@@ -21,12 +21,12 @@ EpBehaviorChange >> affectedPackageName [
 
 { #category : #accessing }
 EpBehaviorChange >> behaviorAffected [
-	^ self shouldBeImplemented 
+	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }
 EpBehaviorChange >> behaviorAffectedName [
-	^ self shouldBeImplemented 
+	^ self shouldBeImplemented
 ]
 
 { #category : #testing }

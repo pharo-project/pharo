@@ -20,7 +20,6 @@ KeyboardEvent >> = aMorphicEvent [
 	buttons = aMorphicEvent buttons ifFalse: [^ false].
 	keyValue = aMorphicEvent keyValue ifFalse: [^ false].
 	^ true
-
 ]
 
 { #category : #keymapping }
@@ -46,7 +45,6 @@ KeyboardEvent >> hasSpecialCTRLKeyValue [
 { #category : #comparing }
 KeyboardEvent >> hash [
 	^buttons hash + keyValue hash
-
 ]
 
 { #category : #initialization }
@@ -79,13 +77,6 @@ KeyboardEvent >> isKeystroke [
 { #category : #testing }
 KeyboardEvent >> isMouseMove [
 	^false
-]
-
-{ #category : #testing }
-KeyboardEvent >> isUserInterrupt [
-
-	^ UserInterruptHandler cmdDotEnabled and: [ self keyCharacter = $. and: [ self commandKeyPressed ] ].
-	
 ]
 
 { #category : #keyboard }

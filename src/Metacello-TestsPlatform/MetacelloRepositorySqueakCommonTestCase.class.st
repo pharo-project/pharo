@@ -78,8 +78,6 @@ MetacelloRepositorySqueakCommonTestCase >> baseline16: spec [
             file: 'Example-Core-anon.1';
             repository:
                 'filetree://' , MCFileTreeFileUtils current default fullName , '/temp/repo' ] ]
-
-
 ]
 
 { #category : #accessing }

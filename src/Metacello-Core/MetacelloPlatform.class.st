@@ -182,7 +182,6 @@ MetacelloPlatform >> createHttpRepository: aRepositorySpec [
         location: aRepositorySpec description
         user: aRepositorySpec username
         password: aRepositorySpec password
-
 ]
 
 { #category : #'repository creation' }
@@ -391,22 +390,6 @@ MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 ]
 
 { #category : #caching }
-MetacelloPlatform >> primeStackCacheFor: cacheName doing: noArgBlock defaultDictionary: aDictionary [
-	self
-		deprecated: 'use #primeStackCacheWith:doing:'
-		transformWith: '`@rec primeStackCacheFor: `@arg1 doing: `@arg2 defaultDictionary: `@arg3' -> '`@rec primeStackCacheWith: `@arg3 doing: `@arg2'.
-	
-	self 
-		useStackCacheDuring: [:dict | | cache |
-			cache := dict at: cacheName ifAbsent: [].
-			cache ifNil: [ 
-					cache := Dictionary new.
-					dict at: cacheName put: cache ].
-			^noArgBlock value ] 
-		defaultDictionary: aDictionary
-]
-
-{ #category : #caching }
 MetacelloPlatform >> primeStackCacheWith: aDictionary doing: noArgBlock [
 
 	self 
@@ -440,8 +423,6 @@ MetacelloPlatform >> recursiveDelete: aDirectory [
 { #category : #tests }
 MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
   "noop for most platforms - needed for GemStone"
-
-
 ]
 
 { #category : #'repository creation' }

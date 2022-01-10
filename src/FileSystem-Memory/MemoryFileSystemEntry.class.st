@@ -38,7 +38,7 @@ MemoryFileSystemEntry >> creationTime [
 
 { #category : #accessing }
 MemoryFileSystemEntry >> fileSize [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }

@@ -30,13 +30,13 @@ Class {
 	#category : #'System-Sound'
 }
 
-{ #category : #'current ' }
+{ #category : #current }
 SoundSystem class >> current [
 
 	^ Current ifNil: [ Current := DummySoundSystem new ]
 ]
 
-{ #category : #'current ' }
+{ #category : #current }
 SoundSystem class >> current: aSoundSystem [
 
 	Current ifNotNil: [Current deactivate].
@@ -44,7 +44,7 @@ SoundSystem class >> current: aSoundSystem [
 	Current activate.
 ]
 
-{ #category : #'current ' }
+{ #category : #current }
 SoundSystem class >> resetSoundSystem [
 	Current := nil
 ]

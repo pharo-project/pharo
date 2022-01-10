@@ -43,15 +43,9 @@ FTStrongSelectionChanged class >> index: aNumber event: anEvent [
 		yourself
 ]
 
-{ #category : #'instance creation' }
-FTStrongSelectionChanged class >> rowIndex: aNumber event: anEvent [
-	self deprecated: 'Use #index:event: instead' transformWith: '`@receiver rowIndex: `@statements1 event: `@statements2' -> '`@receiver index: `@statements1 event: `@statements2'.
-	^ self index: aNumber event: anEvent
-]
-
 { #category : #accessing }
 FTStrongSelectionChanged >> event [
-	^ event 
+	^ event
 ]
 
 { #category : #accessing }
@@ -73,10 +67,4 @@ FTStrongSelectionChanged >> selectedIndex: anObject [
 FTStrongSelectionChanged >> selectedRowIndex [
 	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
 	^ self selectedIndex
-]
-
-{ #category : #accessing }
-FTStrongSelectionChanged >> selectedRowIndex: aNumber [
-	self deprecated: 'Use #selectedIndex: instead' transformWith: '`@receiver selectedRowIndex: `@statements1' -> '`@receiver selectedIndex: `@statements1'.
-	self selectedIndex: aNumber
 ]

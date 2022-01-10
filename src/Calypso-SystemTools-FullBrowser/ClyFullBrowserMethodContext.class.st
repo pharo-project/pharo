@@ -22,5 +22,5 @@ ClyFullBrowserMethodContext >> restoreBrowserState [
 
 { #category : #'selection-methods' }
 ClyFullBrowserMethodContext >> selectedMethodItems [
-	^selectedItems 
+	^selectedItems
 ]

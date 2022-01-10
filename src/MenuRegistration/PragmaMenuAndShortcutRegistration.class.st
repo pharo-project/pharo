@@ -46,7 +46,7 @@ PragmaMenuAndShortcutRegistration >> category: aByteSymbol default: aKMModifiedS
 	self currentItem
 		category: aByteSymbol;
 		default: aKMModifiedShortcut;
-		action: aBlockClosure 
+		action: aBlockClosure
 ]
 
 { #category : #'keymapping protocol' }
@@ -65,7 +65,7 @@ PragmaMenuAndShortcutRegistration >> category: aByteSymbol shortcut: aKMModified
 	self currentItem
 		category: aByteSymbol;
 		default: aKMModifiedShortcut;
-		action: aBlockClosure 
+		action: aBlockClosure
 ]
 
 { #category : #'keymapping protocol' }
@@ -159,7 +159,7 @@ PragmaMenuAndShortcutRegistration >> handOutItems [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistration >> help: aString [ 
 	
-	self currentItem help: aString 
+	self currentItem help: aString
 ]
 
 { #category : #'menu protocol' }
@@ -235,13 +235,13 @@ PragmaMenuAndShortcutRegistration >> model: aModel [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistration >> order: anInteger [ 
 	
-	self currentItem order: anInteger 
+	self currentItem order: anInteger
 ]
 
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistration >> parent: aSymbol [ 
 	
-	self currentItem parent: aSymbol 
+	self currentItem parent: aSymbol
 ]
 
 { #category : #'keymapping protocol' }
@@ -255,7 +255,7 @@ PragmaMenuAndShortcutRegistration >> platform: anArray [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistration >> precondition: aBlock [ 
 	
-	self currentItem precondition: aBlock 
+	self currentItem precondition: aBlock
 ]
 
 { #category : #'menu protocol' }
@@ -274,7 +274,7 @@ PragmaMenuAndShortcutRegistration >> shortcut: aSymbol [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistration >> target: aSymbol [ 
 
-	self currentItem target: aSymbol 
+	self currentItem target: aSymbol
 ]
 
 { #category : #'menu protocol' }

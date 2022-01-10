@@ -15,7 +15,7 @@ ReleaseTest class >> actualProcesses [
 { #category : #accessing }
 ReleaseTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 2 minutes
 ]
 
 { #category : #accessing }
@@ -73,14 +73,13 @@ ReleaseTest >> knownProcesses [
 	^ {
 		Processor activeProcess.	
 		Processor backgroundProcess.
-		InputEventFetcher default fetcherProcess.
 		WeakArray runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
 		Delay schedulingProcess.
 		TKTWatchDog onDuty pharoProcess.
-		OSSDL2Driver current eventLoopProcess.
+		OSSDL2Driver eventLoopProcess.
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
@@ -270,12 +269,11 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 	methods := methods select: [:method |
 	method methodClass superclass
 		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
-			ifNotNil: [ :overridenMethod | method ast = overridenMethod ast ]
+			ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 	].
-	self assert: methods size <= 474.
-	ASTCache reset.
+	self assert: methods size <= 369.
 
 
 	"there should be no method left"

@@ -25,12 +25,12 @@ RBTransformationRule class >> cleanUp [
 	RecursiveSelfRule := nil.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RBTransformationRule class >> initialize [
 	self initializeRecursiveSelfRule
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RBTransformationRule class >> initializeRecursiveSelfRule [
 	RecursiveSelfRule := RBParseTreeSearcher new.
 	RecursiveSelfRule 

@@ -213,7 +213,6 @@ A new VM with
 You can see the Pharo 10.0 changelog at: 
 
 ', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo100ChangeLogs.md')
-
 ]
 
 { #category : #pages }
@@ -307,7 +306,7 @@ WelcomeHelp class >> menuCommandOn: aBuilder [
 		order: 1;
 		action: [ self open ];
 		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
-		help: 'Welcome window for Pharo' 
+		help: 'Welcome window for Pharo'
 ]
 
 { #category : #showing }
@@ -342,7 +341,7 @@ WelcomeHelp class >> openNetworkSettings [
 		yourself.		 
 	window := browser open.
 	path := (window submorphs detect: [ :each | (each isKindOf: MorphTreeMorph) ]) nodeList.
-	browser expandNodePath: path  
+	browser expandNodePath: path
 ]
 
 { #category : #accessing }

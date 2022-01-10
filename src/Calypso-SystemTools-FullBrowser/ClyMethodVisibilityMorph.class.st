@@ -23,7 +23,7 @@ Class {
 ClyMethodVisibilityMorph class >> for: aBrowser level: aMethodVisibilityLevel [
 	^self new 
 		browser: aBrowser;
-		visibilityLevel: aMethodVisibilityLevel 
+		visibilityLevel: aMethodVisibilityLevel
 ]
 
 { #category : #accessing }
@@ -49,7 +49,6 @@ ClyMethodVisibilityMorph >> build [
 	checkBox labelMorph delete.	
 
 	self addMorph: checkBox.
-	
 ]
 
 { #category : #initialization }
@@ -61,7 +60,6 @@ ClyMethodVisibilityMorph >> initialize [
 	self hResizing: #shrinkWrap.
 	self minWidth: 0.
 	self minHeight: 0.
-
 ]
 
 { #category : #testing }

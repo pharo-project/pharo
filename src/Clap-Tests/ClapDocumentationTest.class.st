@@ -17,5 +17,4 @@ ClapDocumentationTest >> testHelloShortUsage [
 	self assert: lines second isEmpty.
 	self assert: (lines third beginsWith: 'Usage: hello').
 	self assert: (lines third endsWith: '[<who>]').
-
 ]

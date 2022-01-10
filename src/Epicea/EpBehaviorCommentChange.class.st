@@ -35,7 +35,6 @@ EpBehaviorCommentChange class >> newWithBehavior: aBehavior oldComment: anOldCom
 		oldStamp: anOldStamp
 		newStamp: aNewStamp;
 		yourself
-
 ]
 
 { #category : #visitor }

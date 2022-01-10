@@ -28,7 +28,7 @@ ClyUndeclaredMethodsQueryTest >> testFromThreeMethods [
 		ClyClassWithUndeclares >> #method2WithUndeclares.
 		Object >> #printString}.
 	
-	self assert: foundSelectors sorted asArray equals: #(method1WithUndeclares method2WithUndeclares) 
+	self assert: foundSelectors sorted asArray equals: #(method1WithUndeclares method2WithUndeclares)
 ]
 
 { #category : #tests }

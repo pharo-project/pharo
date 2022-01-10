@@ -77,7 +77,6 @@ OSWindowJoystickExampleEventHandler >> visitJoyButtonDownEvent: buttonEvent [
 	buttonEvent isButtonStart ifTrue: [ 
 		example reset.
 	].
-
 ]
 
 { #category : #visiting }

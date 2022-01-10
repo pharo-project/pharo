@@ -33,7 +33,7 @@ Class {
 
 { #category : #testing }
 ClyTextEditorToolMorph class >> isAbstract [
-	^self = ClyTextEditorToolMorph 
+	^self = ClyTextEditorToolMorph
 ]
 
 { #category : #accessing }
@@ -41,12 +41,12 @@ ClyTextEditorToolMorph >> activationPriorityInNonActiveContext [
 
 	^applyingChanges
 		ifTrue: [ Float infinity ]
-		ifFalse: [ super activationPriorityInNonActiveContext ] 
+		ifFalse: [ super activationPriorityInNonActiveContext ]
 ]
 
 { #category : #operations }
 ClyTextEditorToolMorph >> applyChanges [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'events handling' }
@@ -104,7 +104,6 @@ ClyTextEditorToolMorph >> buildTextMorph [
 	CmdKMDispatcher attachedTo: textMorph textArea withCommandsFrom: self. "It overrides default text morph shortcuts with Commander"
 	self buildLeftSideBar.
 	textModel setInitialText: self editingText.
-	
 ]
 
 { #category : #operations }
@@ -188,7 +187,7 @@ ClyTextEditorToolMorph >> editingMode [
 
 { #category : #accessing }
 ClyTextEditorToolMorph >> editingText [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selecting text' }

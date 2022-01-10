@@ -40,7 +40,7 @@ IRSend >> selector: symbol [
 { #category : #accessing }
 IRSend >> superOf [
 
-	^ superOf 
+	^ superOf
 ]
 
 { #category : #accessing }

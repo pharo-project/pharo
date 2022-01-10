@@ -19,7 +19,6 @@ FreeTypeFont >> getPreciseAscent [
 	font sizes on same line won't align properly"
 	
 	^(self face ascender * self pixelSize / self face unitsPerEm) asFloat.
-
 ]
 
 { #category : #'*Athens-Text' }
@@ -28,8 +27,6 @@ FreeTypeFont >> getPreciseDescent [
 	font sizes on same line won't align properly"
 	
 	^(self face descender * self pixelSize / self face unitsPerEm) asFloat negated.
-
-
 ]
 
 { #category : #'*Athens-Text' }
@@ -37,7 +34,6 @@ FreeTypeFont >> getPreciseHeight [
 	"get precise font ascent, can be floating value"
 	
 	^(self face height * self pixelSize / self face unitsPerEm) asFloat.
-
 ]
 
 { #category : #'*Athens-Text' }
@@ -45,5 +41,4 @@ FreeTypeFont >> glyphRendererOn: anAthensSurface [
 
 	self validate.
 	^ anAthensSurface getFreetypeFontRendererFor: self
-
 ]

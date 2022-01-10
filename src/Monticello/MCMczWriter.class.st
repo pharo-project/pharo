@@ -37,7 +37,7 @@ MCMczWriter >> addString: string at: path [
 { #category : #writing }
 MCMczWriter >> addString: string at: path encodedTo: encodingName [
 	| member |
-	member := zip addString: (string convertToEncoding: encodingName) as: path.
+	member := zip addString: (string encodeWith: encodingName) as: path.
 	member desiredCompressionMethod: ZipArchive compressionDeflated 
 	
 ]

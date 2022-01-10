@@ -104,7 +104,6 @@ Form class >> extent: extentPoint [
 	"Answer an instance of me with a blank bitmap of depth 1."
 
 	^ self extent: extentPoint depth: 1
-
 ]
 
 { #category : #'instance creation' }
@@ -112,7 +111,6 @@ Form class >> extent: extentPoint depth: bitsPerPixel [
 	"Answer an instance of me with blank bitmap of the given dimensions and depth."
 
 	^ self basicNew setExtent: extentPoint depth: bitsPerPixel
-
 ]
 
 { #category : #'instance creation' }
@@ -129,7 +127,6 @@ Form class >> extent: extentPoint depth: bitsPerPixel fromArray: anArray offset:
 	^ (self extent: extentPoint depth: bitsPerPixel)
 		offset: offsetPoint;
 		initFromArray: anArray
-
 ]
 
 { #category : #'instance creation' }
@@ -139,7 +136,6 @@ Form class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 	^ (self extent: extentPoint depth: 1)
 		offset: offsetPoint;
 		initFromArray: anArray
-
 ]
 
 { #category : #'instance creation' }
@@ -151,7 +147,6 @@ Form class >> extent: extentPoint fromStipple: fourNibbles [
 		initFromArray: ((1 to: 4) collect:
 				[:i | | nibble | nibble := (fourNibbles bitShift: -4*(4-i)) bitAnd: 16rF.
 				16r11111111 * nibble])  "fill 32 bits with each 4-bit nibble"
-
 ]
 
 { #category : #'instance creation' }
@@ -159,7 +154,6 @@ Form class >> extent: extentPoint offset: offsetPoint [
 	"Answer an instance of me with a blank bitmap of depth 1."
 
 	^ (self extent: extentPoint depth: 1) offset: offsetPoint
-
 ]
 
 { #category : #settings }
@@ -296,7 +290,6 @@ Form >> as8BitColorForm [
 	f colors: map.
 	f offset: self offset.
 	^ f
-
 ]
 
 { #category : #converting }
@@ -359,7 +352,6 @@ Form >> asGrayScale [
 	grays at: 1 put: Color transparent.
 	result colors: grays.
 	^ result
-
 ]
 
 { #category : #converting }
@@ -454,7 +446,6 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 	^  Bitmap 
 		with: mask1 * pv1 + (mask2 * pv2)
 		with: mask1 * pv3 + (mask2 * pv1).
-	
 ]
 
 { #category : #'color mapping' }
@@ -577,7 +568,6 @@ Form >> colorAt: aPoint [
 	^ Color 
 		colorFromPixelValue: (self pixelValueAt: aPoint)
 		depth: self depth
-
 ]
 
 { #category : #'pixel access' }
@@ -588,7 +578,6 @@ Form >> colorAt: aPoint put: aColor [
 
 "[Sensor anyButtonPressed] whileFalse:
 	[Display colorAt: Sensor cursorPoint put: Color red]"
-
 ]
 
 { #category : #converting }
@@ -631,7 +620,6 @@ Form >> colorReduced [
 	newForm colors: newFormColors.
 	newForm offset: offset.
 	^ newForm
-
 ]
 
 { #category : #'color mapping' }
@@ -685,7 +673,6 @@ Form >> colormapIfNeededForDepth: destDepth [
 
 	self depth = destDepth ifTrue: [^ nil].  "not needed if depths are the same"
 	^ Color colorMapIfNeededFrom: self depth to: destDepth
-
 ]
 
 { #category : #'color mapping' }
@@ -721,7 +708,6 @@ Form >> colorsUsed [
 		count > 0 ifTrue: [
 			usedColors add: (Color colorFromPixelValue: i - 1 depth: tallyDepth)]].
 	^ usedColors asArray
-
 ]
 
 { #category : #'display box access' }
@@ -862,7 +848,6 @@ Form >> copyWithColorsReducedTo: nColors [
 		closest := palette detectMin: [:c | c diff: pc].
 		closest pixelValueForDepth: depth].
 	^ self deepCopy copyBits: self boundingBox from: self at: 0@0 colorMap: (colorMap as: Bitmap)
-		
 ]
 
 { #category : #converting }
@@ -889,7 +874,6 @@ Form >> deepCopy [
 	^ self shallowCopy
 		bits: bits copy;
 		offset: offset copy
-
 ]
 
 { #category : #accessing }
@@ -930,7 +914,6 @@ Form >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle r
 		rule: rule
 		fillColor: aForm
 		map: (self colormapIfNeededFor: aDisplayMedium).
-
 ]
 
 { #category : #displaying }
@@ -951,7 +934,6 @@ Form >> displayResourceFormOn: aForm [
 		combinationRule: 3;
 		cellSize: 2;
 		warpBits.
-
 ]
 
 { #category : #displaying }
@@ -1015,7 +997,6 @@ Form >> eraseShape: bwForm [
 		extent: self extent clipRect: self boundingBox)
 		colorMap: (Bitmap with: 0 with: 16rFFFFFFFF))
 		copyBits.
-
 ]
 
 { #category : #accessing }
@@ -1047,8 +1028,7 @@ Form >> fadeImage: otherImage at: topLeft
 		resultForm copyBits: imageRect from: otherImage at: 0@0
 			clippingBox: imageRect rule: Form under fillColor: maskForm.
 		self copyBits: imageRect from: resultForm at: topLeft
-				clippingBox: self boundingBox rule: Form over fillColor: nil.
-		Display forceDisplayUpdate]
+				clippingBox: self boundingBox rule: Form over fillColor: nil ]
 ]
 
 { #category : #transitions }
@@ -1147,7 +1127,6 @@ Form >> fillAlpha: alphaValue [
 	bb combinationRule: 7. "bitOr:with:"
 	bb fillColor: (Bitmap with: alphaValue << 24).
 	bb copyBits.
-
 ]
 
 { #category : #filling }
@@ -1282,7 +1261,6 @@ Form >> flipBy: direction centerAt: aPoint [
 	f2 := f flipBy: #vertical centerAt: 0@0.
 	(f2 flipBy: #vertical centerAt: 0@0) displayAt: p]
 "
-
 ]
 
 { #category : #'scaling, rotation' }
@@ -1325,7 +1303,6 @@ Form >> formForColorCount: colorCount [
 	colorCount > 4 ifTrue: [^ ColorForm extent: self extent depth: 4].
 	colorCount > 2 ifTrue: [^ ColorForm extent: self extent depth: 2].
 	^ ColorForm extent: self extent depth: 1
-
 ]
 
 { #category : #initialization }
@@ -1519,7 +1496,6 @@ Form >> isTransparentAt: aPoint [
 
 	self depth = 1 ifTrue: [^ false].  "no transparency at depth 1"
 	^ (self pixelValueAt: aPoint) = (self pixelValueFor: Color transparent)
-
 ]
 
 { #category : #converting }
@@ -1563,7 +1539,6 @@ Display restoreAfter: [Sensor waitNoButton.
 	f2 := f magnify: f boundingBox by: 5@3.
 	(f2 shrink: f2 boundingBox by: 5@3) displayAt: p]
 "
-
 ]
 
 { #category : #'scaling, rotation' }
@@ -1630,7 +1605,6 @@ Form >> mapColor: oldColor to: newColor [
 		destX: 0 destY: 0 width: width height: height;
 		colorMap: map;
 		copyBits.
-
 ]
 
 { #category : #'color mapping' }
@@ -1654,7 +1628,6 @@ Form >> mapColors: oldColorBitsCollection to: newColorBits [
 		destX: 0 destY: 0 width: width height: height;
 		colorMap: map;
 		copyBits.
-
 ]
 
 { #category : #'color mapping' }
@@ -1680,7 +1653,6 @@ Form >> newColorMap [
 	"Return an uninitialized color map array appropriate to this Form's depth."
 
 	^ Bitmap new: (1 bitShift: (self depth min: 15))
-
 ]
 
 { #category : #accessing }
@@ -1733,59 +1705,6 @@ Form >> orderedDither32To16 [
 			pvOut := 0].
 	].
 	^out
-]
-
-{ #category : #transitions }
-Form >> pageWarp: otherImage at: topLeft forward: forward [
-	"Produce a page-turning illusion that gradually reveals otherImage
-	located at topLeft in this form.
-	forward == true means turn pages toward you, else away. [ignored for now]"
-	| pageRect oldPage nSteps buffer p leafRect sourceQuad warp oldBottom d |
-	pageRect := otherImage boundingBox.
-	oldPage := self copy: (pageRect translateBy: topLeft).
-	(forward ifTrue: [oldPage] ifFalse: [otherImage])
-		border: pageRect
-		widthRectangle: (Rectangle
-				left: 0
-				right: 2
-				top: 1
-				bottom: 1)
-		rule: Form over
-		fillColor: Color black.
-	oldBottom := self copy: ((pageRect bottomLeft + topLeft) extent: (pageRect width@(pageRect height//4))).
-	nSteps := 8.
-	buffer := Form extent: otherImage extent + (0@(pageRect height//4)) depth: self depth.
-	d := pageRect topLeft + (0@(pageRect height//4)) - pageRect topRight.
-	1 to: nSteps-1 do:
-		[:i | forward
-			ifTrue: [buffer copy: pageRect from: otherImage to: 0@0 rule: Form over.
-					p := pageRect topRight + (d * i // nSteps)]
-			ifFalse: [buffer copy: pageRect from: oldPage to: 0@0 rule: Form over.
-					p := pageRect topRight + (d * (nSteps-i) // nSteps)].
-		buffer copy: oldBottom boundingBox from: oldBottom to: pageRect bottomLeft rule: Form over.
-		leafRect := pageRect topLeft corner: p x @ (pageRect bottom + p y).
-		sourceQuad := Array with: pageRect topLeft
-			with: pageRect bottomLeft + (0@p y)
-			with: pageRect bottomRight
-			with: pageRect topRight - (0@p y).
-		warp := (WarpBlt toForm: buffer)
-				clipRect: leafRect;
-				sourceForm: (forward ifTrue: [oldPage] ifFalse: [otherImage]);
-				combinationRule: Form paint.
-		warp copyQuad: sourceQuad toRect: leafRect.
-		self copy: buffer boundingBox from: buffer to: topLeft rule: Form over.
-		Display forceDisplayUpdate].
-
-	buffer copy: pageRect from: otherImage to: 0@0 rule: Form over.
-	buffer copy: oldBottom boundingBox from: oldBottom to: pageRect bottomLeft rule: Form over.
-	self copy: buffer boundingBox from: buffer to: topLeft rule: Form over.
-	Display forceDisplayUpdate.
-"
-1 to: 4 do: [:corner | Display pageWarp:
-				(Form fromDisplay: (10@10 extent: 200@300)) reverse
-			at: 10@10 forward: false]
-"
-
 ]
 
 { #category : #displaying }
@@ -1842,7 +1761,6 @@ Form >> pixelValueAt: aPoint [
 	"Return the raw pixel value at the given point. This pixel value depends on the receiver's depth. Typical clients use colorAt: to get a Color.  "
 
 	^ (BitBlt bitPeekerFromForm: self) pixelAt: aPoint
-
 ]
 
 { #category : #'pixel access' }
@@ -1850,7 +1768,6 @@ Form >> pixelValueAt: aPoint put: pixelValue [
 	"Store the given raw pixel value at the given point. Typical clients use colorAt:put: to store a color. "
 
 	(BitBlt bitPokerToForm: self) pixelAt: aPoint put: pixelValue.
-
 ]
 
 { #category : #'color mapping' }
@@ -1909,7 +1826,6 @@ Form >> primPrintHScale: hScale vScale: vScale landscape: aBoolean [
 
 	<primitive: 232>
 	self primitiveFailed
-
 ]
 
 { #category : #printing }
@@ -1920,7 +1836,6 @@ Form >> printOn: aStream [
         nextPut: $x; print: height;
         nextPut: $x; print: depth;
         nextPut: $).
-
 ]
 
 { #category : #private }
@@ -1956,8 +1871,6 @@ Form >> readAttributesFrom: aBinaryStream [
 	offsetX > 32767 ifTrue: [offsetX := offsetX - 65536].
 	offsetY > 32767 ifTrue: [offsetY := offsetY - 65536].
 	offset := Point x: offsetX y: offsetY.
-	
-
 ]
 
 { #category : #'file in/out' }
@@ -1966,7 +1879,6 @@ Form >> readBitsFrom: aBinaryStream [
 	bits := Bitmap newFromStream: aBinaryStream.
 	bits size = self bitsSize ifFalse: [self error: 'wrong bitmap size; bad Form file?'].
 	^ self
-
 ]
 
 { #category : #'file in/out' }
@@ -2080,7 +1992,6 @@ Form >> reducedPaletteOfSize: nColors [
 				ifFalse: [dist - delta].
 			delta := delta / 2].
 	^ palette collect: [:a | a key]
-
 ]
 
 { #category : #other }
@@ -2180,7 +2091,6 @@ Form >> rotateBy: direction centerAt: aPoint [
 	f2 := f rotateBy: #left centerAt: 0@0.
 	(f2 rotateBy: #right centerAt: 0@0) displayAt: p]
 "
-
 ]
 
 { #category : #'scaling, rotation' }
@@ -2236,7 +2146,6 @@ Form >> scaledToSize: newExtent [
 	newExtent = self extent ifTrue: [^self].
 	scale := newExtent x / self width min: newExtent y / self height.
 	^self magnify: self boundingBox by: scale smoothing: 2.
-
 ]
 
 { #category : #private }
@@ -2302,8 +2211,7 @@ Form >> slideImage: otherImage at: topLeft delta: delta [
 	1 to: nSteps do:
 			[:i | self copyBits: bb from: otherImage
 				at: delta*(i-nSteps) + topLeft
-				clippingBox: clipRect rule: Form paint fillColor: nil.
-			Display forceDisplayUpdate]
+				clippingBox: clipRect rule: Form paint fillColor: nil ]
 ]
 
 { #category : #'image manipulation' }
@@ -2374,7 +2282,6 @@ Form >> storeBitsOn:aStream base:anInteger [
 			ifTrue: [aStream space]
 			ifFalse: [aStream crtab: 2].
 		word storeOn: aStream base: anInteger].
-
 ]
 
 { #category : #'file in/out' }
@@ -2409,7 +2316,6 @@ Form >> storeOn: aStream base: anInteger [
 	aStream nextPutAll: 'offset: '.
 	self offset printOn: aStream.
 	aStream nextPut: $).
-
 ]
 
 { #category : #initialization }
@@ -2437,7 +2343,6 @@ Cursor blank showWhile: [
 	nonZero printString , '          ' displayAt: 0@0.
 	Display border: (r expandBy: 2) width: 2 rule: Form reverse fillColor: nil]]
 "
-
 ]
 
 { #category : #analyzing }
@@ -2475,7 +2380,6 @@ Form >> trimBordersOfColor: aColor [
 	| r |
 	r := self rectangleEnclosingPixelsNotOfColor: aColor.
 	^ self copy: r
-
 ]
 
 { #category : #'file in/out' }
@@ -2519,11 +2423,9 @@ Form >> wipeImage: otherImage at: topLeft clippingBox: clipBox rectForIndex: rec
 			rectOrList asOrderedCollection do: [:r |
 				self copyBits: r from: otherImage at: topLeft + r topLeft
 					clippingBox: clipRect rule: Form over fillColor: nil].
-			Display forceDisplayUpdate.
 			waitTime := 3 - (Time millisecondClockValue - t).
 			waitTime > 0 ifTrue:
 				["(Delay forMilliseconds: waitTime) wait"]].
-
 ]
 
 { #category : #transitions }
@@ -2532,7 +2434,6 @@ Form >> wipeImage: otherImage at: topLeft delta: delta [
 		at: 40@40 delta: 0@-2"
 
 	self wipeImage: otherImage at: topLeft delta: delta clippingBox: nil.
-
 ]
 
 { #category : #transitions }
@@ -2584,7 +2485,6 @@ Form >> writeAttributesOn: file [
 	file nextWordPut: ((self offset y) >=0
 					ifTrue: [self offset y]
 					ifFalse: [self offset y + 65536]).
-	
 ]
 
 { #category : #'file in/out' }

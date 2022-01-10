@@ -147,7 +147,6 @@ AthensCairoPaintMode >> exclusion [
 AthensCairoPaintMode >> getOperator [
 	^ self ffiCall: #(
 		cairo_operator_t cairo_get_operator (AthensCairoCanvas canvas) )
-
 ]
 
 { #category : #modes }
@@ -242,7 +241,6 @@ AthensCairoPaintMode >> screen [
 { #category : #private }
 AthensCairoPaintMode >> setOperator: aCairoOperatorT [
 	^ self ffiCall: #(void cairo_set_operator (AthensCairoCanvas canvas, cairo_operator_t aCairoOperatorT) )
-
 ]
 
 { #category : #modes }

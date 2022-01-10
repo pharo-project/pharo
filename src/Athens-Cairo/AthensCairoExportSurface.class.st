@@ -52,7 +52,6 @@ AthensCairoExportSurface class >> finalizeResourceData: data [
 	self destroySurfaceHandle: surfaceHandle value.
 	self destroyContextHandle: contextHandleValue.
 	surfaceHandle beNull.
-
 ]
 
 { #category : #private }

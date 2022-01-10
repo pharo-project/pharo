@@ -10,5 +10,5 @@ Object >> >>> anObject [
 	
 	"(1 max: 1000) >>> 1000"
 
-	^ self -> anObject 
+	^ self -> anObject
 ]

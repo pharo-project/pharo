@@ -19,7 +19,7 @@ HEClassVariable class >> tag [
 { #category : #converting }
 HEClassVariable >> asLiteralIn: env [
 	"I ask the binding to the class that is currently being deserialized"
-	^ env newClass bindingOf: value 
+	^ env newClass bindingOf: value
 ]
 
 { #category : #accessing }

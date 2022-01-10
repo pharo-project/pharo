@@ -71,8 +71,6 @@ PaSimpleMatrixExampleTest >> testAdd [
 	
 	self assert: (aCollection includes: item1).
 	self assert: aCollection size equals: 1.
-
-	
 ]
 
 { #category : #accessing }
@@ -90,7 +88,6 @@ PaSimpleMatrixExampleTest >> testAddAndRemove [
 	
 	self deny: (aCollection includes: item1).
 	self assert: aCollection size equals: 1.
-
 ]
 
 { #category : #accessing }

@@ -12,31 +12,11 @@ Class {
 		'directory',
 		'monitor',
 		'hiedraColumnController',
-		'openSettingsButton',
-		'refreshButton',
-		'selectDirectoryButton',
 		'hiedraCheckBox',
 		'logNodesTable'
 	],
 	#category : #'EpiceaBrowsers-UI-Graph'
 }
-
-{ #category : #specs }
-EpLogNodeGraphPresenter class >> defaultSpec [
-	^ SpBoxLayout newTopToBottom
-		add: #logNodesTable;
-		add:
-			(SpBoxLayout newLeftToRight
-					add: #hiedraCheckBox;
-					add: #refreshButton;
-					add: #selectDirectoryButton;
-					add: #openSettingsButton;
-					yourself)
-			expand: false
-			fill: false
-			padding: 0;
-		yourself
-]
 
 { #category : #'instance creation' }
 EpLogNodeGraphPresenter class >> open [
@@ -91,57 +71,37 @@ EpLogNodeGraphPresenter >> initializeLogNodesTable [
 
 	logNodesTable
 		beMultipleSelection;
-		addColumn:
-			((SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ])
-				width: 50;
-				yourself);
-		addColumn: (SpStringTableColumn evaluated: #yourself)
+		addColumn: ((SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ])
+			width: 50;
+			yourself);
+		addColumn: (SpStringTableColumn 
+			title: 'Modified' 
+			evaluated: [ :item | item modificationTimeString ])
+			beNotExpandable;
+		addColumn: (SpStringTableColumn 
+			title: 'File'
+			evaluated: [ :item | item smallName ])
 ]
 
 { #category : #initialization }
-EpLogNodeGraphPresenter >> initializeOpenSettingsButton [
-	openSettingsButton
-		label: 'Dashboard';
-		action: [ EpDashboardPresenter open ]
-]
+EpLogNodeGraphPresenter >> initializePresenters [
 
-{ #category : #initialization }
-EpLogNodeGraphPresenter >> initializeRefreshButton [
-	refreshButton
-		help: 'Refresh logs from this directory';
-		icon: (self iconNamed: #smallUpdate);
-		label: 'Refresh';
-		action: [ self refresh ]
-]
+	self layout: (SpBoxLayout newTopToBottom
+		add: (logNodesTable := self newTable);
+		add: (SpBoxLayout newLeftToRight
+				add: (hiedraCheckBox := self newCheckBox);
+				yourself)
+			expand: false;
+		yourself).
 
-{ #category : #initialization }
-EpLogNodeGraphPresenter >> initializeSelectedDirectoryButton [
-	selectDirectoryButton
-		help: 'Select directory to browse logs (i.e. files with ombu extension)';
-		icon: (self iconNamed: #openIcon);
-		label: 'Directory';
-		action: [ self selectDirectory ]
-]
-
-{ #category : #initialization }
-EpLogNodeGraphPresenter >> initializeWidgets [
-	hiedraCheckBox := self newCheckBox.
-	selectDirectoryButton := self newButton.
-	logNodesTable := self newTable.
-	refreshButton := self newButton.
-	openSettingsButton := self newButton.
-
-	self initializeSelectedDirectoryButton.
 	self initializeLogNodesTable.
-	self initializeRefreshButton.
-	self initializeHiedraCheckBox.
-	self initializeOpenSettingsButton
+	self initializeHiedraCheckBox
 ]
 
 { #category : #refreshing }
 EpLogNodeGraphPresenter >> isMonitorDirectory [
 
-	^ self monitor sessionStore directory asFileReference = self directory asFileReference 
+	^ self monitor sessionStore directory asFileReference = self directory asFileReference
 ]
 
 { #category : #accessing }
@@ -154,7 +114,6 @@ EpLogNodeGraphPresenter >> monitor [
 EpLogNodeGraphPresenter >> monitor: anEpMonitor [
 
 	monitor := anEpMonitor
-
 ]
 
 { #category : #refreshing }

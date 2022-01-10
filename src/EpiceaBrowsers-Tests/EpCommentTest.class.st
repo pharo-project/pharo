@@ -28,5 +28,4 @@ EpCommentTest >> testComment [
 		commentAt: inputEntry
 		ifPresent: [ :comment | presentComment := comment ].
 	self assert: presentComment equals: '42'.
-
 ]

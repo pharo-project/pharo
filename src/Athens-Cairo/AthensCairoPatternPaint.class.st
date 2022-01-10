@@ -15,13 +15,12 @@ Class {
 { #category : #private }
 AthensCairoPatternPaint class >> finalizeResourceData: handle [
 
-	self primDestroyPattern: handle value 
+	self primDestroyPattern: handle value
 ]
 
 { #category : #private }
 AthensCairoPatternPaint class >> primDestroyPattern: aHandle [
 	^ self ffiCall: #(void cairo_pattern_destroy (ulong aHandle) )
- 
 ]
 
 { #category : #converting }
@@ -71,9 +70,6 @@ AthensCairoPatternPaint >> athensLoadOn: anAthensCanvas [
 	self isSuccess
 		ifTrue:[ anAthensCanvas primSetSource: self ]
 		ifFalse:[ anAthensCanvas setSourceR: 1.0 g: 0.0 b: 0.0 a: 1.0].
-	 
-		
-
 ]
 
 { #category : #initialization }
@@ -111,9 +107,6 @@ AthensCairoPatternPaint >> loadOnCairoCanvas: aCanvas [
 	self isSuccess
 		ifTrue:[ aCanvas primSetSource: self ]
 		ifFalse:[ aCanvas setSourceR: 1.0 g: 0.0 b: 0.0 a: 1.0].
-	 
-		
-
 ]
 
 { #category : #drawing }
@@ -127,14 +120,12 @@ A drawing operator that paints the current source using the alpha channel of pat
 { #category : #accessing }
 AthensCairoPatternPaint >> noRepeat [
 	self primSetExtend: CAIRO_EXTEND_NONE.
-
 ]
 
 { #category : #primitives }
 AthensCairoPatternPaint >> primSetExtend: extend [
 	^ self ffiCall:#(
 		void cairo_pattern_set_extend ( self , ulong extend) )
-		
 ]
 
 { #category : #primitives }
@@ -177,11 +168,9 @@ AthensCairoPatternPaint >> setMatrix: m [
 		void
 			cairo_pattern_set_matrix ( self, AthensCairoMatrix * m)
 		)
-
 ]
 
 { #category : #accessing }
 AthensCairoPatternPaint >> status [
 	^ self ffiCall: #(int cairo_pattern_status (cairo_pattern_t  self))
-		
 ]

@@ -39,7 +39,7 @@ ClyMethodChange class >> of: aMethod [
 
 { #category : #'instance creation' }
 ClyMethodChange class >> ofAll: methods [
-	^methods collect: [ :each | self of: each ] as: AnnouncementSet 
+	^methods collect: [ :each | self of: each ] as: AnnouncementSet
 ]
 
 { #category : #accessing }
@@ -61,5 +61,5 @@ ClyMethodChange >> handlesAnnouncement: anAnnouncement [
 			localMethodNamed: affectedMethod selector ifAbsent: [nil].
 		newMethod ifNotNil: [ affectedMethod := newMethod ]  ].
 	
-	^anAnnouncement affectsMethod: affectedMethod 
+	^anAnnouncement affectsMethod: affectedMethod
 ]

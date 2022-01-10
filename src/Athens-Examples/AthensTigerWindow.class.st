@@ -35,8 +35,6 @@ AthensTigerWindow >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 	aCanvas drawImage: surface asForm at: self layoutBounds origin.
-
-
 ]
 
 { #category : #initialization }
@@ -48,8 +46,6 @@ AthensTigerWindow >> initialize [
 	scale := surface extent x / AthensTiger tigerMaxY.
 	rotation := 0.
 	frames := 0.
-
-
 ]
 
 { #category : #stepping }

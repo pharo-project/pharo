@@ -5,6 +5,6 @@ UndefinedObject >> << aString [
 
 	^ FluidClassBuilder new
 		  superclassToBuild: self;
-		  classNameToBuild: aString;
+		  nameToBuild: aString;
 		  yourself
 ]

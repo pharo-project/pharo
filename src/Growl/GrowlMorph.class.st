@@ -182,7 +182,6 @@ GrowlMorph >> activeGrowlMorphs [
 { #category : #accessing }
 GrowlMorph >> alpha [
 	^ alpha
-
 ]
 
 { #category : #accessing }
@@ -219,7 +218,6 @@ GrowlMorph >> contentsAttributes [
 { #category : #accessing }
 GrowlMorph >> contentsColor [
 	^ contentsColor ifNil: [ contentsColor := self theme growlContentsColorFor: self ]
-
 ]
 
 { #category : #accessing }
@@ -227,7 +225,6 @@ GrowlMorph >> contentsColor: aColor [
 	"when you set this contentsColor, it takes precedence over theme one. In certain case (such as for green as in SUnit) it is needed, normally you do not need it."
 	contentsColor := aColor.
 	contentsAttr color: aColor
-	
 ]
 
 { #category : #initialization }
@@ -290,20 +287,17 @@ GrowlMorph >> initialize [
 { #category : #initialization }
 GrowlMorph >> initializeContentsAttributes [
 	contentsAttr := TextColor color: self contentsColor.
-	
 ]
 
 { #category : #initialization }
 GrowlMorph >> initializeLabelAttributes [
 	labelAttr := TextColor color: self labelColor.
-	
 ]
 
 { #category : #internal }
 GrowlMorph >> is: rect saneWithRespectTo: morphs [
 
 	^(morphs anySatisfy: [ :morph | morph owner isNotNil and: [morph bounds intersects: rect]]) not
-
 ]
 
 { #category : #building }
@@ -403,8 +397,7 @@ GrowlMorph >> unoccupiedPosition [
 		ifTrue: [ ^ self unoccupiedPositionBottomRight ].
 	self class position = #topLeft
 		ifTrue: [ ^ self unoccupiedPositionTopLeft ].
-	^ 0@0	
-	
+	^ 0@0
 ]
 
 { #category : #position }

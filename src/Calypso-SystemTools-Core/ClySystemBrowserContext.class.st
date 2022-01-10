@@ -111,7 +111,7 @@ ClySystemBrowserContext >> isInstanceSideMethodSelected [
 
 { #category : #'selection-messages' }
 ClySystemBrowserContext >> isMessageSelected [
-	^self isMethodSelected 
+	^self isMethodSelected
 ]
 
 { #category : #'selection-methods' }
@@ -217,46 +217,18 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection 
 ]
 
 { #category : #'user requests' }
-ClySystemBrowserContext >> requestSingleMethodTag: queryTitle [
-	^self requestSingleMethodTag: queryTitle suggesting: ''
-]
-
-{ #category : #'user requests' }
-ClySystemBrowserContext >> requestSingleMethodTag: queryTitle suggesting: suggestedTag [
-	| knownTags ui selectedTag |
-	knownTags := (SystemNavigation default allExistingProtocolsFor: true)
-		reject: [ :each | each beginsWith: '*' ].
-	knownTags := knownTags asSortedCollection: [ :a :b | a asLowercase < b asLowercase ].	
-	ui := ListDialogWindow new
-		getList: [ :r | knownTags select: [ :e | r search: e ] ];
-		displayBlock: [ :e | e ];
-		initialAnswer: suggestedTag;
-		acceptNewEntry: true;
-		title: queryTitle;
-		yourself.
-	ui defaultFocusMorph contentMorph selectAll.
-	selectedTag := ui chooseFromOwner: tool.
-	selectedTag isEmptyOrNil ifTrue: [ CmdCommandAborted signal].
-	(selectedTag beginsWith: '*') ifTrue: [ 
-		self inform: 'Star is forbidden for protocol name. You can specify package in method editor using status bar checkbox'.
-		^CmdCommandAborted signal].
-	
-	^selectedTag asSymbol
-]
-
-{ #category : #'user requests' }
 ClySystemBrowserContext >> requestSinglePackage: queryTitle [
 	^tool searchDialog requestSingleObject: queryTitle from: ClyAllPackagesQuery sorted
 ]
 
 { #category : #'selection-classes' }
 ClySystemBrowserContext >> selectedClassItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-classes' }
 ClySystemBrowserContext >> selectedClasses [
-	^self actualSelectionFrom: self selectedClassItems 
+	^self actualSelectionFrom: self selectedClassItems
 ]
 
 { #category : #'selection-messages' }
@@ -266,7 +238,7 @@ ClySystemBrowserContext >> selectedMessages [
 
 { #category : #'selection-methods' }
 ClySystemBrowserContext >> selectedMethodItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-methods' }
@@ -276,7 +248,7 @@ ClySystemBrowserContext >> selectedMethods [
 
 { #category : #'selection-packages' }
 ClySystemBrowserContext >> selectedPackageItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-packages' }

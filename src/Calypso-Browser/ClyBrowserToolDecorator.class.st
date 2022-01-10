@@ -32,7 +32,7 @@ ClyBrowserToolDecorator >> browser [
 
 { #category : #accessing }
 ClyBrowserToolDecorator >> browserEnvironment [
-	^ self browser navigationEnvironment 
+	^ self browser navigationEnvironment
 ]
 
 { #category : #accessing }
@@ -47,10 +47,9 @@ ClyBrowserToolDecorator >> browserTool: anObject [
 
 { #category : #decoration }
 ClyBrowserToolDecorator >> decorateTool [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #controlling }
 ClyBrowserToolDecorator >> toolWasRemoved [
-
 ]

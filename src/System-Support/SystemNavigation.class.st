@@ -38,6 +38,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 ]
 
 { #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
+
+	self allClassesDo: [ :e |
+		(e name beginsWith: aString)
+			ifTrue: [ aBlock value: e name ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 
@@ -159,7 +167,11 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
+
+	| specialIndex |
+	"for speed we check the special selectors here once per class"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
+	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral specialIndex: specialIndex ]
 ]
 
 { #category : #query }
@@ -307,7 +319,7 @@ SystemNavigation >> methodsReferencingObsoleteClasses [
 	"Returns all methods that reference obsolete behaviors"
 	
 	| obsClasses |
-	obsClasses := self obsoleteBehaviors.
+	obsClasses := self obsoleteClasses.
 	
 	^Array streamContents: [ :methods |
 		obsClasses keysAndValuesDo: 
@@ -342,21 +354,6 @@ SystemNavigation >> methodsWithUnboundGlobals [
 ]
 
 { #category : #'identifying obsoletes' }
-SystemNavigation >> obsoleteBehaviors [
-	"SystemNavigation new obsoleteBehaviors inspect"
-	"Find all obsolete behaviors including meta classes"
-
-	| obs |
-	obs := OrderedCollection new.
-	Smalltalk garbageCollect.
-	self 
-		allObjectsDo: [:cl | 
-			(cl isBehavior	and: [ cl isObsolete])
-				ifTrue: [ obs add: cl]].
-	^ obs asArray
-]
-
-{ #category : #'identifying obsoletes' }
 SystemNavigation >> obsoleteClasses [
 	"SystemNavigation new obsoleteClasses inspect"
 	"NOTE:  Also try inspecting comments below"
@@ -368,22 +365,22 @@ SystemNavigation >> obsoleteClasses [
 		allInstancesDo: [ :m | 
 			| c |
 			c := m soleInstance.
-			(c notNil and: [ 'AnOb*' match: c name asString ])
+			(c notNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
 	^ obs asArray	
 		
 "Likely in a ClassDict or Pool...
-(Association allInstances select: [:a | (a value isKindOf: Class) and: ['AnOb*' match: a value name]]) asArray
+(Association allInstances select: [:a | (a value isKindOf: Class) and: [a value isObsolete]]) asArray
 "	
 	
 "Obsolete class refs or super pointer in last lit of a method...
 | n l found |
-Smalltalk browseAllSelect:
+SystemNavigation new browseAllSelect:
 	[:m | found := false.
 	1 to: m numLiterals do:
 		[:i | (((l := m literalAt: i) isMemberOf: Association)
 				and: [(l value isKindOf: Behavior)
-				and: ['AnOb*' match: l value name]])
+				and: [l value isObsolete]])
 			ifTrue: [found := true]].
 	found]
 "

@@ -32,7 +32,7 @@ Class {
 { #category : #printing }
 CleanBlockClosure >> doPrintOn: aStream [
 
-	aStream nextPutAll: self sourceNode value sourceCode 
+	aStream nextPutAll: self sourceNode value sourceCode
 ]
 
 { #category : #accessing }

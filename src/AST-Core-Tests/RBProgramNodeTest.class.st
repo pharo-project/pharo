@@ -188,7 +188,6 @@ RBProgramNodeTest >> testAddTemporariesNamed [
 	self assert: variables second name equals: 'c'.
 	self assert: tree temporaries second equals: variables first.
 	self assert: tree temporaries last equals: variables second
-	
 ]
 
 { #category : #'tests - adding' }
@@ -245,7 +244,6 @@ RBProgramNodeTest >> testAllStatementsBlockWithReturn [
 			'methodName
 				^ [ ^ self ] '.
 	self assert: tree allStatements size equals: 2
- 
 ]
 
 { #category : #tests }
@@ -255,7 +253,6 @@ RBProgramNodeTest >> testAllStatementsBlockWithTemps [
 			'methodName
 				^ [ | tmp | tmp := 88 ] '.
 	self assert: tree allStatements size equals: 3.
- 
 ]
 
 { #category : #tests }
@@ -288,7 +285,6 @@ RBProgramNodeTest >> testAllStatementsReturnsMultiple [
 				^ self '.
 	stats := tree allStatements.
 	self assert: stats size equals: 3
- 
 ]
 
 { #category : #tests }
@@ -451,7 +447,7 @@ RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 9.
 	
-	self assert: bestNode isVariable 
+	self assert: bestNode isVariable
 ]
 
 { #category : #'tests - adding' }
@@ -464,7 +460,7 @@ RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 28.
 	
-	self assert: bestNode isVariable 
+	self assert: bestNode isVariable
 ]
 
 { #category : #'tests - adding' }
@@ -477,7 +473,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 6.
 	
-	self assert: bestNode isMethod 
+	self assert: bestNode isMethod
 ]
 
 { #category : #'tests - adding' }
@@ -490,7 +486,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 7.
 	
-	self assert: bestNode isVariable 
+	self assert: bestNode isVariable
 ]
 
 { #category : #'tests - adding' }
@@ -503,7 +499,7 @@ RBProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 26.
 	
-	self assert: bestNode isVariable 
+	self assert: bestNode isVariable
 ]
 
 { #category : #'tests - adding' }
@@ -516,7 +512,7 @@ RBProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 27.
 	
-	self assert: bestNode isVariable 
+	self assert: bestNode isVariable
 ]
 
 { #category : #'tests - properties' }

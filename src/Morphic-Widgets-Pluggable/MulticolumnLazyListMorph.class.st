@@ -38,7 +38,7 @@ MulticolumnLazyListMorph >> display: items atRow: row on: canvas [
 				from: self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 MulticolumnLazyListMorph >> drawBoundsForRow: row [
 	"calculate the bounds that row should be drawn at.  This might be outside our bounds!"
 	| topLeft drawBounds item width height |
@@ -92,7 +92,6 @@ MulticolumnLazyListMorph >> hUnadjustedScrollRange [
 	(itemsToCheck < listItems size) ifTrue:[maxWidth := maxWidth*2].
 
 	^maxWidth + 150
-
 ]
 
 { #category : #'list access' }
@@ -146,5 +145,4 @@ MulticolumnLazyListMorph >> widthToDisplayItem: item [
 	
 	widths := item collect: [ :each | each widthToDisplayInList: self ].
 	^widths sum + ((listSource gapSize + 4) * (widths size - 1))   "add in space between the columns"
-
 ]

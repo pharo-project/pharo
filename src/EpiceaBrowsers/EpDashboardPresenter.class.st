@@ -190,3 +190,9 @@ EpDashboardPresenter >> refreshEnableMonitorButtonPresenter [
 		label: self monitor statusString;
 		icon: (self iconNamed: self monitor statusIcon)
 ]
+
+{ #category : #initialization }
+EpDashboardPresenter >> updatePresenter [
+
+	self refresh
+]

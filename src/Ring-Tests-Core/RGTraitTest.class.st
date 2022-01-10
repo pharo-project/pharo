@@ -6,7 +6,7 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitTest >> behaviorClass [
 
 	^ RGTrait
@@ -20,7 +20,7 @@ RGTraitTest >> testClassSide [
 	self assert: behavior classTrait classSide identicalTo: behavior classTrait
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RGTraitTest >> testEnsureProtocol [
 
 	| behavior |
@@ -34,10 +34,12 @@ RGTraitTest >> testEnsureProtocol [
 
 { #category : #tests }
 RGTraitTest >> testNewTrait [
+
 	| trait metaclassTrait comment category package |
 	trait := RGTrait unnamed.
 	self assert: trait isRingResolved.
-	self assert: (trait hasUnresolvedAll: #(classTrait comment category package)).
+	self assert:
+		(trait hasUnresolvedAll: #( classTrait comment category package )).
 	self assert: trait isTrait.
 	self assert: trait trait identicalTo: trait.
 
@@ -45,14 +47,14 @@ RGTraitTest >> testNewTrait [
 	trait classTrait: metaclassTrait.
 	self assert: (trait hasResolved: #classTrait).
 	self assert: trait classTrait identicalTo: metaclassTrait.
-	self assert: trait theMetaClass identicalTo: metaclassTrait.
+	self assert: trait classSide identicalTo: metaclassTrait.
 
 	comment := RGComment parent: metaclassTrait.
 	self deny: trait hasComment.
 	trait comment: comment.
 	self assert: (trait hasResolved: #comment).
 	self assert: trait comment identicalTo: comment.
-	self deny: trait hasComment.	"the comment has no content"
+	self deny: trait hasComment. "the comment has no content"
 	comment content: 'some comment'.
 	self assert: trait hasComment.
 

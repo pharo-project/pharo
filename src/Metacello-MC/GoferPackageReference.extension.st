@@ -1,6 +1,6 @@
 Extension { #name : #GoferPackageReference }
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 GoferPackageReference >> metacelloPackageNameWithBranch [
 	"Answer array with package name and package name with branch name .. no branch name"
 

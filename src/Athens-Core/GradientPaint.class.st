@@ -38,7 +38,6 @@ Class {
 GradientPaint >> atStop: anOffset put: aColor [
 
 	colorRamp add: (anOffset -> aColor)
-
 ]
 
 { #category : #accessing }

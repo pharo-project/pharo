@@ -49,7 +49,6 @@ Announcer >> initialize [
 { #category : #statistics }
 Announcer >> numberOfSubscriptions [
 	^ registry numberOfSubscriptions
-
 ]
 
 { #category : #subscription }
@@ -57,34 +56,11 @@ Announcer >> removeSubscription: subscription [
 	"Remove the given subscription from the receiver"
 	
 	^ registry remove: subscription
-
 ]
 
 { #category : #private }
 Announcer >> replace: subscription with: newOne [
 	^ registry replace: subscription with: newOne
-
-]
-
-{ #category : #deprecated }
-Announcer >> subscribe: anAnnouncementClass do: aValuable [ 
-	"Declare that when anAnnouncementClass is raised, aValuable is executed."
-	
-	self
-		deprecated: 'Please use #when:do: instead'
-		transformWith: '`@receiver subscribe: `@statements1 do: `@statements2' 
-						-> '`@receiver when: `@statements1 do: `@statements2'.
-	^ self when: anAnnouncementClass do: aValuable
-]
-
-{ #category : #deprecated }
-Announcer >> subscribe: anAnnouncementClass send: aSelector to: anObject [
-	"Declare that when anAnnouncementClass is raised, anObject should receive the message aSelector."
-	self
-		deprecated: 'Please use #when:send:to: instead'
-		transformWith: '`@receiver subscribe: `@statements1 send: `@statements2 to: `@anObject' 
-						-> '`@receiver when: `@statements1 send: `@statements2 to: `@anObject'.
-	^ self when: anAnnouncementClass do: (MessageSend receiver: anObject selector: aSelector)
 ]
 
 { #category : #accessing }
@@ -121,7 +97,6 @@ Announcer >> when: anAnnouncementClass do: aValuable [
 			announcer: self;
 			announcementClass: anAnnouncementClass;
 			valuable: aValuable)
-	
 ]
 
 { #category : #subscription }

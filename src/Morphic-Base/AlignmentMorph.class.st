@@ -17,7 +17,6 @@ Class {
 AlignmentMorph class >> columnPrototype [
 	"Answer a prototypical column"
 	"self columnPrototype openInHand"
-	<exampleWidget>
 	
 	| sampleMorphs aColumn |
 	sampleMorphs := #(red yellow green) collect:
@@ -35,7 +34,7 @@ AlignmentMorph class >> columnPrototype [
 AlignmentMorph class >> inAColumn: aCollectionOfMorphs [
 	"Answer a columnar AlignmentMorph holding the given collection"
 
-	^ self new inAColumn: aCollectionOfMorphs 
+	^ self new inAColumn: aCollectionOfMorphs
 ]
 
 { #category : #'instance creation' }
@@ -49,7 +48,6 @@ AlignmentMorph class >> inARow: aCollectionOfMorphs [
 AlignmentMorph class >> newColumn [
 
 	^ self new setAsColumn
-
 ]
 
 { #category : #'instance creation' }
@@ -70,15 +68,13 @@ AlignmentMorph class >> newVariableTransparentSpacer [
 	"Answer a space-filling instance of me of the given color."
 
 	^ self new setAsSpacer: Color transparent
-
 ]
 
 { #category : #examples }
 AlignmentMorph class >> rowPrototype [
 	"Answer a prototypical row"
 	"self rowPrototype openInHand"
-	<exampleWidget>
-	
+
 	| sampleMorphs aRow |
 	sampleMorphs := (1 to: (2 + 3 atRandom)) collect:
 		[:integer | EllipseMorph new extent: ((60 + (20 atRandom)) @ (80 + ((20 atRandom)))); color: Color random; setNameTo: ('egg',  integer asString); yourself].
@@ -90,8 +86,6 @@ AlignmentMorph class >> rowPrototype [
 	aRow setBalloonText: 'Things dropped into here will automatically be organized into a row. Once you have added your own items here, you will want to remove the sample colored eggs that this started with, and you will want to change this balloon help message to one of your own!'.
 	aRow color: Color veryVeryLightGray.
 	^ aRow
-
-			
 ]
 
 { #category : #adding }
@@ -159,7 +153,7 @@ AlignmentMorph >> inAColumn: aCollectionOfMorphs [
 			wrapCentering: #center;
 			cellPositioning: #topCenter.
 	aCollectionOfMorphs do: [ :each | self addMorphBack: each ].
-	^ self 
+	^ self
 ]
 
 { #category : #'visual properties' }
@@ -186,7 +180,6 @@ AlignmentMorph >> inARow: aCollectionOfMorphs [
 				cellPositioning: #leftCenter.
 	aCollectionOfMorphs
 		do: [ :each | self addMorphBack: each].
-
 ]
 
 { #category : #initialization }
@@ -201,15 +194,12 @@ AlignmentMorph >> initialize [
 	 	vResizing: #spaceFill;
 	 	layoutInset: 2;
 	 	rubberBandCells: true
-	
-
 ]
 
 { #category : #testing }
 AlignmentMorph >> isAlignmentMorph [
 
 	^ true
-
 ]
 
 { #category : #opening }
@@ -227,7 +217,6 @@ AlignmentMorph >> setAsColumn [
 		hResizing: #spaceFill;
 		extent: 1@1;
 		vResizing: #spaceFill
-
 ]
 
 { #category : #'visual properties' }
@@ -238,7 +227,6 @@ AlignmentMorph >> setAsRow [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		borderWidth: 0
-
 ]
 
 { #category : #'visual properties' }

@@ -28,6 +28,12 @@ ObjectTest >> testAs [
 ]
 
 { #category : #'tests - write barrier' }
+ObjectTest >> testBeReadOnlyLiteral [
+	self assert: String new beReadOnlyLiteral isReadOnlyObject.
+	self deny: Object new beReadOnlyLiteral isReadOnlyObject
+]
+
+{ #category : #'tests - write barrier' }
 ObjectTest >> testBeRecursivelyReadOnlyObject [
 
 	| assoc array |
@@ -36,11 +42,10 @@ ObjectTest >> testBeRecursivelyReadOnlyObject [
 	self should: [ assoc key: 2 ] raise: ModificationForbidden.
 	self should: [ assoc value key: 2 ] raise: ModificationForbidden.
 	
-	array := #(1 #(1 2)).
+	array := Array with: 1 with: (Array with:1 with: 2).
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
 	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
-
 ]
 
 { #category : #'tests - write barrier' }
@@ -57,7 +62,7 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	self assert: assoc key equals: 2.
 	self assert: assoc value key equals: 2.
 	
-	array := #(1 #(1 2)).
+	array := Array with: 1 with: (Array with:1 with: 2).
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
 	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
@@ -136,7 +141,6 @@ ObjectTest >> testCaseOf [
 			[#case1]->[ 1 ].
  			[#case2]->[ 2 ] }
 		] raise: Error
-
 ]
 
 { #category : #tests }

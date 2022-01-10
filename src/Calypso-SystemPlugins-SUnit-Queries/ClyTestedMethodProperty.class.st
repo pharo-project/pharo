@@ -23,7 +23,7 @@ ClyTestedMethodProperty class >> coveringTest: aMethodTest result: aTestResultPr
 
 	^self new 
 		coveringTest: aMethodTest;
-		testResult: aTestResultProperty 
+		testResult: aTestResultProperty
 ]
 
 { #category : #accessing }

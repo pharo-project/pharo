@@ -50,9 +50,15 @@ UndefinedObject >> asCollectionElement [
 	^ CollectionElement withNil
 ]
 
+{ #category : #dispatched }
+UndefinedObject >> asLinkPrepend: anObject [
+
+	^ ValueLink value: anObject
+]
+
 { #category : #accessing }
 UndefinedObject >> at: index put: anObject [ 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #'bottom context' }
@@ -73,7 +79,7 @@ UndefinedObject >> classBuilder [
 UndefinedObject >> classInstaller [
 	"Answer the class responsible of creating classes in the system."
 	
-	^ Smalltalk classInstaller 
+	^ Smalltalk classInstaller
 ]
 
 { #category : #'class hierarchy' }
@@ -255,7 +261,6 @@ UndefinedObject >> subclass: nameOfClass
 		classVariableNames: classVarNames
 		poolDictionaries: poolDictnames
 		category: category
-
 ]
 
 { #category : #'class hierarchy' }
@@ -279,12 +284,6 @@ UndefinedObject >> subclassesDo: aBlock [
 
 	^ Class subclassesDo: [:cl | 
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]].
-]
-
-{ #category : #'class hierarchy' }
-UndefinedObject >> typeOfClass [
-	"Necessary to support disjoint class hierarchies."
-	^#normal
 ]
 
 { #category : #copying }

@@ -54,7 +54,6 @@ SystemProgressMorph class >> enable [
 	Job jobAnnouncer when: JobStart send: #startJob: to: self.
 	Job jobAnnouncer when: JobEnd send: #endJob: to: self.
 	Job jobAnnouncer when: JobChange send: #updateJob: to: self.
-
 ]
 
 { #category : #'job subscription' }
@@ -69,7 +68,6 @@ SystemProgressMorph class >> example [
 	'Progress' 
 		displayProgressFrom: 0 to: 1000
 		during: [:bar | 0 to: 1000 do: [:i | bar current: i. (Delay forMilliseconds: 2) wait]]
-
 ]
 
 { #category : #examples }
@@ -83,7 +81,6 @@ SystemProgressMorph class >> exampleChangeLabel [
 				bar current: i.
 				bar label: i printString, '/', classes size printString, ' ', (classes at: i) printString.
 				(Delay forMilliseconds: 100) wait]]
-
 ]
 
 { #category : #examples }
@@ -109,18 +106,18 @@ SystemProgressMorph class >> horizontalPosition: aFloat [
 	self uniqueInstance reposition.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SystemProgressMorph class >> initialize [
 	"SystemProgressMorph initialize"
 
 	self reset.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SystemProgressMorph class >> reset [
-	"SystemProgressMorph reset"
+	<script>
 	UniqueInstance ifNotNil: [ UniqueInstance delete ].
-	UniqueInstance := nil.
+	UniqueInstance := nil
 ]
 
 { #category : #settings }
@@ -296,14 +293,13 @@ SystemProgressMorph >> maxBarWidth [
 SystemProgressMorph >> morphicLayerNumber [
 	"progress morphs are behind menus and balloons, but in front of most other stuff"
 	^self valueOfProperty: #morphicLayerNumber ifAbsent: [ 12 ].
-
 ]
 
 { #category : #opening }
 SystemProgressMorph >> preOpenInWorld: aWorld [
 
 	self width: 200.
-	self resize.	
+	self resize.
 ]
 
 { #category : #updating }
@@ -414,8 +410,6 @@ SystemProgressMorph >> updateColor [
 
 { #category : #updating }
 SystemProgressMorph >> updateProgressValue [
-
-
 ]
 
 { #category : #updating }

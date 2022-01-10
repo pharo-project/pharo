@@ -35,14 +35,20 @@ RFASTTranslator >> emitMessageNode: aMessageNode [
 ]
 
 { #category : #reflectivity }
-RFASTTranslator >> emitMetaLinkAfter: aNode [
-	aNode hasMetalinkAfter ifFalse: [ ^self ].
-	aNode allAfterAreWeak ifTrue: [ ^self emitMetaLinkAfterNoEnsure: aNode ].
+RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
+	| ensureBlock compiledBlock |
 	
-	methodBuilder blockReturnTop.
-	methodBuilder jumpAheadTarget: #block.
-	aNode postambles do: [:each | valueTranslator visitNode: each].
-	aNode afterHooks do: [:each | valueTranslator visitNode: each].
+	"this saves the value from top of stack, executed [operation <here>] ensure: [ afterhook ] "
+	aNode postambles do: [ :each | valueTranslator visitNode: each ].
+	ensureBlock := RBBlockNode body: (RBSequenceNode statements: aNode afterHooks).
+	
+	ensureBlock parent: aNode.
+	ensureBlock scope: (aNode parent scope newBlockScope: 20).
+	(aNode parent scope copiedVars, aNode parent scope tempVars) do: [ :var |
+		ensureBlock scope addCopyingTempToAllScopesUpToDefTemp: var].
+	
+	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: ensureBlock.
+	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: ensureBlock scope copiedVarNames.
 	methodBuilder send: #ensure:.
 ]
 
@@ -68,21 +74,6 @@ RFASTTranslator >> emitMetaLinkInstead: aNode [
 { #category : #reflectivity }
 RFASTTranslator >> emitPreamble: aNode [
 	aNode preambles do: [ :pre | valueTranslator visitNode: pre].
-]
-
-{ #category : #reflectivity }
-RFASTTranslator >> emitPrepareLinkAfter: aNode [
-	"We need to emit the first part of the block for the ensure: wrap here"
-	| copied |
-	copied := #().
-	aNode hasMetalinkAfter ifFalse: [^self].
-	aNode allAfterAreWeak ifTrue: [ ^self ].
-	aNode isMethod ifTrue: [ copied := aNode argumentNames, aNode temporaryNames ].
-	aNode isSequence ifTrue: [ copied := aNode parent argumentNames, aNode parent temporaryNames ].
-	methodBuilder
-		pushClosureCopyCopiedValues: copied
-		args: #()
-		jumpTo: #block
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -124,33 +115,23 @@ RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitBlockNode: aBlockNode [
+	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
-	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
-	
-	aBlockNode hasMetalinkInstead ifFalse: [  
-	methodBuilder
-			pushClosureCopyCopiedValues: aBlockNode scope inComingCopiedVarNames
-			args: aBlockNode argumentNames
-			jumpTo:  #block.
-	 
-	aBlockNode scope tempVector ifNotEmpty: [
-		methodBuilder 
-			createTempVectorNamed: aBlockNode scope tempVectorName 
-			withVars: aBlockNode scope tempVectorVarNames.
-	].
-	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
+
 	self emitPreamble: aBlockNode.
 	self emitMetaLinkBefore: aBlockNode.
-	valueTranslator visitNode: aBlockNode body.
-	methodBuilder addBlockReturnTopIfRequired.
-	self flag: 'why dont we just add a blockReturnTop here... it could be removed or ignored in IRTranslator'.
-	methodBuilder jumpAheadTarget: #block.
-	] ifTrue: [ self emitMetaLinkInstead: aBlockNode ].
+
+
+	aBlockNode hasMetalinkInstead
+				ifTrue: [ self emitMetaLinkInstead: aBlockNode ]
+				ifFalse: [  
+	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.	
+	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
+		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
+		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ].
+	].
 	self emitMetaLinkAfterNoEnsure: aBlockNode.
-	
-
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -288,6 +269,20 @@ RFASTTranslator >> visitReturnNode: aReturnNode [
 
 		
 
+]
+
+{ #category : #'visitor - double dispatching' }
+RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
+	| wrappedBlock compiledBlock |
+	wrappedBlock := RBBlockNode body: (RBSequenceNode statements: aSequenceNode statements).
+	wrappedBlock parent: aSequenceNode.
+	wrappedBlock scope: (aSequenceNode parent scope newBlockScope: 20).
+	 (aSequenceNode parent scope copiedVars, aSequenceNode parent scope tempVars) do: [ :var |
+		wrappedBlock scope addCopyingTempToAllScopesUpToDefTemp: var].
+	
+	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: wrappedBlock.
+	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: wrappedBlock scope copiedVarNames.
+	self emitMetaLinkAfterEnsure: aSequenceNode.
 ]
 
 { #category : #reflectivity }

@@ -72,7 +72,6 @@ Array2D class >> new: dimension tabulate: aTwoArgumentBlock [
 Array2D class >> ones: dimension [
 	"Create a squared matrix of dimension full of 1"
 	^ self new: dimension element: 1
-
 ]
 
 { #category : #'special instance creation' }
@@ -117,7 +116,6 @@ Array2D class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlo
 		1 to: columnNumber do: [:column |
 			a at: (i := i + 1) put: (aTwoArgumentBlock value: row value: column)]].
 	^ self rows: rowNumber columns: columnNumber contents: a
-
 ]
 
 { #category : #'special instance creation' }
@@ -132,7 +130,6 @@ Array2D >> +* aCollection [
 	 The name of this method is APL's +.x squished into Smalltalk syntax."
 
 	^aCollection preMultiplyByMatrix: self
-
 ]
 
 { #category : #copying }
@@ -154,8 +151,6 @@ Array2D >> , aMatrix [
 		b := b + numberOfColumns.
 		c := c + oldCols].
 	^self class rows: numberOfRows columns: newCols contents: newCont
-		
-
 ]
 
 { #category : #copying }
@@ -168,7 +163,6 @@ Array2D >> ,, aMatrix [
 			rows: numberOfRows + aMatrix numberOfRows 
 			columns: numberOfColumns
 			contents: contents , aMatrix privateContents
-
 ]
 
 { #category : #comparing }
@@ -262,7 +256,6 @@ Array2D >> at: rowNumber at: columnNumber ifInvalid: value [
 	(rowNumber between: 1 and: numberOfRows) ifFalse: [ ^ value ].
 	(columnNumber between: 1 and: numberOfColumns) ifFalse: [ ^ value ].
 	^contents at: (rowNumber - 1) * numberOfColumns + columnNumber
-
 ]
 
 { #category : #accessing }
@@ -290,7 +283,6 @@ Array2D >> atColumn: column [
 	|p|
 	p := (self indexForRow: 1 andColumn: column)-numberOfColumns.
 	^(1 to: numberOfRows) collect: [:row | contents at: (p := p+numberOfColumns)]
-
 ]
 
 { #category : #'row/column operations' }
@@ -300,14 +292,12 @@ Array2D >> atColumn: column put: aCollection [
 	p := (self indexForRow: 1 andColumn: column) - numberOfColumns.
 	aCollection do: [ :each | contents at: (p := p + numberOfColumns) put: each ].
 	^ aCollection
-
 ]
 
 { #category : #random }
 Array2D >> atRandom [
 	"Return the contents of the receiver in a random order."
 	^ contents atRandom
-
 ]
 
 { #category : #random }
@@ -351,7 +341,6 @@ Array2D >> atRows: r1 to: r2 columns: c1 to: c2 [
 	rd := r1 - 1.
 	cd := c1 - 1.
 	^self class rows: r2-rd columns: c2-cd tabulate: [:r :c| self at: r+rd at: c+cd]
-
 ]
 
 { #category : #'accessing - submatrices' }
@@ -362,7 +351,6 @@ Array2D >> atRows: r1 to: r2 columns: c1 to: c2 ifInvalid: element [
 	rd := r1 - 1.
 	cd := c1 - 1.
 	^self class rows: r2-rd columns: c2-cd tabulate: [ :r :c| self at: r+rd at: c+cd ifInvalid: element]
-
 ]
 
 { #category : #'accessing - submatrices' }
@@ -379,7 +367,6 @@ Array2D >> atRows: r1 to: r2 columns: c1 to: c2 put: aMatrix [
 		c1 to: c2 do: [:c |
 			self at: r at: c put: (aMatrix at: r-rd at: c-cd)]].
 	^aMatrix
-
 ]
 
 { #category : #enumerating }
@@ -444,14 +431,12 @@ Array2D >> identityIncludes: anObject [
 Array2D >> identityIndexOf: anElement [
 	
 	^ self identityIndexOf: anElement ifAbsent: [ 0@0 ]
-
 ]
 
 { #category : #accessing }
 Array2D >> identityIndexOf: anElement ifAbsent: anExceptionBlock [
 	^self rowAndColumnForIndex:
 		 (contents identityIndexOf: anElement ifAbsent: [^anExceptionBlock value])
-
 ]
 
 { #category : #testing }
@@ -483,7 +468,6 @@ Array2D >> indexOf: anElement [
 	"If there are integers r, c such that (self at: r at: c) = anElement, answer some such r@c, otherwise answer 0@0. The order in which the receiver are searched is UNSPECIFIED except that it is the same as the order used by #indexOf:ifAbsent: and #readStream."
 
 	^self indexOf: anElement ifAbsent: [0@0]
-
 ]
 
 { #category : #accessing }
@@ -492,7 +476,6 @@ Array2D >> indexOf: anElement ifAbsent: anExceptionBlock [
 
 	^self rowAndColumnForIndex:
 		 (contents indexOf: anElement ifAbsent: [^ anExceptionBlock value])
-
 ]
 
 { #category : #enumerating }
@@ -580,7 +563,6 @@ Array2D >> preMultiplyByArray: a [
 	numberOfRows = 1 ifFalse: [self error: 'dimensions do not conform'].
 	^Array2D rows: a size columns: numberOfColumns tabulate: [:row :col |
 		(a at: row) * (contents at: col)]
-
 ]
 
 { #category : #arithmetic }
@@ -715,7 +697,6 @@ Array2D >> swapColumn: anIndex withColumn: anotherIndex [
 		contents swap: a with: b.
 		a := a + numberOfColumns.
 		b := b + numberOfColumns].
-
 ]
 
 { #category : #'row/column operations' }
@@ -727,7 +708,6 @@ Array2D >> swapRow: anIndex withRow: anotherIndex [
 		contents swap: a with: b.
 		a := a + 1.
 		b := b + 1].
-
 ]
 
 { #category : #'row/column operations' }
@@ -742,7 +722,6 @@ Array2D >> with: aCollection collect: aBlock [
 
 	^self withIndicesCollect: [:each :row :column |
 		aBlock value: each value: (aCollection at: row at: column)]
-
 ]
 
 { #category : #enumerating }
@@ -751,7 +730,6 @@ Array2D >> with: aCollection do: aBlock [
 
 	self withIndicesDo: [:each :row :column |
 		aBlock value: each value: (aCollection at: row at: column)].
-
 ]
 
 { #category : #enumerating }
@@ -773,7 +751,6 @@ Array2D >> withIndicesCollect: aBlock [
 			i := i+1.
 			r at: i put: (aBlock value: (r at: i) value: row value: column)]].
 	^ self class rows: numberOfRows columns: numberOfColumns contents: r
-
 ]
 
 { #category : #enumerating }
@@ -784,7 +761,6 @@ Array2D >> withIndicesDo: aBlock [
 	1 to: numberOfRows do: [:row |
 		1 to: numberOfColumns do: [:column |
 			aBlock value: (contents at: (i := i+1)) value: row value: column]].
-
 ]
 
 { #category : #enumerating }

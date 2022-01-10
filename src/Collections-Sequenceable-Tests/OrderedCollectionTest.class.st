@@ -66,7 +66,7 @@ OrderedCollectionTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 OrderedCollectionTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #helpers }
@@ -78,7 +78,7 @@ OrderedCollectionTest >> anotherValue [
 { #category : #coverage }
 OrderedCollectionTest >> classToBeTested [
 	
-	^ OrderedCollection 
+	^ OrderedCollection
 ]
 
 { #category : #setup }
@@ -102,14 +102,14 @@ OrderedCollectionTest >> collectionInForIncluding [
 { #category : #requirements }
 OrderedCollectionTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^collection5Elements 
+	^collection5Elements
 ]
 
 { #category : #requirements }
@@ -130,7 +130,7 @@ OrderedCollectionTest >> collectionOfCollectionsOfStrings [
 { #category : #requirements }
 OrderedCollectionTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ ((OrderedCollection new add: elementNotIn; yourself),self oldSubCollection) add: elementNotIn;yourself   
+	^ ((OrderedCollection new add: elementNotIn; yourself),self oldSubCollection) add: elementNotIn;yourself
 ]
 
 { #category : #requirements }
@@ -142,7 +142,7 @@ OrderedCollectionTest >> collectionWith2TimeSubcollection [
 { #category : #requirements }
 OrderedCollectionTest >> collectionWith5Elements [
 " return a collection of size 5 including 5 elements"
-^ indexCollection 
+^ indexCollection
 ]
 
 { #category : #requirements }
@@ -171,40 +171,40 @@ OrderedCollectionTest >> collectionWithElementsToRemove [
 OrderedCollectionTest >> collectionWithEqualElements [
 " return a collecition including atLeast two elements equal"
 
-^collectionWithDuplicateElement 
+^collectionWithDuplicateElement
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ collectionWithSameBeginingEnd 
+	^ collectionWithSameBeginingEnd
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ collectionWithSameBeginingEnd 
+	^ collectionWithSameBeginingEnd
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ collectionOfFloat 
+	^ collectionOfFloat
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithoutEqualElements [
 
 " return a collection not including equal elements "
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -238,19 +238,19 @@ OrderedCollectionTest >> elementInForIndexAccessing [
 
 { #category : #requirements }
 OrderedCollectionTest >> elementNotIn [
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> elementNotInForIndexAccessing [
 
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #'tests - includes' }
@@ -271,7 +271,7 @@ OrderedCollectionTest >> elementTwiceIn [
 { #category : #requirements }
 OrderedCollectionTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
-^ duplicateElement 
+^ duplicateElement
 ]
 
 { #category : #requirements }
@@ -300,7 +300,7 @@ OrderedCollectionTest >> expectedSizeAfterReject [
 { #category : #requirements }
 OrderedCollectionTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty 	
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -330,26 +330,26 @@ OrderedCollectionTest >> indexInNonEmpty [
 { #category : #requirements }
 OrderedCollectionTest >> integerCollection [
 " return a collection only including SmallInteger elements"
-	^ indexCollection 
+	^ indexCollection
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ indexCollection 
+	^ indexCollection
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ indexCollection 
+	^ indexCollection
 ]
 
 { #category : #requirements }
@@ -379,14 +379,14 @@ OrderedCollectionTest >> nonEmptyMoreThan1Element [
 { #category : #requirements }
 OrderedCollectionTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -417,13 +417,13 @@ res := OrderedCollection new.
 { #category : #requirements }
 OrderedCollectionTest >> result [
 
-^ collectResult 
+^ collectResult
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWith4Elements 
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -876,7 +876,6 @@ OrderedCollectionTest >> testCopyFromTo [
 
 { #category : #'tests - copy' }
 OrderedCollectionTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - copying' }
@@ -902,13 +901,6 @@ OrderedCollectionTest >> testCopyWith [
 	c1 := #(1 2 3 4) asOrderedCollection.
 	c1 := c1 copyWith: 6.
 	self assert: c1 equals: #(1 2 3 4 6) asOrderedCollection
-	
-	
-
-	
-	
-	
-
 ]
 
 { #category : #'tests - enumerating' }
@@ -919,8 +911,6 @@ OrderedCollectionTest >> testDifferencePreservesOrder [
 	odd := n difference: even.
 	odd2 := n reject: [ :i | i even ].
 	self assert: odd equals: odd2
-
-	
 ]
 
 { #category : #'tests - begin' }
@@ -1010,7 +1000,6 @@ OrderedCollectionTest >> testRemoveAt [
 	self assert: c1 equals: #(2 4 6) asOrderedCollection.
 	self should: [ c1 removeAt: 10 ] raise: Error.
 	self should: [ c1 removeAt: -1 ] raise: Error
-	
 ]
 
 { #category : #'tests - removing' }
@@ -1030,7 +1019,6 @@ OrderedCollectionTest >> testRemoveFirst [
 	c1 removeFirst: 2.
 	self assert: c1 equals: #(6) asOrderedCollection.
 	self should: [c1 removeFirst: 10] raise: Error
-	
 ]
 
 { #category : #'tests - removing' }
@@ -1081,8 +1069,7 @@ OrderedCollectionTest >> testSort [
 	self assert: ord sort equals: (OrderedCollection new addAll:#(1 2 3 6 6 7 10); yourself). 
 	self assert: (ord sort: [:a :b | a > b]) asArray equals: #(10 7 6 6 3 2 1).
 	ord := OrderedCollection new.
-	self assert: ord sort asArray equals: #(). 
-
+	self assert: ord sort asArray equals: #().
 ]
 
 { #category : #'tests - enumerating' }

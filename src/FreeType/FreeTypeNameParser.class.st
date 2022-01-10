@@ -140,7 +140,6 @@ FreeTypeNameParser class >> stretchNames [
 		{LogicalFont stretchExpanded. 'expanded'}.
 		{LogicalFont stretchExtended. 'extended'}	
 		}.  "search for them in the order given here"
-
 ]
 
 { #category : #'known names' }
@@ -192,8 +191,7 @@ FreeTypeNameParser class >> weightNames [
 		{LogicalFont weightNord. 'nord'}.
 		{LogicalFont weightDemi. 'demi'}.
 		{LogicalFont weightUltra. 'ultra'}.
-		} 
-			
+		}
 ]
 
 { #category : #parsing }
@@ -210,7 +208,6 @@ FreeTypeNameParser >> addStyleNameToCombinedName: aStyleString [
 						ifTrue:["don't add the style to the combinedName, because it already contains it"
 							addStyle := false]]].
 	addStyle ifTrue:[combinedName := combinedName , ' ', aStyleString].
-	
 ]
 
 { #category : #accessing }
@@ -245,7 +242,7 @@ FreeTypeNameParser >> extractSlant [
 	(extractedSlant isNil and:[italicFlag])
 		ifTrue:["no italic specified in familyName or styleName; force it to be 'Italic'"
 			extractedSlant := 'Italic'.
-			extractedSlantValue := LogicalFont slantItalic]		
+			extractedSlantValue := LogicalFont slantItalic]
 ]
 
 { #category : #parsing }
@@ -269,7 +266,7 @@ FreeTypeNameParser >> extractStretch [
 				whileTrue:[end := end + 1].		
 			combinedName := combinedName copyReplaceFrom: start to: end with: ' '.
 			"re-tokenize"
-			"tokens := self tokenize: combinedName delimiters: delimiters"].	
+			"tokens := self tokenize: combinedName delimiters: delimiters"].
 ]
 
 { #category : #parsing }
@@ -294,8 +291,6 @@ FreeTypeNameParser >> extractUpright [
 		[end < combinedName size and:[delimiters includes: (combinedName at: end + 1)]]
 			whileTrue:[end := end + 1].		
 		combinedName := combinedName copyReplaceFrom: start to: end with: ' '].
-
-	
 ]
 
 { #category : #parsing }
@@ -321,7 +316,7 @@ FreeTypeNameParser >> extractWeight [
 	(extractedWeight isNil and:[boldFlag])
 		ifTrue:["no weight specified in familyName or styleName; force it to be 'Bold'"
 			extractedWeight := 'Bold'.
-			extractedWeightValue := LogicalFont weightBold]	
+			extractedWeightValue := LogicalFont weightBold]
 ]
 
 { #category : #accessing }
@@ -367,15 +362,11 @@ FreeTypeNameParser >> familyName [
 { #category : #accessing }
 FreeTypeNameParser >> familyName: familyName [
 	familyNameIn := familyName.
-
-	
 ]
 
 { #category : #accessing }
 FreeTypeNameParser >> familyNameIn: familyName [
 	familyNameIn := familyName.
-
-	
 ]
 
 { #category : #initialization }
@@ -383,7 +374,6 @@ FreeTypeNameParser >> initialize [
 	super initialize.
 	delimiters := ',.-_'.
 	Character separators do:[:c | delimiters := delimiters , c asString].
-
 ]
 
 { #category : #'known names' }
@@ -418,14 +408,11 @@ FreeTypeNameParser >> lastMatchValueSequence: values [
 				ifTrue:[answer := answer, {tok} ]].
 		match ifTrue:[^answer]].
 	^nil
-			
-
 ]
 
 { #category : #'known names' }
 FreeTypeNameParser >> normalNames [
 	^self class normalNames
-
 ]
 
 { #category : #parsing }
@@ -445,7 +432,6 @@ FreeTypeNameParser >> parse [
 	self extractStretch.
 	tokens := self tokenize: combinedName.
 	self extractWeight.
-	
 ]
 
 { #category : #parsing }
@@ -469,15 +455,13 @@ FreeTypeNameParser >> stretchNames [
 { #category : #accessing }
 FreeTypeNameParser >> styleName: styleName [
 	
-	styleNameIn := styleName. 
-
+	styleNameIn := styleName.
 ]
 
 { #category : #accessing }
 FreeTypeNameParser >> styleNameIn: styleName [
 	
-	styleNameIn := styleName. 
-
+	styleNameIn := styleName.
 ]
 
 { #category : #parsing }
@@ -499,5 +483,4 @@ FreeTypeNameParser >> tokenize: aString [
 { #category : #'known names' }
 FreeTypeNameParser >> weightNames [
 	^self class weightNames
-			
 ]

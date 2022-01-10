@@ -16,9 +16,7 @@ Class {
 }
 
 { #category : #utilities }
-AthensCairoPathBuilder class >> buildPathFrom:  aPathCreatingBlock [ 
-
-	
+AthensCairoPathBuilder class >> buildPathFrom:  aPathCreatingBlock [
 ]
 
 { #category : #'path commands' }
@@ -45,8 +43,6 @@ AthensCairoPathBuilder >> arcCenterX: xc centerY: yc radius: radius startAngle: 
 				double radius,
 				double angle1,
 				double angle2) )
-				
-			
 ]
 
 { #category : #private }
@@ -57,8 +53,6 @@ AthensCairoPathBuilder >> arcNegativeCenterX: xc centerY: yc radius: radius star
 				double radius,
 				double angle1,
 				double angle2) )
-				
-			
 ]
 
 { #category : #private }
@@ -89,7 +83,6 @@ AthensCairoPathBuilder >> arcTo: newEndPoint angle: angle cw: aBool [
 	endAngle := self angleOfVector: (end-center).
 	aBool ifTrue: [ self arcCenterX: center x centerY: center y  radius: radius  startAngle: startAngle endAngle: endAngle ]
 		ifFalse: [ self arcNegativeCenterX: center x centerY: center y  radius: radius  startAngle: startAngle  endAngle: endAngle ]
-		
 ]
 
 { #category : #private }
@@ -141,7 +134,6 @@ AthensCairoPathBuilder >> context: anObject [
 { #category : #private }
 AthensCairoPathBuilder >> copyPath [ 
 	^ self ffiCall: #( AthensCairoPath cairo_copy_path (AthensCairoCanvas context) )
-
 ]
 
 { #category : #accessing }
@@ -157,7 +149,7 @@ AthensCairoPathBuilder >> createPath: aBlock [
 		
 	aBlock value: self.
 	
-	^ self copyPath initialize 
+	^ self copyPath initialize
 ]
 
 { #category : #'path commands' }
@@ -169,7 +161,6 @@ AthensCairoPathBuilder >> curveVia: p1 and: p2 to: aPoint [
 	endPoint := self toAbsolute: aPoint.
 
 	self curveViaX: pt1 x Y: pt1 y viaX: lastControlPoint x Y: lastControlPoint y toX: endPoint x Y: endPoint y
-
 ]
 
 { #category : #'path commands' }
@@ -198,7 +189,6 @@ The two control points for the cubic are:
 	cp2 := pt1 - endPoint * twoThirds + endPoint.
 	
 	self curveViaX: cp1 x Y: cp1 y viaX: cp2 x Y: cp2 y toX: endPoint x Y: endPoint y
-
 ]
 
 { #category : #private }
@@ -236,7 +226,6 @@ AthensCairoPathBuilder >> glyphPath: glyphs size: numGlyphs [
 		void cairo_glyph_path ( AthensCairoCanvas context ,
 			void * glyphs,
 			int numGlyphs) )
-
 ]
 
 { #category : #'path commands' }
@@ -256,7 +245,6 @@ AthensCairoPathBuilder >> lineTo: aPoint [
 AthensCairoPathBuilder >> lineToX: x Y: y [
 	^ self ffiCall: #(void cairo_line_to (AthensCairoCanvas context,
 		 double x, double y ) )
-
 ]
 
 { #category : #'path commands' }
@@ -265,7 +253,7 @@ AthensCairoPathBuilder >> moveTo: aPoint [
 	endPoint := self toAbsolute: aPoint.
 	lastControlPoint := nil.
 	
-	^ self moveToX: endPoint x asFloat Y: endPoint y asFloat 
+	^ self moveToX: endPoint x asFloat Y: endPoint y asFloat
 ]
 
 { #category : #private }
@@ -273,7 +261,6 @@ AthensCairoPathBuilder >> moveToX: x Y: y [
 	" move command always starts a new contour "
 	^ self ffiCall: #(void cairo_move_to (AthensCairoCanvas context,
 		 double x, double y ) )
-
 ]
 
 { #category : #private }
@@ -290,8 +277,6 @@ AthensCairoPathBuilder >> primCurveViaX: x1 Y: y1 viaX: x2 Y: y2 toX: x3 Y: y3 [
                                                          double y2,
                                                          double x3,
                                                          double y3))
-
-
 ]
 
 { #category : #'path commands' }
@@ -305,7 +290,6 @@ AthensCairoPathBuilder >> reflectedCurveVia: p2 to: aPoint [
 	endPoint := self toAbsolute: aPoint.
 
 	self curveViaX: pt1 x Y: pt1 y viaX: lastControlPoint x Y: lastControlPoint y toX: endPoint x Y: endPoint y
-
 ]
 
 { #category : #'path commands' }

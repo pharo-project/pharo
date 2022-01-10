@@ -31,7 +31,6 @@ OSWindowRenderThread class >> checkSession [
 	RenderSession ~~ Smalltalk session ifTrue: [ 
 		UniqueInstance := self new.
 	]
-
 ]
 
 { #category : #'window animation' }
@@ -84,7 +83,6 @@ OSWindowRenderThread class >> isThisThread [
 OSWindowRenderThread class >> uniqueInstance [
 	self checkSession.
 	^ UniqueInstance
-
 ]
 
 { #category : #'window animation' }
@@ -107,7 +105,6 @@ OSWindowRenderThread >> createRenderThread [
 	
 	RenderThreadProcess := [ self renderThreadProcess ] forkAt: Processor userSchedulingPriority.
 	RenderThreadProcess name:  'OS Window Renderer Loop'; resume.
-
 ]
 
 { #category : #'window animation' }
@@ -116,7 +113,6 @@ OSWindowRenderThread >> createdWindow: window [
 		registeredWindows add: window.
 		operationAvailableSemaphore signal
 	]
-
 ]
 
 { #category : #'mutual exclusion' }
@@ -147,7 +143,6 @@ OSWindowRenderThread >> doAnimationFrameFor: window [
 		error freeze.
 		[ error debug ] fork
 	]
-	
 ]
 
 { #category : #'render thread' }
@@ -190,7 +185,6 @@ OSWindowRenderThread >> executeRenderOperations [
 	  operation  ~~ nil ] whileTrue: [
 		operation execute.
 	].
-
 ]
 
 { #category : #initialization }
@@ -198,19 +192,16 @@ OSWindowRenderThread >> initialize [
 	super initialize.
 	self createRenderThread.
 	RenderSession := Smalltalk session.
-
 ]
 
 { #category : #initialization }
 OSWindowRenderThread >> isActiveThread [
 	^ Processor activeProcess == ActiveRenderThreadProcess
-
 ]
 
 { #category : #initialization }
 OSWindowRenderThread >> isThisThread [
 	^ Processor activeProcess == RenderThreadProcess
-
 ]
 
 { #category : #'window animation' }
@@ -230,7 +221,6 @@ OSWindowRenderThread >> performAnimationFrames [
 			self doAnimationFrameFor: window.
 		]
 	].
-
 ]
 
 { #category : #'render thread' }
@@ -250,9 +240,6 @@ OSWindowRenderThread >> renderThreadProcess [
 	
 		self waitMoreOperations
 	]
-
-
-
 ]
 
 { #category : #'window animation' }

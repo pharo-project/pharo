@@ -54,5 +54,5 @@ HEPragma >> method [
 HEPragma >> value: aPragma [
 	method := aPragma method asExportedLiteral.
 	keyword := aPragma selector asExportedLiteral.
-	arguments := aPragma arguments asExportedLiteral 
+	arguments := aPragma arguments asExportedLiteral
 ]

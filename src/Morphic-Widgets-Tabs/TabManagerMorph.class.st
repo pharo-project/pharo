@@ -93,7 +93,6 @@ TabManagerMorph >> addSplitterOn: tabs delta: delta [
 { #category : #protocol }
 TabManagerMorph >> addTab: aTab [
 	toolbar addTab: aTab
-	
 ]
 
 { #category : #'private - contents' }
@@ -359,7 +358,6 @@ TabManagerMorph >> tabEmptyContents: aTab [
 	"My bar already filtered the tab, so here I am sure the tab is the selected tab"
 	
 	contentsWrapper removeAllMorphs
-	
 ]
 
 { #category : #'private - actions' }

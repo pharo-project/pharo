@@ -43,30 +43,27 @@ FastDraggingFrameMorph class >> forResizing: aWindow fromLocation: aSideOrCorner
 	b := self new.	
 	b target: aWindow.
 	b location: aSideOrCorner.
-	^ b 
+	^ b
 ]
 
 { #category : #initialization }
 FastDraggingFrameMorph >> defaultBorderColor [ 
-	^ Color gray 
+	^ Color gray
 ]
 
 { #category : #initialization }
 FastDraggingFrameMorph >> defaultBorderWidth [
 	^ 2.
-	
 ]
 
 { #category : #initialization }
 FastDraggingFrameMorph >> defaultColor [ 
 	^ Color gray alpha: 0.15.
-	
 ]
 
 { #category : #'event handling' }
 FastDraggingFrameMorph >> draggedTo: aPoint [
 	self position: aPoint + startGap
-
 ]
 
 { #category : #'event handling' }
@@ -88,7 +85,7 @@ FastDraggingFrameMorph >> location: aSymbol [
 { #category : #'event handling' }
 FastDraggingFrameMorph >> mouseDown: evt [
 	"Normally, should not be possible"
-	self delete 
+	self delete
 ]
 
 { #category : #'event handling' }
@@ -96,7 +93,6 @@ FastDraggingFrameMorph >> mouseMove: evt [
 	self isForDragging 
 		ifTrue: [self draggedTo: evt position]
 		ifFalse: [self reframedTo: evt position]
-
 ]
 
 { #category : #'event handling' }

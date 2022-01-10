@@ -109,7 +109,7 @@ FTBasicTreeListItem >> defaultButton [
 { #category : #construction }
 FTBasicTreeListItem >> depth: aNumber [
 
-	depth := aNumber 
+	depth := aNumber
 ]
 
 { #category : #'button-interaction' }

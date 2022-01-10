@@ -62,7 +62,7 @@ IntervalTest >> collectionInForIncluding [
 { #category : #requirements }
 IntervalTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -72,12 +72,12 @@ IntervalTest >> collectionNotIncluded [
 
 { #category : #requirements }
 IntervalTest >> collectionOfFloat [
-	^collectionOfFloat 
+	^collectionOfFloat
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionWith1TimeSubcollection [
-	^ collectionWithSubCollection 
+	^ collectionWithSubCollection
 ]
 
 { #category : #requirements }
@@ -95,18 +95,18 @@ IntervalTest >> collectionWithElementsToRemove [
 { #category : #requirements }
 IntervalTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionWithoutEqualElements [
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -129,7 +129,7 @@ IntervalTest >> elementInForElementAccessing [
 { #category : #requirements }
 IntervalTest >> elementInForIncludesTest [
 
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -140,7 +140,7 @@ IntervalTest >> elementInForIndexAccess [
 { #category : #requirements }
 IntervalTest >> elementInForIndexAccessing [
 
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -151,13 +151,13 @@ IntervalTest >> elementNotIn [
 { #category : #requirements }
 IntervalTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 IntervalTest >> elementNotInForIndexAccessing [
 
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #requirements }
@@ -167,14 +167,13 @@ IntervalTest >> elementNotInForOccurrences [
 
 { #category : #requirements }
 IntervalTest >> elementToAdd [
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 IntervalTest >> empty [
 
 	^ empty
-
 ]
 
 { #category : #requirements }
@@ -214,7 +213,7 @@ IntervalTest >> indexInNonEmpty [
 
 { #category : #requirements }
 IntervalTest >> integerCollection [
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -225,14 +224,14 @@ IntervalTest >> integerCollectionWithoutEqualElements [
 { #category : #requirements }
 IntervalTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
 IntervalTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -244,7 +243,7 @@ IntervalTest >> nonEmpty [
 { #category : #requirements }
 IntervalTest >> nonEmpty1Element [
 
-	^ nonEmpty1Element  
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -254,7 +253,7 @@ IntervalTest >> nonEmptyMoreThan1Element [
 
 { #category : #requirements }
 IntervalTest >> oldSubCollection [
-	^ subCollection 
+	^ subCollection
 ]
 
 { #category : #requirements }
@@ -269,7 +268,7 @@ IntervalTest >> result [
 
 { #category : #requirements }
 IntervalTest >> secondCollection [
-	^anotherCollection 
+	^anotherCollection
 ]
 
 { #category : #running }
@@ -313,7 +312,7 @@ IntervalTest >> speciesClass [
 { #category : #requirements }
 IntervalTest >> subCollectionNotIn [
 
-	^subCollectionNotIn 
+	^subCollectionNotIn
 ]
 
 { #category : #'tests - fixture' }
@@ -364,7 +363,6 @@ IntervalTest >> testAsInterval [
 	self should: [#(33 5 -22) as: Interval]
 		raise: Error
 		description: 'This is not an arithmetic progression'
-
 ]
 
 { #category : #tests }
@@ -533,7 +531,6 @@ IntervalTest >> testInfiniteLoopBug6456 [
 	size := interval size.
 	counter := 0.
 	interval do: [:each | self assert: (counter := counter + 1) <= size]
-
 ]
 
 { #category : #tests }

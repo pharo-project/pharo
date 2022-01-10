@@ -41,13 +41,10 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
-{ #category : #generated }
-MetaclassForTraits >> definition [
+{ #category : #fileout }
+MetaclassForTraits >> expandedDefinitionStringFor: aPrinter [
 
-	self
-		deprecated: 'Use #definitionString instead'
-		transformWith: '`@rec definition' -> '`@rec definitionString'.
-	^ self definitionString
+	^ aPrinter expandedTraitClassDefinitionString
 ]
 
 { #category : #testing }

@@ -40,7 +40,7 @@ RBComment class >> with: aCommentToken [
 	 we strip the surrounding quotes of the comment."
 	^ self new
 		with: aCommentToken value from: aCommentToken start to: aCommentToken stop;
-		yourself. 
+		yourself.
 ]
 
 { #category : #'instance creation' }
@@ -64,8 +64,6 @@ RBComment >> acceptVisitor: aProgramNodeVisitor [
 	It may have an impact on visitors so this should be done carefully.
 	Since by default previously comment node were not subclass of ProgramNode 
 	we do nothing by default."
-
-	
 ]
 
 { #category : #accessing }
@@ -107,22 +105,9 @@ RBComment >> stop [
 			 ifNotNil: [ stop ].
 ]
 
-{ #category : #initialization }
-RBComment >> with: aString at: startPosition [
-	self
-		deprecated: 'The use of a comment token implies a preexisting stop position. 
-	                  Should use with: from: to:'
-		transformWith: '`@receiver with: `@aString at: `@startPosition'
-			-> '`@receiver with: `@aString from: `@startPosition to: `@startPosition + `@aString size - 1'.
-	
-	^ self with: aString from: startPosition to: startPosition + aString size - 1
-
-]
-
 { #category : #'instance creation' }
 RBComment >> with: aString from: aStartPosition to: aStopPosition [
 	start := aStartPosition.
 	stop := aStopPosition.
 	contents := aString.
-
 ]

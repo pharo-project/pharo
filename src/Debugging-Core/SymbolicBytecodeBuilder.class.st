@@ -19,7 +19,6 @@ Class {
 SymbolicBytecodeBuilder class >> decode: aMethod [
 
 	^(self new method: aMethod) decode
-	
 ]
 
 { #category : #private }
@@ -40,7 +39,6 @@ SymbolicBytecodeBuilder >> addBytecode: description [
 		offset: oldPC.
 	symbolicBytecodes add: symbolic.
 	oldPC := scanner pc
-
 ]
 
 { #category : #'instruction decoding' }
@@ -191,15 +189,6 @@ SymbolicBytecodeBuilder >> pushActiveProcess [
 ]
 
 { #category : #'instruction decoding' }
-SymbolicBytecodeBuilder >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
-
-	self addBytecode: 'closureNumCopied: ', numCopied printString
-			, ' numArgs: ', numArgs printString
-			, ' bytes ', scanner pc printString
-			, ' to ', (scanner pc + blockSize - 1) printString
-]
-
-{ #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushClosureTemps: numTemps [
 	"Push on stack nil numTemps times for the closure temps."
 	
@@ -224,7 +213,6 @@ SymbolicBytecodeBuilder >> pushConstant: obj [
 					ifTrue: [obj key
 						ifNotNil: [s nextPutAll: '##'; nextPutAll: obj key]
 						ifNil: [s nextPutAll: '###'; nextPutAll: obj value soleInstance name]]])
-
 ]
 
 { #category : #'instruction decoding' }
@@ -321,5 +309,4 @@ SymbolicBytecodeBuilder >> trap [
 	"send the class trap message to the current context."
 	
 	self addBytecode: 'trap'
-
 ]

@@ -13,7 +13,6 @@ ClapHelloWorldTest >> setUp [
 	hello := (ClapCommand id: #hello)
 		add: (ClapFlag id: #shout);
 		add: (ClapPositional id: #who)
-
 ]
 
 { #category : #'tests - matching' }

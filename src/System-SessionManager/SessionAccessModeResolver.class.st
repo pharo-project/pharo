@@ -41,7 +41,7 @@ SessionAccessModeResolver class >> resolve [
 	SessionManager default currentSession accessMode: mode.
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 SessionAccessModeResolver class >> startUp: resuming [
 
 	resuming ifTrue: [

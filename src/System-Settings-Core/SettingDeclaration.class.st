@@ -51,7 +51,7 @@ Class {
 	#category : #'System-Settings-Core-Base'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SettingDeclaration class >> initialize [
 
 	UniqueObject := Object new

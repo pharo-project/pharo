@@ -26,10 +26,10 @@ SharedRandom class >> globalGenerator [
 	^ global
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SharedRandom class >> initialize [
-	"self initialize"
-	global := self new.
+
+	global := self new
 ]
 
 { #category : #initialization }

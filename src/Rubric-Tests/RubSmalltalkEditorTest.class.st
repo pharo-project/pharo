@@ -166,32 +166,6 @@ RubSmalltalkEditorTest >> assertWidensToRegex: aString playground: isPlayground 
 	self assert: false description: 'Did not find a selection node for, "' , aString , '"'
 ]
 
-{ #category : #generated }
-RubSmalltalkEditorTest >> exectuteBestNodeFor: aSelector [
-
-	self
-		deprecated: 'Use #executeBestNodeFor: instead'
-		transformWith: '`@rec exectuteBestNodeFor: `@arg'
-			-> '`@rec executeBestNodeFor: `@arg'.
-	^ self executeBestNodeFor: aSelector
-]
-
-{ #category : #generated }
-RubSmalltalkEditorTest >> exectuteFindNextKeywordDirection: isFwd editingMode: aRubEditingMode onFound: aBlock [
-
-	self
-		deprecated:
-		'Use #executeFindNextKeywordDirection:editingMode:onFound: instead'
-		transformWith:
-			'`@rec exectuteFindNextKeywordDirection: `@arg1 editingMode: `@arg2 onFound: `@arg3'
-			->
-			'`@rec executeFindNextKeywordDirection: `@arg1 editingMode: `@arg2 onFound: `@arg3'.
-	^ self
-		  executeFindNextKeywordDirection: isFwd
-		  editingMode: aRubEditingMode
-		  onFound: aBlock
-]
-
 { #category : #helpers }
 RubSmalltalkEditorTest >> executeBestNodeFor: aSelector [
 	^ self executeBestNodeFor: aSelector editingMode: RubSmalltalkCodeMode new

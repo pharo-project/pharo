@@ -8,5 +8,4 @@ AthensCairoSurface >> displayOnMorphicCanvas: canvas at: aPoint [
 		at: aPoint
 		sourceRect: (0@0 extent: self extent )
 		rule: 34.
-
 ]

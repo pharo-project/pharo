@@ -11,7 +11,7 @@ CoRepeatedHierarchyImplementedSelectorsFetcherTest >> setUp [
 	fetcher := (CoClassImplementedMessagesFetcher new
 		completionClass: self completionClass;
 		forHierarchy)
-		withoutRepetition.
+		withoutRepetition withNarrowHistory.
 	self completionClass superclass
 		selectors: (self completionClass superclass selectors copyWith: 'ma').
 	expectedElements := { 

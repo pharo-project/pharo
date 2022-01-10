@@ -125,7 +125,7 @@ RGTraitAlias >> removeAlias: aSymbol [
 		self backend forBehavior removeAlias: aSymbol from: self ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitAlias >> traitCompositionString [
 
 	^ String streamContents: [:aStream |	
@@ -140,7 +140,7 @@ RGTraitAlias >> traitCompositionString [
 	aStream nextPut: $}].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitAlias >> traitTransformationString [
 
 	^ String streamContents: [:aStream |	

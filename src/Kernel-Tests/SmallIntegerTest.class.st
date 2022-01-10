@@ -16,7 +16,7 @@ SmallIntegerTest >> classToBeTested [
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testBasicNew [
 
-	self should: [SmallInteger basicNew] raise: self defaultTestError. 
+	self should: [SmallInteger basicNew] raise: self defaultTestError.
 ]
 
 { #category : #'tests - operations' }
@@ -109,7 +109,7 @@ SmallIntegerTest >> testGcd [
 { #category : #'tests - other' }
 SmallIntegerTest >> testIsNotAbstract [
 
-	self deny: SmallInteger isAbstract 
+	self deny: SmallInteger isAbstract
 ]
 
 { #category : #'tests - Class Methods' }
@@ -127,7 +127,7 @@ SmallIntegerTest >> testMinVal [
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testNew [
 
-	self should: [SmallInteger new] raise: self defaultTestError. 
+	self should: [SmallInteger new] raise: self defaultTestError.
 ]
 
 { #category : #'tests - printing' }

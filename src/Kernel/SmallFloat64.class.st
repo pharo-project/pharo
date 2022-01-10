@@ -221,7 +221,7 @@ SmallFloat64 >> identityHash [
 
 { #category : #testing }
 SmallFloat64 >> isImmediateObject [
-	"This is needed for the boostrap"
+	"This is needed for the bootstrap"
 	^ true
 ]
 
@@ -270,7 +270,7 @@ SmallFloat64 >> ln [
 SmallFloat64 >> nextObject [
 	"SmallFloat64 are immediate objects, and, as such, do not have successors in object memory."
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #copying }
@@ -314,10 +314,6 @@ SmallFloat64 >> truncated [
 				r := self - (q asFloat * df).
 				^q*di+r truncated]
 		ifFalse: [^ self asTrueFraction.  "Extract all bits of the mantissa and shift if necess"]
-
-		
-
-		
 ]
 
 { #category : #copying }

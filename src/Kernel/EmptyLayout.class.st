@@ -15,12 +15,6 @@ EmptyLayout class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #description }
-EmptyLayout class >> kind [ 	
-
-	^ #empty
-]
-
 { #category : #extending }
 EmptyLayout >> extend: someSlots [
 	^ FixedLayout new
@@ -56,9 +50,4 @@ EmptyLayout >> extendWeak [
 { #category : #extending }
 EmptyLayout >> extendWord [
 	^ WordLayout new
-]
-
-{ #category : #accessing }
-EmptyLayout >> kindOfSubclass [
-	^self shouldNotImplement
 ]

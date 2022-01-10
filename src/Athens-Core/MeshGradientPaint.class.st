@@ -37,7 +37,6 @@ MeshGradientPaint >> addCircleSliceCenter: center radius: radius startAngle: sli
 				lineTo: sliceCenter;
 				colors: colors
 		].
-
 ]
 
 { #category : #adding }

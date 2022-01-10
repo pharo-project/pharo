@@ -23,14 +23,13 @@ Class {
 { #category : #testing }
 ClyRenameClassTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassTagSelected
-
 ]
 
 { #category : #activation }
 ClyRenameClassTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #activation }

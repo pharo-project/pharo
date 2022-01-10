@@ -56,11 +56,17 @@ TFExternalFunction class >> name: aName moduleName: aModuleName definition: aFun
 { #category : #'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType [
 
-	^ self name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType fixedArgumentCount: 0
+	^ self
+		  name: aName
+		  moduleName: aModuleName
+		  parameterTypes: parameterTypes
+		  returnType: returnType
+		  fixedArgumentCount: 0
+		  abi: nil
 ]
 
 { #category : #'instance creation' }
-TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType fixedArgumentCount: fixedArgumentCount [
+TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType fixedArgumentCount: fixedArgumentCount abi: abiType [
 
 	| definition |
 
@@ -68,12 +74,14 @@ TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: 
 		ifTrue:[	
 			TFFunctionDefinition 
 				parameterTypes: parameterTypes
-				returnType: returnType]
+				returnType: returnType
+				abi: abiType]
 		ifFalse:[	
 			TFVariadicFunctionDefinition 
 				parameterTypes: parameterTypes
 				returnType: returnType
-				fixedArgumentCount: fixedArgumentCount].
+				fixedArgumentCount: fixedArgumentCount
+				abi: abiType].
 
 	^ self
 		name: aName

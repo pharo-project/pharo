@@ -97,8 +97,6 @@ MessageSend >> cull: arg [
 	^ selector numArgs = 0 
 		ifTrue: [ self value ]
 		ifFalse: [ self value: arg ].
-
-	
 ]
 
 { #category : #evaluating }
@@ -123,7 +121,6 @@ MessageSend >> hash [
 { #category : #testing }
 MessageSend >> isMessageSend [
 	^true
-
 ]
 
 { #category : #testing }

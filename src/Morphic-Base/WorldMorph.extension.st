@@ -61,8 +61,6 @@ WorldMorph >> install [
 	self displayWorldSafely.
 	self extent: self worldState worldRenderer actualScreenSize.
 	self viewBox: self worldState worldRenderer viewBox.
-	Sensor flushAllButDandDEvents.
-
 ]
 
 { #category : #'*Morphic-Base' }

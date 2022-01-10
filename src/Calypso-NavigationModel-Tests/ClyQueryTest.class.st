@@ -16,7 +16,7 @@ ClyQueryTest class >> isAbstract [
 
 { #category : #running }
 ClyQueryTest >> createQuery [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -133,14 +133,14 @@ ClyQueryTest >> testHasUnknownScopeByDefault [
 ClyQueryTest >> testIsBoundToEnvironmentWhenScopeIs [
 
 	self assert: query scope isBoundToEnvironment.
-	self assert: query isBoundToEnvironment 
+	self assert: query isBoundToEnvironment
 ]
 
 { #category : #tests }
 ClyQueryTest >> testNotBoundToEnvironmentByDefault [
 
 	query := query class new.
-	self deny: query isBoundToEnvironment 
+	self deny: query isBoundToEnvironment
 ]
 
 { #category : #tests }

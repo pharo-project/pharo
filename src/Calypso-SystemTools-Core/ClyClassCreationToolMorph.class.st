@@ -68,7 +68,7 @@ ClyClassCreationToolMorph >> classTag: anObject [
 { #category : #template }
 ClyClassCreationToolMorph >> classTemplate [
 
-	^ ClassDefinitionPrinter new compactClassDefinitionTemplateInPackage:  self packageName 
+	^ ClassDefinitionPrinter new compactClassDefinitionTemplateInPackage:  self packageName
 ]
 
 { #category : #initialization }
@@ -83,7 +83,7 @@ ClyClassCreationToolMorph >> defaultTitle [
 
 { #category : #building }
 ClyClassCreationToolMorph >> editingText [
-	^self classTemplate 
+	^self classTemplate
 ]
 
 { #category : #building }

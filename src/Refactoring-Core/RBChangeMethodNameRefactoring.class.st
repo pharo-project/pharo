@@ -24,6 +24,12 @@ Class {
 }
 
 { #category : #testing }
+RBChangeMethodNameRefactoring class >> isAbstract [
+
+	^ self == RBChangeMethodNameRefactoring
+]
+
+{ #category : #testing }
 RBChangeMethodNameRefactoring >> hasPermutedArguments [
 	oldSelector numArgs = newSelector numArgs ifFalse: [^true].
 	1 to: oldSelector numArgs

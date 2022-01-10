@@ -20,11 +20,6 @@ Month class >> august [
     ^ self month: 8
 ]
 
-{ #category : #'instance creation' }
-Month class >> current [
-	^ self starting: DateAndTime now
-]
-
 { #category : #accessing }
 Month class >> daysInMonth: indexOrName forYear: yearInteger [ 
 
@@ -88,7 +83,6 @@ Month class >> month: month [
 	^ self 
 		year: DateAndTime now year
 		month: month
-
 ]
 
 { #category : #'instance creation' }
@@ -128,7 +122,6 @@ Month class >> readFrom: aStream [
 		month: (Month indexOfMonth: m contents)
 
 "Month readFrom: 'July 1998' readStream"
-
 ]
 
 { #category : #'instance creation' }
@@ -161,13 +154,12 @@ Month class >> year: year month: month [
 	name of the month. <year> should be with 4 digits."
 
 	^ self starting: (DateAndTime year: year month: month day: 1)
-
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Month >> asMonth [
 
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
@@ -179,19 +171,19 @@ Month >> daysInMonth [
 { #category : #accessing }
 Month >> index [
 
-	^ self monthIndex 
+	^ self monthIndex
 ]
 
 { #category : #testing }
 Month >> name [ 
 
-	^ self monthName 
+	^ self monthName
 ]
 
 { #category : #accessing }
 Month >> previous [ 
 
-	^ self class starting: (self start - 1) 
+	^ self class starting: (self start - 1)
 ]
 
 { #category : #printing }

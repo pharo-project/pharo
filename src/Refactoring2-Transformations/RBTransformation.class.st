@@ -33,13 +33,13 @@ RBTransformation class >> cleanUp [
 	self initializeRefactoringOptions.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RBTransformation class >> initialize [
 
 	self initializeRefactoringOptions
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RBTransformation class >> initializeRefactoringOptions [
 
 	RefactoringOptions := IdentityDictionary new.
@@ -87,6 +87,30 @@ RBTransformation >> asRefactoring [
 	^ self 
 		checksPreconditions;
 		yourself
+]
+
+{ #category : #private }
+RBTransformation >> buildSelectorString: aSelector [ 
+	aSelector numArgs = 0 ifTrue: [^aSelector].
+	^self buildSelectorString: aSelector
+		withPermuteMap: (1 to: aSelector numArgs)
+]
+
+{ #category : #private }
+RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [ 
+	| stream keywords |
+	aSelector numArgs == 0 ifTrue: [^aSelector asString].
+	stream := WriteStream on: String new.
+	keywords := aSelector keywords.
+	keywords with: anIntegerCollection
+		do: 
+			[:each :i | 
+			stream
+				nextPutAll: each;
+				nextPutAll: ' ``@arg';
+				nextPutAll: i printString;
+				nextPut: $ ].
+	^stream contents
 ]
 
 { #category : #accessing }

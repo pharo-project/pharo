@@ -7,7 +7,6 @@ ClyClassDefinitionEditorToolMorph >> criticAnalysisScope [
 
 { #category : #'*Calypso-SystemPlugins-Critic-Browser' }
 ClyClassDefinitionEditorToolMorph >> decorateByCritic: aCriticTool [
-
 ]
 
 { #category : #'*Calypso-SystemPlugins-Critic-Browser' }

@@ -28,20 +28,7 @@ EpFileLogNode class >> withEntry: aDirectoryEntry [
 
 	^ self basicNew 
 		initializeWithEntry: aDirectoryEntry;
-		yourself 
-]
-
-{ #category : #converting }
-EpFileLogNode >> asMorph [
-
-	| morphFactory |
-	morphFactory := EpMorphFactory default.
-	
-	^ morphFactory rowWithAll: {
-		morphFactory emphasizedStringFor: self globalName.
-		morphFactory smallGap.
-		morphFactory secondaryStringFor: self modificationTime asDate epiceaBrowsersAsString.
-	}
+		yourself
 ]
 
 { #category : #accessing }
@@ -76,6 +63,12 @@ EpFileLogNode >> log [
 EpFileLogNode >> modificationTime [
 
 	^ directoryEntry modificationTime
+]
+
+{ #category : #accessing }
+EpFileLogNode >> modificationTimeString [
+
+	^ self modificationTime asDate epiceaBrowsersAsString
 ]
 
 { #category : #private }

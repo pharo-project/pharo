@@ -26,12 +26,12 @@ Class {
 
 { #category : #'instance creation' }
 RBPragmaNode class >> selector: aSymbol arguments: valueNodes [
-	^ self selector: aSymbol keywordsPositions: nil arguments: valueNodes 
+	^ self selector: aSymbol keywordsPositions: nil arguments: valueNodes
 ]
 
 { #category : #'instance creation' }
 RBPragmaNode class >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
-	^ self new selector: aSymbol keywordsPositions: positionList arguments: valueNodes 
+	^ self new selector: aSymbol keywordsPositions: positionList arguments: valueNodes
 ]
 
 { #category : #comparing }

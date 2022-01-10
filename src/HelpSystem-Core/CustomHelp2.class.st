@@ -20,7 +20,6 @@ CustomHelp2 class >> bold: aString [
 	"Return Text object with bold emphasis."
 	aString ifEmpty: [ self errorEmptyString ].
 	^ aString asText addAttribute: TextEmphasis bold from: 1 to: aString size.
-
 ]
 
 { #category : #accessing }
@@ -50,7 +49,6 @@ CustomHelp2 class >> doItFrom: aString [
 	that executes aString; aString should also be a Smalltalk script that is possible to evaluate."
 	
 	^self doItFrom: aString text: aString
-
 ]
 
 { #category : #formatting }
@@ -68,7 +66,6 @@ CustomHelp2 class >> doItFrom: aString text: textString [
 			from: 1 to: textString size;
 		addAttribute: (TextColor new color: color) from: 1 to: textString size;
 		yourself
-
 ]
 
 { #category : #formatting }
@@ -198,5 +195,4 @@ CustomHelp2 class >> url: aString [
 		addAttribute: (	TextAction new actOnClickBlock: clickBlock);
 		addAttribute: (TextColor new color: self theme urlColor);
 		yourself
-
 ]

@@ -88,7 +88,7 @@ TabMorph class >> defaultHeight [
 	^ 22
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TabMorph class >> initialize [
 
 	Icons := Dictionary new.
@@ -387,7 +387,6 @@ TabMorph >> addLabel [
 			leftOffset: self labelRightOffset;
 			topOffset: (label height negated - self labelBottomOffset) + 2;
 			yourself)
-			
 ]
 
 { #category : #private }

@@ -94,6 +94,26 @@ InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumber
 	self assert: operations third equals: { #directSuperSend:numArgs:. #yourself. 0 }
 ]
 
+{ #category : #tests }
+InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
+
+	| stream methodToTest ir startingPc |
+	methodToTest := ClassUsedInInstructionStreamTest
+	                >> #newMethodWithALotOfLiteralsToTestExtensions.
+	ir := (methodToTest ast allChildren select: [ :e | e isMessage ])
+		      anyOne irInstruction.
+	startingPc := ir bytecodeOffset.
+	stream := InstructionStream new
+		          method: methodToTest
+		          pc: startingPc.
+		
+	"16rE0 16rE1 are extensions that help handling lot of literals.
+	When such an extension is encoutered the next pc shoudl skip them.
+	In our case we have 1 extension and the bytecode so the next pc is at the size of this extension plus the size of the bytecode extended (2 + 2)"	
+	
+	self assert: (stream nextPc: 16rE0) equals: startingPc + 4.
+]
+
 { #category : #'tests - example' }
 InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext [
 
@@ -229,25 +249,6 @@ InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 
 	initialContext := aContext := suspendedProcess suspendedContext.
 	[ initialContext method = (self classUnderTest >> #callingAMethodWithMNU) ] 
-		whileFalse: [ initialContext := initialContext sender].
-	
-	return := suspendedProcess stepToHome: initialContext.
-	
-	"Suspended process should stop in the exception"	
-	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:).
-
-]
-
-{ #category : #'tests - example' }
-InstructionStreamTest >> testStepThroughInAMethodWithMNUInMustBeBoolean [
-
-	| initialContext aContext receiver suspendedProcess return |
-	
-	receiver := self classUnderTest new.
-	suspendedProcess := [ receiver callingAMethodWithMustBeBooleanMNU ] forkAt: Processor activePriority + 1.
-
-	initialContext := aContext := suspendedProcess suspendedContext.
-	[ initialContext method = (self classUnderTest >> #callingAMethodWithMustBeBooleanMNU) ] 
 		whileFalse: [ initialContext := initialContext sender].
 	
 	return := suspendedProcess stepToHome: initialContext.

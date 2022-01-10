@@ -28,15 +28,12 @@ AthensSimplePathBuilder >> absolute [
 AthensSimplePathBuilder >> addSegment: aSegment [
 	lastSegment next: aSegment.
 	lastSegment := aSegment
- 
 ]
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> ccwArcTo: endPt angle: rot [
 	" angle should be specified in radians "
 	^ self addSegment: (AthensCCWArcSegment new endPoint: (self toAbsolute: endPt) angle: rot)
-
-
 ]
 
 { #category : #'path commands' }
@@ -72,8 +69,6 @@ AthensSimplePathBuilder >> curveVia: cp1 and: cp2 to: aPoint [
 			via: pt1
 			and: pt2
 			to: pt3)
-
-
 ]
 
 { #category : #'path commands' }
@@ -88,16 +83,12 @@ AthensSimplePathBuilder >> curveVia: cp1 to: aPoint [
 			from: lastSegment endPoint 
 			via: pt1 
 			to: pt2)
-
-
 ]
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> cwArcTo: endPt angle: rot [
 	"Angle should be specified in radians"
 	^ self addSegment: (AthensCWArcSegment new endPoint: (self toAbsolute: endPt) angle: rot).
-
-
 ]
 
 { #category : #initialization }
@@ -117,8 +108,6 @@ AthensSimplePathBuilder >> initialize [
 AthensSimplePathBuilder >> lineTo: aPoint [
 
 	^ self addSegment: (AthensLineSegment new point: (self toAbsolute: aPoint)).
-
-
 ]
 
 { #category : #'path commands' }
@@ -163,8 +152,6 @@ AthensSimplePathBuilder >> reflectedCurveVia: cp2 to: aPoint [
 			via: pt1
 			and: pt2
 			to: pt3)
-
-
 ]
 
 { #category : #'path commands' }

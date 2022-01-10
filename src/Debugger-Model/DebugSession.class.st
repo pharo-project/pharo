@@ -83,17 +83,7 @@ DebugSession >> createModelForContext: aContext [
 { #category : #initialization }
 DebugSession >> detectUIProcess [
 
-	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess 
-	
-
-]
-
-{ #category : #context }
-DebugSession >> downInContext: aContext [
-	"move down the context stack to the previous (enclosing) context"
-
-	self flag: 'This does not take into account (bypasses) filtering'.
-	^ aContext sender 
+	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess
 ]
 
 { #category : #accessing }
@@ -166,7 +156,7 @@ DebugSession >> interruptedProcess [
 { #category : #testing }
 DebugSession >> isAboutUIProcess [
 
-	^errorWasInUIProcess 
+	^errorWasInUIProcess
 ]
 
 { #category : #testing }
@@ -246,9 +236,7 @@ DebugSession >> peelToFirstLike: aContext [
 
 	ctxt := interruptedProcess popTo: aContext findSecondToOldestSimilarSender.
 	self updateContextTo: ctxt.
-	self contextChanged 
-
-	
+	self contextChanged
 ]
 
 { #category : #private }
@@ -285,11 +273,10 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
 	canRewind
 		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
+	
 	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
 	newMethod ifNil: [ ^ false ].
-	newMethod isQuick ifTrue: [
-		recompilationContext := self downInContext: recompilationContext.
-		recompilationContext pc: recompilationContext previousPc ].
+		
 	(self isContextPostMortem: self interruptedContext)
 		ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ].
 
@@ -310,8 +297,7 @@ DebugSession >> restart: aContext [
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ].
 	self unwindAndRestartToContext: aContext.	
 
-	self triggerEvent: #restart		
-	
+	self triggerEvent: #restart
 ]
 
 { #category : #'debugging actions' }
@@ -356,8 +342,6 @@ DebugSession >> resumeProcess [
 
 	"restart low space handler"
 	Smalltalk installLowSpaceWatcher
-		
-	
 ]
 
 { #category : #private }
@@ -365,7 +349,7 @@ DebugSession >> resumeProcessWithValue: aValue [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 	
 	self returnValue: aValue from: interruptedProcess suspendedContext.
-	self resumeProcess	
+	self resumeProcess
 ]
 
 { #category : #'debugging actions' }
@@ -380,7 +364,7 @@ DebugSession >> returnValue: anObject from: aContext [
 	"self resetContext: previous."
 	interruptedProcess popTo: previous value: anObject.
 	self updateContextTo: previous.
-	self contextChanged 
+	self contextChanged
 ]
 
 { #category : #evaluating }
@@ -394,9 +378,8 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 		ifFalse: [
 			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
 		ifTrue: [
-			aMethod isQuick ifFalse: [
-				interruptedProcess restartTopWith: aMethod.
-				self stepToFirstInterestingBytecodeIn: interruptedProcess ] ].
+			interruptedProcess restartTopWith: aMethod.
+			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
 	self updateContextTo:  ctxt.
 	
 	"Issue 3015 - Hernan"
@@ -430,7 +413,6 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	True is returned if there are no filters."
 		
 	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
-	
 ]
 
 { #category : #logging }
@@ -547,7 +529,7 @@ DebugSession >> stepOver: aContext [
 			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
 			ifFalse: [ newContext ]).
 
-	self triggerEvent: #stepOver 
+	self triggerEvent: #stepOver
 ]
 
 { #category : #'debugging actions' }
@@ -566,7 +548,7 @@ DebugSession >> stepThrough: aContext [
 	interruptedProcess stepToHome: aContext.
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 			
-	self triggerEvent: #stepThrough 
+	self triggerEvent: #stepThrough
 ]
 
 { #category : #private }
@@ -577,6 +559,13 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	In this case step until a bytecode that causes a context switch,
 	as otherwise one will have to press may time step into without 
 	seeing any visible results."
+	
+	"If we are are stepping into a quick method,
+	make sure that we step correctly over the first primitive bytecode"
+	| suspendedContext |
+	suspendedContext := aProcess suspendedContext.
+	suspendedContext method isQuick
+		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 	
 	^ aProcess stepToSendOrReturn
 ]
@@ -597,7 +586,6 @@ DebugSession >> terminate [
 			"Kill the active process if the error was in the UI as there should be only one UI process."
 			self isAboutUIProcess
 				ifTrue: [Processor terminateActive] ]
-	
 ]
 
 { #category : #evaluating }
@@ -607,11 +595,7 @@ DebugSession >> unwindAndRestartToContext: aContext [
 	ctx := interruptedProcess popTo: aContext.
 	ctx == aContext ifTrue: [ "Only restart the process if the stack was unwind"
 		interruptedProcess restartTop.
-
-		aContext method isQuick
-			ifTrue: [ aContext updatePCForQuickPrimitiveRestart ]
-			ifFalse: [ 
-			self stepToFirstInterestingBytecodeIn: interruptedProcess ] ].
+		self stepToFirstInterestingBytecodeIn: interruptedProcess ].
 	self flag: 'Should a warning be displayed if the the unwind failed?'.
 	self updateContextTo: aContext
 ]

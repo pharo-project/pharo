@@ -50,7 +50,7 @@ MorphicUIManager class >> uiProcess [
 { #category : #private }
 MorphicUIManager >> activate [
 
-	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: self currentWorld).
+	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
 	self currentWorld currentCursor: self currentWorld currentCursor.
 		
 	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
@@ -123,6 +123,10 @@ MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray ti
 	"Choose an item from the given list. Answer the selected item."
 	
 	|modalMorph|
+	
+	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer |
+		^answer].
+	
 	modalMorph := self modalMorph.
 	^modalMorph theme  
 		chooseIn: modalMorph
@@ -130,19 +134,6 @@ MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray ti
 		labels: labelList
 		values: valueList
 		lines: linesArray
-]
-
-{ #category : #services }
-MorphicUIManager >> chooseFullFileName: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	to show, path and preview type."
-
-	^self theme
-		chooseFullFileNameIn: self modalMorph
-		title: title
-		extensions: exts
-		path: path
-		preview: preview
 ]
 
 { #category : #'ui requests' }
@@ -326,7 +317,6 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].	
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
-		
 ]
 
 { #category : #services }
@@ -367,9 +357,9 @@ MorphicUIManager >> fontFromUser: priorFont [
 ]
 
 { #category : #'handle debug requests' }
-MorphicUIManager >> handleDebugRequest: aDebugRequest [
+MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
-	OupsDebuggerSystem new openDebuggerOnRequest: aDebugRequest
+	anOupsDebuggerSystem openDebuggerOnRequest: aDebugRequest
 ]
 
 { #category : #'error handling' }
@@ -380,9 +370,9 @@ MorphicUIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'handle debug requests' }
-MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
-	OupsDebuggerSystem new openDebuggerOnRequest: aWarningDebugRequest
+	anOupsDebuggerSystem openDebuggerOnRequest: aWarningDebugRequest
 ]
 
 { #category : #'ui requests' }
@@ -432,7 +422,6 @@ Here are some suggestions:
  If you want to investigate further, choose "debug" in this window.  Do not use the debugger "fullStack" command unless you are certain that the stack is not very deep. (Trying to show the full stack will definitely use up all remaining memory if the low-space problem is caused by an infinite recursion!).
 
 '
-
 ]
 
 { #category : #'ui requests' }
@@ -550,7 +539,6 @@ MorphicUIManager >> onPrimitiveError: aString [
 	Stdio stderr << message.
 	"init hands and redisplay" 
 	self currentWorld install
-
 ]
 
 { #category : #accessing }
@@ -567,13 +555,11 @@ MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 		request: queryString 
 		initialAnswer: defaultAnswer 
 		title: 'Provide the following information'
-
 ]
 
 { #category : #'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
 	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' translated entryCompletion: anEntryCompletion
-
 ]
 
 { #category : #'ui requests' }
@@ -713,11 +699,11 @@ MorphicUIManager >> unhandledErrorDefaultAction: anException [
 { #category : #'handle debug requests' }
 MorphicUIManager >> warningDefaultAction: anException [
 	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-
+	self flag: 'This looks like a code smell'.
 	(OupsWarningRequest newForException: anException) submit
 ]
 
 { #category : #'global state' }
 MorphicUIManager >> world [
-	^ self currentWorld 
+	^ self currentWorld
 ]

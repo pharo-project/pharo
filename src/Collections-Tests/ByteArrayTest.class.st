@@ -34,7 +34,6 @@ ByteArrayTest >> testFallbackReplaceFromToWithForString [
 				startingAt: 1 ]
 		raise: Exception
 		description: 'Primitive 105 should be optional for ByteArray'
-
 ]
 
 { #category : #tests }
@@ -53,7 +52,6 @@ ByteArrayTest >> testFallbackReplaceFromToWithForWideString [
 				startingAt: 1 ]
 		raise: Exception
 		description: 'Primitive 105 should be optional for ByteArray'
-
 ]
 
 { #category : #tests }
@@ -61,8 +59,6 @@ ByteArrayTest >> testFourthByteArraysReturnTheCorrectValues [
 	
 	self assert: (#[16r3F 16r80 0 0]  floatAt:1 bigEndian: true) equals: 1.0.
 	self assert: (#[16rC0 0 0 0]  floatAt:1 bigEndian: true) equals: -2.0.
-
-
 ]
 
 { #category : #tests }
@@ -105,6 +101,4 @@ ByteArrayTest >> testindexOfStartingAt [
 	array := #[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0].
 	self assert: (array indexOf: 1 startingAt: 10) equals: 12.
 	self assert: (array indexOf: 17 startingAt: 10) equals: 0.
-
-
 ]

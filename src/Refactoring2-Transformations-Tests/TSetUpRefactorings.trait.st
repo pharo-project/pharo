@@ -37,7 +37,7 @@ TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 	options := aRefactoring options copy.
 	options at: #methodName
 		put: 
-			[:aMethodName | 
+			[:aMethodName :ref | 
 			aMethodName
 				selector: aSelector;
 				yourself].
@@ -50,7 +50,7 @@ TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector withA
 	options := aRefactoring options copy.
 	options at: #methodName
 		put: 
-			[ :aMethodName | 
+			[ :aMethodName :ref | 
 			aMethodName
 				selector: aSelector;
 				arguments: stringCollection;

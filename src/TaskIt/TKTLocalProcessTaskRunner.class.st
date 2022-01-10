@@ -37,8 +37,3 @@ TKTLocalProcessTaskRunner >> isLocalThreadRunner [
 TKTLocalProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
 	self executeTask: aTaskExecution
 ]
-
-{ #category : #polymorphism }
-TKTLocalProcessTaskRunner >> start [
-
-]

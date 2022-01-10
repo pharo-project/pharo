@@ -21,12 +21,6 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
-{ #category : #validating }
-LiteralVariable class >> checkValidName: aString [ 
-	"aString first canBeGlobalVarInitial
-		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
-]
-
 { #category : #'gt-inspector-extension' }
 LiteralVariable class >> gtInspectorAllVariablesIn: composite [
  	"This provides a list of all defined Class or Global Variables"
@@ -122,15 +116,6 @@ LiteralVariable >> installingIn: aClass [
 LiteralVariable >> isAccessedIn: aMethod [ 
 	
 	^aMethod accessesRef: self
-]
-
-{ #category : #generated }
-LiteralVariable >> isGlobal [
-
-	self
-		deprecated: 'Use #isGlobalVariable instead'
-		transformWith: '`@rec isGlobal' -> '`@rec isGlobalVariable'.
-	^ self isGlobalVariable
 ]
 
 { #category : #testing }

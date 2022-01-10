@@ -27,7 +27,7 @@ DTCommentToTestPlugin class >> weight [
 
 { #category : #'configuration building' }
 DTCommentToTestPlugin >> buildConfigurationFrom: aDrTests [
-	^ DTCommentTestConfiguration items: aDrTests selectedItems packages: aDrTests packagesSelected 
+	^ DTCommentTestConfiguration items: aDrTests selectedItems packages: aDrTests packagesSelected
 ]
 
 { #category : #api }
@@ -93,7 +93,7 @@ DTCommentToTestPlugin >> secondListLabel [
 
 { #category : #api }
 DTCommentToTestPlugin >> startButtonHelp [
-	^ 'Run selected tests.' 
+	^ 'Run selected tests.'
 ]
 
 { #category : #api }

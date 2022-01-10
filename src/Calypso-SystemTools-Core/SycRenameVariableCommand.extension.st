@@ -11,5 +11,5 @@ SycRenameVariableCommand class >> sourceCodeMenuActivation [
 SycRenameVariableCommand class >> sourceCodeShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation renamingFor: ClySourceCodeContext 
+	^CmdShortcutActivation renamingFor: ClySourceCodeContext
 ]

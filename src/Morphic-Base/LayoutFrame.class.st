@@ -69,7 +69,7 @@ LayoutFrame >> asArray [
 		leftOffset .
 		topOffset .
 		rightOffset .
-		bottomOffset } 
+		bottomOffset }
 ]
 
 { #category : #converting }
@@ -126,36 +126,13 @@ LayoutFrame >> center: targetMorph with: anotherMorph [
 	
 	self topOffset: (anotherMorph height - targetMorph height) // 2.
 	self leftOffset: (anotherMorph width - targetMorph width) // 2.
-	
 ]
 
 { #category : #accessing }
 LayoutFrame >> fractionRectangle [
 	"Return a rectangle representing the fraction part of layout frame: i.e left@top corner: right@bottom"
 	
-	^ leftFraction @ topFraction corner: rightFraction @ bottomFraction 
-]
-
-{ #category : #deprecated }
-LayoutFrame >> fractions: fractionsOrNil [
-	self deprecated: 'Do not use this method. It forces to create spurious objects for nothing.'.
-	^ self fractions: fractionsOrNil offsets: nil
-]
-
-{ #category : #deprecated }
-LayoutFrame >> fractions: fractionsOrNil offsets: offsetsOrNil [
-
-	| fractions offsets |
-	self deprecated: 'Do not use this method. It forces to create spurious objects (rectangle or points) for nothing.'.
-	fractions := fractionsOrNil ifNil: [0@0 extent: 0@0].
-	offsets := offsetsOrNil ifNil: [0@0 extent: 0@0].
-	
-	^self
-		topFraction: fractions top offset: offsets top;
-		leftFraction: fractions left offset: offsets left;
-		bottomFraction: fractions bottom offset: offsets bottom;
-		rightFraction: fractions right offset: offsets right
-
+	^ leftFraction @ topFraction corner: rightFraction @ bottomFraction
 ]
 
 { #category : #accessing }
@@ -172,7 +149,6 @@ LayoutFrame >> fromArray: anArray [
 LayoutFrame >> hasNoOffsets [
 
 	^ leftOffset = 0 and: [rightOffset = 0  and: [ topOffset = 0 and: [ bottomOffset = 0 ]]].
-	
 ]
 
 { #category : #comparing }
@@ -186,7 +162,6 @@ LayoutFrame >> hash [
 		+ rightOffset hash) hashMultiply
 		+ bottomFraction hash) hashMultiply
 		+ bottomOffset hash) hashMultiply
-
 ]
 
 { #category : #initialization }
@@ -209,7 +184,7 @@ LayoutFrame >> isSelfEvaluating [
 LayoutFrame >> layout: oldBounds in: newBounds [
 	"Return the proportional rectangle insetting the given bounds"
 
-	^ self transform: newBounds 
+	^ self transform: newBounds
 ]
 
 { #category : #accessing }
@@ -244,8 +219,6 @@ LayoutFrame >> negateBottomRightOffsets [
 
 	bottomOffset := bottomOffset negated.
 	rightOffset := rightOffset negated.
-
-
 ]
 
 { #category : #printing }

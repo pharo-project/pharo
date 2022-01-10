@@ -93,7 +93,7 @@ BaselineOfParametrizedTests class >> validate [
 
 	<apiDocumentation>
 	self ensureMetacello.
-	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
 { #category : #baselines }

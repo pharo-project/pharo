@@ -35,7 +35,7 @@ MemoryStore class >> isCaseSensitive [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MemoryStore class >> reset [
 	CurrentFS := nil
 ]
@@ -150,7 +150,6 @@ MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPres
                 put: (sourceNode copy
                                         basename: destinationPath basename;
                                         yourself)
-
 ]
 
 { #category : #public }
@@ -195,7 +194,6 @@ MemoryStore >> entryFromNode: node path: path for: aFileSystem [
 	| entryPath |
 	entryPath := path / (self basenameFromEntry: node).
 	^MemoryDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
-
 ]
 
 { #category : #printing }
@@ -205,7 +203,7 @@ MemoryStore >> forReferencePrintOn: aStream [
 
 { #category : #accessing }
 MemoryStore >> handleClass [
-	^ MemoryHandle 
+	^ MemoryHandle
 ]
 
 { #category : #initialization }
@@ -224,7 +222,6 @@ MemoryStore >> isReadable: aPath [
 	MemoryStore doesn't implement access controls, always true if the file exists."
 
 	^self exists: aPath
-
 ]
 
 { #category : #accessing }
@@ -241,7 +238,6 @@ MemoryStore >> isWritable: aPath [
 	MemoryStore doesn't implement access controls, always true if the file exists."
 
 	^self exists: aPath
-
 ]
 
 { #category : #private }
@@ -291,8 +287,7 @@ MemoryStore >> rename: sourcePath to: destinationPath [
 	
 	
 	(self nodeAt: sourcePath parent)
-		fileEntryRemove: sourcePath basename 
-	
+		fileEntryRemove: sourcePath basename
 ]
 
 { #category : #private }

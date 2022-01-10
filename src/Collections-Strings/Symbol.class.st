@@ -38,14 +38,14 @@ Class {
 	#category : #'Collections-Strings-Base'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 Symbol class >> allSymbolTablesDo: aBlock [
 
 	NewSymbols do: aBlock.
 	SymbolTable do: aBlock.
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
 
 	NewSymbols do: aBlock after: aSymbol.
@@ -60,7 +60,6 @@ Symbol class >> allSymbols [
 		s nextPutAll: OneCharacterSymbols.
 		s nextPutAll: SymbolTable.
 	].
-
 ]
 
 { #category : #cleanup }
@@ -71,7 +70,7 @@ Symbol class >> cleanUp [
 	self rebuildSelectorTable
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 Symbol class >> compactSymbolTable [
 	"Reduce the size of the symbol table so that it holds all existing symbols + 25% (changed from 1000 since sets like to have 25% free and the extra space would grow back in a hurry)"
 
@@ -118,9 +117,9 @@ Symbol class >> initSelectorTable [
 	^ SelectorTable := WeakSet new
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Symbol class >> initialize [
-	Symbol rehash.
+	self rehash.
 	OneCharacterSymbols := nil.
 	OneCharacterSymbols := (1 to: 256) collect: [ :i | (i - 1) asCharacter asSymbol].
 
@@ -149,7 +148,6 @@ Symbol class >> internCharacter: aCharacter [
 	aCharacter asciiValue > 256 ifTrue:[^self intern: aCharacter asString].
 	OneCharacterSymbols ifNil: [^self intern: aCharacter asString].
 	^OneCharacterSymbols at: aCharacter asciiValue + 1
-
 ]
 
 { #category : #'instance creation' }
@@ -225,7 +223,6 @@ Symbol class >> readFrom: strm [
 
 	strm peek = $# ifFalse: [self error: 'Symbols must be introduced by #'].
     	^ strm contents parseLiterals first.
- 
 ]
 
 { #category : #cleanup }
@@ -273,7 +270,6 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 		] after: skipSym.
 
 	^nil
-
 ]
 
 { #category : #accessing }
@@ -313,12 +309,11 @@ Symbol class >> selectorsContaining: aString [
 "Symbol selectorsContaining: 'scon'"
 ]
 
-{ #category : #private }
+{ #category : #'system startup' }
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.
 	NewSymbols := WeakSet new.
-
 ]
 
 { #category : #accessing }
@@ -358,7 +353,6 @@ Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 "Symbol thatStarts: 'sf' skipping: nil"
 "Symbol thatStarts: 'sf' skipping: #sfpGetFile:with:with:with:with:with:with:with:with:"
 "Symbol thatStarts: 'candidate' skipping: nil"
-
 ]
 
 { #category : #accessing }
@@ -381,7 +375,6 @@ Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 		] after: skipSym.
 
 	^nil
-
 ]
 
 { #category : #'instance creation' }
@@ -481,7 +474,6 @@ Symbol >> flushCache [
 	"Tell the virtual machine to remove all entries with this symbol as a selector from its method lookup caches, if it has any.  This 	must be done whenever a method is added, redefined or removed, so that message lookups reflect the revised organization.  c.f. 	Behavior>>flushCache & CompiledMethod>>flushCache.  Essential. See MethodDictionary class comment."
 
 	<primitive: 119>
-
 ]
 
 { #category : #announcements }
@@ -542,7 +534,7 @@ Symbol >> isSelectorSymbol [
 
 { #category : #testing }
 Symbol >> isSymbol [
-	^ true 
+	^ true
 ]
 
 { #category : #testing }
@@ -570,8 +562,6 @@ Symbol >> numArgs: n [
 			ifFalse: [ offs := 1 ].
 		2 to: n - numArgs + offs do: [:i | 
 			stream nextPutAll: 'with:' ]].
-	
-
 ]
 
 { #category : #accessing }
@@ -637,7 +627,7 @@ Symbol >> storeOn: aStream [
 Symbol >> string: aString [
 
 	1 to: aString size do: [:j | super at: j put: (aString at: j)].
-	^self  
+	^self
 ]
 
 { #category : #converting }

@@ -25,7 +25,6 @@ EncodedCharSet class >> canBeGlobalVarInitial: char [
 
 	leadingChar = 0 ifTrue: [^ self isUppercase: char].
 	^ self isLetter: char.
-
 ]
 
 { #category : #'character classification' }
@@ -36,14 +35,12 @@ EncodedCharSet class >> canBeNonGlobalVarInitial: char [
 
 	leadingChar = 0 ifTrue: [^ self isLowercase: char].
 	^ self isLetter: char.
-
 ]
 
 { #category : #'class methods' }
 EncodedCharSet class >> charsetAt: encoding [
 
 	^ EncodedCharSets at: encoding + 1 ifAbsent: [Unicode].
-
 ]
 
 { #category : #initialize }
@@ -69,8 +66,6 @@ EncodedCharSet class >> declareEncodedCharSet: anEncodedCharSetOrLanguageEnviron
 	EncodedCharSets at: 256 put: Unicode.
 
 	"
-	
-	
 ]
 
 { #category : #'class methods' }
@@ -87,7 +82,6 @@ EncodedCharSet class >> digitValueOf: char [
 				(value >= $a asciiValue and: [value <= $z asciiValue])
 					 ifTrue: [^value - $a asciiValue + 10]].
 	^ -1
-
 ]
 
 { #category : #initialize }
@@ -102,14 +96,12 @@ EncodedCharSet class >> initialize [
 EncodedCharSet class >> isBreakableAt: index in: text [
 
 	self subclassResponsibility.
-
 ]
 
 { #category : #'class methods' }
 EncodedCharSet class >> isCharset [
 
 	^ true.
-
 ]
 
 { #category : #'character classification' }
@@ -119,7 +111,6 @@ EncodedCharSet class >> isDigit: char [
 	| value |
 	value := char asciiValue.
 	^ value >= 48 and: [value <= 57].
-
 ]
 
 { #category : #'character classification' }
@@ -129,7 +120,6 @@ EncodedCharSet class >> isLetter: char [
 	| value |
 	value := char asciiValue.
 	^ (8r141 <= value and: [value <= 8r172]) or: [8r101 <= value and: [value <= 8r132]].
-
 ]
 
 { #category : #'character classification' }
@@ -140,7 +130,6 @@ EncodedCharSet class >> isLowercase: char [
 	| value |
 	value := char asciiValue.
 	^ 8r141 <= value and: [value <= 8r172].
-
 ]
 
 { #category : #'character classification' }
@@ -151,28 +140,24 @@ EncodedCharSet class >> isUppercase: char [
 	| value |
 	value := char asciiValue.
 	^ 8r101 <= value and: [value <= 8r132].
-
 ]
 
 { #category : #'class methods' }
 EncodedCharSet class >> leadingChar [
 
 	self subclassResponsibility.
-
 ]
 
 { #category : #'class methods' }
 EncodedCharSet class >> nextPutValue: ascii toStream: aStream withShiftSequenceIfNeededForTextConverterState: state [
 
 	self subclassResponsibility.
-
 ]
 
 { #category : #'accessing - displaying' }
 EncodedCharSet class >> printingDirection [
 
 	self subclassResponsibility.
-
 ]
 
 { #category : #'accessing - displaying' }
@@ -183,6 +168,5 @@ EncodedCharSet class >> scanSelector [
 { #category : #'class methods' }
 EncodedCharSet class >> ucsTable [
 
-	^ ucsTable 
-
+	^ ucsTable
 ]

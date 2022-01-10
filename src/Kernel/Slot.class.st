@@ -49,7 +49,6 @@ Slot class >> checkValidName: aSymbol [
 
 	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
-
 ]
 
 { #category : #testing }
@@ -60,26 +59,6 @@ Slot class >> isPseudovariableName: aSymbol [
 { #category : #testing }
 Slot class >> isUsed [
 	^super isUsed or: [self slotUsers isNotEmpty ]
-]
-
-{ #category : #settings }
-Slot class >> showSlotClassDefinition [
-	self 
-		deprecated: 'Do not use Slot class directly use ClassDefinitionPrinter' 
-		transformWith:
-	'Slot showSlotClassDefinition' -> 'ClassDefinitionPrinter showFluidClassDefinition'.
-	^ ClassDefinitionPrinter showFluidClassDefinition
-
-]
-
-{ #category : #settings }
-Slot class >> showSlotClassDefinition: aBoolean [
-	self 
-		deprecated: 'Do not use Slot class directly use ClassDefinitionPrinter' 
-		transformWith:
-	'Slot showSlotClassDefinition: @val' -> 'ClassDefinitionPrinter showFluidClassDefinition: @val'.
-	ClassDefinitionPrinter showFluidClassDefinition: aBoolean
-
 ]
 
 { #category : #testing }
@@ -192,8 +171,6 @@ Slot >> hasSameDefinitionAs: otherSlot [
 	(e.g. the index in IndexSlot).
 	This method then is overriden to not take that state into account"
 	^self = otherSlot
-	
-
 ]
 
 { #category : #initialization }

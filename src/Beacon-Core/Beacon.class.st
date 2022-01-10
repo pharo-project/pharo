@@ -12,62 +12,79 @@ Class {
 		'announcer'
 	],
 	#classVars : [
-		'instance'
+		'Instance'
 	],
 	#category : #'Beacon-Core-Beacon'
 }
 
 { #category : #logging }
 Beacon class >> announce: anAnnouncement [
+
 	self instance announce: anAnnouncement
 	
 ]
 
 { #category : #accessing }
 Beacon class >> instance [
-	^ instance ifNil: [ instance := self new ]
+
+	^ Instance ifNil: [ Instance := self new ]
 ]
 
 { #category : #accessing }
 Beacon class >> loggers [
+
 	^ self instance loggers 
 ]
 
 { #category : #accessing }
 Beacon class >> loggersOf: aClass [
+
 	^ self instance loggersOf: aClass
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
+Beacon class >> reset [
+	<script>
+	
+	self resetInstance
+]
+
+{ #category : #'private - initialization' }
 Beacon class >> resetInstance [
-	instance ifNotNil: [ 
-		instance announcer subscriptions reset ].
-	instance := nil
+
+	Instance ifNotNil: [ 
+		Instance announcer subscriptions reset ].
+	Instance := nil
 ]
 
 { #category : #private }
 Beacon >> announce: anAnnouncement [
+
 	self announcer announce: anAnnouncement
 ]
 
 { #category : #accessing }
 Beacon >> announcer [
+
 	^ announcer
 ]
 
 { #category : #accessing }
 Beacon >> announcer: anObject [
+
 	announcer := anObject
 ]
 
 { #category : #initialization }
 Beacon >> initialize [
+
 	super initialize.
 	announcer := Announcer new
 ]
 
 { #category : #accessing }
 Beacon >> loggers [
+
 	^ self loggersOf: SignalLogger
 ]
 
@@ -75,16 +92,19 @@ Beacon >> loggers [
 Beacon >> loggersOf: aClass [
 	"Returns the loggers of a certain class of loggers."
 
-	^ ((announcer subscriptions subscriptions) collect: [:each | each subscriber] as: Set)
-			select: [ :each | each isKindOf: aClass ]
+	^ (announcer subscriptions subscriptions
+		   collect: [ :each | each subscriber ]
+		   as: Set) select: [ :each | each isKindOf: aClass ]
 ]
 
 { #category : #announcing }
 Beacon >> unsubscribe: aSignalLogger [
+
 	self announcer unsubscribe: aSignalLogger
 ]
 
 { #category : #announcing }
 Beacon >> when: anAnnouncementClass send: aSelector to: anObject [
+
 	self announcer when: anAnnouncementClass send: aSelector to: anObject
 ]

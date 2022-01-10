@@ -96,17 +96,6 @@ OSWindowMorphicEventHandler >> activeHand [
 	^ self morphicWorld activeHand
 ]
 
-{ #category : #generated }
-OSWindowMorphicEventHandler >> convertButton: osButton [
-
-	self
-		deprecated: 'Use #convertButtonFromEvent: instead'
-		transformWith:
-		'`@rec convertButton: `@arg'
-		-> '`@rec convertButtonFromEvent: `@arg'.
-	^ self convertButtonFromEvent: osButton
-]
-
 { #category : #converting }
 OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 
@@ -154,9 +143,6 @@ OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 			morphicWorld activeHand handleEvent: anEvent
 		]
 	].
-	
-	
-	
 ]
 
 { #category : #events }
@@ -169,7 +155,6 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
 		
 	self dispatchMorphicEvent: morphicEvent
-	
 ]
 
 { #category : #visiting }
@@ -323,7 +308,6 @@ OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 	
 	morphicWorld worldState worldRenderer handleOSWindowCloseEvent: anEvent
-
 ]
 
 { #category : #visiting }
@@ -351,6 +335,6 @@ OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
-	"Resolution (dpi) changed. For now just check for a new size."
-	morphicWorld worldState worldRenderer checkForNewScreenSize.
+	
+	morphicWorld worldState updateToNewResolution: anEvent
 ]

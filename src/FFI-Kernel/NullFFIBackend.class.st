@@ -35,13 +35,13 @@ NullFFIBackend >> free: anExternalAddress [
 { #category : #accessing }
 NullFFIBackend >> integerOfObject: anObject at: byteOffset put: value size: nBytes signed: aBoolean [
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
 NullFFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: aBoolean [
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #'instance creation' }
@@ -50,26 +50,32 @@ NullFFIBackend >> loadSymbol: moduleSymbol module: module [
 	^ self primitiveFailed
 ]
 
+{ #category : #callbacks }
+NullFFIBackend >> lookupCallbackByAddress: address [ 
+	
+	^ self error: 'Null FFI backend does not know about callback in address ' , address printString
+]
+
 { #category : #accessing }
 NullFFIBackend >> on: anObject float32At: offset [
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
 NullFFIBackend >> on: anObject float32At: offset put: value [
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
 NullFFIBackend >> on: anObject float64At: offset [
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
 NullFFIBackend >> on: anObject float64At: offset put: value [
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]

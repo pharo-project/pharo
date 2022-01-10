@@ -60,7 +60,6 @@ ClyDataSourceSelection >> asDesiredSelection [
 	| itemsCopy |
 	itemsCopy := items collect: [ :each | each copy childrenDataSource: nil].
 	^ClyDesiredSelection fromRoot: rootDataSource items: itemsCopy.
-
 ]
 
 { #category : #converting }
@@ -138,7 +137,7 @@ ClyDataSourceSelection >> copyForBrowserStateSnapshotOf: aDataSource [
 	copy := self asDesiredSelection.
 	copy rootDataSource: aDataSource.
 	copy items: (items collect: [ :each | each copyForBrowserStateSnapshotOf: aDataSource]).
-	^copy	
+	^copy
 ]
 
 { #category : #accessing }
@@ -271,7 +270,7 @@ ClyDataSourceSelection >> restoreTableSelection [
 	
 	self restoreTableSelectionSilently: actualSelectionChanged not.
 	
-	^actualSelectionChanged 
+	^actualSelectionChanged
 ]
 
 { #category : #controlling }
@@ -369,5 +368,5 @@ ClyDataSourceSelection >> updateItemsWhichBelongsTo: aDataSource [
 	
 	self restoreTableSelectionSilently: actualSelectionChanged not.
 	
-	^actualSelectionChanged 
+	^actualSelectionChanged
 ]

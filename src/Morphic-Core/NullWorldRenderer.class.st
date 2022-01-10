@@ -10,21 +10,14 @@ Class {
 
 { #category : #accessing }
 NullWorldRenderer class >> isApplicableFor: aWorld [
-
 	"This worldRenderer is always applicable"
+
 	^ true
-]
-
-{ #category : #accessing }
-NullWorldRenderer class >> priority [ 
-
-	^ 0
 ]
 
 { #category : #operations }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
-
-	"We don't activate nothing"
+	"Nothing to activate here"
 ]
 
 { #category : #accessing }
@@ -33,28 +26,21 @@ NullWorldRenderer >> actualScreenSize [
 	^ 240@120
 ]
 
-{ #category : #generated }
-NullWorldRenderer >> canvas: x [
-
-	self deprecated: 'Use #invalidate instead'
-]
-
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
-
 ]
 
-{ #category : #initialization }
+{ #category : #utilities }
 NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
 	^ aPosition
 ]
 
-{ #category : #activation }
+{ #category : #private }
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : #activation }
+{ #category : #private }
 NullWorldRenderer >> doActivate [
 ]
 
@@ -70,13 +56,6 @@ NullWorldRenderer >> drawDuring: aBlock [
 NullWorldRenderer >> forceDamageToScreen: allDamage [
 
 	"Do Nothing"
-	
-]
-
-{ #category : #operations }
-NullWorldRenderer >> forceDisplayUpdate [
-
-	" Do Nothing "
 ]
 
 { #category : #accessing }
@@ -89,4 +68,14 @@ NullWorldRenderer >> icon: aForm [
 NullWorldRenderer >> updateDamage: rectangles [
 
 	"Do nothing"
+]
+
+{ #category : #events }
+NullWorldRenderer >> updateToNewResolution [
+]
+
+{ #category : #accessing }
+NullWorldRenderer >> windowTitle: aString [
+
+	"I am a dummy implementation"
 ]

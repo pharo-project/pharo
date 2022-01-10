@@ -36,7 +36,7 @@ WeakArray class >> addWeakDependent: anObject [
 	] ifError: [:err | err signal].
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 WeakArray class >> initialize [
 	"Do we need to initialize specialObjectsArray?"
 	Smalltalk specialObjectsArray size < 42 

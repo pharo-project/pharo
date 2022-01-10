@@ -13,7 +13,6 @@ ClyBrowserStateTest class >> isAbstract [
 ClyBrowserStateTest >> snapshotState [
 
 	navigationState := browser snapshotState.
-		
 ]
 
 { #category : #tests }

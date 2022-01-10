@@ -74,7 +74,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	"FFI"
 	ExternalObject initialize.
-	ExternalFunction initialize.
 	ExternalType initialize.
 	FFIBackend initialize.
 
@@ -84,7 +83,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	BasicCommandLineHandler initialize.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive.
-
 ]
 
 { #category : #'public api' }

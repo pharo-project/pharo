@@ -29,5 +29,4 @@ PackageAPIHelpBuilder >> build [
 		packageTopic := HelpTopic named: package.
 		topicToBuild addSubtopic: packageTopic.
 		self class buildPackageTopic: packageTopic ]
-
 ]

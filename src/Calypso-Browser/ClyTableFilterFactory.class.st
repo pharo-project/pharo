@@ -54,7 +54,7 @@ ClyTableFilterFactory >> pattern: aString [
 	| newPattern |
 	newPattern := stringPattern copy.
 	newPattern value: aString.
-	^itemFilterClass pattern: newPattern 
+	^itemFilterClass pattern: newPattern
 ]
 
 { #category : #accessing }

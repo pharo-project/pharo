@@ -289,9 +289,3 @@ UnixEnvironment >> setEnv: nameString value: valueString [
 
 	^ self ffiCall: #(int setenv #(String nameString , String valueString , 1)) module: LibC
 ]
-
-{ #category : #private }
-UnixEnvironment >> unsetEnv: string [
-	"This method calls the Standard C Library getenv() function"
-	 ^ self ffiCall: #( int unsetenv (String string) ) module: LibC
-]

@@ -56,17 +56,11 @@ ClyItemGroup class >> named: aString [
 ClyItemGroup class >> named: aString priority: aNumber [
 	^(self named: aString)
 			priority: aNumber
-		
 ]
 
 { #category : #accessing }
 ClyItemGroup class >> priority [
 	^1
-]
-
-{ #category : #accessing }
-ClyItemGroup >> calypsoEnvironmentType [
-	^self class
 ]
 
 { #category : #decoration }

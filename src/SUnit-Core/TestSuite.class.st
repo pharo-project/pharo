@@ -161,16 +161,6 @@ TestSuite >> setUp [
 			each isAvailable ifFalse: [ each signalInitializationError ]].
 ]
 
-{ #category : #deprecated }
-TestSuite >> subscribe: aAnnouncement do: aBlock [
-	
-	self
-		deprecated: 'Please use #when:send:to: instead'
-		transformWith: '`@receiver subscribe: `@statements1 do: `@statements2' 
-						-> '`@receiver when: `@statements1 do: `@statements2'.
-	^ self when: aAnnouncement do: aBlock
-]
-
 { #category : #running }
 TestSuite >> tearDown [
 	self resourceClass resetResources: self resources.

@@ -56,9 +56,9 @@ Class {
 		'autoUpdateProcess',
 		'deferredMessageRecipient',
 		'lastUpdate',
-		'startedCPUWatcher',
 		'keyEventsDict',
-		'textModel'
+		'textModel',
+		'cpuWatcherMonitoring'
 	],
 	#classVars : [
 		'SuspendedProcesses',
@@ -67,7 +67,7 @@ Class {
 	#category : #'Tool-ProcessBrowser'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProcessBrowser class >> cleanUp [
  	"Remove terminated processes from my suspended list"
 	<script>
@@ -139,7 +139,7 @@ ProcessBrowser class >> dumpTallyOnTranscript: tally [
 	Transcript flush.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProcessBrowser class >> initialize [
 	SuspendedProcesses ifNil: [ SuspendedProcesses := IdentityDictionary new ].
 	self registerWellKnownProcesses
@@ -222,7 +222,7 @@ ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickna
 	WellKnownProcesses add: aBlockForProcess->[{nickname . allowStop . allowDebug}]
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ProcessBrowser class >> registerWellKnownProcesses [
 	"Associate each well-known process with a nickname and two flags: allow-stop, and allow-debug.
 	Additional processes may be added to this list as required"
@@ -245,11 +245,6 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowDebug: false.
 	self
 		registerWellKnownProcess: [ Processor backgroundProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ InputEventFetcher default fetcherProcess ]
 		label: nil
 		allowStop: false
 		allowDebug: false.
@@ -478,6 +473,13 @@ ProcessBrowser >> doItReceiver [
 	^selectedContext ifNil: [ selectedProcess ] ifNotNil: [ selectedContext receiver ]
 ]
 
+{ #category : #initialization }
+ProcessBrowser >> ensureCPUWatcherMonitoring [
+
+	self startCPUWatcher.
+	^ true
+]
+
 { #category : #'stack list' }
 ProcessBrowser >> exploreContext [
 	selectedContext inspect
@@ -538,7 +540,7 @@ ProcessBrowser >> initialize [
 	searchString := ''.
 	lastUpdate := 0.
 	textModel :=  RubScrolledTextModel new interactionModel: self; yourself.
-	startedCPUWatcher := CPUWatcher cpuWatcherEnabled and: [ self startCPUWatcher ].
+	cpuWatcherMonitoring := CPUWatcher cpuWatcherEnabled and: [ self ensureCPUWatcherMonitoring ].
 	self updateProcessList; processListIndex: 1
 ]
 
@@ -606,7 +608,7 @@ ProcessBrowser >> keyEventsDict [
 
 { #category : #initialization }
 ProcessBrowser >> mayBeStartCPUWatcher [
-	startedCPUWatcher ifTrue: [ self setUpdateCallbackAfter: 7 ].
+	cpuWatcherMonitoring ifTrue: [ self setUpdateCallbackAfter: 7 ]
 
 ]
 
@@ -1068,13 +1070,11 @@ ProcessBrowser >> startAutoUpdate [
 
 { #category : #initialization }
 ProcessBrowser >> startCPUWatcher [
-	"Answers whether I started the CPUWatcher"
 
-	CPUWatcher isMonitoring
-		ifFalse: [ 
-					CPUWatcher startMonitoringPeriod: 5 rate: 100 threshold: 0.85.
-					self setUpdateCallbackAfter: 7.
-					^ true ]
+	CPUWatcher isMonitoring ifTrue: [ ^ self ].
+
+	CPUWatcher startMonitoringPeriod: 5 rate: 100 threshold: 0.85.
+	self setUpdateCallbackAfter: 7
 ]
 
 { #category : #updating }
@@ -1090,7 +1090,7 @@ ProcessBrowser >> stopCPUWatcher [
 
 	CPUWatcher stopMonitoring.
 	self updateProcessList.
-	startedCPUWatcher := false	"so a manual restart won't be killed later" 
+	cpuWatcherMonitoring := false	"so a manual restart won't be killed later" 
 ]
 
 { #category : #'process actions' }
@@ -1188,5 +1188,6 @@ ProcessBrowser >> wasProcessSuspendedByProcessBrowser: aProcess [
 
 { #category : #initialization }
 ProcessBrowser >> windowIsClosing [
-	startedCPUWatcher ifTrue: [ CPUWatcher stopMonitoring ]
+
+	cpuWatcherMonitoring ifTrue: [ CPUWatcher stopMonitoring ]
 ]

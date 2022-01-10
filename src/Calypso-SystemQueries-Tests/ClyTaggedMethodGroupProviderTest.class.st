@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyTaggedMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyClass1FromP1Mock 
+	^ClyClass1FromP1Mock
 ]
 
 { #category : #running }

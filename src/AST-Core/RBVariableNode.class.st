@@ -115,7 +115,6 @@ RBVariableNode >> isArgumentVariable [
 { #category : #testing }
 RBVariableNode >> isClassVariable [
 	^variable isClassVariable
-
 ]
 
 { #category : #testing }
@@ -166,18 +165,6 @@ RBVariableNode >> isReservedVariable [
 	^ variable isReservedVariable
 ]
 
-{ #category : #generated }
-RBVariableNode >> isSelf [
-
-	"normally this method is not needed (if all the RBVariable creations create RBSelfNode instead but
-	since we do not control this."
-
-	self
-		deprecated: 'Use #isSelfVariable instead'
-		transformWith: '`@rec isSelf' -> '`@rec isSelfVariable'.
-	^ self isSelfVariable
-]
-
 { #category : #testing }
 RBVariableNode >> isSelfOrSuperVariable [
 	^ variable isSelfOrSuperVariable
@@ -188,30 +175,9 @@ RBVariableNode >> isSelfVariable [
 	^variable isSelfVariable
 ]
 
-{ #category : #generated }
-RBVariableNode >> isSuper [
-
-	"normally this method is not needed (if all the RBVariable creations create RBSuperNode instead but
-	since we do not control this."
-
-	self
-		deprecated: 'Use #isSuperVariable instead'
-		transformWith: '`@rec isSuper' -> '`@rec isSuperVariable'.
-	^ self isSuperVariable
-]
-
 { #category : #testing }
 RBVariableNode >> isSuperVariable [
 	^ variable isSuperVariable
-]
-
-{ #category : #generated }
-RBVariableNode >> isTemp [
-
-	self
-		deprecated: 'Use #isTempVariable instead'
-		transformWith: '`@rec isTemp' -> '`@rec isTempVariable'.
-	^ self isTempVariable
 ]
 
 { #category : #testing }

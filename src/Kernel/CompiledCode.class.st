@@ -90,7 +90,6 @@ CompiledCode >> accessesRef: literalVariable [
 { #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
-	
 ]
 
 { #category : #accessing }
@@ -184,19 +183,6 @@ CompiledCode >> comment [
 ]
 
 { #category : #'source code management' }
-CompiledCode >> definition [
-
-	"Polymorphic to class definition"
-
-	self
-		deprecated: #definition
-		transformWith:
-		'`@receiver definition' -> '`@receiver definitionString'.
-
-	^ self definitionString
-]
-
-{ #category : #'source code management' }
 CompiledCode >> definitionString [
 
 	"Polymorphic to class definitionString"
@@ -240,7 +226,6 @@ CompiledCode >> frameSize [
 	(self header noMask: 16r20000)
 		ifTrue: [^ SmallFrame]
 		ifFalse: [^ LargeFrame]
-
 ]
 
 { #category : #literals }
@@ -265,16 +250,6 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 			[^true].
 		lit isEmbeddedBlock ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
 	^false
-]
-
-{ #category : #literals }
-CompiledCode >> hasLiteralThorough: aLiteral [
-	self 
-		deprecated: 'Use #refersToLiteral: instead.' 
-		on: '31 January 2020'
-		in: #Pharo9
-		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
-	^ self refersToLiteral: aLiteral
 ]
 
 { #category : #accessing }
@@ -328,7 +303,6 @@ CompiledCode >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
-
 ]
 
 { #category : #literals }
@@ -542,8 +516,7 @@ CompiledCode >> localSendsAnySelectorOf: aCollection [
 			ifTrue: [ ^ self messages includesAny: aCollection ]
 	].
 
-	^ false 
-
+	^ false
 ]
 
 { #category : #scanning }
@@ -575,7 +548,6 @@ CompiledCode >> longPrintOn: aStream [
 		self printPrimitiveOn: aStream.
 	].
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-
 ]
 
 { #category : #accessing }
@@ -805,7 +777,6 @@ CompiledCode >> sendsAnySelectorOf: aCollection [
 	
 	(self localSendsAnySelectorOf: aCollection) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsAnySelectorOf: aCollection ]
-
 ]
 
 { #category : #literals }
@@ -864,7 +835,7 @@ CompiledCode >> sourceNodeForPC: arg1 [
 
 { #category : #'source code management' }
 CompiledCode >> sourcePointer [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #'source code management' }
@@ -929,7 +900,6 @@ CompiledCode >> withAllBlocksDo: aBlock [
 	
 	aBlock value: self.
 	self allBlocksDo: aBlock
-	
 ]
 
 { #category : #accessing }

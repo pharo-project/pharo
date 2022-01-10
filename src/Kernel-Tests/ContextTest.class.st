@@ -34,7 +34,6 @@ ContextTest class >> contextWithTempForTesting [
 	| string |
 	string := 'test'.
 	^ [self class. string asUppercase] asContext.
-
 ]
 
 { #category : #helper }
@@ -199,9 +198,6 @@ ContextTest >> testNoStepIntoQuickMethod [
 	has not been set."
 	newContext := aMethodContext step.
 	self assert: newContext identicalTo: aMethodContext
-	
-	
-
 ]
 
 { #category : #tests }
@@ -271,8 +267,6 @@ ContextTest >> testStepIntoQuickMethod [
 	The first steppable bytecode is the push just before the return.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
 	self assert: newContext pc equals: (quickMethod initialPC + 3)
-	
-
 ]
 
 { #category : #tests }
@@ -324,8 +318,6 @@ ContextTest >> testStepIntoReturnSelfMethod [
 	The first steppable bytecode is the push just before the return.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
 	self assert: newContext pc equals: (quickMethod initialPC + 3)
-	
-
 ]
 
 { #category : #tests }

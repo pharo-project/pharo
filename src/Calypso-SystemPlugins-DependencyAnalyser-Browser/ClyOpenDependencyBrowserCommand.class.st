@@ -11,7 +11,7 @@ Class {
 ClyOpenDependencyBrowserCommand class >> packageContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext
 ]
 
 { #category : #accessing }
@@ -24,5 +24,5 @@ ClyOpenDependencyBrowserCommand >> execute [
 
 	| packageNames |
 	packageNames := packages collect: [ :each | each name ].
-	(DAPackageAnalyzerPackageDependenciesWindow onPackagesNamed: packageNames) open 
+	(DAPackageAnalyzerPackageDependenciesWindow onPackagesNamed: packageNames) open
 ]

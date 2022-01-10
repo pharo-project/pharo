@@ -36,7 +36,6 @@ FullStackDebugAction >> enabled [
 FullStackDebugAction >> executeAction [
 	
 	self debugger stack expandBy: self expandedStackSize
-	
 ]
 
 { #category : #accessing }
@@ -64,5 +63,5 @@ FullStackDebugAction >> shouldEnableFullStackButton [
 	^ self debugger stack listItems 
 		ifEmpty: [ false ] 
 		ifNotEmpty: [ :aList |
-			aList last sender notNil ] 
+			aList last sender notNil ]
 ]

@@ -7,15 +7,6 @@ Class {
 	#category : #'Collections-Abstract-Base'
 }
 
-{ #category : #'stream creation' }
-SequenceableCollection class >> << blockWithArg [
-	"An alias to #streamContents:"
-	
-	"Array << [ :stream | 0 to: 100 by: 25 do: [ :each | stream nextPut: each ] ] >>> #(0 25 50 75 100)"
-	
-	^ self streamContents: blockWithArg
-]
-
 { #category : #testing }
 SequenceableCollection class >> isAbstract [
 
@@ -89,7 +80,6 @@ SequenceableCollection >> , otherCollection [
 	^ self copyReplaceFrom: self size + 1
 		  to: self size
 		  with: otherCollection
-
 ]
 
 { #category : #comparing }
@@ -783,7 +773,7 @@ SequenceableCollection >> detectIndex: aBlock [
 	
 	"(#(1 5 10) detectIndex: [ :each | each > 3 ]) >>> 2"
 
-	^ self detectIndex: aBlock ifNone: [ self errorNotFound: aBlock ] 
+	^ self detectIndex: aBlock ifNone: [ self errorNotFound: aBlock ]
 ]
 
 { #category : #enumerating }
@@ -2024,7 +2014,6 @@ SequenceableCollection >> reversed [
 	src := n + 1.
 	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
 	^ result
-
 ]
 
 { #category : #accessing }
@@ -2187,8 +2176,6 @@ SequenceableCollection >> split: aSequenceableCollection indicesDo: aBlock [
 	].
 
 	aBlock value: oldPosition value: aSequenceableCollection size.
-
-
 ]
 
 { #category : #splitjoin }

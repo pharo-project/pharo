@@ -118,7 +118,7 @@ RewriteRuleChangesBrowser >> connectPresenters [
 			ifTrue: [ aChange changes ] 
 			ifFalse: [#()]].
 	buttonCancel action: [ self cancel ].														
-	buttonOk action: [ self accept ].																											
+	buttonOk action: [ self accept ].
 ]
 
 { #category : #accessing }
@@ -174,7 +174,6 @@ RewriteRuleChangesBrowser >> initializeWindow: aWindowPresenter [
 { #category : #'instance creation' }
 RewriteRuleChangesBrowser >> open [
 	^ self openWithSpec
-
 ]
 
 { #category : #accessing }

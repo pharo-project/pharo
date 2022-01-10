@@ -22,7 +22,7 @@ SystemAnnouncer class >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SystemAnnouncer class >> reset [
 
 	"unregister all current weak subscriptions because it can cause a memory leak"

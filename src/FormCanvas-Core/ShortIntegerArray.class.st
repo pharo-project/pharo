@@ -11,7 +11,7 @@ Class {
 	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 ShortIntegerArray class >> initialize [
 	LastSaveOrder := self new: 2.
 	LastSaveOrder at: 1 put: 42.
@@ -26,7 +26,7 @@ ShortIntegerArray class >> new: n [
 	^super new: n + 1 // 2
 ]
 
-{ #category : #'system startup' }
+{ #category : #'startup - shutdown' }
 ShortIntegerArray class >> startUp [
 	"Check if the word order has changed from the last save"
 	((LastSaveOrder at: 1) = 42 and:[(LastSaveOrder at: 2) = 13]) 
@@ -36,7 +36,7 @@ ShortIntegerArray class >> startUp [
 	^self error:'This must never happen'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #private }
 ShortIntegerArray class >> swapShortObjects [
 	self allSubInstancesDo:[:inst| inst swapShortObjects]
 ]
@@ -48,7 +48,6 @@ ShortIntegerArray >> at: index [
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
 	self errorNonIntegerIndex.
-
 ]
 
 { #category : #accessing }
@@ -75,7 +74,6 @@ ShortIntegerArray >> pvtAt: index [
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
 	self errorNonIntegerIndex.
-
 ]
 
 { #category : #private }
@@ -124,7 +122,6 @@ ShortIntegerArray >> swapBytePairsHacky [
 		width: 1.
 	#((0 1) (1 0) (0 1) (2 3)(3 2)(2 3))
 		do: [:array | [:a :b| blt sourceX: a; destX: b; copyBits ] valueWithArguments: array ].
-
 ]
 
 { #category : #private }

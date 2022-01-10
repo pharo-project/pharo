@@ -21,6 +21,5 @@ OupsDummyDebugRequest >> computePreDebugActions [
 
 { #category : #preDebugActions }
 OupsDummyDebugRequest >> dummyPreDebugActionExecutedCount [
-	dummyPreDebugActionExecutedCount ifNil: [ dummyPreDebugActionExecutedCount := 0 ].
-	^ dummyPreDebugActionExecutedCount
+	^dummyPreDebugActionExecutedCount ifNil: [ dummyPreDebugActionExecutedCount := 0 ]
 ]

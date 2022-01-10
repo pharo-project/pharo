@@ -10,7 +10,7 @@ Class {
 { #category : #execution }
 ClyRemoveWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasWatch 
+	^aBrowserContext isSelectedItemHasWatch
 ]
 
 { #category : #activation }

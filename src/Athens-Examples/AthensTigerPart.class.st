@@ -89,8 +89,6 @@ AthensTigerPart >> prepareFor: surface [
 		strokePaint := 
 			surface createStrokePaintFor: (surface createSolidColorPaint: strokePaint).
 	].
-
-	
 ]
 
 { #category : #rendering }

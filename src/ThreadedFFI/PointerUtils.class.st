@@ -24,6 +24,13 @@ PointerUtils class >> oopForObject: anObject [
 ]
 
 { #category : #private }
+PointerUtils class >> oopForObjectForcePinInMemory: anObject [
+
+	anObject pinInMemory.
+	^ self oopForObject: anObject
+]
+
+{ #category : #private }
 PointerUtils class >> primObjectForOop: anObject [
 
 	"This primitive fails if the object is not pinned"

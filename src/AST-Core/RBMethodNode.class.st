@@ -146,7 +146,6 @@ RBMethodNode >> allStatements [
 	^ self temporaries asOrderedCollection copy
 			addAll: super allStatements;
 			yourself
-
 ]
 
 { #category : #accessing }
@@ -289,8 +288,7 @@ RBMethodNode >> copyInContext: aDictionary [
 { #category : #accessing }
 RBMethodNode >> decompileString [ 
 
-	^ self formattedCode 
-
+	^ self formattedCode
 ]
 
 { #category : #testing }
@@ -711,19 +709,12 @@ RBMethodNode >> statements [
 
 { #category : #accessing }
 RBMethodNode >> statements: aCollection [
-	self body statements: aCollection 
+	self body statements: aCollection
 ]
 
 { #category : #accessing }
 RBMethodNode >> stop [
 	^(self sourceCode ifNotNil: [:src | src] ifNil: [ self formattedCode ]) size
-]
-
-{ #category : #accessing }
-RBMethodNode >> tempNames [
-	"compatibility method to old MethodNode"
-	self deprecated: 'This method was flagged for cleaning. We have the impression it might not be used so we are deprecating it. If you encounter this deprecation, please report with the scenario to reproduce.'.
-	^ self argumentNames, self temporaryNames
 ]
 
 { #category : #accessing }

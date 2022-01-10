@@ -33,7 +33,6 @@ Context >> findSecondToOldestSimilarSender [
 		context := lastContext.
 	].
 	^ secondContext
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -77,36 +76,6 @@ Context >> methodReturnConstant: value [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> namedTempAt: index [
-
-	"Answer the value of the temp at index in the receiver's sequence of tempNames."
-
-	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be.
-	Do *not* use this!"
-
-	self
-		deprecated: 'Please access temps by name using #tempNamed:'
-		transformWith: '`@rec namedTempAt: `@arg' -> '`@rec tempNamed: (`@rec tempNames at: `@arg)'.
-	
-	^ self tempNamed: (self tempNames at: index)
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> namedTempAt: index put: aValue [
-	"Set the value of the temp at index in the receiver's sequence of tempNames"
-	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be"
-	"Do *not* use this!"
-	self
-		deprecated: 'Please access temps by name using #tempNamed:put:'
-		transformWith: '`@rec namedTempAt: `@arg1 put: `@arg2' ->
-		               '`@rec tempNamed: (`@rec tempNames at: `@arg1) put: `@arg2'.
-	
-	self tempNamed: (self tempNames at: index) put: aValue
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> pcRangeContextIsActive: contextIsActive [
  	"return the debug highlight for aPC"		 
 	| thePC |
@@ -135,8 +104,6 @@ Context >> respondsToUnknownBytecode [
 	| unknownBytecode |
 	unknownBytecode := self compiledCode at: self pc.
 	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
-	
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -158,7 +125,6 @@ Context >> restart [
 	
 	thisContext terminateTo: self.
 	self jump.
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -233,7 +199,6 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	exception class == SimulationExceptionWrapper
 		ifTrue: [ ^ exception exception signal ].
 	^ exception
-	
 ]
 
 { #category : #'*Debugging-Core' }
@@ -344,7 +309,7 @@ Context >> stepToHome: aContext [
 				  error } ].
 
 		home == ctxt home ] whileFalse: [ 
-			home isDead ifTrue: [ 
+			(home isDead or: [ ctxt isDead ]) ifTrue: [ 
 				^ { 
 					  ctxt.
 					  nil } ] ].
@@ -443,13 +408,11 @@ Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
 	^self lookupTempVar: aName
-
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> temporaryVariables [
-	^self sourceNode temporaries collect: [ :each | each binding ] 
-
+	^self sourceNode temporaries collect: [ :each | each binding ]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -480,7 +443,7 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 
 { #category : #'*Debugging-Core' }
 Context >> unusedBytecode [
-	^ self respondsToUnknownBytecode 
+	^ self respondsToUnknownBytecode
 ]
 
 { #category : #'*Debugging-Core' }

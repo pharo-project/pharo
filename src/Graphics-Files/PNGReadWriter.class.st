@@ -95,11 +95,9 @@ PNGReadWriter class >> debugging: aBoolean [
 	Debugging := aBoolean
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 PNGReadWriter class >> initialize [
-	"
-	PNGReadWriter initialize
-	"
+
 	BPP := { 
 		#(1 2 4 8 16 ).
 		#(0 0 0 0 0 ).
@@ -300,7 +298,6 @@ PNGReadWriter >> copyPixelsGray: y at: startX by: incX [
 		blitter pixelAt: (x@y) put: pixel.
 		pixelNumber := pixelNumber + 1.
 	].
-
 ]
 
 { #category : #'pixel copies' }
@@ -499,7 +496,6 @@ PNGReadWriter >> copyPixelsRGB: y [
 				i := i + 6]].
 	
 	tempForm displayOn: form at: 0@y rule: Form over.
-
 ]
 
 { #category : #'pixel copies' }
@@ -547,8 +543,6 @@ PNGReadWriter >> copyPixelsRGB: y at: startX by: incX [
 				i := i + 6.
 				xx := xx + incX]].
 	tempForm displayOn: form at: 0@y rule: Form over.
-
-
 ]
 
 { #category : #'pixel copies' }
@@ -581,7 +575,6 @@ PNGReadWriter >> copyPixelsRGBA: y [
 			tempBits at: x+1 put: pixel normalize.
 	].
 	tempForm displayOn: form at: 0@y rule: Form over.
-
 ]
 
 { #category : #'pixel copies' }
@@ -615,8 +608,6 @@ PNGReadWriter >> copyPixelsRGBA: y at: startX by: incX [
 		].
 	].
 	tempForm displayOn: form at: 0@y rule: Form paintAlpha.
-
-
 ]
 
 { #category : #accessing }
@@ -638,8 +629,6 @@ dimensions"
 	pass = 5 ifTrue: [ ^ height >=3 ].
 	pass = 6 ifTrue: [ ^ width >=2 ].
 	pass = 7 ifTrue: [ ^ height >=2 ].
-
-
 ]
 
 { #category : #filtering }
@@ -679,7 +668,6 @@ PNGReadWriter >> filterHorizontal: count [
 
 { #category : #filtering }
 PNGReadWriter >> filterNone: count [
-
 ]
 
 { #category : #filtering }
@@ -715,8 +703,6 @@ PNGReadWriter >> filterScanline: filterType count: count [
 			#(filterNone: filterHorizontal: filterVertical: filterAverage: filterPaeth:)
 				at: filterType+1)
 		with: count.
-
-
 ]
 
 { #category : #filtering }
@@ -726,8 +712,6 @@ PNGReadWriter >> filterVertical: count [
 	1 to: count do: [ :i |
 		thisScanline at: i put: (((thisScanline at: i) +
 (prevScanline at: i)) bitAnd: 255) ]
-
-
 ]
 
 { #category : #miscellaneous }
@@ -757,7 +741,6 @@ PNGReadWriter >> grayColorsFor: d [
 			palette at: g+1 put: (Color gray: (g/255) asFloat) ].
 		^ palette
 		].
-
 ]
 
 { #category : #accessing }
@@ -931,7 +914,6 @@ PNGReadWriter >> processIDATChunk [
 	interlaceMethod = 0
 		ifTrue: [ self processNonInterlaced ]
 		ifFalse: [ self processInterlaced ]
-
 ]
 
 { #category : #chunks }
@@ -1112,7 +1094,6 @@ PNGReadWriter >> processPLTEChunk [
 PNGReadWriter >> processPhysicalPixelChunk [
 
 	"Transcript show: '  PHYSICAL: ',chunk printString."
-
 ]
 
 { #category : #chunks }
@@ -1154,7 +1135,6 @@ PNGReadWriter >> processTransparencyChunk [
 			[chunk withIndexDo: [ :alpha :index |
 				palette at: index put: ((palette at: index) alpha: alpha/255)].
 			^self].
-
 ]
 
 { #category : #'pixel copies' }
@@ -1173,7 +1153,6 @@ PNGReadWriter >> understandsImageFormat [
 	#(137 80 78 71 13 10 26 10) do: [ :byte |
 		stream next = byte ifFalse: [^ false]].
 	^ true
-
 ]
 
 { #category : #writing }
@@ -1255,7 +1234,6 @@ PNGReadWriter >> writeIHDRChunkOn: aStream [
 	aStream nextNumber: 1 put: 0. "compression"
 	aStream nextNumber: 1 put: 0. "filter method"
 	aStream nextNumber: 1 put: 0. "interlace method"
-
 ]
 
 { #category : #writing }

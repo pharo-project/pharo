@@ -38,15 +38,9 @@ RGMetaclassTraitV2Strategy >> category [
 ]
 
 { #category : #'private - backend access' }
-RGMetaclassTraitV2Strategy >> classSide [
-
-	^ self owner
-]
-
-{ #category : #'private - backend access' }
 RGMetaclassTraitV2Strategy >> classVarNames [
 
-	^ self theNonMetaClass classVarNames
+	^ self instanceSide classVarNames
 ]
 
 { #category : #'private - backend access' }
@@ -205,9 +199,4 @@ RGMetaclassTraitV2Strategy >> sibling [
 RGMetaclassTraitV2Strategy >> storeName [
 
 	^ 'RGMetaclass'
-]
-
-{ #category : #'private - backend access' }
-RGMetaclassTraitV2Strategy >> theNonMetaClass [
-	^self baseClass
 ]

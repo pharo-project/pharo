@@ -130,8 +130,7 @@ HiRuler >> initializeWithValues: aSequenceableCollection [
 	linksByRow := Array new: valueByRow size.
 	1 to: valueByRow size do: [ :index | 
 		elementsByRow at: index put: LinkedList new.
-		linksByRow at: index put: LinkedList new ]. 
-
+		linksByRow at: index put: LinkedList new ].
 ]
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 	#category : #'Metacello-Core-Constructors'
 }
 
-{ #category : #conversion }
+{ #category : #converting }
 MetacelloMethodSectionPath >> asAttributeOrPath [
     self size = 1
         ifTrue: [ 
@@ -17,7 +17,7 @@ MetacelloMethodSectionPath >> asAttributeOrPath [
     ^ self
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 MetacelloMethodSectionPath >> asMetacelloAttributePath [
     ^ self
 ]

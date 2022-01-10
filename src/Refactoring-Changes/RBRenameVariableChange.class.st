@@ -12,7 +12,7 @@ Class {
 		'className',
 		'isMeta'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Variables'
 }
 
 { #category : #'instance creation' }
@@ -25,7 +25,8 @@ RBRenameVariableChange class >> rename: oldName to: newName in: aClass [
 ]
 
 { #category : #comparing }
-RBRenameVariableChange >> = aRenameVariableChange [ 
+RBRenameVariableChange >> = aRenameVariableChange [
+
 	self class = aRenameVariableChange class 
 		ifFalse: [ ^ false ].
 	^ className = aRenameVariableChange changeClassName 
@@ -36,26 +37,32 @@ RBRenameVariableChange >> = aRenameVariableChange [
 
 { #category : #private }
 RBRenameVariableChange >> addNewVariable [
+
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 RBRenameVariableChange >> changeClass [
+
 	| class |
 	class := onSystemDictionary classNamed: self changeClassName.
-	^ isMeta ifTrue: [ class class ] ifFalse: [ class ]
+	^ isMeta
+		  ifTrue: [ class class ]
+		  ifFalse: [ class ]
 ]
 
 { #category : #accessing }
 RBRenameVariableChange >> changeClass: aBehavior [
+
 	isMeta := aBehavior isMeta.
 	className := isMeta
-		ifTrue: [ aBehavior soleInstance name ]
-		ifFalse: [ aBehavior name ]
+		             ifTrue: [ aBehavior soleInstance name ]
+		             ifFalse: [ aBehavior name ]
 ]
 
 { #category : #accessing }
 RBRenameVariableChange >> changeClassName [
+
 	^ className
 ]
 
@@ -68,23 +75,27 @@ RBRenameVariableChange >> changeClassName: aSymbol [
 
 { #category : #printing }
 RBRenameVariableChange >> changeString [
+
 	^ 'Rename ' , oldName , ' to ' , newName
 ]
 
 { #category : #private }
 RBRenameVariableChange >> copyOldValuesToNewVariable [
+
 	self subclassResponsibility
 ]
 
 { #category : #printing }
 RBRenameVariableChange >> displayClassName [
+
 	^ isMeta
 		ifTrue: [ self changeClassName , ' class' ]
 		ifFalse: [ self changeClassName asString ]
 ]
 
 { #category : #private }
-RBRenameVariableChange >> executeNotifying: aBlock [ 
+RBRenameVariableChange >> executeNotifying: aBlock [
+
 	| undo |
 	self addNewVariable.
 	self copyOldValuesToNewVariable.
@@ -98,11 +109,13 @@ RBRenameVariableChange >> executeNotifying: aBlock [
 
 { #category : #comparing }
 RBRenameVariableChange >> hash [
+
 	^ (self class hash bitXor: self oldName hash) bitXor: self newName hash
 ]
 
 { #category : #private }
 RBRenameVariableChange >> isMeta [
+
 	^ isMeta
 ]
 
@@ -114,31 +127,37 @@ RBRenameVariableChange >> nameToDisplay [
 
 { #category : #accessing }
 RBRenameVariableChange >> newName [
+
 	^ newName
 ]
 
 { #category : #private }
-RBRenameVariableChange >> newName: aString [ 
+RBRenameVariableChange >> newName: aString [
+
 	newName := aString
 ]
 
 { #category : #accessing }
 RBRenameVariableChange >> oldName [
+
 	^ oldName
 ]
 
 { #category : #private }
 RBRenameVariableChange >> oldName: aString [
+
 	oldName := aString
 ]
 
 { #category : #printing }
 RBRenameVariableChange >> printOn: aStream [
+
 	aStream nextPutAll: self displayString
 ]
 
 { #category : #accessing }
 RBRenameVariableChange >> removeOldVariable [
+
 	self subclassResponsibility
 ]
 

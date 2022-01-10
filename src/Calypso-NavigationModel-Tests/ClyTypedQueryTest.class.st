@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyTypedQueryTest class >> isAbstract [
-	^self = ClyTypedQueryTest 
+	^self = ClyTypedQueryTest
 ]
 
 { #category : #running }
@@ -119,7 +119,7 @@ ClyTypedQueryTest >> testCreationUnifiedInstance [
 	
 	self assert: unifiedInstance class equals: query class.
 	self assert: unifiedInstance requiredResult equals: query requiredResult.
-	self assert: unifiedInstance scope equals: ClyUnknownScope instance 
+	self assert: unifiedInstance scope equals: ClyUnknownScope instance
 ]
 
 { #category : #tests }
@@ -137,7 +137,6 @@ ClyTypedQueryTest >> testForbidCreationOnScopeWhichNotSupportIt [
 	[query scope: (ClyCompositeScope in: environment).
 	self assert: false description: 'Query should be supported by scope'
 	] onErrorDo: [].
-	
 ]
 
 { #category : #tests }

@@ -11,7 +11,7 @@ Class {
 ReExcessiveArgumentsRuleTest >> longArgMethod: arg1 with: arg2 with: arg3 with: arg4 with: arg5 [
 	"This method should be critisized due to too many arguments"
 	
-	^self  
+	^self
 ]
 
 { #category : #tests }
@@ -32,7 +32,7 @@ ReExcessiveArgumentsRuleTest >> testRule [
 
 	| critiques|	
 	critiques := self myCritiquesOnMethod: self class >> #longArgMethod:with:with:with:with:.	
-	self assert: critiques size equals: 1 
+	self assert: critiques size equals: 1
 ]
 
 { #category : #tests }

@@ -14,5 +14,5 @@ ClySwitchToClassSideCommand class >> toolbarOrder [
 
 { #category : #execution }
 ClySwitchToClassSideCommand >> metaLevelScope [
-	^ClyClassSideScope 
+	^ClyClassSideScope
 ]

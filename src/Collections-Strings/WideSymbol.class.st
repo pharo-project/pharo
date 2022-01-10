@@ -18,7 +18,6 @@ WideSymbol >> asWideString [
 WideSymbol >> at: index [ 
 	"Answer the Character stored in the field of the receiver indexed by the argument."
 	^ Character value: (self wordAt: index).
-
 ]
 
 { #category : #accessing }
@@ -28,7 +27,6 @@ WideSymbol >> byteAt: index [
 	d := (index + 3) // 4.
 	r := (index - 1) \\ 4 + 1.
 	^ (self wordAt: d) byteAt: ((4 - r) + 1).
-
 ]
 
 { #category : #accessing }
@@ -40,7 +38,6 @@ WideSymbol >> byteAt: index put: aByte [
 WideSymbol >> byteSize [
 
 	^ self size * 4.
-
 ]
 
 { #category : #comparing }
@@ -69,14 +66,12 @@ WideSymbol >> privateAt: index put: aCharacter [
 		ifFalse: [^ self errorNonIntegerIndex].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
-
 ]
 
 { #category : #private }
 WideSymbol >> species [
 	"Answer the preferred class for reconstructing the receiver."
 	^WideString
-
 ]
 
 { #category : #private }
@@ -90,10 +85,9 @@ WideSymbol >> string: aString [
 WideSymbol >> wordAt: index [
 	<primitive: 60>
 	^ (self basicAt: index).
-
 ]
 
 { #category : #accessing }
 WideSymbol >> wordAt: index put: anInteger [
-	^ self modificationForbiddenFor: #wordAt:put: index: index value: anInteger 
+	^ self modificationForbiddenFor: #wordAt:put: index: index value: anInteger
 ]

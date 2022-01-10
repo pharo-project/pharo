@@ -449,7 +449,6 @@ SystemWindow >> closeBoxHit [
 	self allowedToClose ifFalse: [^self].
 	self playCloseSound.
 	self close
-
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -516,12 +515,6 @@ SystemWindow >> createMenuBox [
 	"Answer a button for the window menu."
 	
 	^self theme createMenuBoxFor: self
-]
-
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> defaultBackgroundColor [
-	"Answer the color to be used as the base window color."
-	^self theme windowColorFor: self
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -978,7 +971,6 @@ SystemWindow >> navigateFocusForward [
 	self nextMorphWantingFocus
 		ifNil: [self takeKeyboardFocus]
 		ifNotNil: [super navigateFocusForward]
-	
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -1058,7 +1050,6 @@ SystemWindow class >> passivateTopWindow [
 		TopWindow := nil.
 		window privateBePassive.
 	]
-
 ]
 
 { #category : #'*Polymorph-Widgets' }

@@ -33,5 +33,5 @@ ClyNavigationHistoryTest >> setUp [
 
 { #category : #running }
 ClyNavigationHistoryTest >> snapshotState [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

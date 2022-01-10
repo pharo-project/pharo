@@ -189,26 +189,6 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 
 ]
 
-{ #category : #generated }
-RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval edittingMode: aRubEdittingMode shouldFavourExpressions: isFavouringExpressions onError: aBlock [
-
-	"Find the best node in the source text in the identified selection area"
-
-	self
-		deprecated:
-		'Use #bestNodeInString:at:editingMode:shouldFavourExpressions:onError: instead'
-		transformWith:
-			'`@rec bestNodeInString: `@arg1 at: `@arg2 edittingMode: `@arg3 shouldFavourExpressions: `@arg4 onError: `@arg5'
-			->
-			'`@rec bestNodeInString: `@arg1 at: `@arg2 editingMode: `@arg3 shouldFavourExpressions: `@arg4 onError: `@arg5'.
-	^ self
-		  bestNodeInString: source
-		  at: selectionInterval
-		  editingMode: aRubEdittingMode
-		  shouldFavourExpressions: isFavouringExpressions
-		  onError: aBlock
-]
-
 { #category : #'source navigation' }
 RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
@@ -328,7 +308,7 @@ RubSmalltalkEditor >> classNamesContainingIt [
 	self lineSelectAndEmptyCheck: [^self].
 	self model systemNavigation 
 		browseClassesWithNamesContaining: self selection string
-		caseSensitive: Sensor shiftPressed
+		caseSensitive: World currentHand shiftPressed
 ]
 
 { #category : #'do-its' }
@@ -836,6 +816,21 @@ RubSmalltalkEditor >> isScripting [
 { #category : #testing }
 RubSmalltalkEditor >> isSmalltalkEditor [
 	^ true 
+]
+
+{ #category : #private }
+RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
+	"By default, group alphanumeric and non-alphanumeric separately"
+	| character |
+	character := aString at: index.
+	"In smalltalk code, colons make part of selectors too and are part of a word"
+	^ character isAlphaNumeric or: [
+		"Check that it is a keyword selector.
+		 - followed by a colon
+		 - but not by an assignment "
+		character = $: and: [ 
+			aString size > index
+				and: [  (aString at: index + 1) ~= $= ] ] ]
 ]
 
 { #category : #'menu messages' }

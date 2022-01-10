@@ -29,7 +29,7 @@ IRBlockReturnTop >> successor [
 { #category : #accessing }
 IRBlockReturnTop >> successor: anObject [
 
-	successor := anObject. 
+	successor := anObject.
 ]
 
 { #category : #accessing }

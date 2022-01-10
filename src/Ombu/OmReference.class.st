@@ -27,7 +27,6 @@ OmReference class >> fromSton: stonReader [
 			self 
 				globalName: array first
 				localName: array second ]
-
 ]
 
 { #category : #'instance creation' }

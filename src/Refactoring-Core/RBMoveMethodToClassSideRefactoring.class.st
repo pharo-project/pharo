@@ -82,7 +82,7 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 RBMoveMethodToClassSideRefactoring >> getNewSource [
 
 	| rewriter node temp |
-	temp := self getTempName.
+	temp := self temporaryName.
 	node := RBParser parseMethod: method source.
 	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
@@ -105,12 +105,6 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 	whileTrue: [ counter := counter + 1.
 		tempName := aString , counter asString ].
 	^ tempName
-]
-
-{ #category : #initialization }
-RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
-	method := aMethod.
-	class := self classObjectFor: aClass.
 ]
 
 { #category : #accessing }
@@ -158,6 +152,18 @@ RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 		nextPutAll: class name.
 	aStream
 		nextPutAll: ')'
+]
+
+{ #category : #transforming }
+RBMoveMethodToClassSideRefactoring >> temporaryName [
+	| aString counter tempName |
+	counter := 0.
+	aString := class canonicalArgumentName.
+	tempName := aString.
+	[self checkVariableNamed: tempName]
+	whileTrue: [ counter := counter + 1.
+		tempName := aString , counter asString ].
+	^ tempName
 ]
 
 { #category : #transforming }

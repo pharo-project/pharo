@@ -51,22 +51,12 @@ FT2Outline >> contoursCollection [
 	].
 
 	^result
-
-		
-
-		
-
 ]
 
 { #category : #accessing }
 FT2Outline >> pointCollection [
 
 	^(1 to: pointsSize * 2 by: 2) collect: [ :i | ((points at: i) / 64) @ ((points at: i + 1) / 64)]
-
-		
-
-		
-
 ]
 
 { #category : #private }
@@ -84,7 +74,6 @@ FT2Outline >> primLoadArraysFrom: anFT2Face [
 	1 to: (outline n_points * 2) do: [ :idx |
 		points at: 1 put: (pointsArray at: 1).
 	].
-
 ]
 
 { #category : #private }

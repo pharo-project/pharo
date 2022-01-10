@@ -70,7 +70,6 @@ PluggableButtonMorph class >> buildPluggableButtonShortcutsOn: aBuilder [
 { #category : #examples }
 PluggableButtonMorph class >> exampleButtonNoAction [
 	<sampleInstance>
-	<exampleWidget>
 
 	^ PluggableButtonMorph
 		newButtonFor: nil
@@ -116,7 +115,6 @@ PluggableButtonMorph class >> newButtonFor: aModel getState: stateSel action: ac
 PluggableButtonMorph class >> on: anObject [
 
 	^ self on: anObject getState: #isOn action: #switch
-
 ]
 
 { #category : #'instance creation' }
@@ -129,7 +127,6 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		label: nil
 		icon: nil
 		menu: nil
-
 ]
 
 { #category : #'instance creation' }
@@ -142,7 +139,6 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		label: labelSel
 		icon: nil
 		menu: nil
-
 ]
 
 { #category : #'instance creation' }
@@ -155,7 +151,6 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		label: labelSel
 		icon: iconSel
 		menu: menuSel
-
 ]
 
 { #category : #'instance creation' }
@@ -168,7 +163,6 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		label: labelSel
 		icon: nil
 		menu: menuSel
-
 ]
 
 { #category : #accessing }
@@ -183,13 +177,12 @@ PluggableButtonMorph >> action: aSymbol [
 	"Set actionSelector to be the action defined by aSymbol."
 
 	actionSelector := aSymbol.
-
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> actionBlock [
 
-	^ actionBlock 
+	^ actionBlock
 ]
 
 { #category : #accessing }
@@ -212,7 +205,6 @@ PluggableButtonMorph >> actionSelector: aSymbol [
 	SimpleButtonMorph cross-compatibility"
 
 	actionSelector := aSymbol.
-
 ]
 
 { #category : #'event handling' }
@@ -265,7 +257,6 @@ PluggableButtonMorph >> argumentsProvider: anObject argumentsSelector: aSelector
 PluggableButtonMorph >> askBeforeChanging [
 
 	^ askBeforeChanging
-
 ]
 
 { #category : #accessing }
@@ -273,7 +264,6 @@ PluggableButtonMorph >> askBeforeChanging: aBoolean [
 	"If this preference is turned on, then give the model an opportunity to ask the user before accepting a change that might cause unaccepted edits to be lost."
 
 	askBeforeChanging := aBoolean.
-
 ]
 
 { #category : #accessing }
@@ -476,7 +466,6 @@ PluggableButtonMorph >> feedbackColor: aColor [
 
 	feedbackColor := aColor.
 	self changed.
-
 ]
 
 { #category : #accessing }
@@ -485,7 +474,6 @@ PluggableButtonMorph >> fillStyleToUse [
 	
 	^self perform: (self availableFillStyles at: (
 			self interactionStates indexOf: self interactionState))
-
 ]
 
 { #category : #accessing }
@@ -507,7 +495,7 @@ PluggableButtonMorph >> focusIndicatorCornerRadius [
 	"Answer the corner radius preferred for the focus indicator
 	for the receiver for themes that support this."
 
-	^self theme buttonFocusIndicatorCornerRadiusFor: self 
+	^self theme buttonFocusIndicatorCornerRadiusFor: self
 ]
 
 { #category : #accessing }
@@ -603,7 +591,6 @@ PluggableButtonMorph >> handlesKeyboard: evt [
 PluggableButtonMorph >> handlesMouseDown: evt [
 
 	^ true
-
 ]
 
 { #category : #'event handling' }
@@ -669,7 +656,6 @@ PluggableButtonMorph >> indicateModalChild [
 		self fillStyle: fs.
 		w ifNotNil: [w displayWorldSafely].
 		self invalidRect: self bounds]
-
 ]
 
 { #category : #initialization }
@@ -759,7 +745,7 @@ PluggableButtonMorph >> invokeMenu: evt [
 PluggableButtonMorph >> isDefault [
 	"Answer whether the button is considered to be a default one."
 
-	^self valueOfProperty: #isDefault ifAbsent: [false] 
+	^self valueOfProperty: #isDefault ifAbsent: [false]
 ]
 
 { #category : #accessing }
@@ -802,7 +788,6 @@ PluggableButtonMorph >> label [
 	"Answer the DisplayObject used as this button's label."
 
 	^ label
-
 ]
 
 { #category : #accessing }
@@ -898,7 +883,6 @@ PluggableButtonMorph >> model: anObject [
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
 	model := anObject.
-
 ]
 
 { #category : #'event handling' }
@@ -915,7 +899,6 @@ PluggableButtonMorph >> mouseDown: evt [
 		ifFalse: [
 			allButtons := owner submorphs select: [:m | m class = self class].
 			self updateFeedbackForEvt: evt].
-
 ]
 
 { #category : #'event handling' }
@@ -951,7 +934,6 @@ PluggableButtonMorph >> mouseMove: evt [
 
 	allButtons ifNil: [^ self].
 	allButtons do: [:m | m updateFeedbackForEvt: evt].
-
 ]
 
 { #category : #style }
@@ -983,7 +965,6 @@ PluggableButtonMorph >> mouseUp: evt [
 	all do: [:m |
 		(m containsPoint: evt cursorPoint) ifTrue: [m enabled ifTrue: [ m performAction: evt ]]].
 	self showSelectionFeedback ifTrue: [self changed]
-
 ]
 
 { #category : #accessing }
@@ -1028,7 +1009,6 @@ PluggableButtonMorph >> normalFillStyle [
 { #category : #accessing }
 PluggableButtonMorph >> offColor [
 	^ offColor
-
 ]
 
 { #category : #accessing }
@@ -1036,7 +1016,6 @@ PluggableButtonMorph >> offColor: colorWhenOff [
 	"Set the fill colors to be used when this button is off."
 
 	self onColor: onColor offColor: colorWhenOff
-
 ]
 
 { #category : #accessing }
@@ -1053,7 +1032,6 @@ PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel lab
 	self
 		update: (labelSel ifNil: [ iconSel ]);
 		update: getStateSel
-
 ]
 
 { #category : #accessing }
@@ -1073,7 +1051,6 @@ PluggableButtonMorph >> onColor [
 	"Answer the on color."
 	
 	^onColor
-
 ]
 
 { #category : #accessing }
@@ -1084,9 +1061,6 @@ PluggableButtonMorph >> onColor: colorWhenOn offColor: colorWhenOff [
 	offColor := colorWhenOff.
 	self update: #onOffColor.
 	self update: getStateSelector.
-
-
-
 ]
 
 { #category : #updating }
@@ -1202,7 +1176,6 @@ PluggableButtonMorph >> shortcutCharacter [
 	"Return the Character to be used as a shortcut to turn on this switch, or nil if this switch doesn't have a keyboard shortcut."
 
 	^ shortcutCharacter
-
 ]
 
 { #category : #accessing }
@@ -1210,7 +1183,6 @@ PluggableButtonMorph >> shortcutCharacter: aCharacter [
 	"Set the character to be used as a keyboard shortcut for turning on this switch."
 
 	shortcutCharacter := aCharacter.
-
 ]
 
 { #category : #accessing }
@@ -1259,7 +1231,6 @@ PluggableButtonMorph >> themeChanged [
 PluggableButtonMorph >> triggerOnMouseDown [
 
 	^ triggerOnMouseDown
-
 ]
 
 { #category : #accessing }
@@ -1267,7 +1238,6 @@ PluggableButtonMorph >> triggerOnMouseDown: aBoolean [
 	"If this preference is turned on, then trigger my action immediately when the mouse goes down."
 
 	triggerOnMouseDown := aBoolean.
-
 ]
 
 { #category : #updating }
@@ -1309,7 +1279,6 @@ PluggableButtonMorph >> updateFeedbackForEvt: evt [
 	newState = showSelectionFeedback ifFalse: [
 		self showSelectionFeedback: newState.
 		self changed; layoutChanged].
-
 ]
 
 { #category : #updating }
@@ -1325,7 +1294,6 @@ PluggableButtonMorph >> veryDeepFixupWith: deepCopier [
 
 super veryDeepFixupWith: deepCopier.
 model := deepCopier references at: model ifAbsent: [model].
-
 ]
 
 { #category : #copying }
@@ -1350,7 +1318,7 @@ showSelectionFeedback := showSelectionFeedback veryDeepCopyWith: deepCopier.
 allButtons := nil.		"a cache"
 arguments := arguments veryDeepCopyWith: deepCopier.
 argumentsProvider := argumentsProvider veryDeepCopyWith: deepCopier.
-argumentsSelector := argumentsSelector.  " a Symbol" 
+argumentsSelector := argumentsSelector.  " a Symbol"
 ]
 
 { #category : #keyboard }

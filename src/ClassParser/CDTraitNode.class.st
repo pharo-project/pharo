@@ -18,7 +18,7 @@ CDTraitNode >> isTraitNode [
 
 { #category : #accessing }
 CDTraitNode >> name [
-	^name 
+	^name
 ]
 
 { #category : #accessing }

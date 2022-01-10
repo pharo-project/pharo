@@ -109,7 +109,6 @@ Morph class >> initialize [
 
 	"this empty array object is shared by all morphs with no submorphs:"
 	EmptyArray := Array new.
-
 ]
 
 { #category : #settings }
@@ -161,7 +160,6 @@ Morph class >> newBounds: bounds [
 Morph class >> newBounds: bounds color: color [
 
 	^ (self new privateBounds: bounds) privateColor: color
-
 ]
 
 { #category : #'instance creation' }
@@ -214,12 +212,6 @@ Morph >> acceptDroppingMorph: aMorph event: evt [
 		atIndex: (layout indexForInserting: aMorph at: evt position in: self).
 ]
 
-{ #category : #updating }
-Morph >> actAsExecutor [
-	"Prepare the receiver to act as executor for any resources associated with it"
-	self breakDependents
-]
-
 { #category : #'events - accessing' }
 Morph >> actionMap [
 	"Answer an action map"
@@ -237,8 +229,6 @@ Morph >> activeHand [
 { #category : #menus }
 Morph >> addAddHandMenuItemsForHalo: aMenu hand: aHandMorph [
 	"The former charter of this method was to add halo menu items that pertained specifically to the hand.  Over time this charter has withered, and most morphs reimplement this method simply to add their morph-specific menu items.  So in the latest round, all other implementors in the standard image have been removed.  However, this is left here as a hook for the benefit of existing code in client uses."
-
-
 ]
 
 { #category : #'events - alarms' }
@@ -305,7 +295,6 @@ Morph >> addAllMorphs: aCollection after: anotherMorph [
 { #category : #menu }
 Morph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 	"Probably one could offer border-style items even if it's not a borderedMorph, so this remains a loose end for the moment"
-
 ]
 
 { #category : #'layout - menu' }
@@ -347,7 +336,6 @@ Morph >> addCustomHaloMenuItems: aMenu hand: aHandMorph [
 { #category : #menus }
 Morph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	"Add morph-specific items to the given menu which was invoked by the given hand.  This method provides is invoked both from the halo-menu and from the control-menu regimes."
-
 ]
 
 { #category : #'debug and other' }
@@ -445,7 +433,6 @@ Morph >> addFillStyleMenuItems: aMenu hand: aHand [
 	menu add: 'bitmap fill' selector: #useBitmapFill.
 	menu add: 'default fill' selector: #useDefaultFill.
 	aMenu add: 'fill style' subMenu: menu.
-
 ]
 
 { #category : #'rotate scale and flex' }
@@ -514,7 +501,6 @@ Morph >> addHaloActionsTo: aMenu [
 	subMenu balloonTextForLastItem: 'Open an Inspector on this object'.
 
 	aMenu add: 'halo actions...' subMenu: subMenu
-
 ]
 
 { #category : #'layout - menu' }
@@ -582,14 +568,12 @@ Morph >> addMorph: aMorph asElementNumber: aNumber [
 			[self addMorph: aMorph inFrontOf: (submorphs at: aNumber)]
 		ifFalse:
 			[self addMorphBack: aMorph]
-
 ]
 
 { #category : #'submorphs - add/remove' }
 Morph >> addMorph: newMorph behind: aMorph [
 	"Add a morph to the list of submorphs behind the specified morph"
 	^self privateAddMorph: newMorph atIndex: (submorphs indexOf: aMorph) + 1.
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -598,8 +582,6 @@ Morph >> addMorph: aMorph fullFrame: aLayoutFrame [
 	aMorph layoutFrame: aLayoutFrame asLayoutFrame.
 	aMorph hResizing: #spaceFill; vResizing: #spaceFill.
 	self addMorph: aMorph.
-
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -618,7 +600,6 @@ Morph >> addMorphCentered: aMorph [
 
 	aMorph position: bounds center - (aMorph extent // 2).
 	self addMorphFront: aMorph.
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -653,7 +634,6 @@ Morph >> addMorphInFrontOfLayer: aMorph [
 		].
 	].
 	self addMorphBack: aMorph.
-
 ]
 
 { #category : #'wiw support' }
@@ -666,7 +646,6 @@ Morph >> addMorphInLayer: aMorph [
 		].
 	].
 	self addMorphBack: aMorph
-
 ]
 
 { #category : #menu }
@@ -697,7 +676,6 @@ Morph >> addNestedYellowButtonItemsTo: aMenu event: evt [
 
 { #category : #'halos and balloon help' }
 Morph >> addOptionalHandlesTo: aHalo box: box [
-
 ]
 
 { #category : #menus }
@@ -822,7 +800,6 @@ Morph >> addTitleForHaloMenu: aMenu [
 		icon: (self iconOrThumbnailOfSize: 18);
 		cellInset: 3
 	]
-
 ]
 
 { #category : #menus }
@@ -889,7 +866,6 @@ Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
 { #category : #'change reporting' }
 Morph >> addedMorph: aMorph [
 	"Notify the receiver that the given morph was just added."
-
 ]
 
 { #category : #menus }
@@ -1372,7 +1348,6 @@ Morph >> bottomLeft: aPoint [
 	" Move me so that my bottom left corner is at aPoint. My extent (width & height) are unchanged "
 
 	self position: ((aPoint x) @ (aPoint y - self height)).
-
 ]
 
 { #category : #geometry }
@@ -1386,7 +1361,6 @@ Morph >> bottomRight: aPoint [
 	" Move me so that my bottom right corner is at aPoint. My extent (width & height) are unchanged "
 
 	self position: ((aPoint x - bounds width) @ (aPoint y - self height))
-
 ]
 
 { #category : #drawing }
@@ -1405,7 +1379,6 @@ Morph >> bounds [
 	"Note: It is best not to override this method because many methods in Morph and its subclasses use the instance variable directly rather than 'self bounds'. Instead, subclasses should be sure that the bounds instance variable is correct."
 
 	^ bounds
-
 ]
 
 { #category : #geometry }
@@ -1427,7 +1400,6 @@ Morph >> bounds: aRectangle from: referenceMorph [
 	"Return the receiver's bounds as seen by aMorphs coordinate frame"
 	owner ifNil: [^ aRectangle].
 	^(owner transformFrom: referenceMorph) globalBoundsToLocal: aRectangle
-
 ]
 
 { #category : #geometry }
@@ -1435,7 +1407,6 @@ Morph >> bounds: aRectangle in: referenceMorph [
 	"Return the receiver's bounds as seen by aMorphs coordinate frame"
 	owner ifNil: [^ aRectangle].
 	^(owner transformFrom: referenceMorph) localBoundsToGlobal: aRectangle
-
 ]
 
 { #category : #'halos and balloon help' }
@@ -1505,7 +1476,6 @@ Morph >> buildHandleMenu: aHand [
 	self addCustomHaloMenuItems: menu hand: aHand.
 	menu defaultTarget: aHand.
 	^ menu
-
 ]
 
 { #category : #'meta-actions' }
@@ -1664,7 +1634,6 @@ Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor han
 	
 	(UIManager default chooseColor: aColor)
 		ifNotNil: [:nc | anObject perform: aSymbol with: nc].
-
 ]
 
 { #category : #menus }
@@ -1730,7 +1699,6 @@ Morph >> changeListDirection: aSymbol [
 		wrapDir == #topToBottom ifTrue:[^self wrapDirection: #leftToRight].
 		wrapDir == #bottomToTop ifTrue:[^self wrapDirection: #rightToLeft].
 	].
-
 ]
 
 { #category : #'layout - menu' }
@@ -1772,7 +1740,6 @@ Morph >> changeShadowColor [
 
 	(UIManager default chooseColor: self shadowColor)
 		ifNotNil: [:nc | self shadowColor: nc].
-
 ]
 
 { #category : #recategorized }
@@ -1833,7 +1800,6 @@ Morph >> clearArea [
 		right: visRight
 		top: visTop
 		bottom: visBottom
-
 ]
 
 { #category : #'event handling' }
@@ -1944,7 +1910,6 @@ Morph >> colorForInsets [
 	"Return the color to be used for shading inset borders.  The default is my own color, but it might want to be, eg, my owner's color.  Whoever's color ends up prevailing, the color itself gets the last chance to determine, so that when, for example, an InfiniteForm serves as the color, callers won't choke on some non-Color object being returned"
 	(color isColor and:[color isTransparent and:[owner notNil]]) ifTrue:[^owner colorForInsets].
 	^ color colorForInsets
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -2063,7 +2028,6 @@ Morph >> debugDrawError [
 Morph >> deepCopy [
 
 	self error: 'Please use veryDeepCopy'.
-
 ]
 
 { #category : #'accessing - defaults' }
@@ -2110,7 +2074,6 @@ Morph >> defersHaloOnClickTo: aSubMorph [
 	"May want to add a way (via a property) for morphs to assert true here -- this would let certain kinds of morphs that are unusually reluctant to take the halo on initial click"
 
 	^ false
-	
 ]
 
 { #category : #'rotate scale and flex' }
@@ -2273,7 +2236,6 @@ Morph >> dockingBars [
 	"Answer the receiver's dockingBars"
 	^ self submorphs
 		select: [:each | each isDockingBar]
-
 ]
 
 { #category : #accessing }
@@ -2311,7 +2273,6 @@ Morph >> doubleClickTimeout: evt [
 Morph >> dragEnabled [
 	"Get this morph's ability to add and remove morphs via drag-n-drop."
 	^(self valueOfProperty: #dragEnabled) == true
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -2349,7 +2310,6 @@ Morph >> drawDropShadowOn: aCanvas [
 				]
 			]
 		].
-
 ]
 
 { #category : #drawing }
@@ -2399,7 +2359,6 @@ Morph >> drawSubmorphsOn: aCanvas [
 Morph >> dropEnabled [
 	"Get this morph's ability to add and remove morphs via drag-n-drop."
 	^(self valueOfProperty: #dropEnabled) == true
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -2410,7 +2369,6 @@ Morph >> dropEnabled: aBool [
 { #category : #'event handling' }
 Morph >> dropFiles: anEvent [
 	"Handle a number of files dropped from the OS"
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -2500,14 +2458,12 @@ Morph >> enabled [
 { #category : #accessing }
 Morph >> enabled: aBoolean [
 	"does nothing"
-
-	
 ]
 
 { #category : #accessing }
 Morph >> eventHandler [
 	"answer the receiver's eventHandler"
-	^ extension ifNotNil: [extension eventHandler] 
+	^ extension ifNotNil: [extension eventHandler]
 ]
 
 { #category : #accessing }
@@ -2521,8 +2477,6 @@ Morph >> expandFullBoundsForRolloverBorder: aRectangle [
 	| delta |
 	delta := self valueOfProperty: #rolloverWidth ifAbsent: [10@10].
 	^aRectangle expandBy: delta.
-
-
 ]
 
 { #category : #'accessing - extension' }
@@ -2546,7 +2500,6 @@ Morph >> extent: aPoint [
 	bounds := (bounds topLeft extent: newExtent).
 	self layoutChanged.
 	self changed.
-
 ]
 
 { #category : #viewer }
@@ -2613,7 +2566,6 @@ Morph >> firstOwnerSuchThat: conditionBlock [
 
 	self allOwnersDo: [:m | (conditionBlock value: m) ifTrue: [^ m]].
 	^ nil
-
 ]
 
 { #category : #'submorphs - accessing' }
@@ -2744,7 +2696,6 @@ Morph >> fullReleaseCachedState [
 	"Release the cached state of the receiver and its full submorph tree."
 
 	self allMorphsDo: [:m | m releaseCachedState].
-
 ]
 
 { #category : #geometry }
@@ -2756,7 +2707,6 @@ Morph >> globalPointToLocal: aPoint [
 Morph >> goBehind [
 
 	owner addMorphBack: self.
-
 ]
 
 { #category : #geometry }
@@ -2777,7 +2727,6 @@ Morph >> goHome [
 		ifTrue: [self top: box top - fb top + self top].
 	fb bottom > box bottom
 		ifTrue: [self bottom: box bottom - fb bottom + self bottom].
-
 ]
 
 { #category : #'meta-actions' }
@@ -2813,7 +2762,6 @@ Morph >> hResizing: aSymbol [
 	"
 	self assureLayoutProperties hResizing: aSymbol.
 	self layoutChanged.
-
 ]
 
 { #category : #'layout - properties' }
@@ -2832,7 +2780,6 @@ Morph >> haloClass [
 	"Answer the name of the desired kind of HaloMorph to launch on behalf of the receiver"
 
 	^ #HaloMorph
-
 ]
 
 { #category : #accessing }
@@ -2848,7 +2795,6 @@ Morph >> handleDropFiles: anEvent [
 	(self wantsDropFiles: anEvent) ifFalse:[^self].
 	anEvent wasHandled: true.
 	self dropFiles: anEvent.
-
 ]
 
 { #category : #'events - processing' }
@@ -2867,7 +2813,6 @@ Morph >> handleDropMorph: anEvent [
 	aMorph referencePosition: localPt.
 	self acceptDroppingMorph: aMorph event: anEvent.
 	aMorph justDroppedInto: self event: anEvent.
-
 ]
 
 { #category : #'events - processing' }
@@ -3009,7 +2954,6 @@ Morph >> handleMouseMove: anEvent [
 			stepTime: self mouseStillDownStepRate ].
 
 	^ self eventHandler ifNotNil: [:handler | handler mouseMove: anEvent fromMorph: self ]
-
 ]
 
 { #category : #'events - processing' }
@@ -3028,7 +2972,6 @@ Morph >> handleMouseStillDown: anEvent [
 		ifFalse:[^self stopSteppingSelector: #handleMouseStillDown:].
 	self mouseStillDown: anEvent.
 	^ self eventHandler ifNotNil: [:handler | handler mouseStillDown: anEvent fromMorph: self ]
-
 ]
 
 { #category : #'events - processing' }
@@ -3078,7 +3021,6 @@ Morph >> handleWindowEvent: anEvent [
 	(self wantsWindowEvent: anEvent) ifFalse:[^self].
 	anEvent wasHandled: true.
 	self windowEvent: anEvent.
-
 ]
 
 { #category : #'meta-actions' }
@@ -3175,7 +3117,6 @@ Morph >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
 	self eventHandler ifNotNil: [^ self eventHandler handlesKeyboard: evt].
 	^ false
-
 ]
 
 { #category : #'event handling' }
@@ -3202,8 +3143,6 @@ Morph >> handlesMouseMove: anEvent [
 		(anEvent anyButtonPressed and:[
 			anEvent hand mouseFocus == self
 		])]
-	
-
 ]
 
 { #category : #'event handling' }
@@ -3230,7 +3169,6 @@ Morph >> handlesMouseStillDown: evt [
 	"Return true if the receiver wants to get repeated #mouseStillDown: messages between #mouseDown: and #mouseUp"
 	self eventHandler ifNotNil: [^ self eventHandler handlesMouseStillDown: evt].
 	^ false
-
 ]
 
 { #category : #'events - processing' }
@@ -3384,7 +3322,6 @@ Morph >> hasTableLayoutString [
 Morph >> hasYellowButtonMenu [
 	"Answer true if I have any items at all for a context (yellow button) menu."
 	^ self wantsYellowButtonMenu
-			
 ]
 
 { #category : #geometry }
@@ -3398,7 +3335,6 @@ Morph >> height: aNumber [
 	" Set my height; my position (top-left corner) and width will remain the same "
 
 	self extent: self width@aNumber asInteger.
-
 ]
 
 { #category : #'base - widgets' }
@@ -3488,7 +3424,6 @@ Morph >> iconOrThumbnail [
 				ifTrue: [self imageForm]
 				ifFalse: [self imageFormForRectangle: (fb topLeft extent: maxExtent)]
 		]
-
 ]
 
 { #category : #thumbnail }
@@ -3496,14 +3431,12 @@ Morph >> iconOrThumbnailOfSize: aNumberOrPoint [
 	"Answer an appropiate form to represent the receiver"
 
 	^ self iconOrThumbnail scaledIntoFormOfSize: aNumberOrPoint
-
 ]
 
 { #category : #drawing }
 Morph >> imageForm [
 
 	^ self imageFormForRectangle: self fullBounds
-
 ]
 
 { #category : #drawing }
@@ -3530,21 +3463,18 @@ Morph >> imageForm: depth forRectangle: rect [
 Morph >> imageFormDepth: depth [
 
 	^ self imageForm: depth forRectangle: self fullBounds
-
 ]
 
 { #category : #drawing }
 Morph >> imageFormForRectangle: rect [
 
 	^ self imageForm: Display depth forRectangle: rect
-
 ]
 
 { #category : #'user interface' }
 Morph >> initialExtent [
 	
 	 ^(self valueOfProperty: #initialExtent) ifNil: [ 700@500 ] ifNotNil: [ :ext | ext ]
-
 ]
 
 { #category : #initialization }
@@ -3617,7 +3547,6 @@ Morph >> intoWorld: aWorld [
 	aWorld ifNil:[^self].
 	self wantsSteps ifTrue:[aWorld startStepping: self].
 	self submorphsDo:[:m| m intoWorld: aWorld].
-
 ]
 
 { #category : #'change reporting' }
@@ -3645,7 +3574,6 @@ Morph >> invokeMetaMenu: evt [
 	menu := self buildMetaMenu: evt.
 	self addTitleForHaloMenu: menu.	
 	menu popUpEvent: evt in: self world
-
 ]
 
 { #category : #classification }
@@ -3664,7 +3592,6 @@ Morph >> isDockingBar [
 Morph >> isFlexMorph [
 
 	^ false
-
 ]
 
 { #category : #testing }
@@ -3731,7 +3658,6 @@ Morph >> isRenderer [
 	"Details: A renderer is assumed to have a single submorph. Renderers may be nested to concatenate their transformations. It is useful to be able to find the outer-most renderer. This can be done by ascending the owner chain from the rendered morph. To find the morph being rendered, one can descend through the (singleton) submorph lists of the renderer chain until a non-renderer is encountered."
 
 	^ false
-
 ]
 
 { #category : #'stepping and presenter' }
@@ -3752,11 +3678,11 @@ Morph >> isSteppingSelector: aSelector [
 		ifNotNil:	[aWorld isStepping: self selector: aSelector]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 Morph >> isSticky [
 	"answer whether the receiver is Sticky"
-	extension ifNil: [^ false].
-	^ extension sticky
+
+	^ extension ifNil: [ false ] ifNotNil: [ :ext | ext sticky ]
 ]
 
 { #category : #classification }
@@ -3769,7 +3695,6 @@ Morph >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
 
 	^ color isColor and: [ color isTranslucentButNotTransparent ]
-
 ]
 
 { #category : #classification }
@@ -3935,7 +3860,6 @@ Morph >> layoutProperties: newProperties [
 	"Return the current layout properties associated with the receiver"
 	self layoutProperties == newProperties ifTrue:[^self].
 	self assureExtension layoutProperties: newProperties.
-
 ]
 
 { #category : #layout }
@@ -4206,12 +4130,11 @@ Morph >> minimumExtent: aPoint [
 	"Remember a minimumExtent, for possible future use"
 
 	self setProperty: #minimumExtent toValue: aPoint
-
 ]
 
 { #category : #menus }
 Morph >> model [
-	^ nil 
+	^ nil
 ]
 
 { #category : #structure }
@@ -4354,7 +4277,6 @@ Morph >> mouseDownOnHelpHandle: anEvent [
 	str := self balloonText.
 	str ifNil: [str := self noHelpString].
 	self showBalloon: str hand: anEvent hand.
-
 ]
 
 { #category : #'events - processing' }
@@ -4362,7 +4284,6 @@ Morph >> mouseDownPriority [
 	"Return the default mouse down priority for the receiver"
 
 	^ 0
-
 ]
 
 { #category : #'event handling' }
@@ -4376,7 +4297,6 @@ Morph >> mouseEnterDragging: evt [
 
 	self eventHandler ifNotNil:
 		[^ self eventHandler mouseEnterDragging: evt fromMorph: self].
-
 ]
 
 { #category : #'event handling' }
@@ -4392,13 +4312,11 @@ Morph >> mouseLeaveDragging: evt [
 { #category : #'event handling' }
 Morph >> mouseMove: evt [
 	"Handle a mouse move event. The default response is to let my eventHandler, if any, handle it."
-
 ]
 
 { #category : #'event handling' }
 Morph >> mouseStillDown: evt [
 	"Handle a mouse move event. The default response is to let my eventHandler, if any, handle it."
-
 ]
 
 { #category : #'event handling' }
@@ -4416,7 +4334,6 @@ Morph >> mouseStillDownThreshold [
 { #category : #'event handling' }
 Morph >> mouseUp: evt [
 	"Handle a mouse up event. The default response is to let my eventHandler, if any, handle it."
-
 ]
 
 { #category : #'event handling' }
@@ -4456,7 +4373,6 @@ Morph >> nearestOwnerThat: conditionBlock [
 	"Return the first enclosing morph for which aBlock evaluates to true, or nil if none"
 
 	^ self firstOwnerSuchThat: conditionBlock
-
 ]
 
 { #category : #'halos and balloon help' }
@@ -4562,7 +4478,6 @@ Morph >> outOfWorld: aWorld [
 	"ar 1/31/2001: We could explicitly stop stepping the receiver here but for the sake of speed I'm for now relying on the lazy machinery in the world itself."
 	"aWorld stopStepping: self."
 	self submorphsDo:[:m| m outOfWorld: aWorld].
-
 ]
 
 { #category : #geometry }
@@ -4591,7 +4506,7 @@ Morph >> outermostOwnerWithYellowButtonMenu [
 	| outermost |
 	outermost := self outermostMorphThat: [ :ea |
 		ea isWorldMorph not and: [ ea hasYellowButtonMenu ]].
-	^outermost ifNil: [ self hasYellowButtonMenu ifTrue: [ self ] ifFalse: []] 
+	^outermost ifNil: [ self hasYellowButtonMenu ifTrue: [ self ] ifFalse: []]
 ]
 
 { #category : #structure }
@@ -4683,7 +4598,6 @@ Morph >> point: aPoint from: aReferenceMorph [
 
 	owner ifNil: [^ aPoint].
 	^ (owner transformFrom: aReferenceMorph) globalPointToLocal: aPoint.
-
 ]
 
 { #category : #geometry }
@@ -4691,7 +4605,6 @@ Morph >> point: aPoint in: aReferenceMorph [
 
 	owner ifNil: [^ aPoint].
 	^ (owner transformFrom: aReferenceMorph) localPointToGlobal: aPoint.
-
 ]
 
 { #category : #geometry }
@@ -4733,7 +4646,6 @@ Morph >> position: aPoint [
 Morph >> positionInWorld [
 
 	^ self pointInWorld: self position.
-
 ]
 
 { #category : #geometry }
@@ -4775,7 +4687,6 @@ Morph >> potentialTargetsAt: aPoint [
 		ifNil: [^ #()].
 	^ realOwner
 		morphsAt: aPoint
-		
 ]
 
 { #category : #opening }
@@ -4799,14 +4710,12 @@ Morph >> preferredDuplicationHandleSelector [
 Morph >> preferredKeyboardBounds [
 
 	^ self bounds: self bounds in: self world
-
 ]
 
 { #category : #'event handling' }
 Morph >> preferredKeyboardPosition [
 
 	^ self preferredKeyboardBounds topLeft.
-
 ]
 
 { #category : #'rotate scale and flex' }
@@ -4860,7 +4769,6 @@ Morph >> printStructureOn: aStream indent: tabCount [
 	self printOn: aStream.
 	aStream cr.
 	self submorphsDo: [:m | m printStructureOn: aStream indent: tabCount + 1].
-
 ]
 
 { #category : #private }
@@ -4894,7 +4802,6 @@ Morph >> privateAddAllMorphs: aCollection atIndex: index [
 			m noteNewOwner: self ].
 	].
 	self layoutChanged.
-
 ]
 
 { #category : #private }
@@ -4954,7 +4861,6 @@ Morph >> privateBounds: boundsRect [
 Morph >> privateColor: aColor [
 
 	color := aColor.
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -4995,7 +4901,6 @@ Morph >> privateFullMoveBy: delta [
 
 	self privateMoveBy: delta.
 	submorphs do: [:each | each privateFullMoveBy: delta].
-
 ]
 
 { #category : #'change reporting' }
@@ -5087,7 +4992,6 @@ Morph >> referencePosition [
 	| box |
 	box := self bounds.
 	^box origin + (self rotationCenter * box extent).
-
 ]
 
 { #category : #geometry }
@@ -5105,7 +5009,6 @@ Morph >> referencePosition: aPosition [
 Morph >> referencePositionInWorld [
 
 	^ self pointInWorld: self referencePosition
-
 ]
 
 { #category : #geometry }
@@ -5116,14 +5019,12 @@ Morph >> referencePositionInWorld: aPoint [
 		ifNotNil: [(owner transformFrom: self world) globalPointToLocal: aPoint].
 
 	self referencePosition: localPosition
-
 ]
 
 { #category : #drawing }
 Morph >> refreshWorld [
 	| aWorld |
 	(aWorld := self world) ifNotNil: [aWorld displayWorldSafely]
-
 ]
 
 { #category : #'events - processing' }
@@ -5181,8 +5082,7 @@ Morph >> releaseActionMap [
 { #category : #caching }
 Morph >> releaseCachedState [
 	"Release any state that can be recomputed on demand, such as the pixel values for a color gradient or the editor state for a TextMorph. This method may be called to save space when a morph becomes inaccessible. Implementations of this method should do 'super releaseCachedState'."
-	self borderStyle releaseCachedState. 
-
+	self borderStyle releaseCachedState.
 ]
 
 { #category : #'events - alarms' }
@@ -5203,7 +5103,6 @@ Morph >> removeAllMorphs [
 	submorphs := EmptyArray.
 	oldMorphs do: [ :m | self removedMorph: m ].
 	self layoutChanged.
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -5218,7 +5117,6 @@ Morph >> removeAllMorphsIn: aCollection [
 	submorphs := submorphs reject: [ :each | set includes: each].
 	set do: [ :m | self removedMorph: m ].
 	self layoutChanged.
-
 ]
 
 { #category : #updating }
@@ -5267,7 +5165,6 @@ Morph >> removeMorph: aMorph [
 	self privateRemove: aMorph.
 	aMorph privateOwner: nil.
 	self removedMorph: aMorph.
-
 ]
 
 { #category : #'accessing - properties' }
@@ -5280,7 +5177,6 @@ Morph >> removeProperty: aSymbol [
 { #category : #'submorphs - add/remove' }
 Morph >> removedMorph: aMorph [
 	"Notify the receiver that aMorph was just removed from its children"
-
 ]
 
 { #category : #naming }
@@ -5319,7 +5215,7 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 { #category : #'accessing - extension' }
 Morph >> resetExtension [
 	"reset the extension slot if it is not needed"
-	(extension notNil and: [extension isDefault]) ifTrue: [extension := nil] 
+	(extension notNil and: [extension isDefault]) ifTrue: [extension := nil]
 ]
 
 { #category : #'dropping/grabbing' }
@@ -5372,7 +5268,6 @@ Morph >> resumeAfterStepError [
 
 	self startStepping. "Will #step"
 	self removeProperty:#errorOnStep. "Will remove prop only if #step was okay"
-
 ]
 
 { #category : #'layout - properties' }
@@ -5429,7 +5324,6 @@ Morph >> rootMorphsAt: aPoint [
 Morph >> rotationCenter [
 	"Return the rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
 	^self valueOfProperty: #rotationCenter ifAbsent: [0.5@0.5]
-
 ]
 
 { #category : #'rotate scale and flex' }
@@ -5438,7 +5332,6 @@ Morph >> rotationCenter: aPointOrNil [
 	aPointOrNil 
 		ifNil: [self removeProperty: #rotationCenter]
 		ifNotNil:[self setProperty: #rotationCenter toValue: aPointOrNil]
-
 ]
 
 { #category : #rounding }
@@ -5469,13 +5362,11 @@ Morph >> rubberBandCells: aBool [
 { #category : #'rotate scale and flex' }
 Morph >> scale: newScale [
 	"Backstop for morphs that don't have to do something special to set their scale"
-
 ]
 
 { #category : #accessing }
 Morph >> scaleFactor [
 	^self valueOfProperty: #scaleFactor ifAbsent: [ 1.0 ]
-
 ]
 
 { #category : #geometry }
@@ -5507,7 +5398,6 @@ Morph >> separateDragAndDrop [
 	self dragEnabled: dnd.
 	self dropEnabled: dnd.
 	self removeProperty: #dragNDropEnabled.
-
 ]
 
 { #category : #'halos and balloon help' }
@@ -5560,7 +5450,6 @@ Morph >> setConstrainedPosition: aPoint hangOut: partiallyOutside [
 				trialRect amountToTranslateWithin: bRect].
 	self position: aPoint + delta.
 	self layoutChanged  "So that, eg, surrounding text will readjust"
-
 ]
 
 { #category : #naming }
@@ -5602,7 +5491,6 @@ Morph >> setToAdhereToEdge: anEdge [
 	anEdge ifNil: [^ self].
 	anEdge == #none ifTrue: [^ self removeProperty: #edgeToAdhereTo].
 	self setProperty: #edgeToAdhereTo toValue: anEdge.
-
 ]
 
 { #category : #'drop shadows' }
@@ -5625,7 +5513,6 @@ Morph >> shadowForm [
 	canvas translateBy: bounds topLeft negated
 		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
 	^ canvas form offset: bounds topLeft
-
 ]
 
 { #category : #'drop shadows' }
@@ -5663,7 +5550,7 @@ Morph >> shiftSubmorphsOtherThan: listNotToShift by: delta [
 { #category : #shortcuts }
 Morph >> shortcutsHandler [
 
-	^ ShortcutsHandler 
+	^ ShortcutsHandler
 ]
 
 { #category : #testing }
@@ -5957,7 +5844,6 @@ Morph >> start [
 	"Start running my script. For ordinary morphs, this means start stepping."
 
 	self startStepping.
-
 ]
 
 { #category : #'event handling' }
@@ -5998,7 +5884,6 @@ Morph >> startSteppingSelector: aSelector [
 { #category : #'stepping and presenter' }
 Morph >> step [
 	"Do some periodic activity. Use startStepping/stopStepping to start and stop getting sent this message. The time between steps is specified by this morph's answer to the stepTime message.  The generic version dispatches control to the player, if any.  The nasty circumlocation about owner's transformation is necessitated by the flexing problem that the player remains in the properties dictionary both of the flex and the real morph.  In the current architecture, only the top renderer's pointer to the player should actually be honored for the purpose of firing."
-
 ]
 
 { #category : #'stepping and presenter' }
@@ -6008,7 +5893,6 @@ Morph >> stepAt: millisecondClockValue [
 	Default is to dispatch to the parameterless step method for the morph, but this protocol makes it possible for some morphs to do differing things depending on the clock value"
 
 	self step
-
 ]
 
 { #category : #menus }
@@ -6029,7 +5913,6 @@ Morph >> stop [
 	"Stop running my script. For ordinary morphs, this means stop stepping."
 
 	self stopStepping.
-
 ]
 
 { #category : #'stepping and presenter' }
@@ -6039,7 +5922,6 @@ Morph >> stopStepping [
 	| w |
 	w := self world.
 	w ifNotNil: [w stopStepping: self].
-
 ]
 
 { #category : #'stepping and presenter' }
@@ -6048,13 +5930,11 @@ Morph >> stopSteppingSelector: aSelector [
 	| w |
 	w := self world.
 	w ifNotNil: [w stopStepping: self selector: aSelector].
-
 ]
 
 { #category : #'stepping and presenter' }
 Morph >> stopSteppingSelfAndSubmorphs [
 	self allMorphsDo: [:m | m stopStepping]
-
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6065,8 +5945,6 @@ Morph >> submorphAfter [
 	^ (ii := owner submorphIndexOf: self) = owner submorphs size 
 		ifTrue: [nil]
 		ifFalse: [owner submorphs at: ii+1].
-	
-
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6077,8 +5955,6 @@ Morph >> submorphBefore [
 	^ (ii := owner submorphIndexOf: self) = 1 
 		ifTrue: [nil]
 		ifFalse: [owner submorphs at: ii-1].
-	
-
 ]
 
 { #category : #layout }
@@ -6093,7 +5969,6 @@ Morph >> submorphBounds [
 				ifNotNil:[box := box quickMerge: subBox]]].
 	box ifNil:[^self bounds]. "e.g., having submorphs but not visible"
 	^ box origin asIntegerPoint corner: box corner asIntegerPoint
-
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6112,7 +5987,6 @@ Morph >> submorphIndexOf: aMorph [
 { #category : #'submorphs - accessing' }
 Morph >> submorphThat: block1 ifNone: block2 [
 	^ submorphs detect: [:m | (block1 value: m) == true] ifNone: block2
-	
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6123,7 +5997,7 @@ Morph >> submorphWithProperty: aSymbol [
 { #category : #'submorphs - accessing' }
 Morph >> submorphs [
 	"This method returns my actual submorphs collection. Modifying the collection directly could be dangerous; make a copy if you need to alter it."
-	^ submorphs 
+	^ submorphs
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6133,7 +6007,6 @@ Morph >> submorphsBehind: aMorph do: aBlock [
 	submorphs do:
 		[:m | m == aMorph ifTrue: [behind := true]
 						ifFalse: [behind ifTrue: [aBlock value: m]]].
-
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6148,7 +6021,6 @@ Morph >> submorphsInFrontOf: aMorph do: aBlock [
 	submorphs do:
 		[:m | m == aMorph ifTrue: [behind := true]
 						ifFalse: [behind ifFalse: [aBlock value: m]]].
-
 ]
 
 { #category : #'submorphs - accessing' }
@@ -6165,7 +6037,7 @@ Morph >> submorphsSatisfying: aBlock [
 { #category : #'event handling' }
 Morph >> tabAmongFields [
 	^ self theme settings tabAmongFields
-		or: [self hasProperty: #tabAmongFields] 
+		or: [self hasProperty: #tabAmongFields]
 ]
 
 { #category : #'card in a stack' }
@@ -6185,7 +6057,7 @@ Morph >> tabHitWithEvent: anEvent [
 				ifNil: [1]).
 	anEvent hand newKeyboardFocus: itemToHighlight. "really???"
 	itemToHighlight editor selectAll.
-	itemToHighlight invalidRect: itemToHighlight bounds 
+	itemToHighlight invalidRect: itemToHighlight bounds
 ]
 
 { #category : #'accessing - backstop' }
@@ -6341,7 +6213,6 @@ Morph >> toggleDragNDrop [
 	"Toggle this morph's ability to add and remove morphs via drag-n-drop."
 
 		self enableDragNDrop: self dragNDropEnabled not.
-
 ]
 
 { #category : #'drop shadows' }
@@ -6406,7 +6277,6 @@ Morph >> topLeft: aPoint [
 	" Move me so that my top left corner is at aPoint. My extent (width & height) are unchanged "
 
 	self position: aPoint
-
 ]
 
 { #category : #'base - worlds' }
@@ -6441,7 +6311,6 @@ Morph >> topRight: aPoint [
 	" Move me so that my top right corner is at aPoint. My extent (width & height) are unchanged "
 
 	self position: ((aPoint x - bounds width) @ (aPoint y))
-
 ]
 
 { #category : #'halos and balloon help' }
@@ -6486,7 +6355,6 @@ Morph >> transferHalo: event from: formerHaloOwner [
 	(w := self world) ifNil: [ ^self ].
 	localEvt := event transformedBy: (self transformedFrom: w) inverseTransformation.
 	^ w processEvent: localEvt resetHandlerFields.
-
 ]
 
 { #category : #menus }
@@ -6494,12 +6362,6 @@ Morph >> transferStateToRenderer: aRenderer [
 	"Transfer knownName, and visible over to aRenderer, which is being imposed above me as a transformation shell"
 
 	aRenderer simplySetVisible: self visible
-
-
-
- 
-
-		
 ]
 
 { #category : #'event handling' }
@@ -6633,7 +6495,6 @@ Morph >> vResizing: aSymbol [
 	"
 	self assureLayoutProperties vResizing: aSymbol.
 	self layoutChanged.
-
 ]
 
 { #category : #'layout - properties' }
@@ -6706,8 +6567,6 @@ Morph >> veryDeepFixupWith: deepCopier [
 	"If my owner is being duplicated too, then store his duplicate.
 	 If I am owned outside the duplicated tree, then I am no longer owned!"
 	owner := deepCopier references at: owner ifAbsent: [nil].
-
-
 ]
 
 { #category : #copying }
@@ -6759,7 +6618,6 @@ Morph >> wantsDirectionHandles [
 { #category : #'halos and balloon help' }
 Morph >> wantsDirectionHandles: aBool [
 	self setProperty: #wantsDirectionHandles toValue: aBool
-
 ]
 
 { #category : #'event handling' }
@@ -6805,7 +6663,6 @@ Morph >> wantsHaloHandleWithSelector: aSelector inHalo: aHaloMorph [
 		[^ self renderedMorph wantsRecolorHandle].
 
 	^ true
-	
 ]
 
 { #category : #'event handling' }
@@ -6819,8 +6676,6 @@ Morph >> wantsRecolorHandle [
 	"Answer whether the receiver would like a recoloring halo handle to be put up.  Since this handle also presently affords access to the property-sheet, it is presently always allowed, even though SketchMorphs don't like regular recoloring"
 
 	^ true
-	
-
 ]
 
 { #category : #rounding }
@@ -6892,7 +6747,6 @@ Morph >> width: aNumber [
 	" Set my width; my position (top-left corner) and height will remain the same "
 
 	self extent: aNumber asInteger@self height.
-
 ]
 
 { #category : #'base - widgets' }
@@ -6998,12 +6852,11 @@ Morph >> wrapDirection: aSymbol [
 	indicating in which direction wrapping should occur. This direction must be orthogonal to the list direction, that is if listDirection is #leftToRight or #rightToLeft then wrapDirection must be #topToBottom or #bottomToTop and vice versa."
 	self assureTableProperties wrapDirection: aSymbol.
 	self layoutChanged.
-
 ]
 
 { #category : #'layout - properties' }
 Morph >> wrapDirectionString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self wrapDirection 
+	^self layoutMenuPropertyString: aSymbol from: self wrapDirection
 ]
 
 { #category : #'event handling' }

@@ -43,7 +43,7 @@ Announcement class >> handlesAnnouncement: anAnnouncement [
 { #category : #converting }
 Announcement class >> where: instancesFilterBlock [
 
-	^AnnouncementDeliveryCondition for: self where: instancesFilterBlock 
+	^AnnouncementDeliveryCondition for: self where: instancesFilterBlock
 ]
 
 { #category : #converting }

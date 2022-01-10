@@ -98,7 +98,7 @@ ClyActiveBreakpointsQueryTest >> testFromThreeMethods [
 		ClyClassWithBreakpointsMock >> #methodWithBreakpoints.
 		ClyClassWithBreakpointsMock >> #methodWithoutBreakpoints}.
 	
-	self assert: foundSelectors sorted asArray equals: #(#methodWithBreakpoints #methodWithHalts1) 
+	self assert: foundSelectors sorted asArray equals: #(#methodWithBreakpoints #methodWithHalts1)
 ]
 
 { #category : #tests }

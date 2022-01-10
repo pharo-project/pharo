@@ -8,6 +8,10 @@ Class {
 }
 
 { #category : #operations }
+SDLNullPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
+]
+
+{ #category : #operations }
 SDLNullPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
 

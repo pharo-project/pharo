@@ -29,14 +29,14 @@ ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext
 ClyIcebergShowMethodVersionCommand class >> methodBrowserTabActivation [
 	<classAnnotation>
 	
-	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext 
+	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }
 ClyIcebergShowMethodVersionCommand class >> methodMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }

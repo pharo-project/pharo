@@ -56,11 +56,10 @@ ClyProjectChildItem class >> project: aProject [
 
 { #category : #testing }
 ClyProjectChildItem >> isEmpty [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 ClyProjectChildItem >> items [
-	self subclassResponsibility 
-	
+	self subclassResponsibility
 ]

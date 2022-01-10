@@ -41,7 +41,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			ActiveWorld
 			Display
 			Processor
-			Sensor
 			Smalltalk
 			SourceFiles
 			SystemOrganization

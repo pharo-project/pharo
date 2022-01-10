@@ -13,8 +13,8 @@ OCTargetCompilerTest >> expectedFailures [
 OCTargetCompilerTest >> testModifiedReturn [
 	" I test that the compilerClass method works for instance-side "
 	" if something has failed to recompile using compilerClass, then you may need to go to OCTargetCompilerSample and force recompile of the method returnExpected (by e.g. adding/deleting a space and saving) "
+	self skipOnPharoCITestingEnvironment.
 	self assert: OCTargetCompilerSample new returnExpected equals: #expectedReturn.
-
 ]
 
 { #category : #tests }
@@ -23,7 +23,6 @@ OCTargetCompilerTest >> testModifiedReturnFromClass [
 	" it ***doesn't*** at the moment!!!! "
 	" if something has failed to recompile using compilerClass, then you may need to go to OCTargetCompilerSample class and force recompile of the method returnExpected (by e.g. adding/deleting a space and saving) "
 	self assert: OCTargetCompilerSample returnExpected equals: #expectedReturn.
-
 ]
 
 { #category : #tests }

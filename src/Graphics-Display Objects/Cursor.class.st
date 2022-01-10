@@ -69,14 +69,12 @@ Cursor class >> blank [
 Cursor class >> bottomLeft [
 	"Cursor bottomLeft showWhile: [Sensor waitButton]"
 	^BottomLeftCursor
-
 ]
 
 { #category : #constants }
 Cursor class >> bottomRight [
 	"Cursor bottomRight showWhile: [Sensor waitButton]"
 	^BottomRightCursor
-
 ]
 
 { #category : #constants }
@@ -182,7 +180,6 @@ Cursor class >> initBottomLeft [
 		2r1111111111111111
 		2r1111111111111111)
 			offset: 0 @ -16).
-
 ]
 
 { #category : #'initialization - private' }
@@ -208,7 +205,6 @@ Cursor class >> initBottomRight [
 		2r1111111111111111
 		2r1111111111111111)
 			offset: -16 @ -16).
-
 ]
 
 { #category : #'initialization - private' }
@@ -235,7 +231,6 @@ Cursor class >> initCorner [
 		2r1111111111111111
 		2r1111111111111111)
 			offset: -16 @ -16).
-
 ]
 
 { #category : #'initialization - private' }
@@ -262,8 +257,6 @@ Cursor class >> initCrossHair [
 		2r0000000000000000
 		2r0)
 			offset: -7 @ -7).
-	
-	
 ]
 
 { #category : #'initialization - private' }
@@ -290,7 +283,6 @@ Cursor class >> initDown [
 		2r0
 		2r0)
 	offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -317,7 +309,6 @@ Cursor class >> initMarker [
 		2r0
 		2r0)
 			offset: 0@0.
-
 ]
 
 { #category : #'initialization - private' }
@@ -343,7 +334,6 @@ Cursor class >> initMenu [
 		2r1111111111100000
 		0)
 	offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -369,7 +359,6 @@ Cursor class >> initMove [
 		2r1111111111111100
           0)
 			offset: 0@0.
-
 ]
 
 { #category : #'initialization - private' }
@@ -396,9 +385,6 @@ Cursor class >> initNormal [
 		2r0000001100000000
 		2r0000001100000000)
 	offset: 0@0).
-
-	
-	
 ]
 
 { #category : #'initialization - private' }
@@ -446,7 +432,6 @@ Cursor class >> initOrigin [
 		2r1100000000000000
 		2r1100000000000000)
 			offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -468,9 +453,7 @@ Cursor class >> initOverEditableText [
 	               2r000000100000000
 	               2r000111011100000
 				2r0)
-	       offset: (-7@ -8)) 
-
-
+	       offset: (-7@ -8))
 ]
 
 { #category : #'initialization - private' }
@@ -497,7 +480,6 @@ Cursor class >> initRead [
 		2r0
 		2r0)
 	offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -647,8 +629,6 @@ Cursor class >> initSquare [
 		2r0
 		2r0)
 	offset: -8 @ -8).
-
-	
 ]
 
 { #category : #'initialization - private' }
@@ -681,7 +661,6 @@ Cursor class >> initTopLeft [
 		2r1100000000000000
 		2r1100000000000000)
 			offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -706,7 +685,6 @@ Cursor class >> initTopRight [
 		2r0000000000000011
 		2r0000000000000011)
 			offset: -16@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -733,7 +711,6 @@ Cursor class >> initUp [
 		2r0
 		2r0)
 	offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -759,7 +736,6 @@ Cursor class >> initWait [
 		2r1111111111111100
 		0)
 			offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -785,7 +761,6 @@ Cursor class >> initWrite [
 		2r0
 		2r0)
 	offset: 0@0).
-
 ]
 
 { #category : #'initialization - private' }
@@ -812,7 +787,6 @@ Cursor class >> initXeq [
 		2r0000001100000000
 		2r0000001100000000)
 	offset: 0@0).
-
 ]
 
 { #category : #'initialize-release' }
@@ -827,7 +801,7 @@ Cursor class >> makeCursorsWithMask [
 
 	self classPool associationsDo: [:var |
 		var value hasMask
-			ifFalse: [var value: var value withMask]] 
+			ifFalse: [var value: var value withMask]]
 ]
 
 { #category : #constants }
@@ -857,7 +831,6 @@ Cursor class >> new [
 	^ self extent: 16 @ 16
 		fromArray: (Array new: 16 withAll: 0)
 		offset: 0 @ 0
-
 ]
 
 { #category : #constants }
@@ -877,7 +850,7 @@ Cursor class >> origin [
 
 { #category : #constants }
 Cursor class >> overEditableText [
-	^ OverEditableText 
+	^ OverEditableText
 ]
 
 { #category : #constants }
@@ -1012,7 +985,8 @@ Cursor class >> write [
 
 { #category : #primitives }
 Cursor >> activateInCursorOwner: aCursorOwner [
-	^ self beCursor
+
+	^ self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -1021,16 +995,6 @@ Cursor >> asCursorForm [
 	form := Form extent: self extent depth: 8.
 	form fillShape: self fillColor: Color black at: offset negated.
 	^ form offset: offset
-]
-
-{ #category : #primitives }
-Cursor >> beCursor [
-	self primitiveBeCursor
-]
-
-{ #category : #primitives }
-Cursor >> beCursorWithMask: maskForm [
-	self primitiveBeCursorWithMask: maskForm
 ]
 
 { #category : #updating }
@@ -1046,31 +1010,6 @@ Cursor >> changed: aParameter [
 { #category : #testing }
 Cursor >> hasMask [
 	^false
-]
-
-{ #category : #primitives }
-Cursor >> primitiveBeCursor [
-	"Primitive. Tell the interpreter to use the receiver as the current cursor 
-	image. Fail if the receiver does not match the size expected by the 
-	hardware. Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
-]
-
-{ #category : #primitives }
-Cursor >> primitiveBeCursorWithMask: maskForm [
-	"Primitive. Tell the interpreter to use the receiver as the current cursor image with the given mask Form. Both the receiver and the mask should have extent 16@16 and a depth of one. The mask and cursor bits are combined as follow:
-			mask	cursor	effect
-			 0		  0		transparent (underlying pixel shows through)
-			 1		  1		opaque black
-			 1		  0		opaque white
-			 0		  1		invert the underlying pixel"
-"Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
-
 ]
 
 { #category : #printing }
@@ -1103,7 +1042,6 @@ Cursor >> showWhile: aBlock [
 	oldcursor := self currentWorld currentCursor.
 	self show.
 	^aBlock ensure: [oldcursor show]
-
 ]
 
 { #category : #converting }

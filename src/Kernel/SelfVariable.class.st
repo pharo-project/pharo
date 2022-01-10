@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #accessing }
+SelfVariable class >> variableName [
+	^'self'
+]
+
 { #category : #visiting }
 SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
@@ -17,13 +22,6 @@ SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 SelfVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushReceiver
-]
-
-{ #category : #initialization }
-SelfVariable >> initialize [
-	super initialize.
-	
-	name := 'self'
 ]
 
 { #category : #testing }
@@ -38,11 +36,13 @@ SelfVariable >> readInContext: aContext [
 
 { #category : #queries }
 SelfVariable >> usingMethods [
-	"as super sends are doing a pushSelf, too, we need to still check the AST level sometimes"
+	"Super sends are doing a pushSelf, too, we need to still check the AST level sometimes.
+	FFI methods after a first call do not have a self send in the bytecode, but one in the code"
 
 	^ environment allMethods select: [ :method | 
+		method isFFIMethod or: [  
 		  method readsSelf and: [ 
 			  method sendsToSuper not or: [ 
 				  method ast variableNodes anySatisfy: [ :varNode | 
-					  varNode variable == self ] ] ] ]
+					  varNode variable == self ] ] ] ] ]
 ]

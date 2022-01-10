@@ -62,7 +62,6 @@ ClassListNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	c = $I
 		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #accessing }
@@ -79,5 +78,4 @@ ClassListNodeExample >> menu: menu shifted: b [
 		add: 'Explore (I)' 
 		target: self
 		selector: #exploreItem.
-
 ]

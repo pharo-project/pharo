@@ -49,7 +49,6 @@ RBProgramNode class >> formatterClass [
 { #category : #accessing }
 RBProgramNode class >> formatterClass: aClass [
 	FormatterClass := aClass
-		
 ]
 
 { #category : #testing }
@@ -67,8 +66,6 @@ RBProgramNode class >> optimizedSelectors [
 RBProgramNode class >> resetFormatter [
 
 	self formatterClass: nil
-
-	
 ]
 
 { #category : #replacing }
@@ -341,13 +338,13 @@ RBProgramNode >> debugHighlightRange [
 { #category : #accessing }
 RBProgramNode >> debugHighlightStart [
 
-	^ self start 
+	^ self start
 ]
 
 { #category : #accessing }
 RBProgramNode >> debugHighlightStop [
 
-	^ self stop 
+	^ self stop
 ]
 
 { #category : #testing }
@@ -434,7 +431,6 @@ RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
 	
 	^ self comments isNotEmpty
-	
 ]
 
 { #category : #testing }
@@ -476,15 +472,6 @@ RBProgramNode >> instanceVariableWriteNodes [
 RBProgramNode >> intersectsInterval: anInterval [ 
 	^(anInterval first between: self start and: self stop) 
 		or: [self start between: anInterval first and: anInterval last]
-]
-
-{ #category : #testing }
-RBProgramNode >> isArgument [
-	self 
-		deprecated: 'Use #isArgumentVariable instead.' 
-		transformWith: '`@receiver isArgument' -> '`@receiver isArgumentVariable'.
-	
-	^ self isArgumentVariable
 ]
 
 { #category : #testing }
@@ -560,11 +547,6 @@ RBProgramNode >> isGlobalVariable [
 { #category : #testing }
 RBProgramNode >> isHaltNode [
 	^ false
-]
-
-{ #category : #deprecated }
-RBProgramNode >> isImmediate [
-	^self isImmediateNode
 ]
 
 { #category : #testing }
@@ -1074,7 +1056,6 @@ RBProgramNode >> statementNode [
 { #category : #accessing }
 RBProgramNode >> statements [
 	^ #()
-	
 ]
 
 { #category : #accessing }

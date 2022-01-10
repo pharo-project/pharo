@@ -44,8 +44,7 @@ WeekTest >> tearDown [
 
 	Week startDay: restoredStartDay.
 	week := nil.
-	super tearDown 
-
+	super tearDown
 ]
 
 { #category : #tests }
@@ -67,7 +66,6 @@ WeekTest >> testByWeekNumber [
 	week := Week year: 2014 week: 1.
 	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 30).
 	self assert: week start dayOfWeek equals: 2.
-
 ]
 
 { #category : #tests }

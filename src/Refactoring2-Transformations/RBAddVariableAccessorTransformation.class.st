@@ -16,6 +16,10 @@ Preconditions:
 Class {
 	#name : #RBAddVariableAccessorTransformation,
 	#superclass : #RBVariableTransformation,
+	#instVars : [
+		'getterMethod',
+		'setterMethod'
+	],
 	#category : #'Refactoring2-Transformations-Model'
 }
 
@@ -34,24 +38,28 @@ RBAddVariableAccessorTransformation >> createSetterAccessor [
 { #category : #private }
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
-	| selector |
-	selector := self safeMethodNameFor: self definingClass basedOn: variableName asString.
+	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
 	self definingClass 
-		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
+		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
 		classified: #(#accessing).
-	^ selector
+	^ getterMethod
 ]
 
 { #category : #private }
 RBAddVariableAccessorTransformation >> defineSetterMethod [
 
-	| selector sourceCode |
+	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
-	selector := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
+	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
 	self definingClass 
-		compile: (sourceCode expandMacrosWith: selector with: variableName)
+		compile: (sourceCode expandMacrosWith: setterMethod with: variableName)
 		classified: #accessing.
-	^selector
+	^setterMethod
+]
+
+{ #category : #private }
+RBAddVariableAccessorTransformation >> getterMethod [
+	^ getterMethod 
 ]
 
 { #category : #preconditions }
@@ -89,4 +97,9 @@ RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aStrin
 			newString := baseString , i printString 
 						, (hasParam ifTrue: [':'] ifFalse: [''])].
 	^newString asSymbol
+]
+
+{ #category : #private }
+RBAddVariableAccessorTransformation >> setterMethod [
+	^ setterMethod
 ]

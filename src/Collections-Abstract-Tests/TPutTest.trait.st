@@ -50,7 +50,6 @@ TPutTest >> testAtAllIndexesPut [
 	
 	self nonEmpty atAllPut: self aValue.
 	self nonEmpty do:[ :each| self assert: each = self aValue].
-	
 ]
 
 { #category : #'tests - puting with indexes' }
@@ -60,7 +59,6 @@ TPutTest >> testAtAllPut [
 	
 	self indexArray do:
 		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
-	
 ]
 
 { #category : #'tests - puting with indexes' }
@@ -125,7 +123,6 @@ TPutTest >> testSwapWith [
 	result swap: index with: 1.
 	self assert: (result at: index) = (self nonEmpty at:1).
 	self assert: (result at: 1) = (self nonEmpty at: index).
-	
 ]
 
 { #category : #requirements }

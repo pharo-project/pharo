@@ -46,7 +46,7 @@ ClySystemEnvironmentPlugin class >> enableSlowPlugins [
 
 { #category : #testing }
 ClySystemEnvironmentPlugin class >> isAbstract [
-	^self = ClySystemEnvironmentPlugin 
+	^self = ClySystemEnvironmentPlugin
 ]
 
 { #category : #testing }
@@ -111,8 +111,6 @@ ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGr
 
 { #category : #'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anEnvironmentItem ofMethod: aMethod [
-
-	
 ]
 
 { #category : #'item decoration' }
@@ -124,5 +122,5 @@ ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 ]
 
 { #category : #'item decoration' }
-ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofProject: aProject [ 
+ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofProject: aProject [
 ]

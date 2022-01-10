@@ -27,7 +27,6 @@ ZipCrcTest >> testInvalidGZipCrc [
 
 	reader := GZipReadStream on: bytes.
 	self should:[reader next: 100] raise: CRCError.
-
 ]
 
 { #category : #tests }
@@ -50,7 +49,6 @@ ZipCrcTest >> testInvalidZLibCrc [
 
 	reader := ZLibReadStream on: bytes.
 	self should:[reader next: 100] raise: CRCError.
-
 ]
 
 { #category : #tests }
@@ -74,7 +72,6 @@ ZipCrcTest >> testInvalidZipCrc [
 	reader := ZipReadStream on: bytes.
 	reader expectedCrc: writer crc - 1.
 	self should:[reader next: 100] raise: CRCError.
-
 ]
 
 { #category : #tests }
@@ -96,7 +93,6 @@ ZipCrcTest >> testMissingGZipCrc [
 
 	reader := GZipReadStream on: bytes.
 	self should:[reader next: 100] raise: CRCError.
-
 ]
 
 { #category : #tests }
@@ -118,7 +114,6 @@ ZipCrcTest >> testMissingZLibCrc [
 
 	reader := ZLibReadStream on: bytes.
 	self should:[reader next: 100] raise: CRCError.
-
 ]
 
 { #category : #tests }

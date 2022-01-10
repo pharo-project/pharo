@@ -30,8 +30,7 @@ CDTraitCompositionSequenceNode >> sequence: aCollection [
 CDTraitCompositionSequenceNode >> toString [ 
 	| res |
 	res := (self sequence at: 1) toString, ' + ', (self sequence at: 2) toString.
-	^ res	
-	
+	^ res
 ]
 
 { #category : #precedence }
@@ -41,6 +40,4 @@ CDTraitCompositionSequenceNode >> withPrecedenceOf: aCDTraitNode [
 			sequence: sequence;
 			preferedTrait: aCDTraitNode;
 			yourself
-
-
 ]

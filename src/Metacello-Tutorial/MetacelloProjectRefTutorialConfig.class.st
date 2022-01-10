@@ -94,7 +94,6 @@ MetacelloProjectRefTutorialConfig >> baseline10: spec [
 		spec 
 			package: 'Project-Core' with: [ spec requires: 'Example ALL' ];
 			package: 'Project-Tests' with: [ spec requires: 'Project-Core' ].].
-
 ]
 
 { #category : #baselines }
@@ -124,7 +123,6 @@ MetacelloProjectRefTutorialConfig >> baseline11: spec [
 			package: 'Project-Core' with: [ spec requires: 'Example Default' ];
 			package: 'Project-Tests' with: [ 
 				spec requires: #('Project-Core' 'Example Tests' ).].].
-
 ]
 
 { #category : #baselines }
@@ -149,7 +147,6 @@ MetacelloProjectRefTutorialConfig >> baseline12: spec [
 			package: 'Project-Core' with: [ spec requires: 'Example Default' ];
 			package: 'Project-Tests' with: [ 
 				spec requires: #('Project-Core' 'Example Tests' ).].].
-
 ]
 
 { #category : #baselines }
@@ -165,7 +162,6 @@ MetacelloProjectRefTutorialConfig >> baseline14: spec [
 			group: 'default' with: #('Project-Core' 'Project-Extra' );
 			group: 'Core' with: #('default' );
 			group: 'Tests' with: #('Project-Tests' ).].
-
 ]
 
 { #category : #lessons }
@@ -375,7 +371,6 @@ MetacelloProjectRefTutorialConfig >> version07: spec [
 			package: 'Example-Core' with: 'Example-Core-anon.12';
 			package: 'Example-Tests' with: 'Example-Tests-anon.3';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1'.].
-
 ]
 
 { #category : #versions }
@@ -388,7 +383,6 @@ MetacelloProjectRefTutorialConfig >> version10: spec [
 		spec 
 			package: 'Project-Core' with: 'Project-Core-anon.1';
 			package: 'Project-Tests' with: 'Project-Tests-anon.1'.].
-
 ]
 
 { #category : #versions }
@@ -401,7 +395,6 @@ MetacelloProjectRefTutorialConfig >> version11: spec [
 		spec 
 			package: 'Project-Core' with: 'Project-Core-anon.1';
 			package: 'Project-Tests' with: 'Project-Tests-anon.1'.].
-
 ]
 
 { #category : #versions }
@@ -413,7 +406,6 @@ MetacelloProjectRefTutorialConfig >> version12: spec [
 		spec 
 			package: 'Project-Core' with: 'Project-Core-anon.1';
 			package: 'Project-Tests' with: 'Project-Tests-anon.1'.].
-
 ]
 
 { #category : #versions }
@@ -429,7 +421,6 @@ MetacelloProjectRefTutorialConfig >> version13: spec [
 			package: 'Project-Tests' with: 'Project-Tests-anon.1';
 			project: 'Example Default' with: '1.3';
 			project: 'Example Tests' with: '1.3'].
-
 ]
 
 { #category : #versions }
@@ -447,5 +438,4 @@ MetacelloProjectRefTutorialConfig >> version14: spec [
 			package: 'Project-Core' with: 'Project-Core-anon.2';
 			package: 'Project-Tests' with: 'Project-Tests-anon.2';
 			package: 'Project-Extra' with: 'Project-Extra-anon.1'.].
-
 ]

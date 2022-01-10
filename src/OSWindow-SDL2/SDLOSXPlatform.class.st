@@ -8,6 +8,10 @@ Class {
 }
 
 { #category : #operations }
+SDLOSXPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
+]
+
+{ #category : #operations }
 SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	| aParam cocoaWindow wmInfo selector |
@@ -21,7 +25,6 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	self sendMessage: selector to: cocoaWindow getHandle with: aParam.
 	
 	self release: aParam.
-
 ]
 
 { #category : #'ffi-calls' }
@@ -49,7 +52,6 @@ SDLOSXPlatform >> lookupClass: aString [
 SDLOSXPlatform >> lookupSelector: aString [
 
 	^ self ffiCall: #(void* sel_registerName(const char *aString))
-
 ]
 
 { #category : #'utilities - objectiveC' }
@@ -67,7 +69,6 @@ SDLOSXPlatform >> nsStringOf: aString [
 	param at: encoded size + 1 put: 0.
 		
 	^ self sendMessage: selector to: class with: param
-
 ]
 
 { #category : #'utilities - objectiveC' }
@@ -76,7 +77,6 @@ SDLOSXPlatform >> release: aObjCObject [
 	| releaseSelector |
 	releaseSelector:= self lookupSelector: 'release'.
 	self sendMessage: releaseSelector to: aObjCObject.
-
 ]
 
 { #category : #'utilities - objectiveC' }

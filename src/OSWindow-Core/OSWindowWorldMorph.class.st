@@ -20,9 +20,7 @@ Class {
 { #category : #adding }
 OSWindowWorldMorph >> addMorph: aMorph frame: rectangle [
 	"For compatibility with SystemWindow."
-	^ self addMorph: aMorph fullFrame: rectangle 
-
-
+	^ self addMorph: aMorph fullFrame: rectangle
 ]
 
 { #category : #accessing }
@@ -51,7 +49,6 @@ OSWindowWorldMorph >> initialize [
 	isResizeable := true.
 	self extent: 640@480.
 	self addHand: HandMorph new.
-	
 ]
 
 { #category : #accessing }

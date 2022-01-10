@@ -33,7 +33,6 @@ MorphTreeResizerMorph >> adoptPaneColor: paneColor [
 { #category : #'private - testing' }
 MorphTreeResizerMorph >> canResizeColumn [
 	^self column resizable
-
 ]
 
 { #category : #'private - testing' }
@@ -41,7 +40,7 @@ MorphTreeResizerMorph >> column [
 	^container columns at: index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> container: aTreeMorph index: anInteger [
 	container := aTreeMorph.
 	index := anInteger
@@ -51,7 +50,6 @@ MorphTreeResizerMorph >> container: aTreeMorph index: anInteger [
 MorphTreeResizerMorph >> delete [
 	super delete.
 	self release.
-	
 ]
 
 { #category : #'event handling' }
@@ -69,10 +67,9 @@ MorphTreeResizerMorph >> doubleClick: event [
 MorphTreeResizerMorph >> drawOn: aCanvas [
 	(owner notNil and: [owner containsPoint: self position])
 		ifTrue: [super drawOn: aCanvas]
-
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> getOldColor [
 	^ oldColor ifNil: [Color transparent]
 ]
@@ -134,24 +131,24 @@ MorphTreeResizerMorph >> mouseUp: anEvent [
 	self triggerEvent: #mouseUp
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> normalFillStyle [
 	"Return the normal fillstyle for the receiver."
 	^ self theme morphTreeSplitterNormalFillStyleFor: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> normalizedX: x [
 
 	^ x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> normalizedY: y [ 
 	^y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
@@ -164,15 +161,14 @@ MorphTreeResizerMorph >> release [
 	container := nil.
 	self releaseActionMap. "we are not sure if we need it"
 	super release.
-	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> resizeCursor [
 	^ Cursor resizeForEdge: #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
 	
@@ -184,7 +180,7 @@ MorphTreeResizerMorph >> shouldDraw [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> splitsTopAndBottom [
 	^ false
 ]
@@ -196,7 +192,7 @@ MorphTreeResizerMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MorphTreeResizerMorph >> updateFromEvent: anEvent [ 
 	"Update the splitter and attached morph positions from
 	the mouse event.

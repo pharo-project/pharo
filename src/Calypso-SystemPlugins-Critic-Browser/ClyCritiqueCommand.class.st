@@ -30,12 +30,12 @@ ClyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 ClyCritiqueCommand class >> criticTableIconActivation [
 	<classAnnotation>
 	
-	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext 
+	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext
 ]
 
 { #category : #testing }
 ClyCritiqueCommand class >> isAbstract [
-	^self = ClyCritiqueCommand 
+	^self = ClyCritiqueCommand
 ]
 
 { #category : #accessing }

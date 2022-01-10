@@ -14,11 +14,6 @@ PlatformIndependentEnvironment class >> isAvailable [
 	^ true
 ]
 
-{ #category : #testing }
-PlatformIndependentEnvironment class >> isDefaultFor: aPlatform [ 
-	^ false
-]
-
 { #category : #accessing }
 PlatformIndependentEnvironment >> at: aKey ifAbsent: aBlock [
 

@@ -4,7 +4,6 @@ Extension { #name : #GrafPort }
 GrafPort >> installStrikeFont: aStrikeFont [
 
 	^ self installStrikeFont: aStrikeFont foregroundColor: (lastFontForegroundColor ifNil: [Color black]) backgroundColor: (lastFontBackgroundColor ifNil: [Color transparent]).
-
 ]
 
 { #category : #'*Graphics-Fonts' }
@@ -29,12 +28,10 @@ GrafPort >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor back
 	lastFont := aStrikeFont.
 	lastFontForegroundColor := foregroundColor.
 	lastFontBackgroundColor := backgroundColor.
-
 ]
 
 { #category : #'*Graphics-Fonts' }
 GrafPort >> lastFont [
 
 	^ lastFont.
-
 ]

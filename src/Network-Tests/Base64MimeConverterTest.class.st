@@ -26,18 +26,17 @@ Base64MimeConverterTest >> testBase64Encoded [
 	| encoded |
 	encoded := (Base64MimeConverter mimeEncode: message) contents.
 	self assert: encoded equals: 'Hi There!' asByteArray base64Encoded
-	
 ]
 
 { #category : #tests }
 Base64MimeConverterTest >> testDecodeMimeHeader [
 	"Test MIME decoding from single-byte encoding to Unicode"
 
-	| mimeHeader expected characters |
-	characters := #[ 16rBE 16rFD 16r5F 16rE1 16r2E 16rC8 ] asString.
+	| mimeHeader expected bytes |
+	bytes := #[ 16rBE 16rFD 16r5F 16rE1 16r2E 16rC8 ].
 	mimeHeader := '=?ISO-8859-2?Q?=BE=FD=5F=E1=2E=C8?=' decodeMimeHeader.
 
-	expected := characters convertFromEncoding: 'ISO-8859-2'.
+	expected := bytes decodeWith: 'ISO-8859-2'.
 
 	self assert: mimeHeader equals: expected
 ]

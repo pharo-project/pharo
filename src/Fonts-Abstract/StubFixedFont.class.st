@@ -29,12 +29,6 @@ StubFixedFont >> baseFont: aFont [
 ]
 
 { #category : #accessing }
-StubFixedFont >> baseKern [
-
-	^ 0
-]
-
-{ #category : #accessing }
 StubFixedFont >> descent [
 
 	^ 4
@@ -58,7 +52,6 @@ StubFixedFont >> displayString: aString on: aDisplayContext from: startIndex to:
 
 { #category : #accessing }
 StubFixedFont >> emphasized: emph [
-	
 ]
 
 { #category : #accessing }

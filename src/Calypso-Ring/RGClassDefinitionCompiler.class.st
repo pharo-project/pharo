@@ -12,7 +12,7 @@ Class {
 { #category : #'instance creation' }
 RGClassDefinitionCompiler class >> on: anRGEnvironment [ 
 	^self new 
-		environment: anRGEnvironment 
+		environment: anRGEnvironment
 ]
 
 { #category : #accessing }
@@ -59,21 +59,21 @@ RGClassDefinitionCompiler >> evaluate [
 	^createdClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public access' }
 RGClassDefinitionCompiler >> logged: aBoolean [
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RGClassDefinitionCompiler >> new [
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public access' }
 RGClassDefinitionCompiler >> requestor: anObject [ 
 	requestor := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public access' }
 RGClassDefinitionCompiler >> source: aString [ 
 	definitionString := aString
 ]

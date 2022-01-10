@@ -404,11 +404,9 @@ OSKeySymbols class >> data [
 	)
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OSKeySymbols class >> initialize [
-	"
-	self initialize
-	"
+	
 	OSKeySymbolValueToKeyboardKeyMap := Dictionary new.
 	OSKeySymbolNameToValueMap := Dictionary new.
 	self data do: [ :each |
@@ -424,7 +422,6 @@ OSKeySymbols class >> initialize [
 		OSKeySymbolValueToKeyboardKeyMap at: symbolValue put: keyboardKey.
 		OSKeySymbolNameToValueMap at: symbolName put: symbolValue.
 	].
-
 ]
 
 { #category : #accessing }

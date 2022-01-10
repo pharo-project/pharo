@@ -23,7 +23,7 @@ ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 
 	queryResult := ClyExtensionLastSortedClassResult hierarchical.
 	
-	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClassesResult 
+	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClassesResult
 ]
 
 { #category : #tests }
@@ -31,7 +31,7 @@ ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 
 	queryResult := ClyExtensionLastSortedClassResult simple.
 	
-	self assert: queryResult baseQueryResult class equals: ClySortedQueryResult  
+	self assert: queryResult baseQueryResult class equals: ClySortedQueryResult
 ]
 
 { #category : #tests }

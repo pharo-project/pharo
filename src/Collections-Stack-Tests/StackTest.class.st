@@ -34,7 +34,6 @@ StackTest >> setUp [
 	nonEmpty push: -2.
 	nonEmpty push: 3.
 	nonEmpty push: 1.
-	
 ]
 
 { #category : #tests }

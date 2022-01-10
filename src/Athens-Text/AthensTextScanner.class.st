@@ -42,7 +42,6 @@ AthensTextScanner >> addCharacter: position [
 		currentBackground addWidth: charWidth ].
 	
 	currentStrip stop: position
-
 ]
 
 { #category : #accessing }
@@ -66,7 +65,6 @@ AthensTextScanner >> applyAttributes [
 	
 	currentFont ifNil: [ self setActualFont: self defaultFont ].
 	currentColor ifNil: [ self textColor: self defaultColor ]
-	
 ]
 
 { #category : #defaults }
@@ -143,7 +141,6 @@ AthensTextScanner >> setActualFont: aFont [
 		currentFont := AthensFontChange new font: aFont.
 		self addCommand: currentFont.
 	].
-
 ]
 
 { #category : #accessing }
@@ -153,15 +150,12 @@ AthensTextScanner >> setAttributes: anArray [
 	
 	"we should reset character string here"
 	currentStrip := nil
-
 ]
 
 { #category : #'text attributes' }
 AthensTextScanner >> setFont: fontNumber [
 
 	self setActualFont: (self textStyle fontAt: fontNumber).
-	
-	
 ]
 
 { #category : #accessing }
@@ -197,7 +191,6 @@ AthensTextScanner >> textColor: aColor [
 		currentColor := AthensColorChange new color: aColor.
 		self addCommand: currentColor.	
 	].
-	
 ]
 
 { #category : #accessing }

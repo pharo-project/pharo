@@ -33,7 +33,7 @@ ContextDebuggingTest >> deadContext [
 
 { #category : #helpers }
 ContextDebuggingTest >> selfReturnMethod [
-	#foo asSymbol 
+	#foo asSymbol
 ]
 
 { #category : #tests }

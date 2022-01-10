@@ -24,7 +24,7 @@ ClyVariableReferencesTest >> createQuery [
 
 { #category : #running }
 ClyVariableReferencesTest >> queryClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'methods for tests' }
@@ -47,7 +47,7 @@ ClyVariableReferencesTest >> supeclassWriterOfVar1 [
 
 { #category : #running }
 ClyVariableReferencesTest >> targetVarName [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #tests }

@@ -24,10 +24,9 @@ FileHandle class >> register: aFileHandle [
 { #category : #registry }
 FileHandle class >> registry [
 	^Registry ifNil: [Registry := WeakRegistry new]
-
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 FileHandle class >> startUp: resuming [
 	"This functionality is disabled for now, to avoid doing a lot of processing at
 	image start up. To reenable, add this class to the start up list."
@@ -50,7 +49,6 @@ FileHandle >> at: index read: buffer startingAt: start count: count [
 	^ File 
 		setPosition: id to: index - 1;
 		read: id into: buffer startingAt: start count: count
-
 ]
 
 { #category : #public }
@@ -62,7 +60,6 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 	File 
 		setPosition: id to: index - 1;
 		write: id from: buffer startingAt: start count: count
-
 ]
 
 { #category : #public }

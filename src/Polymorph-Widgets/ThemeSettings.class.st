@@ -170,7 +170,6 @@ ThemeSettings >> derivedMenuColor [
 						ifTrue: [worldColor mixed: 0.85 with: Color black]
 						ifFalse: [worldColor mixed: 0.4 with: Color white]]
 				ifFalse: [self menuColor].
-
 ]
 
 { #category : #accessing }
@@ -215,7 +214,7 @@ ThemeSettings >> fallbackMenuColor [
 
 { #category : #accessing }
 ThemeSettings >> fastDragging [ 
-		^ fastDragging ifNil: [fastDragging := false] 
+		^ fastDragging ifNil: [fastDragging := false]
 ]
 
 { #category : #accessing }

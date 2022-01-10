@@ -64,22 +64,18 @@ IRTranslator >> currentScope [
 IRTranslator >> initialize [
 	currentScope := Stack new.
 	tempVectorStack := Stack new.
-
 ]
 
 { #category : #private }
 IRTranslator >> label: seqNum [
 
 	gen label: seqNum.
-	
-
 ]
 
 { #category : #private }
 IRTranslator >> popScope [
 
 	currentScope size = 1 ifFalse: [currentScope pop]
-
 ]
 
 { #category : #private }
@@ -118,21 +114,18 @@ IRTranslator >> trailer: aTrailer [
 IRTranslator >> visitBlockReturnTop: blockReturnTop [
 
 	gen blockReturnTop
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitInstruction: instr [
 	gen mapBytesTo: instr.
 	self visitNode: instr.
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitJump: jump [
 
 	gen goto: jump destination orderNumber
-
 ]
 
 { #category : #visiting }
@@ -142,7 +135,6 @@ IRTranslator >> visitJumpIf: jumpIf [
 		if: jumpIf boolean 
 		goto: jumpIf destination orderNumber 
 		otherwise: jumpIf otherwise orderNumber
-
 ]
 
 { #category : #visiting }
@@ -162,8 +154,6 @@ IRTranslator >> visitMethod: anIr [
 IRTranslator >> visitPop: pop [
 
 	gen popTop
-
-
 ]
 
 { #category : #visiting }
@@ -205,28 +195,9 @@ IRTranslator >> visitPushArray: array [
 ]
 
 { #category : #visiting }
-IRTranslator >> visitPushClosureCopy: closure [
-
-	closure copiedValues do: [:name | 	
-		gen pushTemp: (self currentScope indexForVarNamed: name).
-	].
-	gen mapBytesTo: closure.
-	gen pushClosureCopyNumCopiedValues: closure copiedValues size 
-			numArgs: closure arguments size 
-			to: closure destination orderNumber.
-	self pushScope: closure.
-	gen pushNClosureTemps: closure definedTemps size
-
-
-]
-
-{ #category : #visiting }
 IRTranslator >> visitPushDup: dup [
 	
 	gen pushDup
-
-
-
 ]
 
 { #category : #visiting }
@@ -236,30 +207,17 @@ IRTranslator >> visitPushFullClosure: fullBlock [
 		gen pushTemp: (self currentScope indexForVarNamed: name)].
 	gen mapBytesTo: fullBlock.
 	gen pushFullBlockClosure: fullBlock
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitPushInstVar: instVar [
 	
 	gen pushInstVar: instVar index
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitPushLiteral: lit [
-	| literal |
-	literal := lit literal.
-	"all objects that are not literals we keep writable"
-	literal isLiteral ifFalse: [ ^ gen pushLiteral: literal ].
-	"For symbol we need to set explicitly to writable or read-only. 
-	 Compilation to read-only then back to writable keep the object 
-	 read-only if we don't set it back to writable."
-	compilationContext optionReadOnlyLiterals
-		ifTrue: [ literal beReadOnlyObject ]
-		ifFalse: [ literal beWritableObject ].
-	^ gen pushLiteral: literal
-	
+	^ gen pushLiteral: lit literal beReadOnlyLiteral
 ]
 
 { #category : #visiting }
@@ -272,9 +230,6 @@ IRTranslator >> visitPushLiteralVariable: var [
 IRTranslator >> visitPushReceiver: receiver [
 
 	gen pushReceiver
-
-
-
 ]
 
 { #category : #visiting }
@@ -286,25 +241,18 @@ IRTranslator >> visitPushRemoteTemp: remoteTemp [
 	tempIndex := self currentScope indexForVarNamed: remoteTemp tempVectorName.
 
 	gen pushRemoteTemp: tempVectorIndex inVectorAt: tempIndex
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitPushTemp: tmp [
 
 	gen pushTemp: (self currentScope indexForVarNamed: tmp name)
-
-
-
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitPushThisContext: ctxt [
 
 	gen pushThisContext
-
-
 ]
 
 { #category : #visiting }
@@ -316,9 +264,6 @@ IRTranslator >> visitPushThisProcess: pushThisProcess [
 IRTranslator >> visitReturn: ret [
 	
 	gen returnTop
-
-
-
 ]
 
 { #category : #visiting }
@@ -331,16 +276,12 @@ IRTranslator >> visitReturnInstVar: instVar [
 IRTranslator >> visitReturnLiteral: lit [
 
 	gen returnConstant: lit literal
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitReturnReceiver: rec [
 
 	gen returnReceiver
-
-
-
 ]
 
 { #category : #visiting }
@@ -349,23 +290,18 @@ IRTranslator >> visitSend: send [
 	send superOf
 		ifNil: [ gen send: send selector ]
 		ifNotNil: [ :behavior |  gen send: send selector toSuperOf: behavior ]
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitSequence: instructionSequence [
-	self currentScope isPushClosureCopy ifTrue: [ 
-		self currentScope destination = instructionSequence ifTrue: [ self popScope ] ].
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence
-
 ]
 
 { #category : #visiting }
 IRTranslator >> visitSequences:  irSequences [
 	irSequences withIndexDo: [ :seq :i | seq orderNumber: i].
 	self visitNodes: irSequences.
-
 ]
 
 { #category : #visiting }

@@ -549,7 +549,7 @@ Collection >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
 		do: [ :each | 
 			(aBlock value: each)
 				ifTrue: [ ^ foundBlock cull: each ] ].
-	^ exceptionBlock value	
+	^ exceptionBlock value
 ]
 
 { #category : #enumerating }
@@ -748,7 +748,7 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	| col |
 	col := OrderedCollection new: self size.
 	self do: [ :each | col addAll: (aBlock value: each) ].
-	^ aCollectionClass withAll: col 
+	^ aCollectionClass withAll: col
 ]
 
 { #category : #enumerating }
@@ -808,7 +808,6 @@ Collection >> groupedBy: aBlock [
 		groups associationsDo: [ :association |
 			association value: (self species withAll: association value) ]].
 	^ groups
-
 ]
 
 { #category : #enumerating }
@@ -817,7 +816,6 @@ Collection >> groupedBy: aBlock having: aSelectionBlock [
 	elements for which keyBlock returns the same results, and return those 
 	collections allowed by selectBlock."
 	^ (self groupedBy: aBlock) select: aSelectionBlock
-
 ]
 
 { #category : #comparing }
@@ -898,16 +896,6 @@ Collection >> includesAll: aCollection [
 ]
 
 { #category : #testing }
-Collection >> includesAllOf: aCollection [ 
-
-	self
-		deprecated: 'Please use #includesAll: instead'
-		transformWith: '`@receiver includesAllOf: `@statements' -> '`@receiver includesAll: `@statements'.
-	
-	^ self includesAll: aCollection
-]
-
-{ #category : #testing }
 Collection >> includesAny: aCollection [ 
 	"Answer whether any element of aCollection is one of the receiver's elements."
 	aCollection do: [:elem | (self includes: elem) ifTrue: [^ true]].
@@ -920,7 +908,6 @@ Collection >> includesAnyOf: aCollection [
 	self flag: 'use includesAny: instead'.
 	
 	^ self includesAny: aCollection.
-	
 ]
 
 { #category : #testing }
@@ -1070,7 +1057,6 @@ Collection >> printOn: aStream delimiter: delimString [
 	with a delimiter String like: 'a, b, c' "
 
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
-		
 ]
 
 { #category : #printing }
@@ -1341,16 +1327,6 @@ Collection >> withIndexDo: elementAndIndexBlock [
 	| index |
 	index := 0.
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
-]
-
-{ #category : #deprecated }
-Collection >> write: anObject [
-
-	self
-		deprecated: 'Please use #add: instead'
-		transformWith: '`@receiver write: `@statements1' 
-						-> '`@receiver add: `@statements1'.
-	^ self add: anObject
 ]
 
 { #category : #enumerating }

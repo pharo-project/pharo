@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 FileSystemStore class >> delimiter [
-	^ self shouldBeImplemented 
+	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }
@@ -33,7 +33,6 @@ FileSystemStore class >> separator [
 FileSystemStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
-	
 ]
 
 { #category : #public }
@@ -46,46 +45,45 @@ FileSystemStore >> basenameFromEntry: aNode [
 FileSystemStore >> basicCreationTimeOf: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a readable
 	file or a directory whose contents can be listed."
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicIsDirectory: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a directory.
 	This private message should only be called form within the store."
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicIsFile: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a file.
 	This private message should only be called form within the store."
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicIsSymlink: aNode [
-	^self subclassResponsibility 
-	
+	^self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicIsWritable: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is 
 	a writable file or can be changed."
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicModificationTime: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a readable
 	file or a directory whose contents can be listed."
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'error signalling' }
@@ -97,13 +95,13 @@ FileSystemStore >> basicOpen: aPath writable: aBoolean [
 { #category : #abstract }
 FileSystemStore >> basicPosixPermissions: aNode [
 	"Used to get the posix permissions from a low-level filesystem entry / node"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicSizeOf: aNode [
 	"Used to get the size of the low-level representation (node / entry) "
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -153,7 +151,7 @@ FileSystemStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath if
 
 { #category : #abstract }
 FileSystemStore >> createDirectory: aPath [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #public }
@@ -163,7 +161,6 @@ FileSystemStore >> creationTimeOf: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | self basicCreationTimeOf: entry ] 
 		ifAbsent: [ self signalFileDoesNotExist: aPath ].
-	
 ]
 
 { #category : #accessing }
@@ -173,7 +170,7 @@ FileSystemStore >> defaultWorkingDirectory [
 
 { #category : #abstract }
 FileSystemStore >> delete: aPath [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -274,7 +271,6 @@ FileSystemStore >> exists: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | ^ true ] 
 		ifAbsent: [ ^ false ].
-	
 ]
 
 { #category : #private }
@@ -286,21 +282,18 @@ FileSystemStore >> filename: aByteString matches: aByteString2 [
 FileSystemStore >> gidOf: aPath [
 	"Return the gid of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
-
 ]
 
 { #category : #abstract }
 FileSystemStore >> inodeOf: aPath [
 	"Return the inode number of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
-
 ]
 
 { #category : #testing }
 FileSystemStore >> isBlock: aPath [
 	"Return a boolean indicating whether the File described by aPath is a block device"
 	^FileAttributeNotSupported signalWith: self
-	
 ]
 
 { #category : #accessing }
@@ -312,7 +305,6 @@ FileSystemStore >> isCaseSensitive [
 FileSystemStore >> isCharacter: aPath [
 	"Return a boolean indicating whether the File described by aPath is character based"
 	^FileAttributeNotSupported signalWith: self
-	
 ]
 
 { #category : #public }
@@ -322,7 +314,6 @@ FileSystemStore >> isDirectory: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | ^ self basicIsDirectory: entry ] 
 		ifAbsent: [ ^ false ].
-	
 ]
 
 { #category : #testing }
@@ -334,7 +325,6 @@ FileSystemStore >> isExecutable: aPath [
 FileSystemStore >> isFIFO: aPath [
 	"Return a boolean indicating whether the File described by aPath is FIFO"
 	^FileAttributeNotSupported signalWith: self
-	
 ]
 
 { #category : #public }
@@ -344,7 +334,6 @@ FileSystemStore >> isFile: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | ^ self basicIsFile: entry ] 
 		ifAbsent: [ ^ false ]
-	
 ]
 
 { #category : #testing }
@@ -356,7 +345,6 @@ FileSystemStore >> isReadable: aPath [
 FileSystemStore >> isRegular: aPath [
 	"Return a boolean indicating whether the File described by aPath is a regular file"
 	^FileAttributeNotSupported signalWith: self
-	
 ]
 
 { #category : #testing }
@@ -372,7 +360,6 @@ FileSystemStore >> isSymlink: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | ^ self basicIsSymlink: entry ] 
 		ifAbsent: [ ^ false ].
-	
 ]
 
 { #category : #public }
@@ -380,7 +367,6 @@ FileSystemStore >> isWritable: aPath [
 	self nodeAt: aPath 
 		ifPresent: [ :entry | ^ self basicIsWritable: entry ] 
 		ifAbsent: [ ^ false ].
-	
 ]
 
 { #category : #public }
@@ -390,7 +376,6 @@ FileSystemStore >> modificationTimeOf: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | self basicModificationTimeOf: entry ] 
 		ifAbsent: [ self signalFileDoesNotExist: aPath ].
-	
 ]
 
 { #category : #public }
@@ -403,7 +388,7 @@ FileSystemStore >> nodeAt: aPath [
 
 { #category : #abstract }
 FileSystemStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -429,7 +414,6 @@ FileSystemStore >> permissions: aPath [
 	self nodeAt: aPath 
 		ifPresent: [ :entry | ^ FileSystemPermission posixPermissions: (self basicPosixPermissions: entry) ] 
 		ifAbsent: [ ^ FileSystemPermission default ].
-	
 ]
 
 { #category : #converting }
@@ -453,7 +437,7 @@ FileSystemStore >> rename: sourcePath ifAbsent: absentBlock to: destinationPath 
 
 { #category : #abstract }
 FileSystemStore >> rename: sourcePath to: destinationPath [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -490,7 +474,6 @@ FileSystemStore >> sizeOf: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :entry | self basicSizeOf: entry ] 
 		ifAbsent: [ self signalFileDoesNotExist: aPath ]
-	
 ]
 
 { #category : #converting }

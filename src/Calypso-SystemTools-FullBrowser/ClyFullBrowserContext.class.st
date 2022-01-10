@@ -28,7 +28,7 @@ ClyFullBrowserContext >> isClassTagSelected [
 	| groups |
 	groups := tool classGroupSelection.
 	groups isEmpty ifTrue: [ ^false ].
-	^groups lastSelectedItem type isBasedOnClassTag 
+	^groups lastSelectedItem type isBasedOnClassTag
 ]
 
 { #category : #'selection-method groups' }
@@ -59,7 +59,7 @@ ClyFullBrowserContext >> isSelectedMethodGroupEditable [
 	
 	self isMethodGroupSelected ifFalse: [ ^false ].
 	
-	^self selectedMethodGroupClass isEditableGroup 
+	^self selectedMethodGroupClass isEditableGroup
 ]
 
 { #category : #testing }
@@ -126,7 +126,7 @@ ClyFullBrowserContext >> selectedMethodGroupItems [
 
 { #category : #'selection-method groups' }
 ClyFullBrowserContext >> selectedMethodGroups [
-	^self actualSelectionFrom: self selectedMethodGroupItems 
+	^self actualSelectionFrom: self selectedMethodGroupItems
 ]
 
 { #category : #'selection-methods' }
@@ -146,7 +146,7 @@ ClyFullBrowserContext >> selectedProjectChildItems [
 
 { #category : #'selection-projects' }
 ClyFullBrowserContext >> selectedProjectChildren [
-	^self actualSelectionFrom: self selectedProjectChildItems 
+	^self actualSelectionFrom: self selectedProjectChildItems
 ]
 
 { #category : #'selection-projects' }

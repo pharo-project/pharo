@@ -15,13 +15,12 @@ Class {
 
 { #category : #'class initialization' }
 ExternalObject class >> initialize [
-	"ExternalObject initialize"
-	(Smalltalk classNamed: #SessionManager)
-		ifNotNil: [:sessionManagerClass|
-			sessionManagerClass default
+
+	SessionManager default
 				registerSystemClassNamed: self name
-				atPriority: 60]
-		ifNil: [Smalltalk addToStartUpList: self after: (Smalltalk classNamed: #ShortRunArray)].	
+				atPriority: 60.
+				
+	Smalltalk recreateSpecialObjectsArray
 ]
 
 { #category : #'system startup' }
@@ -50,7 +49,6 @@ ExternalObject class >> startUp: resuming [
 	"The system is coming up. If it is on a new platform, clear out the existing handles."
 	ExternalAddress startUp: resuming. "Make sure handles are invalid"
 	resuming ifTrue:[self installSubclasses].
-
 ]
 
 { #category : #private }

@@ -120,8 +120,7 @@ OSSDL2BackendWindow >> convertCursor: aCursor [
 			result at: lineResultPosition + i put: (bits byteAt: lineBitmapPosition + i)]].
 	
 
-	^ result 
-	
+	^ result
 ]
 
 { #category : #cursor }
@@ -148,7 +147,6 @@ OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
 				             h: extent y
 				             hotX: offset x negated
 				             hotY: offset y negated ].
-	
 ]
 
 { #category : #'event handling' }
@@ -210,11 +208,7 @@ OSSDL2BackendWindow >> fetchDPI [
 	hdpi := ByteArray new: 4.
 	vdpi := ByteArray new: 4.
 	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
-		
- 	ddpi floatAt: 1 put: 96.0.
-	ddpi floatAt: 1 put: 96.0.
-	ddpi floatAt: 1 put: 96.0.
-		
+				
 	newDiagonalDPI := ddpi floatAt: 1.
 	"Allow automatic scale of factor increments of 5%. We need to
 	round due to precision issues which may result in an almost 1 scale factor, but not exactly one.
@@ -310,7 +304,6 @@ OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
 OSSDL2BackendWindow >> initialize [
 	super initialize.
 	self class initializeSlots: self
-
 ]
 
 { #category : #'text input' }
@@ -447,11 +440,6 @@ OSSDL2BackendWindow >> resizable [
 	^ sdl2Window getFlags anyMask: SDL_WINDOW_RESIZABLE
 ]
 
-{ #category : #accessing }
-OSSDL2BackendWindow >> resizable: aBoolean [
-	"This is not supported."
-]
-
 { #category : #'window management' }
 OSSDL2BackendWindow >> restore [
 
@@ -547,6 +535,15 @@ OSSDL2BackendWindow >> toggleBorderOn [
 	sdl2Window toggleBorder: true
 ]
 
+{ #category : #events }
+OSSDL2BackendWindow >> updateToNewResolution [
+	
+	"Force the regeneration of the renderer because we have a new resolution"
+	renderer destroy.
+	renderer validate.
+	renderer updateAll.
+]
+
 { #category : #accessing }
 OSSDL2BackendWindow >> verticalDPI [
 	self fetchDPIAndRaiseEvent.
@@ -625,6 +622,18 @@ OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 			
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
+]
+
+{ #category : #'event handling' }
+OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
+
+	self fetchDPI.
+	(OSWindowResolutionChangeEvent for: osWindow)
+		horizontalDPI: horizontalDPI;
+		verticalDPI: verticalDPI;
+		diagonalDPI: diagonalDPI;
+		screenScaleFactor: screenScaleFactor;
+		deliver
 ]
 
 { #category : #'event handling' }

@@ -73,7 +73,6 @@ AthensAffineTransform >> inverseTransform: aPoint [
 	x0 := px - x - (shx*y0) / sx.
 
 	^ x0@y0
-	
 ]
 
 { #category : #private }
@@ -93,7 +92,6 @@ AthensAffineTransform >> inverseTransformHalfPi: aPoint [
 	y0 := px - x  / shx.
 
 	^ x0@y0
-	
 ]
 
 { #category : #private }
@@ -113,7 +111,6 @@ AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
 	y0 := py - y / sy.
 
 	^ x0@y0
-	
 ]
 
 { #category : #transformations }
@@ -183,8 +180,6 @@ AthensAffineTransform >> loadIdentity [
 	"Initialize with identity transform"
 	sx := sy := 1.0.
 	shx := shy := x := y := 0.0
-	
-	
 ]
 
 { #category : #transformations }
@@ -212,7 +207,7 @@ AthensAffineTransform >> multiplyBy: m [
 	shx := nshx.
 	shy := nshy.
 	x := nx.
-	y := ny.		
+	y := ny.
 ]
 
 { #category : #transformations }
@@ -280,7 +275,6 @@ AthensAffineTransform >> scaleBy: factor [
 			shx := shx*factor.
 			sy := sy*factor.
 			shy := shy*factor ]
-
 ]
 
 { #category : #transformations }
@@ -347,7 +341,7 @@ AthensAffineTransform >> transform: aPoint [
 	py := aPoint y.
 	^ Point 
 		x: (sx*px +(shx*py) + x)
-		y: (shy*px + (sy*py) + y) 
+		y: (shy*px + (sy*py) + y)
 ]
 
 { #category : #'vector - transform' }
@@ -355,7 +349,7 @@ AthensAffineTransform >> transformX: px Y: py [
 	"Transform x and y coordinates by receiver. Answer a Point"
 	^ Point 
 		x: (sx*px +(shx*py) + x)
-		y: (shy*px + (sy*py) + y) 
+		y: (shy*px + (sy*py) + y)
 ]
 
 { #category : #transformations }
@@ -375,7 +369,6 @@ AthensAffineTransform >> translateX: px Y: py [
 "
 	x := (sx*px) + (shx*py) + x.
 	y := (shy*px) + (sy*py) + y
-
 ]
 
 { #category : #transformations }
@@ -389,7 +382,6 @@ AthensAffineTransform >> translateX: px y: py [
 "
 	x := (sx*px) + (shx*py) + x.
 	y := (shy*px) + (sy*py) + y
-
 ]
 
 { #category : #accessing }

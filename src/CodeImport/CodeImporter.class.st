@@ -57,7 +57,6 @@ CodeImporter class >> chunksFromFileNamed: aFileName [
 	^ (self fileNamed: aFileName)
 			parseChunks;
 			codeDeclarations.
-
 ]
 
 { #category : #'instance creation' }
@@ -65,7 +64,6 @@ CodeImporter class >> chunksFromStream: aStream [
 	^ (self fileStream: aStream)
 			parseChunks;
 			codeDeclarations.
-
 ]
 
 { #category : #evaluating }
@@ -91,7 +89,6 @@ CodeImporter class >> evaluateString: aString [
 { #category : #'instance creation' }
 CodeImporter class >> fileNamed: aFileName [
 	^ self new file: (aFileName asFileReference readStream).
-
 ]
 
 { #category : #'instance creation' }

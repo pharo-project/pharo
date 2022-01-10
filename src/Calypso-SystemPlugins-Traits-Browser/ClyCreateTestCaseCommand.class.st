@@ -12,14 +12,14 @@ Class {
 ClyCreateTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
 	
-	^aBrowserContext isPackageSelected 
+	^aBrowserContext isPackageSelected
 ]
 
 { #category : #activation }
 ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
 ]
 
 { #category : #accessing }

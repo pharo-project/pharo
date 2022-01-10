@@ -47,7 +47,7 @@ ClyAllClassGroupsQuery >> checkEmptyResult [
 
 { #category : #execution }
 ClyAllClassGroupsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin collectMetadataOfClassGroups: aQueryResult 
+	anEnvironmentPlugin collectMetadataOfClassGroups: aQueryResult
 ]
 
 { #category : #printing }

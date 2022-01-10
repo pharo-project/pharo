@@ -60,9 +60,6 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 
 	self assert: (ast scope lookupVar: 'code') isLocalVariable.
 	self deny: (ast scope lookupVar: 'code') isUninitialized.
-	
-
-	
 ]
 
 { #category : #'tests - variables' }

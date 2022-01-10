@@ -37,7 +37,6 @@ ClyClassWithScripts class >> methodWithScript [
 { #category : #'methods with scripts' }
 ClyClassWithScripts class >> methodWithScriptWithArgument [
 	<script: 'self inform: ''It is example method with script with argument from '', self name'>
-	
 ]
 
 { #category : #'methods with script' }

@@ -52,7 +52,6 @@ ProgressBarMorph class >> defaultHeight: aNumber [
 ProgressBarMorph class >> defaultWidth: aNumber [
 	
 	DefaultWidth := aNumber.
-
 ]
 
 { #category : #'instance creation' }
@@ -67,7 +66,7 @@ ProgressBarMorph class >> from: startNumber to: endNumber [
 ProgressBarMorph class >> initialize [
 	
 	self defaultWidth: 120.
-	self defaultHeight: 10 
+	self defaultHeight: 10
 ]
 
 { #category : #private }

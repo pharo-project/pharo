@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 ClyMethodCounterGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyMethodCallCountersQueryTest 
+	^ClyMethodCallCountersQueryTest
 ]
 
 { #category : #running }

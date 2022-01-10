@@ -36,7 +36,6 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 	morph addMorph: subMorph.
 	
 	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds.
-		
 ]
 
 { #category : #'testing - geometry' }
@@ -58,7 +57,23 @@ MorphTest >> testExtent [
 	self assert: b2 equals: b1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'testing - testing' }
+MorphTest >> testForTiltedStickyness [
+
+	| m |
+	m := Morph new openCenteredInWorld.
+	self assert: m topRendererOrSelf isSticky not.
+	m beSticky.
+	self assert: m topRendererOrSelf isSticky.
+	m addFlexShell.
+	m topRendererOrSelf rotationDegrees: 45.0.
+	self assert: m topRendererOrSelf isSticky.
+	m beUnsticky.
+	self assert: m topRendererOrSelf isSticky not.
+	m topRendererOrSelf delete
+]
+
+{ #category : #'testing - halo' }
 MorphTest >> testHaloIsDisable [
 	| isHaloEnable |
 	isHaloEnable := Morph halosEnabled.

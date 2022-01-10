@@ -220,7 +220,6 @@ RPackageOrganizer >> addPackageNameToCache: aPackageName [
 	packageNames ifNil: [ ^ self ].
 	
 	packageNames add: aPackageName
-
 ]
 
 { #category : #'system integration' }
@@ -308,7 +307,6 @@ RPackageOrganizer >> basicUnregisterPackageNamed: aSymbolName [
 		ifAbsent: [ ].
 	
 	self removePackageNameFromCache: aSymbolName asSymbol
-	
 ]
 
 { #category : #'system compatibility' }
@@ -328,7 +326,7 @@ RPackageOrganizer >> category: categoryName matches: prefix [
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 	(self packages 
 		anySatisfy: [ :each | self category: packageName matches: each packageName ])
-		ifFalse: [ (self packageClass named: packageName capitalized) register ] 
+		ifFalse: [ (self packageClass named: packageName capitalized) register ]
 ]
 
 { #category : #registration }
@@ -345,7 +343,7 @@ RPackageOrganizer >> createPackageNamed: aString [
 { #category : #'private - testing' }
 RPackageOrganizer >> debuggingName [
 
-	^ debuggingName 
+	^ debuggingName
 ]
 
 { #category : #'private - testing' }
@@ -404,9 +402,6 @@ RPackageOrganizer >> fullyRemoveClassNamed: className [
 	rPackage removeClassNamed: className.
 	(self extendingPackagesOfClassNamed: className)
 		do: [:each | each removeAllMethodsFromClassNamed: className. ].
-
-	
-	
 ]
 
 { #category : #'package - access from class' }
@@ -453,10 +448,9 @@ RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
 		ifTrue: [ ^true ].
 		
 	packages keysDo: [ :aSymbol | 
-		(anExtensionName beginsWithEmpty: aSymbol, '-' caseSensitive: false)
+		(anExtensionName beginsWith: aSymbol asString, '-' caseSensitive: false)
 			ifTrue: [ ^ true]].
 	^ false
-	
 ]
 
 { #category : #testing }
@@ -560,13 +554,11 @@ RPackageOrganizer >> packageClass [
 	"Return the system class that represent packages."
 	
 	^ RPackage
-	
 ]
 
 { #category : #accessing }
 RPackageOrganizer >> packageDefiningOrExtendingMethod: aCompiledMethod [
 	^ self packageDefiningOrExtendingSelector: aCompiledMethod selector inClass: aCompiledMethod methodClass
-
 ]
 
 { #category : #accessing }
@@ -586,8 +578,7 @@ RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClass: aCla
 	
 "	self packages detect: [:each | 
 		each includesSelector: aSelector ofClass: aClass ].
-"	
-	
+"
 ]
 
 { #category : #accessing }
@@ -660,7 +651,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
 	packages keysDo: [:aSymbol |
-		(anExtensionName beginsWithEmpty: (aSymbol asString, '-') caseSensitive: false)
+		(anExtensionName beginsWith: (aSymbol asString, '-') caseSensitive: false)
 			ifTrue: [
 				"we keep the longest package name found"
 				(aSymbol size > tmpPackageName size) 
@@ -700,8 +691,6 @@ RPackageOrganizer >> packageNamed: aSymbol  ifAbsent: errorBlock [
 	^ packages 
 		at: aSymbol asSymbol 
 		ifAbsent: errorBlock
-	
-	
 ]
 
 { #category : #private }
@@ -757,7 +746,7 @@ RPackageOrganizer >> packagesDo: aBlock [
 RPackageOrganizer >> printOn: aStream [
 
 	super printOn: aStream.
-	debuggingName ifNotNil: [aStream nextPutAll: debuggingName ].  
+	debuggingName ifNotNil: [aStream nextPutAll: debuggingName ].
 ]
 
 { #category : #initialization }
@@ -876,7 +865,6 @@ RPackageOrganizer >> removePackageNameFromCache: aPackageName [
 
 	packageNames ifNil: [ ^ self ].	
 	packageNames remove: aPackageName ifAbsent: [  ]
-
 ]
 
 { #category : #'system integration' }
@@ -984,7 +972,6 @@ RPackageOrganizer >> systemCategoryRenamedActionFrom: ann [
 	rPackage 
 		classTagNamed: oldName
 		ifPresent: [ :tag | tag basicRenameTo: newName ]
-
 ]
 
 { #category : #'system integration' }
@@ -998,7 +985,6 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 		ifNil: [ self registerPackage: (self packageClass named: categoryNameSymbol) ].		
 	
 	rPackage importClass: class.
-
 ]
 
 { #category : #'system integration' }
@@ -1030,7 +1016,6 @@ RPackageOrganizer >> systemClassRemovedActionFrom: ann [
 	className  := class originalName.
 		
 	self fullyRemoveClassNamed: className.
-	
 ]
 
 { #category : #'system integration' }
@@ -1063,8 +1048,6 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 	self flag: #cyrille. "we will see that."
 	"maybe we should remove also the key from the extendedPackages dictionary"
 	"CD: This is what are doing the lines above I think"
-
-	
 ]
 
 { #category : #'system integration' }
@@ -1077,7 +1060,6 @@ RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	classOrganization categories do: [ :each | 
 		(each beginsWith: '*')
 			ifTrue:  [ self checkPackageExistsOrRegister: each allButFirst ] ]
-
 ]
 
 { #category : #'system integration' }
@@ -1125,9 +1107,6 @@ RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 	"maybe the name of the method has changed"
 	oldMethod selector = newMethod selector
 		ifFalse: [ methodPackage updateSelector: oldMethod selector inClass: oldMethod methodClass withNewSelector: newMethod selector].
-		
-
-	
 ]
 
 { #category : #'system integration' }
@@ -1211,8 +1190,6 @@ RPackageOrganizer >> systemProtocolAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemProtocolRemovedActionFrom: ann [
 	"to be unregistered"
-	
-	
 ]
 
 { #category : #accessing }
@@ -1337,7 +1314,6 @@ RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName
 	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ])
 		ifTrue: [ 
 			RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: { packageName. tagName })  ]
-
 ]
 
 { #category : #registration }

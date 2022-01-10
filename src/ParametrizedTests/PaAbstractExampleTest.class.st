@@ -39,5 +39,5 @@ PaAbstractExampleTest >> option2: anInteger [
 { #category : #tests }
 PaAbstractExampleTest >> testParametersHaveValue [
 	self assert: option1 isNotNil.
-	self assert: option2 isNotNil.	
+	self assert: option2 isNotNil.
 ]

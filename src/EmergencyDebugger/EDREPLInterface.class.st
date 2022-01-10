@@ -13,9 +13,6 @@ Class {
 		'inputBufferStream',
 		'waitSemaphore'
 	],
-	#pools : [
-		'EventSensorConstants'
-	],
 	#category : #'EmergencyDebugger-View'
 }
 
@@ -95,5 +92,4 @@ EDREPLInterface >> terminateREPL [
 EDREPLInterface >> waitSemaphore [
 
 	^ waitSemaphore ifNil: [ waitSemaphore := Semaphore new ]
-
 ]

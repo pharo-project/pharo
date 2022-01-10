@@ -15,7 +15,7 @@ ClyDebuggingCommand class >> contextMenuOrder [
 
 { #category : #testing }
 ClyDebuggingCommand class >> isAbstract [
-	^self = ClyDebuggingCommand 
+	^self = ClyDebuggingCommand
 ]
 
 { #category : #activation }

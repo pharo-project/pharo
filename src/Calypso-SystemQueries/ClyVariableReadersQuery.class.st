@@ -10,7 +10,7 @@ Class {
 { #category : #printing }
 ClyVariableReadersQuery >> description [
 
-	^'readers of ', self printVariables 
+	^'readers of ', self printVariables
 ]
 
 { #category : #testing }

@@ -24,11 +24,6 @@ InstructionStream >> atEnd [
 ]
 
 { #category : #'*Debugging-Core' }
-InstructionStream >> debuggerMap [
-	^self method debuggerMap
-]
-
-{ #category : #'*Debugging-Core' }
 InstructionStream >> decodeNextInstruction [
 	"Return the next bytecode instruction as a message that an InstructionClient would understand.  This advances the pc by one instruction."
 
@@ -68,8 +63,7 @@ InstructionStream >> interpretWithClient: aClient [
 InstructionStream >> nextPc: currentByte [
 	"Answer the pc of the next bytecode following the current one, given the current bytecode.
 	 Skips the extension bytecodes."
-	
-	^ pc + (self method encoderClass bytecodeSize: currentByte)
+	^ pc + (self method encoderClass instructionSizeAt: pc of: self method)
 ]
 
 { #category : #'*Debugging-Core' }
@@ -114,7 +108,7 @@ InstructionStream >> secondByte [
 InstructionStream >> selectorToSendOrSelf [
 	"If this instruction is a send, answer the selector, otherwise answer self."
  
-	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc 
+	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc
 ]
 
 { #category : #'*Debugging-Core' }

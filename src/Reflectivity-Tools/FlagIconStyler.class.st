@@ -21,11 +21,6 @@ FlagIconStyler >> iconFor: aNode [
 	^ self iconNamed: #flag.
 ]
 
-{ #category : #defaults }
-FlagIconStyler >> iconLabel: aNode [
-	^''
-]
-
 { #category : #testing }
 FlagIconStyler >> shouldStyleNode: aNode [
 	^aNode isMessage and: [aNode selector = #flag:]

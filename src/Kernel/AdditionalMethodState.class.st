@@ -117,7 +117,6 @@ AdditionalMethodState >> at: aKey put: aValue [
                method propertyAt: aKey put: aValue ].
 
        ^ aValue
-
 ]
 
 { #category : #copying }
@@ -155,19 +154,6 @@ AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
 	^copy
-]
-
-{ #category : #generated }
-AdditionalMethodState >> hasLiteralThorough: literal [
-
-	"Answer true if any literal in these properties is literal,
-	 even if embedded in array structure."
-
-	self
-		deprecated: 'Use #refersToLiteral: instead'
-		transformWith:
-		'`@rec hasLiteralThorough: `@arg' -> '`@rec refersToLiteral: `@arg'.
-	^ self refersToLiteral: literal
 ]
 
 { #category : #testing }

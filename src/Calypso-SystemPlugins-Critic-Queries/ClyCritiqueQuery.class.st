@@ -17,7 +17,7 @@ ClyCritiqueQuery class >> resultItemsType [
 
 { #category : #execution }
 ClyCritiqueQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin resolveMetadataOfCritiques: aQueryResult 
+	anEnvironmentPlugin resolveMetadataOfCritiques: aQueryResult
 ]
 
 { #category : #'system changes' }

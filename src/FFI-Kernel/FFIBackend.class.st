@@ -39,18 +39,18 @@ FFIBackend class >> isAvailable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFIBackend class >> reset [
 
 	Current := nil.
 ]
 
-{ #category : #accessing }
+{ #category : #'system startup' }
 FFIBackend class >> startUp: isImageStarting [
 	
 	isImageStarting ifFalse: [ ^ self ].
 	
-	Current := nil.
+	Current := nil
 ]
 
 { #category : #'instance creation' }

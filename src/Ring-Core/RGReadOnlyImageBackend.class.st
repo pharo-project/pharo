@@ -4,24 +4,10 @@ Class {
 	#category : #'Ring-Core-Environment'
 }
 
-{ #category : #'instance creation' }
-RGReadOnlyImageBackend class >> for: anRGEnvironment [
-
-	^ self new 
-		environment: anRGEnvironment;
-		yourself
-]
-
 { #category : #'trait alias' }
 RGReadOnlyImageBackend >> aliasesFor: anRGTraitAlias do: aBlock [
 
 	^ (anRGTraitAlias propertyNamed: #realObject ifAbsent: [ self error: 'You can use only trait transformations generated directly by this backend' ]) aliases associations do: [:each | aBlock value: each ]
-]
-
-{ #category : #method }
-RGReadOnlyImageBackend >> astFor: anRGMethod [
-
-	^  anRGMethod astFromSource
 ]
 
 { #category : #method }
@@ -118,13 +104,6 @@ RGReadOnlyImageBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 			aBlock value: def.]]
 ]
 
-{ #category : #'as yet unclassified' }
-RGReadOnlyImageBackend >> definitionFor: anObject [ 
-
-	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
-
-]
-
 { #category : #'trait exclusion' }
 RGReadOnlyImageBackend >> exclusionsFor: anRGTraitExclusion do: aBlock [
 
@@ -190,15 +169,6 @@ RGReadOnlyImageBackend >> hasSourceCodeFor: anRGMethod [
 	^ (self realMethodFor: anRGMethod) sourceCode
 ]
 
-{ #category : #initialization }
-RGReadOnlyImageBackend >> initialize [
-
-	super initialize.
-	
-	providedDefinitions := IdentityDictionary new.
-	
-]
-
 { #category : #behavior }
 RGReadOnlyImageBackend >> layoutFor: anRGBehavior [
 
@@ -260,12 +230,6 @@ RGReadOnlyImageBackend >> methodPackageFor: anRGMethod [
 	^ (self realMethodFor: anRGMethod) package asRingMinimalDefinitionIn: anRGMethod environment.
 ]
 
-{ #category : #general }
-RGReadOnlyImageBackend >> nameFor: anRGObject [
-
-	^ anRGObject pvtName
-]
-
 { #category : #class }
 RGReadOnlyImageBackend >> packageFor: anRGBehavior [
 
@@ -281,14 +245,14 @@ RGReadOnlyImageBackend >> packagesFor: anRGEnvironment do: aBlock [
 		aBlock value: def.].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> realBehaviorFor: anRGBehavior [
 
 	"TODO: should we cache the definition?"
 	^ Smalltalk classOrTraitNamed: anRGBehavior name asSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> realMethodFor: anRGMethod [
 
 	"TODO: should we cache the definition?"
@@ -297,7 +261,7 @@ RGReadOnlyImageBackend >> realMethodFor: anRGMethod [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> realPackageFor: anRGPackage [
 
 	^ RPackageOrganizer default packageNamed: anRGPackage name ifAbsent: [nil].
@@ -307,12 +271,6 @@ RGReadOnlyImageBackend >> realPackageFor: anRGPackage [
 RGReadOnlyImageBackend >> resolvedPropertiesFor: anRGObject [
 
 	^ anRGObject pvtResolvableProperties collect: [:each | each key]
-]
-
-{ #category : #class }
-RGReadOnlyImageBackend >> sharedPoolsFor: anRGBehavior do: aBlock [
-
-	^ anRGBehavior behaviorStrategy pvtSharedPoolsDo: aBlock
 ]
 
 { #category : #'pointer layout' }

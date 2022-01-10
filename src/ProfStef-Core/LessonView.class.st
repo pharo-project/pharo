@@ -33,7 +33,14 @@ LessonView class >> menuOn: aBuilder [
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
+]
 
+{ #category : #accessing }
+LessonView >> bindings [
+
+	"dynamic variable binding not needed for Lessons"
+
+	^ Dictionary new
 ]
 
 { #category : #gui }
@@ -50,7 +57,6 @@ LessonView >> buildText [
 { #category : #gui }
 LessonView >> buildWindow [
 	^ SystemWindow labelled: 'PrStef lesson'.
-	
 ]
 
 { #category : #gui }
@@ -75,6 +81,7 @@ LessonView >> initialize [
 	window := self buildWindow.
 	shoutMorph := self buildText.
 	window addMorph: shoutMorph frame: (0 @ 0 corner: 1 @ 1).
+	window extent: 600 @ 450.
 ]
 
 { #category : #testing }
@@ -85,7 +92,6 @@ LessonView >> isOpenInWindow [
 { #category : #gui }
 LessonView >> menu [
 	^ (PragmaMenuBuilder pragmaKeyword: #LessonViewContextMenu model: self) menu.
-
 ]
 
 { #category : #gui }
@@ -119,7 +125,6 @@ LessonView >> showLesson: aLesson withTitle: aString [
 	self window setLabel: aString.
 	self sourceTextModel setText: aLesson lesson.
 	self isOpenInWindow ifFalse: [ self open ]
-	
 ]
 
 { #category : #accessing }

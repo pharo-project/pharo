@@ -38,7 +38,6 @@ TBeginsEndsWith >> testsBeginsWithEmpty [
 	
 	self deny: (self nonEmpty beginsWith:(self empty)).
 	self deny: (self empty beginsWith:(self nonEmpty))
-
 ]
 
 { #category : #'tests - begins ends with' }
@@ -54,5 +53,4 @@ TBeginsEndsWith >> testsEndsWithEmpty [
 	
 	self deny: (self nonEmpty endsWith: self empty).
 	self deny: (self empty endsWith: self nonEmpty)
-	
 ]

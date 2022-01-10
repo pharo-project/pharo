@@ -24,8 +24,6 @@ SDL2Example >> osWindow [
 	window eventHandler: (OSWindowMorphicEventHandler for: self currentWorld).
 	window newFormRenderer: Display.
 	^window
-
-
 ]
 
 { #category : #examples }

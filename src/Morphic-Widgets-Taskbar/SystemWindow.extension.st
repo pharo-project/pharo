@@ -25,7 +25,6 @@ SystemWindow >> minimizeAfterGeneratingThumbnail [
 	self setBoundsWithFlex: (-10 @ -10 extent: 2 @ 2).
 	self hide.
 	self layoutChanged
-	
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
@@ -276,5 +275,5 @@ SystemWindow >> worldTaskbar [
 		world 
 		submorphThat: [ :morph | morph isTaskbar ] 
 		ifNone: [ nil ]
-	] 
+	]
 ]

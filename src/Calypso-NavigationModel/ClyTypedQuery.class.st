@@ -100,12 +100,12 @@ ClyTypedQuery class >> mergeOwnInstances: queries unifiedBy: ownUnifiedInstance 
 
 { #category : #'items type' }
 ClyTypedQuery class >> resultItemsType [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
 ClyTypedQuery class >> sorted [
-	^self sortedBy: self resultItemsType defaultSortFunctionForCalypso 
+	^self sortedBy: self resultItemsType defaultSortFunctionForCalypso
 ]
 
 { #category : #'instance creation' }
@@ -133,7 +133,7 @@ ClyTypedQuery >> decorateItemGroup: groupItem [
 
 { #category : #testing }
 ClyTypedQuery >> executesQuery: aTypedQueryClass [
-	^self isKindOf: aTypedQueryClass 
+	^self isKindOf: aTypedQueryClass
 ]
 
 { #category : #converting }
@@ -155,7 +155,7 @@ ClyTypedQuery >> retrievesItemsOfType: itemTypeClass [
 { #category : #composition }
 ClyTypedQuery >> unionWith: typedQueries as: aQueryResult [
 
-	^ClyQuery unionFrom: (typedQueries copyWith: self) as: aQueryResult 
+	^ClyQuery unionFrom: (typedQueries copyWith: self) as: aQueryResult
 ]
 
 { #category : #converting }

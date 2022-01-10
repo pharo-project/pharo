@@ -60,7 +60,7 @@ RBAssignmentNode >> assignment: anInteger [
 
 { #category : #accessing }
 RBAssignmentNode >> assignmentOperator [
-	^  ':=' 
+	^  ':='
 ]
 
 { #category : #accessing }

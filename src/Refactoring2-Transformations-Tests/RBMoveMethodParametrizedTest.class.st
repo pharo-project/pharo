@@ -8,6 +8,7 @@ Class {
 RBMoveMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodRefactoring };
+		addCase: { #rbClass -> RBMoveMethodTransformation };
 		yourself
 ]
 
@@ -50,6 +51,30 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	self assert: (class parseTreeFor: #builder:) equals: (self parseMethod: 'builder: anObject builder := anObject').
 	self assert: (class parseTreeFor: #rewriteRule) equals: (self parseMethod: 'rewriteRule ^rewriteRule').
 	self assert: (class parseTreeFor: #rewriteRule:) equals: (self parseMethod: 'rewriteRule: anObject rewriteRule := anObject')
+]
+
+{ #category : #test }
+RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
+	| refactoring class |
+	(model classFor: Object) compile: 'aTestMethodName ^ OrderedCollection new addAll: (1 to: 100); yourself' classified: #test.
+	
+	refactoring := self createRefactoringWithArguments:  
+				{ #aTestMethodName . model classFor: Object . 'OrderedCollection'}.
+	
+	self
+		setupMethodNameFor: refactoring
+		toReturn: #oneToOneHundred
+		withArguments: #().
+	refactoring setOption: #variableTypes toUse: [ :ref :initialTypes :selectedTypes | selectedTypes ].
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #Object.
+	self
+		assert: ((model classFor: Object) parseTreeFor: #aTestMethodName)
+		equals: (self parseMethod: 'aTestMethodName ^ OrderedCollection oneToOneHundred ').
+	self
+		assert: ((refactoring model classNamed: #OrderedCollection) classSide parseTreeFor: #oneToOneHundred)
+		equals: (self parseMethod: 'oneToOneHundred ^ self new addAll: (1 to: 100); yourself')
+
 ]
 
 { #category : #test }

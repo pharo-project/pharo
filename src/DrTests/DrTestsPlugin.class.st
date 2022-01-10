@@ -113,7 +113,7 @@ DrTestsPlugin >> pluginName [
 { #category : #ui }
 DrTestsPlugin >> pluginPresenterClass [
 	
-	^ DTDefaultPluginPresenter 
+	^ DTDefaultPluginPresenter
 ]
 
 { #category : #accessing }
@@ -132,11 +132,6 @@ DrTestsPlugin >> reRunForConfiguration: aDTpluginConfiguration [
 ]
 
 { #category : #api }
-DrTestsPlugin >> reRunPlugin: aSymbol with: aDTpluginConfiguration [
-	self deprecated: 'Should not be used, meta-programming. Need to be removed.'.
-]
-
-{ #category : #api }
 DrTestsPlugin >> resultButtonHelp [
 	^ self subclassResponsibility
 ]
@@ -149,7 +144,7 @@ DrTestsPlugin >> resultTreeViews [
 	pragmas := Pragma allNamed: self pragmaForResultTrees in: self pluginResultClass.
 
 	^ ((pragmas sorted: [ :p | p argumentAt: 2 ] asSortFunction) collect: [ :pragma |
-		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ]) 
+		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ])
 ]
 
 { #category : #api }

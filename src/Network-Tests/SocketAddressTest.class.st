@@ -41,7 +41,6 @@ SocketAddressTest >> testIsPrivateAddress [
 		self assert: (SocketAddress fromDottedString: each) isPrivateAddress ].
 	#('127.0.0.1' '172.33.1.1' '104.28.27.35' '0.0.0.0') do: [ :each | 
 		self deny: (SocketAddress fromDottedString: each) isPrivateAddress ]
-	
 ]
 
 { #category : #testing }

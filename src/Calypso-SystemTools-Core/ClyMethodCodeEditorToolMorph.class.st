@@ -147,7 +147,7 @@ ClyMethodCodeEditorToolMorph >> detachFromSystem [
 
 { #category : #accessing }
 ClyMethodCodeEditorToolMorph >> editingMethod [
-	^editingMethod 
+	^editingMethod
 ]
 
 { #category : #accessing }
@@ -341,7 +341,6 @@ ClyMethodCodeEditorToolMorph >> update [
 	super update.
 	
 	self formatTextIfNeeded.
-	
 ]
 
 { #category : #updating }

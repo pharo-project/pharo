@@ -18,7 +18,6 @@ AthensCompositePaint >> athensFillPath: athensPath on: anAthensCanvas [
 
 	paints do: [:paint | 
 				paint athensFillPath: athensPath on: anAthensCanvas ]
-
 ]
 
 { #category : #drawing }
@@ -29,7 +28,6 @@ AthensCompositePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 
 	paints do: [:paint | 
 				paint athensFillRectangle: aRect on: anAthensCanvas ]
-
 ]
 
 { #category : #initialization }

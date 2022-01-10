@@ -132,7 +132,7 @@ DoubleLinkedList >> emptyCheck [
 DoubleLinkedList >> errorEmptyCollection [
 	"Signal a CollectionIsEmpty exception"
 	
-	CollectionIsEmpty signalWith: self 
+	CollectionIsEmpty signalWith: self
 ]
 
 { #category : #accessing }

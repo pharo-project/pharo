@@ -15,7 +15,7 @@ ClyScopeTest class >> isAbstract [
 
 { #category : #running }
 ClyScopeTest >> createSampleScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -95,5 +95,4 @@ ClyScopeTest >> testConvertingToAnotherScopeClassShouldKeepName [
 	convertedScope := scope asScope: ClyExampleScope.
 	
 	self assert: convertedScope name equals: 'test scope'.
-	
 ]

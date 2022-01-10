@@ -48,22 +48,24 @@ BaselineOfMorphic >> baseline: spec [
 			spec repository: repository; loads: #('Core') ].
 
 		spec package: 'System-Localization'.
-		spec package: 'System-Clipboard'.
 		
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
-		spec package: 'FreeType'.
-		spec package: 'FreeType-Morphic'.
+		spec baseline: 'FreeType' with: [ 
+			spec 
+				repository: repository; 
+				loads: 'ui' ].
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec package: 'Keymapping-Core'.
-		spec package: 'Keymapping-KeyCombinations'.
-		spec package: 'Keymapping-Pragmas'.
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'core' ].
 
 		spec package: 'Transcript-Core'.
 

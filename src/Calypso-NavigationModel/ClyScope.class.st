@@ -90,7 +90,7 @@ ClyScope class >> defaultName [
 
 { #category : #composition }
 ClyScope >> , anotherTypedScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -112,7 +112,7 @@ ClyScope >> adoptQuery: aQuery [
 	on top of subqueries created for each subscope from given aQuery.
 	This method should return adopted query instance which can be given query itself
 	if it is appropriate"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -143,7 +143,7 @@ ClyScope >> basisObjects [
 
 { #category : #accessing }
 ClyScope >> basisObjects: aCollection [
-	basisObjects := aCollection asSet 
+	basisObjects := aCollection asSet
 ]
 
 { #category : #accessing }
@@ -244,7 +244,6 @@ ClyScope >> printBasisOn: aStream [
 		self printBasisObject: each on: aStream.
 		aStream nextPutAll: ', '].
 	aStream skip: -2.
-
 ]
 
 { #category : #printing }
@@ -277,12 +276,12 @@ ClyScope >> query: aQuery [
 
 { #category : #testing }
 ClyScope >> representsScope: aScopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyScope >> supportsQuery: aQuery [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

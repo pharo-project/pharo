@@ -21,7 +21,7 @@ Class {
 	#category : #'HeuristicCompletion-Model-Statistics'
 }
 
-{ #category : #singleton }
+{ #category : #'class initialization' }
 CoStatistics class >> reset [
 	
 	UniqueInstance := nil
@@ -119,7 +119,6 @@ CoStatistics >> logCancelCompletionFromTypedToken: typedToken inClass: aClassNam
 CoStatistics >> logCancelEvent: aCancelEntry [
 	
 	cancelledCompletions add: aCancelEntry.
-
 ]
 
 { #category : #accessing }

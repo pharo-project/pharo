@@ -114,15 +114,45 @@ Class {
 		'highlighting',
 		'changesWasInitiatedByUser',
 		'navigationSelector',
-		'dataSourceClass'
+		'dataSourceClass',
+		'hoverOverDropItemStartTime',
+		'targetDropItem'
+	],
+	#classVars : [
+		'DragAndDropDelay'
 	],
 	#category : #'Calypso-Browser-Table'
 }
+
+{ #category : #accessing }
+ClyQueryViewMorph class >> dragAndDropDelay [
+	"Modified by settings CodeBrowsing/Calypso: self classSide >> #settingsDragAndDropDelayOn:"
+	^ DragAndDropDelay
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
+	DragAndDropDelay := aNumber
+]
 
 { #category : #'instance creation' }
 ClyQueryViewMorph class >> for: aBrowser [
 	^self new 
 		browser: aBrowser
+]
+
+{ #category : #settings }
+ClyQueryViewMorph class >> settingsDragAndDropDelayOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #dragAndDropDelay)
+		parent: #Calypso;
+		default: 1500;
+		label: 'DragAndDrop delay (ms)';
+		description: 'Delay to extend the list of item in the target of a drag and drop. 
+For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
+Expects an integer giving the number of miliseconds';
+		target: self.
+		
 ]
 
 { #category : #controlling }
@@ -271,13 +301,13 @@ ClyQueryViewMorph >> defaultColor [
 
 { #category : #testing }
 ClyQueryViewMorph >> definesTree [
-	^treeStructure notEmpty 
+	^treeStructure notEmpty
 ]
 
 { #category : #accessing }
 ClyQueryViewMorph >> displayMainColumnBy: cellAndItemBlock [
 
-	self mainColumn displayBlock: cellAndItemBlock 
+	self mainColumn displayBlock: cellAndItemBlock
 ]
 
 { #category : #'drag and drop support' }
@@ -433,10 +463,32 @@ ClyQueryViewMorph >> hasRealQuery [
 	^self query ~~ ClyUnknownQuery instance
 ]
 
+{ #category : #'drag and drop support' }
+ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
+
+	targetDropItem ifNil: [ ^ false ].
+	hoverOverDropItemStartTime ifNil: [ ^ false].
+	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
+
+	^ self class dragAndDropDelay * 1000 < (Time microsecondsSince: hoverOverDropItemStartTime)
+]
+
 { #category : #controlling }
 ClyQueryViewMorph >> highlightItemsWhich: predicateBlock [
 
 	highlighting selectItemsWhere: predicateBlock
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> hoverOverDropItemStartTime [
+
+	^ hoverOverDropItemStartTime
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> hoverOverDropItemStartTime: anObject [
+
+	hoverOverDropItemStartTime := anObject
 ]
 
 { #category : #controlling }
@@ -508,6 +560,22 @@ ClyQueryViewMorph >> isFilterChanged [
 	^selection rootDataSource ~~ self dataSource
 ]
 
+{ #category : #'drag and drop support' }
+ClyQueryViewMorph >> isReadyToExpandForDrop: aSelectedItem [
+	"/!\ Although the selector sounds like a tester, it is modifying the state upon returning true/
+	
+	Current limitation:
+	- You have to move to send another dragAndDrop event so the time can be checked again"
+	| newFocus |
+
+	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem) 
+		ifTrue:[ nil ]
+		ifFalse: [ aSelectedItem ].
+	
+	^ self userNowFocusesOn: newFocus
+	
+]
+
 { #category : #accessing }
 ClyQueryViewMorph >> itemAt: rowIndex [
 	^self dataSource elementAt: rowIndex
@@ -569,7 +637,7 @@ ClyQueryViewMorph >> neverRestoreSelection [
 
 { #category : #initialization }
 ClyQueryViewMorph >> newSelectionWith: dataSourceItems [
-	^self dataSource newSelectionWith: dataSourceItems 
+	^self dataSource newSelectionWith: dataSourceItems
 ]
 
 { #category : #accessing }
@@ -714,7 +782,7 @@ ClyQueryViewMorph >> showsItemsFromMultipleScope [
 { #category : #testing }
 ClyQueryViewMorph >> showsItemsFromQuery: aTypedQueryClass [
 
-	^self query executesQuery: aTypedQueryClass 
+	^self query executesQuery: aTypedQueryClass
 ]
 
 { #category : #testing }
@@ -747,7 +815,19 @@ ClyQueryViewMorph >> table [
 
 { #category : #controlling }
 ClyQueryViewMorph >> takeKeyboardFocus [
-	table takeKeyboardFocus 
+	table takeKeyboardFocus
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> targetDropItem [
+
+	^ targetDropItem
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> targetDropItem: anObject [
+
+	targetDropItem := anObject
 ]
 
 { #category : #accessing }
@@ -827,11 +907,31 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 ]
 
 { #category : #'drag and drop support' }
-ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: aDataSourceItem [
-	| context |
-	context := self createSelectionContextOf: aDataSourceItem asSelection.
+ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
+	"if this is true, then we're not ready to expand, and we do not want to update the time."
+	(targetDropItem isNotNil and: [ aSelectedItem isNotNil
+		and: [ targetDropItem browserItem = aSelectedItem browserItem ]]) ifTrue: [ ^ false ].
 	
-	^aPassenger canBeDroppedInContext: context
+	targetDropItem := aSelectedItem.
+	hoverOverDropItemStartTime := Time microsecondClockValue.
+	"new focus, we do not expand"
+	^ targetDropItem isNil
+]
+
+{ #category : #'drag and drop support' }
+ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
+	| context |
+	 
+	context := self createSelectionContextOf: dropTargetItem asSelection.
+	(aPassenger canBeDroppedInContext: context) ifFalse:[ ^ false ].
+	
+	"if we are able to drop, we always return true.
+	However, the rest is guarded to enable expansion"
+	dropTargetItem hasChildren ifFalse: [ ^ true ].
+	(self isReadyToExpandForDrop: dropTargetItem) ifFalse:[ ^ true ].
+
+	dropTargetItem expand.
+	^ true
 ]
 
 { #category : #'events subscription' }
@@ -843,13 +943,13 @@ ClyQueryViewMorph >> whenDoubleClickDo: aBlock [
 { #category : #'events subscription' }
 ClyQueryViewMorph >> whenEnterKeyPressedDo: aBlock [
 
-	table bindKeyCombination: Character cr asShortcut toAction: aBlock 
+	table bindKeyCombination: Character cr asShortcut toAction: aBlock
 ]
 
 { #category : #'events subscription' }
 ClyQueryViewMorph >> whenEscapeKeyPressedDo: aBlock [
 
-	table bindKeyCombination: Character escape asShortcut toAction: aBlock 
+	table bindKeyCombination: Character escape asShortcut toAction: aBlock
 ]
 
 { #category : #controlling }

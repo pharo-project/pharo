@@ -825,7 +825,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithTraits [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - utilities' }
 Ring2ChunkImporterTest >> testingCommentFor: aClassName [
 
 	| comment commentToWrite|
@@ -836,7 +836,7 @@ Ring2ChunkImporterTest >> testingCommentFor: aClassName [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - utilities' }
 Ring2ChunkImporterTest >> testingHistoricalCommentFor: aClassName [
 
 	| comment commentToWrite|

@@ -44,8 +44,8 @@ CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
 	
 	| completion |
 	completion := CoResultSet fetcher: aFetcher.
-	completion caseSensitive: NECPreferences caseSensitive.
-	completion filterWithString: completionContext completionToken.
+	completion filter: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: completionContext completionToken).
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: completionContext completionToken).
 	^ completion
 ]
 
@@ -55,7 +55,7 @@ CoASTResultSetBuilder >> configureFetcherForNode: aNode usingHeuristicAvoidingRe
 	| fetcher |
 	fetcher := heuristic fetcherFor: aNode inContext: completionContext.
 	^ self
-		configureFetcher: fetcher withoutRepetition
+		configureFetcher: fetcher withoutRepetition withNarrowHistory
 		forNode: aNode
 ]
 
@@ -73,7 +73,7 @@ CoASTResultSetBuilder >> parseNode [
 			source: completionContext source;
 			noPattern: completionContext isWorkspace; 
 			options: #(+ optionParseErrors + optionSkipSemanticWarnings);
-			parse) nodeForOffset: completionContext position ] 
+			parse) nodeForOffset: completionContext position ]
 ]
 
 { #category : #visiting }

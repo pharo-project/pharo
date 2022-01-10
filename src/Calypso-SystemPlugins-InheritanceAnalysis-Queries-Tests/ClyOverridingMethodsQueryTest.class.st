@@ -46,14 +46,12 @@ ClyOverridingMethodsQueryTest >> testFromThreeMethods [
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfOwnMethodWhichIsNotOverridden [
 	
 	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod)
-
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfSuperclassMethodWhichIsAlreadyImplemented [
 	
 	self assert: (query isAffectedByChangedMethod: ClyAbstractClassMock >> #overriddenMethod)
-
 ]
 
 { #category : #tests }
@@ -64,14 +62,12 @@ ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfSuperclassMethodWhichOv
 		from: ClyClassScope of: ClyClassWhichInheritsAbstractSubclassMock in: environment.
 		
 	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
-
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testNotAffectedByChangeOfOverriddenMethodFromAnotherHierarchyWhenSameMethodExistsHereToo [
 	
 	self deny: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
-
 ]
 
 { #category : #tests }

@@ -159,19 +159,6 @@ TEasilyThemed >> chooseExistingFileReference: title extensions: exts path: path 
 ]
 
 { #category : #services }
-TEasilyThemed >> chooseFileName: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	to show, path and preview type."
-	self deprecated: 'Use UIManager default chooseFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	^self theme
-		chooseFileNameIn: self
-		title: title
-		extensions: exts
-		path: path
-		preview: preview
-]
-
-{ #category : #services }
 TEasilyThemed >> chooseFont [
 	"Answer the result of a font selector dialog."
 
@@ -352,7 +339,6 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		getEnabled: enabledSel
 		font: aFont
 		help: helpText
-
 ]
 
 { #category : #controls }
@@ -369,7 +355,6 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		font: aFont
 		help: helpText
 		entryCompletion: anEntryCompletion
-
 ]
 
 { #category : #controls }
@@ -594,7 +579,7 @@ TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel 
 TEasilyThemed >> newCloseButton [
 	"Answer a new close button."
 
-	^self newCloseButtonFor: self 
+	^self newCloseButtonFor: self
 ]
 
 { #category : #controls }
@@ -1018,7 +1003,6 @@ TEasilyThemed >> newLabelGroup: labelsAndControls font: aFont labelColor: aColor
 		for: labelsAndControls
 		font: aFont
 		labelColor: aColor
-
 ]
 
 { #category : #controls }

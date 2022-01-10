@@ -22,6 +22,12 @@ Link >> asLink [
 	^self
 ]
 
+{ #category : #dispatched }
+Link >> asLinkPrepend: anObject [
+
+	^ self class nextLink: self
+]
+
 { #category : #accessing }
 Link >> nextLink [
 	"Answer the link to which the receiver points."

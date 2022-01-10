@@ -18,7 +18,7 @@ Class {
 	#category : #'ThreadedFFI-Callbacks'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 TFCallbackQueue class >> initialize [
 
 	SessionManager default
@@ -28,7 +28,7 @@ TFCallbackQueue class >> initialize [
 	self startUp: true
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'system startup' }
 TFCallbackQueue class >> shutDown: inANewImageSession [
 
 	inANewImageSession ifFalse: [ ^ self ].
@@ -36,7 +36,7 @@ TFCallbackQueue class >> shutDown: inANewImageSession [
 	UniqueInstance := nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'system startup' }
 TFCallbackQueue class >> startUp: inANewImageSession [
 
 	inANewImageSession ifFalse: [ ^ self ].

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'variable'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Variables'
 }
 
 { #category : #'instance creation' }
@@ -28,37 +28,45 @@ RBRefactoryVariableChange class >> remove: aVariable from: aBehavior [
 
 { #category : #comparing }
 RBRefactoryVariableChange >> = aRefactoryVariableChange [
-	^ super = aRefactoryVariableChange and: [ self variable = aRefactoryVariableChange variable ]
+
+	^ super = aRefactoryVariableChange and: [ 
+		  self variable = aRefactoryVariableChange variable ]
 ]
 
 { #category : #private }
 RBRefactoryVariableChange >> changeObject [
+
 	^ self variable
 ]
 
 { #category : #private }
 RBRefactoryVariableChange >> changeSymbol [
+
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
-RBRefactoryVariableChange >> class: aBehavior variable: aString [ 
+RBRefactoryVariableChange >> class: aBehavior variable: aString [
+
 	self changeClass: aBehavior.
 	variable := aString
 ]
 
 { #category : #comparing }
 RBRefactoryVariableChange >> hash [
+
 	^ self changeClassName hash bitXor: self variable hash
 ]
 
 { #category : #private }
 RBRefactoryVariableChange >> primitiveExecute [
+
 	self changeClass perform: self changeSymbol with: self changeObject
 ]
 
 { #category : #printing }
-RBRefactoryVariableChange >> printOn: aStream [ 
+RBRefactoryVariableChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: self displayClassName; nextPut: $ ;
 		nextPutAll: self changeSymbol; nextPut: $ ;
@@ -68,5 +76,6 @@ RBRefactoryVariableChange >> printOn: aStream [
 
 { #category : #private }
 RBRefactoryVariableChange >> variable [
+
 	^ variable
 ]

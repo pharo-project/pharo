@@ -632,11 +632,6 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	^detector
 ]
 
-{ #category : #private }
-RBBasicDummyLintRuleTest class >> new [
-	^super new
-]
-
 { #category : #'unnecessary code' }
 RBBasicDummyLintRuleTest class >> onlyReadOrWritten [
 	| detector |
@@ -1275,11 +1270,6 @@ RBBasicDummyLintRuleTest >> initialize [
 	classBlock := [:context :aResult | ].
 	methodBlock := [:context :aResult | ].
 	self resultClass: RBSelectorEnvironment
-]
-
-{ #category : #testing }
-RBBasicDummyLintRuleTest >> isComposite [
-	^false
 ]
 
 { #category : #testing }

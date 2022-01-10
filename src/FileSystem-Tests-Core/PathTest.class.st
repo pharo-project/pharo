@@ -24,8 +24,6 @@ PathTest >> testAbsolutePath [
 	
 	path := AbsolutePath from: '/' delimiter: $/.
 	self assert: path equals: Path root
-	
-
 ]
 
 { #category : #tests }
@@ -84,7 +82,6 @@ PathTest >> testBasenameNoParent [
 
 	path := Path * 'griffle'.
 	self assert: path parent basename equals: '.'.
-
 ]
 
 { #category : #tests }
@@ -135,7 +132,6 @@ PathTest >> testCanonicalization [
 
 	ref := (Path / 'a/b/../c') canonicalize.
 	self assert: ref segments equals: #('a' 'c').
-
 ]
 
 { #category : #tests }
@@ -230,8 +226,6 @@ PathTest >> testExtendingPath [
 
 	ref := '/a/b/c' asPath / 'd/./e'.
 	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
-
-
 ]
 
 { #category : #tests }
@@ -258,7 +252,6 @@ PathTest >> testFullName [
 	path := (FileSystem workingDirectory / 'book-result' / 'W01-Welcome')
 				relativeToReference: FileSystem workingDirectory.
 	self assert: path fullName equals: 'book-result/W01-Welcome'
-
 ]
 
 { #category : #tests }
@@ -361,6 +354,28 @@ PathTest >> testMakeRelativeFrom2RelativePaths [
 ]
 
 { #category : #tests }
+PathTest >> testNetworkPathWithParents [
+	| path allPaths |
+	path := UNCNetworkPath withAll: #('machine' 'plonk' 'griffle' 'nurb').
+	allPaths := path withParents.
+	
+	self assert: allPaths size equals: 4.
+	self assert: allPaths first isRoot.
+	self assert: allPaths second basename equals: 'plonk'.
+	self assert: allPaths second size equals: 2.
+	self assert: (allPaths second isChildOf: allPaths first).
+	self assert: allPaths third basename equals: 'griffle'.
+	self assert: allPaths third size equals: 3.
+	self assert: (allPaths third isChildOf: allPaths second).
+	self assert: allPaths fourth basename equals: 'nurb'.
+	self assert: allPaths fourth size equals: 4.
+	self assert: (allPaths fourth isChildOf: allPaths third).
+	
+	self assert: allPaths fourth equals: path.
+	self assert: allPaths fourth identicalTo: path
+]
+
+{ #category : #tests }
 PathTest >> testParent [
 	| path parent |
 	path := (Path * 'plonk') / 'griffle'.
@@ -386,7 +401,6 @@ PathTest >> testParentResolution [
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
 	self assert: absolute segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
-
 ]
 
 { #category : #tests }
@@ -410,8 +424,6 @@ PathTest >> testParse [
 	self assert: (path at: 1) equals: 'parent'.
 	self assert: (path at: 2) equals: 'child'.
 	self assert: (path at: 3) equals: 'grandChild'
-	
-
 ]
 
 { #category : #tests }
@@ -422,8 +434,17 @@ PathTest >> testParseBogus [
 	self assert: path size equals: 2.
 	self assert: (path at: 1) equals: 'parent?<>~ \child'.
 	self assert: (path at: 2) equals: 'grandChild'
-	
+]
 
+{ #category : #tests }
+PathTest >> testParseNetworkPath [
+
+	| path |
+	path := Path from: '//parent/child/grandChild' delimiter: $/.
+	self assert: path size equals: 3.
+	self assert: (path at: 1) equals: 'parent'.
+	self assert: (path at: 2) equals: 'child'.
+	self assert: (path at: 3) equals: 'grandChild'
 ]
 
 { #category : #tests }
@@ -443,7 +464,6 @@ PathTest >> testParseWindowsPathWithUnixDelimiters [
 	self
 		assertCollection: path segments
 		equals: #('C:' 'a' 'b' 'c')
-
 ]
 
 { #category : #tests }
@@ -455,7 +475,6 @@ PathTest >> testPathString [
 				relativeToReference: FileSystem workingDirectory.
 	self assert: path isRelative.
 	self assert: path pathString equals: 'book-result/W01-Welcome'
-
 ]
 
 { #category : #tests }
@@ -494,6 +513,19 @@ PathTest >> testPrintPathOnDelimiter [
 	"Test an Absolute path"
 	"Use an unusal delimiter to check that the default isn't hardcoded anywhere"
 	pathSrc := '|one|two|three'.
+	path := Path from: pathSrc delimiter: $|.
+	self assert: path isAbsolute.
+	pathString := String streamContents: [ :stream | path printPathOn: stream delimiter: $| ].
+	self assert: pathSrc equals: pathString
+]
+
+{ #category : #tests }
+PathTest >> testPrintPathOnDelimiterOnNetworkDrive [
+
+
+	"Use an unusal delimiter to check that the default isn't hardcoded anywhere"
+	| pathSrc path pathString |
+	pathSrc := '||one|two|three'.
 	path := Path from: pathSrc delimiter: $|.
 	self assert: path isAbsolute.
 	pathString := String streamContents: [ :stream | path printPathOn: stream delimiter: $| ].
@@ -721,7 +753,6 @@ PathTest >> testSimpleResolution [
 	self assert: (absolute at: 1) equals: 'plonk'.
 	self assert: (absolute at: 2) equals: 'griffle'.
 	self assert: (absolute at: 3) equals: 'zonk'.
-
 ]
 
 { #category : #tests }

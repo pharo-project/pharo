@@ -41,7 +41,8 @@ Class {
 		'methodName',
 		'args',
 		'invalidArgNames',
-		'canAddArgs'
+		'canAddArgs',
+		'canEditName'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
 }
@@ -124,24 +125,42 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	^ temp openBlockedDialogWithSpec
 ]
 
+{ #category : #specs }
+SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 canEditName: aBoolean4 [
+	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
+	|temp|
+	temp := self on: aMethod.
+	temp invalidArgNames: aSet. 
+	temp canRenameArgs: aBoolean1.
+	temp canRemoveArgs: aBoolean2.
+	temp canAddArgs: aBoolean3.
+	temp canEditName: aBoolean4.
+	^ temp openBlockedDialogWithSpec
+]
+
 { #category : #action }
 SycMethodNameEditorPresenter >> addArgument [
 
-	| newArg argValue |
+	| newArg argValue newKeyword |
+	newKeyword := self getNewKeywordName.
+	newKeyword isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
 	newArg := self newArgName asSymbol.
 	argValue := self getDefaultValue.
 	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
 	newArg := RBArgumentName name: newArg value: argValue.
 	argumentsList items: { newArg }.
-	self selectorInput text: self selectorInput text , 'arg:'.
+	self selectorInput text: self selectorInput text , newKeyword ,':' .
 	argumentsList selectIndex: 1.
+	self canEditName: true.
 	self updateLabel
 ]
 
 { #category : #action }
 SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
 
-	| newArg argValue selectedIndex |
+	| newArg argValue selectedIndex newKeyword |
+	newKeyword := self getNewKeywordName.
+	newKeyword isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
 	selectedIndex := argumentsList selection selectedIndex.
 	newArg := self newArgName asSymbol.
 	argValue := self getDefaultValue.
@@ -150,8 +169,9 @@ SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
 	argumentsList items:
 		(argumentsList items copyUpThrough: anItem) , { newArg }
 		, (argumentsList items copyAfter: anItem).
-	self selectorInput text: self selectorInput text , 'arg:'.
+	self selectorInput text: self selectorInput text , newKeyword, ':'.
 	argumentsList selectIndex: selectedIndex + 1.
+	self canEditName: true.
 	self updateLabel
 ]
 
@@ -212,6 +232,17 @@ SycMethodNameEditorPresenter >> canAddArgs: aBoolean [
 ]
 
 { #category : #accessing }
+SycMethodNameEditorPresenter >> canEditName [
+	^canEditName  ifNil: [ canEditName := true ]
+]
+
+{ #category : #accessing }
+SycMethodNameEditorPresenter >> canEditName: aBoolean [
+	canEditName := aBoolean.
+	selectorInput enabled: canEditName .
+]
+
+{ #category : #accessing }
 SycMethodNameEditorPresenter >> canRemoveArgs: anObject [
 
 	argumentsList items do: [ :arg | arg canBeRemoved: anObject ]
@@ -256,6 +287,14 @@ SycMethodNameEditorPresenter >> getDefaultValue [
 		  initialAnswer: 'nil'
 ]
 
+{ #category : #action }
+SycMethodNameEditorPresenter >> getNewKeywordName [
+
+	^ self uiManager
+		  request: 'Enter name for new keyword'
+		  initialAnswer: 'arg'
+]
+
 { #category : #services }
 SycMethodNameEditorPresenter >> getParametersOrder [
 	^ argumentsList items collect: [ :arg | arg newName ]
@@ -268,12 +307,13 @@ SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		initialExtent: 600 @ 300 ;
-		title: 'Method name editor'
+		title: 'Method name editor : "', methodName selector ,'"'
 ]
 
 { #category : #initialization }
 SycMethodNameEditorPresenter >> initializePresenter [
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
+	selectorInput editable: self canEditName.
 	upButton action: [ self pushUpSelectedArgument ].
 	downButton action: [ self pushDownSelectedArgument ].
 	addButton action: [ argumentsList items 
@@ -295,6 +335,7 @@ SycMethodNameEditorPresenter >> initializePresenter [
 { #category : #initialization }
 SycMethodNameEditorPresenter >> initializeWidgets [
 	selectorInput := self newTextInput.
+	selectorInput editable: self canEditName.
 	argumentsList := self newList.
 	previewResult := self newLabel.
 	upButton := self newButton.
@@ -307,6 +348,7 @@ SycMethodNameEditorPresenter >> initializeWidgets [
 	addButton label: '+'.
 	selectorInput text: methodName selector.
 	previewResult label: methodName methodName.
+	"selectorInput beNotEditable."
 	
 	self setFocus
 ]

@@ -74,7 +74,6 @@ FreeTypeFace >> create [
 		ifNil: [	self newFaceFromFile: filename asFileReference index: index ].
 			
 	self loadFields.
-
 ]
 
 { #category : #accessing }
@@ -142,7 +141,6 @@ FreeTypeFace >> postCopy [
 FreeTypeFace >> releaseCachedState [
 
 	hasKerning := nil.
-
 ]
 
 { #category : #accessing }

@@ -48,7 +48,7 @@ ClySystemEnvironment class >> currentImage [
 			changesAnnouncer: SystemAnnouncer uniqueInstance]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClySystemEnvironment class >> reset [
 	<script>
 	currentImage := nil
@@ -56,7 +56,7 @@ ClySystemEnvironment class >> reset [
 
 { #category : #accessing }
 ClySystemEnvironment >> allProcesses [
-	^Process allSubInstances 
+	^Process allSubInstances
 ]
 
 { #category : #accessing }
@@ -290,8 +290,6 @@ ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
 	| defTokens |
 	defTokens := newClassDefinitionString findTokens: Character separators.
 	^ (self class environment classNamed: defTokens first) isNotNil.
-	
- 
 ]
 
 { #category : #testing }
@@ -425,7 +423,7 @@ ClySystemEnvironment >> subscribe: anObject [
 
 { #category : #subscription }
 ClySystemEnvironment >> subscribe: anObject for: anAnnouncementClass [
-	self when: anAnnouncementClass send: #systemChanged: to: anObject 
+	self when: anAnnouncementClass send: #systemChanged: to: anObject
 ]
 
 { #category : #subscription }

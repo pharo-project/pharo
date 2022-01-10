@@ -1,22 +1,6 @@
 Extension { #name : #Character }
 
 { #category : #'*Deprecated90' }
-Character >> asUnicodeForTextConverter [
-	| table charset value |
-	self leadingChar = 0
-		ifTrue: [ ^ self asInteger ].
-	charset := self characterSet.
-	charset isCharset
-		ifFalse: [ ^ self charCode ].
-	table := charset ucsTable.
-	table ifNil: [ ^ 65533 ].
-	value := table at: self charCode + 1.
-	value = -1
-		ifTrue: [ ^ 65533 ].
-	^ value
-]
-
-{ #category : #'*Deprecated90' }
 Character >> leadingChar [
 	^ (self asInteger bitAnd: 1069547520) bitShift: -22
 ]
@@ -32,13 +16,6 @@ Character class >> leadingChar: leadChar code: code [
 	].
 	code < 256 ifTrue: [ ^self value: code ].
 	^self value: (leadChar bitShift: 22) + code
-]
-
-{ #category : #'*Deprecated90' }
-Character >> macRomanToUnicode [
-	"Convert the receiver from MacRoman Unicode."
-
-	^MacRomanTextConverter new unicodeToByte: self
 ]
 
 { #category : #'*Deprecated90' }

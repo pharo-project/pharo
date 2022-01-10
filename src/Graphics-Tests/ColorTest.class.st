@@ -115,7 +115,6 @@ ColorTest >> testFromHexString [
 
 	color := Color fromHexString: '#FF00FF55'.
 	self assert: (color alpha > 0.3 and: [color alpha < 0.4])
-
 ]
 
 { #category : #tests }

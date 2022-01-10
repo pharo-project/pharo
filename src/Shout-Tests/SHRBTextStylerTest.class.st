@@ -211,6 +211,19 @@ SHRBTextStylerTest >> testSettingFalseTheIncompleteMessageShouldNotFormatIt [
 ]
 
 { #category : #tests }
+SHRBTextStylerTest >> testSettingFalseTheIncompleteVariableShouldFormatUndefinedIdentifier [
+	
+	| aText ast |
+
+	SHRBTextStyler formatIncompleteIdentifiers: false.
+	aText := 'm1
+		^ sel' asText.
+	
+	ast := self style: aText.
+	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #undefinedIdentifier
+]
+
+{ #category : #tests }
 SHRBTextStylerTest >> testSettingTrueTheIncompleteIdentifiersShouldFormatIt [
 	
 	| aText index attributes |
@@ -250,4 +263,25 @@ SHRBTextStylerTest >> testSettingTrueTheIncompleteMessageShouldFormatIt [
 	self assertCollection: attributes hasSameElements: { 
 		TextMethodLink sourceNode: node. 
 		TextEmphasis italic }.
+]
+
+{ #category : #tests }
+SHRBTextStylerTest >> testSettingTrueTheIncompleteVariableShouldFormatUndefinedIdentifier [
+	
+	| aText ast |
+
+	SHRBTextStyler formatIncompleteIdentifiers: true.
+	aText := 'm1
+		^ sel' asText.
+	
+	ast := self style: aText.
+	"here the identifier is incomplete"
+	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #incompleteIdentifier.
+	
+	aText := 'm1
+		^ asdfasf' asText.
+	
+	ast := self style: aText.
+	"But for a name that does not exist at all, it is #undefinedIdentifier"
+	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #undefinedIdentifier
 ]

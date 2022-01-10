@@ -58,7 +58,7 @@ FTFieldFunction >> fieldHeigh [
 
 { #category : #'widget API' }
 FTFieldFunction >> ghostText [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }

@@ -20,11 +20,6 @@ RubScrolledTextExtraSurface >> isOver [
 	^ true
 ]
 
-{ #category : #accessing }
-RubScrolledTextExtraSurface >> level [
-	^ 0
-]
-
 { #category : #geometry }
 RubScrolledTextExtraSurface >> manageLayoutInBounds: aRectangle [
 	self position: (self computedPositionFrom: aRectangle).

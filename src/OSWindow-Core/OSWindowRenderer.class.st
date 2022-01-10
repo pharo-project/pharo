@@ -72,26 +72,17 @@ OSWindowRenderer >> resized [
 OSWindowRenderer >> updateAll [
 		"do something to update whole contents of the window"
 		
-		self subclassResponsibility 
+		self subclassResponsibility
 ]
 
 { #category : #'updating screen' }
 OSWindowRenderer >> updateRectangle: rectangle [
 		"do something to update given portion of the window"
 		
-		self subclassResponsibility 
+		self subclassResponsibility
 ]
 
 { #category : #'updating screen' }
 OSWindowRenderer >> updateRectangles: aCollectionOfRectangles [
 	aCollectionOfRectangles do: [ :rectangle | self updateRectangle: rectangle ]
-]
-
-{ #category : #generated }
-OSWindowRenderer >> window: anObject [
-
-	self
-		deprecated: 'Use #backendWindow: instead'
-		transformWith: '`@rec window: `@arg' -> '`@rec backendWindow: `@arg'.
-	^ self backendWindow: anObject
 ]

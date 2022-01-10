@@ -13,7 +13,7 @@ CDExistingClassSideDefinitionTest >> classDefinitionString [
 { #category : #helpers }
 CDExistingClassSideDefinitionTest >> firstInstanceVariableName [
 	
-	^ 'classSideVar1' 
+	^ 'classSideVar1'
 ]
 
 { #category : #helpers }

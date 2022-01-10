@@ -17,11 +17,6 @@ FixedLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
-{ #category : #description }
-FixedLayout class >> kind [ 
-	^ #normal
-]
-
 { #category : #format }
 FixedLayout >> instanceSpecification [
 	^ self hasFields
@@ -32,14 +27,4 @@ FixedLayout >> instanceSpecification [
 { #category : #testing }
 FixedLayout >> isFixedLayout [
 	^true
-]
-
-{ #category : #accessing }
-FixedLayout >> kindOfSubclass [
-	^' subclass: '
-]
-
-{ #category : #accessing }
-FixedLayout >> typeOfClass [
-	^#normal
 ]

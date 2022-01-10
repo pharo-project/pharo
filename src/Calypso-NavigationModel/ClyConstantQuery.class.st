@@ -26,7 +26,7 @@ Class {
 
 { #category : #'items type' }
 ClyConstantQuery class >> resultItemsType [
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #'instance creation' }
@@ -39,7 +39,7 @@ ClyConstantQuery class >> returning: objects [
 ClyConstantQuery class >> returning: objects as: aQueryResult [
 	^self new 
 		resultItems: objects;
-		requiredResult: aQueryResult 
+		requiredResult: aQueryResult
 ]
 
 { #category : #'instance creation' }
@@ -75,7 +75,6 @@ ClyConstantQuery >> checkEmptyResult [
 
 { #category : #execution }
 ClyConstantQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-
 ]
 
 { #category : #printing }
@@ -97,7 +96,7 @@ ClyConstantQuery >> execute [
 ClyConstantQuery >> fullDescription [
 	"Constant query do not depends on scope. And in many cases it is default empty scope.
 	So scope here is useless and confusing information. And we just return simple description"
-	^self description 
+	^self description
 ]
 
 { #category : #comparing }

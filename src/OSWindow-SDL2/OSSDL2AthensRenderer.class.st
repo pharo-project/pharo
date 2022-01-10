@@ -44,8 +44,6 @@ OSSDL2AthensRenderer >> destroy [
 	].
 
 	super destroy.
-
-
 ]
 
 { #category : #private }
@@ -79,7 +77,6 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	mutex critical: [
 		self resetResources.
 	].
-
 ]
 
 { #category : #'updating screen' }
@@ -112,7 +109,6 @@ OSSDL2AthensRenderer >> present [
 OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
 	externalForm getCanvas
 		drawImage: athensSurface asForm at: rectangle origin sourceRect: rectangle
-
 ]
 
 { #category : #'updating resources' }

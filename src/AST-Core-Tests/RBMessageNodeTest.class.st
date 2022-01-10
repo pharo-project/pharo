@@ -10,8 +10,6 @@ RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 	tree := self parseMethod: 'test 1 + 2 '.
 	message := tree sendNodes first.
 	self assert: message argumentPartStrings equals: #('2').
-		
-		
 ]
 
 { #category : #tests }
@@ -20,8 +18,6 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
 	tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
 	message := tree sendNodes first.
 	self assert: message argumentPartStrings asArray equals: #('x + 2' '(y foo: 3)')
-		
-		
 ]
 
 { #category : #tests }
@@ -30,8 +26,6 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 	tree := self parseMethod: 'test self between: 2 and: 3'.
 	message := tree sendNodes first.
 	self assert: message argumentPartStrings asArray equals: #('2' '3').
-		
-		
 ]
 
 { #category : #tests }
@@ -53,8 +47,6 @@ RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 	tree := self parseMethod: 'test 1 foo '.
 	message := tree sendNodes first.
 	self assert: message argumentPartStrings equals: #().
-		
-		
 ]
 
 { #category : #tests }
@@ -75,8 +67,6 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexAr
 		tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
 		message := tree sendNodes first.
 		self assert: message selectorAndArgumentNames equals: 'between: x + 2 and: (y foo: 3)'.
-		
-		
 ]
 
 { #category : #tests }
@@ -85,8 +75,6 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		tree := self parseMethod: 'test self doit: 5'.
 		message := tree sendNodes first.
 		self assert: message selectorAndArgumentNames equals: 'doit: 5'
-		
-		
 ]
 
 { #category : #tests }
@@ -95,8 +83,6 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 		tree := self parseMethod: 'test self doit'.
 		message := tree sendNodes first.
 		self assert: message selectorAndArgumentNames equals: 'doit'
-		
-		
 ]
 
 { #category : #tests }
@@ -116,8 +102,6 @@ RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
 	tree := self parseMethod: 'test 1 + 2 '.
 	message := tree sendNodes first.
 	self assert: message selectorParts equals: #(#+).
-		
-		
 ]
 
 { #category : #tests }
@@ -130,7 +114,6 @@ RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
 		tree := self parseMethod: 'test self between: 0 and: 5 '.
 		message := tree sendNodes first.
 		self assert: message selectorParts equals: #(#between: #and:).
-		
 ]
 
 { #category : #tests }
@@ -139,6 +122,4 @@ RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
 		tree := self parseMethod: 'test self doit'.
 		message := tree sendNodes first.
 		self assert: message selectorParts equals: #(#doit).
-		
-		
 ]

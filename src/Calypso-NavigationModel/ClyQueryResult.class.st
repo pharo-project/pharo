@@ -266,7 +266,7 @@ ClyQueryResult >> environment: anObject [
 
 { #category : #building }
 ClyQueryResult >> fillWith: queriedObjects [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #building }
@@ -381,7 +381,7 @@ ClyQueryResult >> items: anObject [
 { #category : #'system changes' }
 ClyQueryResult >> itemsChanged [
 
-	self forceRebuild 
+	self forceRebuild
 ]
 
 { #category : #queries }
@@ -413,7 +413,7 @@ ClyQueryResult >> metadata [
 
 { #category : #testing }
 ClyQueryResult >> needsRebuild [
-	^needsRebuild 
+	^needsRebuild
 ]
 
 { #category : #testing }
@@ -533,5 +533,5 @@ ClyQueryResult >> subscribe: anObject [
 ClyQueryResult >> unsubscribe: anObject [
 
 	announcer ifNil: [ ^self ].
-	announcer unsubscribe: anObject 
+	announcer unsubscribe: anObject
 ]

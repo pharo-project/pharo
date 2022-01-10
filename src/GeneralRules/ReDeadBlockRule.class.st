@@ -15,7 +15,7 @@ ReDeadBlockRule class >> uniqueIdentifierName [
 	^'DeadBlockRule'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 ReDeadBlockRule >> basicCheck: node [
 	^ node isBlock and: [ node isUsed not ]
 ]

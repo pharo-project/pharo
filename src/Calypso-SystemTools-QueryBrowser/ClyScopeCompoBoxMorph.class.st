@@ -65,7 +65,7 @@ ClyScopeCompoBoxMorph >> currentScope [
 ClyScopeCompoBoxMorph >> currentScope: aScope [
 
 	browser switchScopeTo: aScope.	
-	dropList setBalloonText: aScope description. 
+	dropList setBalloonText: aScope description.
 ]
 
 { #category : #accessing }
@@ -96,5 +96,5 @@ ClyScopeCompoBoxMorph >> scopeNames [
 { #category : #accessing }
 ClyScopeCompoBoxMorph >> scopes [
 
-	^browser allNavigationScopes 
+	^browser allNavigationScopes
 ]

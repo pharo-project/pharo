@@ -19,14 +19,13 @@ DateAndTimeUnixEpochTest >> setUp [
    localTimeZoneToRestore := DateAndTime localTimeZone.
 	aDateAndTime :=  DateAndTime localTimeZone: TimeZone default; unixEpoch.
 	aTimeZone := TimeZone offset: (Duration minutes: 135) name: 'Unix Epoch Test Time Zone' abbreviation: 'UTZ'.
-	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5 
+	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5
 ]
 
 { #category : #running }
 DateAndTimeUnixEpochTest >> tearDown [
      DateAndTime localTimeZone: localTimeZoneToRestore.
      super tearDown
-
 ]
 
 { #category : #tests }
@@ -176,7 +175,6 @@ DateAndTimeUnixEpochTest >> testHour12 [
 { #category : #tests }
 DateAndTimeUnixEpochTest >> testIsLeapYear [
 	self deny: aDateAndTime isLeapYear
-
 ]
 
 { #category : #tests }
@@ -189,7 +187,6 @@ DateAndTimeUnixEpochTest >> testJulianDayNumber [
 DateAndTimeUnixEpochTest >> testLessThan [
 	self assert: aDateAndTime  < (aDateAndTime + '1:00:00:00').
 	self assert: aDateAndTime + -1 < aDateAndTime.
-	
 ]
 
 { #category : #tests }

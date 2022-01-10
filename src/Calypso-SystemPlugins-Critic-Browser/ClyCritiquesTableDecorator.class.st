@@ -9,7 +9,7 @@ Class {
 
 { #category : #decoration }
 ClyCritiquesTableDecorator class >> browserPluginClass [
-	^ClyCriticBrowserPlugin 
+	^ClyCriticBrowserPlugin
 ]
 
 { #category : #decoration }
@@ -25,12 +25,11 @@ ClyCritiquesTableDecorator class >> decorateTableCell: anItemCellMorph of: aData
 	anItemCellMorph color: (aDataSourceItem position odd  
 		ifTrue:  [ Smalltalk ui theme backgroundColor ]
 		ifFalse: [ Smalltalk ui theme lightBackgroundColor ]).
-
 ]
 
 { #category : #decoration }
 ClyCritiquesTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategyAnnotation for: ReAbstractCritique asCalypsoItemContext 
+	^ClyTableDecorationStrategyAnnotation for: ReAbstractCritique asCalypsoItemContext
 ]

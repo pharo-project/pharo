@@ -182,5 +182,4 @@ CompositeFillStyle >> origin: aPoint [
 	self fillStyles reverseDo: [:fs |
 		fs isOrientedFill ifTrue: [
 			fs origin: fs origin + delta]]
-	
 ]

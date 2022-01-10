@@ -66,13 +66,6 @@ IRVisitorTest >> testPopTop [
 ]
 
 { #category : #tests }
-IRVisitorTest >> testPushClosureCopyNoCopied [
-	| ir |
-	ir := IRBuilderTest new testPushClosureCopyNoCopied.
-	self interpret: ir
-]
-
-{ #category : #tests }
 IRVisitorTest >> testPushConsArray [
 	| ir |
 	ir := IRBuilderTest new testPushConsArray.
@@ -111,20 +104,6 @@ IRVisitorTest >> testPushTempTemp [
 IRVisitorTest >> testPushThisContext [
 	| ir |
 	ir := IRBuilderTest new testPushThisContext.
-	self interpret: ir
-]
-
-{ #category : #tests }
-IRVisitorTest >> testRemoteTemp [
-	| ir |
-	ir := IRBuilderTest new testRemoteTemp.
-	self interpret: ir
-]
-
-{ #category : #tests }
-IRVisitorTest >> testRemoteTempNested [
-	| ir |
-	ir := IRBuilderTest new testRemoteTempNested.
 	self interpret: ir
 ]
 

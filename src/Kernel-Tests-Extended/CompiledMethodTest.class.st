@@ -66,7 +66,6 @@ CompiledMethodTest >> deprecatedMethod3 [
 		deprecated: 'Example of a deprecated method with transform'
 		transformWith: '`@receiver deprecatedMethod3' 
 						-> '`@receiver deprecatedMethod3'.
-
 ]
 
 { #category : #examples }
@@ -81,19 +80,6 @@ CompiledMethodTest >> deprecatedMethod4 [
 		in: #Pharo6
 		transformWith: '`@receiver deprecatedMethod4' 
 						-> '`@receiver deprecatedMethod4'.
-
-]
-
-{ #category : #deprecated }
-CompiledMethodTest >> deprecatedMethod5 [
-]
-
-{ #category : #'category - deprecated' }
-CompiledMethodTest >> deprecatedMethod6 [
-]
-
-{ #category : #'deprecated - category' }
-CompiledMethodTest >> deprecatedMethod7 [
 ]
 
 { #category : #'examples - linesofcode' }
@@ -115,8 +101,6 @@ CompiledMethodTest >> locComplex [
 			| c |
 			c := each + b.
 			c "Comment at the end of a line" ] ].
-	
-
 ]
 
 { #category : #'examples - linesofcode' }
@@ -124,7 +108,6 @@ CompiledMethodTest >> locEmptyLineInTheEnd [
 	| a |
 	a := 1.
 	^ a
-
 ]
 
 { #category : #'examples - linesofcode' }
@@ -140,7 +123,6 @@ CompiledMethodTest >> locEmptyLineWithTabInTheEnd [
 	| a |
 	a := 1.
 	^ a
-	
 ]
 
 { #category : #'examples - linesofcode' }
@@ -157,12 +139,10 @@ CompiledMethodTest >> locEmptyMethod [
 
 { #category : #'examples - linesofcode' }
 CompiledMethodTest >> locEmptyMethodWithNewline [
-
 ]
 
 { #category : #'examples - linesofcode' }
 CompiledMethodTest >> locEmptyMethodWithNewlineAndTab [
-	
 ]
 
 { #category : #'examples - linesofcode' }
@@ -245,17 +225,16 @@ CompiledMethodTest >> readX [
 CompiledMethodTest >> readXandY [
 	
 	^ x + y
-	
 ]
 
 { #category : #examples }
 CompiledMethodTest >> returnPlusOne: anInteger [
-	^anInteger + 1. 
+	^anInteger + 1.
 ]
 
 { #category : #examples }
 CompiledMethodTest >> returnTrue [
-	^true  
+	^true
 ]
 
 { #category : #examples }
@@ -302,8 +281,6 @@ CompiledMethodTest >> testAccessesSlot [
 	self assert: ((Point>>#x) accessesSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) accessesSlot: (Point slotNamed: #y)).
 	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y)).
-	
-	
 ]
 
 { #category : #'tests - converting' }
@@ -403,8 +380,6 @@ CompiledMethodTest >> testEqualityClassSideMethod [
 			compile: 'aMethod'.
 			
  	self assert: method1 equals: method2.
-
-
 ]
 
 { #category : #'tests - comparing' }
@@ -437,7 +412,6 @@ CompiledMethodTest >> testHasInstVarRef [
 	
 	method := self class compiledMethodAt: #writeXandY.
 	self assert: (method hasInstVarRef).
-	
 ]
 
 { #category : #'tests - literals' }
@@ -469,15 +443,19 @@ CompiledMethodTest >> testIsAbstract [
 ]
 
 { #category : #'tests - testing' }
+CompiledMethodTest >> testIsClassSide [
+	self deny: (Object>>#yourself) isClassSide.
+	self assert: (Object class>>#initialize) isClassSide.
+]
+
+{ #category : #'tests - testing' }
 CompiledMethodTest >> testIsDeprecated [
 	| deprecatedSelectors |
-	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4 deprecatedMethod5 deprecatedMethod6 deprecatedMethod7).
+	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4).
 	self class selectorsDo: [ :each |
 		(deprecatedSelectors includes: each)
 			ifTrue: [ self assert: (self class >> each) isDeprecated ]
-			ifFalse: [ self deny: (self class >> each) isDeprecated ] ].
-
-	DeprecatedClassForTest selectorsDo: [ :each | self assert: (DeprecatedClassForTest >> each) isDeprecated ]
+			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
 { #category : #'tests - testing' }
@@ -526,8 +504,6 @@ CompiledMethodTest >> testIsQuick [
 
 	method := self class compiledMethodAt: #returnPlusOne:.
 	self deny: (method isQuick).
-
-	
 ]
 
 { #category : #'tests - linesofcode' }
@@ -772,8 +748,6 @@ CompiledMethodTest >> testReadsSlot [
 	self assert: ((Point>>#x) readsSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) readsSlot: (Point slotNamed: #y)).
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y)).
-	
-	
 ]
 
 { #category : #'tests - accessing' }
@@ -830,7 +804,7 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method valueWithReceiver: nil arguments: #(1).
-	self assert: value equals: 2.	
+	self assert: value equals: 2.
 ]
 
 { #category : #'tests - instance variable' }
@@ -869,14 +843,12 @@ CompiledMethodTest >> testWritesSlot [
 	
 	self assert: ((Point>>#setX:setY:) writesSlot: (Point slotNamed: #y)).
 	self assert: ((Point>>#setX:setY:) writesSlot: (Point slotNamed: #x)).
-	
 ]
 
 { #category : #examples }
 CompiledMethodTest >> writeX [
 	
 	x := 33
-	
 ]
 
 { #category : #examples }
@@ -884,5 +856,4 @@ CompiledMethodTest >> writeXandY [
 	
 	x := 33.
 	y := 66
-	
 ]

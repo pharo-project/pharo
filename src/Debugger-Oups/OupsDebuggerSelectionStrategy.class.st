@@ -44,7 +44,7 @@ OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategySettingsOn: aBui
 
 { #category : #settings }
 OupsDebuggerSelectionStrategy class >> defaultDebuggerSelectionStrategy [
-	^OupsSingleDebuggerSelector
+	^OupsDebuggerSelector
 ]
 
 { #category : #instance }
@@ -86,7 +86,7 @@ OupsDebuggerSelectionStrategy >> nextDebugger [
 
 { #category : #debuggers }
 OupsDebuggerSelectionStrategy >> openDebuggerForSession: aDebugSession [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'error handling' }

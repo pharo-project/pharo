@@ -90,6 +90,7 @@ BaselineOfIDE >> additionalInitialization [
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
 	
 	self loadIceberg.	
+	self loadExtraTools.	
 	self makeCalypsoDefaultBrowser.
 ]
 
@@ -168,6 +169,8 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'Tests' ) ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+		spec baseline: 'FreeType' with: [ spec repository: repository; loads: 'tests' ].
+		spec baseline: 'Keymapping' with: [ spec repository: repository; loads: 'tests' ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 		spec package: 'STON-Extensions'. 
@@ -196,7 +199,7 @@ BaselineOfIDE >> baseline: spec [
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.8/src';
+				repository: 'github://ObjectProfile/Roassal3:v0.9.9c/src';
     				loads: #( 'Core' 'Tests') ].
 
 		spec 
@@ -209,6 +212,22 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-ExtraUtils' 
 		
 	]
+]
+
+{ #category : #actions }
+BaselineOfIDE >> loadExtraTools [
+	
+	Metacello new
+		baseline: 'NewToolsDocumentationReader';
+		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
+		onConflictUseIncoming;
+		load.
+"
+	Metacello new
+ 	 baseline: 'BeautifulComments';
+ 	 repository: 'github://pillar-markup/BeautifulComments:master/src';
+ 	 load.
+"
 ]
 
 { #category : #actions }
@@ -229,15 +248,24 @@ BaselineOfIDE >> loadIceberg [
 		pharoPluginClass
 			addProjectNamed: 'pharo-spec2' 
 			commit: (Smalltalk classNamed: #BaselineOfPharo) specReleaseCommit 
-			baselines: #(BaselineOfSpec2) ].
+			baselines: #(BaselineOfSpec2).
+		"Register baselines"
+		Metacello new baseline: 'Spec2'; register.
+		Metacello new baseline: 'SpecCore'; register ].
 		
 	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
 		pharoPluginClass 
 			addProjectNamed: 'pharo-newtools' 
 			commit: (Smalltalk classNamed: #BaselineOfPharo) newToolsReleaseCommit 
-			baselines: #(BaselineOfNewTools) ].
+			baselines: #(BaselineOfNewTools).
+		"Register baselines"
+		Metacello new baseline: 'NewTools'; register ].
 		
-	pharoPluginClass addIcebergProjectToIceberg
+	pharoPluginClass addIcebergProjectToIceberg.
+	"Register baselines"
+	Metacello new baseline: 'Tonel'; register.
+	Metacello new baseline: 'LibGit'; register.
+	Metacello new baseline: 'Iceberg'; register.	
 ]
 
 { #category : #actions }

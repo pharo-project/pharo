@@ -202,7 +202,6 @@ MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBl
 				ifTrue: [ ^ loadedBlock value: #() value: self file ].
 			^ loadedBlock value: vis value: self file ].
 	^ notLoadedBlock value
-
 ]
 
 { #category : #gofer }
@@ -225,9 +224,9 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 
 { #category : #loading }
 MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
-
 	| wc fetchingSpecLoader |
-	((wc := self workingCopy) ~~ nil and: [ wc needsSaving ]) 
+
+	((wc := self workingCopy) notNil and: [ wc needsSaving ]) 
 		ifTrue: [ 
 			(MetacelloSkipDirtyPackageLoad signal: self)
 				ifTrue:  [
@@ -456,7 +455,6 @@ MetacelloPackageSpec >> mergeSpec: anotherSpec [
 					ifTrue: [ anotherRepositories ]
 					ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
 	^newSpec
-
 ]
 
 { #category : #querying }
@@ -547,17 +545,6 @@ MetacelloPackageSpec >> repositories: anObject [
 { #category : #construction }
 MetacelloPackageSpec >> repositories: aBlock constructor: aVersionConstructor [
     aVersionConstructor repositoriesForPackage: aBlock
-]
-
-{ #category : #querying }
-MetacelloPackageSpec >> repository [
-	self
-		deprecated: 'Use repositories or repositorySpecs'
-		transformWith: '`@rec repository' -> '`@rec repositorySpecs first'.
-	
-	^ self repositorySpecs
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ self repositorySpecs first ].
 ]
 
 { #category : #accessing }

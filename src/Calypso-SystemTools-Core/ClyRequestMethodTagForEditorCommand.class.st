@@ -27,7 +27,7 @@ ClyRequestMethodTagForEditorCommand >> defaultMenuItemName [
 ClyRequestMethodTagForEditorCommand >> execute [
 	| tagEditor |
 	tagEditor := methodEditor tagsAndPackageEditor.
-	tagEditor requestChangeBy: [ tagEditor requestTag] 
+	tagEditor requestChangeBy: [ tagEditor requestTag]
 ]
 
 { #category : #execution }
@@ -36,6 +36,4 @@ ClyRequestMethodTagForEditorCommand >> readParametersFromContext: aToolContext [
 	menuItemName := aToolContext tool hasUnacceptedEdits 
 		ifTrue: [ 'Classify currently editing method' ]
 		ifFalse: [ 'Classify method' ]
-
-	
 ]

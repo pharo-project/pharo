@@ -41,8 +41,7 @@ BMPReadWriter class >> displayAllFrom: fd [
 	"BMPReadWriter displayAllFrom: FileDirectory default"
 	fd fileNames do:[:fName|
 		(fName endsWith: '.bmp') ifTrue:[
-			[(Form fromBinaryStream: (fd readOnlyFileNamed: fName)) display.
-			Display forceDisplayUpdate] on: Error do:[:nix|].
+			[(Form fromBinaryStream: (fd readOnlyFileNamed: fName)) display ] on: Error do:[:nix|].
 		].
 	].
 	fd directoryNames do:[:fdName|
@@ -180,7 +179,6 @@ BMPReadWriter >> read24BmpLine: pixelLine into: formBits startingAt: formBitsInd
 				((pixelLine at: (pixIndex := pixIndex+1)) bitShift: 16).
 		rgb = 0 ifTrue:[rgb := 16rFF000001] ifFalse:[rgb := rgb + 16rFF000000].
 		formBits at: (bitsIndex := bitsIndex+1) put: rgb].
-
 ]
 
 { #category : #reading }
@@ -307,7 +305,6 @@ BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBit
 		pixelLine at: (pixIndex := pixIndex+1) put: ((rgb bitShift: -8) bitAnd: 255).
 		pixelLine at: (pixIndex := pixIndex+1) put: ((rgb bitShift: -16) bitAnd: 255).
 	].
-
 ]
 
 { #category : #testing }

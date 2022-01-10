@@ -114,7 +114,6 @@ EFCascadeExpressionTest >> newLineBeforeCascadeConfiguration [
 		indentStyle: #tabulation;
 		newLineBeforeFirstKeyword:false;
 		indentExtraSpaces:0
-
 ]
 
 { #category : #configurations }
@@ -156,7 +155,6 @@ EFCascadeExpressionTest >> noNewLineBeforeCascadeConfiguration [
 		keepBlockInMessage:false;
 		indentStyle: #tabulation;
 		newLineBeforeFirstKeyword:false
-
 ]
 
 { #category : #configurations }

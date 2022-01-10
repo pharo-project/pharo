@@ -73,11 +73,6 @@ ClyTestSetUpEditorToolMorph >> defaultTitle [
 	^'setUp'
 ]
 
-{ #category : #accessing }
-ClyTestSetUpEditorToolMorph >> editingMethod: aMethod [
-	editingMethod := aMethod
-]
-
 { #category : #testing }
 ClyTestSetUpEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 	^self class = anotherBrowserTool class

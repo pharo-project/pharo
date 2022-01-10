@@ -72,7 +72,7 @@ IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [
 
 	<primitive: 74>
 	"instead of copying the fail code here, just call the method that has it"
-	^thisContext object: anObject instVarAt: anIndex put: aValue 
+	^thisContext object: anObject instVarAt: anIndex put: aValue
 ]
 
 { #category : #'meta-object-protocol' }

@@ -50,15 +50,9 @@ RGMetaclassStrategy >> category [
 ]
 
 { #category : #'private - backend access' }
-RGMetaclassStrategy >> classSide [
-
-	^ self owner
-]
-
-{ #category : #'private - backend access' }
 RGMetaclassStrategy >> classVarNames [
 
-	^ self theNonMetaClass classVarNames
+	^ self instanceSide classVarNames
 ]
 
 { #category : #'private - backend access' }
@@ -226,9 +220,4 @@ RGMetaclassStrategy >> sibling [
 RGMetaclassStrategy >> storeName [
 
 	^ 'RGMetaclass'
-]
-
-{ #category : #'private - backend access' }
-RGMetaclassStrategy >> theNonMetaClass [
-	^self baseClass
 ]

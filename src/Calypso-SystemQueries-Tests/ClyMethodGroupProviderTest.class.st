@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyMethodGroupProviderTest class >> isAbstract [
-	^self == ClyMethodGroupProviderTest 
+	^self == ClyMethodGroupProviderTest
 ]
 
 { #category : #running }
@@ -18,7 +18,7 @@ ClyMethodGroupProviderTest >> buildGroupsFor: aClass [
 
 { #category : #running }
 ClyMethodGroupProviderTest >> classSampleWhichHasGroup [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #tests }

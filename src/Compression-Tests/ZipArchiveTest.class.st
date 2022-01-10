@@ -14,6 +14,11 @@ Class {
 	#category : #'Compression-Tests-Archives'
 }
 
+{ #category : #accessing }
+ZipArchiveTest class >> defaultTimeLimit [
+	^30 seconds
+]
+
 { #category : #tests }
 ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileModified [
 	| lastModificationTime |
@@ -89,7 +94,6 @@ ZipArchiveTest >> testAddTreeWithContentInFileShouldSucceed [
 	extractedFile :=  (extractionDir / (fileWithContentToZip relativeTo: fs root) fullName) asFileReference.
 	self assert:	 extractedFile isFile.
 	self assert:	 (extractedFile readStreamDo: [ :stream | stream contents]) equals: fileContent.
-	
 ]
 
 { #category : #tests }
@@ -107,7 +111,7 @@ ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
 	
 	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir') asFileReference isDirectory.
 	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir' / 'fileInSubSubDir') asFileReference isFile.
-	self deny: (extractionDir / 'subSubDir') asFileReference isDirectory 
+	self deny: (extractionDir / 'subSubDir') asFileReference isDirectory
 ]
 
 { #category : #tests }
@@ -157,7 +161,6 @@ ZipArchiveTest >> testCanUnzipFromFileName [
 		extractAllTo: extracted overwrite: true;
 		close.
 	zipFile ensureDelete.
-
 ]
 
 { #category : #tests }
@@ -178,7 +181,6 @@ ZipArchiveTest >> testCanUnzipFromStream [
 			readFrom: stream ;
 			extractAllTo: subdir overwrite: true;
 			close ].
-
 ]
 
 { #category : #tests }

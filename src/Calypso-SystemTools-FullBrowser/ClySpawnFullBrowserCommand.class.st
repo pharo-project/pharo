@@ -23,7 +23,7 @@ Class {
 ClySpawnFullBrowserCommand class >> browserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClySystemBrowserContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClySystemBrowserContext
 ]
 
 { #category : #activation }
@@ -58,7 +58,7 @@ ClySpawnFullBrowserCommand >> defaultMenuItemName [
 { #category : #execution }
 ClySpawnFullBrowserCommand >> execute [
 
-	browser spawnFullBrowser 
+	browser spawnFullBrowser
 ]
 
 { #category : #execution }

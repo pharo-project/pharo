@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #asserting }
-ProtocolConventionsTest >> assertProtocols: aCollectionOfSelectors areNotUsedInsteadOf: aProtocolName [
+ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors [
 	| violations |
 	violations := self class environment allClassesAndTraits
 		select: [ :c | (c protocols includesAny: aCollectionOfSelectors) or: [ c class protocols includesAny: aCollectionOfSelectors ] ].
@@ -30,17 +30,83 @@ Some classes are violating this convention:
 								separatedBy: [ s cr ] ])} ]
 ]
 
-{ #category : #tests }
-ProtocolConventionsTest >> testFileInOutProtocolIsUsed [
-	self assertProtocols: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') areNotUsedInsteadOf: #'file in/out'
+{ #category : #asserting }
+ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors notMoreViolationsThan: aCount [
+	| violations |
+	violations := self class environment allClassesAndTraits
+		select: [ :c | (c protocols includesAny: aCollectionOfSelectors) or: [ c class protocols includesAny: aCollectionOfSelectors ] ].
+	self
+		assert: violations size <= aCount
+		description: [ 'In the default Pharo images, the protocol #{1} should be used instead of {2}.
+Some classes are violating this convention:
+{3}'
+				format:
+					{aProtocolName . aCollectionOfSelectors asString . (String
+						streamContents: [ :s | 
+							violations
+								do: [ :c | 
+									s
+										<< '- ';
+										print: c ]
+								separatedBy: [ s cr ] ])} ]
+]
+
+{ #category : #utilities }
+ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass [
+
+	self checkIdiomForRuleClass: aRuleClass notMoreViolationsThan: 0
+]
+
+{ #category : #utilities }
+ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass notMoreViolationsThan: aCount [
+
+	| idiom |
+	idiom := aRuleClass protocolIdiom.
+	
+	self
+		assertProtocolName: idiom key
+		notAcceptingProtocolNamesLike: idiom value
+		notMoreViolationsThan: aCount
 ]
 
 { #category : #tests }
-ProtocolConventionsTest >> testInstanceCreationProtocolIsUsed [
-	self assertProtocols: #(#'instance-creation') areNotUsedInsteadOf: #'instance creation'
+ProtocolConventionsTest >> testProperAccessingProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAccessingRule notMoreViolationsThan: 1
 ]
 
 { #category : #tests }
-ProtocolConventionsTest >> testRemovalProtocolIsUsed [
-	self assertProtocols: #(#remove #removal) areNotUsedInsteadOf: #removing
+ProtocolConventionsTest >> testProperConvertingProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForConvertingRule notMoreViolationsThan: 29
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperFileInOutProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForFileInOutRule
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperInstanceCreationProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForInstanceCreationRule
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperRemovalProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForRemovalRule
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperTestProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForTestsRule notMoreViolationsThan: 3
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperUtilitiesProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForUtilitiesRule notMoreViolationsThan: 5
 ]

@@ -80,7 +80,7 @@ Class {
 { #category : #'instance creation' }
 ClyBrowserQueryCursor class >> for: aBrowserQueryResult [
 	^self new 
-		queryResult: aBrowserQueryResult 
+		queryResult: aBrowserQueryResult
 ]
 
 { #category : #accessing }
@@ -119,7 +119,7 @@ ClyBrowserQueryCursor >> findItemsSimilarTo: sampleBrowserItems [
 { #category : #queries }
 ClyBrowserQueryCursor >> findItemsWhere: conditionBlock [
 	
-	^queryResult itemsWhere: conditionBlock 
+	^queryResult itemsWhere: conditionBlock
 ]
 
 { #category : #queries }

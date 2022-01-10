@@ -37,9 +37,10 @@ EmbeddedFreeTypeFontInstaller class >> current [
 
 { #category : #'class initialization' }
 EmbeddedFreeTypeFontInstaller class >> initialize [
-	super initialize.
-	self resetCurrent.
-	self current.
+
+	self
+		resetCurrent;
+		current
 ]
 
 { #category : #'extra fonts registration' }
@@ -60,7 +61,7 @@ EmbeddedFreeTypeFontInstaller class >> resetCurrent [
 
 { #category : #adding }
 EmbeddedFreeTypeFontInstaller >> addFirstFileInfo: aFreeTypeEmbeddedFileInfo index: anInteger [ 
-	provider addFirstFileInfo: aFreeTypeEmbeddedFileInfo index: anInteger 
+	provider addFirstFileInfo: aFreeTypeEmbeddedFileInfo index: anInteger
 ]
 
 { #category : #accessing }
@@ -148,7 +149,7 @@ EmbeddedFreeTypeFontInstaller >> failedToOpen: face index: index [
 { #category : #initialization }
 EmbeddedFreeTypeFontInstaller >> initialize [
 	super initialize.
-	embeddedFileInfoCache := Dictionary new: 10. "keyed by file size" 	
+	embeddedFileInfoCache := Dictionary new: 10. "keyed by file size"
 ]
 
 { #category : #accessing }

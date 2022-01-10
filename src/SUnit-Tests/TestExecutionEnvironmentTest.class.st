@@ -243,8 +243,6 @@ TestExecutionEnvironmentTest >> testIgnoreLongTestWhenItIsSuspendedAsUnderDebug 
 		] on: TestTookTooMuchTime do: [ :err | timeOutSignaled := true ]		
 	] forkAt: Processor activePriority + 1.
 
-	200 milliSeconds wait.
-	testProcess resume.
 	self deny: timeOutSignaled
 ]
 

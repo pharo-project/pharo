@@ -34,7 +34,6 @@ ClassOrganizationTest >> setUp [
 	organization addCategory: 'empty'.
 	organization addCategory: 'one'.
 	organization classify: #one under: 'one' suppressIfDefault: true.
-	
 ]
 
 { #category : #running }

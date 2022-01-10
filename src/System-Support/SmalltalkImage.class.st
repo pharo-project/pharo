@@ -77,13 +77,13 @@ SmalltalkImage class >> new [
 	self error: 'Use current'.
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> shutDown: isImageClosing [
 
 	isImageClosing ifTrue: [ SourceFiles close ].
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> startUp: isImageStarting [
 	
 	ChangesLog default
@@ -1151,8 +1151,8 @@ SmalltalkImage >> memoryHogs [
 { #category : #miscellaneous }
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
-    "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x')
+ 
+   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x' #'pharo10.x'  #'pharo10.0.x')
 ]
 
 { #category : #'special objects' }
@@ -1231,8 +1231,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 44 put: (self at: #ExternalAddress ifAbsent: []).
 	newArray at: 45 put: (self at: #ExternalStructure ifAbsent: []).
 	newArray at: 46 put: (self at: #ExternalData ifAbsent: []).
-	newArray at: 47 put: (self at: #ExternalFunction ifAbsent: []).
-	newArray at: 48 put: (self at: #ExternalLibrary ifAbsent: []).
+	newArray at: 47 put: nil.
+	newArray at: 48 put: nil.
 	newArray at: 49 put: #aboutToReturn:through:.
 	newArray at: 50 put: #run:with:in:.
 	"51 reserved for immutability message"
@@ -1248,10 +1248,10 @@ SmalltalkImage >> newSpecialObjectsArray [
 							#'object is pinned' #'primitive write beyond end of object'
 							#'object moved' #'object not pinned' #'callback error'),
 							{PrimitiveError new errorName: #'operating system error'; yourself}.
-	"53 to 55 are for Alien"
-	newArray at: 53 put: (self at: #Alien ifAbsent: []).
-	newArray at: 54 put: #invokeCallbackContext:. "use invokeCallback:stack:registers:jmpbuf: for old Alien callbacks."
-	newArray at: 55 put: (self at: #UnsafeAlien ifAbsent: []).
+
+	newArray at: 53 put: nil.
+	newArray at: 54 put: nil.
+	newArray at: 55 put: nil.
 
 	"Used to be WeakFinalizationList for WeakFinalizationList hasNewFinalization, obsoleted by ephemeron support."
 	newArray at: 56 put: nil.
@@ -1811,12 +1811,11 @@ SmalltalkImage >> specialSelectorAt: anInteger [
 
 { #category : #'special objects' }
 SmalltalkImage >> specialSelectorIndexOrNil: selector [
-	| specialIndex |
 	1 to: Smalltalk specialSelectorSize do:
 		[:index | 
 		(Smalltalk specialSelectorAt: index) == selector
-			ifTrue: [specialIndex := index ]].	
-	^ specialIndex
+			ifTrue: [^index ]].	
+	^ nil
 ]
 
 { #category : #'special objects' }

@@ -83,7 +83,7 @@ Author class >> requestFullName [
 	^ self uniqueInstance requestFullName
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Author class >> reset [
 	<script>
 	^ self uniqueInstance reset

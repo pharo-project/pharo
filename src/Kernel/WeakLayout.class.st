@@ -20,8 +20,11 @@ WeakLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-WeakLayout class >> kind [ 
-	^ #weak
+WeakLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#weakSubclass:
 ]
 
 { #category : #format }
@@ -37,14 +40,4 @@ WeakLayout >> isVariable [
 { #category : #testing }
 WeakLayout >> isWeak [
 	^ true
-]
-
-{ #category : #accessing }
-WeakLayout >> kindOfSubclass [
-	^' weakSubclass: '
-]
-
-{ #category : #accessing }
-WeakLayout >> typeOfClass [
-	^#weak
 ]

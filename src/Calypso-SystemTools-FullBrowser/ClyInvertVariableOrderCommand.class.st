@@ -24,5 +24,5 @@ ClyInvertVariableOrderCommand >> defaultMenuItemName [
 ClyInvertVariableOrderCommand >> execute [
 
 	ClySubclassHierarchy invertVariableHierarchy.
-	browser switchToVariables 
+	browser switchToVariables
 ]

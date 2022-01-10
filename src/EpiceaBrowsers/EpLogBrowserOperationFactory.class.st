@@ -34,7 +34,6 @@ EpLogBrowserOperationFactory >> applyCompleteRefactoring [
 	refactoring := refactoringEntry content asRBRefactoring.
 	
 	self applyRBRefactoring: refactoring
-
 ]
 
 { #category : #public }
@@ -45,7 +44,6 @@ EpLogBrowserOperationFactory >> applyPropagateRefactoring [
 	refactoring := EpRBPropagateRefactoring target: refactoringEntry content asRBRefactoring.
 
 	self applyRBRefactoring: refactoring
-
 ]
 
 { #category : #private }
@@ -91,7 +89,6 @@ EpLogBrowserOperationFactory >> handleErrorDuring: aBlock [
 	aBlock
 		on: Error
 		do: self errorHandlerBlock
-
 ]
 
 { #category : #private }
@@ -123,7 +120,6 @@ EpLogBrowserOperationFactory >> logBrowserModel: aBrowser [
 EpLogBrowserOperationFactory >> newApplyEvent [
 
 	^ EpRedo forAll: (self theLog referencesToAll: self entries)
-
 ]
 
 { #category : #public }
@@ -136,14 +132,12 @@ EpLogBrowserOperationFactory >> newApplyPreviewLog [
 		each previewedApplyEvents ].
 	
 	^ EpLog newWithEvents: events
-
 ]
 
 { #category : #private }
 EpLogBrowserOperationFactory >> newRevertEvent [
 
 	^ EpUndo forAll: (self theLog referencesToAll: self entries)
-
 ]
 
 { #category : #public }
@@ -156,7 +150,6 @@ EpLogBrowserOperationFactory >> newRevertPreviewLog [
 		each asRevertedCodeChange previewedApplyEvents ].
 
 	^ EpLog newWithEvents: events
-
 ]
 
 { #category : #public }

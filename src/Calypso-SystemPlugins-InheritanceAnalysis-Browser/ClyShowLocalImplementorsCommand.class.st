@@ -27,13 +27,13 @@ Class {
 
 { #category : #testing }
 ClyShowLocalImplementorsCommand class >> isAbstract [
-	^self = ClyShowLocalImplementorsCommand 
+	^self = ClyShowLocalImplementorsCommand
 ]
 
 { #category : #execution }
 ClyShowLocalImplementorsCommand >> createInheritanceScopeFrom: classes [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }
@@ -66,5 +66,5 @@ ClyShowLocalImplementorsCommand >> prepareFullExecutionInContext: aToolContext [
 ]
 
 { #category : #execution }
-ClyShowLocalImplementorsCommand >> selectMethodsIn: aQueryBrowser [ 
+ClyShowLocalImplementorsCommand >> selectMethodsIn: aQueryBrowser [
 ]

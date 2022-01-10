@@ -1,11 +1,11 @@
 Extension { #name : #FileReference }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 FileReference >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 FileReference >> stonOn: stonWriter [
 	self fileSystem isDiskFileSystem
 		ifTrue: [ | diskFilePath |

@@ -24,9 +24,9 @@ Class {
 	#category : #'Morphic-Base-Events'
 }
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 TransferMorph class >> initIcons [
-	"TransferMorph initIcons"
+	<script>
 
 	CopyPlusIcon := Form
 		extent: 16@16
@@ -35,7 +35,7 @@ TransferMorph class >> initIcons [
 		offset: 0@0
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TransferMorph class >> initialize [
 	"TransferMorph initialize"
 
@@ -285,5 +285,4 @@ TransferMorph >> updateCopyIcon [
 	copyIcon := ImageMorph new form: CopyPlusIcon.
 	copyIcon setProperty: #tmCopyIcon toValue: true.
 	^ self addMorphFront: copyIcon.
-
 ]

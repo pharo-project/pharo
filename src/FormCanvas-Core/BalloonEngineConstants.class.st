@@ -288,8 +288,6 @@ BalloonEngineConstants class >> initEdgeConstants [
 	GBFinalX := 21.						"Final X value"
 	GBWideUpdateData := 22.			"Update data for second curve"
 	GBWideSize := 28					"Size of wide beziers"
-
-
 ]
 
 { #category : #'private - initialization' }
@@ -346,8 +344,6 @@ BalloonEngineConstants class >> initPrimitiveConstants [
 	GEObjectLength := 1.			"Length of object"
 	GEObjectIndex := 2.			"Index into external objects"
 	GEObjectUnused := 3			"Currently unused"
-
-
 ]
 
 { #category : #'private - initialization' }
@@ -373,7 +369,6 @@ BalloonEngineConstants class >> initStateConstants [
 	GErrorGETEntry := 4.				"Unknown entry in GET"
 	GErrorFillEntry := 5.				"Unknown FILL encountered"
 	GErrorAETEntry := 6				"Unknown entry in AET"
-
 ]
 
 { #category : #'private - initialization' }
@@ -477,20 +472,20 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 
 	GWHasClipShapes := 112.		"True if the engine contains clip shapes"
 	GWCurrentZ := 113				"Current z value of primitives"
-
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 BalloonEngineConstants class >> initialize [
-	"BalloonEngineConstants initialize"
-	self initStateConstants.
-	self initWorkBufferConstants.
-	self initPrimitiveConstants.
-	self initEdgeConstants.
-	self initFillConstants.
-	self initializeInstVarNames: BalloonEngine prefixedBy: 'BE'.
-	self initializeInstVarNames: BalloonEdgeData prefixedBy: 'ET'.
-	self initializeInstVarNames: BalloonFillData prefixedBy: 'FT'.
+
+	self 
+		initStateConstants;
+		initWorkBufferConstants;
+		initPrimitiveConstants;
+		initEdgeConstants;
+		initFillConstants;
+		initializeInstVarNames: BalloonEngine prefixedBy: 'BE';
+		initializeInstVarNames: BalloonEdgeData prefixedBy: 'ET';
+		initializeInstVarNames: BalloonFillData prefixedBy: 'FT'
 ]
 
 { #category : #'private - initialization' }

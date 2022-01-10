@@ -187,7 +187,6 @@ MenuRegistration >> action: aMessageSendOrABlock [
 			self arguments: {self model}]
 		ifFalse: [
 			self selector: aMessageSendOrABlock]
-
 ]
 
 { #category : #accessing }
@@ -267,7 +266,6 @@ MenuRegistration >> enabled: aBooleanOrABlock [
 { #category : #'spec accessing' }
 MenuRegistration >> enabledBlock [
 	^ self spec enabledBlock
-
 ]
 
 { #category : #'spec accessing' }
@@ -314,14 +312,12 @@ MenuRegistration >> isGroup: aBoolean [
 MenuRegistration >> item: aSymbol [
 	"set my name and my label with aSymbol (the label and the name as the same by default) and register myself as a child of my owner"
 	^ (self builder newSubItem) name: aSymbol; label: aSymbol asString
-
 ]
 
 { #category : #accessing }
 MenuRegistration >> itemList [
 	"Return my children"
-	^ itemList 
-
+	^ itemList
 ]
 
 { #category : #accessing }
@@ -452,13 +448,12 @@ MenuRegistration >> printOn: aStream [
 MenuRegistration >> release [
 	itemList := nil.
 	self releaseActionMap.
-	
 ]
 
 { #category : #accessing }
 MenuRegistration >> removeItem: anItem [
 	"Remove a MenuRegistration"
-	self itemList remove: anItem 
+	self itemList remove: anItem
 ]
 
 { #category : #initialization }
@@ -468,7 +463,6 @@ MenuRegistration >> reset [
 			itemList do: [:i | i reset].
 			itemList := nil].
 	spec := nil
-
 ]
 
 { #category : #'spec accessing' }
@@ -497,7 +491,6 @@ MenuRegistration >> spec [
 { #category : #'spec accessing' }
 MenuRegistration >> target [
 	^ self spec action ifNotNil: [:action | action receiver]
-
 ]
 
 { #category : #'spec accessing' }

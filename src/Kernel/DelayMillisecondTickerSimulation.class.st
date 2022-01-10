@@ -18,7 +18,6 @@ DelayMillisecondTickerSimulation >> initialize [
 	super initialize.
 	vmSimTheTimerSemaphore := Semaphore new.
 	vmSimNow := 0.
-
 ]
 
 { #category : #'api-system' }
@@ -34,9 +33,7 @@ DelayMillisecondTickerSimulation >> primSignal: sempahore atMilliseconds: nextTi
 		vmSimNextWakeupTick := nextTick ].
 	(sempahore = nil) ifTrue: [ 
 		vmSimTheTimerSemaphore := nil.
-		vmSimNextWakeupTick := 0] 
-
-		
+		vmSimNextWakeupTick := 0]
 ]
 
 { #category : #'api-system' }
@@ -49,10 +46,6 @@ DelayMillisecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [
 			vmSimTheTimerSemaphore signal.
 			].
  		].
-	
-
-
-
 ]
 
 { #category : #'api-system' }

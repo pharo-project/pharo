@@ -39,7 +39,6 @@ ReadStream >> next: anInteger [
 	ans := collection copyFrom: position+1 to: endPosition.
 	position := endPosition.
 	^ans
-
 ]
 
 { #category : #accessing }

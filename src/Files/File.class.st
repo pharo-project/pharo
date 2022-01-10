@@ -394,7 +394,6 @@ File class >> atEnd: id [
 
 	<primitive: 'primitiveFileAtEnd' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'primitives - errors' }
@@ -426,7 +425,6 @@ File class >> close: id [
 	"Close this file."
 
 	<primitive: 'primitiveFileClose' module: 'FilePlugin'>
-	
 ]
 
 { #category : #'primitives - file' }
@@ -446,8 +444,7 @@ File class >> connectToFile: filePointer writable: writableFlag [
 			[ ^self error: 'filePointer must be a ByteArray' ].
 		(writableFlag isKindOf: Boolean) ifFalse: 
 			[ ^self error: 'writableFlag must be a boolean' ] ].
-	^ self primitiveFailed 
-
+	^ self primitiveFailed
 ]
 
 { #category : #'primitives - file' }
@@ -462,8 +459,7 @@ File class >> connectToFileDescriptor: fileDescriptor writable: writableFlag [
 			[ ^self error: 'fileDescriptor must be an integer' ].
 		(writableFlag isKindOf: Boolean) ifFalse: 
 			[ ^self error: 'writableFlag must be a boolean' ] ].
-	^ self primitiveFailed 
-
+	^ self primitiveFailed
 ]
 
 { #category : #'primitives - errors' }
@@ -479,7 +475,6 @@ File class >> createDirectory: fullPath [
 
  	<primitive: 'primitiveDirectoryCreate' module: 'FilePlugin'>
 	^ nil
-
 ]
 
 { #category : #'primitives - encoding' }
@@ -495,7 +490,6 @@ File class >> deleteDirectory: fullPath [
 
  	<primitive: 'primitiveDirectoryDelete' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'primitives - path' }
@@ -520,7 +514,6 @@ File class >> delimiter [
 
  	<primitive: 'primitiveDirectoryDelimitor' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'primitives - encoding' }
@@ -549,7 +542,6 @@ File class >> file: pathString symlinkUid: uidInteger gid: gidInteger [
 	^self primFile: (self encodePathString: pathString) 
 		symlinkUid: (uidInteger ifNil: [ -1 ]) 
 		gid: (gidInteger ifNil: [ -1 ])
-
 ]
 
 { #category : #attributes }
@@ -560,7 +552,6 @@ File class >> file: pathString uid: uidInteger gid: gidInteger [
 	^self primFile: (self encodePathString: pathString) 
 		uid: (uidInteger ifNil: [ -1 ])
 		gid: (gidInteger ifNil: [ -1 ])
-
 ]
 
 { #category : #attributes }
@@ -673,8 +664,6 @@ File class >> getMacFile: fileName type: typeString creator: creatorString [
 	"Get the Macintosh file type and creator info for the file with the given name. Fails if the file does not exist or if the type and creator type arguments are not strings of length 4. This primitive is Mac specific; it is a noop on other platforms."
 
  	<primitive: 'primitiveDirectoryGetMacTypeAndCreator' module: 'FilePlugin'>
-
-
 ]
 
 { #category : #'primitives - file' }
@@ -683,7 +672,6 @@ File class >> getPosition: id [
 
 	<primitive: 'primitiveFileGetPosition' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'class initialization' }
@@ -704,7 +692,6 @@ File class >> isBlock: aPath [
 	"Answer a boolean indicating whether the supplied path is a Block file"
 
 	^self modeIsBlock: (self modeOf: aPath)
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -712,7 +699,6 @@ File class >> isCharacter: aPath [
 	"Answer a boolean indicating whether the supplied path is a Character file"
 
 	^self modeIsCharacter: (self modeOf: aPath)
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -729,7 +715,6 @@ File class >> isExecutable: aPath [
 	"Answer a boolean indicating whether the supplied path is a executable file"
 
 	^self fileAttribute: aPath number: 15
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -737,7 +722,6 @@ File class >> isFIFO: aPath [
 	"Answer a boolean indicating whether the supplied path is a FIFO file"
 
 	^self modeIsFIFO: (self modeOf: aPath)
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -754,7 +738,6 @@ File class >> isReadable: aPath [
 	"Answer a boolean indicating whether the supplied path is a readable file"
 
 	^self fileAttribute: aPath number: 13
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -762,7 +745,6 @@ File class >> isRegular: aPath [
 	"Answer a boolean indicating whether the supplied path is a Regular file"
 
 	^self modeIsRegular: (self modeOf: aPath)
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -770,7 +752,6 @@ File class >> isSocket: aPath [
 	"Answer a boolean indicating whether the supplied path is a Socket file"
 
 	^self modeIsSocket: (self modeOf: aPath)
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -785,7 +766,6 @@ File class >> isWritable: aPath [
 	"Answer a boolean indicating whether the supplied path is a writable file"
 
 	^self fileAttribute: aPath number: 14
-
 ]
 
 { #category : #'primitives - path' }
@@ -807,8 +787,6 @@ File class >> lookupDirectory: fullPath filename: fileName [
  	<primitive: 'primitiveDirectoryEntry' module: 'FilePlugin'>
 	
 	^ #badDirectoryPath
-
-
 ]
 
 { #category : #'primitives - path' }
@@ -829,8 +807,6 @@ File class >> lookupEntryIn: fullPath index: index [
  	<primitive: 'primitiveDirectoryLookup' module: 'FilePlugin' error: errorCode >
 	
 	^ #badDirectoryPath
-
-
 ]
 
 { #category : #'primitives - file modes' }
@@ -908,15 +884,6 @@ File class >> open: fileName writable: writableFlag [
 
 	<primitive: 'primitiveFileOpen' module: 'FilePlugin'>
 	^ nil
-
-]
-
-{ #category : #'file creation' }
-File class >> openAndTruncateForWriteFileNamed: aName [
-
-	^ (self named: aName)
-		delete;
-		openForWrite
 ]
 
 { #category : #'file creation' }
@@ -937,7 +904,6 @@ File class >> posixPermissions: aPath [
 	"Answer the posix permissions for the supplied path"
 
 	^(self modeOf: aPath) bitAnd: 8r777
-
 ]
 
 { #category : #'primitives - directory' }
@@ -959,7 +925,6 @@ File class >> primDeleteFile: aFileName [
 
 	<primitive: 'primitiveFileDelete' module: 'FilePlugin'>
 	^ nil
-
 ]
 
 { #category : #'primitives - file attributes' }
@@ -968,7 +933,6 @@ File class >> primExists: aByteArray [
 
 	<primitive: 'primitiveFileExists' module: 'FileAttributesPlugin' error: error>
 	^self signalError: error for: aByteArray.
-
 ]
 
 { #category : #'primitives - file attributes' }
@@ -1037,7 +1001,6 @@ symbolic link information
 			"If symlinks aren't supported, answer false"
 			[ ^false ]].
 	^self signalError: error for: aByteArray
-
 ]
 
 { #category : #'primitives - file attributes' }
@@ -1073,7 +1036,6 @@ access() information
 	"
 	<primitive: 'primitiveFileAttributes' module: 'FileAttributesPlugin' error: error>
 	^self signalError: error for: aByteArray
-
 ]
 
 { #category : #private }
@@ -1152,7 +1114,6 @@ File class >> primRewinddir: directoryPointerBytes [
 
 	<primitive: 'primitiveRewinddir' module: 'FileAttributesPlugin' error: error>
 	^self signalError: error for: 'primRewinddir:'
-
 ]
 
 { #category : #'primitives - file attributes' }
@@ -1189,7 +1150,6 @@ File class >> register: anObject [
 { #category : #registry }
 File class >> registry [
 	^Registry ifNil: [Registry := WeakRegistry new]
-
 ]
 
 { #category : #'primitives - path' }
@@ -1201,12 +1161,11 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	^nil
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 File class >> reset [
-	"Initialise the receiver for the current platform"
+	"Initialize the receiver for the current platform"
 
 	| masks |
-
 	masks := self primFileMasks.
 	S_IFMT := masks at: 1.
 	S_IFSOCK := masks at: 2.
@@ -1215,8 +1174,7 @@ File class >> reset [
 	S_IFBLK := masks at: 5.
 	S_IFDIR := masks at: 6.
 	S_IFCHR := masks at: 7.
-	S_IFIFO := masks at: 8.
-
+	S_IFIFO := masks at: 8
 ]
 
 { #category : #registry }
@@ -1288,7 +1246,6 @@ File class >> setPosition: id to: anInteger [
 
 	<primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #private }
@@ -1322,7 +1279,6 @@ File class >> sizeOf: id [
 
 	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'primitives - file' }
@@ -1333,12 +1289,11 @@ File class >> sizeOrNil: id [
 	^ nil
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 File class >> startUp: isImageStarting [
 	"Update VM constants on startup"
 
 	isImageStarting ifTrue: [ self reset ]
-
 ]
 
 { #category : #'primitives - errors' }
@@ -1400,7 +1355,6 @@ File class >> truncate: id to: anInteger [
 
 	<primitive: 'primitiveFileTruncate' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'primitives - errors' }
@@ -1427,7 +1381,7 @@ File class >> write: id from: stringOrByteArray startingAt: startIndex count: co
 	"Write count bytes onto this file from the given string or byte array starting at the given index. 	Answer the number of bytes written."
 
 	<primitive: 'primitiveFileWrite' module: 'FilePlugin'>
-	self primitiveFailed 
+	self primitiveFailed
 ]
 
 { #category : #accessing }
@@ -1468,8 +1422,6 @@ File >> checkWritableFilesystem [
 
 	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [ 
 		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system'].
-
-
 ]
 
 { #category : #'open/close' }
@@ -1477,7 +1429,6 @@ File >> delete [
 	"Delete the receiver"
 
 	^self class deleteFile: name.
-
 ]
 
 { #category : #testing }

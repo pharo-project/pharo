@@ -59,7 +59,6 @@ Array class >> braceStream: nElements [
 	It MUST NOT be deleted or altered."
 
 	^ WriteStream basicNew braceArray: (self new: nElements)
-
 ]
 
 { #category : #'brace support' }
@@ -135,7 +134,6 @@ Array class >> new: sizeRequested [
 
 	<primitive: 71>  "This method runs primitively if successful"
 	^ self basicNew: sizeRequested  "Exceptional conditions will be handled in basicNew:"
-
 ]
 
 { #category : #converting }
@@ -158,7 +156,7 @@ Array >> atWrap: index [
     "(#(11 22 33) atWrap: 4) >>> 11"
     
     <primitive: 60>
-    ^ self at: index - 1 \\ self size + 1 
+    ^ self at: index - 1 \\ self size + 1
 ]
 
 { #category : #accessing }
@@ -168,10 +166,18 @@ Array >> atWrap: index put: anObject [
 	^ self at: index - 1 \\ self size + 1 put: anObject
 ]
 
+{ #category : #'write barrier' }
+Array >> beReadOnlyLiteral [
+	self isLiteral ifFalse: [ ^ self ].
+	self beReadOnlyObject.
+	self do: [ :each | each beReadOnlyLiteral ]
+]
+
 { #category : #copying }
 Array >> copyWithDependent: newElement [
-	self size = 0 ifTrue:[^DependentsArray with: newElement].
-	^self copyWith: newElement
+
+	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].
+	^ self copyWith: newElement
 ]
 
 { #category : #converting }
@@ -288,7 +294,6 @@ Array >> literalEqual: other [
 Array >> printAsLiteralFormOn: aStream [
 	aStream nextPut: $#.
 	self printElementsOn: aStream
-
 ]
 
 { #category : #'self evaluating' }
@@ -305,6 +310,16 @@ Array >> printOn: aStream [
 	self isSelfEvaluating ifTrue: [self printAsSelfEvaluatingFormOn: aStream. ^ self].
 
 	super printOn: aStream
+]
+
+{ #category : #enumerating }
+Array >> recursiveDo: aBlock [
+
+	"execute the block for my content like do, but then recurse into nested arrays"
+
+	self do: [ :each | 
+		aBlock value: each.
+		each isArray ifTrue: [ each recursiveDo: aBlock ] ]
 ]
 
 { #category : #'literal testing' }

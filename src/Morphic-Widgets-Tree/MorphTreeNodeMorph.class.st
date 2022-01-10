@@ -39,7 +39,6 @@ MorphTreeNodeMorph >> addChildrenForList: hostList addingTo: morphList withExpan
 		from: complexContents contents
 		withExpandedItems: expandedItems
 		atLevel: indentLevel + 1.
-
 ]
 
 { #category : #updating }
@@ -92,8 +91,6 @@ MorphTreeNodeMorph >> buildRowMorph [
 
 	self addAllMorphs: rowControls.
 	self layoutChanged
-	
-
 ]
 
 { #category : #testing }
@@ -133,7 +130,6 @@ MorphTreeNodeMorph >> checkRectangle [
 	^ self mustTakeIntoAccountToggleSpace 
 		ifTrue: [(tr topRight + (self checkGap @ 0)) corner:  tr bottomRight + ((self checkGap + self checkWidth) @ 0)]
 		ifFalse: [tr]
-
 ]
 
 { #category : #accessing }
@@ -214,7 +210,7 @@ MorphTreeNodeMorph >> color [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> columnMorphAt: anIndex [
-	^ controls at: anIndex 
+	^ controls at: anIndex
 ]
 
 { #category : #accessing }
@@ -253,7 +249,6 @@ MorphTreeNodeMorph >> delete [
 	nextSibling := nil.
 	controls := nil.
 	super delete.
-
 ]
 
 { #category : #drawing }
@@ -383,15 +378,6 @@ MorphTreeNodeMorph >> drawOn: aCanvas [
 		
 	container listManager isCheckList
 		ifTrue: [self drawCheckOn: aCanvas ].
-	
-
-		
-		
-		
-		
-		
-		
-
 ]
 
 { #category : #drawing }
@@ -403,7 +389,6 @@ MorphTreeNodeMorph >> drawToggleOn: aCanvas in: aRectangle [
 	^aCanvas 
 		translucentImage: aForm 
 		at: (aRectangle topLeft translateBy: 0 @ centeringOffset).
-
 ]
 
 { #category : #updating }
@@ -414,9 +399,6 @@ MorphTreeNodeMorph >> expand [
 	newChildren := container addMorphsAfter: self fromCollection: c.
 	firstChild := newChildren first.
 	self updateChildren
-
-	
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -524,7 +506,6 @@ MorphTreeNodeMorph >> icon [
 	"answer the receiver's icon"
 	
 	^ container iconBlock value: self complexContents.
-	
 ]
 
 { #category : #testing }
@@ -546,7 +527,7 @@ MorphTreeNodeMorph >> indentLevel [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> index [
-	^ index 
+	^ index
 ]
 
 { #category : #accessing }
@@ -558,7 +539,6 @@ MorphTreeNodeMorph >> index: anInteger [
 MorphTreeNodeMorph >> initRow [
 	self buildRowMorph.
 	self layoutChanged
-
 ]
 
 { #category : #initialization }
@@ -593,14 +573,10 @@ MorphTreeNodeMorph >> initialize [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		color: Color transparent.
-
-
-
 ]
 
 { #category : #'change reporting' }
 MorphTreeNodeMorph >> invalidRect: aRectangle [
-	
 ]
 
 { #category : #testing }
@@ -660,7 +636,6 @@ MorphTreeNodeMorph >> layoutBounds [
 	right := (lb right max: left + self spacerWidth).
 	"Make sure that left and right have changed simultaneously, avoiding creating degenerate rectangle"
 	^ Rectangle left: left right: right top: lb top bottom: lb bottom
-
 ]
 
 { #category : #accessing }
@@ -672,8 +647,6 @@ MorphTreeNodeMorph >> lineColor [
 
 	^ lineColor 
 		ifNil: [lineColor := container lineColorForNode: self complexContents]
-	
-
 ]
 
 { #category : #testing }
@@ -842,8 +815,6 @@ MorphTreeNodeMorph >> recursiveAddTo: aCollection [
 
 	firstChild ifNotNil: [firstChild withSiblingsDo: [ :aNode | aNode recursiveAddTo: aCollection]].
 	aCollection add: self.
-
-	
 ]
 
 { #category : #updating }
@@ -853,7 +824,6 @@ MorphTreeNodeMorph >> recursiveDelete [
 		firstChild withSiblingsDo: [ :aNode | aNode recursiveDelete].
 	].
 	self delete
-	
 ]
 
 { #category : #private }
@@ -986,10 +956,7 @@ MorphTreeNodeMorph >> toggleExpandedState [
 MorphTreeNodeMorph >> toggleImageForm [
 	^ isExpanded 
 			ifTrue: [container expandedFormForMorph: self]
-			ifFalse: [container notExpandedFormForMorph: self] 
-				
-		
-
+			ifFalse: [container notExpandedFormForMorph: self]
 ]
 
 { #category : #accessing }
@@ -1014,7 +981,6 @@ MorphTreeNodeMorph >> unhighlight [
 						color: (m
 								valueOfProperty: #originalColor
 								ifAbsent: [ self theme textColor ])]].
-
 ]
 
 { #category : #updating }
@@ -1035,8 +1001,6 @@ MorphTreeNodeMorph >> update: aSymbol [
 { #category : #updating }
 MorphTreeNodeMorph >> updateChildren [
 	self childrenDo: [:child | child parent: self]
-	
-
 ]
 
 { #category : #updating }
@@ -1044,8 +1008,6 @@ MorphTreeNodeMorph >> updateChildrenRecursively [
 	self childrenDo: [:child | 
 		child parent: self. 
 		child updateChildrenRecursively]
-	
-
 ]
 
 { #category : #updating }
@@ -1057,7 +1019,6 @@ MorphTreeNodeMorph >> updateColumnMorphsWidthWith: aListOfWidths [
 		do: [:idx | | w | 
 			w := aListOfWidths at: idx.
 			(controls at: idx) width: (w - (idx = 1 ifTrue: [sw] ifFalse: [0]))].
-
 ]
 
 { #category : #updating }

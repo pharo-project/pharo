@@ -117,5 +117,4 @@ Magnitude >> min: maxValue max: minValue [
 	"(24 min: 20 max: 5) >>> 20"
 
 	^ (self min: maxValue) max: minValue
-
 ]

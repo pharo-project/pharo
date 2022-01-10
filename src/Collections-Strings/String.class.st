@@ -3,13 +3,89 @@ A String is an indexed collection of Characters. Class String provides the abstr
 
 Strings support a vast array of useful methods, which can best be learned by browsing and trying out examples as you find them in the code.
 
-Here are a few useful methods to look at...
-	String match:
-	String contractTo:
+## Substrings and slicing
 
-String also inherits many useful methods from its hierarchy, such as
-	SequenceableCollection ,
-	SequenceableCollection copyReplaceAll:with:
+A number of selectors can be used to get substrings. `String>>#lines` will return a colection containing substrings separated by `\\n`, `\\r`, or `\\r\\n`; `String>>#trim` will return a substring with whitespace removed from the beginning and end. 
+
+Obtaining parts of a string can also be achieved using numbered indices, also known as slicing. There are shortcut methods for some common operations that are often inherited from `SequenceableCollection` inclusing `allButFirst`, `allButLast`, `first`, or `last`.
+
+```
+s := 'abcdefg'.
+
+s first. ""$a""
+s allButFirst.  ""bcdefg""
+
+s last.  ""$g""
+s allButLast.  ""abcdef""
+
+""pass a number argument to change the number of characters removed/kept""
+
+s first: 2.  ""ab""  
+s allButFirst: 2.  ""cdefg""
+
+s last: 2.  ""fg""
+s allButLast: 2.  ""abcde""
+```
+
+To get the middle of a string use `SequenceableCollection>>#copyFrom:to:`
+
+```
+s := 'abcdefg'.
+s copyFrom: 2 to: 6. ""bcdef""
+```
+
+To count back from the end of the string use the `size` selector
+```
+s := 'abcdefg'
+s copyFrom: 2 to: s size - 1 
+```
+
+## Formatting
+
+Strings have a `String>>#format:` selector that can be used for interpolating other objects.
+The ""string template"" can either have numbers between curly bracket characters (`{` and `}`)
+where the argument to format is a collection where values are indexed by number. Or pass in
+a `HashedCollection` where the placeholders are the keys of the collection
+```
+'ab {1} ef {2}' format: {'cd'. 'gh'}.  ""ab cd ef gh""
+
+'ab {one} ef {two}' format: 
+    (Dictionary with: #one -> 'cd' with: #two -> 'gh').
+```
+
+`String>>#contractTo:` is also useful for shortening strings to a particular length by replacing 
+middle characters.
+
+## Copying and Streaming
+As well as the `format:` selector it is possible to build up a string using contatenation with
+`SequenceableCollection>>#,` 
+
+```
+a := 'abc'.
+b := ' easy as '.
+c := '123'.
+a , b , c.  ""abc easy as 123""
+```
+Or alternatively, construct a string from a stream using `SequenceableCollection class>>#streamContents:`.
+
+```
+s := String streamContents: [ :stream |
+	  stream nextPutAll: 'abcdefg';
+	  space;
+	  nextPutAll: '123456';
+	  space.
+	  '7890' putOn: stream. ].  ""abcdefg 123456 7890""
+```
+
+## Finding/Searching
+
+Simple reqular expression type searching can be performed using `String>>#match:`, which has similar
+symantics as ""globbing"" in a shell. The reciever is a template string where the `#` character matches any single character and the `*` character matches any number of characters. A `Boolean` object is returned. 
+```
+'#abb*cdch' match: '4abbadskfakjdfadiadfnvcdch'  ""true""
+```
+
+For more complex matching use `String>>#matchesRegex:` which is an extension method implmented by `RxMatcher`. See the help documentation on regular expressions `HelpBrowser openOn: RegexHelp.`
 
 "
 Class {
@@ -71,7 +147,6 @@ String class >> cr [
 	"Answer a string containing a single carriage return character."
 
 	^ self with: Character cr
-
 ]
 
 { #category : #'instance creation' }
@@ -79,13 +154,11 @@ String class >> crlf [
 	"Answer a string containing a carriage return and a linefeed."
 
 	^ self with: Character cr with: Character lf
-
 ]
 
 { #category : #'instance creation' }
 String class >> crlfcrlf [
 	^self crlf , self crlf.
-
 ]
 
 { #category : #'instance creation' }
@@ -137,7 +210,6 @@ String class >> findFirstInString: aString inSet: inclusionMap startingAt: start
 String class >> fromByteArray: aByteArray [
 
 	^ aByteArray asString
-
 ]
 
 { #category : #'instance creation' }
@@ -152,11 +224,9 @@ String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 	start to: aString size do: [ :index |
 		(aString basicAt: index) = anInteger ifTrue: [ ^index ] ].
 	^0
-
-
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 String class >> initialize [   
 	
 	self initializeTypeTable.
@@ -171,10 +241,10 @@ String class >> initialize [
 
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
-	CSNonSeparators := CSSeparators complement.
+	CSNonSeparators := CSSeparators complement
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 String class >> initializeTypeTable [
 
 	| newTable |
@@ -205,7 +275,6 @@ String class >> initializeTypeTable [
 	newTable at: $_ asciiValue put: #xLetter. "by default, do not accept _ as assignement"
 	newTable at: $| asciiValue put: #verticalBar.
 	TypeTable := newTable
-
 ]
 
 { #category : #'instance creation' }
@@ -258,18 +327,18 @@ String class >> new: sizeRequested [
 		ifFalse: [ self basicNew: sizeRequested ]
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newAsciiOrder [
 	^ (0 to: 255) as: ByteArray
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCSLineEnders [
 	"CR and LF--characters that terminate a line"
 	^ CharacterSet crlf
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCaseInsensitiveOrder [
 	"map char and char asLower (Lowercase Latin1 stays in the Latin1 range, uppercase not.)"
 	| newCollection |
@@ -279,10 +348,10 @@ String class >> newCaseInsensitiveOrder [
             char := v asCharacter.
             lower := char asLowercase.
             newCollection at: lower asciiValue + 1 put: (newCollection at: char asciiValue + 1) ].
-	^ newCollection 
+	^ newCollection
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCaseSensitiveOrder [
 	"Case-sensitive compare sorts space, digits, letters, all the rest..."
 	
@@ -298,23 +367,23 @@ String class >> newCaseSensitiveOrder [
 		[:i | (newTab  at: i) = 255 ifTrue:
 			[newTab  at: i put: (order := order+1)]].
 	order = 255 ifFalse: [self error: 'order problem'].
-	^ newTab 
+	^ newTab
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asLowercase])
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newTokenish [
 	"a table for testing tokenish (for fast numArgs)"
 	^ String withAll: (Character allByteCharacters 
 		collect: [:c | c tokenish ifTrue: [ c ] ifFalse: [ $~ ]])
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newUppercasingTable [
 	"a table for translating to upper case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asUppercase])
@@ -347,7 +416,6 @@ String class >> space [
 	"Answer a string containing a single space character."
 
 	^ self with: Character space
-
 ]
 
 { #category : #primitives }
@@ -362,7 +430,6 @@ String class >> stringHash: aString initialHash: speciesHash [
 		hash := (16r260D * low + ((16r260D * (hash // 16384) + (16r0065 * low) bitAnd: 16383) * 16384)) bitAnd: 16r0FFFFFFF.
 	].
 	^ hash
-
 ]
 
 { #category : #'instance creation' }
@@ -370,7 +437,6 @@ String class >> tab [
 	"Answer a string containing a single tab character."
 
 	^ self with: Character tab
-
 ]
 
 { #category : #primitives }
@@ -381,7 +447,6 @@ String class >> translate: aString from: start  to: stop  table: table [
 		(char := aString basicAt: i) < 256 ifTrue: [
 			aString at: i put: (table at: char+1)].
 	]
-
 ]
 
 { #category : #accessing }
@@ -394,7 +459,6 @@ String class >> typeTable [
 String class >> value: anInteger [
 
 	^ self with: (Character value: anInteger)
-
 ]
 
 { #category : #'instance creation' }
@@ -506,7 +570,7 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -557,7 +621,6 @@ String >> asComment [
 
 		str nextPut: $".
 	]
-	
 ]
 
 { #category : #converting }
@@ -579,7 +642,6 @@ String >> asDuration [
  	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
  
  	^ Duration fromString: self
- 
 ]
 
 { #category : #converting }
@@ -598,7 +660,6 @@ String >> asFourCode [
 	(result bitAnd: 16r40000000) = 0 
 		ifFalse: [ ^ result - 16r80000000 ].
 	^ result
-
 ]
 
 { #category : #converting }
@@ -607,7 +668,6 @@ String >> asHTMLString [
 	"'<a>' asHTMLString"
 	^ self species new: self size streamContents: [ :s| 
 		self do: [:c | s nextPutAll: c asHTMLString ]]
-
 ]
 
 { #category : #converting }
@@ -627,7 +687,6 @@ String >> asInteger [
 	"'a' asInteger >>> nil"
 	"'1.234' asInteger >>> 1"
 	^self asSignedInteger
-
 ]
 
 { #category : #converting }
@@ -657,7 +716,6 @@ String >> asPluralBasedOn: aNumberOrCollection [
 		[aNumberOrCollection isCollection and: [aNumberOrCollection size = 1]])
 			ifTrue: [self]
 			ifFalse: [self, 's']
-
 ]
 
 { #category : #converting }
@@ -678,7 +736,6 @@ String >> asString [
 	"Answer this string."
 
 	^ self
-
 ]
 
 { #category : #converting }
@@ -716,8 +773,6 @@ String >> asUncommentedCode [
 				]
 		 ]
 	]
-
-
 ]
 
 { #category : #converting }
@@ -764,7 +819,6 @@ String >> asValidSelector [
 		]
 	)
 ) ifEmpty: [ 'v' ]), ((self isNotEmpty and: [ self last = $: ]) ifTrue: [ ':' ] ifFalse: [ #() ]) )asSymbol
-
 ]
 
 { #category : #converting }
@@ -774,20 +828,50 @@ String >> asWideString [
 ]
 
 { #category : #testing }
-String >> beginsWithEmpty: prefix caseSensitive: aBoolean [ 
-	"Answer whether the receiver begins with the given prefix string. 
-	The comparison is case-sensitive." 
-	| matchTable |
-	prefix isEmpty ifTrue: [ ^ true ].
-	self size < prefix size ifTrue: [ ^ false ].
-	matchTable := aBoolean 
-		ifTrue: [ CaseSensitiveOrder ]
-		ifFalse: [ CaseInsensitiveOrder ].
-	^ (self 
-		findSubstring: prefix
-		in: self
-		startingAt: 1
-		matchTable: matchTable) = 1
+String >> beginsWith: prefix [
+	"Answer whether the receiver begins with the given prefix string.
+	The comparison is case-sensitive."
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self is wide, then super outperforms,
+	Otherwise, if prefix is wide, primitive is not correct"
+	
+	"('pharo' beginsWith: '') >>> false"
+	"('pharo' beginsWith: 'pharo-project') >>> false"
+	"('pharo' beginsWith: 'phuro') >>> false"
+	"('pharo' beginsWith: 'pha') >>> true"
+	
+	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
+	
+	self size < prefix size ifTrue: [^ false].
+	^ (self findSubstring: prefix in: self startingAt: 1 
+			  matchTable: CaseSensitiveOrder) = 1
+]
+
+{ #category : #testing }
+String >> beginsWith: prefix caseSensitive: aBoolean [ 
+	"Answer whether the receiver begins with the given prefix string"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self or prefix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
+	
+	"('pharo' beginsWith: '' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'pharo-project' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'phuro' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'Pha' caseSensitive: false) >>> true"
+
+	aBoolean ifTrue: [ ^self beginsWith: prefix ].
+	self size < prefix size ifTrue: [^ false].
+	(self class isBytes and: [prefix class isBytes]) ifTrue: [
+		"Optimized version based on primitive"
+		^ (self findSubstring: prefix in: self startingAt: 1 matchTable: CaseInsensitiveOrder) = 1 ].
+	prefix withIndexDo: [ :each :index | 
+		(self at: index) asLowercase = each asLowercase ifFalse: [ ^false ]
+	].
+	^true
 ]
 
 { #category : #accessing }
@@ -905,7 +989,6 @@ String >> contractTo: smallSize [
 	^ self copyReplaceFrom: leftSize+1		"First N/2 ... last N/2"
 		to: self size - (smallSize - leftSize - 3)
 		with: '...'
-
 ]
 
 { #category : #copying }
@@ -956,8 +1039,6 @@ String >> copyReplaceAll: oldSubstring with: newSubstring asTokens: ifTokens [
 					ifTrue: [startSearch := currentIndex + 1]
 					ifFalse: [startSearch := currentIndex + newSubstring size]]].
 	^ aString
-
-
 ]
 
 { #category : #copying }
@@ -966,7 +1047,6 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	"('File asFile Files File''s File' copyReplaceTokens: 'File' with: 'Snick') >>> 'Snick asFile Files Snick''s Snick'"
 	
 	^ self copyReplaceAll: oldSubstring with: newSubstring asTokens: true
-	
 ]
 
 { #category : #copying }
@@ -1056,24 +1136,54 @@ String >> displayStringOn: aStream [
 	aStream nextPutAll: self
 ]
 
-{ #category : #printing }
-String >> encodeDoublingQuoteOn: aStream [
-	self deprecated: 'Use #storeOn: instead' transformWith: '`@receiver encodeDoublingQuoteOn: `@argument' -> '`@receiver storeOn: `@argument'.
-	self storeOn: aStream
+{ #category : #testing }
+String >> endsWith: suffix [
+	"Answer whether the receiver ends with the given prefix string.
+	The comparison is case-sensitive."
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self is wide, then super outperforms,
+	Otherwise, if prefix is wide, primitive is not correct"
+	
+	"('pharo' endsWith: '') >>> false"
+	"('pharo' endsWith: 'project-pharo') >>> false"
+	"('pharo' endsWith: 'phuro') >>> false"
+	"('pharo' endsWith: 'aro') >>> true"
+	"('pharo' endsWith: 'aRo') >>> false"
+	
+	| requiredStart |
+	(self class isBytes and: [ suffix class isBytes ]) ifFalse: [^super endsWith: suffix].	
+	requiredStart := self size - suffix size + 1.
+	requiredStart <= 0 ifTrue: [  ^false ].
+	
+	^ (self findSubstring: suffix in: self startingAt: requiredStart
+			  matchTable: CaseSensitiveOrder) = requiredStart
 ]
 
 { #category : #testing }
-String >> endsWith: suffix [
-	"Answer whether the tail end of the receiver is the same as suffix.
-	The comparison is case-sensitive."
- 
-	"('Elvis' endsWith: 'vis') >>> true"
+String >> endsWith: suffix caseSensitive: aBoolean [ 
+	"Answer whether the tail end of the receiver is the same as suffix"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and suffix are bytes like.
+	Otherwise, if self or suffix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
 	
-	| extra |
-	extra := self size - suffix size.
-	^extra < 0 
-		ifTrue: [ false]
-	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
+	"('pharo' endsWith: '' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'project-pharo' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'phuro' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'aRo' caseSensitive: false) >>> true"
+	aBoolean ifTrue: [ ^self endsWith: suffix ].
+	self size < suffix size ifTrue: [^ false].
+	(self class isBytes and: [suffix class isBytes]) ifTrue: [
+		"Optimized version based on primitive"
+		^ (self findSubstring: suffix in: self startingAt: self size - suffix size + 1
+				  matchTable: CaseInsensitiveOrder) = (self size - suffix size + 1) ].
+	suffix withIndexDo: [ :each :index | 
+		(self at: self size - suffix size + index) asLowercase = each asLowercase ifFalse: [ ^false ]
+	].
+	^true
 ]
 
 { #category : #testing }
@@ -1083,7 +1193,6 @@ String >> endsWithAColon [
 	"'displayStringOn:foo' endsWithAColon >>> false"
 	
 	^ self notEmpty and: [ self last == $: ]
-
 ]
 
 { #category : #testing }
@@ -1288,7 +1397,6 @@ String >> findLastOccurrenceOfString: substring startingAt: start [
 		last := self findString: substring startingAt: last + 1].
 
 	^ now
-
 ]
 
 { #category : #converting }
@@ -1626,9 +1734,7 @@ String >> howManyMatch: string [
 	1 to: shorterLength do: [:index |
 		(self at: index) = (string at: index )
 			ifTrue: [ count := count + 1 ]].
-	^  count 
-	
-	
+	^  count
 ]
 
 { #category : #testing }
@@ -1666,7 +1772,6 @@ String >> indexOf: aCharacter [
 		indexOfAscii: aCharacter asciiValue
 		inString: self
 		startingAt: 1.
-
 ]
 
 { #category : #accessing }
@@ -1790,7 +1895,6 @@ String >> isAllSeparators [
 String >> isAsciiString [
 
 	^ self allSatisfy: [ :each | each asciiValue <= 127 ]
-
 ]
 
 { #category : #testing }
@@ -1852,7 +1956,6 @@ String >> isOctetString [
 		(self at: pos) asInteger >= 256 ifTrue: [^ false].
 	].
 	^ true.
-
 ]
 
 { #category : #testing }
@@ -1933,7 +2036,6 @@ String >> lastSpacePosition [
 	self size to: 1 by: -1 do:
 		[:i | ((self at: i) isSeparator) ifTrue: [^ i]].
 	^ 0
-
 ]
 
 { #category : #accessing }
@@ -2321,7 +2423,6 @@ String >> stemAndNumericSuffix [
 		position := position * 10.
 		stem := stem copyFrom: 1 to: stem size - 1].
 	^ Array with: stem with: suffix
-
 ]
 
 { #category : #printing }
@@ -2347,7 +2448,6 @@ String >> string [
 String >> stringhash [
 
 	^ self hash.
-
 ]
 
 { #category : #converting }
@@ -2456,7 +2556,7 @@ String >> trimBoth: aBlock [
 String >> trimLeft [
 	"Trim separators from the left side of the receiving string."
 	
-	^ self trimLeft: [ :char | char isSeparator ] 
+	^ self trimLeft: [ :char | char isSeparator ]
 ]
 
 { #category : #copying }
@@ -2491,8 +2591,6 @@ String >> trimLineSpaces [
 		self lines 
 			do: [ :line | str nextPutAll: line trimRight]
 			separatedBy: [str cr]]
-		
-
 ]
 
 { #category : #copying }
@@ -2638,7 +2736,6 @@ String >> withLineEndings: lineEndingString [
 			]
 		]
 	]
-
 ]
 
 { #category : #converting }

@@ -54,7 +54,7 @@ OSPlatform class >> initialize [
 	self startUp: true.
 ]
 
-{ #category : #private }
+{ #category : #testing }
 OSPlatform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
 	^false
@@ -98,8 +98,7 @@ OSPlatform >> currentWorkingDirectoryPath [
 OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteArray [
 	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
 	
-	^ (self getPwdViaFFI: aByteArray size: aByteArray size) 
-		ifNil:[ self error: 'Insufficient buffer size to read current working directory: ' , aByteArray size asString]
+	^ self primitiveFailed 
 ]
 
 { #category : #accessing }
@@ -137,13 +136,6 @@ OSPlatform >> family [
 	This may need to be extended if there are new platforms added or significant differences within a platform family arise (as was the case between MacOS 9 and X)."
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-OSPlatform >> getPwdViaFFI: arg1 size: arg2 [
-	" This is an virtual method. It is implemented in its sub classes"
-	 ^ self subclassResponsibility 
-
 ]
 
 { #category : #testing }
@@ -224,13 +216,13 @@ OSPlatform >> platformName [
 	^ self name
 ]
 
-{ #category : #initialize }
+{ #category : #'system startup' }
 OSPlatform >> shutDown: quitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
 
 ]
 
-{ #category : #initialize }
+{ #category : #'system startup' }
 OSPlatform >> startUp: resuming [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 

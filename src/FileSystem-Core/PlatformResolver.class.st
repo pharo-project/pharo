@@ -36,7 +36,7 @@ PlatformResolver >> cache [
 
 { #category : #private }
 PlatformResolver >> cantFindOriginError [
-	^ Error signal: 'Can''t find the requested origin' 
+	^ Error signal: 'Can''t find the requested origin'
 ]
 
 { #category : #origins }

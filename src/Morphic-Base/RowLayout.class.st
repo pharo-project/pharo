@@ -11,14 +11,14 @@ Class {
 	#category : #'Morphic-Base-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 RowLayout >> flushLayoutCache [
 	"Flush any cached information associated with the receiver."
 	
 	cachedMinExtent := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 RowLayout >> layout: aMorph in: layoutBounds [
 	"Compute the layout for the given morph based on the new bounds.
 	Supports submorph hResizing, vResizing, cellInset, cellPositioning
@@ -74,7 +74,7 @@ RowLayout >> layout: aMorph in: layoutBounds [
 		x := x + width + inset]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 RowLayout >> minExtentOf: aMorph in: newBounds [
 	"Return the minimal size aMorph's children would require given the new bounds"
 	

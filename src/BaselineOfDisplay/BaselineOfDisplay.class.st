@@ -65,7 +65,6 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	display := (Smalltalk classNamed: #DisplayScreen) new.
 	display setExtent: 0@0 depth: 2.
 	Smalltalk globals at: #Display put: display.
-	display beDisplay.
 
 	Cursor webLink. "set the webLink cursor shape"
 					

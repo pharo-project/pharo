@@ -13,7 +13,6 @@ Class {
 { #category : #'archive operations' }
 Archive >> addDirectory: aFileReference [
 	^self addDirectory: aFileReference as: aFileReference path pathString
-
 ]
 
 { #category : #'archive operations' }
@@ -64,14 +63,12 @@ Archive >> addTree: aFileReference relativeTo: relativePath match: aBlock [
 			entry isDirectory 
 				ifTrue: [ self addTree: entry asFileReference relativeTo: relativePath match: aBlock ].
 	]
-
 ]
 
 { #category : #'archive operations' }
 Archive >> canWriteToFile: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
 	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not.
-
 ]
 
 { #category : #'archive operations' }
@@ -198,5 +195,5 @@ Archive >> writeToFile: aFileReferenceOrFileName [
 		ifFalse: [ ^self error: (aFileReferenceOrFileName asString, ' is needed by one or more members in this archive') ].
 	
 	aFileReferenceOrFileName asFileReference
-		binaryWriteStreamDo: [ :stream | self writeTo: stream ]	
+		binaryWriteStreamDo: [ :stream | self writeTo: stream ]
 ]

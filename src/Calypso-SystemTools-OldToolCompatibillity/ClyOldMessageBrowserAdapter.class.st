@@ -69,14 +69,12 @@ ClyOldMessageBrowserAdapter class >> browseClasses: classes [
 
 { #category : #opening }
 ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol [ 
-	^ClyQueryBrowserMorph browseImplementorsOf: aSymbol 
-
+	^ClyQueryBrowserMorph browseImplementorsOf: aSymbol
 ]
 
 { #category : #opening }
 ClyOldMessageBrowserAdapter class >> browseSendersOf: aSymbol [ 
-	^ClyQueryBrowserMorph browseSendersOf: aSymbol 
-
+	^ClyQueryBrowserMorph browseSendersOf: aSymbol
 ]
 
 { #category : #'tools registration' }

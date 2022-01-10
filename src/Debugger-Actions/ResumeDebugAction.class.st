@@ -44,7 +44,7 @@ ResumeDebugAction >> executeAction [
 	self session 
 		resume;
 		clear.
-	self debugger close. 
+	self debugger close.
 ]
 
 { #category : #accessing }
@@ -63,11 +63,11 @@ ResumeDebugAction >> initialize [
 
 	super initialize.
 	"No need to update the debgger as it will anyway be closed."
-	self needsUpdate: false 
+	self needsUpdate: false
 ]
 
 { #category : #private }
 ResumeDebugAction >> interruptedContextIsPostMortem [
 
-	^ (self session isContextPostMortem: self interruptedContext) 
+	^ (self session isContextPostMortem: self interruptedContext)
 ]

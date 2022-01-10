@@ -76,7 +76,7 @@ OCCompiledMethodIntegrityTest >> testPrimitive [
 
 { #category : #tests }
 OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
-	| newCompiledMethod expectedLiterals |
+	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
 		source:
 			'value
@@ -88,11 +88,8 @@ OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 		class: Object;
 		compile.
 
-	"In FullBlockClosure the block is another literal of the method"
-	expectedLiterals := (CompilationContext optionFullBlockClosure) ifTrue: [ 3 ] ifFalse: [ 2 ].
-
 	self assert: newCompiledMethod numArgs equals: 0.
-	self assert: newCompiledMethod numLiterals equals: expectedLiterals.
+	self assert: newCompiledMethod numLiterals equals: 3.
 	self assert: newCompiledMethod numTemps equals: 1.
 	self assert: newCompiledMethod primitive equals: 0
 ]

@@ -29,8 +29,6 @@ ClyActivityAnimationIconMorph class >> label: aString [
 ClyActivityAnimationIconMorph >> addLabel: aStringOrMorph [
 
 	self addMorphBack: aStringOrMorph asMorph
-
-	
 ]
 
 { #category : #accessing }

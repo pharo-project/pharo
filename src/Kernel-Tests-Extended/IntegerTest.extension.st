@@ -103,8 +103,6 @@ IntegerTest >> testDigitsAccess [
 	self assert: (256 lastDigit) equals: 1.
 	self assert: ((256*256-1) lastDigit) equals: 255.
 	self assert: ((256*256) lastDigit) equals: 1.
-
-	
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

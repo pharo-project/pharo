@@ -25,7 +25,7 @@ Class {
 	#category : #'Morphic-Core-Worlds'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 PasteUpMorph class >> initialize [
 	ShouldSwapMenuOpenerButtons := false.
 	self shouldShowWorldMenu: true
@@ -67,7 +67,7 @@ PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
 
 { #category : #accessing }
 PasteUpMorph class >> shouldSwapMenuOpenerButtons [
-	^ ShouldSwapMenuOpenerButtons 
+	^ ShouldSwapMenuOpenerButtons
 ]
 
 { #category : #accessing }
@@ -112,14 +112,12 @@ PasteUpMorph >> addMorph: aMorph centeredNear: aPoint [
 	delta := trialRect amountToTranslateWithin: bounds.
 	aMorph position: trialRect origin + delta.
 	self addMorph: aMorph.
-
 ]
 
 { #category : #'submorphs - add/remove' }
 PasteUpMorph >> addMorphFront: aMorph [
 
 	^self addMorphInFrontOfLayer: aMorph
-
 ]
 
 { #category : #'wiw support' }
@@ -144,7 +142,6 @@ PasteUpMorph >> addWorldHaloMenuItemsTo: aMenu hand: aHandMorph [
 
 	aMenu addLine.
 	aMenu defaultTarget: aHandMorph.
-
 ]
 
 { #category : #'menu & halo' }
@@ -337,13 +334,11 @@ PasteUpMorph >> defaultColor [
 PasteUpMorph >> defersHaloOnClickTo: aSubMorph [
 	"If a cmd-click on aSubMorph would make it a preferred recipient of the halo, answer true"
 	^ true
-	
 ]
 
 { #category : #'world menu' }
 PasteUpMorph >> discoveredWorldMenu [
 	^ owner discoveredWorldMenu
-
 ]
 
 { #category : #'world menu' }
@@ -358,7 +353,6 @@ PasteUpMorph >> dispatchCommandKeyInWorld: aChar event: evt [
 		ifFalse:
 			[aMessageSend valueWithArguments: (Array with: evt)].
 	^ true
-
 ]
 
 { #category : #'menu & halo' }
@@ -427,7 +421,6 @@ PasteUpMorph >> dropEnabled [
 	"Get this morph's ability to add and remove morphs via drag-n-drop."
 
 	^ (self valueOfProperty: #dropEnabled) ~~ false
-
 ]
 
 { #category : #'event handling' }
@@ -492,11 +485,8 @@ PasteUpMorph >> flashRects: rectangleList color: aColor [
 	rectangleList do: [:r | | screenRect |
 		screenRect := r translateBy: self viewBox origin.
 		blt destRect: screenRect; copyBits.
-		Display forceToScreen: screenRect; forceDisplayUpdate.
 		(Delay forMilliseconds: 15) wait.
-		blt destRect: screenRect; copyBits.
-		Display forceToScreen: screenRect; forceDisplayUpdate].
-
+		blt destRect: screenRect; copyBits ].
 ]
 
 { #category : #drawing }
@@ -512,7 +502,6 @@ PasteUpMorph >> gridFormOrigin: origin grid: smallGrid background: backColor lin
 	gridOrigin y to: gridForm height by: smallGrid y do:
 		[:y | gridForm fill: (0@y extent: gridForm width@1) fillColor: lineColor].
 	^ InfiniteForm with: gridForm
-
 ]
 
 { #category : #gridding }
@@ -637,8 +626,6 @@ PasteUpMorph >> initializeDesktopCommandKeySelectors [
 			dict at: trip first put: messageSend].
 	self setProperty: #commandKeySelectors toValue: dict.
 	^ dict
-
-
 ]
 
 { #category : #'world menu' }
@@ -731,7 +718,7 @@ PasteUpMorph >> modalWindow: aMorph [
 PasteUpMorph >> morphToDropFrom: aMorph [ 
 	"Given a morph being carried by the hand, which the hand is about to drop, answer the actual morph to be deposited.  Normally this would be just the morph itself, but several unusual cases arise, which this method is designed to service."
 
-	^aMorph 
+	^aMorph
 ]
 
 { #category : #'event handling' }
@@ -809,8 +796,6 @@ PasteUpMorph >> nonWindows [
 PasteUpMorph >> osWindow [
 	
 	^ nil
-	
-
 ]
 
 { #category : #'menu & halo' }
@@ -843,14 +828,12 @@ PasteUpMorph >> positionNear: aPoint forExtent: anExtent adjustmentSuggestion: a
 PasteUpMorph >> privateRemoveMorph: aMorph [
 	backgroundMorph == aMorph ifTrue: [ backgroundMorph := nil ].
 	^super privateRemoveMorph: aMorph.
-
 ]
 
 { #category : #caching }
 PasteUpMorph >> releaseCachedState [
 	super releaseCachedState.
 	self removeModalWindow.
-
 ]
 
 { #category : #accessing }
@@ -924,8 +907,6 @@ PasteUpMorph >> setGridSpec [
 	(result isPoint and: [(result > (0@0)) ])
 		ifTrue: [self gridModulus: result]
 		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )].
-
-
 ]
 
 { #category : #'wiw support' }
@@ -942,8 +923,6 @@ PasteUpMorph >> startSteppingSubmorphsOf: aMorph [
 	aMorph allMorphsDo: [:m |
 		m wantsSteps ifTrue: [m arrangeToStartSteppingIn: m world].
 	]
-
-
 ]
 
 { #category : #options }
@@ -966,8 +945,6 @@ PasteUpMorph >> viewBox: newViewBox [
 
 	super position: newViewBox topLeft.
 	fullBounds := bounds := newViewBox.
-
-	
 ]
 
 { #category : #'dropping/grabbing' }
@@ -981,14 +958,12 @@ PasteUpMorph >> wantsDroppedMorph: aMorph event: evt [
 { #category : #'event handling' }
 PasteUpMorph >> wantsEasySelection [
 	"Answer if the receiver want easy selection mode"
-	^ self isEasySelecting 
+	^ self isEasySelecting
 ]
 
 { #category : #'halos and balloon help' }
 PasteUpMorph >> wantsHaloFromClick [
 	 ^owner isSystemWindow not
-
-
 ]
 
 { #category : #'event handling' }
@@ -1024,7 +999,6 @@ PasteUpMorph >> windowEventHandler [
 PasteUpMorph >> windowEventHandler: anObject [
 	"This is a class variable so it is global to all projects and does not get saved"
 	WindowEventHandler := anObject
-
 ]
 
 { #category : #accessing }
@@ -1037,12 +1011,10 @@ PasteUpMorph >> windowsSatisfying: windowBlock [
 			(windowBlock value: m) 
 				ifTrue: [ windows addLast: m ] ] ].
 		
-	^ windows.		
-		
+	^ windows.
 ]
 
 { #category : #'world menu' }
 PasteUpMorph >> worldMenu [
 	^ owner worldMenu
-	
 ]

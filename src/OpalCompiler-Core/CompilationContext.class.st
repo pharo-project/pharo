@@ -37,7 +37,6 @@ Class {
 		'compiledMethodClass'
 	],
 	#classVars : [
-		'BytecodeBackend',
 		'DefaultOptions',
 		'DefaultTransformationPlugins'
 	],
@@ -47,19 +46,6 @@ Class {
 { #category : #adding }
 CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
 	self defaultTransformationPlugins add: aPlugin
-]
-
-{ #category : #accessing }
-CompilationContext class >> bytecodeBackend [
-	^ BytecodeBackend ifNil: [ self initialize. BytecodeBackend ]
-]
-
-{ #category : #accessing }
-CompilationContext class >> bytecodeBackend: bytecodeSet [
-	((self defaultOptions includes: #optionFullBlockClosure)
-		and: [ bytecodeSet ~= EncoderForSistaV1 ]) ifTrue: [ 
-			^ self notify: 'Operation aborted. Bytecode set incompatible with FullBlockClosure option.' ].
-	BytecodeBackend := bytecodeSet
 ]
 
 { #category : #options }
@@ -122,8 +108,7 @@ CompilationContext class >> fallBackDefaultOptions [
 { #category : #'class initialization' }
 CompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
-	DefaultTransformationPlugins := OrderedCollection new.
-	BytecodeBackend := EncoderForSistaV1.
+	DefaultTransformationPlugins := OrderedCollection new
 ]
 
 { #category : #'options - settings API' }
@@ -144,19 +129,6 @@ CompilationContext class >> optionEmbeddSources [
 { #category : #'options - settings API' }
 CompilationContext class >> optionEmbeddSources: aBoolean [
 	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionFullBlockClosure [
-	^ self readDefaultOption: #optionFullBlockClosure
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionFullBlockClosure: aBoolean [
-	aBoolean ifTrue: [
-		BytecodeBackend = EncoderForSistaV1 ifFalse: [ 
-			^ self notify: 'Operation aborted. FullBlockClosure requires SistaV1 bytecode set.' ] ].
-	^ self writeDefaultOption: #optionFullBlockClosure value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -290,16 +262,6 @@ CompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionReadOnlyLiterals [
-	^ self readDefaultOption: #optionReadOnlyLiterals
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionReadOnlyLiterals: aBoolean [
-	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
-]
-
-{ #category : #'options - settings API' }
 CompilationContext class >> optionSkipSemanticWarnings [
 	^ self readDefaultOption: #optionSkipSemanticWarnings
 ]
@@ -328,9 +290,6 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
-	
-	(+ optionReadOnlyLiterals 			'Compiler sets some literals as read-only')
-	(+ optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
@@ -338,7 +297,7 @@ CompilationContext class >> optionsDescription [
 	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
 	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
 		
-	) 
+	)
 ]
 
 { #category : #'options - settings API' }
@@ -449,7 +408,7 @@ CompilationContext >> compilerOptions: anArray [
 
 { #category : #accessing }
 CompilationContext >> encoderClass [
-	^ encoderClass ifNil: [ encoderClass := self class bytecodeBackend ]
+	^ encoderClass ifNil: [ encoderClass := EncoderForSistaV1 ]
 ]
 
 { #category : #accessing }
@@ -521,85 +480,66 @@ CompilationContext >> noPattern: anObject [
 { #category : #options }
 CompilationContext >> optionCleanBlockClosure [
 	^ options includes: #optionCleanBlockClosure
-
 ]
 
 { #category : #options }
 CompilationContext >> optionEmbeddSources [
 	^ options includes: #optionEmbeddSources
-
-]
-
-{ #category : #options }
-CompilationContext >> optionFullBlockClosure [
-	^ options includes: #optionFullBlockClosure
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineAndOr [
 	^ options includes: #optionInlineAndOr
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineCase [
 	^ options includes: #optionInlineCase
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIf [
 	^ options includes: #optionInlineIf
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIfNil [
 	^ options includes: #optionInlineIfNil
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineNone [
 	^ options includes: #optionInlineNone
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineRepeat [
 	^ options includes: #optionInlineRepeat
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineTimesRepeat [
 	^ options includes: #optionInlineTimesRepeat
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineToDo [
 	^ options includes: #optionInlineToDo
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineWhile [
 	^ options includes: #optionInlineWhile
-
 ]
 
 { #category : #options }
 CompilationContext >> optionLongIvarAccessBytecodes [
 	^ options includes: #optionLongIvarAccessBytecodes
-
 ]
 
 { #category : #options }
 CompilationContext >> optionOptimizeIR [
 	^ options includes: #optionOptimizeIR
-
 ]
 
 { #category : #options }
@@ -610,12 +550,6 @@ CompilationContext >> optionParseErrors [
 { #category : #options }
 CompilationContext >> optionParseErrorsNonInteractiveOnly [
 	^ options includes: #optionParseErrorsNonInteractiveOnly
-]
-
-{ #category : #options }
-CompilationContext >> optionReadOnlyLiterals [
-	^ options includes: #optionReadOnlyLiterals
-
 ]
 
 { #category : #options }

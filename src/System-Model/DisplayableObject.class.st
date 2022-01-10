@@ -11,12 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-DisplayableObject >> iconNamed: aSymbol [
-	"May be this method should not be managed by a presenter and not DisplayableObject"
-	^ Smalltalk ui icons iconNamed: aSymbol
-]
-
-{ #category : #accessing }
 DisplayableObject >> theme [
 	
 	^ Smalltalk ui theme

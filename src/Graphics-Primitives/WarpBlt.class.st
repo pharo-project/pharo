@@ -260,7 +260,6 @@ WarpBlt >> warpBits [
 
 	self warpBitsSmoothing: cellSize
 		sourceMap: (sourceForm colormapIfNeededForDepth: 32).
-
 ]
 
 { #category : #primitives }

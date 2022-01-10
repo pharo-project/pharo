@@ -70,7 +70,6 @@ Class >> fileOutSharedPoolsOn: aFileStream [
 	poolsToFileOut := self sharedPools select: 
 		[:aPool | (self shouldFileOutPool: (self environment keyAtIdentityValue: aPool))].
 	poolsToFileOut do: [:aPool | self fileOutPool: aPool onFileStream: aFileStream].
-	
 ]
 
 { #category : #'*CodeExport' }

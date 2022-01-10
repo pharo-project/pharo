@@ -4,13 +4,13 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBackendTest >> backendClass [
 
 	^ RGEnvironmentBackend  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBackendTest >> testDefaultContentFor: anRGEnvironment [
 
 "	| names defaultNames kernelPackage |

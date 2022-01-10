@@ -67,7 +67,6 @@ TableLayoutProperties >> initialize [
 	reverseTableCells := rubberBandCells := false.
 	layoutInset := cellInset := minCellSize := 0.
 	maxCellSize := 1073741823. "SmallInteger maxVal"
-
 ]
 
 { #category : #'table defaults' }

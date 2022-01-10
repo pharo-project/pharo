@@ -56,10 +56,10 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
-
+ 
 	"ideally this list should be empty"	
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-Common-Widgets')
+	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
 ]
 
 { #category : #'known dependencies' }
@@ -83,7 +83,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	^ #('Spec2-Common-Widgets')
+	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits')
 ]
 
 { #category : #'known dependencies' }
@@ -99,7 +99,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
+	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -148,7 +148,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-Common-Widgets') 
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets') 
 ]
 
 { #category : #utilities }
@@ -191,7 +191,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	| dependencies | 
 	
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -199,6 +199,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
+		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
+		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
@@ -210,7 +212,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core),
-		{ BaselineOfFuelPlatform name }, BaselineOfFuelPlatform allPackageNames ).
+		{ BaselineOfFuelPlatform name }, BaselineOfFuelPlatform allPackageNames,
+		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -310,6 +313,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfHeuristicCompletion.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
+	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
+	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).
 	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
 	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'Methods' on: BaselineOfNewTools ).
@@ -420,7 +425,8 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
-		BaselineOfMorphicCore allPackageNames ).
+		BaselineOfMorphicCore allPackageNames,
+		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicCoreDependencies.
 ]
@@ -439,11 +445,14 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #morphic),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
-		BaselineOfFuelPlatform allPackageNames ).
+		BaselineOfFuelPlatform allPackageNames,
+		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -498,6 +507,8 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		"Morphic - for Morphic backend"
 		BaselineOfDisplay allPackageNames,
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
@@ -508,6 +519,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
+		BaselineOfThreadedFFI corePackageNames,
 	
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
@@ -529,7 +541,8 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,				
 		BaselineOfSUnit defaultPackageNames,
-		BaselineOfUnifiedFFI allPackageNames).
+		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfThreadedFFI corePackageNames).
 	
 	self assertCollection: dependencies hasSameElements: self knownUFFIDependencies.
 ]
@@ -549,6 +562,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
@@ -559,7 +574,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
-		BaselineOfFuelPlatform allPackageNames )).
+		BaselineOfFuelPlatform allPackageNames,
+		BaselineOfThreadedFFI corePackageNames )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]

@@ -28,7 +28,6 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [
 	"Test that wide strings survive"
 	
 	self testEmbeddingSourceCode: 'doit ^''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'' '.
-	
 ]
 
 { #category : #tests }
@@ -89,5 +88,4 @@ CompiledMethodTrailerTest >> testEncodingZeroSourcePointer [
 	trailer := CompiledMethodTrailer new.
 
 	self assert: (trailer sourcePointer: 0) testEncoding sourcePointer equals: 0
-	
 ]

@@ -21,7 +21,6 @@ EpLogNode >> initialize [
 	super initialize.
 	
 	referencedNodes := Set new.
-
 ]
 
 { #category : #testing }
@@ -42,14 +41,19 @@ EpLogNode >> modificationTime [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+EpLogNode >> modificationTimeString [
+
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 EpLogNode >> populateReferencedNodesWith: nodes [
 
 	self referencedGlobalNames do: [ :referencedGlobalName |
 		nodes
 			detect: [:each | each globalName = referencedGlobalName ]
-			ifFound: [ :referencedNode | referencedNodes add: referencedNode ] ] 
-
+			ifFound: [ :referencedNode | referencedNodes add: referencedNode ] ]
 ]
 
 { #category : #accessing }
@@ -77,4 +81,10 @@ EpLogNode >> referencedNodes [
 	"Answer the referenced nodes, that were populated previously by #populateReferencedNodesWith:"
 	
 	^ referencedNodes
+]
+
+{ #category : #accessing }
+EpLogNode >> smallName [
+
+	^ self globalName contractTo: 25
 ]

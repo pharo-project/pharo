@@ -135,8 +135,6 @@ ArrayedCollection class >> with: anObject withAll: aCollection [
 		to: newArray size
 		with: aCollection.
 	^newArray
-	
-
 ]
 
 { #category : #'instance creation' }
@@ -154,7 +152,6 @@ ArrayedCollection >> add: newObject [
 { #category : #accessing }
 ArrayedCollection >> byteSize [
 	^self basicSize * self bytesPerBasicElement
-
 ]
 
 { #category : #'objects from disk' }

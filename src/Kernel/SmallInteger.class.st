@@ -27,7 +27,7 @@ SmallInteger class >> guideToDivision [
 	quo:  truncated division, rounded towards zero."
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 SmallInteger class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
@@ -107,7 +107,16 @@ SmallInteger >> / aNumber [
 
 	<primitive: 10>
 	aNumber = 0 ifTrue: [^(ZeroDivide dividend: self) signal].
-	^super / aNumber
+
+	"This ugly type checking is needed because the implementation in the superclass assumes that the argument is a LargeInteger.
+	So, it is using a primitive message that is only in LargeInteger. 
+	Using the implementation in the superclass when we have a SmallInteger will fail the primitive and use the slow code.
+	At the end it is creating the same Fraction that is done here.
+	These duplication has to be avoided by correctly implementing the decision by using double dispatch."
+
+	^(aNumber isMemberOf: SmallInteger)
+		ifTrue: [(Fraction numerator: self denominator: aNumber) reduced]
+		ifFalse: [super / aNumber]
 ]
 
 { #category : #arithmetic }
@@ -473,7 +482,7 @@ SmallInteger >> identityHash [
 
 { #category : #testing }
 SmallInteger >> isImmediateObject [
-	"This is needed for the boostrap"
+	"This is needed for the bootstrap"
 	^ true
 ]
 
@@ -510,14 +519,14 @@ SmallInteger >> nextInstance [
 	(SmallInteger minVal) to: (SmallInteger maxVal) do: [:integer | <your code here>].
 	"
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #'system primitives' }
 SmallInteger >> nextObject [
 	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #printing }
@@ -544,7 +553,6 @@ SmallInteger >> odd [
 SmallInteger >> pointsTo: anObject [
 	"Answers true if I hold a reference to anObject, or false otherwise. But since SmallIntegers do not have pointers, it always answers false"
 	^false
-
 ]
 
 { #category : #printing }

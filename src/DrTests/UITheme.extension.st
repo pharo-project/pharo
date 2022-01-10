@@ -3,7 +3,7 @@ Extension { #name : #UITheme }
 { #category : #'*DrTests' }
 UITheme >> testColorError [
 	"Should be in SUnit-Core extention methods, but Sunit is used in the bootstrap."
-	^ Color red darker darker 
+	^ Color red darker darker
 ]
 
 { #category : #'*DrTests' }

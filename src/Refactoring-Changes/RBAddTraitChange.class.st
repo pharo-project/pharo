@@ -9,11 +9,12 @@ Class {
 	#instVars : [
 		'category'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Classes'
 }
 
 { #category : #private }
 RBAddTraitChange class >> definitionPatterns [
+
 	^ #('Trait named: `#traitName uses: `@traitComposition package: `#package' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition package: `#package'
 	
  'Trait named: `#traitName uses: `@traitComposition instanceVariableNamed: `@instanceVars package: `#package'
@@ -31,25 +32,29 @@ RBAddTraitChange class >> definitionPatterns [
 
 { #category : #converting }
 RBAddTraitChange >> asUndoOperation [
+
 	| trait |
 	trait := onSystemDictionary classOrTraitNamed: self changeClassName.
 	^ trait isTrait
-		ifTrue: [ changeFactory addTraitDefinition: trait oldDefinition ]
-		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
+		  ifTrue: [ changeFactory addTraitDefinition: trait oldDefinition ]
+		  ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
 { #category : #accessing }
 RBAddTraitChange >> category [
+
 	^ category
 ]
 
 { #category : #private }
 RBAddTraitChange >> definitionClass [
+
 	^ Trait
 ]
 
 { #category : #initialization }
 RBAddTraitChange >> fillOutDefinition: aDictionary [
+
 	className := (aDictionary at: '`#traitName') asSymbol.
 	category := (aDictionary at: '`#package' ifAbsent: [ #Unclassified ]) asSymbol
 ]

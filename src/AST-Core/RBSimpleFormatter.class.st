@@ -45,7 +45,6 @@ RBSimpleFormatter class >> formatAsYouReadPolicy: anObject [
 RBSimpleFormatter class >> initialize [
   "self initialize"
   FormatAsYouReadPolicy := false.
- 
 ]
 
 { #category : #private }
@@ -70,7 +69,7 @@ RBSimpleFormatter >> bracketWith: bracketString around: aBlock [
 		ifTrue: [ ^ aBlock value ].
 	codeStream nextPut: bracketString first.
 	^ aBlock
-		ensure: [ codeStream nextPut: bracketString last ] 
+		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
 { #category : #accessing }
@@ -106,8 +105,6 @@ RBSimpleFormatter >> formatBlock: aBlockNode [
 		space;
 		visitNode: aBlockNode body;
 		space
-
-
 ]
 
 { #category : #'private - formatting' }
@@ -283,7 +280,6 @@ RBSimpleFormatter >> initialize [
 	lineStart := 0.
 	self indent: 0.
 	codeStream := (String new: 256) writeStream
-	
 ]
 
 { #category : #accessing }
@@ -402,7 +398,6 @@ RBSimpleFormatter >> visitBlockNode: aBlockNode [
 	self
 		bracketWith: '[]'
 		around: [ self formatBlock: aBlockNode ]
-	
 ]
 
 { #category : #visiting }

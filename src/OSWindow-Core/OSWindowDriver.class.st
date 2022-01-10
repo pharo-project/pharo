@@ -109,6 +109,10 @@ OSWindowDriver class >> shutDown: quitting [
 ]
 
 { #category : #events }
+OSWindowDriver >> afterMainPharoWindowCreated: aWindow [
+]
+
+{ #category : #events }
 OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 ]
 

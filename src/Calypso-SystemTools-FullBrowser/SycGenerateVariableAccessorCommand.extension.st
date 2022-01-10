@@ -4,5 +4,5 @@ Extension { #name : #SycGenerateVariableAccessorCommand }
 SycGenerateVariableAccessorCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserVariableContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserVariableContext
 ]

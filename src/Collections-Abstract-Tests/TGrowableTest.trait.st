@@ -9,7 +9,7 @@ Trait {
 { #category : #requirements }
 TGrowableTest >> element [
 
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #requirements }

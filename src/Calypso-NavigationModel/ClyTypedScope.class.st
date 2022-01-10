@@ -159,7 +159,7 @@ ClyTypedScope >> restrictedBy: aScope [
 
 { #category : #testing }
 ClyTypedScope >> supportsQuery: aQuery [
-	^aQuery isKindOf: ClyTypedQuery 
+	^aQuery isKindOf: ClyTypedQuery
 ]
 
 { #category : #converting }

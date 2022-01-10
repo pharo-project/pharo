@@ -22,7 +22,7 @@ Class {
 { #category : #'instance creation' }
 ClyClassScriptProperty class >> script: aClassScript [
 	^self new 
-		script: aClassScript 
+		script: aClassScript
 ]
 
 { #category : #accessing }

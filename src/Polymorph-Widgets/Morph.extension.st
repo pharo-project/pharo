@@ -63,7 +63,7 @@ Morph >> focusIndicatorCornerRadius [
 	"Answer the corner radius preferred for the focus indicator
 	for the receiver for themes that support this."
 
-	^self theme focusIndicatorCornerRadiusFor: self 
+	^self theme focusIndicatorCornerRadiusFor: self
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -176,7 +176,6 @@ Morph >> navigateFocusBackward [
 
 	self previousMorphWantingFocus ifNotNil: [:m |
 		m takeKeyboardFocus]
-	
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -185,7 +184,6 @@ Morph >> navigateFocusForward [
 
 	self nextMorphWantingFocus ifNotNil: [:m |
 		m takeKeyboardFocus]
-	
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -193,8 +191,6 @@ Morph >> navigationKey: event [
 	"Check for tab key activity and change focus as appropriate.
 	Check for menu key to do popup."
 	
-	event isUserInterrupt ifTrue: [ ^ true ].
-
 	(event key = KeyboardKey escape and: [
 			event anyModifierKeyPressed]) ifTrue: [
 		^ self yellowButtonActivity: false ].

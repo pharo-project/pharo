@@ -70,5 +70,4 @@ InterpolatedGradientFillStyle >> pixelWord32Of: aColor [
 	val = 0 ifTrue: [val at: 1 put: 1].  "closest non-transparent black"
 	val at: 4 put: self alpha.  "opaque alpha"
 	^val
-
 ]

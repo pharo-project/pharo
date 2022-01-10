@@ -23,17 +23,7 @@ WeakSubscriptionBuilder class >> on: announcer [
 
 { #category : #initialization }
 WeakSubscriptionBuilder >> announcer: anAnnouncer [
-	announcer := anAnnouncer 
-]
-
-{ #category : #'wrapped protocol' }
-WeakSubscriptionBuilder >> subscribe: anAnnouncementClass send: aSelector to: anObject [
-
-	self
-		deprecated: 'Please use #when:send:to: instead'
-		transformWith: '`@receiver subscribe: `@statements1 send: `@statements2 to: `@anObject' 
-						-> '`@receiver when: `@statements1 send: `@statements2 to: `@anObject'.
-	^ self when: anAnnouncementClass send: aSelector to: anObject
+	announcer := anAnnouncer
 ]
 
 { #category : #'wrapped protocol' }

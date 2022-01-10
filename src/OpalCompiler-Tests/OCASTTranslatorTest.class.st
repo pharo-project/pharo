@@ -6,7 +6,6 @@ Class {
 		'method',
 		'globals',
 		'encoder',
-		'fullblocks',
 		'optimization'
 	],
 	#category : #'OpalCompiler-Tests-AST'
@@ -16,9 +15,8 @@ Class {
 OCASTTranslatorTest class >> testParameters [
 
 	^ super testParameters
-		addCase: { #encoder -> EncoderForSistaV1. #fullblocks -> true };
+		addCase: { #encoder -> EncoderForSistaV1 };
 		yourself
-
 ]
 
 { #category : #accessing }
@@ -30,7 +28,6 @@ OCASTTranslatorTest >> compilationContext [
 		bindings: globals;
 		interactive: true;
 		yourself.
-	fullblocks ifTrue: [ context setOptions: { #optionFullBlockClosure . optimization } ].
 	^ context
 ]
 
@@ -86,16 +83,6 @@ OCASTTranslatorTest >> executeMethodOnInstance: aMethod [
 ]
 
 { #category : #accessing }
-OCASTTranslatorTest >> fullblocks [
-	^ fullblocks
-]
-
-{ #category : #accessing }
-OCASTTranslatorTest >> fullblocks: anObject [
-	fullblocks := anObject
-]
-
-{ #category : #accessing }
 OCASTTranslatorTest >> globals [
 	^ globals
 ]
@@ -103,13 +90,6 @@ OCASTTranslatorTest >> globals [
 { #category : #accessing }
 OCASTTranslatorTest >> globals: anObject [
 	globals := anObject
-]
-
-{ #category : #initialization }
-OCASTTranslatorTest >> initialize [
-
-	super initialize.
-	fullblocks := false.
 ]
 
 { #category : #accessing }
@@ -179,7 +159,6 @@ OCASTTranslatorTest >> testExample: aSelector withArgument: anArgument [
 OCASTTranslatorTest >> testExample: aSelector withArguments: arguments [
 
 	^ self testSource: ((OCOpalExamples>> aSelector) sourceCode) withArguments: arguments
-
 ]
 
 { #category : #'tests - primitives' }

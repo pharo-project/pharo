@@ -40,7 +40,6 @@ CairoPNGPaint >> asAthensPaintOn: anAthensCanvas [
 	].
 	
 	^ surface asAthensPaintOn: anAthensCanvas.
- 
 ]
 
 { #category : #initialization }

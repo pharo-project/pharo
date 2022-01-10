@@ -14,11 +14,6 @@ Class {
 	#category : #'FileSystem-Tests-Core-Base'
 }
 
-{ #category : #accessing }
-FileSystemTest class >> defaultTimeLimit [
-	^10 seconds
-]
-
 { #category : #testing }
 FileSystemTest class >> isAbstract [
 	^ self name = #FileSystemTest
@@ -32,12 +27,11 @@ FileSystemTest class >> packageNamesUnderTest [
 { #category : #testing }
 FileSystemTest class >> shouldInheritSelectors [
 	^ true
-	
 ]
 
 { #category : #initialization }
 FileSystemTest >> createFileSystem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -57,7 +51,7 @@ FileSystemTest >> tearDown [
 	toDelete
 		select: [ :path | filesystem exists: path ]
 		thenDo: [ :path | filesystem delete: path ].
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #'tests - streams compatibility' }
@@ -271,11 +265,6 @@ FileSystemTest >> testCreateDirectoryExists [
 	self 
 		should: [filesystem createDirectory: path]
 		raise: DirectoryExists.
-		
-
-	
-	
-
 ]
 
 { #category : #tests }
@@ -285,9 +274,6 @@ FileSystemTest >> testCreateDirectoryNoParent [
 	self 
 		should: [filesystem createDirectory: path]
 		raise: DirectoryDoesNotExist.
-	
-	
-
 ]
 
 { #category : #tests }
@@ -338,8 +324,6 @@ FileSystemTest >> testDelete [
 	reference delete.
 	
 	self deny: reference exists
-		
-
 ]
 
 { #category : #tests }
@@ -466,7 +450,6 @@ FileSystemTest >> testEntryAt [
 
 	self assert: entry1 creationTime < entry2 creationTime.
 	self assert: entry1 modificationTime < entry2 modificationTime.
-
 ]
 
 { #category : #tests }

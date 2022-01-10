@@ -48,27 +48,24 @@ Margin class >> fromRectangle: aRectangle [
 { #category : #'instance creation' }
 Margin class >> left: leftNumber right: rightNumber top: topNumber  bottom: bottomNumber [ 
 
-	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
-
+	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber
 ]
 
 { #category : #'instance creation' }
 Margin class >> left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber [ 
 
-	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
-
+	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber
 ]
 
 { #category : #'instance creation' }
 Margin class >> top: topNumber left: leftNumber bottom: bottomNumber right: rightNumber [ 
 
-	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
-
+	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber
 ]
 
 { #category : #converting }
 Margin >> asMargin [
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
@@ -84,8 +81,7 @@ Margin >> expandRectangle: aRectangle [
 		left: aRectangle left - self left 
 		right: aRectangle right + self right 
 		top: aRectangle top - self top 
-		bottom: aRectangle bottom + self bottom 
-
+		bottom: aRectangle bottom + self bottom
 ]
 
 { #category : #operations }
@@ -94,8 +90,7 @@ Margin >> extendRectangle: aRectangle [
 	
 	^ Rectangle 
 		origin: aRectangle origin 
-		corner: aRectangle corner + (self width @ self height) 
-
+		corner: aRectangle corner + (self width @ self height)
 ]
 
 { #category : #initialization }
@@ -136,7 +131,7 @@ Margin >> height [
 Margin >> initialize [
 
 	super initialize.
-	self setTop: 0 left: 0 bottom: 0 right: 0 
+	self setTop: 0 left: 0 bottom: 0 right: 0
 ]
 
 { #category : #operations }
@@ -150,7 +145,6 @@ Margin >> insetRectangle: aRectangle [
 	b := top max: aRectangle bottom - self bottom.
 	
 	^ Rectangle left: l right: r top: t bottom: b
-	
 ]
 
 { #category : #testing }
@@ -180,8 +174,7 @@ Margin >> printOn: aStream [
 		nextPutAll: ' bottom: ';
 		print: bottom;
 		nextPutAll: ' right: ';
-		print: right. 
-	
+		print: right.
 ]
 
 { #category : #accessing }

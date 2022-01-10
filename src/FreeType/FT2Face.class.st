@@ -86,7 +86,6 @@ FT2Face >> angle: angle scale: scale offset: aPoint [
 	delta at: 1 put: (aPoint x * 64) rounded. 
 	delta at: 2 put: (aPoint y * 64) rounded.
 	self primSetTransform: matrix delta: delta.
-
 ]
 
 { #category : #rendering }
@@ -113,7 +112,6 @@ FT2Face >> angle: angle scale: scale offset: aPoint slant: slant [
 	delta at: 1 put: (aPoint x * 64) rounded. 
 	delta at: 2 put: (aPoint y * 64) rounded.
 	self primSetTransform: matrix delta: delta.
-
 ]
 
 { #category : #rendering }
@@ -139,7 +137,6 @@ FT2Face >> angle: angle scalePoint: scalePoint offset: aPoint [
 	delta at: 1 put: (aPoint x * 64) rounded. 
 	delta at: 2 put: (aPoint y * 64) rounded.
 	self primSetTransform: matrix delta: delta.
-
 ]
 
 { #category : #rendering }
@@ -167,7 +164,6 @@ FT2Face >> angle: angle scalePoint: scalePoint offset: aPoint slant: slant [
 	delta at: 1 put: (aPoint x * 64) rounded. 
 	delta at: 2 put: (aPoint y * 64) rounded.
 	self primSetTransform: matrix delta: delta.
-
 ]
 
 { #category : #accessing }
@@ -273,7 +269,6 @@ FT2Face >> ffiOutline: outline embolden: strength [
 { #category : #'private - ffi' }
 FT2Face >> ffiOutline: outline transformByMatrix: matrix [
 	^ self ffiCall: #(void FT_Outline_Transform( FT_Outline*  outline, FT_Matrix*   matrix ))
-
 ]
 
 { #category : #'private - ffi' }
@@ -306,7 +301,7 @@ FT2Face >> fillGlyph: aGlyphSlot [
 	
 	aGlyphSlot face: self.	
 	faceRec := FTFaceRec fromHandle: handle.
-	aGlyphSlot fillFromGlyphSlotRec: faceRec glyph. 
+	aGlyphSlot fillFromGlyphSlotRec: faceRec glyph.
 ]
 
 { #category : #charmaps }
@@ -335,7 +330,6 @@ FT2Face >> getCharMapsInto: array [
 	].
 
 	^ array.
-
 ]
 
 { #category : #accessing }
@@ -388,7 +382,7 @@ FT2Face >> isBold [
 { #category : #testing }
 FT2Face >> isFixedWidth [
 	styleFlags == nil ifTrue:[^false].
-	^faceFlags allMask: 4 "FT_FACE_FLAG_FIXED_WIDTH" 
+	^faceFlags allMask: 4 "FT_FACE_FLAG_FIXED_WIDTH"
 ]
 
 { #category : #testing }
@@ -416,7 +410,6 @@ FT2Face >> loadCharacter: index flags: flags [
 	glyph
 		ifNil: [ glyph := FT2GlyphSlot fromFace: self ]
 		ifNotNil: [ glyph loadFrom: self ].
-
 ]
 
 { #category : #outlines }
@@ -469,7 +462,6 @@ FT2Face >> loadFields [
 	bbox := Rectangle 
 		origin: ( Point x: faceRect bbox xMin y: faceRect bbox yMin )
 		corner: ( Point x: faceRect bbox xMax y: faceRect bbox yMax ).
-
 ]
 
 { #category : #glyphs }
@@ -482,7 +474,6 @@ FT2Face >> loadGlyph: index flags: flags [
 	glyph
 		ifNil: [ glyph := FT2GlyphSlot fromFace: self ]
 		ifNotNil: [ glyph loadFrom: self ].
-
 ]
 
 { #category : #accessing }
@@ -629,7 +620,6 @@ FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
 { #category : #'private - primitives' }
 FT2Face >> primTranslateGlyphSlotOutline:  anIntegerArray [
 	self ffiTranslateOutline: self outline x: (anIntegerArray at: 1) y: (anIntegerArray at: 2).
-	
 ]
 
 { #category : #printing }
@@ -650,7 +640,6 @@ FT2Face >> renderGlyphIntoForm: aForm [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)"
 	self validate.
 	self renderGlyphIntoForm: aForm pixelMode: nil
-
 ]
 
 { #category : #rendering }
@@ -684,7 +673,6 @@ FT2Face >> setCharMap: encodingString [
 	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error selecting charmap' ].	
 
 	self getCharMap.
-
 ]
 
 { #category : #glyphs }
@@ -725,7 +713,6 @@ FT2Face >> transform: aMatrix [
 	delta at: 1 put: (aMatrix a13 * 64) rounded. 
 	delta at: 2 put: (aMatrix a23 * 64) rounded.
 	self primSetTransform: matrix delta: delta.
-
 ]
 
 { #category : #rendering }

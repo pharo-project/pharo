@@ -46,7 +46,6 @@ FileSystemGuide >> initialize [
 FileSystemGuide >> initializeWithVisitor: aVisitor [
 	self initialize.
 	visitor := aVisitor.
-	
 ]
 
 { #category : #removing }

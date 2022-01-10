@@ -154,12 +154,6 @@ FTTableMorph >> basicHighlightIndexes: anArray [
 ]
 
 { #category : #private }
-FTTableMorph >> basicHighlightRowIndexes: anArray [
-	self deprecated: 'Use #basicHighlightIndexes: instead' transformWith: '`@receiver basicHighlightRowIndexes: `@statements' -> '`@receiver basicHighlightIndexes: `@statements'.
-	^ self basicHighlightIndexes: anArray
-]
-
-{ #category : #private }
 FTTableMorph >> basicMoveShowIndexTo: aNumber [
 
 	showIndex := aNumber
@@ -168,12 +162,6 @@ FTTableMorph >> basicMoveShowIndexTo: aNumber [
 { #category : #private }
 FTTableMorph >> basicSelectIndexes: anArray [
 	selectedIndexes := anArray asArray
-]
-
-{ #category : #private }
-FTTableMorph >> basicSelectRowIndexes: anArray [
-	self deprecated: 'Use #basicSelectIndexes: instead' transformWith: '`@receiver basicSelectRowIndexes: `@statements' -> '`@receiver basicSelectIndexes: `@statements'.
-	self basicSelectIndexes: anArray
 ]
 
 { #category : #accessing }
@@ -310,7 +298,6 @@ FTTableMorph >> drawSubmorphsOn: aCanvas [
 	"1haltOnce."
 	super drawSubmorphsOn: aCanvas.
 	self hasKeyboardFocus ifTrue: [ self drawKeyboardFocusOn: aCanvas ]
-
 ]
 
 { #category : #accessing }
@@ -391,7 +378,6 @@ FTTableMorph >> handleMouseMove: anEvent [
 	(anEvent anyButtonPressed) ifFalse:[^self].
 	anEvent wasHandled: true.
 	self mouseMove: anEvent
-
 ]
 
 { #category : #'event testing' }
@@ -402,7 +388,6 @@ FTTableMorph >> handlesKeyboard: event [
 { #category : #'event testing' }
 FTTableMorph >> handlesMouseDown: event [
 	^ true
-
 ]
 
 { #category : #'event testing' }
@@ -466,18 +451,6 @@ FTTableMorph >> highlightIndexes: anArray [
 ]
 
 { #category : #'accessing - selection' }
-FTTableMorph >> highlightRowIndex: aNumber [
-	self deprecated: 'Use #highlightIndex: instead' transformWith: '`@receiver highlightRowIndex: `@statements1' -> '`@receiver highlightIndex: `@statements1'.
-	self highlightIndex: aNumber
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> highlightRowIndexes: anArray [
-	self deprecated: 'Use #highlightIndexes: instead' transformWith: '`@receiver highlightRowIndexes: `@statements1' -> '`@receiver highlightIndexes: `@statements1'.
-	self highlightIndexes: anArray
-]
-
-{ #category : #'accessing - selection' }
 FTTableMorph >> highlightedIndex [
 	^ self highlightedIndexes ifNotEmpty: #first ifEmpty: [ 0 ]
 ]
@@ -485,18 +458,6 @@ FTTableMorph >> highlightedIndex [
 { #category : #'accessing - selection' }
 FTTableMorph >> highlightedIndexes [
 	^ highlightedIndexes
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> highlightedRowIndex [
-	self deprecated: 'Use #highlightedIndex instead' transformWith: '`@receiver highlightedRowIndex' -> '`@receiver highlightedIndex'.
-	^ self highlightedIndex
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> highlightedRowIndexes [
-	self deprecated: 'Use #highlightedIndexes instead' transformWith: '`@receiver highlightedRowIndexes' -> '`@receiver highlightedIndexes'.
-	^ self highlightedIndexes
 ]
 
 { #category : #private }
@@ -511,7 +472,7 @@ FTTableMorph >> horizontalScrollBarHeight [
 		ifNotNil: [ 
 			self isHorizontalScrollBarVisible ifFalse: [ ^ 0 ].
 			self scrollBarThickness
-			] 
+			]
 ]
 
 { #category : #private }
@@ -613,7 +574,7 @@ FTTableMorph >> intercellSpacing: aNumberOrPoint [
 	"Determines cell spacing 
 		x: space between cells 
 		y: space between rows"
-	intercellSpacing := aNumberOrPoint asPoint 
+	intercellSpacing := aNumberOrPoint asPoint
 ]
 
 { #category : #private }
@@ -643,12 +604,6 @@ FTTableMorph >> isMultipleSelection [
 { #category : #testing }
 FTTableMorph >> isResizable [
 	^ resizable
-]
-
-{ #category : #testing }
-FTTableMorph >> isRowIndexSelected: anIndex [
-	self deprecated: 'Use #isIndexSelected: instead' transformWith: '`@receiver isRowIndexSelected: `@statements1' -> '`@receiver isIndexSelected: `@statements1'.
-	^ self isIndexSelected: anIndex
 ]
 
 { #category : #testing }
@@ -787,7 +742,7 @@ FTTableMorph >> mouseDown: event [
 FTTableMorph >> mouseEnterDragging: event [
 	self enabled ifFalse: [ ^ self ].
 	(event hand hasSubmorphs and: [ self dropEnabled ]) 
-		ifFalse: [ "no d&d" ^ super mouseEnterDragging: event ].	
+		ifFalse: [ "no d&d" ^ super mouseEnterDragging: event ].
 ]
 
 { #category : #'event handling' }
@@ -908,7 +863,6 @@ FTTableMorph >> recalculateVerticalScrollBarVisibilityIfHidden: aBlock [
 				ifFalse: [ 
 					self resizeVerticalScrollBar.
 					self addMorph: self verticalScrollBar ] ]
-
 ]
 
 { #category : #updating }
@@ -919,7 +873,6 @@ FTTableMorph >> refresh [
 	self verticalScrollBar changed.
 	horizontalScrollBar ifNotNil: [ self horizontalScrollBar changed ].
 	self container changed
-	
 ]
 
 { #category : #accessing }
@@ -1040,12 +993,6 @@ FTTableMorph >> selectAll [
 ]
 
 { #category : #'accessing - selection' }
-FTTableMorph >> selectAllRowIndexes [
-	self deprecated: 'Use #selectAll instead' transformWith: '`@receiver selectAllRowIndexes' -> '`@receiver selectAll'.
-	^ self selectAll
-]
-
-{ #category : #'accessing - selection' }
 FTTableMorph >> selectFirst [
 	self selectionModeStrategy selectFirst
 ]
@@ -1093,26 +1040,6 @@ FTTableMorph >> selectRowIndex: aNumber [
 	self selectIndex: aNumber
 ]
 
-{ #category : #private }
-FTTableMorph >> selectRowIndex: rowIndex event: event [
-	self deprecated: 'Use #selectIndex:event: instead' transformWith: '`@receiver selectRowIndex: `@statements1 event: `@statements2' -> '`@receiver selectIndex: `@statements1 event: `@statements2'.
-	self selectIndex: rowIndex event: event
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectRowIndexes: anArray [
-	self deprecated: 'Use #selectIndexes: instead' transformWith: '`@receiver selectRowIndexes: `@statements1' -> '`@receiver selectIndexes: `@statements1'.
-	self selectIndexes: anArray
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectRowIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection [
-	self
-		deprecated: 'Use #selectIndexes:andMakeVisibleIf: instead'
-		transformWith: '`@receiver selectRowIndexes: `@statements1 andMakeVisibleIf: `@statements2' -> '`@receiver selectIndexes: `@statements1 andMakeVisibleIf: `@statements2'.
-	self selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection
-]
-
 { #category : #'accessing - selection' }
 FTTableMorph >> selectedIndex [
 	^ self selectedIndexes ifNotEmpty: #first ifEmpty: [ self selectionModeStrategy nullIndex ]
@@ -1121,18 +1048,6 @@ FTTableMorph >> selectedIndex [
 { #category : #'accessing - selection' }
 FTTableMorph >> selectedIndexes [
 	^ selectedIndexes
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectedRowIndex [
-	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
-	^ self selectedIndex
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectedRowIndexes [
-	self deprecated: 'Use #selectedIndexes instead' transformWith: '`@receiver selectedRowIndexes' -> '`@receiver selectedIndexes'.
-	^ self selectedIndexes
 ]
 
 { #category : #'accessing - colors' }
@@ -1186,12 +1101,6 @@ FTTableMorph >> showColumnHeaders [
 ]
 
 { #category : #accessing }
-FTTableMorph >> showFirstRowSelection [
-	self deprecated: 'Use #showFirstSelection instead' transformWith: '`@receiver showFirstRowSelection' -> '`@receiver showFirstSelection'.
-	^ self showFirstSelection
-]
-
-{ #category : #accessing }
 FTTableMorph >> showFirstSelection [
 	self hasSelection ifFalse: [ ^ self ].
 	self moveShowIndexTo: self selectedIndex
@@ -1219,8 +1128,6 @@ FTTableMorph >> showMenuForIndex: aTuple [
 	(menu isNil or: [ menu isInWorld ]) ifTrue: [ ^ self ].
 	
 	menu popUpInWorld: self currentWorld
-
-	
 ]
 
 { #category : #menu }
@@ -1246,7 +1153,7 @@ FTTableMorph >> startDrag: event [
 	transferMorph align: transferMorph draggedMorph topLeft with: event position.
 	transferMorph dragTransferType: self dataSource dragTransferType.
 	
-	event hand grabMorph: transferMorph 
+	event hand grabMorph: transferMorph
 ]
 
 { #category : #'event testing' }
@@ -1265,7 +1172,6 @@ FTTableMorph >> themeChanged [
 FTTableMorph >> update: symbol [
 	symbol == #refresh ifTrue: [ ^ self refresh ].
 	^ super update: symbol
-	
 ]
 
 { #category : #private }

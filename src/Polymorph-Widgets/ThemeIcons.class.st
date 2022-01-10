@@ -148,7 +148,7 @@ ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 ThemeIcons class >> reset [
 	<script>
 	
@@ -186,7 +186,7 @@ ThemeIcons class >> uiFetchPacks [
 	UIManager default informUserDuring: [ :bar | 
 		choosenPacks do: [ :each |
 			bar label: 'Retrieving "', each name, '" icon set from remote repository'.
-			each downloadFromUrl ]] 	
+			each downloadFromUrl ]]
 ]
 
 { #category : #settings }

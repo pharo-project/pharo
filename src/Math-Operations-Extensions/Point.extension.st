@@ -30,7 +30,6 @@ Point >> bearingToPoint: anotherPoint [
         ifTrue: [ ^ deltaY > 0 ifTrue: [ 180 ] ifFalse: [ 0 ]].
     ^ ((deltaX >= 0 ifTrue: [90] ifFalse: [270])
             - ((deltaY / deltaX) arcTan negated radiansToDegrees)) rounded
-
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -51,18 +50,6 @@ Point >> degrees [
 						ifTrue: [ theta radiansToDegrees ]
 						ifFalse: [ 360.0 + theta radiansToDegrees ] ]
 				ifFalse: [ 180.0 + theta radiansToDegrees ] ]
-]
-
-{ #category : #'*Math-Operations-Extensions' }
-Point >> dist: aPoint [ 
-	"Answer the distance between aPoint and the receiver."
-	
-	self
-		deprecated: 'Use #distanceTo: instead.'
-		on: '9 February 2021'
-		in: #Pharo9
-		transformWith: '`@receiver dist: `@arg' -> '`@receiver distanceTo: `@arg'.
-	^ self distanceTo: aPoint
 ]
 
 { #category : #'*Math-Operations-Extensions' }

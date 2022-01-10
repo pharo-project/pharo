@@ -21,8 +21,7 @@ CDNormalClassParserTest >> classDefinitionString [
 ]
 
 { #category : #helpers }
-CDNormalClassParserTest >> testNormalClassIsNormal [
+CDNormalClassParserTest >> testNormalClassHasFixedLayout [
 
-	self assert: (classDefinition isNormal).
-
+	self assert: classDefinition layoutClass equals: FixedLayout
 ]

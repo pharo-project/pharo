@@ -16,12 +16,6 @@ Model class >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #'dependents-private' }
-Model >> actAsExecutor [
-	"Prepare the receiver to act as executor for any resources associated with it"
-	self breakDependents
-]
-
 { #category : #dependents }
 Model >> addDependent: anObject [
 	"Make the given object one of the receiver's dependents."

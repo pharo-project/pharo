@@ -82,7 +82,6 @@ HiSimpleRenderer >> addLinkFragmentFromTopLeft: topPoint toBottomRight: bottomPo
 		ccwArcTo: (topPoint x    + halfColumn) @ intermediateY angle: self linkCurveAngle;
 		lineTo:   (bottomPoint x - halfColumn) @ intermediateY;
 		cwArcTo:  bottomPoint angle: self linkCurveAngle
-
 ]
 
 { #category : #rendering }
@@ -391,7 +390,6 @@ HiSimpleRenderer >> renderLinks: links on: athensCanvas [
 	
 		"Draw it"
 		athensCanvas drawShape: (self athensPathForLink: each on: athensCanvas) ]
-
 ]
 
 { #category : #rendering }
@@ -413,7 +411,6 @@ HiSimpleRenderer >> renderNodes: nodes on: athensCanvas [
 				athensCanvas pathTransform
 					translateBy: (self cellCenterFor: each rulerPoint).
 				athensCanvas drawShape: nodeAthensPath ] ] ].
-
 ]
 
 { #category : #rendering }

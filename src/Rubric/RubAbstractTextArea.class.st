@@ -91,6 +91,7 @@ Class {
 		'editingMode',
 		'cursor',
 		'segments',
+		'embeddedMorphs',
 		'getMenuPolicy',
 		'mouseDownPoint',
 		'completionEngine',
@@ -157,6 +158,26 @@ RubAbstractTextArea class >> defaultMaxExtent [
 { #category : #settings }
 RubAbstractTextArea class >> editorFont [
 	^ StandardFonts defaultFont
+]
+
+{ #category : #examples }
+RubAbstractTextArea class >> embeddedMorphExample [
+	"This is a simple example of how to embed morphs into a text. It is also a test to quickly see with ones eyes that the morphs are place right and behaves well under resize of window.
+The example sits in this class because this class is the one which implements the placement of morphs"
+	<example>
+	|txt|
+	txt := (1 to: 10000 by: 500) 
+		inject: '' asText 
+		into:[:sofar :elem| 
+			sofar, 
+			(String loremIpsum), 
+			(((String value: 1) asText) addAttribute: (TextAnchor new anchoredMorph: CircleMorph new ))].
+
+	RubScrolledTextMorph new
+		extent: 500@321;
+		beWrapped;
+		updateTextWith: txt;
+	 	openInWindow
 ]
 
 { #category : #'shortcut examples' }
@@ -442,6 +463,11 @@ RubAbstractTextArea >> addCursor [
 	self cursor ifNil: [ self addMorph: (cursor := self newCursor) ]
 ]
 
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> addEmbeddedMorph: aMorph [
+	self embeddedMorphs add: aMorph
+]
+
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> addPrimarySelection [
 	self addMorph: self newPrimarySelection.
@@ -579,7 +605,7 @@ RubAbstractTextArea >> compose [
 
 	self prepareParagraphToCompose.
 	self paragraph compose.
-	self markBackgroundColors
+	self drawEmbeddedMorphs
 ]
 
 { #category : #composing }
@@ -700,15 +726,43 @@ RubAbstractTextArea >> doubleClick: anEvent [
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
+{ #category : #composing }
+RubAbstractTextArea >> drawEmbeddedMorphs [
+	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
+
+	"Scan through text to find spans containing submorphs (Background color and TextAnchor)"
+
+	self text runs
+		withStartStopAndValueDo: [ :start :stop :value | 
+			value do: [ :v | 
+					(v isKindOf: TextBackgroundColor)
+						ifTrue: [ self addSegment: 
+							(RubTextBackgroundColorSegmentMorph
+								color: v color
+								from: start
+								to: stop+1) ].
+					((v isKindOf: TextAnchor) and:[v anchoredMorph isMorph ])
+						ifTrue: [ self addEmbeddedMorph: v anchoredMorph  ] ] ]
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> drawEmbeddedMorphsOn: aCanvas [
+	"draw only those embedded morphs which has been placed by RubDisplayScanner>>placeEmbeddedObject:"
+	((self embeddedMorphs) 
+		select: [ :morph | morph valueOfProperty: #hasBeenPositioned ifAbsent: [false] ])
+		do: [ :morph | morph fullDrawOn: aCanvas]
+]
+
 { #category : #drawing }
 RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 	"Draw the focus here since we are using inset bounds
 	for the focus rectangle."
-
+	self resetEmbeddedMorphs.
 	super drawSubmorphsOn: aCanvas.
 	aCanvas rubParagraph: self paragraph bounds: self drawingBounds color: self textColor.
 	(scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus or: [ self hasFindReplaceFocus ] ] ])
-		ifTrue: [self drawKeyboardFocusOn: aCanvas ]
+		ifTrue: [self drawKeyboardFocusOn: aCanvas ].
+	self drawEmbeddedMorphsOn: aCanvas
 ]
 
 { #category : #drawing }
@@ -773,6 +827,13 @@ RubAbstractTextArea >> editorClass [
 	"Answer the class used to create the receiver's editor"
 
 	^ RubTextEditor
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> embeddedMorphs [
+	"Embedded morphs are kept seperate from other submorphs, to ensure only those placed by
+	RubDisplayScanner>>placeEmbeddedObject: are drawn"
+	^ embeddedMorphs ifNil: [ embeddedMorphs := OrderedCollection new ]
 ]
 
 { #category : #'accessing - editing state' }
@@ -1115,8 +1176,7 @@ RubAbstractTextArea >> keyDown: anEvent [
 		ifNotNil: [ :sp | 
 			(sp scrollByKeyboard: anEvent)
 				ifTrue: [ ^ self ] ].
-	anEvent isUserInterrupt
-		ifTrue: [ ^ self ].
+
 	self handleEdit: [ self editor keyDown: anEvent ].
 ]
 
@@ -1195,21 +1255,6 @@ RubAbstractTextArea >> margins: aMargin [
 				bottom: m bottom
 				right: self cursorWidth ].
 	margins := m
-]
-
-{ #category : #composing }
-RubAbstractTextArea >> markBackgroundColors [
-	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
-
-	self text runs
-		withStartStopAndValueDo: [ :start :stop :value | 
-			value do: [ :v | 
-					(v isKindOf: TextBackgroundColor)
-						ifTrue: [ self addSegment: 
-							(RubTextBackgroundColorSegmentMorph
-								color: v color
-								from: start
-								to: stop+1) ] ] ] 
 ]
 
 { #category : #'accessing - selection' }
@@ -1473,7 +1518,7 @@ RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 				ifFalse: [ self updateExtentFromParagraph ] ].
 	self scrollPane ifNotNil: [ :sp | sp textChanged ].
 	self announce: (RubTextChanged from: start to: stop with: aText).
-	self markBackgroundColors .
+	self drawEmbeddedMorphs.
 
 ]
 
@@ -1680,6 +1725,13 @@ RubAbstractTextArea >> replaceFrom: start to: stop with: aText [
 RubAbstractTextArea >> replaceSelectionWith: aText [
 	self
 		handleEdit: [self editor replaceSelectionWith: aText]
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> resetEmbeddedMorphs [
+	"reset the #hasBeenPositioned property to false for all embeddedMorphs. 
+	Those to actually be shown will be marked in RubDisplayScanner>>placeEmbeddedObject:"
+	self embeddedMorphs do: [ :morph | morph setProperty: #hasBeenPositioned toValue: false ]
 ]
 
 { #category : #'dropping/grabbing' }

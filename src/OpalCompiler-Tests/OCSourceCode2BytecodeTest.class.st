@@ -17,7 +17,6 @@ Class {
 OCSourceCode2BytecodeTest class >> classVar [
 
 	 ^ClassVar
-
 ]
 
 { #category : #compiling }
@@ -27,7 +26,6 @@ OCSourceCode2BytecodeTest >> compile2method: sourceStream [
 						source: sourceStream;
 						class: self class;			
 						compile.
-		
 ]
 
 { #category : #accessing }
@@ -618,20 +616,6 @@ OCSourceCode2BytecodeTest >> testReturnReceiver [
 		timesRepeat: [scanner decodeNextInstruction].
 	self assert: scanner peekInstruction selector == #methodReturnReceiver
 		description: 'Failed ' , selector
-]
-
-{ #category : #tests }
-OCSourceCode2BytecodeTest >> testReturnTopFromBlock [
-	| selector method scanner |
-	
-	"Only Valid if we have inlined closures in the method"
-	CompilationContext optionFullBlockClosure ifTrue: [ ^ self skip ].
-	
-	selector := (method := self compile2method: 'returnTopFromBlock |ia| ^[ia]') selector.
-	scanner := InstructionStream on: method.
-	3 timesRepeat: [scanner decodeNextInstruction].
-	self assert: scanner peekInstruction selector == #blockReturnTop
-		description: ('Failed ' , selector)
 ]
 
 { #category : #tests }

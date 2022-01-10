@@ -69,7 +69,7 @@ KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 		and: [ modifiers first ~= 'Shift' ])
 		ifTrue: [ modifiers := (modifiers copyWithout: 'Shift') copyWithFirst: 'Shift' ].
 	
-	^ modifiers		
+	^ modifiers
 ]
 
 { #category : #visiting }

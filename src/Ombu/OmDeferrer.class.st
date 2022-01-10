@@ -14,13 +14,12 @@ Class {
 	#category : #'Ombu-Common'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OmDeferrer class >> initialize [
 	"
 	self initialize
 	"
 	SessionManager default registerUserClassNamed: self name
-
 ]
 
 { #category : #'instance creation' }

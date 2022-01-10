@@ -4,12 +4,12 @@ Extension { #name : #ClyFindClassCommand }
 ClyFindClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserPackageContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserPackageContext
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 ClyFindClassCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $f meta for: ClyFullBrowserGlobalContext 
+	^CmdShortcutActivation by: $f meta for: ClyFullBrowserGlobalContext
 ]

@@ -6,29 +6,6 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
-RGEnvironmentBackendTest >> backendClass [
-
-	^ RGEnvironmentBackend
-]
-
-{ #category : #'as yet unclassified' }
-RGEnvironmentBackendTest >> checkHierarchyConsistencyOf: anRGClass [
-	self assert: anRGClass ~~ anRGClass superclass.
-	self assert: anRGClass ~~ anRGClass metaclass.
-	self assert: anRGClass ~~ anRGClass superclass metaclass.
-
-	self assert: anRGClass superclass ~~ anRGClass metaclass.
-	self assert: anRGClass superclass ~~ anRGClass superclass metaclass.
-	self assert: anRGClass metaclass ~~ anRGClass superclass metaclass.
-
-	self assert: anRGClass superclass superclass identicalTo: anRGClass superclass.
-	self assert: anRGClass superclass metaclass identicalTo: anRGClass metaclass superclass.
-
-	self assert: anRGClass superclass metaclass superclass identicalTo: anRGClass superclass metaclass.
-	self assert: anRGClass superclass metaclass metaclass identicalTo: anRGClass superclass metaclass
-]
-
 { #category : #tests }
 RGEnvironmentBackendTest >> testAST [
 

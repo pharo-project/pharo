@@ -41,7 +41,6 @@ OupsSingleDebuggerSelectorTest >> testErrorWhenOpeningDebugger [
 	self assert: debuggerSelector hasErrors.
 	self assert: debuggerSelector error class identicalTo: Error.
 	self deny: debuggerSelector handled
-	
 ]
 
 { #category : #tests }

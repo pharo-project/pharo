@@ -117,12 +117,6 @@ ProfStef class >> goOn: aTutorialClass [
 ]
 
 { #category : #navigating }
-ProfStef class >> goToNextLesson [
-
-  self next
-]
-
-{ #category : #navigating }
 ProfStef class >> last [
 
 	^ self default last
@@ -137,7 +131,7 @@ ProfStef class >> menuCommandOn: aBuilder [
 		order: 3;
 		action: [ self openPharoZenWorkspace ];
 		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
-		help: 'Pharo values.' 
+		help: 'Pharo values.'
 ]
 
 { #category : #navigating }
@@ -209,7 +203,7 @@ ProfStef class >> previous [
 	^ self default previous
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProfStef class >> reset [
 	<script>
 		

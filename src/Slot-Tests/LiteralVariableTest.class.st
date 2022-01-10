@@ -1,9 +1,6 @@
 Class {
 	#name : #LiteralVariableTest,
 	#superclass : #TestCase,
-	#classVars : [
-		'TestVariable'
-	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
@@ -20,13 +17,6 @@ LiteralVariableTest >> testComparison [
 	self deny: var1 equals: var2.
 	self deny: var1 equals: #var1 -> var1 value
 
-]
-
-{ #category : #tests }
-LiteralVariableTest >> testIsReferenced [
-	self assert: (SmalltalkImage classVariableNamed: #CompilerClass) isReferenced.
-	TestVariable.
-	self assert: (self class classVariableNamed: #TestVariable) isReferenced
 ]
 
 { #category : #tests }

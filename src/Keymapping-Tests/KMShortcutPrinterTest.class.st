@@ -67,7 +67,6 @@ KMShortcutPrinterTest class >> testParameters [
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> ($n control , $m control). #result -> (ctrl, 'N' , ',' , ctrl , 'M') };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> ($n control , $m control). #result -> 'Ctrl+N,Ctrl+M' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> ($n control , $m control). #result -> 'Ctrl+N,Ctrl+M' }
-
 ]
 
 { #category : #accessing }

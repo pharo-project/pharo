@@ -39,7 +39,7 @@ MalTarjan >> isRootNode: aTarjanNode [
 
 { #category : #configuration }
 MalTarjan >> nodeClass [
-	^ MalTarjanNode 
+	^ MalTarjanNode
 ]
 
 { #category : #accessing }

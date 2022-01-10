@@ -34,7 +34,7 @@ AsciiCharset class >> isConnectorPunctuation: char [
 { #category : #'character classification' }
 AsciiCharset class >> isControlOther: char [
 	char charCode <= 16r1F ifTrue: [ ^ true ].
-	^ char = Character delete 
+	^ char = Character delete
 ]
 
 { #category : #'character classification' }

@@ -52,100 +52,6 @@ Number class >> one [
 	^1
 ]
 
-{ #category : #deprecated }
-Number class >> readExponent: baseValue base: base from: aStream [
-	"Complete creation of a number, reading exponent from aStream. Answer the
-	number, or nil if parsing fails.
-	<number>(e|d|q)<exponent>>"
-
-	| sign exp value |
-	('edq' includes: aStream next) ifFalse: [^ nil].
-	sign := ((aStream peek) == $-)
-		ifTrue: [aStream next. -1]
-		ifFalse: [1].
-	(aStream atEnd or: [(aStream peek digitValue between: 0 and: 9) not])
-		ifTrue: [^ nil]. "Avoid throwing an error"
-	exp := (Integer readFrom: aStream base: 10) * sign.
-	value := baseValue * (base raisedTo: exp).
-	^ value
-
-]
-
-{ #category : #deprecated }
-Number class >> readRemainderOf: integerPart from: aStream base: base withSign: sign [ 
-	"Read optional fractional part and exponent or decimal scale, and return the final result"
-	"Number readFrom: '3r-22.2'"
-
-	| value fractionDigits fracpos fractionPart fraction pos v foundDecimal |
-	value := integerPart.
-	fractionDigits := 0.
-	foundDecimal := false.
-	(aStream peekFor: $.)
-		ifTrue: ["<integer>.<fraction>"
-			foundDecimal := true.
-			(aStream atEnd not
-					and: [aStream peek digitValue between: 0 and: base - 1])
-				ifTrue: [fracpos := aStream position.
-					fractionPart := Integer readFrom: aStream base: base.
-					fraction := fractionPart asFloat
-								/ (base raisedTo: aStream position - fracpos).
-					fractionDigits := aStream position - fracpos.
-					value := value asFloat + fraction]].
-
-	pos := aStream position.
-	(v := self readScaledDecimal: integerPart
-			fractionPart: fractionPart
-			digits: fractionDigits
-			base: base
-			sign: sign
-			from: aStream)
-		ifNil: [aStream position: pos]
-		ifNotNil: [^ v "<number>s<scale>>"].
-
-	pos := aStream position.
-	(v := self readExponent: value base: base from: aStream)
-		ifNil: [aStream position: pos.
-			(foundDecimal and: [fractionDigits = 0])
-				ifTrue: ["oops - just <integer>."
-							aStream skip: -1.
-							"un-gobble the period"
-							^ value * sign]]
-		ifNotNil: [value := v "<number>(e|d|q)<exponent>>"].
-
-	(value isFloat
-			and: [value = 0.0
-					and: [sign = -1]])
-		ifTrue: [^ Float negativeZero]
-		ifFalse: [^ value * sign]
-]
-
-{ #category : #deprecated }
-Number class >> readScaledDecimal: integerPart fractionPart: fractionPart digits: fractionDigits base: base sign: sign from: aStream [ 
-	"Complete creation of a ScaledDecimal, reading scale from aStream. Answer
-	a ScaledDecimal, or nil if parsing fails.
-	<number>s[<scale>]"
-
-	| scale decimalMultiplier decimalFraction |
-	aStream atEnd ifTrue: [^ nil].
-	(aStream next == $s) ifFalse: [^ nil].
-	"<number>s<scale>"
-	(aStream atEnd not and: [aStream peek digitValue between: 0 and: 9])
-		ifTrue: [scale := Integer readFrom: aStream]
-		ifFalse: [^ nil].
-	scale 
-		ifNil: ["<number>s"
-			fractionDigits = 0
-				ifTrue: ["<integer>s"
-					scale := 0]
-				ifFalse: ["<integer>.<fraction>s"
-					scale := fractionDigits]].
-	fractionPart 
-		ifNil: [^integerPart * sign asScaledDecimal: scale]
-		ifNotNil: [decimalMultiplier := base raisedTo: fractionDigits.
-			decimalFraction := integerPart * decimalMultiplier + fractionPart * sign / decimalMultiplier.
-			^decimalFraction asScaledDecimal: scale]
-]
-
 { #category : #arithmetic }
 Number >> * aNumber [ 
 	"Answer the result of multiplying the receiver by aNumber."
@@ -261,7 +167,6 @@ Number >> addAssignToFloatArray: aFloatArray [
 Number >> asDuration [
  
  	^ Duration seconds: self asInteger
- 
 ]
 
 { #category : #converting }
@@ -276,7 +181,7 @@ Number >> asInteger [
 	"Round me towards nearest integer closer to zero."
 	"This violates the ANSI standard, but the system depends on this"
 
-	^self truncated 
+	^self truncated
 ]
 
 { #category : #converting }
@@ -304,7 +209,6 @@ Number >> asScaledDecimal [
 	#Numeric.
 
 	^ self asScaledDecimal: 8
-
 ]
 
 { #category : #converting }
@@ -460,7 +364,6 @@ Number >> milliSecond [
 	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
 	
  	^ self milliSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -470,7 +373,6 @@ Number >> milliSeconds [
 	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
 	
  	^ Duration milliSeconds: self
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -479,7 +381,6 @@ Number >> minute [
 	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
  
  	^ self minutes
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -496,7 +397,6 @@ Number >> nanoSecond [
 	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
  
  	^ self nanoSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -751,7 +651,6 @@ Number >> second [
 	"(1 minute + 1 second) printString >>> '0:00:01:01'"
 	
  	^ self seconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -839,7 +738,6 @@ Number >> truncated [
 Number >> week [
  
  	^ self weeks
- 
 ]
 
 { #category : #'*Kernel-Chronology' }

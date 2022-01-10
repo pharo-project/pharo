@@ -1,9 +1,10 @@
 Extension { #name : #RBCompositeRefactoryChange }
 
 { #category : #'*Refactoring2-Core' }
-RBCompositeRefactoryChange >> addProtocolNamed: aString in: aClass [ 
+RBCompositeRefactoryChange >> addProtocolNamed: aString in: aClass [
 
-	^ self addChange: (RBAddProtocolChange addProtocolNamed: aString in: aClass)
+	^ self addChange:
+		  (RBAddProtocolChange addProtocolNamed: aString in: aClass)
 ]
 
 { #category : #'*Refactoring2-Core' }

@@ -11,5 +11,5 @@ ClySpawnFullBrowserCommand class >> queryBrowserDoubleClickMenuActivation [
 ClySpawnFullBrowserCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 	
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext 
+	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext
 ]

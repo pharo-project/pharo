@@ -79,19 +79,18 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
-	| className classNode node |
-	node := aNode receiver. 
-	(node isKindOf: RBMessageNode)
-		ifTrue: [ "we are in situation ClassX class slots: {xxxx} so grab the class"
-			node := node receiver ].
-		
-	className := (node isVariable
-		ifTrue: [ node name ]
-		ifFalse: [ node value ]) asSymbol.
+	"we are in situation ClassX class << ClassZ class
+				slots: {xxxx} so grab the class"
+	
+	aNode handleMetaclassName: self		
+	"| className classNode node |
+	node := aNode receiver arguments first. 
+	className := node receiver binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
 		className: className.
 	classDefinition className: node astNode: classNode
+	"
 ]
 
 { #category : #accessing }
@@ -191,12 +190,6 @@ CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 	classDefinition traitDefinition: traitComposition.
 ]
 
-{ #category : #testing }
-CDAbstractClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
-	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
-	^ self subclassResponsibility 
-]
-
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> parse: aString [
 	| expressionTree |
@@ -207,25 +200,9 @@ CDAbstractClassDefinitionParser >> parse: aString [
 	^ self parseRootNode: expressionTree
 ]
 
-{ #category : #parsing }
-CDAbstractClassDefinitionParser >> parseRootNode: expressionTree [
-	self setAdequateClassDefinitionFrom: expressionTree.
-	classDefinition originalNode: expressionTree.
-	expressionTree acceptVisitor: self.
-	^ classDefinition
-]
-
 { #category : #hooks }
 CDAbstractClassDefinitionParser >> parserClass [
 	^ RBParser
-]
-
-{ #category : #internal }
-CDAbstractClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
-	"set a class or metaclass class definition as class definition object."
-	(self isInstanceSideDefinition: expressionTree)
-		ifTrue: [ self beClassDefinition ]
-		ifFalse: [ self beMetaclassDefinition ]
 ]
 
 { #category : #'private - class factory' }
@@ -236,7 +213,7 @@ CDAbstractClassDefinitionParser >> sharedPoolNodeClass [
 { #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> slotInitializationNodeClass [
 
-	^ RBSlotInitializationNode 
+	^ RBSlotInitializationNode
 ]
 
 { #category : #'private - class factory' }

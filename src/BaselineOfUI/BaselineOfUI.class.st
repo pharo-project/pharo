@@ -60,14 +60,14 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec package: 'Keymapping-Settings'.
-		spec package: 'Keymapping-Tools-Spec'.
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'ui' ].
 
 		spec package: 'WebBrowser-Core'.
 
 		spec package: 'HelpSystem-Core'.
-
-		spec package: 'EyeInspector'.
 	].
 ]
 

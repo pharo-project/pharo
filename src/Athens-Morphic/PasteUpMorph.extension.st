@@ -15,6 +15,5 @@ PasteUpMorph >> drawOnAthensCanvas: aCanvas [
 	backgroundMorph ifNotNil: [
 		aCanvas clipBy: self clippingBounds
 			during: [ aCanvas fullDrawMorph: backgroundMorph ]
-	]				
-
+	]
 ]

@@ -119,14 +119,13 @@ ScrollBarMorph class >> cleanUp [
 	self initializeImagesCache
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ScrollBarMorph class >> initialize [
-	"ScrollBar initialize"
-
+	
 	self initializeImagesCache
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ScrollBarMorph class >> initializeImagesCache [
 	"initialize the receiver's ImagesCache. 
 	 
@@ -214,7 +213,6 @@ ScrollBarMorph >> doScrollByPage [
 	nextPageDirection
 		ifTrue: [self setValue: (value + pageDelta min: 1.0)]
 		ifFalse: [self setValue: (value - pageDelta max: 0.0)]
-
 ]
 
 { #category : #scrolling }
@@ -259,7 +257,6 @@ ScrollBarMorph >> extent: p [
 				extent: (p max: (42 @ 8) scaledByDisplayScaleFactor)]
 		ifFalse: [super
 				extent: (p max: (8 @ 42) scaledByDisplayScaleFactor)].
-	
 ]
 
 { #category : #'private - accessing' }
@@ -321,7 +318,6 @@ ScrollBarMorph >> initialize [
 	super initialize.
 	scrollDelta := 0.02.
 	pageDelta := 0.2.
-
 ]
 
 { #category : #initialization }
@@ -919,8 +915,6 @@ ScrollBarMorph >> setNextDirectionFromEvent: event [
 	ifFalse: [
 		event cursorPoint y >= slider center y
 	]
-
-
 ]
 
 { #category : #'model access' }
@@ -1056,7 +1050,6 @@ ScrollBarMorph >> updateSliderBounds [
 		updateDownButtonBounds;
 		updatePagingAreaBounds.
 	super updateSliderBounds.
-	
 ]
 
 { #category : #update }

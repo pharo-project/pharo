@@ -1,6 +1,9 @@
 Class {
 	#name : #TFFunctionCallTest,
 	#superclass : #TFTestCase,
+	#pools : [
+		'TFAbiTypes'
+	],
 	#category : #'ThreadedFFI-Tests'
 }
 
@@ -77,9 +80,34 @@ TFFunctionCallTest >> testCallbackInSingleFunction [
 ]
 
 { #category : #tests }
+TFFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
+
+	| fun returnValue |
+	
+	"This test is only valid in OSX and X86_64, as calling conventions constants are heavily dependant on the OS & Architecture"
+	(OSPlatform current isMacOS and: [ Smalltalk vm architectureName = 'x86_64']) 
+		ifFalse: [ self skip ].
+
+	fun := TFExternalFunction
+		name: 'w64Convention'
+		moduleName: self libraryPath
+		definition: (TFFunctionDefinition
+			parameterTypes: {TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint. TFBasicType sint}
+			returnType: TFBasicType sint
+			abi: DARWIN_X86_64_WIN64).
+			
+	returnValue := runner invokeFunction: fun withArguments: (1 to: 10) asArray.
+
+	self assert: returnValue equals: 55
+
+]
+
+{ #category : #tests }
 TFFunctionCallTest >> testVariadicFunctionWithOneFixedAndTwoOptional [
 
 	| fun return buffer aString |
+
+	self skipOnAppleARM.
 
 	fun := TFExternalFunction
 		name: 'sprintf'

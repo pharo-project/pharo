@@ -9,12 +9,6 @@ Class {
 
 { #category : #helpers }
 RBMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
-
-]
-
-{ #category : #helpers }
-RBMethodNodeTest >> parseMethod: aString [
-	^ self parserClass parseMethod: aString
 ]
 
 { #category : #tests }
@@ -41,8 +35,6 @@ RBMethodNodeTest >> testBlockHasArguments [
 		]'.
 
 	self assert: tree body statements first hasArguments
-	
-
 ]
 
 { #category : #tests }
@@ -57,8 +49,6 @@ RBMethodNodeTest >> testBlockHasTemporaries [
 
 	self deny: tree hasTemporaries.
 	self assert: tree body statements first hasTemporaries
-	
-
 ]
 
 { #category : #tests }
@@ -70,9 +60,7 @@ RBMethodNodeTest >> testBlockHeadIsNotEmpty [
 		abd + cde 
 		]'.
 
-	self assert: tree body statements first headIsNotEmpty 
-	
-
+	self assert: tree body statements first headIsNotEmpty
 ]
 
 { #category : #tests }
@@ -84,9 +72,7 @@ RBMethodNodeTest >> testBlockHeadIsNotEmpty2 [
 		abd + cde 
 		]'.
 
-	self assert: tree body statements first headIsNotEmpty 
-	
-
+	self assert: tree body statements first headIsNotEmpty
 ]
 
 { #category : #tests }
@@ -98,9 +84,7 @@ RBMethodNodeTest >> testBlockHeadIsNotEmpty3 [
 		abd + cde 
 		]'.
 
-	self deny: tree body statements first headIsNotEmpty 
-	
-
+	self deny: tree body statements first headIsNotEmpty
 ]
 
 { #category : #tests }
@@ -124,8 +108,6 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 ^ abd + cde'.
 
 	self assert: tree hasComments.
-	
-
 ]
 
 { #category : #'tests - comments' }
@@ -159,8 +141,6 @@ RBMethodNodeTest >> testHasComments [
 ^ abd + cde'.
 
 	self deny: tree hasComments.
-	
-
 ]
 
 { #category : #'tests - primitives' }
@@ -209,8 +189,6 @@ RBMethodNodeTest >> testMethodsHasTemporaries [
 ^ abd + cde'.
 
 	self assert: tree hasTemporaries
-	
-
 ]
 
 { #category : #tests }
@@ -290,7 +268,6 @@ RBMethodNodeTest >> testPrimitiveErrorIsPrimitive [
 
 	ast := (MirrorPrimitives class >> #makeObject:readOnly:) ast.
 	self assert: ast isPrimitive.
-	
 ]
 
 { #category : #'tests - primitives' }
@@ -304,7 +281,6 @@ RBMethodNodeTest >> testPrimitiveIsPrimitive [
 	self assert: ast isPrimitive.
 	ast := (Bitmap >> #primFill:) ast.
 	self assert: ast isPrimitive.
-	
 ]
 
 { #category : #'tests - primitives' }
@@ -317,9 +293,6 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	| ast |
 	ast := (File class >> #primClosedir:) ast.
 	self assert: ast isPrimitive.
-
-
-	
 ]
 
 { #category : #'tests - primitives' }
@@ -340,8 +313,6 @@ RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
 
 	ast := (Integer >> #digitSubtract:) ast.
 	self assert: ast isPrimitive.
-
-	
 ]
 
 { #category : #tests }
@@ -378,7 +349,6 @@ RBMethodNodeTest >> testSizeOfSignatureOfKeywordsMethod [
 	self
 		assert: tree conceptualSignatureSize
 		equals: 'abdcde' size + 'foo:bar:' size + 3.
-	
 ]
 
 { #category : #tests }
@@ -401,6 +371,4 @@ RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
 ^ abd + cde'.
 
 	self deny: tree hasComments.
-	
-
 ]

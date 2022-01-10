@@ -11,5 +11,5 @@ ClyExpectedFailureMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyExpectedFailureMethodGroupProviderTest >> groupProviderClass [
-	^ClyExpectedFailureMethodGroupProvider 
+	^ClyExpectedFailureMethodGroupProvider
 ]

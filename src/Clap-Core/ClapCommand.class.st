@@ -52,7 +52,6 @@ ClapCommand class >> forHelp [
 			topic
 				ifNil: [ match context exitFailure: 'Unknown subcommand: ' , query word ]
 				ifNotNil: [ doc explain: topic ] ]
-
 ]
 
 { #category : #adding }
@@ -68,15 +67,6 @@ ClapCommand >> addSubcommand: aCommand [
 { #category : #adding }
 ClapCommand >> addTo: parentParameter [
 	^ parentParameter addSubcommand: self
-]
-
-{ #category : #generated }
-ClapCommand >> atName: specName [
-
-	self
-		deprecated: 'Use #at: instead'
-		transformWith: '`@rec atName: `@arg' -> '`@rec at: `@arg'.
-	^ self at: specName
 ]
 
 { #category : #'matching - testing' }

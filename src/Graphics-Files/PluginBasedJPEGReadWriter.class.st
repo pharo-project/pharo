@@ -106,7 +106,6 @@ PluginBasedJPEGReadWriter >> nextImage [
 	"Decode and answer a Form from my stream."
 
 	^ self nextImageSuggestedDepth: Display depth
-
 ]
 
 { #category : #'public access' }
@@ -145,7 +144,6 @@ PluginBasedJPEGReadWriter >> nextPutImage: aForm [
 	"Encode the given Form on my stream with default quality."
 
 	^ self nextPutImage: aForm quality: -1 progressiveJPEG: false
-
 ]
 
 { #category : #'public access' }
@@ -180,7 +178,6 @@ PluginBasedJPEGReadWriter >> primImageHeight: aJPEGCompressStruct [
 
 	<primitive: 'primImageHeight' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -188,7 +185,6 @@ PluginBasedJPEGReadWriter >> primImageWidth: aJPEGCompressStruct [
 
 	<primitive: 'primImageWidth' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -196,7 +192,6 @@ PluginBasedJPEGReadWriter >> primJPEGCompressStructSize [
 
 	<primitive: 'primJPEGCompressStructSize' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -204,7 +199,6 @@ PluginBasedJPEGReadWriter >> primJPEGDecompressStructSize [
 
 	<primitive: 'primJPEGDecompressStructSize' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -212,7 +206,6 @@ PluginBasedJPEGReadWriter >> primJPEGErrorMgr2StructSize [
 
 	<primitive: 'primJPEGErrorMgr2StructSize' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -226,7 +219,6 @@ PluginBasedJPEGReadWriter >> primJPEGReadHeader: aJPEGDecompressStruct fromByteA
 
 	<primitive: 'primJPEGReadHeaderfromByteArrayerrorMgr' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -234,7 +226,6 @@ PluginBasedJPEGReadWriter >> primJPEGReadImage: aJPEGDecompressStruct fromByteAr
 
 	<primitive: 'primJPEGReadImagefromByteArrayonFormdoDitheringerrorMgr' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -242,7 +233,6 @@ PluginBasedJPEGReadWriter >> primJPEGWriteImage: aJPEGCompressStruct onByteArray
 
 	<primitive: 'primJPEGWriteImageonByteArrayformqualityprogressiveJPEGerrorMgr' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'public access' }
@@ -314,5 +304,4 @@ PluginBasedJPEGReadWriter >> understandsImageFormat [
 	self next = 16rFF ifFalse: [^ false].
 	self next = 16rD8 ifFalse: [^ false].
 	^ true
-
 ]

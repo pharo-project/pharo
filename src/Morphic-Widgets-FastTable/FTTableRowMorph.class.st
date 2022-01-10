@@ -24,7 +24,6 @@ FTTableRowMorph class >> table: aTableMorph [
 FTTableRowMorph >> handlesMouseOver: evt [
 	self table ifNotNil: [ :table | ^ table selectionModeStrategy allowsRowSelection ].
 	^ false
-
 ]
 
 { #category : #initialization }

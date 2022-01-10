@@ -50,7 +50,7 @@ ZipWriteStream class >> extraLengthBits [
 	^ExtraLengthBits
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ZipWriteStream class >> initialize [
 	"ZipWriteStream initialize"
 	VerboseLevel := 0
@@ -353,7 +353,6 @@ ZipWriteStream >> initialize [
 	literalFreq := WordArray new: MaxLiteralCodes.
 	distanceFreq := WordArray new: MaxDistCodes.
 	self initializeNewBlock.
-
 ]
 
 { #category : #initialization }
@@ -384,7 +383,6 @@ ZipWriteStream >> on: aCollectionOrStream [
 		ifTrue:[super on: ByteArray new]
 		ifFalse:[super on: String new].
 	self writeHeader.
-
 ]
 
 { #category : #initialization }

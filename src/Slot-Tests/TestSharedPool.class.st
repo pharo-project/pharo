@@ -5,7 +5,8 @@ Class {
 	#name : #TestSharedPool,
 	#superclass : #SharedPool,
 	#classVars : [
-		'One'
+		'One',
+		'ReferencedInTest'
 	],
 	#category : #'Slot-Tests-Data'
 }

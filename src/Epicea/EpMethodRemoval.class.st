@@ -21,7 +21,7 @@ EpMethodRemoval class >> method: aCompiledMethod [
 { #category : #visitor }
 EpMethodRemoval >> accept: aVisitor [
 
-	^ aVisitor visitMethodRemoval: self 
+	^ aVisitor visitMethodRemoval: self
 ]
 
 { #category : #accessing }

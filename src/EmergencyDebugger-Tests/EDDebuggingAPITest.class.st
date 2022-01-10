@@ -11,7 +11,6 @@ EDDebuggingAPITest >> forbiddenProcesses [
 	[ Smalltalk lowSpaceWatcherProcess ].
 	[ WeakArray runningFinalizationProcess ].
 	[ Processor backgroundProcess ].
-	[ InputEventFetcher default fetcherProcess ].
 	[ UIManager default uiProcess ].
 	[ Delay schedulingProcess ]}
 ]
@@ -263,8 +262,6 @@ EDDebuggingAPITest >> testStackFromTo [
 	self
 		assertCollection: (debugAPI stackFrom: (stack size - 2) to: (stack size + 5))
 		equals: stackExtract.
-		
-	
 ]
 
 { #category : #'tests - stack' }

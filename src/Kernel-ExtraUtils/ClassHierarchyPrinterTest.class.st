@@ -40,7 +40,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 		excludedClasses: (RBNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
 		limitedToClasses: (RBNode withAllSubclasses select: [:each | each name beginsWith: 'RB']).
 	self assert: printer print equals: 
-'RBNode
+	'RBNode
 	RBProgramNode
 		RBComment
 		RBMethodNode
@@ -71,13 +71,6 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 					RBUnreachableStatementErrorNode
 			RBSelectorNode
 			RBVariableNode
-				RBArgumentNode
-				RBGlobalNode
-				RBInstanceVariableNode
-				RBSelfNode
-				RBSuperNode
-				RBTemporaryNode
-				RBThisContextNode
 	RBSlotInitializationNode
 '
 ]

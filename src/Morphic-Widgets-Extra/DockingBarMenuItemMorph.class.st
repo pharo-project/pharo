@@ -60,8 +60,6 @@ DockingBarMenuItemMorph >> mouseEnter: evt [
 	(owner selectedItem notNil
 				and: [owner selectedItem ~~ self])
 			ifTrue: [owner selectItem: self event: evt.].
-
-
 ]
 
 { #category : #events }
@@ -74,8 +72,7 @@ DockingBarMenuItemMorph >> mouseUp: evt [
 		self refreshWorld.
 		(Delay forMilliseconds: 200) wait].
 	owner rootMenu selectItem: nil event: evt.
-	self invokeWithEvent: evt.		
-
+	self invokeWithEvent: evt.
 ]
 
 { #category : #'submorphs - accessing' }
@@ -143,5 +140,4 @@ DockingBarMenuItemMorph >> updateLayoutInDockingBar [
 { #category : #rounding }
 DockingBarMenuItemMorph >> wantsRoundedCorners [
 	^self theme currentSettings preferRoundCorner
-		
 ]

@@ -23,7 +23,6 @@ CairoUTF8ConverterTest >> testEncodingString [
 	
 	self assert: pos equals: 3.
 	self assert: (encoder buffer first:3) equals: #[97 98 99]
-
 ]
 
 { #category : #tests }

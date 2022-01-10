@@ -88,6 +88,11 @@ ExternalAddress >> copyFrom: startIndex to: endIndex [
 ]
 
 { #category : #'*UnifiedFFI' }
+ExternalAddress >> copyFromOffset: startZeroBasedOffset to: endZeroBasedOffset [
+	^ self copyFrom: startZeroBasedOffset + 1 to: endZeroBasedOffset + 1
+]
+
+{ #category : #'*UnifiedFFI' }
 ExternalAddress >> doubleAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
 	^ self float64AtOffset: byteIndex - 1
@@ -163,15 +168,6 @@ ExternalAddress class >> fromString: aString [
 	result writeString: aString.
 	result unsignedByteAt: aString size + 1 put: 0.
 	^ result
-]
-
-{ #category : #'*UnifiedFFI-Deprecated50' }
-ExternalAddress >> gcpointer [
-	"Same as #pointer (see its comment for detals), but contents are garbage collected automatically"
-	self deprecated: 'Use "pointer autoRelease" instead.' on: '2016-01-22' in: #Pharo5.  
-	^ (ExternalAddress gcallocate: self size)
-		pointerAt: 1 put: self;
-		yourself
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -268,7 +264,7 @@ ExternalAddress >> packToArity: arity [
 	p := MyExternalObjectClass new.
 	self mehod: p.
 	
-	And I expect to have 'p' correctly initialised on return. 
+	And I expect to have 'p' correctly initialized on return. 
 	Well... tha's not so simple :)
 	
 	When compiling #method:, UnifiedFFI needs to first 'pack' the pointer (which means to 

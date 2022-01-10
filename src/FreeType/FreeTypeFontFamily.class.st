@@ -21,7 +21,6 @@ FreeTypeFontFamily >> addMembersFromFileInfos: aCollectionOfFreeTypeFileInfo [
 		member := FreeTypeFontFamilyMember fromFileInfo: aFileInfo.
 		(self memberWithStyleName: member styleName)
 			ifNil:[self addMember: member]].
-	
 ]
 
 { #category : #'simulated members' }
@@ -72,7 +71,6 @@ FreeTypeFontFamily >> initialize [
 { #category : #accessing }
 FreeTypeFontFamily >> memberWithStyleName: aString [
 	^members detect:[:each | each styleName = aString] ifNone:[]
-
 ]
 
 { #category : #'simulated members' }

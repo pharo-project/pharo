@@ -37,7 +37,6 @@ RBParseTreeSearcherTest >> testDynamicArrayStatements [
 	self assert: (dict at: (RBPatternVariableNode named:'`@first')) formattedCode equals: '(1 @ 2)'.
 	self assert: (dict at: (RBPatternVariableNode named:'`@second')) formattedCode equals: 'Color red'.
 	self assert: (dict at: (RBPatternVariableNode named:'`@third')) formattedCode equals: '3'
-		
 ]
 
 { #category : #'tests - to de refined' }
@@ -48,7 +47,6 @@ RBParseTreeSearcherTest >> testDynamicArrayWithStatementListPattern [
 	searcher matches: '{`.@stmts.}' do: [ :aNode :answer |  dict:= searcher context ].
 	dict := searcher executeTree: (self parseExpression:'{ (1@2) . Color red . 3}').
 	self assert: (dict at: (RBPatternVariableNode named: '`.@stmts')) size equals: 3
-
 ]
 
 { #category : #'tests - to de refined' }
@@ -100,7 +98,6 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector [
 					executeTree: (self 	
 							parseExpression: 'self at: 1 put: 2; at: 2 ifAbsent: []; ifAbsent: 2 at: 1; at: 4; foo')
 					initialAnswer: 0) equals: 2
-	
 ]
 
 { #category : #tests }
@@ -115,4 +112,22 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector2 [
 					executeTree: (self parseExpression: 'self ifAbsent: 2 at: 1; at: 4; foo')
 					initialAnswer: 0)
 		equals: 1
+]
+
+{ #category : #'tests - add search' }
+RBParseTreeSearcherTest >> testSimpleAddSearch [
+
+	| res |
+	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
+	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	self assert: res equals: #class
+]
+
+{ #category : #'tests - add search' }
+RBParseTreeSearcherTest >> testSimpleAddSearches [
+
+	| res |
+	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
+	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	self assert: res equals: #class
 ]

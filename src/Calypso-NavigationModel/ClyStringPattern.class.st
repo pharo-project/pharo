@@ -26,7 +26,7 @@ Class {
 { #category : #'instance creation' }
 ClyStringPattern class >> with: patternString [
 	^self new 
-		value: patternString 
+		value: patternString
 ]
 
 { #category : #comparing }
@@ -49,7 +49,7 @@ ClyStringPattern >> hash [
 
 { #category : #testing }
 ClyStringPattern >> matches: aString [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #printing }

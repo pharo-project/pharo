@@ -28,5 +28,4 @@ ArrayedCollection >> swapHalves [
  	blt sourceX: 0; destX: 2; copyBits.  "Exchange bytes 0&1 with 2&3"
  	blt sourceX: 2; destX: 0; copyBits.
  	blt sourceX: 0; destX: 2; copyBits.
-
 ]

@@ -28,7 +28,7 @@ ClyRenameMethodTagCommand class >> canBeExecutedInContext: aToolContext [
 ClyRenameMethodTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserMethodGroupContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #activation }

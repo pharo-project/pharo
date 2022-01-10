@@ -33,7 +33,6 @@ TCloneTest >> testCopyCreatesNewObject [
 	| copy | 
 	copy := self nonEmpty copy.
 	self deny: self nonEmpty == copy.
-	
 ]
 
 { #category : #'tests - copy - clone' }

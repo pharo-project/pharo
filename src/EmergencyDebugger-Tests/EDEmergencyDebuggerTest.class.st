@@ -43,7 +43,6 @@ EDEmergencyDebuggerTest >> testBasicDebug [
 	ed basicDebug: session.
 	self assert: ed debugAPI debugger identicalTo: ed.
 	self assert: ed isRunning
-	
 ]
 
 { #category : #'text - composition' }
@@ -85,7 +84,6 @@ EDEmergencyDebuggerTest >> testComposePromptWith [
 	self assert: rs next equals: $>.
 	self assert: rs next equals: Character space.
 	self assert: rs upToEnd equals: 'prompt'.
-
 ]
 
 { #category : #'text - composition' }
@@ -133,7 +131,6 @@ EDEmergencyDebuggerTest >> testComposeStackTest [
 	self assert: (rs upTo: Character cr) equals: ws contents.
 	
 	self assert: rs atEnd
-	 
 ]
 
 { #category : #'text - composition' }
@@ -175,7 +172,6 @@ EDEmergencyDebuggerTest >> testComposeStackText [
 	self assert: (rs upTo: Character cr) equals: ws contents.
 	
 	self assert: rs atEnd
-	 
 ]
 
 { #category : #'text - composition' }
@@ -192,14 +188,12 @@ EDEmergencyDebuggerTest >> testDebugAPI [
 	api := EDMockObjectForTests new.
 	EDEmergencyDebugger debugAPI: api.
 	self assert: EDEmergencyDebugger debugAPI identicalTo: api
-	
 ]
 
 { #category : #'debug API' }
 EDEmergencyDebuggerTest >> testDefaultDebugAPI [
 	
 	self assert: EDEmergencyDebugger debugAPI identicalTo: EDDebuggingAPI
-	
 ]
 
 { #category : #'text - helpers' }
@@ -230,7 +224,7 @@ EDEmergencyDebuggerTest >> testIsRunning [
 	"This is a new Ed, we did not call #debug: so it is not running"
 	self deny: EDEmergencyDebugger new isRunning.
 	"This Ed, we called #debug: in the test setup so it is running"
-	self assert: ed isRunning 
+	self assert: ed isRunning
 ]
 
 { #category : #'api - stack' }
@@ -242,7 +236,7 @@ EDEmergencyDebuggerTest >> testMoveDownInStack [
 	self assert: ed stackSelectionIndex 
 			equals: ((selectionIndexBefore + 1) min: debugAPI stackSize).
 	self assert: ed shortStackIndex equals: (shortStackIndexBefore + 1).
-	self assert: ed methodVersionSelectionIndex equals: 0		
+	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
 { #category : #'api - stack' }
@@ -263,7 +257,7 @@ EDEmergencyDebuggerTest >> testMoveUpInStack [
 	ed moveUpInStack.
 	self assert: ed stackSelectionIndex equals: (debugAPI stackSize - 1).
 	self assert: ed shortStackIndex equals: (debugAPI stackSize - 1).
-	self assert: ed methodVersionSelectionIndex equals: 0		
+	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
 { #category : #'api - stack' }
@@ -274,7 +268,7 @@ EDEmergencyDebuggerTest >> testMoveUpInStackFromFirstElement [
 	ed moveUpInStack.
 	self assert: ed stackSelectionIndex equals: selectionIndexBefore.
 	self assert: ed shortStackIndex equals: shortStackIndexBefore.
-	self assert: ed methodVersionSelectionIndex equals: 0		
+	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
 { #category : #'text - helpers' }
@@ -313,8 +307,6 @@ EDEmergencyDebuggerTest >> testRevertCurrentMethodToSelectedVersion [
 
 { #category : #'methods version' }
 EDEmergencyDebuggerTest >> testSelectedMethodVersion [
-
-	
 ]
 
 { #category : #'methods version' }
@@ -381,22 +373,20 @@ EDEmergencyDebuggerTest >> testShowOlderMethodVersion [
 
 { #category : #'methods version' }
 EDEmergencyDebuggerTest >> testShowSelectedMethodVersion [
-
-	
 ]
 
 { #category : #setup }
 EDEmergencyDebuggerTest >> testTerminate [
 	
 	ed terminate.
-	self deny: ed isRunning 
+	self deny: ed isRunning
 ]
 
 { #category : #updating }
 EDEmergencyDebuggerTest >> testUpdateDisplay [
 	ed updateDisplay.
 	self assert: mockDisplayAPI isCleared.
-	self assert: mockDisplayAPI displayData equals: ed composeDisplayText 
+	self assert: mockDisplayAPI displayData equals: ed composeDisplayText
 ]
 
 { #category : #updating }
@@ -411,8 +401,7 @@ EDEmergencyDebuggerTest >> testUpdatePrompt [
 ]
 
 { #category : #'api - stack' }
-EDEmergencyDebuggerTest >> testUpdateShortStackForDisplay [ 
-	
+EDEmergencyDebuggerTest >> testUpdateShortStackForDisplay [
 ]
 
 { #category : #'text - helpers' }

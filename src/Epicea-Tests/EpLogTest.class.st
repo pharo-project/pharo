@@ -47,7 +47,6 @@ EpLogTest >> testEntryReferences [
 			ifAbsent: [ self fail ] ].
 
 	self assert: entryReferences size equals: 5.
-
 ]
 
 { #category : #tests }

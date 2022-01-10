@@ -35,7 +35,6 @@ PasteUpMorph >> navigateVisibleWindowForward [
 	self nextVisibleWindow
 		ifNil: [SystemWindow passivateTopWindow]
 		ifNotNil: [:m | m activate]
- 
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
@@ -66,7 +65,6 @@ PasteUpMorph >> nextVisibleWindow [
 		ifNotEmpty: [ :windows | 
 			windows after: self currentWindow ifAbsent: [windows first]
 		]
-
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }

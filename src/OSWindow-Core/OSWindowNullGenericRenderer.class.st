@@ -48,12 +48,10 @@ OSWindowNullGenericRenderer >> drawString: aString from: firstIndex to: lastInde
 
 { #category : #rendering }
 OSWindowNullGenericRenderer >> drawTexture: texture in: rectangle [
-	
 ]
 
 { #category : #rendering }
 OSWindowNullGenericRenderer >> drawTexture: texture rectangle: sourceRectangle in: destRectangle [
-	
 ]
 
 { #category : #rendering }
