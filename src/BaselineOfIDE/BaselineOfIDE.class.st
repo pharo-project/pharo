@@ -244,10 +244,10 @@ BaselineOfIDE >> loadIceberg [
 	pharoPluginClass := Smalltalk classNamed: #IcePharoPlugin.
 	pharoPluginClass  addPharoProjectToIceberg.
 	
-	(Smalltalk classNamed: #BaselineOfSpec2) ifNotNil: [ :aClass | 
+	(Smalltalk classNamed: #BaselineOfSpec2) ifNotNil: [ :aClass |.
 		pharoPluginClass
 			addProjectNamed: 'pharo-spec2' 
-			commit: (Smalltalk classNamed: #BaselineOfPharo) specReleaseCommit 
+			commit: (pharoPluginClass commitOfExternalProject: 'Spec2') 
 			baselines: #(BaselineOfSpec2).
 		"Register baselines"
 		Metacello new baseline: 'Spec2'; register.
@@ -256,7 +256,7 @@ BaselineOfIDE >> loadIceberg [
 	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
 		pharoPluginClass 
 			addProjectNamed: 'pharo-newtools' 
-			commit: (Smalltalk classNamed: #BaselineOfPharo) newToolsReleaseCommit 
+			commit: (pharoPluginClass commitOfExternalProject: 'NewTools') 
 			baselines: #(BaselineOfNewTools).
 		"Register baselines"
 		Metacello new baseline: 'NewTools'; register ].
