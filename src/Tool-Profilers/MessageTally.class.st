@@ -544,11 +544,10 @@ MessageTally >> into: leafDict fromSender: senderTally [
 { #category : #testing }
 MessageTally >> isClosed [
 
-	^ Timer isNil 
-		and: [ class isNil 
+	^ class isNil 
 		and: [ method isNil 
 		and: [ tally isNil 
-		and: [ receivers isNil ] ] ] ]
+		and: [ receivers isNil ] ] ] 
 ]
 
 { #category : #comparing }
