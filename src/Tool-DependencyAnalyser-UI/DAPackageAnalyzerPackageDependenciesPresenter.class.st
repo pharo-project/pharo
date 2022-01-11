@@ -2,18 +2,18 @@
 UI merging SpecTreeModel cycles and browser
 "
 Class {
-	#name : #DAPackageAnalyzerPackageDependenciesWindow,
+	#name : #DAPackageAnalyzerPackageDependenciesPresenter,
 	#superclass : #DAPackageAnalyzerWindow,
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #examples }
-DAPackageAnalyzerPackageDependenciesWindow class >> collections [
+DAPackageAnalyzerPackageDependenciesPresenter class >> collections [
 	^ (self onPackagesMatch: '*Collections*') open
 ]
 
 { #category : #'instance creation' }
-DAPackageAnalyzerPackageDependenciesWindow class >> onPackagesMatch: match [
+DAPackageAnalyzerPackageDependenciesPresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages
 				select: [ :package | match match: package packageName asString ]
@@ -21,18 +21,18 @@ DAPackageAnalyzerPackageDependenciesWindow class >> onPackagesMatch: match [
 ]
 
 { #category : #examples }
-DAPackageAnalyzerPackageDependenciesWindow class >> system [
+DAPackageAnalyzerPackageDependenciesPresenter class >> system [
 	^ (self onPackagesNamed: self systemPackages) open 
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerPackageDependenciesWindow >> initializeWithPackageNames: aCollection [
+DAPackageAnalyzerPackageDependenciesPresenter >> initializeWithPackageNames: aCollection [
 	packageAnalyzerTreeModel := DAPackageAnalyzerTreePresenter onPackagesNamed: aCollection.
-	self buildandAddAllMorph 
+	self buildandAddAllMorph
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerPackageDependenciesWindow >> initializeWithRelationGraph: aRelationGraph [
+DAPackageAnalyzerPackageDependenciesPresenter >> initializeWithRelationGraph: aRelationGraph [
 	packageAnalyzerTreeModel := DAPackageAnalyzerReverseTreePresenter onRelationGraph: aRelationGraph.
 	self buildandAddAllMorph 
 ]

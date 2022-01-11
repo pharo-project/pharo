@@ -3,7 +3,7 @@ A DAPackageTreeModel is an abstract class. It's a the superclass of the two tree
 "
 Class {
 	#name : #DAPackageTreePresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'tree',
 		'buttonRefresh',
@@ -47,7 +47,7 @@ DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 				addMenuItem:
 					(MenuItemPresenter new
 						name: 'Browse scoped dependencies';
-						action: [ (DAPackageAnalyzerPackageDependenciesWindow onPackagesNamed: selectedPackageNames) open ]).
+						action: [ (DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: selectedPackageNames) open ]).
 			selectedNodes size > 1
 				ifTrue: [ 
 					menuGroup
@@ -113,9 +113,10 @@ DAPackageTreePresenter >> initializePresenter [
 { #category : #initialization }
 DAPackageTreePresenter >> initializeWidgets [
 	tree := self newTree
-		multiSelection: true;
+		beMultipleSelection;
 		bindKeyCombination: $b meta toAction: [ self selectedItemFromTree spawnNewBrowser ];
-		columns: {(TreeColumnPresenter new displayBlock: [ :node | node label ])};
+		children: [ :node | node buildChildren ];
+		display: [ :node | node label ];
 		yourself.
 	buttonRefresh := self newButton
 		icon: (self iconNamed: #refreshIcon);

@@ -25,33 +25,23 @@ Class {
 { #category : #specs }
 DAPackageAnalyzerTreePresenter class >> defaultSpec [
 	<spec: #default>
-	^ SpecLayout composed
-		newColumn:
-			[ :col | 
-			col
-				newRow: [ :row | 
-							row
-								add: #textPackageField;
-								add: #buttonBrowseCycles;
-								add: #buttonRefresh;
-								add: #buttonDefault
-								 ]
-					height: 30;
-				newRow: [ :row | 
-							row
-								add: #packageLabel ]
-					height: 20;
-				add: #tree;
-				newRow: [ :row | 
-							row
-								add: #buttonAddPackage;
-								add: #buttonRemovePackage;
-								"add: #buttonGenerateGraphViz;"
-								"add: #buttonMakeDiff;"
-								add: #buttonReverseAnalysis
-								 ]
-					height: 30 ]	
-					  yourself
+	^ SpBoxLayout newVertical 
+		add: ( SpBoxLayout newHorizontal 
+					add: #textPackageField;
+					add: #buttonBrowseCycles;
+					add: #buttonRefresh;
+					add: #buttonDefault;
+					yourself) 
+			expand: false;
+		add: #packageLabel expand: false;
+		add: #tree;
+		add: (SpBoxLayout newHorizontal 
+				add: #buttonAddPackage;
+				add: #buttonRemovePackage;
+				add: #buttonReverseAnalysis;
+				yourself)
+			expand: false;
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -148,7 +138,7 @@ DAPackageAnalyzerTreePresenter >> actionOnRemovePackage [
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> actionOnReverseAnalysis [
 	buttonReverseAnalysis action: [ 
-		(DAPackageAnalyzerPackageDependenciesWindow new 
+		(DAPackageAnalyzerPackageDependenciesPresenter new 
 						initializeWithRelationGraph: self relationGraph) 
 					open ]
 ]
@@ -162,7 +152,7 @@ DAPackageAnalyzerTreePresenter >> actionOnSave [
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> actionWhenTextFieldChanged [
 	textPackageField
-		whenTextChanged: [ textPackageField text
+		whenTextChangedDo: [ textPackageField text
 				ifEmpty: [ self resetFilter ]
 				ifNotEmpty: [ self filter: textPackageField text ].
 			self buildRoots ]
@@ -193,16 +183,6 @@ DAPackageAnalyzerTreePresenter >> buttonBrowseCycles [
 { #category : #accessing }
 DAPackageAnalyzerTreePresenter >> buttonDefault [
 	^ buttonDefault
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonGenerateGraphViz [
-	^ buttonGenerateGraphViz
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonMakeDiff [
-	^ buttonMakeDiff
 ]
 
 { #category : #accessing }
@@ -286,12 +266,13 @@ DAPackageAnalyzerTreePresenter >> initializePresenter [
 	super initializePresenter.
 	self actionOnButtons.
 	tree
-		whenSelectedItemChanged: [ :item |
+		whenSelectedItemChangedDo: [ :item |
 			item
 				ifNil: [ buttonBrowseCycles enabled: false ]
 				ifNotNil: [ 
 					buttonBrowseCycles enabled: true.
-					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ].
+					self flag: #menu.
+					"tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ]."
 					self tree selectedItem selectInBrowser ] ]
 ]
 
@@ -300,7 +281,7 @@ DAPackageAnalyzerTreePresenter >> initializeWidgets [
 	super initializeWidgets.
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	textPackageField := self newTextInput
-		ghostText: 'Enter a package name';
+		placeholder: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
 	self initializeButtons
 ]

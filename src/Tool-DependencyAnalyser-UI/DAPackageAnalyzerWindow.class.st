@@ -7,10 +7,11 @@ The main feature is to browse automatically in the browser when you click on a n
 "
 Class {
 	#name : #DAPackageAnalyzerWindow,
-	#superclass : #StandardWindow,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'packageAnalyzerTreeModel',
-		'browser'
+		'browser',
+		'browserWrapper'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
@@ -23,9 +24,7 @@ DAPackageAnalyzerWindow class >> isAbstract [
 
 { #category : #'instance creation' }
 DAPackageAnalyzerWindow class >> onPackagesNamed: aCollection [
-	^ self new 
-		initializeWithPackageNames: aCollection;
-		yourself
+	^ self on: (DAPackageAnalyzerTreePresenter onPackagesNamed: aCollection)
 ]
 
 { #category : #accessing }
@@ -54,7 +53,7 @@ DAPackageAnalyzerWindow >> addAllMorph [
 { #category : #building }
 DAPackageAnalyzerWindow >> buildBrowserWindow [
 
-	^browser buildWindow
+	^ self model browser
 ]
 
 { #category : #building }
@@ -79,6 +78,14 @@ DAPackageAnalyzerWindow >> defaultLabel [
 	^ 'Package Dependencies Analysis'
 ]
 
+{ #category : #initialization }
+DAPackageAnalyzerWindow >> defaultLayout [ 
+	^ SpBoxLayout newHorizontal 
+		add: self model;
+		add: browserWrapper;
+		yourself 
+]
+
 { #category : #'open/close' }
 DAPackageAnalyzerWindow >> delete [
 	self packageAnalyzerTreeModel close.
@@ -90,9 +97,18 @@ DAPackageAnalyzerWindow >> initialExtent [
 	^ (1500@800)
 ]
 
+{ #category : #initialization }
+DAPackageAnalyzerWindow >> initializePresenters [ 
+
+	browserWrapper := self newMorph 
+		morph: self buildBrowserWindow.
+		
+	self layout: self defaultLayout.
+]
+
 { #category : #accessing }
 DAPackageAnalyzerWindow >> open [
-	^ self openInWorld.
+	^ self openWithSpec
 	
 ]
 

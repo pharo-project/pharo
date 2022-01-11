@@ -82,7 +82,7 @@ DAPackageDependenciesWelcome >> actionOnOpen [
 		action: [ 
 			self itemsFromPackageChosenList
 				ifNotEmpty: [ 
-					(DAPackageAnalyzerPackageDependenciesWindow onPackagesNamed: self itemsFromPackageChosenList) open.
+					(DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: self itemsFromPackageChosenList) open.
 					 ] ]
 ]
 
