@@ -1674,7 +1674,8 @@ String >> findWordStart: key startingAt: start [
 
 { #category : #enumerating }
 String >> flattenOn: aStream [
-		aStream nextPut: self
+	"Strings are not flattend to characters"
+	aStream nextPut: self
 ]
 
 { #category : #formatting }
