@@ -1080,20 +1080,6 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 ]
 
 { #category : #services }
-UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
-	"Answer the result of a font selector dialog with the given title and initial font."
-
-	| dialog |
-	dialog :=  Cursor wait showWhile: [
-		self newFontSelector
-			basicTheme: aThemedMorph theme;
-			title: aString;
-			selectedFont: aFont].
-	dialog openModal.
-	^ dialog cancelled ifFalse: [dialog selectedFont]
-]
-
-{ #category : #services }
 UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
@@ -3590,12 +3576,6 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 			 width: 1;
 			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
-]
-
-{ #category : #'morph creation' }
-UITheme >> newFontSelector [
-	"Answer a new font selector dialog"
-		^FreeTypeFontSelectorDialogWindow new
 ]
 
 { #category : #'morph creation' }
