@@ -564,7 +564,7 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	make sure that we step correctly over the first primitive bytecode"
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
-	suspendedContext method isQuick
+	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 	
 	^ aProcess stepToSendOrReturn
