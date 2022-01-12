@@ -603,6 +603,13 @@ FileReference >> versionNumberFor: basename extension: extension [
 		ifFalse: [ maxVersion ]
 ]
 
+{ #category : #utilities }
+FileReference >> withDifferentExtension: aString [ 
+	"Return a new file reference having the same path than the receiver but with a new extension replacing the previous one."
+	^ self parent / (self basenameWithoutExtension: self extension), aString
+	
+]
+
 { #category : #streams }
 FileReference >> writeStream [
 	
