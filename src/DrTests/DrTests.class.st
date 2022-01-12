@@ -142,8 +142,9 @@ DrTests >> initializePluginsDropList [
 		help: 'Select the plugin used by Dr Tests UI.';
 		items: self plugins;
 		display: [ :pluginClass | pluginClass pluginName ];
-		iconBlock: [ :pluginClass | pluginClass pluginIcon ];
-		whenSelectedItemChangedDo: [ :pluginClass | self currentPlugin: pluginClass new ]
+		displayIcon: [ :pluginClass | pluginClass pluginIcon ];
+		whenSelectedItemChangedDo: [ :pluginClass | 
+			self currentPlugin: pluginClass new ]
 ]
 
 { #category : #initialization }
