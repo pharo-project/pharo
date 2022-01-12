@@ -1186,6 +1186,21 @@ FileReferenceTest >> testVersionNumberForExtension [
 		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
 ]
 
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testWithExtension [
+	
+	| dir origin newFileRef |
+	filesystem createDirectory: 'dir'.
+	dir := filesystem / 'dir'.
+	origin := dir / 'games.html'.
+	
+	newFileRef := (dir / 'games.html') withDifferentExtension: 'md'.
+	self assert: newFileRef basenameWithoutExtension equals: origin basenameWithoutExtension.
+	self assert: newFileRef extension equals: 'md'.
+	self assert: newFileRef withoutExtension printString size equals: origin withoutExtension printString size
+	
+]
+
 { #category : #tests }
 FileReferenceTest >> testWithExtentionAddsExtension [
 	| ref result |
