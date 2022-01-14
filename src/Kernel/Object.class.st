@@ -1733,8 +1733,9 @@ Object >> removeDependent: anObject [
 
 { #category : #'class membership' }
 Object >> respondsTo: aSymbol [ 
-	"Answer whether the method dictionary of the receiver's class contains 
-	aSymbol as a message selector."
+	"Answer whether the receiver can understand the specified message selector
+	aSymbol (ie. will respond meaningfully when such a message is sent to the
+	receiver)."
 
 	^self class canUnderstand: aSymbol
 ]
