@@ -217,11 +217,11 @@ BaselineOfIDE >> baseline: spec [
 { #category : #actions }
 BaselineOfIDE >> loadExtraTools [
 	
-	Metacello new
+	"Metacello new
 		baseline: 'NewToolsDocumentationReader';
 		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
 		onConflictUseIncoming;
-		load.
+		load."
 "
 	Metacello new
  	 baseline: 'BeautifulComments';
