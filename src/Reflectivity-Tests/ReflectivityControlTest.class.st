@@ -34,7 +34,7 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'tests - after' }
@@ -811,7 +811,6 @@ ReflectivityControlTest >> testConditionDisableEnableNoArguments [
 	link enable.
 	ReflectivityExamples new exampleMethod.
 	self assert: tag class equals: RBMessageNode
-
 ]
 
 { #category : #'tests - conditions' }
@@ -954,7 +953,6 @@ ReflectivityControlTest >> testFailingDoubleRWInsteadSimplified [
 			
 	readNode link: readLink.
 	readLink uninstall
-
 ]
 
 { #category : #'tests - instead' }
@@ -1269,7 +1267,6 @@ ReflectivityControlTest >> testLinkOneShot [
 	tag := nil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: tag isNil
-
 ]
 
 { #category : #'tests - options' }

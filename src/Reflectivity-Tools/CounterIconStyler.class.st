@@ -14,7 +14,7 @@ CounterIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 CounterIconStyler >> iconFor: aNode [
-	^ self iconNamed: #classIcon 
+	^ self iconNamed: #classIcon
 ]
 
 { #category : #defaults }

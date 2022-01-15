@@ -31,7 +31,7 @@ MetaLinkObjectAPITest >> linkForTemp [
 MetaLinkObjectAPITest >> setUp [
 	super setUp.
 	tag := OrderedCollection new.
-	MetaLink uninstallAll 
+	MetaLink uninstallAll
 ]
 
 { #category : #tagging }

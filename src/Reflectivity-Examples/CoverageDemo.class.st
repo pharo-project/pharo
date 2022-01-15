@@ -35,7 +35,7 @@ CoverageDemo class >> exampleIfTrueIfFalse [
 	| t |
 	t := false.
 	t ifTrue: [ self bar ] ifFalse: [ 'hello' ].
-	^ 5 
+	^ 5
 ]
 
 { #category : #examples }
@@ -159,7 +159,6 @@ CoverageDemo >> openWithSpec [
 CoverageDemo >> removeMetalink [
 	
 	compiledMethods do:[:method| method methodClass recompile].
-	
 ]
 
 { #category : #action }

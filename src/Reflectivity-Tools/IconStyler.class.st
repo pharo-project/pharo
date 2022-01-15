@@ -24,7 +24,6 @@ IconStyler class >> withStaticStylers [
 	^ self new 
 		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DisabledBreakpointIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler}; 
 		yourself
-
 ]
 
 { #category : #styling }
@@ -40,7 +39,7 @@ IconStyler >> addIconStyle: aNode [
 { #category : #styling }
 IconStyler >> addIconStyle: aNode from: start to: stop [
 	
-	self addIconStyle: aNode from: start to: stop color: self highlightColor 
+	self addIconStyle: aNode from: start to: stop color: self highlightColor
 ]
 
 { #category : #styling }
@@ -73,7 +72,7 @@ IconStyler >> highlightColor [
 
 { #category : #defaults }
 IconStyler >> iconBlock: aNode [
-	^ [ ] 
+	^ [ ]
 ]
 
 { #category : #defaults }
@@ -110,7 +109,7 @@ IconStyler >> segmentMorphClass [
 
 { #category : #testing }
 IconStyler >> shouldStyleNode: aNode [
-	^false 
+	^false
 ]
 
 { #category : #styling }
@@ -236,13 +235,13 @@ IconStyler >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 IconStyler >> visitReturnNode: aReturnNode [ 
 	self addIconStyle: aReturnNode.
-	super visitReturnNode: aReturnNode 
+	super visitReturnNode: aReturnNode
 ]
 
 { #category : #visiting }
 IconStyler >> visitSelfNode: aSelfNode [ 
 	self addIconStyle: aSelfNode.
-	super visitSelfNode: aSelfNode 
+	super visitSelfNode: aSelfNode
 ]
 
 { #category : #visiting }
