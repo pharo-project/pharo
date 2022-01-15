@@ -202,7 +202,6 @@ MirrorPrimitives class >> modificationForbiddenFor: anObject at: fieldIndex with
 MirrorPrimitives class >> print: anObject [
 	
 	^String streamContents: [ :s |	self print: anObject on: s] limitedTo: 32.
-
 ]
 
 { #category : #printing }
