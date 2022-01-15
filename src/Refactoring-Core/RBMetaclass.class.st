@@ -22,8 +22,7 @@ RBMetaclass class >> existingNamed: aSymbol model: aRBNamespace [
 	^ (self named: aSymbol)
 		model: aRBNamespace;
 		realName: aSymbol;
-		yourself 
-	
+		yourself
 ]
 
 { #category : #'instance creation' }

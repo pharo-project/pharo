@@ -30,7 +30,7 @@ RBMoveClassTransformation class >> model: aRBModel move: aClassName to: aCategor
 		model: aRBModel;
 		move: aClassName
 		to: aCategoryName;
-		yourself 
+		yourself
 ]
 
 { #category : #api }
@@ -39,7 +39,7 @@ RBMoveClassTransformation class >> move: aClassName to: aCategoryName [
 	^ self new
 		move: aClassName
 		to: aCategoryName;
-		yourself 
+		yourself
 ]
 
 { #category : #api }

@@ -54,7 +54,6 @@ RBSplitCascadeRefactoring >> extractReceiver [
 		before: ancestorNode.
 	cascadeNode messages
 		do: [ :each | each receiver: (RBVariableNode named: name) ]
-		
 ]
 
 { #category : #preconditions }

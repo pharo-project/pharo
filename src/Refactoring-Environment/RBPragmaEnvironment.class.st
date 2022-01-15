@@ -40,7 +40,7 @@ RBPragmaEnvironment >> addKeyword: aSymbol [
 
 { #category : #accessing }
 RBPragmaEnvironment >> basisObjects [
-	^ keywords 
+	^ keywords
 ]
 
 { #category : #initialization }

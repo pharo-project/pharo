@@ -28,7 +28,7 @@ RBRemovePragmaTransformationTest >> testClassDoesNotExist [
 							pragma: '<gtInspectorPresentationOrder: 34>'
 							inMethod: #methodBefore
 							inClass: #RBPragmaTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -38,7 +38,7 @@ RBRemovePragmaTransformationTest >> testMethodDoesNotExist [
 							pragma: '<gtInspectorPresentationOrder: 34>'
 							inMethod: #method
 							inClass: #RBRemovePragmaTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }

@@ -43,7 +43,7 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass [
 { #category : #'instance creation' }
 RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: aSuperClass [
 	^ self new 
-		pullUp: selectorCollection from: aClass to: aSuperClass 
+		pullUp: selectorCollection from: aClass to: aSuperClass
 ]
 
 { #category : #preconditions }
@@ -246,7 +246,7 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 
 { #category : #initialization }
 RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [ 
-	self pullUp: selectorCollection from: aClass to: aClass superclass 
+	self pullUp: selectorCollection from: aClass to: aClass superclass
 ]
 
 { #category : #initialization }

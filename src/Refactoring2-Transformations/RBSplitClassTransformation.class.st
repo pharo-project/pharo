@@ -113,7 +113,6 @@ RBSplitClassTransformation >> buildTransformations [
 		abstractVariableReferences.
 		
 	^ transformations
-		
 ]
 
 { #category : #api }
@@ -146,7 +145,7 @@ RBSplitClassTransformation >> createReference [
 { #category : #private }
 RBSplitClassTransformation >> definingClass [
 
-	^ self model classObjectFor: class 
+	^ self model classObjectFor: class
 ]
 
 { #category : #preconditions }

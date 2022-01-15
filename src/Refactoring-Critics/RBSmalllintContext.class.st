@@ -217,7 +217,6 @@ RBSmalllintContext >> selectors [
 { #category : #accessing }
 RBSmalllintContext >> selfMessages [
     ^self parseTree selfMessages
-
 ]
 
 { #category : #private }
@@ -244,7 +243,6 @@ RBSmalllintContext >> specialSelectors [
 { #category : #accessing }
 RBSmalllintContext >> superMessages [
     ^self parseTree superMessages
-
 ]
 
 { #category : #testing }

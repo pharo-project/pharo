@@ -64,7 +64,6 @@ And of course
 RBParseTreeSearcher and RBParseTreeRewriter
 The original users of this AST structure for searching and rewriting code, more on this in its own chapter.
 '
-
 ]
 
 { #category : #accessing }

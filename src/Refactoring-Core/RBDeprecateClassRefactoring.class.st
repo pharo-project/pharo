@@ -47,7 +47,7 @@ RBDeprecateClassRefactoring >> classSideExtensionMethodsOf: anRBClass [
 
 	^ anRBClass realClass classSide localMethods 
 		select: #isExtension 
-		thenCollect: [ :each | anRBClass classSide methodFor: each selector ] 
+		thenCollect: [ :each | anRBClass classSide methodFor: each selector ]
 ]
 
 { #category : #transforming }
@@ -101,13 +101,13 @@ RBDeprecateClassRefactoring >> instanceSideExtensionMethodsOf: anRBClass [
 
 	^ anRBClass realClass instanceSide localMethods 
 		select: #isExtension 
-		thenCollect: [ :each | anRBClass instanceSide methodFor: each selector ] 
+		thenCollect: [ :each | anRBClass instanceSide methodFor: each selector ]
 ]
 
 { #category : #transforming }
 RBDeprecateClassRefactoring >> newClass [
 
-	^ self model classNamed: newName.  	
+	^ self model classNamed: newName.
 ]
 
 { #category : #preconditions }
@@ -126,7 +126,6 @@ RBDeprecateClassRefactoring >> removeExtensionMethods [
 		
 	(self classSideExtensionMethodsOf: deprecatedClass)
 		do: [ :each | deprecatedClass classSide removeMethod: each selector ].
-
 ]
 
 { #category : #transforming }
@@ -212,5 +211,4 @@ RBDeprecateClassRefactoring >> transform [
 		
 	self shouldRemoveExtensions 
 		ifTrue: [ self removeExtensionMethods ].
-
 ]

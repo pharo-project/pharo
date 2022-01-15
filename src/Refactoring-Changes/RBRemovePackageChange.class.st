@@ -25,7 +25,7 @@ RBRemovePackageChange >> asUndoOperation [
 { #category : #accessing }
 RBRemovePackageChange >> package [
 
-	^ (browserEnvironment packageAt: packageName ifAbsent: [nil]) 
+	^ (browserEnvironment packageAt: packageName ifAbsent: [nil])
 ]
 
 { #category : #private }

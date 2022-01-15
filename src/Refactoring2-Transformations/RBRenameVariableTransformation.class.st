@@ -121,7 +121,6 @@ RBRenameVariableTransformation >> referencesFor: aClass [
 	^ isClassVariable
 		ifTrue: [ aClass whichSelectorsReferToClassVariable: variableName ]
 		ifFalse: [ aClass whichSelectorsReferToInstanceVariable: variableName ]
-	
 ]
 
 { #category : #api }

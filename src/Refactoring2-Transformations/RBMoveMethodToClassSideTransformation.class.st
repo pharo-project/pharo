@@ -43,7 +43,7 @@ RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 			[^ true].
 	(class whoDefinesClassVariable: aString) ifNotNil: 
 			[^ true].
-	^ (self parseTree allDefinedVariables includes: aString) 
+	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
 { #category : #refactoring }
@@ -72,7 +72,7 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 				(RBParser parseExpression: temp , ' := self new').
 			node body addTemporaryNamed: temp.
 			^ node newSource ]
-		ifFalse: [ ^ node sourceCode ] 
+		ifFalse: [ ^ node sourceCode ]
 ]
 
 { #category : #refactoring }
