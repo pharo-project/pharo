@@ -564,7 +564,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 { #category : #fileout }
 Class >> expandedDefinitionStringFor: aPrinter [
 
-	^ aPrinter expandedClassDefinitionString
+	^ aPrinter expandedDefinitionString
 ]
 
 { #category : #private }
