@@ -167,6 +167,31 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 ]
 
 { #category : #'tests - expanded' }
+FluidClassDefinitionPrinterTest >> testExpandedProtoObject [
+
+	self 
+		assert: (self expandedForClass: ProtoObject)  
+		equals: 'nil << #ProtoObject
+	layout: FixedLayout;
+	traits: {};
+	slots: {};
+	sharedVariables: {};
+	sharedPools: {};
+	tag: ''Objects'';
+	package: ''Kernel'''
+]
+
+{ #category : #'tests - expanded' }
+FluidClassDefinitionPrinterTest >> testExpandedProtoObjectClass [
+
+	self 
+		assert: (self expandedForClass: ProtoObject class)  
+		equals: 'Class class << ProtoObject class
+	traits: {};
+	slots: {}'
+]
+
+{ #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedTime [
 
 	self 
