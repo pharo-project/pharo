@@ -24,8 +24,7 @@ minus'."
 	
 	self assert: ('one word' matchesRegex: '\w').	
 		
-	self assert: ('one' matchesRegex: '\w').		  	
-	
+	self assert: ('one' matchesRegex: '\w').
 ]
 
 { #category : #tests }
@@ -63,7 +62,6 @@ brackets. For example, `[01]' matches either `0' or `1':"
 	self deny: ('3' matchesRegex: '[01]'). 	 
 	self deny: ('11' matchesRegex: '[01]').	"-- false: a set matches only one character"
 	self deny: ('01' matchesRegex: '[01]').
-
 ]
 
 { #category : #tests }
@@ -71,7 +69,7 @@ RxParserTest >> testCharacterSetBinaryNumber [
 	"Using plus operator, we can build the following binary number
 recognizer:"
 	self assert: ('10010100' matchesRegex: '[01]+').	 	
-	self deny: ('10001210' matchesRegex: '[01]+')	 
+	self deny: ('10001210' matchesRegex: '[01]+')
 ]
 
 { #category : #tests }
@@ -102,7 +100,6 @@ between them: `[0-9]' is the same as `[0123456789]'. "
 	self deny: ('a' matchesRegex: '[0-9]').
 	self deny: ('01' matchesRegex: '[0-9]').	
 	self assert: ('01442128629839374565' matchesRegex: '[0-9]+')
-	
 ]
 
 { #category : #tests }
@@ -142,7 +139,6 @@ example: `a|'.  However, it is an error to apply `*', `+', or `?' to
 such expression: `(a|)*' is an invalid expression."
 
 	self should: ['(a|)*' asRegex] raise: Error
-
 ]
 
 { #category : #tests }
@@ -200,7 +196,7 @@ further)."
 
 	self deny: ('ab*' matchesRegex: 'ab*'). "	-- false: star in the right string is special"
 	self assert: ('ab*' matchesRegex: 'ab\*').	 		
-	self assert: ('a\c' matchesRegex: 'a\\c')		 	
+	self assert: ('a\c' matchesRegex: 'a\\c')
 ]
 
 { #category : #tests }
@@ -229,7 +225,7 @@ expression. For example:"
 	self assert: ('ab' matchesRegex: 'a*b').		 		
 	self assert: ('aaaaab' matchesRegex: 'a*b').	
 	self assert: ('b' matchesRegex: 'a*b').	 	
-	self deny: ('aac' matchesRegex: 'a*b')		
+	self deny: ('aac' matchesRegex: 'a*b')
 ]
 
 { #category : #tests }
@@ -250,7 +246,6 @@ set. Below are the examples of how to literally use them in a set:
 	
 	"[^abc] means that everything except abc is matche"
 	self assert: ('^' matchesRegex: '[^01]')
-	
 ]
 
 { #category : #tests }
