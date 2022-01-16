@@ -180,7 +180,6 @@ FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 
 	^ String streamContents: [ :s | 
-		  | tag |
 		  s nextPutAll: 'Trait << '.
 		  s nextPutAll: forClass name.
 
