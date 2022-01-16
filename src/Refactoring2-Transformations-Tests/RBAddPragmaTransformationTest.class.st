@@ -26,7 +26,7 @@ RBAddPragmaTransformationTest >> testClassDoesNotExist [
 							pragma: '<gtInspectorPresentationOrder: 56>'
 							inMethod: #methodBefore
 							inClass: #RBPragmaTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }

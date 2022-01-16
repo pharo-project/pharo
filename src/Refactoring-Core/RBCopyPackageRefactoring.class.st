@@ -123,7 +123,6 @@ RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 	subclasses do: [ :cls |
 		self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name))
 	]
-	
 ]
 
 { #category : #printing }

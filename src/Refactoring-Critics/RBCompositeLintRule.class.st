@@ -123,8 +123,7 @@ RBCompositeLintRule >> isEmpty [
 { #category : #accessing }
 RBCompositeLintRule >> leaves [
 
-	^ rules flatCollect: [ :rule | rule leaves ]	
-
+	^ rules flatCollect: [ :rule | rule leaves ]
 ]
 
 { #category : #accessing }
@@ -149,7 +148,7 @@ RBCompositeLintRule >> removeRule: aRule [
 		ifTrue: [rules := rules reject:  [ :rule | rule name = aRule name]]
 		 ifFalse: [rules do: [ :rule |
 				rule isComposite 
-					ifTrue: [rule removeRule: aRule]]] 
+					ifTrue: [rule removeRule: aRule]]]
 ]
 
 { #category : #initialization }

@@ -264,7 +264,7 @@ RBPullUpMethodTransformation >> pullUp: aSelector [
 
 { #category : #api }
 RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass [
-	self pullUp: selectorCollection from: aClass to: aClass superclass 
+	self pullUp: selectorCollection from: aClass to: aClass superclass
 ]
 
 { #category : #api }

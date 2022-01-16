@@ -50,7 +50,7 @@ RBSelectorEnvironment class >> implementorsMatching: aString in: anEnvironment [
 RBSelectorEnvironment class >> implementorsOf: aSelector [
 	^ self
 		implementorsOf: aSelector
-		in: self default 
+		in: self default
 ]
 
 { #category : #'instance creation' }
@@ -100,7 +100,7 @@ RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass [
 	^ self
 		onMethods: selectorCollection
 		forClass: aClass
-		in: self default 
+		in: self default
 ]
 
 { #category : #'instance creation' }
@@ -115,7 +115,7 @@ RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass in
 RBSelectorEnvironment class >> referencesTo: aLiteral [
 	^ self
 		referencesTo: aLiteral
-		in: self default 
+		in: self default
 ]
 
 { #category : #'instance creation' }

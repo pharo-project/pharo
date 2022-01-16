@@ -14,7 +14,7 @@ RBAddClassParametrizedTest class >> testParameters [
 
 { #category : #accessing }
 RBAddClassParametrizedTest >> constructor [ 
-	^ #addClass:superclass:subclasses:category: 
+	^ #addClass:superclass:subclasses:category:
 ]
 
 { #category : #running }

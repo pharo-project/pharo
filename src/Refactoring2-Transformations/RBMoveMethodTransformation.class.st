@@ -407,7 +407,6 @@ RBMoveMethodTransformation >> selectVariableTypesFrom: initialTypeCollection sel
 		value: self
 		value: initialTypeCollection
 		value: selectedTypeCollection
-
 ]
 
 { #category : #transforming }
