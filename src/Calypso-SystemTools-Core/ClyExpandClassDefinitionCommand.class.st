@@ -5,9 +5,10 @@ Class {
 }
 
 { #category : #activation }
-ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
+ClyExpandClassDefinitionCommand class >> sourceCodeShortcutActivation [
    <classAnnotation>
-   ^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyClassDefinitionContext
+
+   ^CmdShortcutActivation by: $e meta for: ClyClassDefinitionContext
 ]
 
 { #category : #accessing }
