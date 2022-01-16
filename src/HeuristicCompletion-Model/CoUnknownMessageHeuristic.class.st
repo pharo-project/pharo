@@ -23,14 +23,10 @@ CoUnknownMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext
 	I can be used also after more fine heuristics, to complete guessed heuristics that cannot be trusted too much, like variable names"
 
 	"If the context allows it, autocomplete first messages in the current package, then the rest in the system"
-	| fetcher |
-	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
-		collect: [ :e | NECSelectorEntry contents: e node: aNode ].
-	completionContext completionClass ifNotNil: [
-		fetcher := (CoPackageImplementedMessagesFetcher new
+
+	^ CoGlobalSelectorFetcher new
 			astNode: aNode;
-			completionPackage: completionContext completionClass package;
-			yourself), fetcher
-	].
-	^ fetcher
+			yourself
+
+
 ]
