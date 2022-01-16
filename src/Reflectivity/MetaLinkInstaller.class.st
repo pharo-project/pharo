@@ -205,7 +205,7 @@ MetaLinkInstaller >> linkToNodesMapper [
 
 { #category : #'accessing - private tests' }
 MetaLinkInstaller >> linksRegistry [
-	^ linksRegistry 
+	^ linksRegistry
 ]
 
 { #category : #updating }
@@ -345,7 +345,6 @@ MetaLinkInstaller >> removeAllAnonymousNodesIn: methodNode fromAnonSubclassesOf:
 	"Method nodes are implicetely removed from anonymous subclasses,
 	and object are silently moved back to their original class
 	if no instance-specific links do exist for them"
-	
 ]
 
 { #category : #nodes }

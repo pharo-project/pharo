@@ -18,7 +18,7 @@ Class {
 
 { #category : #'instance creation' }
 HookGenerator class >> entity: anEntity node: aNode [
-	^self new entity: anEntity node: aNode links: anEntity links 
+	^self new entity: anEntity node: aNode links: anEntity links
 ]
 
 { #category : #'instance creation' }
@@ -37,7 +37,7 @@ HookGenerator >> afterHooks [
 HookGenerator >> beforeHooks [
 	^links 
 			select: [ :each | each control = #before ] 
-			thenCollect:  [ :link | (self hookFor: link) parent: node] 
+			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
 { #category : #'ast manipulation' }
@@ -58,7 +58,6 @@ HookGenerator >> entity: anEntity node: aNode links: aCollection [
 		(plugin entities anySatisfy: [:class | entity isKindOf: class])	 ifTrue: [
 			plugins at: plugin key put: plugin]
 		].
-
 ]
 
 { #category : #private }
@@ -89,7 +88,7 @@ HookGenerator >> hasOption: aSymbol for: aLink [
 
 { #category : #results }
 HookGenerator >> hook [
-	^RBSequenceNode statements: (links collect:  [ :link | self hookFor: link ]). 
+	^RBSequenceNode statements: (links collect:  [ :link | self hookFor: link ]).
 ]
 
 { #category : #private }
@@ -131,7 +130,7 @@ HookGenerator >> insteadHooks [
 	| insteadLinks |
 	insteadLinks := ((links select: [ :each | each control = #instead ])) asArray.
 	insteadLinks isEmpty ifTrue: [ ^#()].
-	^(self hookFor: insteadLinks last) parent: node 
+	^(self hookFor: insteadLinks last) parent: node
 ]
 
 { #category : #accessing }

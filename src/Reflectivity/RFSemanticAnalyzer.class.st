@@ -27,8 +27,7 @@ RFSemanticAnalyzer >> analyseForLinks: aNode generator: aGenerator [
 	
 	aNode hasMetalinkInstead ifTrue: [  
 		aNode propertyAt: #insteadHooks put: aGenerator insteadHooks.
- 		aNode insteadHooks do: [:each | self visitNode: each]].	
-
+ 		aNode insteadHooks do: [:each | self visitNode: each]].
 ]
 
 { #category : #visiting }
@@ -38,7 +37,6 @@ RFSemanticAnalyzer >> analyseForLinksForNodes: aNode [
 		ifFalse: [ ^ self ].
 	generator := HookGenerator node: aNode.
 	self analyseForLinks: aNode generator: generator.
-
 ]
 
 { #category : #visiting }
@@ -49,8 +47,6 @@ RFSemanticAnalyzer >> analyseForLinksForVariables: aVariableNode [
 		ifFalse: [ ^ self ].
 	generator := HookGeneratorForVariables entity: variable node: aVariableNode.
 	self analyseForLinks: variable generator: generator.
-
-
 ]
 
 { #category : #api }
@@ -75,7 +71,6 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	self declareTemporaryNode: (RBVariableNode named: #RFReifyValueVar).
 	self analyseForLinksForNodes: aMethodNode.
 	self visitNode: aMethodNode body.
-
 ]
 
 { #category : #visiting }

@@ -36,7 +36,6 @@ MetaLinkAnonymousClassBuilderTest >> testAnonSubclassesRegistering [
 	|subclasses|
 	subclasses := WeakSet with: (builder newAnonymousSubclassFor: ReflectivityExamples).
 	self assertCollection: (builder anonSubclassesFor: ReflectivityExamples) equals: subclasses
-
 ]
 
 { #category : #tests }
@@ -49,8 +48,6 @@ MetaLinkAnonymousClassBuilderTest >> testAnonymousClassForObject [
 	self assert: anonClass superclass identicalTo: originalClass.
 	self assert: anonClass isAnonymous.
 	self assert: (builder anonymousClassForObject: anonClass new) identicalTo: anonClass
-	 
-
 ]
 
 { #category : #tests }
@@ -94,8 +91,6 @@ MetaLinkAnonymousClassBuilderTest >> testCompileMethodFromIn [
 	
 	self assert: compiledMethod methodClass identicalTo: anonClass.
 	self assert: compiledMethod sourceCode equals: node methodNode sourceCode
-	 
-
 ]
 
 { #category : #tests }
@@ -108,7 +103,7 @@ MetaLinkAnonymousClassBuilderTest >> testCompiledMethodsOfSelectorInAnonSubClass
 		inAnonSubClassesOf: ReflectivityExamples.
 		
 	self assert: compiledMethods size equals: 1.
-	self assert: compiledMethods asArray first methodClass identicalTo: anonClass 
+	self assert: compiledMethods asArray first methodClass identicalTo: anonClass
 ]
 
 { #category : #tests }
@@ -129,7 +124,6 @@ MetaLinkAnonymousClassBuilderTest >> testCompiledMethodsOfSelectorinClasses [
 { #category : #tests }
 MetaLinkAnonymousClassBuilderTest >> testEmptyAnonSubclasses [
 	self assertCollection: (builder anonSubclassesFor: ReflectivityExamples) equals: Array new
-
 ]
 
 { #category : #tests }
@@ -147,7 +141,6 @@ MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToAnonymousClass [
 	currentClass := object class.	
 	self assert: currentClass identicalTo: class.
 	self assert: currentClass identicalTo: originalClass
-	
 ]
 
 { #category : #tests }
@@ -161,8 +154,6 @@ MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToOriginalClass [
 	self should: [ object realClass ] raise: MessageNotUnderstood.
 	self should: [ object originalClass ] raise: MessageNotUnderstood.
 	self assert: object class identicalTo: class.
-	
-	
 ]
 
 { #category : #tests }
@@ -172,7 +163,6 @@ MetaLinkAnonymousClassBuilderTest >> testNewAnonymousSubclass [
 	self assert: class isAnonymous.
 	self assert: class superclass identicalTo: ReflectivityExamples.
 	self assert: class new class identicalTo: ReflectivityExamples
-
 ]
 
 { #category : #tests }

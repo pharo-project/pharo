@@ -2,7 +2,7 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> addBreakpoint: aBreakpoint [
-	self breakpoints add: aBreakpoint 
+	self breakpoints add: aBreakpoint
 ]
 
 { #category : #'*Reflectivity' }
@@ -27,7 +27,6 @@ RBProgramNode >> availableReifications [
 	^RFReification subclasses 
 		select: [ :e | e entities includesAny: self class withAllSuperclasses ]
 		thenCollect: #key
-
 ]
 
 { #category : #'*Reflectivity' }
@@ -137,7 +136,7 @@ RBProgramNode >> insteadLinks [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> invalidate [
-	self methodNode method invalidate. 
+	self methodNode method invalidate.
 ]
 
 { #category : #'*Reflectivity' }
@@ -220,7 +219,7 @@ RBProgramNode >> removeLink: aMetaLink forObject: anObject [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> tagExecuted [
-	^self propertyAt: #tagExecuted put: true 
+	^self propertyAt: #tagExecuted put: true
 ]
 
 { #category : #'*Reflectivity' }

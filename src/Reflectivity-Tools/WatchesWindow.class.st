@@ -28,7 +28,7 @@ WatchesWindow class >> defaultSpec [
 { #category : #'instance creation' }
 WatchesWindow class >> new [
 	"use on: aWatchpoint"
-	^self shouldNotImplement 
+	^self shouldNotImplement
 ]
 
 { #category : #'instance creation' }
@@ -128,7 +128,7 @@ WatchesWindow >> refreshItems [
 	| max values |
 	values := self watch values.
 	max := values size.
-	list items: (values copyFrom: (1 max: max - numItems) to: max) reversed. 
+	list items: (values copyFrom: (1 max: max - numItems) to: max) reversed.
 ]
 
 { #category : #initialization }
@@ -202,7 +202,7 @@ WatchesWindow >> setupMenu [
 
 { #category : #updating }
 WatchesWindow >> step [
-	self refreshItems 
+	self refreshItems
 ]
 
 { #category : #api }

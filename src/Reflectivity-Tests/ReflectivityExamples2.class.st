@@ -48,8 +48,6 @@ ReflectivityExamples2 >> methodWithClassVarAccess [
 	classVar := 5.
 	classVar := 6.
 	classVar > 5 ifTrue:[^ classVar raisedTo: 2]
-	
-
 ]
 
 { #category : #examples }
@@ -57,8 +55,6 @@ ReflectivityExamples2 >> methodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]
-	
-
 ]
 
 { #category : #examples }
@@ -77,16 +73,12 @@ ReflectivityExamples2 >> methodWithTempVarAccess [
 	temp := 5.
 	temp := 6.
 	temp > 5 ifTrue:[^ temp raisedTo: 2]
-	
-
 ]
 
 { #category : #examples }
 ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 	self class compile:'modifiedMethodWithInstVarAccess
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
-	
-
 ]
 
 { #category : #example }

@@ -28,14 +28,12 @@ CompiledMethod >> destroyTwin [
 { #category : #'*Reflectivity' }
 CompiledMethod >> hasBreakpoint [
 	^ Breakpoint isInstalledIn: self
-	
-	
 ]
 
 { #category : #'*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
-	^self reflectiveMethod hasMetaLinks. 
+	^self reflectiveMethod hasMetaLinks.
 ]
 
 { #category : #'*Reflectivity' }
@@ -67,7 +65,6 @@ CompiledMethod >> invalidate [
 	(self isRealPrimitive or: (reflectiveMethod ast metaLinkOptionsFromClassAndMethod includes: #optionCompileOnLinkInstallation))
 					ifTrue: [reflectiveMethod compileAndInstallCompiledMethod ] 
 					ifFalse: [reflectiveMethod installReflectiveMethod]
-	
 ]
 
 { #category : #'*Reflectivity' }

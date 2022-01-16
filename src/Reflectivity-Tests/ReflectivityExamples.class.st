@@ -67,7 +67,7 @@ ReflectivityExamples >> exampleAssignmentIvar: anObject [
 
 { #category : #examples }
 ReflectivityExamples >> exampleBlock [
-	^ [ 2 + 3 ] value 
+	^ [ 2 + 3 ] value
 ]
 
 { #category : #examples }
@@ -84,12 +84,12 @@ ReflectivityExamples >> exampleBlockOptimized [
 		  #( 1 2 ) collect: [ :each | 
 			  var1 := 1.
 			  var2 := 1.
-			  var1 + var2 ] ] 
+			  var1 + var2 ] ]
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleBlockWithArg [
-	^ [:a | a + 3] value: 2 
+	^ [:a | a + 3] value: 2
 ]
 
 { #category : #examples }
@@ -119,7 +119,7 @@ ReflectivityExamples >> exampleIfTrueIfFalse [
 	| t |
 	t := false.
 	t ifTrue: [ self bar ] ifFalse: [ 'hello' ].
-	^ 5 
+	^ 5
 ]
 
 { #category : #examples }

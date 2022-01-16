@@ -21,7 +21,7 @@ DisabledBreakpointIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 DisabledBreakpointIconStyler >> iconFor: aNode [
-	^ self iconNamed: #smallInfo 
+	^ self iconNamed: #smallInfo
 ]
 
 { #category : #defaults }
