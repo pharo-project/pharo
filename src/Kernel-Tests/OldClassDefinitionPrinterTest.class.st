@@ -73,18 +73,6 @@ OldClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - expanded' }
-OldClassDefinitionPrinterTest >> testExpandedPoint [
-
-	self 
-		assert: (self expandedForClass: Point) 
-		equals: 'Object subclass: #Point
-	instanceVariableNames: ''x y''
-	classVariableNames: ''''
-	poolDictionaries: ''''
-	package: ''Kernel-BasicObjects'''
-]
-
 { #category : #'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testMetaclass [
 	

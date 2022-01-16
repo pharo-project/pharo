@@ -112,28 +112,9 @@ OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aStri
 
 { #category : #'expanded double dispatch API' }
 OldPharoClassDefinitionPrinter >> expandedDefinitionString [
+	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
 
-	^ String streamContents: [ :s | 
-			self halt.
-		s nextPutAll: forClass superclass name.
-		self msgAndClassNameOn: s.
-		self layoutOn: s.
-		s crtab.
-		s nextPutAll: 'traits: '.
-		forClass hasTraitComposition
-			ifTrue: [ s nextPutAll: '{'; nextPutAll: forClass traitCompositionString; nextPutAll: '};' ]
-			ifFalse: [ s nextPutAll: '{};' ].
-		self slotsOn: s.
-		self sharedVariablesOn: s.
-		self sharedPoolsOn: s.
-		
-		(forClass package classTagForClass: forClass) ifNotNil: [ :t |
-			| tag | 
-			tag := t name.
-			tag = forClass package name 
-				ifTrue: [ s crtab; nextPutAll: 'tag: '''';' ]
-				ifFalse: [ self tagOn: s]].
-			self packageOn: s ]
+	^ self definitionString
 ]
 
 { #category : #'low-level elements' }
