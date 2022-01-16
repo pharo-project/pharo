@@ -6,7 +6,8 @@ Class {
 
 { #category : #helpers }
 FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
-	^ (FluidClassDefinitionPrinter for: aClass) expandedDefinitionString
+	
+	^ aClass expandedDefinitionStringFor: (FluidClassDefinitionPrinter for: aClass)
 ]
 
 { #category : #helpers }
@@ -130,7 +131,7 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
 	self 
 		assert: (self expandedForClass: EmptyLayout class)  
-		equals: 'EmptyLayout class
+		equals: 'AbstractLayout class << #EmptyLayout class
 	traits: {};
 	slots: { #instance }'
 ]

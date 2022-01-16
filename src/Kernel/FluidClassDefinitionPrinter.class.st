@@ -119,7 +119,7 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 ]
 
 { #category : #'expanded double dispatch API' }
-FluidClassDefinitionPrinter >> expandedClassDefinitionString [
+FluidClassDefinitionPrinter >> expandedDefinitionString [
 
 	^ String streamContents: [ :s | 
 		s nextPutAll: forClass superclass name.
@@ -147,9 +147,11 @@ FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 	
 	^ String streamContents: [ :s | 
-		forClass  
-			ifNotNil: [ s nextPutAll: forClass name ]
+		forClass superclass   
+			ifNotNil: [ s nextPutAll: forClass superclass name ]
 			ifNil: [ s nextPutAll: 'ProtoObject ' ].
+		s nextPutAll: ' << #'.
+		s nextPutAll: forClass name.
 		s crtab. 
 		forClass hasTraitComposition 
 			ifTrue: [

@@ -4,6 +4,13 @@ Class {
 	#category : #'Kernel-Tests-Fluid'
 }
 
+{ #category : #'tests - expanded' }
+OldClassDefinitionPrinterTest >> expandedForClass: aClass [
+	
+	^ aClass expandedDefinitionStringFor: (OldPharoClassDefinitionPrinter for: aClass)
+	
+]
+
 { #category : #helpers }
 OldClassDefinitionPrinterTest >> forClass: aClass [
 	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString
@@ -64,6 +71,18 @@ OldClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
 	self assert: (self forClass: ContextTest class) equals: 'ContextTest class
 	instanceVariableNames: '''''
+]
+
+{ #category : #'tests - expanded' }
+OldClassDefinitionPrinterTest >> testExpandedPoint [
+
+	self 
+		assert: (self expandedForClass: Point) 
+		equals: 'Object subclass: #Point
+	instanceVariableNames: ''x y''
+	classVariableNames: ''''
+	poolDictionaries: ''''
+	package: ''Kernel-BasicObjects'''
 ]
 
 { #category : #'tests - metaclasses' }
