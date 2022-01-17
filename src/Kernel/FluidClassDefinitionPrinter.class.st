@@ -119,10 +119,13 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 ]
 
 { #category : #'expanded double dispatch API' }
-FluidClassDefinitionPrinter >> expandedClassDefinitionString [
+FluidClassDefinitionPrinter >> expandedDefinitionString [
 
 	^ String streamContents: [ :s | 
-		s nextPutAll: forClass superclass name.
+		"in case of ProtoObject"
+		forClass superclass isNil 
+			ifTrue: [ s nextPutAll: 'nil' ]
+			ifFalse: [ s nextPutAll: forClass superclass name ].
 		self msgAndClassNameOn: s.
 		self layoutOn: s.
 		s crtab.
@@ -147,9 +150,18 @@ FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 	
 	^ String streamContents: [ :s | 
-		forClass  
-			ifNotNil: [ s nextPutAll: forClass name ]
-			ifNil: [ s nextPutAll: 'ProtoObject ' ].
+		
+		forClass soleInstance = ProtoObject
+			ifTrue: [ 
+				"we are on the class of ProtoObject class.
+				Yes this is strange but the fluid printer is printing
+				this." 
+				s nextPutAll: 'Class class << ProtoObject class'
+				]
+			ifFalse: [		
+				s nextPutAll: forClass superclass name.
+				s nextPutAll: ' << #'.
+				s nextPutAll: forClass name. ].
 		s crtab. 
 		forClass hasTraitComposition 
 			ifTrue: [
@@ -168,7 +180,6 @@ FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 
 	^ String streamContents: [ :s | 
-		  | tag |
 		  s nextPutAll: 'Trait << '.
 		  s nextPutAll: forClass name.
 

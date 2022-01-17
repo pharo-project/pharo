@@ -4,6 +4,13 @@ Class {
 	#category : #'Kernel-Tests-Fluid'
 }
 
+{ #category : #'tests - expanded' }
+OldClassDefinitionPrinterTest >> expandedForClass: aClass [
+	
+	^ aClass expandedDefinitionStringFor: (OldPharoClassDefinitionPrinter for: aClass)
+	
+]
+
 { #category : #helpers }
 OldClassDefinitionPrinterTest >> forClass: aClass [
 	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString
