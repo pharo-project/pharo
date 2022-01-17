@@ -196,6 +196,14 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 	^ self allBehaviors flatCollect: [ :class | class whichMethodsReferTo: aVariablesBinding ]
 ]
 
+{ #category : #query }
+SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
+
+	Symbol selectorTable do: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
 	^self allReferencesTo: selector
