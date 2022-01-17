@@ -85,7 +85,6 @@ Random >> initialize [
 	m := 16r7FFFFFFF asFloat.    " magic constant = 2147483647 = 2^31 - 1"
 	q := (m quo: a) asFloat.
 	r  := (m \\ a) asFloat.
-
 ]
 
 { #category : #accessing }
@@ -169,7 +168,6 @@ Random >> seed: aNumber [
 	[ newSeed < m ] whileFalse:
 		[ newSeed := newSeed - m ].
 	seed := newSeed.
-
 ]
 
 { #category : #initialization }
