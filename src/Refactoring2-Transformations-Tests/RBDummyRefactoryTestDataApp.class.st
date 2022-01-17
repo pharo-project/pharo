@@ -559,7 +559,7 @@ RBDummyRefactoryTestDataApp >> usesAdd [
 
 { #category : #lint }
 RBDummyRefactoryTestDataApp >> variableAssignedLiteral [
-	temporaryVariable := #() 
+	temporaryVariable := #()
 ]
 
 { #category : #lint }

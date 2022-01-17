@@ -94,14 +94,7 @@ WorldPresenter >> openWithSpecLayout: aSpec [
 { #category : #private }
 WorldPresenter >> title: aString [
 
-	^ DisplayScreen hostWindowTitle: aString
-]
-
-{ #category : #private }
-WorldPresenter >> updateTitle [
-	"Update the window title"
-
-	DisplayScreen hostWindowTitle: self title
+	^ self currentWorld worldState worldRenderer windowTitle: aString
 ]
 
 { #category : #api }

@@ -19,3 +19,12 @@ CmdOpenTextLeftBarMenuCommand class >> contextClickActivation [
 CmdOpenTextLeftBarMenuCommand >> activationStrategy [
 	^CmdTextLeftBarMenuActivation
 ]
+
+{ #category : #execution }
+CmdOpenTextLeftBarMenuCommand >> execute [
+
+	context selectedTextInterval ifEmpty: [ 
+		context showSourceNode].
+	
+	super execute
+]

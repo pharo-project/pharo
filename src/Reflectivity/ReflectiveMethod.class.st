@@ -23,7 +23,6 @@ Class {
 ReflectiveMethod class >> on: aCompiledMethod [ 
 	^self new
 		compiledMethod: aCompiledMethod
-
 ]
 
 { #category : #accessing }
@@ -35,7 +34,7 @@ ReflectiveMethod >> ast [
 ReflectiveMethod >> compileAndInstallCompiledMethod [
 	self wrapperNeeded ifTrue: [ self generatePrimitiveWrapper ].
 	self recompileAST.
-	self installCompiledMethod. 
+	self installCompiledMethod.
 ]
 
 { #category : #accessing }
@@ -72,7 +71,6 @@ ReflectiveMethod >> destroyTwin [
 { #category : #forwarding }
 ReflectiveMethod >> doesNotUnderstand: aMessage [
 	^aMessage sendTo: compiledMethod
-
 ]
 
 { #category : #forwarding }

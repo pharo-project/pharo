@@ -43,5 +43,4 @@ RBProtectInstanceVariableParametrizedTest >> testVariableNotDefined [
 		(self createRefactoringWithArguments: {'rewrite' . #RBSubclassOfClassToRename}).
 	self shouldFail: 
 		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData}).
-	
 ]

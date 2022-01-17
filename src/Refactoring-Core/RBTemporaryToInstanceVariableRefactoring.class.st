@@ -174,5 +174,4 @@ RBTemporaryToInstanceVariableRefactoring >> transform [
 			ifTrue: [ cls removeInstanceVariable: temporaryVariableName ]
 			ifFalse: [ self removeTemporaryOfClass: cls ] ].
 	class addInstanceVariable: temporaryVariableName.
-	
 ]

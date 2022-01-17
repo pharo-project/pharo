@@ -11,7 +11,7 @@ Class {
 ClyAddStaticBreakpointCommand class >> methodEditorLeftBarClickActivation [
 	<classAnnotation>
 	
-	^CmdTextLeftBarClickActivation for: ClyMethodSourceCodeContext
+	^CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
 ]
 
 { #category : #execution }

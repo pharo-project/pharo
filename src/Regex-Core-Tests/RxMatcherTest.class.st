@@ -901,127 +901,106 @@ RxMatcherTest >> testHenry111 [
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry112 [
 	self runRegex: #('^(ab|cd)e' 'abcde' false nil)
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry113 [
 	self runRegex: #('(abc|)def' 'abcdef' true nil)
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry114 [
 	self runRegex: #('(a|b)c*d' 'abcd' true (1 'bcd' 2 'b'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry115 [
 	self runRegex: #('(ab|ab*)bc' 'abc' true (1 'abc' 2 'a'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry116 [
 	self runRegex: #('a([bc]*)c*' 'abc' true (1 'abc' 2 'bc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry117 [
 	self runRegex: #('a([bc]*)(c*d)' 'abcd' true (1 'abcd' 2 'bc' 3 'd'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry118 [
 	self runRegex: #('a([bc]+)(c*d)' 'abcd' true (1 'abcd' 2 'bc' 3 'd'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry119 [
 	self runRegex: #('a([bc]*)(c+d)' 'abcd' true (1 'abcd' 2 'b' 3 'cd'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry120 [
 	self runRegex: #('a[bcd]*dcdcde' 'adcdcde' true (1 'adcdcde'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry121 [
 	self runRegex: #('a[bcd]+dcdcde' 'adcdcde' false nil)
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry122 [
 	self runRegex: #('(ab|a)b*c' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry123 [
 	self runRegex: #('((a)(b)c)(d)' 'abcd' true (1 'abcd' 3 'a' 4 'b' 5 'd'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry124 [
 	self runRegex: #('[ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry125 [
 	self runRegex: #('[ -~ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry126 [
 	self runRegex: #('[ -~ -~ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry127 [
 	self runRegex: #('[ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry128 [
 	self runRegex: #('[ -~ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry129 [
 	self runRegex: #('[ -~ -~ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry130 [
 	self runRegex: #('[ -~ -~ -~ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry131 [
 	self runRegex: #('[a-zA-Z_][a-zA-Z0-9_]*' 'alpha' true (1 'alpha'))
-	
 ]
 
 { #category : #'tests - henry' }
 RxMatcherTest >> testHenry132 [
 	self runRegex: #('^a(bc+|b[eh])g|.h$' 'abh' true (1 'bh' 2 nil))
-	
 ]
 
 { #category : #'tests - henry' }
@@ -1168,7 +1147,6 @@ RxMatcherTest >> testStringAllRangesOfRegexMatches [
 		assert: result size equals: 1;
 		assert: result first first equals: 3;
 		assert: result first last equals: 4
-	
 ]
 
 { #category : #'tests - extensions' }
@@ -1223,7 +1201,7 @@ RxMatcherTest >> testStringGreedyMatchesRegex [
 	self assert: ('fooABCD' matchesRegex: '.*(ABCD|BC)').
 	self assert: ('fooBC' matchesRegex: '.*(ABCD|BC)').
 	self assert: ('fooB' matchesRegex: '.*(ABC|B)').
-	self assert: ('fooABC' matchesRegex: '.*(ABC|B)').	
+	self assert: ('fooABC' matchesRegex: '.*(ABC|B)').
 ]
 
 { #category : #'tests - extensions' }

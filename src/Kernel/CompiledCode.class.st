@@ -218,6 +218,12 @@ CompiledCode >> flag [
 	^((self header bitShift: -29) bitAnd: 1) = 1
 ]
 
+{ #category : #enumerating }
+CompiledCode >> flattenOn: aStream [
+	"We do not flatten code into bytecode/literals but add the whole object"
+	aStream nextPut: self
+]
+
 { #category : #accessing }
 CompiledCode >> frameSize [
 	"Answer the size of temporary frame needed to run the receiver."

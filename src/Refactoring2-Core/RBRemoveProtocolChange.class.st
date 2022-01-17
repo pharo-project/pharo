@@ -19,7 +19,7 @@ RBRemoveProtocolChange class >> removeProtocolNamed: aString in: aClass [
 { #category : #converting }
 RBRemoveProtocolChange >> asUndoOperation [
 	
-	^ RBAddProtocolChange addProtocolNamed: protocol in: self changeClass 
+	^ RBAddProtocolChange addProtocolNamed: protocol in: self changeClass
 ]
 
 { #category : #printing }

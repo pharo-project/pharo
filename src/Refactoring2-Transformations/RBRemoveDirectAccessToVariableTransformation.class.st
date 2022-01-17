@@ -47,7 +47,6 @@ RBRemoveDirectAccessToVariableTransformation >> preconditions [
 		ifFalse: [ (RBCondition directlyDefinesInstanceVariable: variableName in: class) ])
 		& (RBCondition canUnderstand: self getterMethod in: self definingClass)
 		& (RBCondition canUnderstand: self setterMethod in: self definingClass)
-		
 ]
 
 { #category : #executing }

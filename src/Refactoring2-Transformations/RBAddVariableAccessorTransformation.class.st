@@ -59,7 +59,7 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 
 { #category : #private }
 RBAddVariableAccessorTransformation >> getterMethod [
-	^ getterMethod 
+	^ getterMethod
 ]
 
 { #category : #preconditions }

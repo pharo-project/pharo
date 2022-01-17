@@ -60,6 +60,11 @@ MCMergeOrLoadWarning >> messageText [
 ]
 
 { #category : #accessing }
+MCMergeOrLoadWarning >> versions [
+	^ versions
+]
+
+{ #category : #accessing }
 MCMergeOrLoadWarning >> versions: aCollection [
 	versions := aCollection
 ]

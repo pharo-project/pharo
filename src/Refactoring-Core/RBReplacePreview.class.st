@@ -36,7 +36,7 @@ RBReplacePreview class >> defaultSpec [
 	
 	^ SpBoxLayout newTopToBottom 
 				add: #diffPresenter;
-				yourself 
+				yourself
 ]
 
 { #category : #specs }
@@ -79,7 +79,7 @@ RBReplacePreview >> change: anObject [
 	aCompositeChange := RBRefactoryChangeManager changeFactory compositeRefactoryChange .
 	aCompositeChange addChange: anObject .
 	
-	change := aCompositeChange whatToDisplayIn: self 
+	change := aCompositeChange whatToDisplayIn: self
 ]
 
 { #category : #initialization }
@@ -90,7 +90,7 @@ RBReplacePreview >> initializeDialogWindow: aModalPresenter [
 		addButton: 'Cancel' do: cancelAction;
 		addButton: 'Replace' do: [ :presenter | self accept: presenter ];
 		addButton: 'Skip' do: skipAction;
-		addButton: 'Replace all' do: replaceAllAction 
+		addButton: 'Replace all' do: replaceAllAction
 ]
 
 { #category : #initialization }
@@ -101,7 +101,7 @@ RBReplacePreview >> initializeWidgets [
 
 { #category : #'instance creation' }
 RBReplacePreview >> open [
-	^ self "openDialogWithSpec"openModalWithSpec 
+	^ self "openDialogWithSpec"openModalWithSpec
 ]
 
 { #category : #initialization }

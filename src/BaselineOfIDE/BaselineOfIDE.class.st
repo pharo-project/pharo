@@ -200,7 +200,7 @@ BaselineOfIDE >> baseline: spec [
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.9c/src';
+				repository: 'github://ObjectProfile/Roassal3:v0.9.9d/src';
     				loads: #( 'Core' 'Tests') ].
 
 		spec 
@@ -218,11 +218,11 @@ BaselineOfIDE >> baseline: spec [
 { #category : #actions }
 BaselineOfIDE >> loadExtraTools [
 	
-	Metacello new
+	"Metacello new
 		baseline: 'NewToolsDocumentationReader';
 		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
 		onConflictUseIncoming;
-		load.
+		load."
 "
 	Metacello new
  	 baseline: 'BeautifulComments';

@@ -464,7 +464,7 @@ Behavior >> byteSizeOfInstanceOfSize: basicSize [
 
 { #category : #'testing - method dictionary' }
 Behavior >> canPerform: selector [
-	"Answer whether the receiver can safely perform to the message whose selector 
+	"Answer whether the receiver's instances can safely perform to the message whose selector 
 	is the argument: it is not an abstract or cancelled method"
 
 	^ self classAndMethodFor: selector do: [:c :m | m isProvided] ifAbsent: [false].
@@ -472,7 +472,7 @@ Behavior >> canPerform: selector [
 
 { #category : #'testing - method dictionary' }
 Behavior >> canUnderstand: selector [
-	"Answer whether the receiver can respond to the message whose selector 
+	"Answer whether the receiver's instances can respond to the message whose selector 
 	is the argument."
 
 	^ self

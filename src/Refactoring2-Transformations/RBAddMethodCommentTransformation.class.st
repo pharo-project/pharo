@@ -46,7 +46,6 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 	self className: aClassName.
 	selector := aSelector.
 	comment := aString
-	
 ]
 
 { #category : #preconditions }

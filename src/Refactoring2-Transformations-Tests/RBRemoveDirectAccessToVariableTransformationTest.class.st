@@ -45,7 +45,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						classVariable: 'Foo1'
 						class: #RBFooLintRuleTestData)
-						asRefactoring 
+						asRefactoring
 ]
 
 { #category : #tests }
@@ -60,7 +60,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						classVariable: 'RecursiveSelfRule'
 						class: #RBTransformationRuleTestData)
-						asRefactoring 
+						asRefactoring
 ]
 
 { #category : #tests }

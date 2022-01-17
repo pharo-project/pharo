@@ -29,7 +29,6 @@ RBMultiEnvironment >> asSelectorEnvironment [
 			env := each asSelectorEnvironment. 
 			env classesDo: [:cls | env selectorsForClass: cls do:  [:sel | s addClass: cls selector: sel]]].
 	^ s
-	  
 ]
 
 { #category : #accessing }

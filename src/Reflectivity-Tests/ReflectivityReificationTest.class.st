@@ -21,7 +21,7 @@ ReflectivityReificationTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityReificationTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'tests - variablenodes' }
@@ -471,7 +471,6 @@ ReflectivityReificationTest >> testReifyAssignmentTempOperationBefore [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleAssignment equals: 3.
 	self assert: reachHere.
-
 ]
 
 { #category : #'tests - operations' }
@@ -1542,7 +1541,6 @@ ReflectivityReificationTest >> testReifySendArgumentsLevel [
 	instance := ReflectivityExamples new .
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag equals: #(3).
-
 ]
 
 { #category : #'tests - sends' }
@@ -1628,7 +1626,6 @@ ReflectivityReificationTest >> testReifySendThisContext [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag class equals: Context.
-	
 ]
 
 { #category : #'tests - sends' }
@@ -1648,7 +1645,6 @@ ReflectivityReificationTest >> testReifySendThisContextAfter [
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag class equals: Context.
 	self deny: tag isBlockContext.
-	
 ]
 
 { #category : #'tests - sends' }

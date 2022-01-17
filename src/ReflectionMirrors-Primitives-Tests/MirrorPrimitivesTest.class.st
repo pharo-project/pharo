@@ -80,7 +80,7 @@ MirrorPrimitivesTest >> testChangingGeneralFieldOfArray [
 	MirrorPrimitives fieldOf: object at: 2 put: 200.	
 	self assert: object second equals: 200.
 	
-	self should: [ MirrorPrimitives fieldOf: object at: 3 put: 500 ] raise: SubscriptOutOfBounds  
+	self should: [ MirrorPrimitives fieldOf: object at: 3 put: 500 ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #'tests - fields accessing' }
@@ -130,7 +130,7 @@ MirrorPrimitivesTest >> testChangingIndexableFieldOfArray [
 	MirrorPrimitives indexableFieldOf: object at: 2 put: 200.	
 	self assert: object second equals: 200.
 	
-	self should: [MirrorPrimitives indexableFieldOf: object at: 3 put: 500] raise: SubscriptOutOfBounds 
+	self should: [MirrorPrimitives indexableFieldOf: object at: 3 put: 500] raise: SubscriptOutOfBounds
 ]
 
 { #category : #'tests - fields accessing' }
@@ -161,7 +161,7 @@ MirrorPrimitivesTest >> testChangingIndexableFieldOfWeakMessageSend [
 		
 	self
 	 	should: [ MirrorPrimitives indexableFieldOf: arrayWithInstVars at: 2 put: 100] 
-		raise: SubscriptOutOfBounds 
+		raise: SubscriptOutOfBounds
 ]
 
 { #category : #'tests - message performing' }
@@ -300,7 +300,7 @@ MirrorPrimitivesTest >> testGettingGeneralFieldOfArray [
 	actual := MirrorPrimitives fieldOf: #(110 20) at: 2.
 	self assert: actual equals: 20.
 	
-	self should: [ MirrorPrimitives fieldOf: #(10 20) at: 3 ] raise: SubscriptOutOfBounds  
+	self should: [ MirrorPrimitives fieldOf: #(10 20) at: 3 ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #'tests - fields accessing' }
@@ -363,7 +363,7 @@ MirrorPrimitivesTest >> testGettingIndexableFieldOfArray [
 { #category : #'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexableFieldOfFixedObject [
 	
-	self should: [MirrorPrimitives indexableFieldOf: 10@20 at: 1] raise: Error 
+	self should: [MirrorPrimitives indexableFieldOf: 10@20 at: 1] raise: Error
 ]
 
 { #category : #'tests - fields accessing' }

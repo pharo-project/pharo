@@ -12,7 +12,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 							to: '^ selector'
 							inMethod: #selector:from:
 							inClass: #RBRemoveMethodTransformation)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -23,7 +23,7 @@ RBReplaceSubtreeTransformationTest >> testExtractFailure [
 							to: '^ selector'
 							inMethod: #selector:from:
 							inClass: #RBRemoveMethodTransformation)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -34,7 +34,7 @@ RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 							to: '^ selector'
 							inMethod: #selector:for:
 							inClass: #RBRemoveMethodTransformation)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -45,7 +45,7 @@ RBReplaceSubtreeTransformationTest >> testParseFailure [
 							to: ':= 123'
 							inMethod: #selector:from:
 							inClass: #RBRemoveMethodTransformation)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }

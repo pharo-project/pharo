@@ -47,8 +47,6 @@ RBMatchVisitor >> visitMethodNode: aMethodNode [
 		self replace: arg with: ('argMatch', arguments  asString).
 		arguments := arguments + 1 ].
 	super visitMethodNode: aMethodNode.
-	
-	
 ]
 
 { #category : #accessing }
@@ -61,6 +59,4 @@ RBMatchVisitor >> visitSequenceNode: aSequenceNode [
 		self replace: temp with: ('tempMatch' , temporaries  asString).
 		temporaries := temporaries + 1].
 	super visitSequenceNode: aSequenceNode.
-	
-	
 ]

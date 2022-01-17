@@ -36,7 +36,7 @@ RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 							return: '^ variable'
 							inMethod: #methodAfter
 							inClass: #RBAddReturnStatementTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -46,7 +46,7 @@ RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 							return: '^ variable'
 							inMethod: #methodBefore
 							inClass: #RBReturnStatementTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -56,7 +56,7 @@ RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 							return: '^ variable'
 							inMethod: #method
 							inClass: #RBAddReturnStatementTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }

@@ -58,7 +58,7 @@ RBCopyClassRefactoring >> category [
 
 { #category : #accessing }
 RBCopyClassRefactoring >> category: aSymbol [
-	category := aSymbol 
+	category := aSymbol
 ]
 
 { #category : #transforming }

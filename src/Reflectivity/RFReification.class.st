@@ -98,17 +98,17 @@ RFReification >> genForRBBlockNode [
 
 { #category : #generate }
 RFReification >> genForRBCascadeNode [
-	^self genForRBProgramNode 
+	^self genForRBProgramNode
 ]
 
 { #category : #generate }
 RFReification >> genForRBGlobalNode [
-	^self genForRBVariableNode 
+	^self genForRBVariableNode
 ]
 
 { #category : #generate }
 RFReification >> genForRBInstanceVariableNode [
-	^self genForRBVariableNode 
+	^self genForRBVariableNode
 ]
 
 { #category : #generate }
@@ -123,17 +123,17 @@ RFReification >> genForRBLiteralNode [
 
 { #category : #generate }
 RFReification >> genForRBLiteralValueNode [
-	^self genForRBProgramNode 
+	^self genForRBProgramNode
 ]
 
 { #category : #generate }
 RFReification >> genForRBMessageNode [
-	^self genForRBProgramNode 
+	^self genForRBProgramNode
 ]
 
 { #category : #generate }
 RFReification >> genForRBMethodNode [
-	^self genForRBProgramNode 
+	^self genForRBProgramNode
 ]
 
 { #category : #generate }
@@ -148,7 +148,7 @@ RFReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFReification >> genForRBSelfNode [
-	^self genForRBProgramNode 
+	^self genForRBProgramNode
 ]
 
 { #category : #generate }

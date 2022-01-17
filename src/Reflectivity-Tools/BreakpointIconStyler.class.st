@@ -21,7 +21,7 @@ BreakpointIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 BreakpointIconStyler >> iconFor: aNode [
-	^ self iconNamed: #haltIcon 
+	^ self iconNamed: #haltIcon
 ]
 
 { #category : #defaults }
