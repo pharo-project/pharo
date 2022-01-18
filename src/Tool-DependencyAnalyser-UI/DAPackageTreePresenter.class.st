@@ -155,20 +155,23 @@ DAPackageTreePresenter >> open [
 
 { #category : #actions }
 DAPackageTreePresenter >> openTreeFor: namesOfSelected [
-	| treeToOpen relationGraph |
-	treeToOpen := TreePresenter new.
+
+	| treeToOpen relationGraph window |
+	treeToOpen := self newTree.
 	relationGraph := self tree owner relationGraph.
-	^ treeToOpen
-		roots: namesOfSelected;
-		whenBuiltDo: [ 
-					treeToOpen
-						rootNodeHolder: [ :item | 
-							DAClassToDependencyNode new
-								content: item;
-								package: (relationGraph pdPackageFrom: item) ] ];
+	window := treeToOpen
+		          roots: (namesOfSelected collect: [ :name | 
+					           DAClassToDependencyNode new
+						           content: name;
+						           package: (relationGraph pdPackageFrom: name) ]);
+		          children: [ :node | node buildChildren ];
+		          display: [ :node | node label ];
+		          displayIcon: [ :node | node icon ];
+		          asWindow.
+	window
 		title: 'Class dependencies';
-		extent: 700 @ 500;
-		openWithSpec
+		initialExtent: 700 @ 500;
+		open
 ]
 
 { #category : #actions }
