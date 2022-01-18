@@ -95,6 +95,11 @@ DAPackageTreePresenter >> close [
 	browser windowIsClosing
 ]
 
+{ #category : #initialization }
+DAPackageTreePresenter >> connectPresenters [
+	self actionOnRefresh
+]
+
 { #category : #protocol }
 DAPackageTreePresenter >> defaultFormat [
 	^ #png
@@ -106,17 +111,13 @@ DAPackageTreePresenter >> ifGraphVizAbsent: aBlock [
 ]
 
 { #category : #initialization }
-DAPackageTreePresenter >> initializePresenter [
-	self actionOnRefresh
-]
-
-{ #category : #initialization }
-DAPackageTreePresenter >> initializeWidgets [
+DAPackageTreePresenter >> initializePresenters [
 	tree := self newTree
 		beMultipleSelection;
 		bindKeyCombination: $b meta toAction: [ self selectedItemFromTree spawnNewBrowser ];
 		children: [ :node | node buildChildren ];
 		display: [ :node | node label ];
+		displayIcon: [ :node | node icon ];
 		yourself.
 	buttonRefresh := self newButton
 		icon: (self iconNamed: #refreshIcon);

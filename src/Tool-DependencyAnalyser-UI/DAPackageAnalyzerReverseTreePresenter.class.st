@@ -46,8 +46,8 @@ DAPackageAnalyzerReverseTreePresenter >> buildRoots [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerReverseTreePresenter >> initializePresenter [
-	super initializePresenter.
+DAPackageAnalyzerReverseTreePresenter >> connectPresenters [
+	super connectPresenters.
 	
 	tree
 		whenSelectedItemChanged: [ :item | 
@@ -58,8 +58,8 @@ DAPackageAnalyzerReverseTreePresenter >> initializePresenter [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerReverseTreePresenter >> initializeWidgets [
-	super initializeWidgets.
+DAPackageAnalyzerReverseTreePresenter >> initializePresenters [
+	super initializePresenters.
 	
 	packageLabel := self newLabel label: 'Analysis of packages'.
 ]

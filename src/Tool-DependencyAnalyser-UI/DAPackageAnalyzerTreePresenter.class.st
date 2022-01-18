@@ -200,6 +200,21 @@ DAPackageAnalyzerTreePresenter >> buttonSave [
 	^ buttonSave
 ]
 
+{ #category : #initialization }
+DAPackageAnalyzerTreePresenter >> connectPresenters [
+	super connectPresenters.
+	self actionOnButtons.
+	tree
+		whenSelectedItemChangedDo: [ :item |
+			item
+				ifNil: [ buttonBrowseCycles enabled: false ]
+				ifNotNil: [ 
+					buttonBrowseCycles enabled: true.
+					self flag: #menu.
+					"tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ]."
+					self tree selectedItem selectInBrowser ] ]
+]
+
 { #category : #saving }
 DAPackageAnalyzerTreePresenter >> createDirectoryForSaving [
 	| dir |
@@ -262,23 +277,8 @@ DAPackageAnalyzerTreePresenter >> initializeButtons [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerTreePresenter >> initializePresenter [
-	super initializePresenter.
-	self actionOnButtons.
-	tree
-		whenSelectedItemChangedDo: [ :item |
-			item
-				ifNil: [ buttonBrowseCycles enabled: false ]
-				ifNotNil: [ 
-					buttonBrowseCycles enabled: true.
-					self flag: #menu.
-					"tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ]."
-					self tree selectedItem selectInBrowser ] ]
-]
-
-{ #category : #initialization }
-DAPackageAnalyzerTreePresenter >> initializeWidgets [
-	super initializeWidgets.
+DAPackageAnalyzerTreePresenter >> initializePresenters [
+	super initializePresenters.
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	textPackageField := self newTextInput
 		placeholder: 'Enter a package name';

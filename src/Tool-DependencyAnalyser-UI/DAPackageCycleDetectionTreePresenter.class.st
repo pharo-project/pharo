@@ -91,6 +91,23 @@ DAPackageCycleDetectionTreePresenter >> buttonReversed [
 	^ buttonReversed
 ]
 
+{ #category : #initialization }
+DAPackageCycleDetectionTreePresenter >> connectPresenters [
+	super connectPresenters.
+	
+	cyclesLabel := self newLabel
+			label: 'Analysis of cycles'.
+	
+	buttonReversed := self newButton
+			help: 'Reversed the order of cycles';
+			label: 'Sort by length'.
+	
+		
+	
+	
+		
+]
+
 { #category : #accessing }
 DAPackageCycleDetectionTreePresenter >> cycles [
 	^ cycles
@@ -130,36 +147,15 @@ DAPackageCycleDetectionTreePresenter >> filterWithPackages: aCollectionOfPDPacka
 ]
 
 { #category : #initialization }
-DAPackageCycleDetectionTreePresenter >> initializePresenter [
-	super initializePresenter.
-	
-	buttonReversed action: [ self reversedRoots  ].
-	
-	
-	
-	tree
-		whenSelectedItemChanged: [ :item | 
-			item
-				ifNotNil: [ 
-					self tree selectedItem selectInBrowser.
-					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ] ] ]
-]
-
-{ #category : #initialization }
-DAPackageCycleDetectionTreePresenter >> initializeWidgets [
-	super initializeWidgets.
+DAPackageCycleDetectionTreePresenter >> initializePresenters [
+	super initializePresenters.
 	
 	cyclesLabel := self newLabel
 			label: 'Analysis of cycles'.
 	
 	buttonReversed := self newButton
 			help: 'Reversed the order of cycles';
-			label: 'Sort by length'.
-	
-		
-	
-	
-		
+			label: 'Sort by length'
 ]
 
 { #category : #initialization }
