@@ -53,8 +53,6 @@ BaselineOfUI >> baseline: spec [
 		
 		spec package: 'Debugger-Actions'.
 
-		spec package: 'Fonts-Chooser'.
-
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 
