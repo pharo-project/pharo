@@ -4,7 +4,7 @@ It implies to be open from a PDPackageAnalyzerWindowPackageDependencies instance
 "
 Class {
 	#name : #DAAddPackagePresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'packageList',
 		'buttonAddPackage',
@@ -16,13 +16,10 @@ Class {
 { #category : #specs }
 DAAddPackagePresenter class >> defaultSpec [
 	<spec: #default>
-	^ SpecLayout composed
-		newColumn:
-			[ :col | 
-			col
-				add: #packageList;
-				add: #buttonAddPackage height: 30
-				] yourself
+	^ SpBoxLayout newTopToBottom
+			add: #packageList;
+			add: #buttonAddPackage expand: false;
+			yourself
 ]
 
 { #category : #protocol }
@@ -48,12 +45,17 @@ DAAddPackagePresenter >> buildList [
 	packagesAdded := self packageAnalyzerTreeModel seenPackagesName.
 	packagesNotAdded := self systemPackages.
 	packagesNotAdded removeAll: packagesAdded.
-	packageList items: packagesNotAdded.
+	packageList sourceItems: packagesNotAdded.
 ]
 
 { #category : #accessing }
 DAAddPackagePresenter >> buttonAddPackage [
 	^ buttonAddPackage
+]
+
+{ #category : #initialization }
+DAAddPackagePresenter >> connectPresenters [
+	self actionOnAddPackage
 ]
 
 { #category : #api }
@@ -62,22 +64,15 @@ DAAddPackagePresenter >> initialExtent [
 ]
 
 { #category : #initialization }
-DAAddPackagePresenter >> initializePresenter [
-	self actionOnAddPackage
-]
-
-{ #category : #initialization }
-DAAddPackagePresenter >> initializeWidgets [
-	
-	packageList := self newList
-		multiSelection: true;
-		yourself.
+DAAddPackagePresenter >> initializePresenters [
 	
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
 		icon: (self iconNamed: #addIcon);
 		yourself.
+
+	packageList := SpChooserPresenter new.
 ]
 
 { #category : #'instance creation' }
@@ -103,7 +98,7 @@ DAAddPackagePresenter >> packageList [
 
 { #category : #initialization }
 DAAddPackagePresenter >> selectedItemsFromPackageList [
-	^ self packageList selectedItems
+	^ self packageList chosenItems
 ]
 
 { #category : #accessing }
