@@ -210,8 +210,7 @@ DAPackageAnalyzerTreePresenter >> connectPresenters [
 				ifNil: [ buttonBrowseCycles enabled: false ]
 				ifNotNil: [ 
 					buttonBrowseCycles enabled: true.
-					self flag: #menu.
-					"tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ]."
+					tree contextMenu: [ self loadMenuForSelectedItem ].
 					self tree selectedItem selectInBrowser ] ]
 ]
 
@@ -326,9 +325,8 @@ DAPackageAnalyzerTreePresenter >> pdPackagesFrom: selectedItems [
 
 { #category : #actions }
 DAPackageAnalyzerTreePresenter >> refresh [
-	self isOpen ifTrue: [  
-			self relationGraph refreshGraph.
-			self buildRoots].
+	self relationGraph refreshGraph.
+	self buildRoots.
 		
 ]
 

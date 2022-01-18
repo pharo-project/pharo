@@ -32,7 +32,7 @@ DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup
 			namesOfSelected := selectedNodes collect: [ :package | package content theClass ].
 			menuGroup
 				addMenuItem:
-					(MenuItemPresenter new
+					(SpMenuItemPresenter new
 						name: 'Browse dependencies from class';
 						action: [ self openTreeFor: namesOfSelected ]) ]
 ]
@@ -45,14 +45,14 @@ DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 			selectedPackageNames := selectedNodes collect: [ :packageNode | packageNode packageName ].
 			menuGroup
 				addMenuItem:
-					(MenuItemPresenter new
+					(SpMenuItemPresenter new
 						name: 'Browse scoped dependencies';
 						action: [ (DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: selectedPackageNames) open ]).
 			selectedNodes size > 1
 				ifTrue: [ 
 					menuGroup
 						addMenuItem:
-							(MenuItemPresenter new
+							(SpMenuItemPresenter new
 								name: 'Find cycles among packages';
 								action: [ (DAPackageAnalyzerCycleDetectionWindow onPackagesNamed: selectedPackageNames) open ]) ] ]
 ]
@@ -133,17 +133,18 @@ DAPackageTreePresenter >> isOpen [
 ]
 
 { #category : #actions }
-DAPackageTreePresenter >> loadMenuFor: item in: aMenu [
-	| menuGroup selectedNodes |
+DAPackageTreePresenter >> loadMenuForSelectedItem [
+
+	| menu selectedNodes |
+	menu := self newMenu.
+
 	selectedNodes := self selectedItemsFromTree.
-	menuGroup := MenuGroupPresenter new.
-	self addPackageOptionsFor: selectedNodes on: menuGroup.
-	self addDependenciesOptionsFor: selectedNodes asSet on: menuGroup.
-	(selectedNodes size = 1)
-		ifTrue: [ selectedNodes first addMenuEntriesOn: menuGroup ].
-	
-	aMenu addMenuGroup: menuGroup.
-	^ aMenu
+	menu addGroup: [ :menuGroup | 
+		self addPackageOptionsFor: selectedNodes on: menuGroup.
+		self addDependenciesOptionsFor: selectedNodes asSet on: menuGroup.
+		selectedNodes size = 1 ifTrue: [ 
+			selectedNodes first addMenuEntriesOn: menuGroup ] ].
+	^ menu
 ]
 
 { #category : #'instance creation' }

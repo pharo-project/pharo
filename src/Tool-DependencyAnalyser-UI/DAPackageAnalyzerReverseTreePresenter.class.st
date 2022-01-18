@@ -54,7 +54,7 @@ DAPackageAnalyzerReverseTreePresenter >> connectPresenters [
 			item
 				ifNotNil: [ 
 					self tree selectedItem selectInBrowser.
-					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ] ] ].
+					tree menu: [ :aMenu | self loadMenuForSelectedItem ] ] ].
 ]
 
 { #category : #initialization }
