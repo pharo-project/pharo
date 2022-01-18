@@ -91,7 +91,6 @@ DAPackageTreePresenter >> buttonRefresh [
 
 { #category : #actions }
 DAPackageTreePresenter >> close [
-	open := false.
 	browser windowIsClosing
 ]
 
@@ -127,11 +126,6 @@ DAPackageTreePresenter >> initializePresenters [
 	browser := Smalltalk tools browser onDefaultEnvironment
 ]
 
-{ #category : #testing }
-DAPackageTreePresenter >> isOpen [
-	^ open
-]
-
 { #category : #actions }
 DAPackageTreePresenter >> loadMenuForSelectedItem [
 
@@ -149,7 +143,6 @@ DAPackageTreePresenter >> loadMenuForSelectedItem [
 
 { #category : #'instance creation' }
 DAPackageTreePresenter >> open [
-	open := true.
 	^ self openWithSpec 
 ]
 

@@ -89,9 +89,9 @@ DAPackageAnalyzerReverseTreePresenter >> packageLabel [
 
 { #category : #actions }
 DAPackageAnalyzerReverseTreePresenter >> refresh [
-		self isOpen ifTrue: [  
-			self relationGraph refreshGraph.
-			self buildRoots].
+
+	self relationGraph refreshGraph.
+	self buildRoots
 ]
 
 { #category : #accessing }
