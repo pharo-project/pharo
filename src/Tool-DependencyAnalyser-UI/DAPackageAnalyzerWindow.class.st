@@ -80,9 +80,10 @@ DAPackageAnalyzerWindow >> defaultLabel [
 
 { #category : #initialization }
 DAPackageAnalyzerWindow >> defaultLayout [ 
-	^ SpBoxLayout newHorizontal 
+	^ SpPanedLayout newHorizontal
 		add: self model;
 		add: browserWrapper;
+		positionOfSlider: 0.3;
 		yourself 
 ]
 
