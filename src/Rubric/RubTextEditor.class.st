@@ -442,23 +442,6 @@ RubTextEditor >> changeLfToCr: aKeyboardEvent [
 ]
 
 { #category : #'menu messages' }
-RubTextEditor >> changeTextFont [
-	"Present a menu of available fonts, and if one is chosen, apply it to the current selection."
-
-	textArea
-		forceCursorVisibleWhile: [ 
-			| hadFocus |
-			hadFocus := textArea hasFocus.
-			(FontChooser
-				openWithWindowTitle: 'Choose a Font'
-				for: self
-				setSelector: #applyTextFont:
-				getSelector: self fontToUse) openModal.
-			hadFocus
-				ifTrue: [ textArea takeKeyboardFocus ] ]
-]
-
-{ #category : #'menu messages' }
 RubTextEditor >> chooseAlignment [
 	self changeAlignment
 ]
