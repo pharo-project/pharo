@@ -17,3 +17,13 @@ BaselineOfNewValueHolder >> baseline: spec [
 		spec group: 'core' with: #('NewValueHolder-Core').
 		spec group: 'tests' with: #('NewValueHolder-Tests') ]
 ]
+
+{ #category : #accessing }
+BaselineOfNewValueHolder >> project [
+	
+	| aProject |
+	
+	aProject := super project.
+	aProject loadType: #atomic.
+	^ aProject
+]
