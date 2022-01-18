@@ -14,7 +14,7 @@ WatchIconStyler >> highlightColor [
 
 { #category : #defaults }
 WatchIconStyler >> iconBlock: aNode [
-	^[ WatchesWindow openOn: aNode watch]
+	^[ WatchesWindowPresenter openOn: aNode watch]
 ]
 
 { #category : #defaults }
