@@ -19,11 +19,6 @@ DAPackageTreePresenter class >> isAbstract [
 	^self == DAPackageTreePresenter
 ]
 
-{ #category : #private }
-DAPackageTreePresenter >> actionOnRefresh [
-	buttonRefresh action: [ self refresh ]
-]
-
 { #category : #actions }
 DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup [
 	| namesOfSelected |
@@ -96,7 +91,8 @@ DAPackageTreePresenter >> close [
 
 { #category : #initialization }
 DAPackageTreePresenter >> connectPresenters [
-	self actionOnRefresh
+
+	buttonRefresh action: [ self refresh ]
 ]
 
 { #category : #protocol }
