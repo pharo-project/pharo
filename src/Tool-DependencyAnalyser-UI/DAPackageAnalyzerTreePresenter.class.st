@@ -66,7 +66,7 @@ DAPackageAnalyzerTreePresenter class >> onPackagesNamed: aCollection [
 
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> actionOnAddPackage [
-	self buttonAddPackage action: [ (DAAddPackagePresenter 
+	buttonAddPackage action: [ (DAAddPackagePresenter 
 					new 
 					packageAnalyzerTreeModel: self)
 					open ]
@@ -93,7 +93,7 @@ DAPackageAnalyzerTreePresenter >> actionOnButtons [
 
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> actionOnDefaultSettings [
-	self buttonDefault
+	buttonDefault
 		action: [ 
 			self resetDefaultSettings.
 			self buildRoots ]
@@ -126,7 +126,7 @@ DAPackageAnalyzerTreePresenter >> actionOnGenerateGraphViz [
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> actionOnRemovePackage [
 	| packagesToRemove |
-	self buttonRemovePackage
+	buttonRemovePackage
 		action: [ 
 			self selectedItemsFromTree
 				ifNotEmpty: [ 
@@ -145,7 +145,7 @@ DAPackageAnalyzerTreePresenter >> actionOnReverseAnalysis [
 
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> actionOnSave [
-	self buttonSave 
+	buttonSave 
 		action: [ self saveCurrentRelationGraph ]
 ]
 
@@ -168,36 +168,6 @@ DAPackageAnalyzerTreePresenter >> buildRoots [
 		ifNil: [ self nodesFor: relationGraph seenPackages ].
 	self tree roots: roots.
 	self updatePackageLabel
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonAddPackage [
-	^ buttonAddPackage
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonBrowseCycles [
-	^ buttonBrowseCycles
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonDefault [
-	^ buttonDefault
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonRemovePackage [
-	^ buttonRemovePackage
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonReverseAnalysis [
-	^ buttonReverseAnalysis
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonSave [
-	^ buttonSave
 ]
 
 { #category : #initialization }
@@ -303,11 +273,6 @@ DAPackageAnalyzerTreePresenter >> nodesFor: anItemList [
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> packageLabel [
-	^ packageLabel
-]
-
-{ #category : #accessing }
 DAPackageAnalyzerTreePresenter >> packagesEntryCompletion [
 	| applicants |
 	applicants := (RPackageOrganizer default packages collect: [ :package | package packageName asString ]).
@@ -354,17 +319,10 @@ DAPackageAnalyzerTreePresenter >> relationGraph: anObject [
 			title: 'Potential outdated dependencies' ]
 ]
 
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> relationGraphOnReverse: anObject [
-	relationGraph := anObject.
-	self relationGraph build.
-	self buildReverseRoots
-]
-
 { #category : #actions }
 DAPackageAnalyzerTreePresenter >> resetDefaultSettings [
 	self resetFilter.
-	self textPackageField text: ''
+	textPackageField text: ''
 ]
 
 { #category : #actions }
@@ -388,11 +346,6 @@ DAPackageAnalyzerTreePresenter >> sizeOfRoots [
 	^ self treeRoots size
 ]
 
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> textPackageField [
-	^ textPackageField
-]
-
 { #category : #protocol }
 DAPackageAnalyzerTreePresenter >> title [
 	^ 'Dependencies analysis'
@@ -405,5 +358,5 @@ DAPackageAnalyzerTreePresenter >> treeRoots [
 
 { #category : #accessing }
 DAPackageAnalyzerTreePresenter >> updatePackageLabel [
-	self packageLabel label: 'Analysis of ' , self sizeOfRoots asString , ' package(s)'
+	packageLabel label: 'Analysis of ' , self sizeOfRoots asString , ' package(s)'
 ]

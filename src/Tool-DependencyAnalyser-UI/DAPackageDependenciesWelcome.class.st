@@ -1,5 +1,7 @@
 "
 Welcome user interface to browse dependencies packages. Availaible via tools menu.
+
+self new openWithSpec
 "
 Class {
 	#name : #DAPackageDependenciesWelcome,
@@ -303,6 +305,6 @@ DAPackageDependenciesWelcome >> updatePackageChosenLabel [
 
 { #category : #protocol }
 DAPackageDependenciesWelcome >> updatePackageLabel [
-	self packageLabel 
+	packageLabel 
 			label: 'Choose your packages (', self packageList listSize asString, ' packages available)'.
 ]

@@ -106,5 +106,5 @@ DAPackageAnalyzerReverseTreePresenter >> title [
 
 { #category : #private }
 DAPackageAnalyzerReverseTreePresenter >> updatePackageLabel [
-	self packageLabel label: 'Analysis of ' , self tree roots size asString , ' package(s)'
+	packageLabel label: 'Analysis of ' , self tree roots size asString , ' package(s)'
 ]
