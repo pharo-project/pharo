@@ -33,7 +33,7 @@ HiSpecExample class >> openExample: selector [
 
 	^ self new
 		commits: commits;
-		openWithSpec;
+		open;
 		withWindowDo: [ :window |
 			window
 				extent: 600 @ 800;

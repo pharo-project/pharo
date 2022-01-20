@@ -46,7 +46,7 @@ CoverageDemo class >> exampleMethod [
 { #category : #open }
 CoverageDemo class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #specs }
@@ -150,9 +150,9 @@ CoverageDemo >> metalinkBlock: anObject [
 ]
 
 { #category : #api }
-CoverageDemo >> openWithSpec [
+CoverageDemo >> open [
 	self addCards.
-	^ super openWithSpec
+	^ super open
 ]
 
 { #category : #action }
