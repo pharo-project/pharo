@@ -97,6 +97,7 @@ PharoCommonTools class >> shutDown: aboutToQuit [
 
 { #category : #'world menu' }
 PharoCommonTools class >> worldMenuOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #'System Browser')
 		parent: #Browsing;
@@ -105,13 +106,14 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
 		iconName: #smallSystemBrowser.
-	(aBuilder item: #'Iceberg')
-		order: 1; 
-		icon: (self iconNamed: #komitterSmalltalkhubRemote);  
-		parent: #'Browsing';
+	(aBuilder item: #Iceberg)
+		order: 1;
+		icon: (self iconNamed: #komitterSmalltalkhubRemote);
+		parent: #Browsing;
 		keyText: 'o, i';
-		help: 'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
-		action: [ (Smalltalk at: #IceTipRepositoriesBrowser) new openWithSpec ]
+		help:
+			'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
+		action: [ (Smalltalk at: #IceTipRepositoriesBrowser) new open ]
 ]
 
 { #category : #'registry access' }
