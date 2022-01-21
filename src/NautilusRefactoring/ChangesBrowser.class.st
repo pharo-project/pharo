@@ -3,65 +3,42 @@ A ChangesBrowser is a browser used to browse a composite change wich gather all 
 "
 Class {
 	#name : #ChangesBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'textArea',
 		'changesTree',
-		'changes'
+		'selectedItems'
 	],
 	#category : #'NautilusRefactoring-Utilities'
 }
 
-{ #category : #shortcuts }
-ChangesBrowser class >> buildShortcutsOn: aBuilder [
-	<keymap>
-
-	(aBuilder shortcut: #close)
-		category: #ChangesBrowserGlobalShortcuts
-		default: PharoShortcuts current cancelShortcut
-		do: [ :target | target cancel ]
-		description: 'Close this dialog'.
-		
-	(aBuilder shortcut: #accept)
-		category: #ChangesBrowserGlobalShortcuts
-		default: PharoShortcuts current acceptShortcut
-		do: [ :target | target accept ]
-		description: 'Accept the proposed changes'.
-]
-
 { #category : #'instance creation' }
 ChangesBrowser class >> changes: aCollection [
 
-	^ self new
-		changes: aCollection;
-		yourself
+	^ self on: aCollection
 ]
 
 { #category : #specs }
 ChangesBrowser class >> defaultSpec [
 	<spec>
-	^ SpecLayout composed
-		newColumn: [ :column1 | 
-			column1
-				newColumn: [ :column2 | column2 add: #changesTree ];
-				addSplitter;
-				add: #textArea ]
-]
+	
+	^ SpPanedLayout newTopToBottom 
+		add: #changesTree;
+		add: #textArea;
+		yourself
+	
 
-{ #category : #specs }
-ChangesBrowser class >> title [
-
-	^ 'Changes Browser'
 ]
 
 { #category : #visiting }
 ChangesBrowser >> accept [
-	self okToChange
-		ifFalse: [ ^ self ].
-	[ self pickedChanges do: [ :change | RBRefactoryChangeManager instance performChange: change ] ] asJob
+
+	self okToChange ifFalse: [ ^ self ].
+	
+	[ self pickedChanges do: [ :change | 
+			RBRefactoryChangeManager instance performChange: change ] ] asJob
 		title: 'Refactoring';
-		run.
-	self window delete
+		run
 ]
 
 { #category : #private }
@@ -75,20 +52,18 @@ ChangesBrowser >> buildDiffFor: aChange [
 				to: aChange textToDisplay ].
 ]
 
-{ #category : #api }
-ChangesBrowser >> cancel [
-	self window delete
-]
-
 { #category : #accessing }
 ChangesBrowser >> changes [
-	^ changes
+
+	^ self model
 ]
 
 { #category : #accessing }
 ChangesBrowser >> changes: aCollection [
-	changes := aCollection.
-	self updateChanges
+
+	self model: aCollection
+
+	
 ]
 
 { #category : #accessing }
@@ -97,76 +72,57 @@ ChangesBrowser >> changesTree [
 ]
 
 { #category : #initialization }
-ChangesBrowser >> initializeChangesTree [
-	changesTree
-		beCheckList;
-		removeOnlyLastSelected: true;
-		autoMultiSelection: true;
-		rootNodeHolder: [ :item | 
-					TreeNodePresenter new
-						content: item;
-						hasContentToShow: true;
-						children: [ changesTree childrenFor: item ] ];
-		displayBlock: [ :item | item nameToDisplay ].
-	self whenBuiltDo: [ changesTree selectAll ]
+ChangesBrowser >> connectPresenters [
+
+	changesTree whenSelectionChangedDo: [ :selection |
+		selection selectedItem 
+			ifNil: [ textArea text: '' ]
+			ifNotNil: [ :item | textArea text: (self buildDiffFor: item)  ]
+		 ]
 ]
 
 { #category : #initialization }
-ChangesBrowser >> initializePresenter [
-	changesTree
-		whenHighlightedItemChanged:
-			[ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
+ChangesBrowser >> initializeDialogWindow: aWindow [
+
+	super initializeDialogWindow: aWindow.
+
+	aWindow
+		title: 'Changes Browser';
+		okAction: [ self accept ]
 ]
 
 { #category : #initialization }
-ChangesBrowser >> initializeTextArea [
-	textArea 
-		enabled: false;
-		"make sure we can cycle over the text field"
-		bindKeyCombination: Character tab toAction: [ self giveFocusToNextFrom: textArea ];
-		bindKeyCombination: Character tab shift toAction: [ self giveFocusToPreviousFrom: textArea ].
-]
+ChangesBrowser >> initializePresenters [
 
-{ #category : #initialization }
-ChangesBrowser >> initializeWidgets [
-
-	changesTree := self newTree.
+	changesTree := self newTreeTable.
 	textArea := self newCode.
-	
-	self initializeChangesTree.
-	self initializeTextArea.
-	self setFocus.
-	self
-		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
-		bindKeyCombination: Character escape toAction: [ self cancel ]
+	textArea enabled: false.
+
+	changesTree
+		children: [ :node | 
+			(node whatToDisplayIn: self) copyWithout: node ];
+		addColumn: (SpCompositeTableColumn
+			with: ((SpCheckBoxTableColumn evaluated: [:item | selectedItems includes: item ])
+					onActivation: [ :item | selectedItems add: item ];
+					onDeactivation: [ :item | selectedItems remove: item ifAbsent: [  ] ]
+					yourself)
+			with: (SpStringTableColumn evaluated: [ :item | item nameToDisplay ]) ).	
+
+	self focusOrder
+		add: changesTree;
+		add: textArea
 ]
 
-{ #category : #opening }
+{ #category : #showing }
 ChangesBrowser >> open [
-	^ self openDialogWithSpec
-		okAction: [ self accept ];
-		cancelAction: [ self cancel ];
-		yourself
+
+	self openDialog
 ]
 
 { #category : #accessing }
 ChangesBrowser >> pickedChanges [
-	| selectedItems |
-	selectedItems := changesTree selectedItems collect: [:each | each content].
+
 	^ changesTree roots select: [ :i | selectedItems includes: i ]
-]
-
-{ #category : #initialization }
-ChangesBrowser >> setFocus [
-	self focusOrder
-		add: changesTree;
-		add: textArea;
-		yourself
-]
-
-{ #category : #initialization }
-ChangesBrowser >> setShortcuts [
-	self changesTree attachKeymapCategory: #ChangesBrowserGlobalShortcuts targetting: self
 ]
 
 { #category : #accessing }
@@ -179,9 +135,17 @@ ChangesBrowser >> updateChanges [
 	| aCompositeChange |
 	aCompositeChange := RBRefactoryChangeManager changeFactory
 		compositeRefactoryChange.
-	changes do: [ :each | aCompositeChange addChange: each ].
+	self changes do: [ :each | aCompositeChange addChange: each ].
 
 	"Later we could filter the shown changes depending on the selected scope"
 
-	changesTree roots: (aCompositeChange whatToDisplayIn: self)
+	changesTree roots: (aCompositeChange whatToDisplayIn: self).
+	selectedItems := Set withAll: changesTree roots.
+]
+
+{ #category : #updating }
+ChangesBrowser >> updatePresenter [ 
+
+	self model ifNil: [ ^ self ].
+	self updateChanges
 ]

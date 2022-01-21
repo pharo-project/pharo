@@ -65,10 +65,11 @@ EpLogBrowserPresenter class >> open [
 
 { #category : #'instance creation' }
 EpLogBrowserPresenter class >> openWithLog: aLog [
+
 	^ (self newWithLog: aLog)
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #private }
