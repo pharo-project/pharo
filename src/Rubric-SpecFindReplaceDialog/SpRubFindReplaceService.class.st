@@ -99,7 +99,7 @@ SpRubFindReplaceService >> openDialog [
 	dialog := SpRubFindReplaceDialog on: self.
 	dialog updateFromModel.
 
-	dialogWindow := dialog openDialogWithSpec
+	dialogWindow := dialog openDialog
 ]
 
 { #category : #services }

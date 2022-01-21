@@ -35,8 +35,8 @@ DrTests class >> beDefaultTestRunner [
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #specs }
-DrTests class >> defaultSpec [
+{ #category : #layout }
+DrTests class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		add:
@@ -69,11 +69,11 @@ DrTests class >> menuCommandOn: aBuilder [
 
 { #category : #api }
 DrTests class >> open [
+
 	<script>
-	
 	^ self new
-		openWithSpec;
-		yourself
+		  open;
+		  yourself
 ]
 
 { #category : #'tools registry' }

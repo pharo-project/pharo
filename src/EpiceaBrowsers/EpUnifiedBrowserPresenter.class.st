@@ -18,11 +18,12 @@ Class {
 
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
+
 	<script>
 	^ self new
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #accessing }
