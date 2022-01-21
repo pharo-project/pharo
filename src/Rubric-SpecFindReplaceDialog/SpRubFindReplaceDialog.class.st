@@ -22,8 +22,8 @@ Class {
 	#category : #'Rubric-SpecFindReplaceDialog'
 }
 
-{ #category : #specs }
-SpRubFindReplaceDialog class >> defaultSpec [
+{ #category : #layout }
+SpRubFindReplaceDialog class >> defaultLayout [
 	<spec>
 	^ SpBoxLayout newVertical
 		add: #findInput expand: false;
