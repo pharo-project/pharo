@@ -35,7 +35,7 @@ AthensDemoPresenter class >> defaultLayout [
 { #category : #'instance creation' }
 AthensDemoPresenter class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #initialization }

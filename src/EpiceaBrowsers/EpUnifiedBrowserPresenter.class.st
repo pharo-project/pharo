@@ -139,7 +139,7 @@ EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
 { #category : #actions }
 EpUnifiedBrowserPresenter >> openDashboard [
 
-	(EpDashboardPresenter newApplication: self application) openWithSpec
+	(EpDashboardPresenter newApplication: self application) open
 ]
 
 { #category : #refreshing }

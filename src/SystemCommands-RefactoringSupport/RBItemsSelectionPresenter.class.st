@@ -27,8 +27,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBItemsSelectionPresenter class >> defaultSpec [
+{ #category : #layout }
+RBItemsSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:

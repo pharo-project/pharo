@@ -32,8 +32,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBFindAndReplacePreviewPresenter class >> defaultSpec [
+{ #category : #layout }
+RBFindAndReplacePreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self labelHeight ];
 		add:

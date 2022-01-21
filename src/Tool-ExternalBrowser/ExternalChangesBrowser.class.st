@@ -87,7 +87,7 @@ ExternalChangesBrowser class >> openOnFileName: aFileName [
 
 	self new
 		changeSetName: aFileName;
-		openWithSpec
+		open
 ]
 
 { #category : #'instance creation' }
