@@ -30,9 +30,8 @@ RBReplacePreview class >> change: anObject [
 		yourself
 ]
 
-{ #category : #specs }
-RBReplacePreview class >> defaultSpec [
-	<spec: #default>
+{ #category : #layout }
+RBReplacePreview class >> defaultLayout [
 	
 	^ SpBoxLayout newTopToBottom 
 				add: #diffPresenter;

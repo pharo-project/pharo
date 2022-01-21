@@ -19,8 +19,8 @@ Class {
 	#category : #'Athens-Examples-Spec'
 }
 
-{ #category : #specs }
-AthensDemoPresenter class >> defaultSpec [
+{ #category : #layout }
+AthensDemoPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #demo;
 		add:
