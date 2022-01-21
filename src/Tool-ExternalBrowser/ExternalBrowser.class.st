@@ -32,8 +32,8 @@ ExternalBrowser class >> browseStream: aStream [
 	self openOn: (RingChunkImporter fromStream: aStream)
 ]
 
-{ #category : #specs }
-ExternalBrowser class >> defaultSpec [
+{ #category : #layout }
+ExternalBrowser class >> defaultLayout [
 	<spec: #default>
 	
 	^ SpPanedLayout newTopToBottom 
