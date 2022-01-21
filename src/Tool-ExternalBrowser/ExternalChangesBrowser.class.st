@@ -30,8 +30,8 @@ ExternalChangesBrowser class >> browseRecentLog [
 	^ self openOnStream: SourceFiles changesFileStream
 ]
 
-{ #category : #specs }
-ExternalChangesBrowser class >> defaultSpec [
+{ #category : #layout }
+ExternalChangesBrowser class >> defaultLayout [
 	<spec: #default>
 	
 	^ SpPanedLayout newTopToBottom 
