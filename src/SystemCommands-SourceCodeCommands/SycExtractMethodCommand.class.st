@@ -12,11 +12,11 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not 
+
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+		  aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : #converting }

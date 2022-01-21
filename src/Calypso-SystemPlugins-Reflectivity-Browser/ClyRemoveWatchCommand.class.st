@@ -7,7 +7,7 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyRemoveWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^aBrowserContext isSelectedItemHasWatch
