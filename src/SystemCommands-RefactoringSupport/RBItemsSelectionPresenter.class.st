@@ -42,7 +42,7 @@ RBItemsSelectionPresenter class >> defaultLayout [
 RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new 
 		label: aString withItems: items selecting: selectedItems;
-		openBlockedDialogWithSpec 
+		openBlockedDialog
 ]
 
 { #category : #actions }

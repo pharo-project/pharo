@@ -34,7 +34,7 @@ RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 		selecting: selectedItems
 		dropItems: dropItems
 		acceptBlock: aBlock;
-		openBlockedDialogWithSpec
+		openBlockedDialog
 ]
 
 { #category : #actions }
