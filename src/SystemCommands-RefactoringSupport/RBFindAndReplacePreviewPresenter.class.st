@@ -54,7 +54,7 @@ RBFindAndReplacePreviewPresenter class >> example [
 RBFindAndReplacePreviewPresenter class >> method: aMethod [
 	|temp|
 	temp := self new method: aMethod.
-	^ temp openModalWithSpec
+	^ temp openModal
 ]
 
 { #category : #specs }

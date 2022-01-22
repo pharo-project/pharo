@@ -100,7 +100,7 @@ RBReplacePreview >> initializeWidgets [
 
 { #category : #'instance creation' }
 RBReplacePreview >> open [
-	^ self "openDialogWithSpec"openModalWithSpec
+	^ self "openDialogWithSpec"openModal
 ]
 
 { #category : #initialization }
