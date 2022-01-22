@@ -1152,7 +1152,7 @@ SmalltalkImage >> memoryHogs [
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
  
-   ^ #(#squeakCommon #pharo #'pharo10.x'  #'pharo10.0.x')
+   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x' #'pharo10.x'  #'pharo10.0.x')
 ]
 
 { #category : #'special objects' }
