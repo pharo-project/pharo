@@ -23,8 +23,8 @@ RewriteRuleChangesBrowser class >> changes: aCollection [
 		yourself
 ]
 
-{ #category : #specs }
-RewriteRuleChangesBrowser class >> defaultSpec [
+{ #category : #layout }
+RewriteRuleChangesBrowser class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 		add: (SpPanedLayout newTopToBottom
@@ -173,7 +173,7 @@ RewriteRuleChangesBrowser >> initializeWindow: aWindowPresenter [
 
 { #category : #'instance creation' }
 RewriteRuleChangesBrowser >> open [
-	^ self openWithSpec
+	^ self open
 ]
 
 { #category : #accessing }

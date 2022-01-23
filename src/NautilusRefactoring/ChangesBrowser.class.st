@@ -18,9 +18,8 @@ ChangesBrowser class >> changes: aCollection [
 	^ self on: aCollection
 ]
 
-{ #category : #specs }
-ChangesBrowser class >> defaultSpec [
-	<spec>
+{ #category : #layout }
+ChangesBrowser class >> defaultLayout [
 	
 	^ SpPanedLayout newTopToBottom 
 		add: #changesTree;

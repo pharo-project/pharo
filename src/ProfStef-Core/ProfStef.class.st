@@ -148,7 +148,7 @@ ProfStef class >> openPharoZenWorkspace [
     | presenter |
     presenter := SpTextPresenter new
         text: self pharoZenValuesContents;
-        openWithSpec.
+        open.
 
     presenter
         withWindowDo: [ :w | 

@@ -90,7 +90,7 @@ ReAbstractCritique >> actions [
 					setModal: SystemWindow topWindow;
 					yourself.
 					
-				changesBrowser openDialogWithSpec
+				changesBrowser openDialog
 					okAction: [ changesBrowser accept ];
 					centered ];
 			yourself) ].

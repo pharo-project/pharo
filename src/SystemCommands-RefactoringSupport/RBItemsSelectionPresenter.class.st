@@ -27,8 +27,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBItemsSelectionPresenter class >> defaultSpec [
+{ #category : #layout }
+RBItemsSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -42,7 +42,7 @@ RBItemsSelectionPresenter class >> defaultSpec [
 RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new 
 		label: aString withItems: items selecting: selectedItems;
-		openBlockedDialogWithSpec 
+		openBlockedDialog
 ]
 
 { #category : #actions }

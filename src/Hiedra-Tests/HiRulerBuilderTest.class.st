@@ -110,7 +110,7 @@ HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 		addColumn: (SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ]);
 		items: values;
 		title: testSelector asString;
-		openWithSpec
+		open
 ]
 
 { #category : #tests }

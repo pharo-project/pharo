@@ -30,9 +30,8 @@ RBReplacePreview class >> change: anObject [
 		yourself
 ]
 
-{ #category : #specs }
-RBReplacePreview class >> defaultSpec [
-	<spec: #default>
+{ #category : #layout }
+RBReplacePreview class >> defaultLayout [
 	
 	^ SpBoxLayout newTopToBottom 
 				add: #diffPresenter;
@@ -101,7 +100,7 @@ RBReplacePreview >> initializeWidgets [
 
 { #category : #'instance creation' }
 RBReplacePreview >> open [
-	^ self "openDialogWithSpec"openModalWithSpec
+	^ self "openDialogWithSpec"openModal
 ]
 
 { #category : #initialization }

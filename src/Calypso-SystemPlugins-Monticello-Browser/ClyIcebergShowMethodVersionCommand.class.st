@@ -73,7 +73,7 @@ ClyIcebergShowMethodVersionCommand >> execute [
 	browserClass := #IceTipVersionHistoryBrowser
 		asClassInEnvironment: self class environment.
 		
-	(browserClass onRepository: repository method: method) openWithSpec
+	(browserClass onRepository: repository method: method) open
 ]
 
 { #category : #execution }

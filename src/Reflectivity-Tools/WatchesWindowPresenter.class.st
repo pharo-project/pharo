@@ -16,8 +16,8 @@ Class {
 	#category : #'Reflectivity-Tools-Watches'
 }
 
-{ #category : #specs }
-WatchesWindowPresenter class >> defaultSpec [
+{ #category : #layout }
+WatchesWindowPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 			add: #menu expand: false;
@@ -37,7 +37,7 @@ WatchesWindowPresenter class >> on: aWatchpoint [
 
 { #category : #'instance creation' }
 WatchesWindowPresenter class >> openOn: aWatchpoint [
-	^(self on: aWatchpoint) openWithSpec
+	^(self on: aWatchpoint) open
 ]
 
 { #category : #initialization }

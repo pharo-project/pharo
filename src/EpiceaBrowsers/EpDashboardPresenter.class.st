@@ -17,8 +17,8 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Dashboard'
 }
 
-{ #category : #specs }
-EpDashboardPresenter class >> defaultSpec [
+{ #category : #layout }
+EpDashboardPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #currentSessionInfoPresenter;
 		add:
@@ -37,7 +37,7 @@ EpDashboardPresenter class >> defaultSpec [
 EpDashboardPresenter class >> open [
 	^ self new
 		refresh;
-		openWithSpec;
+		open;
 		yourself
 ]
 
