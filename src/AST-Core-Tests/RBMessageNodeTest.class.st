@@ -50,6 +50,17 @@ RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 ]
 
 { #category : #tests }
+RBMessageNodeTest >> testIntersectsInterval [
+		| tree message |
+		tree := self parseMethod: 'test self doit.'.
+		message := tree sendNodes first.
+		self assert: (message intersectsInterval: (13 to: 14)).	" last 't' selected "
+		self assert: (message intersectsInterval: (14 to: 13)).	" caret placed between 't' and '.' "
+		self assert: (message intersectsInterval: (14 to: 15)).	" '.' selected "
+		self deny:   (message intersectsInterval: (15 to: 14))	" caret placed after '.' "
+]
+
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
