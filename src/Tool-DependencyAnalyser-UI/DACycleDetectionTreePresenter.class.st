@@ -2,7 +2,7 @@
 A PDPackageDetectCycleTreeModel shows all cycles among packages from a graph of dependencies.
 "
 Class {
-	#name : #DAPackageCycleDetectionTreePresenter,
+	#name : #DACycleDetectionTreePresenter,
 	#superclass : #DAPackageTreePresenter,
 	#instVars : [
 		'analysis',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #specs }
-DAPackageCycleDetectionTreePresenter class >> defaultSpec [
+DACycleDetectionTreePresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpecLayout composed
 		newColumn:
@@ -34,7 +34,7 @@ DAPackageCycleDetectionTreePresenter class >> defaultSpec [
 ]
 
 { #category : #'instance creation' }
-DAPackageCycleDetectionTreePresenter class >> onPackagesMatch: match [
+DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages
 				select: [ :package | match match: package packageName asString ]
@@ -42,35 +42,35 @@ DAPackageCycleDetectionTreePresenter class >> onPackagesMatch: match [
 ]
 
 { #category : #'instance creation' }
-DAPackageCycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
+DACycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
 	^ self new 
 		initializeWithPackageName: aCollection;
 		yourself
 ]
 
 { #category : #'instance creation' }
-DAPackageCycleDetectionTreePresenter class >> system [
+DACycleDetectionTreePresenter class >> system [
 	^ self onPackagesNamed: 
 		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> analysis [
+DACycleDetectionTreePresenter >> analysis [
 	^ analysis
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> analysis: anObject [
+DACycleDetectionTreePresenter >> analysis: anObject [
 	analysis := anObject
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> browser: anObject [
+DACycleDetectionTreePresenter >> browser: anObject [
 	browser := anObject
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> buildRoots [
+DACycleDetectionTreePresenter >> buildRoots [
 	self tree
 		roots: cycles;
 		whenBuiltDo: [ 
@@ -87,12 +87,12 @@ DAPackageCycleDetectionTreePresenter >> buildRoots [
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> buttonReversed [
+DACycleDetectionTreePresenter >> buttonReversed [
 	^ buttonReversed
 ]
 
 { #category : #initialization }
-DAPackageCycleDetectionTreePresenter >> connectPresenters [
+DACycleDetectionTreePresenter >> connectPresenters [
 	super connectPresenters.
 	
 	cyclesLabel := self newLabel
@@ -109,45 +109,45 @@ DAPackageCycleDetectionTreePresenter >> connectPresenters [
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> cycles [
+DACycleDetectionTreePresenter >> cycles [
 	^ cycles
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> cycles: aCollectionOfCycles [
+DACycleDetectionTreePresenter >> cycles: aCollectionOfCycles [
 	cycles := aCollectionOfCycles sorted: [ :a :b | a size > b size ].
 	self buildRoots.
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> cyclesLabel [
+DACycleDetectionTreePresenter >> cyclesLabel [
 	^ cyclesLabel
 ]
 
 { #category : #protocol }
-DAPackageCycleDetectionTreePresenter >> extent [
+DACycleDetectionTreePresenter >> extent [
 	^ 1000@600
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> filter [
+DACycleDetectionTreePresenter >> filter [
 	^ filter
 ]
 
 { #category : #filtering }
-DAPackageCycleDetectionTreePresenter >> filterWithPackages [
+DACycleDetectionTreePresenter >> filterWithPackages [
 	
 	self cycles: (self analysis cyclesWithAtLeast: filter)
 ]
 
 { #category : #filtering }
-DAPackageCycleDetectionTreePresenter >> filterWithPackages: aCollectionOfPDPackage [
+DACycleDetectionTreePresenter >> filterWithPackages: aCollectionOfPDPackage [
 	filter := aCollectionOfPDPackage.
 	self cycles: (self analysis cyclesWithAtLeast: filter)
 ]
 
 { #category : #initialization }
-DAPackageCycleDetectionTreePresenter >> initializePresenters [
+DACycleDetectionTreePresenter >> initializePresenters [
 	super initializePresenters.
 	
 	cyclesLabel := self newLabel
@@ -159,7 +159,7 @@ DAPackageCycleDetectionTreePresenter >> initializePresenters [
 ]
 
 { #category : #initialization }
-DAPackageCycleDetectionTreePresenter >> initializeWithPackageName: aCollection [
+DACycleDetectionTreePresenter >> initializeWithPackageName: aCollection [
 	
 	self analysis:  (DAPackageCycleDetector onPackagesNamed: aCollection) runAlgorithm.
 	
@@ -167,7 +167,7 @@ DAPackageCycleDetectionTreePresenter >> initializeWithPackageName: aCollection [
 ]
 
 { #category : #actions }
-DAPackageCycleDetectionTreePresenter >> refresh [
+DACycleDetectionTreePresenter >> refresh [
 	self analysis refresh.
 	self filter ifNil: [ self cycles: self analysis cycles ]
 		ifNotNil: [ self cycles: (self analysis cyclesWithAtLeast: filter) ].
@@ -175,11 +175,11 @@ DAPackageCycleDetectionTreePresenter >> refresh [
 ]
 
 { #category : #accessing }
-DAPackageCycleDetectionTreePresenter >> reversedRoots [
+DACycleDetectionTreePresenter >> reversedRoots [
 	self tree roots: (self tree roots reversed).
 ]
 
 { #category : #protocol }
-DAPackageCycleDetectionTreePresenter >> title [
+DACycleDetectionTreePresenter >> title [
 	^ 'Cycles analysis'
 ]

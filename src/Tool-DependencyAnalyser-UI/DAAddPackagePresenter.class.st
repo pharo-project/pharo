@@ -8,14 +8,14 @@ Class {
 	#instVars : [
 		'packageList',
 		'buttonAddPackage',
-		'packageAnalyzerTreeModel'
+		'dependenciesPresenter'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #specs }
 DAAddPackagePresenter class >> defaultSpec [
-	<spec: #default>
+	
 	^ SpBoxLayout newTopToBottom
 			add: #packageList;
 			add: #buttonAddPackage expand: false;
@@ -29,11 +29,11 @@ DAAddPackagePresenter >> actionOnAddPackage [
 		action: [ 
 			self selectedItemsFromPackageList
 				ifNotEmpty: [ 
-					relationGraph := self packageAnalyzerTreeModel relationGraph.
+					relationGraph := self dependenciesPresenter relationGraph.
 					packagesToAdd := self selectedItemsFromPackageList
 						collect: [ :packageName | (DAPackage on: (RPackageSet named: packageName)) beSeen ].
 					relationGraph addPackages: packagesToAdd.
-					self packageAnalyzerTreeModel
+					self dependenciesPresenter
 						refresh;
 						resetDefaultSettings.
 					self delete ] ]
@@ -42,7 +42,7 @@ DAAddPackagePresenter >> actionOnAddPackage [
 { #category : #actions }
 DAAddPackagePresenter >> buildList [
 	| packagesAdded packagesNotAdded |
-	packagesAdded := self packageAnalyzerTreeModel seenPackagesName.
+	packagesAdded := self dependenciesPresenter seenPackagesName.
 	packagesNotAdded := self systemPackages.
 	packagesNotAdded removeAll: packagesAdded.
 	packageList sourceItems: packagesNotAdded.
@@ -56,6 +56,17 @@ DAAddPackagePresenter >> buttonAddPackage [
 { #category : #initialization }
 DAAddPackagePresenter >> connectPresenters [
 	self actionOnAddPackage
+]
+
+{ #category : #accessing }
+DAAddPackagePresenter >> dependenciesPresenter [
+	^ dependenciesPresenter
+]
+
+{ #category : #accessing }
+DAAddPackagePresenter >> dependenciesPresenter: aPackageTreePresenter [
+	dependenciesPresenter := aPackageTreePresenter.
+	self buildList
 ]
 
 { #category : #api }
@@ -78,17 +89,6 @@ DAAddPackagePresenter >> initializePresenters [
 { #category : #'instance creation' }
 DAAddPackagePresenter >> open [
 	^ self openWithSpec
-]
-
-{ #category : #accessing }
-DAAddPackagePresenter >> packageAnalyzerTreeModel [
-	^ packageAnalyzerTreeModel
-]
-
-{ #category : #accessing }
-DAAddPackagePresenter >> packageAnalyzerTreeModel: aPackageAnalyzerTreeModel [
-	packageAnalyzerTreeModel := aPackageAnalyzerTreeModel.
-	self buildList
 ]
 
 { #category : #accessing }

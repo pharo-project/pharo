@@ -4,7 +4,7 @@ Welcome user interface to browse dependencies packages. Availaible via tools men
 self new openWithSpec
 "
 Class {
-	#name : #DAPackageDependenciesWelcome,
+	#name : #DAWelcomePresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'packageLabel',
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #specs }
-DAPackageDependenciesWelcome class >> defaultSpec [
+DAWelcomePresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpecLayout composed
 		newColumn:
@@ -52,7 +52,7 @@ DAPackageDependenciesWelcome class >> defaultSpec [
 ]
 
 { #category : #'world menu' }
-DAPackageDependenciesWelcome class >> menuCommandOn: aBuilder [
+DAWelcomePresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #PackageDependencies)
@@ -65,7 +65,7 @@ DAPackageDependenciesWelcome class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #protocol }
-DAPackageDependenciesWelcome >> actionOnAddPackage [
+DAWelcomePresenter >> actionOnAddPackage [
 	| itemsToAdd itemsChosen itemsAdded |
 	buttonAddPackage
 		action: [ 
@@ -79,17 +79,17 @@ DAPackageDependenciesWelcome >> actionOnAddPackage [
 ]
 
 { #category : #protocol }
-DAPackageDependenciesWelcome >> actionOnOpen [
+DAWelcomePresenter >> actionOnOpen [
 	buttonOpen
 		action: [ 
 			self itemsFromPackageChosenList
 				ifNotEmpty: [ 
-					(DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: self itemsFromPackageChosenList) open.
+					(DAPackageDependenciesPresenter onPackagesNamed: self itemsFromPackageChosenList) open.
 					 ] ]
 ]
 
 { #category : #protocol }
-DAPackageDependenciesWelcome >> actionOnRemovePackage [
+DAWelcomePresenter >> actionOnRemovePackage [
 	| itemsAdded |
 	buttonRemovePackage
 		action: [ 
@@ -103,38 +103,38 @@ DAPackageDependenciesWelcome >> actionOnRemovePackage [
 ]
 
 { #category : #actions }
-DAPackageDependenciesWelcome >> buildList [
+DAWelcomePresenter >> buildList [
 	self packageList items: self systemPackages.
 	self updateLabels
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> buttonAddAll [
+DAWelcomePresenter >> buttonAddAll [
 	^ buttonAddAll
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> buttonAddPackage [
+DAWelcomePresenter >> buttonAddPackage [
 	^ buttonAddPackage
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> buttonOpen [
+DAWelcomePresenter >> buttonOpen [
 	^ buttonOpen
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> buttonRemoveAll [
+DAWelcomePresenter >> buttonRemoveAll [
 	^ buttonRemoveAll
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> buttonRemovePackage [
+DAWelcomePresenter >> buttonRemovePackage [
 	^ buttonRemovePackage
 ]
 
 { #category : #initialization }
-DAPackageDependenciesWelcome >> filterPackageList [
+DAWelcomePresenter >> filterPackageList [
 	| match itemsMatching |
 	textPackageField text
 		ifEmpty: [ self packageList items: self systemPackages ]
@@ -145,12 +145,12 @@ DAPackageDependenciesWelcome >> filterPackageList [
 ]
 
 { #category : #'morphic ui' }
-DAPackageDependenciesWelcome >> initialExtent [
+DAWelcomePresenter >> initialExtent [
 	^ (800@800)
 ]
 
 { #category : #initialization }
-DAPackageDependenciesWelcome >> initializeButtons [
+DAWelcomePresenter >> initializeButtons [
 	buttonOpen := self newButton
 		help: 'Open the package dependencies analysis';
 		label: 'Browse dependencies';
@@ -174,13 +174,13 @@ DAPackageDependenciesWelcome >> initializeButtons [
 ]
 
 { #category : #initialization }
-DAPackageDependenciesWelcome >> initializeLabels [
+DAWelcomePresenter >> initializeLabels [
 	packageLabel := self newLabel.
 	packageChosenLabel := self newLabel
 ]
 
 { #category : #initialization }
-DAPackageDependenciesWelcome >> initializeLists [
+DAWelcomePresenter >> initializeLists [
 	packageList := self newList
 		multiSelection: true;
 		yourself.
@@ -190,7 +190,7 @@ DAPackageDependenciesWelcome >> initializeLists [
 ]
 
 { #category : #initialization }
-DAPackageDependenciesWelcome >> initializePresenter [
+DAWelcomePresenter >> initializePresenter [
 	self actionOnOpen;
 		actionOnAddPackage;
 		actionOnRemovePackage.
@@ -205,7 +205,7 @@ DAPackageDependenciesWelcome >> initializePresenter [
 ]
 
 { #category : #initialization }
-DAPackageDependenciesWelcome >> initializeWidgets [
+DAWelcomePresenter >> initializeWidgets [
 	self
 		initializeLists;
 		initializeLabels;
@@ -218,44 +218,44 @@ DAPackageDependenciesWelcome >> initializeWidgets [
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> itemsFromPackageChosenList [
+DAWelcomePresenter >> itemsFromPackageChosenList [
 	^ self packageChosenList listItems
 ]
 
 { #category : #merging }
-DAPackageDependenciesWelcome >> merge: aCollection With: anOtherCollection [
+DAWelcomePresenter >> merge: aCollection With: anOtherCollection [
 	^ aCollection asSet
 		addAll: anOtherCollection;
 		yourself
 ]
 
 { #category : #actions }
-DAPackageDependenciesWelcome >> open [
+DAWelcomePresenter >> open [
 	^ self openWithSpec
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> packageChosenLabel [
+DAWelcomePresenter >> packageChosenLabel [
 	^ packageChosenLabel
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> packageChosenList [
+DAWelcomePresenter >> packageChosenList [
 	^ packageChosenList
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> packageLabel [
+DAWelcomePresenter >> packageLabel [
 	^ packageLabel
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> packageList [
+DAWelcomePresenter >> packageList [
 	^ packageList
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> packagesEntryCompletion [
+DAWelcomePresenter >> packagesEntryCompletion [
 	| applicants |
 	applicants := self systemPackages.
 
@@ -266,45 +266,45 @@ DAPackageDependenciesWelcome >> packagesEntryCompletion [
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> selectedItemsFromPackageChosenList [
+DAWelcomePresenter >> selectedItemsFromPackageChosenList [
 	^ self packageChosenList selectedItems
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> selectedItemsFromPackageList [
+DAWelcomePresenter >> selectedItemsFromPackageList [
 	^ self packageList selectedItems
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> systemPackages [
+DAWelcomePresenter >> systemPackages [
 	^ (RPackageOrganizer default packages collect: [ :package | package packageName asString ] )asSortedCollection
 ]
 
 { #category : #accessing }
-DAPackageDependenciesWelcome >> textPackageField [
+DAWelcomePresenter >> textPackageField [
 	^ textPackageField
 ]
 
 { #category : #'morphic ui' }
-DAPackageDependenciesWelcome >> title [
+DAWelcomePresenter >> title [
 	^ 'Package Dependencies Browser'
 ]
 
 { #category : #protocol }
-DAPackageDependenciesWelcome >> updateLabels [
+DAWelcomePresenter >> updateLabels [
 	self
 		updatePackageLabel;
 		updatePackageChosenLabel
 ]
 
 { #category : #protocol }
-DAPackageDependenciesWelcome >> updatePackageChosenLabel [
+DAWelcomePresenter >> updatePackageChosenLabel [
 	self packageChosenLabel 
 			label: packageChosenList listSize asString, ' package(s) chosen'.
 ]
 
 { #category : #protocol }
-DAPackageDependenciesWelcome >> updatePackageLabel [
+DAWelcomePresenter >> updatePackageLabel [
 	packageLabel 
 			label: 'Choose your packages (', self packageList listSize asString, ' packages available)'.
 ]

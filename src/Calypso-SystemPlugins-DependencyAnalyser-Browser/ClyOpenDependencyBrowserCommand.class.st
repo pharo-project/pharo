@@ -24,5 +24,5 @@ ClyOpenDependencyBrowserCommand >> execute [
 
 	| packageNames |
 	packageNames := packages collect: [ :each | each name ].
-	(DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: packageNames) open
+	(DAPackageDependenciesPresenter onPackagesNamed: packageNames) openWithSpec
 ]

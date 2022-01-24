@@ -1,5 +1,9 @@
 "
-A DAPackageTreeModel is an abstract class. It's a the superclass of the two tree model vizualisations (package dependency and cycle detection).
+I'm an abstract presenter.
+I have the common UI definition of the dependency analyzer (left side panel, without the browser):
+- main dependency analyzer window
+- reverse dependency anlaysis
+- and cycle detection
 "
 Class {
 	#name : #DAPackageTreePresenter,
@@ -7,7 +11,6 @@ Class {
 	#instVars : [
 		'tree',
 		'buttonRefresh',
-		'open',
 		'browser'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
@@ -42,14 +45,14 @@ DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 				addMenuItem:
 					(SpMenuItemPresenter new
 						name: 'Browse scoped dependencies';
-						action: [ (DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: selectedPackageNames) open ]).
+						action: [ (DAPackageDependenciesPresenter onPackagesNamed: selectedPackageNames) open ]).
 			selectedNodes size > 1
 				ifTrue: [ 
 					menuGroup
 						addMenuItem:
 							(SpMenuItemPresenter new
 								name: 'Find cycles among packages';
-								action: [ (DAPackageAnalyzerCycleDetectionWindow onPackagesNamed: selectedPackageNames) open ]) ] ]
+								action: [ (DACycleDetectionPresenter onPackagesNamed: selectedPackageNames) open ]) ] ]
 ]
 
 { #category : #testing }
@@ -137,7 +140,7 @@ DAPackageTreePresenter >> loadMenuForSelectedItem [
 	^ menu
 ]
 
-{ #category : #'instance creation' }
+{ #category : #opening }
 DAPackageTreePresenter >> open [
 	^ self openWithSpec 
 ]

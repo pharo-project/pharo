@@ -162,7 +162,7 @@ SingleCodeCriticResultList >> browseCritic [
 { #category : #menu }
 SingleCodeCriticResultList >> browseDependencies [
 	criticsModel selectedItems ifNotNil: [ :packages |
-		(DAPackageAnalyzerPackageDependenciesPresenter onPackagesNamed: (packages collect: [:aPackage | aPackage packageName])) open ]
+		(DAPackageDependenciesPresenter onPackagesNamed: (packages collect: [:aPackage | aPackage packageName])) open ]
 ]
 
 { #category : #accessing }

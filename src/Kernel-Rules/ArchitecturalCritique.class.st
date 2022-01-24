@@ -21,6 +21,6 @@ ArchitecturalCritique >> actions [
 { #category : #actions }
 ArchitecturalCritique >> openDependencyAnalyzerOn: package [
 
-	^ (DAPackageAnalyzerPackageDependenciesPresenter
+	^ (DAPackageDependenciesPresenter
 			onPackagesNamed: {package packageName}) open
 ]
