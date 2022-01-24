@@ -11,10 +11,12 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyAddBreakpointCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasBreakpoint not
+	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+		  aBrowserContext lastSelectedSourceNode isVariable not and: [ 
+			  aBrowserContext isSelectedItemHasBreakpoint not ] ]
 ]
 
 { #category : #activation }
