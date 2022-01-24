@@ -35,7 +35,7 @@ ClyAddBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 
 { #category : #accessing }
 ClyAddBreakpointCommand >> defaultMenuIconName [
-	^#smallDebug
+	^ #halt
 ]
 
 { #category : #execution }

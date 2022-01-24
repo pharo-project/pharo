@@ -15,10 +15,11 @@ SycOpenDebuggingMenuCommand >> activationStrategy [
 
 { #category : #accessing }
 SycOpenDebuggingMenuCommand >> defaultMenuIconName [
-	^#smallDebugIcon 
+	^ #halt 
 ]
 
 { #category : #accessing }
 SycOpenDebuggingMenuCommand >> defaultMenuItemName [
-	^'Debugging'
+
+	^ 'Breakpoints'
 ]

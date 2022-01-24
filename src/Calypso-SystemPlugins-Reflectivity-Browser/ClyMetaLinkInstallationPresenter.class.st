@@ -36,7 +36,8 @@ ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: f
 
 { #category : #opening }
 ClyMetaLinkInstallationPresenter class >> openInstallerOnNode: aSourceNode [
-	(self onNode: aSourceNode forInstallation: true) openWithSpec
+
+	(self onNode: aSourceNode forInstallation: true) open
 ]
 
 { #category : #opening }
