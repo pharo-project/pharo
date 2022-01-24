@@ -313,13 +313,13 @@ RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: pos
 		keywordsPositions: positionList.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMessageNode >> removeFromTree [
 
 	self parent removeNode: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMessageNode >> removeNode: aNode [
 
 	self replaceNode: aNode withNode: aNode receiver

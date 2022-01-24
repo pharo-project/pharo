@@ -80,7 +80,7 @@ RGContainer class >> packageOfMethod: aRGMethodDefinition using: packageKeys [
 	^ pName ifNotNil:[ RGPackageDefinition named: pName key ]
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addClass: aRGBehaviorDefinition [
 	"aRGBehaviorDefinition has to be a class, trait or metaclass"
 	self flag: 'when i am adding a metaclass? check this?'.
@@ -90,13 +90,13 @@ RGContainer >> addClass: aRGBehaviorDefinition [
 	self addElement: aRGBehaviorDefinition in: self definedClasses
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addClassNamed: className [ 
 	"Creates a class with the given name"
 	self addClass: (RGClassDefinition named: className)
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addMethod: aRGMethodDefinition [
 	"aRGMethodDefinition needs to satisfy the status isMethod"
 
@@ -104,7 +104,7 @@ RGContainer >> addMethod: aRGMethodDefinition [
 	self addElement: aRGMethodDefinition in: self methods
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addPackage: aRGPackage [
 	"adds a child package"
 
@@ -112,7 +112,7 @@ RGContainer >> addPackage: aRGPackage [
 	self addElement: aRGPackage in: self packages
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addPackageNamed: packageName [
 	"adds a child package with the given name"
 
@@ -120,14 +120,14 @@ RGContainer >> addPackageNamed: packageName [
 	self addPackage: (RGPackageDefinition named: packageName)
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addTrait: aRGTraitDefinition [
 	"convenient method"
 
 	self addClass: aRGTraitDefinition
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> addTraitNamed: traitName [ 
 	"Creates a trait with the given name"
 	self addClass:  (RGTraitDefinition named: traitName)
@@ -458,19 +458,19 @@ RGContainer >> packages: aCollection [
 	self elementsCategorized: #packages with: aCollection
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> removeClass: aRGAbstractClassDefinition [
 
 	self removeElement: aRGAbstractClassDefinition from: self definedClasses
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> removeMethod: aRGMethodDefinition [
 
 	self removeElement: aRGMethodDefinition from: self methods
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> removePackage: aRGPackage [
 	"removes a child aRGPackage"
 
@@ -478,7 +478,7 @@ RGContainer >> removePackage: aRGPackage [
 	self removeElement: aRGPackage from: self packages
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> removeTrait: aRGTraitDefinition [
 	"convenient method"
 
@@ -558,19 +558,19 @@ RGContainer >> traitsDo: aBlock [
 			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> withoutClasses [
 
 	self removeElementsCategorized: #definedClasses
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> withoutMethods [
 	
 	self removeElementsCategorized: #methods
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGContainer >> withoutPackages [
 	
 	self removeElementsCategorized: #packages
