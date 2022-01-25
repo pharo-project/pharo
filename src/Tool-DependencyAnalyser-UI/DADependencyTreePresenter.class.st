@@ -101,16 +101,18 @@ DADependencyTreePresenter >> actionOnDefaultSettings [
 
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnFindCycles [
+
 	| selectedPackages selectedItems |
 	selectedItems := self selectedItemsFromTree.
-	(self arePackageNodes: selectedItems)
-		ifTrue: [ 
-			self notify: 'This could take a while, confirm?'.
-			selectedPackages := self pdPackagesFrom: selectedItems.
-			systemCycles ifNil: [ systemCycles := DACycleDetectionPresenter  system ].
-			systemCycles
-				updateWithFilter: selectedPackages;
-				open ]
+	(self arePackageNodes: selectedItems) ifFalse: [ ^ self ].
+	
+	self notify: 'This could take a while, confirm?'.
+	selectedPackages := self pdPackagesFrom: selectedItems.
+	systemCycles ifNil: [ 
+		systemCycles := DACycleDetectionPresenter system ].
+	systemCycles
+		updateWithFilter: selectedPackages;
+		openWithSpec
 ]
 
 { #category : #protocol }

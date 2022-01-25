@@ -37,22 +37,23 @@ DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup
 
 { #category : #actions }
 DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
+
 	| selectedPackageNames |
-	(self arePackageNodes: selectedNodes)
-		ifTrue: [ 
-			selectedPackageNames := selectedNodes collect: [ :packageNode | packageNode packageName ].
-			menuGroup
-				addMenuItem:
-					(SpMenuItemPresenter new
-						name: 'Browse scoped dependencies';
-						action: [ (DAPackageDependenciesPresenter onPackagesNamed: selectedPackageNames) open ]).
-			selectedNodes size > 1
-				ifTrue: [ 
-					menuGroup
-						addMenuItem:
-							(SpMenuItemPresenter new
-								name: 'Find cycles among packages';
-								action: [ (DACycleDetectionPresenter onPackagesNamed: selectedPackageNames) open ]) ] ]
+	(self arePackageNodes: selectedNodes) ifFalse: [ ^ self ].
+	
+	selectedPackageNames := selectedNodes collect: [ :packageNode | 
+		                        packageNode packageName ].
+	menuGroup addMenuItem: (SpMenuItemPresenter new
+			 name: 'Browse scoped dependencies';
+			 action: [ 
+				 (DAPackageDependenciesPresenter onPackagesNamed:
+						  selectedPackageNames) openWithSpec ]).
+	selectedNodes size > 1 ifTrue: [ 
+		menuGroup addMenuItem: (SpMenuItemPresenter new
+				 name: 'Find cycles among packages';
+				 action: [ 
+					 (DACycleDetectionPresenter onPackagesNamed: selectedPackageNames)
+						 openWithSpec ]) ]
 ]
 
 { #category : #testing }
