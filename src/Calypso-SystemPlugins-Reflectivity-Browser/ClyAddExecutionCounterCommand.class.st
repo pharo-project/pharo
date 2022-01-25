@@ -19,6 +19,13 @@ ClyAddExecutionCounterCommand class >> contextMenuOrder [
 	^2
 ]
 
+{ #category : #activation }
+ClyAddExecutionCounterCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation byRootGroupItemOrder: -0.5 for: ClySourceCodeContext
+]
+
 { #category : #accessing }
 ClyAddExecutionCounterCommand >> defaultMenuIconName [
 	^#classIcon
@@ -29,8 +36,18 @@ ClyAddExecutionCounterCommand >> defaultMenuItemName [
 	^'Add Counter'
 ]
 
+{ #category : #accessing }
+ClyAddExecutionCounterCommand >> description [
+	^ self defaultMenuItemName, ' to  ',  sourceNode displaySourceCode
+]
+
 { #category : #execution }
 ClyAddExecutionCounterCommand >> execute [
 	
 	ExecutionCounter installOn: sourceNode
+]
+
+{ #category : #execution }
+ClyAddExecutionCounterCommand >> information [
+	self defaultMenuItemName, ' to  ',  sourceNode displaySourceCode
 ]

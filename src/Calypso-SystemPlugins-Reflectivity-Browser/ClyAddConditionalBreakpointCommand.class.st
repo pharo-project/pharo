@@ -64,7 +64,7 @@ ClyAddConditionalBreakpointCommand >> conditionBlockProducerMethodAST: condition
 
 { #category : #accessing }
 ClyAddConditionalBreakpointCommand >> defaultMenuItemName [
-	^'Break with condition on ', sourceNode displaySourceCode, ' ...'
+	^'Break on  ', sourceNode displaySourceCode, '  when ...'
 ]
 
 { #category : #'block generation' }

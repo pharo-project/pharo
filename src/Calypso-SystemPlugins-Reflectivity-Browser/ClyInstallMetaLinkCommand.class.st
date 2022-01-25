@@ -4,7 +4,7 @@ I open a small browser to choose which metalink to install among existing metali
 "
 Class {
 	#name : #ClyInstallMetaLinkCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyAdvancedDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
 
@@ -20,7 +20,7 @@ ClyInstallMetaLinkCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyInstallMetaLinkCommand >> defaultMenuItemName [
-	^'Install MetaLink...'
+	^'     Install MetaLink to  ',  sourceNode displaySourceCode , '  ...'
 ]
 
 { #category : #execution }

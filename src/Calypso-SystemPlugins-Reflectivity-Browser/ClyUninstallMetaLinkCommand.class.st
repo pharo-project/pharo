@@ -15,6 +15,14 @@ ClyUninstallMetaLinkCommand class >> contextMenuOrder [
 	^101
 ]
 
+{ #category : #activation }
+ClyUninstallMetaLinkCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^SycAdvancedDebuggingMenuActivation 
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
+]
+
 { #category : #accessing }
 ClyUninstallMetaLinkCommand >> defaultMenuIconName [
 	^#smallObjects
@@ -22,7 +30,7 @@ ClyUninstallMetaLinkCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyUninstallMetaLinkCommand >> defaultMenuItemName [
-	^'Uninstall MetaLink...'
+	^ 'Uninstall MetaLink from  ' , sourceNode displaySourceCode, '  ...'
 ]
 
 { #category : #execution }

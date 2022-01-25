@@ -18,6 +18,14 @@ ClyRemoveWatchCommand class >> contextMenuOrder [
 	^3
 ]
 
+{ #category : #activation }
+ClyRemoveWatchCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^SycAdvancedDebuggingMenuActivation 
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
+]
+
 { #category : #execution }
 ClyRemoveWatchCommand >> debuggingToolClass [
 	^Watch

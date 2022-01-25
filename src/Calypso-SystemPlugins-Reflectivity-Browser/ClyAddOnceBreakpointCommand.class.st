@@ -14,5 +14,5 @@ ClyAddOnceBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 
 { #category : #accessing }
 ClyAddOnceBreakpointCommand >> defaultMenuItemName [ 
-	^'Break once on ', sourceNode displaySourceCode
+	^'Break on  ', sourceNode displaySourceCode, '  once'
 ]

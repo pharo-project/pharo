@@ -13,6 +13,6 @@ RBBlockNode >> displaySourceCode [
 					         nextPutAll: arg name asString;
 					         nextPutAll: ' ' ] ]). 
 		code := code , '| ' ].
-	code := code , '... ]'.
+	code := code , '  ]'.
 	^ code
 ]

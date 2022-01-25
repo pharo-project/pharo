@@ -3,7 +3,7 @@ I am a command to install watchpoint into the given method or source node
 "
 Class {
 	#name : #ClyAddWatchCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyAdvancedDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 
@@ -26,7 +26,7 @@ ClyAddWatchCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddWatchCommand >> defaultMenuItemName [
-	^'Add Watchpoint'
+	^'   Add Watchpoint to  ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }
