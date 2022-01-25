@@ -48,11 +48,6 @@ DAAddPackagePresenter >> buildList [
 	packageList sourceItems: packagesNotAdded.
 ]
 
-{ #category : #accessing }
-DAAddPackagePresenter >> buttonAddPackage [
-	^ buttonAddPackage
-]
-
 { #category : #initialization }
 DAAddPackagePresenter >> connectPresenters [
 	self actionOnAddPackage
@@ -91,14 +86,9 @@ DAAddPackagePresenter >> open [
 	^ self openWithSpec
 ]
 
-{ #category : #accessing }
-DAAddPackagePresenter >> packageList [
-	^ packageList
-]
-
 { #category : #initialization }
 DAAddPackagePresenter >> selectedItemsFromPackageList [
-	^ self packageList chosenItems
+	^ packageList chosenItems
 ]
 
 { #category : #accessing }
