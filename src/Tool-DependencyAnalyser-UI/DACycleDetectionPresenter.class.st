@@ -19,10 +19,14 @@ DACycleDetectionPresenter class >> onPackagesMatch: match [
 		open
 ]
 
+{ #category : #'instance creation' }
+DACycleDetectionPresenter class >> onPackagesNamed: aCollection [
+	^ self on: (DACycleDetectionTreePresenter onPackagesNamed: aCollection)
+]
+
 { #category : #examples }
 DACycleDetectionPresenter class >> system [
-	^ (self new initializeWithFilter: self systemPackages) 
-		open
+	^ self on: DACycleDetectionTreePresenter system
 ]
 
 { #category : #'initialization - filter' }
@@ -40,7 +44,7 @@ DACycleDetectionPresenter >> initializeWithFilter: aCollection [
 
 { #category : #'initialization - union' }
 DACycleDetectionPresenter >> initializeWithPackageNames: aCollection [
-	self model: (DACycleDetectionTreePresenter  onPackagesNamed: aCollection).
+	self model: (DACycleDetectionTreePresenter onPackagesNamed: aCollection).
 	self buildandAddAllMorph 
 ]
 

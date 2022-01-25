@@ -14,25 +14,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #specs }
-DACycleDetectionTreePresenter class >> defaultSpec [
-	<spec: #default>
-	^ SpecLayout composed
-		newColumn:
-			[ :col | 
-			col
-				newRow: [ :row | 
-							row
-								add: #buttonReversed;
-								add: #buttonRefresh ]
-					height: 30;
-				newRow: [ :row | 
-							row
-								add: #cyclesLabel ]
-					height: 30;
-				add: #tree ] yourself
-]
-
 { #category : #'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
@@ -71,24 +52,17 @@ DACycleDetectionTreePresenter >> browser: anObject [
 
 { #category : #accessing }
 DACycleDetectionTreePresenter >> buildRoots [
-	self tree
-		roots: cycles;
-		whenBuiltDo: [ 
-					tree
-						rootNodeHolder: [ :item | 
-							DACycleNode new
-								content: item;
-								treeModelParent: self;
-								browser: self browser;
-								cycle: true ] ].
-	self cyclesLabel
-		label:
-			'Analysis of ' , self cycles size asString , ' cycles'.
-]
-
-{ #category : #accessing }
-DACycleDetectionTreePresenter >> buttonReversed [
-	^ buttonReversed
+	| roots |
+	roots := cycles collect: [ :cycle |
+		DACycleNode new
+			content: cycle;
+			treeModelParent: self;
+			browser: self browser;
+			cycle: true ].
+	self tree roots: roots.
+	
+	cyclesLabel
+		label: 'Analysis of ' , self cycles size asString , ' cycles'.
 ]
 
 { #category : #initialization }
@@ -119,9 +93,18 @@ DACycleDetectionTreePresenter >> cycles: aCollectionOfCycles [
 	self buildRoots.
 ]
 
-{ #category : #accessing }
-DACycleDetectionTreePresenter >> cyclesLabel [
-	^ cyclesLabel
+{ #category : #layout }
+DACycleDetectionTreePresenter >> defaultLayout [
+	
+	^ SpBoxLayout newTopToBottom 
+		add: (SpBoxLayout newLeftToRight 
+				add: buttonReversed;
+				add: buttonRefresh;
+			yourself)
+			expand: false;
+		add: 'Analysis of cycles' expand: false;
+		add: tree;
+		yourself
 ]
 
 { #category : #protocol }
@@ -155,7 +138,9 @@ DACycleDetectionTreePresenter >> initializePresenters [
 	
 	buttonReversed := self newButton
 			help: 'Reversed the order of cycles';
-			label: 'Sort by length'
+			label: 'Sort by length'.
+			
+	self layout: self defaultLayout.
 ]
 
 { #category : #initialization }

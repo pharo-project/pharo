@@ -29,7 +29,14 @@ DACycleNode >> childNodeClassFor: anItem [
 
 { #category : #accessing }
 DACycleNode >> children [
-	^ self content packages
+	^ #() "self content packages sorted collect: 
+		[ :each | 
+		DAPackageUnderAnalysisNode new
+			content: each;
+			cycle: false;
+			treeModelParent: self;
+			browser: self browser;
+			yourself ]"
 ]
 
 { #category : #accessing }
