@@ -9,7 +9,7 @@ Class {
 		'cycles',
 		'cyclesLabel',
 		'filter',
-		'buttonReversed'
+		'buttonSort'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
@@ -65,23 +65,6 @@ DACycleDetectionTreePresenter >> buildRoots [
 		label: 'Analysis of ' , self cycles size asString , ' cycles'.
 ]
 
-{ #category : #initialization }
-DACycleDetectionTreePresenter >> connectPresenters [
-	super connectPresenters.
-	
-	cyclesLabel := self newLabel
-			label: 'Analysis of cycles'.
-	
-	buttonReversed := self newButton
-			help: 'Reversed the order of cycles';
-			label: 'Sort by length'.
-	
-		
-	
-	
-		
-]
-
 { #category : #accessing }
 DACycleDetectionTreePresenter >> cycles [
 	^ cycles
@@ -98,7 +81,7 @@ DACycleDetectionTreePresenter >> defaultLayout [
 	
 	^ SpBoxLayout newTopToBottom 
 		add: (SpBoxLayout newLeftToRight 
-				add: buttonReversed;
+				add: buttonSort;
 				add: buttonRefresh;
 			yourself)
 			expand: false;
@@ -136,9 +119,10 @@ DACycleDetectionTreePresenter >> initializePresenters [
 	cyclesLabel := self newLabel
 			label: 'Analysis of cycles'.
 	
-	buttonReversed := self newButton
-			help: 'Reversed the order of cycles';
-			label: 'Sort by length'.
+	buttonSort := self newButton
+			help: 'Sort cycles by the number of packages involved in the cycle';
+			label: 'Sort by length';
+			action: [ self reversedRoots  ].
 			
 	self layout: self defaultLayout.
 ]
