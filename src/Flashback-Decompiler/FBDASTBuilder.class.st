@@ -88,7 +88,7 @@ FBDASTBuilder >> codeEmptySequence [
 
 { #category : #building }
 FBDASTBuilder >> codeInstanceVariable: offset [
-	^ RBVariableNode named: (methodClass allInstVarNames at: offset)
+	^ RBVariableNode named: (methodClass allSlots at: offset) name
 ]
 
 { #category : #building }
