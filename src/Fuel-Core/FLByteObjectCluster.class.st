@@ -14,7 +14,6 @@ FLByteObjectCluster >> materializeInstanceWith: aDecoder [
 	instance := theClass basicNew: size.
 	aDecoder nextEncodedBytesInto: instance.
 	^ instance
-
 ]
 
 { #category : #'serialize/materialize' }

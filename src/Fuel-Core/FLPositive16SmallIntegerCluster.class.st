@@ -10,7 +10,7 @@ Class {
 { #category : #'serialize/materialize' }
 FLPositive16SmallIntegerCluster >> materializeInstanceWith: aDecoder [
 	
-	^ aDecoder nextEncodedUint16 
+	^ aDecoder nextEncodedUint16
 ]
 
 { #category : #'serialize/materialize' }

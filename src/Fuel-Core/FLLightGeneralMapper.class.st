@@ -24,14 +24,12 @@ FLLightGeneralMapper >> clusterClassForSmallInteger: aSmallInteger [
 	aSmallInteger >= -1152921504606846976 ifTrue: [^ FLNegative64SmallIntegerCluster].
 
 	self error: 'SmallInteger is out of range'
-
 ]
 
 { #category : #mapping }
 FLLightGeneralMapper >> mapAndTrace: anObject [
 
 	anObject fuelAccept: self
-
 ]
 
 { #category : #'protected-mapping' }
@@ -39,7 +37,6 @@ FLLightGeneralMapper >> mapAndTraceInstanceSideGlobal: aClassOrTrait [
 
 	(self clusterKeyedByClusterName: FLGlobalClassCluster)
 		add: aClassOrTrait traceWith: analysis
-
 ]
 
 { #category : #visiting }
@@ -82,7 +79,6 @@ FLLightGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 FLLightGeneralMapper >> visitDictionary: aDictionary [
 
 	self mapAndTraceByObjectClass: aDictionary to: FLDictionaryCollectionCluster
-
 ]
 
 { #category : #visiting }
@@ -103,14 +99,12 @@ FLLightGeneralMapper >> visitGlobalSend: anObject name: globalName selector: aSy
 
 	(self clusterKeyedByClusterName: FLGlobalSendCluster)
 		add: anObject name: globalName selector: aSymbol traceWith: analysis
-
 ]
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitHookPrimitive: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLHookPrimitiveCluster
-	
 ]
 
 { #category : #visiting }
@@ -130,7 +124,6 @@ FLLightGeneralMapper >> visitMetaclassForTraits: aMetaclass [
 FLLightGeneralMapper >> visitMethodContext: aMethodContext [
 
 	self mapAndTraceByObjectClass: aMethodContext to: FLContextCluster
-
 ]
 
 { #category : #visiting }
@@ -153,7 +146,6 @@ FLLightGeneralMapper >> visitRectangle: aRectangle [
 { #category : #visiting }
 FLLightGeneralMapper >> visitSimpleCollection: aCollection [
 	self mapAndTraceByObjectClass: aCollection to: FLSimpleCollectionCluster
-
 ]
 
 { #category : #visiting }
@@ -167,7 +159,6 @@ FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject [
 
 	(self clusterKeyedByClusterName: FLSubstitutionCluster)
 		add: anObject substitutedBy: anotherObject traceWith: analysis
-
 ]
 
 { #category : #visiting }
@@ -183,7 +174,6 @@ FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject onRecursio
 				add: anObject
 				substitutedBy: anotherObject
 				traceWith: analysis ]
-
 ]
 
 { #category : #visiting }

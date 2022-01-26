@@ -16,7 +16,6 @@ FLGZipStrategy class >> newWithTarget: aStreamStrategy [
 	^self basicNew
 		initializeWith: aStreamStrategy;
 		yourself
-		
 ]
 
 { #category : #'initialize-release' }
@@ -32,7 +31,6 @@ FLGZipStrategy >> readStreamDo: aValuable [
 	
 	targetStrategy readStreamDo: [:aStream |
 		^ GZipReadStream with: aStream do: aValuable]
-
 ]
 
 { #category : #writing }
@@ -41,5 +39,4 @@ FLGZipStrategy >> writeStreamDo: aValuable [
 	
 	targetStrategy writeStreamDo: [:aStream |
 		^ GZipWriteStream with: aStream do: aValuable]
-
 ]

@@ -43,13 +43,11 @@ FLPair >> left: anObject [
 FLPair >> method1 [
 	self name.
 	self printString.
-	
 ]
 
 { #category : #accessing }
 FLPair >> method2 [
 	self name.
-	
 ]
 
 { #category : #accessing }
