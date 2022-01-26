@@ -6,7 +6,7 @@ I open a small browser to choose which metalink to install among existing metali
 "
 Class {
 	#name : #ClyUninstallMetaLinkCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyAdvancedDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
 

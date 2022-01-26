@@ -26,7 +26,7 @@ ClyAddWatchCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddWatchCommand >> defaultMenuItemName [
-	^'   Add Watchpoint to  ',  sourceNode displaySourceCode
+	^'    Add Watchpoint to  ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }

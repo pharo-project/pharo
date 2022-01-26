@@ -7,6 +7,12 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Commands'
 }
 
+{ #category : #activation }
+ClyAdvancedDebuggingCommand class >> contextMenuOrder [
+	<classAnnotationDependency>
+	^ 1.8
+]
+
 { #category : #testing }
 ClyAdvancedDebuggingCommand class >> isAbstract [
 	^self == ClyAdvancedDebuggingCommand 

@@ -20,7 +20,7 @@ ClyInstallMetaLinkCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyInstallMetaLinkCommand >> defaultMenuItemName [
-	^'     Install MetaLink to  ',  sourceNode displaySourceCode , '  ...'
+	^'      Install MetaLink to  ',  sourceNode displaySourceCode , '  ...'
 ]
 
 { #category : #execution }
