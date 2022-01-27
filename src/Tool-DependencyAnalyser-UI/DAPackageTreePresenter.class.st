@@ -40,20 +40,20 @@ DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 
 	| selectedPackageNames |
 	(self arePackageNodes: selectedNodes) ifFalse: [ ^ self ].
-	
+
 	selectedPackageNames := selectedNodes collect: [ :packageNode | 
 		                        packageNode packageName ].
 	menuGroup addMenuItem: (SpMenuItemPresenter new
 			 name: 'Browse scoped dependencies';
 			 action: [ 
 				 (DAPackageDependenciesPresenter onPackagesNamed:
-						  selectedPackageNames) openWithSpec ]).
+						  selectedPackageNames) open ]).
 	selectedNodes size > 1 ifTrue: [ 
 		menuGroup addMenuItem: (SpMenuItemPresenter new
 				 name: 'Find cycles among packages';
 				 action: [ 
 					 (DACycleDetectionPresenter onPackagesNamed: selectedPackageNames)
-						 openWithSpec ]) ]
+						 open ]) ]
 ]
 
 { #category : #testing }
@@ -118,11 +118,13 @@ DAPackageTreePresenter >> initializePresenters [
 		display: [ :node | node label ];
 		displayIcon: [ :node | node icon ];
 		yourself.
+		
 	buttonRefresh := self newButton
 		icon: (self iconNamed: #refreshIcon);
 		help: 'Refresh the TreePresenter';
 		label: 'Refresh';
 		yourself.
+		
 	browser := Smalltalk tools browser onDefaultEnvironment
 ]
 
@@ -139,11 +141,6 @@ DAPackageTreePresenter >> loadMenuForSelectedItem [
 		selectedNodes size = 1 ifTrue: [ 
 			selectedNodes first addMenuEntriesOn: menuGroup ] ].
 	^ menu
-]
-
-{ #category : #opening }
-DAPackageTreePresenter >> open [
-	^ self openWithSpec 
 ]
 
 { #category : #actions }

@@ -13,15 +13,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #specs }
-DAAddPackagePresenter class >> defaultSpec [
-	
-	^ SpBoxLayout newTopToBottom
-			add: #packageList;
-			add: #buttonAddPackage expand: false;
-			yourself
-]
-
 { #category : #protocol }
 DAAddPackagePresenter >> actionOnAddPackage [
 	| relationGraph packagesToAdd |
@@ -53,6 +44,15 @@ DAAddPackagePresenter >> connectPresenters [
 	self actionOnAddPackage
 ]
 
+{ #category : #layout }
+DAAddPackagePresenter >> defaultLayout [
+	
+	^ SpBoxLayout newTopToBottom
+			add: packageList;
+			add: buttonAddPackage expand: false;
+			yourself
+]
+
 { #category : #accessing }
 DAAddPackagePresenter >> dependenciesPresenter [
 	^ dependenciesPresenter
@@ -79,11 +79,6 @@ DAAddPackagePresenter >> initializePresenters [
 		yourself.
 
 	packageList := SpChooserPresenter new.
-]
-
-{ #category : #'instance creation' }
-DAAddPackagePresenter >> open [
-	^ self openWithSpec
 ]
 
 { #category : #initialization }

@@ -57,8 +57,6 @@ DAReverseTreePresenter >> initializePresenters [
 
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	self buildRoots.
-	
-	self layout: self defaultLayout.
 ]
 
 { #category : #private }

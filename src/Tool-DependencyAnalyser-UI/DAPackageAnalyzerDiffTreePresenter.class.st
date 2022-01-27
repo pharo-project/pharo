@@ -55,11 +55,6 @@ DAPackageAnalyzerDiffTreePresenter >> initializeWith: oldRelationGraph on: newRe
 	
 ]
 
-{ #category : #'instance creation' }
-DAPackageAnalyzerDiffTreePresenter >> open [	
-	^ self openWithSpec
-]
-
 { #category : #protocol }
 DAPackageAnalyzerDiffTreePresenter >> title [
 	^ 'Package Dependencies Analysis Diff'

@@ -23,7 +23,7 @@ DAWelcomePresenter class >> menuCommandOn: aBuilder [
 		label: 'Dependency Analyser';
 		icon: (self iconNamed: #packageIcon);
 		help: 'Analyze dependencies between different packages in the image.';
-		action: [ self new openWithSpec ]
+		action: [ self new open ]
 ]
 
 { #category : #layout }
@@ -54,8 +54,6 @@ DAWelcomePresenter >> initializePresenters [
 		icon: (self iconNamed: #packageIcon);
 		action: [ self selectedPackages ifNotEmpty: [ self openDependencyAnalyzer ] ]
 		yourself.
-
-	self layout: self defaultLayout.
 ]
 
 { #category : #initialization }
@@ -67,7 +65,7 @@ DAWelcomePresenter >> initializeWindow: 	aWindowPresenter [
 
 { #category : #action }
 DAWelcomePresenter >> openDependencyAnalyzer [
-	(DAPackageDependenciesPresenter onPackagesNamed: self selectedPackageNames) openWithSpec.
+	(DAPackageDependenciesPresenter onPackagesNamed: self selectedPackageNames) open.
 	choosePresenter delete.
 ]
 

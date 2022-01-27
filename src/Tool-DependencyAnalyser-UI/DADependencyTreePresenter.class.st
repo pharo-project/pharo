@@ -22,8 +22,8 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #specs }
-DADependencyTreePresenter class >> defaultSpec [
+{ #category : #layout }
+DADependencyTreePresenter class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical 
 		add: ( SpBoxLayout newHorizontal 
@@ -111,7 +111,7 @@ DADependencyTreePresenter >> actionOnFindCycles [
 	systemCycles ifNil: [ systemCycles := DACycleDetectionPresenter system ].
 	systemCycles
 		updateWithFilter: selectedPackages;
-		openWithSpec
+		open
 ]
 
 { #category : #protocol }
@@ -139,8 +139,9 @@ DADependencyTreePresenter >> actionOnRemovePackage [
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnReverseAnalysis [
 
-	buttonReverseAnalysis action: [
-		(DAPackageDependenciesPresenter on: (DAReverseTreePresenter onRelationGraph: self relationGraph)) openWithSpec ]
+	buttonReverseAnalysis action: [ 
+		(DAPackageDependenciesPresenter on:
+			 (DAReverseTreePresenter onRelationGraph: self relationGraph)) open ]
 ]
 
 { #category : #protocol }

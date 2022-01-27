@@ -79,6 +79,4 @@ DAPackageAnalyzerPresenter >> initializePresenters [
 
 	browserWrapper := self newMorph 
 		morph: self browserWindow.
-		
-	self layout: self defaultLayout.
 ]
