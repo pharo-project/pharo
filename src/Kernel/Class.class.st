@@ -1038,7 +1038,7 @@ Class >> sharing: poolString [
 							builder superclass: SharedPool;
 							name: poolName;
 							category: self category ]]
-				ifFalse:[^self error: poolName,' does not exist']])].
+				ifFalse:[^self inform: poolName,' does not exist']])].
 	self sharedPools isEmpty ifTrue: [self sharedPools: nil].
 	oldPools do: [:pool |
 				| found |
