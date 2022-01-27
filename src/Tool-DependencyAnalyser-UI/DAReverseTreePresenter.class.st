@@ -37,7 +37,7 @@ DAReverseTreePresenter >> connectPresenters [
 			item
 				ifNotNil: [ 
 					self tree selectedItem selectInBrowser.
-					tree menu: [ :aMenu | self loadMenuForSelectedItem ] ] ].
+					tree contextMenu: [ :aMenu | self loadMenuForSelectedItem ] ] ].
 ]
 
 { #category : #layout }
