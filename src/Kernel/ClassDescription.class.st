@@ -110,7 +110,7 @@ ClassDescription >> addSlot: aSlot [
 ClassDescription >> allInstVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
-	^self allSlots collect: [ :each | each name ]
+	^self allSlots collect: [ :each | each name ] as: Array
 ]
 
 { #category : #'instance variables' }
