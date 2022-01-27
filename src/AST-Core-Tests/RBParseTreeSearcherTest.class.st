@@ -55,10 +55,8 @@ RBParseTreeSearcherTest >> testDynamicArrayWithStatementListPattern [
 { #category : #'tests - to de refined' }
 RBParseTreeSearcherTest >> testSearchListComplex [
 
-	"		
-		- Here we looking for multiple lists in one match pattern at the same time. 
-		- Lists can be any receiver or args
-	"
+	"Here we are looking for multiple lists in one match pattern at the same time. 
+	Lists can be any receiver or arguments"
 
 	| dict |
 	searcher
