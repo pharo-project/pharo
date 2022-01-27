@@ -15,6 +15,11 @@ SycOpenReflectivityMenuCommand class >> sourceCodeMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemOrder: 8 for: ClySourceCodeContext
 ]
 
+{ #category : #execution }
+SycOpenReflectivityMenuCommand >> activationStrategy [
+	^SycReflectivityMenuActivation 
+]
+
 { #category : #accessing }
 SycOpenReflectivityMenuCommand >> defaultMenuIconName [
 	^ #smallObjects

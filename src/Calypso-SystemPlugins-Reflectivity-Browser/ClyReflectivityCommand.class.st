@@ -10,6 +10,17 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Commands'
 }
 
+{ #category : #testing }
+ClyReflectivityCommand class >> canBeExecutedInContext: aBrowserContext [
+
+	| node |
+	^ self showReflectivityCommands and: [ 
+		  self isAbstract not and: [ 
+			  node := aBrowserContext lastSelectedSourceNode.
+			  node isCommentNode not and: [ 
+				  node isPragma not and: [ node isSequence not ] ] ] ]
+]
+
 { #category : #activation }
 ClyReflectivityCommand class >> contextMenuOrder [
 	<classAnnotationDependency>
@@ -27,6 +38,21 @@ ClyReflectivityCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation 
 		byItemOf: ClyReflectivityMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #'accessing - defaults' }
+ClyReflectivityCommand class >> settingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #reflectivity)
+		label: 'Reflectivity';
+		parent: #tools;
+		description: 'Settings related to reflectivity tools';
+		with: [
+			(aBuilder setting: #showReflectivityCommands)
+				label: 'Show reflectivity commands' ;
+				default: false;
+				target: self;
+				description: 'Enable the usage of reflectivity commands (such as Metalinks) to instrument the code. These commands become visible in the contextual menu under the submenu ''Reflectivity''']
 ]
 
 { #category : #'accessing - defaults' }

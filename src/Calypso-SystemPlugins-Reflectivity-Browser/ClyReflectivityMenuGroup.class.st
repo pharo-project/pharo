@@ -11,3 +11,8 @@ Class {
 ClyReflectivityMenuGroup >> isInlined [
 	^true
 ]
+
+{ #category : #accessing }
+ClyReflectivityMenuGroup >> order [
+	^1.9
+]
