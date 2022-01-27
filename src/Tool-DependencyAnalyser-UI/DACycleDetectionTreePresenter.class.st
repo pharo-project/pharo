@@ -115,7 +115,13 @@ DACycleDetectionTreePresenter >> filterWithPackages: aCollectionOfPDPackage [
 { #category : #initialization }
 DACycleDetectionTreePresenter >> initializePresenters [
 	super initializePresenters.
-	
+
+	tree whenSelectedItemChangedDo: [ :item | | menu |
+		item ifNotNil: [ 
+			menu := self newMenu. 
+			item addMenuEntriesOn: menu.
+			tree contextMenu: menu. ] ].
+
 	cyclesLabel := self newLabel
 			label: 'Analysis of cycles'.
 	

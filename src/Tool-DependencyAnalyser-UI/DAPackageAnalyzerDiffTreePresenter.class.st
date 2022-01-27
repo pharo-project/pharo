@@ -13,8 +13,10 @@ Class {
 
 { #category : #specs }
 DAPackageAnalyzerDiffTreePresenter class >> defaultSpec [
-	<spec: #default>
-	^ SpecLayout composed newColumn: [ :col | col add: #treeDiff ] yourself
+	
+	^ SpBoxLayout newTopToBottom 
+		add: #treeDiff;
+		yourself
 ]
 
 { #category : #'instance creation' }

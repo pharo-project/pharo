@@ -108,8 +108,7 @@ DADependencyTreePresenter >> actionOnFindCycles [
 	
 	self notify: 'This could take a while, confirm?'.
 	selectedPackages := self pdPackagesFrom: selectedItems.
-	systemCycles ifNil: [ 
-		systemCycles := DACycleDetectionPresenter system ].
+	systemCycles ifNil: [ systemCycles := DACycleDetectionPresenter system ].
 	systemCycles
 		updateWithFilter: selectedPackages;
 		openWithSpec
