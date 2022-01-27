@@ -17,7 +17,8 @@ ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
 		  node isCommentNode not and: [ 
 			  node isPragma not and: [ 
 				  node isSequence not and: [ 
-					  (node isVariable and: [ node isDefinition ]) not ] ] ] ]
+					  node isLiteralNode not and: [ 
+						  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ]
 ]
 
 { #category : #activation }

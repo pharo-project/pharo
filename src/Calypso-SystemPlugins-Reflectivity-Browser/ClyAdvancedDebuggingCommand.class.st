@@ -1,5 +1,5 @@
 "
-I am a base class for commands which add/remove metalinks, watchpoints, and counters into given method or source node
+I am a base class for commands which add/remove watchpoints and counters into given method or source node
 "
 Class {
 	#name : #ClyAdvancedDebuggingCommand,

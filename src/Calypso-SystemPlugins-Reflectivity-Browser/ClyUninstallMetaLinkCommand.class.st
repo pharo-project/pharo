@@ -6,21 +6,13 @@ I open a small browser to choose which metalink to install among existing metali
 "
 Class {
 	#name : #ClyUninstallMetaLinkCommand,
-	#superclass : #ClyAdvancedDebuggingCommand,
+	#superclass : #ClyReflectivityCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
 
 { #category : #activation }
 ClyUninstallMetaLinkCommand class >> contextMenuOrder [
 	^101
-]
-
-{ #category : #activation }
-ClyUninstallMetaLinkCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^SycAdvancedDebuggingMenuActivation 
-		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
 { #category : #accessing }
@@ -30,7 +22,7 @@ ClyUninstallMetaLinkCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyUninstallMetaLinkCommand >> defaultMenuItemName [
-	^ 'Uninstall MetaLink from  ' , sourceNode displaySourceCode, '  ...'
+	^ ' Uninstall MetaLink in  ' , sourceNode displaySourceCode, '  ...'
 ]
 
 { #category : #execution }

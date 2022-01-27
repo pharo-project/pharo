@@ -21,5 +21,5 @@ SycOpenAdvancedDebuggingMenuCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycOpenAdvancedDebuggingMenuCommand >> defaultMenuItemName [
 
-	^ 'Advanced Debugging'
+	^ 'Debugging'
 ]

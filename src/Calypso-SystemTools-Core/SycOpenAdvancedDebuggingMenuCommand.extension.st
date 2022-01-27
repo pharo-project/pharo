@@ -11,5 +11,5 @@ SycOpenAdvancedDebuggingMenuCommand class >> methodEditorShortcutActivation [
 SycOpenAdvancedDebuggingMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 8 for: ClySourceCodeContext
+	^CmdContextMenuActivation byRootGroupItemOrder: 0 for: ClySourceCodeContext
 ]

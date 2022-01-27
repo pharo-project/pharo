@@ -22,7 +22,8 @@ ClyRemoveExecutionCounterCommand class >> contextMenuOrder [
 ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: -0.5 for: ClySourceCodeContext
+	^SycAdvancedDebuggingMenuActivation 
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
 { #category : #accessing }

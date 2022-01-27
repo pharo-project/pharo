@@ -3,7 +3,7 @@ I am a command to install execution counter into given method or source node
 "
 Class {
 	#name : #ClyAddExecutionCounterCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyAdvancedDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 
@@ -19,13 +19,6 @@ ClyAddExecutionCounterCommand class >> contextMenuOrder [
 	^2
 ]
 
-{ #category : #activation }
-ClyAddExecutionCounterCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: -0.5 for: ClySourceCodeContext
-]
-
 { #category : #accessing }
 ClyAddExecutionCounterCommand >> defaultMenuIconName [
 	^#classIcon
@@ -33,7 +26,7 @@ ClyAddExecutionCounterCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddExecutionCounterCommand >> defaultMenuItemName [
-	^'Add Counter'
+	^' Add     Counter    to  ', sourceNode displaySourceCode
 ]
 
 { #category : #accessing }
