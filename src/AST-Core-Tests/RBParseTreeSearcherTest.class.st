@@ -107,23 +107,15 @@ RBParseTreeSearcherTest >> testSearchListComplexMultiArgs [
 { #category : #'tests - to de refined' }
 RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
 
-	"		
-		- Here we looking for multiple lists in one match pattern at the same time. 
-		- Lists can be any receiver or args
-	"
+	"Here we are looking for multiple lists in one match pattern at the same time. 
+	Lists can be any receiver or argument"
 
-	| dict |
 	searcher
 		matches: '`@receiver assert: `@arg equals: true'
-		do: [ :aNode :answer | dict := searcher context ].
-
-	"so in below example, there is no match with the suggested pattern. Which is why, dict is nil "
+		do: [ :aNode :answer | self fail ].
 
 	searcher executeTree:
 		(self parseExpression: 'self assert: token isLiteralToken.').
-
-	self assert: dict isNil
-	"self deny: dict isNotNil"
 ]
 
 { #category : #'tests - to de refined' }
