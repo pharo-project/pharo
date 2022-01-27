@@ -72,7 +72,6 @@ FLPluggableSubstitutionTest >> testSubstitute: anObject inPresenceOf: anotherObj
 	
 	self assert: result first equals: 424242.
 	self assert: result second equals: anotherObject.
-
 ]
 
 { #category : #tests }
@@ -90,7 +89,6 @@ FLPluggableSubstitutionTest >> testSubstituteCharacterInPresenceOfSomeCharacter 
 	"See issues #209 and #217"
 
 	self testSubstitute: Character inPresenceOf: $c
-
 ]
 
 { #category : #tests }
@@ -98,7 +96,6 @@ FLPluggableSubstitutionTest >> testSubstituteTrueInPresenceOfTheTrueInstance [
 	"See issues #209 and #217"
 
 	self testSubstitute: True inPresenceOf: true
-
 ]
 
 { #category : #tests }
@@ -106,7 +103,6 @@ FLPluggableSubstitutionTest >> testSubstituteUndefinedObjectInPresenceOfNil [
 	"See issues #209 and #217"
 
 	self testSubstitute: UndefinedObject inPresenceOf: nil
-
 ]
 
 { #category : #tests }

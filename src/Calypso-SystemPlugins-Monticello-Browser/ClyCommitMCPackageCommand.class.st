@@ -42,24 +42,39 @@ ClyCommitMCPackageCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyCommitMCPackageCommand >> execute [
+
 	| repoBrowser commitBrowser repos targetRepo |
-	repoBrowser := self class environment at: #IceTipRepositoriesBrowser ifAbsent: [ ^ self inform: 'Iceberg 0.7 and higher is required' ].
-	commitBrowser := self class environment at: #IceTipCommitBrowser ifAbsent: [ ^ self inform: 'Iceberg 0.7 and higher is required' ].
-	packages ifEmpty: [ ^ repoBrowser new openWithSpec ].
-	repos := IceRepository registry select: [ :repo | packages anySatisfy: [ :each | repo includesPackageNamed: each name ] ].
-	repos ifEmpty: [ ^ self inform: 'Selected packages are not managed by Iceberg' ].
-	targetRepo := repos size = 1 ifTrue: [ repos first ] ifFalse: [ UIManager default chooseFrom: (repos collect: [:each | each name]) values: repos title: 'Choose repository' ].
+	repoBrowser := self class environment
+		               at: #IceTipRepositoriesBrowser
+		               ifAbsent: [ 
+		               ^ self inform: 'Iceberg 0.7 and higher is required' ].
+	commitBrowser := self class environment
+		                 at: #IceTipCommitBrowser
+		                 ifAbsent: [ 
+		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
+	packages ifEmpty: [ ^ repoBrowser new open ].
+	repos := IceRepository registry select: [ :repo | 
+		         packages anySatisfy: [ :each | 
+			         repo includesPackageNamed: each name ] ].
+	repos ifEmpty: [ 
+		^ self inform: 'Selected packages are not managed by Iceberg' ].
+	targetRepo := repos size = 1
+		              ifTrue: [ repos first ]
+		              ifFalse: [ 
+			              UIManager default
+				              chooseFrom: (repos collect: [ :each | each name ])
+				              values: repos
+				              title: 'Choose repository' ].
 	targetRepo ifNil: [ ^ self ].
 	(targetRepo isMissing or: [ 
-		targetRepo isCodeMissing or: [ 
-			targetRepo workingCopy isDetached or: [ 
-				targetRepo head isDetached or: [ 
-					targetRepo workingCopy project isUnborn ] ] ] ])
-		ifTrue: [ UIManager default
-				alert:
-					'The ' , targetRepo name
-						,
-							' repository is not operational to commit.
+		 targetRepo isCodeMissing or: [ 
+			 targetRepo workingCopy isDetached or: [ 
+				 targetRepo head isDetached or: [ 
+					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [ 
+		UIManager default
+			alert:
+				'The ' , targetRepo name
+				, ' repository is not operational to commit.
 Causes can be:
 - The local repository is missing
 - The code directory is missing
@@ -67,7 +82,7 @@ Causes can be:
 - Metadatas are missing.
 
 You can fix this problem using the Iceberg tool.'
-				title: 'Error'.
-			^ self ].
-	(commitBrowser onRepository: targetRepo) openWithSpec
+			title: 'Error'.
+		^ self ].
+	(commitBrowser onRepository: targetRepo) open
 ]

@@ -73,8 +73,8 @@ DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
 		yourself
 ]
 
-{ #category : #specs }
-DTDefaultPluginPresenter class >> defaultSpec [
+{ #category : #layout }
+DTDefaultPluginPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 		add: (SpPanedLayout newHorizontal

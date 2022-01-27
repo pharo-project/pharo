@@ -22,5 +22,5 @@ FLGlobalClassSerializationTest >> testInstanceOfAnObsoleteClass [
 		should: [self serialize: instance ] 
 		raise: FLObsolete
 		whoseDescriptionIncludes: aClass name
-		description: 'Should raise an error when serializing as global an obsolete class.' 
+		description: 'Should raise an error when serializing as global an obsolete class.'
 ]

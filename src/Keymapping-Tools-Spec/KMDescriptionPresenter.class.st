@@ -12,8 +12,8 @@ Class {
 	#category : #'Keymapping-Tools-Spec'
 }
 
-{ #category : #specs }
-KMDescriptionPresenter class >> defaultSpec [
+{ #category : #layout }
+KMDescriptionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #categoryList withConstraints: [ :c | c height: 25 ];
 		add: #shortcutList;
@@ -25,7 +25,7 @@ KMDescriptionPresenter class >> defaultSpec [
 KMDescriptionPresenter class >> example [
 	self new
 		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);
-		openWithSpec
+		open
 ]
 
 { #category : #api }

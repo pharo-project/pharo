@@ -196,8 +196,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 			labels add: each.
 			actions
 				add: [ 
-					self substituteVariable: each atInterval: interval.
-					(ReparseAfterSourceEditing new newSource: self requestor text) signal ] ].
+					^self substituteVariable: each atInterval: interval ] ].
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
@@ -226,6 +225,7 @@ OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterva
 		offset: 0.
 	self methodNode source: self requestor text.
 	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
 	^ (node owningScope lookupVar: varName)
 		ifNil: [self error: 'should be found'].
 ]

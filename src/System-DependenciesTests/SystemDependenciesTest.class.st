@@ -206,7 +206,9 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #core),
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #ui),
+		{ BaselineOfNewValueHolder name }, (BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		{ BaselineOfSpecCore name }, (BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
@@ -315,6 +317,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
 	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).
+	packages := packages ,  { BaselineOfNewValueHolder name }, (self packagesOfGroupNamed: 'core' on: BaselineOfNewValueHolder ).
 	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
 	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'Methods' on: BaselineOfNewTools ).
@@ -451,6 +454,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfFuelPlatform allPackageNames,
 		BaselineOfThreadedFFI corePackageNames ).
 	
@@ -517,6 +521,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		BaselineOfThreadedFFI corePackageNames,
@@ -568,6 +573,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),

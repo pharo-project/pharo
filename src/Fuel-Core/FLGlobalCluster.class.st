@@ -10,7 +10,7 @@ Class {
 { #category : #analyzing }
 FLGlobalCluster class >> clusterBucketIn: aClusterization [
 
-	^aClusterization globalsBucket 
+	^aClusterization globalsBucket
 ]
 
 { #category : #'serialize/materialize' }
@@ -21,7 +21,6 @@ FLGlobalCluster >> materializeGlobalAssociationFrom: aDecoder [
 	^ aDecoder globalEnvironment
 		associationAt: globalName
 		ifAbsent: [ FLGlobalNotFound signalWithName: globalName ]
-
 ]
 
 { #category : #'serialize/materialize' }
@@ -42,5 +41,5 @@ FLGlobalCluster >> serializeGlobalAssociationKeyed: aSymbol on: anEncoder [
 FLGlobalCluster >> serializeGlobalClass: aClass on: anEncoder [
 	
 	aClass isObsolete ifTrue: [ FLObsolete signalWithName: aClass name ].
-	anEncoder encodeString: aClass name 
+	anEncoder encodeString: aClass name
 ]

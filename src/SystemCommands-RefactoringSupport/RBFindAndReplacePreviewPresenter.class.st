@@ -32,8 +32,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBFindAndReplacePreviewPresenter class >> defaultSpec [
+{ #category : #layout }
+RBFindAndReplacePreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self labelHeight ];
 		add:
@@ -54,7 +54,7 @@ RBFindAndReplacePreviewPresenter class >> example [
 RBFindAndReplacePreviewPresenter class >> method: aMethod [
 	|temp|
 	temp := self new method: aMethod.
-	^ temp openModalWithSpec
+	^ temp openModal
 ]
 
 { #category : #specs }

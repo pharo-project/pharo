@@ -7,7 +7,7 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyRemoveExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^aBrowserContext isSelectedItemHasExecutionCounter

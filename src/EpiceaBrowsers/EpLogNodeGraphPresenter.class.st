@@ -23,7 +23,7 @@ EpLogNodeGraphPresenter class >> open [
 	<script>
 	^ self new
 		refresh;
-		openWithSpec;
+		open;
 		yourself
 ]
 
