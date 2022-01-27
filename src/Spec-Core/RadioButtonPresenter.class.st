@@ -98,11 +98,10 @@ RadioButtonPresenter >> privateSetState: aBoolean [
 	self changed: #state
 ]
 
-{ #category : #protocol }
+{ #category : #api }
 RadioButtonPresenter >> state: aBoolean [
 	"Set if the radio is activated or not"
 
-	<api: #boolean getter: #state>
 	self canDeselectByClick
 		ifTrue: [ stateHolder value: aBoolean ]
 		ifFalse: [ self state
