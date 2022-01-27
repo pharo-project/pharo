@@ -222,7 +222,10 @@ RBSequenceNode >> asSequenceNode [
 
 { #category : #querying }
 RBSequenceNode >> bestNodeFor: anInterval [
+
 	| node |
+	(self start == anInterval first and: [ self stop == anInterval last ]) 
+		ifTrue: [ ^ self ].
 	" search in statements "
 	statements doWithIndex: [ :statement :index | 
 		(statement intersectsInterval: anInterval) ifTrue: [ 
@@ -230,11 +233,10 @@ RBSequenceNode >> bestNodeFor: anInterval [
 		(periods at: index ifAbsent: [ 0 ]) == anInterval first ifTrue: [ 
 			^ statement ] ].
 	node := super bestNodeFor: anInterval.
-	node == self 
-		ifTrue: 
-			[(temporaries isEmpty and: [statements size == 1]) 
-				ifTrue: [^statements first]].
-	^node
+	node == self ifTrue: [ 
+		(temporaries isEmpty and: [ statements size == 1 ]) ifTrue: [ 
+			^ statements first ] ].
+	^ node
 ]
 
 { #category : #accessing }
