@@ -12,9 +12,10 @@ Class {
 
 { #category : #testing }
 SycExtractSetUpRefactoring class >> canBeExecutedInContext: aToolContext [
-	super canBeExecutedInContext: aToolContext.
-	
-	^aToolContext isMethodSelected not and: [aToolContext lastSelectedMethod selector isTestSelector]
+
+	^ (super canBeExecutedInContext: aToolContext) and: [ 
+		  aToolContext isMethodSelected not and: [ 
+			  aToolContext lastSelectedMethod selector isTestSelector ] ]
 ]
 
 { #category : #executing }

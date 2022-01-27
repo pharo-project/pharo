@@ -56,8 +56,9 @@ BaselineOfFuel >> fuelPlatform: spec [
 		baseline: 'FuelPlatform' 
 		with: [ 
 			spec
-				repository: self packageRepositoryURL;
+				repository: 'github://theseion/FuelPlatform:stable/repository';
   				loads: 'default' ]
+
 ]
 
 { #category : #'baselines-helpers' }

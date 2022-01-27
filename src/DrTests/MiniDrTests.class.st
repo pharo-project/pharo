@@ -10,8 +10,8 @@ Class {
 	#category : #'DrTests-Spec'
 }
 
-{ #category : #specs }
-MiniDrTests class >> defaultSpec [
+{ #category : #layout }
+MiniDrTests class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: (SpBoxLayout newLeftToRight
 				add: #switchButton;

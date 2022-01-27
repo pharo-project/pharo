@@ -33,8 +33,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-SycRefactoringPreviewPresenter class >> defaultSpec [
+{ #category : #layout }
+SycRefactoringPreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #scopeDropList withConstraints: [ :constraints | constraints height: 30 ];

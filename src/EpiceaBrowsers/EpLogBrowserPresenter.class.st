@@ -24,14 +24,8 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Log'
 }
 
-{ #category : #accessing }
-EpLogBrowserPresenter class >> defaultLog [
-
-	^ EpMonitor current log
-]
-
-{ #category : #specs }
-EpLogBrowserPresenter class >> defaultSpec [
+{ #category : #layout }
+EpLogBrowserPresenter class >> defaultLayout [
 
 	^ SpPanedLayout newTopToBottom
 		  positionOfSlider: 0.6;
@@ -47,6 +41,12 @@ EpLogBrowserPresenter class >> defaultSpec [
 				   padding: 2;
 				   yourself);
 		  yourself
+]
+
+{ #category : #accessing }
+EpLogBrowserPresenter class >> defaultLog [
+
+	^ EpMonitor current log
 ]
 
 { #category : #'instance creation' }
@@ -65,10 +65,11 @@ EpLogBrowserPresenter class >> open [
 
 { #category : #'instance creation' }
 EpLogBrowserPresenter class >> openWithLog: aLog [
+
 	^ (self newWithLog: aLog)
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #private }

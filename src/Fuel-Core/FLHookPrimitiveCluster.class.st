@@ -23,7 +23,6 @@ FLHookPrimitiveCluster >> clusterMaterializeStepWith: aMaterialization [
 
 	super clusterMaterializeStepWith: aMaterialization.
 	theClass := aMaterialization decoder nextEncodedReference.
-
 ]
 
 { #category : #analyzing }
@@ -36,7 +35,7 @@ FLHookPrimitiveCluster >> clusterReferencesDo: aBlock [
 FLHookPrimitiveCluster >> clusterSerializeStepWith: aSerialization [
 
 	super clusterSerializeStepWith: aSerialization.
-	aSerialization encoder encodeReferenceToClusterObjectClass: theClass.	
+	aSerialization encoder encodeReferenceToClusterObjectClass: theClass.
 ]
 
 { #category : #'initialize-release' }

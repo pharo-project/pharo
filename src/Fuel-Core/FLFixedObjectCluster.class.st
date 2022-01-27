@@ -16,5 +16,4 @@ FLFixedObjectCluster >> materializeInstanceWith: aDecoder [
 { #category : #'serialize/materialize' }
 FLFixedObjectCluster >> serializeInstancesStepWith: anEncoder [
 	"Do nothing. I know my objects have nothing to serialize in this step."
-
 ]

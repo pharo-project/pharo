@@ -61,5 +61,4 @@ FLGlobalSendCluster >> serializeInstance: anObject with: anEncoder [
 	
 	self serializeGlobalAssociationKeyed: globalSend key on: anEncoder.
 	anEncoder encodeString: globalSend value.
-
 ]

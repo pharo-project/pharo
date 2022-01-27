@@ -146,12 +146,17 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
-	| violating |
+	| violating validExceptions remaining|
 	violating := Smalltalk globals allBehaviors select: [ :class | 
 		             class protocols includes: Protocol unclassified ].
 
+
+	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass).	
+	
+	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 33
+	self assert: remaining size <= 30
 ]
 
 { #category : #tests }

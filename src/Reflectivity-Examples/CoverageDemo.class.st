@@ -17,8 +17,8 @@ Class {
 	#category : #'Reflectivity-Examples'
 }
 
-{ #category : #specs }
-CoverageDemo class >> defaultSpec [
+{ #category : #layout }
+CoverageDemo class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #codePanelMorph;
 		add:
@@ -82,7 +82,7 @@ CoverageDemo >> coverageCode: anObject [
 { #category : #examples }
 CoverageDemo >> exampleMethod [
 
-	self openWithSpec.
+	self open.
 ]
 
 { #category : #examples }
@@ -91,7 +91,7 @@ CoverageDemo >> exampleNotCompleteCoverage [
 	self coverageCode: [ CoverageDemo exampleIfTrueIfFalse. ].
 	self compiledMethods add: CoverageDemo class >>#exampleIfTrueIfFalse.
 	
-	self openWithSpec.
+	self open.
 ]
 
 { #category : #initialization }

@@ -29,7 +29,6 @@ FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: cl
 			clusterFactory value 
 				traceWith: analysis;
 				yourself ].
-
 ]
 
 { #category : #'protected-mapping' }
@@ -47,7 +46,6 @@ FLMapper >> clusterKeyedByClusterName: aClusterClass factory: clusterFactory [
 		clusterInstanceOf: aClusterClass
 		keyInBucket: aClusterClass name
 		factory: clusterFactory
-
 ]
 
 { #category : #'protected-mapping' }
@@ -75,7 +73,6 @@ FLMapper >> mapAndTraceByClusterName: anObject to: aClusterClass [
 
 	(self clusterKeyedByClusterName: aClusterClass)
 		add: anObject traceWith: analysis
-
 ]
 
 { #category : #'protected-mapping' }
@@ -83,7 +80,6 @@ FLMapper >> mapAndTraceByObjectClass: anObject to: aClusterClass [
 
 	(self clusterKeyedByObjectClass: aClusterClass class: anObject class)
 		add: anObject traceWith: analysis
-
 ]
 
 { #category : #accessing }

@@ -7,11 +7,12 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not and: [ aSourceCodeContext isMessageSelected ]
+
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+		  aSourceCodeContext isMethodSelected not and: [ 
+			  aSourceCodeContext isMessageSelected ] ]
 ]
 
 { #category : #execution }

@@ -7,8 +7,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 
-{ #category : #specs }
-RBEnvironmentsPresenter class >> defaultSpec [
+{ #category : #layout }
+RBEnvironmentsPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add:
 			(SpBoxLayout newLeftToRight
@@ -30,7 +30,7 @@ RBEnvironmentsPresenter class >> menuCommandOn: aBuilder [
 { #category : #specs }
 RBEnvironmentsPresenter class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #accessing }
@@ -107,7 +107,7 @@ RBEnvironmentsPresenter >> initializeWidgets [
 { #category : #actions }
 RBEnvironmentsPresenter >> inspect: anItem [
 
-	(anItem inspectIn: self) openWithSpec title: anItem shortDescription.
+	(anItem inspectIn: self) open title: anItem shortDescription.
 ]
 
 { #category : #actions }
