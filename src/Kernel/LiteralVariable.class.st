@@ -21,17 +21,6 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
-{ #category : #'gt-inspector-extension' }
-LiteralVariable class >> gtInspectorAllVariablesIn: composite [
- 	"This provides a list of all defined Class or Global Variables"
- 	<gtInspectorPresentationOrder: 20>
- 	composite list 
- 		title: 'All Defined Variables';
- 		display: [ self allSubclasses sorted: #name ascending ];
- 		tags: [ :each | { each package name } ];
- 		when: [self == LiteralVariable  ].
-]
-
 { #category : #'instance creation' }
 LiteralVariable class >> key: aKey [ 
 	"Answer an instance of me with the argument as the lookup up."
