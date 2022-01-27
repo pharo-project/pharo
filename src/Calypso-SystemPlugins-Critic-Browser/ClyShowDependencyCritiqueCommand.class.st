@@ -27,6 +27,6 @@ ClyShowDependencyCritiqueCommand >> description [
 { #category : #execution }
 ClyShowDependencyCritiqueCommand >> execute [
 
-	(DAPackageAnalyzerPackageDependenciesWindow
+	(DAPackageDependenciesPresenter
 		onPackagesNamed: {analyzedObject packageName}) open
 ]

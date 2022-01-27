@@ -2,7 +2,7 @@
 A PDPackageAnalyzerTreeModel shows all dependent packages from a set of packages. Also you can see all type of the dependency, and browse them.
 "
 Class {
-	#name : #DAPackageAnalyzerTreePresenter,
+	#name : #DADependencyTreePresenter,
 	#superclass : #DAPackageTreePresenter,
 	#instVars : [
 		'systemCycles',
@@ -22,47 +22,37 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #specs }
-DAPackageAnalyzerTreePresenter class >> defaultSpec [
+{ #category : #layout }
+DADependencyTreePresenter class >> defaultLayout [
 	<spec: #default>
-	^ SpecLayout composed
-		newColumn:
-			[ :col | 
-			col
-				newRow: [ :row | 
-							row
-								add: #textPackageField;
-								add: #buttonBrowseCycles;
-								add: #buttonRefresh;
-								add: #buttonDefault
-								 ]
-					height: 30;
-				newRow: [ :row | 
-							row
-								add: #packageLabel ]
-					height: 20;
-				add: #tree;
-				newRow: [ :row | 
-							row
-								add: #buttonAddPackage;
-								add: #buttonRemovePackage;
-								"add: #buttonGenerateGraphViz;"
-								"add: #buttonMakeDiff;"
-								add: #buttonReverseAnalysis
-								 ]
-					height: 30 ]	
-					  yourself
+	^ SpBoxLayout newVertical 
+		add: ( SpBoxLayout newHorizontal 
+					add: #textPackageField;
+					add: #buttonBrowseCycles;
+					add: #buttonRefresh;
+					add: #buttonDefault;
+					yourself) 
+			expand: false;
+		add: #packageLabel expand: false;
+		add: #tree;
+		add: (SpBoxLayout newHorizontal 
+				add: #buttonAddPackage;
+				add: #buttonRemovePackage;
+				add: #buttonReverseAnalysis;
+				yourself)
+			expand: false;
+		yourself
 ]
 
 { #category : #'instance creation' }
-DAPackageAnalyzerTreePresenter class >> onPackages: aCollection [
+DADependencyTreePresenter class >> onPackages: aCollection [
 	^ self new
 		initializeWithRPackageSet: aCollection;
 		yourself
 ]
 
 { #category : #examples }
-DAPackageAnalyzerTreePresenter class >> onPackagesMatch: match [
+DADependencyTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages
 				select: [ :package | match match: package packageName asString ]
@@ -70,25 +60,25 @@ DAPackageAnalyzerTreePresenter class >> onPackagesMatch: match [
 ]
 
 { #category : #'instance creation' }
-DAPackageAnalyzerTreePresenter class >> onPackagesNamed: aCollection [
+DADependencyTreePresenter class >> onPackagesNamed: aCollection [
 	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnAddPackage [
-	self buttonAddPackage action: [ (DAAddPackagePresenter 
+DADependencyTreePresenter >> actionOnAddPackage [
+	buttonAddPackage action: [ (DAAddPackagePresenter 
 					new 
-					packageAnalyzerTreeModel: self)
+					dependenciesPresenter: self)
 					open ]
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnBrowseCycles [
+DADependencyTreePresenter >> actionOnBrowseCycles [
 	buttonBrowseCycles action: [ self actionOnFindCycles ]
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnButtons [
+DADependencyTreePresenter >> actionOnButtons [
 
 	self
 		actionOnBrowseCycles;
@@ -102,29 +92,30 @@ DAPackageAnalyzerTreePresenter >> actionOnButtons [
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnDefaultSettings [
-	self buttonDefault
+DADependencyTreePresenter >> actionOnDefaultSettings [
+	buttonDefault
 		action: [ 
 			self resetDefaultSettings.
 			self buildRoots ]
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnFindCycles [
+DADependencyTreePresenter >> actionOnFindCycles [
+
 	| selectedPackages selectedItems |
 	selectedItems := self selectedItemsFromTree.
-	(self arePackageNodes: selectedItems)
-		ifTrue: [ 
-			self notify: 'This could take a while, confirm?'.
-			selectedPackages := self pdPackagesFrom: selectedItems.
-			systemCycles ifNil: [ systemCycles := DAPackageAnalyzerCycleDetectionWindow  system ].
-			systemCycles
-				updateWithFilter: selectedPackages;
-				open ]
+	(self arePackageNodes: selectedItems) ifFalse: [ ^ self ].
+	
+	self notify: 'This could take a while, confirm?'.
+	selectedPackages := self pdPackagesFrom: selectedItems.
+	systemCycles ifNil: [ systemCycles := DACycleDetectionPresenter system ].
+	systemCycles
+		updateWithFilter: selectedPackages;
+		open
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnGenerateGraphViz [
+DADependencyTreePresenter >> actionOnGenerateGraphViz [
 	| graphvizGenerator |
 	buttonGenerateGraphViz
 		action: [  
@@ -134,9 +125,9 @@ DAPackageAnalyzerTreePresenter >> actionOnGenerateGraphViz [
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnRemovePackage [
+DADependencyTreePresenter >> actionOnRemovePackage [
 	| packagesToRemove |
-	self buttonRemovePackage
+	buttonRemovePackage
 		action: [ 
 			self selectedItemsFromTree
 				ifNotEmpty: [ 
@@ -146,30 +137,30 @@ DAPackageAnalyzerTreePresenter >> actionOnRemovePackage [
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnReverseAnalysis [
+DADependencyTreePresenter >> actionOnReverseAnalysis [
+
 	buttonReverseAnalysis action: [ 
-		(DAPackageAnalyzerPackageDependenciesWindow new 
-						initializeWithRelationGraph: self relationGraph) 
-					open ]
+		(DAPackageDependenciesPresenter on:
+			 (DAReverseTreePresenter onRelationGraph: self relationGraph)) open ]
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionOnSave [
-	self buttonSave 
+DADependencyTreePresenter >> actionOnSave [
+	buttonSave 
 		action: [ self saveCurrentRelationGraph ]
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> actionWhenTextFieldChanged [
+DADependencyTreePresenter >> actionWhenTextFieldChanged [
 	textPackageField
-		whenTextChanged: [ textPackageField text
+		whenTextChangedDo: [ textPackageField text
 				ifEmpty: [ self resetFilter ]
 				ifNotEmpty: [ self filter: textPackageField text ].
 			self buildRoots ]
 ]
 
 { #category : #actions }
-DAPackageAnalyzerTreePresenter >> buildRoots [
+DADependencyTreePresenter >> buildRoots [
 	| matching roots |
 	roots := self filter
 		ifNotNil: [ :f | 
@@ -180,80 +171,54 @@ DAPackageAnalyzerTreePresenter >> buildRoots [
 	self updatePackageLabel
 ]
 
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonAddPackage [
-	^ buttonAddPackage
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonBrowseCycles [
-	^ buttonBrowseCycles
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonDefault [
-	^ buttonDefault
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonGenerateGraphViz [
-	^ buttonGenerateGraphViz
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonMakeDiff [
-	^ buttonMakeDiff
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonRemovePackage [
-	^ buttonRemovePackage
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonReverseAnalysis [
-	^ buttonReverseAnalysis
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> buttonSave [
-	^ buttonSave
+{ #category : #initialization }
+DADependencyTreePresenter >> connectPresenters [
+	super connectPresenters.
+	self actionOnButtons.
+	tree
+		whenSelectedItemChangedDo: [ :item |
+			item
+				ifNil: [ buttonBrowseCycles enabled: false ]
+				ifNotNil: [ 
+					buttonBrowseCycles enabled: true.
+					tree contextMenu: [ self loadMenuForSelectedItem ].
+					self tree selectedItem selectInBrowser ] ]
 ]
 
 { #category : #saving }
-DAPackageAnalyzerTreePresenter >> createDirectoryForSaving [
+DADependencyTreePresenter >> createDirectoryForSaving [
 	| dir |
 	dir := FileSystem workingDirectory / self defaultDirectory.
 	dir ensureCreateDirectory
 ]
 
 { #category : #saving }
-DAPackageAnalyzerTreePresenter >> defaultDirectory [
+DADependencyTreePresenter >> defaultDirectory [
 	^ 'saving'
 ]
 
 { #category : #saving }
-DAPackageAnalyzerTreePresenter >> defaultName [
+DADependencyTreePresenter >> defaultName [
 	^ self defaultDirectory, '/relationGraph.FL'
 ]
 
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> extent [
+DADependencyTreePresenter >> extent [
 	^ 700@500
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> filter [
+DADependencyTreePresenter >> filter [
 	^ filter
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> filter: aString [
+DADependencyTreePresenter >> filter: aString [
 	filter := aString
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerTreePresenter >> initializeButtons [
+DADependencyTreePresenter >> initializeButtons [
 	buttonBrowseCycles := self newButton
 		help: 'Find all the cycles where the package is in the system';
 		label: 'Find cycles'.
@@ -282,36 +247,22 @@ DAPackageAnalyzerTreePresenter >> initializeButtons [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerTreePresenter >> initializePresenter [
-	super initializePresenter.
-	self actionOnButtons.
-	tree
-		whenSelectedItemChanged: [ :item |
-			item
-				ifNil: [ buttonBrowseCycles enabled: false ]
-				ifNotNil: [ 
-					buttonBrowseCycles enabled: true.
-					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ].
-					self tree selectedItem selectInBrowser ] ]
-]
-
-{ #category : #initialization }
-DAPackageAnalyzerTreePresenter >> initializeWidgets [
-	super initializeWidgets.
+DADependencyTreePresenter >> initializePresenters [
+	super initializePresenters.
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	textPackageField := self newTextInput
-		ghostText: 'Enter a package name';
+		placeholder: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
 	self initializeButtons
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> initializeWithRPackageSet: aCollection [
+DADependencyTreePresenter >> initializeWithRPackageSet: aCollection [
 	self relationGraph: (DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: each ]))
 ]
 
 { #category : #private }
-DAPackageAnalyzerTreePresenter >> nodesFor: anItemList [ 
+DADependencyTreePresenter >> nodesFor: anItemList [ 
 	^ anItemList sorted collect: 
 		[ :each | 
 		DAPackageUnderAnalysisNode new
@@ -323,12 +274,7 @@ DAPackageAnalyzerTreePresenter >> nodesFor: anItemList [
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> packageLabel [
-	^ packageLabel
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> packagesEntryCompletion [
+DADependencyTreePresenter >> packagesEntryCompletion [
 	| applicants |
 	applicants := (RPackageOrganizer default packages collect: [ :package | package packageName asString ]).
 
@@ -339,25 +285,24 @@ DAPackageAnalyzerTreePresenter >> packagesEntryCompletion [
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> pdPackagesFrom: selectedItems [
+DADependencyTreePresenter >> pdPackagesFrom: selectedItems [
 	^ selectedItems collect: [ :item | DAPackage on: (RPackageSet named: item content packageName asString) ]
 ]
 
 { #category : #actions }
-DAPackageAnalyzerTreePresenter >> refresh [
-	self isOpen ifTrue: [  
-			self relationGraph refreshGraph.
-			self buildRoots].
+DADependencyTreePresenter >> refresh [
+	self relationGraph refreshGraph.
+	self buildRoots.
 		
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> relationGraph [
+DADependencyTreePresenter >> relationGraph [
 	^ relationGraph
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> relationGraph: anObject [
+DADependencyTreePresenter >> relationGraph: anObject [
 	| warnings alertMessage |
 	warnings := Set new.
 	relationGraph := anObject.
@@ -375,56 +320,44 @@ DAPackageAnalyzerTreePresenter >> relationGraph: anObject [
 			title: 'Potential outdated dependencies' ]
 ]
 
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> relationGraphOnReverse: anObject [
-	relationGraph := anObject.
-	self relationGraph build.
-	self buildReverseRoots
-]
-
 { #category : #actions }
-DAPackageAnalyzerTreePresenter >> resetDefaultSettings [
+DADependencyTreePresenter >> resetDefaultSettings [
 	self resetFilter.
-	self textPackageField text: ''
+	textPackageField text: ''
 ]
 
 { #category : #actions }
-DAPackageAnalyzerTreePresenter >> resetFilter [
+DADependencyTreePresenter >> resetFilter [
 	^ self filter: nil
 ]
 
 { #category : #saving }
-DAPackageAnalyzerTreePresenter >> saveCurrentRelationGraph [
+DADependencyTreePresenter >> saveCurrentRelationGraph [
 	self createDirectoryForSaving.
 	^  FLSerializer serialize: relationGraph toFileNamed: self defaultName. 
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> seenPackagesName [
+DADependencyTreePresenter >> seenPackagesName [
 	^ self relationGraph seenPackagesName
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> sizeOfRoots [
+DADependencyTreePresenter >> sizeOfRoots [
 	^ self treeRoots size
 ]
 
-{ #category : #accessing }
-DAPackageAnalyzerTreePresenter >> textPackageField [
-	^ textPackageField
-]
-
 { #category : #protocol }
-DAPackageAnalyzerTreePresenter >> title [
+DADependencyTreePresenter >> title [
 	^ 'Dependencies analysis'
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> treeRoots [
+DADependencyTreePresenter >> treeRoots [
 	^ self tree roots
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerTreePresenter >> updatePackageLabel [
-	self packageLabel label: 'Analysis of ' , self sizeOfRoots asString , ' package(s)'
+DADependencyTreePresenter >> updatePackageLabel [
+	packageLabel label: 'Analysis of ' , self sizeOfRoots asString , ' package(s)'
 ]
