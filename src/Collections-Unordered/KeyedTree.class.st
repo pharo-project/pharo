@@ -194,7 +194,7 @@ KeyedTree >> removePath: anArray ifAbsent: aBlock [
 	element := self.
 	anArray allButLastDo: [:key |
 		element := element at: key ifAbsent: [^aBlock value]].
-	^element removeKey: anArray last ifAbsent: aBlock	
+	^element removeKey: anArray last ifAbsent: aBlock
 ]
 
 { #category : #accessing }

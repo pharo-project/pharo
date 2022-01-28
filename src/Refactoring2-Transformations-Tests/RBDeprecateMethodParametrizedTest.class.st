@@ -49,7 +49,6 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 	self
 		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
 			[ :e | e isMessage and: [ e selector = #deprecated:on:in: ] ]).
-	
 ]
 
 { #category : #'failure tests' }

@@ -13,7 +13,6 @@ IRVisitor >> visitBlockReturnTop: blockReturnTop [
 
 { #category : #visiting }
 IRVisitor >> visitInstruction: instr [
-	 
 ]
 
 { #category : #visiting }

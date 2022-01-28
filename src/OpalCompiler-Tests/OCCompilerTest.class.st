@@ -27,7 +27,6 @@ OCCompilerTest >> compileWithFailBlock: aBlock [
 		requestor: self;
 		failBlock: aBlock;
 		compile.
-
 ]
 
 { #category : #mocking }
@@ -47,21 +46,17 @@ OCCompilerTest >> notify: aString at: aSmallInteger in: aReadStream [
 	errorMessage := aString.
 	errorLocation := aSmallInteger.
 	errorSource := aReadStream.
-	
 ]
 
 { #category : #running }
 OCCompilerTest >> runCase [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
-
 ]
 
 { #category : #running }
 OCCompilerTest >> setUp [
 	super setUp.
 	testingEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
-	
-	
 ]
 
 { #category : #running }
@@ -197,9 +192,6 @@ OCCompilerTest >> testNoShadowing [
 	self compileWithFailBlock: [
 		self fail.
 		^nil ].
-	
-
-
 ]
 
 { #category : #'tests - shadowing2' }
@@ -221,7 +213,6 @@ OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 				assert: ex warningMessage 
 				equals: 'MockForCompilation>>temp(var1 is shadowed)'
 		].
-
 ]
 
 { #category : #'tests - shadowing2' }
@@ -265,7 +256,6 @@ OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 				assert: ex warningMessage 
 				equals: 'MockForCompilation>>temp(var1 is shadowed)'
 		].
-	
 ]
 
 { #category : #'tests - shadowing2' }
@@ -288,8 +278,6 @@ OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 				assert: ex warningMessage 
 				equals: 'MockForCompilation>>temp(var2 is shadowed)'
 		].
-
-
 ]
 
 { #category : #'tests - shadowing2' }
@@ -306,10 +294,6 @@ OCCompilerTest >> testNotInteractiveNoShadowing [
 			failBlock: [self fail. ^ nil ];
 			compile.
 	] raise: OCShadowVariableWarning.
-	
-
-
-
 ]
 
 { #category : #'tests - shadowing2' }
@@ -331,7 +315,6 @@ OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 				assert: ex warningMessage 
 				equals: 'MockForCompilation>>temp(temp1 is shadowed)'
 		].
-	
 ]
 
 { #category : #'tests - shadowing2' }
@@ -354,9 +337,6 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 				assert: ex warningMessage 
 				equals: 'MockForCompilation>>temp(var1 is shadowed)'
 		].
-
-
-	
 ]
 
 { #category : #'tests - shadowing2' }
@@ -373,14 +353,6 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
 			failBlock: [self fail. ^nil];
 			compile
 	] raise: OCShadowVariableWarning.
-
-
-
-
-	
-					
-
-
 ]
 
 { #category : #'tests - shadowing' }
@@ -459,14 +431,6 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 		class: MockForCompilation;
 		failBlock: [self fail. ^ nil ];
 		compile.
-				
-
-
-
-	
-					
-
-
 ]
 
 { #category : #'tests - shadowing2' }

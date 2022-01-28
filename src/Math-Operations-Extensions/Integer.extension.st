@@ -39,7 +39,6 @@ Integer >> benchFib [
 	^ self < 2
 		ifTrue: [1] 
 		ifFalse: [(self-1) benchFib + (self-2) benchFib + 1]
-
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -275,7 +274,6 @@ Integer class >> largePrimesUpTo: max do: aBlock [
 			].
 		].
 	].
-
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -507,7 +505,6 @@ Integer class >> primesUpTo: max do: aBlock [
 				flags at: k put: false.
 				k := k + prime].
 			aBlock value: prime]].
-
 ]
 
 { #category : #'*Math-Operations-Extensions' }

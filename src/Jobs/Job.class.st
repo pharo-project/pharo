@@ -78,7 +78,6 @@ Job class >> exampleDebug [
 	[ aJob run ] forkAt: Processor userBackgroundPriority.
 	1 second asDelay wait. "wait for the job to start properly"
 	aJob debug
-	
 ]
 
 { #category : #examples }

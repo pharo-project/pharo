@@ -263,7 +263,6 @@ SmallDictionary >> at: firstKey at: secondKey put: aValue [
 	| subDictionary |
 	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
 	^ subDictionary at: secondKey put: aValue
-
 ]
 
 { #category : #accessing }
@@ -306,7 +305,6 @@ SmallDictionary >> at: key ifPresent: aBlock [
 	| v |
 	v := self at: key ifAbsent: [^ nil].
 	^ aBlock cull: v
-
 ]
 
 { #category : #accessing }
@@ -343,8 +341,7 @@ SmallDictionary >> at: key put: value [
 	index := self findIndexForKey:  key.
 	^ index = 0
 		ifFalse: [values at: index put: value]
-		ifTrue: [self privateAt: key put: value]	
-	
+		ifTrue: [self privateAt: key put: value]
 ]
 
 { #category : #accessing }
@@ -441,7 +438,6 @@ SmallDictionary >> empty [
 		keys at: index put: nil.
 		values at: index put: nil ].
 	size := 0
-
 ]
 
 { #category : #private }
@@ -501,7 +497,6 @@ SmallDictionary >> includesAssociation: anAssociation [
   ^ (self   
       associationAt: anAssociation key
       ifAbsent: [ ^ false ]) value = anAssociation value
-
 ]
 
 { #category : #testing }
@@ -569,7 +564,6 @@ SmallDictionary >> keyAtIdentityValue: value ifAbsent: exceptionBlock [
 	index = 0 
 		ifTrue: [ ^ exceptionBlock value].
 	^ keys at: index.
-
 ]
 
 { #category : #accessing }
@@ -592,8 +586,6 @@ SmallDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
 		ifTrue: [ ^ exceptionBlock value].
 		
 	^ keys at: index.
-
-
 ]
 
 { #category : #accessing }

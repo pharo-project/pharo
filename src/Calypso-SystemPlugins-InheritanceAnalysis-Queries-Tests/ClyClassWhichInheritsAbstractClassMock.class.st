@@ -14,7 +14,6 @@ ClyClassWhichInheritsAbstractClassMock >> abstractMethod1 [
 
 { #category : #protocol }
 ClyClassWhichInheritsAbstractClassMock >> notOverriddenMethod [
-
 ]
 
 { #category : #protocol }

@@ -29,7 +29,7 @@ ClyFullBrowserVariableContext >> isGlobalVariableSelected [
 
 { #category : #'selection-variables' }
 ClyFullBrowserVariableContext >> isVariableSelected [
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #'selection-variables' }

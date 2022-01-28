@@ -12,7 +12,6 @@ RBBrowserMethodRefactoringHelp class >> addParameterRefactoring [
 	^HelpTopic
 		title: 'Add parameter'
 		contents: RBAddParameterRefactoring comment
-
 ]
 
 { #category : #accessing }
@@ -25,7 +24,6 @@ RBBrowserMethodRefactoringHelp class >> deprecateMethodRefactoring [
 	^HelpTopic
 		title: 'Deprecate'
 		contents: RBDeprecateMethodRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -33,7 +31,6 @@ RBBrowserMethodRefactoringHelp class >> inlineParameterRefactoring [
 	^HelpTopic
 		title: 'Inline parameter'
 		contents: RBInlineParameterRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -48,7 +45,6 @@ RBBrowserMethodRefactoringHelp class >> moveMethodRefactoring [
 	^HelpTopic
 		title: 'Move'
 		contents: RBMoveMethodRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -75,7 +71,6 @@ RBBrowserMethodRefactoringHelp class >> pushDownpMethodRefactoring [
 	^HelpTopic
 		title: 'Push down'
 		contents: RBPushDownMethodRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -83,14 +78,13 @@ RBBrowserMethodRefactoringHelp class >> pushUpMethodRefactoring [
 	^HelpTopic
 		title: 'Push up'
 		contents: RBPullUpMethodRefactoring comment
-
 ]
 
 { #category : #removing }
 RBBrowserMethodRefactoringHelp class >> removeAllSendersRefactoring [
 	^HelpTopic
 		title: 'Remove all senders'
-		contents: RBRemoveAllSendersRefactoring comment 
+		contents: RBRemoveAllSendersRefactoring comment
 ]
 
 { #category : #pages }
@@ -98,7 +92,6 @@ RBBrowserMethodRefactoringHelp class >> removeHierarchyMethodRefactoring [
 	^HelpTopic
 		title: 'Remove'
 		contents: RBRemoveHierarchyMethodRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -106,7 +99,6 @@ RBBrowserMethodRefactoringHelp class >> removeMethodRefactoring [
 	^HelpTopic
 		title: 'Remove'
 		contents: RBRemoveMethodRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -121,7 +113,6 @@ RBBrowserMethodRefactoringHelp class >> renameMethodRefactoring [
 	^HelpTopic
 		title: 'Rename method (all)'
 		contents: RBRenameMethodRefactoring comment
-
 ]
 
 { #category : #pages }
@@ -129,5 +120,4 @@ RBBrowserMethodRefactoringHelp class >> replaceMethodByAnotherRefactoring [
 	^HelpTopic
 		title: 'Replace by another'
 		contents: RBReplaceMethodRefactoring comment
-
 ]

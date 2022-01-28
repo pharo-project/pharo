@@ -64,7 +64,6 @@ CharacterSetComplement >> complement: aCharacterSet [
 	
 	byteArrayMapCache := nil.
 	absent := aCharacterSet.
-	
 ]
 
 { #category : #enumerating }

@@ -31,7 +31,6 @@ Class {
 { #category : #'instance creation' }
 IRInstruction class >> blockReturnTop [
 	^ IRBlockReturnTop new
-		
 ]
 
 { #category : #'instance creation' }
@@ -91,7 +90,6 @@ IRInstruction class >> pushLiteralVariable: object [
 	^ IRPushLiteralVariable new
 		association: object;
 		yourself
-	 
 ]
 
 { #category : #'instance creation' }
@@ -162,7 +160,6 @@ IRInstruction class >> storeInstVar: index [
 	^ IRStoreInstVar new 
 		index: index; 
 		yourself
-	
 ]
 
 { #category : #'instance creation' }
@@ -186,7 +183,6 @@ IRInstruction class >> storeTemp: aName [
 	^ IRStoreTemp new
 		name: aName;
 		yourself
-
 ]
 
 { #category : #visiting }
@@ -243,20 +239,20 @@ IRInstruction >> delete [
 { #category : #testing }
 IRInstruction >> isBlockReturnTop [
 
-	^false 
+	^false
 ]
 
 { #category : #testing }
 IRInstruction >> isGoto [
 	"is unconditional jump"
 	
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
 IRInstruction >> isIf [
 
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -269,7 +265,7 @@ IRInstruction >> isInstVarAccess [
 IRInstruction >> isJump [
 	"goto or if"
 
-	^false 
+	^false
 ]
 
 { #category : #testing }
@@ -302,7 +298,7 @@ IRInstruction >> isRead [
 { #category : #testing }
 IRInstruction >> isReturn [
 
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -384,14 +380,12 @@ IRInstruction >> sourceInterval [
 IRInstruction >> sourceNode [
 
 	^ sourceNode
-	
 ]
 
 { #category : #mapping }
 IRInstruction >> sourceNode: parseNode [
 
 	sourceNode := parseNode
-	
 ]
 
 { #category : #accessing }

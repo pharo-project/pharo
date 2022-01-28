@@ -50,5 +50,4 @@ EmbeddedFreeTypeFontInstallerTest >> testinstallAllFontsIn [
 	self 
 		assert: (families includesKey: 'Source Sans Pro');
 		assert: (families includesKey: 'Source Code Pro').
-
 ]

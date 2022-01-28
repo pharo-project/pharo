@@ -72,8 +72,6 @@ FreeTypeFileInfoAbstract >> extractAttributesFromNames [
 	styleNameExtracted := styleNameExtracted trimBoth.
 	styleNameExtracted ifEmpty: [
 		styleNameExtracted := upright ifNil:['Regular']].
-		 
-	
 ]
 
 { #category : #accessing }
@@ -253,8 +251,6 @@ FreeTypeFileInfoAbstract >> styleNameWithItalicForcedToBe: aString [
 	answer := answer , ' ', aString.
 	answer := answer trimBoth.
 	^answer
-		 
-	
 ]
 
 { #category : #accessing }
@@ -268,8 +264,6 @@ FreeTypeFileInfoAbstract >> styleNameWithWeightForcedToBe: aString [
 		answer := answer , ' ', slant].
 	answer := answer trimBoth.
 	^answer
-		 
-	
 ]
 
 { #category : #accessing }
@@ -282,8 +276,6 @@ FreeTypeFileInfoAbstract >> styleNameWithWeightForcedToBe: aString italicForcedT
 	answer := answer , ' ', aString2.
 	answer := answer trimBoth.
 	^answer
-		 
-	
 ]
 
 { #category : #accessing }

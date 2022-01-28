@@ -57,7 +57,7 @@ RBChangeMethodNameTransformation >> implementorsCanBePrimitives [
 RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aClass [ 
 	| oldArgs |
 	oldArgs := parseTree arguments.
-	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each]) 
+	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
 ]
 
 { #category : #support }
@@ -122,7 +122,7 @@ RBChangeMethodNameTransformation >> removeRenamedImplementors [
 RBChangeMethodNameTransformation >> renameArgumentsIn: parseTree [
 	self renameMap do: [ :arg |
 		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
-	] 
+	]
 ]
 
 { #category : #support }

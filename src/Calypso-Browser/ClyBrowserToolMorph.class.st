@@ -262,7 +262,7 @@ ClyBrowserToolMorph >> browserContextWasChanged [
 
 { #category : #building }
 ClyBrowserToolMorph >> build [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #building }
@@ -417,7 +417,6 @@ ClyBrowserToolMorph >> initialize [
 		listDirection: #topToBottom;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill
-	
 ]
 
 { #category : #testing }
@@ -543,12 +542,10 @@ ClyBrowserToolMorph >> setUpDefaultIcon [
 
 { #category : #initialization }
 ClyBrowserToolMorph >> setUpModelFromContext [
-
 ]
 
 { #category : #initialization }
 ClyBrowserToolMorph >> setUpParametersFromModel [
-
 ]
 
 { #category : #accessing }

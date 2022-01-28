@@ -163,15 +163,6 @@ PragmaSetting >> fontButtonLabel [
 					ifAbsent: ['']) , ' ' , self realValue pointSize asString font: self realValue
 ]
 
-{ #category : #'user interface' }
-PragmaSetting >> getFont [
-	^ FontChooser
-		openWithWindowTitle: 'Font for ' , self name
-		for: self
-		setSelector: #realValue:
-		getSelector: #realValue 
-]
-
 { #category : #accessing }
 PragmaSetting >> hasDefault [
 	^ false

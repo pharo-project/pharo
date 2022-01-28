@@ -131,7 +131,6 @@ ByteString >> asByteArray [
 ByteString >> asOctetString [
 
 	^ self
-
 ]
 
 { #category : #accessing }
@@ -165,7 +164,6 @@ ByteString >> at: index put: aCharacter [
 		ifFalse: [self errorNonIntegerIndex].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ].
-
 ]
 
 { #category : #accessing }
@@ -252,5 +250,4 @@ ByteString >> replaceFrom: start to: stop with: replacement startingAt: repStart
 	]. 
 
 	super replaceFrom: start to: stop with: replacement startingAt: repStart.
-
 ]

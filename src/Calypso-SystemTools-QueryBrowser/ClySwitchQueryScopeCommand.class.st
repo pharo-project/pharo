@@ -21,21 +21,21 @@ Class {
 ClySwitchQueryScopeCommand class >> queryBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext 
+	^CmdContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
 ClySwitchQueryScopeCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 	
-	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup order: -5 for: ClyQueryBrowserContext 
+	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup order: -5 for: ClyQueryBrowserContext
 ]
 
 { #category : #'instance creation' }
 ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
 	^self new 
 		browser: aBrowser;
-		queryScope: anEnvironmentScope 
+		queryScope: anEnvironmentScope
 ]
 
 { #category : #'activation - toolbar support' }

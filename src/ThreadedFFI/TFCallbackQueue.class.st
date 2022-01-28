@@ -28,7 +28,7 @@ TFCallbackQueue class >> initialize [
 	self startUp: true
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : #'system startup' }
 TFCallbackQueue class >> shutDown: inANewImageSession [
 
 	inANewImageSession ifFalse: [ ^ self ].
@@ -36,7 +36,7 @@ TFCallbackQueue class >> shutDown: inANewImageSession [
 	UniqueInstance := nil
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : #'system startup' }
 TFCallbackQueue class >> startUp: inANewImageSession [
 
 	inANewImageSession ifFalse: [ ^ self ].

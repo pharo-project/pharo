@@ -17,14 +17,17 @@ EpDisabledIntegrationTest >> testDisableDuring [
 ]
 
 { #category : #tests }
-EpDisabledIntegrationTest >> testDisableDuringWithInteruption [
+EpDisabledIntegrationTest >> testDisableDuringWithInterruption [
+
 	monitor enable.
 	self assert: monitor isEnabled.
+	
 	[ monitor
 		disableDuring: [ self deny: monitor isEnabled.
 			self error ] ]
 		on: Error
 		do: [ "We just want to test the case with an error." ].
+		
 	self assert: monitor isEnabled
 ]
 
@@ -37,7 +40,6 @@ EpDisabledIntegrationTest >> testEnable [
 	classFactory newClass.
 
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 1.
-
 ]
 
 { #category : #tests }
@@ -47,7 +49,6 @@ EpDisabledIntegrationTest >> testIsEnabled [
 	self assert: monitor isEnabled.
 	monitor disable.
 	self deny: monitor isEnabled.
-
 ]
 
 { #category : #tests }

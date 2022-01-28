@@ -25,7 +25,7 @@ ChunkFileFormatParser class >> for: aReadStream [
 
 { #category : #accessing }
 ChunkFileFormatParser >> addDeclaration: aDeclaration [
-	parsedDeclarations	 add: aDeclaration 
+	parsedDeclarations	 add: aDeclaration
 ]
 
 { #category : #'class factory' }
@@ -127,7 +127,7 @@ ChunkFileFormatParser >> methodsForSelector: anObject [
 { #category : #parsing }
 ChunkFileFormatParser >> parseChunks [
 	[ readStream atEnd ] whileFalse: [ self parseNextDeclaration ].
-	^ parsedDeclarations 
+	^ parsedDeclarations
 ]
 
 { #category : #parsing }

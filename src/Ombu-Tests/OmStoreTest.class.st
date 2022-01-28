@@ -56,7 +56,6 @@ OmStoreTest >> tearDown [
 	store flush.
 	otherStore flush.
 	super tearDown
-
 ]
 
 { #category : #tests }
@@ -162,7 +161,6 @@ OmStoreTest >> testEntryReferences [
 			ifAbsent: [ self fail ] ].
 
 	self assert: entryReferences size equals: 7. "To be sure it tests something"
-
 ]
 
 { #category : #tests }

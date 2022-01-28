@@ -66,7 +66,6 @@ ScrollPane >> hideOrShowScrollBar [
 
 	(self vIsScrollbarNeeded not and: [ self isScrolledFromTop not ]) ifTrue: [self vHideScrollBar].
 	(self vIsScrollbarNeeded or: [ self isScrolledFromTop ]) ifTrue: [self vShowScrollBar].
-
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -119,7 +118,6 @@ ScrollPane >> mouseWheel: event [
 ScrollPane >> scrollBarThickness [
 	"Includes border"
 	^ self theme scrollbarThickness
-	
 ]
 
 { #category : #'*Polymorph-Widgets' }

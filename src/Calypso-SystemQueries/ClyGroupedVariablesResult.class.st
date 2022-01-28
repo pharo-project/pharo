@@ -49,7 +49,7 @@ Class {
 { #category : #'instance creation' }
 ClyGroupedVariablesResult class >> defaultHierarchy [
 
-	^ClySubclassHierarchy hierarchyForVariables 
+	^ClySubclassHierarchy hierarchyForVariables
 ]
 
 { #category : #testing }
@@ -60,7 +60,7 @@ ClyGroupedVariablesResult class >> isExpandedHierarchy [
 { #category : #'instance creation' }
 ClyGroupedVariablesResult class >> withDefaultHierarchy [
 
-	^self withHierarchy: self defaultHierarchy 
+	^self withHierarchy: self defaultHierarchy
 ]
 
 { #category : #'instance creation' }
@@ -85,12 +85,12 @@ ClyGroupedVariablesResult >> fillWith: variables [
 	| typedGroups |
 	typedGroups := self groupVariablesByTypeAndDefinition: variables.
 	
-	self fillWithGroupedVariables: typedGroups 
+	self fillWithGroupedVariables: typedGroups
 ]
 
 { #category : #building }
 ClyGroupedVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #building }

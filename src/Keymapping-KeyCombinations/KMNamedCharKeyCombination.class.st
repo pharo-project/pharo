@@ -47,7 +47,6 @@ KMNamedCharKeyCombination class >> space [
 	^ self
 		key: Character space
 		name: 'Space'
-		
 ]
 
 { #category : #accessing }

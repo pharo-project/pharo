@@ -66,7 +66,6 @@ RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMis
 			 'self assert: reader storedSettings first realValue equals: false.').
 
 	self assert: contextDictionary isNil
-		
 ]
 
 { #category : #tests }
@@ -123,7 +122,6 @@ RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	searcher matches: '{`.@stmts.}' do: [ :aNode :answer |  contextDictionary:= searcher context ].
 	contextDictionary := searcher executeTree: (self parseExpression:'{ (1@2) . Color red . 3 }').	
 	self assert: (contextDictionary at: (RBPatternVariableNode named: '`.@stmts')) size equals: 3
-
 ]
 
 { #category : #'test-argument' }
@@ -673,7 +671,6 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector [
 					executeTree: (self 	
 							parseExpression: 'self at: 1 put: 2; at: 2 ifAbsent: []; ifAbsent: 2 at: 1; at: 4; foo')
 					initialAnswer: 0) equals: 2
-	
 ]
 
 { #category : #'tests - selectors' }
@@ -826,4 +823,22 @@ RBParseTreeSearcherTest >> testWithoutAListDoesNotMatchComposedMessages [
 	searcher executeTree: (self parseExpression:
 			 'self assert: reader storedSettings first realValue equals: true.').
 	self assert: contextDictionary isNil
+]
+
+{ #category : #'tests - add search' }
+RBParseTreeSearcherTest >> testSimpleAddSearch [
+
+	| res |
+	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
+	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	self assert: res equals: #class
+]
+
+{ #category : #'tests - add search' }
+RBParseTreeSearcherTest >> testSimpleAddSearches [
+
+	| res |
+	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
+	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	self assert: res equals: #class
 ]

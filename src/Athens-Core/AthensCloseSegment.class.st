@@ -15,5 +15,4 @@ AthensCloseSegment >> accept: aVisitor [
 { #category : #visitor }
 AthensCloseSegment >> sendCommandTo: aBuilder [
 	^ aBuilder close
-	
 ]

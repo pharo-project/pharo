@@ -55,7 +55,6 @@ TIncludesTest >> testIdentityIncludesNonSpecificComportement [
 	
 	self deny: (collection identityIncludes: self elementNotIn).
 	self assert: (collection identityIncludes: collection anyOne)
-
 ]
 
 { #category : #'tests - includes' }

@@ -183,7 +183,6 @@ WatchTest >> testTimestamp [
 	]. 
 	
 	watchpoint uninstall.
-	
 ]
 
 { #category : #adding }

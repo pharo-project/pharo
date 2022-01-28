@@ -44,5 +44,5 @@ RFMethodOperation >> receiver: anObject [
 
 { #category : #evaluating }
 RFMethodOperation >> value [
-	^method valueWithReceiver: receiver arguments: arguments  
+	^method valueWithReceiver: receiver arguments: arguments
 ]

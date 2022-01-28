@@ -21,7 +21,6 @@ OSBackendWindow >> borderless [
 
 { #category : #accessing }
 OSBackendWindow >> borderless: aBoolean [
-	
 ]
 
 { #category : #accessing }
@@ -31,7 +30,7 @@ OSBackendWindow >> bounds [
 
 { #category : #accessing }
 OSBackendWindow >> bounds: newBounds [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'mouse capture' }
@@ -40,12 +39,12 @@ OSBackendWindow >> captureMouse [
 
 { #category : #accessing }
 OSBackendWindow >> clipboardText [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 OSBackendWindow >> clipboardText: aString [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -60,7 +59,7 @@ OSBackendWindow >> extent [
 
 { #category : #accessing }
 OSBackendWindow >> extent: newExtent [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -69,7 +68,7 @@ OSBackendWindow >> fullscreen: aBoolean [
 
 { #category : #accessing }
 OSBackendWindow >> hide [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -88,7 +87,7 @@ OSBackendWindow >> isTextInputActive [
 
 { #category : #testing }
 OSBackendWindow >> isValid [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #factory }
@@ -125,7 +124,7 @@ OSBackendWindow >> position [
 
 { #category : #accessing }
 OSBackendWindow >> position: newPosition [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -157,7 +156,6 @@ OSBackendWindow >> resizable [
 
 { #category : #accessing }
 OSBackendWindow >> resizable: aBoolean [
-	
 ]
 
 { #category : #accessing }
@@ -187,7 +185,7 @@ OSBackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 
 { #category : #accessing }
 OSBackendWindow >> show [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'text input' }
@@ -202,12 +200,12 @@ OSBackendWindow >> stopTextInput [
 
 { #category : #accessing }
 OSBackendWindow >> title [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 OSBackendWindow >> title: aTitle [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #events }

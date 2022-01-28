@@ -72,7 +72,7 @@ DateAndTime class >> basicYear: year month: month day: day hour: hour minute: mi
 DateAndTime class >> clock [ 
 	 "the provider of real time seconds/milliseconds."
 
-	^ ClockProvider 
+	^ ClockProvider
 ]
 
 { #category : #'system queries' }
@@ -80,14 +80,12 @@ DateAndTime class >> clockPrecision [
 	"One nanosecond precision"
 
 	^ Duration seconds: 0 nanoSeconds: 1
-
 ]
 
 { #category : #'instance creation queries' }
 DateAndTime class >> current [
 
 	^ self now
-
 ]
 
 { #category : #'instance creation queries' }
@@ -95,7 +93,6 @@ DateAndTime class >> epoch [
   "Answer a DateAndTime representing the epoch: 1 January 1901"
 
   ^ (self julianDayNumber: SqueakEpoch) offset: 0.
-  
 ]
 
 { #category : #'instance creation' }
@@ -146,7 +143,6 @@ DateAndTime class >> localOffset [
 	"Answer the duration we are offset from UTC"
 
 	^ self localTimeZone offset
-
 ]
 
 { #category : #'time zones' }
@@ -154,8 +150,6 @@ DateAndTime class >> localTimeZone [
 	"Answer the local time zone"
 
 	^ LocalTimeZoneCache ifNil: [ LocalTimeZoneCache := TimeZone default ]
-
-
 ]
 
 { #category : #'time zones' }
@@ -168,16 +162,12 @@ DateAndTime class >> localTimeZone: aTimeZone [
 	"
 
 	LocalTimeZoneCache := aTimeZone
-
-
-
 ]
 
 { #category : #'instance creation' }
 DateAndTime class >> midnight [
 
 	^ self now midnight
-
 ]
 
 { #category : #primitives }
@@ -190,8 +180,7 @@ DateAndTime class >> millisecondClockValue [
 DateAndTime class >> new [
 	"Answer a DateAndTime representing the epoch: 1 January 1901"
 
-	^ self epoch offset: self localOffset 
-	
+	^ self epoch offset: self localOffset
 ]
 
 { #category : #'instance creation' }
@@ -290,7 +279,6 @@ DateAndTime >> asDate [
 DateAndTime >> asDateAndTime [
 
 	^ self
-
 ]
 
 { #category : #converting }
@@ -298,7 +286,6 @@ DateAndTime >> asDuration [
 	"Answer the duration since midnight."
 
 	^ Duration seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
-
 ]
 
 { #category : #converting }
@@ -319,7 +306,6 @@ DateAndTime >> asUTC [
 	^ offset isZero
 		ifTrue: [ self ]
 		ifFalse: [ self offset: 0 ]
-
 ]
 
 { #category : #converting }
@@ -365,8 +351,6 @@ DateAndTime >> hasEqualTicks: aDateAndTime [
 	^ (self julianDayNumberUTC = aDateAndTime julianDayNumberUTC)
 		and: [ (seconds = aDateAndTime secondsSinceMidnightUTC)
 			and: [ nanos = aDateAndTime nanoSecond ] ]
-
-
 ]
 
 { #category : #comparing }
@@ -428,7 +412,6 @@ DateAndTime >> minute [
 DateAndTime >> nanoSecond [
 
 	^ nanos
-
 ]
 
 { #category : #initialization }
@@ -441,14 +424,12 @@ DateAndTime >> normalizeSecondsAndNanos [
 		ifTrue: [
 			julianDayNumber := julianDayNumber + (seconds // SecondsInDay).
 			seconds := seconds \\ SecondsInDay].
-
 ]
 
 { #category : #accessing }
 DateAndTime >> offset [
 
 	^ offset
-
 ]
 
 { #category : #accessing }
@@ -460,7 +441,6 @@ DateAndTime >> offset: anOffset [
 	^ self class basicNew 
 		ticks: self ticks offset: anOffset asDuration;
 		yourself
-		
 ]
 
 { #category : #printing }
@@ -470,7 +450,6 @@ DateAndTime >> printOn: aStream [
 		'YYYY-MM-DDThh:mm:ss.s+ZZ:zz:z' (for positive years) or '-YYYY-MM-DDThh:mm:ss.s+ZZ:zz:z' (for negative years)"
 
 	^self printOn: aStream withLeadingSpace: false
-
 ]
 
 { #category : #printing }

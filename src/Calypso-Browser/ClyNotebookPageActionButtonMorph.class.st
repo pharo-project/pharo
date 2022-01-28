@@ -81,5 +81,4 @@ ClyNotebookPageActionButtonMorph >> themeChanged [
 		passiveEnabledOverUpFillStyle: (self theme buttonMouseOverFillStyleFor: self);
 		activeEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self);
 		passiveEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self)
-	
 ]

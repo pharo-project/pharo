@@ -10,7 +10,7 @@ Class {
 { #category : #printing }
 ClyVariableWritersQuery >> description [
 
-	^'writers of ', self printVariables 
+	^'writers of ', self printVariables
 ]
 
 { #category : #testing }

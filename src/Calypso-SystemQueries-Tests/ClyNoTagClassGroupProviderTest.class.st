@@ -11,5 +11,5 @@ ClyNoTagClassGroupProviderTest >> groupProviderClass [
 
 { #category : #running }
 ClyNoTagClassGroupProviderTest >> packageSampleWhichHasGroup [
-	^ClyClass6UntaggedFromP5Mock package "P5WithTags" 
+	^ClyClass6UntaggedFromP5Mock package "P5WithTags"
 ]

@@ -104,5 +104,5 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVarInSharedPool [
 	self assert: (class parseTreeFor: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').	
 	self assert: (class parseTreeFor: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').	
 		self flag: 'TODO : fix in tranform class'
-"	self assert: (userClass parseTreeFor: #msg3) equals: (self parseMethod: 'msg3 ^ VarOne').	" 
+"	self assert: (userClass parseTreeFor: #msg3) equals: (self parseMethod: 'msg3 ^ VarOne').	"
 ]

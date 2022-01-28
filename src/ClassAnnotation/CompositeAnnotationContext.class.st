@@ -26,7 +26,7 @@ Class {
 { #category : #'instance creation' }
 CompositeAnnotationContext class >> with: contextCollection [
 	^self new 
-		parts: contextCollection 
+		parts: contextCollection
 ]
 
 { #category : #converting }

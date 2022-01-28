@@ -56,7 +56,6 @@ IndentingListItemMorph >> addChildrenForList: hostList addingTo: morphList withE
 		allowSorting: true
 		withExpandedItems: expandedItems
 		atLevel: indentLevel + 1.
-	
 ]
 
 { #category : #accessing }
@@ -239,7 +238,6 @@ IndentingListItemMorph >> drawToggleOn: aCanvas in: aRectangle [
 	^aCanvas 
 		translucentImage: aForm 
 		at: (aRectangle topLeft translateBy: 0 @ centeringOffset).
-
 ]
 
 { #category : #private }
@@ -291,8 +289,6 @@ IndentingListItemMorph >> highlight [
 
 	complexContents highlightingColor ifNotNil: [self color: complexContents highlightingColor].
 	self changed.
-	
-
 ]
 
 { #category : #accessing }
@@ -424,7 +420,6 @@ IndentingListItemMorph >> recursiveAddTo: aCollection [
 		firstChild withSiblingsDo: [ :aNode | aNode recursiveAddTo: aCollection].
 	].
 	aCollection add: self
-	
 ]
 
 { #category : #'private - container protocol' }
@@ -434,7 +429,6 @@ IndentingListItemMorph >> recursiveDelete [
 		firstChild withSiblingsDo: [ :aNode | aNode recursiveDelete].
 	].
 	self delete
-	
 ]
 
 { #category : #'private - container protocol' }
@@ -455,7 +449,6 @@ IndentingListItemMorph >> refreshExpandedState [
 		fromCollection: c 
 		allowSorting: true.
 	firstChild := newChildren first.
-
 ]
 
 { #category : #search }
@@ -489,16 +482,12 @@ IndentingListItemMorph >> toggleRectangle [
 IndentingListItemMorph >> unhighlight [
 	complexContents highlightingColor ifNotNil: [ self color: self theme textColor ].
 	self changed.
-	
-	
-
 ]
 
 { #category : #accessing }
 IndentingListItemMorph >> userString [
 	"Add leading tabs to my userString"
 	^ (String new: indentLevel withAll: Character tab), super userString
-
 ]
 
 { #category : #private }

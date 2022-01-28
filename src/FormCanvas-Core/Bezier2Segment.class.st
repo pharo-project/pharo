@@ -361,14 +361,12 @@ Bezier2Segment >> parameterAtExtreme: tangentDirection [
 Bezier2Segment >> parameterAtExtremeX [
 	"Note: Only valid for non-monoton receivers"
 	^self parameterAtExtreme: 0.0@1.0.
-
 ]
 
 { #category : #'vector functions' }
 Bezier2Segment >> parameterAtExtremeY [
 	"Note: Only valid for non-monoton receivers"
 	^self parameterAtExtreme: 1.0@0.0.
-
 ]
 
 { #category : #printing }
@@ -389,7 +387,6 @@ Bezier2Segment >> printOn: aStream [
 Bezier2Segment >> roundTo: quantum [
 	super roundTo: quantum.
 	via := via roundTo: quantum.
-
 ]
 
 { #category : #'vector functions' }

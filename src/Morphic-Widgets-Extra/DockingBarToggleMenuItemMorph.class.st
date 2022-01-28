@@ -100,7 +100,6 @@ DockingBarToggleMenuItemMorph >> mouseDown: evt [
 		ifFalse: [
 			evt hand newMouseFocus: owner. "Redirect to menu for valid transitions"
 			owner selectItem: self event: evt. ]
-
 ]
 
 { #category : #accessing }
@@ -111,8 +110,6 @@ DockingBarToggleMenuItemMorph >> mouseEnter: evt [
 	(owner selectedItem notNil
 				and: [owner selectedItem ~~ self])
 			ifTrue: [owner selectItem: self event: evt.].
-
-
 ]
 
 { #category : #accessing }
@@ -125,8 +122,7 @@ DockingBarToggleMenuItemMorph >> mouseUp: evt [
 		self refreshWorld.
 		(Delay forMilliseconds: 200) wait].
 	owner rootMenu selectItem: nil event: evt.
-	self invokeWithEvent: evt.		
-
+	self invokeWithEvent: evt.
 ]
 
 { #category : #accessing }
@@ -166,7 +162,6 @@ DockingBarToggleMenuItemMorph >> selectionBorderStyle [
 	"Answer the border style to use with the receiver is the selected element."
 	
 	^ self theme menuItemInDockingBarSelectedBorderStyleFor: self
-	
 ]
 
 { #category : #private }
@@ -174,7 +169,6 @@ DockingBarToggleMenuItemMorph >> selectionFillStyle [
 	"Answer the fill style to use with the receiver is the selected element."
 	
 	^self theme menuItemInDockingBarSelectedFillStyleFor: self
-		
 ]
 
 { #category : #accessing }
@@ -217,5 +211,4 @@ DockingBarToggleMenuItemMorph >> updateLayoutInDockingBar [
 { #category : #accessing }
 DockingBarToggleMenuItemMorph >> wantsRoundedCorners [
 	^self theme currentSettings preferRoundCorner
-		
 ]

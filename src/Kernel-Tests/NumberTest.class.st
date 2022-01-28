@@ -18,7 +18,6 @@ NumberTest >> testAsInteger [
 	"ensure we keep using truncated in asInteger"
 	self assert: 0.5 asInteger equals: 0.
 	self assert: (1/2) asInteger equals: 0
-	
 ]
 
 { #category : #tests }
@@ -46,7 +45,7 @@ NumberTest >> testIntegerPart [
 { #category : #tests }
 NumberTest >> testNew [
 
-	self should: [Number new] raise: self defaultTestError. 
+	self should: [Number new] raise: self defaultTestError.
 ]
 
 { #category : #tests }

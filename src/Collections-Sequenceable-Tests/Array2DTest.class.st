@@ -69,7 +69,6 @@ Array2DTest >> testAtColumn [
 
 	self assert: (matrix23 atColumn: 1) equals: #(11 12 13).
 	self assert: (matrix23 atColumn: 2) equals: #(21 22 23).
-	
 ]
 
 { #category : #'tests - accessing' }
@@ -108,7 +107,6 @@ Array2DTest >> testColumnVector [
 
 	self assert: m2 numberOfColumns equals: 1.
 	self assert: m2 numberOfRows equals: 0.
-	
 ]
 
 { #category : #'tests - accessing' }
@@ -141,7 +139,6 @@ Array2DTest >> testDiagonal [
 
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
-	
 ]
 
 { #category : #'tests - instance creation' }
@@ -165,7 +162,6 @@ Array2DTest >> testIdentityOtherTest [
 	self assert: (m at: 2 at:2) equals: 1.
 	self assert: (m at: 3 at:3) equals: 1.
 	self assert: (m occurrencesOf: 1) equals: 3.
-
 ]
 
 { #category : #'tests - testing' }
@@ -173,7 +169,6 @@ Array2DTest >> testIncludes [
 	self assert:
 			((1 to: 4)
 				allSatisfy: [:i | matrix1 includes: i])
-
 ]
 
 { #category : #'tests - arithmetic' }
@@ -208,7 +203,6 @@ Array2DTest >> testNewTabulate [
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
 	self assert: (m2 occurrencesOf: 1) equals: 0.
-	
 ]
 
 { #category : #'tests - instance creation' }
@@ -227,7 +221,6 @@ Array2DTest >> testOnes [
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
 	self assert: (m2 occurrencesOf: 1) equals: 0.
-	
 ]
 
 { #category : #'tests - accessing' }
@@ -256,14 +249,12 @@ Array2DTest >> testRowVector [
 
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 1.
-	
 ]
 
 { #category : #'tests - accessing' }
 Array2DTest >> testSquaredWithAllElement [
 
 	self assert: ((Array2D new: 3 element: -1) occurrencesOf: -1) equals: 9.
-
 ]
 
 { #category : #'tests - accessing' }
@@ -322,5 +313,4 @@ Array2DTest >> testzeros [
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
 	self assert: (m2 occurrencesOf: 0) equals: 0.
-	
 ]

@@ -60,5 +60,5 @@ AnnouncementDeliveryCondition >> conditionBlock: anObject [
 AnnouncementDeliveryCondition >> handlesAnnouncement: anAnnouncement [
 
 	^(announcementClass handlesAnnouncement: anAnnouncement)
-		and: [conditionBlock value: anAnnouncement ] 
+		and: [conditionBlock value: anAnnouncement ]
 ]

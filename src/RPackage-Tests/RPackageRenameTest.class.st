@@ -25,7 +25,7 @@ RPackageRenameTest >> tearDown [
 	self class environment at: #TestClass1 ifPresent: [ :class | class removeFromSystem ].
 	self class environment at: #TestClass2 ifPresent: [ :class | class removeFromSystem ].
 	self class environment at: #TestClass3 ifPresent: [ :class | class removeFromSystem ].
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
@@ -86,7 +86,6 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	workingCopy unload.	
 	self deny: (RPackageOrganizer default includesPackageNamed: #'Test1-Core').
 	self deny: (MCWorkingCopy hasPackageNamed: #'Test1-Core').
-
 ]
 
 { #category : #tests }
@@ -115,7 +114,6 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	workingCopy unload.	
 	self deny: (RPackageOrganizer default includesPackageNamed: #'Test1-Core').
 	self deny: (MCWorkingCopy hasPackageNamed: #'Test1-Core').
-
 ]
 
 { #category : #tests }
@@ -148,7 +146,6 @@ self deny: (RPackageOrganizer default includesPackageNamed: #TEST1).
 self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
 self deny: (RPackageOrganizer default includesPackageNamed: #Test1).
 self deny: (MCWorkingCopy hasPackageNamed: #Test1).]
-
 ]
 
 { #category : #tests }
@@ -173,5 +170,4 @@ RPackageRenameTest >> testUnregisterPackage [
 	
 	self deny: (RPackageOrganizer default includesPackageNamed: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1).
-	
 ]

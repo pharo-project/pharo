@@ -36,7 +36,6 @@ ClyProjectContentQuery >> checkEmptyResult [
 
 { #category : #execution }
 ClyProjectContentQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-
 ]
 
 { #category : #'system changes' }

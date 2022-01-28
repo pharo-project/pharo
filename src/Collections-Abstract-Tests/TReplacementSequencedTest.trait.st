@@ -37,7 +37,7 @@ TReplacementSequencedTest >> nonEmpty [
 TReplacementSequencedTest >> replacementCollection [
 	"Return a collection that will be put into 'nonEmpty'"
 	
-	^ self replacementCollectionSameSize, self 	replacementCollectionSameSize   
+	^ self replacementCollectionSameSize, self 	replacementCollectionSameSize
 ]
 
 { #category : #requirements }

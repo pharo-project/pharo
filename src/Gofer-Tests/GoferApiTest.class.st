@@ -101,7 +101,6 @@ GoferApiTest >> testHttpRepositoryOverrideStoredCredentials [
 		self assert: registry on: exampleServer hasUser: 'myusername' withPassword: 'mypassword'.
 	] ensure: [
 		registry removeCredentialsFor: exampleServer ].
-	
 ]
 
 { #category : #'tests - repositories' }
@@ -119,7 +118,6 @@ GoferApiTest >> testHttpRepositoryUseStoredCredentials [
 		self assert: gofer repositories first user equals: 'myusername'
 	] ensure: [
 		registry removeCredentialsFor: exampleServer ].
-	
 ]
 
 { #category : #tests }

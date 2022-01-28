@@ -33,7 +33,6 @@ Context >> findSecondToOldestSimilarSender [
 		context := lastContext.
 	].
 	^ secondContext
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -105,8 +104,6 @@ Context >> respondsToUnknownBytecode [
 	| unknownBytecode |
 	unknownBytecode := self compiledCode at: self pc.
 	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
-	
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -128,7 +125,6 @@ Context >> restart [
 	
 	thisContext terminateTo: self.
 	self jump.
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -203,7 +199,6 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	exception class == SimulationExceptionWrapper
 		ifTrue: [ ^ exception exception signal ].
 	^ exception
-	
 ]
 
 { #category : #'*Debugging-Core' }
@@ -314,7 +309,7 @@ Context >> stepToHome: aContext [
 				  error } ].
 
 		home == ctxt home ] whileFalse: [ 
-			home isDead ifTrue: [ 
+			(home isDead or: [ ctxt isDead ]) ifTrue: [ 
 				^ { 
 					  ctxt.
 					  nil } ] ].
@@ -413,13 +408,11 @@ Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
 	^self lookupTempVar: aName
-
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> temporaryVariables [
-	^self sourceNode temporaries collect: [ :each | each binding ] 
-
+	^self sourceNode temporaries collect: [ :each | each binding ]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -450,7 +443,7 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 
 { #category : #'*Debugging-Core' }
 Context >> unusedBytecode [
-	^ self respondsToUnknownBytecode 
+	^ self respondsToUnknownBytecode
 ]
 
 { #category : #'*Debugging-Core' }

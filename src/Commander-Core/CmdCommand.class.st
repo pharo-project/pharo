@@ -99,7 +99,7 @@ Class {
 
 { #category : #testing }
 CmdCommand class >> canBeExecutedInContext: aToolContext [
-	^true
+	^self isAbstract not
 ]
 
 { #category : #accessing }
@@ -122,7 +122,7 @@ CmdCommand class >> defaultMenuItemName [
 
 { #category : #testing }
 CmdCommand class >> isAbstract [
-	^self = CmdCommand 
+	^self = CmdCommand
 ]
 
 { #category : #execution }
@@ -176,7 +176,7 @@ CmdCommand >> description [
 
 { #category : #execution }
 CmdCommand >> execute [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }

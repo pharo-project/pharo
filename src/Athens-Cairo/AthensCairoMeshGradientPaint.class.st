@@ -23,13 +23,11 @@ AthensCairoMeshGradientPaint class >> createMeshGradientWithPatches: aListOfMesh
 { #category : #paints }
 AthensCairoMeshGradientPaint class >> primCreateMesh [
 	^ self ffiCall: #(AthensCairoMeshGradientPaint cairo_pattern_create_mesh () )
-
 ]
 
 { #category : #'mesh pattern commands' }
 AthensCairoMeshGradientPaint >> beginPatch [
 	^ self ffiCall:#( void cairo_mesh_pattern_begin_patch ( cairo_pattern_t  self ))
-		
 ]
 
 { #category : #accessing }
@@ -53,14 +51,11 @@ AthensCairoMeshGradientPaint >> curveViaX: x1 Y: y1 viaX: x2 Y: y2 toX: x3 Y: y3
                                                          double y2,
                                                          double x3,
                                                          double y3))
-
-
 ]
 
 { #category : #'mesh pattern commands' }
 AthensCairoMeshGradientPaint >> endPatch [
 	^ self ffiCall:#( void cairo_mesh_pattern_end_patch ( cairo_pattern_t  self ))
-		
 ]
 
 { #category : #'mesh pattern commands' }
@@ -71,7 +66,6 @@ AthensCairoMeshGradientPaint >> lineTo: aPoint [
 { #category : #'mesh pattern commands' }
 AthensCairoMeshGradientPaint >> lineToX: x Y: y [
 	^ self ffiCall:#( void cairo_mesh_pattern_line_to ( cairo_pattern_t self, double x, double y ))
-		
 ]
 
 { #category : #'mesh pattern commands' }
@@ -82,7 +76,6 @@ AthensCairoMeshGradientPaint >> moveTo: aPoint [
 { #category : #'mesh pattern commands' }
 AthensCairoMeshGradientPaint >> moveToX: x Y: y [
 	^ self ffiCall:#( void cairo_mesh_pattern_move_to ( cairo_pattern_t self, double x, double y ))
-		
 ]
 
 { #category : #private }
@@ -98,5 +91,4 @@ AthensCairoMeshGradientPaint >> setCorner: corner_num color: color [
 { #category : #'mesh pattern commands' }
 AthensCairoMeshGradientPaint >> setCorner: corner_num r: red g: green b: blue a: alpha [
 	^ self ffiCall:#( void cairo_mesh_pattern_set_corner_color_rgba ( cairo_pattern_t self, uint corner_num, 	double red, double green, double blue, double alpha ))
-		
 ]

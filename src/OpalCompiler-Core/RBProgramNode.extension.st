@@ -10,7 +10,6 @@ RBProgramNode >> asDoit [
 		body: self asSequenceNode transformLastToReturn.
 	methodNode source: methodNode formattedCode.
 	^methodNode
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -31,39 +30,38 @@ RBProgramNode >> asDoitForContext: aContext [
 
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asSequenceNode [
-	^RBSequenceNode statements: {self} 
+	^RBSequenceNode statements: {self}
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysis.
-	
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysisIn: aClass [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysisIn: aClass
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> irInstruction [
 	^ self methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> isClean [
 	^ self children allSatisfy: [ :child | child isClean ]
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> owningScope [
 
-	^ parent owningScope 
+	^ parent owningScope
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> scope [
 	^ self methodOrBlockNode scope
 ]

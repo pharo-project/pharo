@@ -18,17 +18,13 @@ WindowsStoreTest >> testAbsoluteFullName [
 	"Check round-trip conversion from String to FileReference back to String again."
 	#( 	'C:\'		'D:\'		'\'		'C:\tmp'		'D:\tmp'		'C:\tmp\xx'      ) 
 		do: [ :pathString | self assert: (filesystem referenceTo: pathString) fullName equals: pathString ].
-	
-	
-
 ]
 
 { #category : #testing }
 WindowsStoreTest >> testAbsolutePath [
 
 	#('c:\' 'C:\temp' 'A:\temp\test' '\test\bar' '\') do: [:each |
-		self assert: (WindowsStore current pathFromString: each) isAbsolute ] 
-	
+		self assert: (WindowsStore current pathFromString: each) isAbsolute ]
 ]
 
 { #category : #testing }
@@ -42,17 +38,13 @@ WindowsStoreTest >> testNetworkPathFullName [
 	"Check round-trip conversion from String to FileReference back to String again."
 	#( '\\MachineName.x.y.z\directory\file' '\\MachineName.x.y.z\directory' '\\MachineName.x.y.z' ) 
 		do: [ :pathString | self assert: (filesystem referenceTo: pathString) fullName equals: pathString ].
-	
-	
-
 ]
 
 { #category : #testing }
 WindowsStoreTest >> testNetworkPathIsAbsolute [
 
 		#( '\\MachineName.x.y.z\directory\file' '\\MachineName.x.y.z\directory' '\\MachineName.x.y.z' )  do: [:each |
-		self assert: (WindowsStore new pathFromString: each) isAbsolute ] 
-	
+		self assert: (WindowsStore new pathFromString: each) isAbsolute ]
 ]
 
 { #category : #testing }
@@ -93,6 +85,5 @@ WindowsStoreTest >> testRelativeFullName [
 WindowsStoreTest >> testRelativePath [
 
 	#('a' 'bin\foo' 'temp\test' 'C:temp\test') do: [:each |
-		self assert: (WindowsStore current pathFromString: each) isRelative ] 
-	
+		self assert: (WindowsStore current pathFromString: each) isRelative ]
 ]

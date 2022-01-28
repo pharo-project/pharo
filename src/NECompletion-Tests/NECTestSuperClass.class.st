@@ -13,7 +13,7 @@ Class {
 	#category : #'NECompletion-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 NECTestSuperClass class >> initialize [
 	SuperClassVar := Dictionary new
 ]
@@ -25,7 +25,7 @@ NECTestSuperClass >> initialize [
 
 { #category : #tests }
 NECTestSuperClass >> testIt: aString [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #utilities }

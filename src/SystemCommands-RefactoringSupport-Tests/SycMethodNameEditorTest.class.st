@@ -41,7 +41,8 @@ SycMethodNameEditorTest >> setUp [
 
 { #category : #running }
 SycMethodNameEditorTest >> tearDown [
-	methodNameEditor ifNotNil: [ :x | x application close ].
+
+	methodNameEditor ifNotNil: [ :x | x application closeAllWindows ].
 	super tearDown
 ]
 

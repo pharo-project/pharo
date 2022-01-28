@@ -126,7 +126,6 @@ ZipConstants class >> initializeDeflateConstants [
 	HashBits := 15.
 	HashMask := (1 << HashBits) - 1.
 	HashShift := (HashBits + MinMatch - 1) // MinMatch
-
 ]
 
 { #category : #'private - initialization' }
@@ -147,7 +146,6 @@ ZipConstants class >> initializeDistanceCodes [
 		1 to: (1 bitShift: (ExtraDistanceBits at: code)-7) do:[:n|
 			dist := dist + 1.
 			DistanceCodes at: 256 + dist put: code-1]].
-
 ]
 
 { #category : #'private - initialization' }
@@ -160,7 +158,6 @@ ZipConstants class >> initializeExtraBits [
 		WordArray withAll: #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 3 7).
 	BitLengthOrder :=
 		WordArray withAll: #(16 17 18 0 8 7 9 6 10 5 11 4 12 3 13 2 14 1 15)
-
 ]
 
 { #category : #'private - initialization' }
@@ -200,7 +197,6 @@ ZipConstants class >> initializeLengthCodes [
 		1 to: (1 bitShift: (ExtraLengthBits at: code)) do:[:n|
 			length := length + 1.
 			MatchLengthCodes at: length put: NumLiterals + code]].
-
 ]
 
 { #category : #'private - initialization' }
@@ -229,5 +225,4 @@ ZipConstants class >> initializeWriteStreamConstants [
 		initializeLengthCodes;
 		initializeDistanceCodes;
 		initializeFixedTrees
-
 ]

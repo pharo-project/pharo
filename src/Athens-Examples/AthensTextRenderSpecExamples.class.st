@@ -14,7 +14,7 @@ AthensTextRenderSpecExamples class >> testSpecWindow [
 	presenter := SpTextPresenter new
 		text: self testText;
 		yourself.
-	window := presenter openWithSpec.
+	window := presenter open.
 
 	presenter withWindowDo: [ :w | w title: 'A fancy looking title text' ].
 
@@ -36,6 +36,4 @@ AthensTextRenderSpecExamples class >> testWindowRender [
 	].
 
 	surf asMorph openInWindow
-
-
 ]

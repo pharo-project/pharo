@@ -609,7 +609,7 @@ RBRefactoryTestDataApp >> usesAdd [
 
 { #category : #lint }
 RBRefactoryTestDataApp >> variableAssignedLiteral [
-	temporaryVariable := #() 
+	temporaryVariable := #()
 ]
 
 { #category : #lint }

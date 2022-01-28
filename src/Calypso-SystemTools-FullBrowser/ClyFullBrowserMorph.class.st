@@ -239,7 +239,7 @@ ClyFullBrowserMorph >> chooseClassesForNewMethod: aMethod [
 
 { #category : #'accessing - selection' }
 ClyFullBrowserMorph >> classGroupSelection [
-	^packageView selection asSelectedItemsOf: ClyClassGroup 
+	^packageView selection asSelectedItemsOf: ClyClassGroup
 ]
 
 { #category : #accessing }
@@ -279,7 +279,6 @@ ClyFullBrowserMorph >> classView [
 ClyFullBrowserMorph >> compileANewClassFrom: aString notifying: aController startingFrom: aClass [
 	
 	^ self system compileANewClassFrom: aString notifying: aController startingFrom: aClass
-
 ]
 
 { #category : #'accessing - context' }
@@ -305,7 +304,6 @@ ClyFullBrowserMorph >> defaultClassScopeForMethods [
 	selectedClassScope := self classSelection asItemsScope: metaLevelScope.
 	
 	^self extendClassScopeForMethods: selectedClassScope
-	
 ]
 
 { #category : #navigation }
@@ -389,12 +387,12 @@ ClyFullBrowserMorph >> isScopedModeEnabled [
 
 { #category : #accessing }
 ClyFullBrowserMorph >> metaLevelScope [
-	^metaLevelScope 
+	^metaLevelScope
 ]
 
 { #category : #accessing }
 ClyFullBrowserMorph >> metaLevelScope: aMetaLevelScopeClass [
-	metaLevelScope := aMetaLevelScopeClass 
+	metaLevelScope := aMetaLevelScopeClass
 ]
 
 { #category : #accessing }
@@ -477,7 +475,7 @@ ClyFullBrowserMorph >> newClassView [
 			self specifyClassItemNameOn: cell label for: item browserItem];
 		enableFilter;
 		enableCollapsingOfPreexpandedItems;
-		requestNavigationBy: #classSelectionChanged	
+		requestNavigationBy: #classSelectionChanged
 ]
 
 { #category : #initialization }
@@ -541,7 +539,7 @@ ClyFullBrowserMorph >> packageSelection [
 { #category : #'accessing - selection' }
 ClyFullBrowserMorph >> packageSelectionChanged [
 	
-	self switchToFlatClasses 
+	self switchToFlatClasses
 ]
 
 { #category : #'accessing - view' }
@@ -862,7 +860,6 @@ ClyFullBrowserMorph >> switchToPackages [
 { #category : #navigation }
 ClyFullBrowserMorph >> switchToProjects [
 	packageView showQuery: (systemScope projectQueryFor: self systemScope).
-
 ]
 
 { #category : #navigation }

@@ -11,5 +11,4 @@ EpRenameInstanceVariableRefactoring >> summaryOn: aWriteStream [
 		print: newName;
 		nextPutAll: ' in ';		
 		nextPutAll: affectedClassName.
-
 ]

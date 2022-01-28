@@ -40,7 +40,6 @@ Class {
 { #category : #accessing }
 HelpBrowser class >> defaultHelpBrowser [
 	^ DefaultHelpBrowser ifNil: [DefaultHelpBrowser := self]
-	
 ]
 
 { #category : #accessing }
@@ -48,7 +47,6 @@ HelpBrowser class >> defaultHelpBrowser: aClass [
 	"Use a new help browser implementation"
 	
 	DefaultHelpBrowser := aClass
-	
 ]
 
 { #category : #'world menu' }
@@ -60,7 +58,7 @@ HelpBrowser class >> menuCommandOn: aBuilder [
 		action: [ self open ];
 		iconName: #smallHelpIcon;
 		help: 'Explore a list of help topics to learn to use Pharo tools.';
-		withSeparatorAfter 
+		withSeparatorAfter
 ]
 
 { #category : #ui }
@@ -81,7 +79,6 @@ HelpBrowser class >> menuOn: aBuilder [
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
-
 ]
 
 { #category : #'instance creation' }
@@ -185,13 +182,11 @@ HelpBrowser >> initWindow [
 HelpBrowser >> initialize [ 
 	super initialize. 
 	self initWindow.
- 
 ]
 
 { #category : #ui }
 HelpBrowser >> menu [
 	^ (PragmaMenuBuilder pragmaKeyword: #HelpBrowserContextMenu model: self) menu.
-
 ]
 
 { #category : #actions }
@@ -211,7 +206,6 @@ HelpBrowser >> open [
 
 	self refresh.	
 	window openInWorld.
-	 
 ]
 
 { #category : #actions }
@@ -238,7 +232,7 @@ HelpBrowser >> rootTopic [
 HelpBrowser >> rootTopic: aHelpTopic [
 
 	rootTopic := aHelpTopic. 
-	self refresh 
+	self refresh
 ]
 
 { #category : #actions }

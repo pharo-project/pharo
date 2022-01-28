@@ -25,6 +25,20 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 ]
 
 { #category : #tests }
+BehaviorTest >> testAllInstVarNames [
+
+	self assert: Point allInstVarNames equals: #( x y ).
+	"superclass ivars are first"
+	self assert: Association allInstVarNames equals: #( key value ).
+	"For now, allInstVarNames is implemented by returning all slot names. This has the be improved 
+	later: for ST80 compatibilty, we should have allInstVarNames just returning the indexed slots, 
+	while allInstanceVariableNames should return all"
+	self assert:
+		(SystemNavigation new allBehaviors allSatisfy: [ :behavior | 
+			 behavior allInstVarNames size = behavior allSlots size ])
+]
+
+{ #category : #tests }
 BehaviorTest >> testAllMethods [
 	| allMethods nonOverridenMethods |
 	allMethods := IdentitySet new
@@ -55,7 +69,6 @@ BehaviorTest >> testAllSelectorsAbove [
 	self deny: (sels includes: #weekday).
 	self assert: (sels includes: #at:).
 	self assert: (sels includes: #cannotInterpret: )
-	
 ]
 
 { #category : #tests }
@@ -67,7 +80,6 @@ BehaviorTest >> testAllSelectorsAboveUntil [
 	self deny: (sels includes: #weekday).
 	self assert: (sels includes: #at:).
 	self deny: (sels includes: #cannotInterpret: )
-	
 ]
 
 { #category : #tests }
@@ -75,7 +87,6 @@ BehaviorTest >> testBehaviornewnewShouldNotCrash [
 
 	Behavior new new.
 	"still not working correctly but at least does not crash the image"
-	
 ]
 
 { #category : #tests }
@@ -111,8 +122,6 @@ BehaviorTest >> testHasAbstractMethods [
 	self assert: ObjectLayout hasAbstractMethods.
 	"ObjectLayout defines methods because its class side contains abstract methods"
 	self assert: ObjectLayout class hasAbstractMethods.
-	
-	
 ]
 
 { #category : #'tests - properties' }
@@ -172,7 +181,6 @@ BehaviorTest >> testIsRootInEnvironment [
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
 	self assert: Object class isUsed
-
 ]
 
 { #category : #'tests - queries' }
@@ -251,7 +259,6 @@ BehaviorTest >> testallMethodsAccessingSlot [
 
 	methods := LookupKey allMethodsAccessingSlot: (LookupKey slotNamed: #key).
 	self assert: (methods includes: (Association >>#key:value:))
-
 ]
 
 { #category : #'tests - queries' }
@@ -262,7 +269,6 @@ BehaviorTest >> testallMethodsReadingSlot [
 
 	methods := LookupKey allMethodsReadingSlot: (LookupKey slotNamed: #key).
 	self assert: (methods includes: (Ephemeron >>#mourn))
-
 ]
 
 { #category : #'tests - queries' }
@@ -274,7 +280,6 @@ BehaviorTest >> testallMethodsWritingSlot [
 
 	methods := LookupKey allMethodsWritingSlot: (LookupKey slotNamed: #key).
 	self assert: (methods includes: (Association >>#key:value:))
-
 ]
 
 { #category : #tests }
@@ -285,14 +290,14 @@ BehaviorTest >> testallSuperclassesIncluding [
 	self deny: (cls includes: ArrayedCollection).
 	self deny: (cls includes: Object). 
 	self assert: (cls includes: Collection). 
-	self assert: (cls includes: SequenceableCollection). 
+	self assert: (cls includes: SequenceableCollection).
 ]
 
 { #category : #tests }
 BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
 	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method'). 
-	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method') 
+	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method')
 ]
 
 { #category : #'tests - queries' }
@@ -307,4 +312,18 @@ BehaviorTest >> testthoroughWhichMethodsReferTo [
 	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
 	"and we are false for non existing symbols"
 	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testthoroughWhichMethodsReferToSpecialIndex [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty.
 ]

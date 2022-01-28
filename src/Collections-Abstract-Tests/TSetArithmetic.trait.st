@@ -133,7 +133,6 @@ TSetArithmetic >> testIntersectionItself [
 	self assert: result size equals: self collectionWithoutEqualElements size.
 	self collectionWithoutEqualElements do: [ :each|
 		self assert: (result includes: each) ].
-	
 ]
 
 { #category : #'tests - set arithmetic' }

@@ -41,8 +41,7 @@ AthensCubicSegment >> isCubic [
 
 { #category : #visitor }
 AthensCubicSegment >> sendCommandTo: aBuilder [
-	^ aBuilder curveVia: via1 and: via2  to: to 
-	
+	^ aBuilder curveVia: via1 and: via2  to: to
 ]
 
 { #category : #accessing }

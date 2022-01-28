@@ -44,8 +44,7 @@ RGBehavior >> includesLocalSelector: aSymbol [
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> includesMethodsAffectedBy: aSystemAnnouncement [
-	^aSystemAnnouncement affectsMethodsDefinedInClass: self 
-
+	^aSystemAnnouncement affectsMethodsDefinedInClass: self
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -118,7 +117,7 @@ RGBehavior >> sourceCodeAt: aSymbol [
 	| method |
 	method :=  self localMethodNamed: aSymbol 
 						 ifAbsent: [ self error: 'Selector #', aSymbol asString, ' not found in RGClass "', self name, '"' ].
-	^ method sourceCode 
+	^ method sourceCode
 ]
 
 { #category : #'*Calypso-Ring' }

@@ -23,7 +23,6 @@ FT2Handle class >> startUp: isImageStarting [
 	FTCharMapRec compileFields.
 	FTGlyphSlotRec compileFields.
 	FTFaceRec compileFields.
-
 ]
 
 { #category : #initialization }

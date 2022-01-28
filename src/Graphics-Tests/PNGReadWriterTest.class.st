@@ -269,7 +269,6 @@ PNGReadWriterTest >> encodeAndDecodeColor: aColor depth: aDepth [
 	aForm fillColor: aColor.
 	self encodeAndDecode: aForm.
 	self deleteFile.
-
 ]
 
 { #category : #helpers }
@@ -348,7 +347,6 @@ PNGReadWriterTest >> encodeAndDecodeStream: file [
 	aForm ifNil:[^self error: 'nil form' ].
 	aForm display.
 	self encodeAndDecode: aForm.
-
 ]
 
 { #category : #helpers }
@@ -372,7 +370,6 @@ PNGReadWriterTest >> encodeAndDecodeWithColors: aColorForm [
 		colors nextPut: (indexedColors atRandom: myRandom).
 	].
 	self deleteFile.
-
 ]
 
 { #category : #helpers }
@@ -611,7 +608,6 @@ PNGReadWriterTest >> testNewFromSampleBytes [
 	png := PNGReadWriter on: sampleBytes readStream.
 	form := png nextImage.
 	self assert: Form equals: form class.
-
 ]
 
 { #category : #'tests - decoding' }

@@ -19,7 +19,6 @@ BuilderManifestTest >> setUp [
 			cl
 				removeFromChanges;
 				removeFromSystem ].
-
 ]
 
 { #category : #running }
@@ -98,7 +97,6 @@ BuilderManifestTest >> testAddClass [
 	manifestBuilder removeRejectClass: MFClassA.	.
 
 	self deny: ((manifestBuilder rejectClasses) anySatisfy: [:each| each = MFClassA]).
-	
 ]
 
 { #category : #tests }
@@ -124,7 +122,6 @@ BuilderManifestTest >> testAddFalsePositive [
 	
 	self deny: ((manifestBuilder falsePositiveOf: 'test' version: 0) anySatisfy: [:each| each = cl]).
 	self deny: ((manifestBuilder falsePositiveOf: 'test'version: 0) anySatisfy: [:each| each = mth]).
-
 ]
 
 { #category : #tests }
@@ -143,7 +140,6 @@ BuilderManifestTest >> testAddRule [
 	manifestBuilder removeRejectRule: 0.	
 
 	self deny: ((manifestBuilder rejectRules) anySatisfy: [:each| each = 0]).
-	
 ]
 
 { #category : #tests }
@@ -169,7 +165,6 @@ BuilderManifestTest >> testAddToDo [
 	
 	self deny: ((manifestBuilder toDoOf: 'test' version: 0) anySatisfy: [:each| each = cl]).
 	self deny: ((manifestBuilder toDoOf: 'test' version: 0) anySatisfy: [:each| each = mth]).
-	
 ]
 
 { #category : #tests }
@@ -217,9 +212,6 @@ BuilderManifestTest >> testContainsFalsePositive [
 	
 	self assert: (manifestBuilder containsFalsePositive: MFClassA onRule: 'test' version: 0).
 	self deny: (manifestBuilder containsFalsePositive: MFClassB onRule: 'test' version: 0).
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -235,9 +227,6 @@ BuilderManifestTest >> testContainsToDo [
 	
 	self assert: (manifestBuilder containsToDo: MFClassA onRule: 'test' version: 0).
 	self deny: (manifestBuilder containsToDo: MFClassB onRule: 'test' version: 0).
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -287,10 +276,6 @@ BuilderManifestTest >> testDateOfFalsePositive [
 	
 	self assert: (manifestBuilder dateOfFalsePositive: MFClassA onRule: 'test' version: 0) >= date1 .
 	self assert: (manifestBuilder dateOfFalsePositive: MFClassA onRule: 'test' version: 0) <= date2 .
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -308,10 +293,6 @@ BuilderManifestTest >> testDateOfToDo [
 	
 	self assert: (manifestBuilder dateOfToDo: MFClassA onRule: 'test' version: 0) >= date1 .
 	self assert: (manifestBuilder dateOfToDo: MFClassA onRule: 'test' version: 0) <= date2 .
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -322,7 +303,6 @@ BuilderManifestTest >> testInstallFalsePositive [
 	manifestBuilder installFalsePositiveOf: 'test' version: 0.
 	self assert: (manifestBuilder hasFalsePositiveOf: 'test' version: 0).
 	self assert: (manifestBuilder falsePositiveOf: 'test' version: 0) notNil.
-
 ]
 
 { #category : #tests }
@@ -334,7 +314,6 @@ BuilderManifestTest >> testInstallToDo [
 	manifestBuilder installToDoOf: 'test' version: 0.
 	self assert: (manifestBuilder hasToDoOf: 'test' version: 0).
 	self assert: (manifestBuilder toDoOf: 'test' version: 0) notNil.
-	
 ]
 
 { #category : #tests }
@@ -369,8 +348,6 @@ BuilderManifestTest >> testIsFalsePositive [
 	manifestBuilder installFalsePositiveOf: 'test' version: 0.
 	manifestBuilder addFalsePositive:  mth of: 'test' version: 0.
 	self assert: (manifestBuilder isFalsePositive: mth onRule: 'test' version:0 ).
-	
-	
 ]
 
 { #category : #tests }

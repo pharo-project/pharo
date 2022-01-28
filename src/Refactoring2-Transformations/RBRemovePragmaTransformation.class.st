@@ -4,7 +4,7 @@ I am responsible for removing a pragma definition in a method. In this implement
 Usage:
 | transformation |
 transformation := (RBRemovePragmaTransformation
-				pragma: '<gtInspectorPresentationOrder: 34>'
+				pragma: '<pragmaForTesting: 34>'
 				inMethod: #methodBefore
 				inClass: #RBRemovePragmaTransformationTest)
 				transform.

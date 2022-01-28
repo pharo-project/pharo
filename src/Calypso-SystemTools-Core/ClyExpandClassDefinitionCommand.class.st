@@ -10,11 +10,18 @@ ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
    ^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyClassDefinitionContext
 ]
 
+{ #category : #activation }
+ClyExpandClassDefinitionCommand class >> sourceCodeShortcutActivation [
+   <classAnnotation>
+
+   ^CmdShortcutActivation by: $e meta for: ClyClassDefinitionContext
+]
+
 { #category : #accessing }
 ClyExpandClassDefinitionCommand >> applyResultInContext: aToolContext [
 
-	super applyResultInContext: aToolContext.
-	aToolContext tool pendingText: targetClass expandedDefinitionString
+	super applyResultInContext: aToolContext. 
+	aToolContext tool pendingText: aToolContext tool editingClass expandedDefinitionString
 ]
 
 { #category : #accessing }

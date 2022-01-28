@@ -28,7 +28,6 @@ AthensBezier3Scene >> curvePathBlock [
 			moveTo: pt1;
 			curveVia: pt2 and: pt3 to: pt4
 	 ]
-
 ]
 
 { #category : #initialization }
@@ -38,7 +37,6 @@ AthensBezier3Scene >> initFromArray: aControlPointsArray [
 		pt2 := aControlPointsArray at: 2.
 		pt3 := aControlPointsArray at: 3.
 		pt4 := aControlPointsArray at: 4
-
 ]
 
 { #category : #rendering }

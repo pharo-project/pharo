@@ -28,7 +28,6 @@ NullWorldRenderer >> actualScreenSize [
 
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
-
 ]
 
 { #category : #utilities }
@@ -57,7 +56,6 @@ NullWorldRenderer >> drawDuring: aBlock [
 NullWorldRenderer >> forceDamageToScreen: allDamage [
 
 	"Do Nothing"
-	
 ]
 
 { #category : #accessing }
@@ -72,13 +70,12 @@ NullWorldRenderer >> updateDamage: rectangles [
 	"Do nothing"
 ]
 
+{ #category : #events }
+NullWorldRenderer >> updateToNewResolution [
+]
+
 { #category : #accessing }
 NullWorldRenderer >> windowTitle: aString [
 
 	"I am a dummy implementation"
-]
-
-{ #category : #events }
-NullWorldRenderer >> updateToNewResolution [
-
 ]

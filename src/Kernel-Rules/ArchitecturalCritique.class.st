@@ -16,12 +16,11 @@ ArchitecturalCritique >> actions [
 			action: [ :crit :package |
 				self openDependencyAnalyzerOn: package ];
 			yourself)
-				
 ]
 
 { #category : #actions }
 ArchitecturalCritique >> openDependencyAnalyzerOn: package [
 
-	^ (DAPackageAnalyzerPackageDependenciesWindow
+	^ (DAPackageDependenciesPresenter
 			onPackagesNamed: {package packageName}) open
 ]

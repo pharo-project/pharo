@@ -9,8 +9,7 @@ Class {
 
 { #category : #accessing }
 HelpTopicListItemWrapperTest >> defaultTestClass [ 
-	^HelpTopicListItemWrapper 
-	
+	^HelpTopicListItemWrapper
 ]
 
 { #category : #testing }

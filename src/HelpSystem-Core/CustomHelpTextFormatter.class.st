@@ -9,7 +9,6 @@ CustomHelpTextFormatter >> bold: aString [
 	"Return Text object with bold emphasis."
 	aString ifEmpty: [ self errorEmptyString ].
 	^ aString asText addAttribute: TextEmphasis bold from: 1 to: aString size.
-
 ]
 
 { #category : #formatting }
@@ -18,7 +17,6 @@ CustomHelpTextFormatter >> doItFrom: aString [
 	that executes aString; aString should also be a Smalltalk script that is possible to evaluate."
 	
 	^self doItFrom: aString text: aString
-
 ]
 
 { #category : #formatting }
@@ -36,7 +34,6 @@ CustomHelpTextFormatter >> doItFrom: aString text: textString [
 			from: 1 to: textString size;
 		addAttribute: (TextColor new color: color) from: 1 to: textString size;
 		yourself
-
 ]
 
 { #category : #formatting }
@@ -54,7 +51,6 @@ CustomHelpTextFormatter >> heading: aString [
 		addAttribute: TextEmphasis bold from: 1 to: aString size;
 		addAttribute: (TextColor new color: color) from: 1 to: aString size;
 		yourself
-
 ]
 
 { #category : #formatting }
@@ -73,7 +69,6 @@ CustomHelpTextFormatter >> heading: aString withSubtitle: aSubtitleString [
 		addAttribute: (TextColor new color: color) from: 1 to: aString size;
 		addAttribute: (TextColor new color: color) from: aString size+1 to: aString size+1+aSubtitleString size;
 		yourself
-
 ]
 
 { #category : #'instance creation' }
@@ -128,7 +123,6 @@ CustomHelpTextFormatter >> sourceCode: aSourceCode [
 	^ text
 		addAttribute: (TextFontReference toFont: font) from: 3 to: text size - 1;
 		yourself
-
 ]
 
 { #category : #formatting }
@@ -146,7 +140,6 @@ CustomHelpTextFormatter >> subheading: aString [
 		addAttribute: TextEmphasis bold from: 1 to: text size - 1;
 		addAttribute: (TextColor new color: color) from: 1 to: text size - 1;
 		yourself
-
 ]
 
 { #category : #formatting }
@@ -164,7 +157,6 @@ CustomHelpTextFormatter >> subsubheading: aString [
 		addAttribute: TextEmphasis bold from: 1 to: text size - 1;
 		addAttribute: (TextColor new color: color) from: 1 to: text size - 1;
 		yourself
-
 ]
 
 { #category : #formatting }
@@ -173,7 +165,6 @@ CustomHelpTextFormatter >> underlined: aString [
 	aString ifEmpty: [ self errorEmptyString ].
 	
 	^ aString asText addAttribute: TextEmphasis underlined from: 1 to: aString size.
-
 ]
 
 { #category : #formatting }
@@ -189,5 +180,4 @@ CustomHelpTextFormatter >> url: aString [
 		addAttribute: (	TextAction new actOnClickBlock: clickBlock);
 		addAttribute: (TextColor new color: self theme urlColor);
 		yourself
-
 ]

@@ -206,7 +206,6 @@ ProtoObjectTest >> testNextObject [
 	"Small Floats are only available in 64 bits VMs"	
 	Smalltalk vm hasSmallFloats 
 		ifTrue: [self should: [3.14 nextObject notNil] raise: ShouldNotImplement].
-
 ]
 
 { #category : #'tests - testing' }

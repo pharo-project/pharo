@@ -10,8 +10,8 @@ Class {
 { #category : #tests }
 HashTesterTest >> testBasicBehaviour [
 
-	self 
+	self
 		assert: ((HashTester with: 1) resultFor: 100);
 		assert: ((HashTester with: 'fred') resultFor: 100);
-		deny: ((HashTester with: BadHasher new) resultFor: 100) 
+		deny: ((HashTester with: BadHasher new) resultFor: 100)
 ]

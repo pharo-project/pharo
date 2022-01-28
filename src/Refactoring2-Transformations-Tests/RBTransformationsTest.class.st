@@ -232,7 +232,6 @@ RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 	newClass := transformation model classNamed: self changeMock name asSymbol.
 	self deny: (oldClass directlyDefinesInstanceVariable: 'asdf').
 	self assert: (newClass directlyDefinesInstanceVariable: 'asdf').
-	
 ]
 
 { #category : #tests }

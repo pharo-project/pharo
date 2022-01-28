@@ -20,9 +20,6 @@ AthensPathSegmentConverter >> convert: aPath [
 	contourStartPt := endPoint := 0@0.
 	
 	aPath sendCommandsTo: self.
-	
-	
-	
 ]
 
 { #category : #accessing }

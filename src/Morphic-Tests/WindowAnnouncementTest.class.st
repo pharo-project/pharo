@@ -11,7 +11,6 @@ Class {
 WindowAnnouncementTest >> tearDown [ 
 	window ifNotNil: [ window delete ].
 	super tearDown.
-
 ]
 
 { #category : #'tests - window change' }

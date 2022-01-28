@@ -20,11 +20,9 @@ OmStoreFactory class >> current [
 	^ current ifNil: [ current := self new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OmStoreFactory class >> initialize [
-	"
-	self initialize
-	"
+	
 	SessionManager default registerSystemClassNamed: self name
 ]
 
@@ -68,7 +66,6 @@ OmStoreFactory >> initialize [
 	super initialize.
 	
 	storeByPath := WeakValueDictionary new.
-
 ]
 
 { #category : #accessing }
@@ -90,7 +87,6 @@ OmStoreFactory >> named: aGlobalName inDirectory: aDirectory [
 			newStore := self newStoreNamed: aGlobalName in: aDirectory.
 			storeByPath at: fileReference fullName put: newStore.
 			newStore ]
-
 ]
 
 { #category : #private }

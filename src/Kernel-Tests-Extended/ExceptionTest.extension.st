@@ -7,5 +7,5 @@ ExceptionTest >> testSimpleRetry [
 
 { #category : #'*Kernel-Tests-Extended' }
 ExceptionTest >> testSimpleRetryUsing [
-	self assertSuccess: (ExceptionTester new runTest: #simpleRetryUsingTest) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleRetryUsingTest)
 ]

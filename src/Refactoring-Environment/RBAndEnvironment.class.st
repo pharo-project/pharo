@@ -106,7 +106,6 @@ RBAndEnvironment >> selectionIntervalFor: aString [
 	interval := super selectionIntervalFor: aString.
 	interval ifNotNil: [^interval].
 	^ self andedEnvironment selectionIntervalFor: aString
-
 ]
 
 { #category : #accessing }

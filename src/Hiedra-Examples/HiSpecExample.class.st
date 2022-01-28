@@ -33,13 +33,12 @@ HiSpecExample class >> openExample: selector [
 
 	^ self new
 		commits: commits;
-		openWithSpec;
+		open;
 		withWindowDo: [ :window |
 			window
 				extent: 600 @ 800;
 				title: ('Hiedra in Spec2 with Roassal3 - {1} - {2} elements' format: {selector. commits size}) ];
 		yourself.
-
 ]
 
 { #category : #windows }
@@ -90,7 +89,6 @@ HiSpecExample >> initializeActionBar [
 		add: inspectButton;
 		add: refreshButton;
 		yourself.
-
 ]
 
 { #category : #initialization }

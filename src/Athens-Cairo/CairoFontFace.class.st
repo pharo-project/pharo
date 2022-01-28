@@ -14,17 +14,23 @@ Class {
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [
 		'AthensCairoDefinitions',
-		'FT2Constants'
+		'AthensFT2Constants'
 	],
 	#category : #'Athens-Cairo-Text'
 }
+
+{ #category : #private }
+CairoFontFace class >> boldEmphasisCode [
+
+	^ 1
+]
 
 { #category : #finalizing }
 CairoFontFace class >> countReferences: handle [
 "
 unsigned int  cairo_font_face_get_reference_count             (cairo_font_face_t *font_face);
 "
-	^ self ffiCall: #( uint cairo_font_face_get_reference_count (size_t handle)) 
+	^ self ffiCall: #( uint cairo_font_face_get_reference_count (size_t handle))
 ]
 
 { #category : #finalizing }
@@ -33,7 +39,7 @@ CairoFontFace class >> finalizeResourceData: handle [
 "
 void                cairo_font_face_destroy             (cairo_font_face_t *font_face);
 "
-	^ self ffiCall: #( void cairo_font_face_destroy (size_t handle)) 
+	^ self ffiCall: #( void cairo_font_face_destroy (size_t handle))
 ]
 
 { #category : #'instance creation' }
@@ -51,6 +57,12 @@ CairoFontFace class >> hasSharedResourceData: handle [
 	^(self countReferences: handle) > 1
 ]
 
+{ #category : #private }
+CairoFontFace class >> italicEmphasisCode [
+
+	^ 2
+]
+
 { #category : #'instance creation' }
 CairoFontFace class >> primFtFace: aFace loadFlags: flags [
 
@@ -61,12 +73,12 @@ cairo_font_face_t * cairo_ft_font_face_create_for_ft_face
 
 load_flags: flags to pass to FT_Load_Glyph when loading glyphs from the font. These flags are OR'ed together with the flags derived from the cairo_font_options_t passed to cairo_scaled_font_create(), so only a few values such as FT_LOAD_VERTICAL_LAYOUT, and FT_LOAD_FORCE_AUTOHINT are useful. You should not pass any of the flags affecting the load target, such as FT_LOAD_TARGET_LIGHT.
 "
-	^ self ffiCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 
+	^ self ffiCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags ))
 ]
 
 { #category : #initialization }
 CairoFontFace >> initialize [ 
-	self autoRelease 
+	self autoRelease
 ]
 
 { #category : #initialization }
@@ -86,7 +98,7 @@ void
 cairo_ft_font_face_set_synthesize (cairo_font_face_t *font_face,
                                    int synth_flags);
 "
-	^ self ffiCall: #( void cairo_ft_font_face_set_synthesize(self, int flags )) 
+	^ self ffiCall: #( void cairo_ft_font_face_set_synthesize(self, int flags ))
 ]
 
 { #category : #'external resource management' }
@@ -97,7 +109,6 @@ CairoFontFace >> resourceData [
 { #category : #accessing }
 CairoFontFace >> status [
 	^ self ffiCall: #(int cairo_font_face_status (self))
-		
 ]
 
 { #category : #accessing }
@@ -112,11 +123,12 @@ CairoFontFace >> synthesizeBoldAndOblique [
 
 { #category : #accessing }
 CairoFontFace >> synthesizeEmphasis: emphasisCode [
-	emphasisCode = (TextEmphasis bold emphasisCode | TextEmphasis italic emphasisCode)
+
+	emphasisCode = (self class boldEmphasisCode | self class italicEmphasisCode)
 		ifTrue: [ ^ self synthesizeBoldAndOblique ].
-	emphasisCode = TextEmphasis bold emphasisCode
+	emphasisCode = self class boldEmphasisCode
 		ifTrue: [ ^ self synthesizeBold ].
-	emphasisCode = TextEmphasis italic emphasisCode
+	emphasisCode = self class italicEmphasisCode
 		ifTrue: [ ^ self synthesizeOblique ]
 ]
 

@@ -64,10 +64,6 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesAssociation [
 	self deny: (self nonEmpty includesAssociation: (keyIn-> self valueNotInNonEmpty )).
 	" testing the case where value is included but not corresponding key :"
 	self deny: (self nonEmpty includesAssociation: (self keyNotInNonEmpty -> valueIn  )).
-
-
-
-
 ]
 
 { #category : #'tests - dictionary including' }
@@ -102,7 +98,6 @@ valueIn := collection  values anyOne.
 
 self assert: (collection includesIdentity: valueIn ) .
 self deny: (collection includesIdentity: valueIn copy ) .
-
 ]
 
 { #category : #'tests - dictionary including' }

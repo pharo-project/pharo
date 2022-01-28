@@ -28,7 +28,7 @@ DiskFileSystemTest >> testEntriesHaveAttributes [
 	entries := FileLocator imageDirectory resolve entries.
 	"Ensure that we are actually checking entries"
 	self assert: entries isNotEmpty.
-	"We can't use the accessor method to get the statAttributes since does lazy initialisation"
+	"We can't use the accessor method to get the statAttributes since does lazy initialization"
 	self assert: (entries select: [ :each | (each instVarNamed: 'statAttributes') isNil ]) isEmpty.
 ]
 
@@ -47,7 +47,6 @@ DiskFileSystemTest >> testIsDirectory [
 { #category : #tests }
 DiskFileSystemTest >> testIsDiskFileSystem [
 	self assert: filesystem isDiskFileSystem.
-	
 ]
 
 { #category : #tests }

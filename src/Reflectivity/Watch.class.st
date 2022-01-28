@@ -79,7 +79,6 @@ Watch >> addValue: anObject [
 	values add: 
 		(DateAndTime now -> anObject).
 	^anObject.
-
 ]
 
 { #category : #accessing }

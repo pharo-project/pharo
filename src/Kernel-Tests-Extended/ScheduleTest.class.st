@@ -16,8 +16,6 @@ Class {
 ScheduleTest >> classToBeTested [
 
 	^ Schedule
-
-
 ]
 
 { #category : #coverage }
@@ -27,7 +25,6 @@ ScheduleTest >> selectorsToBeIgnored [
 	private := #( #printOn: ).
 
 	^ super selectorsToBeIgnored, private
-
 ]
 
 { #category : #running }
@@ -54,15 +51,13 @@ ScheduleTest >> setUp [
 	"Schedule the recurring events by scheduling the time in between each one.  
 	One day for Sat-Sun. 6 days for Sun-Sat" 
 	aSchedule schedule: { Duration days: 1. Duration days: 6 }.
-
 ]
 
 { #category : #running }
 ScheduleTest >> tearDown [
 
 	DateAndTime localTimeZone: restoredTimeZone.
-	super tearDown 
-
+	super tearDown
 ]
 
 { #category : #tests }
@@ -136,8 +131,6 @@ ScheduleTest >> testExampleFromSwikiPage [
 	"To inspect:"
 	shows dateAndTimes.
 	shows dateAndTimes collect: [ :dt | dt dayOfWeekName ].
-
-
 ]
 
 { #category : #tests }
@@ -154,8 +147,6 @@ ScheduleTest >> testFromDateAndTime [
 { #category : #tests }
 ScheduleTest >> testIncludes [
 	self assert: (aSchedule includes: (DateAndTime year: 2003 month: 6 day: 15 hour: 20 minute: 30 second: 0 offset: 0 hours))
-	
-
 ]
 
 { #category : #tests }
@@ -171,7 +162,6 @@ ScheduleTest >> testMonotonicity [
 		assert: (	t1 <= t2);
 		assert: (	t2 <= t3);
 		assert: (	t3 <= t4).
-
 ]
 
 { #category : #tests }

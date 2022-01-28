@@ -118,7 +118,6 @@ Bezier3Segment class >> makePieSegments: aRectangle from: angle1 to: angle2 [
 	].
 	"Create actual pie segment"
 	^self makePieSegment: aRectangle from: angle1 to: angle2
-
 ]
 
 { #category : #utilities }
@@ -188,7 +187,6 @@ Bezier3Segment >> asBezier2Points: error [
 		prev := pts at: index.
 		].
 	^ pts.
-	
 ]
 
 { #category : #converting }
@@ -244,8 +242,6 @@ Bezier3Segment >> bezier2SegmentCount: pixelError [
 	a := (start x negated @ start y negated) + (3 * via1) - (3 * via2) +
 (end).
 	^ (((a r / (20.0 * pixelError)) raisedTo: 0.333333) ceiling) max: 1.
-
-
 ]
 
 { #category : #'bezier clipping' }
@@ -362,7 +358,6 @@ Bezier3Segment >> outlineSegment: width [
 	newVia1 := newStart + (tan1 * dist).
 	newVia2 := newEnd - (tan2 * dist).
 	^self class from: newStart via: newVia1 and: newVia2 to: newEnd.
-
 ]
 
 { #category : #'vector functions' }
@@ -389,7 +384,6 @@ Bezier3Segment >> tangentAtMid [
 	tan2 := via2 - via1.
 	tan3 := end - via2.
 	^(tan1 + (2*tan2) + tan3) * 0.25
-
 ]
 
 { #category : #'vector functions' }
@@ -414,8 +408,6 @@ Bezier3Segment >> valueAt: t [
 	c := (3 * start negated) + (3 * via1).
 	d := start.
 	^ ((a * t + b) * t + c) * t + d
-
-
 ]
 
 { #category : #accessing }

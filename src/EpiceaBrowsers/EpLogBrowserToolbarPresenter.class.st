@@ -12,8 +12,8 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Log'
 }
 
-{ #category : #specs }
-EpLogBrowserToolbarPresenter class >> defaultSpec [
+{ #category : #layout }
+EpLogBrowserToolbarPresenter class >> defaultLayout [
 	^ SpBoxLayout newLeftToRight
 		add: #statusLabel;
 		addLast: #filtersButton;

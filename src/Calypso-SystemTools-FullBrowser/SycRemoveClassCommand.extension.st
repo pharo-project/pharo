@@ -11,5 +11,5 @@ SycRemoveClassCommand class >> fullBrowserMenuActivation [
 SycRemoveClassCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext 
+	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext
 ]

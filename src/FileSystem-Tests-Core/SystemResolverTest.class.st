@@ -19,7 +19,6 @@ SystemResolverTest >> createResolver [
 SystemResolverTest >> resetToOriginalUserLocalDirectory [
 
 	resolver class userLocalDirectory: originalUserLocalDir
-	
 ]
 
 { #category : #running }
@@ -33,7 +32,7 @@ SystemResolverTest >> setUp [
 SystemResolverTest >> tearDown [ 
 	
 	self resetToOriginalUserLocalDirectory.
-	super tearDown.	
+	super tearDown.
 ]
 
 { #category : #testing }
@@ -72,8 +71,6 @@ SystemResolverTest >> testUserLocalDirectory [
 	newReference := resolver vmDirectory.
 	resolver class userLocalDirectory:  newReference.
 	self assert: resolver class userLocalDirectory equals: newReference.
-	
-	
 ]
 
 { #category : #testing }

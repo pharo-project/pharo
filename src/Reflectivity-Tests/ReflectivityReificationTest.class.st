@@ -21,7 +21,7 @@ ReflectivityReificationTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityReificationTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'tests - variablenodes' }
@@ -471,7 +471,6 @@ ReflectivityReificationTest >> testReifyAssignmentTempOperationBefore [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleAssignment equals: 3.
 	self assert: reachHere.
-
 ]
 
 { #category : #'tests - operations' }
@@ -934,7 +933,7 @@ ReflectivityReificationTest >> testReifyMethod [
 	self deny: tag identicalTo: origMethod
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodArgs [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -951,7 +950,7 @@ ReflectivityReificationTest >> testReifyMethodArgs [
 	self assert: tag equals: #(3)
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodArgsAfter [
 	| methodNode instance |
 	methodNode := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -969,7 +968,7 @@ ReflectivityReificationTest >> testReifyMethodArgsAfter [
 	self assert: tag equals: #(3)
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodArgsAfter2 [
 	| methodNode |
 	methodNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1049,7 +1048,7 @@ ReflectivityReificationTest >> testReifyMethodBodyArgsInstead [
 	self assert: tag equals: #(3)
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodReceiver [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1066,7 +1065,7 @@ ReflectivityReificationTest >> testReifyMethodReceiver [
 	self assert: tag equals: instance
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodSelector [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1083,7 +1082,7 @@ ReflectivityReificationTest >> testReifyMethodSelector [
 	self assert: tag equals: #exampleMethod
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodThisContext [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1100,7 +1099,7 @@ ReflectivityReificationTest >> testReifyMethodThisContext [
 	self assert: tag class equals: Context
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodThisContextAfter [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1119,7 +1118,7 @@ ReflectivityReificationTest >> testReifyMethodThisContextAfter [
 	self deny: tag isBlockContext.
 ]
 
-{ #category : #'tests - method ' }
+{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodValue [
 	| methodNode instance |
 	methodNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1542,7 +1541,6 @@ ReflectivityReificationTest >> testReifySendArgumentsLevel [
 	instance := ReflectivityExamples new .
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag equals: #(3).
-
 ]
 
 { #category : #'tests - sends' }
@@ -1628,7 +1626,6 @@ ReflectivityReificationTest >> testReifySendThisContext [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag class equals: Context.
-	
 ]
 
 { #category : #'tests - sends' }
@@ -1648,7 +1645,6 @@ ReflectivityReificationTest >> testReifySendThisContextAfter [
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag class equals: Context.
 	self deny: tag isBlockContext.
-	
 ]
 
 { #category : #'tests - sends' }

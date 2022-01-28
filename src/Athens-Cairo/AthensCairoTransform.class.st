@@ -26,8 +26,6 @@ AthensCairoTransform >> canvas: aCairoCanvas [
 AthensCairoTransform >> loadIdentity [
 	^ self ffiCall: #(
 		void cairo_identity_matrix (AthensCairoCanvas canvas) )
-
-
 ]
 
 { #category : #transformations }
@@ -41,8 +39,6 @@ AthensCairoTransform >> moveToX: px Y: py [
 		void cairo_move_to (AthensCairoCanvas canvas,
                                                          double px,
                                                          double py))
-
-
 ]
 
 { #category : #primitives }
@@ -50,8 +46,6 @@ AthensCairoTransform >> primRotateByRadians: angle [
 	^ self ffiCall: #(
 		void cairo_rotate (AthensCairoCanvas canvas,
                                                          double angle))
-
-
 ]
 
 { #category : #primitives }
@@ -60,8 +54,6 @@ AthensCairoTransform >> primScaleX: fx Y: fy [
 		void cairo_scale (AthensCairoCanvas canvas,
                                                          double fx,
                                                          double fy))
-
-
 ]
 
 { #category : #primitives }
@@ -70,7 +62,6 @@ AthensCairoTransform >> primTransformX: x Y: y [
 		void cairo_user_to_device (AthensCairoCanvas canvas,
                                                          NBFloatPtr x,
                                                          NBFloatPtr y) )
-
 ]
 
 { #category : #primitives }
@@ -80,14 +71,11 @@ AthensCairoTransform >> primTranslateX: px Y: py [
 		void cairo_translate (AthensCairoCanvas canvas,
                                                          double px,
                                                          double py))
-
-
 ]
 
 { #category : #primitives }
 AthensCairoTransform >> restore [
 	^ self ffiCall: #(void cairo_restore(AthensCairoCanvas canvas))
-
 ]
 
 { #category : #transformations }
@@ -106,13 +94,11 @@ AthensCairoTransform >> rotateByDegrees: angle [
 AthensCairoTransform >> rotateByRadians: angle [
 
 	^ self primRotateByRadians: angle asFloat
-
 ]
 
 { #category : #primitives }
 AthensCairoTransform >> save [
 	^ self ffiCall: #(void cairo_save (AthensCairoCanvas canvas))
-
 ]
 
 { #category : #transformations }
@@ -126,7 +112,6 @@ AthensCairoTransform >> scaleBy: aScalarOrPoint [
 		ifFalse:[ 
 			double := aScalarOrPoint asFloat.
 			self scaleX: double Y: double ].
-
 ]
 
 { #category : #transformation }
@@ -149,7 +134,6 @@ AthensCairoTransform >> transform: aPoint [
 { #category : #transformations }
 AthensCairoTransform >> translateBy: aPoint [
 	self translateX: aPoint x Y: aPoint y
-
 ]
 
 { #category : #primitives }

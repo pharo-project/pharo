@@ -167,10 +167,6 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 				source: source;
 				compile.
 	TryNamedPrimitiveTemplateMethod := method copyWithSource: source.
-
-
-
-	
 ]
 
 { #category : #'instance creation' }
@@ -207,7 +203,6 @@ Context class >> primitiveFailToken [
 Context class >> primitiveFailTokenFor: errorCode [
 
 	^ { PrimitiveFailToken. errorCode }
-
 ]
 
 { #category : #'instance creation' }
@@ -390,7 +385,6 @@ Context >> blockReturnConstant: value [
 	activation. "
 	self assert: closureOrNil isClosure.
 	^ self return: value from: self
-
 ]
 
 { #category : #'instruction decoding' }
@@ -408,16 +402,15 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private - exceptions' }
+{ #category : #'private-exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
 	^ (self exceptionClass handles: exception)
 		or: [ self nextHandlerContext canHandleSignal: exception ].
-
 ]
 
-{ #category : #'private - exceptions' }
+{ #category : #'private-exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
@@ -444,24 +437,6 @@ Context >> client [
 { #category : #accessing }
 Context >> closure [
 	^closureOrNil
-]
-
-{ #category : #controlling }
-Context >> closureCopy: numArgs copiedValues: anArray [
-	"Distinguish a block of code from its enclosing method by 
-	creating a BlockClosure for that block. The compiler inserts into all 
-	methods that contain blocks the bytecodes to send the message 
-	closureCopy:copiedValues:. Do not use closureCopy:copiedValues: in code that you write! Only the 
-	compiler can decide to send the message closureCopy:copiedValues:. Fail if numArgs is 
-	not a SmallInteger. Optional. No Lookup. See Object documentation 
-	whatIsAPrimitive."
-
-	<primitive: 200>
-	^BlockClosure 
-		outerContext: self
-		startpc: pc + 2
-		numArgs: numArgs
-		copiedValues: anArray
 ]
 
 { #category : #accessing }
@@ -521,7 +496,6 @@ Context >> cut: aContext [
 			aContext ifNotNil: [
 				self error: 'aContext not a sender' ]]].
 	callee privSender: nil.
-
 ]
 
 { #category : #printing }
@@ -631,6 +605,14 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			ifFalse: [ ^self send: (arguments at: 2) to: (arguments at: 1) with: (arguments at: 3) lookupIn: (arguments at: 4) ]
 		].
 
+	primitiveIndex = 88 ifTrue: ["Process>>suspend"
+		"Simulation of suspend primitive should do nothing (with receiver return) by two reasons:
+			- if by mistake the receiver is a simulating process itself 
+				the suspend would stop it and the simulation would hang.
+				For example the debugger can hang during stepping over #suspend of real active process.
+			- suspend over already suspended process does nothing anyway. 
+				For example debugger always steps over suspended process"
+		^self push: aReceiver ].
 
 	"Mutex>>primitiveEnterCriticalSection
 	 Mutex>>primitiveTestAndSetOwnershipOfCriticalSection"
@@ -663,12 +645,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 		].
 	"Closure primitives"
 	(primitiveIndex = 200 and: [self == aReceiver]) ifTrue:
-		"ContextPart>>closureCopy:copiedValues:; simulated to get startpc right"
-		[^self push: (BlockClosure
-						outerContext: aReceiver
-						startpc: pc + 2
-						numArgs: arguments first
-						copiedValues: arguments last)].
+		[^self error: 'embedded block not supported'].
 
 	primitiveIndex = 118 ifTrue: "tryPrimitive:withArgs:; avoid recursing in the VM"
 		[(arguments size = 2
@@ -763,21 +740,18 @@ Context >> evaluateSignal: exception [
 Context >> exception [
 	"signaling context (Context>>evaluateSignal:) only. Access the exception argument."
 	^self tempAt: 1
-
 ]
 
 { #category : #'special context access' }
 Context >> exceptionClass [
 	"handlercontext only. access temporaries from BlockClosure>>#on:do:"
 	^self tempAt: 1
-
 ]
 
 { #category : #'special context access' }
 Context >> exceptionHandlerBlock [
 	"handlercontext only. access temporaries from BlockClosure>>#on:do:"
 	^self tempAt: 2
-
 ]
 
 { #category : #'private - exceptions' }
@@ -961,15 +935,29 @@ Context >> isContext [
 
 { #category : #testing }
 Context >> isDead [
-	"Has self finished"
+	"Context is dead when
+	- it is self finished (returned to sender) 
+	- it is at the last instruction of process termination (it is unwinded and process is suspended)"
 
-	^ pc isNil
+	^ pc isNil or: [  self isEndOfProcessTermination ]
+]
+
+{ #category : #testing }
+Context >> isEndOfProcessTermination [ 
+	"The normal completion of any process always ends at Process>>doTerminationFromYourself method
+	(see #newProcess and #terminateRealActive).
+	The last instruction is the call to #suspend primitive method 
+	which finally removes the process from the scheduler.
+	This precise criteria of the terminated process is used here" 
+	method selector == #doTerminationFromYourself ifFalse: [ ^false ].
+	method methodClass == Process ifFalse: [ ^false ].	
+	^pc = (self endPC - 1)
 ]
 
 { #category : #testing }
 Context >> isExecutingBlock [
 	"for compatibility"
-	^self isBlockContext 
+	^self isBlockContext
 ]
 
 { #category : #private }
@@ -1508,25 +1496,6 @@ Context >> pushArgs: arguments from: senderContext [
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize withInterpreter: anInterpreter [
-	"Simulate the action of a 'closure copy' bytecode whose result is the
-	 new BlockClosure for the following code"
-	| copiedValues |
-	numCopied > 0
-		ifTrue: [
-			copiedValues := Array new: numCopied.
-			numCopied to: 1 by: -1 do: [ :i |
-				copiedValues at: i put: self pop ]]
-		ifFalse: [ copiedValues := nil ].
-	self push: (BlockClosure
-				outerContext: self
-				startpc: pc
-				numArgs: numArgs
-				copiedValues: copiedValues).
-	self jump: blockSize withInterpreter: anInterpreter
-]
-
-{ #category : #'instruction decoding' }
 Context >> pushClosureTemps: numTemps [
 	numTemps timesRepeat: [ self push: nil ]
 ]
@@ -1672,7 +1641,6 @@ Context >> resume: value [
 	"Unwind thisContext to self and resume with value as result of last send.  Execute unwind blocks when unwinding.  ASSUMES self is a sender of thisContext"
 	
 	self resume: value through: (thisContext findNextUnwindContextUpTo: self)
-	
 ]
 
 { #category : #controlling }
@@ -1684,7 +1652,8 @@ Context >> resume: value through: firstUnwindContext [
 	| context unwindBlock |
 	self isDead 
 		ifTrue: [ self cannotReturn: value to: self ].
-	context := firstUnwindContext.
+	"note: nil value of firstUnwindContext is sent by #return:from: to invoke fresh search for first unwind context"
+	context := firstUnwindContext ifNil: [thisContext findNextUnwindContextUpTo: self].
 	[ context isNil ] whileFalse: [	
 		context unwindComplete ifNil:[
 			context unwindComplete: true.
@@ -1694,7 +1663,6 @@ Context >> resume: value through: firstUnwindContext [
 		context := context findNextUnwindContextUpTo: self].
 	thisContext terminateTo: self.
 	^value
-
 ]
 
 { #category : #controlling }
@@ -1717,7 +1685,6 @@ Context >> resumeEvaluating: aBlock [
 	].
 	thisContext terminateTo: self.
 	^aBlock value
-
 ]
 
 { #category : #controlling }
@@ -1736,20 +1703,26 @@ Context >> return: value [
 ]
 
 { #category : #controlling }
-Context >> return: value from: aSender [ 
+Context >> return: value from: aSender [
 	"For simulation.  Roll back self to aSender and return value from it.  Execute any unwind blocks on the way.  ASSUMES aSender is a sender of self"
-
 	| newTop context |
 	aSender isDead ifTrue: [
 		^ self send: #cannotReturn: to: self with: {value} super: false ].
 	newTop := aSender sender.
 	context := self findNextUnwindContextUpTo: newTop.
+	(context notNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
+		"Here the return happens inside the unwind block like in following example: 
+				[ #test ] ensure: [ ^ #returnFromUnwindBlock ]
+		In such cases #findNextUnwindContextUpTo: returns the corresponding #ensure context
+		because it is always a sender of unwind block.
+		Here we detect this case and lookup the next unwind context after the current ensure section (current unwind)"
+		context := context findNextUnwindContextUpTo: newTop ].
 	context ifNotNil: [
-		^ self send: #aboutToReturn:through: to: self with: {value. context} super: false] .
+			"note: nil is sent to #resume:through via #aboutToReturn:through: to invoke fresh search for next unwind context there"
+		^ self send: #aboutToReturn:through: to: self with: {value. nil} super: false ].
 	self releaseTo: newTop.
 	newTop ifNotNil: [ newTop push: value ].
 	^ newTop
-
 ]
 
 { #category : #controlling }
@@ -1789,7 +1762,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Control resumes here once above ensure block or exception handler is executed"
 	^ error ifNil: [
 		"No error was raised, remove ensure context by stepping until popped"
-		[(context isDead)or: [ topContext isNil  ]] whileFalse: [topContext := topContext stepToCallee].
+		[ context isDead or: [ topContext isNil  ]] whileFalse: [topContext := topContext stepToCallee].
 		{topContext. nil}
 
 	] ifNotNil: [
@@ -1797,7 +1770,6 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 		aSender terminateTo: context sender.  "remove above ensure and handler contexts"
 		{topContext. error}
 	].
-
 ]
 
 { #category : #'debugger access' }
@@ -1874,6 +1846,16 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 			  'Simulated message ' , (arguments at: 1) selector
 			  , ' not understood' ].
 
+	(selector == #terminateRealActive and: [ aReceiver == Processor ]) ifTrue: [ 
+		"We should never simulate #terminateRealActive as it will terminate a simulating process 
+		(UI process of debugger) instead of the actual process under simulation.
+		Therefore the simulation always delegates this method to the public one 
+		which explicitly supports the simulation with effective process logic.
+		Notice that #terminateRealActive is a process completion method 
+		and normally users do not step over it"
+		^self send: #terminateActive to: aReceiver with: arguments super: superFlag
+	].
+
 	"failure.. lets activate the method"
 	context := self
 		           activateMethod: aMethod
@@ -1910,8 +1892,6 @@ Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.
-	
-
 ]
 
 { #category : #private }
@@ -1972,7 +1952,6 @@ Context >> singleRelease [
 			self at: i put: nil ]].
 	sender := nil.
 	pc := nil.
-
 ]
 
 { #category : #accessing }
@@ -2162,7 +2141,6 @@ Context >> terminate [
 
 	sender := nil.
 	pc := nil.
-
 ]
 
 { #category : #controlling }
@@ -2208,7 +2186,6 @@ Context >> tryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: argumen
 		withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod
 		for: aReceiver
 		withArgs: arguments
-
 ]
 
 { #category : #private }
@@ -2226,21 +2203,18 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	^self tempAt: 1
-
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	^self tempAt: 2
-
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete: aBoolean [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	self tempAt: 2 put: aBoolean
-
 ]
 
 { #category : #'private - exceptions' }
@@ -2269,7 +2243,6 @@ Context >> unwindTo: aContext [
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
 			unwindBlock value ]].
-
 ]
 
 { #category : #private }

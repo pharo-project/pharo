@@ -15,7 +15,7 @@ Class {
 ClassTest >> categoryNameForTemporaryClasses [
 	"Answer the category where to classify temporarily created classes"
 
-	^'Dummy-Tests-Class' 
+	^'Dummy-Tests-Class'
 ]
 
 { #category : #coverage }
@@ -65,7 +65,6 @@ ClassTest >> setUp [
 		aBuilder 
 			name: className;
 			package: self categoryNameForTemporaryClasses]
-
 ]
 
 { #category : #running }
@@ -73,7 +72,7 @@ ClassTest >> tearDown [
 	self deleteClass.
 	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
 			RPackage organizer unregisterPackageNamed: category].
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
@@ -151,7 +150,7 @@ ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 ClassTest >> testClassSide [
 
 	self assert: Point classSide equals: Point class. 
-	self assert: Point class classSide equals: Point class. 
+	self assert: Point class classSide equals: Point class.
 ]
 
 { #category : #tests }
@@ -223,7 +222,6 @@ ClassTest >> testClassVariableEntanglement [
 		firstClass 
 			removeFromChanges;
 			removeFromSystemUnlogged ].
-
 ]
 
 { #category : #tests }
@@ -269,7 +267,13 @@ ClassTest >> testHasBindingThatBeginsWith [
 	
 	"CompiledMethodLayout works, too"
 	self deny: (CompiledMethod hasBindingThatBeginsWith: 'Compiler').
+]
 
+{ #category : #'tests - class variables' }
+ClassTest >> testHasClassVarNamed [
+
+	self assert: (Object hasClassVarNamed: #DependentsFields).
+	self deny: (Object hasClassVarNamed: #CompilerClass)
 ]
 
 { #category : #'tests - access' }
@@ -303,7 +307,7 @@ ClassTest >> testHasSharedPools [
 ClassTest >> testInstanceSide [
 
 	self assert: Point instanceSide equals: Point. 
-	self assert: Point class instanceSide equals: Point. 
+	self assert: Point class instanceSide equals: Point.
 ]
 
 { #category : #'test - accessing parallel hierarchy' }
@@ -374,7 +378,6 @@ ClassTest >> testOrdersACollectionOfClassesBySuperclass [
 	self assert: (ordered indexOf: ExampleForTest11 class) < (ordered indexOf: ExampleForTest111 class).
 	self assert: (ordered indexOf: ExampleForTest11 class) < (ordered indexOf: ExampleForTest112 class).
 	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest12 class).
-	
 ]
 
 { #category : #'tests - file in/out' }
@@ -391,7 +394,6 @@ ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 	self assert: (ordered indexOf: True) < (ordered indexOf: True class).
 	self assert: (ordered indexOf: Boolean class) < (ordered indexOf: True class).
 	self assert: (ordered indexOf: Boolean) < (ordered indexOf: True).
-
 ]
 
 { #category : #'tests - pools' }
@@ -429,7 +431,6 @@ ClassTest >> testReferencedClasses [
 		
 	"classes referenced from class variables should not be seen as referenced statically"
 	self assert: (SmalltalkImage class>>#compilerClass ) referencedClasses isEmpty.
-	
 ]
 
 { #category : #tests }
@@ -537,8 +538,6 @@ ClassTest >> testSuperclassOrderPreservingOrder [
 	
 	"should not affect the order as there is no dependencies"
 	self assert: ordered equals: noHierarchicalRelationship asOrderedCollection
-	
-	
 ]
 
 { #category : #'tests - access' }

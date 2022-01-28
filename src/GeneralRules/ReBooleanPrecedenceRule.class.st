@@ -31,7 +31,6 @@ ReBooleanPrecedenceRule >> initialize [
 			'`@object1 | `@object2 ~~ `@object3'
 			'`@object1 & `@object2 ~= `@object3'
 			'`@object1 & `@object2 ~~ `@object3' )
-		
 ]
 
 { #category : #accessing }

@@ -66,7 +66,7 @@ AbstractKeymappingTest >> eventKey: character alt: useAlt ctrl: useCtrl command:
 		hand: nil 
 		stamp: Time now.
 	event key: (KeyboardKey fromCharacter: character).
-	^ event 	
+	^ event
 ]
 
 { #category : #utilities }
@@ -107,5 +107,5 @@ AbstractKeymappingTest >> setUp [
 AbstractKeymappingTest >> tearDown [
 	KMRepository default: default.
 	default := nil.
-	super tearDown 
+	super tearDown
 ]

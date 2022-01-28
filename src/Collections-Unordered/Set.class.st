@@ -34,7 +34,6 @@ Set class >> newFrom: aCollection [
 	newCollection := self new: aCollection size.
 	newCollection addAll: aCollection.
 	^ newCollection
-
 ]
 
 { #category : #'instance creation' }

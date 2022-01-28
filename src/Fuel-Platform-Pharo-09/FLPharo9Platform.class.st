@@ -16,7 +16,7 @@ FLPharo9Platform class >> isResponsibleForCurrentPlatform [
 			and: [ SystemVersion current major = 9 ] ]
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPharo9Platform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 	aClass
 		addAndClassifySelector: aSymbol
@@ -24,19 +24,19 @@ FLPharo9Platform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: 
 		inProtocol: aString
 ]
 
-{ #category : #'accessing-files' }
+{ #category : #'accessing - files' }
 FLPharo9Platform >> deleteFileNamed: aFilename [
 	((Smalltalk at: #File) named: aFilename) delete
 ]
 
-{ #category : #'accessing-files' }
+{ #category : #'accessing - files' }
 FLPharo9Platform >> fileNamed: aFilename readStreamDo: aBlock [
 	^ ((Smalltalk at: #File) named: aFilename) readStreamDo: [ :stream |
 		stream binary.
 		aBlock value: stream ]
 ]
 
-{ #category : #'accessing-files' }
+{ #category : #'accessing - files' }
 FLPharo9Platform >> fileNamed: aFilename writeStreamDo: aBlock [
 	^ ((Smalltalk at: #File) named: aFilename) writeStreamDo: [ :stream |
 		stream binary.
@@ -48,7 +48,7 @@ FLPharo9Platform >> isBigEndian [
 	^ (Smalltalk at: #EndianDetector) isBigEndian
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPharo9Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 	aClass
 		addSelector: aSymbol
@@ -58,7 +58,7 @@ FLPharo9Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass with
 		under: aString
 ]
 
-{ #category : #'accessing-kernel' }
+{ #category : #'accessing - kernel' }
 FLPharo9Platform >> withPragmasIn: aClass do: aBlock [
 	aClass pragmasDo: aBlock
 ]

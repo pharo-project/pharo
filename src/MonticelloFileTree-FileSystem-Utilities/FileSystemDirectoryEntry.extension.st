@@ -1,11 +1,11 @@
 Extension { #name : #FileSystemDirectoryEntry }
 
-{ #category : #'*monticellofiletree-filesystem-utilities' }
+{ #category : #'*MonticelloFileTree-FileSystem-Utilities' }
 FileSystemDirectoryEntry >> name [
     ^ self basename
 ]
 
-{ #category : #'*monticellofiletree-filesystem-utilities' }
+{ #category : #'*MonticelloFileTree-FileSystem-Utilities' }
 FileSystemDirectoryEntry >> readStreamDo: aBlock [
     ^ reference readStreamDo: aBlock
 ]

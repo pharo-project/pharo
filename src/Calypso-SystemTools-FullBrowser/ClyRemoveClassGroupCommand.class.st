@@ -24,14 +24,14 @@ ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
 ClyRemoveClassGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassGroupContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #activation }
 ClyRemoveClassGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation removalFor: ClyFullBrowserClassGroupContext 
+	^CmdShortcutActivation removalFor: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #accessing }

@@ -58,7 +58,7 @@ UndefinedObject >> asLinkPrepend: anObject [
 
 { #category : #accessing }
 UndefinedObject >> at: index put: anObject [ 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #'bottom context' }
@@ -79,7 +79,7 @@ UndefinedObject >> classBuilder [
 UndefinedObject >> classInstaller [
 	"Answer the class responsible of creating classes in the system."
 	
-	^ Smalltalk classInstaller 
+	^ Smalltalk classInstaller
 ]
 
 { #category : #'class hierarchy' }
@@ -261,7 +261,6 @@ UndefinedObject >> subclass: nameOfClass
 		classVariableNames: classVarNames
 		poolDictionaries: poolDictnames
 		category: category
-
 ]
 
 { #category : #'class hierarchy' }

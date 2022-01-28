@@ -1,6 +1,6 @@
 Extension { #name : #ZnUrlTest }
 
-{ #category : #'*zinc-tests' }
+{ #category : #'*Zinc-Tests' }
 ZnUrlTest >> testRetrieveContents [
 	| numbers |
 	numbers := 'http://zn.stfx.eu/zn/numbers.txt' asZnUrl retrieveContents.
@@ -9,7 +9,7 @@ ZnUrlTest >> testRetrieveContents [
 	self should: [ 'http://zn.stfx.eu/zn/numbers-wrong.txt' asZnUrl retrieveContents ] raise: Error
 ]
 
-{ #category : #'*zinc-tests' }
+{ #category : #'*Zinc-Tests' }
 ZnUrlTest >> testSaveContentsToFile [
 	| url target result numbers |
 	url := 'http://zn.stfx.eu/zn/numbers.txt' asZnUrl.

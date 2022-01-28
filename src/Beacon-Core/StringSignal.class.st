@@ -27,15 +27,18 @@ StringSignal class >> emit: aString [
 
 { #category : #accessing }
 StringSignal >> message [
+
 	^ message
 ]
 
 { #category : #accessing }
 StringSignal >> message: anObject [
+
 	message := anObject
 ]
 
 { #category : #printing }
 StringSignal >> printOneLineContentsOn: stream [
+
 	stream nextPutAll: self message
 ]

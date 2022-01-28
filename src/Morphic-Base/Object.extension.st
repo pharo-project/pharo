@@ -7,7 +7,6 @@ Object >> addModelYellowButtonMenuItemsTo: aCustomMenu forMorph: aMorph hand: aH
 		aCustomMenu add: 'inspect model'  target: self selector: #inspect.
 	].
 	^aCustomMenu
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -18,15 +17,14 @@ Object >> asAlphaImageMorph [
 
 { #category : #'*Morphic-Base' }
 Object >> asDraggableMorph [
-	^ self asStringMorph 
+	^ self asStringMorph
 ]
 
 { #category : #'*Morphic-Base' }
 Object >> asMorph [
 	"Open a morph, as best one can, on the receiver"
 
-	^ self asStringMorph 
-
+	^ self asStringMorph
 ]
 
 { #category : #'*Morphic-Base' }
@@ -34,7 +32,6 @@ Object >> asStringMorph [
 	"Open a StringMorph, as best one can, on the receiver"
 
 	^ self asString asStringMorph
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -42,7 +39,6 @@ Object >> asTextMorph [
 	"Open a TextMorph, as best one can, on the receiver"
 
 	^ TextMorph new contentsAsIs: self asStringOrText
-
 ]
 
 { #category : #'*Morphic-Base' }

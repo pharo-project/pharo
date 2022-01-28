@@ -142,7 +142,7 @@ KMCategory >> name [
 
 { #category : #accessing }
 KMCategory >> name: aCategorySymbol [ 
-	name := aCategorySymbol 
+	name := aCategorySymbol
 ]
 
 { #category : #matching }

@@ -59,7 +59,7 @@ CommentTestCase >> instanceVariablesToKeep [
 
 { #category : #printing }
 CommentTestCase >> printString [
-	^ docCommentNode sourceNode contents 
+	^ docCommentNode sourceNode contents
 ]
 
 { #category : #tests }

@@ -38,6 +38,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 ]
 
 { #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
+
+	self allClassesDo: [ :e |
+		(e name beginsWith: aString)
+			ifTrue: [ aBlock value: e name ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 
@@ -159,7 +167,11 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
+
+	| specialIndex |
+	"for speed we check the special selectors here once per class"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
+	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral specialIndex: specialIndex ]
 ]
 
 { #category : #query }
@@ -186,6 +198,14 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 	"Answer all the methods that refer to aVariableBinding, do not go into nested Arrays"
 
 	^ self allBehaviors flatCollect: [ :class | class whichMethodsReferTo: aVariablesBinding ]
+]
+
+{ #category : #query }
+SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
+
+	Symbol selectorTable do: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
 ]
 
 { #category : #'message sends' }
@@ -307,7 +327,7 @@ SystemNavigation >> methodsReferencingObsoleteClasses [
 	"Returns all methods that reference obsolete behaviors"
 	
 	| obsClasses |
-	obsClasses := self obsoleteBehaviors.
+	obsClasses := self obsoleteClasses.
 	
 	^Array streamContents: [ :methods |
 		obsClasses keysAndValuesDo: 
@@ -339,21 +359,6 @@ SystemNavigation >> methodsWithUnboundGlobals [
 			and: [(m methodClass classBindingOf: l key)
 					ifNil: [(Undeclared associationAt: l key ifAbsent: []) ~~ l]
 					ifNotNil: [:b| b ~~ l]]]]]]
-]
-
-{ #category : #'identifying obsoletes' }
-SystemNavigation >> obsoleteBehaviors [
-	"SystemNavigation new obsoleteBehaviors inspect"
-	"Find all obsolete behaviors including meta classes"
-
-	| obs |
-	obs := OrderedCollection new.
-	Smalltalk garbageCollect.
-	self 
-		allObjectsDo: [:cl | 
-			(cl isBehavior	and: [ cl isObsolete])
-				ifTrue: [ obs add: cl]].
-	^ obs asArray
 ]
 
 { #category : #'identifying obsoletes' }

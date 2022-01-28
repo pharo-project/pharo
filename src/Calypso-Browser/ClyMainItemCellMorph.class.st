@@ -112,7 +112,6 @@ ClyMainItemCellMorph >> build [
 	fullIndentation 
 		ifTrue: [ self buildWithFullIndentation ]
 		ifFalse: [ self buildWithLabelIndentation  ].
-	
 ]
 
 { #category : #building }
@@ -187,7 +186,7 @@ ClyMainItemCellMorph >> definitionMorph: aMorph [
 	
 	definitionMorph := aMorph.
 	definitionMorph width: 16.
-	^definitionMorph 
+	^definitionMorph
 ]
 
 { #category : #building }

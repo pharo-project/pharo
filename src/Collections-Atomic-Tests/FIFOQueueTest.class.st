@@ -144,7 +144,7 @@ FIFOQueueTest >> testFlush [
 	sema wait. 
 	q flush: [:each | self assert: v < each. v := each ].
 
-	self assert: v equals: 10	
+	self assert: v equals: 10
 ]
 
 { #category : #tests }
@@ -258,7 +258,6 @@ FIFOQueueTest >> testNextOrNilSuchThat [
 
 	self assert: q nextOrNil equals: 5.
 	self should: q nextOrNil isNil
-
 ]
 
 { #category : #tests }

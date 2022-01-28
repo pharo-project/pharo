@@ -121,8 +121,7 @@ ListDialogWindow >> buildSearchMorph [
 			acceptSelector: #searchAccept:;
 			updateSelector: #searchUpdate:;
 			searchList: self class searchList;
-			yourself.	
-	
+			yourself.
 ]
 
 { #category : #actions }
@@ -222,7 +221,6 @@ ListDialogWindow >> initialize [
 	acceptNewEntry := false.
 	
 	super initialize.
-
 ]
 
 { #category : #'morphic protocol' }
@@ -237,7 +235,7 @@ ListDialogWindow >> listChanged [
 
 { #category : #'morphic protocol' }
 ListDialogWindow >> listIndex [
-	^ listIndex 
+	^ listIndex
 ]
 
 { #category : #'morphic protocol' }
@@ -338,7 +336,6 @@ ListDialogWindow >> searchKeystroke: event [
 		
 	(event keyCharacter = Character arrowUp)
 		ifTrue: [ ^ self searchKeystrokeUp ].
-	
 ]
 
 { #category : #events }

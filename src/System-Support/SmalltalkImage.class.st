@@ -77,13 +77,13 @@ SmalltalkImage class >> new [
 	self error: 'Use current'.
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> shutDown: isImageClosing [
 
 	isImageClosing ifTrue: [ SourceFiles close ].
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> startUp: isImageStarting [
 	
 	ChangesLog default
@@ -1811,12 +1811,11 @@ SmalltalkImage >> specialSelectorAt: anInteger [
 
 { #category : #'special objects' }
 SmalltalkImage >> specialSelectorIndexOrNil: selector [
-	| specialIndex |
 	1 to: Smalltalk specialSelectorSize do:
 		[:index | 
 		(Smalltalk specialSelectorAt: index) == selector
-			ifTrue: [specialIndex := index ]].	
-	^ specialIndex
+			ifTrue: [^index ]].	
+	^ nil
 ]
 
 { #category : #'special objects' }

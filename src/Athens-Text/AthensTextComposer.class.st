@@ -28,7 +28,6 @@ AthensTextComposer >> renderOn: aCanvas [
 	
 	renderer := AthensTextRenderer new.
 	renderer render: text lines: lines on: aCanvas.
-
 ]
 
 { #category : #'private - scanning' }
@@ -68,6 +67,4 @@ AthensTextComposer >> scan: aText for: scanner [
 	lines do: [:line |
 		line top: top.
 		top := top + line height ].
-	
-
 ]

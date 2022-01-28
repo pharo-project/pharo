@@ -42,8 +42,7 @@ ClyInstallMetaLinkPresenterTest >> setUp [
 	breakpoint := MetaLink new metaObject: Break; yourself.
 	executionCounter := MetaLink new metaObject: ExecutionCounter new; yourself.
 	watchpoint := MetaLink new metaObject: Watch new; yourself.
-	node propertyAt: #links put: {metalink. breakpoint. executionCounter. watchpoint} asOrderedCollection 
-	
+	node propertyAt: #links put: {metalink. breakpoint. executionCounter. watchpoint} asOrderedCollection
 ]
 
 { #category : #running }
@@ -59,10 +58,10 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.
-	self deny: self nodeInRealMethod hasLinks.
+	self deny: self nodeInRealMethod hasMetaLinks.
 	presenter installSelectedMetalink.
-	self assert: self nodeInRealMethod hasLinks.
-	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
+	self assert: self nodeInRealMethod hasMetaLinks.
+	self assert: self nodeInRealMethod links asArray first identicalTo: list items first
 ]
 
 { #category : #tests }
@@ -71,10 +70,10 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.	
-	self deny: self nodeInRealMethod hasLinks.
+	self deny: self nodeInRealMethod hasMetaLinks.
 	presenter toolbarButtons first click.
-	self assert: self nodeInRealMethod hasLinks.
-	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
+	self assert: self nodeInRealMethod hasMetaLinks.
+	self assert: self nodeInRealMethod links asArray first identicalTo: list items first
 ]
 
 { #category : #tests }
@@ -84,7 +83,6 @@ ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForInstallation [
 	self assert: links size >= 2.
 	self assertCollection: links includesAll: { metalink. metalink2 }.
 	self denyCollection: links includesAll: { breakpoint. watchpoint. executionCounter  }.
-	
 ]
 
 { #category : #tests }
@@ -124,9 +122,9 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalink [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.
-	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod hasMetaLinks.
 	presenter uninstallSelectedMetalink.
-	self deny: self nodeInRealMethod hasLinks
+	self deny: self nodeInRealMethod hasMetaLinks
 ]
 
 { #category : #tests }
@@ -136,7 +134,7 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.	
-	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod hasMetaLinks.
 	presenter toolbarButtons first click.
-	self deny: self nodeInRealMethod hasLinks
+	self deny: self nodeInRealMethod hasMetaLinks
 ]

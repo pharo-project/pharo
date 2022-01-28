@@ -24,7 +24,6 @@ PluggableListItemWrapper >> asString [
 	string ifNotNil:[^string].
 	getStringSelector ifNil:[^super asString].
 	^self sendToModel: getStringSelector
-
 ]
 
 { #category : #accessing }
@@ -59,7 +58,6 @@ PluggableListItemWrapper >> getStringSelector: aSymbol [
 PluggableListItemWrapper >> hasContents [
 	hasContentsSelector ifNil:[^super hasContents].
 	^self sendToModel: hasContentsSelector
-
 ]
 
 { #category : #accessing }

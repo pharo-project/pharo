@@ -31,7 +31,6 @@ OSTouchFingerTracker class >> for: anEvent [
 OSTouchFingerTracker >> addToMove: aPoint [
 	move add: aPoint.
 	lastPosition := aPoint
-	
 ]
 
 { #category : #accessing }
@@ -145,7 +144,7 @@ OSTouchFingerTracker >> pressure: anObject [
 
 { #category : #accessing }
 OSTouchFingerTracker >> timestamp [
-	^ timestamp 
+	^ timestamp
 ]
 
 { #category : #accessing }

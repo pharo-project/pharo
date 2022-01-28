@@ -1,49 +1,49 @@
 Extension { #name : #MetacelloAbstractPackageSpec }
 
-{ #category : #'*metacello-mc-querying' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> file [ 
 	"MetacelloPackageSpec compatibility"
 	
 	^nil
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> forceUpdatePackageSpec: updatedSpecs using: anMCLoader [
 
 	^self updatePackageSpec: updatedSpecs using: anMCLoader
 ]
 
-{ #category : #'*metacello-mc-querying' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> getFile [
   "MetacelloPackageSpec compatibility"
 
   ^ nil
 ]
 
-{ #category : #'*metacello-mc-querying' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> isPackageLoaded [
 
 	^false
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> packagesNeedSavingVisited: visitedProjects using: repos into: aCollection [
 	"noop by default"
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> repositorySpecs [
 
 	^#()
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> resolveToAllPackagesIn: aVersionSpec into: packages visited: visited [
 
 	visited
@@ -62,7 +62,7 @@ MetacelloAbstractPackageSpec >> resolveToAllPackagesIn: aVersionSpec into: packa
 					groupDo: [:grp | grp resolveToAllPackagesIn: aVersionSpec into: packages  visited: visited ]]]
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> resolveToAllPackagesIn: aVersionSpec visited: visited [
 
 	| packages |
@@ -71,50 +71,50 @@ MetacelloAbstractPackageSpec >> resolveToAllPackagesIn: aVersionSpec visited: vi
 	^packages values asOrderedCollection
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> resolveToLoadableSpec [
 
 	^self
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool visited: visited [
   ^ self resolveToPackagesIn: aVersionSpec visited: visited
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> updateForSpawnMethod: sourceSpec [
 	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
 
 	answers := name := requires := includes := nil
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> updatePackageRepositoriesFor: aVersionSpec [
 	"noop by default"
 	
 	^true
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> updatePackageSpec: updatedSpecs using: anMCLoader [
 	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
 ]
 
-{ #category : #'*metacello-mc-querying' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> version [ 
 	"MetacelloPackageSpec compatibility"
 	
 	^nil
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MetacelloAbstractPackageSpec >> visitingWithPackages: packages [
 	"noop"
 ]

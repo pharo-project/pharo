@@ -78,7 +78,6 @@ DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 	self updateColor.
 	(self bounds containsPoint: aHand position)
 		ifFalse: [self center: aHand position].
-
 ]
 
 { #category : #'events-processing' }
@@ -170,13 +169,13 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMen
 DockingBarMorph >> add: wordingString icon: aForm subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
 
-	^ self add: wordingString icon: aForm help: nil subMenu: aMenuMorph 
+	^ self add: wordingString icon: aForm help: nil subMenu: aMenuMorph
 ]
 
 { #category : #construction }
 DockingBarMorph >> add: aString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
-	self add: aString icon: nil subMenu: aMenuMorph 
+	self add: aString icon: nil subMenu: aMenuMorph
 ]
 
 { #category : #accessing }
@@ -209,7 +208,6 @@ DockingBarMorph >> addLine [
 	submorphs isEmpty ifTrue: [^ self].
 	(self lastSubmorph isKindOf: DockingBarMenuLineMorph)
 		ifFalse: [self addMorphBack: DockingBarMenuLineMorph new].
-
 ]
 
 { #category : #construction }
@@ -403,7 +401,6 @@ self updateLayoutProperties
 DockingBarMorph >> fillsOwnerString [
 	"Answer the string to be shown in a menu to represent the fills owner status"
 	^ (self fillsOwner) -> 'fills owner' translated
-
 ]
 
 { #category : #'private - layout' }
@@ -434,7 +431,6 @@ DockingBarMorph >> handleFocusEvent: evt [
 	evt isMove ifFalse:[^self handleEvent: evt]. "handle clicks outside by regular means"
 	"Now it's getting tricky. On #mouseMove we might transfer control to *either* the currently active submenu or the pop up owner, if any. Since the active sub menu is always displayed upfront check it first."
 	selectedItem ifNotNil:[(selectedItem activateSubmenu: evt) ifTrue:[^self]].
-
 ]
 
 { #category : #'events-processing' }
@@ -512,7 +508,6 @@ DockingBarMorph >> isVertical [
 	"Answer true if the receiver has a vertical layout"
 	^ self isAdheringToLeft
 		or: [self isAdheringToRight]
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -622,7 +617,6 @@ DockingBarMorph >> noteNewOwner: aMorph [
 
 	self submorphs
 		do: [:each | each adjustLayoutBounds].
-
 ]
 
 { #category : #accessing }
@@ -792,7 +786,6 @@ DockingBarMorph >> updateLayoutProperties [
 	self fillsOwner ifTrue: [
 			self isHorizontal ifTrue: [self hResizing: #spaceFill].
 			self isVertical ifTrue: [self vResizing: #spaceFill]].
-	
 ]
 
 { #category : #'private - layout' }
@@ -836,7 +829,7 @@ DockingBarMorph >> usedHeightByPredominantDockingBarsOfChastes: predominantChast
 	"Private - convenience"
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
-		ifNotEmpty: [:predominants | (predominants collect: [:each | each height]) sum] 
+		ifNotEmpty: [:predominants | (predominants collect: [:each | each height]) sum]
 ]
 
 { #category : #'private - accessing' }

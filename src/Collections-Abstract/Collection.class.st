@@ -549,7 +549,7 @@ Collection >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
 		do: [ :each | 
 			(aBlock value: each)
 				ifTrue: [ ^ foundBlock cull: each ] ].
-	^ exceptionBlock value	
+	^ exceptionBlock value
 ]
 
 { #category : #enumerating }
@@ -748,7 +748,7 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	| col |
 	col := OrderedCollection new: self size.
 	self do: [ :each | col addAll: (aBlock value: each) ].
-	^ aCollectionClass withAll: col 
+	^ aCollectionClass withAll: col
 ]
 
 { #category : #enumerating }
@@ -808,7 +808,6 @@ Collection >> groupedBy: aBlock [
 		groups associationsDo: [ :association |
 			association value: (self species withAll: association value) ]].
 	^ groups
-
 ]
 
 { #category : #enumerating }
@@ -817,7 +816,6 @@ Collection >> groupedBy: aBlock having: aSelectionBlock [
 	elements for which keyBlock returns the same results, and return those 
 	collections allowed by selectBlock."
 	^ (self groupedBy: aBlock) select: aSelectionBlock
-
 ]
 
 { #category : #comparing }
@@ -910,7 +908,6 @@ Collection >> includesAnyOf: aCollection [
 	self flag: 'use includesAny: instead'.
 	
 	^ self includesAny: aCollection.
-	
 ]
 
 { #category : #testing }
@@ -1060,7 +1057,6 @@ Collection >> printOn: aStream delimiter: delimString [
 	with a delimiter String like: 'a, b, c' "
 
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
-		
 ]
 
 { #category : #printing }

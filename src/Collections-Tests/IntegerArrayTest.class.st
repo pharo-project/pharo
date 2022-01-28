@@ -15,7 +15,6 @@ IntegerArrayTest >> testAt [
 	
 	array at: 3 put: 5.
 	self assert: (array at: 3) equals: 5
-
 ]
 
 { #category : #tests }

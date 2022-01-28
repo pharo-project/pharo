@@ -199,8 +199,6 @@ RBInlineMethodRefactoring >> isOverridden [
 		(each directlyDefinesMethod: selector)
 			ifTrue: [ ^ true ]].
 	^ false
-	
-		
 ]
 
 { #category : #testing }

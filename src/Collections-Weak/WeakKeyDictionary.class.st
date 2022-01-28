@@ -103,7 +103,6 @@ WeakKeyDictionary >> finalizeValues [
 			].
 		].
 	].
-
 ]
 
 { #category : #finalization }
@@ -116,7 +115,6 @@ WeakKeyDictionary >> finalizeValues: finiObjects [
 			tally := tally - 1.
 		].
 	].
-
 ]
 
 { #category : #private }

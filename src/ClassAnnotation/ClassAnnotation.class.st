@@ -271,7 +271,7 @@ ClassAnnotation class >> isInstanceRedefined: aClassAnnotation [
 
 	redefinedInstances ifNil: [ ^false ].
 	
-	^redefinedInstances includesKey: aClassAnnotation	
+	^redefinedInstances includesKey: aClassAnnotation
 ]
 
 { #category : #testing }
@@ -355,7 +355,7 @@ ClassAnnotation class >> registry [
 { #category : #private }
 ClassAnnotation class >> resetCache [
 	<script>
-	ClassAnnotationRegistry reset 
+	ClassAnnotationRegistry reset
 ]
 
 { #category : #redefining }

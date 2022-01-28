@@ -84,7 +84,7 @@ ClyMethodCallCountersQueryTest >> testFromTwoMethods [
 		self class >> #methodWithCounter. 
 		self class >> #methodWithoutCounter}.
 	
-	self assert: foundSelectors sorted asArray equals: #(#methodWithCounter) 
+	self assert: foundSelectors sorted asArray equals: #(#methodWithCounter)
 ]
 
 { #category : #tests }

@@ -67,10 +67,6 @@ IdentityBagTest >> testIdentity [
 	
 	self assert: (identityBag occurrencesOf: aString) equals: 2.
 	self assert: (identityBag occurrencesOf: anOtherString) equals: 1.
-
-
-
-
 ]
 
 { #category : #'tests - identity adding' }

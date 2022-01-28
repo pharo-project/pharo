@@ -99,7 +99,6 @@ RBArrayNode >> allStatements [
 	^ statements asOrderedCollection copy
 			addAll: super allStatements;
 			yourself
-
 ]
 
 { #category : #accessing }
@@ -155,7 +154,7 @@ RBArrayNode >> isDynamicArray [
 
 { #category : #testing }
 RBArrayNode >> isEmpty [
-	^ statements isEmpty 
+	^ statements isEmpty
 ]
 
 { #category : #testing }

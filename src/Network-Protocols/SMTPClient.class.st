@@ -56,7 +56,6 @@ SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: message
 	smtpClient mailFrom: fromAddress to: recipientList text: messageText.
 	smtpClient quit]
 		ensure: [smtpClient close]
-
 ]
 
 { #category : #examples }
@@ -123,7 +122,6 @@ SMTPClient >> initiateSession [
 
 	self sendCommand: (self useHelo ifTrue:['HELO '] ifFalse: ['EHLO ']) , NetNameResolver localHostName.
 	self checkResponse.
-
 ]
 
 { #category : #'public protocol' }
@@ -162,7 +160,6 @@ SMTPClient >> mailFrom: sender to: recipientList text: messageText [
 	recipientList do: [ :recipient |
 		self recipient: recipient ].
 	self data: messageText.
-
 ]
 
 { #category : #'private - protocol' }

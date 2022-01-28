@@ -1,6 +1,6 @@
 Extension { #name : #ClassDescription }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 ClassDescription >> ban: aCritique [
 
 	ReSystemAnnouncer uniqueInstance
@@ -12,32 +12,32 @@ ClassDescription >> ban: aCritique [
 		banRule: aCritique rule for: self.
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 ClassDescription >> banChecksForValidation [
 "returns ban levels that have to be chacked before validation"
 
 	^ { self }
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 ClassDescription >> banLevelCandidates [
 "returns code entities which can ban a rule for this entity"
 
 	^ { self } , self package banLevelCandidates
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 ClassDescription >> critiques [
 	^ ReCriticEngine critiquesOf: self
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 ClassDescription >> reBanName [
 
 	^ self name, ' (Class)'
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 ClassDescription >> suitableRulesFrom: aReRuleManager [ 
 	^ aReRuleManager classRules
 ]

@@ -23,7 +23,6 @@ OmBlock class >> store: anOmBlockFileStore startPosition: aStartPosition endPosi
 		endPosition: anEndPosition
 		firstEntryReference: anOmReference;
 		yourself
-
 ]
 
 { #category : #accessing }
@@ -69,7 +68,6 @@ OmBlock >> initializeWithStore: anOmBlockFileStore startPosition: aStartPosition
 	startPosition := aStartPosition.
 	endPosition := anEndPosition.
 	firstEntryReference := anOmReference.
-
 ]
 
 { #category : #accessing }
@@ -78,7 +76,6 @@ OmBlock >> lastLocalNameAsInteger [
 	self checkIfMustRefreshBlock.
 	
 	^ positions size + self firstLocalNameAsInteger - 1.
-
 ]
 
 { #category : #accessing }
@@ -99,7 +96,6 @@ OmBlock >> printOn: aStream [
 		nextPutAll: '..';
 		print: endPosition;
 		nextPut: $).
-
 ]
 
 { #category : #refreshing }
@@ -116,7 +112,6 @@ OmBlock >> refreshIfNeededStartingAt: firstStreamPosition since: initialLocalNam
 	
 	"Then, it's only partially loaded i.e. outdated."
 	positions addAll: (store entryPositionsStartingAt: firstStreamPosition upTo: endPosition).
-
 ]
 
 { #category : #accessing }

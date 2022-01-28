@@ -71,5 +71,4 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCodeBig [
 	"Test a big string"
 	
 	self testEmbeddingSourceCode: (String loremIpsum: 30000)
-	
 ]

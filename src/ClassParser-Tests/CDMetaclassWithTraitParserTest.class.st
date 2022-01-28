@@ -16,8 +16,6 @@ CDMetaclassWithTraitParserTest >> classDefinitionString [
 				'instvar2' -> self secondInstanceVariableName.
 				'classTraitName' -> self classTraitName
 			 } asDictionary
-			
-	
 ]
 
 { #category : #helpers }

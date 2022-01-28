@@ -14,7 +14,7 @@ ClyMultipleClassRelationScopeTest >> multipleScopeSample [
 
 { #category : #running }
 ClyMultipleClassRelationScopeTest >> scopeClass [
-	^ClyMultipleClassRelationScope 
+	^ClyMultipleClassRelationScope
 ]
 
 { #category : #running }
@@ -59,5 +59,5 @@ ClyMultipleClassRelationScopeTest >> testRepresentsClassOfScope [
 	self assert: (scope representsScope: ClyTypedScope).
 	
 	self deny: (scope representsScope: ClySubclassScope).
-	self deny: (scope representsScope: ClyCompositeScope). 
+	self deny: (scope representsScope: ClyCompositeScope).
 ]

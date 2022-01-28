@@ -153,7 +153,6 @@ WeakSetTest >> testCollisions [
 	ws add: 1/on second.
 	ws add: 1/o5 second.
 	remember do: [:m | self assert: (ws includes: m)].
-	
 ]
 
 { #category : #tests }

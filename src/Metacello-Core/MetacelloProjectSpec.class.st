@@ -409,7 +409,10 @@ MetacelloProjectSpec >> hasRepository [
 
 { #category : #scripting }
 MetacelloProjectSpec >> isLocked [
-  ^ self registration locked
+
+  ^ self registration 
+	ifNotNil: [ :aRegistration | aRegistration locked ]
+	ifNil: [ false ]
 ]
 
 { #category : #printing }

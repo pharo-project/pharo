@@ -18,11 +18,12 @@ Class {
 
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
+
 	<script>
 	^ self new
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -52,8 +53,6 @@ EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 			"Needed to reverse the selected logs to have the expected order (as user)."
 			entries := items reversed flatCollect: [:each | each log entries ].
 			EpLog newWithEntries: entries ].
-
-
 ]
 
 { #category : #initialization }
@@ -140,7 +139,7 @@ EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
 { #category : #actions }
 EpUnifiedBrowserPresenter >> openDashboard [
 
-	(EpDashboardPresenter newApplication: self application) openWithSpec
+	(EpDashboardPresenter newApplication: self application) open
 ]
 
 { #category : #refreshing }

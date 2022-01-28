@@ -53,15 +53,15 @@ BaselineOfUI >> baseline: spec [
 		
 		spec package: 'Debugger-Actions'.
 
-		spec package: 'Fonts-Chooser'.
-
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec package: 'Keymapping-Settings'.
-		spec package: 'Keymapping-Tools-Spec'.
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'ui' ].
 
 		spec package: 'WebBrowser-Core'.
 

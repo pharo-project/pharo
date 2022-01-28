@@ -143,7 +143,7 @@ ClyTabManager >> desiredSelection: toolClasses [
 	shouldSkipCurrentDesiredSelection ifFalse: [ 
 		currentSelection := self selectedTools collect: [ :each | each class ].
 		desiredSelection addAll: currentSelection].
-	shouldSkipCurrentDesiredSelection := false "it is one time option" 
+	shouldSkipCurrentDesiredSelection := false "it is one time option"
 ]
 
 { #category : #'focus management' }
@@ -183,7 +183,7 @@ ClyTabManager >> okToChange [
 
 	(tools anySatisfy: #hasUnacceptedEdits) ifFalse: [ ^true ].
 	
-	^browser confirmDiscardChanges 
+	^browser confirmDiscardChanges
 ]
 
 { #category : #private }
@@ -316,7 +316,7 @@ ClyTabManager >> tabDeleted: aTab [
 	| removedTool |
 	removedTool := tools detect: [ :each | each containerTab = aTab ] ifNone: [ ^self ].
 	tools remove: removedTool.
-	removedTool cleanAfterRemove	
+	removedTool cleanAfterRemove
 ]
 
 { #category : #accessing }

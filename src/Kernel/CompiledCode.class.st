@@ -90,7 +90,6 @@ CompiledCode >> accessesRef: literalVariable [
 { #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
-	
 ]
 
 { #category : #accessing }
@@ -219,6 +218,12 @@ CompiledCode >> flag [
 	^((self header bitShift: -29) bitAnd: 1) = 1
 ]
 
+{ #category : #enumerating }
+CompiledCode >> flattenOn: aStream [
+	"We do not flatten code into bytecode/literals but add the whole object"
+	aStream nextPut: self
+]
+
 { #category : #accessing }
 CompiledCode >> frameSize [
 	"Answer the size of temporary frame needed to run the receiver."
@@ -227,7 +232,6 @@ CompiledCode >> frameSize [
 	(self header noMask: 16r20000)
 		ifTrue: [^ SmallFrame]
 		ifFalse: [^ LargeFrame]
-
 ]
 
 { #category : #literals }
@@ -305,7 +309,6 @@ CompiledCode >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
-
 ]
 
 { #category : #literals }
@@ -519,8 +522,7 @@ CompiledCode >> localSendsAnySelectorOf: aCollection [
 			ifTrue: [ ^ self messages includesAny: aCollection ]
 	].
 
-	^ false 
-
+	^ false
 ]
 
 { #category : #scanning }
@@ -552,7 +554,6 @@ CompiledCode >> longPrintOn: aStream [
 		self printPrimitiveOn: aStream.
 	].
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-
 ]
 
 { #category : #accessing }
@@ -782,7 +783,6 @@ CompiledCode >> sendsAnySelectorOf: aCollection [
 	
 	(self localSendsAnySelectorOf: aCollection) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsAnySelectorOf: aCollection ]
-
 ]
 
 { #category : #literals }
@@ -841,7 +841,7 @@ CompiledCode >> sourceNodeForPC: arg1 [
 
 { #category : #'source code management' }
 CompiledCode >> sourcePointer [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #'source code management' }
@@ -906,7 +906,6 @@ CompiledCode >> withAllBlocksDo: aBlock [
 	
 	aBlock value: self.
 	self allBlocksDo: aBlock
-	
 ]
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 ClySwitchToScopedModeCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext
 ]
 
 { #category : #accessing }

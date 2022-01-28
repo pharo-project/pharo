@@ -39,7 +39,7 @@ Class {
 { #category : #'instance variables' }
 ClyVariableReferencesQuery class >> from: aScope toVariablesFrom: aVariableQuery [ 
 	^(self from: aScope)
-		variableQuery: aVariableQuery 
+		variableQuery: aVariableQuery
 ]
 
 { #category : #'instance variables' }
@@ -66,7 +66,7 @@ ClyVariableReferencesQuery class >> ofAny: variables from: aScope [
 { #category : #'instance variables' }
 ClyVariableReferencesQuery class >> toVariablesFrom: aVariableQuery [ 
 	^self new
-		variableQuery: aVariableQuery 
+		variableQuery: aVariableQuery
 ]
 
 { #category : #comparing }
@@ -93,7 +93,7 @@ ClyVariableReferencesQuery >> buildResult: aQueryResult [
 { #category : #printing }
 ClyVariableReferencesQuery >> description [
 
-	^'references to ', self printVariables 
+	^'references to ', self printVariables
 ]
 
 { #category : #testing }
@@ -120,7 +120,7 @@ ClyVariableReferencesQuery >> hash [
 ClyVariableReferencesQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
-	aStream nextPutAll: self printVariables 
+	aStream nextPutAll: self printVariables
 ]
 
 { #category : #printing }
@@ -147,5 +147,5 @@ ClyVariableReferencesQuery >> variableQuery [
 
 { #category : #accessing }
 ClyVariableReferencesQuery >> variableQuery: aVariableQuery [
-	variableQuery := aVariableQuery 
+	variableQuery := aVariableQuery
 ]

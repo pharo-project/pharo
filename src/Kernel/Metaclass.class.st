@@ -123,7 +123,7 @@ Metaclass >> classVariables [
 { #category : #fileout }
 Metaclass >> definitionStringFor: aConfiguredPrinter [
 
-	^ aConfiguredPrinter metaclassDefinitionString 
+	^ aConfiguredPrinter metaclassDefinitionString
 ]
 
 { #category : #accessing }
@@ -149,6 +149,14 @@ Metaclass >> hasClassSide [
 	^ false
 ]
 
+{ #category : #'accessing - instances and variables' }
+Metaclass >> hasClassVarNamed: aString [
+
+	^self instanceSide 
+		ifNil: [ false ]
+		ifNotNil: [ :class | class hasClassVarNamed: aString ]
+]
+
 { #category : #compiling }
 Metaclass >> innerBindingOf: varName [
 
@@ -166,7 +174,7 @@ Metaclass >> instanceSide [
 
 { #category : #testing }
 Metaclass >> isAnonymous [
-	^self soleInstance isAnonymous 
+	^self soleInstance isAnonymous
 ]
 
 { #category : #testing }
@@ -185,7 +193,7 @@ Metaclass >> isMetaclassOfClassOrNil [
 	
 	^ self instanceSide 
 		ifNil: [ true ] 
-		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ] 
+		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ]
 ]
 
 { #category : #testing }
@@ -250,7 +258,6 @@ Metaclass >> obsoleteSubclasses [
 Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
 	^ self instanceSide possibleVariablesFor: misspelled continuedFrom: oldResults
-
 ]
 
 { #category : #copying }

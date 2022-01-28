@@ -37,7 +37,7 @@ BagTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 BagTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #coverage }
@@ -50,7 +50,6 @@ BagTest >> classToBeTested [
 BagTest >> collection [
 
 	^ nonEmpty.
-	
 ]
 
 { #category : #'tests - set arithmetic' }
@@ -62,19 +61,19 @@ BagTest >> collectionClass [
 
 { #category : #requirements }
 BagTest >> collectionInForIncluding [
-	 ^ collectionIn 
+	 ^ collectionIn
 ]
 
 { #category : #requirements }
 BagTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ collectionWithoutNilMoreThan5 
+	^ collectionWithoutNilMoreThan5
 ]
 
 { #category : #requirements }
 BagTest >> collectionNotIncluded [
-	^ collectionNotIn 
+	^ collectionNotIn
 ]
 
 { #category : #requirements }
@@ -106,13 +105,13 @@ BagTest >> collectionWithElementsToRemove [
 
 { #category : #requirements }
 BagTest >> collectionWithEqualElements [
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
 BagTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -140,7 +139,7 @@ BagTest >> element [
 { #category : #requirements }
 BagTest >> elementInForIncludesTest [
 
-	^ self element 
+	^ self element
 ]
 
 { #category : #requirements }
@@ -152,7 +151,7 @@ BagTest >> elementInForOccurrences [
 { #category : #requirements }
 BagTest >> elementNotIn [
 
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #'tests - includes' }
@@ -173,22 +172,20 @@ BagTest >> elementTwiceIn [
 { #category : #requirements }
 BagTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
-^ self elementTwiceIn 
+^ self elementTwiceIn
 ]
 
 { #category : #requirements }
 BagTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
-	^ collectionOfString 
+	^ collectionOfString
 ]
 
 { #category : #setup }
 BagTest >> empty [
 
 	^ empty
-	
-	
 ]
 
 { #category : #setup }
@@ -205,7 +202,7 @@ BagTest >> expectedSizeAfterReject [
 { #category : #requirements }
 BagTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -217,8 +214,6 @@ BagTest >> integerCollectionWithoutEqualElements [
 BagTest >> nonEmpty [
 
 	^ nonEmpty
-	
-	
 ]
 
 { #category : #requirements }
@@ -230,7 +225,7 @@ BagTest >> nonEmpty1Element [
 { #category : #requirements }
 BagTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ otherCollectionWithoutEqualElements 
+	^ otherCollectionWithoutEqualElements
 ]
 
 { #category : #requirements }
@@ -242,13 +237,12 @@ BagTest >> otherCollection [
 BagTest >> result [
 
 	^ collectResult.
-	
 ]
 
 { #category : #requirements }
 BagTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWithCharacters 
+	^ collectionWithCharacters
 ]
 
 { #category : #requirements }
@@ -404,7 +398,6 @@ BagTest >> testCopy [
 
 { #category : #'tests - copy' }
 BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #tests }

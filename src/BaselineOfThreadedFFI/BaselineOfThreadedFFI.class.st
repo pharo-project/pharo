@@ -21,6 +21,7 @@ BaselineOfThreadedFFI >> baseline: spec [
 		spec
 			"core"
 			package: 'ThreadedFFI';
+			package: 'ThreadedFFI-Graphics-Extensions' with: [ spec requires: #('ThreadedFFI') ];
 			package: 'ThreadedFFI-UFFI' with: [ spec requires: #('ThreadedFFI') ];
 			package: 'ThreadedFFI-UFFI-Overrides' with: [ spec requires: #('ThreadedFFI-UFFI') ];
 			"tests"
@@ -29,8 +30,9 @@ BaselineOfThreadedFFI >> baseline: spec [
 	
 	spec 
 		group: 'Core' with: #('ThreadedFFI' 'ThreadedFFI-UFFI' 'ThreadedFFI-UFFI-Overrides');
+		group: 'Graphics' with: #('Core' 'ThreadedFFI-Graphics-Extensions');
 		group: 'Tests' with: #('ThreadedFFI-Tests' 'ThreadedFFI-UFFI-Tests');
-		group: 'default' with: #('Core' 'Tests')
+		group: 'default' with: #('Core' 'Graphics' 'Tests')
 ]
 
 { #category : #doits }

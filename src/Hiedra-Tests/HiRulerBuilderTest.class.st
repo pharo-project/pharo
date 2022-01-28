@@ -34,7 +34,6 @@ HiRulerBuilderTest >> assertRulerHasLinks: expectedLinksAndRulerPointsAsAssociat
 			assert: actualRulerPoints = rulerPoints asArray
 			description: [ '{1}: Found {2} instead of {3}.' format: { actualLink. actualRulerPoints. rulerPoints } ].
 	]
-
 ]
 
 { #category : #running }
@@ -59,7 +58,6 @@ HiRulerBuilderTest >> assertRulerHasNodes: expectedNodesAndRulerPointsAsAssociat
 		assert: failures isEmpty
 		description: [ 'Nodes found at unexpected points: {1}'
 			format: { failures printString } ].
-
 ]
 
 { #category : #running }
@@ -112,7 +110,7 @@ HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 		addColumn: (SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ]);
 		items: values;
 		title: testSelector asString;
-		openWithSpec
+		open
 ]
 
 { #category : #tests }
@@ -188,7 +186,6 @@ HiRulerBuilderTest >> testFourMergedForks [
 
 		(#d->#b) -> {1@1. 3@2. 2@3}.
 	}.
-
 ]
 
 { #category : #tests }
@@ -246,7 +243,6 @@ HiRulerBuilderTest >> testThreeMergedForks [
 
 		(#d->#b) -> {1@1. 2@2. 1@3}.
 	}.
-
 ]
 
 { #category : #tests }
@@ -287,7 +283,6 @@ HiRulerBuilderTest >> testThreeMergedForks2 [
 
 		(#c->#a) -> {2@2. 2@3. 1@4}.
 	}.
-
 ]
 
 { #category : #tests }
@@ -328,7 +323,6 @@ HiRulerBuilderTest >> testThreeMergedForks3 [
 
 		(#c->#b) -> {2@2. 1@3}.
 	}.
-
 ]
 
 { #category : #tests }
@@ -384,7 +378,6 @@ HiRulerBuilderTest >> testTwoMergedForks [
 		(#c->#b) -> {1@1. 2@2}.
 		(#b->#a) -> {2@2. 1@3}.
 	}.
-
 ]
 
 { #category : #tests }
@@ -417,7 +410,6 @@ HiRulerBuilderTest >> testTwoMergedForks2 [
 
 		(#c->#a) -> {1@1. 2@2. 1@3}.
 	}.
-
 ]
 
 { #category : #tests }
@@ -440,7 +432,6 @@ HiRulerBuilderTest >> testTwoUnconnectedNodes [
 	
 	self assertRulerHasLinks: {
 	}.
-
 ]
 
 { #category : #tests }
@@ -475,5 +466,4 @@ HiRulerBuilderTest >> testTwoUnmergedForks [
 
 		(#c->#a) -> {2@2. 2@3. 1@4}.
 	}.
-
 ]

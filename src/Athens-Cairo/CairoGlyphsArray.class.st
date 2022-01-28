@@ -36,7 +36,7 @@ CairoGlyphsArray class >> new: size [
 
 { #category : #accessing }
 CairoGlyphsArray >> allocatedByCairo [
-	^ allocatedByCairo 
+	^ allocatedByCairo
 ]
 
 { #category : #accessing }

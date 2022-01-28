@@ -219,7 +219,6 @@ MailAddressParser >> removePhrase [
 		tokens isNotEmpty and: [
 			#(Atom QuotedString $. $@) includes: (tokens last type) ]
 	] whileTrue: [ tokens removeLast ].
-
 ]
 
 { #category : #'building address list' }

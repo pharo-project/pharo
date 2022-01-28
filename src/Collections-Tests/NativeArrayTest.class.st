@@ -14,7 +14,7 @@ NativeArrayTest >> alignmentIndexesDo: aBlock [
 	1 to: max do: [ :i |
 		1 to: max do: [ :j |
 			1 to: max do: [ :k |
-				aBlock value: i value: j value: k ] ] ] 
+				aBlock value: i value: j value: k ] ] ]
 ]
 
 { #category : #utilities }

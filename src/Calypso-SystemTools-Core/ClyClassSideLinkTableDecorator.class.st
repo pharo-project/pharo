@@ -26,14 +26,13 @@ ClyClassSideLinkTableDecorator class >> decorateMainTableCell: anItemCellMorph i
 
 { #category : #decoration }
 ClyClassSideLinkTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }
 ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext 
+	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext
 ]
 
 { #category : #decoration }

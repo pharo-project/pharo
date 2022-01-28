@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyPackageScopeTest >> extraBasisSample [
-	^ClySubclassMOfClass1FromP2Mock package 
+	^ClySubclassMOfClass1FromP2Mock package
 ]
 
 { #category : #running }
@@ -17,7 +17,7 @@ ClyPackageScopeTest >> scopeClass [
 
 { #category : #running }
 ClyPackageScopeTest >> singleBasisSample [
-	^ClyClass1FromP1Mock package 
+	^ClyClass1FromP1Mock package
 ]
 
 { #category : #tests }

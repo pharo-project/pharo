@@ -19,7 +19,7 @@ ClyDebugBrokenCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 ClyDebugBrokenCritiqueCommand class >> criticTableIconActivation [
 	<classAnnotation>
 	
-	^ClyTableIconCommandActivation for: ReProperty asCalypsoItemContext 
+	^ClyTableIconCommandActivation for: ReProperty asCalypsoItemContext
 ]
 
 { #category : #'table decoration' }

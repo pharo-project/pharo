@@ -42,7 +42,6 @@ AbstractTutorial class >> title [
 	separators := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.	
 	groups := className findTokens: separators keep: separators.	
 	^' ' join: (groups pairsCollect: [ :sep :rest | sep , rest ]).
-
 ]
 
 { #category : #'tutorial metainfo' }
@@ -73,7 +72,7 @@ AbstractTutorial >> printOn: aStream [
 	aStream 
 		nextPutAll: 'a Pharo Tutorial (';
 		nextPutAll: self class title;
-		nextPutAll: ')'.    
+		nextPutAll: ')'.
 ]
 
 { #category : #accessing }

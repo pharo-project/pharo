@@ -13,7 +13,7 @@ RPackageTest >> tearDown [
 	#(TestClass TestClassOther) 
 		do: [ :each | 
 			self class environment at: each ifPresent: #removeFromSystem ].
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
@@ -68,9 +68,6 @@ RPackageTest >> testAddClassFromTag [
 	self assert: (package2 includesClass: class).	
 	self assert: (package2 classTagNamed: #Test2 ifAbsent: [ nil ]) notNil.
 	self assert: ((package2 classTagNamed: #Test2 ifAbsent: [ nil ]) includesClass: class)
-
-	
-
 ]
 
 { #category : #tests }
@@ -203,7 +200,6 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 	self assert: (packageDemoted extensionMethods includes: classOther>>#bar).	
 	self assert: ((classOther>>#bar) protocol) equals: '*Test1-TAG1'.
 	self assert: (packageDemoted classes	includesAll: {class. classOther}).
-
 ]
 
 { #category : #'tests - properties' }
@@ -290,8 +286,6 @@ RPackageTest >> testRenameToMakesMCDirty [
 	self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 	
 	package renameTo: 'Test2'.
-	
-	
 ]
 
 { #category : #'tests - queries' }

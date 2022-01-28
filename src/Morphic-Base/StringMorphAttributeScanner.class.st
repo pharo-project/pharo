@@ -98,7 +98,6 @@ StringMorphAttributeScanner >> initializeFromStringMorph: aStringMorph [
 	
 	emphasis := actualFont emphasis.
 	textColor := aStringMorph color.
-
 ]
 
 { #category : #accessing }

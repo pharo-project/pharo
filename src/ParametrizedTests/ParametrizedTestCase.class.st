@@ -78,7 +78,7 @@ ParametrizedTestCase class >> buildSuite [
 
 { #category : #private }
 ParametrizedTestCase class >> isAbstract [
-	^ self name = #ParametrizedTestCase 
+	^ self name = #ParametrizedTestCase
 ]
 
 { #category : #'building suites' }
@@ -103,7 +103,6 @@ ParametrizedTestCase >> nameForReport [
 	^ String streamContents: [ :s |
 		s nextPutAll: self selector asString.
 		parametersToUse printElementsOn: s ]
-
 ]
 
 { #category : #accessing }
@@ -121,7 +120,6 @@ ParametrizedTestCase >> printOn: aStream [
 
 	super printOn: aStream.
 	parametersToUse ifNotNil: [ parametersToUse printElementsOn: aStream.]
-	
 ]
 
 { #category : #running }

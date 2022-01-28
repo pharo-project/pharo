@@ -96,7 +96,8 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 	super buildLeftSideBar.
 
-	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self
+	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self.	
+	self leftSideBar enableMouseCommands: CmdTextLeftBarDoubleClickActivation withContextFrom: self
 ]
 
 { #category : #operations }
@@ -147,7 +148,7 @@ ClyMethodCodeEditorToolMorph >> detachFromSystem [
 
 { #category : #accessing }
 ClyMethodCodeEditorToolMorph >> editingMethod [
-	^editingMethod 
+	^editingMethod
 ]
 
 { #category : #accessing }
@@ -341,7 +342,6 @@ ClyMethodCodeEditorToolMorph >> update [
 	super update.
 	
 	self formatTextIfNeeded.
-	
 ]
 
 { #category : #updating }

@@ -82,7 +82,7 @@ DiskStore class >> isActiveClass [
 
 { #category : #public }
 DiskStore class >> maxFileNameLength [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #public }
@@ -196,7 +196,6 @@ DiskStore >> basicEntryAt: aPath [
 	
 	^ (File lookupDirectory: encodedPath filename: encodedBasename)
 		ifNil: [ #badDirectoryPath ].
-	
 ]
 
 { #category : #private }
@@ -299,7 +298,6 @@ DiskStore >> creationTimeOf: aPath [
 	pathString := self stringFromPath: aPath.
 	time := (File fileAttribute: pathString number: 12) ifNil: [ File fileAttribute: pathString number: 11 ].
 	^DateAndTime fromInternalTime: time
-
 ]
 
 { #category : #accessing }
@@ -355,7 +353,6 @@ DiskStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 	^[ self directoryAt: aPath nodesDo: aBlock ]
 		on: DirectoryDoesNotExist, FileDoesNotExistException
 		do: [ absentBlock value ].
-
 ]
 
 { #category : #private }
@@ -400,7 +397,6 @@ DiskStore >> entryFromNode: node path: path for: aFileSystem [
 	^DiskDirectoryEntry 
 		reference: (FileReference fileSystem: aFileSystem path: entryPath)
 		statAttributes: (node at: 2).
-
 ]
 
 { #category : #public }
@@ -505,7 +501,7 @@ DiskStore >> isFile: aPath [
 	"Answer a boolean indicating whether the supplied path is a file, i.e. not a directory"
 
 	aPath isRoot ifTrue: [ ^false ].
-	^File isFile: (self stringFromPath: aPath)	
+	^File isFile: (self stringFromPath: aPath)
 ]
 
 { #category : #testing }
@@ -576,7 +572,6 @@ DiskStore >> permissions: aPath [
 	"Answer the FileSystemPermissions for the supplied path"
 
 	^FileSystemPermission posixPermissions: (File posixPermissions: (self stringFromPath: aPath))
-
 ]
 
 { #category : #public }

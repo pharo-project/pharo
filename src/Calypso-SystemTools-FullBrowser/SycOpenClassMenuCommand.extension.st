@@ -4,5 +4,5 @@ Extension { #name : #SycOpenClassMenuCommand }
 SycOpenClassMenuCommand class >> fullBrowserTabActivation [
 	<classAnnotation>
 	
-	^ClyBrowserTabCommandActivation for: ClyFullBrowserClassContext 
+	^ClyBrowserTabCommandActivation for: ClyFullBrowserClassContext
 ]

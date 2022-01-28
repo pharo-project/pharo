@@ -9,7 +9,7 @@ Class {
 
 { #category : #parents }
 ClySwitchScopeMenuGroup class >> parentGroup [
-	^ClyQueryMenuGroup 
+	^ClyQueryMenuGroup
 ]
 
 { #category : #accessing }

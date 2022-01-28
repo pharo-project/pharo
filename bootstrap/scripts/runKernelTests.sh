@@ -26,7 +26,7 @@ if [ "${1}" -eq "32" ]
 then
  TEST_VM_KIND="vm"
 else
- TEST_VM_KIND="vmHeadlessLatest"	
+ TEST_VM_KIND="vmLatest"	
 fi
 
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${TEST_VM_KIND} ${1}

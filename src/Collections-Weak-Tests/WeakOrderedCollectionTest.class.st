@@ -31,8 +31,6 @@ WeakOrderedCollectionTest >> testWeakOrderedCollectionAllGarbageCollected [
 	3 timesRepeat: [Smalltalk garbageCollect].
 	self assert: weakOrderedCollection asSet size equals: 1.
 	self assert: (weakOrderedCollection asSet includes: nil)
-
-
 ]
 
 { #category : #tests }

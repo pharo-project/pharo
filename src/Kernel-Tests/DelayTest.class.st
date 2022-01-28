@@ -30,8 +30,6 @@ DelayTest >> testMultiProcessWaitOnSameDelay [
 	p1 terminate.
 	p2 terminate.
 	self assert: wasRun.
-
-
 ]
 
 { #category : #'tests - limits' }
@@ -41,5 +39,4 @@ DelayTest >> testMultiSchedule [
 	delay := Delay forSeconds: 1.
 	delay schedule.
 	self should:[delay schedule] raise: Error.
-
 ]

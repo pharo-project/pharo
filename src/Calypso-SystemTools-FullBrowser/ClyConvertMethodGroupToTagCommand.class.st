@@ -25,7 +25,7 @@ ClyConvertMethodGroupToTagCommand class >> canBeExecutedInContext: aToolContext 
 ClyConvertMethodGroupToTagCommand class >> fullBrowserContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
 ]
 
 { #category : #execution }

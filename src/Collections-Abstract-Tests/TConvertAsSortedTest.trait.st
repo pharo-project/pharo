@@ -55,6 +55,5 @@ TConvertAsSortedTest >> testAsSortedCollectionWithSortBlock [
 		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
 	self assert: result size equals: self collectionWithSortableElements  size.
 	tmp:=result at: 1.
-	result do: [:each| self assert: tmp >= each. tmp := each ] 
-	
+	result do: [:each| self assert: tmp >= each. tmp := each ]
 ]

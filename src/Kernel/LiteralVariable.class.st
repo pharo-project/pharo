@@ -21,24 +21,6 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
-{ #category : #validating }
-LiteralVariable class >> checkValidName: aString [
-	self flag: #fixme
-	"aString first canBeGlobalVarInitial
-		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
-]
-
-{ #category : #'gt-inspector-extension' }
-LiteralVariable class >> gtInspectorAllVariablesIn: composite [
- 	"This provides a list of all defined Class or Global Variables"
- 	<gtInspectorPresentationOrder: 20>
- 	composite list 
- 		title: 'All Defined Variables';
- 		display: [ self allSubclasses sorted: #name ascending ];
- 		tags: [ :each | { each package name } ];
- 		when: [self == LiteralVariable  ].
-]
-
 { #category : #'instance creation' }
 LiteralVariable class >> key: aKey [ 
 	"Answer an instance of me with the argument as the lookup up."

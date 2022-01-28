@@ -7,7 +7,7 @@ RGMethodDefinition >> createTwin [
 
 { #category : #'*Reflectivity' }
 RGMethodDefinition >> installLink: aMetaLink [ 
-	self compiledMethod installLink: aMetaLink 
+	self compiledMethod installLink: aMetaLink
 ]
 
 { #category : #'*Reflectivity' }

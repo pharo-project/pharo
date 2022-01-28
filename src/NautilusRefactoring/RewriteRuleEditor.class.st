@@ -15,8 +15,8 @@ Class {
 	#category : #'NautilusRefactoring-Utilities'
 }
 
-{ #category : #specs }
-RewriteRuleEditor class >> defaultSpec [
+{ #category : #layout }
+RewriteRuleEditor class >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
 		add: (SpBoxLayout newTopToBottom
@@ -29,7 +29,7 @@ RewriteRuleEditor class >> defaultSpec [
 			add: #helpText expand: true fill: true padding: 18;
 			addLast: #replaceButton)
 			expand: false fill: false padding: 0;
-		yourself	
+		yourself
 ]
 
 { #category : #'world menu' }
@@ -44,14 +44,14 @@ RewriteRuleEditor class >> menuCommandOn: aBuilder [
 
 { #category : #examples }
 RewriteRuleEditor class >> open [
+
 	<example>
-	^self new openWithSpec
+	^ self new open
 ]
 
 { #category : #initialization }
 RewriteRuleEditor >> connectPresenters [
 	replaceButton action: [ self runReplace ].
-
 ]
 
 { #category : #initialization }
@@ -90,7 +90,6 @@ RewriteRuleEditor >> initializeWindow: aWindowPresenter [
 		title: self windowTitle;
 		initialExtent: (50@18) * (fontWidth @ rowHeight);
 		whenOpenedDo: [ helpText color: self theme baseColor]
-
 ]
 
 { #category : #actions }

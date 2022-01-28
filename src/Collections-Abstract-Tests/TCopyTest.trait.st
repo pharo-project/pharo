@@ -114,8 +114,6 @@ TCopyTest >> testCopyNonEmptyWithout [
 	self nonEmpty do:
 		[:each | (each = anElementOfTheCollection) 
 					ifFalse: [self assert: (res includes: each)]]
-	
-
 ]
 
 { #category : #'tests - copy' }

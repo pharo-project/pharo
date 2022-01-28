@@ -59,8 +59,7 @@ AthensCanvas >> createPath: aPathCreatingBlock [
 
 { #category : #paths }
 AthensCanvas >> createRectanglePath: aRectangle [ 
-	^ surface createRectanglePath: aRectangle 
-
+	^ surface createRectanglePath: aRectangle
 ]
 
 { #category : #masking }
@@ -73,8 +72,6 @@ AthensCanvas >> draw [
 	"Fill the currently selected shape with currently selected paint"
 	
 	^ shape paintFillsUsing: paint on: self
-
-
 ]
 
 { #category : #drawing }
@@ -91,7 +88,6 @@ AthensCanvas >> drawShape: anObject [
 	self 
 		setShape: anObject;
 		draw
-	
 ]
 
 { #category : #'drawing text' }
@@ -138,7 +134,7 @@ AthensCanvas >> isVisible: aRectangle [
 
 { #category : #accessing }
 AthensCanvas >> paint [
-	^ paint  
+	^ paint
 ]
 
 { #category : #paint }
@@ -162,7 +158,6 @@ AthensCanvas >> paintTransform [
 	The answered object should conform to AthensTransform public protocol."
 
 	^ surface paintTransform
-
 ]
 
 { #category : #'transformation matrices' }
@@ -170,7 +165,6 @@ AthensCanvas >> pathTransform [
 	"Answer the path transformation matrix controller.
 	The answered object should conform to AthensTransform public protocol."
 	^ surface pathTransform
-
 ]
 
 { #category : #'drawing text' }

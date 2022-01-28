@@ -13,8 +13,7 @@ Class {
 { #category : #utilities }
 GoferOperationTest >> allManagers [
 
-	^ MCWorkingCopy allManagers 
-	
+	^ MCWorkingCopy allManagers
 ]
 
 { #category : #accessing }

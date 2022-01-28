@@ -44,7 +44,7 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	^ self 
 		selector: selector 
 		arguments: ((1 to: selector numArgs) collect: [ :i | RBVariableNode named: 't' , i asString ]) 
-		body: (RBSequenceNode statements: {message}) 
+		body: (RBSequenceNode statements: {message})
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -134,7 +134,6 @@ RBMethodNode >> notShadowedTemporaryNamesFrom: aContext [
 	| ownVariableNames |
 	ownVariableNames := self allDefinedVariables collect: [ :var | var asString ].
 	^ aContext tempNames difference: ownVariableNames
-
 ]
 
 { #category : #'*OpalCompiler-Core' }

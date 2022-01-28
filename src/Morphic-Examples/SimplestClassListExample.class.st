@@ -31,7 +31,6 @@ SimplestClassListExample >> defaultTreeMorph [
 SimplestClassListExample >> openDialogOn: aClass [ 
 	rootClass := aClass.
 	^ self openDialogWindowIn: self currentWorld title: 'All Object subclasses'
-
 ]
 
 { #category : #'instance creation' }
@@ -39,7 +38,6 @@ SimplestClassListExample >> openOn: aClass [
 	rootClass := aClass.
 	(self defaultTreeMorph buildContents embeddedInMorphicWindowLabeled: 'test') openInWorld
 	"(self dialogWindowIn: World title: 'All Object subclasses') openInWorld"
-
 ]
 
 { #category : #examples }

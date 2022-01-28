@@ -175,7 +175,6 @@ FixedFaceFont >> fontSize: aNumber [
 FixedFaceFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 
 	^ baseFont glyphInfoOf: substitutionCharacter into: glyphInfoArray.
-
 ]
 
 { #category : #accessing }

@@ -26,7 +26,7 @@ ClyRunTestsFromSelectedItemsCommand class >> canBeExecutedInContext: aToolContex
 
 { #category : #activation }
 ClyRunTestsFromSelectedItemsCommand class >> contextClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #activation }
@@ -52,7 +52,7 @@ ClyRunTestsFromSelectedItemsCommand class >> fullBrowserTableIconActivation [
 
 { #category : #testing }
 ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
-	^self = ClyRunTestsFromSelectedItemsCommand 
+	^self = ClyRunTestsFromSelectedItemsCommand
 ]
 
 { #category : #accessing }

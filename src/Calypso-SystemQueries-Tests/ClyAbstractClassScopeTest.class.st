@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyAbstractClassScopeTest class >> isAbstract [
-	^self == ClyAbstractClassScopeTest 
+	^self == ClyAbstractClassScopeTest
 ]
 
 { #category : #running }

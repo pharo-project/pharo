@@ -24,5 +24,4 @@ CDNormalClassParserTest >> classDefinitionString [
 CDNormalClassParserTest >> testNormalClassHasFixedLayout [
 
 	self assert: classDefinition layoutClass equals: FixedLayout
-
 ]

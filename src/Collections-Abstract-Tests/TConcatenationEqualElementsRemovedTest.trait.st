@@ -45,7 +45,6 @@ result := collection1 , collection2.
 
 collection1 do:[ :each | self assert: (result includes: each)].
 collection2 do:[ :each | self assert: (result includes: each)].
-
 ]
 
 { #category : #'tests - concatenation' }

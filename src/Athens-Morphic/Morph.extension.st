@@ -14,7 +14,6 @@ Morph >> drawClippedOnAthensCanvas: anAthensCanvas during: aBlock [
 				clipBy: (self clippingBounds intersect: anAthensCanvas clipRect ifNone:[^ self])
 				during: aBlock ] 
 		ifFalse: [ aBlock value ]
-
 ]
 
 { #category : #'*Athens-Morphic' }
@@ -40,13 +39,11 @@ Morph >> drawOnAthensCanvas: anAthensCanvas [
 	
 
 	"aBorderStyle frameRectangle: aRectangle on: self "
-	
-	
 ]
 
 { #category : #'*Athens-Morphic' }
 Morph >> drawOnCanvasWrapperFor: anAthensCanvas [ 
-	self drawOn: anAthensCanvas asCanvasWrapper	
+	self drawOn: anAthensCanvas asCanvasWrapper
 ]
 
 { #category : #'*Athens-Morphic' }
@@ -69,7 +66,6 @@ Morph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	submorphs isEmpty ifTrue: [^self].
 
 	self drawSubmorphsOnAthensCanvas: anAthensCanvas
-
 ]
 
 { #category : #'*Athens-Morphic' }
@@ -83,5 +79,4 @@ Morph >> testAthensRender [
 		self fullDrawOnAthensCanvas: can ].
 
 	Display getCanvas drawImage: 	surf asForm  at: 0@0
-
 ]

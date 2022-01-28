@@ -48,7 +48,6 @@ OSSDL2GLRenderer >> destroy [
 		context ifNotNil: [ context delete ].
 		context := nil.
 	]
-	
 ]
 
 { #category : #misc }
@@ -88,7 +87,6 @@ OSSDL2GLRenderer >> swapBuffers: aWindow [
 { #category : #'updating screen' }
 OSSDL2GLRenderer >> updateAll [
 	"Do nothing here"
-
 ]
 
 { #category : #'updating screen' }

@@ -35,6 +35,12 @@ RGBehaviorDefinition class >> definitionSourceKey [
 	^#definitionSource
 ]
 
+{ #category : #testing }
+RGBehaviorDefinition class >> isAbstract [
+
+	^ self == RGBehaviorDefinition
+]
+
 { #category : #'class-annotations' }
 RGBehaviorDefinition class >> isPoolKey [
 
@@ -83,7 +89,7 @@ RGBehaviorDefinition >> addInContainer: aRGContainer [
 	aRGContainer addClass: self
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> addMethod: aRGMethodDefinition [
 	"Adds aRGMethodDefinition in the methods dictionary.
 	 Adds the protocol of such method too"
@@ -101,7 +107,7 @@ RGBehaviorDefinition >> addMethod: aRGMethodDefinition in: aCollection [
 		put: aRGMethodDefinition
 ]
 
-{ #category : #'adding/removing protocols' }
+{ #category : #'adding-removing protocols' }
 RGBehaviorDefinition >> addProtocol: anObject [
 	"Adds a protocol named anObject.
 	Protocols are not repeated"
@@ -110,7 +116,7 @@ RGBehaviorDefinition >> addProtocol: anObject [
 	protocols add: anObject
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> addSelector: selectorName classified: protocolName sourced: source [
 
 	self addMethod: ((RGMethodDefinition named: selectorName) 
@@ -414,7 +420,7 @@ RGBehaviorDefinition >> removeFromContainer: aRGContainer [
 	aRGContainer removeClass: self
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> removeMethod: aRGMethodDefinition [
 	"Removes aRGMethodDefinition from the methods dictionary"
 
@@ -428,14 +434,14 @@ RGBehaviorDefinition >> removeMethod: aRGMethodDefinition from: aCollection [
 	aCollection removeKey: aRGMethodDefinition selector ifAbsent:[]
 ]
 
-{ #category : #'adding/removing protocols' }
+{ #category : #'adding-removing protocols' }
 RGBehaviorDefinition >> removeProtocol: aString [
 	"Removes a protocol named aString (if exists)"
 
 	protocols remove: aString ifAbsent:[]
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> removeSelector: selector [
 	"Removes a method named as selector"
 

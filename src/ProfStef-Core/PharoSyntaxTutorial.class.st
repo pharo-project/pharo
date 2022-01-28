@@ -244,7 +244,7 @@ PharoSyntaxTutorial >> divideTwoByZero [
 	- Right-click and select 'Accept' to compile the new version of the method
 	- click the button 'Proceed' to continue execution."
 
-	ProfStef next. 
+	ProfStef next.
 ]
 
 { #category : #lessons }

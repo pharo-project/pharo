@@ -26,7 +26,6 @@ AthensTextLine >> addCommand: aCommand [
 		ifNil: [ tail := commands := aCommand. ]
 		ifNotNil: [ tail next: aCommand ].
 	tail := tail tail.
-
 ]
 
 { #category : #accessing }
@@ -118,7 +117,6 @@ AthensTextLine >> renderOn: aTextRenderer [
 	commands do: [ :cmd |
 		cmd renderOn: aTextRenderer
 	].
-
 ]
 
 { #category : #rendering }

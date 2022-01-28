@@ -50,7 +50,6 @@ MenuItemMorph class >> initialize [
 	BottomArrow := SubMenuMarker rotateBy: 90.
 	LeftArrow := SubMenuMarker rotateBy: 180.
 	UpArrow := SubMenuMarker rotateBy: 270.
-
 ]
 
 { #category : #grabbing }
@@ -126,14 +125,12 @@ MenuItemMorph >> allWordingsNotInSubMenus: verbotenSubmenuContentsList [
 MenuItemMorph >> arguments [
 
 	^ arguments
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> arguments: aCollection [
 
 	arguments := aCollection.
-
 ]
 
 { #category : #private }
@@ -225,7 +222,6 @@ MenuItemMorph >> deselectItem [
 	(owner isMenuMorph) ifTrue:
 		[item := owner popUpOwner.
 		(item isMenuItemMorph) ifTrue: [item deselectItem]].
-
 ]
 
 { #category : #events }
@@ -322,7 +318,6 @@ MenuItemMorph >> handleMouseUp: anEvent [
 MenuItemMorph >> handlesMouseDown: evt [
 
 	^ true
-
 ]
 
 { #category : #events }
@@ -350,7 +345,7 @@ MenuItemMorph >> hasIconOrMarker [
 { #category : #accessing }
 MenuItemMorph >> hasMarker [
 	"Answer whether the receiver has a marker morph."
-	^self hasSubmorphs 
+	^self hasSubmorphs
 ]
 
 { #category : #accessing }
@@ -376,7 +371,6 @@ MenuItemMorph >> icon [
 MenuItemMorph >> icon: aForm [ 
 	"change the the receiver's icon"
 	icon := aForm.
-	
 ]
 
 { #category : #private }
@@ -433,7 +427,6 @@ MenuItemMorph >> invokeWithEvent: evt [
 MenuItemMorph >> isEnabled [
 
 	^ isEnabled
-
 ]
 
 { #category : #testing }
@@ -442,7 +435,6 @@ MenuItemMorph >> isEnabled: aBoolean [
 	isEnabled = aBoolean ifTrue: [^ self].
 	isEnabled := aBoolean.
 	self color: (aBoolean ifTrue: [Color black] ifFalse: [Color gray]).
-
 ]
 
 { #category : #testing }
@@ -452,7 +444,7 @@ MenuItemMorph >> isMenuItemMorph [
 
 { #category : #selecting }
 MenuItemMorph >> isSelected [
-	^ isSelected 
+	^ isSelected
 ]
 
 { #category : #selecting }
@@ -460,7 +452,6 @@ MenuItemMorph >> isSelected: aBoolean [
 
 	isSelected := aBoolean.
 	self changed.
-
 ]
 
 { #category : #accessing }
@@ -507,7 +498,7 @@ MenuItemMorph >> minHeight [
 	iconHeight := self hasIcon
 				ifTrue: [self icon height + 2]
 				ifFalse: [0].
-	^ self fontToUse height max: iconHeight 
+	^ self fontToUse height max: iconHeight
 ]
 
 { #category : #layout }
@@ -533,8 +524,7 @@ MenuItemMorph >> mouseDown: evt [
 	(evt shiftPressed and: [ self isEditable ])
 		ifTrue: [^ super mouseDown: evt].  "enable label editing"
 	evt hand newMouseFocus: owner. "Redirect to menu for valid transitions"
-	owner selectItem: self event: evt. 
-
+	owner selectItem: self event: evt.
 ]
 
 { #category : #events }
@@ -579,8 +569,7 @@ MenuItemMorph >> mouseUp: evt [
 		self refreshWorld.
 		(Delay forMilliseconds: 200) wait].
 	self deselect: evt.
-	self invokeWithEvent: evt.		
-
+	self invokeWithEvent: evt.
 ]
 
 { #category : #private }
@@ -643,14 +632,12 @@ MenuItemMorph >> selectionTextColor [
 MenuItemMorph >> selector [
 
 	^ selector
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> selector: aSymbol [
 
 	selector := aSymbol.
-
 ]
 
 { #category : #testing }
@@ -662,16 +649,12 @@ MenuItemMorph >> shouldBeHighlighted [
 MenuItemMorph >> showShortcut [
 
 	ShortcutReminder showShortcut: self
-
-	
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> subMenu [
 
 	^ subMenu
-
 ]
 
 { #category : #accessing }
@@ -679,7 +662,6 @@ MenuItemMorph >> subMenu: aMenuMorph [
 
 	subMenu := aMenuMorph.
 	self changed.
-
 ]
 
 { #category : #private }
@@ -698,7 +680,6 @@ MenuItemMorph >> target [
 MenuItemMorph >> target: anObject [
 
 	target := anObject.
-
 ]
 
 { #category : #events }

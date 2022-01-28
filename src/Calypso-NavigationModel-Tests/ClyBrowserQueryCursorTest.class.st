@@ -11,7 +11,7 @@ Class {
 
 { #category : #testing }
 ClyBrowserQueryCursorTest class >> isAbstract [
-	^self = ClyBrowserQueryCursorTest 
+	^self = ClyBrowserQueryCursorTest
 ]
 
 { #category : #running }
@@ -23,7 +23,7 @@ ClyBrowserQueryCursorTest >> createQuery [
 
 { #category : #running }
 ClyBrowserQueryCursorTest >> createQueryResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }

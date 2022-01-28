@@ -62,7 +62,7 @@ OmEntry >> printOn: aStream [
 { #category : #accessing }
 OmEntry >> tagAt: aKey [
 
-	^ self tags at: aKey 
+	^ self tags at: aKey
 ]
 
 { #category : #accessing }

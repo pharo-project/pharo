@@ -33,7 +33,6 @@ TCreationWithTest >> testOfSize [
 	| aCol |
 	aCol := self collectionClass ofSize: 3.
 	self assert: aCol size equals: 3.
-
 ]
 
 { #category : #'tests - creation' }
@@ -67,9 +66,7 @@ TCreationWithTest >> testWithWith [
 	
 	aCol := self collectionClass with: element1  with: element2 .
 	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
-	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2) 
-	
-	
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
 ]
 
 { #category : #'tests - creation' }

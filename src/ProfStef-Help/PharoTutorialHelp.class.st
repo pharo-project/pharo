@@ -14,7 +14,7 @@ PharoTutorialHelp class >> bookName [
 
 { #category : #testing }
 PharoTutorialHelp class >> canHaveSyntaxHighlighting [
-	^ true 
+	^ true
 ]
 
 { #category : #pages }

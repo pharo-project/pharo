@@ -15,7 +15,6 @@ ReGlobalVariablesUsageRuleTest >> sampleMethod [
 	"Note: we compile this method in #setUp and #tearDown to add
 	a global variable that would otherwise be undeclared"
 	Smalltalk value.
-
 ]
 
 { #category : #running }

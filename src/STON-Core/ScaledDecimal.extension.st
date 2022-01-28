@@ -1,6 +1,6 @@
 Extension { #name : #ScaledDecimal }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 ScaledDecimal >> stonOn: stonWriter [
 	stonWriter writeScaledDecimal: self
 ]

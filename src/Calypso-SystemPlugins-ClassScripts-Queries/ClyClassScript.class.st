@@ -94,7 +94,7 @@ ClyClassScript >> iconName [
 
 { #category : #accessing }
 ClyClassScript >> implementorClass [
-	^ implementorMethod origin 
+	^ implementorMethod origin
 ]
 
 { #category : #accessing }

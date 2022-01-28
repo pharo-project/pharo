@@ -52,7 +52,6 @@ ClapCommand class >> forHelp [
 			topic
 				ifNil: [ match context exitFailure: 'Unknown subcommand: ' , query word ]
 				ifNotNil: [ doc explain: topic ] ]
-
 ]
 
 { #category : #adding }

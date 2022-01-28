@@ -13,7 +13,7 @@ Class {
 { #category : #coverage }
 ClassDescriptionTest >> classToBeTested [
 	
-	^ ClassDescription 
+	^ ClassDescription
 ]
 
 { #category : #tests }
@@ -36,7 +36,6 @@ ClassDescriptionTest >> testDefinesSlotNamed [
 	
 	self assert: (ExampleForTest11 definesSlotNamed: #aSubclassVariable).
 	self deny: (ExampleForTest11 definesSlotNamed: #aSuperclassVariable).
-	
 ]
 
 { #category : #'tests - slots' }
@@ -95,7 +94,6 @@ ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
 	self assert: (Point classThatDefinesInstVarNamed: 'x') equals: Point.
 	self assert: (Class classThatDefinesInstVarNamed: 'methodDict') equals: Behavior.
 	self assert: (Point classThatDefinesInstVarNamed: 'methodDict') equals: nil.
-	
 ]
 
 { #category : #'tests - instance variables' }

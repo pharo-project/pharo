@@ -51,8 +51,6 @@ OCOpalExamples >> doubleRemoteAnidatedBlocks [
 	].
 	self assert: val = 9.
 	self assert: last = 10.
-
-
 ]
 
 { #category : #'examples - andor' }
@@ -141,7 +139,6 @@ OCOpalExamples >> exampleEffectValues [
 	#getMe.
 	#( got that ? ).
 	Class.
-	
 ]
 
 { #category : #'examples - simple' }
@@ -175,7 +172,7 @@ OCOpalExamples >> exampleFalseIfTrue [
 
 { #category : #'examples - conditionals' }
 OCOpalExamples >> exampleFalseIfTrueIfFalse [
-	^false ifTrue: [ self error ] ifFalse: [iVar := 'false'] 
+	^false ifTrue: [ self error ] ifFalse: [iVar := 'false']
 ]
 
 { #category : #'examples - conditionals' }
@@ -198,7 +195,6 @@ OCOpalExamples >> exampleForBlockArgument [
 { #category : #'examples - variables' }
 OCOpalExamples >> exampleForInlinedBlockArgument [
 	1 ifNotNil:[ :value | ^ value ].
-
 ]
 
 { #category : #'examples - blocks-optimized' }
@@ -243,7 +239,6 @@ OCOpalExamples >> exampleInlineBlockCollectionLR3 [
 	col := OrderedCollection new.
 	1 to: 11 do: [ :each | | i | i := each. col add: [ i ]. i := i + 1 ].
 	^ (col collect: [ :each | each value ]) asArray "= (2 to: 12) asArray"
-
 ]
 
 { #category : #'examples - variables' }
@@ -396,8 +391,6 @@ OCOpalExamples >> examplePrimitiveErrorCode [
 	<primitive: 60 error: code >
 	
 	^ code
-
-
 ]
 
 { #category : #'examples - pragmas' }
@@ -487,7 +480,7 @@ OCOpalExamples >> exampleRepeatValue [
 	^ [ 
 	i := i + 1.
 	i = 10
-		ifTrue: [ ^ true ] ] repeat 
+		ifTrue: [ ^ true ] ] repeat
 ]
 
 { #category : #'examples - simple' }
@@ -625,7 +618,7 @@ OCOpalExamples >> exampleTimesRepeatEffect [
 
 { #category : #'examples - blocks-optimized' }
 OCOpalExamples >> exampleTimesRepeatValue [
-	^ 5 timesRepeat: [ 1 + 2 ]   
+	^ 5 timesRepeat: [ 1 + 2 ]
 ]
 
 { #category : #'examples - blocks-optimized' }
@@ -697,15 +690,11 @@ OCOpalExamples >> exampleToDoOutsideTempNotInlined [
 { #category : #'examples - misc' }
 OCOpalExamples >> exampleToDoValue [
 	^ 1 to: 2 do: [:each | each]
-	
-
 ]
 
 { #category : #'examples - misc' }
 OCOpalExamples >> exampleToDoValueLimitExpression [
 	^ 2 to: 3+4 do: [:each | each]
-	
-
 ]
 
 { #category : #'examples - andor' }
@@ -887,16 +876,12 @@ OCOpalExamples >> noRemoteBlockArgument [
 	block := [ :arg | | temp | temp := arg. [ temp ] ].
 	block1 := block value: 1.
 	block2 := block value: 2.
-
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> noRemoteBlockReturn [
 	(self announcements at: self index ifAbsent: [ ^ self ]) 
 		open.
-
-
 ]
 
 { #category : #examples }
@@ -905,9 +890,6 @@ OCOpalExamples >> noRemoteBlockTemp [
 	block := [ :arg | [ arg ] ].
 	block1 := block value: 1.
 	block2 := block value: 2.
-
-
-
 ]
 
 { #category : #examples }
@@ -915,8 +897,6 @@ OCOpalExamples >> noRemoteMethodTemp [
 	| block1 block2 |
 	block1 := self methodArgument: 1.
 	block2 := self methodArgument: 2.
-
-
 ]
 
 { #category : #examples }
@@ -924,64 +904,54 @@ OCOpalExamples >> noRemoteReadInBlock [
 	| a |
 	a := 1.
 	[ a ]
-
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> noRemoteReadNestedBlocks [   
 	 [ |a| a := 1.
        [ a ]]
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockReadInBlock [
 	| t1 |
 	[ t1 < 5 ] whileTrue: [ [ t1 ] ].
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockWriteInBlock [
 	| t1 |
 	[ t1 < 5 ] whileTrue: [ t1 := 1 ].
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockWriteInNestedBlock [
 	| t1 |
 	^[ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ]
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockWriteInNestedBlockCase2 [
 	| t1 |
 	(true) ifTrue: [ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ]
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockWriteInNestedBlockCase3 [
 	| t1 |
 	[(true) ifTrue: [ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ] ]
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockWriteInNestedBlockCase4 [
 	| t1 |
 	[(true) whileTrue: [ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ] ]
-
 ]
 
 { #category : #examples }
 OCOpalExamples >> optimizedBlockWriteReadInBlock [
 	| t1 |
 	[ t1 < 5 ] whileTrue: [ t1 := 1. [ t1 ] ].
-
 ]
 
 { #category : #examples }
@@ -993,7 +963,6 @@ OCOpalExamples >> optimizedBlockWrittenAfterClosedOverCase1 [
 		[ temp ].
 		temp := index := index + 1].
 	^index
-
 ]
 
 { #category : #examples }
@@ -1004,7 +973,6 @@ OCOpalExamples >> optimizedBlockWrittenAfterClosedOverCase2 [
 		| temp |
 		temp := index := index + 1.
 		 [ temp ] ].
-
 ]
 
 { #category : #examples }
@@ -1039,8 +1007,6 @@ OCOpalExamples >> singleRemoteDifferentBlocksSameArgumentName [
 	c := [:a |
 		z + a].
 	^ (b value: 2) + (c value: 1)
-
-
 ]
 
 { #category : #examples }
@@ -1051,7 +1017,6 @@ OCOpalExamples >> singleRemoteMethodArgument [
 	temp := 1.
 	block := block value.
 	temp := 2.
-
 ]
 
 { #category : #examples }
@@ -1059,7 +1024,6 @@ OCOpalExamples >> singleRemoteReadNestedBlocks [
 	|a| 
 	[  a := 1.
        [ a ]]
-
 ]
 
 { #category : #examples }
@@ -1079,7 +1043,6 @@ OCOpalExamples >> singleRemoteTempVarWrittenAfterClosedOver [
 	index := 0.
 	block := [ index ].
 	index := index + 1.
-
 ]
 
 { #category : #examples }

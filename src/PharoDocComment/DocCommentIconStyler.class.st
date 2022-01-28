@@ -63,10 +63,10 @@ DocCommentIconStyler >> runExampleBlock: aNode [
 DocCommentIconStyler >> shouldStyleNode: aNode [
 	^ self stylingEnabled
 		and: [ aNode isMethod
-				and: [ aNode comments anySatisfy: [ :commentNode | commentNode hasDocComment ] ] ] 
+				and: [ aNode comments anySatisfy: [ :commentNode | commentNode hasDocComment ] ] ]
 ]
 
 { #category : #private }
 DocCommentIconStyler >> stylingEnabled [
-	^ PharoDocCommentNode docCommentEnabled 
+	^ PharoDocCommentNode docCommentEnabled
 ]

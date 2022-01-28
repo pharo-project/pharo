@@ -18,8 +18,6 @@ FreeTypeCacheLinkedList >> add: link after: otherLink [
 	savedLink ifNotNil: [ savedLink previousLink: link ].
 	link previousLink: otherLink.
 	^link
-	
-	
 ]
 
 { #category : #adding }
@@ -78,8 +76,6 @@ FreeTypeCacheLinkedList >> moveDown: aLink [
 	e4 ifNotNil:[e4 previousLink: e3].
 	e3 previousLink: e2.
 	e2 previousLink: e1
-
-	
 ]
 
 { #category : #removing }

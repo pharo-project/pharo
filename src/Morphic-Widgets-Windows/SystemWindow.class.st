@@ -77,7 +77,6 @@ SystemWindow class >> buildWindowBottomEdgeShortcutsOn: aBuilder [
 			movement := 0@(target bounds height / 2).
 			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
 		description: 'Move bottXX edge of the window up by half of the window extent'.
-
 ]
 
 { #category : #keymapping }
@@ -101,7 +100,6 @@ SystemWindow class >> buildWindowLeftEdgeShortcutsOn: aBuilder [
 			movement := (target bounds width / 2)@0.
 			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
 		description: 'Move left edge of the window right by half of the window extent'.
-
 ]
 
 { #category : #keymapping }
@@ -143,7 +141,6 @@ SystemWindow class >> buildWindowMovingShortcutsOn: aBuilder [
 			movement := 0@(target bounds height / 2).
 			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
 		description: 'Move window down by half of its extent'.
-
 ]
 
 { #category : #keymapping }
@@ -167,7 +164,6 @@ SystemWindow class >> buildWindowRightEdgeShortcutsOn: aBuilder [
 			movement := (target bounds width / 2)@0.
 			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
 		description: 'Center the window with a default extent'.
-
 ]
 
 { #category : #keymapping }
@@ -239,7 +235,6 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 		default: PharoShortcuts current windowCenterShortcut
 		do: [ :target | target tileCenter]
 		description: 'Center the window with a default extent'.
-
 ]
 
 { #category : #keymapping }
@@ -263,7 +258,6 @@ SystemWindow class >> buildWindowTopEdgeShortcutsOn: aBuilder [
 			movement := 0@(target bounds height / 2).
 			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
 		description: 'Move top edge of the window down by half of the window extent'.
-
 ]
 
 { #category : #accessing }
@@ -284,7 +278,6 @@ SystemWindow class >> closeTopWindow [
 		TopWindow := nil. 
 		window delete.
 	]
-
 ]
 
 { #category : #accessing }
@@ -329,7 +322,6 @@ SystemWindow class >> initialize [
 
 	CollapseBoxImage := nil.
 	CloseBoxImage := nil
-
 ]
 
 { #category : #'instance creation' }
@@ -433,12 +425,6 @@ SystemWindow class >> tilingMenuItemsOn: aBuilder [
 		label: 'Center';
 		parent: #Tile;
 		help: 'Center the window with a default extent'.
-
-
-
-
-
-
 ]
 
 { #category : #'menu items - tiling' }
@@ -568,8 +554,6 @@ SystemWindow >> activatedModalChild [
 		]
 	].
 	^false
-
-
 ]
 
 { #category : #initialization }
@@ -590,7 +574,6 @@ SystemWindow >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 "template..."
 	aCustomMenu addLine.
 	aCustomMenu add: 'Edit label...' selector: #relabel.
-
 ]
 
 { #category : #initialization }
@@ -603,9 +586,7 @@ SystemWindow >> addLabelArea [
 { #category : #panes }
 SystemWindow >> addMorph: aMorph frame: rectangle [
 	
-	^ self addMorph: aMorph fullFrame: rectangle 
-
-
+	^ self addMorph: aMorph fullFrame: rectangle
 ]
 
 { #category : #activation }
@@ -648,7 +629,7 @@ SystemWindow >> amendSteppingStatus [
 { #category : #announcement }
 SystemWindow >> announce: anAnnouncement [
 	"announcer is lazy initialized. If announcer is not set, this means that there is no listener, no need to propagate the announcement therefore"
-	self doAnnounce: anAnnouncement 
+	self doAnnounce: anAnnouncement
 ]
 
 { #category : #announcement }
@@ -683,7 +664,7 @@ SystemWindow >> announceOpened [
 
 { #category : #initialization }
 SystemWindow >> applyModelExtent [
-	self extent: model initialExtent 
+	self extent: model initialExtent
 ]
 
 { #category : #activation }
@@ -717,7 +698,6 @@ SystemWindow >> basicActivate [
 	].
 
 	self privateFullBounds: nil; changed "ensure fullBounds computed for active drop shadow"
-
 ]
 
 { #category : #controls }
@@ -757,7 +737,7 @@ SystemWindow >> boxExtent [
 	The label height is used to be proportional to the standard window label font"
 	
 	label ifNil: [^(14 @ 14) * self displayScaleFactor].
-	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)  
+	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)
 ]
 
 { #category : #controls }
@@ -776,7 +756,7 @@ SystemWindow >> canBeMaximized [
 { #category : #'menu actions' }
 SystemWindow >> changeColor [
 	"Change the color of the receiver -- triggered, e.g. from a menu.  This variant allows the recolor triggered from the window's halo recolor handle to have the same result as choosing change-window-color from the window-title menu"
-	self setWindowColor 
+	self setWindowColor
 ]
 
 { #category : #'open/close' }
@@ -794,7 +774,6 @@ SystemWindow >> closeWindowAction [
 { #category : #'resize/collapse' }
 SystemWindow >> collapse [
 	self isCollapsed ifFalse:[self collapseOrExpand].
-
 ]
 
 { #category : #'resize/collapse' }
@@ -959,7 +938,6 @@ SystemWindow >> doFastFrameDrag: grabPoint [
 	"Do fast frame dragging from the given point"
 
 	(FastDraggingFrameMorph forDragging: self clickedAt: grabPoint) openInWorld
-
 ]
 
 { #category : #'resize/collapse' }
@@ -984,7 +962,7 @@ SystemWindow >> embeddedWindowOrNil [
 
 	"answer nil for common morphs, yourself from system windows and first submorph for transformation morphs"
 	
-	^ self 
+	^ self
 ]
 
 { #category : #panes }
@@ -1000,7 +978,6 @@ SystemWindow >> existingPaneColor [
 { #category : #'resize/collapse' }
 SystemWindow >> expand [
 	self isCollapsed ifTrue:[self collapseOrExpand].
-
 ]
 
 { #category : #'resize/collapse' }
@@ -1042,7 +1019,6 @@ SystemWindow >> extent: aPoint [
 						newSize: newExtent; 
 						window: self; 
 						yourself).
-
 ]
 
 { #category : #label }
@@ -1080,8 +1056,7 @@ SystemWindow >> fullFrame [
 SystemWindow >> fullscreenBounds [
 	"Answer the bounds that the receiver would take if expanded to fullscreen."
 	
-	^ (RealEstateAgent maximumUsableAreaInWorld: self world) insetBy: self fullscreenMargin 
-
+	^ (RealEstateAgent maximumUsableAreaInWorld: self world) insetBy: self fullscreenMargin
 ]
 
 { #category : #settings }
@@ -1201,7 +1176,7 @@ SystemWindow >> initializeShortcuts: aKMDispatcher [
 	"Where we may attach keymaps or even on:do: local shortcuts if needed."
 
 	super initializeShortcuts: aKMDispatcher.
-	aKMDispatcher attachCategory: #WindowShortcuts	
+	aKMDispatcher attachCategory: #WindowShortcuts
 ]
 
 { #category : #testing }
@@ -1246,7 +1221,7 @@ SystemWindow >> isSystemWindow [
 { #category : #'top window' }
 SystemWindow >> isTopWindow [
 
-	^self == TopWindow 
+	^self == TopWindow
 ]
 
 { #category : #label }
@@ -1257,7 +1232,6 @@ SystemWindow >> label [
 { #category : #geometry }
 SystemWindow >> labelRect [
 	^ self innerBounds withHeight: self labelHeight.
-
 ]
 
 { #category : #label }
@@ -1286,8 +1260,6 @@ SystemWindow >> makeMeVisible [
 	self isCollapsed
 		ifTrue: [self position: (RealEstateAgent assignCollapsePointFor: self)]
 		ifFalse: [self position: (RealEstateAgent initialFrameFor: self initialExtent: self extent world: self world) topLeft].
-
-
 ]
 
 { #category : #'menu actions' }
@@ -1395,7 +1367,6 @@ SystemWindow >> modalLockTo: aSystemWindow [
 		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
 		closeBox enabled: false
 	].
-
 ]
 
 { #category : #'modal-windows' }
@@ -1434,8 +1405,6 @@ SystemWindow >> mouseDown: evt [
 		(morph containsPoint: evt cursorPoint) ifTrue: [ morph processEvent: evt ]
 	].
 	evt wasHandled: true.
-	
-	
 ]
 
 { #category : #events }
@@ -1464,7 +1433,7 @@ SystemWindow >> mouseMove: evt [
 		self fastFramingOn 
 			ifTrue: [self doFastFrameDrag: evt startPoint ]
 			ifFalse: [ self grabSelfOrTopRenderer: evt	]
-	]. 
+	].
 ]
 
 { #category : #events }
@@ -1595,7 +1564,6 @@ SystemWindow >> position: newPos [
 						oldPosition: oldPos;
 						newPosition: newPos;
 						window: self)]
-
 ]
 
 { #category : #activation }
@@ -1606,7 +1574,6 @@ SystemWindow >> positionModalOwner [
 			modalOwner bringBehind: self.
 		]
    ]
-
 ]
 
 { #category : #'open/close' }
@@ -1650,10 +1617,6 @@ SystemWindow >> privateBePassive [
 	rememberKeyboardFocus: self activeHand keyboardFocus;
 	passivate;
 	announceDeActivated
-
-	
-	
-	
 ]
 
 { #category : #layout }
@@ -1666,8 +1629,6 @@ SystemWindow >> putLabelItemsInLabelArea [
 		menuBox ifNotNil: [labelArea addMorph: menuBox].
 		collapseBox ifNotNil: [labelArea addMorph: collapseBox].
 		label ifNotNil: [labelArea addMorph: label]]
-
-
 ]
 
 { #category : #drawing }
@@ -1723,7 +1684,6 @@ SystemWindow >> removeMenuBox [
 	menuBox ifNotNil:
 		[menuBox delete.
 		menuBox := nil].
-
 ]
 
 { #category : #panes }
@@ -1745,8 +1705,6 @@ SystemWindow >> replacePane: oldPane with: newPane [
 	hadDep ifTrue: [model removeDependent: oldPane. model addDependent: newPane].
 
 	self changed
-
-
 ]
 
 { #category : #panes }
@@ -1813,7 +1771,6 @@ SystemWindow >> setLabel: aString [
 		 leftOffset: label width negated // 2;
 		 topOffset: label height negated // 2.
 	label layoutFrame: frame.
-
 ]
 
 { #category : #label }
@@ -1821,7 +1778,6 @@ SystemWindow >> setLabelFont: aFont [
 
 	label ifNil: [^ self].
 	label font: aFont.
-
 ]
 
 { #category : #geometry }
@@ -1866,7 +1822,6 @@ SystemWindow >> setWindowColor [
 
 	(UIManager default chooseColor: self paneColor)
 		ifNotNil: [:nc | self setWindowColor: nc].
-
 ]
 
 { #category : #testing }

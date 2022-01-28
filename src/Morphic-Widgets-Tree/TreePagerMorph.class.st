@@ -126,7 +126,6 @@ TreePagerMorph >> currentPage: anIndex [
 			lastIdx <= self nodeList size 
 				ifTrue: [self setPageInterval: (((lastIdx - pageSize + 1) max: 1) to: (lastIdx))]
 				ifFalse: [self setPageInterval: ((((self lastPage - 1) * pageSize) + 1) to: self nodeList size)]]
-
 ]
 
 { #category : #accessing }
@@ -165,7 +164,6 @@ TreePagerMorph >> lastPage [
 	p := (self nodeList size / pageSize) asInteger.
 	self nodeList size \\ pageSize > 0 ifTrue: [p := p + 1].
 	^ p.
-
 ]
 
 { #category : #accessing }
@@ -185,7 +183,6 @@ TreePagerMorph >> nextPage: theIndexOfAnElement [
 { #category : #testing }
 TreePagerMorph >> notOnFirstPage [
 	^ self onFirstPage not
-
 ]
 
 { #category : #testing }
@@ -225,8 +222,7 @@ TreePagerMorph >> showCurrentPage [
 		ifTrue: [^ treeMorph emptySelection].
 	treeMorph addSubmorphsFromNodeList.
 	treeMorph updateColumnMorphs.
-	treeMorph scrollSelectionIntoView 
-
+	treeMorph scrollSelectionIntoView
 ]
 
 { #category : #'user interface' }
@@ -237,5 +233,4 @@ TreePagerMorph >> updateForNewPageSize: newPageSize [
 			pageSize := newPageSize max: 1.
 			currentPageFirstIndex := (oldLast + 1 - pageSize) max: 1.
 			self nodeList ifNotNil: [self showCurrentPage]]
-
 ]

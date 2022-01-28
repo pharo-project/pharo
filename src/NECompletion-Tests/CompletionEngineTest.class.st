@@ -76,7 +76,7 @@ CompletionEngineTest >> newCompletionEngine [
 
 { #category : #'tests - keyboard' }
 CompletionEngineTest >> selectAll [
-	editor selectAll 
+	editor selectAll
 ]
 
 { #category : #'tests - keyboard' }
@@ -97,8 +97,7 @@ CompletionEngineTest >> selectedClassOrMetaClass [
 
 { #category : #'tests - keyboard' }
 CompletionEngineTest >> setEditorText: aString [
-	editor selectAll; addString:  aString 
-	
+	editor selectAll; addString:  aString
 ]
 
 { #category : #running }
@@ -118,6 +117,128 @@ CompletionEngineTest >> tearDown [
 	controller closeMenu.
 	editor textArea delete.
 	super tearDown
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenFollowedByAssignmentWithCaretInTheEndOfWordAfterCaretWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist:= something that follows'.
+	
+	"Select just after the colon"
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist:' size.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist::= something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenFollowedByAssignmentWithCaretInTheEndOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist:= something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist:= something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenFollowedByAssignmentWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist:= something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist:= something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheEndOfWordAfterCaretWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
+	
+	"Select just after the colon"
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist:' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheEndOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
 ]
 
 { #category : #'tests - interaction' }
@@ -227,7 +348,6 @@ CompletionEngineTest >> testSmartBackspaceOutsideSmartCharacters [
 	self
 		assert: controller smartBackspace not
 		description: 'smartbackspace ignored if after smart character'
-		
 ]
 
 { #category : #'tests - keyboard' }
@@ -240,7 +360,6 @@ CompletionEngineTest >> testSmartBackspaceWithSelection [
 	self
 		assert: controller smartBackspace not
 		description: 'No smartbackspace if no selection and not a smart character'.
-		
 ]
 
 { #category : #'tests - keyboard' }
@@ -265,7 +384,6 @@ CompletionEngineTest >> testSmartCharacterPairForIfAbsent [
 		self assert: (controller smartCharacterPairFor: pairs last ifAbsent: [ nil ]) equals: pairs first -> pairs last].
 	
 	self assert: (controller smartCharacterPairFor: $% ifAbsent: [ nil ]) equals: nil.
-		
 ]
 
 { #category : #'tests - keyboard' }
@@ -314,7 +432,6 @@ CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
 		
 	controller smartCharacterWithEvent: (self keyboardEventFor: $<).
 	self assert: editor text equals: ' '.
-	
 ]
 
 { #category : #'tests - keyboard' }
@@ -332,7 +449,6 @@ CompletionEngineTest >> testSmartCharactersShouldClose [
 	"Some smart characters shouldn't auto close, ohers not"
 	self assert: (controller smartCharacterShouldClose: $() equals: true.
 	self assert: (controller smartCharacterShouldClose: $<) equals: false.
-	
 ]
 
 { #category : #'tests - keyboard' }

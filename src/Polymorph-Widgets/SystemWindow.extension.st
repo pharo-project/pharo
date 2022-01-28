@@ -449,7 +449,6 @@ SystemWindow >> closeBoxHit [
 	self allowedToClose ifFalse: [^self].
 	self playCloseSound.
 	self close
-
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -972,7 +971,6 @@ SystemWindow >> navigateFocusForward [
 	self nextMorphWantingFocus
 		ifNil: [self takeKeyboardFocus]
 		ifNotNil: [super navigateFocusForward]
-	
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -1052,7 +1050,6 @@ SystemWindow class >> passivateTopWindow [
 		TopWindow := nil.
 		window privateBePassive.
 	]
-
 ]
 
 { #category : #'*Polymorph-Widgets' }

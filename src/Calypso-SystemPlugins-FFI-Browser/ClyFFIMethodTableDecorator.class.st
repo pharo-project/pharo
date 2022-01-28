@@ -20,5 +20,5 @@ ClyFFIMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aData
 
 { #category : #testing }
 ClyFFIMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	^aDataSourceItem isMarkedWith: ClyFFIMethodTag 
+	^aDataSourceItem isMarkedWith: ClyFFIMethodTag
 ]

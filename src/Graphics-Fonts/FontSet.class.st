@@ -62,8 +62,6 @@ FontSet class >> installAsDefault [
 		ifFalse: [^ self].
 	self installAsTextStyle.
 	TextSharedInformation at: #DefaultTextStyle put: (TextStyle named: self fontName).
-	
-
 ]
 
 { #category : #installing }

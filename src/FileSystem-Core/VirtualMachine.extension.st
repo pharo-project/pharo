@@ -6,5 +6,4 @@ VirtualMachine >> binary [
 	"SmalltalkImage current vmBinary"
 
 	^ FileLocator vmBinary
-
 ]

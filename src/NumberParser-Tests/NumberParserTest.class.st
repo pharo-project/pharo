@@ -110,7 +110,6 @@ NumberParserTest >> testFloatFromStreamAsNumber [
 	aFloat := NumberParser parse: rs.
 	self assert: 12.3456 equals: aFloat.
 	self assert: rs upToEnd equals: 'z2'.
-
 ]
 
 { #category : #'tests - Float' }
@@ -170,7 +169,7 @@ NumberParserTest >> testFloatGradualUnderflow [
 	float absPrintExactlyOn: str base: 10.
 	
 	"verify if SqNumberParser can read it back"
-	self assert: (NumberParser parse: str contents) equals: float. 
+	self assert: (NumberParser parse: str contents) equals: float.
 ]
 
 { #category : #'tests - Float' }
@@ -344,7 +343,6 @@ NumberParserTest >> testIntegerReadWithRadix [
 	rs := '2r1e26eee' readStream.
 	self assert: (NumberParser parse: rs) equals: 67108864.
 	self assert: rs upToEnd equals: 'eee'
-
 ]
 
 { #category : #'tests - Float' }
@@ -360,8 +358,6 @@ NumberParserTest >> testIntegerWithNegExponentIsAFloat [
 	rs := '1e-14' readStream.
 	aFloat := (NumberParser on: rs ) nextNumberBase: 10.
 	self assert: aFloat isFloat.
-
-
 ]
 
 { #category : #'tests - Float' }

@@ -119,7 +119,6 @@ CoStatistics >> logCancelCompletionFromTypedToken: typedToken inClass: aClassNam
 CoStatistics >> logCancelEvent: aCancelEntry [
 	
 	cancelledCompletions add: aCancelEntry.
-
 ]
 
 { #category : #accessing }

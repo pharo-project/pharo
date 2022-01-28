@@ -21,14 +21,12 @@ Class {
 LazyListMorph >> adjustHeight [
 	"private.  Adjust our height to match that of the underlying list"
 	self height: (listItems size max: 1) * font height
-
 ]
 
 { #category : #drawing }
 LazyListMorph >> adjustWidth [
 	"private.  Adjust our width to match that of the underlying list"
-	self width: ((listSource width max: self hUnadjustedScrollRange) + 20). 
-
+	self width: ((listSource width max: self hUnadjustedScrollRange) + 20).
 ]
 
 { #category : #'row management' }
@@ -43,7 +41,6 @@ LazyListMorph >> backgroundColorForRow: row [
 LazyListMorph >> bottomVisibleRowForCanvas: aCanvas [
         "return the bottom visible row in aCanvas's clip rectangle"
         ^self rowAtLocation: aCanvas clipRect bottomLeft.
-
 ]
 
 { #category : #'row management' }
@@ -167,7 +164,6 @@ LazyListMorph >> drawSelectionOn: aCanvas [
 	selectedRow ifNil: [ ^self ].
 	selectedRow = 0 ifTrue: [ ^self ].
 	self drawBackgroundForSelectedRow: selectedRow on: aCanvas
-
 ]
 
 { #category : #drawing }
@@ -206,8 +202,6 @@ LazyListMorph >> getListSize [
 	^listSource 
 		ifNil: [ 0 ]
 		ifNotNil: [ :source | source getListSize]
-		
-	
 ]
 
 { #category : #'row management' }
@@ -237,7 +231,6 @@ This is a compromise -- find the widest of the first 30 items, then double it, T
 	(itemsToCheck < listItems size) ifTrue:[maxWidth := maxWidth*2].
 
 	^maxWidth
-
 ]
 
 { #category : #drawing }
@@ -264,7 +257,6 @@ LazyListMorph >> isRowSelected: row [
 	^ ((selectedRow notNil
 				and: [row = selectedRow])
 			or: [listSource itemSelectedAmongMultiple: row])
-
 ]
 
 { #category : #'list access' }
@@ -297,7 +289,6 @@ LazyListMorph >> listChanged [
 	self adjustHeight.
 	self adjustWidth.
 	self changed.
-
 ]
 
 { #category : #initialization }
@@ -396,7 +387,6 @@ LazyListMorph >> selectionFrameForRow: row [
 LazyListMorph >> topVisibleRowForCanvas: aCanvas [
         "return the top visible row in aCanvas's clip rectangle"
         ^self rowAtLocation: aCanvas clipRect topLeft.
-
 ]
 
 { #category : #'row management' }

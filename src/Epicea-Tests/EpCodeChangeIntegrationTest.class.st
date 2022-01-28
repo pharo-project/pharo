@@ -11,7 +11,6 @@ Class {
 EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
 	^ #'EpiceaTestingWith-A-Really-WeirdCategoryName'
-
 ]
 
 { #category : #running }
@@ -64,7 +63,6 @@ EpCodeChangeIntegrationTest >> testClassAddition [
 
 	classFactory newClass.
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 1.
-
 ]
 
 { #category : #tests }
@@ -101,7 +99,6 @@ EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
 	self assert: (self countLogEventsWith: EpMethodAddition) equals: 0.
 	self assert: (self countLogEventsWith: EpMethodModification) equals: 0.
-
 ]
 
 { #category : #tests }
@@ -115,7 +112,6 @@ EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
 	modifications := (self allLogEntriesWith: EpClassModification) collect: [:each | each content].
 	self assert: modifications size equals: 1.
 	self assert: modifications first behaviorAffectedName equals: aClass name.
-
 ]
 
 { #category : #tests }
@@ -130,7 +126,6 @@ EpCodeChangeIntegrationTest >> testClassRemoval [
 	self assert: events size equals: 1.
 	"It shouldn't begin with AnObsolete"
 	self assert: events anyOne behaviorAffectedName equals: className.
-
 ]
 
 { #category : #tests }
@@ -183,7 +178,6 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAddition [
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 	aClass classSide instanceVariableNames: 'x'.	
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
-
 ]
 
 { #category : #tests }
@@ -196,7 +190,6 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 	aClass classSide uses: aTrait asTraitComposition instanceVariableNames: 'x'.	
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
-
 ]
 
 { #category : #tests }
@@ -221,7 +214,6 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 	event := events anyOne.
 	self assert: event oldMethod protocol equals: 'old'.
 	self assert: event newMethod protocol equals: 'new'.
-
 ]
 
 { #category : #tests }
@@ -237,7 +229,6 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfSourceCode [
 	event := events anyOne.
 	self assert: event oldMethod sourceCode equals: 'fortyTwo ^42'.
 	self assert: event newMethod sourceCode equals: 'fortyTwo ^nil'.
-
 ]
 
 { #category : #tests }
@@ -313,7 +304,6 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 	self class compiler evaluate: aClass classSide definitionString.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-
 ]
 
 { #category : #tests }
@@ -328,7 +318,6 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 					traitComposition: {};
 					package: aClass category]] 
 		raise: MessageNotUnderstood
-	
 ]
 
 { #category : #tests }
@@ -355,7 +344,6 @@ EpCodeChangeIntegrationTest >> testTraitModificationOfTraitComposition [
 	self assert: (self countLogEventsWith: EpTraitModification) equals: 1.
 	self assert: (self countLogEventsWith: EpMethodAddition) equals: 0.
 	self assert: (self countLogEventsWith: EpMethodModification) equals: 0.
-
 ]
 
 { #category : #tests }

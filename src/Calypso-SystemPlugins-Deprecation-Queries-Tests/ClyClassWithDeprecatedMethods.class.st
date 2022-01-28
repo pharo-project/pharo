@@ -19,5 +19,4 @@ ClyClassWithDeprecatedMethods >> deprecatedMethod2 [
 
 { #category : #protocol }
 ClyClassWithDeprecatedMethods >> notDeprecatedMethod [
-
 ]

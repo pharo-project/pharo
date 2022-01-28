@@ -38,7 +38,6 @@ CairoLibrary >> unix64LibraryName [
 CairoLibrary >> unixLibraryName [
 	"Backward compatibility"
 	^ self unix32LibraryName
-		
 ]
 
 { #category : #versions }
@@ -54,5 +53,5 @@ CairoLibrary >> versionString [
 { #category : #'accessing - platform' }
 CairoLibrary >> win32LibraryName [ 
 	
-	^ FFIWindowsLibraryFinder findAnyLibrary: #('libcairo-2.dll')	
+	^ FFIWindowsLibraryFinder findAnyLibrary: #('libcairo-2.dll')
 ]

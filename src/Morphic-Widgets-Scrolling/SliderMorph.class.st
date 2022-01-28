@@ -115,7 +115,6 @@ SliderMorph >> initializeSlider [
 	sliderShadow hide.
 	self addMorph: slider.
 	self computeSlider.
-
 ]
 
 { #category : #'other events' }
@@ -334,7 +333,6 @@ SliderMorph >> updateSliderBounds [
 	sliderShadow bounds: self totalSliderArea.
 	
 	self computeSlider.
-
 ]
 
 { #category : #accessing }

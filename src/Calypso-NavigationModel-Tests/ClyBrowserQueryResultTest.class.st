@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 ClyBrowserQueryResultTest class >> isAbstract [
-	^self == ClyBrowserQueryResultTest 
+	^self == ClyBrowserQueryResultTest
 ]
 
 { #category : #helpers }

@@ -37,8 +37,6 @@ TDictionaryKeyAccessTest >> testKeyAtIdentityValue [
 	self assert: (dict at: result) = value.
 		
 	self should: [dict keyAtIdentityValue: self valueNotIn ] raise: Error
-	
-	
 ]
 
 { #category : #'tests - dictionary key access' }
@@ -52,8 +50,7 @@ TDictionaryKeyAccessTest >> testKeyAtIdentityValueIfAbsent [
 	result := dict keyAtIdentityValue: value ifAbsent: [nil].
 	self assert: (dict at: result) = value.
 		
-	self assert: (dict keyAtIdentityValue: self valueNotIn ifAbsent: [nil] ) = nil. 
-	
+	self assert: (dict keyAtIdentityValue: self valueNotIn ifAbsent: [nil] ) = nil.
 ]
 
 { #category : #'tests - dictionary key access' }
@@ -68,8 +65,6 @@ TDictionaryKeyAccessTest >> testKeyAtValue [
 	self assert: (dict at: result) = value.
 		
 	self should: [dict keyAtValue: self valueNotIn ] raise: Error
-	
-	
 ]
 
 { #category : #'tests - dictionary key access' }
@@ -83,9 +78,7 @@ TDictionaryKeyAccessTest >> testKeyAtValueIfAbsent [
 	result := dict keyAtValue: value ifAbsent: [nil].
 	self assert: (dict at: result) = value.
 		
-	self assert: (dict keyAtValue: self valueNotIn ifAbsent: [nil] ) = nil. 
-	
-	
+	self assert: (dict keyAtValue: self valueNotIn ifAbsent: [nil] ) = nil.
 ]
 
 { #category : #requirements }

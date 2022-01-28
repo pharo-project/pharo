@@ -177,7 +177,7 @@ ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [
 
 { #category : #initialization }
 ProtoObject >> initialize [
-	"Subclasses should redefine this method to perform initializations on instance creation" 
+	"Subclasses should redefine this method to perform initializations on instance creation"
 ]
 
 { #category : #introspection }
@@ -215,17 +215,20 @@ ProtoObject >> modificationForbiddenFor: selector index: index value: value [
 
 { #category : #'write barrier' }
 ProtoObject >> modificationForbiddenFor: selector value: value [
-	^ self modificationForbiddenFor: selector index: nil value: value 
-	
-
+	^ self modificationForbiddenFor: selector index: nil value: value
 ]
 
 { #category : #'block support' }
 ProtoObject >> mustBeBoolean [
 	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
-	^ Boolean mustBeBooleanDeOptimize
-		ifTrue: [ self mustBeBooleanDeOptimizeIn: thisContext sender  ]
-		ifFalse: [ self mustBeBooleanIn: thisContext sender ]
+	
+	^ self mustBeBooleanHandler mustBeBooleanIn: thisContext sender
+]
+
+{ #category : #'block support' }
+ProtoObject >> mustBeBooleanHandler [
+
+	^ NonBooleanReceiver mustBeBooleanHandler ifNil: [ self ]
 ]
 
 { #category : #'block support' }
@@ -250,7 +253,7 @@ ProtoObject >> mustBeBooleanIn: context [
 	| proceedValue |
 	
 	"Set the pc back to the point just before the conditional jump that set off the must be boolean"
-	context pc: context previousPc.
+	context pc: context instructionStream previousPc.
 	proceedValue := NonBooleanReceiver new
 		object: self;
 		signal: 'proceed for truth.'.
@@ -382,7 +385,6 @@ ProtoObject >> rearmOneShot [
 	self class environment at: #OneShotArmed put: true
 
 	"self rearmOneShot"
-
 ]
 
 { #category : #'apply primitives' }

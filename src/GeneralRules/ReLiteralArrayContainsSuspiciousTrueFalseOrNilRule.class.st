@@ -22,7 +22,6 @@ ReLiteralArrayContainsSuspiciousTrueFalseOrNilRule class >> uniqueIdentifierName
 { #category : #running }
 ReLiteralArrayContainsSuspiciousTrueFalseOrNilRule >> basicCheck: aNode [
 	^ aNode isLiteralArray and: [ #(#true #false #nil) anySatisfy: [ :each | aNode value identityIncludes: each]]
-
 ]
 
 { #category : #accessing }

@@ -25,7 +25,7 @@ SourceFileArray class >> initialize [
 	SessionManager default registerSystemClassNamed: self name.
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 SourceFileArray class >> startUp: resuming [
 
 	resuming ifTrue: [ Smalltalk openSourceFiles ]

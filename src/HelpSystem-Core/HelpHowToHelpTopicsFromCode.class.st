@@ -53,7 +53,6 @@ There is a predefined class CustomHelp which you have to subclass for a custom h
 Class methods on this class can reflect pages and if you want to provide nested help books just subclass your own help class to form a hierarchy. Any new subclass of MyAppHelp will then be a new book in your hierarchy.
 
 The class category used should end with "-Help" so it is easy to recognize that it includes the help support of your project.'
-
 ]
 
 { #category : #pages }
@@ -74,7 +73,6 @@ Additionaly you can specify #bookDescription which will be displayed in the Help
 
 	bookDescription
 	    ^ ''This is a help book about my App'''
-
 ]
 
 { #category : #pages }
@@ -104,7 +102,6 @@ You can also define an icon for the specific page:
 Note: 
 =====
 Later we may add support for better help contents than just plain text (markup descriptions, active morphs, ...)  '
-
 ]
 
 { #category : #pages }
@@ -120,7 +117,6 @@ By implementing the class method #pages you return a collection of method select
      	    ^#(firstPage secondPage)
 
 '
-
 ]
 
 { #category : #pages }
@@ -136,7 +132,6 @@ By using
 
  
 '
-
 ]
 
 { #category : #pages }
@@ -159,7 +154,6 @@ MyAppHelp subclass: #MyAppTutorial
 then implement a #bookName, the pages and a #pages method as before on this new 
 class and reopen the help browser. 		
 '
-
 ]
 
 { #category : #pages }
@@ -189,5 +183,4 @@ Tip2:
 		
 
 '
-
 ]

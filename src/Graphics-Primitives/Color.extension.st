@@ -48,7 +48,6 @@ Color class >> colorMapIfNeededFrom: sourceDepth to: destDepth [
 		^ nil].
 
 	^ self cachedColormapFrom: sourceDepth to: destDepth
-
 ]
 
 { #category : #'*Graphics-Primitives' }

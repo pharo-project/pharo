@@ -14,7 +14,7 @@ Class {
 
 { #category : #testing }
 ClyInteractiveRemoveClassStrategy class >> isAbstract [
-	^self == ClyInteractiveRemoveClassStrategy 
+	^self == ClyInteractiveRemoveClassStrategy
 ]
 
 { #category : #'instance creation' }

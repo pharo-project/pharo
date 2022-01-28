@@ -19,7 +19,6 @@ Class {
 SubscriptionRegistry >> add: subscription [
 	^ self protected: [
 		subscriptions add: subscription  ]
-
 ]
 
 { #category : #announcing }
@@ -64,7 +63,6 @@ SubscriptionRegistry >> handleSubscriberClass: eventClass [
 SubscriptionRegistry >> initialize [
 	monitor := Semaphore forMutualExclusion.
 	self reset
-
 ]
 
 { #category : #accessing }
@@ -81,8 +79,6 @@ SubscriptionRegistry >> protected: aBlock [
 SubscriptionRegistry >> remove: subscription [
 	^ self protected: [
 		subscriptions remove: subscription ifAbsent: nil ]
-
-
 ]
 
 { #category : #'add/remove' }
@@ -90,8 +86,6 @@ SubscriptionRegistry >> removeSubscriber: subscriber [
 	
 	^ self protected: [
 		subscriptions removeAllSuchThat: [:subscription | subscription subscriber == subscriber ]]
-
-
 ]
 
 { #category : #'add/remove' }
@@ -110,10 +104,6 @@ SubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
 	
 	subscriptions := IdentitySet new
-	
-
-
-
 ]
 
 { #category : #accessing }
@@ -149,5 +139,4 @@ SubscriptionRegistry >> subscriptionsOf: aSubscriber do: aBlock [
 		[:subscription | 
 			subscription subscriber == aSubscriber 
 				ifTrue: [ aBlock value: subscription ]	]
-
 ]

@@ -40,7 +40,7 @@ Class class >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unprocessedCl
 Class class >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache [ 
 	^ (self hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache) and: [
 		aClass isMeta not or: [
-			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
+			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]]
 ]
 
 { #category : #'file in/out' }
@@ -54,7 +54,6 @@ Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cach
 { #category : #'file in/out' }
 Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [ 
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
-	
 ]
 
 { #category : #inquiries }
@@ -91,7 +90,7 @@ Class class >> superclassOrder: classes [
 Class class >> template: aSystemCategoryName [ 
 	"Answer an expression that can be edited and evaluated in order to define a new class."
 
-	^ self templateForSubclassOf: Object name category: aSystemCategoryName 
+	^ self templateForSubclassOf: Object name category: aSystemCategoryName
 ]
 
 { #category : #'instance creation' }
@@ -139,7 +138,6 @@ Class >> addInstVarNamed: aString [
 
 	aString substrings do: [ :each|
 		self addSlot: (InstanceVariableSlot named: each asSymbol) ]
-
 ]
 
 { #category : #'pool variables' }
@@ -209,8 +207,7 @@ Class >> anyUserOfClassVarNamed: aSymbol [
 { #category : #deprecation }
 Class >> applyDeprecation [
 
-	self deprecationRefactorings do: #execute.	
-	
+	self deprecationRefactorings do: #execute.
 ]
 
 { #category : #accessing }
@@ -486,7 +483,7 @@ Class >> definesClassVariableNamed: aString [
 { #category : #fileout }
 Class >> definitionStringFor: aConfiguredPrinter [
 
-	^ aConfiguredPrinter classDefinitionString 
+	^ aConfiguredPrinter classDefinitionString
 ]
 
 { #category : #deprecation }
@@ -498,8 +495,6 @@ Class >> deprecationRefactorings [
 	^ { RBApplyClassDeprecationRefactoring rename: self to: #NewName } "	
 	
 	^ #()
-	
-
 ]
 
 { #category : #copying }
@@ -569,7 +564,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 { #category : #fileout }
 Class >> expandedDefinitionStringFor: aPrinter [
 
-	^ aPrinter expandedClassDefinitionString 
+	^ aPrinter expandedDefinitionString
 ]
 
 { #category : #private }
@@ -699,7 +694,7 @@ Class >> instanceSide [
 	"Point instanceSide >>> Point"
 	"Point class instanceSide >>> Point"
 	
-	^ self 
+	^ self
 ]
 
 { #category : #testing }
@@ -773,7 +768,6 @@ Class >> newAnonymousSubclass [
 		builder
 			superclass: self ;
 			layoutClass: self classLayout class ].
-
 ]
 
 { #category : #'subclass creation' }
@@ -879,8 +873,6 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 Class >> removeClassVariable: aGlobal [
 	"Remove the class variable"
 	self removeClassVarNamed: aGlobal name
-
-	
 ]
 
 { #category : #initialization }
@@ -1046,7 +1038,7 @@ Class >> sharing: poolString [
 							builder superclass: SharedPool;
 							name: poolName;
 							category: self category ]]
-				ifFalse:[^self error: poolName,' does not exist']])].
+				ifFalse:[^self inform: poolName,' does not exist']])].
 	self sharedPools isEmpty ifTrue: [self sharedPools: nil].
 	oldPools do: [:pool |
 				| found |
@@ -1198,7 +1190,7 @@ Class >> subclassesDo: aBlock [
 Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
-	self subclasses: nil. 
+	self subclasses: nil.
 ]
 
 { #category : #initialization }

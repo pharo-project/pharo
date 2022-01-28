@@ -64,7 +64,6 @@ RBParseErrorNode >> asSyntaxErrorNotification [
 { #category : #accessing }
 RBParseErrorNode >> binding: anOCTempVariable [ 
 	"only for compatibility"
-	
 ]
 
 { #category : #accessing }

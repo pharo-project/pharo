@@ -68,7 +68,6 @@ GrafPort >> fillOval: rect [
 	width := rect width.
 	destX := rect left.
 	self copyBits.
-
 ]
 
 { #category : #accessing }
@@ -143,7 +142,6 @@ GrafPort >> frameOval: rect borderWidth: borderWidth [
 	self copyBits.
 	destX := rect right - wp x.
 	self copyBits.
-
 ]
 
 { #category : #'drawing support' }
@@ -152,7 +150,6 @@ GrafPort >> frameRect: rect borderWidth: borderWidth [
 	sourceY := 0.
 	(rect areasOutside: (rect insetBy: borderWidth)) do:
 		[:edgeStrip | self destRect: edgeStrip; copyBits].
-
 ]
 
 { #category : #'drawing support' }
@@ -167,7 +164,6 @@ GrafPort >> frameRectBottom: rect height: h [
 		destX := destX + 1.
 		destY := destY - 1.
 		width := width - 2].
-
 ]
 
 { #category : #'drawing support' }
@@ -182,7 +178,6 @@ GrafPort >> frameRectRight: rect width: w [
 		destX := destX - 1.
 		destY := destY + 1.
 		height := height - 2].
-
 ]
 
 { #category : #'drawing support' }

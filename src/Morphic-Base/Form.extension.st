@@ -12,13 +12,13 @@ Form >> asMorph [
 ]
 
 { #category : #'*Morphic-Base' }
-Form >> floodFillTolerance [
-	^ self class floodFillTolerance
+Form class >> floodFillTolerance [
+	^ FloodFillTolerance ifNil: [FloodFillTolerance := 0.0]
 ]
 
 { #category : #'*Morphic-Base' }
-Form class >> floodFillTolerance [
-	^ FloodFillTolerance ifNil: [FloodFillTolerance := 0.0]
+Form >> floodFillTolerance [
+	^ self class floodFillTolerance
 ]
 
 { #category : #'*Morphic-Base' }
@@ -31,7 +31,6 @@ Form >> iconOrThumbnailOfSize: aNumberOrPoint [
 Form >> scaledByDisplayScaleFactor [
 	
 	^ self scaledToSize: self extent * self currentWorld displayScaleFactor.
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -58,7 +57,6 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 		at: extent - scaledForm extent // 2.
 
 	^ result
-
 ]
 
 { #category : #'*Morphic-Base-Support' }
@@ -73,5 +71,4 @@ Form >> stencil [
 				sourceRect: (Rectangle origin: 0@0 corner: self extent) color: Color black.
 
 	^ canvas form
-
 ]

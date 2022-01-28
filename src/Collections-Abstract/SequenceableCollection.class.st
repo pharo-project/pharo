@@ -80,7 +80,6 @@ SequenceableCollection >> , otherCollection [
 	^ self copyReplaceFrom: self size + 1
 		  to: self size
 		  with: otherCollection
-
 ]
 
 { #category : #comparing }
@@ -774,7 +773,7 @@ SequenceableCollection >> detectIndex: aBlock [
 	
 	"(#(1 5 10) detectIndex: [ :each | each > 3 ]) >>> 2"
 
-	^ self detectIndex: aBlock ifNone: [ self errorNotFound: aBlock ] 
+	^ self detectIndex: aBlock ifNone: [ self errorNotFound: aBlock ]
 ]
 
 { #category : #enumerating }
@@ -1695,7 +1694,7 @@ SequenceableCollection >> pairsCollect: aBlock [
 SequenceableCollection >> pairsDo: aBlock [
 	"Evaluate aBlock with my elements taken two at a time.  If there's an odd number of items, ignore the last one.  Allows use of a flattened array for things that naturally group into pairs.  See also pairsCollect:"
 
-	"(#(1 'fred' 2 'charlie' 3 'elmer') pairsDo: [:a :b | Transcript cr; show: b, ' is number ', a printString]) >>> #(1 'fred' 2 'charlie' 3 'elmer')"
+	"(Array streamContents: [:s | #(1 'fred' 2 'charlie' 3 'elmer') pairsDo: [:a :b | s nextPut: b; nextPut: a]]) >>> #('fred' 1 'charlie' 2 'elmer' 3)"
 
 	1 to: self size // 2 do: [ :index | aBlock value: (self at: 2 * index - 1) value: (self at: 2 * index) ]
 ]
@@ -2015,7 +2014,6 @@ SequenceableCollection >> reversed [
 	src := n + 1.
 	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
 	^ result
-
 ]
 
 { #category : #accessing }
@@ -2178,8 +2176,6 @@ SequenceableCollection >> split: aSequenceableCollection indicesDo: aBlock [
 	].
 
 	aBlock value: oldPosition value: aSequenceableCollection size.
-
-
 ]
 
 { #category : #splitjoin }

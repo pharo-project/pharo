@@ -18,7 +18,6 @@ DateParsingTest >> assertReading: aString as: aPattern raise: anErrorClass [
 	self
 		should: [ self reading: aPattern pattern: aString ]
 		raise: anErrorClass
-	
 ]
 
 { #category : #accessing }
@@ -35,8 +34,6 @@ DateParsingTest >> reading: aPattern pattern: aString [
 DateParsingTest >> testCanEscapeSpecialCharacters [
 	"Checks that reserved pattern characters $d $m and $y can be escaped in patterns"
 	self assertReading: '4d\2m\2345y' as: 'd\d\\m\m\\y\y' equals: (Date year: 2345 month: 2 day: 4)
-		
-	
 ]
 
 { #category : #tests }
@@ -52,7 +49,6 @@ DateParsingTest >> testDefaultParsingSucceeds [
 DateParsingTest >> testParsingDDPatternWithIncorrectDaysFails [ 
 	self assertReading: '02.00.2013' as: 'dd.mm.yyyy' raise: DateError.
 	self assertReading: '02.13.2013' as: 'dd.mm.yyyy' raise: DateError.
-	
 ]
 
 { #category : #'tests - dd pattern' }

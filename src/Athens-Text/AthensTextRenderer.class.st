@@ -97,7 +97,6 @@ AthensTextRenderer >> renderBackground: bkObj [
 "self halt."
 	canvas setPaint: bkObj color.
 	canvas drawShape: ( bkObj start@0 corner: bkObj start + bkObj width @ currentLine heightAndDescent)
-
 ]
 
 { #category : #rendering }
@@ -105,7 +104,6 @@ AthensTextRenderer >> renderBackground: aColor width: w [
 "self halt."
 	canvas setPaint: aColor.
 	canvas drawShape: ( advance x@0 corner: advance x + w +1@ currentLine heightAndDescent)
-
 ]
 
 { #category : #rendering }
@@ -115,8 +113,6 @@ AthensTextRenderer >> renderCharactersFrom: start to: stop [
 	"canvas drawShape: (advance x @ advance y extent: 2 @ 2)."
 	glyphRenderer advance: advance.
 	advance := advance + (glyphRenderer renderCharacters: text asString from: start to: stop).
-	
-
 ]
 
 { #category : #accessing }

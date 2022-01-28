@@ -75,7 +75,6 @@ Canvas >> contentsOfArea: aRectangle into: aForm [
 Canvas >> depth [
 
 	^ Display depth
-
 ]
 
 { #category : #testing }
@@ -201,7 +200,6 @@ Canvas >> fillColor: aColor [
 Canvas >> fillOval: r color: c [
 
 	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent.
-
 ]
 
 { #category : #'drawing - ovals' }
@@ -255,7 +253,6 @@ Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderSt
                self fillRectangle: (aRectangle insetBy: aBorderStyle width) fillStyle: aFillStyle ].
        
        (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ].
-       
 ]
 
 { #category : #initialization }
@@ -277,7 +274,6 @@ Canvas >> flushDisplay [
 Canvas >> form [
 
 	^ Display
-
 ]
 
 { #category : #'drawing - rectangles' }
@@ -307,21 +303,18 @@ Canvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth
 Canvas >> frameOval: r color: c [
 
 	self fillOval: r color: Color transparent borderWidth: 1 borderColor: c.
-
 ]
 
 { #category : #'drawing - ovals' }
 Canvas >> frameOval: r width: w color: c [
 
 	self fillOval: r color: Color transparent borderWidth: w borderColor: c.
-
 ]
 
 { #category : #'drawing - rectangles' }
 Canvas >> frameRectangle: r color: c [
 
 	self frameRectangle: r width: 1 color: c.
-
 ]
 
 { #category : #'drawing - rectangles' }
@@ -460,14 +453,12 @@ Canvas >> isShadowDrawing [
 Canvas >> isVisible: aRectangle [
 	"Return true if the given rectangle is (partially) visible"
 	^self clipRect intersects: aRectangle
-
 ]
 
 { #category : #drawing }
 Canvas >> line: pt1 to: pt2 color: c [
 
 	self line: pt1 to: pt2 width: 1 color: c.
-
 ]
 
 { #category : #drawing }
@@ -641,7 +632,6 @@ Canvas >> paintImage: aForm at: aPoint [
 	self paintImage: aForm
 		at: aPoint
 		sourceRect: aForm boundingBox
-
 ]
 
 { #category : #'drawing - images' }
@@ -695,7 +685,6 @@ Canvas >> roundShadowCornersOf: aMorph in: bounds during: aBlock [
 Canvas >> seesNothingOutside: aRectangle [
 	"Return true if this canvas will not touch anything outside aRectangle"
 	^ aRectangle containsRect: self clipRect
-
 ]
 
 { #category : #accessing }
@@ -728,7 +717,6 @@ Canvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 Canvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock [
 	"Transform the receiver by the given display transformation during the execution of aBlock. The given clip rectangle defines the *global* (e.g., outer) rectangle against which the receiver should clip (which would be equivalent to 'self clipRect: aClipRect; transformBy: aDisplayTransform')."
 	^ self transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: 1
-
 ]
 
 { #category : #'drawing - support' }

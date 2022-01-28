@@ -41,14 +41,14 @@ ClyShowClassRefCommand class >> fullBrowserShortcutActivation [
 ClyShowClassRefCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 	
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyFullBrowserClassContext 
+	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> queryBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyQueryBrowserContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
@@ -62,7 +62,7 @@ ClyShowClassRefCommand class >> queryBrowserShortcutActivation [
 ClyShowClassRefCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 	
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext 
+	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }

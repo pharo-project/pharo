@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyOverriddenMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'overridden' priority: -10 on: aMethodQuery 
+	^ClyMethodGroup named: 'overridden' priority: -10 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

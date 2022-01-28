@@ -102,13 +102,11 @@ IdentifierChooserMorph class >> labels: aCollection chooseBlock: aBlock [
 	"return a new chooser or nil"
 	^ aCollection isEmpty
 		ifFalse: [ self new chooseBlock: aBlock; labels: aCollection; yourself].
-
 ]
 
 { #category : #'event handling' }
 IdentifierChooserMorph >> activate: evt [
 	"Backstop."
-	
 ]
 
 { #category : #accessing }
@@ -132,7 +130,6 @@ IdentifierChooserMorph >> choiceMenuItems [
 	"Answer the value of choiceMenus"
 
 	^ Array streamContents: [:strm | self choiceMenus  do: [:menu | strm nextPutAll: menu menuItems]].
-
 ]
 
 { #category : #accessing }
@@ -162,7 +159,6 @@ IdentifierChooserMorph >> choose: index [
 	chooseBlock value: chosen.
 	self close.
 	requestor ifNotNil: [requestor takeKeyboardFocus]
-
 ]
 
 { #category : #accessing }
@@ -173,7 +169,6 @@ IdentifierChooserMorph >> chooseBlock: aBlock [
 { #category : #action }
 IdentifierChooserMorph >> close [
 	self delete.
-
 ]
 
 { #category : #accessing }
@@ -191,7 +186,7 @@ IdentifierChooserMorph >> forcesHeight: aHeight [
 	| sp |
 	(sp := self scrollPane) minHeight: aHeight.
 	sp height: sp minHeight.
- 	self height: sp height. 
+ 	self height: sp height.
 ]
 
 { #category : #'event handling' }
@@ -222,7 +217,6 @@ IdentifierChooserMorph >> initialize [
 	self hResizing: #shrinkWrap.
 	self vResizing: #shrinkWrap.
 	self color: self defaultBaseColor.
-
 ]
 
 { #category : #'event handling' }
@@ -297,7 +291,6 @@ IdentifierChooserMorph >> newChoiceButtonFor: index [
 			cornerStyle: #square;
 			hResizing: #spaceFill]
 		ifNil: [MenuLineMorph new]
-		
 ]
 
 { #category : #'ui-building' }
@@ -389,7 +382,6 @@ IdentifierChooserMorph >> newRow [
 		extent: 1@1;
 		borderWidth: 0;
 		color: Color transparent.
-
 ]
 
 { #category : #'ui-building' }
@@ -413,14 +405,12 @@ IdentifierChooserMorph >> newVerticalSeparator [
 IdentifierChooserMorph >> oneMenuOfWidth: anInteger [
 	self maxLines: 999999999.
 	scrollPaneWidth := anInteger.
-
 ]
 
 { #category : #'ui-building' }
 IdentifierChooserMorph >> open [
 	self addMorph: self newContentMorph.
 	self openInWorld.
-
 ]
 
 { #category : #'event handling' }
@@ -463,7 +453,6 @@ IdentifierChooserMorph >> selectLastItem [
 
 	self choiceMenus last selectItem:  self choiceMenuItems last event: nil.
 	self activeHand newKeyboardFocus: self.
-
 ]
 
 { #category : #'event handling' }
@@ -505,7 +494,6 @@ IdentifierChooserMorph >> selectPreviousItem [
 					self scrollPane ifNotNil: [:sp | sp scrollToShow: previous bounds].
 					^ embeddedMenu selectItem: previous event: nil]]].
 	self selectFirstItem.
-
 ]
 
 { #category : #'ui-building' }
@@ -524,7 +512,6 @@ IdentifierChooserMorph >> switchToNextColumn [
 		prevIdx =  self choiceMenus size
 				ifTrue: [1]
 				ifFalse: [prevIdx + 1]]
-
 ]
 
 { #category : #'event handling' }
@@ -569,5 +556,4 @@ IdentifierChooserMorph >> switchToPreviousColumn [
 		prevIdx =  1
 			ifTrue: [self choiceMenus size]
 			ifFalse: [prevIdx - 1]]
-
 ]

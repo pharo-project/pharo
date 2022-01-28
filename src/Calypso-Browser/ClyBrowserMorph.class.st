@@ -149,7 +149,7 @@ ClyBrowserMorph class >> on: aNavigationEnvironment [
 { #category : #'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment systemScope: aSystemScope [
 	^(self on: aNavigationEnvironment)
-		systemScope: aSystemScope 
+		systemScope: aSystemScope
 ]
 
 { #category : #accessing }
@@ -390,7 +390,7 @@ ClyBrowserMorph >> initializeNavigationPanel [
 
 { #category : #initialization }
 ClyBrowserMorph >> initializeNavigationViews [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -414,7 +414,7 @@ ClyBrowserMorph >> initializeToolsPanel [
 { #category : #testing }
 ClyBrowserMorph >> isNavigationPanelFocused [
 
-	^navigationViews anySatisfy: [ :each | each hasKeyboardFocus ] 
+	^navigationViews anySatisfy: [ :each | each hasKeyboardFocus ]
 ]
 
 { #category : #updating }
@@ -483,7 +483,7 @@ ClyBrowserMorph >> newNavigationView [
 
 { #category : #updating }
 ClyBrowserMorph >> newWindowTitle [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'opening/closing' }
@@ -498,8 +498,9 @@ ClyBrowserMorph >> open [
 	
 	self ensureInitialState.
 	window := self openInWindow.
-	window model: self.		
-	self updateWindowTitle
+	window model: self.
+	self updateWindowTitle.
+	window minimumExtent: 675@500.0 
 ]
 
 { #category : #'opening/closing' }
@@ -535,7 +536,7 @@ ClyBrowserMorph >> prepareDefaultState [
 
 { #category : #initialization }
 ClyBrowserMorph >> prepareInitialState [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -568,7 +569,7 @@ ClyBrowserMorph >> rebuildToolsForChangedEnvironment [
 
 { #category : #navigation }
 ClyBrowserMorph >> recordNavigationState: aBrowserNavigationState [
-	navigationHistory recordState: aBrowserNavigationState 
+	navigationHistory recordState: aBrowserNavigationState
 ]
 
 { #category : #accessing }
@@ -649,7 +650,7 @@ ClyBrowserMorph >> systemScope: aSystemScope [
 
 { #category : #accessing }
 ClyBrowserMorph >> tabManager [
-	^tabManager 
+	^tabManager
 ]
 
 { #category : #'tools support' }

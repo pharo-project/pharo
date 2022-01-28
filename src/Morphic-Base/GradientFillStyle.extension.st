@@ -47,7 +47,7 @@ GradientFillStyle >> changeColorOf: aMorph rampIndex: rampIndex [
 	Smalltalk ui theme 
 		chooseColorIn: self currentWorld title: 'Color' color: originalColor for: [:color |
 		self changeColorAt: rampIndex  to:  color.
-		aMorph changed] 
+		aMorph changed]
 ]
 
 { #category : #'*Morphic-Base-Balloon' }
@@ -63,8 +63,6 @@ GradientFillStyle >> changeColorSelector: aSymbol hand: aHand morph: aMorph orig
 				with: nc 
 				with: aMorph 
 				with: aHand]
-
-
 ]
 
 { #category : #'*Morphic-Base-Balloon' }

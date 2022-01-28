@@ -1033,6 +1033,8 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	
 	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
 		ifTrue:[ ^#incompleteIdentifier] .
+	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
+	aVariableNode isUndeclaredVariable ifTrue: [ ^#undefinedIdentifier ].
 
 	^#invalid.
 ]

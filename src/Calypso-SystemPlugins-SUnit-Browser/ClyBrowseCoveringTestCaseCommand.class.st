@@ -22,7 +22,7 @@ ClyBrowseCoveringTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
 		byItemOf: ClyQueryMenuGroup
-		for: ClyClass asCalypsoItemContext 
+		for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #accessing }

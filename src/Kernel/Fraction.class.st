@@ -302,7 +302,6 @@ Fraction >> printOn: aStream [
 	aStream nextPut: $/.
 	denominator printOn: aStream.
 	aStream nextPut: $).
-
 ]
 
 { #category : #printing }
@@ -313,7 +312,6 @@ Fraction >> printOn: aStream base: base [
 	aStream nextPut: $/.
 	denominator printOn: aStream base: base.
 	aStream nextPut: $).
-
 ]
 
 { #category : #printing }
@@ -385,7 +383,6 @@ Fraction >> storeOn: aStream base: base [
 	aStream nextPut: $/.
 	denominator storeOn: aStream base: base.
 	aStream nextPut: $).
-
 ]
 
 { #category : #'truncation and round off' }

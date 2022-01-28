@@ -140,7 +140,7 @@ BalloonMorph class >> string: str for: morph corner: cornerName [
 BalloonMorph >> adjustedCenter [
 	"Return the center of the original textMorph box within the balloon."
 
-	^ (self vertices last: 4) average rounded  
+	^ (self vertices last: 4) average rounded
 ]
 
 { #category : #accessing }
@@ -198,7 +198,7 @@ BalloonMorph >> morphicLayerNumber [
 	"Helpful for insuring some morphs always appear in front of or behind others.
 	smaller numbers are in front. Balloons are very front-like things"
 
-	^ 5		 
+	^ 5
 ]
 
 { #category : #initialization }
@@ -224,7 +224,6 @@ BalloonMorph >> popUpForHand: aHand [
 	((worldBounds := aHand world bounds) containsRect: self bounds) ifFalse:
 		[self bounds: (self bounds translatedToBeWithin: worldBounds)].
 	aHand balloonHelp: self
-
 ]
 
 { #category : #private }

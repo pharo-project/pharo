@@ -7,10 +7,10 @@ Class {
 { #category : #running }
 ClyCriticMethodGroupProviderTest >> classSampleWhichHasGroup [
 
-	^ClyClassWithProblemMethods 
+	^ClyClassWithProblemMethods
 ]
 
 { #category : #running }
 ClyCriticMethodGroupProviderTest >> groupProviderClass [
-	^ClyCriticMethodGroupProvider 
+	^ClyCriticMethodGroupProvider
 ]

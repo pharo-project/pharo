@@ -7,7 +7,7 @@ Class {
 	#category : #'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyShowDependencyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
 	
@@ -27,6 +27,6 @@ ClyShowDependencyCritiqueCommand >> description [
 { #category : #execution }
 ClyShowDependencyCritiqueCommand >> execute [
 
-	(DAPackageAnalyzerPackageDependenciesWindow
+	(DAPackageDependenciesPresenter
 		onPackagesNamed: {analyzedObject packageName}) open
 ]

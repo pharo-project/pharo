@@ -123,7 +123,6 @@ ClyExpandedDataSource >> initializeForBrowserStateSpanshot [
 ClyExpandedDataSource >> isExpanded: aDataSourceItem [
 
 	^(collapsedItems includes: aDataSourceItem) not
-	
 ]
 
 { #category : #testing }
@@ -135,7 +134,6 @@ ClyExpandedDataSource >> isInSameStateAs: anotherDataSource [
 	^collapsedItems allSatisfy: [ :myItem | 
 		anotherDataSource collapsedItems anySatisfy: [ :anotherItem | 
 			myItem isSameAs: anotherItem ] ]
-	 
 ]
 
 { #category : #accessing }

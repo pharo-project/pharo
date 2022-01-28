@@ -20,7 +20,6 @@ Class {
 AthensInteractiveScene >> eventHandledByScene: evt [
 
 	^  true == (scene handleEvent: evt in: self at: (self eventPositionInScene:evt))
-	
 ]
 
 { #category : #'event handling' }
@@ -61,5 +60,5 @@ AthensInteractiveScene >> mouseUp: evt [
 			(self eventHandledByScene: evt) ifTrue: [ ^ self ]. 	
 		].
 		
-	^ super mouseUp:evt 
+	^ super mouseUp:evt
 ]

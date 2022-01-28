@@ -58,7 +58,7 @@ FalseTest >> testIfTrueIfFalse [
 { #category : #'tests - instance creation' }
 FalseTest >> testNew [
 
-	self should: [False new] raise: self defaultTestError 
+	self should: [False new] raise: self defaultTestError
 ]
 
 { #category : #'tests - logical operations' }

@@ -16,7 +16,7 @@ EpRefactoring >> accept: aChangeVisitor [
 EpRefactoring >> asRBRefactoring [
 	"Answer the RBRefactoring corresponding to myself."
 	
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }

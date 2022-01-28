@@ -97,7 +97,6 @@ Interval class >> new [
 	"space must be low"
 	OutOfMemory signal.
 	^ self new  "retry if user proceeds"
-
 ]
 
 { #category : #'instance creation' }
@@ -309,7 +308,6 @@ Interval >> permutationsDo: aBlock [
 	"(1 to: 4) permutationsDo: [:each | Transcript cr; show: each printString]"
 
 	self asArray permutationsDo: aBlock
-
 ]
 
 { #category : #printing }

@@ -120,7 +120,7 @@ ClyItemDefinitionProperty >> printDefiningProtocol [
 { #category : #'printing items' }
 ClyItemDefinitionProperty >> printDefinition [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'printing items' }

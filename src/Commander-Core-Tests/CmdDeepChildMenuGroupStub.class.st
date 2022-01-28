@@ -6,5 +6,5 @@ Class {
 
 { #category : #parents }
 CmdDeepChildMenuGroupStub class >> parentGroup [
-	^CmdMenuGroupExample2 
+	^CmdMenuGroupExample2
 ]

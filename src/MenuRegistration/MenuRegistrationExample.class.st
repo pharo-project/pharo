@@ -47,7 +47,6 @@ MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 		target: Smalltalk tools workspace; 
 		selector: #openContents: ;
 		arguments: #('yep, my own cool tool can be opened from the world menu ! :)')
-
 ]
 
 { #category : #'menu declaring' }
@@ -93,7 +92,7 @@ MenuRegistrationExample class >> saveAs [
 MenuRegistrationExample class >> theme [
 	"Answer the ui theme that provides controls."
 
-	^ Smalltalk ui theme 
+	^ Smalltalk ui theme
 ]
 
 { #category : #'menu declaring' }

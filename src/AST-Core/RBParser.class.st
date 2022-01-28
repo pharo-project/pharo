@@ -197,7 +197,7 @@ RBParser >> cascadeNodeClass [
 
 { #category : #accessing }
 RBParser >> currentToken [
-	^currentToken 
+	^currentToken
 ]
 
 { #category : #'private - classes' }
@@ -251,7 +251,7 @@ RBParser >> initialize [
 { #category : #accessing }
 RBParser >> initializeParserWith: aString [ 
 	source := aString.
-	self scanner: (self scannerClass on: (ReadStream on: aString) errorBlock: self errorBlock)		
+	self scanner: (self scannerClass on: (ReadStream on: aString) errorBlock: self errorBlock)
 ]
 
 { #category : #'private - classes' }
@@ -768,7 +768,6 @@ RBParser >> parseNumberLiteral [
 		start: token start
 		stop: token stop
 		source: token source
-	
 ]
 
 { #category : #'private - parsing' }
@@ -887,7 +886,6 @@ RBParser >> parsePrimitiveValueLiteral [
 		start: token start
 		stop: token stop
 		source: token source
-	
 ]
 
 { #category : #'private - parsing' }
@@ -954,7 +952,6 @@ RBParser >> parseStatementInto: statementList periodList: periods [
 	
 	"Consume it. This is a hack to get to work"
 	startOfStatementToken = currentToken ifTrue: [ self step ]
-	
 ]
 
 { #category : #'private - parsing' }
@@ -1039,7 +1036,6 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 
 	"Commit the statement to the statements list"
 	statementList add: node.
-	
 ]
 
 { #category : #'private - parsing' }

@@ -16,11 +16,9 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not 
+		^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : #execution }
@@ -33,7 +31,7 @@ SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 { #category : #execution }
 SycExtractTempCommand >> asRefactorings [
 
-	^ {RBExtractToTemporaryRefactoring
+	^ {RBExtractToTemporaryTransformation
 		  extract: sourceNode sourceInterval
 		  to: tempName
 		  from: method selector

@@ -35,7 +35,6 @@ SDL2 class >> clipboardText [
 	
 	text := self primClipboardText.
 	^ text readStringUTF8
-
 ]
 
 { #category : #clipboard }
@@ -199,7 +198,7 @@ SDL2 class >> glGetAttribute: attr [
 
 	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
 		  self glGetAttribute: attr into: value.
-		  value nbUInt32AtOffset: 0 ]
+		  value unsignedLongAt: 1 ]
 ]
 
 { #category : #opengl }
@@ -276,7 +275,6 @@ SDL2 class >> initLibrary [
 SDL2 class >> initPlatformSpecific [
 
 	OSPlatform current sdlPlatform initPlatformSpecific.
-
 ]
 
 { #category : #common }

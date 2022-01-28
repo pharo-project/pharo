@@ -23,14 +23,13 @@ ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivatio
 	
 	^(CmdDoubleClickActivation for: ClyFullBrowserMethodGroupContext)
 		priority: 10000
-	
 ]
 
 { #category : #activation }
 ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #accessing }

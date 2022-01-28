@@ -25,8 +25,6 @@ AthensCairoSolidPaint >> athensFillPath: path on: aCanvas [
 		newPath;
 		loadPath: path;
 		fill.
-	
-
 ]
 
 { #category : #drawing }

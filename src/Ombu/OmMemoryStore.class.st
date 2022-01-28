@@ -94,7 +94,6 @@ OmMemoryStore >> newEntry: anEntry [
 	newReference := self referenceToLocalName: localName.
 	anEntry tags at: self selfReferenceKey put: newReference.
 	entries add: anEntry.
-
 ]
 
 { #category : #refreshing }

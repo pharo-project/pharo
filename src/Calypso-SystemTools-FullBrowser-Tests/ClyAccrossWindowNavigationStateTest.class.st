@@ -16,7 +16,6 @@ ClyAccrossWindowNavigationStateTest >> restoreBrowserInstance [
 ClyAccrossWindowNavigationStateTest >> snapshotState [
 
 	navigationState := ClyAccrossWindowNavigationState from: browser
-		
 ]
 
 { #category : #tests }

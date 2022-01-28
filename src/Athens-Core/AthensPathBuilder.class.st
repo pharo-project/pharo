@@ -41,14 +41,14 @@ AthensPathBuilder >> ccwArcTo: endPt angle: rot [
 AthensPathBuilder >> close [
 	"Close the current path controur"
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'creating path' }
 AthensPathBuilder >> createPath:	aBlock [
 	"aBlock value: self ...."	
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
@@ -57,7 +57,7 @@ AthensPathBuilder >> curveVia: cp1 and: cp2 to: aPoint [
 	starting from current path endpoint, using control points cp1, cp2
 	and ending at aPoint "
 	
-	self subclassResponsibility 	
+	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
@@ -66,7 +66,7 @@ AthensPathBuilder >> curveVia: cp1 to: aPoint [
 	starting from current path endpoint, using control point cp1, 
 	and ending at aPoint "
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
@@ -97,7 +97,7 @@ AthensPathBuilder >> reflectedCurveVia: cp2 to: aPoint [
 	The first control point is calculated as a reflection from the current point, if the last command was also a cubic bezier curve.
 	Otherwise, the first control point is the current point. The second control point is cp2."
 	
-	self subclassResponsibility 	
+	self subclassResponsibility
 ]
 
 { #category : #'path commands' }

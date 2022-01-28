@@ -37,7 +37,7 @@ ClassAPIHelpBuilder class >> buildHierarchicalHelpTopicFrom: aClass withSubclass
 		addMethods: anotherBoolean;
 		rootToBuildFrom: aClass;
 		build;
-		topicToBuild 
+		topicToBuild
 ]
 
 { #category : #accessing }
@@ -98,8 +98,6 @@ ClassAPIHelpBuilder >> buildMethodTopicsOn: topic for: aClass [
 		stream nextPutAll: methodComment;cr;cr ] ].
 	
 	topic contents: stream contents.
-	
-	
 ]
 
 { #category : #'private - building' }
@@ -111,8 +109,7 @@ ClassAPIHelpBuilder >> buildSubclassTopicFor: aSubclass [
 			addMethods: addMethods;
 			subclassesAsSeparateTopic: subclassesAsSeparateTopic;
 			build;
-			topicToBuild 
-	 
+			topicToBuild
 ]
 
 { #category : #'private - building' }

@@ -26,7 +26,7 @@ Since this model forms a hierarchical structure of help topics there is a browse
 You can open this browser programmatically using:
 
    HelpBrowser open
-' 
+'
 ]
 
 { #category : #pages }
@@ -134,7 +134,7 @@ to use the help system to provide end user help on any commercial
 application that is written with the Smalltalk system.
 
 
-' 
+'
 ]
 
 { #category : #accessing }

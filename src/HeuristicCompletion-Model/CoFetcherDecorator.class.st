@@ -24,6 +24,13 @@ CoFetcherDecorator >> decoree: anotherFetcher [
 	decoree := anotherFetcher
 ]
 
+{ #category : #accessing }
+CoFetcherDecorator >> filter: aFilter [
+
+	super filter: aFilter.
+	decoree filter: aFilter
+]
+
 { #category : #resetting }
 CoFetcherDecorator >> reset [
 

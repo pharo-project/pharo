@@ -56,7 +56,6 @@ ClyItemGroup class >> named: aString [
 ClyItemGroup class >> named: aString priority: aNumber [
 	^(self named: aString)
 			priority: aNumber
-		
 ]
 
 { #category : #accessing }

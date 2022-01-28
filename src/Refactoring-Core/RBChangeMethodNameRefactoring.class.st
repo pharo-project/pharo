@@ -24,6 +24,12 @@ Class {
 }
 
 { #category : #testing }
+RBChangeMethodNameRefactoring class >> isAbstract [
+
+	^ self == RBChangeMethodNameRefactoring
+]
+
+{ #category : #testing }
 RBChangeMethodNameRefactoring >> hasPermutedArguments [
 	oldSelector numArgs = newSelector numArgs ifFalse: [^true].
 	1 to: oldSelector numArgs
@@ -47,7 +53,7 @@ RBChangeMethodNameRefactoring >> implementorsCanBePrimitives [
 RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
 	| oldArgs |
 	oldArgs := parseTree arguments.
-	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each]) 
+	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
 ]
 
 { #category : #preconditions }
@@ -105,7 +111,7 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 RBChangeMethodNameRefactoring >> renameArgumentsIn: parseTree [
 	self renameMap do: [ :arg |
 		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
-	] 
+	]
 ]
 
 { #category : #transforming }

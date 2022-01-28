@@ -39,7 +39,6 @@ MorphTreeListManager >> addAllToSelection: aCollection [
 	self selectionUpdateFromViewWhile: [
 		selHolder := self newSelectionHolderWithNodePath: (aCollection last path collect: [:m | m complexContents]).
 		self listModel selection: selHolder]
-
 ]
 
 { #category : #'selection change' }
@@ -138,8 +137,7 @@ MorphTreeListManager >> autoAction [
 		ifNotNil: [
 			firstClickedMorph selected
 				ifTrue: [#addToSelection:]
-				ifFalse: [#removeFromSelection:]]. 
-	
+				ifFalse: [#removeFromSelection:]].
 ]
 
 { #category : #accessing }
@@ -278,8 +276,6 @@ MorphTreeListManager >> deselectAll [
 	self selectionUpdateFromViewWhile: [
 		selHolder := self newSelectionHolderWithNodePath: nil.
 		self listModel selection: selHolder]
-
-
 ]
 
 { #category : #'mouse managing' }
@@ -292,7 +288,7 @@ MorphTreeListManager >> doubleClick: anEvent on: aMorph [
 { #category : #accessing }
 MorphTreeListManager >> doubleClickSelector [
 
-	^ doubleClickSelector 
+	^ doubleClickSelector
 ]
 
 { #category : #accessing }
@@ -306,7 +302,6 @@ MorphTreeListManager >> emptySelection [
 	self selectedMorphList do: [:n | n unhighlight; setSelectedSilently: false].
 	self selectedMorphList removeAll.
 	self selectionChanged
-
 ]
 
 { #category : #accessing }
@@ -327,7 +322,6 @@ MorphTreeListManager >> from: aNodeMorph to: anotherNodeMorph do: action [
 	idx1 := ((self getSelectionIndexOf: aNodeMorph) min: self allNodeMorphs size) max: 1.
 	idx2 := ((self getSelectionIndexOf: anotherNodeMorph) min: self allNodeMorphs size) max: 1.
 	(idx1 min: idx2) to: (idx1 max: idx2) do: [:idx | action value: (self allNodeMorphs at: idx)]
-
 ]
 
 { #category : #accessing }
@@ -361,7 +355,7 @@ MorphTreeListManager >> isMultiple [
 
 { #category : #'selection change' }
 MorphTreeListManager >> isSelectionUpdateFromView [
-	^ isSelectionUpdateFromView ifNil: [isSelectionUpdateFromView := false] 
+	^ isSelectionUpdateFromView ifNil: [isSelectionUpdateFromView := false]
 ]
 
 { #category : #'keyboard managing' }
@@ -521,8 +515,7 @@ MorphTreeListManager >> mouseUp: event on: aNodeMorph [
 		self listModel selection: selHolder].
 	
 	clickedTheCheckbox ifFalse: [ self lastClickedMorph: aNodeMorph ].
-	self selectionChanged. 
-
+	self selectionChanged.
 ]
 
 { #category : #accessing }
@@ -599,7 +592,6 @@ MorphTreeListManager >> removeFromSelection: aMorph [
 		selHolder := self newSelectionHolderWithNodePath: nil.
 		self listModel selection: selHolder].
 	^ true
-
 ]
 
 { #category : #accessing }
@@ -760,7 +752,6 @@ MorphTreeListManager >> selectedMorph [
 	^ self selectedMorphList
 		ifNotEmpty: [ :l | l last]
  		ifEmpty: []
-
 ]
 
 { #category : #'selection accessing' }
@@ -771,7 +762,6 @@ MorphTreeListManager >> selectedMorphList [
 { #category : #'selection change' }
 MorphTreeListManager >> selectionChanged [
 	client selectionChanged
-
 ]
 
 { #category : #'selection change' }
@@ -780,7 +770,6 @@ MorphTreeListManager >> selectionUpdateFromViewWhile: aBlock [
 	prev := self isSelectionUpdateFromView.
 	isSelectionUpdateFromView := true.
 	aBlock ensure: [isSelectionUpdateFromView := prev]
-
 ]
 
 { #category : #'selection change' }
@@ -817,8 +806,6 @@ MorphTreeListManager >> setSelectionIndexFromKeyboard: index multiSelection: mul
 
 	self selectionChanged.
 	self scrollToShow: targetMorph contentBounds
-	
-
 ]
 
 { #category : #'selection change' }
@@ -852,8 +839,6 @@ MorphTreeListManager >> silentlySetSelectedMorph: aMorph [
 MorphTreeListManager >> toggleExpandedState: aMorph [
 	aMorph toggleExpandedState.
 	client innerWidgetChanged
-
-
 ]
 
 { #category : #'selection change' }
@@ -878,5 +863,4 @@ MorphTreeListManager >> updateSelectionFromModel [
 						self listModel selectionChanged.
 						self selectionChanged]
 					ifFalse: [selHolder updateView: client forModel: self listModel]].
-
 ]

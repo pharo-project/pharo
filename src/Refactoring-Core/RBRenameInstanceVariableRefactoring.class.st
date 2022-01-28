@@ -108,7 +108,6 @@ RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 { #category : #initialization }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self rename: aVarName to: aName in: aClass renameAccessors: false
-
 ]
 
 { #category : #initialization }

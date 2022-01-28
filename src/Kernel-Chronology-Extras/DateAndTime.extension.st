@@ -4,7 +4,6 @@ Extension { #name : #DateAndTime }
 DateAndTime >> asDosTimestamp [
 
 	^ (DosTimestamp fromDateAndTime: self) value.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -23,14 +22,12 @@ DateAndTime >> asLocal [
 	^ (self offset = self class localOffset)
 		ifTrue: [self]
 		ifFalse: [self offset: self class localOffset]
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asMonth [
 
 	^ Month starting: self
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -38,7 +35,6 @@ DateAndTime >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
 	^ self asDuration asNanoSeconds
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -51,8 +47,7 @@ DateAndTime >> asSeconds [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asWeek [
 
-	^ Week starting: self 
-
+	^ Week starting: self
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -105,7 +100,6 @@ DateAndTime >> dayOfWeekAbbreviation [
 DateAndTime >> dayOfWeekName [
 
 	^ Week nameOfDay: self dayOfWeek
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -136,7 +130,6 @@ DateAndTime >> daysInYear [
  	"Answer the number of days in the year represented by the receiver."
  
  	^ self asYear daysInYear
- 
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -144,7 +137,6 @@ DateAndTime >> daysLeftInYear [
  	"Answer the number of days in the year after the date of the receiver."
  
  	^ self daysInYear - self dayOfYear
- 
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -249,14 +241,12 @@ DateAndTime class >> fuzzyReadFrom: aStream [
 		nanoSecond:  nanos
 
 		offset: offset.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> hour [
 
 	^ self hour24
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -285,7 +275,6 @@ DateAndTime >> hours [
 DateAndTime >> isLeapYear [
 
 	^ Year isLeapYear: self year.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -301,7 +290,6 @@ DateAndTime >> middleOf: aDuration [
 	| duration |
 	duration := aDuration asDuration.
 	^ Timespan starting: (self - (duration / 2)) duration: duration.
-		
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -320,7 +308,6 @@ DateAndTime >> month [
 DateAndTime >> monthAbbreviation [
 
 	^ self monthName copyFrom: 1 to: 3
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -328,14 +315,12 @@ DateAndTime >> monthIndex [
  
  
  	^ self month
- 
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> monthName [
 
 	^ Month nameOfMonth: self month
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -362,7 +347,7 @@ DateAndTime >> printHMSOn: aStream [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> printHMSOn: aStream separatedBy: aSeparator [
 	
-	BasicDatePrinter default printHMS: self separatedBy: aSeparator on: aStream 
+	BasicDatePrinter default printHMS: self separatedBy: aSeparator on: aStream
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -398,7 +383,6 @@ DateAndTime >> printYMDOn: aStream [
 	If the year is negative, prints out '-YYYY-MM-DD'."
 
 	^ self printYMDOn: aStream withLeadingSpace: false.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -575,14 +559,12 @@ DateAndTime >> timeZone [
 DateAndTime >> timeZoneAbbreviation [
 
 	^ self timeZone abbreviation
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> timeZoneName [
 
 	^ self timeZone name
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -590,7 +572,6 @@ DateAndTime >> to: anEnd [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
 	^ Timespan starting: self ending: (anEnd asDateAndTime).
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -600,7 +581,6 @@ DateAndTime >> to: anEnd by: aDuration [
 	^ (Schedule starting: self ending: (anEnd asDateAndTime))
 		schedule: (Array with: aDuration asDuration);
 		yourself.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -608,14 +588,12 @@ DateAndTime >> to: anEnd by: aDuration do: aBlock [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
 	^ (self to: anEnd by: aDuration) scheduleDo: aBlock
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> today [
 
 	^ self midnight
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -656,7 +634,7 @@ DateAndTime >> translateTo: anOffset [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> translateToUTC [
 	" Move this represenation to UTC"
-	^ self translateTo: 0 asDuration 
+	^ self translateTo: 0 asDuration
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -669,7 +647,7 @@ DateAndTime >> truncated [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> withoutOffset [
 
-	^ self offset: 0 
+	^ self offset: 0
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -699,7 +677,6 @@ DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second:
 		minute: minute
 		second: second
 		offset: self localOffset.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -770,7 +747,6 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		minute: minute
 		second: second
 		offset: self localOffset
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -821,7 +797,6 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		second: second
 		nanoSecond: 0
 		offset: offset
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -833,12 +808,11 @@ DateAndTime class >> year: year month: month day: day offset: anOffset [
 		day: day
 		hour: 0
 		minute: 0
-		offset: anOffset 
+		offset: anOffset
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> yesterday [
 
 	^ self today asDate previous asDateAndTime
-
 ]

@@ -23,8 +23,8 @@ RewriteRuleChangesBrowser class >> changes: aCollection [
 		yourself
 ]
 
-{ #category : #specs }
-RewriteRuleChangesBrowser class >> defaultSpec [
+{ #category : #layout }
+RewriteRuleChangesBrowser class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 		add: (SpPanedLayout newTopToBottom
@@ -118,7 +118,7 @@ RewriteRuleChangesBrowser >> connectPresenters [
 			ifTrue: [ aChange changes ] 
 			ifFalse: [#()]].
 	buttonCancel action: [ self cancel ].														
-	buttonOk action: [ self accept ].																											
+	buttonOk action: [ self accept ].
 ]
 
 { #category : #accessing }
@@ -173,8 +173,7 @@ RewriteRuleChangesBrowser >> initializeWindow: aWindowPresenter [
 
 { #category : #'instance creation' }
 RewriteRuleChangesBrowser >> open [
-	^ self openWithSpec
-
+	^ self open
 ]
 
 { #category : #accessing }

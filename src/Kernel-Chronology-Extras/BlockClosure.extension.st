@@ -10,7 +10,7 @@ BlockClosure >> bench [
 	
 	| benchmarkResult |
 	benchmarkResult := self benchFor: 5 seconds.
-	^ benchmarkResult shortPrintString 
+	^ benchmarkResult shortPrintString
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }

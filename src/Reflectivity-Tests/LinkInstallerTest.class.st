@@ -99,8 +99,6 @@ LinkInstallerTest >> testLinkOnClassVar [
 	self assert: link nodes size equals: 4.	
 	link uninstall.
 	self assert: link nodes isEmpty.
-	
-	
 ]
 
 { #category : #permalinks }
@@ -127,8 +125,6 @@ LinkInstallerTest >> testLinkOnClassVarForObject [
 	self assert: link nodes size equals: 4.	
 	link uninstall.
 	self assert: link nodes isEmpty.
-	
-	
 ]
 
 { #category : #nodes }
@@ -352,11 +348,7 @@ LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemoved [
 	
 	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.	
 	self assert: link nodes size equals: 4.
-	link uninstall 
-	
-
-	
-	
+	link uninstall
 ]
 
 { #category : #permalinks }
@@ -378,10 +370,6 @@ LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
 	
 	link uninstall.
 	self assert: link nodes isEmpty
-	
-
-	
-	
 ]
 
 { #category : #'links - installing' }
@@ -396,7 +384,6 @@ LinkInstallerTest >> testObjectsAreWeakReferenced [
 	obj1 := nil.
 	Smalltalk garbageCollect.	
 	self assert: weakArray first equals: nil
-
 ]
 
 { #category : #'links - installing' }
@@ -488,8 +475,7 @@ LinkInstallerTest >> testPermaLinkNotInstalledOnObjectIfExistsInClass [
 	self assert: link nodes size equals: 8.		
 	
 	link uninstall.
-	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.	
-	
+	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.
 ]
 
 { #category : #'links - updating' }
@@ -758,11 +744,7 @@ LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAddition [
 	ReflectivityExamples2 new generateNewMethodWithInstVarAccess.
 	
 	self assert: link nodes size equals: 8.
-	link uninstall 
-	
-
-	
-	
+	link uninstall
 ]
 
 { #category : #permalinks }
@@ -782,11 +764,7 @@ LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAdditionForObject [
 	ReflectivityExamples2 new generateNewMethodWithInstVarAccess.
 	
 	self assert: link nodes size equals: 8.
-	link uninstall 
-	
-
-	
-	
+	link uninstall
 ]
 
 { #category : #permalinks }
@@ -805,8 +783,7 @@ LinkInstallerTest >> testSlotOrVarLinksRemainAfterMethodModification [
 		
 	self assert: link nodes size equals: 10.
 	self assert: (link nodes allSatisfy: [:n| n links includes: link ]).
-	link uninstall 
-
+	link uninstall
 ]
 
 { #category : #permalinks }
@@ -825,7 +802,7 @@ LinkInstallerTest >> testSlotOrVarLinksRemainAfterMethodModificationForObject [
 	ReflectivityExamples2 new modifyMethodWithInstVarAccess.
 	self assert: link nodes size equals: 10.
 	self assert: (link nodes allSatisfy: [:n| n links includes: link ]).
-	link uninstall 
+	link uninstall
 ]
 
 { #category : #'links - installing' }

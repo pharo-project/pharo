@@ -21,7 +21,6 @@ ProceedDialogWindow >> handlesKeyboard: evt [
 	(super handlesKeyboard: evt) ifTrue: [^true].
 	^evt keyCharacter = $y or: [
 		evt keyCharacter = $n]
-	
 ]
 
 { #category : #accessing }

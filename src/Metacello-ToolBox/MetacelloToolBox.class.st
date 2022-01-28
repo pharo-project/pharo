@@ -29,7 +29,7 @@ MetacelloToolBox class >> appendDescription: aString to: versionSpec [
 			versionSpec description: strm contents ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> baseNameOf: configurationClassName [
   "Return the baseName for the given configuration class name."
 
@@ -42,7 +42,7 @@ MetacelloToolBox class >> baseNameOf: configurationClassName [
     ifFalse: [ configurationClassName ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> baseNameOfConfiguration: aConfigurationClass [
 	"Return the baseName for the given configuration class."
 
@@ -50,7 +50,7 @@ MetacelloToolBox class >> baseNameOfConfiguration: aConfigurationClass [
 	^self baseNameOf: aConfigurationClass name asString
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> baselineNameFrom: baseName [
   "Return the fully-qualified baseline class name."
 
@@ -65,7 +65,7 @@ MetacelloToolBox class >> baselineNamed: baseName [
     yourself
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> checkForCriticalValidationIssues: configurationBasename [
 	"Validate the named configuration and filter out all non-critical issues."
 	<apiDocumentation>
@@ -113,7 +113,6 @@ MetacelloToolBox class >> compareVersionsIn: aConfigurationClass [
 		compareVersion: previousVersion versionString
 		for: aConfigurationClass name asString
 		to: developmentVersion versionString
-	
 ]
 
 { #category : #'tool support' }
@@ -125,7 +124,7 @@ MetacelloToolBox class >> compiledMethodForVersion: aMetacelloVersion [
 	^pragma method
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> configurationClasses [
     "Return a set of the Metacello configuration classes that have been loaded into the image."
 
@@ -133,7 +132,7 @@ MetacelloToolBox class >> configurationClasses [
     ^ MetacelloProjectRegistration configurationClasses
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> configurationNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -547,7 +546,6 @@ MetacelloToolBox class >> defaultTopic: pageSelector for: aConfigurationClass [
 			stream
 				nextPutAll: 'I guess you''re on your own:).'.
 			^ helpTopicClass perform: #title:contents: withArguments: { 'Getting Started' .stream contents} ].
-
 ]
 
 { #category : #validation }
@@ -736,7 +734,7 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString section: sectionAtt
 	^ toolbox
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> platformAttributes [
 	"Answer the list of platform attributes for the current platform"
 	<apiDocumentation>
@@ -956,15 +954,13 @@ MetacelloToolBox class >> stableVersion: stableVersionString for: configurationB
 		symbolicVersionMethod: #stable;
 		addSymbolicSection: platformAttribute version: stableVersionString;
 		commitMethod.
-
 ]
 
 { #category : #private }
 MetacelloToolBox class >> stripVersionStringForSelector: versionString [
 
 	^((versionString copyWithout: $.) copyWithout: $-) 
-		copyReplaceAll: 'baseline' with: '' 
-
+		copyReplaceAll: 'baseline' with: ''
 ]
 
 { #category : #scripts }
@@ -1185,7 +1181,6 @@ MetacelloToolBox class >> validateProject: aMetacelloProject version: versionStr
 
 	<apiDocumentation>
 	^ self validateProject: aMetacelloProject version: versionString debug: #() recurse: false
-
 ]
 
 { #category : #validation }
@@ -1595,7 +1590,6 @@ MetacelloToolBox >> commitBaselineOfMethod [
   skipValidation
     ifFalse: [ self validateVersion: self methodSpec versionString ].
   methodSpec := nil
-
 ]
 
 { #category : #'api-configuration' }
@@ -1617,7 +1611,6 @@ MetacelloToolBox >> commitMethod [
 	skipValidation
 		ifFalse: [ self validateVersion: self methodSpec versionString ].
 	methodSpec := nil
-
 ]
 
 { #category : #private }
@@ -1719,7 +1712,6 @@ MetacelloToolBox >> createSymbolicVersionMethod: selector inCategory: category f
 		yourself.
 	constructor := self constructor.
 	self methodSpec methodSections: (constructor extractSymbolicVersionSpecsFor: versionSymbol) asOrderedCollection.
-
 ]
 
 { #category : #'spec creation' }
@@ -1830,7 +1822,6 @@ MetacelloToolBox >> ensureMetacello [
 MetacelloToolBox >> hasMethodForSymbolicVersion: versionSymbol [
 
 	^(self constructor extractSymbolicVersionPragmas at: versionSymbol ifAbsent: [ ^ false ]) size > 0
-
 ]
 
 { #category : #'api-configuration' }
@@ -2076,7 +2067,6 @@ MetacelloToolBox >> modifySection: sectionAttributeOrPath sectionIndex: sectionI
 MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol [
 
 	^self modifySymbolicVersionMethodFor: versionSymbol symbolicVersionSpecsDo: [:symbolicVersionSpec | true ].
-
 ]
 
 { #category : #'api-configuration' }
@@ -2134,7 +2124,6 @@ MetacelloToolBox >> symbolicVersionMethod: versionSymbol [
 				createSymbolicVersionMethod: versionSymbol asString , ':'
 				inCategory: 'symbolic versions'
 				forVersion: versionSymbol ].
-
 ]
 
 { #category : #'api-configuration' }
@@ -2192,7 +2181,6 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol pr
                         ifTrue: [ self methodSpec methodSections add: methodSection ] ]
                 ifFalse: [ self methodSpec methodSections add: methodSection ] ].
     ^ updatedSpecs
-
 ]
 
 { #category : #'api-configuration' }

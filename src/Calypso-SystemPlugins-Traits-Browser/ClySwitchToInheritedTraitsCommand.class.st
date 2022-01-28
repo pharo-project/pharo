@@ -21,10 +21,10 @@ ClySwitchToInheritedTraitsCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClySwitchToInheritedTraitsCommand >> requiredQueryResult [
-	^ClyTraitUserHierarchy inverse asQueryResult 
+	^ClyTraitUserHierarchy inverse asQueryResult
 ]
 
 { #category : #execution }
 ClySwitchToInheritedTraitsCommand >> traitScopeClass [
-	^ClyInheritedTraitScope 
+	^ClyInheritedTraitScope
 ]

@@ -91,16 +91,17 @@ BaselineOfTaskIt class >> loadDevelopment [
 	^(self project version: #development) load
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfTaskIt >> baseline: spec [
 	<baseline>
 	spec for: #'pharo7.x' do: [ self baselineForPharo7: spec ].
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
 	spec for: #'pharo6.1.x' do: [ self baselineForPharo6: spec ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfTaskIt >> baselineForCommon: spec [
 
 	spec
@@ -135,7 +136,14 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 		group: 'development' with: #('default' 'debug' 'tests')
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
+BaselineOfTaskIt >> baselineForPharo10: spec [
+
+	spec package: #TaskIt.
+	self baselineForCommon: spec
+]
+
+{ #category : #baselines }
 BaselineOfTaskIt >> baselineForPharo6: spec [
 	spec
 		package: #TaskIt;
@@ -166,7 +174,7 @@ BaselineOfTaskIt >> baselineForPharo6: spec [
 		group: 'development' with: #( 'default' 'debug' 'tests' )
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfTaskIt >> baselineForPharo7: spec [
 
 	spec 
@@ -176,14 +184,14 @@ BaselineOfTaskIt >> baselineForPharo7: spec [
 	self baselineForCommon: spec
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfTaskIt >> baselineForPharo8: spec [
 
 	spec package: #TaskIt.
 	self baselineForCommon: spec
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfTaskIt >> baselineForPharo9: spec [
 
 	spec package: #TaskIt.

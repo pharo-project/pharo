@@ -17,7 +17,7 @@ Class {
 
 { #category : #'building groups' }
 ClyClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'system changes' }

@@ -51,8 +51,7 @@ CmdCommandMenuItem >> executeCommand [
 ]
 
 { #category : #accessing }
-CmdCommandMenuItem >> findGroupLike: menuGroupClass ifExists: aBlockClosure [ 
-
+CmdCommandMenuItem >> findGroupLike: menuGroupClass ifExists: aBlockClosure [
 ]
 
 { #category : #accessing }
@@ -102,5 +101,4 @@ CmdCommandMenuItem >> printOn: aStream [
 
 { #category : #updating }
 CmdCommandMenuItem >> synchronizeContentWith: anotherMenuItem [
-
 ]

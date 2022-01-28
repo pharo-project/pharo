@@ -95,7 +95,7 @@ QuotedPrintableMimeConverter >> mimeEncode [
 						lineLength := lineLength + 3 ] ] ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 QuotedPrintableMimeConverter >> newline: string [
 	"Set another newline convention, like CRLF or LF that I should use.
 	By default I use CR."

@@ -15,7 +15,7 @@ Class {
 
 { #category : #'mocking world' }
 TaskbarMorphTest >> addWindow [
-	^world addWindowToWorld 
+	^world addWindowToWorld
 ]
 
 { #category : #'mocking world' }
@@ -37,7 +37,7 @@ TaskbarMorphTest >> newTaskFor: window [
 
 { #category : #'mocking taskbar' }
 TaskbarMorphTest >> orderedTasks [
-	^tasks 
+	^tasks
 ]
 
 { #category : #'mocking taskbar' }
@@ -53,7 +53,7 @@ TaskbarMorphTest >> putOnTop: aMorph [
 
 { #category : #'mocking world' }
 TaskbarMorphTest >> removeWindow: aMorph [ 
-	windows remove: aMorph 
+	windows remove: aMorph
 ]
 
 { #category : #running }
@@ -75,7 +75,6 @@ TaskbarMorphTest >> testEmptyTaskBarList [
 	world := self.
 	taskbar updateTasks.
 	self assert: taskbar tasks size equals: 0
-	
 ]
 
 { #category : #tests }
@@ -91,7 +90,6 @@ TaskbarMorphTest >> testUpdateEmptyTaskBarWithNewWindow [
 	world addWindow.
 	taskbar updateTasks.
 	self assert: taskbar tasks size equals: 1
-	
 ]
 
 { #category : #tests }
@@ -101,7 +99,6 @@ TaskbarMorphTest >> testUpdateTaskBarShouldContainsTaskbarTasks [
 	world addWindow.
 	taskbar updateTasks.
 	self assert: (taskbar tasks first isKindOf: TaskbarTask)
-	
 ]
 
 { #category : #tests }
@@ -142,7 +139,6 @@ TaskbarMorphTest >> testWhenRemovingWindowInWorldListTaskListShouldUpdateConsequ
 	taskbar updateTasks.
 	self assert: taskbar tasks size equals: 1.
 	self assert: taskbar tasks first morph equals: window2.
-	
 ]
 
 { #category : #'the real thing - aka: the test subject' }
@@ -175,5 +171,4 @@ TaskbarMorphTest >> updateTasks [
 	tasksThatShouldBeUpdated := windows
 		collect: [ :window | self newTaskFor: window ].
 	self updateOrderedTasksFrom: tasksThatShouldBeUpdated
-	
 ]

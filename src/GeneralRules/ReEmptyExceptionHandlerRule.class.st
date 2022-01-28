@@ -45,7 +45,6 @@ ReEmptyExceptionHandlerRule >> initialize [
 		'`@block 
 			on: `exception
 			do: [ :`@err | | `@temps | ]'
-		
 ]
 
 { #category : #accessing }

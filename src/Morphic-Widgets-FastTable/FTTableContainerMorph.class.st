@@ -72,7 +72,6 @@ FTTableContainerMorph >> adjustToHorizontalScrollBarValue: aNumber [
 		ifTrue: [ 
 			self startColumnIndex: newStartColumnIndex.
 			self changed  ]
-
 ]
 
 { #category : #private }
@@ -210,7 +209,7 @@ FTTableContainerMorph >> createResizableHeaderWith: aMorph between: leftColumn a
 { #category : #initialization }
 FTTableContainerMorph >> defaultColor [
 
-	^Color transparent 
+	^Color transparent
 ]
 
 { #category : #drawing }
@@ -290,7 +289,6 @@ FTTableContainerMorph >> exposedColumnsRange: columnWidths [
 	^self startColumnIndex isZero
 		ifTrue: [1 to: self table numberOfColumns] 
 		ifFalse: [(1 to: columnWidths size) select: [ :idx | (columnWidths at: idx)>0 ]  ]
-
 ]
 
 { #category : #private }
@@ -419,7 +417,6 @@ FTTableContainerMorph >> updateAllRows [
 		ifTrue: [ self updateHeaderRow ]
 		ifFalse: [ headerRow := nil ].
 	self updateExposedRows
-	
 ]
 
 { #category : #updating }

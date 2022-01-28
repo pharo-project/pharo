@@ -57,7 +57,6 @@ Path class >> addElement: element to: result [
 { #category : #private }
 Path class >> addEmptyElementTo: result [
 	result isEmpty ifTrue: [result add: '']
-		
 ]
 
 { #category : #private }
@@ -65,7 +64,6 @@ Path class >> addParentElementTo: result [
 	(result isEmpty or: [ result last = '..' ])
 		ifTrue: [ result add: '..' ]
 		ifFalse: [ result removeLast ]
-		
 ]
 
 { #category : #private }
@@ -124,7 +122,7 @@ Path class >> isAbsolutePath: aString delimiter: aCharacter [
 
 { #category : #private }
 Path class >> isAbsoluteUnixPath: aString [
-	^aString first = $/ 
+	^aString first = $/
 ]
 
 { #category : #private }
@@ -253,7 +251,7 @@ Path >> asResolvedBy: anObject [
 
 { #category : #accessing }
 Path >> base [
-	^self basenameWithoutExtension 
+	^self basenameWithoutExtension
 ]
 
 { #category : #accessing }
@@ -331,7 +329,6 @@ Path >> copyFrom: aPath [
 	| size |
 	size := aPath size min: self size.
 	1 to: size do: [:i | self at: i put: (aPath at: i)].
-	
 ]
 
 { #category : #accessing }
@@ -393,7 +390,7 @@ Path >> hash [
 
 { #category : #testing }
 Path >> isAbsolute [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -425,7 +422,7 @@ Path >> isRelative [
 
 { #category : #testing }
 Path >> isRoot [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -494,7 +491,6 @@ Path >> printPathOn: aStream [
 	"(String streamContents: [ :str| ((FileSystem workingDirectory / 'book-result' / 'W01-Welcome') relativeToReference: FileSystem workingDirectory) printPathOn: str]) >>> 'book-result/W01-Welcome'"
 
 	self printPathOn: aStream delimiter: self delimiter.
-
 ]
 
 { #category : #printing }
@@ -585,7 +581,7 @@ Path >> segments [
 		segments add: part
 	].
 	
-	^ segments asArray 
+	^ segments asArray
 ]
 
 { #category : #navigating }

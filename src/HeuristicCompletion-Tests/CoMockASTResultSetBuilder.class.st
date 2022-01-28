@@ -38,7 +38,7 @@ CoMockASTResultSetBuilder >> visitBlockNode: aNode [
 CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [ 
 
 	heuristic := #cascade.
-	^ super visitCascadeNode: aRBCascadeNode 
+	^ super visitCascadeNode: aRBCascadeNode
 ]
 
 { #category : #accessing }

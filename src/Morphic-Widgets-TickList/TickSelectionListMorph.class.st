@@ -33,7 +33,7 @@ TickSelectionListMorph >> indentingItemClass [
 TickSelectionListMorph >> mouseUp: event [ 
 
 	self storeValue: nil.
-	super mouseUp: event 
+	super mouseUp: event
 ]
 
 { #category : #accessing }

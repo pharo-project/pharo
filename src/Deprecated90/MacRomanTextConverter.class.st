@@ -41,8 +41,3 @@ MacRomanTextConverter class >> encodingNames [
 MacRomanTextConverter class >> initialize [
 	self initializeTables
 ]
-
-{ #category : #accessing }
-MacRomanTextConverter class >> languageEnvironment [
-	^Latin1Environment
-]

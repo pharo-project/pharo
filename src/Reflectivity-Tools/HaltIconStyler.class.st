@@ -14,7 +14,7 @@ HaltIconStyler >> highlightColor [
 
 { #category : #defaults }
 HaltIconStyler >> iconFor: aNode [
-	^ self iconNamed: #haltIcon 
+	^ self iconNamed: #haltIcon
 ]
 
 { #category : #defaults }

@@ -23,7 +23,7 @@ Class {
 	#category : #'FileSystem-Core-Public'
 }
 
-{ #category : #initializing }
+{ #category : #'system startup' }
 FileSystem class >> startUp: aBoolean [
 	"This is only here to deal with migration from older versions of
 	FileSystem that wanted to receive startup notifcations."
@@ -198,7 +198,6 @@ FileSystem >> copyAndDelete: sourcePath to: destination [
 		[ self copyDirectoryAndDelete: sourcePath to: destination ]
 	ifFalse:
 		[ self copyFileAndDelete: sourcePath to: destination ].
-
 ]
 
 { #category : #private }
@@ -385,7 +384,6 @@ FileSystem >> entryAt: aResolvable [
 	"Answer the FileSystemDirectoryEntry for aResolvable"
 
 	^ store entryAt: (self resolve: aResolvable) fileSystem: self.
-
 ]
 
 { #category : #public }
@@ -568,7 +566,7 @@ FileSystem >> isHidden: aResolvable attributes: statAttributesArray [
 	"Resolve the argument, and answer a boolean indicating whether the file is hidden or not.
 	statAttributesArray is optional and may be supplied for performance.  It is the result of File>>fileAttributes:mask: or nil"
 
-	^ store isHidden: (self resolve: aResolvable) attributes: statAttributesArray 
+	^ store isHidden: (self resolve: aResolvable) attributes: statAttributesArray
 ]
 
 { #category : #'public-testing' }
@@ -674,7 +672,6 @@ FileSystem >> open: aResolvable writable: aBoolean [
 	^ store handleClass 
 		open: (FileReference fileSystem: self path: path) 
 		writable: aBoolean
-		
 ]
 
 { #category : #private }
@@ -826,7 +823,6 @@ FileSystem >> symlinkEntryAt: aResolvable [
 	"Answer the DiskSymlinkDirectoryEntry for aResolvable"
 
 	^ store symlinkEntryAt: (self resolve: aResolvable) fileSystem: self.
-
 ]
 
 { #category : #'public-testing' }

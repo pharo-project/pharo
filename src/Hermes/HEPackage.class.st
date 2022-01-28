@@ -89,7 +89,6 @@ HEPackage >> printOn: aStream [
 { #category : #reading }
 HEPackage >> readClassFrom: aReader [
 	classes add: (HEClass readFrom: aReader).
-	
 ]
 
 { #category : #reading }
@@ -108,7 +107,7 @@ HEPackage >> readFrom: aReader [
 	1 to: numberOfClasses do: [ :idx | classes add: (HEClass readFrom: aReader)].
 
 	numberOfExtensionMethods := aReader readInt32.
-	1 to: numberOfExtensionMethods do: [ :idx | extensionMethods add: (HEMethod readFrom: aReader) ]  
+	1 to: numberOfExtensionMethods do: [ :idx | extensionMethods add: (HEMethod readFrom: aReader) ]
 ]
 
 { #category : #accessing }

@@ -29,7 +29,6 @@ VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 	expected := ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser.
 
 	self assert: actual asSet equals: expected asSet.
-
 ]
 
 { #category : #tests }

@@ -9,8 +9,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBAbstractSelectionPresenter class >> defaultSpec [
+{ #category : #layout }
+RBAbstractSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #dropLabel withConstraints: [ :c | c height: self labelHeight ];
 		add:
@@ -34,7 +34,7 @@ RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 		selecting: selectedItems
 		dropItems: dropItems
 		acceptBlock: aBlock;
-		openBlockedDialogWithSpec
+		openBlockedDialog
 ]
 
 { #category : #actions }

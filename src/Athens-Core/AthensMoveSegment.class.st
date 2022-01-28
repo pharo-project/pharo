@@ -41,7 +41,6 @@ AthensMoveSegment >> reopen: aBoolean [
 { #category : #visitor }
 AthensMoveSegment >> sendCommandTo: aBuilder [
 	^ aBuilder moveTo: point
-	
 ]
 
 { #category : #visitor }

@@ -179,7 +179,6 @@ BMPReadWriter >> read24BmpLine: pixelLine into: formBits startingAt: formBitsInd
 				((pixelLine at: (pixIndex := pixIndex+1)) bitShift: 16).
 		rgb = 0 ifTrue:[rgb := 16rFF000001] ifFalse:[rgb := rgb + 16rFF000000].
 		formBits at: (bitsIndex := bitsIndex+1) put: rgb].
-
 ]
 
 { #category : #reading }
@@ -306,7 +305,6 @@ BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBit
 		pixelLine at: (pixIndex := pixIndex+1) put: ((rgb bitShift: -8) bitAnd: 255).
 		pixelLine at: (pixIndex := pixIndex+1) put: ((rgb bitShift: -16) bitAnd: 255).
 	].
-
 ]
 
 { #category : #testing }

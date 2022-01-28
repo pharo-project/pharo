@@ -434,7 +434,7 @@ EFContext >> spacesAfterCaretSymbolInReturnString [
 
 { #category : #accessing }
 EFContext >> spacesBeforeDotInDynamicArray [ 
-	^ spacesBeforeDotInDynamicArray 
+	^ spacesBeforeDotInDynamicArray
 ]
 
 { #category : #accessing }

@@ -39,5 +39,5 @@ SDL2SpecialCharacterMapping class >> initialize [
 
 { #category : #'symbol mapping' }
 SDL2SpecialCharacterMapping class >> mapKeySymbol: keySym ifAbsent: aBlock [
-	^( Mapping at: keySym ifAbsent: [^ aBlock value ]) asCharacter 
+	^( Mapping at: keySym ifAbsent: [^ aBlock value ]) asCharacter
 ]

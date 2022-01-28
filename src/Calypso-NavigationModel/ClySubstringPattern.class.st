@@ -62,5 +62,5 @@ ClySubstringPattern >> isCaseSensitive: anObject [
 
 { #category : #testing }
 ClySubstringPattern >> matches: aString [
-	^aString includesSubstring: value caseSensitive: isCaseSensitive 
+	^aString includesSubstring: value caseSensitive: isCaseSensitive
 ]

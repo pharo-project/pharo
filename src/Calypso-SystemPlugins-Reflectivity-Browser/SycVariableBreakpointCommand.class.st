@@ -17,14 +17,8 @@ SycVariableBreakpointCommand class >> browserContextMenuActivation [
 ]
 
 { #category : #testing }
-SycVariableBreakpointCommand class >> canBeExecutedInContext: aToolContext [
-	^ self isAbstract not
-		and: [ super canBeExecutedInContext: aToolContext ]
-]
-
-{ #category : #testing }
 SycVariableBreakpointCommand class >> isAbstract [
-	^self == SycVariableBreakpointCommand 
+	^self == SycVariableBreakpointCommand
 ]
 
 { #category : #execution }

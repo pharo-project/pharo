@@ -21,5 +21,5 @@ ClyMethodScope >> methodsDo: aBlock [
 
 { #category : #initialization }
 ClyMethodScope >> prepareBasisFrom: aCollection [
-	^aCollection asIdentitySet 
+	^aCollection asIdentitySet
 ]

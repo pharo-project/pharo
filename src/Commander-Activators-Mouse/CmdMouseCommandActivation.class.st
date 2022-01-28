@@ -99,7 +99,7 @@ CmdMouseCommandActivation class >> handleMouseUsing: someObjectWithCommandContex
 
 { #category : #'morphs setup' }
 CmdMouseCommandActivation class >> morphicEventType [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
@@ -131,7 +131,7 @@ CmdMouseCommandActivation >> beYellowButton [
 CmdMouseCommandActivation >> initialize [
 	super initialize.
 	
-	self beRedButton 
+	self beRedButton
 ]
 
 { #category : #testing }

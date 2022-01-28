@@ -9,7 +9,7 @@ Class {
 
 { #category : #'api-system' }
 DelayMicrosecondTicker >> millisecondsUntilTick: microsecondsTick [
-	^((microsecondsTick - self nowTick) max: 0) / 1000 
+	^((microsecondsTick - self nowTick) max: 0) / 1000
 ]
 
 { #category : #'api-system' }
@@ -73,5 +73,4 @@ DelayMicrosecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activ
 	self primSignal: timingSemaphore atUTCMicroseconds: nextTick.
 	"WARNING! Stepping <Over> the following line may lock the Image. Use <Proceed>."
 	timingSemaphore wait.
-	
 ]

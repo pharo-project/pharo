@@ -4,7 +4,6 @@ Extension { #name : #Date }
 Date >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper visitHookPrimitive: self
-
 ]
 
 { #category : #'*Fuel-Core' }

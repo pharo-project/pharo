@@ -35,7 +35,6 @@ ClapContextTest >> testRootPositionalAfterSubcommand [
 	self
 		assert: context leftovers
 		equals: #('--directory' 'foo/bar/baz')
-
 ]
 
 { #category : #running }

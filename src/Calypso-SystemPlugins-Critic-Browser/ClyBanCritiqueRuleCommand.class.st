@@ -27,5 +27,5 @@ ClyBanCritiqueRuleCommand >> description [
 { #category : #execution }
 ClyBanCritiqueRuleCommand >> execute [
 
-	critique guidedBan 
+	critique guidedBan
 ]

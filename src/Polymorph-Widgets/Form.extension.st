@@ -32,7 +32,7 @@ Form >> mergeWith: aForm at: aPoint [
 		translucentImage: aForm 
 		at: aPoint. 
 		
-	^ mergedForm 
+	^ mergedForm
 ]
 
 { #category : #'*Polymorph-Widgets-Themes' }
@@ -42,5 +42,5 @@ Form >> setAsBackground [
 	world := self currentWorld.
 	world backgroundMorph: ((Smalltalk ui theme builder newAlphaImage: self help: nil) autoSize: false;
 			 layout: #scaled;
-			 lock) 
+			 lock)
 ]

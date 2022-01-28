@@ -1,6 +1,6 @@
 Extension { #name : #RBPragmaNode }
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBPragmaNode >> asIRPrimitive [
 	"return a IRPrimitive for this method to be used in the compiler intermediate representation"
 	| args module name spec |
@@ -23,14 +23,14 @@ RBPragmaNode >> asIRPrimitive [
 				yourself ]
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBPragmaNode >> asPragma [
 	^ Pragma
 		selector: selector
 		arguments: (arguments collect: [ :each | each value ]) asArray
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBPragmaNode >> isPrimitiveError [
 	^ #( primitive:error: primitive:module:error: primitive:error:module:) includes: self selector
 ]

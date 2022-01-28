@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 ClyVariableReferencesQueryTest >> queryClass [
-	^ClyVariableReferencesQuery 
+	^ClyVariableReferencesQuery
 ]
 
 { #category : #'methods for tests' }
@@ -32,7 +32,7 @@ ClyVariableReferencesQueryTest >> referenceOfAnotherVar [
 
 { #category : #running }
 ClyVariableReferencesQueryTest >> targetVarName [
-	^#referencedVar1 
+	^#referencedVar1
 ]
 
 { #category : #tests }

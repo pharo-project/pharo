@@ -61,16 +61,13 @@ ClyInheritanceAnalysisEnvironmentPlugin >> cacheAllImplementors [
 		environment systemScope methodsDo: [ :each |
 			self cacheMethod: each ]
 	]
-
-
 ]
 
 { #category : #'implementors cache' }
 ClyInheritanceAnalysisEnvironmentPlugin >> cacheMethod: aMethod [
 	| classes |
 	classes := self implementorsOf: aMethod.
-	classes add: aMethod methodClass 
-
+	classes add: aMethod methodClass
 ]
 
 { #category : #'item decoration' }
@@ -261,8 +258,6 @@ ClyInheritanceAnalysisEnvironmentPlugin >> resetImplementorsCache [
 	cacheGuard critical: [ 
 		allImplementorsCache := nil.
 	]
-
-
 ]
 
 { #category : #'implementors cache' }

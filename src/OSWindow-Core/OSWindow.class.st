@@ -79,7 +79,7 @@ OSWindow class >> finalizeResourceData: windowHandle [
 	windowHandle destroy.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OSWindow class >> initialize [ 
 
 	self traceEvents: false
@@ -247,7 +247,6 @@ OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	eventHandler := anEventHandle.
 	self createWindow.
 	self initialize
-
 ]
 
 { #category : #private }

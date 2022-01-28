@@ -76,8 +76,6 @@ RBParseTreeRule >> performOn: aProgramNode [
 				[owner recusivelySearchInContext.
 				self foundMatchFor: aProgramNode]
 			ifFalse: [nil]
-			
-		
 ]
 
 { #category : #initialization }

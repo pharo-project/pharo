@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+DAExtensionDependencyNode >> children [
+	^ #()
+]
+
+{ #category : #accessing }
 DAExtensionDependencyNode >> icon [
 	^  self iconNamed: #editIcon
 ]

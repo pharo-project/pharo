@@ -24,7 +24,6 @@ WorldMorph class >> addExtraWorld: aWorld [
 	ExtraWorldListMutex critical: [
 		ExtraWorldList := self extraWorldList copyWith: aWorld
 	]
-
 ]
 
 { #category : #accessing }
@@ -53,14 +52,12 @@ WorldMorph class >> cursorOwnerWorld [
 WorldMorph class >> cursorOwnerWorld: aWorld [
 	
 	CursorOwnerWorld := aWorld.
-
 ]
 
 { #category : #setting }
 WorldMorph class >> defaultWorldColor [
 
 	^ Color r: 0.937 g: 0.937 b: 0.937
-
 ]
 
 { #category : #setting }
@@ -87,7 +84,6 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
 		range: (0.5 to: 5 by: 0.5)
-	
 ]
 
 { #category : #updating }
@@ -120,13 +116,13 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	ExtraWorldListMutex critical: [
 		ExtraWorldList := self extraWorldList copyWithout: aWorld.
 	].
-	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ].	
+	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ].
 ]
 
 { #category : #setting }
 WorldMorph class >> scaleFactor [
 	
-	^ World scaleFactor 
+	^ World scaleFactor
 ]
 
 { #category : #setting }
@@ -139,7 +135,6 @@ WorldMorph class >> scaleFactor: aValue [
 WorldMorph >> activateCursor: aCursor withMask: maskForm [
 
 	worldState worldRenderer activateCursor: aCursor withMask: maskForm
-
 ]
 
 { #category : #structure }
@@ -152,8 +147,6 @@ WorldMorph >> activeHand [
 WorldMorph >> activeHand: aHandMorph [
 	"Temporarily retained for old main event loops"
 	worldState activeHand: aHandMorph
-
-
 ]
 
 { #category : #accessing }
@@ -173,7 +166,6 @@ WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
 	array do: [:m | self startSteppingSubmorphsOf: m]
-
 ]
 
 { #category : #'world state' }
@@ -233,7 +225,6 @@ WorldMorph >> buildMetaMenu: evt [
 	menu := UIManager default newMenuIn: self for: self.
 	self addStandardHaloMenuItemsTo: menu hand: evt hand.
 	^ menu
-
 ]
 
 { #category : #stepping }
@@ -322,7 +313,6 @@ WorldMorph >> displayWorld [
 { #category : #'world state' }
 WorldMorph >> displayWorldSafely [
 	worldState displayWorldSafely: self.
-
 ]
 
 { #category : #'world state' }
@@ -334,7 +324,6 @@ WorldMorph >> doOneCycle [
 WorldMorph >> doOneCycleNow [
 	"see the comment in doOneCycleNowFor:"
 	worldState doOneCycleFor: self.
-
 ]
 
 { #category : #geometry }
@@ -352,7 +341,6 @@ WorldMorph >> firstHand [
 { #category : #'geometry - testing' }
 WorldMorph >> fullContainsPoint: pt [
 	^bounds containsPoint: pt
-
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -360,15 +348,12 @@ WorldMorph >> fullRepaintNeeded [
 
 	worldState doFullRepaint.
 	self windowsSatisfying: [:w | w makeMeVisible. false]
-
-
 ]
 
 { #category : #'event handling' }
 WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
 
 	self worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
-	
 ]
 
 { #category : #'world state' }
@@ -386,7 +371,7 @@ WorldMorph >> hands [
 { #category : #'project state' }
 WorldMorph >> handsDo: aBlock [
 
-	^  worldState handsDo: aBlock 
+	^  worldState handsDo: aBlock
 ]
 
 { #category : #'project state' }
@@ -399,8 +384,7 @@ WorldMorph >> initialize [
 	worldState := WorldState new.
  	super initialize.
 	
-	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self	
-
+	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
 ]
 
 { #category : #'change reporting' }
@@ -460,8 +444,6 @@ WorldMorph >> printOn: aStream [
 { #category : #private }
 WorldMorph >> privateMoveBy: delta [
 	super privateMoveBy: delta.
-
-	
 ]
 
 { #category : #'event handling' }
@@ -492,21 +474,18 @@ WorldMorph >> removeHand: aHandMorph [
 WorldMorph >> restoreMorphicDisplay [
 
 	worldState worldRenderer restoreMorphicDisplay
-	
 ]
 
 { #category : #stepping }
 WorldMorph >> runLocalStepMethods [
 
 	worldState runLocalStepMethodsIn: self
-
 ]
 
 { #category : #stepping }
 WorldMorph >> runStepMethods [
 
 	worldState runStepMethodsIn: self
-
 ]
 
 { #category : #accessing }
@@ -550,7 +529,6 @@ WorldMorph >> stopStepping: aMorph [
 	"Remove the given morph from the step list."
 
 	worldState stopStepping: aMorph
-
 ]
 
 { #category : #stepping }
@@ -558,7 +536,6 @@ WorldMorph >> stopStepping: aMorph selector: aSelector [
 	"Remove the given morph from the step list."
 
 	worldState stopStepping: aMorph selector: aSelector
-
 ]
 
 { #category : #'menu & halo' }
@@ -624,11 +601,10 @@ WorldMorph >> world [
 { #category : #'world menu' }
 WorldMorph >> worldMenu [
 	^ worldState worldMenu
-	
 ]
 
 { #category : #accessing }
 WorldMorph >> worldState [
 	
-	^ worldState 
+	^ worldState
 ]

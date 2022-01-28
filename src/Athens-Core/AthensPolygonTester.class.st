@@ -50,7 +50,6 @@ See [ 1 ] for details, copyrights etc.
 		i := i + 1.
 	 ].
 	^ inside
-	
 ]
 
 { #category : #accessing }

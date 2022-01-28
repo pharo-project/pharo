@@ -39,7 +39,7 @@ DTPluginConfiguration >> asTestSuite [
 
 { #category : #'result handling' }
 DTPluginConfiguration >> handleResults: aPluginResult for: aPlugin [
-	^ aPluginResult 
+	^ aPluginResult
 ]
 
 { #category : #accessing }

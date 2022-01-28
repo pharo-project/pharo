@@ -16,7 +16,6 @@ AthensBalloonSolidColorPaint >> athensFillPath: athensBalloonPath on: anAthensCa
 	^ anAthensCanvas surface 
 		fillBezierShape: athensBalloonPath contoursForFilling  
 		color: color
-		
 ]
 
 { #category : #rendering }
@@ -46,7 +45,6 @@ AthensBalloonSolidColorPaint >> strokePath: aPath on: anAthensCanvas stroke: str
 		strokeBezierShape: aPath contoursForStroke
 		color: color
 		width: strokePaint width
-		
 ]
 
 { #category : #rendering }
@@ -56,7 +54,6 @@ AthensBalloonSolidColorPaint >> strokePath: aPath on: anAthensCanvas strokeWidth
 		strokeBezierShape: aPath contoursForStroke
 		color: color
 		width: strokeWidth
-		
 ]
 
 { #category : #rendering }

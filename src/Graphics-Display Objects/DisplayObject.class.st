@@ -116,7 +116,6 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
 DisplayObject >> displayOnPort: port at: location rule: rule [
 
 	port copyForm: self to: location rule: rule.
-
 ]
 
 { #category : #accessing }
@@ -181,7 +180,6 @@ DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialB
 			rect1 := rect2]].
 
 	^ save1 displayOn: Display at: location
-
 ]
 
 { #category : #accessing }
@@ -197,7 +195,7 @@ DisplayObject >> initialExtent [
 	"Included here for when a FormView is being opened
 	as a window.  (4@4) covers border widths."
 
-	^ self extent + (4@4) 
+	^ self extent + (4@4)
 ]
 
 { #category : #'displaying - display' }
@@ -258,7 +256,6 @@ DisplayObject >> slideFrom: startPoint to: stopPoint nSteps: nSteps delay: milli
 		while: [
 			(Delay forMilliseconds: milliSecs) wait.
 			(i := i + 1) < nSteps]
-
 ]
 
 { #category : #'displaying - display' }

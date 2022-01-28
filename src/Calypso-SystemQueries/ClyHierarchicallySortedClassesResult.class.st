@@ -45,7 +45,7 @@ ClyHierarchicallySortedClassesResult class >> isExpandedHierarchy [
 { #category : #'instance creation' }
 ClyHierarchicallySortedClassesResult class >> with: aClassHierarchy [
 	^self new 
-		hierarchy: aClassHierarchy 
+		hierarchy: aClassHierarchy
 ]
 
 { #category : #comparing }
@@ -112,7 +112,7 @@ ClyHierarchicallySortedClassesResult >> initialize [
 { #category : #converting }
 ClyHierarchicallySortedClassesResult >> sortedBy: aSortFunction [
 	^self copy 
-		hierarchy: (hierarchy sortedBy: aSortFunction) 
+		hierarchy: (hierarchy sortedBy: aSortFunction)
 ]
 
 { #category : #converting }

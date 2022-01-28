@@ -60,8 +60,7 @@ RxmBranch >> matchAgainst: aMatcher [
 		ifTrue: [
 			aMatcher restoreState: firstMatch.
 			^true].
-	^true			
-
+	^true
 ]
 
 { #category : #building }

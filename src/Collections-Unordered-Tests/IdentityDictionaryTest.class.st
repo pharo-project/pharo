@@ -39,5 +39,4 @@ IdentityDictionaryTest >> testIdentity [
 	dict at: 'sksl' put: 1.0.
 	self deny: (dict includesKey: 1.0) .
 	self assert: (dict includes: 1)"
-
 ]

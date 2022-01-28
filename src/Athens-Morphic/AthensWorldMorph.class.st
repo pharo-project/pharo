@@ -40,5 +40,4 @@ AthensWorldMorph >> restoreMorphicDisplay [
 	self defer: [Cursor normal show].
 		
 	self layoutChanged.
-
 ]

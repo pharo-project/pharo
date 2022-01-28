@@ -81,7 +81,6 @@ DelayBasicScheduler class >> defaultSuspendedDelaysHeap [
 	 ^ Heap 
 			sortBlock: [ :delay1 :delay2 | 
 				delay1 resumptionTick <= delay2 resumptionTick ]
-
 ]
 
 { #category : #'instance creation' }
@@ -102,7 +101,6 @@ DelayBasicScheduler >> initialize [
 
 	self initializeTicker: (DelayMicrosecondTicker new) 
 		  suspendedDelaysHeap: DelayBasicScheduler defaultSuspendedDelaysHeap.
-
 ]
 
 { #category : #initialization }
@@ -127,7 +125,6 @@ DelayBasicScheduler >> printOn: aStream [
 		print: self identityHash ;
 		nextPutAll: ') on ' ;
 		nextPutAll: ticker className.
-		 
 ]
 
 { #category : #'system-api' }
@@ -136,8 +133,6 @@ DelayBasicScheduler >> restartTimerEventLoop [
 	"Delay restartTimerEventLoop"
 	self stopTimerEventLoop.
 	self startTimerEventLoop.
-
-
 ]
 
 { #category : #'user-api' }
@@ -189,7 +184,7 @@ DelayBasicScheduler >> schedule: aDelay [
 	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
 	
 	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
-	 bytecode inlining such that interuption *cannot* occur between the following assignment and signal.
+	 bytecode inlining such that interruption *cannot* occur between the following assignment and signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
 	 Subclasses provide addition protections to lessen the importance of these semantics."
@@ -213,12 +208,11 @@ DelayBasicScheduler >> scheduleAtTimingPriority [
 					activeDelay := delayToStart ]
 				ifFalse: [ suspendedDelays add: delayToStart ]].
 	delayToStart := nil
-
 ]
 
 { #category : #'system-api' }
 DelayBasicScheduler >> schedulingProcess [
-	^ timerEventLoop 
+	^ timerEventLoop
 ]
 
 { #category : #'system-api' }
@@ -231,7 +225,6 @@ DelayBasicScheduler >> simulate_vmMilliseconds: milliseconds [
 	"This method is only called from tests which make use of the 'simulation' tickers 
 	which implement the next method."
 	ticker simulate_vmMilliseconds: milliseconds.
-
 ]
 
 { #category : #'system-api' }
@@ -256,7 +249,6 @@ DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 		name: self className , '(' , ticker className, ')';
 		priority: processorPriority.
 	timerEventLoop resume.
-
 ]
 
 { #category : #'system-api' }
@@ -292,7 +284,6 @@ DelayBasicScheduler >> suspend [
 		
 	"That #signal transfers execution to timingPriorityRunEventLoop 
 	 which then waits for suspendSemaphore to be signalled from #startup"
-
 ]
 
 { #category : #'private - timing priority process' }
@@ -306,7 +297,6 @@ DelayBasicScheduler >> suspendAtTimingPriority [
 	
 	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.  
 	suspendSemaphore := nil
-
 ]
 
 { #category : #'system-api' }
@@ -320,7 +310,7 @@ DelayBasicScheduler >> unschedule: aDelay [
 	 For back-half see #unscheduleAtTimingPriority"
 
 	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
-	 bytecode inlining such that interuption *cannot* occur between the assignment and the signal.
+	 bytecode inlining such that interruption *cannot* occur between the assignment and the signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
 	 Subclasses add protection against this."

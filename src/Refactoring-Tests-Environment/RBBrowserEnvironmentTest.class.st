@@ -128,7 +128,6 @@ RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
 	newEnvironment := Smalltalk compiler evaluate: aBrowserEnvironment storeString.
 	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
 	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
-	
 ]
 
 { #category : #'tests - environments' }
@@ -456,7 +455,6 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentAddRemove [
 	refs removeClass: self class classVariable: 'AClassVariable'.
 	self assert: refs numberSelectors equals: 0.
 	self assert: refs numberClasses equals: 0
-	
 ]
 
 { #category : #tests }

@@ -81,6 +81,11 @@ RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : #'fluid parser' }
+RBCascadeNode >> handleMetaclassName: aCDFluidClassDefinitionParser [ 
+	aCDFluidClassDefinitionParser handleMetaclassNameFromCascade: self
+]
+
 { #category : #comparing }
 RBCascadeNode >> hash [
 	^ self hashForCollection: self messages
@@ -153,7 +158,7 @@ RBCascadeNode >> receiver [
 	^self messages first receiver
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBCascadeNode >> removeNode: aNode [
 
 	self messages remove: aNode ifAbsent: [ ]

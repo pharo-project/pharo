@@ -47,5 +47,4 @@ IRPushFullClosure >> indexForVarNamed: aName [
 IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [ 
 
 	self copiedValues at: index put: aRemote.
-
 ]

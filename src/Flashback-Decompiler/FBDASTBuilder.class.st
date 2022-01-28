@@ -41,7 +41,7 @@ FBDASTBuilder >> codeArray: array [
 
 { #category : #building }
 FBDASTBuilder >> codeAssignment: value to: variable [
-	^ RBAssignmentNode variable: variable value: value 
+	^ RBAssignmentNode variable: variable value: value
 ]
 
 { #category : #building }
@@ -51,7 +51,7 @@ FBDASTBuilder >> codeBlock: body [
 
 { #category : #building }
 FBDASTBuilder >> codeBlock: body arguments: args [
-	^ RBBlockNode arguments: args body: body 
+	^ RBBlockNode arguments: args body: body
 ]
 
 { #category : #building }
@@ -61,7 +61,7 @@ FBDASTBuilder >> codeBlockFromStatements: statements [
 
 { #category : #building }
 FBDASTBuilder >> codeCascade: messages [
-	^ RBCascadeNode messages: messages 
+	^ RBCascadeNode messages: messages
 ]
 
 { #category : #building }
@@ -78,7 +78,7 @@ FBDASTBuilder >> codeConditionalNode: expr trueSequence: seq1 falseSequence: seq
 
 { #category : #building }
 FBDASTBuilder >> codeEmptyBlock [
-	^ RBBlockNode body: (self codeSequence: #()) 
+	^ RBBlockNode body: (self codeSequence: #())
 ]
 
 { #category : #building }
@@ -88,17 +88,17 @@ FBDASTBuilder >> codeEmptySequence [
 
 { #category : #building }
 FBDASTBuilder >> codeInstanceVariable: offset [
-	^ RBVariableNode named: (methodClass allInstVarNames at: offset)
+	^ RBVariableNode named: (methodClass allSlots at: offset) name
 ]
 
 { #category : #building }
 FBDASTBuilder >> codeLiteral: lit [
-	^ RBLiteralNode value: lit 
+	^ RBLiteralNode value: lit
 ]
 
 { #category : #building }
 FBDASTBuilder >> codeLiteralValue: lit [
-	^ RBLiteralValueNode value: lit 
+	^ RBLiteralValueNode value: lit
 ]
 
 { #category : #building }

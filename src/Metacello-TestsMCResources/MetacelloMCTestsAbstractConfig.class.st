@@ -14,5 +14,4 @@ MetacelloMCTestsAbstractConfig >> project [
 		project := constructor project.
 		project loader: MetacelloNullRecordingMCSpecLoader new.
 		project].
-
 ]

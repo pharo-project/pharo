@@ -13,6 +13,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #testing }
+RBPackageRefactoring class >> isAbstract [
+
+	^ self == RBPackageRefactoring
+]
+
 { #category : #'instance creation' }
 RBPackageRefactoring class >> model: aRBModel packageName: aName [ 
 	^ self new

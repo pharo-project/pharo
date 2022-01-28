@@ -307,7 +307,6 @@ Exception >> resumeUnchecked: resumptionValue [
 			ctxt := outerContext.
 			outerContext := ctxt tempAt: 1. "prevOuterContext in #outer"
 			ctxt return: resumptionValue ]
-
 ]
 
 { #category : #handling }

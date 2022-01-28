@@ -18,7 +18,6 @@ AthensGradientPaint >> athensFillPath: aPath on: canvas [
 	| fill |
 	fill := self convertGradientToPaintOn: canvas.
 	fill athensFillPath: aPath on: canvas
-
 ]
 
 { #category : #rendering }
@@ -29,7 +28,6 @@ AthensGradientPaint >> athensFillRectangle: aRect on: canvas [
 	| fill |
 	fill := self convertGradientToPaintOn: canvas.
 	fill athensFillRectangle: aRect on: canvas
-
 ]
 
 { #category : #private }
