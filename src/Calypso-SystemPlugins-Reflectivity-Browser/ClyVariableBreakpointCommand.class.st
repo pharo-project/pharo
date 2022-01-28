@@ -27,7 +27,7 @@ ClyVariableBreakpointCommand class >> isAbstract [
 
 { #category : #accessing }
 ClyVariableBreakpointCommand >> defaultMenuIconName [
-	^#smallDebug
+	^#halt
 ]
 
 { #category : #execution }

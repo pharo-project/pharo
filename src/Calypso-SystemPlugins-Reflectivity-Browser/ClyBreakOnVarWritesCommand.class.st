@@ -16,7 +16,7 @@ ClyBreakOnVarWritesCommand class >> canBeExecutedInContext: aSourceCodeContext [
 { #category : #accessing }
 ClyBreakOnVarWritesCommand >> defaultMenuItemName [
 	sourceNode isVariable ifFalse:[^'(unvalid node)'].
-	^'Break on writes to ', sourceNode name
+	^'Break on writes to  ', sourceNode name
 ]
 
 { #category : #execution }

@@ -18,6 +18,14 @@ ClyRemoveExecutionCounterCommand class >> contextMenuOrder [
 	^2
 ]
 
+{ #category : #activation }
+ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^SycAdvancedDebuggingMenuActivation 
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
+]
+
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> createTableCellButtonWith: anIcon using: aCommandActivator [
 	| button |
