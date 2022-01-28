@@ -193,7 +193,7 @@ RBParseTreeSearcher >> answer [
 	^answer
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RBParseTreeSearcher >> answer: anObject [
 	answer := anObject
 ]
@@ -264,8 +264,10 @@ RBParseTreeSearcher >> lookForMoreMatchesInContext: oldContext [
 ]
 
 { #category : #searching }
-RBParseTreeSearcher >> matches: aString do: aBlock [ 
-	self addRule: (RBSearchRule searchFor: aString thenDo: aBlock)
+RBParseTreeSearcher >> matches: aPatternedString do: aBlock [
+	"Configure the receiver to execute the block when the pattern will match a tree during the actual matching phase (see method executeTree:). A better name for this method could be ifMatches:do:.
+	aPattern can be any tree with patterns: '`@x' or '{ `@x . `@m}"
+	self addRule: (RBSearchRule searchFor: aPatternedString thenDo: aBlock)
 ]
 
 { #category : #searching }
@@ -290,6 +292,7 @@ RBParseTreeSearcher >> matchesAnyTreeOf: treeCollection do: aBlock [
 
 { #category : #searching }
 RBParseTreeSearcher >> matchesArgument: aString do: aBlock [ 
+	 
 	self addArgumentRule: (RBSearchRule searchFor: aString thenDo: aBlock)
 ]
 
