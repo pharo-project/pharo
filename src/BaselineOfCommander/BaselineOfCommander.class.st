@@ -36,8 +36,6 @@ BaselineOfCommander >> baseline: spec [
 				spec requires: #(#'Commander-Core' )];
 			package: #'Commander-Activators-TextView' with: [
 				spec requires: #(#'Commander-Activators-ContextMenu' #'Commander-Activators-Mouse')];
-			
-			package: #'Commander-SpecSupport';
 			package: #'Commander-Spec2-Compatibility' with: [spec requires: #(#'Commander-Core' )];			
 			package: #'Commander-Examples' with: [
 				spec requires: #(#'Commander-SpecSupport')].
@@ -45,5 +43,5 @@ BaselineOfCommander >> baseline: spec [
 			group: 'Core' with: #(#'Commander-Core');
 			group: 'AllActivators' with: #(#'Commander-Activators-Shortcut' #'Commander-Activators-ContextMenu' #'Commander-Activators-DragAndDrop' #'Commander-Activators-WorldMenu' #'Commander-Activators-TextView' #'Commander-Activators-Mouse');
 			group: 'Tests' with: #(#'Commander-Core-Tests' );
-			group: 'default' with: #('Core' 'AllActivators' 'Tests' 'Commander-SpecSupport' 'Commander-Spec2-Compatibility') ]
+			group: 'default' with: #('Core' 'AllActivators' 'Tests' 'Commander-Spec2-Compatibility') ]
 ]
