@@ -355,6 +355,45 @@ RBParseTreeSearcherTest >> testMatchingReceiverComposite [
 	self assertCodeForVariableNodeNamed: '`@rcv' in: contextDictionary equals: 'self httpClient'.
 ]
 
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListComplex [
+
+	"Here we are looking for multiple lists in one match pattern at the same time. 
+	Lists can be any receiver or arguments"
+
+	| dict |
+	searcher
+		matches: '`@receiver assert: `@arg equals: true'
+		do: [ :aNode :answer | dict := searcher context ].
+
+	searcher executeTree: (self parseExpression: 'self 
+					assert: each isReadOnlyObject equals: true.').
+
+	self
+		assert:
+		(dict at: (RBPatternVariableNode named: '`@receiver')) formattedCode
+		equals: 'self'.
+
+	self
+		assert:
+		(dict at: (RBPatternVariableNode named: '`@arg')) formattedCode
+		equals: 'each isReadOnlyObject'
+]
+
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
+
+	"Here we are looking for multiple lists in one match pattern at the same time. 
+	Lists can be any receiver or argument"
+
+	searcher
+		matches: '`@receiver assert: `@arg equals: true'
+		do: [ :aNode :answer | self fail ].
+
+	searcher executeTree:
+		(self parseExpression: 'self assert: token isLiteralToken.').
+]
+
 { #category : #tests }
 RBParseTreeSearcherTest >> testSearchListReceiverNotMatching [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put. "
