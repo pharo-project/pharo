@@ -205,7 +205,6 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
-		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #core),
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfNewValueHolder name }, (BaselineOfNewValueHolder packagesOfGroupNamed: #core),
@@ -284,7 +283,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphic.
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
-	BaselineOfSpec.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
@@ -572,7 +570,6 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
-		BaselineOfSpec allPackageNames,
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
