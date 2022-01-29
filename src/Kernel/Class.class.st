@@ -743,8 +743,7 @@ Class >> isUsed [
 { #category : #private }
 Class >> isValidTraitName: aSymbol [
 
-	aSymbol ifNil: [ ^ false ].
-	^ aSymbol isValidGlobalName.
+	^ aSymbol ifNil: [ false ] ifNotNil: [ :sym | sym isValidGlobalName ]
 ]
 
 { #category : #accessing }

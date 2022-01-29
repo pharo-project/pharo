@@ -52,12 +52,7 @@ RubMethodEditingExample >> className: aClassName [
 { #category : #view }
 RubMethodEditingExample >> classSelector [
 	| applicantsBlock entryCompletion |
-	applicantsBlock := [(Array
-				streamContents: [:strm | Symbol
-						allSymbolTablesDo: [:each | (each notEmpty
-									and: [each isValidGlobalName
-											and: [Smalltalk globals includesKey: each]])
-								ifTrue: [strm nextPut: each]]]) sort].
+	applicantsBlock := [Smalltalk classNames sorted].
 	entryCompletion := EntryCompletion new
 				dataSourceBlock: [:currText | applicantsBlock value ];
 				filterBlock: [:currApplicant :currText | currText size > 0
