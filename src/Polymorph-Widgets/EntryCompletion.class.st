@@ -45,7 +45,7 @@ EntryCompletion class >> exampleTextEntryWithCompletionDialog [
 		streamContents: [ :strm | 
 			Symbol
 				allSymbolTablesDo: [ :each | 
-					(each notEmpty and: [ each first canBeGlobalVarInitial and: [ Smalltalk globals includesKey: each ] ])
+					(each notEmpty and: [ each isValidGlobalName and: [ Smalltalk globals includesKey: each ] ])
 						ifTrue: [ strm nextPut: each ] ] ]) sort.
 	entryCompletion := EntryCompletion new
 		dataSourceBlock: [ :currText | applicants ];
