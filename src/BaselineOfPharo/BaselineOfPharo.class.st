@@ -7,6 +7,12 @@ Class {
 	#category : #BaselineOfPharo
 }
 
+{ #category : #'repository urls' }
+BaselineOfPharo class >> beautifulCommentsRepository [
+
+	^ (self externalProjectNamed: 'BeautifulComments') repository
+]
+
 { #category : #'external projects' }
 BaselineOfPharo class >> declareExternalProjects [
 
@@ -14,6 +20,8 @@ BaselineOfPharo class >> declareExternalProjects [
 	PharoExternalProject newName: 'Iceberg' owner: 'pharo-vcs' project: 'iceberg' version: 'dev-2.0' sourceDir: nil.
 	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'Pharo10'.
 	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo10'.	
+	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.	
+	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.	
 	 }
 ]
 
@@ -41,6 +49,12 @@ BaselineOfPharo class >> icebergRepository [
 BaselineOfPharo class >> icebergVersion [
 
 	^ 'dev-2.0'
+]
+
+{ #category : #'repository urls' }
+BaselineOfPharo class >> microdownRepository [
+
+	^ (self externalProjectNamed: 'Microdown') repository
 ]
 
 { #category : #'repository urls' }
