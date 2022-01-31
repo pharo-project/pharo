@@ -339,6 +339,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
 	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
+	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
