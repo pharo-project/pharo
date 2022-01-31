@@ -238,6 +238,7 @@ BaselineOfIDE >> loadIceberg [
 	self registerPharo.	
 	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').		
 	self registerProject: 'NewTools'.		
+	self registerProject: 'Roassal3'.		
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.		
 	self registerIceberg
@@ -402,7 +403,7 @@ BaselineOfIDE >> roassal3: spec [
 		baseline: 'Roassal3' 
  		with: [ 
 			spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.9d/src';
+				repository: (self class environment at: #BaselineOfPharo) roassal3Repository;
     			loads: #( 'Core' 'Tests') ]
 ]
 
