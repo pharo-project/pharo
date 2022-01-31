@@ -39,11 +39,15 @@ Class {
 	#name : #MicCodeBlock,
 	#superclass : #MicSameStartStopMarkupBlock,
 	#instVars : [
-		'arguments',
 		'firstTag'
 	],
 	#category : #'Microdown-Model'
 }
+
+{ #category : #visiting }
+MicCodeBlock >> accept: aVisitor [
+ 	^ aVisitor visitCode: self
+]
 
 { #category : #accessing }
 MicCodeBlock >> arguments [
@@ -51,18 +55,8 @@ MicCodeBlock >> arguments [
 ]
 
 { #category : #accessing }
-MicCodeBlock >> arguments: aString [
-	arguments := aString
-]
-
-{ #category : #accessing }
 MicCodeBlock >> code [
 	^ self body
-]
-
-{ #category : #public }
-MicCodeBlock >> contents [ 
-	^super contents , '[ ', self code, ' ]'
 ]
 
 { #category : #handle }
@@ -84,16 +78,45 @@ MicCodeBlock >> firstTag [
 	^ firstTag
 ]
 
-{ #category : #utilities }
+{ #category : #accessing }
+MicCodeBlock >> firstTagValue [
+	^ arguments at: self firstTag ifAbsent: [ '' ]
+]
+
+{ #category : #accessing }
+MicCodeBlock >> hasFirstTag [
+
+	^ firstTag isNotEmpty
+]
+
+{ #category : #initialization }
+MicCodeBlock >> initialize [
+	super initialize.
+	arguments := OrderedDictionary new.
+]
+
+{ #category : #'public access' }
+MicCodeBlock >> isEvaluated [ 
+	arguments at: #eval ifAbsent: [ ^ false ].
+	^ arguments at: #eval
+]
+
+{ #category : #visiting }
+MicCodeBlock >> label [
+	^ arguments at: #label ifAbsent: [ '' ]
+]
+
+{ #category : #accessing }
+MicCodeBlock >> language [
+	arguments ifNotEmpty: [ 
+		arguments at: #language ifAbsent: [ ^ arguments keys first asString ].
+		^ arguments at: #language ].
+	^ ''
+]
+
+{ #category : #utilspipi }
 MicCodeBlock >> lineStartMarkup [
 	"a code block is delimited by ``` "
 	
 	^ self parser codeblockMarkup 
-]
-
-{ #category : #printing }
-MicCodeBlock >> printOn: aStream [
-
-	aStream nextPutAll: 'Code: '.
-	aStream nextPutAll: (self code asString contractTo: 100)
 ]

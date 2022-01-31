@@ -8,12 +8,12 @@ See *@fig1*
 Class {
 	#name : #MicAnnotationCloserDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicAnnotationCloserDelimiter class >> associatedInlineBlock [
-	^ MicAnnotationInlineBlock 
+	^ MicAnnotationBlock 
 ]
 
 { #category : #accessing }
@@ -28,7 +28,8 @@ MicAnnotationCloserDelimiter class >> isOpener [
 
 { #category : #accessing }
 MicAnnotationCloserDelimiter class >> markup [
-	^ '?>'
+
+	^ '}?'
 ]
 
 { #category : #accessing }

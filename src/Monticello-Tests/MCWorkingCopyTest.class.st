@@ -5,8 +5,7 @@ Class {
 		'workingCopy',
 		'repositoryGroup',
 		'versions',
-		'versions2',
-		'savedName'
+		'versions2'
 	],
 	#category : #'Monticello-Tests-Base'
 }
@@ -32,7 +31,7 @@ MCWorkingCopyTest >> assertNumberWhenSavingTo: aRepository is: aNumber [
 		do: [ :n | 
 			name := n suggestedName.
 			n resume: (Array with: name with: '') ].
-	self assert: name equals: self packageName , '-' , Author fullName , '.' , aNumber asString
+	self assert: name equals: self packageName , '-.' , aNumber asString
 ]
 
 { #category : #actions }
@@ -88,9 +87,7 @@ MCWorkingCopyTest >> setUp [
 	repositoryGroup addRepository: repos1.
 	repositoryGroup addRepository: repos2.
 	MCRepositoryGroup default removeRepository: repos1; removeRepository: repos2.
-	workingCopy repositoryGroup: repositoryGroup.
-	savedName := Author fullName.
-	Author fullName: 'abc'.
+	workingCopy repositoryGroup: repositoryGroup
 ]
 
 { #category : #actions }
@@ -108,7 +105,6 @@ MCWorkingCopyTest >> tearDown [
 	workingCopy unregister.
 	self restoreMocks.
 	self clearPackageCache.
-	Author fullName: savedName.
 	super tearDown
 ]
 

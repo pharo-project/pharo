@@ -15,9 +15,8 @@ FLPlatform class >> addExtensions [
 
 { #category : #operations }
 FLPlatform class >> addHacks [
-	self current
-		useAuthor: 'Fuel'
-		during: [ self basicAddHacks ]
+
+	self basicAddHacks
 ]
 
 { #category : #'private - hacks' }

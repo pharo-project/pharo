@@ -49,17 +49,15 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicUnorderedListBlock >> accept: aVisitor [
+ 	^ aVisitor visitUnorderedList: self
+]
+
 { #category : #testing }
 MicUnorderedListBlock >> canConsumeLine: line [
 	"to consume this line there must be a UnorderdListItem start at the right indentation"
 
 	line ifEmpty: [ ^ true ].
 	^ (super canConsumeLine: line) and: [line trim matchesRegex: '(^\* |^- | ^\+).*']
-]
-
-{ #category : #printing }
-MicUnorderedListBlock >> printOn: aStream [
-
-	aStream nextPutAll: 'UnorderedList'.
-	
 ]

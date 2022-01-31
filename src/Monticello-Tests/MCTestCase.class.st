@@ -182,7 +182,7 @@ MCTestCase >> mockVersionInfo: tag [
 		message: self mockMessageString, '-', tag asString
 		date: Date today
 		time: Time now
-		author: Author fullName
+		author: ''
 		ancestors: #()
 
 ]
@@ -195,7 +195,7 @@ MCTestCase >> mockVersionInfoWithAncestor: aVersionInfo [
 		message: self mockMessageString
 		date: Date today
 		time: Time now
-		author: Author fullName
+		author: ''
 		ancestors: {aVersionInfo}
 
 ]

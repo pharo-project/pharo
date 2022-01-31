@@ -168,13 +168,6 @@ ClassDescription >> allUnreferencedInstanceVariables [
 	^ self allSlots reject: [:slot | slot isReferenced]
 ]
 
-{ #category : #authors }
-ClassDescription >> authors [
-	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
-
-	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
-]
-
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> baseClass [
 	"This method is deprecated so consider to migrate."
@@ -382,14 +375,10 @@ ClassDescription >> compile: code classified: heading [
 
 { #category : #compiling }
 ClassDescription >> compile: text classified: category notifying: requestor [
-	| stamp |
-	stamp := self acceptsLoggingOfCompilation
-		ifTrue: [ Author changeStamp ]
-		ifFalse: [ nil ].
 	^ self
 		compile: text
 		classified: category
-		withStamp: stamp
+		withStamp: nil
 		notifying: requestor
 ]
 

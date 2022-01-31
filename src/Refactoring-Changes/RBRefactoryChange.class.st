@@ -24,11 +24,6 @@ RBRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
 	^ nil
 ]
 
-{ #category : #accessing }
-RBRefactoryChange >> changeStamp [
-	^ Author changeStamp
-]
-
 { #category : #printing }
 RBRefactoryChange >> changeString [
 	^self class name

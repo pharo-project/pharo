@@ -21,20 +21,23 @@ V_i = C_0 - C_3
 Class {
 	#name : #MicMathBlock,
 	#superclass : #MicSameStartStopMarkupBlock,
-	#instVars : [
-		'arguments'
-	],
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicMathBlock >> accept: aVisitor [ 
+ 	^ aVisitor visitMath: self
+]
+
 { #category : #accessing }
 MicMathBlock >> arguments [
-	
+	self flag: #strange.
+	"why this is not called directly during the closeMe phase."
 	^ arguments ifNil: [ arguments := ZnResourceMetaUtils parseQueryFrom: firstLine readStream ]
 ]
 
 { #category : #markups }
 MicMathBlock >> lineStartMarkup [
 	
-	^ parser mathOpeningBlockMarkup 
+	^ parser mathOpeningBlockMarkup
 ]

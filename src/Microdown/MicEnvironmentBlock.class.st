@@ -1,6 +1,18 @@
 "
 An environment is delimited by a start and end markup and it can have an argument list. 
-This class needs another pass.
+By default I do not handle any form of formatting in the potential arguments.
+
+## Syntax
+
+
+```
+<?
+
+?>
+```
+
+
+This class needs another pass to support nested mic elements inside its delimiter.
 
 In Pillar
 ```
@@ -9,7 +21,6 @@ blah blah
 ${end:column}$
 ```
 
-Working on
 ```
 ${begin:card}$
 
@@ -21,13 +32,7 @@ I will be interpreted as part of the card.
 ${end:card}$ 
 ```
 
-In Microdown 
 
-```
-<?
-
-?>
-```
 
 
 
@@ -65,10 +70,77 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #public }
+MicEnvironmentBlock class >> alternateBlockClassFor: line [
+	"If there is one subclass with the corresponding tag, returns it, else resturn the current class."
+	"line is of the form <?slide|title=Schedule"
+	
+	"We know that the two first characters are <? else we would be invoked"
+	| tag |
+	tag := ((line allButFirst: 2) copyUpTo: $|) trimBoth.
+	^ self allSubclasses detect: [ :each | each tag = tag ] ifNone: [ self ]
+	
+	
+	
+]
+
+{ #category : #visiting }
+MicEnvironmentBlock >> accept: aVisitor [
+ 	^ aVisitor visitEnvironment: self
+]
+
+{ #category : #adding }
+MicEnvironmentBlock >> addLineAndReturnNextNode: line [
+	"add line to this node. 
+	Notice, the action is allowed to create new nodes in the block tree.
+	Returns the node to handle next line - typically self."
+	
+	isClosed
+		ifTrue: [ ^ self ].
+	(self doesLineStartWithStopMarkup: line)
+		ifTrue: [ ^ self ].
+	firstLine
+		ifNil:
+			[ firstLine := self extractFirstLineFrom: line ]
+		ifNotNil: [ ^ self bodyFromLine: line ].
+	^ self
+]
+
 { #category : #accessing }
 MicEnvironmentBlock >> arguments [
 	
 	^ arguments
+]
+
+{ #category : #'parse support' }
+MicEnvironmentBlock >> body [
+
+	^ String streamContents: [:s |  self bodyElements do: [ :each | s nextPutAll: each substring ] ]
+]
+
+{ #category : #'parse support' }
+MicEnvironmentBlock >> bodyElements [
+
+	^ children
+]
+
+{ #category : #'parse support' }
+MicEnvironmentBlock >> bodyFromLine: line [
+	
+	| newBlock |
+	newBlock := (self newBlockFor: line parent: self).
+	self parser setCurrent: newBlock.
+	^ newBlock
+]
+
+{ #category : #'parse support' }
+MicEnvironmentBlock >> closeMe [
+
+	"this is a temporary solution because normally the parser should populate body with MicBlocks.
+	Right now just make sure that we have structured text = inline elements. "
+	"body ifNotNil: [ 
+		body :=  self inlineParse: body ].
+	children := body"
 ]
 
 { #category : #accessing }
@@ -77,7 +149,7 @@ MicEnvironmentBlock >> extractFirstLineFrom: aLine [
 	| lineWithoutMarkup argumentsSplitter |
 	lineWithoutMarkup := super extractFirstLineFrom: aLine.
 	argumentsSplitter := MicArgumentsSplitter withString: lineWithoutMarkup.
-	name := argumentsSplitter name.
+	name := argumentsSplitter name trimBoth.
 	arguments := argumentsSplitter arguments.
 	^ lineWithoutMarkup
 ]
@@ -90,7 +162,7 @@ MicEnvironmentBlock >> lineStartMarkup [
 
 { #category : #markups }
 MicEnvironmentBlock >> lineStopMarkup [
-
+	
 	^ parser environmentClosingBlockMarkup 
 ]
 

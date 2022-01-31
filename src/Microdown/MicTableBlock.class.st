@@ -2,23 +2,28 @@
 Support table with a simple and more relax setup than github.
 A table is not forced to have a header definition.
 
+```
 | aaab | jkhjh |
 | --- |
 | bar |
+```
 
 or 
+```
 |aaab|jkhjh|
 |---|
 |bar|
-
-or 
+```
+or
+```
 | aaa | bbb |
 |ccc |ddd |
-
+```
 or 
+```
 | aaa | bbb
 | cc | ddd
-
+```
 Block-level elements cannot be inserted in a table.
 
 When a table contains a header it is the first row and all rows should have that size else they are cut. 
@@ -38,6 +43,11 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicTableBlock >> accept: aVisitor [
+	^ aVisitor visitTable: self
+]
+
 { #category : #actions }
 MicTableBlock >> addLineAndReturnNextNode: line [
 	"line is assumed to be of the form 'chararacters some text' e.g., '> some text'
@@ -49,20 +59,20 @@ MicTableBlock >> addLineAndReturnNextNode: line [
 	
 ]
 
-{ #category : #private }
+{ #category : #'parse support' }
 MicTableBlock >> closeMe [ 
 
 	| firstSize |
 	firstSize := rows first size.
 	rows := rows collect: [ :each | self cut: each toSize: firstSize ].
-	
+	rows := rows collect: [ :each | 
+		        each collect: [ :e | self inlineParse: e ] ].
 ]
 
 { #category : #private }
 MicTableBlock >> cut: row toSize: firstSize [
 
-	^ row copyFrom: 1 to: firstSize 
-	
+	^ row copyFrom: 1 to: ( row size min: firstSize)
 ]
 
 { #category : #actions }
@@ -80,30 +90,6 @@ MicTableBlock >> extractLine: line [
 		
 ]
 
-{ #category : #actions }
-MicTableBlock >> extractLineOld: line [
-	"For now we have 
-		| something | something | 
-		or 
-		| something | something"
-		| acc rowElements cLine |
-		acc := ''.
-		rowElements := OrderedCollection new. 
-		cLine := line allButFirst.
-		cLine do: [ :each | 
-				each = $|  
-					ifTrue: [ rowElements add: acc trim. acc := ''  ]
-					ifFalse: [ acc := acc, (String with: each) ]
-						 ].
-		(line last = $|)
-			ifFalse: [ rowElements add: acc trim ].
-		^ rowElements 			
-					
-		
-				
-		
-]
-
 { #category : #accessing }
 MicTableBlock >> hasHeader [
 	^ hasHeader
@@ -113,6 +99,7 @@ MicTableBlock >> hasHeader [
 MicTableBlock >> initialize [ 
 	super initialize.
 	rows := OrderedCollection new.
+	hasHeader := false
 ]
 
 { #category : #testing }

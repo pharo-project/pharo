@@ -8,16 +8,11 @@ Class {
 	#instVars : [
 		'stream',
 		'parserClass',
-		'lastIsNewLine'
+		'lastIsNewLine',
+		'newLineCharacterString'
 	],
 	#category : #'Microdown-Parser'
 }
-
-{ #category : #testing }
-MicAbstractMicrodownTextualBuilder class >> isAbstract [
-
-	^ self == MicAbstractMicrodownTextualBuilder
-]
 
 { #category : #'instance creation' }
 MicAbstractMicrodownTextualBuilder class >> on: aStream [ 
@@ -47,6 +42,7 @@ MicAbstractMicrodownTextualBuilder >> initialize [
 	super initialize.
 	stream := (String new: 1000) writeStream.
 	parserClass := MicroDownParser.
+	newLineCharacterString := String cr.
 	lastIsNewLine := true
 ]
 
@@ -76,7 +72,7 @@ MicAbstractMicrodownTextualBuilder >> monospace: aText [
 
 { #category : #'writing text' }
 MicAbstractMicrodownTextualBuilder >> newLine [
-	self raw: String cr.
+	self raw: newLineCharacterString.
 	lastIsNewLine := true
 ]
 
@@ -103,6 +99,11 @@ MicAbstractMicrodownTextualBuilder >> raw: aString [
 ]
 
 { #category : #initialization }
+MicAbstractMicrodownTextualBuilder >> setNewLineCharacterString: aLine [
+	newLineCharacterString := aLine
+]
+
+{ #category : #initialization }
 MicAbstractMicrodownTextualBuilder >> setStream: aStream [ 
 	stream := aStream
 ]
@@ -122,6 +123,14 @@ MicAbstractMicrodownTextualBuilder >> strike: aText [
 MicAbstractMicrodownTextualBuilder >> text: aText [
 	self raw: aText
 	
+]
+
+{ #category : #writing }
+MicAbstractMicrodownTextualBuilder >> writeDuring: aBlock surroundBy: anOpenerMarkup and: aCloserMarkup [
+
+	self raw: anOpenerMarkup.
+	aBlock value.
+	self raw: aCloserMarkup
 ]
 
 { #category : #writing }

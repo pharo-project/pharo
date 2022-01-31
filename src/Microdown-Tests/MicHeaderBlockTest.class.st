@@ -4,7 +4,7 @@ I'm a test class for testing the behavior of MicHeaderBlock
 Class {
 	#name : #MicHeaderBlockTest,
 	#superclass : #MicBlockTest,
-	#category : #'Microdown-Tests'
+	#category : #'Microdown-Tests-Parser'
 }
 
 { #category : #tests }
@@ -14,13 +14,6 @@ MicHeaderBlockTest >> testCanConsumeLine [
 	headerString := (parser headerMarkup, ' Level1').
 	root := parser parse: headerString.
 	self deny: (root children first canConsumeLine: headerString) 
-]
-
-{ #category : #tests }
-MicHeaderBlockTest >> testContents [
-	| root |
-	root := parser parse: (parser headerMarkup, ' Level1').
-	self assert: root children first contents equals: '[ 1/Level1 ]'
 ]
 
 { #category : #tests }
@@ -60,4 +53,9 @@ MicHeaderBlockTest >> testHeaderLevel6 [
 	self assert: root children size equals: 1.
 	self assert: root children first header equals: 'Level six'.
 	self assert: root children first level equals: 6
+]
+
+{ #category : #running }
+MicHeaderBlockTest >> testedClass [ 
+	^ MicHeaderBlock  
 ]

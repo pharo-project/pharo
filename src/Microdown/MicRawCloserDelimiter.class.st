@@ -4,12 +4,12 @@ I am the closer delimiter for raw.
 Class {
 	#name : #MicRawCloserDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicRawCloserDelimiter class >> associatedInlineBlock [
-	^ MicRawInlineBlock 
+	^ MicRawBlock 
 ]
 
 { #category : #accessing }

@@ -283,7 +283,6 @@ RGClassDefinitionTest >> testWithComment [
 	self assert: newClass hasStamp.
 	self assert: newClass equals: newComment parent.
 	self assert: newComment content equals: 'This is a comment for test'.
-	self assert: newComment author equals: 'VeronicaUquillas'.
 	self assert: newComment timeStamp equals: '3/22/2011 14:51' asDateAndTime.
 
 	newClass comment: nil.

@@ -4,12 +4,12 @@ I am the opener delimiter for figure name.
 Class {
 	#name : #MicFigureNameOpenerDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicFigureNameOpenerDelimiter class >> associatedInlineBlock [
-	^ MicFigureInlineBlock
+	^ MicFigureBlock
 ]
 
 { #category : #accessing }

@@ -23,13 +23,13 @@ MicStartStopMarkupBlock >> addLineAndReturnNextNode: line [
 	"add line to this node. 
 	Notice, the action is allowed to create new nodes in the block tree.
 	Returns the node to handle next line - typically self."
-
+	
 	isClosed
 		ifTrue: [ ^ self ].
 	firstLine
 		ifNil:
 			[ firstLine := self extractFirstLineFrom: line ]
-		ifNotNil: [ self bodyFromLine: line ].
+		ifNotNil: [ ^ self bodyFromLine: line ].
 	^ self
 ]
 
@@ -40,7 +40,7 @@ MicStartStopMarkupBlock >> body [
 
 { #category : #accessing }
 MicStartStopMarkupBlock >> body: anObject [
-	^ body := anObject
+	body := anObject
 ]
 
 { #category : #handle }
@@ -61,9 +61,8 @@ MicStartStopMarkupBlock >> canConsumeLine: line [
 	a line 
 	>
 	The first line was accepted by its parent (a root block and the code block got created.
-	then a line was accepting since done was false...
-	then the closing line was reached and the code block got closed.)
-	
+	then a line was accepted...
+	then the closing line was reached and the code block got closed.)	
 	"
 
 	isClosed
@@ -82,10 +81,9 @@ MicStartStopMarkupBlock >> doesLineStartWithMarkup: line [
 
 { #category : #testing }
 MicStartStopMarkupBlock >> doesLineStartWithStopMarkup: line [
-	"return if the line starts with a stop markup"
 
+	"return if the line starts with a stop markup"
 	^ line beginsWith: self lineStopMarkup
-	
 ]
 
 { #category : #handle }

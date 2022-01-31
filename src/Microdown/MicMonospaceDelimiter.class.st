@@ -4,12 +4,12 @@ I am the delimiter for monospace/inline code format.
 Class {
 	#name : #MicMonospaceDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicMonospaceDelimiter class >> associatedInlineBlock [
-	^ MicMonospaceInlineBlock 
+	^ MicMonospaceFormatBlock 
 ]
 
 { #category : #accessing }

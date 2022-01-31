@@ -162,8 +162,7 @@ RBAddMethodChange >> printOn: aStream [
 		nextPutAll: self displayClassName;
 		nextPutAll: ' methodsFor: ''';
 		nextPutAll: self protocol;
-		nextPutAll: ''' stamp: ';
-		print: self changeStamp;
+		nextPutAll: ''' stamp: ''''';
 		nextPut: $!;
 		cr;
 		nextPutAll: (source copyReplaceAll: '!' with: '!!');

@@ -131,7 +131,6 @@ BaselineOfMorphic >> baseline: spec [
 { #category : #actions }
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
-	Author fullName: self class name.
 	MCDataStream initialize.
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
@@ -166,7 +165,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Smalltalk garbageCollect.
-	Author reset.
 ]
 
 { #category : #fonts }
@@ -285,7 +283,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	SystemNotification signal: 'Starting postload action'.
 
 	Smalltalk cleanOutUndeclared.
-	Author fullName: self class name.
 
 	TextConstants initialize.
 		
@@ -359,7 +356,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	array at: 5 put: Bitmap.
 	Smalltalk specialObjectsArray becomeForward: array.
 
-	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
 	UIManager default restoreDisplay.
@@ -377,8 +373,6 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
-	
-	Author fullName: self class name
 ]
 
 { #category : #baseline }

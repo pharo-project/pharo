@@ -1,40 +1,72 @@
 Class {
 	#name : #MicBlockTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'parser'
-	],
-	#category : #'Microdown-Tests'
+	#superclass : #MicElementTest,
+	#category : #'Microdown-Tests-Parser'
 }
 
-{ #category : #factory }
-MicBlockTest >> listBlockClass [
-	^ MicListBlock
+{ #category : #testing }
+MicBlockTest class >> isAbstract [ 
+
+	^ self = MicBlockTest
 ]
 
-{ #category : #factory }
-MicBlockTest >> orderedListBlockClass [
-	^ MicOrderedListBlock
+{ #category : #tests }
+MicBlockTest >> testHasProperty [
+	self deny: (self instance hasProperty: #foo).
+	self instance propertyAt: #foo put: 'bar'.
+	self assert: (self instance hasProperty: #foo).
+	self deny: (self instance hasProperty: #bar)
 ]
 
-{ #category : #factory }
-MicBlockTest >> parser [
-	^ self parserClass new
+{ #category : #tests }
+MicBlockTest >> testProperties [
+	self assert: self instance properties isNotNil.
+	self instance instVarNamed: 'properties' put: nil.
+
+	self instance propertyAt: #foo put: #bar.
+	self instance instVarNamed: 'properties' put: nil.
+
+	self instance propertyAt: #foo ifAbsent: [ nil ].
+	self instance instVarNamed: 'properties' put: nil.
+
+	self instance propertyAt: #foo ifAbsentPut: [ #bar ].
+	self instance instVarNamed: 'properties' put: nil.
+
+	self instance hasProperty: #foo.
+	self instance instVarNamed: 'properties' put: nil
 ]
 
-{ #category : #factory }
-MicBlockTest >> parserClass [
-	^ MicroDownParser
+{ #category : #tests }
+MicBlockTest >> testPropertyAt [
+	self assert: (self instance propertyAt: #foo put: 'bar') equals: 'bar'.
+	self assert: (self instance propertyAt: #foo) equals: 'bar'.
+	self should: [ self instance propertyAt: #bar ] raise: MicPropertyError
 ]
 
-{ #category : #factory }
-MicBlockTest >> rootBlockClass [
-	^ MicRootBlock
+{ #category : #tests }
+MicBlockTest >> testPropertyAtIfAbsent [
+	self assert: (self instance propertyAt: #foo put: 'bar') equals: 'bar'.
+	self assert: (self instance propertyAt: #foo ifAbsent: [ 'baz' ]) equals: 'bar'.
+	self assert: (self instance propertyAt: #bar ifAbsent: [ 'baz' ]) equals: 'baz'
 ]
 
-{ #category : #running }
-MicBlockTest >> setUp [
+{ #category : #tests }
+MicBlockTest >> testPropertyAtPut [
+	self instance propertyAt: #foo put: 'bar'.
+	self assert: (self instance propertyAt: #foo) equals: 'bar'.
 
-	super setUp.
-	parser := self parser. 
+	self instance propertyAt: #foo put: 'baz'.
+	self assert: (self instance propertyAt: #foo) equals: 'baz'
+]
+
+{ #category : #tests }
+MicBlockTest >> testSanity [
+	"If this test case fails, there is something wrong with the setup of the test-case."
+
+	self
+		assert: self testedClass isAbstract not
+		description: 'Unable to test abstract class.'.
+	self
+		assert: self instance class equals: self testedClass
+		
 ]

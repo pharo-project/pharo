@@ -4,7 +4,7 @@ I'm the opener delimiter for URL.
 Class {
 	#name : #MicURLOpenerDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }

@@ -4,12 +4,12 @@ I am the delimiter for italic/emphasis format.
 Class {
 	#name : #MicItalicDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicItalicDelimiter class >> associatedInlineBlock [
-	^ MicItalicInlineBlock 
+	^ MicItalicFormatBlock 
 ]
 
 { #category : #accessing }

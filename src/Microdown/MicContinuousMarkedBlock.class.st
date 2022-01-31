@@ -1,5 +1,18 @@
 "
-I'm an abstract block for blocks requiring a systematic simple character or character sequences at the beginning of each line. 
+I'm an abstract block for blocks requiring a systematic simple character or character sequences at the beginning of each line. The text of the lines are accumulated for now as line without the markup separated by a newline. 
+
+For example 
+```
+% comment 1
+% comment 2
+```
+produces a single comment object with text as follows:
+
+```
+comment 1
+comment 2
+```
+
 
 For example 
 ```
@@ -25,12 +38,6 @@ Class {
 	#category : #'Microdown-Model'
 }
 
-{ #category : #testing }
-MicContinuousMarkedBlock class >> isAbstract [
-
-	^ self == MicContinuousMarkedBlock
-]
-
 { #category : #actions }
 MicContinuousMarkedBlock >> addLineAndReturnNextNode: line [
 	"line is assumed to be of the form 'chararacters some text' e.g., '> some text'
@@ -48,11 +55,6 @@ MicContinuousMarkedBlock >> canConsumeLine: line [
 	"return if this block can consume line i.e., it starts with sensible characters, e.g., > "
 
 	^ self doesLineStartWithMarkup: line
-]
-
-{ #category : #public }
-MicContinuousMarkedBlock >> contents [ 
-	^ super contents , '[ ', self text, ' ]'
 ]
 
 { #category : #testing }

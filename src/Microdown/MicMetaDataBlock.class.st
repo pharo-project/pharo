@@ -21,6 +21,11 @@ Class {
 	#category : #'Microdown-BookRelated'
 }
 
+{ #category : #visiting }
+MicMetaDataBlock >> accept: aVisitor [
+	^ aVisitor visitMetaData: self
+]
+
 { #category : #markups }
 MicMetaDataBlock >> lineStartMarkup [
 

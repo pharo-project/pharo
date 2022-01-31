@@ -16,15 +16,20 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicQuoteBlock >> accept: aVisitor [
+ 	^ aVisitor visitQuote: self
+]
+
+{ #category : #visiting }
+MicQuoteBlock >> closeMe [
+	super closeMe.
+	
+	children := MicInlineParser new parse: text
+]
+
 { #category : #testing }
 MicQuoteBlock >> lineMarkup [
 
 	^ self parser preformattedMarkup
-]
-
-{ #category : #printing }
-MicQuoteBlock >> printOn: aStream [
-
-	aStream nextPutAll: 'Quote: '.
-	aStream nextPutAll: (self text asString contractTo: 100)
 ]

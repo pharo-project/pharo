@@ -4,7 +4,7 @@ I am the closer delimiter for link name.
 Class {
 	#name : #MicLinkNameCloserDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }

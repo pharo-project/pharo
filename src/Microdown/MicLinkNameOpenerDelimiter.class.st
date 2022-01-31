@@ -4,12 +4,12 @@ I am the opener delimiter for link name.
 Class {
 	#name : #MicLinkNameOpenerDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicLinkNameOpenerDelimiter class >> associatedInlineBlock [
-	^ MicLinkInlineBlock 
+	^ MicLinkBlock 
 ]
 
 { #category : #accessing }

@@ -374,8 +374,7 @@ MCWorkingCopy >> nextVersionName [
 
 	branch isEmpty ifFalse: [branch := '.',branch].
 	counter := counter + 1.
-	author := Author fullName collect: [ :each | each isAlphaNumeric ifTrue: [ each ] ifFalse: [ $_ ] ].
-	^ base , '-' , author , branch , '.' , counter asString
+	^ base , '-' , branch , '.' , counter asString
 ]
 
 { #category : #operations }

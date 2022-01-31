@@ -764,27 +764,26 @@ CompiledMethodTest >> testReadsSlot [
 
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testSelector [
-	Author
-		useAuthor: 'TUTU_TEST'
-		during: [ | method cls |
-			method := self class >> #returnTrue.
-			self assert: method selector equals: #returnTrue.
 
-			"now make an orphaned method. new semantics: return corrent name"
-			Smalltalk removeClassNamed: #TUTU.
+	| method cls |
+	method := self class >> #returnTrue.
+	self assert: method selector equals: #returnTrue.
 
-			cls := self class classInstaller make: [ :aBuilder | 
-				aBuilder 
-					name: #TUTU;
-					package: self categoryNameForTemporaryClasses].
+	"now make an orphaned method. new semantics: return corrent name"
+	Smalltalk removeClassNamed: #TUTU.
 
-			cls compile: 'foo ^ 10'.
+	cls := self class classInstaller make: [ :aBuilder | 
+		       aBuilder
+			       name: #TUTU;
+			       package: self categoryNameForTemporaryClasses ].
 
-			method := cls >> #foo.
+	cls compile: 'foo ^ 10'.
 
-			Smalltalk removeClassNamed: #TUTU.
+	method := cls >> #foo.
 
-			self assert: method selector equals: #foo ]
+	Smalltalk removeClassNamed: #TUTU.
+
+	self assert: method selector equals: #foo
 ]
 
 { #category : #'tests - testing' }

@@ -15,6 +15,11 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicAnchorBlock >> accept: aVisitor [
+ 	^ aVisitor visitAnchor: self
+]
+
 { #category : #public }
 MicAnchorBlock >> addLineAndReturnNextNode: line [
 	"# bla
@@ -22,6 +27,12 @@ MicAnchorBlock >> addLineAndReturnNextNode: line [
 	"
 	label := (line copyFrom: parser anchorMarkup size + 1 to: line size) trim.
 	^ self
+]
+
+{ #category : #testing }
+MicAnchorBlock >> hasLabel [ 
+	label ifNil: [ ^ false ].
+	^ true
 ]
 
 { #category : #accessing }
@@ -32,11 +43,4 @@ MicAnchorBlock >> label [
 { #category : #accessing }
 MicAnchorBlock >> label: anObject [
 	label := anObject
-]
-
-{ #category : #printing }
-MicAnchorBlock >> printOn: aStream [
-
-	aStream nextPutAll: 'Anchor: '.
-	aStream nextPutAll: label
 ]

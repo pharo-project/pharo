@@ -74,10 +74,3 @@ FLPharoPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 FLPharoPlatform >> setTestTimeLimitFor: aTest to: aDuration [
 	aTest timeLimit: aDuration
 ]
-
-{ #category : #'accessing - system' }
-FLPharoPlatform >> useAuthor: aString during: aBlock [
-	(Smalltalk at: #Author)
-		useAuthor: aString
-		during: aBlock
-]

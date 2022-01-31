@@ -52,7 +52,7 @@ MCFileTreeAbstractReader >> addClassAndMethodDefinitionsFromDirectoryEntries: en
 												ifTrue: [ directory
 														fileNamed: definition selector asString , '.meta'
 														do:
-															[ :fileStream | definition setTimeStamp: (Author fixStamp: fileStream contents) ] ].
+															[ :fileStream | definition setTimeStamp: (self fixStamp: fileStream contents) ] ].
 											self noMethodMetaData
 												ifTrue: [ definition setTimeStamp: timestamp ] ].
 									definitions add: definition ] ] ] ]
@@ -93,6 +93,18 @@ MCFileTreeAbstractReader >> definitionFromFile: directoryEntry inDirectory: aDir
 { #category : #accessing }
 MCFileTreeAbstractReader >> fileUtils [
     ^ MCFileTreeFileUtils current
+]
+
+{ #category : #utilities }
+MCFileTreeAbstractReader >> fixStamp: changeStamp [ 
+	| parts |
+	parts := changeStamp findTokens: ' '.
+	(parts notEmpty and: [parts last first isLetter]) ifTrue:
+		["Put initials first in all time stamps..."
+		^ String streamContents:
+				[:s | s nextPutAll: parts last.
+				parts allButLast do: [:p | s space; nextPutAll: p]]].
+	^ changeStamp
 ]
 
 { #category : #testing }

@@ -47,12 +47,6 @@ RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
 ]
 
 { #category : #running }
-RPackageIncrementalTest >> setUp [
-	super setUp.
-	Author fullName ifNil: [Author fullName: 'RPackage'].
-]
-
-{ #category : #running }
 RPackageIncrementalTest >> tearDown [
 	
 	| logging |

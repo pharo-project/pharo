@@ -240,9 +240,7 @@ Deprecation >> transform [
 		(rewriteRule executeTree: node)
 			ifFalse: [ ^ self signal ].
 		node replaceWith: rewriteRule tree. 
-		Author 
-			useAuthor: 'AutoDeprecationRefactoring'
-			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
+		aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol.
 		Log  ifNotNil: [:log | log add: self].
 		self logTranscript]
 ]

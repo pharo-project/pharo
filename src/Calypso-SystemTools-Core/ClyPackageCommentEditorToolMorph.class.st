@@ -44,7 +44,7 @@ ClyPackageCommentEditorToolMorph class >> tabOrder [
 ClyPackageCommentEditorToolMorph >> applyChanges [
 
 	self pendingText asString = self editingText ifFalse: [
-		editingPackage packageManifest comment: self pendingText stamp: Author changeStamp].
+		editingPackage packageManifest comment: self pendingText stamp: nil ].
 
 	^true
 ]

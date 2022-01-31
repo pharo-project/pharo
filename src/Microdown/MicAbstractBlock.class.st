@@ -8,19 +8,19 @@ See the comment of `MicroDownParser` for an overview of the algorithm used in bu
 "
 Class {
 	#name : #MicAbstractBlock,
-	#superclass : #Object,
+	#superclass : #MicElement,
 	#instVars : [
-		'parent',
 		'children',
 		'parser'
 	],
 	#category : #'Microdown-Model'
 }
 
-{ #category : #testing }
-MicAbstractBlock class >> isAbstract [
-
-	^ self == MicAbstractBlock
+{ #category : #public }
+MicAbstractBlock class >> alternateBlockClassFor: line [
+	"This hook supports extensions of environments. 
+	we get <?slide ... and we do not create an environment but a slideBlock"
+	^ self
 ]
 
 { #category : #adding }
@@ -49,7 +49,7 @@ MicAbstractBlock >> blockExtensionStarterClassFrom: line [
 MicAbstractBlock >> blockStarterClassFrom: line [
 	"return the class of a block which can start with line, or nil if none"
 
-	^ self parser blockStarterClassFrom: line
+	^ (self parser blockStarterClassFrom: line) ifNotNil: [ :c | c alternateBlockClassFor: line ]
 ]
 
 { #category : #public }
@@ -64,6 +64,11 @@ MicAbstractBlock >> children [
 	^children 
 ]
 
+{ #category : #adding }
+MicAbstractBlock >> children: aCollection [
+ 	children := aCollection
+]
+
 { #category : #public }
 MicAbstractBlock >> closeMe [
 	"I'm hook for closing elements. By default do nothing."
@@ -71,9 +76,17 @@ MicAbstractBlock >> closeMe [
 	^ self
 ]
 
-{ #category : #debugging }
-MicAbstractBlock >> contents [
-	^ ''
+{ #category : #public }
+MicAbstractBlock >> computeNestedLevel [ 
+
+	^ 0
+]
+
+{ #category : #properties }
+MicAbstractBlock >> hasProperty: aKey [
+	"Test if the property aKey is present."
+	
+	^ self properties notNil and: [ self properties includesKey: aKey ]
 ]
 
 { #category : #accessing }
@@ -93,6 +106,13 @@ MicAbstractBlock >> listItemBlockClass [
 ]
 
 { #category : #public }
+MicAbstractBlock >> nestedLevel [ 
+	"Return the nesting level of main blocks. Basically only list increases this."
+	
+	^ 0
+]
+
+{ #category : #public }
 MicAbstractBlock >> newBlockFor: line parent: parentBlock [
 	| newBlockClass |
 	newBlockClass := self blockStarterClassFrom: line.
@@ -101,17 +121,6 @@ MicAbstractBlock >> newBlockFor: line parent: parentBlock [
 		setParser: parser;
 		parent: parentBlock;
 		addLineAndReturnNextNode: line
-]
-
-{ #category : #accessing }
-MicAbstractBlock >> parent [
-	^ parent
-]
-
-{ #category : #accessing }
-MicAbstractBlock >> parent: aBlock [
-	parent := aBlock.
-	aBlock addChild: self
 ]
 
 { #category : #private }
@@ -129,18 +138,10 @@ MicAbstractBlock >> setParser: aParser [
 	parser := aParser 
 ]
 
-{ #category : #debugging }
-MicAbstractBlock >> showStructure: indent [
-	"Produce a string representing the structure in terms of block classes of the receiver"
-	
-	| ind |
-	ind := String tab repeat: indent.
-	^ ind, self class name, String cr, ((children collect: [:c | c showStructure: indent + 1]) joinUsing: String cr).
-]
-
-{ #category : #public }
-MicAbstractBlock >> splitString: aString [
-	self flag: #fixMe.
-	"rename me as handleDecorations: and it should be private interface."
-	^ MicInlineSplitter new start: aString
+{ #category : #accessing }
+MicAbstractBlock >> text [
+	| text |
+	text := ''.
+	children do: [ :each | text := text , each text ].
+	^ text
 ]

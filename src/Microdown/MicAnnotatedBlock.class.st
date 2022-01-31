@@ -1,10 +1,13 @@
 "
-MicroDownParserrting with `!!paragraph` (such as `@@note` `@@important` in Pillar).
+I represent a paragraph with the title. My title can only contain a string while my body can contain formatted text.
+
+I'm created with `!!paragraph` (such as `@@note` `@@important` in Pillar).
 
 !!note This is important so I used exclamatation mark.
 
 ### Known limits. 
 We should revisit the implementation because there is something unclear. 
+Currently we cannot add list for example inside a annotatedBlock.
 See [https://github.com/pillar-markup/MicroDown/issues/54](https://github.com/pillar-markup/MicroDown/issues/54)
 
 "
@@ -13,6 +16,11 @@ Class {
 	#superclass : #MicAbstractAnnotatedBlock,
 	#category : #'Microdown-Model'
 }
+
+{ #category : #visiting }
+MicAnnotatedBlock >> accept: aVisitor [
+ 	^ aVisitor visitAnnotated: self
+]
 
 { #category : #testing }
 MicAnnotatedBlock >> addLineAndReturnNextNode: line [
@@ -40,6 +48,12 @@ MicAnnotatedBlock >> canConsumeLine: line [
 	^ line isNotEmpty 
 ]
 
+{ #category : #'parse support' }
+MicAnnotatedBlock >> closeMe [
+	super closeMe.
+	body := self inlineParse: body
+]
+
 { #category : #accessing }
 MicAnnotatedBlock >> label [
 	^ label
@@ -47,19 +61,18 @@ MicAnnotatedBlock >> label [
 
 { #category : #testing }
 MicAnnotatedBlock >> lineMarkup [
-
+	"Normally !!"
 	^ parser annotatedParagraphMarkup
 ]
 
-{ #category : #printing }
-MicAnnotatedBlock >> printOn: aStream [
+{ #category : #accessing }
+MicAnnotatedBlock >> text [
 
-	aStream nextPutAll: 'Annotated: '.
-	aStream nextPutAll: (self text asString contractTo: 100)
+	^ String streamContents: [ :s | self textElements do: [ :each | s nextPutAll: each substring ] ]
 ]
 
 { #category : #accessing }
-MicAnnotatedBlock >> text [ 
+MicAnnotatedBlock >> textElements [
 
 	^ self body
 ]

@@ -7,6 +7,11 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicRootBlock >> accept: aVisitor [
+ 	^ aVisitor visitRoot: self
+]
+
 { #category : #testing }
 MicRootBlock >> addLineAndReturnNextNode: line [
 	"add line to this node. 
@@ -23,12 +28,6 @@ MicRootBlock >> canConsumeLine: line [
 	"The root block can always consume everything no matter what it is."
 
 	^ true
-]
-
-{ #category : #'as yet unclassified' }
-MicRootBlock >> contents [ 
-	"not clear what tesxt is."
-	^super contents , '[ ', (self showStructure: 0), ' ]'
 ]
 
 { #category : #accessing }

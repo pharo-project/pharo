@@ -281,8 +281,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	Author fullName: self class name.
-	
 	"collect and process the standard tools registrations"
 	Smalltalk tools initDefaultToolSet.
 	
@@ -313,8 +311,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk fixObsoleteReferences.
 	
 	EpMonitor current enable.
-		
-	Author reset.
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	

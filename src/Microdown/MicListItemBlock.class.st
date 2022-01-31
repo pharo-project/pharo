@@ -10,6 +10,11 @@ Class {
 	#category : #'Microdown-Model'
 }
 
+{ #category : #visiting }
+MicListItemBlock >> accept: aVisitor [
+ 	^ aVisitor visitListItem: self
+]
+
 { #category : #testing }
 MicListItemBlock >> addLineAndReturnNextNode: line [
 	"add line to this node. 
@@ -36,9 +41,17 @@ MicListItemBlock >> canConsumeLine: line [
 	^ line beginsWith: (' ' repeat: parent indent)
 ]
 
-{ #category : #debugging }
-MicListItemBlock >> contents [ 
-	^super contents , '[ ', self text, ' ]'
+{ #category : #visiting }
+MicListItemBlock >> closeMe [
+	super closeMe.
+	text := self inlineParse: text.
+	
+]
+
+{ #category : #accessing }
+MicListItemBlock >> computeNestedLevel [
+	"An item has the same nested level than its parent."
+	^ self parent computeNestedLevel
 ]
 
 { #category : #testing }
@@ -47,14 +60,21 @@ MicListItemBlock >> isAList: normalized [
 	^ parser isAList: normalized
 ]
 
-{ #category : #debugging }
-MicListItemBlock >> printOn: aStream [
-
-	aStream nextPutAll: 'List Item: '.
-	aStream nextPutAll: (self text asString contractTo: 100)
+{ #category : #accessing }
+MicListItemBlock >> nestedLevel [
+	"Return the nesting level of main blocks. Basically only list increases this."
+	
+	^ self parent nestedLevel 
 ]
 
 { #category : #accessing }
 MicListItemBlock >> text [
-	^ text
+	"Returns a string we should rename text into textString"
+	^ String streamContents: [ :s | self textElements do: [:each | s nextPutAll: each substring ]]
+]
+
+{ #category : #accessing }
+MicListItemBlock >> textElements [ 
+	
+	^ text 
 ]

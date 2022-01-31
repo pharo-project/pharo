@@ -401,8 +401,7 @@ ClassTest >> testPoolVariableAccessibleInClassUser [
 	PoolDefiner initialize.
 	RootClassPoolUser compileAll.
 
-	self assert: RootClassPoolUser gloups equals: 42.
-	self assert: RootClassPoolUser author equals: 'Ducasse'
+	self assert: RootClassPoolUser gloups equals: 42
 ]
 
 { #category : #'tests - pools' }
@@ -412,8 +411,7 @@ ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	PoolDefiner initialize.
 	SubclassPoolUser compileAll.
 
-	self assert: SubclassPoolUser gloups equals: 42.
-	self assert: SubclassPoolUser author equals: 'Ducasse'
+	self assert: SubclassPoolUser gloups equals: 42
 ]
 
 { #category : #'tests - navigation' }

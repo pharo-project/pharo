@@ -1,12 +1,12 @@
 Class {
 	#name : #MicAnnotationOpenerDelimiter,
 	#superclass : #MicAbstractDelimiter,
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
 MicAnnotationOpenerDelimiter class >> associatedInlineBlock [
-	^ MicAnnotationInlineBlock 
+	^ MicAnnotationBlock 
 ]
 
 { #category : #accessing }
@@ -21,7 +21,8 @@ MicAnnotationOpenerDelimiter class >> isOpener [
 
 { #category : #accessing }
 MicAnnotationOpenerDelimiter class >> markup [
-	^ '<?'
+
+	^ '?{'
 ]
 
 { #category : #accessing }

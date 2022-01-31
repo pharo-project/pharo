@@ -61,6 +61,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 
 { #category : #tests }
 SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesCompleteChunkDuringCompilation [
+
 	"This test covers https://github.com/pharo-project/pharo/issues/6063.
 	When flushing is deferred but the internal write buffer overlows during
 	compilation, part of a chunk may have been written to disk while the rest
@@ -68,52 +69,43 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 	check only whether the start position of the chunk had been written and
 	a read stream would then read the complete chunk from disk. That chunk would
 	then be incomplete of course."
-	| trait |
+
+	| trait preambleLength |
 	trait := classFactory newTrait.
 	"force recompilation"
 	trait addInstVarNamed: 'var'.
 	classFactory
 		newSubclassOf: classFactory defaultSuperclass
 		using: trait.
- 
+
 	"Need to know the length of the author name"
-	Author
-		useAuthor: 'a'
-		during: [
-			| preambleLength |
-			"<cr>
+
+	"<cr>
 			!TraitForTestToBeDeleted1 methodsFor: 'a' stamp: 'a 6/5/2020 14:47'!
 			<cr>"
-			preambleLength := 2 + trait name size + 13 + 3 + 9 + Author changeStamp size + 3.
-			
-			SourceFiles changesWriteStreamDo: [ :sourceFile |
-				| stream |
-				[ "We want the internal buffer to be flushed after
+	preambleLength := 2 + trait name size + 13 + 3 + 9 + 3.
+
+	SourceFiles changesWriteStreamDo: [ :sourceFile | 
+		| stream |
+		[ "We want the internal buffer to be flushed after
 				writing the first two characters of the method selector"
-				stream := ((sourceFile instVarNamed: 'stream') instVarNamed: 'writeStream') wrappedStream.
-				stream sizeBuffer: preambleLength + 2.
-				
-				"This happens in MCPackageLoader>>basicLoad:"
-				SourceFiles deferFlushDuring: [
-					"Compiling a method in a trait with users will lead to
+		stream := ((sourceFile instVarNamed: 'stream') instVarNamed:
+			           'writeStream') wrappedStream.
+		stream sizeBuffer: preambleLength + 2.
+
+		"This happens in MCPackageLoader>>basicLoad:"
+		SourceFiles deferFlushDuring: [ "Compiling a method in a trait with users will lead to
 					the source of the compiled method being read again for
 					compilation in the using class which would read an incomplete
-					chunk and lead to an error."
-					
-					"It's difficult to align the buffer properly to the file size, as
+					chunk and lead to an error.""It's difficult to align the buffer properly to the file size, as
 					we'd need to set the new buffer size first and then check whether
 					the buffer is aligned and then adjust the buffer size again. Instead,
 					we just compile enough methods so that we know we'll eventually end up
 					in a situation were the buffer is flushed and we end up with a partial
 					chunk in memory"
-					1
-						to: 10
-						do: [ :index |
-							"Need to know the length of the category name"
-							trait
-								compile: 'aMethod', index asString
-								classified: 'a' ] ] ] ensure: [
-									stream sizeBuffer: stream defaultBufferSize ] ] ]
+			1 to: 10 do: [ :index | "Need to know the length of the category name" 
+				trait compile: 'aMethod' , index asString classified: 'a' ] ] ] 
+			ensure: [ stream sizeBuffer: stream defaultBufferSize ] ]
 ]
 
 { #category : #tests }

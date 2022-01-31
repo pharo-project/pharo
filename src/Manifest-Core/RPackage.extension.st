@@ -23,7 +23,7 @@ RPackage >> packageComment [
 RPackage >> packageComment: aDescription [
 	^ self packageManifest
 		ifNil: [ '' ]
-		ifNotNil: [ :manifest | manifest comment: aDescription stamp: Author changeStamp]
+		ifNotNil: [ :manifest | manifest comment: aDescription stamp: '']
 ]
 
 { #category : #'*Manifest-Core' }

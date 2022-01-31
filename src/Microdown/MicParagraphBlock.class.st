@@ -17,6 +17,11 @@ MicParagraphBlock class >> opensBy: aLine [
 	^ aLine notEmpty 
 ]
 
+{ #category : #visiting }
+MicParagraphBlock >> accept: aVisitor [
+ 	^ aVisitor visitParagraph: self
+]
+
 { #category : #parsing }
 MicParagraphBlock >> addLineAndReturnNextNode: line [
 	"add line to this node. 
@@ -41,16 +46,21 @@ MicParagraphBlock >> canConsumeLine: line [
 	"A paragraph is closed by an empty line, "
 
 	| unIndented |
-	line ifEmpty: [ ^ false ].
+	"if we are closing block that can contain other elements then do not consume their ends."
+	(line isEmpty or: [ #('?>') includes: line]) 
+		ifTrue: [ ^ false ].
 	(self isRightlyIndented: line)
 		ifFalse: [ ^ false ].
 	unIndented := self asUnindented: line.
+	"if the line was the start of a new block then paragraph does not consume it"
 	^ (self blockStarterClassFrom: unIndented) = self class
 ]
 
-{ #category : #public }
-MicParagraphBlock >> contents [ 
-	^super contents , '[ ', self text, ' ]'
+{ #category : #'parse support' }
+MicParagraphBlock >> closeMe [
+
+	super closeMe.
+	self children: (self inlineParse: text)
 ]
 
 { #category : #private }
@@ -60,13 +70,6 @@ MicParagraphBlock >> isRightlyIndented: line [
 	self indent = 0
 		ifTrue: [ ^ true ].
 	^ line beginsWith: (' ' repeat: self indent)
-]
-
-{ #category : #printing }
-MicParagraphBlock >> printOn: aStream [
-
-	aStream nextPutAll: 'Paragraph: '.
-	aStream nextPutAll: (self text asString contractTo: 100)
 ]
 
 { #category : #accessing }

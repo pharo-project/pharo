@@ -87,32 +87,32 @@ ImageCleaner >> cleanUpForProduction [
 
 { #category : #api }
 ImageCleaner >> cleanUpForRelease [
-	<script: 'self new cleanUpForRelease'>
 
-	Author fullName: 'MrCleaner'.
+	<script: 'self new cleanUpForRelease'>
 	self cleanUpMethods.
-	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
-	SystemNavigation new
-		allObjectsDo: [ :each | 
-			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
-				ifTrue: [ each releaseCachedState ] ].
-	
-	self 
+	self class environment
+		at: #MetacelloProjectRegistration
+		ifPresent: [ :class | class resetRegistry ].
+	SystemNavigation new allObjectsDo: [ :each | 
+		((each respondsTo: #releaseCachedState) and: [ 
+			 (each isKindOf: RubAbstractTextArea) not ]) ifTrue: [ 
+			each releaseCachedState ] ].
+
+	self
 		removeEmptyCategories;
 		removeEmptyPackages.
-		
+
 	Smalltalk organization sortCategories.
 
-	Smalltalk 
+	Smalltalk
 		garbageCollect;
-		cleanOutUndeclared; 
+		cleanOutUndeclared;
 		fixObsoleteReferences;
-		cleanUp: true except: #() confirming: false.
-		
-	FreeTypeFontProvider current prepareForRelease.	
-	
-	HashedCollection rehashAll.		
-	Author reset
+		cleanUp: true except: #(  ) confirming: false.
+
+	FreeTypeFontProvider current prepareForRelease.
+
+	HashedCollection rehashAll
 ]
 
 { #category : #cleaning }

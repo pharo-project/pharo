@@ -24,12 +24,27 @@ Class {
 }
 
 { #category : #'element - annotated' }
-MicMicrodownTextualBuilder >> annotated: annotation paragraph:  aText [
+MicMicrodownTextualBuilder >> anchor: aLabel [
+
+	self raw: parserClass anchorMarkup.
+	self raw: aLabel.
+
+]
+
+{ #category : #'element - format' }
+MicMicrodownTextualBuilder >> anchorReference: aText [
+
+	self raw: parserClass anchorReferenceOpenerMarkup.
+	self raw: aText.
+	self raw: parserClass anchorReferenceCloserMarkup.
+]
+
+{ #category : #'element - annotated' }
+MicMicrodownTextualBuilder >> annotated: annotation paragraph:  aBlock [
 	"!!Important 
 	
 	attention there is not space between the !! and the label (annotation in pillar) or we should improve the microdown parser"
-	self flag: #fixme. "Should have the same API than paragraph for the paragraph"
-	self rawAnnotated: annotation paragraph: aText. 
+	self rawAnnotated: annotation paragraph: aBlock. 
 	self newLine
 
 ]
@@ -47,6 +62,35 @@ MicMicrodownTextualBuilder >> annotatedAnnotation: annotation [
 
 ]
 
+{ #category : #'element - annotated' }
+MicMicrodownTextualBuilder >> annotation: aString arguments: aDictionary [
+
+	self raw: MicAnnotationOpenerDelimiter markup.
+	self raw: aString.
+	aDictionary ifNotEmpty: [ 
+		self raw: ' | '.
+		aDictionary keysAndValuesDo: [ :key :value | 
+			self raw: key.
+			self raw: '='.
+			self raw: value.
+			key = aDictionary keys last ifFalse: [ self raw: '&' ] ] ].
+	self raw: MicAnnotationCloserDelimiter markup
+]
+
+{ #category : #'element - format' }
+MicMicrodownTextualBuilder >> bold: aBlock [
+	self raw: parserClass boldMarkup.
+	aBlock value.
+	self raw: parserClass boldMarkup.
+]
+
+{ #category : #accessing }
+MicMicrodownTextualBuilder >> cell: aCellBlock [
+	self raw: '| '.
+	aCellBlock value.
+	self raw: ' '
+]
+
 { #category : #'element - code block' }
 MicMicrodownTextualBuilder >> codeblock: aString [ 
 	self codeblock: aString firstLineAssociations: #() 
@@ -54,18 +98,36 @@ MicMicrodownTextualBuilder >> codeblock: aString [
 
 { #category : #'element - code block' }
 MicMicrodownTextualBuilder >> codeblock: aString firstLineAssociations: aCol [
-
 	self raw: parserClass codeblockMarkup.
 	aCol do: [ :each | self 
 						raw: each key;
 						raw: '=';
-						raw: each value value 
+						raw: each value value asString
 						"so that we can put format such as bold in the value"]
 			separatedBy: [ self raw: '&' ].
 	self newLine.
 	self raw: aString.
 	self newLine.
 	self raw: parserClass codeblockMarkup.
+	self newLine.
+]
+
+{ #category : #'element - code block' }
+MicMicrodownTextualBuilder >> codeblock: aString firstLineAssociations: aCol withCaption: aCaptionBlock [
+	self raw: parserClass codeblockMarkup.
+	aCol do: [ :each | self 
+						raw: each key;
+						raw: '='.
+						each key = #caption 
+							ifTrue: [ aCaptionBlock value ]
+						 	ifFalse: [ self raw: each value value  ]
+						"so that we can put format such as bold in the value"]
+			separatedBy: [ self raw: '&' ].
+	self newLine.
+	self raw: aString.
+	self newLine.
+	self raw: parserClass codeblockMarkup.
+	self newLine.
 ]
 
 { #category : #'element - code block' }
@@ -88,48 +150,100 @@ MicMicrodownTextualBuilder >> codeblockTag: aTag withBody: aString [
 MicMicrodownTextualBuilder >> comment: aText [
 	self 
 		withLinesIn: aText 
-		do: [ :line | self writeText: line beginsWith: (parserClass commentedLineMarkup), String space ] 		separatedBy: [ self newLine ]
+		do: [ :line | self writeText: line beginsWith: (parserClass commentedLineMarkup) ] 		separatedBy: [ self newLine ]
 	
 ]
 
+{ #category : #'element - environment' }
+MicMicrodownTextualBuilder >> environment: aName arguments: aCol [
+	self raw: parserClass environmentOpeningBlockMarkup.
+	self raw: aName.
+	self raw: parserClass argumentListStartDelimiter.
+	self rawParameters: aCol asDictionary.
+	self newLine.
+	self raw: parserClass environmentClosingBlockMarkup
+]
+
+{ #category : #'element - environment' }
+MicMicrodownTextualBuilder >> environment: aName body: aBodyBlock arguments: aCol [
+	self raw: parserClass environmentOpeningBlockMarkup.
+	self raw: aName.
+	self raw: parserClass argumentListStartDelimiter.
+	self rawParameters: aCol asDictionary.
+	self newLine.
+	aBodyBlock value.
+	self newLine.
+	self raw: parserClass environmentClosingBlockMarkup
+]
+
 { #category : #'element - references' }
-MicMicrodownTextualBuilder >> externalLink: aURL withDescription: aDescription [
-	self 
-		writeText: aDescription 
-		surroundBy: parserClass linkNameOpenerMarkup 
-		and: parserClass linkNameCloserMarkup.
-	self 
-		writeText: aURL 
-		surroundBy: parserClass urlOpenerMarkup 
-		and: parserClass urlCloserMarkup
+MicMicrodownTextualBuilder >> externalLink: aURL withDescription: aDescriptionBlock [
+
+	self raw: parserClass linkNameOpenerMarkup .
+	aDescriptionBlock value.
+	self raw: parserClass linkNameCloserMarkup.
+	self raw: parserClass urlOpenerMarkup.
+	self raw: aURL asString.
+	self raw: parserClass urlCloserMarkup.
 ]
 
 { #category : #'element - figure' }
-MicMicrodownTextualBuilder >> figure: aFigureUrl withDescription: aDescription [
-	self flag: #fixme.
-	"missing parameter and need a builder like in header."
-	self 
-		writeText: aDescription 
-		surroundBy: parserClass figureOpenerMarkup 
-		and: parserClass linkNameCloserMarkup.
-	self 
-		writeText: aFigureUrl 
-		surroundBy: parserClass urlOpenerMarkup 
-		and: parserClass urlCloserMarkup
+MicMicrodownTextualBuilder >> figureURL: aUrl withCaption: aDescriptionBlock [
+
+	self rawFigureDescription: aDescriptionBlock.
+	self raw: parserClass urlOpenerMarkup.
+	self raw: aUrl asString. 
+	self raw: parserClass urlCloserMarkup
 ]
 
 { #category : #'element - figure' }
-MicMicrodownTextualBuilder >> figure: aFigureUrl withDescription: aDescription withParameters: aZnDictionary [
-	| stringToAdd |
-	aZnDictionary 
-		ifEmpty: [ self figure: aFigureUrl withDescription: aDescription ] 
-		ifNotEmpty: [
-			self flag: #fixme.
-			"we should avoid to concatenate all such string and use the builder internals."
-			stringToAdd := String empty.
-			aZnDictionary keysAndValuesDo: [ :key :value | stringToAdd := stringToAdd, parserClass argumentListDelimiter, key asString, parserClass argumentListEqualsDelimiter, value asString ].
-		stringToAdd := parserClass argumentListStartDelimiter, stringToAdd allButFirst.
-		self figure: aFigureUrl, stringToAdd withDescription: aDescription ]
+MicMicrodownTextualBuilder >> figureURL: aUrl withCaption: aDescriptionBlock withParameters: anOrderedDictionary [
+	"If you specify association of arguments then asSting is not the url but the url without the query part, i.e., http://www.pharo.org/figures/light.png"
+	
+	anOrderedDictionary
+		ifEmpty: [ 
+			self figureURL: aUrl withCaption: aDescriptionBlock ]
+		ifNotEmpty: [ 
+			self rawFigureDescription: aDescriptionBlock.
+			self raw: parserClass urlOpenerMarkup.
+			aUrl scheme ifNotNil: [ :sch | self raw: sch asString, '://' ].
+			aUrl authority ifNotNil: [ :auth | self raw: auth asString ].
+			self raw: '/'.
+			aUrl segments ifNotNil: [:segs | segs do: [:each | self raw: each asString]].
+			self raw: parserClass argumentListOfFigureStartDelimiter.
+			self rawParameters: anOrderedDictionary.
+			self raw: parserClass urlCloserMarkup ]
+]
+
+{ #category : #'element - figure' }
+MicMicrodownTextualBuilder >> figureURLString: aString withCaption: aDescriptionBlock [
+	"aString can be 'http://www.pharo.org or http://www.pharo.org?width=80&language=en'"
+	
+	self rawFigureDescription: aDescriptionBlock.
+	self raw: parserClass urlOpenerMarkup.
+	self raw: aString.
+	self raw: parserClass urlCloserMarkup.
+]
+
+{ #category : #'element - figure' }
+MicMicrodownTextualBuilder >> figureURLString: aString withCaption: aDescriptionBlock withParameters: anOrderedDictionary [
+	"If you specify association of arguments then asSting is not the url but the url without the query part, i.e., http://www.pharo.org/figures/light.png"
+	
+	anOrderedDictionary
+		ifEmpty: [ 
+			self figureURLString: aString withCaption: aDescriptionBlock ]
+		ifNotEmpty: [ 
+			self rawFigureDescription: aDescriptionBlock.
+			self raw: parserClass urlOpenerMarkup.
+			self raw: aString.
+			self raw: parserClass argumentListOfFigureStartDelimiter.
+			self rawParameters: anOrderedDictionary.
+			self raw: parserClass urlCloserMarkup ]
+]
+
+{ #category : #accessing }
+MicMicrodownTextualBuilder >> headCell [
+	self raw: '| --- '.
 ]
 
 { #category : #'element - header' }
@@ -153,6 +267,15 @@ MicMicrodownTextualBuilder >> initialize [
 	
 ]
 
+{ #category : #'element - annotated' }
+MicMicrodownTextualBuilder >> inputfile: aPathString [
+
+	self raw: MicAnnotationOpenerDelimiter markup.
+	self raw: 'inputfile | path='.
+	self raw: aPathString.
+	self raw: MicAnnotationCloserDelimiter markup
+]
+
 { #category : #'element - references' }
 MicMicrodownTextualBuilder >> internalLink: aLabel [
 	self 
@@ -160,6 +283,13 @@ MicMicrodownTextualBuilder >> internalLink: aLabel [
 		surroundBy: parserClass anchorReferenceOpenerMarkup 
 		and: parserClass anchorReferenceCloserMarkup.
 	
+]
+
+{ #category : #'element - format' }
+MicMicrodownTextualBuilder >> italic: aBlock [
+	self raw: parserClass italicMarkup.
+	aBlock value.
+	self raw: parserClass italicMarkup.
 ]
 
 { #category : #'element - list' }
@@ -183,6 +313,50 @@ MicMicrodownTextualBuilder >> lines: aString [
 	 ]
 ]
 
+{ #category : #'element - format' }
+MicMicrodownTextualBuilder >> mathInline: aText [
+
+	self raw: MicMathDelimiter markup.
+	self raw: aText.
+	self raw: MicMathDelimiter markup.
+]
+
+{ #category : #'element - math' }
+MicMicrodownTextualBuilder >> mathblock: aString firstLineAssociations: aCol [
+
+	self raw: parserClass mathOpeningBlockMarkup.
+	aCol do: [ :each | self 
+						raw: each key;
+						raw: '=';
+						raw: each value value 
+						"so that we can put format such as bold in the value"]
+			separatedBy: [ self raw: '&' ].
+	self newLine.
+	self raw: aString.
+	self newLine.
+	self raw: parserClass mathClosingBlockMarkup.
+	self newLine.
+]
+
+{ #category : #'element - math' }
+MicMicrodownTextualBuilder >> mathblock: aString firstLineAssociations: aCol withCaption: aCaptionBlock [
+
+	self raw: parserClass mathOpeningBlockMarkup.
+	aCol do: [ :each | self 
+						raw: each key;
+						raw: '='.
+						each key = #caption
+							ifTrue: [ aCaptionBlock value ]
+							ifFalse: [ self raw: each value value  ]
+						"so that we can put format such as bold in the value"]
+			separatedBy: [ self raw: '&' ].
+	self newLine.
+	self raw: aString.
+	self newLine.
+	self raw: parserClass mathClosingBlockMarkup.
+	self newLine.
+]
+
 { #category : #'element - metadata' }
 MicMicrodownTextualBuilder >> metaDataFrom: aDictionary [ 
 
@@ -191,7 +365,7 @@ MicMicrodownTextualBuilder >> metaDataFrom: aDictionary [
 
 { #category : #'element - metadata' }
 MicMicrodownTextualBuilder >> metaDataFromAssociations: aCollection [ 
-	self raw: '{ '; newLine.
+	self raw: '{'; newLine.
 	aCollection do: [ :each | 
 		self raw: '"';
 		raw: each key; 
@@ -213,9 +387,11 @@ MicMicrodownTextualBuilder >> nextPutAllLines: aString [
 
 { #category : #'element - list' }
 MicMicrodownTextualBuilder >> orderedItem: aBlock [
-	self writeStartOfOrderedListIndex: 1.
+
+	self raw: (self startOfOrderedListForLevel: currentLevel).
 	aBlock value.
-	self newLine.
+	self potentialNewLine.
+	
 ]
 
 { #category : #'element - list' }
@@ -230,8 +406,9 @@ MicMicrodownTextualBuilder >> orderedItem: aBlock startingAt: aNumber [
 MicMicrodownTextualBuilder >> orderedListDuring: aBlockClosure [
 	"For list we do not emit empty line at the end because we do not want to force the creation of a paragraph 
 	in the middle of nested list. And from a builder point of view this is difficult to know it."
-	
+	currentLevel := currentLevel + 1.
 	aBlockClosure value.
+	currentLevel := currentLevel - 1.
 	"for now we do not care to generate 
 	1. 
 	2.
@@ -250,13 +427,13 @@ MicMicrodownTextualBuilder >> paragraph: aBlock [
 	self newLine
 ]
 
-{ #category : #'private - utilities' }
+{ #category : #'private utils' }
 MicMicrodownTextualBuilder >> popPrefix [
 	
 	prefixStack removeLast
 ]
 
-{ #category : #'private - utilities' }
+{ #category : #'private utils' }
 MicMicrodownTextualBuilder >> pushPrefix: aString [ 
 	
 	prefixStack addLast: aString
@@ -287,18 +464,33 @@ MicMicrodownTextualBuilder >> raw: aString [
 ]
 
 { #category : #'element - annotated' }
-MicMicrodownTextualBuilder >> rawAnnotated: annotation paragraph:  aText [
+MicMicrodownTextualBuilder >> rawAnnotated: annotation paragraph:  aBlock [
 	"!!Important 
 	
 	attention there is not space between the !! and the label (annotation in pillar) or we should improve the microdown parser"
-	self flag: #fixme. "Should have the same API than paragraph for the paragraph"
 	self
 		raw: parserClass annotatedParagraphMarkup;
 		raw: annotation; 
 		raw: String space;
-		raw: aText.
+		rawParagraph: aBlock
 	
 
+]
+
+{ #category : #'element - figure' }
+MicMicrodownTextualBuilder >> rawFigureDescription: aBlock [
+
+	self raw: parserClass figureOpenerMarkup.
+	aBlock value.
+	self raw: parserClass linkNameCloserMarkup.
+]
+
+{ #category : #'element - format' }
+MicMicrodownTextualBuilder >> rawFormat: aText [
+
+	self raw: MicRawOpenerDelimiter markup.
+	self raw: aText.
+	self raw: MicRawCloserDelimiter markup.
 ]
 
 { #category : #'writing low-level' }
@@ -306,7 +498,10 @@ MicMicrodownTextualBuilder >> rawHeader: aBloc withLevel: anInteger [
 
 	self raw: (parserClass headerMarkup repeat: anInteger).
    self raw: String space.
-   aBloc value: self.
+	self flag: #todo. 
+	"in this future once we are sure no one use header: [:b | b...] but [abuilder ..
+	we should replace aBloc cull: self by aBloc value"
+   aBloc cull: self 
 	
 ]
 
@@ -326,10 +521,41 @@ MicMicrodownTextualBuilder >> rawParagraph: aBlock [
 	
 ]
 
+{ #category : #'element - figure' }
+MicMicrodownTextualBuilder >> rawParameters: aZnDictionary [
+	"should be better to use do: separatedBy:"
+	
+	aZnDictionary keysAndValuesDo: [ :key :value | 
+		self raw: key.
+		self raw: parserClass argumentListEqualsDelimiter.
+		self raw: value asString.
+		key = aZnDictionary keys last ifFalse: [ 
+			self raw: parserClass argumentListDelimiter ] ]
+]
+
+{ #category : #'ugly line handling' }
+MicMicrodownTextualBuilder >> root: aBlock [
+	
+	aBlock value
+]
+
+{ #category : #'element - list' }
+MicMicrodownTextualBuilder >> startOfOrderedListForLevel: aNumber [
+
+	^ ('  ' repeat: aNumber) ,'1', parserClass orderedListSemiMarkup
+]
+
 { #category : #'element - list' }
 MicMicrodownTextualBuilder >> startOfUnorderedListForLevel: aNumber [
 
 	^ ('  ' repeat: aNumber) , parserClass unorderedListMarkup
+]
+
+{ #category : #'element - format' }
+MicMicrodownTextualBuilder >> strike: aBlock [
+	self raw: parserClass strikeMarkup.
+	aBlock value.
+	self raw: parserClass strikeMarkup.
 ]
 
 { #category : #'element - list' }

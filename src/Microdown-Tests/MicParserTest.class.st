@@ -1,7 +1,7 @@
 Class {
 	#name : #MicParserTest,
-	#superclass : #MicBlockTest,
-	#category : #'Microdown-Tests'
+	#superclass : #MicElementTest,
+	#category : #'Microdown-Tests-Parser'
 }
 
 { #category : #tests }

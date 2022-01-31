@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #'Microdown-ModelInline'
+	#category : #'Microdown-Parser'
 }
 
 { #category : #accessing }
@@ -31,12 +31,6 @@ MicAbstractDelimiter class >> associatedInlineBlock [
 { #category : #accessing }
 MicAbstractDelimiter class >> index: anIndex [
 	^ self new index: anIndex; yourself
-]
-
-{ #category : #testing }
-MicAbstractDelimiter class >> isAbstract [
-
-	^ self == MicAbstractDelimiter
 ]
 
 { #category : #testing }
@@ -66,7 +60,7 @@ MicAbstractDelimiter class >> isOpener [
 
 { #category : #testing }
 MicAbstractDelimiter class >> isOpenerOnly [
-	^ self isCloser not and: self isOpener
+	^ self isCloser not and: [ self isOpener ]
 ]
 
 { #category : #accessing }

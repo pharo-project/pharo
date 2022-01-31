@@ -4,7 +4,7 @@ I'm is a test class for testing the behavior of paragraph block.
 Class {
 	#name : #MicParagraphBlockTest,
 	#superclass : #MicBlockTest,
-	#category : #'Microdown-Tests'
+	#category : #'Microdown-Tests-Parser'
 }
 
 { #category : #tests }
@@ -32,12 +32,22 @@ another line** and more
 
 a paragraph on two lines**'.
 
-	self assert: root children first text equals: '**Hello is ... cut for real
+	self
+		assert: root children first text
+		equals: '**Hello is ... cut for real
 another line** and more'.
-	self assert: root children second text equals: 'a paragraph on two lines**'.
-	
-	self assert: (MicInlineSplitter new start: root children first text) first kind equals: #bold.
-	self assert: (MicInlineSplitter new start: root children second text) first kind equals: #basic.
+	self
+		assert: root children second text
+		equals: 'a paragraph on two lines**'.
+
+	self
+		assert:
+		(MicInlineParser new parse: root children first text) first kind
+		equals: #bold.
+	self
+		assert:
+		(MicInlineParser new parse: root children second text) first kind
+		equals: #basic
 ]
 
 { #category : #tests }
@@ -53,8 +63,10 @@ MicParagraphBlockTest >> testCanConsumeLine [
 	self deny: (listitem canConsumeLine: 'a paragraph in a list item').
 	
 	parser handleLine: '  a paragraph in a list item'.
-	self assert: parser current equals: listitem.  
-	self assert: listitem text equals: 'This is
+	self assert: parser current equals: listitem.
+	"pay attention here at this point the closeMe hook as not being executed yet.
+	So text is a string and not an array of textElements."  
+	self assert: (listitem instVarNamed: 'text') equals: 'This is
 a paragraph in a list item'.
 	
 
@@ -116,9 +128,10 @@ MicParagraphBlockTest >> testSingleParagraph [
 	root := parser parse: 'This is
 a paragraph on two lines'.
 	self 
-		assert: root children first contents 
-		equals: '[ This is
-a paragraph on two lines ]'
+		assert: root children first class equals: MicParagraphBlock.
+	self assert: root children first children first text equals: 'This is
+a paragraph on two lines'.
+
 
 ]
 
@@ -144,4 +157,9 @@ a paragraph on two lines'.
 	self assert: root children first text equals: 'This is'.
 	self assert: root children second text equals: 'a paragraph on two lines'.
 	
+]
+
+{ #category : #tests }
+MicParagraphBlockTest >> testedClass [ 
+	^ MicParagraphBlock 
 ]

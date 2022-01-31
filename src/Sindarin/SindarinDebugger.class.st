@@ -25,28 +25,26 @@ Class {
 		'sindarinSession',
 		'blockToDebug'
 	],
-	#category : #'Sindarin-Base'
+	#category : #Sindarin
 }
 
 { #category : #start }
 SindarinDebugger class >> attachTo: aDebugSession [
 	"Returns a new instance of ScriptableDebugger attached to aDebugSession"
+	^ self new attachTo: aDebugSession.
 
-	^ self new attachTo: aDebugSession
 ]
 
-{ #category : #actions }
+{ #category : #accessing }
 SindarinDebugger class >> closeAllDebuggers [
-	<script>
-	
-	self allInstances do: [ :dbg | dbg terminate ]
+	self allInstances do:[:dbg| dbg terminate]
 ]
 
 { #category : #start }
 SindarinDebugger class >> debug: aBlock [
 	"Creates an execution of aBlock and returns an instance of ScriptableDebugger attached to this execution"
-
 	^ self new debug: aBlock
+
 ]
 
 { #category : #'instance creation' }

@@ -7,17 +7,6 @@ Class {
 	#category : #'Metacello-PharoCommonPlatform'
 }
 
-{ #category : #utilities }
-MetacelloPharoCommonPlatform >> authorName [
-	^ Author fullName
-]
-
-{ #category : #utilities }
-MetacelloPharoCommonPlatform >> authorName: aString [
-
-	Author fullName: aString
-]
-
 { #category : #'github support' }
 MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
 	

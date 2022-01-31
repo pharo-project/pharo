@@ -52,7 +52,7 @@ RBCommentChange >> comment: aString [
 RBCommentChange >> primitiveExecute [
 	self changeClass 
 		classComment: comment
-		stamp: self changeStamp.
+		stamp: ''.
 	SystemAnnouncer uniqueInstance 
 		classCommented: self changeClass
 ]
@@ -63,7 +63,6 @@ RBCommentChange >> printOn: aStream [
 		nextPutAll: self displayClassName;
 		nextPutAll: ' classComment: ';
 		print: (self comment copyReplaceAll: '!' with: '!!');
-		nextPutAll: ' stamp: ';
-		print: (self changeStamp);
+		nextPutAll: ' stamp: ''''';
 		nextPutAll: '!'
 ]

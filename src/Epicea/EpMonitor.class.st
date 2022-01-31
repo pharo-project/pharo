@@ -132,8 +132,6 @@ EpMonitor >> addEvent: anEvent newEntryDo: aBlock triggerReference: triggerRefer
 				tags 
 					at: EpLog triggererReferenceKey
 					put: triggerReference ].
-			
-			tags at: EpLog authorKey put: self author.
 			tags at: EpLog timeKey put: self time ].
 		
 	aBlock value: newEntry.
@@ -148,14 +146,6 @@ EpMonitor >> announceMonitorStateUpdated [
 { #category : #accessing }
 EpMonitor >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #private }
-EpMonitor >> author [
-	^ Author uniqueInstance 
-		ifUnknownAuthorUse: 'Unknown' 
-		during: [ Author uniqueInstance fullName ]
-
 ]
 
 { #category : #accessing }

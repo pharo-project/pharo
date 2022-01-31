@@ -4,7 +4,7 @@ I'm a test class for testing the behavior of ordered list blocks
 Class {
 	#name : #MicOrderedListBlockTest,
 	#superclass : #MicBlockTest,
-	#category : #'Microdown-Tests'
+	#category : #'Microdown-Tests-Parser'
 }
 
 { #category : #tests }
@@ -23,6 +23,59 @@ MicOrderedListBlockTest >> testEmbeddedUnordered [
 			children first "unordered list"
 			children second "sub item"
 			text equals: 'sublevel item 2'
+]
+
+{ #category : #'tests - nested' }
+MicOrderedListBlockTest >> testNestedLevel [
+	| source root list |
+	source := 
+'1. item 1
+   6) sublevel
+1. item 2'.
+	root := parser parse: source.
+	list := root children first.
+	self assert: list children size equals: 2.
+	
+	self assert: list children first text equals: 'item 1'.
+	self assert: list children first nestedLevel equals: 1.
+	
+	"this is the inner list"
+	self assert: list children first children first nestedLevel equals: 2.
+	
+	"this is the inner list first item"
+	self assert: list children first children first children first text equals: 'sublevel'.
+	self assert: list children first children first children first nestedLevel equals: 2.
+	
+
+]
+
+{ #category : #'tests - nested' }
+MicOrderedListBlockTest >> testNestedLevel2 [
+	| source root list |
+	source := 
+'1. item 1
+   6) sublevel
+      1. subsublevel
+   7) sublevel2
+1. item 2'.
+	root := parser parse: source.
+	list := root children first.
+	self assert: list children size equals: 2.
+	
+	self assert: list children first text equals: 'item 1'.
+	self assert: list children first nestedLevel equals: 1.
+	
+	"this is the inner list"
+	self assert: list children first children first nestedLevel equals: 2.
+	
+	"this is the inner list first item"
+	self assert: list children first children first children first text equals: 'sublevel'.
+	self assert: list children first children first children first nestedLevel equals: 2.
+	self assert: list children first children first children second text equals: 'sublevel2'.
+	
+	self assert: list children first children first children first children first nestedLevel equals: 3.
+	self assert: list children first children first children first children first children first nestedLevel equals: 3.
+
 ]
 
 { #category : #tests }
@@ -163,4 +216,9 @@ MicOrderedListBlockTest >> testTwoLevelList1 [
 			children first "ordered list"
 			children first "sub item"
 			text equals: 'sublevel'
+]
+
+{ #category : #tests }
+MicOrderedListBlockTest >> testedClass [ 
+	^ MicOrderedListBlock 
 ]

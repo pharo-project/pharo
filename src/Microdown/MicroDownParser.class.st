@@ -206,6 +206,12 @@ MicroDownParser class >> argumentListEqualsDelimiter [
 ]
 
 { #category : #'markup utils' }
+MicroDownParser class >> argumentListOfFigureStartDelimiter [
+	
+	^ '?'
+]
+
+{ #category : #'markup utils' }
 MicroDownParser class >> argumentListStartDelimiter [
 	
 	^ '|'
@@ -241,11 +247,6 @@ MicroDownParser class >> environmentClosingBlockMarkup [
 { #category : #'block markups' }
 MicroDownParser class >> environmentOpeningBlockMarkup [
 	^ '<?'
-]
-
-{ #category : #'inline block markups' }
-MicroDownParser class >> escapeMarkup [
-	^ self inlineMarkups at: #escapeCloser
 ]
 
 { #category : #examples }
@@ -423,6 +424,12 @@ MicroDownParser >> annotatedParagraphMarkup [
 ]
 
 { #category : #markups }
+MicroDownParser >> argumentListOfFigureStartDelimiter [
+	
+	^ self class argumentListOfFigureStartDelimiter
+]
+
+{ #category : #markups }
 MicroDownParser >> argumentListStartDelimiter [
 	
 	^ self class argumentListStartDelimiter
@@ -587,6 +594,12 @@ MicroDownParser >> isAList: normalized [
 	^ (self matchUnordered: normalized) or: [ self matchOrdered: normalized ]
 ]
 
+{ #category : #markups }
+MicroDownParser >> italicMarkup [
+
+	^ self class italicMarkup
+]
+
 { #category : #'node creation' }
 MicroDownParser >> matchOrdered: line [
 	^ line prefixMatchesRegex: '\d+(\.|\))'
@@ -637,7 +650,9 @@ MicroDownParser >> parse: aStreamOrString [
 	current := root := self newRootBlock
 		setParser: self;
 		yourself.
-	inStream := aStreamOrString readStream.
+	inStream := aStreamOrString isStream 
+		ifTrue:  [ aStreamOrString readStream ]
+		ifFalse: [  aStreamOrString asString readStream ].
 	[ line := inStream nextLine.
 	line isNil ] whileFalse: [ self handleLine: line ].
 	[ current = root ]
@@ -649,6 +664,21 @@ MicroDownParser >> parse: aStreamOrString [
 { #category : #markups }
 MicroDownParser >> preformattedMarkup [ 
 	^ self class preformattedMarkup 
+]
+
+{ #category : #accessing }
+MicroDownParser >> resolver [
+	^ MicPathResolver new
+]
+
+{ #category : #accessing }
+MicroDownParser >> setCurrent: aBlock [
+	"aBlock parent = current 
+		ifFalse: [ self error: 'When changing current, the current block should be the parent of the new one' ].
+	note for me: we could just inforce this. aBlock parent: current.
+	No this is not correct since 
+	the parent of an item list is the list and this is the list that is parent of environment."	
+	current := aBlock
 ]
 
 { #category : #markups }
