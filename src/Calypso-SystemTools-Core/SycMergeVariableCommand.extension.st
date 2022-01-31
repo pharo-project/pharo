@@ -4,5 +4,5 @@ Extension { #name : #SycMergeVariableCommand }
 SycMergeVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1.1 for: ClyFullBrowserVariableContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 1.1 for: ClyFullBrowserVariableContext
 ]

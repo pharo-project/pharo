@@ -95,7 +95,7 @@ ClyAbstractClassScope class >> defaultName [
 
 { #category : #'scope names' }
 ClyAbstractClassScope class >> hierarchyScopeName [
-	^'hier'
+	^ 'hierarchy'
 ]
 
 { #category : #'scope names' }
@@ -115,7 +115,7 @@ ClyAbstractClassScope class >> userHierarchyScopeName [
 
 { #category : #converting }
 ClyAbstractClassScope >> adoptLocalScopeClassTo: aLocalScopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -135,7 +135,7 @@ ClyAbstractClassScope >> asInterestingClassScope [
 
 { #category : #converting }
 ClyAbstractClassScope >> asLocalClassScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'refactoring support' }
@@ -169,7 +169,7 @@ ClyAbstractClassScope >> classVariablesOf: definingClass do: aBlock [
 
 { #category : #queries }
 ClyAbstractClassScope >> classesDo: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -251,7 +251,7 @@ ClyAbstractClassScope >> instanceVariablesOf: definingClass do: aBlock [
 
 { #category : #'meta level' }
 ClyAbstractClassScope >> localScopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'meta level' }
@@ -259,7 +259,7 @@ ClyAbstractClassScope >> metaLevelsOf: aClass do: aBlock [
 	"Subclasses should decide what class meta level is visible. 
 	For example it can be instance side, class side or both"
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -288,7 +288,7 @@ ClyAbstractClassScope >> methodGroupsDo: aBlock [
 { #category : #queries }
 ClyAbstractClassScope >> methodsDo: aBlock [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #printing }
@@ -328,10 +328,9 @@ ClyAbstractClassScope >> variablesDo: aBlock [
 	self classesDo: [ :eachClass | 
 		self classVariablesOf: eachClass do: aBlock.
 		self instanceVariablesOf: eachClass do: aBlock]
-
 ]
 
 { #category : #converting }
 ClyAbstractClassScope >> withMetaLevel: aMetaLevelScopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

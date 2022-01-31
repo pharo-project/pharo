@@ -24,7 +24,6 @@ Character class >> allByteCharacters [
 	"Answer all the characters that can be encoded in a byte"
 	
 	^ (0 to: 255) collect: [:v | Character value: v] as: String
-
 ]
 
 { #category : #'instance creation' }
@@ -32,8 +31,6 @@ Character class >> allCharacters [
 	"This name is obsolete since only the characters that will fit in a byte can be queried"
 	
 	^self allByteCharacters
-	
-
 ]
 
 { #category : #constants }
@@ -90,7 +87,6 @@ Character class >> codePoint: anInteger [
 	"Just for ANSI Compliance"	
 		
 	^self value: anInteger
-	
 ]
 
 { #category : #private }
@@ -375,8 +371,6 @@ Character >> asUnicode [
 Character >> asUppercase [
 	"If the receiver is lowercase, answer its matching uppercase Character."
 	^ self characterSet toUppercase: self
-	
-
 ]
 
 { #category : #accessing }
@@ -412,7 +406,7 @@ Character >> basicPharoToIso [
 
 { #category : #testing }
 Character >> canBeGlobalVarInitial [
-	^ self characterSet canBeGlobalVarInitial: self 
+	^ self characterSet canBeGlobalVarInitial: self
 ]
 
 { #category : #testing }
@@ -517,7 +511,6 @@ Character >> isCasedLetter [
 Character >> isCharacter [
 
 	^ true
-
 ]
 
 { #category : #testing }
@@ -560,7 +553,6 @@ Character >> isControlOther [
 	"$} isControlOther >>> false"
 	
 	^ self characterSet isControlOther: self
-
 ]
 
 { #category : #testing }
@@ -598,7 +590,6 @@ Character >> isDigit [
 	"$0 isDigit >>> true"
 	
 	^ self characterSet isDigit: self
-
 ]
 
 { #category : #testing }
@@ -653,7 +644,6 @@ Character >> isLetter [
 	"$A isLetter >>> true"
 
 	^ self characterSet isLetter: self
-
 ]
 
 { #category : #'testing - unicode' }
@@ -686,7 +676,6 @@ Character >> isLiteral [
 Character >> isLowercase [
 
 	^ self characterSet isLowercase: self
-
 ]
 
 { #category : #testing }
@@ -784,7 +773,6 @@ Character >> isSpecial [
 	"Answer whether the receiver is one of the special characters: i.e., +-/\*~<>=@,%|&?! and a couple of others."
 
 	^ self class specialCharacters includes: self
-
 ]
 
 { #category : #testing }
@@ -801,7 +789,6 @@ Character >> isTitlecaseLetter [
 Character >> isUppercase [
 
 	^ self characterSet isUppercase: self
-
 ]
 
 { #category : #testing }
@@ -821,7 +808,7 @@ Character >> lowercase [
 Character >> nextObject [
 	"Characters are immediate objects, and, as such, do not have successors in object memory."
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #printing }
@@ -847,7 +834,7 @@ Character >> printStringHex [
 { #category : #comparing }
 Character >> sameAs: aCharacter [ 
 	"Answer whether the receiver is equal to aCharacter, ignoring case"
-	^ (self asLowercase = aCharacter asLowercase)	
+	^ (self asLowercase = aCharacter asLowercase)
 ]
 
 { #category : #private }

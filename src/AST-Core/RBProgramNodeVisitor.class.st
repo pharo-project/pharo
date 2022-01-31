@@ -96,7 +96,6 @@ RBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
-	
 ]
 
 { #category : #visiting }
@@ -141,7 +140,6 @@ RBProgramNodeVisitor >> visitNode: aNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
-	
 ]
 
 { #category : #visiting }
@@ -169,7 +167,6 @@ RBProgramNodeVisitor >> visitReturnNode: aReturnNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitSelectorNode: aSelectorNode [
-	
 ]
 
 { #category : #visiting }

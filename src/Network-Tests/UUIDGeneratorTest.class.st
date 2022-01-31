@@ -33,7 +33,7 @@ UUIDGeneratorTest >> testCounterRollover [
 { #category : #testing }
 UUIDGeneratorTest >> testDefault [
 	self assert: UUIDGenerator default equals: UUIDGenerator default.
-	self deny: UUIDGenerator next isNilUUID 
+	self deny: UUIDGenerator next isNilUUID
 ]
 
 { #category : #testing }
@@ -100,5 +100,5 @@ UUIDGeneratorTest >> timeFromUUID: uuid [
 	in := uuid readStream.
 	bytes := ByteArray streamContents: [ :out |
 		8 timesRepeat: [ out nextPut: in next ] ].
-	^ bytes reverse asInteger 
+	^ bytes reverse asInteger
 ]

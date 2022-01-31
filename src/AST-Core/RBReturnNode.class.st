@@ -98,7 +98,7 @@ RBReturnNode >> postCopy [
 	self value: self value copy
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBReturnNode >> removeNode: aNode [
 
 	self parent removeNode: self

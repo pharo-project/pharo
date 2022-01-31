@@ -69,13 +69,11 @@ ClyCriticDecorator >> buildCriticalTextSegmentsFor: anObject [
 { #category : #controlling }
 ClyCriticDecorator >> changeStateBy: aBlock [
 	aBlock value
-
 ]
 
 { #category : #controlling }
 ClyCriticDecorator >> changeStateOf: aQueryView by: aBlock [
 	aBlock value
-
 ]
 
 { #category : #decoration }
@@ -114,7 +112,6 @@ ClyCriticDecorator >> hideCritiques [
 	criticView delete.
 	browserTool removePaneSplitters.
 	originalToolPanel layoutFrame bottomFraction: 1; bottomOffset: 0.
-	
 ]
 
 { #category : #controlling }

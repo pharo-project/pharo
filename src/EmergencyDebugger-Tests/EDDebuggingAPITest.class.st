@@ -262,8 +262,6 @@ EDDebuggingAPITest >> testStackFromTo [
 	self
 		assertCollection: (debugAPI stackFrom: (stack size - 2) to: (stack size + 5))
 		equals: stackExtract.
-		
-	
 ]
 
 { #category : #'tests - stack' }

@@ -194,7 +194,7 @@ ClyCollapsedDataSource >> initializeForBrowserStateSpanshot [
 { #category : #testing }
 ClyCollapsedDataSource >> isExpanded: aDataSourceItem [
 
-	^expandedItems includes: aDataSourceItem 
+	^expandedItems includes: aDataSourceItem
 ]
 
 { #category : #testing }

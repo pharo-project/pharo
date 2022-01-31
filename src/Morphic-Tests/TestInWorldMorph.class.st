@@ -22,7 +22,6 @@ TestInWorldMorph >> intoWorld: aWorld [
 	aWorld ifNil:[^self].
 	super intoWorld: aWorld.
 	intoWorldCount := intoWorldCount + 1.
-
 ]
 
 { #category : #accessing }
@@ -35,7 +34,6 @@ TestInWorldMorph >> outOfWorld: aWorld [
 	aWorld ifNil:[^self].
 	super outOfWorld: aWorld.
 	outOfWorldCount := outOfWorldCount + 1.
-
 ]
 
 { #category : #accessing }

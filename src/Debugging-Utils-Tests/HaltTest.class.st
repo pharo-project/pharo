@@ -75,8 +75,6 @@ HaltTest >> testContainsHalt [
 	deny: (annonClass >> #m3) containsHalt;
 	deny: (annonClass >> #m4) containsHalt;
 	assert: (annonClass >> #m5) containsHalt
-	
-	
 ]
 
 { #category : #tests }
@@ -104,7 +102,6 @@ HaltTest >> testHaltFromCount [
 				on: Halt
 				do: [ haltCount := haltCount + 1 ] ].
 	self assert: haltCount equals: 8
-
 ]
 
 { #category : #tests }

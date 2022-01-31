@@ -16,7 +16,6 @@ AllocationTest >> testOneGBAllocation [
 	sz := 1024*1024*1024.
 	array := [ByteArray new: sz] on: OutOfMemory do: [:ex| failed := true].
 	self assert: (failed or:[array size = sz]).
-	
 ]
 
 { #category : #testing }
@@ -31,7 +30,6 @@ AllocationTest >> testOneGWordAllocation [
 	sz := 1024*1024*1024.
 	array := [Array new: sz] on: OutOfMemory do: [:ex| failed := true].
 	self assert: (failed or:[array size = sz]).
-	
 ]
 
 { #category : #testing }
@@ -43,7 +41,6 @@ AllocationTest >> testOneMBAllocation [
 	sz := 1024*1024.
 	array := [ByteArray new: sz] on: OutOfMemory do: [:ex| failed := true].
 	self assert: (failed or:[array size = sz]).
-	
 ]
 
 { #category : #testing }
@@ -55,5 +52,4 @@ AllocationTest >> testOneMWordAllocation [
 	sz := 1024*1024.
 	array := [Array new: sz] on: OutOfMemory do: [:ex| failed := true].
 	self assert: (failed or:[array size = sz]).
-	
 ]

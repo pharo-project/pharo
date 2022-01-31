@@ -52,7 +52,6 @@ StubFixedFont >> displayString: aString on: aDisplayContext from: startIndex to:
 
 { #category : #accessing }
 StubFixedFont >> emphasized: emph [
-	
 ]
 
 { #category : #accessing }

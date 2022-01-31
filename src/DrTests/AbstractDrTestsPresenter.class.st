@@ -41,7 +41,6 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 		when: DTUpdateResults
 		send: #handlePluginResultUpdate:
 		to: self.
-
 ]
 
 { #category : #events }

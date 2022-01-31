@@ -108,10 +108,7 @@ IRBytecodeGenerator >> addLiteral: object [
 { #category : #private }
 IRBytecodeGenerator >> addPragma: aPragma [
 	properties ifNil: [ properties := AdditionalMethodState new ].
-	properties := properties copyWith: aPragma. 
-
-	
-	
+	properties := properties copyWith: aPragma.
 ]
 
 { #category : #results }
@@ -127,13 +124,11 @@ IRBytecodeGenerator >> addProperties: cm [
 { #category : #accessing }
 IRBytecodeGenerator >> additionalLiterals: aSet [
 	additionalLiterals := aSet.
-	
 ]
 
 { #category : #instructions }
 IRBytecodeGenerator >> blockReturnTop [
 	encoder genReturnTopToCaller
-
 ]
 
 { #category : #results }
@@ -154,15 +149,6 @@ IRBytecodeGenerator >> bytecodes [
 			lastInstr key bytecodeIndex: ((seqBytes at: seqId) size < lastInstr value ifFalse: [  stream position + lastInstr value]).
 			stream nextPutAll: (seqBytes at: seqId) ].
 	^ stream contents
-]
-
-{ #category : #instructions }
-IRBytecodeGenerator >> closureFrom: fromSeqId to: toSeqId copyNumCopiedValues: numCopied numArgs: numArgs2 [
-	| distance from to |
-	from := seqOrder at: fromSeqId.
-	to := seqOrder at: toSeqId ifAbsent: [ ^ self ].	"not done yet"
-	distance := (from + 1 to: to - 1) inject: 0 into: [ :size :i | size + (seqBytes at: (orderSeq at: i)) size ].
-	encoder genPushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 jumpSize: distance. 
 ]
 
 { #category : #accessing }
@@ -198,7 +184,7 @@ IRBytecodeGenerator >> compiledMethod [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledMethodWith: trailer [
-	| lits header quickPrimitive |
+	| lits quickPrimitive |
 	lits := self literals.
 	quickPrimitive := self quickMethodPrim.
 	(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
@@ -208,9 +194,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 		encoder stream: primitiveBytes.
 		encoder genCallPrimitive: quickPrimitive.
 	].
-	
-	header := Smalltalk vm isSpur ifTrue: [ self spurVMHeader: lits size ] ifFalse: [ self v3VMHeader: lits size ].
-	^ self compiledMethodWith: trailer header: header literals: lits
+	^ self compiledMethodWith: trailer header: (self spurVMHeader: lits size) literals: lits
 ]
 
 { #category : #results }
@@ -231,12 +215,12 @@ IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits
 
 { #category : #accessing }
 IRBytecodeGenerator >> encoderClass [
-	^ encoderClass  
+	^ encoderClass
 ]
 
 { #category : #accessing }
 IRBytecodeGenerator >> encoderClass: class [
-	encoderClass := class  
+	encoderClass := class
 ]
 
 { #category : #results }
@@ -270,7 +254,6 @@ IRBytecodeGenerator >> from: fromSeqId goto: toSeqId [
 			+ bytes size.
 		self jumpBackward: distance.
 	].
-
 ]
 
 { #category : #private }
@@ -286,7 +269,6 @@ IRBytecodeGenerator >> from: fromSeqId if: bool goto: toSeqId otherwise: otherwi
 		inject: 0
 		into: [:size :i | size + (seqBytes at: (orderSeq at: i)) size].
 	self jump: distance if: bool.
-
 ]
 
 { #category : #instructions }
@@ -368,9 +350,6 @@ IRBytecodeGenerator >> initialize [
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
 	self label: self newDummySeqId
-	
-
-	
 ]
 
 { #category : #initialize }
@@ -390,7 +369,6 @@ IRBytecodeGenerator >> jump: distance if: condition [
 	condition
 		ifTrue: [ encoder genBranchPopTrue: distance ]
 		ifFalse: [ encoder genBranchPopFalse: distance ]
-		
 ]
 
 { #category : #instructions }
@@ -410,7 +388,6 @@ IRBytecodeGenerator >> jumpForward: distance [
 
 	distance = 0 ifTrue: [^ self].  
 	encoder genJump: distance.
-
 ]
 
 { #category : #instructions }
@@ -426,7 +403,6 @@ IRBytecodeGenerator >> label: seqId [
 	stack
 		ifNil: [ stack := stacks at: currentSeqId ifAbsentPut: [ IRStackCount new ] ]
 		ifNotNil: [stack := stacks at: currentSeqId ifAbsentPut: [ stack class newOn:stack ] ]
-	
 ]
 
 { #category : #private }
@@ -512,7 +488,7 @@ IRBytecodeGenerator >> pragmas: aCollection [
 
 { #category : #accessing }
 IRBytecodeGenerator >> primNum [
-	^ primNumber 
+	^ primNumber
 ]
 
 { #category : #accessing }
@@ -523,31 +499,6 @@ IRBytecodeGenerator >> properties [
 { #category : #accessing }
 IRBytecodeGenerator >> properties: propDict [
 	properties := propDict.
-]
-
-{ #category : #instructions }
-IRBytecodeGenerator >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 to: toSeqId [
-	| blockSeqId |
-	blockSeqId := self newDummySeqId.
-	stack pop: numCopied.
-	stacks at: blockSeqId put: ((IRClosureStackCount new numMethodTempVars:(numberOfTemps)) startAt: (numArgs2+numCopied)).
-	stack push.
-	stacks at: toSeqId put: (stack linkTo: (stacks at: toSeqId ifAbsentPut: [ nil ])).
-	self
-		saveLastJump:
-			(Message
-				selector: #closureFrom:to:copyNumCopiedValues:numArgs:
-				arguments:
-					{currentSeqId.
-					toSeqId.
-					numCopied.
-					numArgs2}).
-	self
-		closureFrom: currentSeqId
-		to: toSeqId
-		copyNumCopiedValues: numCopied
-		numArgs: numArgs2.
-	self label: blockSeqId
 ]
 
 { #category : #instructions }
@@ -589,20 +540,12 @@ IRBytecodeGenerator >> pushLiteral: object [
 	(self encoderClass specialLiterals identityIncludes: object) ifTrue: [ 
 		^ encoder genPushSpecialLiteral: object ].
 	encoder genPushLiteral: (self literalIndexOf: object)
-
 ]
 
 { #category : #instructions }
 IRBytecodeGenerator >> pushLiteralVariable: object [ 
 	stack push.
 	encoder genPushLiteralVar: (self literalIndexOf: object).
-]
-
-{ #category : #instructions }
-IRBytecodeGenerator >> pushNClosureTemps: n [
-	n = 0 ifTrue: [ ^ self ].
-	n timesRepeat:[ stack push].
-	encoder genPushNClosureTemps: n.
 ]
 
 { #category : #instructions }
@@ -614,7 +557,7 @@ IRBytecodeGenerator >> pushNewArray: size [
 { #category : #instructions }
 IRBytecodeGenerator >> pushReceiver [
 	stack push.
-	encoder genPushReceiver 
+	encoder genPushReceiver
 ]
 
 { #category : #instructions }
@@ -633,7 +576,7 @@ IRBytecodeGenerator >> pushTemp: index [
 IRBytecodeGenerator >> pushThisContext [
 
 	stack push.
-	encoder genPushThisContext 
+	encoder genPushThisContext
 ]
 
 { #category : #instructions }
@@ -663,7 +606,6 @@ IRBytecodeGenerator >> quickMethodPrim [
 		ifTrue: [^forceLongForm 
 					ifTrue: [0]  "when compiling long bytecodes for Contexts, do not do quick return either"
 					ifFalse: [263 + lastSpecialReturn argument]]
-	
 ]
 
 { #category : #instructions }
@@ -681,14 +623,12 @@ IRBytecodeGenerator >> returnInstVar: index [
 		lastSpecialReturn := Message selector: #returnInstVar: argument: index].
 	self pushInstVar: index.
 	self returnTop.
-
 ]
 
 { #category : #instructions }
 IRBytecodeGenerator >> returnReceiver [
 	bytes ifEmpty: [ lastSpecialReturn := Message selector: #returnReceiver].
 	encoder genReturnReceiver.
-
 ]
 
 { #category : #instructions }
@@ -700,7 +640,6 @@ IRBytecodeGenerator >> returnTop [
 { #category : #private }
 IRBytecodeGenerator >> saveLastJump: message [
 	jumps at: currentSeqId put: {bytes size. message}.
- 
 ]
 
 { #category : #instructions }
@@ -720,7 +659,7 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 	stack pop: nArgs.
 	index := self literalIndexOf: selector.
 
-	(encoder class = EncoderForSistaV1 and: [ inBlock ])
+	inBlock
 		ifTrue: [
 			"we need to use a copy of the binding as else 'references to' will find this method" 
 			encoder genPushLiteralVar: (self literalIndexOf: behavior binding copy).
@@ -753,7 +692,7 @@ IRBytecodeGenerator >> storeInstVar: index [
 
 { #category : #instructions }
 IRBytecodeGenerator >> storeIntoLiteralVariable: object [ 
-	encoder genStoreLiteralVar: (self literalIndexOf: object). 
+	encoder genStoreLiteralVar: (self literalIndexOf: object).
 ]
 
 { #category : #instructions }
@@ -819,21 +758,4 @@ IRBytecodeGenerator >> updateLiterals: code [
 	"Add back pointer from compiled block to outer code"
 	code literals do: [ :each |
 		each isEmbeddedBlock ifTrue: [ each outerCode: code ] ]
-]
-
-{ #category : #results }
-IRBytecodeGenerator >> v3VMHeader: literalsSize [
-	| header primBits endPrimNumber |
-	self encoderClass name = #EncoderForSistaV1 ifTrue: [ 
-		self error: 'SistaV1 non supported in non spur VM'].
-	endPrimNumber := self endPrimNumber.
-	primBits := endPrimNumber <= 16r1FF
-		ifTrue: [endPrimNumber]
-		ifFalse: ["For now the high bit of primitive no. is in the 29th bit of header"
-				(endPrimNumber bitAnd: 16r1FF) + ((endPrimNumber bitAnd: 16r200) bitShift: 19)].
-	header := (self numArgs bitShift: 24) +
-				(self numTemps bitShift: 18) +
-				(literalsSize bitShift: 9) +
-				primBits.
-	^ header
 ]

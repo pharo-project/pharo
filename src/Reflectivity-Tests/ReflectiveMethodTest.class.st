@@ -11,7 +11,7 @@ Class {
 ReflectiveMethodTest >> tearDown [
 	selector ifNotNil: [  
 		ReflectivityExamples recompile: selector].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'tests - creation' }
@@ -149,7 +149,32 @@ ReflectiveMethodTest >> testSetLinkOnClassVariableAndUninstall [
 	
 	link uninstall.
 	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: CompiledMethod.
+]
 
+{ #category : #'tests - links' }
+ReflectiveMethodTest >> testSetLinkOnDynamicArrayArgument [
+	
+ 	| link |
+ 	link := MetaLink new
+ 		        metaObject: #node;
+ 		        selector: #tagExecuted;
+ 		        yourself.
+ 	(ReflectivityExamples >> #exampleDynamicArrayArgument)
+ 		compiledMethod recompile.
+ 	ReflectivityExamples new exampleDynamicArrayArgument. 
+ 	(ReflectivityExamples >> #exampleDynamicArrayArgument) ast 
+ 		nodesDo: [ :n | 
+ 			n removeProperty: #tagExecuted ifAbsent: [  ].
+ 			n isDynamicArray ifTrue: [ 
+ 				n
+ 					propertyAt: #tagExecuted put: false;
+ 					link: link ] ].
+ 	ReflectivityExamples new exampleDynamicArrayArgument.
+ 	link uninstall.
+ 	(ReflectivityExamples >> #exampleDynamicArrayArgument) ast 
+ 		nodesDo: [ :n | 
+ 			n isDynamicArray ifTrue: [ 
+ 				self assert: (n propertyAt: #tagExecuted) ]]
 ]
 
 { #category : #'tests - variables' }
@@ -163,7 +188,6 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.
 	link uninstall.
 	globalVar removeProperty: #links.
-	
 ]
 
 { #category : #'tests - variables' }
@@ -179,8 +203,6 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariableAndUninstall [
 	link uninstall.
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: CompiledMethod.
 	global removeProperty: #links.
-
-
 ]
 
 { #category : #'tests - variables' }
@@ -226,7 +248,6 @@ ReflectiveMethodTest >> testSetLinkOnPrimitive [
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) class equals: CompiledMethod.
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) reflectiveMethod isNil.
-	
 ]
 
 { #category : #'tests - links' }
@@ -242,7 +263,6 @@ ReflectiveMethodTest >> testSetLinkWithPragmaOptions [
 	(ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) destroyTwin.
 	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) class equals: CompiledMethod.
 	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) reflectiveMethod isNil.
-	
 ]
 
 { #category : #'tests - links' }
@@ -257,5 +277,5 @@ ReflectiveMethodTest >> testSetLinkWithPragmaOptionsPerClass [
 	(ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) destroyTwin.
 	self assert: (ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) class equals: CompiledMethod.
 	self assert: (ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) reflectiveMethod isNil.
-	ReflectivityExamples class recompile: #exampleMethodWithMetaLinkOptionsViaClass 
+	ReflectivityExamples class recompile: #exampleMethodWithMetaLinkOptionsViaClass
 ]

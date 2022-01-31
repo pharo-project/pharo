@@ -107,7 +107,6 @@ Message >> printOn: stream [
 		stream space.
 	].
 	stream skip: -1.
-
 ]
 
 { #category : #accessing }
@@ -144,7 +143,6 @@ Message >> sentTo: receiver [
 Message >> setSelector: aSymbol [
 
 	selector := aSymbol.
-
 ]
 
 { #category : #private }

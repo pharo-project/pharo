@@ -24,7 +24,7 @@ CmdDragPassenger class >> draggedFromContext: aToolContext toActivate: commandAc
 
 	^self new 
 		dragContext: aToolContext;
-		dropActivators: commandActivators 
+		dropActivators: commandActivators
 ]
 
 { #category : #converting }

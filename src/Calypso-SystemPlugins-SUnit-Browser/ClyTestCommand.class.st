@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 ClyTestCommand class >> isAbstract [
-	^self = ClyTestCommand 
+	^self = ClyTestCommand
 ]
 
 { #category : #execution }
@@ -49,5 +49,5 @@ ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 
 { #category : #tests }
 ClyTestCommand >> testResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

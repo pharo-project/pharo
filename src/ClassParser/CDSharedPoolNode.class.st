@@ -24,7 +24,7 @@ CDSharedPoolNode class >> node: aRBLiteralValueNode name: aString start: anInteg
 
 { #category : #accessing }
 CDSharedPoolNode >> name [
-	^name 
+	^name
 ]
 
 { #category : #accessing }
@@ -44,5 +44,5 @@ CDSharedPoolNode >> start: anInteger [
 
 { #category : #accessing }
 CDSharedPoolNode >> stop: anInteger [ 
-	stop := anInteger 
+	stop := anInteger
 ]

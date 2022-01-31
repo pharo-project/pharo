@@ -1,23 +1,23 @@
 Extension { #name : #String }
 
-{ #category : #'*zinc-resource-meta-core' }
+{ #category : #'*Zinc-Resource-Meta-Core' }
 String >> addedToZnUrl: url [
 	| segments |
 	segments := self findTokens: '/'.
 	^ url withPathSegments: segments
 ]
 
-{ #category : #'*zinc-resource-meta-core' }
+{ #category : #'*Zinc-Resource-Meta-Core' }
 String >> asUrl [
 	^ self asZnUrl 
 ]
 
-{ #category : #'*zinc-resource-meta-core' }
+{ #category : #'*Zinc-Resource-Meta-Core' }
 String >> asZnMimeType [
 	^ ZnMimeType fromString: self
 ]
 
-{ #category : #'*zinc-resource-meta-core' }
+{ #category : #'*Zinc-Resource-Meta-Core' }
 String >> asZnUrl [
 	^ ZnUrl fromString: self
 ]

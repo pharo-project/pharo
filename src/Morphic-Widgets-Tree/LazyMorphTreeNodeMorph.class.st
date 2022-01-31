@@ -15,26 +15,22 @@ LazyMorphTreeNodeMorph >> drawOn: aCanvas [
 	drawable
 		ifFalse: [container buildRowMorphsFrom: self]
 		ifTrue: [super drawOn: aCanvas]
-
 ]
 
 { #category : #accessing }
 LazyMorphTreeNodeMorph >> drawSubmorphsOn: aCanvas [
 	drawable ifFalse: [^ self].
 	super drawSubmorphsOn: aCanvas.
-
 ]
 
 { #category : #drawing }
 LazyMorphTreeNodeMorph >> drawable [
 	^ drawable ifNil: [false]
-
 ]
 
 { #category : #drawing }
 LazyMorphTreeNodeMorph >> drawable: aBoolean [
 	drawable := aBoolean.
-
 ]
 
 { #category : #initialization }

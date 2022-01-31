@@ -283,7 +283,6 @@ ExternalType class >> noticeRemovalOf: aClass [
 	type == nil ifFalse:[
 		type newReferentClass: nil.
 		type asPointerType newReferentClass: nil].
-
 ]
 
 { #category : #housekeeping }

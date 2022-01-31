@@ -59,7 +59,6 @@ FloatTest >> test32bitGradualUnderflow [
 	conv := 2r0.0000000000000000000001011e-126 asIEEE32BitWord.
 	expected := exponentPart bitOr: 2r11.
 	self assert: expected equals: conv
-	
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -96,7 +95,6 @@ FloatTest >> test32bitRoundingMode [
 	conv := 2r1.0000000000000000000000011e25 asIEEE32BitWord.
 	expected := exponentPart bitOr: 2r1.
 	self assert: expected equals: conv
-
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -165,7 +163,6 @@ FloatTest >> testBinaryLiteralString [
 	self assert: (Float fromIEEE64Bit: 2r0111111111111111111111111111111111111111111111111111111111111111) binaryLiteralString equals: 'Float nan'.
 	self assert: (Float fromIEEE64Bit: 2r1111111111110000000000000000000000000000000000000000000000000001) binaryLiteralString equals: 'Float nan'.
 	self assert: (Float fromIEEE64Bit: 2r1111111111111111111111111111111111111111111111111111111111111111) binaryLiteralString equals: 'Float nan'
-
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

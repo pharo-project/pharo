@@ -20,7 +20,6 @@ Class {
 { #category : #'class initialization' }
 CollectionElement class >> initialize [
 	NilElement := self with: nil.
-
 ]
 
 { #category : #'instance creation' }
@@ -31,7 +30,6 @@ CollectionElement class >> with: anObject [
 { #category : #accessing }
 CollectionElement class >> withNil [
 	^ NilElement
-
 ]
 
 { #category : #comparing }
@@ -63,5 +61,4 @@ CollectionElement >> enclosedElement: anObject [
 { #category : #comparing }
 CollectionElement >> hash [
 	^ enclosedElement hash
-
 ]

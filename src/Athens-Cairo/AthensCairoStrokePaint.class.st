@@ -41,7 +41,6 @@ AthensCairoStrokePaint >> athensFillRectangle: aRect on: aCanvas [
 		width: aRect width
 		height: aRect height;
 		stroke.
-
 ]
 
 { #category : #'setting - cap styles' }
@@ -77,7 +76,7 @@ AthensCairoStrokePaint >> joinMiter [
 
 { #category : #'setting - join styles' }
 AthensCairoStrokePaint >> joinRound [
-	joinStyle := CAIRO_LINE_JOIN_ROUND 
+	joinStyle := CAIRO_LINE_JOIN_ROUND
 ]
 
 { #category : #private }
@@ -108,7 +107,6 @@ AthensCairoStrokePaint >> primSetDashesOn: aCanvas lengths: dashesLengths count:
 				double* dashesLengths,
 				int dashesCount,
 				double anOffset) )
-
 ]
 
 { #category : #private }
@@ -130,7 +128,6 @@ AthensCairoStrokePaint >> primSetLineWidthOn: aCanvas [
 	^ self ffiCall: #(void cairo_set_line_width (
 				AthensCairoCanvas aCanvas,
 				double width) )
-
 ]
 
 { #category : #private }
@@ -141,12 +138,11 @@ AthensCairoStrokePaint >> setDashesOn: aCanvas [
 	
 	dashLenghts withIndexDo: [:len :i |
 		
-		buf nbFloat64AtOffset: (i-1)*8 put: len asFloat
+		buf doubleAt: (i-1)*8 + 1 put: len asFloat
 		].
 
 	aCanvas
 		primSetDashesLengths: buf
 		count: dashLenghts size
 		offset: dashOffset
-		
 ]

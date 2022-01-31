@@ -7,11 +7,9 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isTempVariableSelected  
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isTempVariableSelected]
 ]
 
 { #category : #execution }

@@ -35,8 +35,8 @@ DrTests class >> beDefaultTestRunner [
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #specs }
-DrTests class >> defaultSpec [
+{ #category : #layout }
+DrTests class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		add:
@@ -64,16 +64,16 @@ DrTests class >> menuCommandOn: aBuilder [
 		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
 		help: '(Preview) Let you run and debug SUnit tests.';
 		icon: self taskbarIcon;
-		withSeparatorAfter	
+		withSeparatorAfter
 ]
 
 { #category : #api }
 DrTests class >> open [
+
 	<script>
-	
 	^ self new
-		openWithSpec;
-		yourself
+		  open;
+		  yourself
 ]
 
 { #category : #'tools registry' }
@@ -142,8 +142,9 @@ DrTests >> initializePluginsDropList [
 		help: 'Select the plugin used by Dr Tests UI.';
 		items: self plugins;
 		display: [ :pluginClass | pluginClass pluginName ];
-		iconBlock: [ :pluginClass | pluginClass pluginIcon ];
-		whenSelectedItemChangedDo: [ :pluginClass | self currentPlugin: pluginClass new ]
+		displayIcon: [ :pluginClass | pluginClass pluginIcon ];
+		whenSelectedItemChangedDo: [ :pluginClass | 
+			self currentPlugin: pluginClass new ]
 ]
 
 { #category : #initialization }
@@ -182,7 +183,7 @@ DrTests >> menuForSelectedResult: menu [
 { #category : #accessing }
 DrTests >> packagesSelected [
 	
-	^ pluginPresenter packagesSelected 
+	^ pluginPresenter packagesSelected
 ]
 
 { #category : #accessing }
@@ -205,7 +206,7 @@ DrTests >> pluginsDropList [
 { #category : #accessing }
 DrTests >> selectedItems [
 	
-	^ pluginPresenter selectedItems 
+	^ pluginPresenter selectedItems
 ]
 
 { #category : #'accessing - model' }
@@ -223,17 +224,17 @@ DrTests >> statusLabel [
 { #category : #'api - locking' }
 DrTests >> subwidgetsToLock [
 
-	^ pluginPresenter subwidgetsToLock 
+	^ pluginPresenter subwidgetsToLock
 ]
 
 { #category : #'private - actions' }
 DrTests >> switchToMiniDrTest [
 
 	(MiniDrTests new
-		testsConfiguration: self testsConfiguration;
-		currentPlugin: self currentPlugin;
-		updateWithPluginResult:self pluginResult ;
-		yourself) openWithSpec
+		 testsConfiguration: self testsConfiguration;
+		 currentPlugin: self currentPlugin;
+		 updateWithPluginResult: self pluginResult;
+		 yourself) open
 ]
 
 { #category : #actions }
@@ -267,7 +268,6 @@ DrTests >> title [
 DrTests >> updateStatus: aString [
 	self statusLabel
 		label: ('{1}: {2}' format: { self dateAndTimeString . aString }).
-
 ]
 
 { #category : #updating }
@@ -282,7 +282,6 @@ DrTests >> updateUI [
 	super updateUI.
 	
 	pluginPresenter updateUI.
-
 ]
 
 { #category : #updating }

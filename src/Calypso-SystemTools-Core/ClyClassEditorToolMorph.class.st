@@ -27,7 +27,7 @@ ClyClassEditorToolMorph class >> classTabActivation [
 
 { #category : #testing }
 ClyClassEditorToolMorph class >> isAbstract [
-	^self = ClyClassEditorToolMorph 
+	^self = ClyClassEditorToolMorph
 ]
 
 { #category : #testing }
@@ -56,7 +56,7 @@ ClyClassEditorToolMorph >> belongsToCurrentBrowserContext [
 
 { #category : #testing }
 ClyClassEditorToolMorph >> belongsToRemovedBrowserContext [
-	^editingClass isObsolete 
+	^editingClass isObsolete
 ]
 
 { #category : #controlling }

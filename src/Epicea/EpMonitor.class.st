@@ -26,8 +26,7 @@ EpMonitor class >> current [
 	current ifNil: [
 		current := self new ].
 	
-	^ current 
-	
+	^ current
 ]
 
 { #category : #accessing }
@@ -75,7 +74,7 @@ EpMonitor class >> newWithLog: aLog [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 EpMonitor class >> reset [
 	"
 	self reset
@@ -342,7 +341,6 @@ EpMonitor >> disable [
 		do: [ :each | each ifNotNil: [ :a | a unsubscribe: self ] ].
 
 	self announceMonitorStateUpdated.
-
 ]
 
 { #category : #enabling }
@@ -368,7 +366,6 @@ EpMonitor >> enable [
 		self subscribeToJobAnnouncer. ].
 
 	self announceMonitorStateUpdated.
-
 ]
 
 { #category : #enabling }
@@ -561,7 +558,6 @@ EpMonitor >> subscribeToJobAnnouncer [
 			when: pair key 
 			send: pair value 
 			to: self ].
-
 ]
 
 { #category : #private }
@@ -588,7 +584,6 @@ EpMonitor >> subscribeToSystemAnnouncer [
 			when: pair key 
 			send: pair value 
 			to: self ].
-
 ]
 
 { #category : #private }

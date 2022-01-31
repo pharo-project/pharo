@@ -4,7 +4,7 @@ Extension { #name : #SycRemovePackageCommand }
 SycRemovePackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }

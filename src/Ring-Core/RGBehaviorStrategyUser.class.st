@@ -365,8 +365,6 @@ RGBehaviorStrategyUser >> storeOn: aStream [
 
 { #category : #accessing }
 RGBehaviorStrategyUser >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-	
 	self
 		deprecated: 'Please use #classSide instead'
 		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
@@ -377,7 +375,10 @@ RGBehaviorStrategyUser >> theMetaClass [
 { #category : #accessing }
 RGBehaviorStrategyUser >> theNonMetaClass [
 
-	^ self behaviorStrategy instanceSide
+	self
+		deprecated: 'Please use #instanceSide instead'
+		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
+	^self instanceSide
 ]
 
 { #category : #variables }

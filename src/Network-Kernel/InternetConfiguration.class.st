@@ -27,7 +27,6 @@ InternetConfiguration class >> getArchiePreferred [
 	"InternetConfiguration getArchiePreferred"
 
 	^self primitiveGetStringKeyedBy: 'ArchiePreferred'
-
 ]
 
 { #category : #lookups }
@@ -36,7 +35,6 @@ InternetConfiguration class >> getDownloadPath [
 	"InternetConfiguration getDownloadPath"
 
 	^self primitiveGetStringKeyedBy: 'DownLoadPath'
-
 ]
 
 { #category : #lookups }
@@ -45,7 +43,6 @@ InternetConfiguration class >> getEmail [
 	"InternetConfiguration getEmail"
 
 	^self primitiveGetStringKeyedBy: 'Email'
-
 ]
 
 { #category : #lookups }
@@ -54,7 +51,6 @@ InternetConfiguration class >> getFTPHost [
 	"InternetConfiguration getFTPHost"
 
 	^self primitiveGetStringKeyedBy: 'FTPHost'
-
 ]
 
 { #category : #lookups }
@@ -63,7 +59,6 @@ InternetConfiguration class >> getFTPProxyAccount [
 	"InternetConfiguration getFTPProxyAccount"
 
 	^self primitiveGetStringKeyedBy: 'FTPProxyAccount'
-
 ]
 
 { #category : #lookups }
@@ -72,7 +67,6 @@ InternetConfiguration class >> getFTPProxyHost [
 	"InternetConfiguration getFTPProxyHost"
 
 	^self primitiveGetStringKeyedBy: 'FTPProxyHost'
-
 ]
 
 { #category : #lookups }
@@ -81,7 +75,6 @@ InternetConfiguration class >> getFTPProxyPassword [
 	"InternetConfiguration getFTPProxyPassword"
 
 	^self primitiveGetStringKeyedBy: 'FTPProxyPassword'
-
 ]
 
 { #category : #lookups }
@@ -90,7 +83,6 @@ InternetConfiguration class >> getFTPProxyUser [
 	"InternetConfiguration getFTPProxyUser"
 
 	^self primitiveGetStringKeyedBy: 'FTPProxyUser'
-
 ]
 
 { #category : #lookups }
@@ -99,7 +91,6 @@ InternetConfiguration class >> getFingerHost [
 	"InternetConfiguration getFingerHost"
 
 	^self primitiveGetStringKeyedBy: 'FingerHost'
-
 ]
 
 { #category : #lookups }
@@ -108,7 +99,6 @@ InternetConfiguration class >> getGopherHost [
 	"InternetConfiguration getGopherHost"
 
 	^self primitiveGetStringKeyedBy: 'GopherHost'
-
 ]
 
 { #category : #lookups }
@@ -117,7 +107,6 @@ InternetConfiguration class >> getGopherProxy [
 	"InternetConfiguration getGopherProxy"
 
 	^self primitiveGetStringKeyedBy: 'GopherProxy'
-
 ]
 
 { #category : #lookups }
@@ -126,7 +115,6 @@ InternetConfiguration class >> getHTTPProxyHost [
 	"InternetConfiguration getHTTPProxyHost"
 
 	^self primitiveGetStringKeyedBy: 'HTTPProxyHost'
-
 ]
 
 { #category : #lookups }
@@ -135,7 +123,6 @@ InternetConfiguration class >> getIRCHost [
 	"InternetConfiguration getIRCHost"
 
 	^self primitiveGetStringKeyedBy: 'IRCHost'
-
 ]
 
 { #category : #lookups }
@@ -144,7 +131,6 @@ InternetConfiguration class >> getLDAPSearchbase [
 	"InternetConfiguration getLDAPSearchbase"
 
 	^self primitiveGetStringKeyedBy: 'LDAPSearchbase'
-
 ]
 
 { #category : #lookups }
@@ -153,7 +139,6 @@ InternetConfiguration class >> getLDAPServer [
 	"InternetConfiguration getLDAPServer"
 
 	^self primitiveGetStringKeyedBy: 'LDAPServer'
-
 ]
 
 { #category : #lookups }
@@ -167,7 +152,6 @@ InternetConfiguration class >> getMacintoshFileTypeAndCreatorFrom: aFileName [
 	string := self primitiveGetMacintoshFileTypeAndCreatorFrom: aFileName.
 	string = '********' ifTrue: [^nil].
 	^Array with: (string first: 4) with: (string last: 4)
-
 ]
 
 { #category : #lookups }
@@ -176,7 +160,6 @@ InternetConfiguration class >> getMailAccount [
 	"InternetConfiguration getMailAccount"
 
 	^self primitiveGetStringKeyedBy: 'MailAccount'
-
 ]
 
 { #category : #lookups }
@@ -185,7 +168,6 @@ InternetConfiguration class >> getMailPassword [
 	"InternetConfiguration getMailPassword "
 
 	^self primitiveGetStringKeyedBy: 'MailPassword'
-
 ]
 
 { #category : #lookups }
@@ -194,7 +176,6 @@ InternetConfiguration class >> getNNTPHost [
 	"InternetConfiguration getNNTPHost"
 
 	^self primitiveGetStringKeyedBy: 'NNTPHost'
-
 ]
 
 { #category : #lookups }
@@ -203,7 +184,6 @@ InternetConfiguration class >> getNTPHost [
 	"InternetConfiguration getNTPHost"
 
 	^self primitiveGetStringKeyedBy: 'NTPHost'
-
 ]
 
 { #category : #lookups }
@@ -212,7 +192,6 @@ InternetConfiguration class >> getNewsAuthPassword [
 	"InternetConfiguration getNewsAuthPassword"
 
 	^self primitiveGetStringKeyedBy: 'NewsAuthPassword'
-
 ]
 
 { #category : #lookups }
@@ -221,7 +200,6 @@ InternetConfiguration class >> getNewsAuthUsername [
 	"InternetConfiguration getNewsAuthUsername"
 
 	^self primitiveGetStringKeyedBy: 'NewsAuthUsername'
-
 ]
 
 { #category : #lookups }
@@ -230,7 +208,6 @@ InternetConfiguration class >> getNoProxyDomains [
 	"InternetConfiguration getNoProxyDomains"
 
 	^self primitiveGetStringKeyedBy: 'NoProxyDomains'
-
 ]
 
 { #category : #lookups }
@@ -239,7 +216,6 @@ InternetConfiguration class >> getOrganization [
 	"InternetConfiguration getOrganization"
 
 	^self primitiveGetStringKeyedBy: 'Organization'
-
 ]
 
 { #category : #lookups }
@@ -248,7 +224,6 @@ InternetConfiguration class >> getPhHost [
 	"InternetConfiguration getPhHost"
 
 	^self primitiveGetStringKeyedBy: 'PhHost'
-
 ]
 
 { #category : #lookups }
@@ -257,7 +232,6 @@ InternetConfiguration class >> getRealName [
 	"InternetConfiguration getRealName"
 
 	^self primitiveGetStringKeyedBy: 'RealName'
-
 ]
 
 { #category : #lookups }
@@ -266,7 +240,6 @@ InternetConfiguration class >> getSMTPHost [
 	"InternetConfiguration getSMTPHost"
 
 	^self primitiveGetStringKeyedBy: 'SMTPHost'
-
 ]
 
 { #category : #lookups }
@@ -275,7 +248,6 @@ InternetConfiguration class >> getSocksHost [
 	"InternetConfiguration getSocksHost"
 
 	^self primitiveGetStringKeyedBy: 'SocksHost'
-
 ]
 
 { #category : #lookups }
@@ -284,7 +256,6 @@ InternetConfiguration class >> getTelnetHost [
 	"InternetConfiguration getTelnetHost"
 
 	^self primitiveGetStringKeyedBy: 'TelnetHost'
-
 ]
 
 { #category : #lookups }
@@ -293,7 +264,6 @@ InternetConfiguration class >> getWAISGateway [
 	"InternetConfiguration getWAISGateway"
 
 	^self primitiveGetStringKeyedBy: 'WAISGateway'
-
 ]
 
 { #category : #lookups }
@@ -302,7 +272,6 @@ InternetConfiguration class >> getWWWHomePage [
 	"InternetConfiguration getWWWHomePage"
 
 	^self primitiveGetStringKeyedBy: 'WWWHomePage'
-
 ]
 
 { #category : #lookups }
@@ -311,7 +280,6 @@ InternetConfiguration class >> getWhoisHost [
 	"InternetConfiguration getWhoisHost"
 
 	^self primitiveGetStringKeyedBy: 'WhoisHost'
-
 ]
 
 { #category : #initialization }
@@ -323,14 +291,13 @@ InternetConfiguration class >> initialize [
 { #category : #'system primitives' }
 InternetConfiguration class >> primitiveGetMacintoshFileTypeAndCreatorFrom: aFileName [
 	<primitive: 'primitiveGetMacintoshFileTypeAndCreatorFrom' module: 'InternetConfigPlugin'>
-	^'********' copy 
+	^'********' copy
 ]
 
 { #category : #'system primitives' }
 InternetConfiguration class >> primitiveGetStringKeyedBy: aKey [
 	<primitive: 'primitiveGetStringKeyedBy' module: 'InternetConfigPlugin'>
 	^String new.
-
 ]
 
 { #category : #'HTTP Proxy' }
@@ -347,8 +314,6 @@ InternetConfiguration class >> setHttpProxy [
 InternetConfiguration class >> shutDown [
 	Smalltalk os isMacOS
 		ifTrue: [ NetworkSystemSettings useHTTPProxy: false ]
-	
-
 ]
 
 { #category : #'system startup' }
@@ -362,7 +327,6 @@ InternetConfiguration class >> useFTPProxy [
 	<script: 'self useFTPProxy inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UseFTPProxy') = '1'
-
 ]
 
 { #category : #tests }
@@ -371,7 +335,6 @@ InternetConfiguration class >> useGopherProxy [
 	<script: 'self useGopherProxy inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UseGopherProxy') = '1'
-
 ]
 
 { #category : #tests }
@@ -380,7 +343,6 @@ InternetConfiguration class >> useHTTPProxy [
 	<script: 'self useHTTPProxy inspect'>
 	
 	^(self primitiveGetStringKeyedBy: 'UseHTTPProxy') = '1'
-
 ]
 
 { #category : #tests }
@@ -389,7 +351,6 @@ InternetConfiguration class >> usePassiveFTP [
 	<script: 'self usePassiveFTP inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UsePassiveFTP') = '1'
-
 ]
 
 { #category : #tests }
@@ -398,5 +359,4 @@ InternetConfiguration class >> useSocks [
 	<script: 'self useSocks inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UseSocks') = '1'
-
 ]

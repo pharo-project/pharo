@@ -21,7 +21,6 @@ EpLogNode >> initialize [
 	super initialize.
 	
 	referencedNodes := Set new.
-
 ]
 
 { #category : #testing }
@@ -54,8 +53,7 @@ EpLogNode >> populateReferencedNodesWith: nodes [
 	self referencedGlobalNames do: [ :referencedGlobalName |
 		nodes
 			detect: [:each | each globalName = referencedGlobalName ]
-			ifFound: [ :referencedNode | referencedNodes add: referencedNode ] ] 
-
+			ifFound: [ :referencedNode | referencedNodes add: referencedNode ] ]
 ]
 
 { #category : #accessing }

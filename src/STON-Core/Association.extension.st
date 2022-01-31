@@ -1,6 +1,6 @@
 Extension { #name : #Association }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Association >> stonOn: stonWriter [
 	self class == STON associationClass
 		ifTrue: [ stonWriter writeAssociation: self ]

@@ -14,7 +14,7 @@ ClyFilterQueryTest >> createQuery [
 
 { #category : #running }
 ClyFilterQueryTest >> queryClass [
-	^ClyFilterQuery 
+	^ClyFilterQuery
 ]
 
 { #category : #tests }

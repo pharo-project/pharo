@@ -328,7 +328,6 @@ EpLog >> priorEntriesFrom: aReference do: aBlock [
 				aBlock value: entry.		
 				nextReference := self priorReferenceAt: entry ]
 			ifAbsent: [ ^ self ] ]
-
 ]
 
 { #category : #enumerating }

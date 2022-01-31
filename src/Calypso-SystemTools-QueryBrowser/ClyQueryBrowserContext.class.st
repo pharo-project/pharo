@@ -17,7 +17,7 @@ ClyQueryBrowserContext class >> selectionStrategy [
 { #category : #'selection-classes' }
 ClyQueryBrowserContext >> isClassSelected [
 	"here we extract selected classes from selected items"
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #'selection-methods' }
@@ -30,7 +30,7 @@ ClyQueryBrowserContext >> isMethodSelected [
 { #category : #'selection-packages' }
 ClyQueryBrowserContext >> isPackageSelected [
 	"here we extract selected packages from selected items"
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #'selection-classes' }

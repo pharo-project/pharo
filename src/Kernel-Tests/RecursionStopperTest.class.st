@@ -16,7 +16,7 @@ RecursionStopperTest class >> defaultTimeLimit [
 	"Those tests are supposed to be fast. 
 	But with broken RecursionStopper they will hang the image.
 	Therefore this small allowed time for tests to fail quickly if they are broken"
-	^100 milliSeconds 
+	^100 milliSeconds
 ]
 
 { #category : #accessing }
@@ -39,7 +39,7 @@ RecursionStopperTest >> mixedMethod [
 	].
 
 	self assert: value equals: 1.
-	^ value 
+	^ value
 ]
 
 { #category : #accessing }
@@ -101,6 +101,5 @@ RecursionStopperTest >> threadSafe [
 			
 		fork := nil.
 		
-	].	
-
+	].
 ]

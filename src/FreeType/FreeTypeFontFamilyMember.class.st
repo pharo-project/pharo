@@ -30,7 +30,6 @@ FreeTypeFontFamilyMember class >> fromFileInfo: aFreeTypeFileInfo [
 		slantName: aFreeTypeFileInfo slant;
 		slantValue: aFreeTypeFileInfo slantValue;
 		yourself
-		
 ]
 
 { #category : #comparing }
@@ -38,7 +37,7 @@ FreeTypeFontFamilyMember >> <= aFreeTypeFontFamilyMember [
 	^self sortValue <= aFreeTypeFontFamilyMember sortValue
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedBold [
 	^self copy 
 		weightValue: LogicalFont weightBold;
@@ -47,7 +46,7 @@ FreeTypeFontFamilyMember >> asSimulatedBold [
 		yourself
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 	^self copy 
 		slantValue: LogicalFont slantItalic; "treat italic and oblique the same"
@@ -57,7 +56,7 @@ FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 		yourself
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedOblique [
 	^self copy 
 		slantValue: LogicalFont slantItalic;  "treat italic and oblique the same"
@@ -140,7 +139,6 @@ FreeTypeFontFamilyMember >> sortValue [
 	v := v + (normalizedWeight).
 	v := v + (slantValue).
 	^v
-
 ]
 
 { #category : #accessing }

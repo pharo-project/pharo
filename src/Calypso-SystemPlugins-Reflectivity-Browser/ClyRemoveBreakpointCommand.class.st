@@ -7,10 +7,11 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyRemoveBreakpointCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasBreakpoint 
+	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+		  aBrowserContext isSelectedItemHasBreakpoint ]
 ]
 
 { #category : #activation }

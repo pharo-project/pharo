@@ -70,7 +70,7 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 				yourself);
 			buildCompletion.
 		
-		completion filterWithString: prefix.
+		completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: prefix).
 		candidates := completion first: 10.
 
 		completionIndex := (candidates collect: [:each | each contents]) indexOf: originalSelector.
@@ -109,36 +109,6 @@ CoStaticBenchmarks >> completionIndexes [
 CoStaticBenchmarks >> gradeForPrefixSize: prefixSize [
 
 	^ self accuracyForCompletionIndex: (2 to: 8) withPrefixSize: prefixSize
-]
-
-{ #category : #inspector }
-CoStaticBenchmarks >> gtResultsTableIn: composite [
-	<gtInspectorPresentationOrder: 1>
-	| table |
-	table := composite table title: 'Results'.
-	"columns"
-	table
-		column: 'Prefix'
-		evaluated: [ :completionIndexRange | | label |
-			label := '% '.
-			label := label, (completionIndexRange size = 1
-				ifTrue: [ 
-					{ 'fail' . '1st' . '2nd' . '3rd' } at: completionIndexRange first + 1 ]
-				ifFalse: [ completionIndexRange first asString , '-', completionIndexRange last asString ]).
-			label ]
-		width: 70.
-	self prefixSizes do: [ :prefixSize |
-		table
-			column: prefixSize asString
-			evaluated: [ :completionIndexRange | | float | 
-				float := self accuracyForCompletionIndex: completionIndexRange withPrefixSize: prefixSize.
-				(float * 100) printShowingDecimalPlaces: 2 ]
-			width: 70 ].
-	"rows"
-	table display: [ 
-		self completionIndexes
-	].
-	^ table
 ]
 
 { #category : #initialization }

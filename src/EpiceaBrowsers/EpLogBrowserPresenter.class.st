@@ -24,14 +24,8 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Log'
 }
 
-{ #category : #accessing }
-EpLogBrowserPresenter class >> defaultLog [
-
-	^ EpMonitor current log
-]
-
-{ #category : #specs }
-EpLogBrowserPresenter class >> defaultSpec [
+{ #category : #layout }
+EpLogBrowserPresenter class >> defaultLayout [
 
 	^ SpPanedLayout newTopToBottom
 		  positionOfSlider: 0.6;
@@ -47,6 +41,12 @@ EpLogBrowserPresenter class >> defaultSpec [
 				   padding: 2;
 				   yourself);
 		  yourself
+]
+
+{ #category : #accessing }
+EpLogBrowserPresenter class >> defaultLog [
+
+	^ EpMonitor current log
 ]
 
 { #category : #'instance creation' }
@@ -65,10 +65,11 @@ EpLogBrowserPresenter class >> open [
 
 { #category : #'instance creation' }
 EpLogBrowserPresenter class >> openWithLog: aLog [
+
 	^ (self newWithLog: aLog)
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #private }
@@ -106,7 +107,6 @@ EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
 				description: 'Write selected entries to an Ombu file';
 				icon: (self iconNamed: #smallSaveAsIcon);
 				action: [ self ombuFileSaveSelection ] ] ].
-
 ]
 
 { #category : #'menu - operations' }
@@ -114,7 +114,6 @@ EpLogBrowserPresenter >> applyAllChangesAndCloseWindow [
 
 	self applyChangesIn: self entriesWithCodeChanges.
 	self window close.
-
 ]
 
 { #category : #'menu - operations' }
@@ -127,7 +126,6 @@ EpLogBrowserPresenter >> applyChangesIn: entries [
 		entries: entries;
 		errorHandlerBlock: self operationsErrorHandlerBlock;
 		applyCodeChanges.
-
 ]
 
 { #category : #'menu - operations' }
@@ -143,7 +141,6 @@ EpLogBrowserPresenter >> applyCompleteRefactoringInSelection [
 		entries: entries;
 		errorHandlerBlock: self operationsErrorHandlerBlock;	
 		applyCompleteRefactoring.
-
 ]
 
 { #category : #'menu - operations' }
@@ -159,14 +156,12 @@ EpLogBrowserPresenter >> applyPropagateRefactoringInSelection [
 		entries: entries;
 		errorHandlerBlock: self operationsErrorHandlerBlock;
 		applyPropagateRefactoring.
-
 ]
 
 { #category : #'menu - operations' }
 EpLogBrowserPresenter >> applySelectedChanges [
 
 	self applyChangesIn: self selectedCodeChanges
-
 ]
 
 { #category : #modes }
@@ -222,7 +217,6 @@ EpLogBrowserPresenter >> cachedLogEntries [
 				displayProgressFrom: 0 to: 1 
 				during: [ cachedLogEntries := log entries ]
 			]
-
 ]
 
 { #category : #refreshing }
@@ -250,7 +244,6 @@ EpLogBrowserPresenter >> codeChangesMenuActions [
 		#nautilusIcon.
 		$b command }.
 	}
-
 ]
 
 { #category : #'menu - operations' }
@@ -291,7 +284,6 @@ EpLogBrowserPresenter >> commentsLog: anEpLog [
 EpLogBrowserPresenter >> entries [
 
 	^ log entryReferences collect: [:each | log entryFor: each ]
-
 ]
 
 { #category : #accessing }
@@ -317,7 +309,6 @@ EpLogBrowserPresenter >> eventsMenuActions [
 		#announcementIcon. 
 		$c command }.
 	}
-
 ]
 
 { #category : #'menu - filters' }
@@ -397,7 +388,6 @@ EpLogBrowserPresenter >> filterSelection [
 		theLog: log; 
 		rejectedEntryReferences: references; 
 		yourself).
-
 ]
 
 { #category : #'menu - filters' }
@@ -416,7 +406,6 @@ EpLogBrowserPresenter >> filteredEntries [
 EpLogBrowserPresenter >> filteredEntriesCount [
 
 	^ self filteredEntryReferences size
-
 ]
 
 { #category : #accessing }
@@ -428,7 +417,6 @@ EpLogBrowserPresenter >> filteredEntryReferences [
 			self cachedLogEntries
 				select: [:each | andFilter accepts: each ]
 				thenCollect: [:each | log referenceTo: each ] ].
-
 ]
 
 { #category : #accessing }
@@ -620,7 +608,6 @@ EpLogBrowserPresenter >> menuActionsForSelectedItems [
 			ifTrue: [ ^ self refactoringMenuActions, self eventsMenuActions ]].
 
 	^ self codeChangesMenuActions, self eventsMenuActions
-
 ]
 
 { #category : #menu }
@@ -792,7 +779,6 @@ EpLogBrowserPresenter >> revertAllChangesAndCloseWindow [
 
 	self revertChangesIn: self entriesWithCodeChanges.
 	self window close.
-
 ]
 
 { #category : #'menu - operations' }
@@ -805,14 +791,12 @@ EpLogBrowserPresenter >> revertChangesIn: entries [
 		entries: entries;
 		errorHandlerBlock: self operationsErrorHandlerBlock;
 		revertCodeChangesInPreviewMode.
-
 ]
 
 { #category : #'menu - operations' }
 EpLogBrowserPresenter >> revertSelectedChanges [
 
 	self revertChangesIn: self selectedCodeChanges
-
 ]
 
 { #category : #'menu - accessing' }
@@ -872,5 +856,4 @@ EpLogBrowserPresenter >> triggerItemsFor: anEntry [
 			triggerItem := self itemForEntryReference: triggerEntryReference.
 			triggerItem triggerItems, { triggerItem } ]
 		ifAbsent: [ #() ]
-
 ]

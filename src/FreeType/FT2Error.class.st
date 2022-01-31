@@ -32,7 +32,6 @@ FT2Error class >> errorCode: code signal: message [
 { #category : #accessing }
 FT2Error >> errorCode [
 	^ errorCode
-
 ]
 
 { #category : #accessing }
@@ -43,7 +42,6 @@ FT2Error >> errorCode: anObject [
 { #category : #accessing }
 FT2Error >> errorString [
 	^ errorString
-
 ]
 
 { #category : #accessing }

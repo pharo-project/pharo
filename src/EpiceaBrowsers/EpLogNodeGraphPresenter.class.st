@@ -23,7 +23,7 @@ EpLogNodeGraphPresenter class >> open [
 	<script>
 	^ self new
 		refresh;
-		openWithSpec;
+		open;
 		yourself
 ]
 
@@ -101,7 +101,7 @@ EpLogNodeGraphPresenter >> initializePresenters [
 { #category : #refreshing }
 EpLogNodeGraphPresenter >> isMonitorDirectory [
 
-	^ self monitor sessionStore directory asFileReference = self directory asFileReference 
+	^ self monitor sessionStore directory asFileReference = self directory asFileReference
 ]
 
 { #category : #accessing }
@@ -114,7 +114,6 @@ EpLogNodeGraphPresenter >> monitor [
 EpLogNodeGraphPresenter >> monitor: anEpMonitor [
 
 	monitor := anEpMonitor
-
 ]
 
 { #category : #refreshing }

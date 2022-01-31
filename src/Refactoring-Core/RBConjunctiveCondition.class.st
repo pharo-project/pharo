@@ -78,7 +78,6 @@ RBConjunctiveCondition >> printOn: aStream [
 		print: left;
 		nextPutAll: ' & ';
 		print: right
-
 ]
 
 { #category : #private }

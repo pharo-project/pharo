@@ -204,7 +204,6 @@ GIFReadWriter >> nextImage [
 		readHeader;
 		readBody.
 	^ self form.
-	
 ]
 
 { #category : #accessing }
@@ -368,7 +367,6 @@ GIFReadWriter >> readApplicationExtension [
 	[ numSubBlocks = 0 ] whileFalse: [ 
 		self next: numSubBlocks.
 		numSubBlocks := self next ].
-	
 ]
 
 { #category : #'private - decoding' }
@@ -505,7 +503,6 @@ GIFReadWriter >> readDisposal: aPackedByte [
 	middle ifTrue: [ ^ #restoreBackground ].
 	
 	^ #otherDisposal
-	
 ]
 
 { #category : #'private - decoding' }
@@ -664,7 +661,6 @@ GIFReadWriter >> writeDisposal: aSymbol toPackedByte: aByte [
 			so 011, then shifted two to the left (equal to 12)"
 			^ aByte + (3 bitShift: 2) ].
 	^ aByte
-		
 ]
 
 { #category : #accessing }
@@ -687,7 +683,6 @@ GIFReadWriter >> writeFrameHeader: anImageFrame [
 		ifTrue: [ 64 ]
 		ifFalse: [ 0 ].
 	self nextPut: interlaceByte
-	
 ]
 
 { #category : #'private - encoding' }

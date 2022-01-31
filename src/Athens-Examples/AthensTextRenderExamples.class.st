@@ -91,8 +91,6 @@ AthensTextRenderExamples class >> test3 [
 		].
 	].
 	surf asMorph openInWindow
-
-
 ]
 
 { #category : #tests }
@@ -115,8 +113,6 @@ AthensTextRenderExamples class >> test4 [
 		]
 	].
 	surf asMorph openInWindow
-
-
 ]
 
 { #category : #tests }
@@ -138,8 +134,6 @@ AthensTextRenderExamples class >> test5 [
 		]
 	].
 	surf asMorph openInWindow
-
-
 ]
 
 { #category : #tests }
@@ -172,11 +166,6 @@ AthensTextRenderExamples class >> testBlitting [
 		ungammaTable: FreeTypeSettings current gammaInverseTable.
 	
 	dstForm asMorph openInWindow
-	
-
-	
-	
-
 ]
 
 { #category : #tests }

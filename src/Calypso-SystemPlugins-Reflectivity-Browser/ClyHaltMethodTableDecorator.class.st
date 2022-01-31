@@ -19,7 +19,6 @@ ClyHaltMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: 
 
 { #category : #decoration }
 ClyHaltMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }

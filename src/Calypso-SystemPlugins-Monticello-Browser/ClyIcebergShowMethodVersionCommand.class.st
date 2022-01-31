@@ -19,24 +19,24 @@ Class {
 
 { #category : #testing }
 ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
-	self flag: #todo. "Check for IceLog is temporal, to let time to update iceberg on Pharo 7.0a"
-	^ aToolContext isMethodSelected 
-		and: [ (Smalltalk globals includesKey: #IceLog)
-		and: [ (IceRepository registeredRepositoryIncludingPackage: aToolContext lastSelectedMethod package) notNil ] ]
+
+	^ aToolContext isMethodSelected and: [ 
+		  (IceRepository registeredRepositoryIncludingPackage:
+			   aToolContext lastSelectedMethod package) notNil ]
 ]
 
 { #category : #accessing }
 ClyIcebergShowMethodVersionCommand class >> methodBrowserTabActivation [
 	<classAnnotation>
 	
-	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext 
+	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }
 ClyIcebergShowMethodVersionCommand class >> methodMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }
@@ -73,7 +73,7 @@ ClyIcebergShowMethodVersionCommand >> execute [
 	browserClass := #IceTipVersionHistoryBrowser
 		asClassInEnvironment: self class environment.
 		
-	(browserClass onRepository: repository method: method) openWithSpec
+	(browserClass onRepository: repository method: method) open
 ]
 
 { #category : #execution }

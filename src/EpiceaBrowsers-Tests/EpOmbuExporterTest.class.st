@@ -53,7 +53,6 @@ EpOmbuExporterTest >> testBasicExport [
 	self 
 		assert: outputResult asSet 
 		equals: (selection collect: [ :each | each content ]) asSet
-		
 ]
 
 { #category : #tests }

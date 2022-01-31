@@ -24,14 +24,13 @@ ClyRunClassScriptCommand class >> canBeExecutedInContext: aBrowserContext [
 	
 	^aBrowserContext isClassSelected 
 		and: [ aBrowserContext isClassScriptSelected ]
-	
 ]
 
 { #category : #activation }
 ClyRunClassScriptCommand class >> methodTableIconActivation [
 	<classAnnotation>
 	
-	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext 
+	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }
@@ -68,5 +67,5 @@ ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
 ClyRunClassScriptCommand >> readParametersFromContext: aBrowserContext [
 	super readParametersFromContext: aBrowserContext.
 	
-	script := aBrowserContext selectedClassScript 
+	script := aBrowserContext selectedClassScript
 ]

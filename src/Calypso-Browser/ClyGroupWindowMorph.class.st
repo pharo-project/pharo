@@ -44,7 +44,7 @@ ClyGroupWindowMorph >> update: aSymbol [
 	"Handle tab changes."
 
 	super update: aSymbol.
-	self updateMainWindowTitle 
+	self updateMainWindowTitle
 ]
 
 { #category : #updating }
@@ -52,7 +52,7 @@ ClyGroupWindowMorph >> update: aSymbol  with: anObject [
 	"Handle tab changes."
 
 	super update: aSymbol with: anObject.
-	self updateMainWindowTitle 
+	self updateMainWindowTitle
 ]
 
 { #category : #updating }

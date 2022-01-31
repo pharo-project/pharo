@@ -28,7 +28,6 @@ CairoUTF8Converter >> checkBufferSpace: minimalSize [
 		bs := buffer writeStream.
 		
 		]
-
 ]
 
 { #category : #converting }

@@ -317,7 +317,6 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].	
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
-		
 ]
 
 { #category : #services }
@@ -358,9 +357,9 @@ MorphicUIManager >> fontFromUser: priorFont [
 ]
 
 { #category : #'handle debug requests' }
-MorphicUIManager >> handleDebugRequest: aDebugRequest [
+MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
-	OupsDebuggerSystem new openDebuggerOnRequest: aDebugRequest
+	anOupsDebuggerSystem openDebuggerOnRequest: aDebugRequest
 ]
 
 { #category : #'error handling' }
@@ -371,9 +370,9 @@ MorphicUIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'handle debug requests' }
-MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
-	OupsDebuggerSystem new openDebuggerOnRequest: aWarningDebugRequest
+	anOupsDebuggerSystem openDebuggerOnRequest: aWarningDebugRequest
 ]
 
 { #category : #'ui requests' }
@@ -423,7 +422,6 @@ Here are some suggestions:
  If you want to investigate further, choose "debug" in this window.  Do not use the debugger "fullStack" command unless you are certain that the stack is not very deep. (Trying to show the full stack will definitely use up all remaining memory if the low-space problem is caused by an infinite recursion!).
 
 '
-
 ]
 
 { #category : #'ui requests' }
@@ -541,7 +539,6 @@ MorphicUIManager >> onPrimitiveError: aString [
 	Stdio stderr << message.
 	"init hands and redisplay" 
 	self currentWorld install
-
 ]
 
 { #category : #accessing }
@@ -558,13 +555,11 @@ MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 		request: queryString 
 		initialAnswer: defaultAnswer 
 		title: 'Provide the following information'
-
 ]
 
 { #category : #'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
 	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' translated entryCompletion: anEntryCompletion
-
 ]
 
 { #category : #'ui requests' }
@@ -704,11 +699,11 @@ MorphicUIManager >> unhandledErrorDefaultAction: anException [
 { #category : #'handle debug requests' }
 MorphicUIManager >> warningDefaultAction: anException [
 	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-
+	self flag: 'This looks like a code smell'.
 	(OupsWarningRequest newForException: anException) submit
 ]
 
 { #category : #'global state' }
 MorphicUIManager >> world [
-	^ self currentWorld 
+	^ self currentWorld
 ]

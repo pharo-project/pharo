@@ -64,7 +64,7 @@ ShortcutReminder class >> showShortcut: aShortcut [
 { #category : #accessing }
 ShortcutReminder >> backgroundColor [
 
-	^backgroundColor 
+	^backgroundColor
 ]
 
 { #category : #accessing }
@@ -86,7 +86,7 @@ ShortcutReminder >> createKeyTextMorph: aString [
 	^(self fixKeyText: aString) asStringMorph 
 		font: font emphasis: 2;
 		color: textColor;
-		yourself. 
+		yourself.
 ]
 
 { #category : #'private - utilities' }
@@ -95,7 +95,7 @@ ShortcutReminder >> createLabelMorph: aString [
 	^aString asStringMorph 
 		font: self labelFont emphasis: 0;
 		color: textColor;
-		yourself. 
+		yourself.
 ]
 
 { #category : #settings }
@@ -107,7 +107,6 @@ ShortcutReminder >> createResetCountButtonMorph [
 		actionSelector: #resetCount;
 		themeChanged;
 		yourself
-	
 ]
 
 { #category : #'shortcut creation' }
@@ -118,7 +117,6 @@ ShortcutReminder >> createShortcutMorphFor: aMenuItem [
 		addMorphBack: (self createKeyTextMorph: aMenuItem keyText);
 		color: backgroundColor;
 		yourself
-
 ]
 
 { #category : #settings }
@@ -193,7 +191,6 @@ ShortcutReminder >> defaultTextColor [
 ShortcutReminder >> fixKeyText: aString [
 
 	^ (ToggleMenuItemShortcut owner: nil keyText: aString) text
-
 ]
 
 { #category : #'private - utilities' }
@@ -211,7 +208,6 @@ ShortcutReminder >> initialize [
 	position := #bottomLeft.
 	backgroundColor := self defaultBackgroundColor.
 	textColor := self defaultTextColor.
-
 ]
 
 { #category : #private }
@@ -223,7 +219,7 @@ ShortcutReminder >> keyTextFont [
 { #category : #private }
 ShortcutReminder >> labelFont [
 
-	^self fontSized: self pointSize 
+	^self fontSized: self pointSize
 ]
 
 { #category : #private }
@@ -283,7 +279,6 @@ ShortcutReminder >> positionShortcut: aMorph [
 	"the layout has to be computed before changing the position."
 	
 	aMorph perform: (position , ':') asSymbol with: (position value: area).
-	
 ]
 
 { #category : #private }
@@ -309,8 +304,7 @@ ShortcutReminder >> remind: aMenuItem [
 { #category : #settings }
 ShortcutReminder >> resetCount [
 
-	countDict := Dictionary new. 
-	
+	countDict := Dictionary new.
 ]
 
 { #category : #'shortcut creation' }
@@ -328,7 +322,7 @@ ShortcutReminder >> show: aMenuItem [
 { #category : #private }
 ShortcutReminder >> sizes [ 
 
-	^#(#small #medium #large) 
+	^#(#small #medium #large)
 ]
 
 { #category : #private }

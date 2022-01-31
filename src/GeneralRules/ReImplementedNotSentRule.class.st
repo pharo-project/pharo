@@ -35,7 +35,7 @@ ReImplementedNotSentRule class >> allMessages [
 
 { #category : #testing }
 ReImplementedNotSentRule class >> checksMethod [
-	^ true 
+	^ true
 ]
 
 { #category : #cleanup }
@@ -79,7 +79,7 @@ ReImplementedNotSentRule class >> methodModified: anAnnouncement [
 	self allMessages addAll: anAnnouncement newMethod messages
 ]
 
-{ #category : #cleanup }
+{ #category : #'class initialization' }
 ReImplementedNotSentRule class >> reset [
 	<script>
 	allMessages := nil

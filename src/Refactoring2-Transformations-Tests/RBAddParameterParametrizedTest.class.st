@@ -8,6 +8,7 @@ Class {
 RBAddParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddParameterRefactoring };
+		addCase: { #rbClass -> RBAddParameterTransformation };
 		yourself
 ]
 
@@ -226,7 +227,6 @@ RBAddParameterParametrizedTest >> testPrimitiveMethods [
 	refactoring := self createRefactoringWithArguments:  
 		{ #at: . Object . #at:foo: . #(1 -1) . {newArg}}.
 	self shouldFail: refactoring.
-	
 ]
 
 { #category : #'failure tests' }

@@ -145,7 +145,6 @@ ZipArchiveMember >> centralDirectoryHeaderSize [
 	systemFileComment := fileComment utf8Encoded.
 	systemCdExtraField := cdExtraField.
 	^ 46 + systemFileName size + systemCdExtraField size + systemFileComment size
-
 ]
 
 { #category : #accessing }
@@ -198,7 +197,6 @@ ZipArchiveMember >> contentStream [
 	Default is no conversion, since we don't know what the bytes mean."
 
 	^self contentStreamFromEncoding: 'latin1'
-
 ]
 
 { #category : #accessing }
@@ -252,7 +250,6 @@ ZipArchiveMember >> copyDataWithCRCTo: aStream [
 	].
 
 	crc32 := crc32 bitXor: 16rFFFFFFFF
-
 ]
 
 { #category : #'private - writing' }
@@ -275,7 +272,6 @@ ZipArchiveMember >> copyRawDataTo: aStream from: start to: finish [
 		data := self readRawChunk: (32768 min: readDataRemaining).
 		aStream nextPutAll: data.
 		readDataRemaining := readDataRemaining - data size ]
-
 ]
 
 { #category : #accessing }
@@ -532,7 +528,6 @@ ZipArchiveMember >> isTextFile [
 	That is, bytes are stored in native format whether or not they came
 	from a text file."
 	^ (internalFileAttributes bitAnd: 1) ~= 0
-
 ]
 
 { #category : #testing }
@@ -545,7 +540,6 @@ ZipArchiveMember >> isTextFile: aBoolean [
 	internalFileAttributes := aBoolean
 		ifTrue: [ internalFileAttributes bitOr: 1 ]
 		ifFalse: [ internalFileAttributes bitAnd: 1 bitInvert ]
-
 ]
 
 { #category : #accessing }
@@ -597,7 +591,6 @@ ZipArchiveMember >> rewindData [
 		and: [ compressionMethod = CompressionDeflated ])
 			ifTrue: [ compressedSize ]
 			ifFalse: [ uncompressedSize ]
-
 ]
 
 { #category : #accessing }
@@ -814,7 +807,6 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: localExtraField asByteArray.
-
 ]
 
 { #category : #writing }

@@ -79,7 +79,6 @@ IdentityTransform >> invertBoundsRect: aRectangle [
 	no transformation is made."
 
 	^aRectangle
-
 ]
 
 { #category : #testing }

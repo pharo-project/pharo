@@ -34,7 +34,7 @@ ClyShowMessageSenderCommand class >> methodBrowserToolbarActivation [
 ClyShowMessageSenderCommand class >> methodMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }

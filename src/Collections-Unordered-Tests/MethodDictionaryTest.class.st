@@ -99,7 +99,7 @@ MethodDictionaryTest >> nonEmpty [
 
 { #category : #requirements }
 MethodDictionaryTest >> nonEmptyDict [
-	^ nonEmptyDict 
+	^ nonEmptyDict
 ]
 
 { #category : #requirements }

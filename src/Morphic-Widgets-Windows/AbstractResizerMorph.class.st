@@ -42,7 +42,6 @@ AbstractResizerMorph >> handlesMouseDown: anEvent [
 AbstractResizerMorph >> handlesMouseOver: anEvent [
 
 	^ true
-	
 ]
 
 { #category : #initialization }

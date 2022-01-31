@@ -78,7 +78,6 @@ AsyncFile >> primClose: fHandle [
 	"Close this file. Do nothing if primitive fails."
 
 	<primitive: 'primitiveAsyncFileClose' module: 'AsynchFilePlugin'>
-	
 ]
 
 { #category : #primitives }
@@ -97,7 +96,6 @@ AsyncFile >> primReadResult: fHandle intoBuffer: buffer at: startIndex count: co
 
 	<primitive: 'primitiveAsyncFileReadResult' module: 'AsynchFilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -117,8 +115,6 @@ Then save-and-quit, restart, and try to open the movie file again.  If you are u
 
 then save-and-quit, restart, and try again.
 "
-
-
 ]
 
 { #category : #primitives }
@@ -129,7 +125,6 @@ AsyncFile >> primWriteResult: fHandle [
 
 	<primitive: 'primitiveAsyncFileWriteResult' module: 'AsynchFilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -139,7 +134,6 @@ AsyncFile >> primWriteStart: fHandle fPosition: fPosition fromBuffer: buffer at:
 	<primitive: 'primitiveAsyncFileWriteStart' module: 'AsynchFilePlugin'>
 	writeable ifFalse: [^ self error: 'attempt to write a file opened read-only'].
 	self primitiveFailed
-
 ]
 
 { #category : #'write and read' }
@@ -158,7 +152,6 @@ AsyncFile >> readByteCount: byteCount fromFilePosition: fPosition onCompletionDo
 		n = ErrorCode ifTrue: [^ self error: 'asynchronous read operation failed'].
 		aBlock value: buffer.
 	] forkAt: Processor userInterruptPriority.
-
 ]
 
 { #category : #tests }
@@ -191,7 +184,6 @@ AsyncFile >> test: byteCount fileName: fileName [
 	buf1 = buf2 ifFalse: [self error: 'buffers do not match'].
 	^ 'wrote ', bytesWritten printString, ' bytes; ',
 	   'read ', bytesRead printString, ' bytes'
-
 ]
 
 { #category : #'write and read' }
@@ -219,5 +211,4 @@ AsyncFile >> writeBuffer: buffer atFilePosition: fPosition onCompletionDo: aBloc
 		n = buffer size ifFalse: [^ self error: 'did not write the entire buffer'].
 		aBlock value.
 	] forkAt: Processor userInterruptPriority
-
 ]

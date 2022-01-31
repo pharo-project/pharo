@@ -59,7 +59,7 @@ OCASTSemanticAnalyzer >> compilationContext: aCompilationContext [
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: (ArgumentVariable named: aVariableNode name) 
+	^self declareVariableNode: aVariableNode as: (ArgumentVariable named: aVariableNode name)
 ]
 
 { #category : #variables }
@@ -186,7 +186,6 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
 	self visitNode: aMethodNode body.
-
 ]
 
 { #category : #visiting }

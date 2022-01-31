@@ -19,17 +19,17 @@ HEDuplicationModeStrategy class >> forOption: keyword [
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> doExistingTrait: aTrait hermesTrait: aHETrait installer: installer [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> doShouldBuildMethod: aHEMethod in: installer installer: aClass original: aMethod [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'validating existence' }

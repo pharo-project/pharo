@@ -60,7 +60,7 @@ RBAssignmentNode >> assignment: anInteger [
 
 { #category : #accessing }
 RBAssignmentNode >> assignmentOperator [
-	^  ':=' 
+	^  ':='
 ]
 
 { #category : #accessing }
@@ -139,7 +139,7 @@ RBAssignmentNode >> precedence [
 	^5
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBAssignmentNode >> removeNode: aNode [
 
 	self replaceNode: aNode withNode: aNode receiver

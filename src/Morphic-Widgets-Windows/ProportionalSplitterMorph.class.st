@@ -51,15 +51,12 @@ ProportionalSplitterMorph >> addLeftOrTop: aMorph [
 ProportionalSplitterMorph >> addRightOrBottom: aMorph [
 
 	rightOrBottom add: aMorph.
-	
-	
 ]
 
 { #category : #operations }
 ProportionalSplitterMorph >> beSplitsTopAndBottom [
 
 	splitsTopAndBottom := true.
-	
 ]
 
 { #category : #accessing }
@@ -208,7 +205,6 @@ ProportionalSplitterMorph >> resizeCursor [
 	^ Cursor resizeForEdge: (splitsTopAndBottom
 		ifTrue: [#top]
 		ifFalse: [#left])
-		
 ]
 
 { #category : #accessing }

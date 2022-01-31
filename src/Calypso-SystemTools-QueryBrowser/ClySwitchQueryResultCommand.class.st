@@ -14,12 +14,12 @@ Class {
 
 { #category : #testing }
 ClySwitchQueryResultCommand class >> isAbstract [
-	^self = ClySwitchQueryResultCommand 
+	^self = ClySwitchQueryResultCommand
 ]
 
 { #category : #activation }
 ClySwitchQueryResultCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 	
-	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup for: ClyQueryBrowserContext 
+	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup for: ClyQueryBrowserContext
 ]

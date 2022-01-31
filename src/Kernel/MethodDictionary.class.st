@@ -67,14 +67,13 @@ MethodDictionary class >> newForCapacity: capacity [
 	"Create an instance with the given capacity which must be a power of two."
 	
 	^(self basicNew: capacity) initialize: capacity
-
 ]
 
 { #category : #sizing }
 MethodDictionary class >> sizeFor: numberOfElements [
     "Return the minimum capacity of a dictionary that can hold numberOfElements elements. At least 25% of the array must be empty and the return value must be a nonnegative power of 2. Notice that the max: 1 is because a MethodDictionaries can never be entirely empty, as the #grow method requires it not to be (since it does self basicSize * 2)"
 
-	^(numberOfElements * 4 // 3 max: 1) asLargerPowerOfTwo 
+	^(numberOfElements * 4 // 3 max: 1) asLargerPowerOfTwo
 ]
 
 { #category : #accessing }
@@ -305,12 +304,12 @@ MethodDictionary >> scanFor: anObject [
 
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := self basicAt: index) isNil or: [element == anObject])
+		[:index | ((element := self basicAt: index) == nil or: [element == anObject])
 			ifTrue: [^ index ]].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := self basicAt: index) isNil or: [element == anObject])
+		[:index | ((element := self basicAt: index) == nil or: [element == anObject])
 			ifTrue: [^ index ]].
 
 	^ 0  "No match AND no empty slot"
@@ -324,7 +323,6 @@ MethodDictionary >> swap: oneIndex with: otherIndex [
 	self basicAt: oneIndex put: (self basicAt: otherIndex).
 	self basicAt: otherIndex put: element.
 	array swap: oneIndex with: otherIndex
-
 ]
 
 { #category : #enumeration }

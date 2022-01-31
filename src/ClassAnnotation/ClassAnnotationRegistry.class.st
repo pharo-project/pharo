@@ -156,7 +156,7 @@ ClassAnnotationRegistry class >> handleOldMethodChange: aMethodModified [
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodModified oldMethod]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClassAnnotationRegistry class >> reset [
 	<script>
 	
@@ -195,7 +195,7 @@ ClassAnnotationRegistry >> addAnnotation: aClassAnnotation [
 
 	container := annotatedClasses 
 		at: actualAnnotation annotatedClass ifAbsentPut: [ Set new].
-	container add: actualAnnotation	
+	container add: actualAnnotation
 ]
 
 { #category : #queries }

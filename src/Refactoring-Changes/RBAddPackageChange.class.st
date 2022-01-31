@@ -7,11 +7,12 @@ Class {
 	#instVars : [
 		'packageName'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Packages'
 }
 
 { #category : #adding }
 RBAddPackageChange class >> addPackageNamed: aString [
+
 	^ self new addPackageNamed: aString
 ]
 

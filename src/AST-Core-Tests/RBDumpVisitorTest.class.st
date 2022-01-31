@@ -21,7 +21,6 @@ RBDumpVisitorTest >> testAPI [
 	self 
 		assert: (RBDumpVisitor new visit: node) contents
 		equals:  'RBMessageNode receiver: (RBVariableNode named: #self) selector: #foo'
-	
 ]
 
 { #category : #tests }

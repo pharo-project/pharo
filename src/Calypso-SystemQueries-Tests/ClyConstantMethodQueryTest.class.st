@@ -105,13 +105,11 @@ ClyConstantMethodQueryTest >> testNotEmptyFromEmptyMethodScope [
 { #category : #tests }
 ClyConstantMethodQueryTest >> testNotSelectsMethodOnWhichItIsBased [
 
-	self deny: (query selectsMethod: Point >> #x) 
-
+	self deny: (query selectsMethod: Point >> #x)
 ]
 
 { #category : #tests }
 ClyConstantMethodQueryTest >> testSelectsMethodOnWhichItIsBased [
 
-	self assert: (query selectsMethod: self class >> #method1) 
-
+	self assert: (query selectsMethod: self class >> #method1)
 ]

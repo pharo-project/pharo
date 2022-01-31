@@ -14,5 +14,5 @@ ClyAbstractSubclassMock >> abstractMethod1 [
 
 { #category : #protocol }
 ClyAbstractSubclassMock >> abstractSubclassMethod [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

@@ -63,7 +63,7 @@ ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand isComplexRefactoring ifTrue: [
 		aCommand confirmRefactoringInContext: self by: aCommandActivator].
 	
-	aCommand execute 
+	aCommand execute
 ]
 
 { #category : #testing }
@@ -150,7 +150,7 @@ ClySourceCodeContext >> lastSelectedSourceNode [
 { #category : #selection }
 ClySourceCodeContext >> lastSelectedVariable [
 
-	^self selectedVariable 
+	^self selectedVariable
 ]
 
 { #category : #'refactoring support' }

@@ -27,7 +27,7 @@ EpRBPropagateRefactoring >> asEpiceaEvent [
 { #category : #initialization }
 EpRBPropagateRefactoring >> initializeWith: aRefactoring [ 
 	self initialize.
-	targetRefactoring := aRefactoring 
+	targetRefactoring := aRefactoring
 ]
 
 { #category : #private }
@@ -37,7 +37,7 @@ EpRBPropagateRefactoring >> primitiveExecute [
 
 { #category : #accessing }
 EpRBPropagateRefactoring >> setOption: aString toUse: aBlockClosure [ 
-	targetRefactoring setOption: aString toUse: aBlockClosure 
+	targetRefactoring setOption: aString toUse: aBlockClosure
 ]
 
 { #category : #accessing }

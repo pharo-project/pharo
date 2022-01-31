@@ -16,7 +16,7 @@ ZnUtils class >> bufferedWriteStreamOn: stream [
 		yourself
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> capitalizeString: string [
 	| capitalExpected |
 	capitalExpected := true.
@@ -43,26 +43,26 @@ ZnUtils class >> currentProcessID [
 	^ Processor activeProcess hash \\ 999999
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> decodeBase64: string [
 	| bytes |
 	bytes := ZnBase64Encoder new decode: string.
 	^ ZnNullEncoder new decodeBytes: bytes
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> encodeBase64: string [
 	| bytes |
 	bytes := ZnNullEncoder new encodeString: string.
 	^ ZnBase64Encoder new encode: bytes
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> httpDate [
 	^ self httpDate: DateAndTime now
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> httpDate: object [
 	"Answers a string formatting object as time stamp for HTTP1.1 (RFC 1123). 
 	Eg. Sun, 06 Nov 1994 08:49:37 GMT"
@@ -113,7 +113,7 @@ ZnUtils class >> nextPutAll: collection on: stream [
 		self signalProgress: totalWritten total: total ]
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> parseHttpDate: string [
 	"self parseHttpDate: 'Tue, 13 Sep 2011 08:04:49 GMT'."
 	"self parseHttpDate: 'Tue, 13-Sep-2011 08:04:51 GMT'."
@@ -225,7 +225,7 @@ ZnUtils class >> streamingBufferSize [
 	^ 16384
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnUtils class >> trimString: string [
 	"Until String>>#trimBoth is available everywhere"
 	

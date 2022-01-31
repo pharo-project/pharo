@@ -87,7 +87,6 @@ IRStackCount >> printOn: aStream [
 		nextPutAll: ' start '; print: start;
 		nextPutAll: ' stop '; print: position;
 		nextPutAll: ' max '; print: length.
-
 ]
 
 { #category : #affecting }

@@ -28,7 +28,7 @@ PreDebugResumeDebugAction >> executeAction [
 	self session 
 		resume;
 		clear.
-	self preDebugWindow close. 
+	self preDebugWindow close.
 ]
 
 { #category : #accessing }

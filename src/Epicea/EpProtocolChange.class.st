@@ -16,7 +16,7 @@ EpProtocolChange class >> behavior: aBehavior protocol: aProtocol [
 	^ self basicNew 
 		initializeWithBehavior: aBehavior
 		protocol: aProtocol;
-		yourself 
+		yourself
 ]
 
 { #category : #accessing }

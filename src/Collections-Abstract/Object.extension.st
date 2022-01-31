@@ -32,7 +32,6 @@ Object >> split: aSequenceableCollection [
 	self split: aSequenceableCollection do: [ :item |
 		result add: item ].
 	^ result
-
 ]
 
 { #category : #'*Collections-Abstract-splitjoin' }
@@ -66,5 +65,4 @@ Object >> split: aSequenceableCollection indicesDo: aBlock [
 	].
 
 	aBlock value: oldPosition value: aSequenceableCollection size.
-
 ]

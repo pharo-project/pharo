@@ -28,7 +28,6 @@ TDictionaryKeysValuesAssociationsAccess >> testAssociations [
 	self assert: result size = collection size.
 	result do: [:assoc | self assert: (assoc value) = (collection at: assoc key) ].
 	"keys do: [ :key | self assert: ( result at: key ) = ( collection at: key )] ."
-	
 ]
 
 { #category : #'tests - dictionary keys values associations access' }
@@ -61,5 +60,4 @@ TDictionaryKeysValuesAssociationsAccess >> testValues [
 	
 	self assert: result size = collection size.
 	result do: [:each | self assert: (collection occurrencesOf:each ) = (result occurrencesOf: each) ].
-	
 ]

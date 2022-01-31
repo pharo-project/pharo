@@ -64,7 +64,7 @@ OSKeyboardEvent >> character: anObject [
 OSKeyboardEvent >> characterCode [
 	"answer the unicode value"
 	
-	^ character ifNil: [0] ifNotNil: [ character charCode ] 
+	^ character ifNil: [0] ifNotNil: [ character charCode ]
 ]
 
 { #category : #initialization }
@@ -107,7 +107,6 @@ OSKeyboardEvent >> printOn: stream [
 	stream space; nextPutAll: 'symbol '; print: symbol.
 	stream space; nextPutAll: 'character '; print: character.
 	stream space; nextPutAll: 'modifiers: '; print: modifiers.
-	
 ]
 
 { #category : #accessing }

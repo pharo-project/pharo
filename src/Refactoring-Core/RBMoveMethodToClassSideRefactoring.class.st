@@ -63,7 +63,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 			[^ true].
 	(class whoDefinesClassVariable: aString) ifNotNil: 
 			[^ true].
-	^ (self parseTree allDefinedVariables includes: aString) 
+	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
 { #category : #transforming }
@@ -82,7 +82,7 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 RBMoveMethodToClassSideRefactoring >> getNewSource [
 
 	| rewriter node temp |
-	temp := self getTempName.
+	temp := self temporaryName.
 	node := RBParser parseMethod: method source.
 	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
@@ -92,7 +92,7 @@ RBMoveMethodToClassSideRefactoring >> getNewSource [
 				(RBParser parseExpression: temp , ' := self new').
 			node body addTemporaryNamed: temp.
 			^ node newSource ]
-		ifFalse: [ ^ node sourceCode ] 
+		ifFalse: [ ^ node sourceCode ]
 ]
 
 { #category : #transforming }
@@ -152,6 +152,18 @@ RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 		nextPutAll: class name.
 	aStream
 		nextPutAll: ')'
+]
+
+{ #category : #transforming }
+RBMoveMethodToClassSideRefactoring >> temporaryName [
+	| aString counter tempName |
+	counter := 0.
+	aString := class canonicalArgumentName.
+	tempName := aString.
+	[self checkVariableNamed: tempName]
+	whileTrue: [ counter := counter + 1.
+		tempName := aString , counter asString ].
+	^ tempName
 ]
 
 { #category : #transforming }

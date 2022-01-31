@@ -23,7 +23,7 @@ EpBehaviorCategoryChange class >> oldCategory: anOldCategory newCategory: aNewCa
 { #category : #visitor }
 EpBehaviorCategoryChange >> accept: aVisitor [
 
-	^ aVisitor visitBehaviorCategoryChange: self 
+	^ aVisitor visitBehaviorCategoryChange: self
 ]
 
 { #category : #accessing }

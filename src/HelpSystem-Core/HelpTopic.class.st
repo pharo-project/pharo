@@ -63,7 +63,6 @@ HelpTopic class >> title: aTitle contents: aText [
 		title: aTitle;
 		contents: aText;
 		yourself.
-		
 ]
 
 { #category : #'instance creation' }
@@ -75,7 +74,6 @@ HelpTopic class >> title: aTitle icon: anIcon contents: aText [
 		icon: anIcon;
 		contents: aText;
 		yourself.
-		
 ]
 
 { #category : #'instance creation' }
@@ -87,14 +85,13 @@ HelpTopic class >> title: aTitle iconName: anIconName contents: aText [
 		iconName: anIconName;
 		contents: aText;
 		yourself.
-		
 ]
 
 { #category : #comparing }
 HelpTopic >> <= anotherHelpTopic [
 	"Use sorting by title as the default sort order"
 	
-	^self title <= anotherHelpTopic title 
+	^self title <= anotherHelpTopic title
 ]
 
 { #category : #accessing }
@@ -106,7 +103,7 @@ HelpTopic >> addSubtopic: aTopic [
 	^aTopic
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 HelpTopic >> asHelpTopic [ 
 	"Converts the receiver to a help topic"
 	
@@ -133,7 +130,6 @@ HelpTopic >> defaultTitle [
 	"Returns the receivers default title"
 	
 	^'Unnamed Topic'
-	
 ]
 
 { #category : #printing }
@@ -145,7 +141,7 @@ HelpTopic >> displayStringOn: stream [
 HelpTopic >> hasSubtopics [ 
 	"Returns true if the receiver has subtopics, false otherwise"
 	
-	^self subtopics notEmpty 
+	^self subtopics notEmpty
 ]
 
 { #category : #accessing }
@@ -159,14 +155,14 @@ HelpTopic >> icon [
 HelpTopic >> icon: aSymbol [
 	"Sets the receivers icon"
 	
-	icon := aSymbol 
+	icon := aSymbol
 ]
 
 { #category : #accessing }
 HelpTopic >> iconName: aSymbol [
 	"Sets the receivers icon"
 	
-	self icon: (self iconNamed: aSymbol) 
+	self icon: (self iconNamed: aSymbol)
 ]
 
 { #category : #initialization }
@@ -176,7 +172,7 @@ HelpTopic >> initialize [
 	super initialize.
 	self title: self defaultTitle.
 	self contents: ''.
-	self key: '' 
+	self key: ''
 ]
 
 { #category : #accessing }
@@ -190,7 +186,7 @@ HelpTopic >> key [
 HelpTopic >> key: aUniqueKey [
 	"Sets a unique key identifying the receiver in the help system"	
 		
-	key := aUniqueKey 
+	key := aUniqueKey
 ]
 
 { #category : #accessing }
@@ -233,7 +229,7 @@ HelpTopic >> printOn: stream [
 HelpTopic >> sortSubtopicsByTitle [
 	"Sort the subtopics by title"
 	
-	subtopics := SortedCollection withAll: self subtopics  
+	subtopics := SortedCollection withAll: self subtopics
 ]
 
 { #category : #accessing }

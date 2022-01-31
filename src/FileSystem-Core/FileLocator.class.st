@@ -45,134 +45,112 @@ Class {
 
 { #category : #'windows-origins' }
 FileLocator class >> A [
-	^ self driveNamed: #A 
-
+	^ self driveNamed: #A
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> B [
 	^ self driveNamed: #B
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> C [
 	^ self driveNamed: #C
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> D [
 	^ self driveNamed: #D
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> E [
 	^ self driveNamed: #E
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> F [
 	^ self driveNamed: #F
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> G [
 	^ self driveNamed: #G
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> H [
 	^ self driveNamed: #H
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> I [
 	^ self driveNamed: #I
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> J [
 	^ self driveNamed: #J
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> K [
 	^ self driveNamed: #K
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> L [
 	^ self driveNamed: #L
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> M [
 	^ self driveNamed: #M
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> N [
 	^ self driveNamed: #N
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> O [
 	^ self driveNamed: #O
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> P [
 	^ self driveNamed: #P
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> Q [
 	^ self driveNamed: #Q
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> R [
 	^ self driveNamed: #R
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> S [
 	^ self driveNamed: #S
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> T [
 	^ self driveNamed: #T
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> U [
 	^ self driveNamed: #U
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> V [
 	^ self driveNamed: #V
-
 ]
 
 { #category : #'windows-origins' }
@@ -183,19 +161,16 @@ FileLocator class >> W [
 { #category : #'windows-origins' }
 FileLocator class >> X [
 	^ self driveNamed: #X
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> Y [
 	^ self driveNamed: #Y
-
 ]
 
 { #category : #'windows-origins' }
 FileLocator class >> Z [
 	^ self driveNamed: #Z
-
 ]
 
 { #category : #adding }
@@ -210,7 +185,7 @@ FileLocator class >> cache [
 
 { #category : #origins }
 FileLocator class >> changes [
-	^ self origin: #changes 
+	^ self origin: #changes
 ]
 
 { #category : #origins }
@@ -280,12 +255,12 @@ FileLocator class >> home [
 
 { #category : #origins }
 FileLocator class >> image [
-	^ self origin: #image 
+	^ self origin: #image
 ]
 
 { #category : #origins }
 FileLocator class >> imageDirectory [
-	^ self origin: #imageDirectory 
+	^ self origin: #imageDirectory
 ]
 
 { #category : #'class initialization' }
@@ -300,7 +275,7 @@ FileLocator class >> initialize [
 
 { #category : #origins }
 FileLocator class >> localDirectory [
-	^ self origin: #localDirectory 
+	^ self origin: #localDirectory
 ]
 
 { #category : #'instance creation' }
@@ -404,7 +379,7 @@ FileLocator >> absolutePath [
 
 { #category : #converting }
 FileLocator >> asAbsolute [
-	^ self 
+	^ self
 ]
 
 { #category : #converting }
@@ -498,7 +473,7 @@ FileLocator >> printOn: aStream [
 
 { #category : #streams }
 FileLocator >> readStream [
-	^ self resolve readStream 
+	^ self resolve readStream
 ]
 
 { #category : #operations }
@@ -526,5 +501,5 @@ FileLocator >> resolveString: aString [
 
 { #category : #streams }
 FileLocator >> writeStream [
-	^ self resolve writeStream 
+	^ self resolve writeStream
 ]

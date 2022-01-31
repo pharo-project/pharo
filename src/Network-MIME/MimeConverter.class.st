@@ -19,7 +19,6 @@ MimeConverter class >> forEncoding: encodingString [
 		{ ['base64'] -> [Base64MimeConverter].
 		  ['quoted-printable'] -> [QuotedPrintableMimeConverter]}
 		otherwise: [].
-
 ]
 
 { #category : #convenience }
@@ -64,14 +63,14 @@ MimeConverter >> dataStream: anObject [
 	dataStream := anObject
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 MimeConverter >> mimeDecode [
 	"Do conversion reading from mimeStream writing to dataStream"
 
 	self subclassResponsibility
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 MimeConverter >> mimeEncode [
 	"Do conversion reading from dataStream writing to mimeStream"
 

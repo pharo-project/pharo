@@ -23,5 +23,5 @@ CDDoubleByteClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDDoubleByteClassParserTest >> testDoubleByteClass [
 
-	self assert: classDefinition layoutClass equals: DoubleByteLayout 
+	self assert: classDefinition layoutClass equals: DoubleByteLayout
 ]

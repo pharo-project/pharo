@@ -1,6 +1,6 @@
 Extension { #name : #RBProgramNode }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> banChecksForValidation [
 "returns ban levels that have to be chacked before validation"
 
@@ -11,7 +11,7 @@ RBProgramNode >> banChecksForValidation [
 	^ #()
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> banLevelCandidates [
 "returns code entities which can ban a rule for this entity"
 
@@ -22,12 +22,12 @@ RBProgramNode >> banLevelCandidates [
 	^ #()
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> critiques [
 	^ ReCriticEngine critiquesOf: self
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [ 
 	| context |
 	
@@ -38,7 +38,7 @@ RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [
 		ifFalse: anAlternativeBlock
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> nodeAtTraversalIndex: anIndex [
 	| index |
 	index := 0.
@@ -50,7 +50,7 @@ RBProgramNode >> nodeAtTraversalIndex: anIndex [
 	NotFound signal.
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> package [
 	"a hack to make the critique check working"
 	"the package information is used to determin bans"
@@ -58,12 +58,12 @@ RBProgramNode >> package [
 	^ nil
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> suitableRulesFrom: aReRuleManager [ 
 	^ aReRuleManager nodeRules
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBProgramNode >> traversalIndexOf: aNode [
 	| index |
 	index := 0.

@@ -240,7 +240,6 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
                     (self fileHandleOn: '/tmp')
                         deleteFileNamed: zipFile;
                         deleteFileNamed: errorFileName ] ]
-
 ]
 
 { #category : #'repository creation' }

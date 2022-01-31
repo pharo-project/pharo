@@ -67,7 +67,7 @@ FuzzyMatcherExample class >> exampleSelectors [
 	^ self new 
 		pattern: '::::::::::';
 		elements: Symbol selectorTable asArray;
-		open 
+		open
 ]
 
 { #category : #private }
@@ -103,7 +103,6 @@ FuzzyMatcherExample >> buildMorph [
 		addMorph: textModel.
 	
 	^ morph
-	
 ]
 
 { #category : #accessing }
@@ -113,7 +112,6 @@ FuzzyMatcherExample >> elements: aCollection [
 	matchedElements := elements.
 	dataSource elements: matchedElements.
 	self update
-	
 ]
 
 { #category : #private }
@@ -146,8 +144,6 @@ FuzzyMatcherExample >> initialize [
 		send: #update to: self.
 	
 	stringMorph := StringMorph contents: '' font: self aquireFont
-		
-	
 ]
 
 { #category : #private }
@@ -227,5 +223,4 @@ FuzzyMatcherExample >> updatePattern: newPattern [
 	pattern := newPattern.	
 	dataSource elements: matchedElements.	
 	dataSource table ifNotNil: [ :fastTable | fastTable refresh ]
-	
 ]

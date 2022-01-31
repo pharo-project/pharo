@@ -30,7 +30,7 @@ EpMethodChange >> isEpMethodChange [
 { #category : #accessing }
 EpMethodChange >> methodAffected [
 	
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

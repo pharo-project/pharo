@@ -49,7 +49,6 @@ Clipboard class >> initialize [
 { #category : #'system startup' }
 Clipboard class >> shutDown: isImageQuitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
-
 ]
 
 { #category : #'system startup' }
@@ -86,7 +85,6 @@ Clipboard >> clipboardText: text [
 
 	self noteRecentClipping: text asText copyWithoutExternalReferences.
 	contents := text asText copyWithoutExternalReferences.
-
 ]
 
 { #category : #initialization }
@@ -104,5 +102,4 @@ Clipboard >> noteRecentClipping: text [
 	(recent includes: text) ifTrue: [^ self].
 	recent addFirst: text.
 	[recent size > 5] whileTrue: [recent removeLast].
-
 ]

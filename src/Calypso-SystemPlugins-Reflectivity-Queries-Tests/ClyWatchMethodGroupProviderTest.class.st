@@ -21,7 +21,7 @@ ClyWatchMethodGroupProviderTest >> groupProviderClass [
 ClyWatchMethodGroupProviderTest >> setUp [
 	super setUp.
 	
-	installedWatchpoint := ClyMethodWatchQueryTest new setUp; installWatchInto: #methodWithWatch 
+	installedWatchpoint := ClyMethodWatchQueryTest new setUp; installWatchInto: #methodWithWatch
 ]
 
 { #category : #running }

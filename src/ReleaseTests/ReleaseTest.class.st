@@ -79,7 +79,7 @@ ReleaseTest >> knownProcesses [
 		CurrentExecutionEnvironment value watchDogProcess.
 		Delay schedulingProcess.
 		TKTWatchDog onDuty pharoProcess.
-		OSSDL2Driver current eventLoopProcess.
+		OSSDL2Driver eventLoopProcess.
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
@@ -269,12 +269,11 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 	methods := methods select: [:method |
 	method methodClass superclass
 		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
-			ifNotNil: [ :overridenMethod | method ast = overridenMethod ast ]
+			ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 	].
-	self assert: methods size <= 470.
-	ASTCache reset.
+	self assert: methods size <= 369.
 
 
 	"there should be no method left"

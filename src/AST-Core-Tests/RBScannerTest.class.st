@@ -31,7 +31,6 @@ RBScannerTest >> testCommentTokenHasTheRightValue [
 	scanner := self buildScannerForText: String tab, ' "comment ""nested at end""" firstToken'.
 	token := scanner next comments first.
 	self assert: token value equals: 'comment ""nested at end""'.
-	
 ]
 
 { #category : #'tests - Comment' }
@@ -57,7 +56,6 @@ RBScannerTest >> testCommentTokenStartAtFirstQuote [
 	token := scanner next comments first.
 	self assert: token isComment.
 	self assert: token start equals: (str findString: comment).
-	
 ]
 
 { #category : #'tests - Comment' }
@@ -83,7 +81,6 @@ RBScannerTest >> testCommentTokenStopAtLastQuote [
 	token := scanner next comments first.
 	self assert: token isComment.
 	self assert: token stop equals: (str findString: comment) + comment size - 1.
-	
 ]
 
 { #category : #'tests - Comment' }
@@ -171,7 +168,6 @@ RBScannerTest >> testNextAllAlphabeticsGiveIdentifier [
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
 	self assert: token isIdentifier.
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -188,7 +184,6 @@ RBScannerTest >> testNextAlphabeticsAndDigitGiveIdentifier [
 	scanner := self buildScannerForText: 'first123Token'.
 	token := scanner next.
 	self assert: token isIdentifier.
-	
 ]
 
 { #category : #'tests - Start' }
@@ -321,7 +316,6 @@ RBScannerTest >> testNextCommentIsCommentToken [
 	scanner := self buildScannerForText: String tab, ' "comment ""nested at end""" firstToken'.
 	token := scanner next comments first.
 	self assert: token isComment.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -331,7 +325,6 @@ RBScannerTest >> testNextDoesNotAddLineBreakToComments [
 firstToken'.
 	token := scanner next.
 	self assert: token comments isNil.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -340,7 +333,6 @@ RBScannerTest >> testNextDoesNotAddSpacesToComments [
 	scanner := self buildScannerForText: String space, String space,'firstToken'.
 	token := scanner next.
 	self assert: token comments isNil.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -349,7 +341,6 @@ RBScannerTest >> testNextDoesNotAddTabToComments [
 	scanner := self buildScannerForText: String tab, 'firstToken'.
 	token := scanner next.
 	self assert: token comments isNil.
-	
 ]
 
 { #category : #'tests - Error' }
@@ -440,7 +431,6 @@ RBScannerTest >> testNextFirstTokenContainsPrecedingComments [
 	token := scanner next.
 	self assert: token comments size equals: 1.
 	self assert: token comments first isComment.
-	
 ]
 
 { #category : #'tests - NumberLiteral' }
@@ -508,7 +498,6 @@ RBScannerTest >> testNextIdentifierCanContainUnderscore [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token value equals: 'firstToken_'.
-	
 ]
 
 { #category : #'tests - Identifiers' }
@@ -541,7 +530,6 @@ RBScannerTest >> testNextIdentifierCanNotBeginWithDigit [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token value equals: 'firstToken'.
-	
 ]
 
 { #category : #'tests - Identifiers' }
@@ -575,7 +563,6 @@ RBScannerTest >> testNextIdentifierCanNotHaveBinary [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token value equals: 'Token'.
-	
 ]
 
 { #category : #'tests - Start' }
@@ -584,7 +571,6 @@ RBScannerTest >> testNextIdentifierStartAtFirstLetter [
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
 	self assert: token start equals: 1.
-	
 ]
 
 { #category : #'tests - Stop' }
@@ -593,7 +579,6 @@ RBScannerTest >> testNextIdentifierStopAtLastLetter [
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
 	self assert: token stop equals: 10.
-	
 ]
 
 { #category : #'tests - Identifiers' }
@@ -602,7 +587,6 @@ RBScannerTest >> testNextIdentifierValueIsName [
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
-	
 ]
 
 { #category : #'tests - Start' }
@@ -611,7 +595,6 @@ RBScannerTest >> testNextKeyWordStartAtFirstLetter [
 	scanner := self buildScannerForText: 'firstToken:'.
 	token := scanner next.
 	self assert: token start equals: 1.
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -636,9 +619,6 @@ RBScannerTest >> testNextKeywordBeginningWithSpecialCharacterIsNotKeyword [
 	token := scanner next.
 	self assert: token isError.
 	self assert: token value equals: '`'.
-	
-	
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -674,8 +654,6 @@ RBScannerTest >> testNextKeywordCanNotBeFullBinary [
 	token := scanner next.
 	self assert: token isSpecial.
 	self assert: token value equals: $:.
-	
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -692,7 +670,6 @@ RBScannerTest >> testNextKeywordCanNotBeFullDigit [
 	token := scanner next.
 	self assert: token isSpecial.
 	self assert: token value equals: $:.
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -707,7 +684,6 @@ RBScannerTest >> testNextKeywordCanNotBeginWithBinary [
 	token := scanner next.
 	self assert: token isKeyword.
 	self assert: token value equals: 'alpha:'.
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -722,8 +698,6 @@ RBScannerTest >> testNextKeywordCanNotBeginWithDigit [
 	token := scanner next.
 	self assert: token isKeyword.
 	self assert: token value equals: 'alpha:'.
-	
-	
 ]
 
 { #category : #'tests - Stop' }
@@ -738,7 +712,6 @@ RBScannerTest >> testNextKeywordStopAtColon [
 	token := scanner next.
 	self assert: token isKeyword.
 	self assert: token stop equals: 6.
-	
 ]
 
 { #category : #'tests - Keyword' }
@@ -751,7 +724,6 @@ RBScannerTest >> testNextKeywordValueIsStartToStop [
 	scanner := self buildScannerForText: 'first:Token'.
 	token := scanner next.
 	self assert: token value equals: 'first:'.
-	
 ]
 
 { #category : #'tests - SpecialCharacters' }
@@ -982,7 +954,6 @@ RBScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
 	self verifyErrorToken: scannedToken message: 'A Character was expected' translated valueExpected: '$'
-
 ]
 
 { #category : #'tests - Start' }
@@ -1205,7 +1176,6 @@ RBScannerTest >> testNextSpecialCharacterStartAtTheBeginning [
 	scanner := self buildScannerForText: ']'.
 	token := scanner next.
 	self assert: token start equals: 1.
-	
 ]
 
 { #category : #'tests - Stop' }
@@ -1223,7 +1193,6 @@ RBScannerTest >> testNextSpecialCharacterStopAtThemself [
 	scanner := self buildScannerForText: ']'.
 	token := scanner next.
 	self assert: token stop equals: 1.
-	
 ]
 
 { #category : #'tests - SpecialCharacters' }
@@ -1248,7 +1217,6 @@ RBScannerTest >> testNextSpecialCharactereisSingle [
 	scanner := self buildScannerForText: ']'.
 	token := scanner next.
 	self assert: token value equals: $].
-	
 ]
 
 { #category : #'tests - SpecialCharacters' }
@@ -1265,7 +1233,6 @@ RBScannerTest >> testNextSpecialCharactereisSpecial [
 	scanner := self buildScannerForText: ']'.
 	token := scanner next.
 	self assert: token isSpecial.
-	
 ]
 
 { #category : #'tests - Literal' }
@@ -1309,7 +1276,6 @@ RBScannerTest >> testNextTokenStartAfterComment [
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
 	self assert: token start equals: 16.
-	
 ]
 
 { #category : #'tests - Start' }
@@ -1321,7 +1287,6 @@ firstToken'.
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
 	self assert: token start equals: 2.
-	
 ]
 
 { #category : #'tests - Start' }
@@ -1332,7 +1297,6 @@ RBScannerTest >> testNextTokenStartAfterSpaces [
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
 	self assert: token start equals: 3.
-	
 ]
 
 { #category : #'tests - Start' }
@@ -1343,7 +1307,6 @@ RBScannerTest >> testNextTokenStartAfterTab [
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
 	self assert: token start equals: 2.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1352,7 +1315,6 @@ RBScannerTest >> testNextTrimsBeginningComment [
 	scanner := self buildScannerForText: '"start comment"firstToken'.
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1362,7 +1324,6 @@ RBScannerTest >> testNextTrimsBeginningLineBreak [
 firstToken'.
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1371,7 +1332,6 @@ RBScannerTest >> testNextTrimsBeginningSpaces [
 	scanner := self buildScannerForText: String space, String space, 'firstToken'.
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1380,7 +1340,6 @@ RBScannerTest >> testNextTrimsBeginningTab [
 	scanner := self buildScannerForText: String tab, 'firstToken'.
 	token := scanner next.
 	self assert: token value equals: 'firstToken'.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1391,7 +1350,6 @@ RBScannerTest >> testNextTrimsEndComment [
 	token := scanner next.
 	self assert: token isEOF.
 	self assert: token start equals: 24.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1403,7 +1361,6 @@ RBScannerTest >> testNextTrimsEndLineBreak [
 	token := scanner next.
 	self assert: token isEOF.
 	self assert: token start equals: 12.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1414,7 +1371,6 @@ RBScannerTest >> testNextTrimsEndSpaces [
 	token := scanner next.
 	self assert: token isEOF.
 	self assert: token start equals: 13.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1425,7 +1381,6 @@ RBScannerTest >> testNextTrimsEndTab [
 	token := scanner next.
 	self assert: token isEOF.
 	self assert: token start equals: 12.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1436,7 +1391,6 @@ RBScannerTest >> testNextTrimsMiddleComment [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token start equals: 27.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1448,7 +1402,6 @@ secondToken'.
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token start equals: 12.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1459,7 +1412,6 @@ RBScannerTest >> testNextTrimsMiddleSpaces [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token start equals: 13.
-	
 ]
 
 { #category : #'tests - Separators' }
@@ -1470,7 +1422,6 @@ RBScannerTest >> testNextTrimsMiddleTab [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self assert: token start equals: 12.
-	
 ]
 
 { #category : #'tests - Literal' }
@@ -1641,7 +1592,6 @@ RBScannerTest >> testNextWithUnFinishedCommentGivesAnError [
 	| scanner |
 	scanner := self buildScannerForText: 'firstToken "unfinished comment secondToken'.
 	self should: [scanner next] raise: SyntaxErrorNotification .
-	
 ]
 
 { #category : #'tests - Creation api' }
@@ -1652,7 +1602,6 @@ RBScannerTest >> testScanTokenObjects1 [
 	'subclass:'.
 	#NameOfSubclass asString}.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp.
-	
 ]
 
 { #category : #'tests - Creation api' }
@@ -1672,7 +1621,6 @@ RBScannerTest >> testScanTokens1 [
 	'subclass:'.
 	#NameOfSubclass asString}.
 	self assert: (self scannerClass scanTokens: inp) equals: exp.
-	
 ]
 
 { #category : #'tests - Creation api' }

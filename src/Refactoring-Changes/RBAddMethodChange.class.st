@@ -16,33 +16,45 @@ Class {
 		'controller',
 		'definedSelector'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Classes'
 }
 
 { #category : #'instance creation' }
 RBAddMethodChange class >> compile: aString in: aClass [
+
 	^ self compile: aString in: aClass for: nil
 ]
 
 { #category : #'instance creation' }
 RBAddMethodChange class >> compile: aString in: aBehavior classified: aProtocol [
-	^ self compile: aString in: aBehavior classified: aProtocol for: nil
+
+	^ self
+		  compile: aString
+		  in: aBehavior
+		  classified: aProtocol
+		  for: nil
 ]
 
 { #category : #'instance creation' }
 RBAddMethodChange class >> compile: aString in: aBehavior classified: aProtocol for: aController [
-	^ self new class: aBehavior protocol: aProtocol source: aString controller: aController
+
+	^ self new
+		  class: aBehavior
+		  protocol: aProtocol
+		  source: aString
+		  controller: aController
 ]
 
 { #category : #'instance creation' }
 RBAddMethodChange class >> compile: aString in: aClass for: aController [
-	^ self new class: aClass source: aString contoller: aController
+
+	^ self new class: aClass source: aString controller: aController
 ]
 
 { #category : #comparing }
 RBAddMethodChange >> = anAddMethodChange [
-	super = anAddMethodChange
-		ifFalse: [ ^ false ].
+
+	super = anAddMethodChange ifFalse: [ ^ false ].
 	^ self parseTree = anAddMethodChange parseTree
 ]
 
@@ -63,33 +75,40 @@ RBAddMethodChange >> asUndoOperation [
 ]
 
 { #category : #accessing }
-RBAddMethodChange >> changeForClass: aClassName selector: aSelector [ 
-	^ (isMeta not and: [ self selector = aSelector and: [ className = aClassName ] ])
-		ifTrue: [ self ]
-		ifFalse: [ nil ]
+RBAddMethodChange >> changeForClass: aClassName selector: aSelector [
+
+	^ (isMeta not and: [ 
+		   self selector = aSelector and: [ className = aClassName ] ])
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #accessing }
-RBAddMethodChange >> changeForMetaclass: aClassName selector: aSelector [ 
-	^ (isMeta and: [ self selector = aSelector and: [ className = aClassName ] ])
-		ifTrue: [ self ]
-		ifFalse: [ nil ]
+RBAddMethodChange >> changeForMetaclass: aClassName selector: aSelector [
+
+	^ (isMeta and: [ 
+		   self selector = aSelector and: [ className = aClassName ] ])
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #printing }
 RBAddMethodChange >> changeString [
+
 	^ self displayClassName , '>>' , self selector
 ]
 
 { #category : #initialization }
-RBAddMethodChange >> class: aClass protocol: aProtocol source: aString [ 
+RBAddMethodChange >> class: aClass protocol: aProtocol source: aString [
+
 	self changeClass: aClass.
 	self protocols: aProtocol.
 	source := aString
 ]
 
 { #category : #initialization }
-RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controller: aController [ 
+RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controller: aController [
+
 	self changeClass: aClass.
 	self protocols: aProtocol.
 	source := aString.
@@ -97,30 +116,37 @@ RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controlle
 ]
 
 { #category : #initialization }
-RBAddMethodChange >> class: aClass source: aString contoller: aController [
+RBAddMethodChange >> class: aClass source: aString controller: aController [
+
 	self changeClass: aClass.
 	source := aString.
-	self protocols: (RBBrowserEnvironment new whichProtocolIncludes: self selector in: aClass).
+	self protocols: (RBBrowserEnvironment new
+			 whichProtocolIncludes: self selector
+			 in: aClass).
 	controller := aController
 ]
 
 { #category : #private }
 RBAddMethodChange >> controller [
+
 	^ controller
 ]
 
 { #category : #initialization }
-RBAddMethodChange >> controller: aController [ 
+RBAddMethodChange >> controller: aController [
+
 	controller := aController
 ]
 
 { #category : #accessing }
 RBAddMethodChange >> definedSelector [
+
 	^ definedSelector
 ]
 
 { #category : #comparing }
 RBAddMethodChange >> hash [
+
 	^ self parseTree hash
 ]
 
@@ -142,21 +168,24 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 
 { #category : #private }
 RBAddMethodChange >> parseTree [
+
 	^ self parserClass
-		parseMethod: self source
-		onError: [ :str :pos | ^ nil ]
+		  parseMethod: self source
+		  onError: [ :str :pos | ^ nil ]
 ]
 
 { #category : #private }
 RBAddMethodChange >> primitiveExecute [
-	definedSelector := self changeClass 
-		compile: self source
-		classified: self protocol
-		notifying: self controller
+
+	definedSelector := self changeClass
+		                   compile: self source
+		                   classified: self protocol
+		                   notifying: self controller
 ]
 
 { #category : #printing }
-RBAddMethodChange >> printOn: aStream [ 
+RBAddMethodChange >> printOn: aStream [
+
 	aStream
 		nextPut: $!;
 		nextPutAll: self displayClassName;
@@ -171,36 +200,39 @@ RBAddMethodChange >> printOn: aStream [
 
 { #category : #accessing }
 RBAddMethodChange >> protocol [
+
 	^ self protocols first
 ]
 
 { #category : #accessing }
 RBAddMethodChange >> protocols [
+
 	^ protocols
 ]
 
 { #category : #'initialize-release' }
 RBAddMethodChange >> protocols: aCollectionOrString [
-	protocols := aCollectionOrString isString
-		ifTrue: [ 	
-			aCollectionOrString = Protocol unclassified 
-				ifTrue: [ protocols := #(accessing) ]
-				ifFalse: [ Array with: aCollectionOrString ] ]
-		ifFalse: [ aCollectionOrString ].
-		
 
+	protocols := aCollectionOrString isString
+		             ifTrue: [ 
+			             aCollectionOrString = Protocol unclassified
+				             ifTrue: [ protocols := #( accessing ) ]
+				             ifFalse: [ Array with: aCollectionOrString ] ]
+		             ifFalse: [ aCollectionOrString ]
 ]
 
 { #category : #accessing }
 RBAddMethodChange >> selector [
-	selector
-		ifNil: [ selector := self parserClass parseMethodPattern: source.
-			selector ifNil: [ selector := #unknown ] ].
+
+	selector ifNil: [ 
+		selector := self parserClass parseMethodPattern: source.
+		selector ifNil: [ selector := #unknown ] ].
 	^ selector
 ]
 
 { #category : #accessing }
 RBAddMethodChange >> source [
+
 	^ source
 ]
 

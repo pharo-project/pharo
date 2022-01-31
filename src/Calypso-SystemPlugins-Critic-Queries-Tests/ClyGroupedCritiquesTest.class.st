@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 ClyGroupedCritiquesTest >> createQuery [
 
-	^ClyAllProblemMethodQuery from: (ClyClassScope emptyIn: environment).	
+	^ClyAllProblemMethodQuery from: (ClyClassScope emptyIn: environment).
 ]
 
 { #category : #running }

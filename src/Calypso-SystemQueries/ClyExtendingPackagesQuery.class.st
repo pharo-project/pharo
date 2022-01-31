@@ -49,5 +49,5 @@ ClyExtendingPackagesQuery >> description [
 { #category : #'system changes' }
 ClyExtendingPackagesQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	
-	^scope includesMethodsAffectedBy: aSystemAnnouncement 
+	^scope includesMethodsAffectedBy: aSystemAnnouncement
 ]

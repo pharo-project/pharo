@@ -21,7 +21,6 @@ EpApplyPreviewerTest >> assertOutputsAnEventWith: aBlock [
 	self assert: outputEvents size equals: 1.
 	
 	aBlock value: outputEvents anyOne.
-
 ]
 
 { #category : #resources }
@@ -38,7 +37,6 @@ EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 			newApplyPreviewLog.
 	
 	aBlock value: (outputLog entries collect: [:each | each content]).
-
 ]
 
 { #category : #resources }
@@ -74,7 +72,6 @@ EpApplyPreviewerTest >> testBehaviorCategoryChange [
 		self assert: output oldCategory equals: aCategory.
 		self assert: output newCategory equals: anotherCategory.
 		]
-
 ]
 
 { #category : #tests }
@@ -91,7 +88,6 @@ EpApplyPreviewerTest >> testBehaviorCommentChange [
 		self assert: output oldComment equals: 'after'.
 		self assert: output newComment equals: 'before'.
 		]
-
 ]
 
 { #category : #tests }
@@ -111,7 +107,6 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 		self assert: output oldName equals: oldName.
 		self assert: output newName equals: newName.
 		]
-
 ]
 
 { #category : #tests }
@@ -159,7 +154,6 @@ EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 		self assert: output oldCategoryName equals: aCategory.
 		self assert: output newCategoryName equals: anotherCategory.
 		]
-
 ]
 
 { #category : #tests }
@@ -250,7 +244,6 @@ EpApplyPreviewerTest >> testKeepChangeWhenMethodAdditionWithAbsentBehavior [
 
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpMethodAddition ]
-
 ]
 
 { #category : #tests }
@@ -265,7 +258,6 @@ EpApplyPreviewerTest >> testKeepChangeWhenMethodModificationWithAbsentBehavior [
 
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpMethodModification ]
-
 ]
 
 { #category : #tests }
@@ -366,7 +358,6 @@ EpApplyPreviewerTest >> testNonCodeChangeEvent [
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog.
-
 ]
 
 { #category : #tests }
@@ -382,7 +373,6 @@ EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 		self assert: output class equals: EpProtocolAddition.
 		self assert: output protocol equals: 'protocol'.
 		]
-
 ]
 
 { #category : #tests }
@@ -399,7 +389,6 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 		self assert: output class equals: EpProtocolRemoval.
 		self assert: output protocol equals: 'protocol'.
 		]
-
 ]
 
 { #category : #tests }
@@ -517,7 +506,6 @@ EpApplyPreviewerTest >> testRedundantMethodAddition [
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog.
-
 ]
 
 { #category : #tests }
@@ -530,7 +518,6 @@ EpApplyPreviewerTest >> testRedundantMethodModification [
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog.
-
 ]
 
 { #category : #tests }
@@ -610,7 +597,6 @@ EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 		outputClasses := output collect: #class as: Array.
 		self assert: outputClasses equals: { EpClassAddition. EpMethodAddition }.
 		]
-
 ]
 
 { #category : #'tests - multiple changes' }
@@ -632,7 +618,6 @@ EpApplyPreviewerTest >> testSequenceOfMethodModifications [
 		self assert: outputClasses equals: { EpClassAddition. EpMethodModification }.
 		self assert: output last methodAffectedSourceCode equals: 'fortyTwo ^44'.
 		]
-
 ]
 
 { #category : #tests }

@@ -157,7 +157,6 @@ AthensCubicBezier >> recursiveSubDiv: flattener level: level [
 		b1 recursiveSubDiv: flattener level: level +1.	
 		b2 recursiveSubDiv: flattener level: level +1.	
 	]
-	
 ]
 
 { #category : #subdivision }
@@ -198,8 +197,7 @@ AthensCubicBezier >> subdivideAt: t do: aBinaryBlock [
 			y2: y2334;
 			x3: x34;
 			y3: y34
-		)	
-
+		)
 ]
 
 { #category : #accessing }

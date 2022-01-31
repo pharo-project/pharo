@@ -29,7 +29,7 @@ IRReconstructor >> createTempVectorNamed: name withVars: anArray [
 
 { #category : #accessing }
 IRReconstructor >> currentSequence [
-	^currentSequence 
+	^currentSequence
 ]
 
 { #category : #accessing }
@@ -45,8 +45,7 @@ IRReconstructor >> fixPushNilsForTemps [
 
 	| blocksequence |
 	blocksequence := self currentScope blockSequence sequence.
-	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]. 
-	
+	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ].
 ]
 
 { #category : #initialization }
@@ -63,15 +62,6 @@ IRReconstructor >> isLastClosureInstruction [
 	| nextJumps |
 	nextJumps := jumpAheadStacks at: sourceMapByteIndex + 1 ifAbsent: [ ^ false ].
 	^ nextJumps anySatisfy: [ :anOrigin | anOrigin = self currentScope ]
-]
-
-{ #category : #instructions }
-IRReconstructor >> pushClosureCopyCopiedValues: copiedValuesNames args: args jumpTo: aJumpLabel [
-	| anInstruction |
-	anInstruction := super pushClosureCopyCopiedValues: copiedValuesNames args: args jumpTo: aJumpLabel.
-	"remove pushed nils of local temps"
-	anInstruction copiedValues withIndexDo: [ :aValue :index |
-		self rememberReference: anInstruction -> index to: aValue in: closureCopiedValues ]
 ]
 
 { #category : #instructions }

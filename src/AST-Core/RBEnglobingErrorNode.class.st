@@ -54,7 +54,6 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitEnglobingErrorNode: self
-
 ]
 
 { #category : #accessing }
@@ -64,7 +63,7 @@ RBEnglobingErrorNode >> children [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> content [
-	^content 
+	^content
 ]
 
 { #category : #accessing }

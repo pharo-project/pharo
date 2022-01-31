@@ -9,42 +9,48 @@ Class {
 	#instVars : [
 		'comment'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Classes'
 }
 
 { #category : #'instance creation' }
 RBCommentChange class >> comment: aString in: aClass [
+
 	^ self new
-		changeClass: aClass;
-		comment: aString;
-		yourself
+		  changeClass: aClass;
+		  comment: aString;
+		  yourself
 ]
 
 { #category : #converting }
 RBCommentChange >> asUndoOperation [
+
 	^ self copy
-		comment: self changeClass organization classComment;
-		yourself
+		  comment: self changeClass organization classComment;
+		  yourself
 ]
 
 { #category : #accessing }
 RBCommentChange >> changeClass: aBehavior [
+
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
 { #category : #printing }
 RBCommentChange >> changeString [
+
 	^ 'Comment ' , self displayClassName
 ]
 
 { #category : #accessing }
 RBCommentChange >> comment [
+
 	^ comment
 ]
 
 { #category : #accessing }
-RBCommentChange >> comment: aString [ 
+RBCommentChange >> comment: aString [
+
 	comment := aString
 ]
 
@@ -58,7 +64,8 @@ RBCommentChange >> primitiveExecute [
 ]
 
 { #category : #printing }
-RBCommentChange >> printOn: aStream [ 
+RBCommentChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' classComment: ';

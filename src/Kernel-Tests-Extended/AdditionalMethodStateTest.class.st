@@ -18,7 +18,6 @@ AdditionalMethodStateTest >> setUp [
 	pragma := (Object compiledMethodAt: #at:) penultimateLiteral at: #primitive:.
 	
 	amState := AdditionalMethodState selector: #at: with: pragma copy.
-
 ]
 
 { #category : #tests }

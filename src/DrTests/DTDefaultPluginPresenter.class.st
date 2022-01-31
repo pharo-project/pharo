@@ -52,9 +52,7 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 	
 	^group 
 		beDisplayedAsGroup;
-		yourself 
-		
-		
+		yourself
 ]
 
 { #category : #'private - commands' }
@@ -75,8 +73,8 @@ DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
 		yourself
 ]
 
-{ #category : #specs }
-DTDefaultPluginPresenter class >> defaultSpec [
+{ #category : #layout }
+DTDefaultPluginPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 		add: (SpPanedLayout newHorizontal
@@ -137,7 +135,6 @@ DTDefaultPluginPresenter >> connectPresenters [
 			resultTreeViewOrNil
 				ifNotNil: [ resultsList
 						roots: (resultTreeViewOrNil resultTreeFor: drTests pluginResult) subResults ] ].
-
 ]
 
 { #category : #'private - initialization' }
@@ -202,8 +199,6 @@ DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
 
 	self resultTree: DTTreeNode empty.
-
-	
 ]
 
 { #category : #accessing }

@@ -39,7 +39,6 @@ CalendarMorph class >> on: aDate [
 		"extent: 200 @ 160;"
 		date: aDate;
 		yourself.
-
 ]
 
 { #category : #'instance creation' }
@@ -204,7 +203,6 @@ CalendarMorph >> drawMonthHeaderOn: aCanvas [
 		at: (self bounds topCenter translateBy: (headerWidth // -2) @ 5)
 		font: self monthNameFont
 		color: Color black.
-
 ]
 
 { #category : #drawing }
@@ -228,10 +226,6 @@ CalendarMorph >> drawOn: aCanvas [
 				frameRectangle: self bounds
 				width: 1
 				color: Color black].
-
-
-
-	
 ]
 
 { #category : #drawing }
@@ -276,7 +270,6 @@ CalendarMorph >> drawWeekDayNamesOn: aCanvas [
 			at: (cellTopCenter translateBy: (textWidth // -2) @ 3)
 			font: self weekdayFont
 			color: Color darkGray]
-
 ]
 
 { #category : #accessing }
@@ -312,7 +305,6 @@ CalendarMorph >> handleNextMonthTouched [
 
 	self date: date onNextMonth.
 	self changed.
-
 ]
 
 { #category : #'event handling' }
@@ -320,7 +312,6 @@ CalendarMorph >> handlePreviousMonthTouched [
 
 	self date: date onPreviousMonth.
 	self changed.
-
 ]
 
 { #category : #'event handling' }
@@ -328,7 +319,6 @@ CalendarMorph >> handleTodayTouched [
 
 	self date: Date today.
 	self changed.
-
 ]
 
 { #category : #'event handling' }
@@ -360,7 +350,6 @@ CalendarMorph >> initialize [
 
 	super initialize.
 	touchPoints := Dictionary new.
-
 ]
 
 { #category : #accessing }
@@ -381,7 +370,6 @@ CalendarMorph >> mouseDown: event [
 	days do: [:each |
 		each highlighted: (each bounds containsPoint: morphRelativeHitPoint)].
 	self changed.
-
 ]
 
 { #category : #'event handling' }
@@ -408,7 +396,6 @@ CalendarMorph >> mouseUp: event [
 				self date: each date.
 				self announceDate ]].
 	self changed.
-
 ]
 
 { #category : #announcing }

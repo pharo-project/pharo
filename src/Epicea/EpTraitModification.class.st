@@ -22,7 +22,7 @@ EpTraitModification class >> oldTrait: anOldTrait newTrait: aNewTrait [
 { #category : #visitor }
 EpTraitModification >> accept: aVisitor [
 
-	^ aVisitor visitTraitModification: self 
+	^ aVisitor visitTraitModification: self
 ]
 
 { #category : #accessing }

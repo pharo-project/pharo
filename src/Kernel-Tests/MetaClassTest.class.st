@@ -12,3 +12,19 @@ MetaClassTest >> testHasBindingThatBeginsWith [
 	"Pools are looked up, too"
 	self assert: (TimeZone class hasBindingThatBeginsWith: 'DaysInMo')
 ]
+
+{ #category : #tests }
+MetaClassTest >> testHasClassVarNamed [
+
+	self assert: (Object class hasClassVarNamed: #DependentsFields).
+	self deny: (Object class hasClassVarNamed: #CompilerClass)
+]
+
+{ #category : #tests }
+MetaClassTest >> testclassVarNames [
+
+	self assert: (Object class classVarNames includes: #DependentsFields).
+	
+	"A class and it's meta-class share the class variables"
+	self assert: Object class classVarNames equals: Object classVarNames
+]

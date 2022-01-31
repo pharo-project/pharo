@@ -81,5 +81,4 @@ CollectionTest >> testGroupedByGroupsOrderWithSortedCollectionOfDates [
 	1 to: grouped size do: [ :i |
 		self assert: (keys at: i) equals: 2000 + i - 1.
 		].
-
 ]

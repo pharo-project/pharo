@@ -19,7 +19,7 @@ Class {
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
 ]
 
 { #category : #activation }

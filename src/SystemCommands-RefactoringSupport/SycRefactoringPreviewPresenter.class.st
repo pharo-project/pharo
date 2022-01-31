@@ -33,8 +33,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-SycRefactoringPreviewPresenter class >> defaultSpec [
+{ #category : #layout }
+SycRefactoringPreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #scopeDropList withConstraints: [ :constraints | constraints height: 30 ];
@@ -216,12 +216,6 @@ SycRefactoringPreviewPresenter >> pickedChanges [
 	^ table items select: [ :item | selectedRefactorings at: item ]
 ]
 
-{ #category : #update }
-SycRefactoringPreviewPresenter >> rebuild [
-	self needRebuild: false.
-	self buildWithSpec
-]
-
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> scopeDropList [
 	^ scopeDropList
@@ -230,6 +224,14 @@ SycRefactoringPreviewPresenter >> scopeDropList [
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> scopes: aCollectionOfScopes [
 	scopeDropList items: aCollectionOfScopes "It also sets up first item as selection"
+]
+
+{ #category : #private }
+SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [ 
+
+	| nextIndex |
+	nextIndex := (self table items indexOf: aRefactoring) + 1.
+	self table selectIndex: nextIndex scrollToSelection: true
 ]
 
 { #category : #update }
@@ -259,9 +261,8 @@ SycRefactoringPreviewPresenter >> title [
 { #category : #private }
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
 	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
-
 	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
-	self rebuild 
+	self selectItemBelow: aRefactoring 
 ]
 
 { #category : #update }

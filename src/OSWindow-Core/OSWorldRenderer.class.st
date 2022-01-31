@@ -41,7 +41,7 @@ OSWorldRenderer >> actualScreenSize [
 	^ (self windowExtent / self screenScaleFactor) ceiling max: 1@1
 ]
 
-{ #category : #private }
+{ #category : #events }
 OSWorldRenderer >> checkForNewScreenSize [
 
 	(display isNil or: [ display extent = self actualScreenSize ]) 
@@ -76,7 +76,6 @@ OSWorldRenderer >> deactivate [
 
 	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
 	display := nil.
-	
 ]
 
 { #category : #operations }
@@ -159,7 +158,6 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 	] timeToRunWithoutGC.
 	
 	self logRenderingTimeMeasurements: measurements
-
 ]
 
 { #category : #accessing }
@@ -222,6 +220,12 @@ OSWorldRenderer >> updateDamage: allDamage [
 	self osWindowRenderer updateAreas: allDamage immediate: false.
 ]
 
+{ #category : #events }
+OSWorldRenderer >> updateToNewResolution [
+
+	self window updateToNewResolution
+]
+
 { #category : #activation }
 OSWorldRenderer >> updateWindowTitle [
 
@@ -234,7 +238,7 @@ OSWorldRenderer >> updateWindowTitle [
 { #category : #accessing }
 OSWorldRenderer >> window [
 	
-	^ osWindow 
+	^ osWindow
 ]
 
 { #category : #accessing }

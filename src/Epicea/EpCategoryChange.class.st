@@ -39,7 +39,7 @@ EpCategoryChange >> affectedPackageName [
 { #category : #accessing }
 EpCategoryChange >> categoryName [
 
-	^ classCategoryName 
+	^ classCategoryName
 ]
 
 { #category : #testing }
@@ -55,7 +55,6 @@ EpCategoryChange >> initializeNamed: aName packageName: aPackageName [
 	self initialize.
 	classCategoryName := aName.
 	affectedPackageName := aPackageName.
-
 ]
 
 { #category : #testing }

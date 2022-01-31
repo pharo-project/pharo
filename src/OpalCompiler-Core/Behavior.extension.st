@@ -47,7 +47,6 @@ Behavior >> compileAllFrom: oldClass [
 	This validates sourceCode and variable references and forces
 	all methods to use the current bytecode set"
 	oldClass localSelectors do: [:sel | self recompile: sel from: oldClass].
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -81,7 +80,7 @@ Behavior >> lookupVar: aName [
 
 { #category : #'*OpalCompiler-Core' }
 Behavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName 
+	^ self lookupVar: aName
 ]
 
 { #category : #'*OpalCompiler-Core' }

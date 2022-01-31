@@ -52,7 +52,7 @@ HEBinaryReader >> readByteString [
 
 { #category : #reading }
 HEBinaryReader >> readByteSymbol [
-	^ self readByteString asSymbol 
+	^ self readByteString asSymbol
 ]
 
 { #category : #reading }

@@ -12,7 +12,7 @@ ClyOverriddenMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyOverriddenMethodGroupProviderTest >> groupProviderClass [
-	^ClyOverriddenMethodGroupProvider 
+	^ClyOverriddenMethodGroupProvider
 ]
 
 { #category : #running }

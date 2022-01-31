@@ -16,7 +16,6 @@ DelaySemaphoreScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: a
 	super initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap.
 	readyToSchedule := Semaphore new signal.
 	readyToUnschedule := Semaphore new signal.
-
 ]
 
 { #category : #initialization }
@@ -29,7 +28,6 @@ DelaySemaphoreScheduler >> schedule: aDelay [
 	readyToSchedule wait.  "Starts signalled. Resignalled from back-end #scheduleAtTimingPriority"
 	delayToStart := aDelay.
 	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
-
 ]
 
 { #category : #initialization }
@@ -39,7 +37,6 @@ DelaySemaphoreScheduler >> scheduleAtTimingPriority [
 
 	readyToSchedule signal. "But this timingPriority method completes first"
 	super 	scheduleAtTimingPriority.
-
 ]
 
 { #category : #initialization }
@@ -56,5 +53,4 @@ DelaySemaphoreScheduler >> unscheduleAtTimingPriority [
 
 	readyToUnschedule signal. "But this timingPriority method completes first"
 	super 	unscheduleAtTimingPriority.
-
 ]

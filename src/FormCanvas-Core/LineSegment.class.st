@@ -89,7 +89,6 @@ LineSegment >> asBezier2Segments: error [
 	pts := self asBezier2Points: error.
 	^(1 to: pts size by: 3) collect:[:i| 
 		Bezier2Segment from: (pts at: i) via: (pts at: i+1) to: (pts at: i+2)].
-
 ]
 
 { #category : #converting }
@@ -422,7 +421,6 @@ LineSegment >> sideOfPoint: aPoint [
 	(LineSegment from: 0@0 to: 100@0) sideOfPoint: 50@50.
 	(LineSegment from: 0@0 to: 100@0) sideOfPoint: 50@0.
 "
-
 ]
 
 { #category : #accessing }

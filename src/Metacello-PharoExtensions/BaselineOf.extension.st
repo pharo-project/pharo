@@ -38,9 +38,6 @@ BaselineOf >> packageRepository [
 	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
 		ifNotEmpty: [ :repositories | repositories anyOne ]
 		ifEmpty: [ nil ]
-
-
-	
 ]
 
 { #category : #'*Metacello-PharoExtensions' }
@@ -52,9 +49,6 @@ BaselineOf >> packageRepositoryURL [
 	^ self packageRepository
 		ifNotNil: [ :aRepository | aRepository description ]
 		ifNil: [ '' ]
-
-
-	
 ]
 
 { #category : #'*Metacello-PharoExtensions' }

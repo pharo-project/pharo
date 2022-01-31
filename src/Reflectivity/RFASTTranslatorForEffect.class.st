@@ -23,7 +23,6 @@ RFASTTranslatorForEffect >> emitIfFalse: aMessageNode [
 	methodBuilder jumpAheadTo: #else if: true.
 		self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTarget: #else.
-
 ]
 
 { #category : #'inline messages' }
@@ -37,7 +36,6 @@ RFASTTranslatorForEffect >> emitIfNotNil: aMessageNode [
 	methodBuilder jumpAheadTo: #end if: true.
 	self visitInlinedBlockNode: args first.
 	methodBuilder jumpAheadTarget: #end.
-	
 ]
 
 { #category : #'inline messages' }
@@ -54,7 +52,6 @@ RFASTTranslatorForEffect >> emitMessageNode: aMessageNode [
 
 	super emitMessageNode: aMessageNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'inline messages' }
@@ -70,14 +67,13 @@ RFASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 
 	super visitArrayNode: anArrayNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [ 
 
 	super visitAssignmentNode: anAssignmentNode .
-	methodBuilder popTop. 
+	methodBuilder popTop.
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -105,20 +101,20 @@ RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 	super visitParseErrorNode: anErrorNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
+	
 	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
-	self emitPrepareLinkAfter: aSequenceNode.
+		
+	aSequenceNode hasMetalinkAfter ifTrue: [ ^ self visitSequenceWithAfter: aSequenceNode  ].
 	
 	aSequenceNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aSequenceNode ]
 		ifFalse: [ aSequenceNode statements do: [:each | self visitNode: each]. ].
-	self emitMetaLinkAfter: aSequenceNode.
-	(aSequenceNode hasMetalinkAfter or: [ aSequenceNode hasMetalinkInstead ]) ifTrue: [aSequenceNode parent isMethod 
+	aSequenceNode hasMetalinkInstead ifTrue: [aSequenceNode parent isMethod 
 			ifTrue: [methodBuilder returnTop]
 			ifFalse: [methodBuilder popTop]]
 ]
@@ -140,5 +136,4 @@ RFASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 		ifTrue: [ methodBuilder addLiteral: binding ].
 		
 	self emitMetaLinkAfterNoEnsure: aVariableNode.
-
 ]

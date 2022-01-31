@@ -45,7 +45,7 @@ FTStrongSelectionChanged class >> index: aNumber event: anEvent [
 
 { #category : #accessing }
 FTStrongSelectionChanged >> event [
-	^ event 
+	^ event
 ]
 
 { #category : #accessing }

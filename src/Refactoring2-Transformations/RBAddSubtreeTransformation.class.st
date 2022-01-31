@@ -59,7 +59,7 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 						node isBlock "special case when a block is empty"
 							ifTrue: [ node body addNode: aRBNode ]
 							ifFalse: [ aSequenceNode addNode: aRBNode before: node ]].
-	^ aSequenceNode parentSuchAs: #isMethod
+	^ aSequenceNode methodNode
 ]
 
 { #category : #api }

@@ -43,7 +43,6 @@ AthensSimpleTreeNode >> children: aCollection [
 { #category : #accessing }
 AthensSimpleTreeNode >> color [
 	^ color
-	
 ]
 
 { #category : #accessing }
@@ -98,7 +97,6 @@ AthensSimpleTreeNode >> layoutWidth [
 
 		layoutWidth := self width max: childWidth.
 	].
-
 ]
 
 { #category : #accessing }
@@ -108,7 +106,7 @@ AthensSimpleTreeNode >> midBottom [
 
 { #category : #accessing }
 AthensSimpleTreeNode >> midTop [
-	^ originX +(extent x *0.5) @ originY 
+	^ originX +(extent x *0.5) @ originY
 ]
 
 { #category : #accessing }

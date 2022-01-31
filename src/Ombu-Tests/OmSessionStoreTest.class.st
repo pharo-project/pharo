@@ -23,7 +23,7 @@ OmSessionStoreTest >> tearDown [
 
 	(self directoryForTests / 'test-sessions-main') ensureDeleteAll.
 	(self directoryForTests / 'test-sessions-other') ensureDeleteAll.
-	super tearDown. 
+	super tearDown.
 ]
 
 { #category : #tests }
@@ -88,7 +88,6 @@ OmSessionStoreTest >> testResetWithStoreNamedDoesAnnounce [
 		ensure: [ store announcer unsubscribe: self ].
 
 	self assert: wasAnnounced
-	
 ]
 
 { #category : #tests }

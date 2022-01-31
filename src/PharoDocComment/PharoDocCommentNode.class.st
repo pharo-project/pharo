@@ -26,7 +26,7 @@ Class {
 
 { #category : #settings }
 PharoDocCommentNode class >> docCommentEnabled [
-	^ DocCommentEnabled  ifNil: [ DocCommentEnabled  := true ] 
+	^ DocCommentEnabled  ifNil: [ DocCommentEnabled  := true ]
 ]
 
 { #category : #settings }
@@ -79,7 +79,7 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 PharoDocCommentNode >> asTriplet [
 	"Return the expression, its returned value and its expected result."
 	

@@ -68,7 +68,6 @@ RBRenameClassVariableRefactoring >> renameReferences [
 
 	methods := class methodsUsingClassVariableNamed: variableName.	
 	methods do: [ :method | self convertMethod: method selector for: method modelClass using: replacer ]
-
 ]
 
 { #category : #printing }

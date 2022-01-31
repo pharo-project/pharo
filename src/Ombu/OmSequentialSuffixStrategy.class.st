@@ -16,5 +16,4 @@ OmSequentialSuffixStrategy >> nextTo: aName in: aDirectory [
 		inDirectory: aDirectory.
 	
 	^ fileReference nextVersion basenameWithoutExtension
-
 ]

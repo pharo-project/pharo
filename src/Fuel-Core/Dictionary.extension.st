@@ -7,8 +7,7 @@ Dictionary >> fuelAccept: aGeneralMapper [
 	class := self class.
 	^ (((class == Dictionary) or: [class == IdentityDictionary ])) 
 		ifTrue: [ aGeneralMapper visitDictionary: self ]
-		ifFalse: [ super fuelAccept: aGeneralMapper ] 
-	
+		ifFalse: [ super fuelAccept: aGeneralMapper ]
 ]
 
 { #category : #'*Fuel-Core' }

@@ -46,15 +46,45 @@ BreakpointTest >> tearDown [
 
 { #category : #tests }
 BreakpointTest >> testAddRemoveBreakpoint [
-	|bp|
+	| bp method |
 	cls compile: 'dummy ^42'.
+	method := cls >> #dummy.
 	self assertEmpty: Breakpoint all.
 	bp := Breakpoint new.
 	bp	node: (cls >> #dummy) ast.
-	Breakpoint addBreakpoint: bp.
+	bp install.
+	"after the breakpoint is installed, the method is different"
+	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	
 	self assertCollection: Breakpoint all includesAll: {bp}.
-	Breakpoint removeBreakpoint: bp.
+	bp remove.
 	self assertEmpty: Breakpoint all.
+	
+	"Check that the method is correcty reverted"
+	self assert: (cls >> #dummy) bytecode equals: method bytecode
+]
+
+{ #category : #tests }
+BreakpointTest >> testAddRemoveBreakpointKeepTimeStamp [
+
+	| bp timeStamp |
+	"adding an removing a breakpoint does not change the timestamp of the method"
+	Author
+		useAuthor: thisContext method selector
+		during: [ cls compile: 'dummy ^42' ].
+
+	timeStamp := (cls >> #dummy) timeStamp.
+
+	bp := Breakpoint new.
+	bp node: (cls >> #dummy) ast.
+	bp install.
+
+	self assert: (cls >> #dummy) timeStamp equals: timeStamp.
+
+	bp remove.
+	self assertEmpty: Breakpoint all.
+
+	self assert: (cls >> #dummy) timeStamp equals: timeStamp
 ]
 
 { #category : #tests }
@@ -68,7 +98,6 @@ BreakpointTest >> testBreakInContextNode [
 	self assert: observer tag notNil.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: #(#node).
-	
 ]
 
 { #category : #tests }
@@ -79,7 +108,7 @@ BreakpointTest >> testBreakLink [
 	self assert: link metaObject identicalTo: breakpoint.
 	self assert: link selector equals: #breakInContext:node:.
 	self assertCollection: link options equals: (MetaLink new parseOptions: breakpoint options) options.
-	self assertCollection: link arguments equals: #(#context #node) 
+	self assertCollection: link arguments equals: #(#context #node)
 ]
 
 { #category : #tests }
@@ -146,7 +175,6 @@ BreakpointTest >> testDisableEnableBreakpoint [
 	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
 	breakpoint enable.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break
-
 ]
 
 { #category : #tests }
@@ -320,4 +348,24 @@ BreakpointTest >> testUninstallFromGarbageCollectedInstance [
 	Smalltalk garbageCollect.
 	
 	self shouldnt: [ bp remove ] raise: Error.
+]
+
+{ #category : #tests }
+BreakpointTest >> testUpdateMethod [
+	| bp method |
+	"test that, if we install a breakpoint and edit the method, it is removed correctly"
+	
+	cls compile: 'dummy ^42'.
+	method := cls >> #dummy.
+	self assertEmpty: Breakpoint all.
+	bp := Breakpoint new.
+	bp	node: (cls >> #dummy) ast.
+	bp install.
+	self assertCollection: Breakpoint all includesAll: {bp}.
+	"no edit the method"
+	cls compile: 'dummy ^nil'.
+	"after the new method is installed, the method is different"
+	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	"and the breakpoint is not registered anymore"
+	self assertEmpty: Breakpoint all
 ]

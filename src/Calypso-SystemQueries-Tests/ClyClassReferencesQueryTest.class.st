@@ -7,7 +7,7 @@ Class {
 { #category : #'methods for tests' }
 ClyClassReferencesQueryTest class >> classSideReference1OfClass [
 
-	^ClyClassReferencesQueryTest 
+	^ClyClassReferencesQueryTest
 ]
 
 { #category : #running }
@@ -20,13 +20,13 @@ ClyClassReferencesQueryTest >> createQuery [
 { #category : #'methods for tests' }
 ClyClassReferencesQueryTest >> reference1OfClass [
 
-	^ClyClassReferencesQueryTest 
+	^ClyClassReferencesQueryTest
 ]
 
 { #category : #'methods for tests' }
 ClyClassReferencesQueryTest >> reference2OfClass [
 
-	^ClyClassReferencesQueryTest 
+	^ClyClassReferencesQueryTest
 ]
 
 { #category : #'methods for tests' }

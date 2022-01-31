@@ -37,21 +37,18 @@ FTColumnResizerMorph class >> resizerWidth [
 { #category : #'private - testing' }
 FTColumnResizerMorph >> canResizeColumn [
 	^ container owner isResizable
-
 ]
 
 { #category : #'submorphs - add/remove' }
 FTColumnResizerMorph >> delete [
 	super delete.
 	self release.
-	
 ]
 
 { #category : #drawing }
 FTColumnResizerMorph >> drawOn: aCanvas [
 	(owner notNil and: [owner containsPoint: self position])
 		ifTrue: [super drawOn: aCanvas]
-
 ]
 
 { #category : #initialization }
@@ -61,7 +58,6 @@ FTColumnResizerMorph >> initializeContainer: aTableContainerMorph left: aColumn 
 	container := aTableContainerMorph.
 	leftColumn := aColumn.
 	rightColumn := otherColumn
-	
 ]
 
 { #category : #'event handling' }
@@ -135,7 +131,6 @@ FTColumnResizerMorph >> release [
 	container := nil.
 	self releaseActionMap. "we are not sure if we need it"
 	super release.
-	
 ]
 
 { #category : #actions }

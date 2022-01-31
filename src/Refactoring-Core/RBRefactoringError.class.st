@@ -20,7 +20,6 @@ RBRefactoringError class >> signal: aString with: aBlock [
 { #category : #accessing }
 RBRefactoringError >> actionBlock [
 	^ actionBlock
-	
 ]
 
 { #category : #accessing }

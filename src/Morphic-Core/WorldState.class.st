@@ -45,8 +45,6 @@ WorldState class >> MinCycleLapse: milliseconds [
 WorldState class >> addDeferredUIMessage: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
 	self deferredUIMessages nextPut: aValuable
-
-
 ]
 
 { #category : #'testing os' }
@@ -69,15 +67,12 @@ WorldState class >> debugShowDamage: aBoolean [
 WorldState class >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
 	self addDeferredUIMessage: aValuable.
-
-
 ]
 
 { #category : #'deferred message' }
 WorldState class >> deferredUIMessages [
 
 	^DeferredUIMessages ifNil: [DeferredUIMessages := WaitfreeQueue  new].
-
 ]
 
 { #category : #settings }
@@ -90,7 +85,6 @@ WorldState class >> desktopMenuPragmaKeyword [
 { #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword: aString [
 	DesktopMenuPragmaKeyword := aString
-
 ]
 
 { #category : #settings }
@@ -131,7 +125,6 @@ WorldState class >> doInterCycleWait [
 		].
 	waitTime > 0 ifTrue: [ (Delay forMilliseconds: waitTime) wait ].
 	LastCycleTime := newCycleTime.
-	
 ]
 
 { #category : #settings }
@@ -248,7 +241,6 @@ WorldState class >> quitSession [
 	response 
 		ifTrue: [Smalltalk snapshot: true andQuit: true] 
 		ifFalse: [Smalltalk snapshot: false andQuit: true]
- 
 ]
 
 { #category : #'world menu items' }
@@ -361,7 +353,6 @@ WorldState >> addHand: aHandMorph [
 	"Add the given hand to the list of hands for this world."
 
 	hands := (hands copyWithout: aHandMorph) copyWith: aHandMorph.
-
 ]
 
 { #category : #alarms }
@@ -379,7 +370,6 @@ WorldState >> adjustWakeupTimes: now [
 	deltaTime := now - lastStepTime.
 	stepList do:[:entry| entry scheduledTime: entry scheduledTime + deltaTime].
 	lastStepTime := now.
-
 ]
 
 { #category : #stepping }
@@ -390,7 +380,6 @@ WorldState >> adjustWakeupTimesIfNecessary [
 	now := Time millisecondClockValue.
 	((now < lastStepTime) or: [(now - lastStepTime) > 5000])
 		 ifTrue: [self adjustWakeupTimes: now].  "clock slipped"
-
 ]
 
 { #category : #alarms }
@@ -414,14 +403,12 @@ WorldState >> checkIfUpdateNeeded [
 	hands do: [:h | 
 		(h hasChanged and: [h needsToBeDrawn]) ifTrue: [^true]].
 	^false  "display is already up-to-date"
-
 ]
 
 { #category : #cleaning }
 WorldState >> cleanStepList [
 	"ensure that we have a cleaner block"
 	^stepList sortBlock: self stepListSortBlock
-
 ]
 
 { #category : #stepping }
@@ -450,8 +437,6 @@ WorldState >> cleanseStepListForWorld: aWorld [
 WorldState >> convertAlarms [
 	
 	alarms ifNotNil: [alarms sortBlock: self alarmSortBlock].	"ensure cleaner block"
-
-
 ]
 
 { #category : #accessing }
@@ -467,7 +452,7 @@ WorldState >> currentCursor: anObject [
 { #category : #accessing }
 WorldState >> damageRecorder [
 
-	^ damageRecorder 
+	^ damageRecorder
 ]
 
 { #category : #'deferred message' }
@@ -529,7 +514,6 @@ WorldState >> displayWorldSafely: aWorld [
 WorldState >> doFullRepaint [
 
 	damageRecorder doFullRepaint
-
 ]
 
 { #category : #'update cycle' }
@@ -671,7 +655,6 @@ WorldState >> initialize [
 	stepList := Heap sortBlock: self stepListSortBlock.
 	lastStepTime := 0.
 	lastAlarmTime := 0.
-
 ]
 
 { #category : #canvas }
@@ -715,7 +698,6 @@ WorldState >> isStepping: aMorph selector: aSelector [
 { #category : #stepping }
 WorldState >> listOfSteppingMorphs [
 	^stepList collect:[:entry| entry receiver].
-
 ]
 
 { #category : #hands }
@@ -734,7 +716,6 @@ WorldState >> realWindowExtent: aValue [
 WorldState >> recordDamagedRect: damageRect [
 
 	damageRecorder ifNotNil: [damageRecorder recordInvalidRect: damageRect truncated]
-
 ]
 
 { #category : #alarms }
@@ -759,7 +740,6 @@ WorldState >> removeHand: aHandMorph [
 WorldState >> resetDamageRecorder [
 
 	damageRecorder reset
-
 ]
 
 { #category : #stepping }
@@ -839,7 +819,6 @@ WorldState >> stopStepping: aMorph [
 	lastStepMessage ifNotNil:[
 		(lastStepMessage receiver == aMorph) ifTrue:[lastStepMessage := nil]].
 	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph]).
-
 ]
 
 { #category : #stepping }
@@ -862,6 +841,19 @@ WorldState >> triggerAlarmsBefore: nowTime [
 	[pending isEmpty not and:[pending first scheduledTime < nowTime]]
 		whileTrue:[pending removeFirst value: nowTime].
 	lastAlarmTime := nowTime.
+]
+
+{ #category : #events }
+WorldState >> updateToNewResolution: originalEvent [
+
+	"We need to reset the render if the resolution changes. 
+	If we don't do this the image seems blocked but as it does not refresh the window"
+
+	self doFullRepaint.
+	
+	self worldRenderer updateToNewResolution.
+	
+	self worldRenderer checkForNewScreenSize.
 ]
 
 { #category : #canvas }

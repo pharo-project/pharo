@@ -96,7 +96,6 @@ KMCatcherMorph >> initialize [
 	edited := false.
 	focused := false.
 	self initializeKeystrokes.
-	
 ]
 
 { #category : #initialization }

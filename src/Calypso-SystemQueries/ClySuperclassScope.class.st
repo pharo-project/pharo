@@ -10,7 +10,7 @@ Class {
 
 { #category : #converting }
 ClySuperclassScope class >> asInterestingClassScope [
-	^ClyInterestingSuperclassScope 
+	^ClyInterestingSuperclassScope
 ]
 
 { #category : #accessing }
@@ -44,5 +44,5 @@ ClySuperclassScope class >> inheritedScopeProvider [
 
 { #category : #converting }
 ClySuperclassScope >> asInterestingClassScope [
-	^self asScope: ClyInterestingSuperclassScope 
+	^self asScope: ClyInterestingSuperclassScope
 ]

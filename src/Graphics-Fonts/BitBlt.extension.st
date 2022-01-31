@@ -14,7 +14,6 @@ BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint 
 			map: font characterToGlyphMap xTable: font xTable
 			kern: kernDelta.
 	^ destX@destY.
-
 ]
 
 { #category : #'*Graphics-Fonts' }

@@ -90,7 +90,7 @@ TOccurrencesForMultiplinessTest >> testOccurrencesOfForMultipliness [
 	collection := self collectionWithEqualElements.
 	elem := self elementTwiceInForOccurrences.
 
-	self assert: (collection occurrencesOf: elem ) equals: 2.  
+	self assert: (collection occurrencesOf: elem ) equals: 2.
 ]
 
 { #category : #'tests - occurrencesOf' }

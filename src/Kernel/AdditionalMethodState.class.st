@@ -117,7 +117,6 @@ AdditionalMethodState >> at: aKey put: aValue [
                method propertyAt: aKey put: aValue ].
 
        ^ aValue
-
 ]
 
 { #category : #copying }

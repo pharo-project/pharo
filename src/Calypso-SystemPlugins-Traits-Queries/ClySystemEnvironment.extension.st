@@ -13,8 +13,8 @@ ClySystemEnvironment >> defineTrait: defString notifying: aController startingFr
 		and: [self includesClassNamed: newTraitName asSymbol]) ifTrue:
 			["Attempting to define new class/trait over existing one when
 				not looking at the original one in this browser..."
-			(self confirm: ((newTraitName , ' is an existing class/trait in this system.
-Redefining it might cause serious problems.
+			(self confirm: ((newTraitName , ' might have been edited from another editor.
+Redefining it might override these changes.
 Is this really what you want to do?') asText makeBoldFrom: 1 to: newTraitName size))
 				ifFalse: [^ nil ]].
 

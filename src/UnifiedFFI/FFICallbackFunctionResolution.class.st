@@ -54,7 +54,7 @@ FFICallbackFunctionResolution class >> registerCallback: aCallback as: functionN
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FFICallbackFunctionResolution class >> reset [
 	CallbackRegistry := nil
 ]

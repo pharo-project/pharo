@@ -12,11 +12,11 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not 
+
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+		  aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : #converting }
@@ -72,7 +72,7 @@ SycExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 
 	| dialog |
-	refactoring setOption: #methodName toUse: [ :methodName | | invalidArgs |
+	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
 		dialog := SycMethodNameEditorPresenter
 			openOn: methodName

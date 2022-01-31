@@ -97,7 +97,7 @@ ClyDataSource class >> scheduleUpdateOf: aDataSource [
 { #category : #accessing }
 ClyDataSource >> allElements [
 	^(1 to: self numberOfRows) collect: [ :i | 
-		self elementAt: i] 
+		self elementAt: i]
 ]
 
 { #category : #accessing }
@@ -105,7 +105,7 @@ ClyDataSource >> cellColumn: column row: rowIndex [
 
 	| item |
 	item := self elementAt: rowIndex.
-	^column createCellFor: item in: queryView 
+	^column createCellFor: item in: queryView
 ]
 
 { #category : #controlling }
@@ -118,7 +118,7 @@ ClyDataSource >> close [
 
 { #category : #controlling }
 ClyDataSource >> collapse: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #copying }
@@ -131,7 +131,7 @@ ClyDataSource >> copyForBrowserStateSnapshot [
 
 { #category : #accessing }
 ClyDataSource >> countChildrenOf: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -144,7 +144,7 @@ ClyDataSource >> createElementWith: anEnvironmentItem [
 
 { #category : #testing }
 ClyDataSource >> definesChildren [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -159,7 +159,7 @@ ClyDataSource >> depth: anObject [
 
 { #category : #testing }
 ClyDataSource >> doesItemHaveChildren: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'drag and drop' }
@@ -177,7 +177,7 @@ ClyDataSource >> dropElements: aPassenger index: rowIndex [
 
 { #category : #controlling }
 ClyDataSource >> expand: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #controlling }
@@ -189,7 +189,7 @@ ClyDataSource >> expansionChanged [
 
 { #category : #private }
 ClyDataSource >> findCachedElementWith: anEnvironmentItem ifAbsent: absentBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -197,7 +197,6 @@ ClyDataSource >> findDataSourceSameAs: aDataSource ifNone: noneBlock [
 	^(self isSameAs: aDataSource) 
 		ifTrue: [ ^self ]
 		ifFalse: noneBlock
-
 ]
 
 { #category : #queries }
@@ -243,7 +242,7 @@ ClyDataSource >> getMetaProperty: aPropertyClass [
 
 { #category : #accessing }
 ClyDataSource >> globalPositionOf: childDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -299,14 +298,13 @@ ClyDataSource >> isEmpty [
 
 { #category : #testing }
 ClyDataSource >> isExpanded: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyDataSource >> isInSameStateAs: anotherDataSource [
 
 	^self isSameAs: anotherDataSource
-	 
 ]
 
 { #category : #testing }
@@ -342,7 +340,7 @@ ClyDataSource >> isSameAs: anotherDataSource [
 { #category : #accessing }
 ClyDataSource >> itemCursor [
 	dirty ifTrue: [ self runUpdate ].
-	^itemCursor 
+	^itemCursor
 ]
 
 { #category : #controlling }
@@ -393,7 +391,7 @@ ClyDataSource >> newDataSourceMatching: anItemFilter [
 
 { #category : #accessing }
 ClyDataSource >> newSelectionWith: dataSourceItems [
-	^ClyDataSourceSelection fromRoot: self items: dataSourceItems 
+	^ClyDataSourceSelection fromRoot: self items: dataSourceItems
 ]
 
 { #category : #controlling }
@@ -505,7 +503,7 @@ ClyDataSource >> transferFor: dataSourceItems from: aMorph [
 
 { #category : #private }
 ClyDataSource >> updateExpandingItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -519,14 +517,10 @@ ClyDataSource >> updateItems: dataSourceItems [
 ]
 
 { #category : #'drag and drop' }
-ClyDataSource >> wantsDropElements: aPassanger type: type index: rowIndex [
-	| dropTargetItem result |
+ClyDataSource >> wantsDropElements: aPassenger type: type index: rowIndex [
+	| dropTargetItem |
 	rowIndex = 0 | (rowIndex > self numberOfRows) ifTrue: [ ^false ].
 	self dragTransferType == type ifFalse: [ ^false ].
-	dropTargetItem := self elementAt: rowIndex.		
-	result := queryView wantsDropPassenger: aPassanger at: dropTargetItem.
-	
-	result & dropTargetItem hasChildren ifTrue: [ dropTargetItem expand ].
-	
-	^result
+	dropTargetItem := self elementAt: rowIndex.
+	^ queryView wantsDropPassenger: aPassenger at: dropTargetItem
 ]

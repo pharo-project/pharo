@@ -86,7 +86,6 @@ PositionableStream >> boolean [
 	"Answer the next boolean value from this (binary) stream."
 
 	^ self next ~= 0
-
 ]
 
 { #category : #'accessing - data' }
@@ -94,7 +93,6 @@ PositionableStream >> boolean: aBoolean [
 	"Store the given boolean value on this (binary) stream."
 
 	self nextPut: (aBoolean ifTrue: [1] ifFalse: [0]).
-
 ]
 
 { #category : #private }
@@ -126,7 +124,6 @@ PositionableStream >> int16 [
 	n := (n bitShift: 8) + (self next).
 	n >= 16r8000 ifTrue: [n := n - 16r10000].
 	^ n
-
 ]
 
 { #category : #'accessing - data' }
@@ -155,7 +152,6 @@ PositionableStream >> int32 [
 	n := (n bitShift: 8) + self next.
 	firstDigit >= 128 ifTrue: [n := -16r100000000 + n].  "decode negative 32-bit integer"
 	^ n
-
 ]
 
 { #category : #'accessing - data' }
@@ -321,7 +317,6 @@ PositionableStream >> nextLittleEndianNumber: n [
 	s := 0.
 	n to: 1 by: -1 do: [:i | s := (s bitShift: 8) bitOr: (bytes at: i)].
 	^ s
-
 ]
 
 { #category : #'accessing - nonhomogeneous' }
@@ -351,7 +346,6 @@ PositionableStream >> nextNumber: n put: v [
 
 	1 to: n do: [:i | self nextPut: (v byteAt: n+1-i)].
 	^ v
-
 ]
 
 { #category : #'accessing - nonhomogeneous' }
@@ -369,7 +363,6 @@ PositionableStream >> nextString [
 
 	self nextInto: aByteArray.
 	^aByteArray asString.
-
 ]
 
 { #category : #'accessing - nonhomogeneous' }
@@ -431,7 +424,6 @@ PositionableStream >> oldBack [
 	self position = 1 ifTrue: [self position: 0.  ^ nil].
 	self skip: -2.
 	^ self next
-
 ]
 
 { #category : #accessing }
@@ -442,7 +434,6 @@ PositionableStream >> oldPeekBack [
 	element := self oldBack.
 	self skip: 1.
 	^ element
-
 ]
 
 { #category : #initialization }
@@ -673,7 +664,6 @@ PositionableStream >> string [
 	| size |
 	size := self uint16.
 	^ (self next: size) asString
-
 ]
 
 { #category : #'accessing - data' }
@@ -683,7 +673,6 @@ PositionableStream >> string: aString [
 	aString size > 16rFFFF ifTrue: [self error: 'string too long for this format'].
 	self uint16: aString size.
 	self nextPutAll: aString asByteArray.
-
 ]
 
 { #category : #'accessing - data' }
@@ -694,7 +683,6 @@ PositionableStream >> uint16 [
 	n := self next.
 	n := (n bitShift: 8) + (self next).
 	^ n
-
 ]
 
 { #category : #'accessing - data' }
@@ -706,7 +694,6 @@ PositionableStream >> uint16: anInteger [
 
 	self nextPut: (anInteger byteAt: 2).
 	self nextPut: (anInteger byteAt: 1).
-
 ]
 
 { #category : #'accessing - data' }
@@ -718,7 +705,6 @@ PositionableStream >> uint24 [
 	n := (n bitShift: 8) + self next.
 	n := (n bitShift: 8) + self next.
 	^ n
-
 ]
 
 { #category : #'accessing - data' }
@@ -731,7 +717,6 @@ PositionableStream >> uint24: anInteger [
 	self nextPut: (anInteger byteAt: 3).
 	self nextPut: (anInteger byteAt: 2).
 	self nextPut: (anInteger byteAt: 1).
-
 ]
 
 { #category : #'accessing - data' }
@@ -744,7 +729,6 @@ PositionableStream >> uint32 [
 	n := (n bitShift: 8) + self next.
 	n := (n bitShift: 8) + self next.
 	^ n
-
 ]
 
 { #category : #'accessing - data' }
@@ -758,7 +742,6 @@ PositionableStream >> uint32: anInteger [
 	self nextPut: (anInteger byteAt: 3).
 	self nextPut: (anInteger byteAt: 2).
 	self nextPut: (anInteger byteAt: 1).
-
 ]
 
 { #category : #positioning }

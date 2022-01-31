@@ -52,7 +52,6 @@ BorderedMorph >> addPaneSplitters [
 
 	self linkSubmorphsToSplitters.
 	self splitters do: [:each | each comeToFront].
-
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }

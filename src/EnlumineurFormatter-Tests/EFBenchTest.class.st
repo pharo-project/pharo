@@ -20,7 +20,6 @@ EFBenchTest >> basicMethod2 [
 	<sampleInstance>
 	
 	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
- 
 ]
 
 { #category : #tests }
@@ -30,7 +29,6 @@ EFBenchTest >> basicMethod3 [
 	x to: y do: [:i | Transcript show:i ; cr ;cr].
 	x to: y do: [:i | Transcript show:i ; cr ;cr].
 	x to: y do: [:i | Transcript show:i ; cr: x ; cr: x ].
- 
 ]
 
 { #category : #resources }
@@ -64,7 +62,7 @@ EFBenchTest >> testBasicEF [
 { #category : #tests }
 EFBenchTest >> testBasicEF2 [
 	self skip.
-	EFFormatter format: (EFBenchTest >> #basicMethod2) ast 
+	EFFormatter format: (EFBenchTest >> #basicMethod2) ast
 ]
 
 { #category : #tests }

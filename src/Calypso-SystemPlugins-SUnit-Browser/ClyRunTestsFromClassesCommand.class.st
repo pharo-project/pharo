@@ -9,7 +9,7 @@ Class {
 
 { #category : #activation }
 ClyRunTestsFromClassesCommand class >> contextClass [
-	^ClyClass asCalypsoItemContext 
+	^ClyClass asCalypsoItemContext
 ]
 
 { #category : #execution }

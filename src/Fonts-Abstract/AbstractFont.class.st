@@ -68,14 +68,12 @@ AbstractFont >> approxWidthOfText: aText [
 AbstractFont >> ascent [
 
 	self subclassResponsibility.
-
 ]
 
 { #category : #accessing }
 AbstractFont >> ascentOf: aCharacter [
 
 	^ self ascent.
-
 ]
 
 { #category : #accessing }
@@ -87,14 +85,12 @@ AbstractFont >> baseKern [
 AbstractFont >> basicAscentOf: aCharacter [
 
 	^ self ascent.
-
 ]
 
 { #category : #accessing }
 AbstractFont >> basicDescentOf: aCharacter [
 
 	^ self descent.
-
 ]
 
 { #category : #'glyph lookup' }
@@ -127,14 +123,12 @@ AbstractFont >> derivativeFonts [
 AbstractFont >> descent [
 
 	self subclassResponsibility
-
 ]
 
 { #category : #accessing }
 AbstractFont >> descentOf: aCharacter [
 
 	^ self descent
-
 ]
 
 { #category : #displaying }
@@ -183,7 +177,6 @@ AbstractFont >> installOn: aDisplayContext foregroundColor: foregroundColor back
 AbstractFont >> isFontSet [
 
 	^ false
-
 ]
 
 { #category : #accessing }
@@ -223,7 +216,6 @@ AbstractFont >> pointSize [
 
 { #category : #caching }
 AbstractFont >> releaseCachedState [
-	
 ]
 
 { #category : #metrics }
@@ -276,7 +268,6 @@ AbstractFont >> widthOfString: aString [
 	"
 	aString ifNil: [^0].
 	^self widthOfString: aString from: 1 to: aString size.
-
 ]
 
 { #category : #measuring }
@@ -296,7 +287,7 @@ AbstractFont >> widthOfStringOrText: aStringOrText [
     aStringOrText ifNil: [ ^0 ].
     ^aStringOrText isText
         ifTrue:[ self approxWidthOfText: aStringOrText ]
-        ifFalse:[ self widthOfString: aStringOrText ] 
+        ifFalse:[ self widthOfString: aStringOrText ]
 ]
 
 { #category : #accessing }

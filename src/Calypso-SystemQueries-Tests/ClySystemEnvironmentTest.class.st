@@ -48,7 +48,7 @@ ClySystemEnvironmentTest >> testExtractClassNameFrom [
 	self
 		assert:
 			(dummySystemEnvironment extractNameFrom: 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Tests-Domain''')
@@ -80,9 +80,10 @@ ClySystemEnvironmentTest >> testIsFluidClassDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
+	
 	self deny:
 		(dummySystemEnvironment isFluidClassDefinition: 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Domain''').
@@ -111,15 +112,17 @@ ClySystemEnvironmentTest >> testIsFluidDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
+	
 	self assert:
 		(dummySystemEnvironment isFluidDefinition: 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Tests-Domain''').
+
 	self deny:
 		(dummySystemEnvironment isFluidDefinition: 'Trait named: #TMyTraits
-	 uses: {}
+	 traits: {}
 	 package: ''Calypso-SystemQueries-Tests-Domain''')
 ]
 
@@ -144,13 +147,14 @@ ClySystemEnvironmentTest >> testIsFluidTraitDefinition [
 	package: ''Calypso-SystemQueries-Domain''').
 	self assert:
 		(dummySystemEnvironment isFluidTraitDefinition: 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Domain''').
+
 	self deny: (dummySystemEnvironment isFluidTraitDefinition:
 			 'Trait named: #TMyTraits
-	uses: {}
+	traits: {}
 	package: ''Calypso-SystemQueries-Domain''')
 ]
 
@@ -173,9 +177,10 @@ ClySystemEnvironmentTest >> testIsOldTraitDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
+	
 	self deny: (dummySystemEnvironment isOldTraitDefinition:
 			 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Domain''').
@@ -204,14 +209,16 @@ ClySystemEnvironmentTest >> testIsTraitDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
+	
 	self assert: (dummySystemEnvironment isTraitDefinition:
 			 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Domain''').
+	
 	self assert: (dummySystemEnvironment isTraitDefinition:
 			 'Trait named: #TMyTraits
-	uses: {}
+	traits: {}
 	package: ''Calypso-SystemQueries-Domain''')
 ]

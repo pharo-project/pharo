@@ -30,7 +30,7 @@ WhereIsDebugAction >> defaultOrder [
 WhereIsDebugAction >> executeAction [
 
 	self debugger code setSelection: (self session 
-		pcRangeForContext:  self currentContext)	
+		pcRangeForContext:  self currentContext)
 ]
 
 { #category : #accessing }

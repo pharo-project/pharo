@@ -101,7 +101,6 @@ EpPluggableFilter class >> noTriggerFilter [
 		condition: [ :e | 
 			e content isCodeChange and: [
 			(e tags includesKey: EpLog triggererReferenceKey) not ] ]
-
 ]
 
 { #category : #'instance creation' }
@@ -137,12 +136,12 @@ EpPluggableFilter >> condition [
 
 { #category : #accessing }
 EpPluggableFilter >> condition: aBlockClosure [ 
-	condition := aBlockClosure 
+	condition := aBlockClosure
 ]
 
 { #category : #comparing }
 EpPluggableFilter >> hash [
-	^ self class hash bitXor: self title hash 
+	^ self class hash bitXor: self title hash
 ]
 
 { #category : #printing }
@@ -152,8 +151,6 @@ EpPluggableFilter >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: self title;
 		nextPut: $)
-			
-
 ]
 
 { #category : #accessing }

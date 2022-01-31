@@ -83,9 +83,7 @@ DebugSession >> createModelForContext: aContext [
 { #category : #initialization }
 DebugSession >> detectUIProcess [
 
-	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess 
-	
-
+	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess
 ]
 
 { #category : #accessing }
@@ -158,7 +156,7 @@ DebugSession >> interruptedProcess [
 { #category : #testing }
 DebugSession >> isAboutUIProcess [
 
-	^errorWasInUIProcess 
+	^errorWasInUIProcess
 ]
 
 { #category : #testing }
@@ -238,9 +236,7 @@ DebugSession >> peelToFirstLike: aContext [
 
 	ctxt := interruptedProcess popTo: aContext findSecondToOldestSimilarSender.
 	self updateContextTo: ctxt.
-	self contextChanged 
-
-	
+	self contextChanged
 ]
 
 { #category : #private }
@@ -301,8 +297,7 @@ DebugSession >> restart: aContext [
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ].
 	self unwindAndRestartToContext: aContext.	
 
-	self triggerEvent: #restart		
-	
+	self triggerEvent: #restart
 ]
 
 { #category : #'debugging actions' }
@@ -347,8 +342,6 @@ DebugSession >> resumeProcess [
 
 	"restart low space handler"
 	Smalltalk installLowSpaceWatcher
-		
-	
 ]
 
 { #category : #private }
@@ -356,7 +349,7 @@ DebugSession >> resumeProcessWithValue: aValue [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 	
 	self returnValue: aValue from: interruptedProcess suspendedContext.
-	self resumeProcess	
+	self resumeProcess
 ]
 
 { #category : #'debugging actions' }
@@ -371,7 +364,7 @@ DebugSession >> returnValue: anObject from: aContext [
 	"self resetContext: previous."
 	interruptedProcess popTo: previous value: anObject.
 	self updateContextTo: previous.
-	self contextChanged 
+	self contextChanged
 ]
 
 { #category : #evaluating }
@@ -420,7 +413,6 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	True is returned if there are no filters."
 		
 	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
-	
 ]
 
 { #category : #logging }
@@ -537,7 +529,7 @@ DebugSession >> stepOver: aContext [
 			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
 			ifFalse: [ newContext ]).
 
-	self triggerEvent: #stepOver 
+	self triggerEvent: #stepOver
 ]
 
 { #category : #'debugging actions' }
@@ -556,7 +548,7 @@ DebugSession >> stepThrough: aContext [
 	interruptedProcess stepToHome: aContext.
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 			
-	self triggerEvent: #stepThrough 
+	self triggerEvent: #stepThrough
 ]
 
 { #category : #private }
@@ -572,7 +564,7 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	make sure that we step correctly over the first primitive bytecode"
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
-	suspendedContext method isQuick
+	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 	
 	^ aProcess stepToSendOrReturn
@@ -594,7 +586,6 @@ DebugSession >> terminate [
 			"Kill the active process if the error was in the UI as there should be only one UI process."
 			self isAboutUIProcess
 				ifTrue: [Processor terminateActive] ]
-	
 ]
 
 { #category : #evaluating }

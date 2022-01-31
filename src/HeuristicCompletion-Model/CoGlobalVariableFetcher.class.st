@@ -5,8 +5,8 @@ Class {
 	#name : #CoGlobalVariableFetcher,
 	#superclass : #CoFetcher,
 	#instVars : [
-		'completionEnvironment',
-		'astNode'
+		'astNode',
+		'systemNavigation'
 	],
 	#category : #'HeuristicCompletion-Model-Fetchers'
 }
@@ -21,19 +21,20 @@ CoGlobalVariableFetcher >> astNode: anObject [
 	astNode := anObject
 ]
 
-{ #category : #accessing }
-CoGlobalVariableFetcher >> completionEnvironment [
-	^ completionEnvironment
-]
-
-{ #category : #accessing }
-CoGlobalVariableFetcher >> completionEnvironment: anObject [
-	completionEnvironment := anObject
-]
-
 { #category : #enumerating }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
-	completionEnvironment globals do: [ :e |
-		aBlock value: (NECGlobalEntry contents: e node: astNode)]
+	self systemNavigation
+		allClassNamesStartingWith: filter completionString 
+		do: [ :e | aBlock value: (NECGlobalEntry contents: e node: astNode) ]
+]
+
+{ #category : #accessing }
+CoGlobalVariableFetcher >> systemNavigation [
+	^ systemNavigation ifNil: [ SystemNavigation new ]
+]
+
+{ #category : #accessing }
+CoGlobalVariableFetcher >> systemNavigation: anObject [
+	systemNavigation := anObject
 ]

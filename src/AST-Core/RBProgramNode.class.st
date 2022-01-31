@@ -49,7 +49,6 @@ RBProgramNode class >> formatterClass [
 { #category : #accessing }
 RBProgramNode class >> formatterClass: aClass [
 	FormatterClass := aClass
-		
 ]
 
 { #category : #testing }
@@ -67,8 +66,6 @@ RBProgramNode class >> optimizedSelectors [
 RBProgramNode class >> resetFormatter [
 
 	self formatterClass: nil
-
-	
 ]
 
 { #category : #replacing }
@@ -341,13 +338,13 @@ RBProgramNode >> debugHighlightRange [
 { #category : #accessing }
 RBProgramNode >> debugHighlightStart [
 
-	^ self start 
+	^ self start
 ]
 
 { #category : #accessing }
 RBProgramNode >> debugHighlightStop [
 
-	^ self stop 
+	^ self stop
 ]
 
 { #category : #testing }
@@ -434,7 +431,6 @@ RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
 	
 	^ self comments isNotEmpty
-	
 ]
 
 { #category : #testing }
@@ -1060,7 +1056,6 @@ RBProgramNode >> statementNode [
 { #category : #accessing }
 RBProgramNode >> statements [
 	^ #()
-	
 ]
 
 { #category : #accessing }

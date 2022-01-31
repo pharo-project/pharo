@@ -3,7 +3,7 @@ Extension { #name : #MetaclassForTraits }
 { #category : #'*Ring-TraitsV2Support' }
 MetaclassForTraits >> asRGDefinition [
 
-	^ self theNonMetaClass asRGDefinition theMetaClass
+	^ self instanceSide asRGDefinition theMetaClass
 ]
 
 { #category : #'*Ring-TraitsV2Support' }

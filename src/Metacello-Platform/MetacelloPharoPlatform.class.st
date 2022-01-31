@@ -11,8 +11,6 @@ Class {
 { #category : #'initialize-release' }
 MetacelloPharoPlatform class >> initialize [
   self select
-
-
 ]
 
 { #category : #utilities }
@@ -30,7 +28,6 @@ MetacelloPharoPlatform >> defaultDirectory [
 { #category : #scripting }
 MetacelloPharoPlatform >> defaultRepositoryDescription [
   ^ 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main'
-
 ]
 
 { #category : #'file system' }
@@ -56,7 +53,6 @@ MetacelloPharoPlatform >> downloadJSON: url username: username pass: pass [
   client get.
   json := client contents.
   ^ STON fromString: json
-
 ]
 
 { #category : #'github support' }
@@ -149,7 +145,6 @@ MetacelloPharoPlatform >> registerPackageNamed: packageName [
   "PackageInfo deprecated in Pharo3.0"
 
   ^RPackageSet named: packageName
-
 ]
 
 { #category : #system }
@@ -170,7 +165,6 @@ MetacelloPharoPlatform >> suspendSystemUpdateEventsDuring: aBlock [
 	"From Pharo2, we cannot suspend system events since missing events brak the image (rpackage at least should be notified."
 	"SystemAnnouncer uniqueInstance suspendAllWhile: aBlock"
 	^ aBlock value
-
 ]
 
 { #category : #'file system' }

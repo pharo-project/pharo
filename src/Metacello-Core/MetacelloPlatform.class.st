@@ -181,7 +181,6 @@ MetacelloPlatform >> createHttpRepository: aRepositorySpec [
         location: aRepositorySpec description
         user: aRepositorySpec username
         password: aRepositorySpec password
-
 ]
 
 { #category : #'repository creation' }
@@ -423,8 +422,6 @@ MetacelloPlatform >> recursiveDelete: aDirectory [
 { #category : #tests }
 MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
   "noop for most platforms - needed for GemStone"
-
-
 ]
 
 { #category : #'repository creation' }

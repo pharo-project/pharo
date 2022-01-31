@@ -12,13 +12,12 @@ Class {
 { #category : #'instance creation' }
 AthensCairoPath class >> finalizeResourceData: aHandle [
 
-	self primDestroyPath: aHandle 
+	self primDestroyPath: aHandle
 ]
 
 { #category : #'instance creation' }
 AthensCairoPath class >> primDestroyPath: aHandle [
 	^ self ffiCall: #(void cairo_path_destroy ( void* aHandle ))
-
 ]
 
 { #category : #converting }
@@ -45,5 +44,4 @@ AthensCairoPath >> paintFillsUsing: aPaint on: anAthensCanvas [
 { #category : #'instance creation' }
 AthensCairoPath >> primDestroyPath: aHandle [
 	^ self ffiCall: #(void cairo_path_destroy ( ulong aHandle ))
-
 ]

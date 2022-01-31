@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyInterestingSuperclassScopeTest >> scopeClass [
-	^ClyInterestingSuperclassScope 
+	^ClyInterestingSuperclassScope
 ]
 
 { #category : #tests }

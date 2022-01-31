@@ -17,7 +17,6 @@ ClyTraitMethodDecorator class >> decorateMainTableCell: anItemCellMorph of: aDat
 
 { #category : #decoration }
 ClyTraitMethodDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }

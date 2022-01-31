@@ -35,7 +35,6 @@ SDL2 class >> clipboardText [
 	
 	text := self primClipboardText.
 	^ text readStringUTF8
-
 ]
 
 { #category : #clipboard }
@@ -108,6 +107,12 @@ SDL2 class >> delay: milliseconds [
 SDL2 class >> disableScreenSaver [
 
 	^ self ffiCall: #(void SDL_DisableScreenSaver(void))
+]
+
+{ #category : #timer }
+SDL2 class >> eventType: type state: state [
+
+	^ self ffiCall: #( Uint8 SDL_EventState(Uint32 type, int state))
 ]
 
 { #category : #native }
@@ -193,7 +198,7 @@ SDL2 class >> glGetAttribute: attr [
 
 	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
 		  self glGetAttribute: attr into: value.
-		  value nbUInt32AtOffset: 0 ]
+		  value unsignedLongAt: 1 ]
 ]
 
 { #category : #opengl }
@@ -270,7 +275,6 @@ SDL2 class >> initLibrary [
 SDL2 class >> initPlatformSpecific [
 
 	OSPlatform current sdlPlatform initPlatformSpecific.
-
 ]
 
 { #category : #common }

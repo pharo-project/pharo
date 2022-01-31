@@ -57,7 +57,7 @@ OSWindowGestureHandler >> lastUpdateTimestamp [
 
 { #category : #accessing }
 OSWindowGestureHandler >> lastUpdateTimestamp: anObject [ 
-	lastUpdateTimestamp := anObject 
+	lastUpdateTimestamp := anObject
 ]
 
 { #category : #'detector registering' }
@@ -87,7 +87,7 @@ OSWindowGestureHandler >> trackFinger: anEvent [
 
 { #category : #'detector registering' }
 OSWindowGestureHandler >> unregisterGesture: anOSTouchGesture [
-	registeredGestures remove: anOSTouchGesture 
+	registeredGestures remove: anOSTouchGesture
 ]
 
 { #category : #'handling fingers' }

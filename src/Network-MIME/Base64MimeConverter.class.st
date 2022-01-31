@@ -79,7 +79,6 @@ Base64MimeConverter class >> initialize [
 	ToCharTable at: 63 put: $+.
 	FromCharTable at: $/ asciiValue + 1 put: 63.
 	ToCharTable at: 64 put: $/.
-	
 ]
 
 { #category : #encoding }
@@ -120,7 +119,7 @@ Base64MimeConverter >> initialize [
 	multiLine := true.
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Base64MimeConverter >> mimeDecode [
 	"Convert a stream in base 64 with only a-z,A-Z,0-9,+,/ to a full byte stream of characters.  Reutrn a whole stream for the user to read."
 
@@ -139,7 +138,7 @@ Base64MimeConverter >> mimeDecode [
 	^ dataStream
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Base64MimeConverter >> mimeDecodeToByteArray [
 	"Convert a stream in base 64 with only a-z,A-Z,0-9,+,/ to a full ByteArray of 0-255 values.  Reutrn a whole stream for the user to read."
 
@@ -158,36 +157,45 @@ Base64MimeConverter >> mimeDecodeToByteArray [
 	^ dataStream
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Base64MimeConverter >> mimeEncode [
-	"Convert from data to 6 bit characters."
 
 	| phase1 phase2 raw nib lineLength data |
 	phase1 := phase2 := false.
 	lineLength := 0.
-	[dataStream atEnd] whileFalse: [
-		(multiLine and:[lineLength >= 70]) ifTrue: [ mimeStream cr.  lineLength := 0. ].
+	[ dataStream atEnd ] whileFalse: [ 
+		(multiLine and: [ lineLength >= 70 ]) ifTrue: [ 
+			mimeStream cr.
+			lineLength := 0 ].
 		data := raw := dataStream next asInteger.
-		nib := (data bitAnd: 16rFC) bitShift: -2.
-		mimeStream nextPut: (ToCharTable at: nib+1).
-		(raw := dataStream next) ifNil: [raw := 0. phase1 := true].
+		nib := (data bitAnd: 252) bitShift:  -2.
+		mimeStream nextPut: (ToCharTable at: nib + 1).
+		(raw := dataStream next) ifNil: [ 
+			raw := 0.
+			phase1 := true ].
 		data := ((data bitAnd: 3) bitShift: 8) + raw asInteger.
-		nib := (data bitAnd: 16r3F0) bitShift: -4.
-		mimeStream nextPut: (ToCharTable at: nib+1).
-		(raw := dataStream next) ifNil: [raw := 0. phase2 := true].
-		data := ((data bitAnd: 16rF) bitShift: 8) + (raw asInteger).
-		nib := (data bitAnd: 16rFC0) bitShift: -6.
-		mimeStream nextPut: (ToCharTable at: nib+1).
-		nib := (data bitAnd: 16r3F).
-		mimeStream nextPut: (ToCharTable at: nib+1).
-
-		lineLength := lineLength + 4.].
-	phase1 ifTrue: [mimeStream skip: -2; nextPut: $=; nextPut: $=.
-			^ mimeStream].
-	phase2 ifTrue: [mimeStream skip: -1; nextPut: $=.
-			^ mimeStream].
-
-
+		nib := (data bitAnd: 1008) bitShift:  -4.
+		mimeStream nextPut: (ToCharTable at: nib + 1).
+		(raw := dataStream next) ifNil: [ 
+			raw := 0.
+			phase2 := true ].
+		data := ((data bitAnd: 15) bitShift: 8) + raw asInteger.
+		nib := (data bitAnd: 4032) bitShift:  -6.
+		mimeStream nextPut: (ToCharTable at: nib + 1).
+		nib := data bitAnd: 63.
+		mimeStream nextPut: (ToCharTable at: nib + 1).
+		lineLength := lineLength + 4 ].
+	phase1 ifTrue: [ 
+		mimeStream
+			skip:  -2;
+			nextPut: $=;
+			nextPut: $=.
+		^ mimeStream ].
+	phase2 ifFalse: [ ^ self ].
+	mimeStream
+		skip: -1;
+		nextPut: $=.
+	^ mimeStream
 ]
 
 { #category : #accessing }
@@ -200,7 +208,7 @@ Base64MimeConverter >> multiLine: anObject [
 	multiLine := anObject
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Base64MimeConverter >> nextValue [
 	"The next six bits of data char from the mimeStream, or nil.  Skip all other chars"
 	| raw num |

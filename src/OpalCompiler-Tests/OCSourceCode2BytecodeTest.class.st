@@ -17,7 +17,6 @@ Class {
 OCSourceCode2BytecodeTest class >> classVar [
 
 	 ^ClassVar
-
 ]
 
 { #category : #compiling }
@@ -27,7 +26,6 @@ OCSourceCode2BytecodeTest >> compile2method: sourceStream [
 						source: sourceStream;
 						class: self class;			
 						compile.
-		
 ]
 
 { #category : #accessing }

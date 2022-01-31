@@ -39,7 +39,6 @@ OmFileStore class >> existsStoreNamed: aGlobalName inDirectory: aFileReference [
 		(self 
 			fileReferenceForStoreNamed: aGlobalName 
 			inDirectory: aFileReference) exists ]
-
 ]
 
 { #category : #accessing }
@@ -142,7 +141,6 @@ OmFileStore >> entriesDo: aBlockClosure [
 	"Finally, the entries still not written"
 	self entryBufferDo: [:entryAndLocalName | 
 		aBlockClosure value: entryAndLocalName key ].
-
 ]
 
 { #category : #private }
@@ -182,7 +180,6 @@ OmFileStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: abs
 					self entryByLocalName at: aReference localName put: entry.
 					presentBlockClosure value: entry ] 
 				ifAbsent: absentBlockClosure ]
-
 ]
 
 { #category : #private }
@@ -258,7 +255,6 @@ OmFileStore >> flushEntryBuffer [
 			] ensure: [ fileStream close ].
 	
 		self refreshEntryPositionsByLocalNameStartingAt: initialPosition since: initialLocalName ].
-
 ]
 
 { #category : #accessing }
@@ -293,7 +289,6 @@ OmFileStore >> initializeWithGlobalName: aName fileReference: aFileReference [
 	globalName := aName.
 	fileReference := aFileReference.
 	mustRefresh := fileReference exists. "Late file read"
-
 ]
 
 { #category : #testing }
@@ -386,7 +381,6 @@ OmFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifA
 		ifPresent: [ :position |
 			presentBlockClosure value: (self nextEntryFromPosition: position) ]
 		ifAbsent: absentBlockClosure
-
 ]
 
 { #category : #refreshing }

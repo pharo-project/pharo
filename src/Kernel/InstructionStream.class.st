@@ -26,7 +26,6 @@ InstructionStream class >> initialize [
 		(Array with: true with: false with: nil)
 			, (Array with: -1 with: 0 with: 1 with: 2)	
 	"InstructionStream initialize."
-
 ]
 
 { #category : #'instance creation' }
@@ -132,12 +131,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	bytecode = 248 ifTrue:
 		[^client callPrimitive: byte2 + (byte3 bitShift: 8)].
 	bytecode = 250 ifTrue:
-		["**	250  11111010  eeiiikkk  jjjjjjjj  Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
-		 ^client
-			pushClosureCopyNumCopiedValues: ((byte2 bitShift: -3) bitAnd: 7) + (extA // 16 bitShift: 3)
-			numArgs: (byte2 bitAnd: 7) + (extA \\ 16 bitShift: 3)
-			blockSize: byte3 + (extB bitShift: 8)
-			withInterpreter: self].
+		[self error: 'We only support full blocks'].
 	bytecode = 251 ifTrue:
 		[^client pushRemoteTemp: byte2 inVectorAt: byte3].
 	bytecode = 252 ifTrue:
@@ -275,155 +269,6 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 ]
 
 { #category : #interpreting }
-InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [ 
-	"Send to the argument, client, a message that specifies the type of the 
-	next instruction."
-
-	| byte type offset method |
-	method := self compiledCode.  
-	byte := method at: pc.
-	type := byte // 16.  
-	offset := byte \\ 16.   
-	pc := pc+1.
-	client pc: pc.
-	"We do an inline binary search on each of the possible 16 values of type:
-	The old, cleaner but slowe code is retained as a comment below"
-	type < 8
-	ifTrue: [type < 4
-				ifTrue: [type < 2
-						ifTrue: [type < 1
-								ifTrue: ["type = 0"
-									^ client pushReceiverVariable: offset]
-								ifFalse: ["type = 1"
-									^ client pushTemporaryVariable: offset]]
-						ifFalse: [type < 3
-								ifTrue: ["type = 2"
-									^ client
-										pushConstant: (method literalAt: offset + 1)]
-								ifFalse: ["type = 3"
-									^ client
-										pushConstant: (method literalAt: offset + 17)]]]
-				ifFalse: [type < 6
-						ifTrue: [type < 5
-								ifTrue: ["type = 4"
-									^ client
-										pushLiteralVariable: (method literalAt: offset + 1)]
-								ifFalse: ["type = 5"
-									^ client
-										pushLiteralVariable: (method literalAt: offset + 17)]]
-						ifFalse: [type < 7
-								ifTrue: ["type = 6"
-									offset < 8
-										ifTrue: [^ client popIntoReceiverVariable: offset]
-										ifFalse: [^ client popIntoTemporaryVariable: offset - 8]]
-								ifFalse: ["type = 7"
-									offset = 0
-										ifTrue: [^ client pushReceiver].
-									offset < 8
-										ifTrue: [^ client
-												pushConstant: (SpecialConstants at: offset)].
-									offset = 8
-										ifTrue: [^ client methodReturnReceiver].
-									offset < 12
-										ifTrue: [^ client
-												methodReturnConstant: (SpecialConstants at: offset - 8)].
-									offset = 12
-										ifTrue: [^ client methodReturnTop].
-									offset = 13
-										ifTrue: [^ client blockReturnTop].
-									offset > 13
-										ifTrue: [^ self interpretUnusedBytecode: client at: pc - 1 ]]]]]
-		ifFalse: [type < 12
-				ifTrue: [type < 10
-						ifTrue: [type < 9
-								ifTrue: ["type = 8"
-									^ self
-										interpretV3PlusClosureExtension: offset 
-										in: method 
-										for: client]
-								ifFalse: ["type = 9 (short jumps)"
-									offset < 8
-										ifTrue: [^ client jump: offset + 1 withInterpreter: self].
-									^ client jump: offset - 8 + 1 if: false withInterpreter: self]]
-						ifFalse: [type < 11
-								ifTrue: ["type = 10 (long jumps)"
-									byte := method at: pc.
-									pc := pc + 1.
-									offset < 8
-										ifTrue: [^ client
-												jump: offset - 4 * 256 + byte
-												withInterpreter: self].
-									^ client
-										jump: (offset bitAnd: 3) * 256 + byte
-										if: offset < 12
-										withInterpreter: self]
-								ifFalse: ["type = 11"
-									^ client
-										send: (Smalltalk specialSelectorAt: offset + 1)
-										super: false
-										numArgs: (Smalltalk specialNargsAt: offset + 1)]]]
-				ifFalse: [type = 12
-						ifTrue: [^ client
-								send: (Smalltalk specialSelectorAt: offset + 17)
-								super: false
-								numArgs: (Smalltalk specialNargsAt: offset + 17)]
-						ifFalse: ["type = 13, 14 or 15"
-							^ client
-								send: (method literalAt: offset + 1)
-								super: false
-								numArgs: type - 13]]].
-
-
-"    old code 
-	type=0 ifTrue: [^client pushReceiverVariable: offset].
-	type=1 ifTrue: [^client pushTemporaryVariable: offset].
-	type=2 ifTrue: [^client pushConstant: (method literalAt: offset+1)].
-	type=3 ifTrue: [^client pushConstant: (method literalAt: offset+17)].
-	type=4 ifTrue: [^client pushLiteralVariable: (method literalAt: offset+1)].
-	type=5 ifTrue: [^client pushLiteralVariable: (method literalAt: offset+17)].
-	type=6 
-		ifTrue: [offset<8
-					ifTrue: [^client popIntoReceiverVariable: offset]
-					ifFalse: [^client popIntoTemporaryVariable: offset-8]].
-	type=7
-		ifTrue: [offset=0 ifTrue: [^client pushReceiver].
-				offset<8 ifTrue: [^client pushConstant: (SpecialConstants at: offset)].
-				offset=8 ifTrue: [^client methodReturnReceiver].
-				offset<12 ifTrue: [^client methodReturnConstant: 
-												(SpecialConstants at: offset-8)].
-				offset=12 ifTrue: [^client methodReturnTop].
-				offset=13 ifTrue: [^client blockReturnTop].
-				offset>13 ifTrue: [^self error: 'unusedBytecode']].
-	type=8 ifTrue: [^self interpretExtension: offset in: method for: client].
-	type=9
-		ifTrue:  short jumps
-			[offset<8 ifTrue: [^client jump: offset+1].
-			^client jump: offset-8+1 if: false].
-	type=10 
-		ifTrue:  long jumps
-			[byte:= method at: pc.  pc:= pc+1.
-			offset<8 ifTrue: [^client jump: offset-4*256 + byte].
-			^client jump: (offset bitAnd: 3)*256 + byte if: offset<12].
-	type=11 
-		ifTrue: 
-			[^client 
-				send: (Smalltalk specialSelectorAt: offset+1) 
-				super: false
-				numArgs: (Smalltalk specialNargsAt: offset+1)].
-	type=12 
-		ifTrue: 
-			[^client 
-				send: (Smalltalk specialSelectorAt: offset+17) 
-				super: false
-				numArgs: (Smalltalk specialNargsAt: offset+17)].
-	type>12
-		ifTrue: 
-			[^client send: (method literalAt: offset+1) 
-					super: false
-					numArgs: type-13]"
-]
-
-{ #category : #interpreting }
 InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [ 
 	"Implement the extended push for non-zero extensions."
 	"*	82			01010010			Push thisContext, (then Extend B = 1 => push
@@ -433,83 +278,11 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 	extB = 1
 		ifTrue: [^ client pushActiveProcess].
 	self error: 'undefined extended push'
-
 ]
 
 { #category : #interpreting }
 InstructionStream >> interpretUnusedBytecode: client at: startPC [
 	^ client unusedBytecode
-]
-
-{ #category : #interpreting }
-InstructionStream >> interpretV3PlusClosureExtension: offset in: method for: client [
-	| type offset2 byte2 byte3 byte4 |
-	offset <= 6 ifTrue: 
-		["Extended op codes 128-134"
-		byte2 := method at: pc. pc := pc + 1.
-		client pc: pc.
-		offset <= 2 ifTrue:
-			["128-130:  extended pushes and pops"
-			type := byte2 // 64.
-			offset2 := byte2 \\ 64.
-			offset = 0 ifTrue: 
-				[type = 0 ifTrue: [^client pushReceiverVariable: offset2].
-				type = 1 ifTrue: [^client pushTemporaryVariable: offset2].
-				type = 2  ifTrue: [^client pushConstant: (method literalAt: offset2 + 1)].
-				type = 3 ifTrue: [^client pushLiteralVariable: (method literalAt: offset2 + 1)]].
-			offset = 1 ifTrue: 
-				[type = 0 ifTrue: [^client storeIntoReceiverVariable: offset2].
-				type = 1 ifTrue: [^client storeIntoTemporaryVariable: offset2].
-				type = 2 ifTrue: [self error: 'illegalStore'].
-				type = 3 ifTrue: [^client storeIntoLiteralVariable: (method literalAt: offset2 + 1)]].
-			offset = 2 ifTrue: 
-				[type = 0 ifTrue: [^client popIntoReceiverVariable: offset2].
-				type = 1 ifTrue: [^client popIntoTemporaryVariable: offset2].
-				type = 2 ifTrue: [self error: 'illegalStore'].
-				type = 3  ifTrue: [^client popIntoLiteralVariable: (method literalAt: offset2 + 1)]]].
-		"131-134: extended sends"
-		offset = 3 ifTrue:  "Single extended send"
-			[^client send: (method literalAt: byte2 \\ 32 + 1)
-					super: false numArgs: byte2 // 32].
-		offset = 4 ifTrue:    "Double extended do-anything"
-			[byte3 := method at: pc. pc := pc + 1.
-			type := byte2 // 32.
-			type = 0 ifTrue: [^client send: (method literalAt: byte3 + 1)
-									super: false numArgs: byte2 \\ 32].
-			type = 1 ifTrue: [^client send: (method literalAt: byte3 + 1)
-									super: true numArgs: byte2 \\ 32].
-			type = 2 ifTrue: [^client pushReceiverVariable: byte3].
-			type = 3 ifTrue: [^client pushConstant: (method literalAt: byte3 + 1)].
-			type = 4 ifTrue: [^client pushLiteralVariable: (method literalAt: byte3 + 1)].
-			type = 5 ifTrue: [^client storeIntoReceiverVariable: byte3].
-			type = 6 ifTrue: [^client popIntoReceiverVariable: byte3].
-			type = 7 ifTrue: [^client storeIntoLiteralVariable: (method literalAt: byte3 + 1)]].
-		offset = 5 ifTrue:  "Single extended send to super"
-			[^client send: (method literalAt: byte2 \\ 32 + 1)
-					super: true numArgs: byte2 // 32].
-		offset = 6 ifTrue:   "Second extended send"
-			[^client send: (method literalAt: byte2 \\ 64 + 1)
-					super: false numArgs: byte2 // 64]].
-	offset = 7 ifTrue: [^client doPop].
-	offset = 8 ifTrue: [^client doDup].
-	offset = 9 ifTrue: [^client pushActiveContext].
-	byte2 := method at: pc. pc := pc + 1.
-	offset = 10 ifTrue:
-		[^byte2 < 128
-			ifTrue: [client pushNewArrayOfSize: byte2]
-			ifFalse: [client pushConsArrayWithElements: byte2 - 128]].
-	byte3 := method at: pc.  pc := pc + 1.
-	offset = 11 ifTrue: [^client callPrimitive: byte2 + (byte3 * 256) ].
-	offset = 12 ifTrue: [^client pushRemoteTemp: byte2 inVectorAt: byte3].
-	offset = 13 ifTrue: [^client storeIntoRemoteTemp: byte2 inVectorAt: byte3].
-	offset = 14 ifTrue: [^client popIntoRemoteTemp: byte2 inVectorAt: byte3].
-	"offset = 15"
-	byte4 := method at: pc.  pc := pc + 1.
-	^client
-		pushClosureCopyNumCopiedValues: (byte2 bitShift: -4)
-		numArgs: (byte2 bitAnd: 16rF)
-		blockSize: (byte3 * 256) + byte4
-		withInterpreter: self
 ]
 
 { #category : #scanning }

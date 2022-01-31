@@ -1,6 +1,6 @@
 Extension { #name : #RGMethodDefinition }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RGMethodDefinition >> critiques [
 	^ self compiledMethod critiques
 ]

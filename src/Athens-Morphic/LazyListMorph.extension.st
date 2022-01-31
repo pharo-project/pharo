@@ -50,8 +50,7 @@ LazyListMorph >> athensDrawSelectionOn: anAthensCanvas [
 	
 	selectedRow ifNil: [ ^self ].
 	selectedRow = 0 ifTrue: [ ^self ].
-	self athensDrawBackgroundForSelectedRow: selectedRow on: anAthensCanvas 
-
+	self athensDrawBackgroundForSelectedRow: selectedRow on: anAthensCanvas
 ]
 
 { #category : #'*Athens-Morphic' }

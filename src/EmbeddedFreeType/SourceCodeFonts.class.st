@@ -48,9 +48,7 @@ SourceCodeFonts class >> fontSourceCodeRow [
 		self fontButton: 'Medium' size: self sizeMedium.
 		self fontButton: 'Large' size: self sizeLarge.
 		self fontButton: 'Very Large' size: self sizeVeryLarge.
-		self fontButton: 'Huge' size: self sizeHuge	}	
-		
-		
+		self fontButton: 'Huge' size: self sizeHuge	}
 ]
 
 { #category : #'font registration' }
@@ -154,12 +152,10 @@ SourceCodeFonts class >> sizeVeryLarge [
 
 { #category : #accessing }
 SourceCodeFonts class >> useSourceCode [
-	
 ]
 
 { #category : #accessing }
 SourceCodeFonts class >> useSourceCode: aBoolean [
-	
 ]
 
 { #category : #notes }

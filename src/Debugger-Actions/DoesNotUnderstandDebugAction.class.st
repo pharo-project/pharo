@@ -16,7 +16,7 @@ DoesNotUnderstandDebugAction class >> actionType [
 { #category : #testing }
 DoesNotUnderstandDebugAction >> appliesToDebugger: aDebugger [
 
-	^ aDebugger session isInterruptedContextDoesNotUnderstand 
+	^ aDebugger session isInterruptedContextDoesNotUnderstand
 ]
 
 { #category : #private }

@@ -142,7 +142,6 @@ DisplayMedium >> fillWhite [
 	"Set all bits in the form to white."
 
 	self fill: self boundingBox fillColor: Color white.
-
 ]
 
 { #category : #coloring }
@@ -150,7 +149,6 @@ DisplayMedium >> fillWhite: aRectangle [
 	"Set all bits in the receiver's area defined by aRectangle to white."
 
 	self fill: aRectangle rule: Form over fillColor: Color white.
-
 ]
 
 { #category : #coloring }
@@ -158,14 +156,12 @@ DisplayMedium >> fillWithColor: aColor [
 	"Fill the receiver's bounding box with the given color."
 
 	self fill: self boundingBox fillColor: aColor.
-
 ]
 
 { #category : #private }
 DisplayMedium >> highLightBitmaps [
 	"Quickly return a Bitblt-ready raw colorValue for highlighting areas."
 	^HighLightBitmaps ifNil: [self initializeHighLights ].
-
 ]
 
 { #category : #private }
@@ -182,7 +178,6 @@ DisplayMedium >> initializeHighLights [
 		at: 16 put: (Bitmap with: 4294967295);
 		at: 32 put: (Bitmap with: 4294967295);
 		yourself.
-
 ]
 
 { #category : #private }

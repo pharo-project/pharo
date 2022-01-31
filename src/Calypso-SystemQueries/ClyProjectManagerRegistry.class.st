@@ -54,5 +54,5 @@ ClyProjectManagerRegistry >> projects [
 { #category : #registration }
 ClyProjectManagerRegistry >> registerProjectManager: aPackageManager [
 	projectManagers removeAllSuchThat: [ :each | each class = aPackageManager class ].
-	projectManagers add: aPackageManager 
+	projectManagers add: aPackageManager
 ]

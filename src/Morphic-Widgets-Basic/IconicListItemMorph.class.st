@@ -57,7 +57,6 @@ IconicListItemMorph >> icon: anObject [
 	anObject ifNotNil: [ "since the text can be removed" 
 		self addMorphFront: icon.
 		self adjustLayoutBounds]
-	
 ]
 
 { #category : #initialization }
@@ -90,7 +89,6 @@ IconicListItemMorph >> morph: anObject [
 	morph ifNotNil: [ "since the text can be removed" 
 		self addMorphBack: morph.
 		self adjustLayoutBounds]
-	
 ]
 
 { #category : #accessing }

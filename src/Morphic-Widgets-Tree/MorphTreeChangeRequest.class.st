@@ -23,7 +23,7 @@ MorphTreeChangeRequest class >> collapseAll [
 
 { #category : #'instance creation' }
 MorphTreeChangeRequest class >> collapseNodePath: aNodePath [
-	^ self new action: #collapseNodePath:; arguments: (Array with: aNodePath) 
+	^ self new action: #collapseNodePath:; arguments: (Array with: aNodePath)
 ]
 
 { #category : #'instance creation' }

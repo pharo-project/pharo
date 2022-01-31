@@ -111,7 +111,6 @@ AlphaImageMorph >> displayBounds [
 	Just one rep for the tiled case."
 
 	^self layoutPosition extent: self cachedForm extent
-	
 ]
 
 { #category : #drawing }
@@ -151,7 +150,6 @@ AlphaImageMorph >> extent: aPoint [
 	self basicExtent: aPoint.
 	
 	(self layout = #scaled or: [self layout = #scaledAspect]) ifTrue: [self cachedForm: nil]
-
 ]
 
 { #category : #accessing }
@@ -293,7 +291,6 @@ AlphaImageMorph >> model: anObject [
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
 	model := anObject
-
 ]
 
 { #category : #geometry }

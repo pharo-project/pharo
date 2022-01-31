@@ -11,7 +11,6 @@ FLExternalAddressCluster >> materializeInstanceWith: aDecoder [
 	^ (theClass basicNew: size)
 		beNull;
 		yourself
-
 ]
 
 { #category : #'serialize/materialize' }

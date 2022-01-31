@@ -4,7 +4,6 @@ Extension { #name : #Number }
 Number >> asDuration [
  
  	^ Duration seconds: self asInteger
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -42,7 +41,6 @@ Number >> milliSecond [
 	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
 	
  	^ self milliSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -52,7 +50,6 @@ Number >> milliSeconds [
 	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
 	
  	^ Duration milliSeconds: self
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -61,7 +58,6 @@ Number >> minute [
 	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
  
  	^ self minutes
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -78,7 +74,6 @@ Number >> nanoSecond [
 	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
  
  	^ self nanoSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -95,7 +90,6 @@ Number >> second [
 	"(1 minute + 1 second) printString >>> '0:00:01:01'"
 	
  	^ self seconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -111,7 +105,6 @@ Number >> seconds [
 Number >> week [
  
  	^ self weeks
- 
 ]
 
 { #category : #'*Kernel-Chronology' }

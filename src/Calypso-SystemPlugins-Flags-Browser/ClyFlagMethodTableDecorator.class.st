@@ -19,7 +19,6 @@ ClyFlagMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: 
 
 { #category : #decoration }
 ClyFlagMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-	
 ]
 
 { #category : #decoration }
@@ -30,5 +29,5 @@ ClyFlagMethodTableDecorator class >> priority [
 { #category : #testing }
 ClyFlagMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	
-	^aDataSourceItem isMarkedWith: ClyMethodFlag 
+	^aDataSourceItem isMarkedWith: ClyMethodFlag
 ]

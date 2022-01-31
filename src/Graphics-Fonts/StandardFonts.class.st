@@ -90,7 +90,6 @@ StandardFonts class >> defaultFont: aFont [
 	newDefaultStyle := aStyle copy.
 	newDefaultStyle defaultFontIndex: (aStyle fontIndexOf: aFont).
 	TextSharedInformation at: #DefaultTextStyle put: newDefaultStyle.
-
 ]
 
 { #category : #'small font fixing' }
@@ -121,7 +120,6 @@ StandardFonts class >> fontsSpecForStyleNamed: aSymbol [
 			{#balloonFont:. k. small }. 
 			{#haloFont:. k. small }.
 			{#buttonFont:. k. regular } }
-
 ]
 
 { #category : #'font accessing' }
@@ -176,9 +174,6 @@ StandardFonts class >> pointSizeForStyleNamed: aSymbol [
 	^ (#(#(#small 9) #(#medium 12) #(#large 14) #(veryLarge 18) #(huge 24)) 
 		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
 			ifNotNil: [:info | info second]
-	
-		
-
 ]
 
 { #category : #'font accessing' }
@@ -204,14 +199,11 @@ StandardFonts class >> printStandardSystemFonts [
 	UIManager default  
 		longMessage: string
 		title: 'Current system font settings' translated.
-	
 ]
 
 { #category : #'font accessing' }
 StandardFonts class >> setAllStandardFontsTo: aFont [
 	self systemFontAspects do: [:selector | StandardFonts perform: (selector, ':') asSymbol with: aFont].
-	 
-
 ]
 
 { #category : #menu }
@@ -315,7 +307,7 @@ StandardFonts class >> systemFontAspects [
 
 { #category : #'font accessing' }
 StandardFonts class >> systemFontAspectsAndLabels [
-	^ {#defaultFont -> 'Default font' translated. #listFont -> 'List font'  translated. #menuFont -> 'Menu font'  translated. #windowTitleFont -> 'Window title'  translated. #balloonFont -> 'Balloon help font'  translated. #codeFont -> 'Code font'  translated. #buttonFont -> 'Button font'  translated. #haloFont -> 'Halo font'  translated } 
+	^ {#defaultFont -> 'Default font' translated. #listFont -> 'List font'  translated. #menuFont -> 'Menu font'  translated. #windowTitleFont -> 'Window title'  translated. #balloonFont -> 'Balloon help font'  translated. #codeFont -> 'Code font'  translated. #buttonFont -> 'Button font'  translated. #haloFont -> 'Halo font'  translated }
 ]
 
 { #category : #'font accessing' }

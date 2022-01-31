@@ -72,7 +72,6 @@ PaginatedMorphTreeMorph >> extent: newExtent [
 	self extent = newExtent ifTrue: [^ self].
 	super extent: newExtent.
 	self updatePager.
-
 ]
 
 { #category : #geometry }
@@ -101,7 +100,6 @@ PaginatedMorphTreeMorph >> pageSize: aPageSize [
 { #category : #'pager managing' }
 PaginatedMorphTreeMorph >> pager [
 	^ pager
-	
 ]
 
 { #category : #'pager managing' }
@@ -123,7 +121,6 @@ PaginatedMorphTreeMorph >> removePager [
 		pager := nil.
 		self updateList.
 		self resizerChanged].
-
 ]
 
 { #category : #updating }

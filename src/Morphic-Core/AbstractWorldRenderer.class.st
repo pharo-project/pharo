@@ -64,7 +64,7 @@ AbstractWorldRenderer class >> forWorld: aWorld [
 { #category : #'class initialization' }
 AbstractWorldRenderer class >> initialize [
 
-	SessionManager default registerSystemClassNamed: self name	
+	SessionManager default registerSystemClassNamed: self name
 ]
 
 { #category : #testing }
@@ -180,7 +180,13 @@ AbstractWorldRenderer >> activate [
 { #category : #activation }
 AbstractWorldRenderer >> actualScreenSize [
 
-	self subclassResponsibility 
+	self subclassResponsibility
+]
+
+{ #category : #events }
+AbstractWorldRenderer >> checkForNewScreenSize [
+
+	self subclassResponsibility
 ]
 
 { #category : #utilities }
@@ -192,7 +198,7 @@ AbstractWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 { #category : #activation }
 AbstractWorldRenderer >> deactivate [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #operations }
@@ -247,7 +253,7 @@ AbstractWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld [
 { #category : #activation }
 AbstractWorldRenderer >> doActivate [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #rendering }
@@ -307,11 +313,16 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world defer: [Cursor normal show].
 		
 	world layoutChanged.
-
 ]
 
 { #category : #rendering }
 AbstractWorldRenderer >> updateDamage: rectangles [
+
+	self subclassResponsibility
+]
+
+{ #category : #events }
+AbstractWorldRenderer >> updateToNewResolution [
 
 	self subclassResponsibility
 ]
@@ -337,7 +348,7 @@ AbstractWorldRenderer >> viewBox [
 { #category : #accessing }
 AbstractWorldRenderer >> windowTitle: aString [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

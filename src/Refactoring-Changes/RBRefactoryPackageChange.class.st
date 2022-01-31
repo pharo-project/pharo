@@ -7,12 +7,12 @@ Class {
 	#instVars : [
 		'browserEnvironment'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Packages'
 }
 
 { #category : #converting }
 RBRefactoryPackageChange >> asUndoOperation [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }

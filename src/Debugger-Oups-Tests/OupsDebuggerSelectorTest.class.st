@@ -48,8 +48,6 @@ OupsDebuggerSelectorTest >> testFirstUsableDebuggerForSession [
 	self
 		assert: (debuggerSelector nextDebuggerForSession: self session)
 		identicalTo: debuggers third
-	
-	
 ]
 
 { #category : #'tests - debugging' }
@@ -77,8 +75,6 @@ OupsDebuggerSelectorTest >> testNextDebuggerForDebuggerFailure [
 	self
 		assert: (debuggerSelector nextDebuggerForSession: session)
 		identicalTo: debuggers second
-
-	
 ]
 
 { #category : #'tests -  algorithm' }
@@ -100,9 +96,6 @@ OupsDebuggerSelectorTest >> testNextDebuggerForSession [
 	self
 		should: [ debuggerSelector nextDebuggerForSession: self session]
 		raise: CollectionIsEmpty
-		
-		
-
 ]
 
 { #category : #'tests -  algorithm' }

@@ -16,19 +16,19 @@ Class {
 { #category : #accessing }
 Week class >> dayNames [
 
-	^ DayNames 
+	^ DayNames
 ]
 
 { #category : #accessing }
 Week class >> indexOfDay: aSymbol [
 
-	^ DayNames indexOf: aSymbol 
+	^ DayNames indexOf: aSymbol
 ]
 
 { #category : #accessing }
 Week class >> nameOfDay: anIndex [
 
-	^ DayNames at: anIndex 
+	^ DayNames at: anIndex
 ]
 
 { #category : #accessing }
@@ -43,7 +43,6 @@ Week class >> startDay: aSymbol [
 	(DayNames includes: aSymbol)
 		ifTrue: [ StartDay := aSymbol ]
 		ifFalse: [ self error: aSymbol, ' is not a recognised day name' ]
-
 ]
 
 { #category : #'instance creation' }
@@ -78,24 +77,23 @@ Week class >> year: aYear week: weekNumber [
 	^ super starting: aYear asYear firstThursday + (weekNumber * 7 - 10) days duration: 1 week
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Week >> asWeek [
 
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
 Week >> index [
 
 	^ self asMonth dayOfWeek + self dayOfMonth - 2  // 7 + 1
-
 ]
 
 { #category : #printing }
 Week >> printOn: aStream [
 
 	aStream nextPutAll: 'a Week starting: '.
-	self start printOn: aStream. 
+	self start printOn: aStream.
 ]
 
 { #category : #private }

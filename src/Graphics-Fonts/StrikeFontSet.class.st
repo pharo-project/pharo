@@ -36,7 +36,6 @@ StrikeFontSet class >> familyName: aName size: aSize [
 	collection := collection asSortedCollection: [:a :b | a pointSize <= b pointSize].
 	collection do: [:s | (s pointSize >= aSize) ifTrue: [^ s]].
 	^ TextStyle defaultFont.
-
 ]
 
 { #category : #'instance creation' }
@@ -44,7 +43,6 @@ StrikeFontSet class >> familyName: aName size: aSize emphasized: emphasisCode [
 	"Create the font with this emphasis"
 
 	^ (self familyName: aName size: aSize) emphasized: emphasisCode
-
 ]
 
 { #category : #utilities }
@@ -54,7 +52,6 @@ StrikeFontSet class >> findMaximumLessThan: f in: array [
 		f height >= (array at: i) height ifTrue: [^ array at: i].
 	].
 	^ array first.
-
 ]
 
 { #category : #'file in/out' }
@@ -77,14 +74,12 @@ StrikeFontSet class >> installNewFontAtIndex: newIndex fromOld: oldIndex [
 StrikeFontSet installNewFontAtIndex: UnicodeSimplifiedChinese leadingChar fromOld: UnicodeJapanese leadingChar
 StrikeFontSet installNewFontAtIndex: UnicodeKorean leadingChar fromOld: UnicodeJapanese leadingChar
 "
-
 ]
 
 { #category : #'instance creation' }
 StrikeFontSet class >> newFontArray: anArray [
  
 	^super new initializeWithFontArray: anArray
-
 ]
 
 { #category : #'file in/out' }
@@ -108,7 +103,6 @@ StrikeFontSet class >> removeFontsForEncoding: leadingChar encodingName: encodin
 	].
 
 	TextSharedInformation removeKey: encodingSymbol asSymbol ifAbsent: [].
-
 ]
 
 { #category : #private }
@@ -125,21 +119,18 @@ StrikeFontSet >> addNewFont: aFont at: encodingIndex [
 	newArray at: encodingIndex put: aFont.
 
 	self initializeWithFontArray: newArray.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> ascent [
 
 	^ (fontArray  at: 1) ascent.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> ascentKern [
 
 	^ (fontArray  at: 1) ascentKern.
-
 ]
 
 { #category : #accessing }
@@ -151,7 +142,6 @@ StrikeFontSet >> ascentOf: aCharacter [
 StrikeFontSet >> baseKern [
 
 	^ (fontArray  at: 1) baseKern.
-
 ]
 
 { #category : #accessing }
@@ -173,7 +163,6 @@ StrikeFontSet >> bonk: glyphForm with: bonkForm at: j [
 	] ifFalse: [
 		1 to: x size-1 do: [:i | bb destX: (x at: i) + offset; copyBits].
 	].
-
 ]
 
 { #category : #'character shapes' }
@@ -188,7 +177,6 @@ StrikeFontSet >> characterFormAt: character [
 	leftX := xTable at: ascii + 1.
 	rightX := xTable at: ascii + 2.
 	^ (fontArray at: encoding) glyphs copy: (leftX @ 0 corner: rightX @ self height).
-
 ]
 
 { #category : #'character shapes' }
@@ -221,7 +209,6 @@ StrikeFontSet >> characterFormAt: character put: characterForm [
 		ascii + 2 to: xTable size do: [:i |
 			xTable at: i put: (xTable at: i) + widthDif]].
 	glyphs copy: (leftX @ 0 extent: characterForm extent) from: 0 @ 0 in: characterForm rule: Form over.
-
 ]
 
 { #category : #accessing }
@@ -261,7 +248,6 @@ StrikeFontSet >> characters: anInterval in: sourceString displayAt: aPoint clipp
 		aBitBlt copyFrom: sourceRect in: f glyphs to: destPoint.
 		destPoint x + (rightX - leftX + kernDelta) @ destPoint y.
 	].
-
 ]
 
 { #category : #copying }
@@ -278,7 +264,6 @@ StrikeFontSet >> copy [
 	].
 	s fontArray: a.
 	^ s.
-
 ]
 
 { #category : #accessing }
@@ -290,14 +275,12 @@ StrikeFontSet >> derivativeFonts [
 StrikeFontSet >> descent [
 
 	^ (fontArray  at: 1) descent.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> descentKern [
 
 	^ (fontArray at: 1) descentKern.
-
 ]
 
 { #category : #accessing }
@@ -317,7 +300,6 @@ StrikeFontSet >> displayLine: aString at: aPoint [
 		fillColor: nil
 		kernDelta: 0
 		on: (BitBlt toForm: Display).
-
 ]
 
 { #category : #displaying }
@@ -348,7 +330,6 @@ StrikeFontSet >> displayMultiString: aString on: aBitBlt from: startIndex to: st
 StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta [ 
 
 	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: aPoint y + self ascent.
-
 ]
 
 { #category : #displaying }
@@ -403,7 +384,6 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 		rIndex := rIndex + 1.
 	].
 	^ Array with: rIndex with: destPoint.
-
 ]
 
 { #category : #accessing }
@@ -412,7 +392,6 @@ StrikeFontSet >> emphasis [
 	strike-out."
 
 	^ emphasis.
-
 ]
 
 { #category : #accessing }
@@ -421,7 +400,6 @@ StrikeFontSet >> emphasis: code [
 	where bold=1, italic=2, underlined=4, and struck out=8."
 
 	emphasis := code.
-
 ]
 
 { #category : #accessing }
@@ -450,14 +428,12 @@ StrikeFontSet >> emphasized: code [
 	derivative emphasis: safeCode.
 	derivativeFonts at: safeCode put: derivative.
 	^ derivative
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> familyName [
 
 	^ (fontArray at: 1) familyName.
-
 ]
 
 { #category : #accessing }
@@ -467,28 +443,24 @@ StrikeFontSet >> familySizeFace [
 		with: (fontArray  at: 1) name
 		with: self height
 		with: (fontArray  at: 1) emphasis
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> fontArray [
 
 	^ fontArray
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> fontArray: anArray [
 
 	fontArray := anArray.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> fontNameWithPointSize [
 
 	^ (fontArray at: 1) fontNameWithPointSize.
-
 ]
 
 { #category : #accessing }
@@ -506,7 +478,6 @@ StrikeFontSet >> fontOf: aCharacter ifAbsent: aBlock [
 		ifTrue:[font := fontArray at: encoding].
 	font ifNil:[^aBlock value].
 	^font
-
 ]
 
 { #category : #private }
@@ -535,21 +506,18 @@ StrikeFontSet >> glyphInfoOf: aCharacter into: glyphInfoArray [
 StrikeFontSet >> glyphs [
 
 	^ (fontArray  at: 1) glyphs
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> glyphsEncoding: anInteger [
 
 	^ (fontArray at: (anInteger+1)) glyphs.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> height [
 
 	^ (fontArray  at: 1) height.
-
 ]
 
 { #category : #accessing }
@@ -585,7 +553,6 @@ StrikeFontSet >> initializeWithFontArray: anArray [
 StrikeFontSet >> installOn: aDisplayContext [
 
 	^ aDisplayContext installStrikeFont: self.
-
 ]
 
 { #category : #displaying }
@@ -595,14 +562,12 @@ StrikeFontSet >> installOn: aDisplayContext foregroundColor: foregroundColor bac
 		installStrikeFont: self
 		foregroundColor: foregroundColor
 		backgroundColor: backgroundColor.
-
 ]
 
 { #category : #testing }
 StrikeFontSet >> isFontSet [
 
 	^ true.
-
 ]
 
 { #category : #testing }
@@ -623,7 +588,6 @@ StrikeFontSet >> lineGrid [
 	| f |
 	f := fontArray at: 1.
 	^ f ascent + f descent.
-
 ]
 
 { #category : #emphasis }
@@ -643,7 +607,6 @@ StrikeFontSet >> makeBoldGlyphs [
 			(fontArray at: i) setGlyphs: g.
 		].
 	].
-
 ]
 
 { #category : #emphasis }
@@ -681,7 +644,6 @@ StrikeFontSet >> makeItalicGlyphs [
 			font setGlyphs: g
 		].
 	].
-
 ]
 
 { #category : #emphasis }
@@ -697,7 +659,6 @@ StrikeFontSet >> makeStruckOutGlyphs [
 			font setGlyphs: g
 		].
 	].
-
 ]
 
 { #category : #emphasis }
@@ -713,7 +674,6 @@ StrikeFontSet >> makeUnderlinedGlyphs [
 			font setGlyphs: g
 		].
 	].
-
 ]
 
 { #category : #accessing }
@@ -723,42 +683,36 @@ StrikeFontSet >> maxAsciiFor: encoding [
 	f := (fontArray at: encoding+1).
 	f ifNotNil: [^ f maxAscii].
 	^ 0.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> maxEncoding [
 
 	^ fontArray size.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> maxWidth [
 
 	^ (fontArray at: 1) maxWidth.
-
 ]
 
 { #category : #testing }
 StrikeFontSet >> name [
 
 	^ name
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> name: aString [
 
 	name := aString
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> pointSize [
 
 	^ (fontArray  at: 1) pointSize.
-
 ]
 
 { #category : #copying }
@@ -776,7 +730,6 @@ StrikeFontSet >> printOn: aStream [
 	aStream space.
 	self height printOn: aStream.
 	aStream nextPut: $).
-
 ]
 
 { #category : #private }
@@ -791,7 +744,6 @@ StrikeFontSet >> questionGlyphInfoInto: glyphInfoArray [
 		at: 4 put: (self ascentOf: $?);
 		at: 5 put: self.
 	^ glyphInfoArray.
-
 ]
 
 { #category : #initialization }
@@ -799,21 +751,18 @@ StrikeFontSet >> reset [
 	"Reset the cache of derivative emphasized fonts"
 
 	derivativeFonts := Array new: 32.
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> subscript [
 
 	^ (fontArray  at: 1) subscript
-
 ]
 
 { #category : #accessing }
 StrikeFontSet >> superscript [
 
 	^ (fontArray  at: 1) superscript
-
 ]
 
 { #category : #accessing }
@@ -821,7 +770,6 @@ StrikeFontSet >> textStyle [
 
 	^ TextStyle actualTextStyles detect: [:aStyle | (aStyle fontArray collect: [:s | s name]) includes: self name]
 		ifNone: [].
-
 ]
 
 { #category : #accessing }
@@ -841,7 +789,6 @@ StrikeFontSet >> widthOfString: aString [
 "
 	TextStyle default defaultFont widthOfString: 'zort' 21
 "
-
 ]
 
 { #category : #accessing }
@@ -849,7 +796,6 @@ StrikeFontSet >> xTable [
 	"Answer an Array of the left x-coordinate of characters in glyphs."
 
 	^ (fontArray  at: 1) xTable.
-
 ]
 
 { #category : #private }
@@ -857,5 +803,4 @@ StrikeFontSet >> xTableEncoding: anInteger [
 	"Answer an Array of the left x-coordinate of characters in glyphs."
 
 	^(fontArray at: anInteger + 1) xTable.
-
 ]

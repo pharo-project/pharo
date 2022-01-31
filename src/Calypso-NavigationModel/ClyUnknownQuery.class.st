@@ -27,7 +27,7 @@ ClyUnknownQuery class >> mergeOwnInstances: queries [
 	^queries anyOne
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClyUnknownQuery class >> reset [
 	instance := nil
 ]

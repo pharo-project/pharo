@@ -88,6 +88,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloFileServices'.
 		
 		self specHelp: spec.
+		self specRefactoring: spec.
 		
 		spec package: 'Tools-CodeNavigation'.
 		spec package: 'Tool-Diff'.
@@ -135,4 +136,17 @@ BaselineOfBasicTools >> specHelp: spec [
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Spec2-Help') ]
+]
+
+{ #category : #baseline }
+BaselineOfBasicTools >> specRefactoring: spec [
+	
+	"Package used to rename #defaultSpec methods to #defaultLayout.
+	Should be removed once users of #defaultSpec are migrated."
+	
+	spec baseline: 'SpecRefactoring' with: [
+		spec 
+			repository: (self class environment at: #BaselineOfPharo) specRepository;
+			className: 'BaselineOfSpec2';
+			loads: #('Spec2-Transformations') ]
 ]

@@ -9,19 +9,19 @@ Trait {
 { #category : #requirements }
 TAsStringCommaAndDelimiterTest >> empty [
 
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #requirements }
 TAsStringCommaAndDelimiterTest >> nonEmpty [
 
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #requirements }
 TAsStringCommaAndDelimiterTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #'tests - fixture' }
@@ -39,8 +39,6 @@ TAsStringCommaAndDelimiterTest >> testAsCommaStringEmpty [
 
 	self assert: self empty asCommaString = ''.
 	self assert: self empty asCommaStringAnd = ''.
-	
-
 ]
 
 { #category : #'tests - as string comma delimiter sequenceable' }
@@ -77,14 +75,11 @@ TAsStringCommaAndDelimiterTest >> testAsCommaStringOne [
 		[:each | 
 		self assert: each asString =self nonEmpty1Element  asCommaString.
 		self assert: each asString=self nonEmpty1Element  asCommaStringAnd.].
-
-	
 ]
 
 { #category : #'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterEmpty [
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' ]) equals: ''
-
 ]
 
 { #category : #'tests - as string comma delimiter sequenceable' }
@@ -123,9 +118,6 @@ TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterLastOne [
 		[:each1 |
 		self nonEmpty1Element do: [:each2 |self assert: each1 = (each2 asString) ]
 		 ].
-	
-
-
 ]
 
 { #category : #'tests - as string comma delimiter sequenceable' }
@@ -160,6 +152,4 @@ TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterOne [
 		[:each1 |
 		self nonEmpty1Element do: [:each2 |self assert: each1 = (each2 asString) ]
 		 ].
-	
-
 ]

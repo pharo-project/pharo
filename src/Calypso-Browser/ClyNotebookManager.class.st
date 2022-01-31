@@ -153,7 +153,7 @@ ClyNotebookManager >> desiredSelection: toolClasses [
 	shouldSkipCurrentDesiredSelection ifFalse: [ 
 		currentSelection := self selectedTools collect: [ :each | each class ].
 		desiredSelection addAll: currentSelection ].
-	shouldSkipCurrentDesiredSelection := false "it is one time option" 
+	shouldSkipCurrentDesiredSelection := false "it is one time option"
 ]
 
 { #category : #'focus management' }
@@ -190,7 +190,7 @@ ClyNotebookManager >> initialize [
 ClyNotebookManager >> okToChange [
 
 	(tools anySatisfy: #hasUnacceptedEdits) ifFalse: [ ^ true ].
-	^browser confirmDiscardChanges 
+	^browser confirmDiscardChanges
 ]
 
 { #category : #private }
@@ -363,7 +363,7 @@ ClyNotebookManager >> tabDeleted: aTab [
 	removedTool := aTab model.
 	(tools includes: removedTool) ifFalse: [ ^ self ].
 	tools remove: removedTool.
-	removedTool cleanAfterRemove	
+	removedTool cleanAfterRemove
 ]
 
 { #category : #accessing }
@@ -410,7 +410,6 @@ ClyNotebookManager >> updateTabsWith: newTools [
 		reject: [ :each | each wantsStayInDifferentContext ]
 		thenDo: [ :each | self removeTool: each ].
 	tools do: [ :each | each browserContextWasChanged ].
-	
 ]
 
 { #category : #updating }

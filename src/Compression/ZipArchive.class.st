@@ -31,7 +31,7 @@ ZipArchive class >> compressionLevelDefault [
 
 { #category : #constants }
 ZipArchive class >> compressionLevelNone [
-	^CompressionLevelNone 
+	^CompressionLevelNone
 ]
 
 { #category : #constants }
@@ -204,7 +204,6 @@ ZipArchive >> initialize [
 	super initialize.
 	writeEOCDOffset := writeCentralDirectoryOffset := 0.
 	zipFileComment := ''
-
 ]
 
 { #category : #private }
@@ -237,7 +236,6 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	centralDirectoryOffsetWRTStartingDiskNumber := endianStream nextLittleEndianNumber: 4. "offset of start of central directory"
 	zipFileCommentLength := endianStream nextLittleEndianNumber: 2. "zip file comment"
 	zipFileComment := aStream next: zipFileCommentLength
-
 ]
 
 { #category : #reading }
@@ -279,7 +277,6 @@ ZipArchive >> readSignatureFrom: stream [
 		includes: signatureData)
 			ifFalse: [ ^ ZipArchiveError signal: 'bad signature ', signatureData asString asHex, ' at position ', (stream position - 4) asString ].
 	^signatureData
-
 ]
 
 { #category : #private }
@@ -292,8 +289,6 @@ ZipArchive >> writeCentralDirectoryTo: aStream [
 	].
 	writeEOCDOffset := offset.
 	self writeEndOfCentralDirectoryTo: aStream
-
-
 ]
 
 { #category : #private }
@@ -312,8 +307,6 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: zipFileComment size. "zip file comment"
 	
 	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
-
-
 ]
 
 { #category : #writing }
@@ -324,7 +317,6 @@ ZipArchive >> writeTo: stream [
 	].
 	writeCentralDirectoryOffset := stream position.
 	self writeCentralDirectoryTo: stream
-	
 ]
 
 { #category : #writing }

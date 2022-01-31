@@ -28,7 +28,6 @@ ReIfNotNilDoRule >> initialize [
 			with: '`@receiver ifNotNil: `@statements1 ifNil: `@statements2';
 		replace: '`@receiver ifNil: `@statements1 ifNotNilDo: `@statements2'
 			with: '`@receiver ifNil: `@statements1 ifNotNil: `@statements2'
-		
 ]
 
 { #category : #accessing }

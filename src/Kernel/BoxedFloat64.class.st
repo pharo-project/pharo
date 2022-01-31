@@ -269,10 +269,6 @@ BoxedFloat64 >> truncated [
 				r := self - (q asFloat * df).
 				^q*di+r truncated]
 		ifFalse: [^ self asTrueFraction.  "Extract all bits of the mantissa and shift if necess"]
-
-		
-
-		
 ]
 
 { #category : #comparing }

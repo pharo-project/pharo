@@ -36,7 +36,7 @@ Class {
 
 { #category : #testing }
 ClyMethodEditorToolMorph class >> isAbstract [
-	^self = ClyMethodEditorToolMorph 
+	^self = ClyMethodEditorToolMorph
 ]
 
 { #category : #accessing }
@@ -123,13 +123,11 @@ ClyMethodEditorToolMorph >> fillStatusBar [
 	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
 	
 	statusBar addCommandItem: (ClyMethodTagsAndPackageEditorMorph for: self).
-	
-	
 ]
 
 { #category : #operations }
 ClyMethodEditorToolMorph >> formatSourceCode [
-	textMorph formatSourceCode 
+	textMorph formatSourceCode
 ]
 
 { #category : #building }
@@ -166,7 +164,7 @@ ClyMethodEditorToolMorph >> isForScripting [
 
 { #category : #accessing }
 ClyMethodEditorToolMorph >> methodClass [
-	self subclassResponsibility 	
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -185,7 +183,7 @@ ClyMethodEditorToolMorph >> modifiesExtension [
 	"it should answer if tool is going to modify extension state of method.
 	For example tool ca move method to another package
 	ot it can move extension method back to class package"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #operations }
@@ -211,12 +209,12 @@ ClyMethodEditorToolMorph >> selectedClassOrMetaClass [
 ClyMethodEditorToolMorph >> setUpParametersFromModel [
 	super setUpParametersFromModel.
 
-	self setUpTargetClasses 
+	self setUpTargetClasses
 ]
 
 { #category : #initialization }
 ClyMethodEditorToolMorph >> setUpTargetClasses [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #operations }

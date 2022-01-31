@@ -16,3 +16,18 @@ ManifestSystemSupport class >> ignoredDependencies [
 ManifestSystemSupport class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Support' #'System-Settings-Core' #'System-Platforms')
 ]
+
+{ #category : #'code-critics' }
+ManifestSystemSupport class >> ruleBadMessageRule2V1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SystemDictionary #poolUsers #false)) #'2021-11-02T17:56:27.52638+01:00') #(#(#RGMethodDefinition #(#SystemDictionary #fillCaches #false)) #'2021-11-02T17:58:27.713429+01:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestSystemSupport class >> ruleInconsistentMethodClassificationRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SystemDictionary #at:put: #false)) #'2021-11-02T18:04:16.398839+01:00') #(#(#RGMethodDefinition #(#SystemDictionary #removeKey:ifAbsent: #false)) #'2021-11-02T18:06:16.506535+01:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestSystemSupport class >> ruleUtilityMethodsRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SystemDictionary #veryDeepCopyWith: #false)) #'2021-11-02T18:14:26.131262+01:00') )
+]

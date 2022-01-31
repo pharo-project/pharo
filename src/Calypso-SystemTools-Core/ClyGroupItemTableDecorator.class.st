@@ -29,7 +29,6 @@ ClyGroupItemTableDecorator class >> decorateMainTableCell: anItemCellMorph of: g
 
 { #category : #decoration }
 ClyGroupItemTableDecorator class >> decorateTableCell: anItemCellMorph of: groupItem [
-
 ]
 
 { #category : #decoration }

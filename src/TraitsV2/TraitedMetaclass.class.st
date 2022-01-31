@@ -92,6 +92,13 @@ TraitedMetaclass >> emptyMethodDictionary [
 	^ MethodDictionary new: 64.
 ]
 
+{ #category : #fileout }
+TraitedMetaclass >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedTraitedMetaclassDefinitionString
+
+]
+
 { #category : #testing }
 TraitedMetaclass >> findOriginClassOf: aMethod [
 

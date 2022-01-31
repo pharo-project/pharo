@@ -31,7 +31,6 @@ Class {
 { #category : #'instance creation' }
 IRInstruction class >> blockReturnTop [
 	^ IRBlockReturnTop new
-		
 ]
 
 { #category : #'instance creation' }
@@ -46,14 +45,6 @@ IRInstruction class >> createTempVectorNamed: aTempVectorName withVars: anArray 
 { #category : #'instance creation' }
 IRInstruction class >> popTop [
 	^ IRPop new
-]
-
-{ #category : #'instance creation' }
-IRInstruction class >> pushClosureCopyCopiedValues: copiedValues args: arguments [
-	^IRPushClosureCopy new
-			copiedValues: copiedValues;
-			arguments: arguments;
-			yourself.
 ]
 
 { #category : #'instance creation' }
@@ -99,7 +90,6 @@ IRInstruction class >> pushLiteralVariable: object [
 	^ IRPushLiteralVariable new
 		association: object;
 		yourself
-	 
 ]
 
 { #category : #'instance creation' }
@@ -170,7 +160,6 @@ IRInstruction class >> storeInstVar: index [
 	^ IRStoreInstVar new 
 		index: index; 
 		yourself
-	
 ]
 
 { #category : #'instance creation' }
@@ -194,7 +183,6 @@ IRInstruction class >> storeTemp: aName [
 	^ IRStoreTemp new
 		name: aName;
 		yourself
-
 ]
 
 { #category : #visiting }
@@ -251,20 +239,20 @@ IRInstruction >> delete [
 { #category : #testing }
 IRInstruction >> isBlockReturnTop [
 
-	^false 
+	^false
 ]
 
 { #category : #testing }
 IRInstruction >> isGoto [
 	"is unconditional jump"
 	
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
 IRInstruction >> isIf [
 
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -277,7 +265,7 @@ IRInstruction >> isInstVarAccess [
 IRInstruction >> isJump [
 	"goto or if"
 
-	^false 
+	^false
 ]
 
 { #category : #testing }
@@ -289,11 +277,6 @@ IRInstruction >> isLiteralVariable [
 IRInstruction >> isPop [
 
 	^ false
-]
-
-{ #category : #testing }
-IRInstruction >> isPushClosureCopy [
-	^false
 ]
 
 { #category : #testing }
@@ -315,7 +298,7 @@ IRInstruction >> isRead [
 { #category : #testing }
 IRInstruction >> isReturn [
 
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -397,14 +380,12 @@ IRInstruction >> sourceInterval [
 IRInstruction >> sourceNode [
 
 	^ sourceNode
-	
 ]
 
 { #category : #mapping }
 IRInstruction >> sourceNode: parseNode [
 
 	sourceNode := parseNode
-	
 ]
 
 { #category : #accessing }
@@ -417,5 +398,5 @@ IRInstruction >> successorSequences [
 { #category : #testing }
 IRInstruction >> transitionsToNextSequence [
 	"Does the current instruction intrinsically know how to transition to the next sequence?"
-	^ self isJump or: [self isReturn or: [self isPushClosureCopy ]]
+	^ self isJump or: [self isReturn]
 ]

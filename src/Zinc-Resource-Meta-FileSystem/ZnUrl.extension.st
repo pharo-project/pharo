@@ -1,6 +1,6 @@
 Extension { #name : #ZnUrl }
 
-{ #category : #'*zinc-resource-meta-filesystem' }
+{ #category : #'*Zinc-Resource-Meta-FileSystem' }
 ZnUrl >> asFileReference [
 	"Convert the receiver into a new FileReference object.
 	Note that for a FileReference a trailing slash is not relevant"

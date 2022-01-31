@@ -23,5 +23,5 @@ CDDoubleWordClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDDoubleWordClassParserTest >> testDoubleWordClass [
 
-	self assert: classDefinition layoutClass equals: DoubleWordLayout 
+	self assert: classDefinition layoutClass equals: DoubleWordLayout
 ]

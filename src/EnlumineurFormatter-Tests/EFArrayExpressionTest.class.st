@@ -20,7 +20,7 @@ EFArrayExpressionTest >> basicConfiguration [
 		numberOfSpacesInsideArray: 0;
 		numberOfSpacesBeforeDotInDynamicArray: 0.
 		"here since we shortcut the initialize method we have to set the numberOfSpace...
-		manually so that the spacesBefore string is correctly computed." 
+		manually so that the spacesBefore string is correctly computed."
 ]
 
 { #category : #configurations }
@@ -39,7 +39,7 @@ EFArrayExpressionTest >> fiveSpacesInsideArrayConfiguration [
 		numberOfSpacesInsideArray: 5;
 		numberOfSpacesBeforeDotInDynamicArray: 0.
 		"here since we shortcut the initialize method we have to set the numberOfSpace...
-		manually so that the spacesBefore string is correctly computed." 
+		manually so that the spacesBefore string is correctly computed."
 ]
 
 { #category : #configurations }
@@ -61,7 +61,7 @@ EFArrayExpressionTest >> maxLineLengthConfiguration [
 		numberOfSpacesInsideArray: 0;
 		numberOfSpacesBeforeDotInDynamicArray: 0.
 		"here since we shortcut the initialize method we have to set the numberOfSpace...
-		manually so that the spacesBefore string is correctly computed." 
+		manually so that the spacesBefore string is correctly computed."
 ]
 
 { #category : #configurations }
@@ -83,7 +83,7 @@ EFArrayExpressionTest >> maxLineLengthConfigurationWithSpaceBefore [
 		numberOfSpacesInsideArray: 0;
 		numberOfSpacesBeforeDotInDynamicArray: 1.
 		"here since we shortcut the initialize method we have to set the numberOfSpace...
-		manually so that the spacesBefore string is correctly computed." 
+		manually so that the spacesBefore string is correctly computed."
 ]
 
 { #category : #configurations }
@@ -125,7 +125,7 @@ EFArrayExpressionTest >> oneSpaceInsideArrayConfiguration [
 		numberOfSpacesInsideArray: 1;
 		numberOfSpacesBeforeDotInDynamicArray: 0.
 		"here since we shortcut the initialize method we have to set the numberOfSpace...
-		manually so that the spacesBefore string is correctly computed." 
+		manually so that the spacesBefore string is correctly computed."
 ]
 
 { #category : #configurations }
@@ -169,7 +169,7 @@ EFArrayExpressionTest >> spaceInsideArrayConfiguration [
 		numberOfSpacesInsideArray: 5;
 		numberOfSpacesBeforeDotInDynamicArray: 0.
 		"here since we shortcut the initialize method we have to set the numberOfSpace...
-		manually so that the spacesBefore string is correctly computed." 
+		manually so that the spacesBefore string is correctly computed."
 ]
 
 { #category : #tests }
@@ -275,7 +275,7 @@ EFArrayExpressionTest >> testPeriodAtEndOfMethodWithMultipleElementArrayShouldNo
 	self assert: source equals: 
  '{
 	1 factorial.
-	(3 + 2)}' "we should not have a point at the end."	
+	(3 + 2)}' "we should not have a point at the end."
 ]
 
 { #category : #tests }

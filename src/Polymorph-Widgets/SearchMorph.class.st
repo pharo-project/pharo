@@ -172,5 +172,4 @@ SearchMorph >> updateSelector: aSymbol [
 { #category : #'event handling' }
 SearchMorph >> whenKeystroke: anAnnouncement [
 	^ self keyStroke: anAnnouncement event fromMorph: anAnnouncement morph
-
 ]

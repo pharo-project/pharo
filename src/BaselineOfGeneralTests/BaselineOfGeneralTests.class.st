@@ -36,18 +36,14 @@ BaselineOfGeneralTests >> baseline: spec [
 			
 			package: 'FileSystem-Tests-Memory';
 			package: 'Fonts-Infrastructure-Tests';
-			package: 'FreeType-Tests';
-			package: 'FreeType-Help';
-
+			
 			package: 'Graphics-Tests';
 			package: 'HelpSystem-Tests';
-			package: 'Keymapping-Tests';
 
 			package: 'Morphic-Tests';
 			
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
-			package: 'NewValueHolder-Tests';
 			package: 'ProfStef-Tests';
 			package: 'Regex-Core-Tests';
 			package: 'Ring-Definitions-Tests-Monticello';
@@ -69,7 +65,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tool-Profilers-Tests';
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-CodeNavigation-Tests';
-			package: 'Tools-Test';
+			package: 'Tools-Tests';
 			package: 'Zinc-Resource-Meta-FileSystem';
 			package: 'Zinc-Resource-Meta-Tests';
 			package: 'Zinc-HTTP-Examples';

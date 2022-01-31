@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyMethodCounterGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'counters' priority: 8.4 on: aMethodQuery 
+	^ClyMethodGroup named: 'counters' priority: 8.4 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

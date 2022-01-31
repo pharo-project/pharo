@@ -66,7 +66,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 { #category : #organization }
 ClassDescription >> addCategory: newName before: aCategory [
 
-	^ self organization addCategory: newName before: aCategory 
+	^ self organization addCategory: newName before: aCategory
 ]
 
 { #category : #'instance variables' }
@@ -103,7 +103,14 @@ ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 { #category : #'instance variables' }
 ClassDescription >> addSlot: aSlot [
 
-	^self subclassResponsibility 
+	^self subclassResponsibility
+]
+
+{ #category : #'accessing - instances and variables' }
+ClassDescription >> allInstVarNames [
+	"Answer an Array of the receiver's instance variable names."
+
+	^self allSlots collect: [ :each | each name ] as: Array
 ]
 
 { #category : #'instance variables' }
@@ -146,7 +153,6 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	
 	^self withAllSuperclasses
 		flatCollectAsSet: [ :class | class organization listAtCategoryNamed: aName ]
-		
 ]
 
 { #category : #'pool variable' }
@@ -178,7 +184,7 @@ ClassDescription >> baseClass [
 
 { #category : #organization }
 ClassDescription >> basicOrganization [
-	^ organization 
+	^ organization
 ]
 
 { #category : #organization }
@@ -577,7 +583,7 @@ ClassDescription >> definitionString [
 { #category : #fileout }
 ClassDescription >> definitionStringFor: aConfiguredPrinter [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
@@ -707,7 +713,6 @@ ClassDescription >> instanceVariablesOn: aStream [
 	self localSlots
 		do: [ :each | aStream nextPutAll: each name asString]
 		separatedBy: [ aStream space ].
-
 ]
 
 { #category : #printing }
@@ -753,14 +758,14 @@ ClassDescription >> isLocalSelector: aSelector [
 	^ self methodDict includesKey: aSelector
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> isMeta [
 	^self isClassSide
 ]
 
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
-	^self tags includes: aSymbol 
+	^self tags includes: aSymbol
 ]
 
 { #category : #private }
@@ -874,7 +879,6 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to
 			SystemAnnouncer uniqueInstance 
 				methodRecategorized: method
 				oldProtocol: oldCategory ].
-
 ]
 
 { #category : #private }
@@ -911,7 +915,7 @@ ClassDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self classSide numberOfMethods ] 
+		ifFalse: [ num + self classSide numberOfMethods ]
 ]
 
 { #category : #initialization }
@@ -939,8 +943,6 @@ ClassDescription >> organization [
 						ifTrue: [ ClassOrganization new ]
 						ifFalse: [ ClassOrganization forClass: self ]) ].
 	^self basicOrganization setSubject: self.	"Making sure that subject is set correctly. It should not be necessary."
-	
-	
 ]
 
 { #category : #organization }
@@ -1007,7 +1009,7 @@ ClassDescription >> removeSelector: selector [
 { #category : #'instance variables' }
 ClassDescription >> removeSlot: aSlot [
 
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]
 
 { #category : #organization }
@@ -1074,7 +1076,7 @@ ClassDescription >> sharedPoolsOn: aStream [
 						each isObsolete
 							ifTrue: [ each name ] "obsolete classes should be visible"
 							ifFalse: [ 'private' ] ]) ] "if class is from different environment, mark it as private"
-			separatedBy: [ aStream space ] 
+			separatedBy: [ aStream space ]
 ]
 
 { #category : #'pool variable' }
@@ -1206,7 +1208,7 @@ ClassDescription >> tagsForMethods [
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass' 
@@ -1214,7 +1216,7 @@ ClassDescription >> theMetaClass [
 	^ self classSide
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theNonMetaClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass' 

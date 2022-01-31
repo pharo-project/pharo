@@ -78,12 +78,11 @@ RBBlockNode >> allStatements [
 	^ self temporaries asOrderedCollection copy
 			addAll: super allStatements;
 			yourself
-
 ]
 
 { #category : #accessing }
 RBBlockNode >> argumentNames [
-	^ self arguments collect: [:each | each name] as: Array 
+	^ self arguments collect: [:each | each name] as: Array
 ]
 
 { #category : #accessing }
@@ -293,7 +292,7 @@ RBBlockNode >> references: aVariableName [
 	^body references: aVariableName
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBBlockNode >> removeTemporaryNamed: aName [
 
 	self body removeTemporaryNamed: aName

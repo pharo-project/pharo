@@ -9,7 +9,6 @@ TransformMorph >> clipDuring: aBlock canvas: aCanvas [
 				clipBy: self clippingBounds 
 				during: aBlock ] 
 		ifFalse: [ ^ aBlock value ]
-
 ]
 
 { #category : #'*Athens-Morphic' }

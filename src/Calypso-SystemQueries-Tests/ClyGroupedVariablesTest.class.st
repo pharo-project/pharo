@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyGroupedVariablesTest class >> isAbstract [
-	^self = ClyGroupedVariablesTest 
+	^self = ClyGroupedVariablesTest
 ]
 
 { #category : #helpers }

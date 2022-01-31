@@ -128,15 +128,35 @@ ProperMethodCategorizationTest >> testNoEmptyProtocols [
 ]
 
 { #category : #tests }
+ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
+	"Make sure we have no protocol names with leading or trailing spaces"
+	
+	| violations |
+	violations := OrderedCollection new.
+
+	Object allSubclasses do: [ :each | 
+		each organization allCategories do: [ :cat | 
+			((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ 
+				violations add: each -> cat ] ] ].
+	
+	self assert: violations isEmpty
+]
+
+{ #category : #tests }
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
-	| violating |
+	| violating validExceptions remaining|
 	violating := Smalltalk globals allBehaviors select: [ :class | 
 		             class protocols includes: Protocol unclassified ].
 
+
+	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass).	
+	
+	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 48
+	self assert: remaining size <= 30
 ]
 
 { #category : #tests }
@@ -148,7 +168,7 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 		             class protocols includes: #'utils' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 7
+	self assert: violating size <= 4
 ]
 
 { #category : #'tests - object' }

@@ -162,5 +162,4 @@ FFIConstants class >> initializeTypeConstants [
 	FFIStructSizeMask := 16rFFFF. "mask for max size of structure"
 	FFIAtomicTypeMask := 16r0F000000. "mask for atomic type spec"
 	FFIAtomicTypeShift := 24. "shift for atomic type"
-
 ]

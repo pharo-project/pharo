@@ -21,10 +21,10 @@ ClySwitchToTraitUsersCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClySwitchToTraitUsersCommand >> requiredQueryResult [
-	^ClyTraitUserHierarchy new asQueryResult 
+	^ClyTraitUserHierarchy new asQueryResult
 ]
 
 { #category : #execution }
 ClySwitchToTraitUsersCommand >> traitScopeClass [
-	^ClyTraitUserScope 
+	^ClyTraitUserScope
 ]

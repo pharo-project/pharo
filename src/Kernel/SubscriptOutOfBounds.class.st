@@ -35,7 +35,6 @@ SubscriptOutOfBounds class >> signalFor: subscript lowerBound: lowerBound upperB
 		lowerBound: lowerBound 
 		upperBound: upperBound 
 		in: nil
-
 ]
 
 { #category : #signaling }
@@ -45,7 +44,7 @@ SubscriptOutOfBounds class >> signalFor: subscript lowerBound: lowerBound upperB
 		subscript: subscript;
 		lowerBound: lowerBound;
 		upperBound: upperBound;
-		signal		 
+		signal
 ]
 
 { #category : #accessing }

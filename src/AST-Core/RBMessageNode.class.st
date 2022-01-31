@@ -69,7 +69,7 @@ RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
 RBMessageNode >> argumentPartStrings [
 	"Return a collection of string representing the code of the argument."
 	^ arguments collect: [ :each | each formattedCode asString 
-			"strangely enough literal formatted code is not a string" ]  
+			"strangely enough literal formatted code is not a string" ]
 ]
 
 { #category : #accessing }
@@ -138,6 +138,11 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 		with: anObject arguments
 		do: [:first :second | (first equalTo: second withMapping: aDictionary) ifFalse: [^false]].
 	^true
+]
+
+{ #category : #'fluid parser' }
+RBMessageNode >> handleMetaclassName: aCDFluidClassDefinitionParser [ 
+	aCDFluidClassDefinitionParser handleMetaclassNameFromMessage: self
 ]
 
 { #category : #comparing }
@@ -234,7 +239,7 @@ RBMessageNode >> lastIsReturn [
 	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
 	^ arguments first isBlock and: [ arguments first body lastIsReturn 
-		and: [ arguments last isBlock and: [ arguments last body lastIsReturn ]]] 
+		and: [ arguments last isBlock and: [ arguments last body lastIsReturn ]]]
 ]
 
 { #category : #accessing }
@@ -308,13 +313,13 @@ RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: pos
 		keywordsPositions: positionList.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMessageNode >> removeFromTree [
 
 	self parent removeNode: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMessageNode >> removeNode: aNode [
 
 	self replaceNode: aNode withNode: aNode receiver
@@ -423,7 +428,6 @@ RBMessageNode >> selector: aSelector [
 		ifTrue: [ RBSelectorNode value: aSelector ]
 		ifFalse: [ aSelector ].
 	selector parent: self.
-	
 ]
 
 { #category : #accessing }
@@ -442,8 +446,6 @@ RBMessageNode >> selectorAndArgumentNames [
 								<< ' ';
 								<< arg formattedCode;
 								<< ' ']]) allButLast ]
-								
-					
 ]
 
 { #category : #accessing }

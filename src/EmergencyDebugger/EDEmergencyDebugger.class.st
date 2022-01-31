@@ -94,7 +94,7 @@ EDEmergencyDebugger class >> debugAPI [
 
 { #category : #accessing }
 EDEmergencyDebugger class >> debugAPI: aDebugAPIClass [
-	DefaultDebugAPI := aDebugAPIClass 
+	DefaultDebugAPI := aDebugAPIClass
 ]
 
 { #category : #'instance creation' }
@@ -127,7 +127,7 @@ EDEmergencyDebugger >> availableActionsDescriptions [
 
 { #category : #actions }
 EDEmergencyDebugger >> availableActionsDescriptionsMap [
-	^self buildDefaultActionsDescriptionsMap 
+	^self buildDefaultActionsDescriptionsMap
 ]
 
 { #category : #initialization }
@@ -209,7 +209,6 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 { #category : #'text - composing' }
 EDEmergencyDebugger >> composeDisplayText [
 	^(titleText , (self composeSessionTitle), stackText, methodText, input, result )
-
 ]
 
 { #category : #'text - composing' }
@@ -321,7 +320,7 @@ EDEmergencyDebugger >> debug: aDebugSession [
 	self composeHelpText.
 	self composePromptWith: ''.
 	self updateDisplay.
-	repl readEvalPrint 
+	repl readEvalPrint
 ]
 
 { #category : #accessing }
@@ -390,7 +389,7 @@ EDEmergencyDebugger >> errorText [
 
 { #category : #accessing }
 EDEmergencyDebugger >> errorText: aText [
-	errorText := aText 
+	errorText := aText
 ]
 
 { #category : #evaluation }
@@ -465,7 +464,7 @@ EDEmergencyDebugger >> inspectStackAndQuit [
 
 { #category : #testing }
 EDEmergencyDebugger >> isRunning [
-	^isRunning 
+	^isRunning
 ]
 
 { #category : #accessing }
@@ -584,7 +583,6 @@ EDEmergencyDebugger >> selectedMethodVersion [
 	|versions |	
 	versions := debugAPI methodVersionAt: stackSelectionIndex.
 	^versions at: methodVersionSelectionIndex.
-	
 ]
 
 { #category : #methods }
@@ -713,8 +711,7 @@ EDEmergencyDebugger >> titleText [
 { #category : #updating }
 EDEmergencyDebugger >> updateDisplay [
 	rawDisplay clear.
-	rawDisplay show: self composeDisplayText 
-
+	rawDisplay show: self composeDisplayText
 ]
 
 { #category : #updating }

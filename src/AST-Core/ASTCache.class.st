@@ -30,7 +30,7 @@ Class {
 { #category : #'private - announcements' }
 ASTCache class >> announceCacheReset [
 
-	SystemAnnouncer uniqueInstance announce: ASTCacheReset new 
+	SystemAnnouncer uniqueInstance announce: ASTCacheReset new
 ]
 
 { #category : #accessing }
@@ -61,7 +61,7 @@ ASTCache class >> default: anASTCache [
 	default := anASTCache
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ASTCache class >> reset [
 	<script>
 	self default reset.

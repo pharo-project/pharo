@@ -134,7 +134,6 @@ PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
 	^ SolidFillStyle color: self selectionColor
-	
 ]
 
 { #category : #'accessing - colors' }
@@ -164,13 +163,11 @@ PharoDarkTheme >> configurePluggableTextMorph: textMorph [
 ]
 
 { #category : #configure }
-PharoDarkTheme >> configureScrollPane: aMorph [ 
-	
+PharoDarkTheme >> configureScrollPane: aMorph [
 ]
 
 { #category : #configure }
 PharoDarkTheme >> configureSystemWindow: aWindow [
-	
 ]
 
 { #category : #configure }
@@ -275,7 +272,7 @@ PharoDarkTheme >> enabledColor [
 
 { #category : #'basic-colors' }
 PharoDarkTheme >> errorPopperBackgroundColor [
-	^ Color red muchDarker 
+	^ Color red muchDarker
 ]
 
 { #category : #initialization }
@@ -404,7 +401,7 @@ PharoDarkTheme >> spotlightWindowColor [
 
 { #category : #'accessing - colors' }
 PharoDarkTheme >> successTextColor [
-	^ Color green darker darker darker 
+	^ Color green darker darker darker
 ]
 
 { #category : #'fill-styles-taskbar' }

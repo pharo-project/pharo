@@ -29,5 +29,4 @@ RBMergeInstanceVariableIntoAnotherTransformation >> privateTransform [
 	isClassVariable
 	ifTrue: [ self definingClass removeClassVariable: variableName ifAbsent: [ ^ self ] ]
 	ifFalse: [ self definingClass removeInstanceVariable: variableName ifAbsent: [ ^ self ] ]
-	
 ]

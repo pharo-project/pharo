@@ -43,7 +43,6 @@ RelativePath >> printOn: aStream [
 					nextPutAll: ' / ''';
 					nextPutAll: (self at: i);
 					nextPut: $' ]]
-			
 ]
 
 { #category : #printing }

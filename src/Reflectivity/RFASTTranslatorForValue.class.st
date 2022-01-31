@@ -53,7 +53,6 @@ RFASTTranslatorForValue >> emitWhileFalse: aMessageNode [
 
 	super emitWhileFalse: aMessageNode.
 	methodBuilder pushLiteral: nil.
-
 ]
 
 { #category : #'inline messages' }
@@ -61,15 +60,16 @@ RFASTTranslatorForValue >> emitWhileTrue: aMessageNode [
 
 	super emitWhileTrue: aMessageNode.
 	methodBuilder pushLiteral: nil.
-
 ]
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForValue >> visitSequenceNode: aSequenceNode [ 
 	| statements |
+	
 	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
-	self emitPrepareLinkAfter: aSequenceNode.
+	
+	aSequenceNode hasMetalinkAfter ifTrue: [ ^ self visitSequenceWithAfter: aSequenceNode  ].
 	
 	aSequenceNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aSequenceNode ]
@@ -80,6 +80,5 @@ RFASTTranslatorForValue >> visitSequenceNode: aSequenceNode [
 			^self].
 		statements allButLastDo: [:each | effectTranslator visitNode: each].
 		self visitNode: statements last.
-	].
-	self emitMetaLinkAfter: aSequenceNode.
+	]
 ]

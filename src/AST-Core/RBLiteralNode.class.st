@@ -15,6 +15,12 @@ Class {
 	#category : #'AST-Core-Nodes'
 }
 
+{ #category : #testing }
+RBLiteralNode class >> isAbstract [
+		
+	^ self == RBLiteralNode
+]
+
 { #category : #'instance creation' }
 RBLiteralNode class >> value: aValue [ 
 	^((aValue class == Array or: [aValue class == ByteArray]) 

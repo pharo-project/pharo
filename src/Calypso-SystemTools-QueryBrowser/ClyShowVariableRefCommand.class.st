@@ -21,7 +21,7 @@ Class {
 ClyShowVariableRefCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2000 for: ClyFullBrowserVariableContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2000 for: ClyFullBrowserVariableContext
 ]
 
 { #category : #activation }

@@ -16,7 +16,7 @@ DTFilterableListPresenterTest >> setUp [
 	filterableList := DTFilterableListPresenter new
 							items: (1 to: 20);
 							displayBlock: #asString;
-							yourself.	
+							yourself.
 ]
 
 { #category : #tests }

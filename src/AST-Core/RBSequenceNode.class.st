@@ -206,7 +206,6 @@ RBSequenceNode >> allStatements [
 	^ statements asOrderedCollection copy
 			addAll: super allStatements;
 			yourself
-
 ]
 
 { #category : #accessing }
@@ -222,14 +221,28 @@ RBSequenceNode >> asSequenceNode [
 ]
 
 { #category : #querying }
-RBSequenceNode >> bestNodeFor: anInterval [ 
-	| node |
+RBSequenceNode >> bestNodeFor: anInterval [
+
+	| node intersectingStatements |
+	" if the interval contains myself precisely, return self "
+	(self start == anInterval first and: [ self stop == anInterval last ]) 
+		ifTrue: [ ^ self ].
+
+	intersectingStatements := self statementsIntersectingInterval:
+		                          anInterval.
+	" if the interval intersects more than one of my statements, return self "
+	intersectingStatements size > 1 ifTrue: [ ^ self ].
+
+	intersectingStatements do: [ :statement | 
+		(statement intersectsInterval: anInterval)
+			ifTrue: [ ^ statement bestNodeFor: anInterval ]
+			ifFalse: [ ^ statement ] ]. "anInterval intersects the statement's final period"
+
 	node := super bestNodeFor: anInterval.
-	node == self 
-		ifTrue: 
-			[(temporaries isEmpty and: [statements size == 1]) 
-				ifTrue: [^statements first]].
-	^node
+	node == self ifTrue: [ 
+		(temporaries isEmpty and: [ statements size == 1 ]) ifTrue: [ 
+			^ statements first ] ].
+	^ node
 ]
 
 { #category : #accessing }
@@ -454,6 +467,20 @@ RBSequenceNode >> statements [
 RBSequenceNode >> statements: stmtCollection [ 
 	statements := stmtCollection.
 	statements do: [:each | each parent: self]
+]
+
+{ #category : #querying }
+RBSequenceNode >> statementsIntersectingInterval: anInterval [
+
+	| found |
+	found := #(  ) asOrderedCollection.
+
+	" search for statements intersecting anInterval, consider final periods as part of the statement "
+	statements doWithIndex: [ :statement :index | 
+		((statement intersectsInterval: anInterval) or: [ 
+			 (periods at: index ifAbsent: [ 0 ]) == anInterval first ]) 
+			ifTrue: [ found add: statement ] ].
+	^ found
 ]
 
 { #category : #accessing }

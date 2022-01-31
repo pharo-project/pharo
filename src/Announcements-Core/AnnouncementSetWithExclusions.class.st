@@ -26,7 +26,7 @@ AnnouncementSetWithExclusions >> addExclusion: anAnnouncement [
 	"Add anAnnouncement as an exclusion to me.
 	I will explicitly not handle my exclusion announcements."
 	
-	^ exclusions add: anAnnouncement 
+	^ exclusions add: anAnnouncement
 ]
 
 { #category : #testing }

@@ -49,7 +49,6 @@ Announcer >> initialize [
 { #category : #statistics }
 Announcer >> numberOfSubscriptions [
 	^ registry numberOfSubscriptions
-
 ]
 
 { #category : #subscription }
@@ -57,13 +56,11 @@ Announcer >> removeSubscription: subscription [
 	"Remove the given subscription from the receiver"
 	
 	^ registry remove: subscription
-
 ]
 
 { #category : #private }
 Announcer >> replace: subscription with: newOne [
 	^ registry replace: subscription with: newOne
-
 ]
 
 { #category : #accessing }
@@ -100,7 +97,6 @@ Announcer >> when: anAnnouncementClass do: aValuable [
 			announcer: self;
 			announcementClass: anAnnouncementClass;
 			valuable: aValuable)
-	
 ]
 
 { #category : #subscription }

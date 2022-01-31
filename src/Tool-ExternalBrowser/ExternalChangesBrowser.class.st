@@ -11,7 +11,7 @@ ExternalChangesBrowser openOn: Smalltalk changesFile fullName
 "
 Class {
 	#name : #ExternalChangesBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'changes',
 		'codePane',
@@ -30,29 +30,27 @@ ExternalChangesBrowser class >> browseRecentLog [
 	^ self openOnStream: SourceFiles changesFileStream
 ]
 
-{ #category : #specs }
-ExternalChangesBrowser class >> defaultSpec [
+{ #category : #layout }
+ExternalChangesBrowser class >> defaultLayout [
 	<spec: #default>
 	
-	^ SpecLayout composed 
-		newColumn: [ :col | 
-			col
-				add: #changes;
-				newRow: [ :row | 
-					row
-						add: #selectAllButton;
-						add: #deselectAllButton;
-						add: #fileInSelectedButton ] height: 32;
-				add: #codePane ]; 
-		yourself
+	^ SpPanedLayout newTopToBottom 
+		add: (SpBoxLayout newTopToBottom 
+					add: #changes;
+					add: (SpBoxLayout newLeftToRight 
+							add: #selectAllButton;
+							add: #deselectAllButton;
+							add: #fileInSelectedButton;
+							yourself ) height: self buttonHeight );
+		add: #codePane;
+		yourself 
 ]
 
 { #category : #examples }
 ExternalChangesBrowser class >> example1 [
-	<example>
-	
-	self new openWithSpec
 
+	<example>
+	self new open
 ]
 
 { #category : #examples }
@@ -65,9 +63,12 @@ ExternalChangesBrowser class >> example2 [
 { #category : #'file service' }
 ExternalChangesBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
+
 	| services |
 	services := OrderedCollection new.
+
 	(ExternalBrowser sourceFileSuffixes includes: suffix) |
+
 	('changes' = suffix) | (suffix = '*')
 		ifTrue: [ services add: self serviceBrowseCSOrSTFile ].
 	^services
@@ -78,7 +79,7 @@ ExternalChangesBrowser class >> openOn: changeSetName [
 
 	self new
 		changeSetName: changeSetName;
-		openWithSpec
+		open
 ]
 
 { #category : #'instance creation' }
@@ -86,7 +87,7 @@ ExternalChangesBrowser class >> openOnFileName: aFileName [
 
 	self new
 		changeSetName: aFileName;
-		openWithSpec
+		open
 ]
 
 { #category : #'instance creation' }
@@ -95,7 +96,7 @@ ExternalChangesBrowser class >> openOnStream: aStream [
 	| widget |
 	widget := self new.
 	widget changes items: (CodeImporter chunksFromStream: aStream).
-	widget openWithSpec	
+	widget open
 ]
 
 { #category : #'tool registry' }
@@ -132,21 +133,22 @@ ExternalChangesBrowser class >> taskbarIconName [
 ]
 
 { #category : #menu }
-ExternalChangesBrowser >> buildMenu: aMenu [
+ExternalChangesBrowser >> buildMenu [
 
-	aMenu
-		add: 'File in all selected'
-		target: self
-		selector: #fileIn:
-		argumentList: { changes selectedItems }.
-	
-	aMenu
-		addToggle: 'Compare method to current'
-		target: self
-		selector: #compareToCurrent:
-		getStateSelector:nil
-		enablementSelector: #canCompareToCurrent
-		argumentList: { changes selectedItem }.
+	| aMenu |
+
+	aMenu := self newMenu.
+
+	aMenu 	addItem: [ :item | 
+			item
+				name: 'File in all selected';
+				action: [ self fileIn: changes selectedItems ] ].
+
+	aMenu 	addItem: [ :item | 
+			item
+				name:  'Compare method to current';
+				enabled: [ self canCompareToCurrent ];
+				action: [ self compareToCurrent: changes selectedItem ] ].
 
 	^ aMenu
 ]
@@ -205,6 +207,21 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 		inWindowLabeled: 'Comparison to Current Version'
 ]
 
+{ #category : #initialization }
+ExternalChangesBrowser >> connectPresenters [ 
+
+	changes display: [ :elem | self changeDescription: elem ].
+
+	changes whenSelectionChangedDo: [ :selection | selection selectedItem ifNotNil: [ codePane text: selection selectedItem contents ] ].
+
+	selectAllButton action: [ changes selectAll ].
+	deselectAllButton action: [ changes resetListSelection ].
+	fileInSelectedButton action: [ self fileIn: changes selectedItemsSorted ].
+	
+	changes contextMenu: self buildMenu.
+
+]
+
 { #category : #accessing }
 ExternalChangesBrowser >> deselectAllButton [
 
@@ -224,27 +241,10 @@ ExternalChangesBrowser >> fileInSelectedButton [
 ]
 
 { #category : #initialization }
-ExternalChangesBrowser >> initialExtent [
+ExternalChangesBrowser >> initializePresenters [
 
-	^ 500@600
-]
-
-{ #category : #initialization }
-ExternalChangesBrowser >> initializePresenter [
-	changes whenSelectedItemChanged: [ :change | change ifNotNil: [ codePane text: change contents ] ].
-	changes menu: [ :menu :shifted | self buildMenu: menu ].
-	selectAllButton action: [ changes selectAll ].
-	deselectAllButton action: [ changes resetSelection ].
-	fileInSelectedButton action: [ self fileIn: changes selectedItemsSorted ]
-]
-
-{ #category : #initialization }
-ExternalChangesBrowser >> initializeWidgets [
-
-	self title: 'Changes Browser'.
 
 	changes := self newList.
-	changes displayBlock: [ :elem | self changeDescription: elem ].
 	changes beMultipleSelection.
 
 	selectAllButton := self newButton.
@@ -260,6 +260,13 @@ ExternalChangesBrowser >> initializeWidgets [
 		label: 'file in selected'.
 
 	codePane := self newCode.
+]
+
+{ #category : #initialization }
+ExternalChangesBrowser >> initializeWindow: aWindow [
+
+	aWindow initialExtent: 500@600.
+	aWindow title: 'Changes Browser'
 ]
 
 { #category : #private }

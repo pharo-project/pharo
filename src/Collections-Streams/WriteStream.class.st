@@ -27,7 +27,7 @@ WriteStream class >> with: aCollection from: firstIndex to: lastIndex [
 	^self basicNew
 		with: aCollection
 		from: firstIndex
-		to: lastIndex 
+		to: lastIndex
 ]
 
 { #category : #accessing }
@@ -143,7 +143,6 @@ WriteStream >> growTo: anInteger [
       length := anInteger + (oldSize // 4 max: 20) - oldSize.
  	collection := collection grownBy: length.
  	writeLimit := collection size.
- 
 ]
 
 { #category : #'character writing' }
@@ -174,7 +173,6 @@ WriteStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 
 	collection replaceFrom: position+1 to: newEnd with: aCollection startingAt: startIndex.
 	position := newEnd.
-
 ]
 
 { #category : #accessing }
@@ -298,7 +296,6 @@ WriteStream >> space: anInteger [
 	"Append anInteger space characters to the receiver."
 	
 	self next: anInteger put: Character space
-	
 ]
 
 { #category : #printing }

@@ -123,8 +123,7 @@ RBCompositeLintRule >> isEmpty [
 { #category : #accessing }
 RBCompositeLintRule >> leaves [
 
-	^ rules flatCollect: [ :rule | rule leaves ]	
-
+	^ rules flatCollect: [ :rule | rule leaves ]
 ]
 
 { #category : #accessing }
@@ -142,14 +141,14 @@ RBCompositeLintRule >> problemCount [
 	^ rules inject: 0 into: [ :count :each | count + each problemCount ]
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBCompositeLintRule >> removeRule: aRule [
 
 	(rules anySatisfy: [ :rule | rule name = aRule name] )
 		ifTrue: [rules := rules reject:  [ :rule | rule name = aRule name]]
 		 ifFalse: [rules do: [ :rule |
 				rule isComposite 
-					ifTrue: [rule removeRule: aRule]]] 
+					ifTrue: [rule removeRule: aRule]]]
 ]
 
 { #category : #initialization }
@@ -167,7 +166,7 @@ RBCompositeLintRule >> rules: aCollection [
 	rules := aCollection
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBCompositeLintRule >> sort: aBlock [
 	
 	rules first isComposite

@@ -47,7 +47,7 @@ ClySortFunction >> = anObject [
 
 { #category : #evaluating }
 ClySortFunction >> collate: anObject1 with: anObject2 [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

@@ -39,5 +39,5 @@ DTTestsProfilerVisitor >> visitTestCase: aTestCase [
 			(DTTestCaseProfilingData
 				testCase: aTestCase
 				duration: [ aTestresult := aTestCase run ] timeToRun
-				testResult: aTestresult) 
+				testResult: aTestresult)
 ]

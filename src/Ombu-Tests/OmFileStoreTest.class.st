@@ -44,7 +44,6 @@ OmFileStoreTest >> testEnsureDeleteFile [
 			yourself.
 	
 	self assert: loadedStore entriesCount equals: 0.
-
 ]
 
 { #category : #tests }
@@ -63,7 +62,6 @@ OmFileStoreTest >> testIsOutdated [
 	self assert: copy isOutdated.
 	store ensureDeleteFile.
 	self deny: copy isOutdated.
-
 ]
 
 { #category : #tests }
@@ -160,7 +158,6 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 	self 
 		should: [ loadedStore refresh; entries ]
 		raise: OmFileStoreReadingError.
-
 ]
 
 { #category : #tests }

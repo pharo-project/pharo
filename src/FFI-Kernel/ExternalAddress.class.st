@@ -40,7 +40,7 @@ ExternalAddress class >> gcallocate: byteSize [
 { #category : #'instance creation' }
 ExternalAddress class >> loadSymbol: moduleSymbol module: module [ 
 
-	^ FFIBackend current loadSymbol: moduleSymbol module: module 
+	^ FFIBackend current loadSymbol: moduleSymbol module: module
 ]
 
 { #category : #'instance creation' }
@@ -57,7 +57,7 @@ ExternalAddress class >> new: n [
 		ifFalse: [self shouldNotImplement]
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 ExternalAddress class >> startUp: resuming [
 	"If starting the image afresh all external addresses should be zero.
 	 In addition, if the word size has changed then external addresses shoiuld be resized.
@@ -168,7 +168,6 @@ ExternalAddress >> fromCString [
 				whileFalse: [
 					aStream nextPut: aByte.
 					index := index + 1]]) utf8Decoded
-
 ]
 
 { #category : #converting }

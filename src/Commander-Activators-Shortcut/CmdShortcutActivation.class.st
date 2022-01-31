@@ -56,21 +56,21 @@ CmdShortcutActivation class >> buildSettingsOn: aBuilder [
 { #category : #'instance creation' }
 CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [  
 	^(self for: anAnnotationUser)
-		keyCombination: aKeyCombination 
+		keyCombination: aKeyCombination
 ]
 
 { #category : #'well known shortcuts' }
 CmdShortcutActivation class >> removalFor: anAnnotationUser [  
 	<classAnnotationDependency>
 	
-	^self by: $x meta for: anAnnotationUser  
+	^self by: $x meta for: anAnnotationUser
 ]
 
 { #category : #'well known shortcuts' }
 CmdShortcutActivation class >> renamingFor: anAnnotationUser [  
 	<classAnnotationDependency>
 	
-	^self by: $r meta for: anAnnotationUser  
+	^self by: $r meta for: anAnnotationUser
 ]
 
 { #category : #settings }

@@ -46,7 +46,6 @@ EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 	detector := EpLostChangesDetector newWithLog: logWithALostChange.
 	self deny: detector hasLostChanges.
 	self assertEmpty: detector lostChanges.
-
 ]
 
 { #category : #tests }
@@ -67,7 +66,6 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 	self assert: detector hasLostChanges.
 	self assert: detector lostChanges size equals: 1.
 	self assert: monitor log entriesCount > 1. "Just to ensure assumptions of this test"
-
 ]
 
 { #category : #tests }
@@ -91,5 +89,4 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 	self
 		assert: (detectedLostChanges collect: [ :each | each content behaviorAffectedName ]) asArray
 		equals: expectedLostClassNames.
-
 ]

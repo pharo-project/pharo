@@ -54,8 +54,6 @@ TSequencedStructuralEqualityTest >> testEqualSignIsTrueForEmptyButNonIdenticalCo
 	self assert: self empty equals: self empty copy. 
 	self assert: self empty copy equals: self empty.
 	self assert: self empty copy equals: self empty copy
-		
-
 ]
 
 { #category : #'tests - equality' }
@@ -74,8 +72,7 @@ TSequencedStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCo
 TSequencedStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
 	
 	self assert: self empty equals: self empty. 
-	self assert: self nonEmpty equals: self nonEmpty 
-	
+	self assert: self nonEmpty equals: self nonEmpty
 ]
 
 { #category : #'tests - equality' }
@@ -96,7 +93,7 @@ TSequencedStructuralEqualityTest >> testHasEqualElementsIsTrueForNonIdenticalBut
 		
 	self assert: (self nonEmpty hasEqualElements: self nonEmpty copy). 
 	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty).
-	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty copy) 
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty copy)
 ]
 
 { #category : #'tests - equality' }
@@ -104,5 +101,4 @@ TSequencedStructuralEqualityTest >> testHasEqualElementsOfIdenticalCollectionObj
 	
 	self assert: (self empty hasEqualElements: self empty). 
 	self assert: (self nonEmpty hasEqualElements: self nonEmpty)
-	
 ]

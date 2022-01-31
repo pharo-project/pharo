@@ -27,9 +27,9 @@ Class {
 	#category : #'NECompletion-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 NECTestClass class >> initialize [
-	super initialize.
+
 	ClassVar := 'Any string'
 ]
 
@@ -52,7 +52,7 @@ NECTestClass >> initialize: aRectangle [
 	complexInit := 15 > 16
 				ifTrue: [#Symbol]
 				ifFalse: ['String'].
-	complexInit2 := Dictionary new: aRectangle origin x. 
+	complexInit2 := Dictionary new: aRectangle origin x.
 ]
 
 { #category : #utilities }

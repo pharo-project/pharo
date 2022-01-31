@@ -35,7 +35,6 @@ HiRulerBuilder >> build [
 				ruler addNodeFor: each.
 				self buildLinksStartingAt: each ].
 		].
-
 ]
 
 { #category : #private }
@@ -62,7 +61,6 @@ HiRulerBuilder >> buildLinksStartingAt: aValue [
 		].
 
 	].
-
 ]
 
 { #category : #initialization }
@@ -95,7 +93,6 @@ HiRulerBuilder >> stackLinksFrom: aValue in: pending [
 	| linkedValues |
 	linkedValues := linksBlock value: aValue.
 	linkedValues reverseDo: [:each | pending push: (aValue -> each) ].
-
 ]
 
 { #category : #accessing }

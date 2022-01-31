@@ -133,7 +133,6 @@ KMPragmaKeymapBuilder >> pragmas [
 KMPragmaKeymapBuilder >> release [
 	model := nil.
 	super release.
-	
 ]
 
 { #category : #initialization }

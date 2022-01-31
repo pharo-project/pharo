@@ -74,7 +74,7 @@ Categorizer class >> documentation [
 	elements := Array with: #a with: #b with: #c with: #d. This means that 
 	category firstCat has only #a, secondCat has #b, #c, and #d, and 
 	thirdCat has no elements. This means that stops at: stops size must be the 
-	same as elements size." 
+	same as elements size."
 ]
 
 { #category : #'class initialization' }
@@ -98,7 +98,7 @@ Categorizer class >> sortAllCategories [
 
 { #category : #operations }
 Categorizer >> addCategory: newCategory [
-	^ self addCategory: newCategory before: nil 
+	^ self addCategory: newCategory before: nil
 ]
 
 { #category : #operations }
@@ -413,7 +413,7 @@ Categorizer >> numberOfCategoryOfElement: element [
 Categorizer >> protocolOfElement: element [
 	"when the receiver is used to sort methods, it is nicer to use the right vocabulary."
 	
-	^ self categoryOfElement: element 
+	^ self categoryOfElement: element
 ]
 
 { #category : #operations }
@@ -435,7 +435,6 @@ Categorizer >> removeCategory: cat [
 		ifTrue:
 			[categoryArray := Array with: Default.
 			categoryStops := Array with: 0]
-
 ]
 
 { #category : #operations }

@@ -37,12 +37,10 @@ OCCompilerExceptionsTest >> removeGeneratedMethods [
 
 { #category : #emulating }
 OCCompilerExceptionsTest >> select [
-	
 ]
 
 { #category : #emulating }
-OCCompilerExceptionsTest >> selectFrom: start to: end [ 
-	
+OCCompilerExceptionsTest >> selectFrom: start to: end [
 ]
 
 { #category : #emulating }
@@ -55,7 +53,6 @@ OCCompilerExceptionsTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler.
-
 ]
 
 { #category : #running }

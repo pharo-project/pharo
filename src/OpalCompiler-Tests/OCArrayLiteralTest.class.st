@@ -8,7 +8,6 @@ Class {
 OCArrayLiteralTest >> runCase [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
-
 ]
 
 { #category : #running }

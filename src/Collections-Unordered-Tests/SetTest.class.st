@@ -40,7 +40,7 @@ SetTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 SetTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #coverage }
@@ -64,19 +64,19 @@ SetTest >> collectionClass [
 
 { #category : #requirements }
 SetTest >> collectionInForIncluding [
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SetTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
 SetTest >> collectionNotIncluded [
-	^ self classToBeTested  with: elementNotIn. 
+	^ self classToBeTested  with: elementNotIn.
 ]
 
 { #category : #requirements }
@@ -92,31 +92,31 @@ SetTest >> collectionWithElement [
 
 { #category : #requirements }
 SetTest >> collectionWithElementsToRemove [
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^collectionOfFloat 
+	^collectionOfFloat
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutElement [
 	" return a collection that does not include 'element' "
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutEqualElements [
 " return a collection without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #requirements }
@@ -132,7 +132,7 @@ SetTest >> elementInForIncludesTest [
 
 { #category : #ambiguous }
 SetTest >> elementNotIn [
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #'tests - includes' }
@@ -165,13 +165,13 @@ SetTest >> expectedSizeAfterReject [
 { #category : #requirements }
 SetTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 SetTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #'tests - empty' }
@@ -183,13 +183,13 @@ SetTest >> nonEmpty [
 { #category : #requirements }
 SetTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 SetTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -201,14 +201,13 @@ SetTest >> result [
 { #category : #requirements }
 SetTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #'tests - iterate' }
 SetTest >> selectedNumber [
 
 	^ 2
-	
 ]
 
 { #category : #running }
@@ -334,7 +333,6 @@ SetTest >> testCopy [
 
 { #category : #'tests - copy' }
 SetTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - some' }
@@ -400,7 +398,6 @@ SetTest >> testIdentityIncludes [
 SetTest >> testIllegal [
 	self should: [empty at: 5] raise: self defaultTestError.
 	self should: [empty at: 5 put: #abc] raise: self defaultTestError.
-			
 ]
 
 { #category : #'tests - sunit original tests' }
@@ -408,7 +405,6 @@ SetTest >> testIncludes [
 	self assert: (full includes: 4).
 	self assert: (full includes: 3).
 	self deny: (full includes: 6).
-			
 ]
 
 { #category : #'tests - includes' }
@@ -521,9 +517,6 @@ SetTest >> testRemoveIfAbsent [
 		
 	self assert: (full remove: 8 ifAbsent: [true]).
 	self assert: (full remove: 4 ifAbsent: [false]) isNumber.
-	
-	
-	
 ]
 
 { #category : #'tests - integrity' }

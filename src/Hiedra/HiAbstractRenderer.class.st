@@ -77,5 +77,4 @@ HiAbstractRenderer >> ruler [
 { #category : #accessing }
 HiAbstractRenderer >> ruler: aHiRuler [
 	ruler := aHiRuler
-
 ]

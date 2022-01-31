@@ -9,7 +9,6 @@ EFLiteralValueExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false
-		
 ]
 
 { #category : #tests }
@@ -28,7 +27,6 @@ EFLiteralValueExpressionTest >> testNotLitteral [
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '''<an unprintable nonliteral value>'''
-	
 ]
 
 { #category : #tests }
@@ -37,8 +35,6 @@ EFLiteralValueExpressionTest >> testNumbers [
 	configurationSelector := #basicConfiguration.
 	source := self formatExpression: ' 3.141592653589793 '.
 	self assert: source equals: '3.141592653589793'
-	
-
 ]
 
 { #category : #tests }

@@ -8,6 +8,7 @@ Class {
 RBRenameMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameMethodRefactoring };
+		addCase: { #rbClass -> RBRenameMethodTransformation };
 		yourself
 ]
 
@@ -54,7 +55,6 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	self assert: (class parseTreeFor: #checkClass1:) 
 		equals: (self parseMethod: 'checkClass1: aSmalllintContext 
 	^classBlock value: aSmalllintContext value: result').
-	
 ]
 
 { #category : #tests }

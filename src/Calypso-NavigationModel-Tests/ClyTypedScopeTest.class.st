@@ -6,12 +6,12 @@ Class {
 
 { #category : #testing }
 ClyTypedScopeTest class >> isAbstract [
-	^self = ClyTypedScopeTest 
+	^self = ClyTypedScopeTest
 ]
 
 { #category : #running }
 ClyTypedScopeTest >> createSampleScope [
-	^self multipleScopeSample 
+	^self multipleScopeSample
 ]
 
 { #category : #running }
@@ -21,7 +21,7 @@ ClyTypedScopeTest >> emptyScopeSample [
 
 { #category : #running }
 ClyTypedScopeTest >> extraBasisSample [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -33,12 +33,12 @@ ClyTypedScopeTest >> multipleScopeSample [
 
 { #category : #running }
 ClyTypedScopeTest >> scopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
 ClyTypedScopeTest >> singleBasisSample [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }

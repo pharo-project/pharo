@@ -23,7 +23,7 @@ Class {
 ClyFilteringCritiqueQuery class >> filter: aCritiqueQuery from: aScope [
 
 	^(self from: aScope)
-		baseCritiqueQuery: aCritiqueQuery 
+		baseCritiqueQuery: aCritiqueQuery
 ]
 
 { #category : #comparing }
@@ -33,7 +33,7 @@ ClyFilteringCritiqueQuery >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 		
-	^baseCritiqueQuery = anObject baseCritiqueQuery  
+	^baseCritiqueQuery = anObject baseCritiqueQuery
 ]
 
 { #category : #accessing }
@@ -89,5 +89,5 @@ ClyFilteringCritiqueQuery >> scope: aScope [
 
 { #category : #testing }
 ClyFilteringCritiqueQuery >> selectsCritique: aCritique [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

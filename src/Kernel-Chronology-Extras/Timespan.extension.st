@@ -3,19 +3,19 @@ Extension { #name : #Timespan }
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> asDosTimestamp [ 
 
-	^ start asDosTimestamp 
+	^ start asDosTimestamp
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> asMonth [ 
 
-	^ start asMonth 
+	^ start asMonth
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> asWeek [
 
-	^ start asWeek 
+	^ start asWeek
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -38,7 +38,7 @@ Timespan >> dates [
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> datesDo: aBlock [ 
 
-	self do: aBlock with: start asDate. 
+	self do: aBlock with: start asDate.
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -71,14 +71,14 @@ Timespan >> dayOfYear [
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> daysInMonth [ 
 
-	^ start daysInMonth 
+	^ start daysInMonth
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> daysInYear [
  	"Answer the number of days in the month represented by the receiver."
 
-	^ start daysInYear 
+	^ start daysInYear
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -89,7 +89,7 @@ Timespan >> daysLeftInYear [
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> do: aBlock with: aFirstElement [
 
- 	self do: aBlock with: aFirstElement when: [ :t | true ]. 
+ 	self do: aBlock with: aFirstElement when: [ :t | true ].
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -123,7 +123,6 @@ Timespan >> every: aDuration do: aBlock [
 	
 	[ aBlock value: element.
 		element := element + aDuration. ]
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -140,7 +139,6 @@ Timespan >> includes: aDateAndTime [
 				(self includes: aDateAndTime start)
 					and: [ self includes: aDateAndTime end ] ]
 			ifFalse: [ aDateAndTime asDateAndTime between: start and: self end ]
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -174,25 +172,24 @@ Timespan >> intersection: aTimespan [
 	 anEnd <= aBegin ifTrue: [^nil].
 
 	 ^ self species starting: aBegin ending: anEnd.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> isLeapYear [
 
-	^ start isLeapYear 
+	^ start isLeapYear
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> monthAbbreviation [ 
 
-	^ start monthAbbreviation 
+	^ start monthAbbreviation
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> monthName [ 
 
-	^ start monthName 
+	^ start monthName
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -217,7 +214,7 @@ Timespan >> to: anEnd [
 	end := (anEnd isKindOf: Timespan)
 		ifTrue: [ anEnd end ]
 		ifFalse: [ anEnd asDateAndTime ].
-	^ Timespan starting: (self start) ending: end. 
+	^ Timespan starting: (self start) ending: end.
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -244,7 +241,6 @@ Timespan >> union: aTimespan [
 	aBegin := self start min: aTimespan start.
 	anEnd := self end max: aTimespan end.
 	^ Timespan starting: aBegin ending: (anEnd + DateAndTime clockPrecision).
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -267,7 +263,7 @@ Timespan >> weeksDo: aBlock [
 Timespan >> workDatesDo: aBlock [
  	"Exclude Saturday and Sunday"
 
-	self do: aBlock with: start asDate when: [ :d | d dayOfWeek < 6 ]. 
+	self do: aBlock with: start asDate when: [ :d | d dayOfWeek < 6 ].
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }

@@ -754,7 +754,6 @@ JPEGReadWriter >> initialSOSSetup [
 JPEGReadWriter >> nextImage [
 
 	^ self nextImageDitheredToDepth: Display depth
-
 ]
 
 { #category : #'public access' }
@@ -1159,7 +1158,6 @@ JPEGReadWriter >> understandsImageFormat [
 	self next = 16rFF ifFalse: [^ false].
 	self next = 16rD8 ifFalse: [^ false].
 	^ true
-
 ]
 
 { #category : #preferences }

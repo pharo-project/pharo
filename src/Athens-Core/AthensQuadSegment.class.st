@@ -40,8 +40,7 @@ AthensQuadSegment >> from: pt0 via: pt1 to: p [
 
 { #category : #visitor }
 AthensQuadSegment >> sendCommandTo: aBuilder [
-	^ aBuilder curveVia: via to: to 
-	
+	^ aBuilder curveVia: via to: to
 ]
 
 { #category : #accessing }

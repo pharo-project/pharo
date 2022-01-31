@@ -64,7 +64,6 @@ FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollectionOfString
 	matches sort: [:a :b | a key >= b key ].
 	
 	^ matches collect: [:each | each value ] as: Array
-	
 ]
 
 { #category : #construction }
@@ -118,7 +117,7 @@ FuzzyMatcher >> firstScore: aString at: anIndex [
 		
 	score := score + (((anIndex - 1) * self leadingLetterPenalty) max: self maxLeadingLetterPenalty).
 				
-	^ score 
+	^ score
 ]
 
 { #category : #'private - accessing' }
@@ -145,7 +144,7 @@ FuzzyMatcher >> initialize [
 
 	super initialize.
 	pattern := lowercasePattern := ''.
-	indexes := #()	
+	indexes := #()
 ]
 
 { #category : #'private - testing' }
@@ -211,7 +210,7 @@ FuzzyMatcher >> maxLeadingLetterPenalty [
 { #category : #accessing }
 FuzzyMatcher >> pattern [
 
-	^ pattern 
+	^ pattern
 ]
 
 { #category : #accessing }
@@ -220,8 +219,6 @@ FuzzyMatcher >> pattern: aString [
 	pattern := aString.
 	lowercasePattern := pattern asLowercase.
 	indexes := Array new: pattern size
-	
-
 ]
 
 { #category : #'private - accessing' }
@@ -245,7 +242,7 @@ FuzzyMatcher >> score: aString at: stringIndex patternAt: patternIndex [
 		score := score + self caseEqualBonus.
 	].
 
-	^ score 
+	^ score
 ]
 
 { #category : #'scoring - bonus' }

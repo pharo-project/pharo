@@ -15,7 +15,6 @@ Class {
 ClassTreeExample class >> example [
 
 	ClassTreeExample new openOn: Object
-
 ]
 
 { #category : #accessing }
@@ -43,7 +42,6 @@ ClassTreeExample >> menu: menu shifted: b [
 { #category : #'instance creation' }
 ClassTreeExample >> open [
 	^ self openOn: Object
-
 ]
 
 { #category : #'instance creation' }

@@ -15,7 +15,7 @@ ClySwitchToPackagesCommand class >> toolbarOrder [
 { #category : #accessing }
 ClySwitchToPackagesCommand >> defaultMenuItemName [
 	
-	^ 'All Packages' 
+	^ 'All Packages'
 ]
 
 { #category : #accessing }

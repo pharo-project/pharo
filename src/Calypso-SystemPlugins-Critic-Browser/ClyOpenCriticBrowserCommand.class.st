@@ -12,7 +12,7 @@ ClyOpenCriticBrowserCommand class >> packageContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
-		byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext 
+		byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext
 ]
 
 { #category : #activation }
@@ -22,8 +22,8 @@ ClyOpenCriticBrowserCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyOpenCriticBrowserCommand >> execute [
-
-	CriticBrowser
-		openOnRule: (ReRuleManager uniqueInstance allRules) 
-		onEnvironment: (RBPackageEnvironment packages: packages)
+	| env |
+	
+	env := RBPackageEnvironment new packages: packages.
+	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false
 ]

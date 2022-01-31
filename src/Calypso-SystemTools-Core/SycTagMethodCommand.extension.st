@@ -4,5 +4,5 @@ Extension { #name : #SycTagMethodCommand }
 SycTagMethodCommand class >> methodMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyMethod asCalypsoItemContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyMethod asCalypsoItemContext
 ]

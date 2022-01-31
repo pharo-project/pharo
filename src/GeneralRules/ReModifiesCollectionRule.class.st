@@ -44,7 +44,6 @@ ReModifiesCollectionRule >> initialize [
 			'`@collection select: [:`each | | `@temps | `@.Statements]' 
 			'`@collection reject: [:`each | | `@temps | `@.Statements]' 
 			'`@collection inject: `@value into: [:`sum :`each | | `@temps | `@.Statements]')
-		
 ]
 
 { #category : #private }

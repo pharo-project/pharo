@@ -237,5 +237,4 @@ FT2Constants class >> initialize [
 	
 	StyleFlagItalic := 1.
 	StyleFlagBold := 2.
-
 ]

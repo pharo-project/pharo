@@ -21,7 +21,6 @@ ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingD
 	collectionOwner := mappingDict at: (RBPatternVariableNode named: '`@collectionOwner').
 	 collectionOwner isVariable ifFalse: [ ^ true ].
 	^ self isNotSpecialVariable: collectionOwner.
-	
 ]
 
 { #category : #accessing }
@@ -46,7 +45,6 @@ ReCollectionMessagesToExternalObjectRule >> isNotSpecialVariable: variableNode [
 	variableNode isReservedVariable ifTrue: [ ^false ]. 
 	(Smalltalk globals includesKey: variableNode name asSymbol) ifTrue: [ ^ false ].
 	^ true
-	
 ]
 
 { #category : #accessing }

@@ -4,11 +4,16 @@ Class {
 	#category : #'Kernel-Tests-Fluid'
 }
 
+{ #category : #'tests - expanded' }
+OldClassDefinitionPrinterTest >> expandedForClass: aClass [
+	
+	^ aClass expandedDefinitionStringFor: (OldPharoClassDefinitionPrinter for: aClass)
+	
+]
+
 { #category : #helpers }
 OldClassDefinitionPrinterTest >> forClass: aClass [
-	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString 
-
-
+	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString
 ]
 
 { #category : #running }
@@ -83,7 +88,7 @@ OldClassDefinitionPrinterTest >> testMetaclassClass [
 	self 
 		assert: (self forClass: Metaclass class) 
 		equals: 'Metaclass class
-	instanceVariableNames: '''''	
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - classes' }
@@ -105,8 +110,6 @@ OldClassDefinitionPrinterTest >> testProtoObject [
 	classVariableNames: ''''
 	package: ''Kernel-Objects''.
 ProtoObject superclass: nil'
-		
- 
 ]
 
 { #category : #'tests - metaclasses' }

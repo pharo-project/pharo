@@ -129,7 +129,6 @@ Object class >> initializeDependentsFields [
 	<script: 'Object initialize'>
 	
 	DependentsFields := WeakIdentityKeyDictionary new
-
 ]
 
 { #category : #'instance creation' }
@@ -250,7 +249,7 @@ Object >> = anObject [
 	object. If = is redefined in any subclass, consider also redefining the 
 	message hash."
 
-	^self == anObject 
+	^self == anObject
 ]
 
 { #category : #finalization }
@@ -326,7 +325,6 @@ Object >> asCollectionElement [
 	"Answer an object, which can be put into a Set as element , wrapped
 	by one of SetElement instance, if necessary. 
 	Default implementation is to answer self"
-
 ]
 
 { #category : #converting }
@@ -353,7 +351,7 @@ Object >> asOrderedCollection [
 Object >> asString [
 	"Answer a string that represents the receiver."
 
-	^ self printString 
+	^ self printString
 ]
 
 { #category : #asserting }
@@ -405,7 +403,7 @@ Object >> at: index put: value [
 		ifFalse: [ ^ self errorNonIntegerIndex ].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: value ].
-	self errorImproperStore 
+	self errorImproperStore
 ]
 
 { #category : #'write barrier' }
@@ -451,7 +449,7 @@ Object >> basicAt: index put: value [
 		ifFalse: [ ^ self errorNonIntegerIndex ].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #basicAt:put: index: index value: value ].
-	self errorImproperStore 
+	self errorImproperStore
 ]
 
 { #category : #accessing }
@@ -462,7 +460,7 @@ Object >> basicSize [
 
 	<primitive: 62>
 	"The number of indexable fields of fixed-length objects is 0"
-	^0	
+	^0
 ]
 
 { #category : #'write barrier' }
@@ -661,7 +659,6 @@ Object >> copySameFrom: otherObject [
 			[self instVarAt: index put: (otherObject instVarAt: match)]].
 	1 to: (self basicSize min: otherObject basicSize) do: [:i |
 		self basicAt: i put: (otherObject basicAt: i)].
-
 ]
 
 { #category : #copying }
@@ -731,7 +728,6 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		version: version;
 		rule: aRule;
 		transform.
-		
 ]
 
 { #category : #deprecation }
@@ -746,7 +742,6 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		rule: aRule;
 		condition: conditionBlock;
 		transform.
-		
 ]
 
 { #category : #deprecation }
@@ -758,7 +753,6 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		explanation: anExplanationString;
 		rule: aRule;
 		transform.
-		
 ]
 
 { #category : #deprecation }
@@ -771,7 +765,6 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		rule: aRule;
 		condition: conditionBlock;
 		transform.
-		
 ]
 
 { #category : #displaying }
@@ -819,8 +812,6 @@ Object >> enclosedElement [
 	a set sends this message to its element to make sure it getting real object,
 	instead of its wrapper.
 	Only SetElement instance or its subclasses allowed to answer something different than receiver itself"
-	
-
 ]
 
 { #category : #'error handling' }
@@ -1022,7 +1013,7 @@ Object >> hash [
 	"Answer a SmallInteger whose value is related to the receiver's identity.
 	May be overridden, and should be overridden in any classes that define = "
 
-	^ self identityHash 
+	^ self identityHash
 ]
 
 { #category : #evaluating }
@@ -1030,7 +1021,6 @@ Object >> in: aBlock [
 	"Evaluate the given block with the receiver as its argument."
 
 	^ aBlock value: self
-
 ]
 
 { #category : #introspection }
@@ -1108,7 +1098,6 @@ Object >> isBlock [
 Object >> isCharacter [
 
 	^ false.
-
 ]
 
 { #category : #testing }
@@ -1137,7 +1126,6 @@ Object >> isColor [
 	"Answer true if receiver is a Color. False by default."
 
 	^ false
-
 ]
 
 { #category : #testing }
@@ -1236,7 +1224,6 @@ Object >> isMemberOf: aClass [
 { #category : #testing }
 Object >> isMessageSend [
 	^false
-
 ]
 
 { #category : #testing }
@@ -1320,7 +1307,6 @@ Object >> isSelfEvaluating [
 Object >> isStream [
 	"Return true if the receiver responds to the stream protocol"
 	^false
-
 ]
 
 { #category : #testing }
@@ -1331,7 +1317,7 @@ Object >> isString [
 
 { #category : #testing }
 Object >> isSymbol [
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -1366,7 +1352,6 @@ Object >> isTrait [
 Object >> isVariableBinding [
 	"Return true if I represent a literal variable binding"
 	^false
-	
 ]
 
 { #category : #comparing }
@@ -1452,7 +1437,6 @@ This will serve two purposes:
 	(2)	You can locate all such methods by browsing senders of #nominallyUnsent:"
 
 	false ifTrue: [self flag: #nominallyUnsent:]    "So that this method itself will appear to be sent"
-
 ]
 
 { #category : #testing }
@@ -1621,7 +1605,7 @@ Object >> pointsOnlyWeaklyTo: anObject [
 Object >> postCopy [
 	"I'm a hook method in the sense of Design Patterns TemplateHook/Methods. I'm called by copy. self is a shallow copy, subclasses should copy fields as necessary to complete the full copy"
 
-	^ self 
+	^ self
 ]
 
 { #category : #'reflective operations' }
@@ -1723,7 +1707,6 @@ Object >> recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: alreadyDone 
 		(self basicAt: i)
 			recursivelySetIsReadOnlyObject: aBoolean
 			exceptObjectsIn: alreadyDone ]
-
 ]
 
 { #category : #testing }
@@ -1736,8 +1719,6 @@ Object >> release [
 	"Remove references to objects that may refer to the receiver. This message 
 	should be overridden by subclasses with any cycles, in which case the 
 	subclass should also include the expression super release."
-
-	
 ]
 
 { #category : #dependencies }
@@ -1752,8 +1733,9 @@ Object >> removeDependent: anObject [
 
 { #category : #'class membership' }
 Object >> respondsTo: aSymbol [ 
-	"Answer whether the method dictionary of the receiver's class contains 
-	aSymbol as a message selector."
+	"Answer whether the receiver can understand the specified message selector
+	aSymbol (ie. will respond meaningfully when such a message is sent to the
+	receiver)."
 
 	^self class canUnderstand: aSymbol
 ]
@@ -1794,7 +1776,6 @@ Object >> setIsReadOnlyObject: aBoolean [
 	<primitive: 164 error: ec>
 	self isImmediateObject ifTrue: [ ^true ].
 	^self primitiveFailed
-	
 ]
 
 { #category : #pinning }
@@ -1974,7 +1955,6 @@ Object >> storeOn: aStream [
 			store: (self basicAt: i);
 			nextPut: $;].
 	aStream nextPutAll: ' yourself)'
-
 ]
 
 { #category : #printing }
@@ -2119,7 +2099,6 @@ Object >> veryDeepCopyWith: deepCopier [
 		currentClass := currentClass superclass ].
 		
 	^ copyOfSelf
-
 ]
 
 { #category : #copying }
@@ -2153,7 +2132,6 @@ Object >> wantsStepsIn: aSystemWindow [
 { #category : #'model - updating' }
 Object >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
-
 ]
 
 { #category : #introspection }

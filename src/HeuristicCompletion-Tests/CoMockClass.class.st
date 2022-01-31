@@ -36,7 +36,7 @@ CoMockClass >> allInstVarNames [
 	superclassVarNames := superclass
 		ifNil: [ #() ]
 		ifNotNil: [ superclass allInstVarNames ].
-	^ superclassVarNames , instanceVariables 
+	^ superclassVarNames , instanceVariables
 ]
 
 { #category : #accessing }

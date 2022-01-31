@@ -27,5 +27,4 @@ GZipWriteStream >> writeHeader [
 	encoder nextBits: 32 put: 0. "no time stamp"
 	encoder nextBits: 8 put: 0. "No extra flags"
 	encoder nextBits: 8 put: 0. "No OS type"
-
 ]

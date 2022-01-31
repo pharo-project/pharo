@@ -41,7 +41,6 @@ InstanceVariableSlot >> definitionOn: aStream [
 	^self needsFullDefinition
 		ifTrue: [ super definitionOn: aStream ]
 		ifFalse: [ self name printOn: aStream ]
-
 ]
 
 { #category : #'code generation' }
@@ -54,7 +53,6 @@ InstanceVariableSlot >> emitStore: methodBuilder [
 InstanceVariableSlot >> emitValue: methodBuilder [
 	"emit the bytecode to push ivar"
 	methodBuilder pushInstVar: index
-
 ]
 
 { #category : #testing }

@@ -80,7 +80,7 @@ MenubarMorph class >> open [
 		open.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MenubarMorph class >> reset [
 
 	<script>

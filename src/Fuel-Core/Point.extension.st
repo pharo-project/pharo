@@ -4,5 +4,4 @@ Extension { #name : #Point }
 Point >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper visitPoint: self
-
 ]

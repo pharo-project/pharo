@@ -17,7 +17,6 @@ RFC2047MimeConverter >> encodeChar: aChar to: aStream [
 	aStream nextPut: $=;
 		nextPut: (Character digitValue: aChar asciiValue // 16);
 		nextPut: (Character digitValue: aChar asciiValue \\ 16)
-
 ]
 
 { #category : #'private - encoding' }
@@ -41,7 +40,7 @@ RFC2047MimeConverter >> isStructuredField: aString [
 	^#('Sender' 'From' 'Reply-To' 'To' 'cc' 'bcc') anySatisfy: [:each | fName sameAs: each]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 RFC2047MimeConverter >> mimeDecode [
 	"Do conversion reading from mimeStream writing to dataStream. See String>>decodeMimeHeader"
 
@@ -56,7 +55,7 @@ RFC2047MimeConverter >> mimeDecode [
 	^ dataStream
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 RFC2047MimeConverter >> mimeEncode [
 	"Do conversion reading from dataStream writing to mimeStream. Break long lines and escape non-7bit chars."
 

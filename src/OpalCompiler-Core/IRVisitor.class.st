@@ -13,7 +13,6 @@ IRVisitor >> visitBlockReturnTop: blockReturnTop [
 
 { #category : #visiting }
 IRVisitor >> visitInstruction: instr [
-	 
 ]
 
 { #category : #visiting }
@@ -61,10 +60,6 @@ IRVisitor >> visitPopIntoTemp: tmp [
 
 { #category : #visiting }
 IRVisitor >> visitPushArray: pushArray [
-]
-
-{ #category : #visiting }
-IRVisitor >> visitPushClosureCopy: pushClosureCopy [
 ]
 
 { #category : #visiting }

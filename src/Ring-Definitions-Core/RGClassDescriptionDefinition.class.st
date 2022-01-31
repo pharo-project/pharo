@@ -11,6 +11,12 @@ Class {
 	#category : #'Ring-Definitions-Core-Base'
 }
 
+{ #category : #testing }
+RGClassDescriptionDefinition class >> isAbstract [
+
+	^ self == RGClassDescriptionDefinition
+]
+
 { #category : #comparing }
 RGClassDescriptionDefinition >> = aRGClassDefinition [
 

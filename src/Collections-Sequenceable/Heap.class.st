@@ -95,7 +95,6 @@ Heap class >> heapExample [
 			sorted add: rnd next].
 	].
 	str << 'Time for SortedCollection: '<< time printString << ' msecs'.]
-
 ]
 
 { #category : #examples }
@@ -315,8 +314,6 @@ Heap >> growTo: newSize [
 Heap >> indexUpdateBlock: aBlockOrNil [
 
 	indexUpdateBlock := aBlockOrNil.
-
-
 ]
 
 { #category : #testing }

@@ -10,5 +10,4 @@ MetacelloPlatformTestCase >> testTempFileFor [
 	| tempFilePath |
 
 	tempFilePath := MetacelloPlatform current tempFileFor: 'xxx' suffix: '.test'.
-
 ]

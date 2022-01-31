@@ -11,7 +11,6 @@ Class {
 CDClassParserSelectionTest >> setUp [ 
 	super setUp.
 	slotuse := ClassDefinitionPrinter showFluidClassDefinition.
-	
 ]
 
 { #category : #running }

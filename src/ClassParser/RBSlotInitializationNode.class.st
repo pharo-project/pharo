@@ -59,7 +59,7 @@ RBSlotInitializationNode >> acceptVisitor: aVisitor [
 
 { #category : #accessing }
 RBSlotInitializationNode >> argumentParts [
-	^ argumentParts 
+	^ argumentParts
 ]
 
 { #category : #accessing }
@@ -103,7 +103,7 @@ RBSlotInitializationNode >> printOn: aStream [
 
 { #category : #accessing }
 RBSlotInitializationNode >> selectorParts [
-	^ selectorParts 
+	^ selectorParts
 ]
 
 { #category : #accessing }
@@ -114,5 +114,5 @@ RBSlotInitializationNode >> selectorParts: aCollection [
 { #category : #accessing }
 RBSlotInitializationNode >> selectorString [
 	^ String streamContents: [ :s |  
-			selectorParts do: [ :e | s <<e ] ] 
+			selectorParts do: [ :e | s <<e ] ]
 ]

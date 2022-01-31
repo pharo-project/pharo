@@ -33,7 +33,6 @@ ReUnconditionalRecursionRule >> initialize [
 			`@.before.
 			self `@message: `@args.
 			`@.after'
-		
 ]
 
 { #category : #accessing }

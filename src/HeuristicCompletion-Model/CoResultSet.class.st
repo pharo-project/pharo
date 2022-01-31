@@ -15,8 +15,7 @@ Class {
 	#instVars : [
 		'results',
 		'fetcher',
-		'completionString',
-		'caseSensitive'
+		'filter'
 	],
 	#category : #'HeuristicCompletion-Model-Core'
 }
@@ -38,37 +37,9 @@ CoResultSet class >> onContext: aCompletionContext fetcher: aFetcher [
 ]
 
 { #category : #accessing }
-CoResultSet >> caseSensitive [
-
-	^ caseSensitive
-]
-
-{ #category : #accessing }
-CoResultSet >> caseSensitive: anObject [
-
-	caseSensitive := anObject
-]
-
-{ #category : #accessing }
 CoResultSet >> completionToken [
 	
-	^ completionString
-]
-
-{ #category : #'api-filtering' }
-CoResultSet >> does: aCandidate matches: aLookupString [
-
-	| aLookupStringToUse aCandidateString |
-
-	caseSensitive 
-		ifTrue: [
-			aLookupStringToUse := aLookupString.
-			aCandidateString := aCandidate contents]  
-		ifFalse: [
-			aLookupStringToUse := aLookupString asLowercase.
-			aCandidateString := aCandidate contents asLowercase ].
-	
-	^ aLookupString isEmpty or: [ aCandidateString beginsWith: aLookupStringToUse ]
+	^ filter completionString
 ]
 
 { #category : #enumerating }
@@ -103,29 +74,17 @@ CoResultSet >> fetcher: anObject [
 	fetcher := anObject
 ]
 
-{ #category : #'api-filtering' }
-CoResultSet >> filterWithString: aString [
+{ #category : #accessing }
+CoResultSet >> filter [
 
-	"Narrow results"
+	^ filter
+]
 
-	aString = completionString ifTrue: [ ^ self ].
+{ #category : #accessing }
+CoResultSet >> filter: anObject [
 
-	aString size >= completionString size
-		ifTrue: [ "Filter existing results"
-			fetcher := fetcher narrowFilterBlock: [ :e | 
-				           self does: e matches: aString ] narrowKey: aString.
-			results := results select: [ :e | self does: e matches: aString ] ]
-		ifFalse: [ "Smaller filter, reset results and filter"
-			fetcher := fetcher
-				         unnarrowFilterBlock: [ :e | 
-				         self does: e matches: aString ]
-				         narrowKey: aString.
-
-			results := OrderedCollection new ].
-		
-	results := OrderedCollection new.	
-		
-	completionString := aString
+	filter := anObject.
+	fetcher filter: filter.
 ]
 
 { #category : #enumerating }
@@ -156,7 +115,7 @@ CoResultSet >> initialize [
 
 	super initialize.
 	results := OrderedCollection new.
-	completionString := ''.
+	filter := CoFilter empty
 ]
 
 { #category : #testing }
@@ -166,10 +125,30 @@ CoResultSet >> notEmpty [
 ]
 
 { #category : #'api-filtering' }
+CoResultSet >> replaceFilterWith: newFilter [
+
+	"Narrow results"
+
+	newFilter completionString = filter completionString ifTrue: [ ^ self ].
+
+	newFilter completionString size >= filter completionString size
+		ifTrue: [
+			"Filter existing results"
+			fetcher := fetcher narrowFilter: newFilter narrowKey: newFilter completionString ]
+		ifFalse: [
+			"Smaller filter, reset results and filter"
+			fetcher := fetcher unnarrowFilter: newFilter narrowKey: newFilter completionString ].
+		
+	results := OrderedCollection new.		
+	filter := newFilter
+]
+
+{ #category : #'api-filtering' }
 CoResultSet >> resetFilter [
 	
 	results removeAll.
-	fetcher := fetcher withoutFilter.
+	fetcher reset.
+	fetcher filter: CoFilter empty.
 ]
 
 { #category : #accessing }

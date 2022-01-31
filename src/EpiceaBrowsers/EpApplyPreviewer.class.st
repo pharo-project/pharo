@@ -189,7 +189,6 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 				ifAbsent: [ #() ] ].
 
 	^ #() "No impact if container does not exist"
-
 ]
 
 { #category : #visitor }

@@ -4,5 +4,5 @@ Extension { #name : #SycAddPackagesScopeCommand }
 SycAddPackagesScopeCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
-	^ CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext 
+	^ CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext
 ]

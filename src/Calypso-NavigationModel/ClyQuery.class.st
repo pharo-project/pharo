@@ -137,12 +137,12 @@ ClyQuery class >> unionFrom: subqueries [
 
 { #category : #'instance creation' }
 ClyQuery class >> unionFrom: subqueries as: aQueryResult [
-	^ClyUnionQuery with: subqueries as: aQueryResult 
+	^ClyUnionQuery with: subqueries as: aQueryResult
 ]
 
 { #category : #composition }
 ClyQuery >> , anotherQuery [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -169,7 +169,7 @@ ClyQuery >> bindTo: aScope in: aNavigationEnvironment [
 
 { #category : #execution }
 ClyQuery >> buildResult: aQueryResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -180,7 +180,7 @@ ClyQuery >> buildsDefaultResult [
 
 { #category : #execution }
 ClyQuery >> checkEmptyResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }
@@ -226,7 +226,7 @@ ClyQuery >> executesQuery: aTypedQueryClass [
 	"We should be able to check that given query executes particular kind of query class.
 	It allows simple check for tools that desired kind of query is activated.
 	Composite query should check all subqueries according to this logic"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -300,18 +300,18 @@ ClyQuery >> isExecutedFromScope: aTypedScopeClass [
 { #category : #testing }
 ClyQuery >> isExecutedFromScopeOf: basisObject [
 
-	^scope isBasedOn: basisObject 
+	^scope isBasedOn: basisObject
 ]
 
 { #category : #testing }
 ClyQuery >> isExecutedFromSingleScope [
-	^scope isBasedOnSingleBasis 
+	^scope isBasedOnSingleBasis
 ]
 
 { #category : #'system changes' }
 ClyQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]
 
 { #category : #execution }
@@ -333,7 +333,6 @@ ClyQuery >> prepareStateBeforeExecution [
 
 { #category : #printing }
 ClyQuery >> printExtraInfoOn: aStream [
-
 ]
 
 { #category : #printing }
@@ -350,8 +349,7 @@ ClyQuery >> printOn: aStream [
 	aStream nextPutAll: 'from '.
 	scope isBasedOnEmptyBasis 
 		ifTrue: [ aStream nextPutAll: 'empty scope']
-		ifFalse: [ scope printDescriptionOn: aStream]. 
-	
+		ifFalse: [ scope printDescriptionOn: aStream].
 ]
 
 { #category : #accessing }
@@ -372,7 +370,7 @@ ClyQuery >> resetScope [
 
 { #category : #converting }
 ClyQuery >> restrictedByScope: aScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -382,17 +380,17 @@ ClyQuery >> retrievesBrowserItems [
 
 { #category : #testing }
 ClyQuery >> retrievesItem: anObject [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyQuery >> retrievesItemsAs: aQueryResultClass [
-	^requiredResult isKindOf: aQueryResultClass 
+	^requiredResult isKindOf: aQueryResultClass
 ]
 
 { #category : #testing }
 ClyQuery >> retrievesItemsOfType: itemTypeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -420,7 +418,7 @@ ClyQuery >> semiAsync [
 ClyQuery >> unionWith: typedQueries as: aQueryResult [
 	"Subclasses should return ClyUnionQuery with collection of given subqueries together with itself or own subqueries if exists.
 	To create ClyUnionQuery they can yse short version ClyQuery unionFrom:"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -433,15 +431,15 @@ ClyQuery >> withResult: aQueryResult [
 
 { #category : #converting }
 ClyQuery >> withScope: aScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
 ClyQuery >> withScopeOf: newBasisObjects [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
 ClyQuery >> withoutItemsOfType: anItemTypeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

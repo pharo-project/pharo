@@ -43,8 +43,6 @@ DockingBarMenuMorph >> veryDeepInner: deepCopier [
 
 	super veryDeepInner: deepCopier.
 	activatorDockingBar := activatorDockingBar.  "Weakly copied"
-
-
 ]
 
 { #category : #accessing }

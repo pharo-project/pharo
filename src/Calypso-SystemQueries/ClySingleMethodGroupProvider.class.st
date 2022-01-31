@@ -32,12 +32,12 @@ ClySingleMethodGroupProvider >> buildGroupsFrom: aClassScope [
 { #category : #'building groups' }
 ClySingleMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'building groups' }
 ClySingleMethodGroupProvider >> createMethodQueryFrom: aClassScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }

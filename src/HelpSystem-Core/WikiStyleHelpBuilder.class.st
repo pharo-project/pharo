@@ -41,13 +41,11 @@ WikiStyleHelpBuilder class >> help [
 { #category : #'private - accessing' }
 WikiStyleHelpBuilder class >> pragmaKeyword [
 	 ^#wikiStyleHelp:
-
 ]
 
 { #category : #'private - accessing' }
 WikiStyleHelpBuilder class >> pragmaKeywords [
 	 ^#(wikiStyleHelp: wikiStyleHelp:syntax:)
-
 ]
 
 { #category : #building }
@@ -153,7 +151,6 @@ WikiStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle [
 		whileFalse: [topic := topicStack pop.
 			topicStack isEmpty ifFalse: [topicStack top addSubtopic: topic]].
 	^ topic
-
 ]
 
 { #category : #'private - accessing' }
@@ -163,5 +160,5 @@ WikiStyleHelpBuilder >> sectionStartChar [
 
 { #category : #'private - accessing' }
 WikiStyleHelpBuilder >> supportedSyntaxes [
-	^#(pier) 
+	^#(pier)
 ]

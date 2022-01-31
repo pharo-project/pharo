@@ -4,5 +4,5 @@ Extension { #name : #SycGenerateAllInstVarAccessorsCommand }
 SycGenerateAllInstVarAccessorsCommand class >> browserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation  by: $g meta, $a meta for: ClyClass asCalypsoItemContext 
+	^CmdShortcutActivation  by: $g meta, $a meta for: ClyClass asCalypsoItemContext
 ]

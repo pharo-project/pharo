@@ -45,7 +45,7 @@ ExternalData class >> new [
 	^self shouldNotImplement
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ExternalData >> fromCString [
 	"Assume that the receiver represents a C string and convert it to a Smalltalk string. hg 2/25/2000 14:18"
 
@@ -54,9 +54,9 @@ ExternalData >> fromCString [
 	^ handle fromCString
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ExternalData >> fromCStrings [
-	"Assume that the receiver represents a set of C strings and is teerminated by a empty string and convert it to a Smalltalk ordered collection of strings"
+	"Assume that the receiver represents a set of C strings and is terminated by a empty string and convert it to a Smalltalk ordered collection of strings"
 
 	| stream index char strings str |
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
@@ -71,7 +71,7 @@ ExternalData >> fromCStrings [
 			].
 		str := stream contents.
 		strings addLast: str.
-		str size = 0
+		str isEmpty
 	] whileFalse.
 	^strings
 ]

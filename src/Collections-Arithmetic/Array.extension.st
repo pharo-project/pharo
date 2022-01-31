@@ -6,7 +6,6 @@ Array >> +* aCollection [
 	 The name of this method is APL's +.x squished into Smalltalk syntax."
 
 	^aCollection preMultiplyByArray: self
-
 ]
 
 { #category : #'*Collections-arithmetic' }

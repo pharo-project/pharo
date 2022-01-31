@@ -35,8 +35,6 @@ WideCharacterSetTest >> testAddingToCharacterSet [
 	self should: [wcs = cs] description: 'A WideCharacterSet can be equal to an Ordinary CharacterSet'.
 	self should: [cs = wcs] description: 'An ordinary CharacterSet can be equal to a WideCharacterSet'.
 	self should: [cs hash = wcs hash] description: 'If some objects are equal, then they should have same hash code'.
-	
-	
 ]
 
 { #category : #tests }

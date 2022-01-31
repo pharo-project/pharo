@@ -16,7 +16,6 @@ EpInverseVisitor >> visitBehaviorCategoryChange: aChange [
 			oldCategory: aChange newCategory
 			newCategory: aChange oldCategory
 			class: aChange behaviorAffected
-
 ]
 
 { #category : #visitor }
@@ -28,7 +27,6 @@ EpInverseVisitor >> visitBehaviorCommentChange: aChange [
 			newComment: aChange oldComment
 			oldStamp: aChange newStamp
 			newStamp: aChange oldStamp
-
 ]
 
 { #category : #visitor }
@@ -63,7 +61,6 @@ EpInverseVisitor >> visitCategoryRename: aChange [
 			oldName: aChange newCategoryName
 			newName: aChange oldCategoryName
 			packageName: aChange affectedPackageName
-
 ]
 
 { #category : #visitor }
@@ -76,7 +73,6 @@ EpInverseVisitor >> visitClassAddition: aChange [
 EpInverseVisitor >> visitClassModification: aChange [
 
 	^ EpClassModification oldClass: aChange newClass newClass: aChange oldClass.
-
 ]
 
 { #category : #visitor }
@@ -118,7 +114,6 @@ EpInverseVisitor >> visitProtocolAddition: aChange [
 EpInverseVisitor >> visitProtocolRemoval: aChange [
 
 	^ EpProtocolAddition behavior: aChange behaviorAffected protocol: aChange protocol
-
 ]
 
 { #category : #visitor }

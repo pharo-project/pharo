@@ -48,7 +48,7 @@ ClySystemEnvironment class >> currentImage [
 			changesAnnouncer: SystemAnnouncer uniqueInstance]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClySystemEnvironment class >> reset [
 	<script>
 	currentImage := nil
@@ -56,7 +56,7 @@ ClySystemEnvironment class >> reset [
 
 { #category : #accessing }
 ClySystemEnvironment >> allProcesses [
-	^Process allSubInstances 
+	^Process allSubInstances
 ]
 
 { #category : #accessing }
@@ -165,8 +165,8 @@ ClySystemEnvironment >> confirmToOverrideExistingClassNamed: newClassName [
 	"Attempting to define new class/trait over existing one when not looking at the original one in this browser..."
 
 	^ self confirm:
-		((newClassName , ' is an existing class/trait in this system.
-Redefining it might cause serious problems.
+		((newClassName , ' might have been edited from another editor.
+Redefining it might override these changes.
 Is this really what you want to do?') asText
 			 makeBoldFrom: 1
 			 to: newClassName size)
@@ -290,8 +290,6 @@ ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
 	| defTokens |
 	defTokens := newClassDefinitionString findTokens: Character separators.
 	^ (self class environment classNamed: defTokens first) isNotNil.
-	
- 
 ]
 
 { #category : #testing }
@@ -425,7 +423,7 @@ ClySystemEnvironment >> subscribe: anObject [
 
 { #category : #subscription }
 ClySystemEnvironment >> subscribe: anObject for: anAnnouncementClass [
-	self when: anAnnouncementClass send: #systemChanged: to: anObject 
+	self when: anAnnouncementClass send: #systemChanged: to: anObject
 ]
 
 { #category : #subscription }

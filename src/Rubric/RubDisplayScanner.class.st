@@ -155,7 +155,7 @@ RubDisplayScanner >> fillTextBackground [
 ]
 
 { #category : #'multilingual scanning' }
-RubDisplayScanner >> isBreakableAt: index in: sourceString in: encodingClass [
+RubDisplayScanner >> isBreakableAt: index in: sourceString [
 
 	^ false.
 
@@ -186,7 +186,8 @@ RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 	].
 	(super placeEmbeddedObject: anchoredMorph) ifFalse: [^ false].
 	anchoredMorph isMorph ifTrue: [
-		anchoredMorph position: ((destX - anchoredMorph width)@lineY) - morphicOffset
+		anchoredMorph position: ((destX - anchoredMorph width)@lineY) - morphicOffset.
+		anchoredMorph setProperty: #hasBeenPositioned toValue: true
 	] ifFalse: [
 		destY := lineY.
 		baselineY := lineY + anchoredMorph height..

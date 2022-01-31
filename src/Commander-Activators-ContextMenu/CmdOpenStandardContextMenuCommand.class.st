@@ -11,5 +11,5 @@ Class {
 
 { #category : #execution }
 CmdOpenStandardContextMenuCommand >> activationStrategy [
-	^CmdContextMenuActivation 
+	^CmdContextMenuActivation
 ]

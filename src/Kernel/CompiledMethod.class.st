@@ -26,13 +26,13 @@ CompiledMethod class >> abstractMarker [
 { #category : #'instance creation' }
 CompiledMethod class >> basicNew [
 
-	self error: 'CompiledMethods may only be created with newMethod:header:' 
+	self error: 'CompiledMethods may only be created with newMethod:header:'
 ]
 
 { #category : #'instance creation' }
 CompiledMethod class >> basicNew: size [
 
-	self error: 'CompiledMethods may only be created with newMethod:header:' 
+	self error: 'CompiledMethods may only be created with newMethod:header:'
 ]
 
 { #category : #'class initialization' }
@@ -132,11 +132,9 @@ CompiledMethod class >> initialize [    "CompiledMethod initialize"
 	"Initialize class variables specifying the size of the temporary frame
 	needed to run instances of me."
 
-	self flag:#oldBytecode.
-
 	SmallFrame := 16.	"Context range for temps+stack"
 	LargeFrame := 56.
-	PrimaryBytecodeSetEncoderClass := EncoderForV3PlusClosures.
+	PrimaryBytecodeSetEncoderClass := nil. "Old encoder was removed"
 	SecondaryBytecodeSetEncoderClass := EncoderForSistaV1
 ]
 
@@ -366,7 +364,7 @@ CompiledMethod >> containsHalt [
 
 { #category : #'source code management' }
 CompiledMethod >> copyWithSource: aString [
-	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString) 
+	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString)
 ]
 
 { #category : #initialization }
@@ -410,7 +408,6 @@ CompiledMethod >> embeddSourceInTrailer [
 	"
 	self trailer hasSourcePointer ifTrue: [
 		^self becomeForward: (self copyWithSource: self sourceCode)]
-
 ]
 
 { #category : #accessing }
@@ -424,7 +421,6 @@ CompiledMethod >> flushCache [
 	"Tell the virtual machine to remove all references to this method from its method lookup caches, and to discard any optimized version 	of the method, if it has any of these.  This must be done whenever a method is modified in place, such as modifying its literals or 	machine code, to reflect the revised code.  c.f. Behavior>>flushCache & Symbol>>flushCache.  Essential.	 See MethodDictionary class 	comment."
 
 	<primitive: 116>
-
 ]
 
 { #category : #'source code management' }
@@ -526,13 +522,17 @@ CompiledMethod >> isAbstract [
 	
 	^marker == self class subclassResponsibilityMarker 
 		or: [ marker == self class explicitRequirementMarker ]
-
 ]
 
 { #category : #testing }
 CompiledMethod >> isBinarySelector [
 	^self selector
 		allSatisfy: [:each | each isSpecial]
+]
+
+{ #category : #testing }
+CompiledMethod >> isClassSide [
+	^self methodClass isClassSide
 ]
 
 { #category : #testing }
@@ -556,7 +556,6 @@ CompiledMethod >> isDeprecated [
 			#deprecated:on:in: 
 			#deprecated:on:in:transformWith:
 			#deprecated:on:in:transformWith:when:)
-	
 ]
 
 { #category : #testing }
@@ -622,7 +621,6 @@ CompiledMethod >> isOverridden [
 		(each includesSelector: selector)
 			ifTrue: [ ^ true ]].
 	^ false
-	
 ]
 
 { #category : #testing }
@@ -730,7 +728,7 @@ CompiledMethod >> methodClass [
 CompiledMethod >> methodClass: aClass [
 	"set the class binding in the last literal to aClass"
 	^self numLiterals > 0
-		ifTrue: [ self literalAt: self numLiterals put: aClass binding ]	
+		ifTrue: [ self literalAt: self numLiterals put: aClass binding ]
 ]
 
 { #category : #accessing }
@@ -767,7 +765,6 @@ CompiledMethod >> postCopy [
 									yourself).
 		 self penultimateLiteral pragmas do:
 			[:p| p method: self]]
-
 ]
 
 { #category : #'accessing - pragmas & properties' }
@@ -947,7 +944,7 @@ CompiledMethod >> protocol: aString [
 CompiledMethod >> readsField: varIndex [ 
 	"Answer whether the receiver loads the instance variable indexed by the argument."
 	self isReturnField ifTrue: [^self returnField = (varIndex - 1)].
-	^ super readsField: varIndex 
+	^ super readsField: varIndex
 ]
 
 { #category : #evaluating }
@@ -1046,7 +1043,6 @@ CompiledMethod >> setSourcePointer: srcPointer [
 			self replaceFrom: start to: self size with: copy startingAt: start ]
 		ifFalse: [ self becomeForward: copy ].
 	^ self
-
 ]
 
 { #category : #accessing }
@@ -1067,7 +1063,6 @@ CompiledMethod >> sourcePointer [
 	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
 
 	^ self trailer sourcePointer
-
 ]
 
 { #category : #'debugger support' }

@@ -123,7 +123,6 @@ DiskDirectoryEntry >> changeTime [
 	On platforms that don't support change time, use the modification time"
 
 	^DateAndTime fromInternalTime: ((self statAttributes at: 11) ifNil: [ self statAttributes at: 12 ])
-
 ]
 
 { #category : #accessing }
@@ -131,7 +130,6 @@ DiskDirectoryEntry >> changeUnixTime [
 	"Answer the receiver's change time in Unix time_t format"
 
 	^self changeTime asUnixTime
-
 ]
 
 { #category : #accessing }
@@ -171,7 +169,6 @@ DiskDirectoryEntry >> getAllAttributes [
 	allAttributes := self primitives fileAttributes: self pathString mask: self allAttributeMask.
 	statAttributes := allAttributes at: 1.
 	accessAttributes := allAttributes at: 2.
-
 ]
 
 { #category : #'cache management' }
@@ -179,7 +176,6 @@ DiskDirectoryEntry >> getStatAttributes [
 	"Store the receivers stat() attributes for future reference"
 
 	^statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask.
-
 ]
 
 { #category : #accessing }
@@ -187,25 +183,6 @@ DiskDirectoryEntry >> gid [
 	"Answer the GID of the owner of the receiver"
 	
 	^self statAttributes at: 7
-]
-
-{ #category : #inspecting }
-DiskDirectoryEntry >> gtInspectAttributesIn: composite [
-	<gtInspectorPresentationOrder: 2>
-
-	| attrDictionary |
-
-	attrDictionary := Dictionary new.
-	self class methodsDo: [ :method |
-		method methodNode arguments size = 0 ifTrue:
-			[ attrDictionary at: method selector put:
-				([ (method selector value: self) ]
-					on: Error
-					do: [ 'N/A' translated ]) ] ].
-	^(attrDictionary gtInspectorItemsIn: composite)
-		when: [ attrDictionary isNotEmpty ];
-		title: 'Attributes' translated;
-		yourself.
 ]
 
 { #category : #testing }

@@ -144,7 +144,6 @@ ThumbnailMorph >> drawOn: aCanvas [
 	self drawMeOn: aCanvas.
 	drawTime := Time millisecondClockValue - time.
 	drawTime < 0 ifTrue:[drawTime := nil].
-
 ]
 
 { #category : #'what to view' }
@@ -194,7 +193,6 @@ ThumbnailMorph >> morphToView [
 			[objectToView]
 		ifFalse:
 			[Morph new color: Color blue]
-
 ]
 
 { #category : #initialization }
@@ -244,7 +242,6 @@ scaleX := myBox width asFloat / viewedMorphBox width.
 							ifFalse:
 								[scale := scaleX min: scaleY]].
 ^ scale
-
 ]
 
 { #category : #stepping }
@@ -255,7 +252,6 @@ ThumbnailMorph >> step [
 	viewee := self actualViewee.
 	viewee ifNil: [ self stopStepping. ^self ].
 	self changed.
-
 ]
 
 { #category : #stepping }
@@ -290,5 +286,4 @@ viewSelector := viewSelector veryDeepCopyWith: deepCopier.
 lastSketchForm := lastSketchForm veryDeepCopyWith: deepCopier.
 lastFormShown := lastFormShown veryDeepCopyWith: deepCopier.
 drawTime := drawTime veryDeepCopyWith: deepCopier.
-
 ]

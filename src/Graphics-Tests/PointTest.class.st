@@ -247,7 +247,6 @@ PointTest >> testIsFloatPoint [
 	self deny: (0.0 @ 0) isFloatPoint.
 	self deny: (0 @ 0.0) isFloatPoint.
 	self assert: (0.0 @ 0.0) isFloatPoint.
-	
 ]
 
 { #category : #'tests - truncation and roundoff' }
@@ -265,7 +264,6 @@ PointTest >> testIsIntegerPoint [
 	self deny: (-1 @ -1.2) isIntegerPoint.
 	self deny: (-1.2 @ -1) isIntegerPoint.
 	self deny: (-1.2 @ -1.2) isIntegerPoint.
-	
 ]
 
 { #category : #'tests - converting' }
@@ -340,7 +338,6 @@ PointTest >> testRightRotated [
 PointTest >> testScaleTo [
 	self assert: (200@200 scaleTo: 400@400) equals:(2.0@2.0).
 	self assert: (40@40 scaleTo: 400@400) equals: (10.0@10.0)
-	
 ]
 
 { #category : #'tests - testing' }
@@ -388,8 +385,6 @@ PointTest >> testTheta [
 	dir := tan arcTan.
       result :=  180.0 degreesToRadians + dir.
       self assert: ((x @ y) theta - result) abs < 1e-15.
-
-	
 ]
 
 { #category : #'tests - geometry' }
@@ -413,6 +408,5 @@ PointTest >> testToIntersectsTo [
 	
 	"point line( 1@1 to: 1@1 ) not allowed "
 	self deny: ( (1 @ 1) to: ( 1 @ 1) intersects: (1@ 0) to: (1 @ 2) )."should be true if point line alowed" 
-	self assert: ( (1 @ 1) to: ( 1 @ 1) intersects: (1 @ 1) to: (1 @ 9) ). 
-
+	self assert: ( (1 @ 1) to: ( 1 @ 1) intersects: (1 @ 1) to: (1 @ 9) ).
 ]

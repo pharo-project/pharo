@@ -38,9 +38,11 @@ CoCompletionContext >> activateEntryAt: anIndex [
 CoCompletionContext >> completion [
 
 	completion ifNotNil: [ ^ completion ].
-	^ completion := self completionBuilder
+	completion := self completionBuilder
 		completionContext: self;
-		buildCompletion
+		buildCompletion.
+	completion filter: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: self completionToken).
+	^ completion
 ]
 
 { #category : #accessing }
@@ -78,12 +80,6 @@ CoCompletionContext >> completionClass [
 CoCompletionContext >> completionClass: aClass [
 	
 	^ completionClass := aClass
-]
-
-{ #category : #accessing }
-CoCompletionContext >> completionEnvironment [
-	
-	^ CoSystemEnvironment new
 ]
 
 { #category : #accessing }
@@ -128,7 +124,7 @@ CoCompletionContext >> entryCount [
 { #category : #accessing }
 CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [ 
 	
-	^ self completionEnvironment environmentAt: aString ifPresent: aBlockClosure
+	^ self systemNavigation environmentAt: aString ifPresent: aBlockClosure
 ]
 
 { #category : #testing }
@@ -159,7 +155,7 @@ CoCompletionContext >> isWorkspace [
 { #category : #narrowing }
 CoCompletionContext >> narrowWith: aString [ 
 
-	self completion filterWithString: aString
+	self completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: aString)
 ]
 
 { #category : #accessing }
@@ -186,6 +182,12 @@ CoCompletionContext >> source [
 { #category : #accessing }
 CoCompletionContext >> source: anObject [
 	source := anObject
+]
+
+{ #category : #accessing }
+CoCompletionContext >> systemNavigation [
+	
+	^ CoSystemEnvironment new
 ]
 
 { #category : #accessing }

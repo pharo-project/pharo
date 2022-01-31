@@ -27,7 +27,6 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 	
 	self assert: node arguments first isLiteralNode.
 	self assert: node arguments first value equals: 12.
-
 ]
 
 { #category : #tests }
@@ -65,7 +64,6 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCo
 
 	self assert: node arguments first isLiteralNode.
 	self assert: node arguments first value equals: 12.
-
 ]
 
 { #category : #tests }
@@ -82,7 +80,6 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCo
 	self assert: node arguments first value equals: #lala:.
 	self assert: node arguments second isLiteralNode.
 	self assert: node arguments second value equals: 12.
-
 ]
 
 { #category : #tests }
@@ -119,5 +116,4 @@ RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContin
 
 	self assert: node body statements second isMessage.
 	self assert: node body statements second selector equals: #between:and:.
-
 ]

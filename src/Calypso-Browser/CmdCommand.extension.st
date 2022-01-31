@@ -12,7 +12,7 @@ CmdCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
 { #category : #'*Calypso-Browser' }
 CmdCommand >> browserTabActionIcon [
 
-	^self secureMenuIcon 
+	^self secureMenuIcon
 ]
 
 { #category : #'*Calypso-Browser' }
@@ -42,7 +42,6 @@ CmdCommand >> createTableCellButtonUsing: aCommandActivator [
 	icon := self tableCellIcon.
 	
 	^self createTableCellButtonWith: icon using: aCommandActivator.
-		
 ]
 
 { #category : #'*Calypso-Browser' }
@@ -97,5 +96,5 @@ CmdCommand >> defaultToolbarItemName [
 { #category : #'*Calypso-Browser' }
 CmdCommand >> tableCellIcon [
 
-	^self secureMenuIcon 
+	^self secureMenuIcon
 ]

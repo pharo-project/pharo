@@ -105,6 +105,10 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 			"Note: The following is querying the font about the width
 			since the primitive may have failed due to a non-trivial
 			mapping of characters to glyphs or a non-existing xTable."
+			
+			(self isBreakableAt: lastIndex in: text) 
+				ifTrue: [ self registerBreakableIndex ].
+			
 			nextChar := (lastIndex + 1 <= stopIndex) 
 				ifTrue:[sourceString at: lastIndex + 1]
 				ifFalse:[
@@ -182,9 +186,15 @@ RubCharacterScanner >> initialize [
 ]
 
 { #category : #'scanner methods' }
-RubCharacterScanner >> isBreakableAt: index in: sourceString in: encodingClass [
+RubCharacterScanner >> isBreakableAt: index in: sourceString [ 
 
-	^ encodingClass isBreakableAt: index in: sourceString.
+	| char |
+	
+	char := sourceString at: index.
+	char = Character space ifTrue: [^ true].
+	char = Character cr ifTrue: [^ true].
+
+	^ false.
 
 ]
 
@@ -257,6 +267,16 @@ RubCharacterScanner >> plainTab [
 ]
 
 { #category : #scanning }
+RubCharacterScanner >> registerBreakableIndex [
+
+	"Record left x and character index of the line-wrappable point. 
+	The default implementation here does nothing."
+
+	^ false.
+
+]
+
+{ #category : #scanning }
 RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 
 	sourceString isByteString
@@ -311,6 +331,10 @@ RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sou
 		ascii > maxAscii ifTrue: [ascii := maxAscii].
 		(ascii < stops size and: [(stops at: ascii + 1) ~~ nil])
 			ifTrue: [^ stops at: ascii + 1].
+		
+		(self isBreakableAt: lastIndex in: sourceString) ifTrue: [
+			self registerBreakableIndex ].
+		
 		nextChar := (lastIndex + 1 <= stopIndex) 
 			ifTrue:[sourceString at: lastIndex + 1]
 			ifFalse:[

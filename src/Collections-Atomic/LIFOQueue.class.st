@@ -66,7 +66,6 @@ LIFOQueue >> next [
 	dummy next: tail next.
 
 	^ tail object
-	
 ]
 
 { #category : #accessing }
@@ -90,7 +89,6 @@ LIFOQueue >> nextIfNone: aBlock [
 	dummy next: tail next.
 
 	^ tail object
-	
 ]
 
 { #category : #accessing }

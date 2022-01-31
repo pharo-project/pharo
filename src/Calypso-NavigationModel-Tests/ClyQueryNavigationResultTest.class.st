@@ -22,7 +22,7 @@ ClyQueryNavigationResultTest >> createQuery [
 
 { #category : #running }
 ClyQueryNavigationResultTest >> createQueryResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -35,7 +35,6 @@ ClyQueryNavigationResultTest >> setUp [
 	queryResult cancelRebuild. 
 	"by default result is in state to be rebuilt by query.
 	We do not need it in tests where we usually just test fillWith: logic"
-	
 ]
 
 { #category : #tests }
@@ -111,7 +110,7 @@ ClyQueryNavigationResultTest >> testNeedsRebuildByDefault [
 	
 	queryResult := self createQueryResult.
 	
-	self assert: queryResult needsRebuild 
+	self assert: queryResult needsRebuild
 ]
 
 { #category : #tests }

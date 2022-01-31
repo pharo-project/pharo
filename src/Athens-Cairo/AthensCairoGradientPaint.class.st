@@ -22,7 +22,6 @@ AthensCairoGradientPaint class >> createLinearGradient: aColorRamp start: aStart
 	"note, we do #initialize here because instance was created by primitive"
 	paint initialize; populateRamp: aColorRamp.
 	^ paint
-
 ]
 
 { #category : #primitives }
@@ -32,7 +31,6 @@ AthensCairoGradientPaint class >> primCreateLinearX0: x0 y0: y0 x1: x1 y1: y1 [
 		double y0,
 		double x1,
 		double y1 ) )
-
 ]
 
 { #category : #primitives }
@@ -44,7 +42,6 @@ AthensCairoGradientPaint class >> primCreateRadialXo: xo yo: yo radiuso: radiuso
 		double x1,
 		double y1,
 		double radius1 ) )
-
 ]
 
 { #category : #private }
@@ -101,7 +98,6 @@ AthensCairoGradientPaint >> initializeRadialBetween: origin
 		self
 			addColorStopAt: each key
 			colored: each value ]
-	
 ]
 
 { #category : #private }
@@ -110,7 +106,6 @@ AthensCairoGradientPaint >> populateRamp: aRamp [
 		self
 			addColorStopAt: each key
 			colored: each value ]
-	
 ]
 
 { #category : #primitives }
@@ -121,5 +116,4 @@ AthensCairoGradientPaint >> primAddColorStopOffset: offset R: red G: green B: bl
 					double green,
 					double blue,
 					double alpha ))
-		
 ]

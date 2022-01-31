@@ -4,7 +4,6 @@ Extension { #name : #String }
 String >> asFileLocatorOrReference [
 
 	^ FileLocator fromString: self ifNone: [ self asFileReference ]
-
 ]
 
 { #category : #'*Filesystem-Core-converting' }

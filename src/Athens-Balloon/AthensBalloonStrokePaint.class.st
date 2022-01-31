@@ -11,7 +11,6 @@ Class {
 AthensBalloonStrokePaint >> athensFillPath: aPath on: aCanvas [
 
 	^ fillPaint strokePath: aPath on: aCanvas strokeWidth: width
-
 ]
 
 { #category : #rendering }

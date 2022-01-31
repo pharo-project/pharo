@@ -84,7 +84,7 @@ AthensSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 	"This protocol is deprecated. Use #createLinearGradient: start:stop: instead"
 	
 	
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #paints }
@@ -102,7 +102,6 @@ AthensSurface >> createPath: aPathBuilder [
 AthensSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius [
 	"by default, focal point coincede with center"
 	^ self createRadialGradient: colorRamp center: aCenter radius: aRadius focalPoint: aCenter
-
 ]
 
 { #category : #paints }
@@ -200,7 +199,6 @@ AthensSurface >> newCanvas [
 	"Answer a preinitialized instance of AthensCanvas.
 	Private to receiver and its subclasses, override seldom"
 	^ AthensCanvas on: self
-
 ]
 
 { #category : #private }

@@ -16,7 +16,7 @@ Class {
 
 { #category : #'building groups' }
 ClyMethodGroupProvider >> buildGroupsFrom: aClassScope [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }

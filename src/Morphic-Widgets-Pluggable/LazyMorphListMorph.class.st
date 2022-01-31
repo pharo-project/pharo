@@ -11,14 +11,13 @@ Class {
 LazyMorphListMorph >> adjustHeight [
 	"private.  Adjust our height to match the length of the underlying list.
 	Automatic with table layout."
-
 ]
 
 { #category : #private }
 LazyMorphListMorph >> adjustWidth [
 	"private.  Adjust our height to match the length of the underlying list"
 	
-	self width: (listSource innerBounds width max: self hUnadjustedScrollRange). 
+	self width: (listSource innerBounds width max: self hUnadjustedScrollRange).
 ]
 
 { #category : #drawing }
@@ -70,7 +69,6 @@ LazyMorphListMorph >> hUnadjustedScrollRange [
 	listItems do: [:each |
 		each ifNotNil: [maxWidth := maxWidth max: (each widthToDisplayInList: self)]].
 	^maxWidth
-
 ]
 
 { #category : #initialization }
@@ -102,7 +100,6 @@ LazyMorphListMorph >> listChanged [
 		adjustWidth.
 	listItems do: [:i | i layoutChanged].
 	self changed.
-
 ]
 
 { #category : #accessing }

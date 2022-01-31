@@ -118,7 +118,7 @@ Breakpoint class >> handleMethodRemoved: anAnnouncement [
 
 { #category : #'class initialization' }
 Breakpoint class >> initialize [
-	self registerInterestToSystemAnnouncement 
+	self registerInterestToSystemAnnouncement
 ]
 
 { #category : #querying }
@@ -141,7 +141,6 @@ Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 		on: aBreakpoint
 		nodes: aBreakpoint link nodes.
 	SystemAnnouncer uniqueInstance announce: announcement
-	
 ]
 
 { #category : #'observers - experimental' }
@@ -183,7 +182,6 @@ Breakpoint class >> registerObserver: anObject [
 		when: BreakpointAdded send: #update: to: anObject;
 		when: BreakpointHit send: #update: to: anObject;
 		when: BreakpointRemoved send: #update: to: anObject
-	
 ]
 
 { #category : #cleanup }
@@ -229,8 +227,6 @@ Breakpoint class >> unregisterObserver: anObject [
 Breakpoint >> always [
 
 	self link: self breakLink
-
-
 ]
 
 { #category : #api }
@@ -293,7 +289,7 @@ Breakpoint >> install [
 			self class addBreakpoint: self.
 			^ self ].
 	self node link: self link.
-	self class addBreakpoint: self 
+	self class addBreakpoint: self
 ]
 
 { #category : #testing }
@@ -384,14 +380,14 @@ Breakpoint >> remove [
 
 { #category : #removing }
 Breakpoint >> removeFromClass: aClass [
-
+	"we just remove this breakpoint from the cache, overridden by VariableBreakpoint to do more"
 	self class removeBreakpoint: self
 ]
 
 { #category : #removing }
 Breakpoint >> removeFromMethod: aMethod [
-
-	self remove
+	"we just remove this breakpoint from the cache, overridden by VariableBreakpoint to do more"
+	self class removeBreakpoint: self
 ]
 
 { #category : #removing }

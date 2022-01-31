@@ -45,7 +45,6 @@ ClyClassCommentEditorToolMorph >> defaultTitle [
 { #category : #accessing }
 ClyClassCommentEditorToolMorph >> editingMode [
 	^ RubSmalltalkCommentMode new
-	
 ]
 
 { #category : #accessing }

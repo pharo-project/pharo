@@ -40,7 +40,6 @@ TAbleToRotate >> rotationDegrees [
 	"Default implementation."
 
 	^ 0.0
-
 ]
 
 { #category : #'t - rotating' }
@@ -54,5 +53,4 @@ TAbleToRotate >> setDirectionFrom: aPoint [
 	delta := (self transformFromWorld globalPointToLocal: aPoint) - self referencePosition.
 	degrees := delta degrees + 90.0.
 	self forwardDirection: (degrees \\ 360) rounded.
-
 ]

@@ -22,7 +22,7 @@ TickSelectionCheckboxButtonMorph >> mouseUp: evt [
 	| result |
 	result := super mouseUp: evt.
 	self pressed: index.
-	^ result 
+	^ result
 ]
 
 { #category : #event }

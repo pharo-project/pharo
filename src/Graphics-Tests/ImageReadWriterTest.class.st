@@ -126,7 +126,6 @@ ImageReadWriterTest >> testHasMagicNumber [
 	"The source stream is shorter than the magic number. Shouldn't error!"
 	reader := ImageReadWriter on: failTooShortStream.
 	self assert: (reader hasMagicNumber: exampleNumber) equals: false.
-	
 ]
 
 { #category : #tests }

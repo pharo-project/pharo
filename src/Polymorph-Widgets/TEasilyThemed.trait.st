@@ -339,7 +339,6 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		getEnabled: enabledSel
 		font: aFont
 		help: helpText
-
 ]
 
 { #category : #controls }
@@ -356,7 +355,6 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		font: aFont
 		help: helpText
 		entryCompletion: anEntryCompletion
-
 ]
 
 { #category : #controls }
@@ -581,7 +579,7 @@ TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel 
 TEasilyThemed >> newCloseButton [
 	"Answer a new close button."
 
-	^self newCloseButtonFor: self 
+	^self newCloseButtonFor: self
 ]
 
 { #category : #controls }
@@ -1005,7 +1003,6 @@ TEasilyThemed >> newLabelGroup: labelsAndControls font: aFont labelColor: aColor
 		for: labelsAndControls
 		font: aFont
 		labelColor: aColor
-
 ]
 
 { #category : #controls }

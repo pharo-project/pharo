@@ -197,7 +197,6 @@ FBDDecompiler >> doDup [
 	simulatedStack 
 		addLast: dupTemp;
 		addLast: dupTemp.
-		
 ]
 
 { #category : #'data flow instructions' }
@@ -213,21 +212,6 @@ FBDDecompiler >> errorCodeNameFor: cm [
 		selectorParts := pragma selector separateKeywords splitOn: '  '.
 		selectorParts first = 'primitive:' ].
 	^ primitivePragma argumentAt: (selectorParts indexOf: 'error:')
-]
-
-{ #category : #'data flow instructions' }
-FBDDecompiler >> extractBlockWith: copied numArgs: numArgs blockSize: blockSize [
-	| startPC numTemps |
-	numTemps := instructionStream method encoderClass 
-		numLocalTempsForBlockAt: self pc 
-		in: instructionStream method.
-	self initializeStackNumArgs: numArgs copied: copied numTemps: numTemps.
-	startPC := self pc.
-	self skipTemps: numTemps.
-	self interpret: startPC + blockSize - 1.
-	^ builder 
-		codeBlock: currentSequence 
-		arguments: (simulatedStack first: numArgs)
 ]
 
 { #category : #'closure support' }
@@ -335,7 +319,6 @@ FBDDecompiler >> interpret: endPC [
 			(loopsArray at: self pc)
 				ifNotNil: [ :ls | self decodeLoops: ls ]
 				ifNil: [ instructionStream interpretNextInstructionFor: self ] ].
-			
 ]
 
 { #category : #'control flow instructions' }
@@ -343,7 +326,7 @@ FBDDecompiler >> interpret: endPC nextLoops: loops [
 	loops 
 		ifNotEmpty: [ self decodeLoops: loops ]
 		ifEmpty: [ self pc > endPC ifFalse: [ instructionStream interpretNextInstructionFor: self ] ].
-	self interpret: endPC 
+	self interpret: endPC
 ]
 
 { #category : #'control flow instructions' }
@@ -458,14 +441,12 @@ FBDDecompiler >> popFromStack: numElements [
 FBDDecompiler >> popIntoLiteralVariable: association [
 	self storeIntoLiteralVariable: association.
 	self doPop.
-
 ]
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> popIntoReceiverVariable: offset [ 
 	self storeIntoReceiverVariable: offset.
 	self doPop.
-
 ]
 
 { #category : #'data flow instructions' }
@@ -483,7 +464,7 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 			simulatedStack at: offset + 1 put: simulatedStack removeLast ]
 		ifFalse: [ 
 			simulatedStack
-				addLast: (builder codeAssignment: simulatedStack removeLast to: (simulatedStack at: offset + 1)). self doPop ]	
+				addLast: (builder codeAssignment: simulatedStack removeLast to: (simulatedStack at: offset + 1)). self doPop ]
 ]
 
 { #category : #initialize }
@@ -496,7 +477,7 @@ FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushActiveContext [
-	simulatedStack addLast: builder codeThisContext 
+	simulatedStack addLast: builder codeThisContext
 ]
 
 { #category : #'closure support' }
@@ -510,20 +491,6 @@ FBDDecompiler >> pushCleanClosure: aCompiledBlock [
 	simulatedStack addLast: (self
 		extractFullBlock: aCompiledBlock numCopied: 0).
 
-	simulatedStack := savedSimStack.
-	currentSequence := savedSequence.
-
-]
-
-{ #category : #'data flow instructions' }
-FBDDecompiler >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
-	| savedSimStack savedSequence |
-	savedSimStack := simulatedStack.
-	savedSequence := currentSequence.
-	savedSimStack addLast: (self
-		extractBlockWith: (self popFromStack: numCopied)
-		numArgs: numArgs
-		blockSize: blockSize).
 	simulatedStack := savedSimStack.
 	currentSequence := savedSequence.
 ]
@@ -557,7 +524,6 @@ FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOn
 
 	simulatedStack := savedSimStack.
 	currentSequence := savedSequence.
-
 ]
 
 { #category : #'data flow instructions' }
@@ -577,13 +543,12 @@ FBDDecompiler >> pushNewArrayOfSize: numElements [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushReceiver [
-	simulatedStack addLast: builder codeReceiver 
+	simulatedStack addLast: builder codeReceiver
 ]
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushReceiverVariable: offset [ 
 	simulatedStack addLast: (builder codeInstanceVariable: offset + 1)
-
 ]
 
 { #category : #'data flow instructions' }
@@ -658,7 +623,6 @@ FBDDecompiler >> storeIntoLiteralVariable: association [
 { #category : #'data flow instructions' }
 FBDDecompiler >> storeIntoReceiverVariable: offset [ 
 	simulatedStack addLast: (builder codeAssignment: simulatedStack removeLast to: (builder codeInstanceVariable: offset + 1)).
-
 ]
 
 { #category : #'data flow instructions' }

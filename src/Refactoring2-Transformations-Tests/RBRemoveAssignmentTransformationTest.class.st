@@ -35,7 +35,7 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 							value: '1 asString'
 							inMethod: #methodBefore
 							inClass: #RBRemoveAssignmentTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -46,7 +46,7 @@ RBRemoveAssignmentTransformationTest >> testClassDoesNotExist [
 							value: '1 asString'
 							inMethod: #methodBefore
 							inClass: #RBAssignmentTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -57,7 +57,7 @@ RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 							value: '1 asString'
 							inMethod: #method
 							inClass: #RBRemoveAssignmentTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }

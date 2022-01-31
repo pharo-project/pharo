@@ -165,7 +165,7 @@ AbstractBinaryFileStream >> next: n into: aString startingAt: startIndex [
 	read := (self readInto: aString startingAt: startIndex count: n).
 	^read = n 
 		ifTrue: [ aString ]
-		ifFalse: [ aString copyFrom: 1 to: startIndex + read - 1 ]	
+		ifFalse: [ aString copyFrom: 1 to: startIndex + read - 1 ]
 ]
 
 { #category : #writing }
@@ -268,7 +268,6 @@ AbstractBinaryFileStream >> releaseSemaphores [
 	
 	semaphoreIndex := nil.	
 	semaphore := nil.
-
 ]
 
 { #category : #initialization }

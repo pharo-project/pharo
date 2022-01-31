@@ -59,25 +59,22 @@ StrikeFont class >> default [
 
 { #category : #accessing }
 StrikeFont class >> defaultFallbackFontKeys [
-	^ Array with: self defaultFontKey 
+	^ Array with: self defaultFontKey
 ]
 
 { #category : #accessing }
 StrikeFont class >> defaultFontKey [
-	^ self dejaVuKey 
-
+	^ self dejaVuKey
 ]
 
 { #category : #accessing }
 StrikeFont class >> defaultFontSize [
 	^ 9
-
 ]
 
 { #category : #accessing }
 StrikeFont class >> dejaVuKey [
 	^ 'Bitmap DejaVu Sans'
-
 ]
 
 { #category : #accessing }
@@ -390,7 +387,6 @@ StrikeFont class >> setupDefaultFallbackFont [
 					(e respondsTo: #fontArray)
 						ifTrue: [e fontArray 
 								do: [:f | f setupDefaultFallbackFont]]]].
-
 ]
 
 { #category : #'system startup' }
@@ -399,7 +395,6 @@ StrikeFont class >> shutDown [
 	"Deallocate synthetically derived copies of base fonts to save space"
 	self allSubInstancesDo: [ :sf | sf reset ].
 	StrikeFontSet allSubInstancesDo: [ :sf | sf reset ].
-
 ]
 
 { #category : #'character shapes' }
@@ -431,8 +426,6 @@ StrikeFont >> ascentKern [
 	"Return the kern delta for ascenders."
 	(emphasis noMask: 2) ifTrue: [^ 0].
 	^ (self ascent-5+4)//4 max: 0  "See makeItalicGlyphs"
-
-
 ]
 
 { #category : #accessing }
@@ -444,7 +437,6 @@ StrikeFont >> ascentOf: aCharacter [
 		].
 	].
 	^ self ascent.
-
 ]
 
 { #category : #accessing }
@@ -757,7 +749,6 @@ StrikeFont >> createCharacterToGlyphMap [
 
         maxAscii < 256 ifTrue: [^ (1 to: 256) collect: [:i | i - 1]].
         ^ nil.
-
 ]
 
 { #category : #copying }
@@ -800,8 +791,6 @@ StrikeFont >> descentKern [
 	"Return the kern delta for descenders."
 	(emphasis noMask: 2) ifTrue: [^ 0].
 	^ (self height-1-self ascent+4)//4 max: 0  "See makeItalicGlyphs"
-
-
 ]
 
 { #category : #accessing }
@@ -813,7 +802,6 @@ StrikeFont >> descentOf: aCharacter [
 		].
 	].
 	^ self descent.
-
 ]
 
 { #category : #'file in/out' }
@@ -846,7 +834,6 @@ StrikeFont >> displayLine: aString at: aPoint [
 		fillColor: nil
 		kernDelta: 0
 		on: (BitBlt toForm: Display).
-
 ]
 
 { #category : #displaying }
@@ -1160,7 +1147,6 @@ StrikeFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 		at: 4 put: (self ascentOf: aCharacter);
 		at: 5 put: self.
 	^ glyphInfoArray.
-
 ]
 
 { #category : #accessing }
@@ -1211,14 +1197,12 @@ StrikeFont >> heightOf: aCharacter [
 		].
 	].
 	^ self height.
-
 ]
 
 { #category : #displaying }
 StrikeFont >> installOn: aDisplayContext [
 
 	^aDisplayContext installStrikeFont: self.
-
 ]
 
 { #category : #displaying }
@@ -1250,7 +1234,6 @@ StrikeFont >> isSyntheticItalic [
 StrikeFont >> isSyntheticItalic: aBoolean [ 
 	aBoolean 
 		ifTrue: [type :=  5]
-		
 ]
 
 { #category : #accessing }

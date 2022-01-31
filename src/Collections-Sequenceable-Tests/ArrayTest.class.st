@@ -72,7 +72,7 @@ ArrayTest >> anIndex [
 
 { #category : #requirements }
 ArrayTest >> anotherElementNotIn [
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
@@ -84,7 +84,7 @@ ArrayTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 ArrayTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #helpers }
@@ -111,7 +111,7 @@ ArrayTest >> classToBeTested [
 { #category : #initialization }
 ArrayTest >> collection [ 
 
-	^ collectionWith4Elements 
+	^ collectionWith4Elements
 ]
 
 { #category : #'tests - creation' }
@@ -129,14 +129,14 @@ ArrayTest >> collectionInForIncluding [
 { #category : #requirements }
 ArrayTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -161,7 +161,7 @@ ArrayTest >> collectionOfFloat [
 
 { #category : #requirements }
 ArrayTest >> collectionWith1TimeSubcollection [
-	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst). 
+	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst).
 ]
 
 { #category : #requirements }
@@ -194,31 +194,31 @@ ArrayTest >> collectionWithEqualElements [
 ArrayTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ stringCollectionWithSameBeginingAnEnd 
+	^ stringCollectionWithSameBeginingAnEnd
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ stringCollectionWithSameBeginingAnEnd 
+	^ stringCollectionWithSameBeginingAnEnd
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithoutEqualElements [
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWithoutNil  
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -228,7 +228,7 @@ ArrayTest >> elementInCollectionOfFloat [
 
 { #category : #requirements }
 ArrayTest >> elementInForCopy [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
@@ -240,12 +240,12 @@ ArrayTest >> elementInForElementAccessing [
 { #category : #requirements }
 ArrayTest >> elementInForIncludesTest [
 
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementInForIndexAccess [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
@@ -256,41 +256,41 @@ ArrayTest >> elementInForIndexAccessing [
 
 { #category : #requirements }
 ArrayTest >> elementInForOccurrences [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementInForReplacement [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForCopy [
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForIndexAccessing [
 
-	^elementNotInForCopy 
+	^elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForOccurrences [
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #'tests - copying' }
@@ -301,7 +301,7 @@ ArrayTest >> elementToAdd [
 { #category : #requirements }
 ArrayTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
-^ duplicateElement 
+^ duplicateElement
 ]
 
 { #category : #requirements }
@@ -323,7 +323,7 @@ ArrayTest >> expectedSizeAfterReject [
 
 { #category : #requirements }
 ArrayTest >> firstCollection [
-	^example1 
+	^example1
 ]
 
 { #category : #requirements }
@@ -334,7 +334,7 @@ ArrayTest >> firstEven [
 
 { #category : #requirements }
 ArrayTest >> firstIndex [
-	^ firstIndex 
+	^ firstIndex
 ]
 
 { #category : #requirements }
@@ -357,7 +357,7 @@ ArrayTest >> indexInForCollectionWithoutDuplicates [
 ArrayTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 	
-	^ 2 
+	^ 2
 ]
 
 { #category : #requirements }
@@ -373,14 +373,14 @@ ArrayTest >> integerCollectionWithoutEqualElements [
 { #category : #requirements }
 ArrayTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ example1 
+	^ example1
 ]
 
 { #category : #requirements }
 ArrayTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ example1 
+	^ example1
 ]
 
 { #category : #requirements }
@@ -397,7 +397,7 @@ ArrayTest >> nonEmpty [
 { #category : #requirements }
 ArrayTest >> nonEmpty1Element [
 
-	^ nonEmpty1Element  
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -407,7 +407,7 @@ ArrayTest >> nonEmptyMoreThan1Element [
 
 { #category : #requirements }
 ArrayTest >> oldSubCollection [
-	^oldSubCollection 
+	^oldSubCollection
 ]
 
 { #category : #requirements }
@@ -417,7 +417,7 @@ ArrayTest >> replacementCollection [
 
 { #category : #requirements }
 ArrayTest >> replacementCollectionSameSize [
-	^replacementCollectionSameSize 
+	^replacementCollectionSameSize
 ]
 
 { #category : #initialization }
@@ -428,12 +428,12 @@ ArrayTest >> result [
 
 { #category : #requirements }
 ArrayTest >> secondCollection [
-	^example2 
+	^example2
 ]
 
 { #category : #requirements }
 ArrayTest >> secondIndex [
-	^ secondIndex 
+	^ secondIndex
 ]
 
 { #category : #parameters }
@@ -507,7 +507,6 @@ ArrayTest >> smallerIndex [
 { #category : #requirements }
 ArrayTest >> sortedInAscendingOrderCollection [
 	^sortedInAscendingOrderCollection .
-	
 ]
 
 { #category : #'tests - iterate' }
@@ -519,7 +518,7 @@ ArrayTest >> speciesClass [
 { #category : #requirements }
 ArrayTest >> subCollectionNotIn [
 
-	^subCollectionNotIn 
+	^subCollectionNotIn
 ]
 
 { #category : #'tests - fixture' }
@@ -639,7 +638,6 @@ ArrayTest >> testComplexIsSelfEvaluating [
 
 { #category : #'tests - copy' }
 ArrayTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - enumerating' }
@@ -792,7 +790,6 @@ ArrayTest >> testShuffleBy [
 	shuffleByResult := #(2 5 4 3 1) copy.
 	
 	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult).
-	
 ]
 
 { #category : #'tests - shuffling' }
@@ -802,7 +799,6 @@ ArrayTest >> testShuffleChangeOrder [
 	array := #( 1 2 3 4 5).
 	shuffled := array copy shuffle.
 	array do: [ :e | self assert: (shuffled includes: e) ]
-	
 ]
 
 { #category : #'tests - shuffling' }
@@ -811,8 +807,7 @@ ArrayTest >> testShuffleModifyTheReceiver [
 	| array shuffled |
 	array := #( 1 2 3 4 5) copy.
 	shuffled := array shuffle.
-	self assert: array == shuffled. 
-	
+	self assert: array == shuffled.
 ]
 
 { #category : #'tests - arithmetic' }

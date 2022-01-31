@@ -31,7 +31,4 @@ OSWindowBench >> benchEventProcessing [
 			(Delay forMilliseconds: 20) wait ].
 		sema signal
 	] forkAt: 60.
-
-	
-
 ]

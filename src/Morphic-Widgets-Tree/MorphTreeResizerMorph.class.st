@@ -33,7 +33,6 @@ MorphTreeResizerMorph >> adoptPaneColor: paneColor [
 { #category : #'private - testing' }
 MorphTreeResizerMorph >> canResizeColumn [
 	^self column resizable
-
 ]
 
 { #category : #'private - testing' }
@@ -51,7 +50,6 @@ MorphTreeResizerMorph >> container: aTreeMorph index: anInteger [
 MorphTreeResizerMorph >> delete [
 	super delete.
 	self release.
-	
 ]
 
 { #category : #'event handling' }
@@ -69,7 +67,6 @@ MorphTreeResizerMorph >> doubleClick: event [
 MorphTreeResizerMorph >> drawOn: aCanvas [
 	(owner notNil and: [owner containsPoint: self position])
 		ifTrue: [super drawOn: aCanvas]
-
 ]
 
 { #category : #'instance creation' }
@@ -164,7 +161,6 @@ MorphTreeResizerMorph >> release [
 	container := nil.
 	self releaseActionMap. "we are not sure if we need it"
 	super release.
-	
 ]
 
 { #category : #'instance creation' }

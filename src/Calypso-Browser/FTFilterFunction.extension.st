@@ -11,7 +11,6 @@ FTFilterFunction >> filterNowWith: patternString [
 	self field setText: pattern.
 	self filterWith: pattern.
 	self filter.
-	
 ]
 
 { #category : #'*Calypso-Browser' }

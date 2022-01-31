@@ -30,7 +30,7 @@ Class {
 { #category : #'instance creation' }
 ClyConstantMethodQuery class >> named: queryDescription with: methods [
 	^(self with: methods)
-		description: queryDescription 
+		description: queryDescription
 ]
 
 { #category : #'instance creation' }

@@ -323,7 +323,6 @@ RxParser >> lookAround [
 	lookahead = $!
 		ifTrue: [ lookaround beNegative ].
 	^ lookaround
-	
 ]
 
 { #category : #private }

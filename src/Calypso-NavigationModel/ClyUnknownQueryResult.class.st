@@ -26,7 +26,6 @@ ClyUnknownQueryResult >> adoptForBrowser [
 
 { #category : #private }
 ClyUnknownQueryResult >> beProtected [
-
 ]
 
 { #category : #initialization }

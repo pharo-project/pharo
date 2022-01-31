@@ -203,7 +203,7 @@ MailAddressTokenizer >> nextToken [
 MailAddressTokenizer >> peek [
 	cachedToken ifNil: [ cachedToken := self nextToken. ].
 	
-	^cachedToken	
+	^cachedToken
 ]
 
 { #category : #tokenizing }

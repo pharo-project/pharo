@@ -43,7 +43,6 @@ ReMissingSubclassResponsibilityRule >> check: aClass forCritiquesDo: aCritiqueBl
 				thenDo: [ :critic |
 					aCritiqueBlock cull: critic ].
 				^ self ] ].
-		
 ]
 
 { #category : #accessing }

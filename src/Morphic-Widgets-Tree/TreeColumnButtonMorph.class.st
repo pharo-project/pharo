@@ -18,7 +18,6 @@ TreeColumnButtonMorph >> acceptDroppingMorph: aMorph event: evt [
 	self noMorePotentialDropTarget.
 	self model container changed.
 	Cursor normal show.
-
 ]
 
 { #category : #accessing }
@@ -53,7 +52,6 @@ TreeColumnButtonMorph >> initialize [
 	self enableDragNDrop: true.
 	self fillStyle: (self theme morphTreeColumnFillStyleFor: self).
 	self borderStyle: (self theme morphTreeColumnBorderStyleFor: self)
-
 ]
 
 { #category : #testing }
@@ -95,7 +93,7 @@ TreeColumnButtonMorph >> mouseEnterDragging: evt [
 
 { #category : #'dropping/grabbing' }
 TreeColumnButtonMorph >> mouseLeaveDragging: evt [
-	self noMorePotentialDropTarget 
+	self noMorePotentialDropTarget
 ]
 
 { #category : #'dropping/grabbing' }

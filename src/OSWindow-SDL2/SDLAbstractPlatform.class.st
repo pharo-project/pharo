@@ -8,6 +8,7 @@ Class {
 	#name : #SDLAbstractPlatform,
 	#superclass : #Object,
 	#pools : [
+		'SDL2Constants',
 		'SDL2ConstantsHint'
 	],
 	#category : #'OSWindow-SDL2-Bindings'
@@ -16,7 +17,7 @@ Class {
 { #category : #operations }
 SDLAbstractPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #operations }

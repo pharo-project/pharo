@@ -35,6 +35,10 @@ In addition having a binary message makes () unneccessary.
 Class {
 	#name : #CDFluidClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
+	#instVars : [
+		'classNameNode',
+		'superclassNode'
+	],
 	#category : #'ClassParser-Parser'
 }
 
@@ -47,22 +51,37 @@ CDFluidClassDefinitionParser class >> fromASTNode: aNode [
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
-	"Pay attention that is is important to test first traits because we have the same message to create classes and traits, but traits are sent to Trait."
-	(self isTraitDefinition: aNode receiver)
-		ifTrue: [ self handleClassName: aNode receiver arguments first. ^ self ].
-	(self isTraitClassSideDefinition: aNode receiver)
-		ifTrue: [ self handleClassName: aNode receiver receiver. ^ self].
-	
-	(self isInstanceSideDefinition: aNode receiver)
-		ifTrue: [ 
-			self handleSuperclassNode: aNode receiver receiver.
-			self handleClassName: aNode receiver arguments first ]
-		ifFalse: [ self handleMetaclassName: aNode ].
+	superclassNode ifNotNil: [ self handleSuperclassNode: superclassNode ].
+	self handleClassName: classNameNode.
 ]
 
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
 	classDefinition layoutClass: aNode binding value
+]
+
+{ #category : #metaclass }
+CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [ 
+
+	| className classNode node |
+	node := aRBCascadeNode receiver arguments first. 
+	className := node receiver binding value class name.
+	classNode := self classNameNodeClass new
+		originalNode: node;
+		className: className.
+	classDefinition className: node astNode: classNode
+]
+
+{ #category : #metaclass }
+CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [ 
+
+	| className classNode node |
+	node := aNode arguments first receiver. 
+	className := node binding value class name.
+	classNode := self classNameNodeClass new
+		originalNode: node;
+		className: className.
+	classDefinition className: node astNode: classNode
 ]
 
 { #category : #'handling  nodes' }
@@ -100,16 +119,17 @@ CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [
 
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
-	| aSuperclassName superclassNode |
+	| aSuperclassName newSuperclassNode |
+
 	aSuperclassName := aSuperclassNode isLiteralNode
 		ifTrue: [ nil ]
 		ifFalse: [ aSuperclassNode binding value asString asSymbol ].
-	superclassNode := self classNameNodeClass new
+	newSuperclassNode := self classNameNodeClass new
 		originalNode: aSuperclassNode;
 		className: aSuperclassName.
 	classDefinition
 		superclassName: aSuperclassName
-		astNode: superclassNode
+		astNode: newSuperclassNode
 ]
 
 { #category : #'handling  nodes' }
@@ -118,34 +138,28 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 	classDefinition tag: (CDClassTagNode new name: aNode value)
 ]
 
-{ #category : #testing }
-CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
-	"Returns whether the definition is a class or instance side definition. Superclass < #myObject. Trait << are handled prior to this method."
-	
-	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #<< ]
-	
-]
-
-{ #category : #testing }
-CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
-	"Based on the message structure, returns whether the definition is a trait definition."
-
-	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #classTrait ]
-	
-]
-
-{ #category : #testing }
-CDFluidClassDefinitionParser >> isTraitDefinition: aRBMessageNode [
-	"Returns whether the definition is a trait definition, i.e., Trait << #Tbehavior."
-
-	^ aRBMessageNode isMessage and: [ aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]
-	
-]
-
 { #category : #'parsing-internal' }
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	
-	expressionTree extractClassDefinitionFor: self. 
+	| searcher |
+	searcher := RBParseTreeSearcher new.
+	searcher
+		matches: 'Trait << `#name' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`#name'.
+			self beTraitDefinition ];
+		matches: 'Trait << `name classTrait' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`name'.
+			self beClassSideTraitDefinition ];
+		matches: '`superclass << `#name' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`#name'.			
+			superclassNode := searcher variableNamed: '`superclass'.
+			self beClassDefinition ];
+		matches: '`superclass class << `name class' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`name'.			
+			self beMetaclassDefinition ].
+		
+	searcher executeTree: expressionTree.
+	
 	classDefinition originalNode: expressionTree.
 	expressionTree acceptVisitor: self.
 	^ classDefinition
@@ -166,9 +180,7 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		ifTrue: [ ^ self handleLayout: aNode ].	
 	aString = #tag: 
 		ifTrue: [  ^self handleTag: aNode ].
-	aString =	 #uses:
-		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
-	aString =	 #trait:
+	aString =	 #traits:
 		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
 	aString =	 #sharedPools:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
@@ -179,23 +191,12 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		signal
 ]
 
-{ #category : #internal }
-CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
-	"Set a class, trait, class side trait or metaclass definition as definition object."
-	
-	(self isTraitDefinition: expressionTree)
-		ifTrue: [ self beTraitDefinition. ^ self ].
-	(self isTraitClassSideDefinition: expressionTree)	
-		ifTrue: [ self beClassSideTraitDefinition. ^ self ].
-	super setAdequateClassDefinitionFrom: expressionTree
-]
-
 { #category : #'parsing-internal' }
 CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [ 
 	"See class comment. Here we handle the cascade version of the class definition."
 	" 
 	Object << #Point
-			uses: TraitX;
+			trait: TraitX;
 			slots: { #foo };
 			package: ''Kernel-BasicObjects'''
 	"

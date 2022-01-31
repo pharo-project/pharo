@@ -7,6 +7,5 @@ MouseButtonEvent >> fixStateForClickAndModifierIssue [
 	self yellowButtonChanged ifFalse: [ ^self ].
 	self anyModifierKeyPressed ifFalse: [ ^self ].
 	
-	whichButton := MouseEvent redButton 
-	
+	whichButton := MouseEvent redButton
 ]

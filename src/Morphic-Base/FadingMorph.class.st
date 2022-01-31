@@ -48,7 +48,7 @@ FadingMorph >> beUnResetable [
 FadingMorph >> defaultFadingFactor [
 	"show the morph for 2.5 seconds"
 	
-	^0.04 
+	^0.04
 ]
 
 { #category : #drawing }
@@ -65,7 +65,6 @@ FadingMorph >> handleMouseMove: anEvent [
 	self resetAlpha.
 
 	anEvent wasHandled: true.
-
 ]
 
 { #category : #initialization }
@@ -123,9 +122,6 @@ FadingMorph >> step [
 	alpha := alpha - fadingFactor.
 	
 	self changed.
-
-	
-	
 ]
 
 { #category : #stepping }

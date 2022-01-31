@@ -36,7 +36,7 @@ PluggableMenuItemSpec >> action: aMessageSend [
 { #category : #accessing }
 PluggableMenuItemSpec >> checked [
 	"Answer whether the receiver is checked"
-	^checked 
+	^checked
 ]
 
 { #category : #accessing }

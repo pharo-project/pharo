@@ -41,6 +41,12 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
+{ #category : #fileout }
+MetaclassForTraits >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedTraitClassDefinitionString
+]
+
 { #category : #testing }
 MetaclassForTraits >> isBaseTrait [
 	

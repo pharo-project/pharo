@@ -37,5 +37,5 @@ PharoTutorialHelpTutorialBuilder >> buildTutorialTopicFor: aTutorial [
 									contents:  aLesson lesson)
 	].
 
-	^ tutorialTopic 
+	^ tutorialTopic
 ]

@@ -162,8 +162,6 @@ AthensCairoSurface class >> destroyContextHandle: aHandle [
 { #category : #private }
 AthensCairoSurface class >> destroySurfaceHandle: handle [
 	^ self ffiCall: #( void cairo_surface_destroy ( ulong handle ) )
-
-
 ]
 
 { #category : #'surface plugin callbacks' }
@@ -180,7 +178,6 @@ AthensCairoSurface class >> extent: anExtent [
 { #category : #'instance creation' }
 AthensCairoSurface class >> extent: anExtent format: aFormat [
 	^ ( self primImage: aFormat width: anExtent x height: anExtent y + 1) initialize
-
 ]
 
 { #category : #'finalize resources' }
@@ -199,7 +196,6 @@ AthensCairoSurface class >> finalizeResourceData: data [
 	self unregisterSurfaceWithId: id.
 	self destroyContextHandle: contextHandle value. 
 	self destroySurfaceHandle: handle value
-
 ]
 
 { #category : #private }
@@ -209,10 +205,10 @@ AthensCairoSurface class >> findSurface: surfaceId [
 	
 	
 	(self primFindSurface: surfaceId handle: buf) ifTrue: [
-		^ buf nbUlongAt: 1
+		^ buf unsignedLongAt: 1
 		].
 	
-	^ nil. 
+	^ nil.
 ]
 
 { #category : #'instance creation' }
@@ -270,8 +266,7 @@ AthensCairoSurface class >> initializeForNewSession [
 
 { #category : #private }
 AthensCairoSurface class >> primCreateFromFile: aFileName [
-	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_from_png (char* aFileName)) 
-
+	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_from_png (char* aFileName))
 ]
 
 { #category : #private }
@@ -289,8 +284,6 @@ AthensCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
 	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create (int aFormat,
                                                          int aWidth,
                                                          int aHeight) )
-
-
 ]
 
 { #category : #private }
@@ -304,8 +297,6 @@ AthensCairoSurface class >> primImageFromData: data width: width height: height 
 		int width,
 		int height,
 		int stride) )
-
-
 ]
 
 { #category : #private }
@@ -317,6 +308,7 @@ AthensCairoSurface class >> primRegisterSurface: aCairoSurfaceHandle dispatch: s
 	otherwise."
 
 	<primitive: 'primitiveRegisterSurface' module: 'SurfacePlugin'>
+	^false
 ]
 
 { #category : #private }
@@ -370,7 +362,6 @@ AthensCairoSurface class >> width: aWidth height: aHeight [
 { #category : #converting }
 AthensCairoSurface >> asAthensPaintOn: aCanvas [
 	^ AthensCairoPatternSurfacePaint createForSurface: self.
- 
 ]
 
 { #category : #converting }
@@ -385,7 +376,7 @@ AthensCairoSurface >> asForm [
 
 { #category : #drawing }
 AthensCairoSurface >> attemptToRecurseDrawing [
-	^ self 
+	^ self
 ]
 
 { #category : #caching }
@@ -420,8 +411,6 @@ AthensCairoSurface >> clear: clearPaint [
 				drawShape: (0@0 extent: self extent).
 				
         ]].
-
-
 ]
 
 { #category : #paints }
@@ -433,8 +422,6 @@ AthensCairoSurface >> createFormPaint: aForm [
 	newSurface := self class fromForm: (aForm asFormOfDepth: 32).
 	
 	^ newSurface asAthensPaintOn: context
-
-
 ]
 
 { #category : #paints }
@@ -443,7 +430,6 @@ AthensCairoSurface >> createLinearGradient: aColorRamp start: aStartPoint stop: 
 		createLinearGradient: aColorRamp 
 		start: aStartPoint 
 		stop: aStopPoint
-	
 ]
 
 { #category : #paints }
@@ -453,7 +439,7 @@ AthensCairoSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
 
 { #category : #creation }
 AthensCairoSurface >> createPath: aPathCreatingBlock [
-	^ builder createPath:  aPathCreatingBlock 
+	^ builder createPath:  aPathCreatingBlock
 ]
 
 { #category : #paints }
@@ -511,7 +497,6 @@ AthensCairoSurface >> fillPath: aPath withSolidColor: aColor [
 		newPath;
 		loadPath: aPath;
 		fill
-	
 ]
 
 { #category : #'rendering dispatch' }
@@ -556,8 +541,6 @@ AthensCairoSurface >> getDataPtr [
 	
 	^ self ffiCall: #(
 		void* cairo_image_surface_get_data ( self ) )
-
-
 ]
 
 { #category : #'text support' }
@@ -589,7 +572,6 @@ AthensCairoSurface >> handle [
 AthensCairoSurface >> height [
 	
 	^self privateHeight - 1
-
 ]
 
 { #category : #initialization }
@@ -632,8 +614,6 @@ AthensCairoSurface >> newCanvas [
 	Private to receiver and its subclasses, override seldom"
 	
 	^ self primCreateCanvas surface: self
-
-
 ]
 
 { #category : #private }
@@ -647,16 +627,12 @@ AthensCairoSurface >> privSetDefaults [
 	currentCanvas pathTransform loadIdentity.
 	currentCanvas paintTransform loadIdentity.
 	currentCanvas paintMode over.
-	
-
 ]
 
 { #category : #private }
 AthensCairoSurface >> privateHeight [
 	^ self ffiCall: #(
 		int cairo_image_surface_get_height ( self ) )
-
-
 ]
 
 { #category : #initialization }
@@ -672,7 +648,6 @@ AthensCairoSurface >> showPage [
 { #category : #accessing }
 AthensCairoSurface >> status [
 	^ self ffiCall: #(int cairo_surface_status (self) )
-	
 ]
 
 { #category : #private }
@@ -684,20 +659,15 @@ AthensCairoSurface >> statusToString: aCairoStatusT [
 AthensCairoSurface >> stride [
 	^ self ffiCall: #(
 		int cairo_image_surface_get_stride ( self ) )
-
-
 ]
 
 { #category : #accessing }
 AthensCairoSurface >> width [
 	^ self ffiCall: #(
 		int cairo_image_surface_get_width ( self ) )
-
-
 ]
 
 { #category : #converting }
 AthensCairoSurface >> writeToPng: aFileName [
 	^ self ffiCall: #(void cairo_surface_write_to_png (self, String aFileName) )
-
 ]

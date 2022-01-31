@@ -57,7 +57,6 @@ Path class >> addElement: element to: result [
 { #category : #private }
 Path class >> addEmptyElementTo: result [
 	result isEmpty ifTrue: [result add: '']
-		
 ]
 
 { #category : #private }
@@ -65,7 +64,6 @@ Path class >> addParentElementTo: result [
 	(result isEmpty or: [ result last = '..' ])
 		ifTrue: [ result add: '..' ]
 		ifFalse: [ result removeLast ]
-		
 ]
 
 { #category : #private }
@@ -106,7 +104,10 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 	
 	pathClass :=  ((self isAbsolutePath: aString delimiter: aDelimiterCharacter) or: 
 							[self isAbsoluteWindowsPath: aString]) 
-		ifTrue: [ AbsolutePath ]
+		ifTrue: [ 
+			((aString size >= 2) and: [ aString second = aDelimiterCharacter ])
+				ifTrue: [ UNCNetworkPath ]
+				ifFalse: [AbsolutePath] ]
 		ifFalse:[ RelativePath ].
 	
 	^ pathClass withAll: (aDelimiterCharacter split: aString)
@@ -116,22 +117,25 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 Path class >> isAbsolutePath: aString delimiter: aCharacter [
 	"Answer a boolean indicating whether the supplied path is considered absolute"
 
-	^aString first = aCharacter
+	^ aString first = aCharacter
 ]
 
 { #category : #private }
 Path class >> isAbsoluteUnixPath: aString [
-	^aString first = $/ 
+	^aString first = $/
 ]
 
 { #category : #private }
 Path class >> isAbsoluteWindowsPath: aString [
-	aString ifEmpty: [ ^ false ].
-	(aString first = $\) ifTrue: [ ^ true ]. "e.g. \file"
-	^ ((aString size > 2) and: [ aString first isLetter ])
-		ifTrue: [ (aString second = $:) and: [aString third = $\] ] "e.g. C:\..."
-		ifFalse: [ false ]
 
+	aString ifEmpty: [ ^ false ].
+	(aString first = $\ and: [ 
+		 aString size = 1 or: [ aString second ~= $\ ] ]) ifTrue: [ ^ true ]. "e.g. \file"
+
+	^ (aString size > 2 and: [ aString first isLetter ])
+		  ifTrue: [ "e.g. C:\..." 
+		  aString second = $: and: [ aString third = $\ ] ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #'instance creation' }
@@ -247,7 +251,7 @@ Path >> asResolvedBy: anObject [
 
 { #category : #accessing }
 Path >> base [
-	^self basenameWithoutExtension 
+	^self basenameWithoutExtension
 ]
 
 { #category : #accessing }
@@ -325,7 +329,6 @@ Path >> copyFrom: aPath [
 	| size |
 	size := aPath size min: self size.
 	1 to: size do: [:i | self at: i put: (aPath at: i)].
-	
 ]
 
 { #category : #accessing }
@@ -387,7 +390,7 @@ Path >> hash [
 
 { #category : #testing }
 Path >> isAbsolute [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -407,13 +410,19 @@ Path >> isEmpty [
 ]
 
 { #category : #testing }
+Path >> isNetworkPath [
+
+	^ false
+]
+
+{ #category : #testing }
 Path >> isRelative [
 	^ self isAbsolute not
 ]
 
 { #category : #testing }
 Path >> isRoot [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -482,7 +491,6 @@ Path >> printPathOn: aStream [
 	"(String streamContents: [ :str| ((FileSystem workingDirectory / 'book-result' / 'W01-Welcome') relativeToReference: FileSystem workingDirectory) printPathOn: str]) >>> 'book-result/W01-Welcome'"
 
 	self printPathOn: aStream delimiter: self delimiter.
-
 ]
 
 { #category : #printing }
@@ -573,7 +581,7 @@ Path >> segments [
 		segments add: part
 	].
 	
-	^ segments asArray 
+	^ segments asArray
 ]
 
 { #category : #navigating }

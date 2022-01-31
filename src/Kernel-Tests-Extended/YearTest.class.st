@@ -23,7 +23,6 @@ YearTest >> testFirstThursday [
 			self assert: firstThursday dayOfWeek equals: 5.
 			self assert: firstThursday year equals: y.
 			self assert: (firstThursday - 1 week) year equals: y - 1 ]
-
 ]
 
 { #category : #tests }
@@ -84,5 +83,4 @@ YearTest >> testdaysInMonth [
 	self assert: ((Year year: 2018) daysInMonth:10) equals: 31. "October"
 	self assert: ((Year year: 2018) daysInMonth:11) equals: 30. "November"
 	self assert: ((Year year: 2018) daysInMonth:12) equals: 31. "December"
-
 ]

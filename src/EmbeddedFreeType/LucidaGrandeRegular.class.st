@@ -18,8 +18,6 @@ LucidaGrandeRegular class >> canBeInstalled [
 LucidaGrandeRegular class >> fontContents [
 	^ self fontReference 
 		binaryReadStreamDo: [ :stream | stream contents ]
-	
-	
 ]
 
 { #category : #accessing }
@@ -32,7 +30,6 @@ LucidaGrandeRegular class >> fontDirectory [
 { #category : #accessing }
 LucidaGrandeRegular class >> fontReference [ 
 	^ self fontDirectory / self originalFileName
-	
 ]
 
 { #category : #'class initialization' }

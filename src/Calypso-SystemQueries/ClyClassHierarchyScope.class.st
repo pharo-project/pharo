@@ -35,7 +35,7 @@ Class {
 
 { #category : #accessing }
 ClyClassHierarchyScope class >> defaultName [
-	^self hierarchyScopeName 
+	^self hierarchyScopeName
 ]
 
 { #category : #'instance creation' }
@@ -101,7 +101,7 @@ ClyClassHierarchyScope >> allClassesRelatedTo: aClass do: aBlock [
 
 { #category : #converting }
 ClyClassHierarchyScope >> asLocalClassScope [
-	^self asScope: localScopeClass 
+	^self asScope: localScopeClass
 ]
 
 { #category : #testing }
@@ -123,7 +123,7 @@ ClyClassHierarchyScope >> classesDo: aBlock [
 
 { #category : #queries }
 ClyClassHierarchyScope >> classesRelatedTo: aClass do: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }

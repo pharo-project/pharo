@@ -16,5 +16,4 @@ Date >> epiceaBrowsersAsString [
 		^ numberOfDaysAgo asString, ' days ago' ].
 
 	^ self asDate asString
-
 ]
