@@ -211,8 +211,8 @@ BaselineOfIDE >> baseline: spec [
 { #category : #baseline }
 BaselineOfIDE >> beautifulComments: spec [ 
 
-	spec baseline: 'Microdown' with: [ 
-		spec repository: (self class environment at: #BaselineOfPharo) microdownRepository ]
+	spec baseline: 'BeautifulComments' with: [ 
+		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
 { #category : #actions }
@@ -255,7 +255,7 @@ BaselineOfIDE >> microdown: spec [
 	spec baseline: 'Microdown' with: [ 
 		spec 
 			repository: (self class environment at: #BaselineOfPharo) microdownRepository;
-			loads: #('RichText') ]
+			loads: #('RichText' 'Tests') ]
 ]
 
 { #category : #baseline }
