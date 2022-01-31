@@ -212,7 +212,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> beautifulComments: spec [ 
 
 	spec baseline: 'Microdown' with: [ 
-		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
+		spec repository: (self class environment at: #BaselineOfPharo) microdownRepository ]
 ]
 
 { #category : #actions }
