@@ -13,13 +13,6 @@ ClyBreakOnVarAccessCommand class >> canBeExecutedInContext: aSourceCodeContext [
 		and: [ aSourceCodeContext selectedSourceNode isArgumentVariable not ]
 ]
 
-{ #category : #testing }
-ClyBreakOnVarAccessCommand class >> methodEditorLeftBarClickActivation [
-	<classAnnotation>
-
-	^CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
-]
-
 { #category : #accessing }
 ClyBreakOnVarAccessCommand >> defaultMenuItemName [
 	sourceNode isVariable ifFalse:[^'(unvalid node)'].
