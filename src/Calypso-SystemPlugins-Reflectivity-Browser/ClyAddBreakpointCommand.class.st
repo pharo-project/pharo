@@ -15,8 +15,7 @@ Class {
 ClyAddBreakpointCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
-		  aBrowserContext lastSelectedSourceNode isVariable not and: [ 
-			  aBrowserContext isSelectedItemHasBreakpoint not ] ]
+		  aBrowserContext isSelectedItemHasBreakpoint not ]
 ]
 
 { #category : #activation }
