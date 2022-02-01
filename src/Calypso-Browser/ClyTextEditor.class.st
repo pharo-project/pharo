@@ -18,6 +18,8 @@ ClyTextEditor class >> contextMenuOn: aBuilder [
 		ifFalse: [ ^self ].
 		
 	context := aBuilder model browserTool createCommandContext.
+	context selectedTextInterval ifEmpty: [ 
+		context showSourceNode].
 	CmdContextMenuActivation registerContextMenuOn: aBuilder inContext: context
 ]
 
