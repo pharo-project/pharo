@@ -86,19 +86,6 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingByteArrayAsStringArgument [
 ]
 
 { #category : #tests }
-TFUFFIDerivedTypeMarshallingTest >> testMarshallingByteArrayWillPinTheObject [
-	| aByteArray |
-	
-	aByteArray := ByteArray new: 10.
-	
-	self fillByteArray: aByteArray size: aByteArray size.
-	
-	self assert: aByteArray equals: #[1 2 3 4 5 6 7 8 9 10].
-	
-	self assert: aByteArray isPinnedInMemory
-]
-
-{ #category : #tests }
 TFUFFIDerivedTypeMarshallingTest >> testMarshallingFalseArgument [
 
 	self assert: (self booleanToInt: false) equals: 0

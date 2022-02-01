@@ -90,6 +90,18 @@ TFStructType >> emitMarshallToPrimitive: anIRBuilder [
 	anIRBuilder send: #getHandle
 ]
 
+{ #category : #marshalling }
+TFStructType >> emitRestorePinnedStateIn: builder of: argument context: sender index: index callout: anObject [
+
+	"Nothing"
+]
+
+{ #category : #marshalling }
+TFStructType >> emitSavePinnedStateIn: builder index: index [
+
+	"Nothing"
+]
+
 { #category : #primitives }
 TFStructType >> free [
 	<primitive: 'primitiveFreeStruct'>
