@@ -123,9 +123,7 @@ Class {
 		'navigationStarted',
 		'plugins',
 		'navigationEnvironment',
-		'systemScope',
-		'toolbars',
-		'toolbarPanels'
+		'systemScope'
 	],
 	#category : #'Calypso-Browser-UI'
 }
