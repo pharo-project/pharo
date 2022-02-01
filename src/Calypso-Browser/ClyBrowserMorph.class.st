@@ -123,7 +123,9 @@ Class {
 		'navigationStarted',
 		'plugins',
 		'navigationEnvironment',
-		'systemScope'
+		'systemScope',
+		'toolbars',
+		'toolbarPanels'
 	],
 	#category : #'Calypso-Browser-UI'
 }
@@ -500,7 +502,7 @@ ClyBrowserMorph >> open [
 	window := self openInWindow.
 	window model: self.
 	self updateWindowTitle.
-	window minimumExtent: 675@500.0 
+	window minimumExtent: 860@500.0 
 ]
 
 { #category : #'opening/closing' }
