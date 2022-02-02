@@ -64,7 +64,7 @@ TabExample >> freshListTab [
 		retrievingBlock: [ 1 second asDelay wait.
 			SpListPresenter new
 				items: (1 to: 50) asOrderedCollection;
-				buildWithSpec ]
+				build ]
 		actions:
 		{(TabAction
 				action: [ self halt ]
@@ -112,7 +112,7 @@ TabExample >> storedListTab [
 	^ TabMorph
 		label: 'Stored List Model'
 		icon: (self iconNamed: #smallHelpIcon)
-		retrievingBlock: [ listModel buildWithSpec ]
+		retrievingBlock: [ listModel build ]
 ]
 
 { #category : #private }
