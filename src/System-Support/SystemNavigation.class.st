@@ -240,18 +240,18 @@ SystemNavigation >> allUnimplementedCalls [
 	"Answer an Array of each message that is sent by an expression in a  
 	method but is not implemented by any object in the system."
 
-	| all |
+	| all badMethods |
 	all := self allImplementedMessages.
-	^ Array streamContents: [ :aStream | 
-		  self allBehaviorsDo: [ :cl | 
-			  cl selectorsAndMethodsDo: [ :sel :meth | 
-				  | ignored |
-				  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
-					             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-					             ifNil: [ #(  ) ].
-				  meth messages do: [ :m | 
-					  ((all includes: m) not and: [ (ignored includes: m) not ]) 
-						  ifTrue: [ aStream nextPut: meth ] ] ] ] ]
+	badMethods := Set new.
+	self allMethods do: [ :meth | 
+		| ignored |
+		ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
+			           ifNotNil: [ :pragma | pragma argumentAt: 1 ]
+			           ifNil: [ #(  ) ].
+		meth messages do: [ :m | 
+			((all includes: m) not and: [ (ignored includes: m) not ]) ifTrue: [ 
+				badMethods add: meth ] ] ].
+	^ badMethods
 ]
 
 { #category : #query }
