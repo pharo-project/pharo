@@ -733,12 +733,6 @@ Class >> isUsed [
 		ifTrue: [ true ]
 ]
 
-{ #category : #private }
-Class >> isValidTraitName: aSymbol [
-
-	^ aSymbol ifNil: [ false ] ifNotNil: [ :sym | sym isValidGlobalName ]
-]
-
 { #category : #accessing }
 Class >> name [
 	"Answer the name of the receiver."
