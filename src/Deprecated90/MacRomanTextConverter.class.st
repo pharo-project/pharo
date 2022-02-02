@@ -30,13 +30,6 @@ MacRomanTextConverter class >> byteToUnicodeSpec [
 	16r00AF 16r02D8 16r02D9 16r02DA 16r00B8 16r02DD 16r02DB 16r02C7 )
 ]
 
-{ #category : #accessing }
-MacRomanTextConverter class >> encodingNames [ 
-
-	^ #('mac-roman' ) copy
-
-]
-
 { #category : #initialization }
 MacRomanTextConverter class >> initialize [
 	self initializeTables

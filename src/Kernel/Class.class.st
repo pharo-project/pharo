@@ -698,13 +698,6 @@ Class >> instanceSide [
 ]
 
 { #category : #testing }
-Class >> isAbstract [
-	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
-
-	^ super isAbstract or: [ self classSide isAbstract ]
-]
-
-{ #category : #testing }
 Class >> isAnonymous [
 	^self getName isNil
 ]
