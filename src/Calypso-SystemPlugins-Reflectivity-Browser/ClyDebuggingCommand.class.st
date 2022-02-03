@@ -1,11 +1,25 @@
 "
-I am a base class for commands which add/remove metalinks into given method or source node
+I am a base class for commands which add/remove watchpoints, metalinks, breakpoints, and counters into given method or source node
 "
 Class {
 	#name : #ClyDebuggingCommand,
 	#superclass : #SycSourceCodeCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Commands'
 }
+
+{ #category : #testing }
+ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
+
+	| node |
+	^ self isAbstract not and: [ 
+		  node := aBrowserContext lastSelectedSourceNode.
+
+		  node isCommentNode not and: [ 
+			  node isPragma not and: [ 
+				  node isSequence not and: [ 
+					  node isLiteralNode not and: [ 
+						  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ]
+]
 
 { #category : #activation }
 ClyDebuggingCommand class >> contextMenuOrder [

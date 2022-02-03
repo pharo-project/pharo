@@ -61,7 +61,6 @@ FLPointerObjectCluster >> referencesOf: anObject do: aBlock [
 FLPointerObjectCluster >> serializeReferencesOf: anObject with: anEncoder [
 	
 	variablesMapping serializeReferencesOf: anObject with: anEncoder
-
 ]
 
 { #category : #'serialize/materialize' }

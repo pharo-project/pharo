@@ -211,7 +211,7 @@ OCUndeclaredVariableWarning >> possibleVariablesFor: proposedVariable [
 	
 	results := proposedVariable correctAgainst: node methodOrBlockNode scope allTempNames 
 								continuedFrom: nil.
-	proposedVariable first canBeGlobalVarInitial ifTrue:
+	proposedVariable isValidGlobalName ifTrue:
 		[ results := class possibleVariablesFor: proposedVariable
 						continuedFrom: results ].
 	^ proposedVariable correctAgainst: nil continuedFrom: results

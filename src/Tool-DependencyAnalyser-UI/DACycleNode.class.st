@@ -8,28 +8,22 @@ Class {
 }
 
 { #category : #'building-menu' }
-DACycleNode >> addMenuEntriesOn: aMenuGroup [
+DACycleNode >> addMenuEntriesOn: aMenu [
 	| graphvizGenerator |
 
-	aMenuGroup 
-		addMenuItem:
-			(MenuItemPresenter new
+	aMenu defaultGroup
+		addMenuItem: (SpMenuItemPresenter new
 						name: 'Generate GraphViz file';
-						action: [ self ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
+						action: [ treeModelParent ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
 									graphvizGenerator := DAPackageCycleGenerator 
-										newWith: self cycle 
-										named: 'CycleGraph' , self cycle size asString , 'nodes'.
-									self saveGraphAndOpenWith: graphvizGenerator ])
+										newWith: cycle 
+										named: 'CycleGraph' , cycle size asString , 'nodes'.
+									treeModelParent saveGraphAndOpenWith: graphvizGenerator ])
 ]
 
 { #category : #accessing }
 DACycleNode >> childNodeClassFor: anItem [
 	^ DAPackageUnderAnalysisNode
-]
-
-{ #category : #accessing }
-DACycleNode >> children [
-	^ self content packages
 ]
 
 { #category : #accessing }

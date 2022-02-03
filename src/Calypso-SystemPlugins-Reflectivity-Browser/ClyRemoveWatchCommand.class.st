@@ -7,7 +7,7 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyRemoveWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^aBrowserContext isSelectedItemHasWatch
@@ -16,6 +16,14 @@ ClyRemoveWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 { #category : #activation }
 ClyRemoveWatchCommand class >> contextMenuOrder [
 	^3
+]
+
+{ #category : #activation }
+ClyRemoveWatchCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^SycAdvancedDebuggingMenuActivation 
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
 { #category : #execution }

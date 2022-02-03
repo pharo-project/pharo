@@ -8,8 +8,6 @@ Array >> fuelAccept: aGeneralMapper [
 	^ self class isWeak
 		ifTrue: [ aGeneralMapper visitWeakObject: self ]
 		ifFalse: [ aGeneralMapper visitVariableObject: self ]
-	
-	
 ]
 
 { #category : #'*Fuel-Core' }

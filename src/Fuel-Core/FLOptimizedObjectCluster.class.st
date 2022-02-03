@@ -10,7 +10,7 @@ Class {
 { #category : #analyzing }
 FLOptimizedObjectCluster class >> clusterBucketIn: aClusterization [
 
-	^aClusterization baselevelBucket 
+	^aClusterization baselevelBucket
 ]
 
 { #category : #'serialize/materialize' }
@@ -29,7 +29,6 @@ FLOptimizedObjectCluster >> materializeReferencesStepWith: aDecoder [
 { #category : #'serialize/materialize' }
 FLOptimizedObjectCluster >> serializeInstancesStepWith: anEncoder [
 	"Do nothing. I know my objects have nothing to serialize in this step."
-
 ]
 
 { #category : #'serialize/materialize' }

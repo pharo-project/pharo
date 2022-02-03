@@ -15,13 +15,13 @@ Class {
 	#category : #'Ring-Definitions-Containers-Base'
 }
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGAbstractContainer >> addElement: anObject [
 
 	anObject addInContainer: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGAbstractContainer >> addElement: anObject in: aCollection [
 
 	aCollection isDictionary
@@ -109,13 +109,13 @@ RGAbstractContainer >> initialize [
 	elements:= IdentityDictionary new.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGAbstractContainer >> removeElement: anObject [
 
 	anObject removeFromContainer: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGAbstractContainer >> removeElement: anObject from: aCollection [
 
 	aCollection isDictionary

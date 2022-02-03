@@ -11,7 +11,7 @@ Class {
 FLCluster class >> clusterBucketIn: aClusterization [
 	"Answer in which clusters bucket place this cluster. This defines the sort order in which the clusters will be ordered. See FLAnalyzer >> clusteredObjects for more information."
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
@@ -37,13 +37,11 @@ FLCluster class >> newMaterializing [
 
 { #category : #'serialize/materialize' }
 FLCluster >> afterMaterializationStepWith: aDecoder [
-
 ]
 
 { #category : #'serialize/materialize' }
 FLCluster >> clusterMaterializeStepWith: aMaterialization [
 	"Materialize cluster stuff"
-
 ]
 
 { #category : #analyzing }
@@ -75,18 +73,14 @@ FLCluster >> initializeMaterializing [
 
 { #category : #'serialize/materialize' }
 FLCluster >> materializeInstancesStepWith: aDecoder [
-
 ]
 
 { #category : #'serialize/materialize' }
 FLCluster >> materializePostInstancesStepWith: aDecoder [
-
-
 ]
 
 { #category : #'serialize/materialize' }
 FLCluster >> materializeReferencesStepWith: aDecoder [
-
 ]
 
 { #category : #accessing }
@@ -108,17 +102,14 @@ FLCluster >> registerIndexesOn: anEncoder [
 
 { #category : #'serialize/materialize' }
 FLCluster >> serializeInstancesStepWith: anEncoder [
-
 ]
 
 { #category : #'serialize/materialize' }
 FLCluster >> serializePostInstancesStepWith: anEncoder [
-
 ]
 
 { #category : #'serialize/materialize' }
 FLCluster >> serializeReferencesStepWith: anEncoder [
-
 ]
 
 { #category : #analyzing }

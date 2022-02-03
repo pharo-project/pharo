@@ -53,7 +53,6 @@ FLAnalyzer >> considerGlobal: aSymbol [
 FLAnalyzer >> firstInMapperChain [
 
 	^ self mappers first
-
 ]
 
 { #category : #hooks }
@@ -77,7 +76,7 @@ FLAnalyzer >> globalEnvironment [
 { #category : #accessing }
 FLAnalyzer >> globalEnvironment: aDictionary [ 
 
-	globalEnvironment := aDictionary 
+	globalEnvironment := aDictionary
 ]
 
 { #category : #accessing }
@@ -104,7 +103,6 @@ FLAnalyzer >> initialize [
 	internalMethods := IdentitySet new. 
 	globalEnvironment := self class environment.
 	globalSymbols := self class defaultGlobalSymbols asIdentitySet.
-
 ]
 
 { #category : #analyzing }
@@ -139,7 +137,6 @@ FLAnalyzer >> pluggableSubstitutionMappers [
 FLAnalyzer >> privateFirstInMapperChain [
 
 	^ self privateMappers first
-
 ]
 
 { #category : #protected }

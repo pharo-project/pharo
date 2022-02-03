@@ -23,5 +23,4 @@ FLByteArrayStreamStrategy >> writeStreamDo: aValuable [
 	
 	inMemoryStream := ByteArray new writeStream.
 	^aValuable value: inMemoryStream binary
-
 ]

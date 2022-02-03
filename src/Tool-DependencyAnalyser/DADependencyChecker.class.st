@@ -114,13 +114,13 @@ DADependencyChecker >> shortestPathToPackageIntroducingDependency: dependencyPac
 	between #Kernel and #'System-Settings-Core'."
 	| dijkstra |
 	report ifNil: [ ^ self ].
-	dijkstra := MalDijkstra new.
+	dijkstra := AIDijkstra new.
 	dijkstra nodes: report dependencies keys.
 	report dependenciesDo: [ :packageName :dependencies |
 		dependencies do: [ :dependency | 
 			dijkstra edges: { packageName } from: [ :ignored | packageName ] to: [ :ignored | dependency ] ] ].
 	dijkstra runFrom: aPackageName to: dependencyPackageName.
-	^ dijkstra backtrack
+	^ dijkstra reconstructPath
 ]
 
 { #category : #'computing - dependencies' }

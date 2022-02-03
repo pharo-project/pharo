@@ -6,7 +6,7 @@ Class {
 
 { #category : #utilities }
 RBAddPragmaTransformationTest >> methodAfter [
-	<gtInspectorPresentationOrder: 56>
+	<pragmaForTesting: 56>
 
 	| variable |
 	variable := 'String'.
@@ -23,7 +23,7 @@ RBAddPragmaTransformationTest >> methodBefore [
 RBAddPragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
-							pragma: '<gtInspectorPresentationOrder: 56>'
+							pragma: '<pragmaForTesting: 56>'
 							inMethod: #methodBefore
 							inClass: #RBPragmaTransformationTest)
 							asRefactoring
@@ -33,7 +33,7 @@ RBAddPragmaTransformationTest >> testClassDoesNotExist [
 RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
-							pragma: '<gtInspectorPresentationOrder: 56>'
+							pragma: '<pragmaForTesting: 56>'
 							inMethod: #method
 							inClass: #RBAddPragmaTransformationTest)
 							asRefactoring
@@ -43,7 +43,7 @@ RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 RBAddPragmaTransformationTest >> testPragmaAlreadyExists [
 
 	self shouldFail: (RBAddPragmaTransformation
-							pragma: '<gtInspectorPresentationOrder: 56>'
+							pragma: '<pragmaForTesting: 56>'
 							inMethod: #methodAfter
 							inClass: #RBAddPragmaTransformationTest)
 							asRefactoring
@@ -54,7 +54,7 @@ RBAddPragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddPragmaTransformation
-						pragma: '<gtInspectorPresentationOrder: 56>'
+						pragma: '<pragmaForTesting: 56>'
 						inMethod: #methodBefore
 						inClass: #RBAddPragmaTransformationTest)
 						asRefactoring transform.
@@ -71,7 +71,7 @@ RBAddPragmaTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddPragmaTransformation new
-		pragma: '<gtInspectorPresentationOrder: 56>'
+		pragma: '<pragmaForTesting: 56>'
 		inMethod: #methodBefore
 		inClass: self class name)
 		transform.

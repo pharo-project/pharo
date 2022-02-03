@@ -11,7 +11,6 @@ Class {
 FLMaterializationError class >> signal: signalerText [
 
 	^ super signal: 'Materialization error. ', signalerText
-	
 ]
 
 { #category : #testing }

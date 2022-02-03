@@ -4,5 +4,4 @@ Extension { #name : #Metaclass }
 Metaclass >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitMetaclass: self
-
 ]

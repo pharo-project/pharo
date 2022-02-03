@@ -109,30 +109,6 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	ast := wrapperMethod.
 ]
 
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorASTIn: composite [
-	<gtInspectorPresentationOrder: 35> 
-	self compiledMethod gtInspectorASTIn: composite
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorIrIn: composite [
-	<gtInspectorPresentationOrder: 35> 
-	self compiledMethod gtInspectorIrIn: composite
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorPragmasIn: composite [
-	<gtInspectorPresentationOrder: 30> 
-	self compiledMethod gtInspectorPragmasIn: composite
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorSourceIn: composite [
-	<gtInspectorPresentationOrder: 30> 
-	self compiledMethod gtInspectorSourceIn: composite
-]
-
 { #category : #testing }
 ReflectiveMethod >> hasMetaLinks [
 	^self linkCount > 0.

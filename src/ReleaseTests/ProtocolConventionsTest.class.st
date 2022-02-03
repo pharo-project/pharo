@@ -76,6 +76,12 @@ ProtocolConventionsTest >> testProperAccessingProtocolIsUsed [
 ]
 
 { #category : #tests }
+ProtocolConventionsTest >> testProperAddingRemovingProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAddingRemovingRule notMoreViolationsThan: 5
+]
+
+{ #category : #tests }
 ProtocolConventionsTest >> testProperConvertingProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForConvertingRule notMoreViolationsThan: 29

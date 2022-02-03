@@ -1,5 +1,5 @@
 "
-I am a command to open the debugging menu after a right click on the source code.
+I am a command to open the breakpoint menu after a right click on the source code.
 I show in the menu all commands annotated by SycDebuggingMenuActivation
 "
 Class {
@@ -15,10 +15,11 @@ SycOpenDebuggingMenuCommand >> activationStrategy [
 
 { #category : #accessing }
 SycOpenDebuggingMenuCommand >> defaultMenuIconName [
-	^#smallDebugIcon 
+	^ #halt 
 ]
 
 { #category : #accessing }
 SycOpenDebuggingMenuCommand >> defaultMenuItemName [
-	^'Debugging'
+
+	^ 'Breakpoints'
 ]

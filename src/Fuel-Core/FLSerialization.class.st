@@ -30,7 +30,6 @@ FLSerialization >> analysisStep [
 	anAnalysis := analyzer analysisFor: root.
 	clusters := anAnalysis clusterization clusters.
 	encoder objectCount: anAnalysis clusterization objectCount
-
 ]
 
 { #category : #private }
@@ -40,7 +39,6 @@ FLSerialization >> clusterInstancesStepOf: aCluster [
 	aCluster clusterSerializeStepWith: self.
 	aCluster serializeInstancesStepWith: encoder.
 	aCluster serializePostInstancesStepWith: encoder.
-
 ]
 
 { #category : #accessing }
