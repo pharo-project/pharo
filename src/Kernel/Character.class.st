@@ -799,6 +799,11 @@ Character >> isVowel [
 	^'AEIOU' includes: self asUppercase
 ]
 
+{ #category : #testing }
+Character >> leadingChar [
+	^ (self asInteger bitAnd: 1069547520) bitShift: -22
+]
+
 { #category : #converting }
 Character >> lowercase [
 	^ self asLowercase

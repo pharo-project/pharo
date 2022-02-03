@@ -1,11 +1,6 @@
 Extension { #name : #Character }
 
 { #category : #'*Deprecated90' }
-Character >> leadingChar [
-	^ (self asInteger bitAnd: 1069547520) bitShift: -22
-]
-
-{ #category : #'*Deprecated90' }
 Character class >> leadingChar: leadChar code: code [
 
 	code >= 16r400000 ifTrue: [
