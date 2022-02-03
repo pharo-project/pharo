@@ -112,6 +112,7 @@ RBPatternVariableNode >> match: aNode inContext: aDictionary [
 
 { #category : #matching }
 RBPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [
+
 	^aNode isLiteralNode
 		and: [ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode]
 ]

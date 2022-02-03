@@ -92,7 +92,7 @@ BaselineOfMorphic >> baseline: spec [
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
 		
-		spec package: 'NewValueHolder-Core'.
+		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
 		

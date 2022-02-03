@@ -42,9 +42,7 @@ BaselineOfUI >> baseline: spec [
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
-		"old spec, to be removed"
-		spec baseline: 'Spec' with: [ spec repository: repository ].
-		"new spec (base), using external configuration"
+		"Spec 2 (base), using external configuration"
 		self specBase: spec.		
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].

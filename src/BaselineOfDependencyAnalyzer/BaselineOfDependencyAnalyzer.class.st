@@ -10,17 +10,25 @@ BaselineOfDependencyAnalyzer >> baseline: spec [
 	
 	spec for: #'common' do: [
 			
+		self graphAlgorithms: spec.
+		
 		spec 
-			package: 'Moose-Algos-Graph';
-			package: 'Tool-DependencyAnalyser';
+			package: 'Tool-DependencyAnalyser'
+				 with: [ spec requires: #('AIGraphAlgorithms') ];
 			package: 'Tool-DependencyAnalyser-UI';
-			package: 'Moose-Algos-Graph-Tests';
 			package: 'Tool-DependencyAnalyser-Tests';
 			package: 'Tool-DependencyAnalyser-Tests-Data'.
+			
 		spec 
-			group: 'Core' with: #('Moose-Algos-Graph' 	'Tool-DependencyAnalyser'
-				'Tool-DependencyAnalyser-UI');
-			group: 'Tests' with: #('Moose-Algos-Graph-Tests' 	'Tool-DependencyAnalyser-Tests'
-				'Tool-DependencyAnalyser-Tests-Data');
+			group: 'Core' with: #('Tool-DependencyAnalyser' 'Tool-DependencyAnalyser-UI');
+			group: 'Tests' with: #('Tool-DependencyAnalyser-Tests' 'Tool-DependencyAnalyser-Tests-Data');
 			group: 'default' with: #('Core' 'Tests') ]
+]
+
+{ #category : #baselines }
+BaselineOfDependencyAnalyzer >> graphAlgorithms: spec [ 
+
+	spec baseline: 'AIGraphAlgorithms' with: [
+		spec repository: 'github://pharo-ai/graph-algorithms:v1.0.0/src' ].
+
 ]

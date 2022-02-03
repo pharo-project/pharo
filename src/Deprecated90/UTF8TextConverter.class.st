@@ -7,22 +7,6 @@ Class {
 	#category : #Deprecated90
 }
 
-{ #category : #utilities }
-UTF8TextConverter class >> encodingNames [
-
-	^ #('utf-8' 'utf8') copy.
-
-]
-
-{ #category : #accessing }
-UTF8TextConverter class >> writeBOMOn: aStream [
-	"Write Byte Order Mark"
-	aStream nextPut: 16rEF.
-	aStream nextPut: 16rBB.
-	aStream nextPut: 16rBF.
-
-]
-
 { #category : #converting }
 UTF8TextConverter >> errorMalformedInput [
 	^UTF8InvalidText new signal: 'Invalid utf8 input detected'

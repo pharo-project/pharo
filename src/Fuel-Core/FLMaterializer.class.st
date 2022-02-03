@@ -34,7 +34,6 @@ FLMaterializer class >> materializationFromFileNamed: aFilename [
 		fileNamed: aFilename 
 		readStreamDo: [ :aFileStream | 
 			self newDefault materializeFrom: aFileStream ]
-
 ]
 
 { #category : #'materializing-shortcuts' }
@@ -44,7 +43,6 @@ FLMaterializer class >> materializationHeaderFromFileNamed: aFilename [
 		fileNamed: aFilename 
 		readStreamDo: [ :aFileStream | 
 			self newDefault materializeHeaderFrom: aFileStream ]
-
 ]
 
 { #category : #'materializing-shortcuts' }
@@ -57,14 +55,12 @@ FLMaterializer class >> materializeFromByteArray: byteArray [
 FLMaterializer class >> materializeFromFileNamed: aFilename [
 
 	^ (self materializationFromFileNamed: aFilename) root
-
 ]
 
 { #category : #'materializing-shortcuts' }
 FLMaterializer class >> materializeHeaderFromFileNamed: aFilename [
 
 	^ self materializationHeaderFromFileNamed: aFilename
-
 ]
 
 { #category : #'instance creation' }
@@ -138,8 +134,7 @@ FLMaterializer >> materializeFrom: aStream [
 	"This is useful because the postMaterializationActions may need to have access to the state of the materialization, for example, to the root"
 	header materialization: materialization.
 	header executePostMaterializationActions.
-	^ materialization 
-	
+	^ materialization
 ]
 
 { #category : #materializing }
@@ -190,9 +185,6 @@ FLMaterializer >> setDefaultMaterialization [
 			with: aDecoder)
 			run; 
 			yourself ]
-	
-	
-
 ]
 
 { #category : #accessing }
@@ -215,7 +207,6 @@ FLMaterializer >> verifySignatureFrom: aDecoder [
 		FLBadSignature 
 			signalCurrentSignature: self signature 
 			streamSignature: streamSignature  ].
-
 ]
 
 { #category : #protected }
@@ -227,7 +218,6 @@ FLMaterializer >> verifyVersionFrom: aDecoder [
 		FLBadVersion 
 			signalCurrentVersion: self version 
 			streamVersion: streamVersion ]
-
 ]
 
 { #category : #accessing }

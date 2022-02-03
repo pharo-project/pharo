@@ -66,7 +66,7 @@ FLSimpleStack >> pop [
 	"Returns the first element and remove it from the stack."
 
 	slotIndex := slotIndex - 1.	
-	^ array at: slotIndex 
+	^ array at: slotIndex
 ]
 
 { #category : #printing }
@@ -75,7 +75,6 @@ FLSimpleStack >> printOn: aStream [
 
 	super printOn: aStream.
 	array printElementsOn: aStream
-
 ]
 
 { #category : #adding }

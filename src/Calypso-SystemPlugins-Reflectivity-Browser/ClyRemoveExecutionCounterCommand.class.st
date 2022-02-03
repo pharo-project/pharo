@@ -7,7 +7,7 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyRemoveExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^aBrowserContext isSelectedItemHasExecutionCounter
@@ -16,6 +16,14 @@ ClyRemoveExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContex
 { #category : #activation }
 ClyRemoveExecutionCounterCommand class >> contextMenuOrder [	
 	^2
+]
+
+{ #category : #activation }
+ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^SycAdvancedDebuggingMenuActivation 
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
 { #category : #accessing }

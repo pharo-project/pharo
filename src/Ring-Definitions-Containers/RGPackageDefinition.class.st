@@ -13,7 +13,7 @@ Class {
 	#category : #'Ring-Definitions-Containers-Base'
 }
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition package: self.
@@ -26,7 +26,7 @@ RGPackageDefinition >> addInContainer: anRGContainer [
 	anRGContainer addPackage: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> addMethod: aRGMethodDefinition [
 	"aRGMethodDefinition needs to satisfy the status isMethod"
 
@@ -230,7 +230,7 @@ RGPackageDefinition >> realPackage [
 	^ RPackageOrganizer default packageNamed: self name
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 
 	self 
@@ -240,7 +240,7 @@ RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 				ifFalse:[ super methods ])
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> withoutCategories [
 
 	self removeElementsCategorized: #categories

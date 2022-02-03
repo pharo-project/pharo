@@ -7,12 +7,6 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
 }
 
-{ #category : #testing }
-ClyBreakOnVariableCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	^ self isAbstract not
-		and: [ super canBeExecutedInContext: aSourceCodeContext ]
-]
-
 { #category : #activation }
 ClyBreakOnVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>

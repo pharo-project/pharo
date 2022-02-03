@@ -6,7 +6,7 @@ I open a small browser to choose which metalink to install among existing metali
 "
 Class {
 	#name : #ClyUninstallMetaLinkCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyReflectivityCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
 
@@ -22,7 +22,7 @@ ClyUninstallMetaLinkCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyUninstallMetaLinkCommand >> defaultMenuItemName [
-	^'Uninstall MetaLink...'
+	^ ' Uninstall MetaLink in  ' , sourceNode displaySourceCode, '  ...'
 ]
 
 { #category : #execution }

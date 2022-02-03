@@ -698,13 +698,6 @@ Class >> instanceSide [
 ]
 
 { #category : #testing }
-Class >> isAbstract [
-	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
-
-	^ super isAbstract or: [ self classSide isAbstract ]
-]
-
-{ #category : #testing }
 Class >> isAnonymous [
 	^self getName isNil
 ]
@@ -738,13 +731,6 @@ Class >> isUsed [
 	^ self hasSubclasses
 		ifFalse: [ super isUsed ]
 		ifTrue: [ true ]
-]
-
-{ #category : #private }
-Class >> isValidTraitName: aSymbol [
-
-	aSymbol ifNil: [ ^ false ].
-	^ aSymbol isValidGlobalName.
 ]
 
 { #category : #accessing }
@@ -1038,7 +1024,7 @@ Class >> sharing: poolString [
 							builder superclass: SharedPool;
 							name: poolName;
 							category: self category ]]
-				ifFalse:[^self error: poolName,' does not exist']])].
+				ifFalse:[^self inform: poolName,' does not exist']])].
 	self sharedPools isEmpty ifTrue: [self sharedPools: nil].
 	oldPools do: [:pool |
 				| found |

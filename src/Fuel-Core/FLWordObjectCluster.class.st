@@ -32,8 +32,7 @@ FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 
 	(aDecoder isBigEndian = FLPlatform current isBigEndian asBit)
 		ifTrue: [^ inst ]
-		ifFalse: [ ^ self swapBytesOf: inst ] 
-	
+		ifFalse: [ ^ self swapBytesOf: inst ]
 ]
 
 { #category : #'serialize/materialize' }
@@ -41,8 +40,6 @@ FLWordObjectCluster >> serializeInstance: aWordObject with: anEncoder [
 	anEncoder
 		encodeUint32: aWordObject basicSize;
 		encodeWords: aWordObject
-
-
 ]
 
 { #category : #endianness }
