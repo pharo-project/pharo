@@ -404,16 +404,6 @@ Character >> basicPharoToIso [
 	^ Character value: tmp1
 ]
 
-{ #category : #testing }
-Character >> canBeGlobalVarInitial [
-	^ self characterSet canBeGlobalVarInitial: self
-]
-
-{ #category : #testing }
-Character >> canBeNonGlobalVarInitial [
-  ^ self characterSet canBeNonGlobalVarInitial: self
-]
-
 { #category : #accessing }
 Character >> charCode [
 	^ self asInteger bitAnd: 4194303
