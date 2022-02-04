@@ -12,20 +12,12 @@ Class {
 	#category : #'Hiedra-Examples-Spec2'
 }
 
-{ #category : #specs }
-HiSpecExample class >> defaultSpec [
-	^ SpBoxLayout newTopToBottom
-		add: #table;
-		add: #actionBar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
-		yourself
-]
-
-{ #category : #specs }
+{ #category : #examples }
 HiSpecExample class >> example60RandomCommits [
 	^ self openExample: #randomlyGenerated
 ]
 
-{ #category : #specs }
+{ #category : #examples }
 HiSpecExample class >> openExample: selector [
 
 	| commits |
@@ -62,6 +54,14 @@ HiSpecExample >> commits: commits [
 	
 	"After #reset, we know the desired width for the column."
 	table columns first width: hiedraColumnController rulerWidth.
+]
+
+{ #category : #layout }
+HiSpecExample >> defaultLayout [
+	^ SpBoxLayout newTopToBottom
+		add: #table;
+		add: #actionBar expand: false;
+		yourself
 ]
 
 { #category : #initialization }
