@@ -18,6 +18,12 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
+{ #category : #testing }
+CDNode class >> isAbstract [
+		
+	^ self == CDNode
+]
+
 { #category : #'instance creation' }
 CDNode class >> on: aRBMessageNode [ 
 	
@@ -71,24 +77,6 @@ CDNode >> classDefinitionNode [
 { #category : #selection }
 CDNode >> containedBy: anInterval [ 
 	^anInterval first <= self start and: [anInterval last >= self stop]
-]
-
-{ #category : #compatibility }
-CDNode >> hasBreakpoint [
-	
-	^ false
-]
-
-{ #category : #compatibility }
-CDNode >> hasExecutionCounter [
-	
-	^ false
-]
-
-{ #category : #compatibility }
-CDNode >> hasWatch [
-	
-	^ false
 ]
 
 { #category : #initialization }
