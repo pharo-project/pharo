@@ -9,12 +9,6 @@ Class {
 	#category : #'Kernel-BasicObjects'
 }
 
-{ #category : #testing }
-AsciiCharset class >> canBeGlobalVarInitial: aCharacter [ 
-	
-	^ self isUppercase: aCharacter
-]
-
 { #category : #'character classification' }
 AsciiCharset class >> isCasedLetter: char [
 	"There are no ASCII Characters in this Category"
