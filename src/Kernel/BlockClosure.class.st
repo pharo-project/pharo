@@ -174,7 +174,13 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 
 { #category : #printing }
 BlockClosure >> doPrintOn: aStream [
-	aStream nextPutAll: self sourceNode sourceCode
+
+	| code |
+	"If the compiler is available, we can print the code nicely"
+	code := Smalltalk hasCompiler
+		        ifTrue: [ self sourceNode value sourceCode ]
+		        ifFalse: [ '[]' ].
+	aStream nextPutAll: code
 ]
 
 { #category : #controlling }
