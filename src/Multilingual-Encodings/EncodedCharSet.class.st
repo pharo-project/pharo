@@ -123,12 +123,6 @@ EncodedCharSet class >> isUppercase: char [
 ]
 
 { #category : #'class methods' }
-EncodedCharSet class >> leadingChar [
-
-	self subclassResponsibility.
-]
-
-{ #category : #'class methods' }
 EncodedCharSet class >> nextPutValue: ascii toStream: aStream withShiftSequenceIfNeededForTextConverterState: state [
 
 	self subclassResponsibility.

@@ -13,7 +13,7 @@ Class {
 		'latin1Map',
 		'latin1Encodings'
 	],
-	#category : #Deprecated90
+	#category : #Deprecated10
 }
 
 { #category : #'instance creation' }

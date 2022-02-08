@@ -8,7 +8,7 @@ Class {
 		'byteToUnicode',
 		'unicodeToByte'
 	],
-	#category : #Deprecated90
+	#category : #Deprecated10
 }
 
 { #category : #'class initialization' }

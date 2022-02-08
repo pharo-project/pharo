@@ -4,7 +4,7 @@ Text converter for Mac Roman.  An encoding used for the languages originated fro
 Class {
 	#name : #MacRomanTextConverter,
 	#superclass : #ByteTextConverter,
-	#category : #Deprecated90
+	#category : #Deprecated10
 }
 
 { #category : #initialization }
