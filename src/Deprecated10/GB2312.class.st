@@ -58,16 +58,7 @@ GB2312 class >> initializeUcsTable [
 { #category : #'class methods' }
 GB2312 class >> isLetter: char [
 
-	| value leading |
-
-	leading := char leadingChar.
-	value := char charCode.
-
-	leading = 0 ifTrue: [^ super isLetter: char].
-
-	value := value // 94 + 1.
-	^ 1 <= value and: [value < 84].
-
+	^ super isLetter: char
 ]
 
 { #category : #'class methods' }
@@ -80,11 +71,6 @@ GB2312 class >> leadingChar [
 { #category : #'class methods' }
 GB2312 class >> nextPutValue: ascii toStream: aStream withShiftSequenceIfNeededForTextConverterState: state [ 
 	| c1 c2 |
-	state charSize: 2.
-	state g0Leading ~= self leadingChar ifTrue: 
-		[ state g0Leading: self leadingChar.
-		state g0Size: 2.
-		aStream basicNextPutAll: compoundTextSequence ].
 	c1 := ascii // 94 + 33.
 	c2 := ascii \\ 94 + 33.
 	^ aStream
