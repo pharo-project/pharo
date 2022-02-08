@@ -316,18 +316,25 @@ RBSelectorEnvironment >> removeClass: aClass [
 ]
 
 { #category : #removing }
-RBSelectorEnvironment >> removeClass: aClass selector: aSelector [ 
-	(aClass isMeta 
-		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [^self]]
-		ifFalse: [classSelectors at: aClass name ifAbsent: [^self]]) 
-			remove: aSelector
-			ifAbsent: []
+RBSelectorEnvironment >> removeClass: aClass selector: aSelector [
+
+	| class |
+	class := aClass isMeta
+		         ifTrue: [ 
+			         metaClassSelectors
+				         at: aClass soleInstance name
+				         ifAbsent: [ ^ self ] ]
+		         ifFalse: [ 
+		         classSelectors at: aClass name ifAbsent: [ ^ self ] ].
+	class remove: aSelector ifAbsent: [  ].
+	class ifEmpty: [ self removeClass: aClass ]
 ]
 
 { #category : #accessing }
-RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [ 
-	^(self privateSelectorsForClass: aClass) 
-		do: [:each | (aClass includesSelector: each) ifTrue: [aBlock value: each]]
+RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [
+
+	^ (self privateSelectorsForClass: aClass) copy do: [ :each | 
+		  (aClass includesSelector: each) ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #printing }
