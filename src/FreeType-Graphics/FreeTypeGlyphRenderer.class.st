@@ -163,7 +163,7 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 			(aFreeTypeFont face charmaps includes:'armn')
 				ifTrue:[ "select apple roman char map, and map character from unicode to mac encoding"
 					aFreeTypeFont face setCharMap:'armn'.
-					charCode := aCharacter unicodeToMacRoman asUnicode asInteger. "check this!"]].
+					charCode := self unicodeToMacRoman: aCharacter. "check this!"]].
 	aCharacter < $  ifTrue: ["charCode := $  asUnicode asInteger"
 		^(GlyphForm extent: 0@0 depth: depth)
 			advance: 0@0;
@@ -217,4 +217,10 @@ FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: mo
 	so answer an ordinary glyph"
 
 	^self mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont
+]
+
+{ #category : #private }
+FreeTypeGlyphRenderer >> unicodeToMacRoman: aCharacter [
+
+	^ (#macroman asZnCharacterEncoder decodeAsCodePoints: { aCharacter codePoint }) first
 ]

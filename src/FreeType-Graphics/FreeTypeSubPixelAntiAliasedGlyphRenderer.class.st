@@ -111,7 +111,7 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 			(aFreeTypeFont face charmaps includes:'armn')
 				ifTrue:[ "select apple roman char map, and map character from unicode to mac encoding"
 					aFreeTypeFont face setCharMap:'armn'.
-					charCode := aCharacter unicodeToMacRoman asUnicode asInteger. "check this!"]].
+					charCode := self unicodeToMacRoman: aCharacter. "check this!"]].
 	aCharacter < $  ifTrue: ["charCode := $  asUnicode asInteger"
 		^(GlyphForm extent: 0@0 depth: depth)
 			advance: 0@0;

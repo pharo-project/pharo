@@ -278,7 +278,7 @@ FreeTypeFont >> getLinearWidthOf: aCharacter [
 			(self face charmaps includes:'armn')
 				ifTrue:[ "select apple roman char map, and map character from unicode to mac encoding"
 					self face setCharMap:'armn'.
-					charCode := aCharacter unicodeToMacRoman asUnicode asInteger. "check this!"]].
+					charCode := self unicodeToMacRoman: aCharacter. "check this!"]].
 	em := self pixelSize.
 	face validate.
 	face setPixelWidth: em height: em.
@@ -316,7 +316,7 @@ FreeTypeFont >> getWidthOf: aCharacter [
 			(self face charmaps includes:'armn')
 				ifTrue:[ "select apple roman char map, and map character from unicode to mac encoding"
 					self face setCharMap:'armn'.
-					charCode := aCharacter unicodeToMacRoman asUnicode asInteger. "check this!"]].
+					charCode := self unicodeToMacRoman: aCharacter. "check this!"]].
 	em := self pixelSize.
 	face validate.
 	face isValid ifFalse:[^0].
@@ -565,9 +565,9 @@ FreeTypeFont >> linearKerningLeft: leftChar right: rightChar [
 				ifTrue:[ "select apple roman char map, and map characters from unicode to mac encoding"
 					self face setCharMap:'armn'.
 					(l asInteger between: 16r20 and: 16rFF)
-						ifTrue:[l := (Character value: l asInteger) unicodeToMacRoman].
+						ifTrue:[l := (self unicodeToMacRoman: (Character value: l asInteger)) asCharacter ].
 					(r asInteger between: 16r20 and: 16rFF)
-						ifTrue:[r := (Character value: r asInteger) unicodeToMacRoman]]].
+						ifTrue:[r := (self unicodeToMacRoman: (Character value: r asInteger)) asCharacter]]].
 	^(f kerningLeft: l right: r) x asFloat *  self pixelSize / f unitsPerEm
 ]
 
@@ -774,6 +774,12 @@ FreeTypeFont >> underlineThickness [
 { #category : #metrics }
 FreeTypeFont >> underlineTop [
 	^ ((self face underlinePosition * self pixelSize / self face unitsPerEm) negated - (self underlineThickness/2)) rounded + 1 "needs the +1 , possibly because glyph origins are moved down by 1 so that their baselines line up with strike fonts"
+]
+
+{ #category : #measuring }
+FreeTypeFont >> unicodeToMacRoman: aCharacter [
+
+	^ (#macroman asZnCharacterEncoder decodeAsCodePoints: { aCharacter codePoint }) first
 ]
 
 { #category : #validation }
