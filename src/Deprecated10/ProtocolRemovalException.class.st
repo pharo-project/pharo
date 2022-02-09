@@ -4,5 +4,11 @@ A ProtocolRemovalException is an error raised when someone try to remove a proto
 Class {
 	#name : #ProtocolRemovalException,
 	#superclass : #Error,
-	#category : #'Kernel-Exceptions'
+	#category : #Deprecated10
 }
+
+{ #category : #testing }
+ProtocolRemovalException class >> isDeprecated [
+	"exception for this made no sense, usage was removed"
+	^true
+]
