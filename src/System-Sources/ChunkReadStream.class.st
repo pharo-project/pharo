@@ -60,7 +60,7 @@ ChunkReadStream >> decodeString: string andRuns: runsRaw [
 	runLength
 		with: runValues
 		do: [ :length :leadingChar | 
-			index to: index + length - 1 do: [ :pos | newString at: pos put: (Character leadingChar: leadingChar code: (string at: pos) charCode) ].
+			index to: index + length - 1 do: [ :pos | newString at: pos put: (string at: pos) ].
 			index := index + length ].
 	^ newString
 ]
