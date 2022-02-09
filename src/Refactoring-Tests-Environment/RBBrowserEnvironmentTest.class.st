@@ -416,6 +416,17 @@ RBBrowserEnvironmentTest >> testSelectorEnvironment [
 	self assert: printString numberClasses equals: (printString referencesTo: #printString) numberClasses
 ]
 
+{ #category : #'tests - environments' }
+RBBrowserEnvironmentTest >> testSelectorEnvironmentRemovesEmptyClasses [
+
+	| printString class |
+	printString := RBBrowserEnvironment new referencesTo: #printString.
+	class := printString classes anyOne.
+	printString selectorsForClass: class do: [ :eachSelector | 
+		printString removeClass: class selector: eachSelector ].
+	self deny: (printString classes includes: class)
+]
+
 { #category : #tests }
 RBBrowserEnvironmentTest >> testSystemIntegrity [
 	| classes environment |
