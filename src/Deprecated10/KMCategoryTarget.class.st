@@ -9,8 +9,13 @@ Class {
 		'category',
 		'morph'
 	],
-	#category : #'Keymapping-Core-Categories'
+	#category : #Deprecated10
 }
+
+{ #category : #testing }
+KMCategoryTarget class >> isDeprecated [
+	^true
+]
 
 { #category : #'instance creation' }
 KMCategoryTarget class >> target: aTarget morph: aMorph category: aCategory [
