@@ -54,22 +54,16 @@ EpApplyVisitor >> visitCategoryRename: aChange [
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
-	"this is a hack for the moment. Because fluid class definition return a builder and not the old syntax."
-	
-	('*<<*' match: aClassCreation classAdded definitionSource )
-		ifTrue: [ 
-			(self compiler evaluate: aClassCreation classAdded definitionSource) install.
-			(self compiler evaluate: aClassCreation classAdded classSide definitionSource) install ]
-		ifFalse: [self compiler
-			evaluate: aClassCreation classAdded definitionSource;
-			evaluate: aClassCreation classAdded classSide definitionSource ]
+	(self compiler evaluate: aClassCreation classAdded definitionSource) install.
+	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) install
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassModification: aModifiedClassChange [
-	self compiler
-		evaluate: aModifiedClassChange newClass definitionSource;
-		evaluate: aModifiedClassChange newClass classSide definitionSource
+
+	(self compiler evaluate: aModifiedClassChange newClass definitionSource) install.
+	(self compiler evaluate: aModifiedClassChange newClass classSide definitionSource) install
+	
 ]
 
 { #category : #visitor }
@@ -134,13 +128,13 @@ EpApplyVisitor >> visitProtocolRemoval: aProtocolRemoved [
 { #category : #visitor }
 EpApplyVisitor >> visitTraitAddition: aChange [
 
-	self compiler evaluate: aChange traitAdded definitionSource
+	(self compiler evaluate: aChange traitAdded definitionSource) install
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitTraitModification: aChange [
 
-	self compiler evaluate: aChange newTrait definitionSource
+	(self compiler evaluate: aChange newTrait definitionSource) install
 ]
 
 { #category : #visitor }
