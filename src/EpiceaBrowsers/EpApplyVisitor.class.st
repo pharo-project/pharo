@@ -54,15 +54,15 @@ EpApplyVisitor >> visitCategoryRename: aChange [
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
-	(self compiler evaluate: aClassCreation classAdded definitionSource) install.
-	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) install
+	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
+	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 
-	(self compiler evaluate: aModifiedClassChange newClass definitionSource) install.
-	(self compiler evaluate: aModifiedClassChange newClass classSide definitionSource) install
+	(self compiler evaluate: aModifiedClassChange newClass definitionSource) fluidInstall.
+	(self compiler evaluate: aModifiedClassChange newClass classSide definitionSource) fluidInstall
 	
 ]
 
@@ -128,13 +128,13 @@ EpApplyVisitor >> visitProtocolRemoval: aProtocolRemoved [
 { #category : #visitor }
 EpApplyVisitor >> visitTraitAddition: aChange [
 
-	(self compiler evaluate: aChange traitAdded definitionSource) install
+	(self compiler evaluate: aChange traitAdded definitionSource) fluidInstall
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitTraitModification: aChange [
 
-	(self compiler evaluate: aChange newTrait definitionSource) install
+	(self compiler evaluate: aChange newTrait definitionSource) fluidInstall
 ]
 
 { #category : #visitor }
