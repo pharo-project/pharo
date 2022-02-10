@@ -156,7 +156,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: remaining size <= 30
+	self assert: remaining size <= 3
 ]
 
 { #category : #tests }
