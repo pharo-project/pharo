@@ -13,12 +13,6 @@ Class {
 }
 
 { #category : #parsing }
-CDClassDefinitionParser class >> fromASTNode: aNode [ 
-	
-	^ self new parseRootNode: aNode
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 	| layoutClass |
 	self handleClassName: aNode.
