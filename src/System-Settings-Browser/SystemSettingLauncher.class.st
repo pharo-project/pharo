@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'script'
 	],
-	#category : #'System-Settings-Core-Utilities'
+	#category : #'System-Settings-Browser'
 }
 
 { #category : #accessing }
