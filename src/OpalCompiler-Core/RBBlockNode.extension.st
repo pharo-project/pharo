@@ -7,8 +7,9 @@ RBBlockNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir [
-
-	^ self propertyAt: #ir ifAbsent: [ self parent methodOrBlockNode ir ]
+	"if the ir is not yet set, generate the IR for the whole method, it fills the property here"
+	self propertyAt: #ir ifAbsent: [ self methodNode generateIR  ].
+	^self propertyAt: #ir
 ]
 
 { #category : #'*OpalCompiler-Core' }
