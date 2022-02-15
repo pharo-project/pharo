@@ -15,5 +15,5 @@ ShBitLayoutChanged >> hasChangeInstanceSideShape [
 
 { #category : #propagating }
 ShBitLayoutChanged >> propagateToSubclasses: anotherBuilder [
-	anotherBuilder layoutDefinition layoutClass: builder layoutDefinition layoutClass 
+	anotherBuilder layoutDefinition layoutClass: builder layoutDefinition layoutClass
 ]

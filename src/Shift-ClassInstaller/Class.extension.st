@@ -37,5 +37,4 @@ Class >> removeSlot: aSlot [
 		builder
 			fillFor: self;
 			slots: (self classLayout slots copyWithout: aSlot)]
-	
 ]

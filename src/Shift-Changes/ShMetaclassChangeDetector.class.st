@@ -12,7 +12,7 @@ ShMetaclassChangeDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e metaclassClass ].
 	classAccessor := [ :e | e class class ].
-	comparer := [ :a :b |  a name = b name ]	
+	comparer := [ :a :b |  a name = b name ]
 ]
 
 { #category : #changes }
