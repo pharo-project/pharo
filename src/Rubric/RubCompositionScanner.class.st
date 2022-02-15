@@ -119,7 +119,6 @@ RubCompositionScanner >> crossedX [
 	lineHeight := lineHeightAtBreak.
 	baseline := baselineAtBreak.
 	^ true.
-
 ]
 
 { #category : #'stop conditions' }
@@ -180,7 +179,6 @@ RubCompositionScanner >> registerBreakableIndex [
 		breakableIndex := lastIndex - 1.
 	].
 	^ false.
-
 ]
 
 { #category : #accessing }
@@ -194,7 +192,6 @@ RubCompositionScanner >> rightX [
 	breakAtSpace ifTrue: [^ spaceX].
 
 	^ destX.
-
 ]
 
 { #category : #scanning }
@@ -236,5 +233,4 @@ RubCompositionScanner >> tab [
 	destX > rightMargin ifTrue:	[^self crossedX].
 	lastIndex := lastIndex + 1.
 	^false
-
 ]

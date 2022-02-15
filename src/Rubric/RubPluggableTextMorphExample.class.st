@@ -41,7 +41,7 @@ RubPluggableTextMorphExample >> autoAccept [
 
 { #category : #accessing }
 RubPluggableTextMorphExample >> behavior [
-	^ self selectedClass 
+	^ self selectedClass
 ]
 
 { #category : #'events handling' }
@@ -78,7 +78,6 @@ RubPluggableTextMorphExample >> classIsMeta [
 RubPluggableTextMorphExample >> classIsMeta: aBoolean [
 	classIsMeta := aBoolean.
 	self changed: #classIsMeta
-
 ]
 
 { #category : #'view creation' }
@@ -160,7 +159,7 @@ RubPluggableTextMorphExample >> metaSwitchMorph [
 		getSelected: #classIsMeta
 		setSelected: #classIsMeta:
 		label: 'Class'
-		help: 'Class side is used if checked' 
+		help: 'Class side is used if checked'
 ]
 
 { #category : #accessing }
@@ -209,7 +208,7 @@ RubPluggableTextMorphExample >> newScrolledTextMorph [
 RubPluggableTextMorphExample >> okToChange [
 	self canDiscardEdits
 		ifTrue: [ ^ true ].
-	^ self promptForCancel 
+	^ self promptForCancel
 ]
 
 { #category : #'view creation' }
@@ -273,7 +272,7 @@ RubPluggableTextMorphExample >> scrollValue: aPoint [
 
 { #category : #accessing }
 RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [ 
-	scrollValue := anAnnouncement step 
+	scrollValue := anAnnouncement step
 ]
 
 { #category : #'view creation' }
@@ -298,7 +297,7 @@ RubPluggableTextMorphExample >> selectedMethodName [
 
 { #category : #accessing }
 RubPluggableTextMorphExample >> selector [
-	^ self selectedMethodName getString asSymbol 
+	^ self selectedMethodName getString asSymbol
 ]
 
 { #category : #accessing }
@@ -316,7 +315,7 @@ RubPluggableTextMorphExample >> shoutAboutToStyle: ARubricMode [
 { #category : #'events handling' }
 RubPluggableTextMorphExample >> whenClassNameChanged: anAnnouncement [
 	self checkMethodName.
-	self checkClassName 
+	self checkClassName
 ]
 
 { #category : #'events handling' }

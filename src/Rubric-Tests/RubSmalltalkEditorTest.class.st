@@ -118,12 +118,12 @@ RubSmalltalkEditorTest >> assertNodeValue: anObject [
 	
 	node := self executeBestNodeFor: anObject printString.
 
-	self assert: node value equals: anObject 
+	self assert: node value equals: anObject
 ]
 
 { #category : #assertions }
 RubSmalltalkEditorTest >> assertNodeValue: anObject description: aString [
-	self assertNodeValue: anObject 
+	self assertNodeValue: anObject
 ]
 
 { #category : #assertions }
@@ -132,7 +132,7 @@ RubSmalltalkEditorTest >> assertNodeVariable: anObject [
 	
 	node := self executeBestNodeFor: anObject printString.
 
-	self assert: node name equals: anObject 
+	self assert: node name equals: anObject
 ]
 
 { #category : #assertions }
@@ -207,13 +207,11 @@ RubSmalltalkEditorTest >> positionAfter: aString [
 	
 	pos := (self source findString: aString) + aString size.
 	self selection: (pos to: pos - 1).
-	
 ]
 
 { #category : #helpers }
 RubSmalltalkEditorTest >> positionBefore: aString [
 	self positionBefore: aString offset: 0
-	
 ]
 
 { #category : #helpers }
@@ -222,7 +220,6 @@ RubSmalltalkEditorTest >> positionBefore: aString offset: aNumber [
 	
 	pos := (self source findString: aString) + aNumber.
 	self selection: (pos to: pos - 1).
-	
 ]
 
 { #category : #helpers }
@@ -231,7 +228,6 @@ RubSmalltalkEditorTest >> positionSelection: aString [
 	
 	pos := (self source findString: aString).
 	self selection: (pos to: pos + aString size).
-	
 ]
 
 { #category : #accessing }
@@ -276,7 +272,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidEmptySource [
 	self 
 		positionAfter: '';
 		assertNodeError.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -292,7 +287,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodIncompleteMidSourceNearNe
 	self 
 		positionBefore: '^self' offset: -1;
 		assertNodeValue: 300.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -307,7 +301,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodIncompleteMidSourceNearPr
 	self 
 		positionBefore: '1 +' offset: -2;
 		assertNodeSelector: #msg1 description: 'should backup to closest node unaffected by error'.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -322,7 +315,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodIncompleteMidSourceOnLine
 	self 
 		positionAfter: '300';
 		assertNodeValue: 300 description: 'should let you select a value you have just typed (e.g. to widen and bracket)'
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -337,7 +329,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodIncompleteMidSourceOnMess
 	self 
 		positionAfter: '+';
 		assertNodeSelector: #+ description: 'should let you select an operator for implementorsOf etc.'.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -352,7 +343,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundIncompleteMidSource [
 	self 
 		positionAfter: '300';
 		assertNodeValue: 300.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -367,7 +357,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundIncompleteMidSourceTh
 	self 
 		positionAfter: 'String';
 		assertNodeVariable: #String
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -384,7 +373,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundParsableError [
 	self 
 		positionAfter: 'isSymbol ]';
 		assertPlaygroundNodeValue: 'RBBlockNode([ node isSymbol ])'.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -396,7 +384,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidBinaryOperation [
 	self 
 		positionAfter: '+';
 		assertNodeSelector: #+.
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -411,8 +398,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidCascadeLastStatement [
 	self 
 		positionAfter: 'msg3';
 		assertNodeSelector: #msg3
-	
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -427,8 +412,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidCascadeMidStatement [
 	self 
 		positionAfter: 'msg2;';
 		assertNodeSelector: #msg2
-	
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -440,7 +423,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidKeywordMessage [
 	self 
 		positionAfter: 'to';
 		assertNodeSelector: #to:do:
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -450,8 +432,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPlayground [
 	self 
 		positionAfter: '100';
 		assertPlaygroundNodeValue: 100
-	
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -462,8 +442,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPlaygroundSimpleMsg [
 	self 
 		positionAfter: 'msg1';
 		assertPlaygroundNodeSelector: #msg1
-	
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -475,7 +453,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPostionOnMethodEnd [
 	self 
 		positionAfter: '9';
 		assertNodeValue: 9
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -488,7 +465,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPostionOnMethodPeriodEnd [
 	self 
 		positionAfter: '9.';
 		assertNodeValue: 9
-		
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -512,8 +488,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPostionOnStatementPeriodEnd [
 	self 
 		positionAfter: '3.';
 		assertNodeValue: 3
-	
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -526,8 +500,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidSelectorMidSource [
 	self 
 		positionAfter: '+';
 		assertNodeSelector: #+
-		
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -540,8 +512,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidSimpleMethod [
 	self 
 		positionAfter: '100';
 		assertNodeValue: 100
-	
-
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -554,7 +524,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 	self 
 		positionAfter: '3';
 		assertNodeValue: 3
-
 ]
 
 { #category : #'tests - copy' }
@@ -626,7 +595,6 @@ RubSmalltalkEditorTest >> testJumpOnAssignment [
 	self 
 		positionAfter: '1000';
 		assertJumpsToPostionAfter: ':= ' direction: false.
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -644,7 +612,6 @@ RubSmalltalkEditorTest >> testJumpOnBlockPipe [
 	self 
 		positionBefore: 'result add:';
 		assertJumpsToPostionAfter: ':result' direction: false.
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -668,7 +635,6 @@ RubSmalltalkEditorTest >> testJumpOnBlockVariables [
 	self 
 		positionAfter: ':result';
 		assertJumpsToPostionAfter: ':item' direction: false.
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -695,7 +661,6 @@ RubSmalltalkEditorTest >> testJumpOnCascade [
 	self 
 		positionBefore: 'msg2';
 		assertJumpsToPostionBefore: 'msg1' direction: false.
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -717,7 +682,6 @@ RubSmalltalkEditorTest >> testJumpOnComments [
 	self 
 		positionAfter: 'msg1; ';
 		assertJumpsToPostionAfter: self source direction: true.
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -730,7 +694,6 @@ RubSmalltalkEditorTest >> testJumpOnEndOfBlock [
 	self 
 		positionAfter: ' true';
 		assertJumpsToPostionBefore: ' ifFalse:' direction: true.
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -748,8 +711,6 @@ RubSmalltalkEditorTest >> testJumpOnEndOfSource [
 	self 
 		positionBefore: 'testMethod';
 		assertJumpsToPostionBefore: 'testMethod' direction: false.
-
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -775,7 +736,6 @@ RubSmalltalkEditorTest >> testJumpOnErroneousMethod [
 	self 
 		positionBefore: 'new:';
 		assertJumpsToPostionBefore: '1 +' direction: false.
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -793,7 +753,6 @@ true ifTrue:  ifFalse: '.
 	self 
 		positionAfter: 'ifFalse: ';
 		assertJumpsToPostionAfter: 'ifTrue: ' direction: false.
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -810,9 +769,6 @@ RubSmalltalkEditorTest >> testJumpOnNoFurtherStatements [
 	self 
 		positionAfter: 'self';
 		assertJumpsToPostionBefore: 'testMethod' direction: false.
-
-	
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -827,7 +783,6 @@ RubSmalltalkEditorTest >> testJumpOnNoParameterBlock [
 	self 
 		positionAfter: ' and: ';
 		assertJumpsToPostionBefore: 'aString ]' direction: true.
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -852,7 +807,6 @@ RubSmalltalkEditorTest >> testJumpOnReturn [
 	self 
 		positionAfter: 'refresh. ';
 		assertJumpsToPostionBefore: 'nil' direction: true."
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -880,7 +834,6 @@ RubSmalltalkEditorTest >> testJumpOnSecondKeyword [
 	self 
 		positionAfter: 'with:';
 		assertJumpsToPostionAfter: 'KeywordMsg: ' direction: false.
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -900,7 +853,6 @@ RubSmalltalkEditorTest >> testJumpOnSelf [
 	self 
 		positionBefore: 'msg2';
 		assertJumpsToPostionBefore: 'msg1' direction: false.
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -927,8 +879,6 @@ self simpleKeywordMsg: 5.
 	self 
 		positionAfter: 'simpleKeywordMsg:';
 		assertJumpsToPostionAfter: 'self ' direction: false.
-
-
 ]
 
 { #category : #'tests - jumpFind' }
@@ -953,7 +903,6 @@ RubSmalltalkEditorTest >> testPlaygroundJumpOnErroneousSource [
 	self 
 		positionBefore: 'new:';
 		assertJumpsToPostionBefore: '1 +' direction: false playground: true.
-	
 ]
 
 { #category : #'tests - jumpFind' }
@@ -969,7 +918,6 @@ RubSmalltalkEditorTest >> testPlaygroundJumpOnIfTrueIfFalseAfterCompletion [
 	self 
 		positionAfter: 'ifFalse: ';
 		assertJumpsToPostionAfter: 'ifTrue: ' direction: false playground: true.
-
 ]
 
 { #category : #'tests - widenSelection' }
@@ -995,7 +943,6 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnCascade [
 	self 
 		positionSelection: 'msg2';
 		assertWidensToRegex: 'self.*msg3' playground: true.
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1017,8 +964,6 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnErroneousSource [
 	self 
 		positionSelection: '300';
 		assertWidensToRegex: '1 \+ 300' playground: true.
-		
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1037,7 +982,6 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 	self 
 		positionBefore: 'msg2';
 		assertWidensToRegex: ';.*msg2' playground: true
-	
 ]
 
 { #category : #'tests - completion' }
@@ -1056,7 +1000,6 @@ RubSmalltalkEditorTest >> testSettingCompletionFromEditorToTextArea [
 	self assert: textEditor completionEngine class equals: CompletionEngine.
 	textEditor textArea: RubEditingArea new. 
 	self assert: textEditor textArea completionEngine class equals: CompletionEngine.
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1078,9 +1021,6 @@ RubSmalltalkEditorTest >> testWidenInsideBlock [
 	self 
 		positionSelection: '[ aString > 10 ]';
 		assertWidensToRegex: 'self.*10 \]' playground: false.
-		
-	
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1096,7 +1036,6 @@ RubSmalltalkEditorTest >> testWidenOnAssignment [
 	self 
 		positionAfter: ':=';
 		assertWidensToRegex: 'x .*1000' playground: false.
-		
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1118,8 +1057,6 @@ RubSmalltalkEditorTest >> testWidenOnBrackets [
 	 self 
 		positionSelection: '20';
 		assertWidensToRegex: '\(\(100.*20\)' playground: false
-		
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1144,7 +1081,6 @@ RubSmalltalkEditorTest >> testWidenOnCascade [
 	self 
 		positionSelection: 'msg2';
 		assertWidensToRegex: 'self.*msg3' playground: false.
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1166,8 +1102,6 @@ RubSmalltalkEditorTest >> testWidenOnComments [
 	self 
 		positionSelection: 'keyword:selector:';
 		assertWidensToRegex: '"some.*ignored"' playground: false
-		
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1181,9 +1115,6 @@ RubSmalltalkEditorTest >> testWidenOnEndOfBlock [
 	self 
 		positionAfter: 'true ]';
 		assertWidensToRegex: '\[ true \]' playground: false.
-		
-	
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1206,7 +1137,6 @@ RubSmalltalkEditorTest >> testWidenOnErroneousMethod [
 	self 
 		positionSelection: '300';
 		assertWidensToRegex: '1 \+ 300' playground: false.
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1248,7 +1178,6 @@ RubSmalltalkEditorTest >> testWidenOnMultipleExpressions [
 	self 
 		positionSelection: '5';
 		assertWidensToRegex: '1000 \+ 5' playground: false.
-		
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1268,7 +1197,6 @@ RubSmalltalkEditorTest >> testWidenOnSelf [
 	self 
 		positionBefore: 'msg2';
 		assertWidensToRegex: ';.*msg2' playground: false
-	
 ]
 
 { #category : #'tests - widenSelection' }
@@ -1289,8 +1217,6 @@ RubSmalltalkEditorTest >> testWidenOnString [
 	self 
 		positionAfter: 'a comment';
 		assertWidensToRegex: '\''a string.*inside\''' playground: false.
-			
-	
 ]
 
 { #category : #helpers }

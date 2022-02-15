@@ -17,5 +17,4 @@ RubSegmentIconMenuMorph >> addToggle: aString target: anObject selector: aSymbol
 		getStateSelector: stateSymbol;
 		enablementSelector: enableSymbol.
 	^ self addMenuItem: item.
-
 ]

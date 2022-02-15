@@ -6,7 +6,6 @@ TextStyle >> privateTabsArray: anArray [
 	DefaultTabsArray := anArray."
 	tabsArray := anArray.
 	marginTabsArray := tabsArray collect: [ :t | Array with: t with: t ]
-
 ]
 
 { #category : #'*Rubric' }

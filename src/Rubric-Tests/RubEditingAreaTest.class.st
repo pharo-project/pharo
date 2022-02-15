@@ -44,7 +44,6 @@ RubEditingAreaTest >> sendMouseClickAt: index withShift: aBoolean [
 	buttons := (aBoolean ifTrue: [8] ifFalse: [0]).
 	buttons := buttons bitOr: MouseButtonEvent redButton.
 	area simulateClickWith: buttons position: position.
-	
 ]
 
 { #category : #convenience }
@@ -103,7 +102,6 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 
 	self assert: circle counter equals: 1.	
 	self assert: circle position y > 500
-	
 ]
 
 { #category : #'tests - accessing selection' }

@@ -103,12 +103,11 @@ RubTextAreaExamples class >> centered [
 { #category : #shout }
 RubTextAreaExamples class >> hasBindingOf: aString [
 	^ (self bindingOf: aString) notNil
-	
 ]
 
 { #category : #accessing }
 RubTextAreaExamples class >> interactionModel [
-	^ ModelForShout 
+	^ ModelForShout
 ]
 
 { #category : #accessing }

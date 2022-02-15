@@ -27,7 +27,6 @@ RubTextFieldExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -37,7 +36,6 @@ RubTextFieldExample class >> openAutoAccept [
 	st := model newScrolledTextAutoAccept.
 	model inspect.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -45,7 +43,6 @@ RubTextFieldExample class >> openWithBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithBorderOfWidth: anInteger.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -53,7 +50,6 @@ RubTextFieldExample class >> openWithScrollbar [
 	| st |
 	st := self new newScrolledTextWithScrollbar.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -61,7 +57,6 @@ RubTextFieldExample class >> openWithScrollbarAndBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithScrollbarAndBorderOfWidth: anInteger.
  	st openInWorld
-
 ]
 
 { #category : #accessing }

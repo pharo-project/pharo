@@ -63,7 +63,6 @@ RubScrolledTextMorph >> acceptTextInModel [
 { #category : #'accessing - segments' }
 RubScrolledTextMorph >> addSegment: aRubTextSegmentMorph [
 	^ self textArea addSegment: aRubTextSegmentMorph
-
 ]
 
 { #category : #drawing }
@@ -162,7 +161,7 @@ RubScrolledTextMorph >> basicHasUnacceptedEdits: aBoolean [
 
 { #category : #accessing }
 RubScrolledTextMorph >> beEditable [
-	self textArea beEditable 
+	self textArea beEditable
 ]
 
 { #category : #initialization }
@@ -199,23 +198,21 @@ RubScrolledTextMorph >> beForSmalltalkComment [
 RubScrolledTextMorph >> beForSmalltalkScripting [
     self textArea beForSmalltalkScripting.
     self textArea font: StandardFonts codeFont
-
 ]
 
 { #category : #accessing }
 RubScrolledTextMorph >> beForSmalltalkScriptingWithDefaultFont [
     self textArea beForSmalltalkScriptingWithDefaultFont
-
 ]
 
 { #category : #'accessing - text' }
 RubScrolledTextMorph >> beNotWrapped [
-	self scrollPane beNotWrapped 
+	self scrollPane beNotWrapped
 ]
 
 { #category : #accessing }
 RubScrolledTextMorph >> beReadOnly [
-	self textArea beReadOnly 
+	self textArea beReadOnly
 ]
 
 { #category : #'accessing - text' }
@@ -236,13 +233,12 @@ RubScrolledTextMorph >> borderStyleToUse [
 RubScrolledTextMorph >> borderWidth: anInteger [
 	super borderWidth: anInteger.
 	self extent: self extent.
-	self manageLayout 
+	self manageLayout
 ]
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> canDiscardEdits [
 	^ (self hasUnacceptedEdits and: [askBeforeDiscardingEdits]) not
-
 ]
 
 { #category : #'model protocol' }
@@ -285,7 +281,7 @@ RubScrolledTextMorph >> configureGhostText: aTextArea [
 	(aTextArea height < self scrollBounds height)
 		ifTrue: [ aTextArea top: self scrollBounds top ]
 		ifFalse: [ aTextArea center: self scrollBounds center.
-					  aTextArea left: self scrollBounds left ] 
+					  aTextArea left: self scrollBounds left ]
 ]
 
 { #category : #'interactive error protocol' }
@@ -316,7 +312,7 @@ RubScrolledTextMorph >> defaultBorderWidth [
 
 { #category : #defaults }
 RubScrolledTextMorph >> defaultColor [
-	^ self defaultBackgroundColor 
+	^ self defaultBackgroundColor
 ]
 
 { #category : #defaults }
@@ -367,7 +363,7 @@ RubScrolledTextMorph >> drawHighlightsOn: aCanvas [
 { #category : #drawing }
 RubScrolledTextMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
-	self drawHighlightsOn: aCanvas 
+	self drawHighlightsOn: aCanvas
 ]
 
 { #category : #drawing }
@@ -429,7 +425,6 @@ RubScrolledTextMorph >> editingMode [
 { #category : #accessing }
 RubScrolledTextMorph >> editingMode: anEditingMode [
 	self textArea editingMode: anEditingMode.
-
 ]
 
 { #category : #accessing }
@@ -454,7 +449,6 @@ RubScrolledTextMorph >> extent: aPoint [
 { #category : #'accessing - rulers' }
 RubScrolledTextMorph >> extraAreas [
 	^ self rulers select: [ :r | r isOver ]
-
 ]
 
 { #category : #'accessing - text' }
@@ -488,7 +482,7 @@ RubScrolledTextMorph >> getBackgroundColorFromModel [
 
 { #category : #accessing }
 RubScrolledTextMorph >> getBackgroundColorSelector [ 
-	^ getBackgroundColorSelector 
+	^ getBackgroundColorSelector
 ]
 
 { #category : #accessing }
@@ -516,7 +510,6 @@ RubScrolledTextMorph >> getSelectionSelector [
 { #category : #'model protocol' }
 RubScrolledTextMorph >> getSelectionSelector: aSelector [
 	getSelectionSelector := aSelector.
-
 ]
 
 { #category : #'accessing - text' }
@@ -573,7 +566,7 @@ RubScrolledTextMorph >> ghostTextRuler [
 RubScrolledTextMorph >> hScrollbarShowAlways [
 	self scrollPane hScrollbarShowAlways.
 	self extent: self extent.
-	self manageLayout 
+	self manageLayout
 ]
 
 { #category : #'accessing - scrollbars' }
@@ -628,13 +621,11 @@ RubScrolledTextMorph >> hasKeyboardFocus [
 { #category : #'rulers handling' }
 RubScrolledTextMorph >> hasRuler: aRuler [
 	^ self rulers includes: aRuler
-	
 ]
 
 { #category : #'rulers handling' }
 RubScrolledTextMorph >> hasRulerNamed: aKey [
 	^ self rulers anySatisfy: [ :r | r key = aKey ]
-	
 ]
 
 { #category : #'model protocol' }
@@ -696,7 +687,7 @@ RubScrolledTextMorph >> isForScripting [
 
 { #category : #testing }
 RubScrolledTextMorph >> isReadOnly [
-	^ self textArea isReadOnly 
+	^ self textArea isReadOnly
 ]
 
 { #category : #classification }
@@ -786,7 +777,6 @@ RubScrolledTextMorph >> model: aModel [
 	aModel announcer when: RubPrimarySelectionUpdatedInModel send: #whenPrimarySelectionUpdatedInModel: to: self.
 	aModel announcer when: RubCancelEditRequestedInModel send: #whenCancelEditRequestedInModel: to: self.	
 	aModel announcer when: RubConfigurationChange send: #whenConfigurationChangedFromModel: to: self.
-
 ]
 
 { #category : #'event handling' }
@@ -824,7 +814,7 @@ RubScrolledTextMorph >> newScrollPane [
 { #category : #'submorphs - accessing' }
 RubScrolledTextMorph >> noteNewOwner: aMorph [ 
 	super noteNewOwner: aMorph.
-	self manageLayout 
+	self manageLayout
 ]
 
 { #category : #accessing }
@@ -845,7 +835,6 @@ RubScrolledTextMorph >> offset [
 { #category : #'model protocol' }
 RubScrolledTextMorph >> on: aModel [ 
 	self model: aModel.
-
 ]
 
 { #category : #'model protocol' }
@@ -864,15 +853,13 @@ RubScrolledTextMorph >> overRulers [
 
 { #category : #accessing }
 RubScrolledTextMorph >> paragraph [
-	^ self scrollPane paragraph 
+	^ self scrollPane paragraph
 ]
 
 { #category : #geometry }
 RubScrolledTextMorph >> position: aPoint [
 	super position: aPoint.
 	self manageLayout
-
-	
 ]
 
 { #category : #'rulers handling' }
@@ -894,7 +881,7 @@ RubScrolledTextMorph >> rulerNamed: aKey [
 
 { #category : #'accessing - rulers' }
 RubScrolledTextMorph >> rulers [
-	^ rulers 
+	^ rulers
 ]
 
 { #category : #geometry }
@@ -936,7 +923,6 @@ RubScrolledTextMorph >> scrollbarsShowNever [
 { #category : #'event handling' }
 RubScrolledTextMorph >> scrollerExtentChanged [
 	self manageLayout
-
 ]
 
 { #category : #'accessing - scrollbars' }
@@ -947,31 +933,27 @@ RubScrolledTextMorph >> scrollerOffsetChanged [
 { #category : #'accessing - segments' }
 RubScrolledTextMorph >> segments [
 	^ self textArea segments
-
 ]
 
 { #category : #'accessing - segments' }
 RubScrolledTextMorph >> segmentsAtLine: aLineNumber [
 	^ self textArea  segmentsAtLine: aLineNumber
-
 ]
 
 { #category : #'accessing - selection' }
 RubScrolledTextMorph >> selectAll [
-	self selectFrom: 1 to: self text size 
+	self selectFrom: 1 to: self text size
 ]
 
 { #category : #'accessing - selection' }
 RubScrolledTextMorph >> selectFrom: firstIndex to: lastIndex [
 	self selectionInterval: (firstIndex to: lastIndex)
-
 ]
 
 { #category : #'accessing - selection' }
 RubScrolledTextMorph >> selectionChanged [
 	self rulers do: [ :r | r selectionChanged ].
 	self setModelSelection: self selectionInterval
-
 ]
 
 { #category : #'accessing - selection' }
@@ -995,7 +977,7 @@ RubScrolledTextMorph >> setModelSelection: aSelectionInterval [
 RubScrolledTextMorph >> setSelection: aSelectionInterval [
 	aSelectionInterval ifNil: [ ^ self ].
 	self setTextAreaSelection: aSelectionInterval.
-	self selectionChanged 
+	self selectionChanged
 ]
 
 { #category : #'mock for spec' }
@@ -1046,7 +1028,7 @@ RubScrolledTextMorph >> tabWidth [
 
 { #category : #'accessing - text' }
 RubScrolledTextMorph >> tabWidth: anInteger [
-	self textArea tabWidth: anInteger 
+	self textArea tabWidth: anInteger
 ]
 
 { #category : #'model protocol' }
@@ -1072,7 +1054,6 @@ RubScrolledTextMorph >> textAreaClass [
 { #category : #'event handling' }
 RubScrolledTextMorph >> textAreaExtentChanged [
 	self manageLayout
-
 ]
 
 { #category : #'event handling' }
@@ -1158,26 +1139,22 @@ RubScrolledTextMorph >> verticalRulers [
 RubScrolledTextMorph >> whenCancelEditRequested: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self cancel
-
 ]
 
 { #category : #'event handling' }
 RubScrolledTextMorph >> whenCancelEditRequestedInModel: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self cancel
-
 ]
 
 { #category : #'event handling' }
 RubScrolledTextMorph >> whenConfigurationChanged: anAnnouncement [
 	anAnnouncement configurationBlock value: self
-
 ]
 
 { #category : #'event handling' }
 RubScrolledTextMorph >> whenConfigurationChangedFromModel: anAnnouncement [
 	self announcer announce: anAnnouncement
-
 ]
 
 { #category : #'event handling' }
@@ -1185,7 +1162,6 @@ RubScrolledTextMorph >> whenEditsStateChangedInModel: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self basicHasUnacceptedEdits: self model hasUnacceptedEdits.
 	self changed
-
 ]
 
 { #category : #'event handling' }
@@ -1209,8 +1185,6 @@ RubScrolledTextMorph >> whenLostFocus: anAnnouncement [
 RubScrolledTextMorph >> whenPrimarySelectionUpdatedInModel: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self setTextAreaSelection: self getSelectionFromModel.
-
-
 ]
 
 { #category : #'event handling' }
@@ -1229,7 +1203,6 @@ RubScrolledTextMorph >> whenTextAcceptRequest: anAnnouncement [
 RubScrolledTextMorph >> whenTextAcceptedInModel: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self acceptContents
-
 ]
 
 { #category : #'event handling' }
@@ -1247,7 +1220,6 @@ RubScrolledTextMorph >> whenTextSetInModel: anAnnouncement [
 RubScrolledTextMorph >> whenTextUpdatedInModel: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self updateTextWith: self getTextFromModel
-
 ]
 
 { #category : #'accessing - rulers' }
@@ -1336,7 +1308,6 @@ RubScrolledTextMorph >> withSourceCodeAnnotation [
 { #category : #'accessing - rulers' }
 RubScrolledTextMorph >> withTextSegmentIcons [
 	self withRulerNamed: #textSegmentIcons
-
 ]
 
 { #category : #'accessing - rulers' }
@@ -1377,7 +1348,6 @@ RubScrolledTextMorph >> withoutFocusBorder [
 { #category : #'accessing - rulers' }
 RubScrolledTextMorph >> withoutGhostText [
 	self withoutRulerNamed: #ghostText.
-
 ]
 
 { #category : #'accessing - rulers' }
@@ -1415,13 +1385,11 @@ RubScrolledTextMorph >> withoutSelectionBar [
 { #category : #'accessing - rulers' }
 RubScrolledTextMorph >> withoutTextField [
 	self withoutRulerNamed: #textField.
-
 ]
 
 { #category : #'accessing - rulers' }
 RubScrolledTextMorph >> withoutTextSegmentIcons [
 	self withoutRulerNamed: #textSegmentIcons
-
 ]
 
 { #category : #accessing }

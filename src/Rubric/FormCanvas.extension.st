@@ -9,5 +9,4 @@ FormCanvas >> rubParagraph: para bounds: bounds color: c [
 		foreground: c background: Color transparent
 		ignoreColorChanges: false.
 	para drawOn: (self copyClipRect: bounds) using: scanner at: origin + bounds topLeft.
-
 ]

@@ -20,7 +20,7 @@ Class {
 RubScrolledTextModel >> acceptEdits [
 	"Accept the current contents and end editing."
 	self announce: RubTextAcceptedInModel new.
-	self clearUserEdits 
+	self clearUserEdits
 ]
 
 { #category : #'text managing' }
@@ -58,7 +58,7 @@ RubScrolledTextModel >> canDiscardEdits [
 RubScrolledTextModel >> cancelEdits [
 	"Cancel the current contents and end editing."
 	self announce: RubCancelEditRequestedInModel new.
-	self clearUserEdits  
+	self clearUserEdits
 ]
 
 { #category : #'undo - redo' }
@@ -154,7 +154,7 @@ RubScrolledTextModel >> newTextField [
 
 { #category : #'text managing' }
 RubScrolledTextModel >> primarySelectionInterval [
-	^ primarySelectionInterval 
+	^ primarySelectionInterval
 ]
 
 { #category : #'view updating' }

@@ -75,7 +75,7 @@ RubColumnDisplayer >> font [
 
 { #category : #accessing }
 RubColumnDisplayer >> tabLineColor [
-	^ tabLineColor ifNil: [ tabLineColor := Color lightGray twiceLighter] 
+	^ tabLineColor ifNil: [ tabLineColor := Color lightGray twiceLighter]
 ]
 
 { #category : #accessing }
@@ -86,19 +86,16 @@ RubColumnDisplayer >> tabLineColor: aColor [
 { #category : #accessing }
 RubColumnDisplayer >> tabLineDashes [
 	^ tabLineDashes ifNil: [tabLineDashes := {self tabLineWidth. self tabLineWidth*3}].
-
 ]
 
 { #category : #accessing }
 RubColumnDisplayer >> tabLineDashes: anArray [
 	 tabLineDashes := anArray
-
 ]
 
 { #category : #accessing }
 RubColumnDisplayer >> tabLineDashesColors [ 
 	^ tabLineDashesColors ifNil: [tabLineDashesColors := {(self tabLineColor). (Color transparent)}].
-
 ]
 
 { #category : #accessing }

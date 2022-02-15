@@ -38,13 +38,10 @@ RubHighlightSegmentMorph >> registerTextArea [
 
 { #category : #'event handling' }
 RubHighlightSegmentMorph >> showMouseHasEntered [
-
 ]
 
 { #category : #'event handling' }
 RubHighlightSegmentMorph >> showMouseHasLeaved [
-
-
 ]
 
 { #category : #'event handling' }
@@ -63,7 +60,6 @@ RubHighlightSegmentMorph >> whenMouseClicked: event [
 RubHighlightSegmentMorph >> whenSelectionChanged: anAnnouncement [ 
 
 	self delete
-	
 ]
 
 { #category : #'event handling' }

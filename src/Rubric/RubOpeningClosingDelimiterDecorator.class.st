@@ -62,7 +62,6 @@ RubOpeningClosingDelimiterDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	(anAthensCanvas setStrokePaint: Color black)
 		width: 1.
 	anAthensCanvas draw.
-
 ]
 
 { #category : #drawing }

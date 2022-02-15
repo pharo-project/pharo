@@ -17,7 +17,7 @@ TRubWithWrapPolicy >> changeWrappingPolicy [
 
 { #category : #accessing }
 TRubWithWrapPolicy >> fontToUse [
-	^ RubAbstractTextArea lineNumbersFont 
+	^ RubAbstractTextArea lineNumbersFont
 ]
 
 { #category : #'event handling' }

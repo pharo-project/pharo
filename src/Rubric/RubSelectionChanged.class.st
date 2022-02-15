@@ -13,8 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 RubSelectionChanged class >> from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock [ 
-	^ self new from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock 
-
+	^ self new from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock
 ]
 
 { #category : #accessing }

@@ -32,8 +32,7 @@ RubCurrentLineBarDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	bnd := (line topLeft - (self margins left @ 0)) corner: ((line bottomRight + (self margins right @ 0)) min: anAthensCanvas clipRect bottomRight).
 	anAthensCanvas setPaint: self selectionBarColor.
 	anAthensCanvas setShape: bnd.
-	anAthensCanvas draw 
-
+	anAthensCanvas draw
 ]
 
 { #category : #accessing }

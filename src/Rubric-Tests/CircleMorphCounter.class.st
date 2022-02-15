@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 CircleMorphCounter >> counter [
 	counter ifNil: [ counter := 0 ].
-	^ counter 
+	^ counter
 ]
 
 { #category : #accessing }

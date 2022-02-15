@@ -10,13 +10,11 @@ Class {
 { #category : #initialization }
 RubPrimarySelectionMorph >> defaultBorderColor [
 	^ Color orange
-
 ]
 
 { #category : #initialization }
 RubPrimarySelectionMorph >> defaultColor [
 	^ self theme selectionColor
-
 ]
 
 { #category : #initialization }
@@ -39,8 +37,7 @@ RubPrimarySelectionMorph >> registerTextArea [
 	textArea announcer 
 	when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self;
 	when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self;	
-	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self.	
-
+	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self.
 ]
 
 { #category : #accessing }
@@ -52,12 +49,12 @@ RubPrimarySelectionMorph >> selectionColor [
 
 { #category : #'protocol - events' }
 RubPrimarySelectionMorph >> whenTextAreaGotFocus: anAnnouncement [ 
-	self color: self selectionColor 
+	self color: self selectionColor
 ]
 
 { #category : #'protocol - events' }
 RubPrimarySelectionMorph >> whenTextAreaLostFocus: anAnnouncement [ 
-	self color: self selectionColor 
+	self color: self selectionColor
 ]
 
 { #category : #'protocol - events' }
@@ -66,5 +63,4 @@ RubPrimarySelectionMorph >> whenTextAreaSelectionChanged: anAnnouncement [
 	lastIndex := self textArea pointIndex max: self textArea markIndex.
 	self computeVertices.
 	self announcer announce: RubTextSetInModel.
-
 ]

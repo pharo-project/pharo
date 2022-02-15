@@ -85,7 +85,6 @@ RubSegmentMorph >> bounds: newBounds [
 	Always change extent first then position"
 	
 	self extent: newBounds extent; position: newBounds topLeft
-
 ]
 
 { #category : #'cubic support' }
@@ -170,9 +169,7 @@ RubSegmentMorph >> closedCubicSlopesOf: knots [
 	(1 to: n1 - 2)
 		reverseDo: [:k | D at: k put: (y at: k)
 					- ((v at: k + 1) * (D at: k + 1)) - ((w at: k + 1) * (D at: n1))].
-	^ D 
-
-
+	^ D
 ]
 
 { #category : #smoothing }
@@ -180,7 +177,7 @@ RubSegmentMorph >> coefficients [
 	curveState ifNotNil: [^ curveState at: 1].
 	^ self vertices size < 1 
 		ifTrue: [ self  ]
-		ifFalse: [ self coefficientsForMoreThanThreePoints ].  
+		ifFalse: [ self coefficientsForMoreThanThreePoints ].
 ]
 
 { #category : #smoothing }
@@ -216,7 +213,6 @@ RubSegmentMorph >> computeBounds [
 	bounds := self curveBounds expanded.
 	self layoutChanged.
 	self changed.
-
 ]
 
 { #category : #smoothing }
@@ -241,7 +237,7 @@ RubSegmentMorph >> containsPoint: aPoint [
 		lineSegmentsDo: [ :p1 :p2 | 
 			(aPoint onLineFrom: p1 to: p2 within: (3 max: (borderWidth + 1) // 2) asFloat)
 				ifTrue: [ ^ true ] ].
-	^ false 
+	^ false
 ]
 
 { #category : #accessing }
@@ -387,7 +383,6 @@ RubSegmentMorph >> drawOn: aCanvas [
 	|  |
 	aCanvas drawPolygon: self getVertices fillStyle: self fillStyle.
 	self drawBorderOn: aCanvas
-
 ]
 
 { #category : #drawing }
@@ -407,7 +402,6 @@ RubSegmentMorph >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas setShape: polygonPath.
 	anAthensCanvas draw.
 	self drawBorderOnAthensCanvas: anAthensCanvas
-
 ]
 
 { #category : #geometry }
@@ -464,7 +458,6 @@ RubSegmentMorph >> initialize [
 	vertices := Array with: 5 @ 0 with: 20 @ 10 with: 0 @ 20.
 	smoothCurve := false.
 	self computeBounds.
-
 ]
 
 { #category : #geometry }
@@ -721,7 +714,6 @@ RubSegmentMorph >> privateMoveBy: delta [
 RubSegmentMorph >> referencePosition [ 
 	"Return the current reference position of the receiver"
 	^ self valueOfProperty: #referencePosition ifAbsent: [super referencePosition]
-
 ]
 
 { #category : #caching }
@@ -733,7 +725,6 @@ RubSegmentMorph >> releaseCachedState [
 	curveState := nil.
 	(self hasProperty: #flex) ifTrue:
 		[self removeProperty: #flex].
-
 ]
 
 { #category : #'cubic support' }

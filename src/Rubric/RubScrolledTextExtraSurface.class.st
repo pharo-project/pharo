@@ -12,7 +12,6 @@ RubScrolledTextExtraSurface >> computedHeightFrom: aRectangle [
 { #category : #accessing }
 RubScrolledTextExtraSurface >> computedWidthFrom: aRectangle [
 	^  aRectangle width min: self scrollBounds width
-
 ]
 
 { #category : #testing }
@@ -25,5 +24,5 @@ RubScrolledTextExtraSurface >> manageLayoutInBounds: aRectangle [
 	self position: (self computedPositionFrom: aRectangle).
 	self extent: (self computedExtentFrom: aRectangle).
 	self changed.
-	^ aRectangle 
+	^ aRectangle
 ]

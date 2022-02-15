@@ -138,7 +138,6 @@ RubTextLine >> justifiedPadFor: spaceIndex font: aFont [
 			spaceIndex <= (paddingWidth \\ internalSpaces)
 				ifTrue: [pad + 1]
 				ifFalse: [pad]]
-		
 ]
 
 { #category : #scanning }
@@ -211,7 +210,6 @@ RubTextLine >> moveBy: delta [
 	right := right + delta x.
 	top := top + delta y.
 	bottom := bottom + delta y.
-
 ]
 
 { #category : #accessing }
@@ -280,7 +278,6 @@ RubTextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	lastIndex := lastIndex + delta.
 	bottom := bottom + (newTop - top).
 	top := newTop.
-
 ]
 
 { #category : #accessing }
