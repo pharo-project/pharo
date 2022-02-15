@@ -168,6 +168,26 @@ BlockClosureTest >> testIsClean [
 ]
 
 { #category : #tests }
+BlockClosureTest >> testLiteralEqual [
+	"Check that if we have two clean blocks with the same code, they are not #literalEqual:"
+	| methodToTest compiledBlocks |
+	methodToTest := self class compiler 
+		options: #(+ optionCleanBlockClosure);
+		compile: 'twoCleanBlocks
+
+	| value |
+	[3].
+	"just two clean blocks"
+	[3].'.
+	
+	compiledBlocks := methodToTest literals select: [ :each | each isBlock ].
+	self assert: compiledBlocks size equals: 2.
+	self deny: (compiledBlocks first literalEqual: compiledBlocks second).
+	"Clean blocks are not equal as they have a different compiledBlock"
+	self deny: compiledBlocks first equals: compiledBlocks second
+]
+
+{ #category : #tests }
 BlockClosureTest >> testNew [
 	self	should: [Context new: 5] raise: Error.
 	[Context new: 5]
