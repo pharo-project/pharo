@@ -25,7 +25,6 @@ CommandLineTestRunner >> createStdout [
 
 { #category : #running }
 CommandLineTestRunner >> done [
-	
 ]
 
 { #category : #helper }
@@ -67,7 +66,7 @@ CommandLineTestRunner >> recordPassOf: aTestCase [
 	self
 		print: nil
 		short: ' [OK]' 
-		of: aTestCase 
+		of: aTestCase
 ]
 
 { #category : #helper }
@@ -106,7 +105,7 @@ CommandLineTestRunner >> shortStackDescriptionFor: anError [
 CommandLineTestRunner >> stderr [
 	(stderr isNil or: [ stderr closed ])
 		ifTrue: [ stderr := self createStderr ].
-	^ stderr 
+	^ stderr
 ]
 
 { #category : #accessing }
@@ -127,7 +126,7 @@ CommandLineTestRunner >> writeError: anError of: aTestCase [
 	self
 		print: (self shortStackDescriptionFor: anError)
 		short: ' [ERROR]' 
-		of: aTestCase 
+		of: aTestCase
 ]
 
 { #category : #helper }
@@ -135,5 +134,5 @@ CommandLineTestRunner >> writeFailure: anError of: aTestCase [
 	self
 		print: (self shortStackDescriptionFor: anError)
 		short: ' [FAIL]' 
-		of: aTestCase 
+		of: aTestCase
 ]

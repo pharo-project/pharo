@@ -111,7 +111,7 @@ TestExecutionEnvironmentTest >> testCleanUpTestServicesAfterTerminatedTest [
 	self runWithNoHandlers: [
 		self runTestWith: [ Processor terminateActive]].
 
-	self assert: testService isCleanUpDone 
+	self assert: testService isCleanUpDone
 ]
 
 { #category : #tests }
@@ -191,13 +191,13 @@ TestExecutionEnvironmentTest >> testEnableGivenServiceWithConfigurationBlock [
 	| actual |
 	executionEnvironment enableService: TestServiceExample using: [:service | actual := service] .
 
-	self assert: actual identicalTo: testService 
+	self assert: actual identicalTo: testService
 ]
 
 { #category : #tests }
 TestExecutionEnvironmentTest >> testFindService [
 
-	self assert: (executionEnvironment findService: TestServiceExample) identicalTo: testService 
+	self assert: (executionEnvironment findService: TestServiceExample) identicalTo: testService
 ]
 
 { #category : #tests }
@@ -208,7 +208,7 @@ TestExecutionEnvironmentTest >> testGettingEnvironmentFromTestCase [
 		actual := self executionEnvironment.
 	].
 
-	self assert: actual identicalTo: executionEnvironment 
+	self assert: actual identicalTo: executionEnvironment
 ]
 
 { #category : #tests }
@@ -429,5 +429,5 @@ TestExecutionEnvironmentTest >> testRunningTooLongTest [
 			self runTestWith: [ 
 				executionEnvironment maxTimeForTest: 10 milliSeconds.
 				20 milliSeconds wait]]
-		raise: TestTookTooMuchTime 
+		raise: TestTookTooMuchTime
 ]

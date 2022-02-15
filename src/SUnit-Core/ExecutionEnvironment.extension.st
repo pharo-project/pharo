@@ -3,11 +3,11 @@ Extension { #name : #ExecutionEnvironment }
 { #category : #'*SUnit-Core' }
 ExecutionEnvironment >> runTestCase: aTestCase [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'*SUnit-Core' }
 ExecutionEnvironment >> runTestsBy: aBlock [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

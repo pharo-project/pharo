@@ -4,7 +4,6 @@ Extension { #name : #CurrentExecutionEnvironment }
 CurrentExecutionEnvironment class >> runTestCase: aTestCase [
 
 	self value runTestCase: aTestCase
-
 ]
 
 { #category : #'*SUnit-Core' }

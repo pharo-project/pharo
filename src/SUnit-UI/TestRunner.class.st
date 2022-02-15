@@ -139,7 +139,6 @@ TestRunner >> browseSelectedFailedTest [
 { #category : #browsing }
 TestRunner >> browseSelectedTest: aTest [
 	(aTest class lookupSelector: aTest selector) browse
-
 ]
 
 { #category : #private }
@@ -165,9 +164,6 @@ TestRunner >> build [
 	window	addMorph: self buildErrors fullFrame: self errorListFrame. 
 	window	addMorph: self buildButtons fullFrame: self buttonsFrame. 
 	^ window
-	
-	
-	
 ]
 
 { #category : #building }
@@ -226,7 +222,6 @@ TestRunner >> buildErrors [
 			changeSelected: #errorSelected:
 			menu: #errorMenu: 
 			keystroke: nil.
-	
 ]
 
 { #category : #building }
@@ -282,7 +277,6 @@ TestRunner >> buildStatus [
 			textColor: self theme textColorForNonStandardBackground;
 			getColorSelector: #statusColor ; 
 			yourself.
-	
 ]
 
 { #category : #building }
@@ -303,7 +297,6 @@ TestRunner >> buttons [
 { #category : #building }
 TestRunner >> buttonsFrame [
 	^LayoutFrame new topFraction: 1 offset: self buttonHeight negated
-		
 ]
 
 { #category : #'accessing - classes' }
@@ -508,9 +501,6 @@ TestRunner >> executeSuite: aTestSuite as: aBlock [
 	[ aBlock cull: aTestSuite cull: result  ] ensure: [
 		aTestSuite unsubscribe:TestAnnouncement.
 	].
-
-
-
 ]
 
 { #category : #'accessing - ui' }
@@ -707,14 +697,14 @@ TestRunner >> initialize [
 
 { #category : #'accessing - ui' }
 TestRunner >> label [
-	^ 'Test Runner' 
+	^ 'Test Runner'
 ]
 
 { #category : #private }
 TestRunner >> label: aString forSuite: aTestSuite [
 	^ String streamContents: [ :stream |
 		stream nextPutAll: 'Running '; print: aTestSuite tests size; space; nextPutAll: aString.
-		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ]. 
+		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ].
 ]
 
 { #category : #building }
@@ -722,8 +712,6 @@ TestRunner >> open [
 	<script: 'self new open'>
 	 
 	^ self build openInWorld
-	
-
 ]
 
 { #category : #'accessing - packages' }
@@ -775,7 +763,7 @@ TestRunner >> packageSearchUpdate: aPattern [
 
 { #category : #'accessing - packages' }
 TestRunner >> packageSelected [
-	^ packageIndex 
+	^ packageIndex
 ]
 
 { #category : #'accessing - packages' }
@@ -856,7 +844,6 @@ TestRunner >> runCoverage [
 	methods isEmpty ifTrue: 
 		[ ^ UIManager default inform: 'No methods found for coverage analysis.' ].
 	self collectCoverageFor: methods
-
 ]
 
 { #category : #actions }
@@ -880,8 +867,6 @@ TestRunner >> runProfiled [
 TestRunner >> runSuite: aTestSuite [
 	self executeSuite: aTestSuite as: [ :aSuite :aResult | aSuite run: aResult ].
 	self updateResults
-
-
 ]
 
 { #category : #actions }
@@ -1007,8 +992,7 @@ TestRunner >> showDiffWith: aTestResult [
 		diff third do: [:s| str nextPutAll: s printString, ' '].
 		str cr].
 	
-	UIManager default edit: string label: 'SUnit Progress'. 
-	
+	UIManager default edit: string label: 'SUnit Progress'.
 ]
 
 { #category : #'history saving' }
@@ -1025,7 +1009,7 @@ TestRunner >> showHistoryMenu [
 	selectedPreviousResult := self previousRun at: (selectionIndex - 1).
  	actionIndex := (UIManager default chooseFrom: #('delete' 'show diff')  title:  'Action:').
 	actionIndex = 1 ifTrue: [ self previousRun remove: selectedPreviousResult. ^ self ].
-	actionIndex = 2 ifTrue: [ self showDiffWith: selectedPreviousResult].	
+	actionIndex = 2 ifTrue: [ self showDiffWith: selectedPreviousResult].
 ]
 
 { #category : #'history saving' }
@@ -1073,9 +1057,7 @@ TestRunner >> showProgress [
 		(d at: #errors) do: [:s| str nextPutAll: s printString, ' '].
 		str cr].
 	
-	UIManager default edit: string label: 'SUnit Progress'. 
-
-	
+	UIManager default edit: string label: 'SUnit Progress'.
 ]
 
 { #category : #utilities }
@@ -1129,7 +1111,6 @@ TestRunner >> statusText [
 TestRunner >> storeResultIntoTestCases [
 
 	result classesTested do: [:testCaseCls | testCaseCls generateLastStoredRunMethod ]
-
 ]
 
 { #category : #accessing }

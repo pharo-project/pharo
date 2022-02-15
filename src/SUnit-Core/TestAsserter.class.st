@@ -347,7 +347,6 @@ TestAsserter >> deny: aBooleanOrBlock description: aStringOrBlock resumable: res
 		assert: aBooleanOrBlock value not
 		description: aStringOrBlock
 		resumable: resumableBoolean
-			
 ]
 
 { #category : #asserting }
@@ -420,7 +419,6 @@ TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: true]
-			
 ]
 
 { #category : #asserting }
@@ -428,7 +426,6 @@ TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescript
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) not ]
-			
 ]
 
 { #category : #asserting }
@@ -469,7 +466,6 @@ TestAsserter >> should: aBlock [
 { #category : #asserting }
 TestAsserter >> should: aBlock description: aString [
 	self assert: aBlock value description: aString
-			
 ]
 
 { #category : #asserting }
@@ -482,8 +478,6 @@ TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
 			assert: false 
 			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
 	]
-	
-
 ]
 
 { #category : #asserting }
@@ -504,21 +498,18 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent [
 TestAsserter >> should: aBlock raise: anExceptionalEvent description: aString [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 		description: aString
-			
 ]
 
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring)
 		description: aString
-
 ]
 
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring)
 		description: aString
-
 ]
 
 { #category : #asserting }
@@ -537,20 +528,17 @@ TestAsserter >> shouldFix: aBlock [
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock [
 	self deny: aBlock value
-			
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock description: aString [
 	self deny: aBlock value description: aString
-			
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [  
 	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
-			
 ]
 
 { #category : #asserting }
@@ -559,7 +547,6 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString 
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 		description: aString
-			
 ]
 
 { #category : #asserting }
@@ -568,7 +555,6 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesN
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring) not
 		description: aString
-
 ]
 
 { #category : #asserting }
@@ -577,7 +563,6 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionInclu
 	^self 
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring) not
 		description: aString
-
 ]
 
 { #category : #asserting }

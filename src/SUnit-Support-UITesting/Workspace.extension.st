@@ -12,5 +12,4 @@ Workspace >> hasUnacceptedEdits [
 				ifTrue: [^ true]]
 		without: self.
 	^ false
-
 ]

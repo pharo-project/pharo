@@ -146,7 +146,7 @@ TestCase class >> announcer [
 
 { #category : #events }
 TestCase class >> announcers [
-	^ Announcers ifNil: [ Announcers := Dictionary new ] 
+	^ Announcers ifNil: [ Announcers := Dictionary new ]
 ]
 
 { #category : #'building suites' }
@@ -166,14 +166,12 @@ TestCase class >> buildSuite [
 TestCase class >> buildSuiteFromAllSelectors [
 
 	^self buildSuiteFromMethods: self allTestSelectors
-			
 ]
 
 { #category : #'building suites' }
 TestCase class >> buildSuiteFromLocalSelectors [
 
 	^self buildSuiteFromMethods: self testSelectors
-			
 ]
 
 { #category : #'building suites' }
@@ -243,7 +241,6 @@ TestCase class >> coverageForClass: cls until: aRootClass [
 	testedMethods := testedMethods reject: [:sel | (definedMethods includes: sel) not].
 	untestedMethods := definedMethods select: [:selector | (testedMethods includes: selector) not].
 	^ { (testedMethods size * 100 / definedMethods size) asFloat . untestedMethods}
-
 ]
 
 { #category : #coverage }
@@ -260,7 +257,6 @@ TestCase class >> debug: aSymbol [
 { #category : #accessing }
 TestCase class >> defaultTimeLimit [
 	^DefaultTimeLimit ifNil: [DefaultTimeLimit := 10 seconds]
-
 ]
 
 { #category : #accessing }
@@ -311,13 +307,13 @@ TestCase class >> hasComment [
 { #category : #testing }
 TestCase class >> hasErrorTest [
 
-	^ (self history at: #errors) isEmpty not 
+	^ (self history at: #errors) isEmpty not
 ]
 
 { #category : #testing }
 TestCase class >> hasFailedTest [
 
-	^ (self history at: #failures) isEmpty not 
+	^ (self history at: #failures) isEmpty not
 ]
 
 { #category : #testing }
@@ -331,7 +327,7 @@ TestCase class >> hasMethodBeenRun: aSelector [
 { #category : #testing }
 TestCase class >> hasPassedTest [
 
-	^ (self history at: #passed) isEmpty not 
+	^ (self history at: #passed) isEmpty not
 ]
 
 { #category : #testing }
@@ -348,7 +344,6 @@ TestCase class >> hasTestSelectors [
 				]
 			]
 		]
-	
 ]
 
 { #category : #history }
@@ -383,7 +378,6 @@ TestCase class >> isAbstract [
 	TestCase instances built from it"
 
 	^self name = #TestCase
-			
 ]
 
 { #category : #testing }
@@ -415,7 +409,6 @@ TestCase class >> lastRunMethodNamed: aSelector [
 	^ String streamContents: [:str |
 		str nextPutAll: aSelector asString ;cr.
 		str tab; nextPutAll: '^ ', (self lastRun) storeString]
-
 ]
 
 { #category : #history }
@@ -470,7 +463,6 @@ TestCase class >> localCoverageForClass: cls [
 	untestedMethods := definedMethods select: [:selector | (testedMethods includes: selector) not].
 
 	^ { (testedMethods size * 100 / definedMethods size) asFloat . untestedMethods}
-
 ]
 
 { #category : #coverage }
@@ -505,7 +497,6 @@ TestCase class >> methodPassed: aSelector [
 TestCase class >> methodProgressed: aSelector [
 	^ ((self storedMethodRaisedError: aSelector) or: [self storedMethodFailed: aSelector])
 		and: [self methodPassed: aSelector]
-		
 ]
 
 { #category : #testing }
@@ -526,7 +517,6 @@ TestCase class >> newTestDictionary [
 		at: #failures put: Set new;
 		at: #errors put: Set new;
 		yourself
-		
 ]
 
 { #category : #events }
@@ -580,7 +570,6 @@ TestCase class >> shouldGenerateLastStoredRunMethod [
 	sameRun := #(#passed #failures #errors) inject: true into: 
 		[ :ok :set | ok and: [(self lastRun at: set) = (self lastStoredRun at: set) ]].
 	^ sameRun not
-
 ]
 
 { #category : #testing }
@@ -691,7 +680,6 @@ TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionC
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) ]
-			
 ]
 
 { #category : #accessing }
@@ -711,15 +699,12 @@ TestCase >> expectedFailures [
 		
 		pragmas := Pragma allNamed: #expectedFailure from: self class to: TestCase.
 		expectedFails := pragmas collect: [:each | each method selector  ].
-	]	
-
+	]
 ]
 
 { #category : #running }
 TestCase >> failureLog [	
 	^Transcript
-
-			
 ]
 
 { #category : #private }
@@ -737,7 +722,6 @@ TestCase >> isLogging [
 	"By default, we're not logging failures. If you override this in 
 	a subclass, make sure that you override #failureLog"
 	^false
-			
 ]
 
 { #category : #running }
@@ -747,7 +731,6 @@ TestCase >> logFailure: aString [
 			cr; 
 			nextPutAll: aString; 
 			flush]
-			
 ]
 
 { #category : #accessing }
@@ -877,7 +860,6 @@ TestCase >> setTestSelector: aSymbol [
 { #category : #running }
 TestCase >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
-
 ]
 
 { #category : #events }

@@ -25,7 +25,6 @@ ClassTestCase class >> isAbstract [
 	TestCase instances built from it"
 
 	^self name = #ClassTestCase
-			
 ]
 
 { #category : #testing }
@@ -79,7 +78,6 @@ ClassTestCase >> repeatedMethodsThatDoNotAccessInstanceVariablesBetween: firstCl
 ClassTestCase >> selectorsNotTested [
 
 	^ self selectorsToBeTested difference: self selectorsTested
-
 ]
 
 { #category : #coverage }
