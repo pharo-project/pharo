@@ -35,5 +35,4 @@ SystemSystemSettings class >> systemSettingOn: aBuilder [
 				target: Locale;
 				selector: #activated;
 				description: 'Use the system locale to set the system language at startup.']
-
 ]
