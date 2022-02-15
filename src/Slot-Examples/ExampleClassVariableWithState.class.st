@@ -20,5 +20,4 @@ ExampleClassVariableWithState >> read [
 { #category : #'meta-object-protocol' }
 ExampleClassVariableWithState >> write:	 anObject [
 	state := anObject
-	 
 ]

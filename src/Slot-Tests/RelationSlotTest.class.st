@@ -13,8 +13,7 @@ RelationSlotTest >> testDefinition [
 	s2 := #people => ToManyRelationSlot inverse: #x inClass: #SlotExamplePerson.
 	
 	self assert: s1 equals: s2.
-	self assert: s1 hasInverse 
-
+	self assert: s1 hasInverse
 ]
 
 { #category : #tests }
@@ -26,8 +25,7 @@ RelationSlotTest >> testDefinitionWithClass [
 	s2 := #people => ToManyRelationSlot inverse: #x inClass: SlotExamplePerson.
 	
 	self assert: s1 equals: s2.
-	self assert: s1 hasInverse 
-
+	self assert: s1 hasInverse
 ]
 
 { #category : #tests }
