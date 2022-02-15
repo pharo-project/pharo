@@ -290,7 +290,6 @@ SmalltalkImage >> bytesLeft [
 	"Answer the number of bytes of space available. Does a full garbage collection."
 
 	^ self garbageCollect
-
 ]
 
 { #category : #'memory space' }
@@ -312,7 +311,7 @@ SmalltalkImage >> changesName [
 	"Answer the name for the changes file corresponding to the image file name."
 	"Smalltalk changesName"
 
-	^ self changesFile fullName 
+	^ self changesFile fullName
 ]
 
 { #category : #'image, changes name' }
@@ -412,7 +411,6 @@ SmalltalkImage >> clearExternalObjects [
 	"Smalltalk clearExternalObjects"
 
 	ExternalSemaphoreTable clearExternalObjects
-
 ]
 
 { #category : #miscellaneous }
@@ -422,7 +420,6 @@ SmalltalkImage >> closeLog: logger [
 	we should delegate to it at some point "
 	
 	logger ifNotNil: [ logger close ]
-
 ]
 
 { #category : #'sources, change log' }
@@ -533,7 +530,6 @@ SmalltalkImage >> externalObjects [
 	"Smalltalk externalObjects"
 
 	^ ExternalSemaphoreTable externalObjects
-
 ]
 
 { #category : #'system attribute' }
@@ -795,7 +791,7 @@ SmalltalkImage >> imagePath [
 
 	"SmalltalkImage current imagePath"
 
-	^ self primImagePath asByteArray utf8Decoded 
+	^ self primImagePath asByteArray utf8Decoded
 ]
 
 { #category : #'image, changes name' }
@@ -850,9 +846,6 @@ SmalltalkImage >> isHeadless [
 			includes: (self vm getSystemAttribute: n)) 
 				ifTrue: [ ^ true ]].
 	^ false
-	
-	
-
 ]
 
 { #category : #testing }
@@ -914,7 +907,6 @@ SmalltalkImage >> lastUpdateString [
 	"SmalltalkImage current lastUpdateString"
 	
 	^'Build information: ', SystemVersion current asString
-
 ]
 
 { #category : #'sources, change log' }
@@ -1009,8 +1001,6 @@ SmalltalkImage >> logDuring: aMonadicBlock [
 		logStream := self openLog.
 		aMonadicBlock value: logStream.
 	] ensure: [ self closeLog: logStream ].
-
-
 ]
 
 { #category : #miscellaneous }
@@ -1039,7 +1029,7 @@ SmalltalkImage >> logError: errMsg inContext: aContext [
 { #category : #log }
 SmalltalkImage >> logFileName [
 
-	^ LogFileName ifNil: [ self defaultLogFileName ] 
+	^ LogFileName ifNil: [ self defaultLogFileName ]
 ]
 
 { #category : #log }
@@ -1120,7 +1110,6 @@ SmalltalkImage >> lowSpaceWatcher [
 	UIManager default lowSpaceWatcherDefaultAction: preemptedProcess.
 	"We need to reinstall the lowSpaceWatcher"	
 	Smalltalk installLowSpaceWatcher.
-
 ]
 
 { #category : #'memory space' }
@@ -1282,7 +1271,6 @@ run out of memory and crash. If you do proceed, you can start the
 low space notifier when more space becomes available simply by
 opening and then closing a debugger (e.g., by hitting Cmd-period.)
 Do you want to proceed?'
-
 ]
 
 { #category : #miscellaneous }
@@ -1445,7 +1433,7 @@ SmalltalkImage >> quitPrimitive [
 SmalltalkImage >> recompile [
 	Smalltalk globals allClassesAndTraits 
 		do: [:classOrTrait | classOrTrait recompile] 
-		displayingProgress: 'Recompiling all classes and traits'. 
+		displayingProgress: 'Recompiling all classes and traits'.
 ]
 
 { #category : #'snapshot and quit' }
@@ -1469,7 +1457,6 @@ SmalltalkImage >> recreateSpecialObjectsArray [
 	
 	"Replace the interpreter's reference in one atomic operation"
 	self specialObjectsArray becomeForward: self newSpecialObjectsArray.
-	
 ]
 
 { #category : #'special objects' }
@@ -1895,7 +1882,6 @@ SmalltalkImage >> unbindExternalPrimitives [
 	"Primitive. Force all external primitives to be looked up again afterwards. Since external primitives that have not found are bound for fast failure this method will force the lookup of all primitives again so that after adding some plugin the primitives may be found."
 	<primitive: 570>
 	"Do nothing if the primitive fails for compatibility with older VMs"
-
 ]
 
 { #category : #'special objects' }

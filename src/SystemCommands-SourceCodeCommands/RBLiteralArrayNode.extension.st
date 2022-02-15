@@ -6,5 +6,4 @@ RBLiteralArrayNode >> displaySourceCode [
 	code := super displaySourceCode.
 	(code endsWith: '...') ifTrue: [ code := code , ')' ].
 	^ code
-	
 ]

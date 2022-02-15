@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 SycRemoveClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
@@ -34,7 +34,7 @@ SycRemoveClassStrategy class >> createForBrowser: aBrowser references: hasRefere
 
 { #category : #testing }
 SycRemoveClassStrategy class >> isAbstract [
-	^self == SycRemoveClassStrategy 
+	^self == SycRemoveClassStrategy
 ]
 
 { #category : #'instance creation' }
@@ -45,7 +45,7 @@ SycRemoveClassStrategy class >> newForBrowser: aBrowser [
 
 { #category : #execution }
 SycRemoveClassStrategy >> execute: aSycRemoveClassCommand [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -61,5 +61,5 @@ SycRemoveClassStrategy >> orderForBrowser [
 
 { #category : #execution }
 SycRemoveClassStrategy >> userRequestString [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

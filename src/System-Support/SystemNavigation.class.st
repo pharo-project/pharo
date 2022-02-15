@@ -50,8 +50,6 @@ SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 
 	^ self environment allClasses
-
-	
 ]
 
 { #category : #query }
@@ -65,8 +63,6 @@ SystemNavigation >> allClassesAndTraits [
 SystemNavigation >> allClassesDo: aBlock [
 
 	^ self environment allClassesDo: aBlock
-
-	
 ]
 
 { #category : #query }
@@ -90,8 +86,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 	| binding|
 	binding := self environment bindingOf: aSymbol.
 	binding ifNil: [ ^ #() ].
-	^ self allReferencesTo: binding	
-	
+	^ self allReferencesTo: binding
 ]
 
 { #category : #query }
@@ -113,7 +108,6 @@ SystemNavigation >> allImplementorsOf: aSelector [
 { #category : #query }
 SystemNavigation >> allMethods [
 	^ self environment allMethods
-
 ]
 
 { #category : #query }
@@ -259,12 +253,12 @@ SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
 	
 	^ (selectorSet copyWithoutAll: self allSentMessages) 
-			select: [ :each | (self allCallsOn: each) isEmpty ]   
+			select: [ :each | (self allCallsOn: each) isEmpty ]
 ]
 
 { #category : #accessing }
 SystemNavigation >> environment [
-	^ environment 
+	^ environment
 ]
 
 { #category : #accessing }

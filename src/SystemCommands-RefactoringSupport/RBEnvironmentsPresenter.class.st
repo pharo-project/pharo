@@ -147,7 +147,7 @@ RBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 { #category : #actions }
 RBEnvironmentsPresenter >> remove: anItem [
 	RefactoringSettings removeScopeNamed: anItem description.
-	self updateList 
+	self updateList
 ]
 
 { #category : #actions }
@@ -158,7 +158,7 @@ RBEnvironmentsPresenter >> selectAnotherScopeWhitout: anItem [
 			chooseFrom: (list collect: #shortDescription)
 			values: list
 			title: 'Select another scope (RBEnvironment)'.
-	^ anotherScope 
+	^ anotherScope
 ]
 
 { #category : #actions }

@@ -110,7 +110,7 @@ SycRefactoringPreviewPresenter >> changes [
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> changes: aCollection [
 	changes := aCollection.
-	self generateChanges 
+	self generateChanges
 ]
 
 { #category : #initialization }
@@ -262,7 +262,7 @@ SycRefactoringPreviewPresenter >> title [
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
 	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
 	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
-	self selectItemBelow: aRefactoring 
+	self selectItemBelow: aRefactoring
 ]
 
 { #category : #update }

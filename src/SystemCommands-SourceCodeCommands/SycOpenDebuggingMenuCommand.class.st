@@ -10,12 +10,12 @@ Class {
 
 { #category : #execution }
 SycOpenDebuggingMenuCommand >> activationStrategy [
-	^SycDebuggingMenuActivation 
+	^SycDebuggingMenuActivation
 ]
 
 { #category : #accessing }
 SycOpenDebuggingMenuCommand >> defaultMenuIconName [
-	^ #halt 
+	^ #halt
 ]
 
 { #category : #accessing }

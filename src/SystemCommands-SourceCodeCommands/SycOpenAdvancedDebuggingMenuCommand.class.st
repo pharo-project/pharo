@@ -10,7 +10,7 @@ Class {
 
 { #category : #execution }
 SycOpenAdvancedDebuggingMenuCommand >> activationStrategy [
-	^SycAdvancedDebuggingMenuActivation  
+	^SycAdvancedDebuggingMenuActivation
 ]
 
 { #category : #accessing }

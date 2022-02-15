@@ -10,7 +10,7 @@ Class {
 
 { #category : #execution }
 SycOpenReflectivityMenuCommand >> activationStrategy [
-	^SycReflectivityMenuActivation 
+	^SycReflectivityMenuActivation
 ]
 
 { #category : #accessing }

@@ -27,13 +27,12 @@ SycInlineAllSendersMessageCommand >> createRefactoring [
 		sendersOf: originalMessage selector 
 		in: methodOrigin.
 	refactoring setOption: #inlineExpression toUse: [ :ref :aString | self confirm: ('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString) ] .
-	^ refactoring 
+	^ refactoring
 ]
 
 { #category : #accessing }
 SycInlineAllSendersMessageCommand >> defaultMenuIconName [
 	^#smallRightFlushIcon
-
 ]
 
 { #category : #accessing }

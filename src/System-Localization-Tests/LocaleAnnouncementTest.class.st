@@ -20,7 +20,7 @@ LocaleAnnouncementTest >> frenchLocale [
 { #category : #events }
 LocaleAnnouncementTest >> localeWasChanged: anAnnouncement [
 
-	catchedAnnouncement := anAnnouncement 
+	catchedAnnouncement := anAnnouncement
 ]
 
 { #category : #running }

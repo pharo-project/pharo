@@ -9,7 +9,6 @@ Class {
 
 { #category : #execution }
 SycNotRemoveMethodStrategy >> removeMethods: methods [
-
 ]
 
 { #category : #execution }

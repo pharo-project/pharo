@@ -43,7 +43,6 @@ SystemNavigationTest >> setUp [
 SystemNavigationTest >> systemNavigationToTest [
 
 	^SystemNavigation new
-	
 ]
 
 { #category : #running }
@@ -52,7 +51,6 @@ SystemNavigationTest >> tearDown [
 	self classFactory cleanUp. 
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	super tearDown
-	
 ]
 
 { #category : #tests }

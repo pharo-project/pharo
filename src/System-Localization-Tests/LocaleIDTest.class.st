@@ -23,7 +23,7 @@ LocaleIDTest >> germanLocaleID [
 LocaleIDTest >> testComparision [
 
 	self deny: self germanLocaleID equals: self frenchLocaleID.
-	self assert: self germanLocaleID equals: self germanLocaleID.	
+	self assert: self germanLocaleID equals: self germanLocaleID.
 ]
 
 { #category : #tests }
@@ -50,8 +50,7 @@ LocaleIDTest >> testFromSingleISOString [
 LocaleIDTest >> testHashing [
 
 	self assert: self germanLocaleID hash equals: self germanLocaleID hash.
-	self assert: self frenchLocaleID hash equals: self frenchLocaleID hash.	
-
+	self assert: self frenchLocaleID hash equals: self frenchLocaleID hash.
 ]
 
 { #category : #tests }
@@ -88,5 +87,4 @@ LocaleIDTest >> testPrintString [
 	| locale |
 	locale := LocaleID isoString: 'en-us'.	
 	self assert: locale printString equals: 'en-us'
-
 ]

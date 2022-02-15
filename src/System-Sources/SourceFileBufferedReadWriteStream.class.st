@@ -55,8 +55,6 @@ SourceFileBufferedReadWriteStream >> atEnd: anInteger [
 SourceFileBufferedReadWriteStream >> bufferAt: aPosition [
 
 	^ buffer at:  (aPosition - bufferOffset)
-	
-	
 ]
 
 { #category : #private }
@@ -66,7 +64,6 @@ SourceFileBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
 
 	bufferLength := (aPosition - bufferOffset) max: bufferLength.
 	buffer at: (aPosition - bufferOffset) put: anElement
-	
 ]
 
 { #category : #private }
@@ -135,7 +132,7 @@ SourceFileBufferedReadWriteStream >> flush [
 { #category : #testing }
 SourceFileBufferedReadWriteStream >> isBinary [
 	
-	^ innerStream isBinary 
+	^ innerStream isBinary
 ]
 
 { #category : #private }
@@ -186,7 +183,7 @@ SourceFileBufferedReadWriteStream >> next: aQuantity [
 
 	^ read = aQuantity 
 		ifTrue: [ collection ]
-		ifFalse: [ collection copyFrom: 1 to: read - 1 ]     
+		ifFalse: [ collection copyFrom: 1 to: read - 1 ]
 ]
 
 { #category : #writing }
@@ -226,8 +223,6 @@ SourceFileBufferedReadWriteStream >> on: aStream [
 	isDirty := false.
 	
 	self sizeBuffer: self defaultBufferSize.
-	
-
 ]
 
 { #category : #reading }
@@ -239,21 +234,18 @@ SourceFileBufferedReadWriteStream >> peek [
 	value ifNotNil: [ nextPosition := nextPosition - 1  ].
 	
 	^ value
-	
 ]
 
 { #category : #querying }
 SourceFileBufferedReadWriteStream >> position [
 
-	^ nextPosition - 1 
-
+	^ nextPosition - 1
 ]
 
 { #category : #querying }
 SourceFileBufferedReadWriteStream >> position: aNewPosition [
 
 	^ nextPosition := aNewPosition + 1
-
 ]
 
 { #category : #reading }

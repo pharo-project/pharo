@@ -71,7 +71,7 @@ AbstractStoredSetting >> printOn: aStream [
 
 { #category : #accessing }
 AbstractStoredSetting >> realValue [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

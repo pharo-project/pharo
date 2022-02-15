@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	^(super canBeExecutedInContext: aSourceCodeContext) and: [aSourceCodeContext isTempVariableSelected]  
+	^(super canBeExecutedInContext: aSourceCodeContext) and: [aSourceCodeContext isTempVariableSelected]
 ]
 
 { #category : #execution }

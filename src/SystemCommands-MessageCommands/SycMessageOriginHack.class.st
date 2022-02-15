@@ -18,7 +18,7 @@ Class {
 SycMessageOriginHack class >> of: aMessageDescription [
 
 	^self new 
-		message: aMessageDescription 
+		message: aMessageDescription
 ]
 
 { #category : #'hacked methods' }

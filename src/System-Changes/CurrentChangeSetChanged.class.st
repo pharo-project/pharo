@@ -28,5 +28,5 @@ CurrentChangeSetChanged >> old [
 
 { #category : #accessing }
 CurrentChangeSetChanged >> old: anObject [
-	old := anObject  
+	old := anObject
 ]

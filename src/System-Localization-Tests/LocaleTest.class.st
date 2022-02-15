@@ -11,5 +11,4 @@ Class {
 LocaleTest >> testCurrent [
 
 	self assert: Locale current notNil
-	
 ]

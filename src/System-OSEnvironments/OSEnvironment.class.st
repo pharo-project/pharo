@@ -71,7 +71,7 @@ OSEnvironment class >> isDefaultFor: aPlatform [
 
 { #category : #'instance creation' }
 OSEnvironment class >> platform: anOSPlatform [
-	^ self basicNew initializeWith: anOSPlatform 
+	^ self basicNew initializeWith: anOSPlatform
 ]
 
 { #category : #'system startup' }
@@ -219,7 +219,6 @@ OSEnvironment >> keysAndValuesDo: aBlock withAssociationString: associationStrin
 	aBlock 
 		value: (associationString first: equalsIndex-1) 
 		value: (associationString allButFirst: equalsIndex).
-		
 ]
 
 { #category : #enumeration }

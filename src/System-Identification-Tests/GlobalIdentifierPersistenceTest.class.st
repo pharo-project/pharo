@@ -68,7 +68,6 @@ GlobalIdentifierPersistenceTest >> testDelete [
 	self assert: preferences exists.
 	persistence delete.
 	self deny: preferences exists.
-	
 ]
 
 { #category : #tests }
@@ -76,7 +75,6 @@ GlobalIdentifierPersistenceTest >> testEnsureDirectory [
 	persistence ensureDirectory.
 	self assert: preferences parent exists.
 	self deny: preferences exists.
-	
 ]
 
 { #category : #tests }
@@ -112,7 +110,6 @@ GlobalIdentifierPersistenceTest >> testLoad2 [
 	loaded := Dictionary new.
 	persistence load: loaded.
 	self assert: loaded equals: values.
-
 ]
 
 { #category : #tests }

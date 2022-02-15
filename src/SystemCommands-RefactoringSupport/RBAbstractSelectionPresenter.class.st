@@ -68,7 +68,6 @@ RBAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: 
 	dropLabel label: dropString.
 	dropList items: dropItems.
 	acceptBlock := aBlock.
-	
 ]
 
 { #category : #accessing }

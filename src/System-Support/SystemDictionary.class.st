@@ -74,9 +74,6 @@ SystemDictionary >> allClassesAndTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each class and trait in the system."
 	
 	^self classAndTraitNames do: [:each | aBlock value: (self at: each) ]
-	
-	
-
 ]
 
 { #category : #'accessing - classes and traits' }
@@ -132,7 +129,6 @@ SystemDictionary >> classAndTraitNames [
 	Do not bother to sort"
 	
 	^self classNames
-	
 ]
 
 { #category : #'accessing - classes and traits' }

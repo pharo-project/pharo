@@ -29,7 +29,6 @@ Termcap >> getent: aString [
 	result = -1 ifTrue: [ Error signal: 'Could not find terminfo database' ]."
 	
 	Error signal: 'Cannot interact with tput yet'.
-	
 ]
 
 { #category : #accessing }

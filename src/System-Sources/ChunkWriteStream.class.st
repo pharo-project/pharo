@@ -45,7 +45,6 @@ ChunkWriteStream >> nextPut: aString [
 	decoratedStream next: string size - start + 1 putAll: string startingAt: start.
 	self bang. "one extra"
 	decoratedStream flush
-
 ]
 
 { #category : #accessing }

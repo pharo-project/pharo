@@ -15,7 +15,6 @@ SystemOrganizer class >> cleanUp: agressive [
 	"Remove empty categories when cleaning aggressively"
 
 	agressive ifTrue: [SystemOrganization removeEmptyCategories].
-
 ]
 
 { #category : #'instance creation' }
@@ -44,7 +43,7 @@ SystemOrganizer >> categoriesMatching: matchString [
 
 { #category : #queries }
 SystemOrganizer >> classesInCategory: category [
-	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ] 
+	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
 ]
 
 { #category : #accessing }
@@ -55,7 +54,6 @@ SystemOrganizer >> environment [
 { #category : #accessing }
 SystemOrganizer >> environment: aSystemDictionary [
 	 environment := aSystemDictionary.
-
 ]
 
 { #category : #testing }
@@ -117,7 +115,6 @@ SystemOrganizer >> removeSystemCategory: category [
 		reverseDo: [:each | each removeFromSystem].
 
 	self removeCategory: category.
-
 ]
 
 { #category : #accessing }
@@ -138,5 +135,5 @@ SystemOrganizer >> superclassOrder: category [
 	| behaviors classes |
 	behaviors := (self listAtCategoryNamed: category asSymbol) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
-	^ Class superclassOrder: classes 
+	^ Class superclassOrder: classes
 ]

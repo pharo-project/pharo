@@ -31,7 +31,6 @@ SettingNode >> <= other [
 { #category : #accessing }
 SettingNode >> allChildren [
 	^ self model childrenOf: self
-
 ]
 
 { #category : #menu }
@@ -94,7 +93,7 @@ SettingNode >> helpText [
 
 { #category : #accessing }
 SettingNode >> icon [
-	^ self settingDeclaration ifNotNil: [:d | d icon ] 
+	^ self settingDeclaration ifNotNil: [:d | d icon ]
 ]
 
 { #category : #accessing }
@@ -132,7 +131,6 @@ SettingNode >> isEmpty [
 SettingNode >> isNotCurrentValueStored [
 	"Return false if the current setting value is stored."
 	^ self isCurrentValueStored not
-
 ]
 
 { #category : #testing }
@@ -153,7 +151,6 @@ SettingNode >> keyDown: anEvent from: aTreeMorph [
 	c = $I
 		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #accessing }
@@ -219,13 +216,11 @@ SettingNode >> parent: aSymbol [
 { #category : #accessing }
 SettingNode >> parentName [
 	^ parentName
-	
 ]
 
 { #category : #accessing }
 SettingNode >> parentName: aSymbol [
 	parentName := aSymbol
-	
 ]
 
 { #category : #accessing }
@@ -261,7 +256,7 @@ SettingNode >> realValue: anObject [
 { #category : #accessing }
 SettingNode >> receiverPackage [
 	^ self settingReceiver
-		ifNotNil: [self settingReceiver class package] 
+		ifNotNil: [self settingReceiver class package]
 ]
 
 { #category : #menu }
@@ -301,7 +296,6 @@ SettingNode >> settingReceiver [
 { #category : #accessing }
 SettingNode >> settingValue [
 	^ self settingDeclaration realValue
-
 ]
 
 { #category : #accessing }
@@ -317,5 +311,4 @@ SettingNode >> updateAccordingTo: aFilter [
 		ifFalse: [
 			self contents do: [ :n | n updateAccordingTo: aFilter].
 			self contents removeAllSuchThat: [ :n | (aFilter keepSettingTreeNode: n) not  and: [n isEmpty]]]
-		
 ]

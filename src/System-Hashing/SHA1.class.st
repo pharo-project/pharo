@@ -58,7 +58,6 @@ SHA1 >> constantForStep: i [
 	i <= 40 ifTrue: [^ K2].
 	i <= 60 ifTrue: [^ K3].
 	^ K4
-
 ]
 
 { #category : #private }
@@ -119,7 +118,6 @@ SHA1 >> hashFunction: i of: x with: y with: z [
 	i <= 40 ifTrue: [^ x copy bitXor: y; bitXor: z].
 	i <= 60 ifTrue: [^ x copy bitAnd: y; bitOr: (x copy bitAnd: z); bitOr: (y copy bitAnd: z)].
 	^ x copy bitXor: y; bitXor: z
-
 ]
 
 { #category : #accessing }
@@ -235,7 +233,6 @@ SHA1 >> primExpandBlock: aByteArray into: wordBitmap [
 
 	<primitive: 'primitiveExpandBlock' module: 'DSAPrims'>
 	^ self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -244,7 +241,6 @@ SHA1 >> primHasSecureHashPrimitive [
 
 	<primitive: 'primitiveHasSecureHashPrimitive' module: 'DSAPrims'>
 	^ false
-
 ]
 
 { #category : #primitives }
@@ -253,7 +249,6 @@ SHA1 >> primHashBlock: blockBitmap using: workingTotalsBitmap [
 
 	<primitive: 'primitiveHashBlock' module: 'DSAPrims'>
 	^ self primitiveFailed
-
 ]
 
 { #category : #private }

@@ -52,7 +52,6 @@ SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 	].
 
 	^ menuMorph
-
 ]
 
 { #category : #execution }
@@ -109,7 +108,6 @@ SycCmCommand >> parentGroup: aCmdRootMenuGroup [
 
 { #category : #preparation }
 SycCmCommand >> prepareFullExecution [
-	
 ]
 
 { #category : #execution }

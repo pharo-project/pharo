@@ -96,7 +96,6 @@ Win32Environment >> ffiLibraryName [
 Win32Environment >> getEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock [
 
 	^ self doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock isRetry: false
-
 ]
 
 { #category : #enumeration }

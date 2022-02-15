@@ -1067,19 +1067,19 @@ KeyboardKey class >> value: aKeyValue [
 { #category : #macos }
 KeyboardKey class >> valueForMacOSXPlatform: aKeyValue [
 
-	^self macOSVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue andName: #Unknown) ] 
+	^self macOSVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue andName: #Unknown) ]
 ]
 
 { #category : #unix }
 KeyboardKey class >> valueForUnixPlatform: aKeyValue [
 
-	^self unixVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue) ] 
+	^self unixVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue) ]
 ]
 
 { #category : #windows }
 KeyboardKey class >> valueForWindowsPlatform: aKeyCode [
 
-	^self windowsVirtualKeyTable at: aKeyCode ifAbsent: [ (self basicNew withValue: aKeyCode andName: #Unknown) ] 
+	^self windowsVirtualKeyTable at: aKeyCode ifAbsent: [ (self basicNew withValue: aKeyCode andName: #Unknown) ]
 ]
 
 { #category : #windows }

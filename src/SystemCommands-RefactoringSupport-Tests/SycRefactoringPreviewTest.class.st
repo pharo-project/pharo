@@ -71,7 +71,6 @@ SycRefactoringPreviewTest >> testInitializationAllCheckBoxDictionarySetTrue [
 		assert:
 			(sycRefactoringPreview selectedRefactorings
 				allSatisfy: [ :key | key ])
-			
 ]
 
 { #category : #tests }

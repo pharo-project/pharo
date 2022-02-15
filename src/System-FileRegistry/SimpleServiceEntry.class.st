@@ -39,7 +39,6 @@ Class {
 SimpleServiceEntry class >> provider: anObject label: aString selector: aSymbol [
 
 	^self provider: anObject label: aString selector: aSymbol description: ''.
-
 ]
 
 { #category : #'instance creation' }
@@ -81,7 +80,6 @@ SimpleServiceEntry >> description [
 	"may be used for balloon or other"
 
 	^ description
-
 ]
 
 { #category : #accessing }
@@ -89,7 +87,6 @@ SimpleServiceEntry >> description: aString [
 	"may be used for balloon or other"
 
 	description := aString
-
 ]
 
 { #category : #'services menu' }
@@ -138,7 +135,6 @@ SimpleServiceEntry >> performExtraFor: anObject [
 	^stateSelector numArgs = 0
 		ifTrue: [provider perform: stateSelector]
 		ifFalse: [provider perform: stateSelector with: (self getArgumentsFrom: anObject) ]
-
 ]
 
 { #category : #'performing service' }
@@ -163,8 +159,6 @@ SimpleServiceEntry >> printOn: aStream [
 	self selector notNil
 		ifTrue: [ aStream print: selector ].
 	aStream nextPut: $)
-
-
 ]
 
 { #category : #accessing }
@@ -199,7 +193,6 @@ SimpleServiceEntry >> requestExtraSelector [
 	"send me this message to ask me to perform secondary service"
 
 	^#performExtraFor:
-
 ]
 
 { #category : #accessing }

@@ -58,7 +58,6 @@ Announcement >> affectsMethodsTaggedWith: tagName [
 { #category : #'*System-Announcements' }
 Announcement >> affectsPackage: aPackage [
 	^aPackage includesClassesAffectedBy: self
-
 ]
 
 { #category : #'*System-Announcements' }

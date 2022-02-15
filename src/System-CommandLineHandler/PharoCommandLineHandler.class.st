@@ -136,5 +136,4 @@ PharoCommandLineHandler >> runPreferences [
 		persistence resumeSystemSettings].
 	Smalltalk at: #StartupPreferencesLoader ifPresent: [:loader |
 		loader default loadFromDefaultLocations ].
-
 ]

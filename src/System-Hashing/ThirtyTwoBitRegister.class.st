@@ -19,7 +19,6 @@ ThirtyTwoBitRegister class >> new [
 	"Answer a new instance whose initial contents is zero."
 
 	^ super new load: 0
-
 ]
 
 { #category : #'accumulator ops' }
@@ -30,7 +29,6 @@ ThirtyTwoBitRegister >> += aThirtTwoBitRegister [
 	lowSum := low + aThirtTwoBitRegister low.
 	hi := (hi + aThirtTwoBitRegister hi + (lowSum bitShift: -16)) bitAnd: 16rFFFF.
 	low := lowSum bitAnd: 16rFFFF.
-
 ]
 
 { #category : #converting }
@@ -43,7 +41,6 @@ ThirtyTwoBitRegister >> asInteger [
 	"Answer the integer value of my current contents."
 
 	^ (hi bitShift: 16) + low
-
 ]
 
 { #category : #converting }
@@ -54,7 +51,6 @@ ThirtyTwoBitRegister >> asReverseInteger [
        ((low bitAnd: 16rFF00) bitShift: 8) +
 	  ((hi bitAnd: 16rFF) bitShift: 8) +
        (hi bitShift: -8)
-
 ]
 
 { #category : #'accumulator ops' }
@@ -63,7 +59,6 @@ ThirtyTwoBitRegister >> bitAnd: aThirtTwoBitRegister [
 
 	hi := hi bitAnd: aThirtTwoBitRegister hi.
 	low := low bitAnd: aThirtTwoBitRegister low.
-
 ]
 
 { #category : #'accumulator ops' }
@@ -72,7 +67,6 @@ ThirtyTwoBitRegister >> bitInvert [
 
 	hi := hi bitXor: 16rFFFF.
 	low := low bitXor: 16rFFFF.
-
 ]
 
 { #category : #'accumulator ops' }
@@ -81,13 +75,12 @@ ThirtyTwoBitRegister >> bitOr: aThirtTwoBitRegister [
 
 	hi := hi bitOr: aThirtTwoBitRegister hi.
 	low := low bitOr: aThirtTwoBitRegister low.
-
 ]
 
 { #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> bitShift: anInteger [
 	"Replace my contents with the bitShift of anInteger."
-	self load: (self asInteger bitShift: anInteger). 
+	self load: (self asInteger bitShift: anInteger).
 ]
 
 { #category : #'accumulator ops' }
@@ -96,7 +89,6 @@ ThirtyTwoBitRegister >> bitXor: aThirtTwoBitRegister [
 
 	hi := hi bitXor: aThirtTwoBitRegister hi.
 	low := low bitXor: aThirtTwoBitRegister low.
-
 ]
 
 { #category : #accessing }
@@ -119,14 +111,12 @@ ThirtyTwoBitRegister >> copy [
 
 	<primitive: 148>
 	^ super copy
-
 ]
 
 { #category : #accessing }
 ThirtyTwoBitRegister >> hi [
 
 	^ hi
-
 ]
 
 { #category : #'accumulator ops' }
@@ -160,7 +150,6 @@ ThirtyTwoBitRegister >> load: anInteger [
 	hi := (anInteger bitShift: -16) bitAnd: 16rFFFF.
 	self asInteger = anInteger
 		ifFalse: [self error: 'out of range: ', anInteger printString].
-
 ]
 
 { #category : #accessing }
@@ -169,7 +158,6 @@ ThirtyTwoBitRegister >> loadFrom: aByteArray at: index [
 
 	hi := ((aByteArray at: index) bitShift: 8) + ( aByteArray at: index + 1).
 	low := ((aByteArray at: index + 2) bitShift: 8) + ( aByteArray at: index + 3).
-
 ]
 
 { #category : #accessing }
@@ -184,7 +172,6 @@ ThirtyTwoBitRegister >> printOn: aStream [
 
 	aStream nextPutAll: 'R:'.
 	self asInteger storeOn: aStream base: 16.
-
 ]
 
 { #category : #accessing }
@@ -195,7 +182,6 @@ significant bits of the word (i.e., use big-endian byte ordering)."
 
 	hi := ((aByteArray at: index + 3) bitShift: 8) + ( aByteArray at: index + 2).
 	low := ((aByteArray at: index + 1) bitShift: 8) + ( aByteArray at: index).
-
 ]
 
 { #category : #accessing }

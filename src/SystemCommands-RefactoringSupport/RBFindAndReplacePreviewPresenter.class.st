@@ -47,7 +47,7 @@ RBFindAndReplacePreviewPresenter class >> defaultLayout [
 { #category : #specs }
 RBFindAndReplacePreviewPresenter class >> example [
 	<script>
-	^ (self method: (RBRefactoring >> #convertMethod:for:using: )) 
+	^ (self method: (RBRefactoring >> #convertMethod:for:using: ))
 ]
 
 { #category : #specs }
@@ -109,7 +109,6 @@ RBFindAndReplacePreviewPresenter >> initializeDropList [
 { #category : #initialization }
 RBFindAndReplacePreviewPresenter >> initializePresenter [
 	super initializePresenter.
-	
 ]
 
 { #category : #initialization }
@@ -120,7 +119,6 @@ RBFindAndReplacePreviewPresenter >> initializeWidgets [
 	selectedRefactorings := OrderedCollection new.
 	self initializeDropList.
 	self initializeChangeList.
-	
 ]
 
 { #category : #initialization }
@@ -130,7 +128,6 @@ RBFindAndReplacePreviewPresenter >> method: aMethod [
 	selectedRefactorings := OrderedCollection newFrom: 
 		(method origin methods select: [:each | each ~= method]).
 	changeList items: selectedRefactorings.
-	
 ]
 
 { #category : #initialization }

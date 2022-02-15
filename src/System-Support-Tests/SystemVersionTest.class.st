@@ -26,7 +26,7 @@ SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 { #category : #tests }
 SystemVersionTest >> testCalculationOfHighestUpdate [
 
-	self assert: (SystemVersion fromVersionString: 'Pharo-6.0+alpha.build.510') highestUpdate equals: 60510 
+	self assert: (SystemVersion fromVersionString: 'Pharo-6.0+alpha.build.510') highestUpdate equals: 60510
 ]
 
 { #category : #tests }

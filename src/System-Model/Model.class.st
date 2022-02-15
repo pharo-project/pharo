@@ -109,12 +109,11 @@ Model >> hasUnacceptedEdits [
 				ifTrue: [^ true]]
 		without: self.
 	^ false
-
 ]
 
 { #category : #window }
 Model >> modelWakeUpIn: aWindow [
-	"A window with me as model is being entered or expanded.  Default response is no-op" 
+	"A window with me as model is being entered or expanded.  Default response is no-op"
 ]
 
 { #category : #'dependents-private' }
@@ -178,7 +177,7 @@ Model >> stepTime [
 { #category : #stepping }
 Model >> stepTimeIn: aSystemWindow [
 	
-	^ self stepTime 
+	^ self stepTime
 ]
 
 { #category : #updating }
@@ -263,5 +262,4 @@ Model >> whenChangedSend: aSelector to: aReceiver [
 { #category : #updating }
 Model >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
-
 ]

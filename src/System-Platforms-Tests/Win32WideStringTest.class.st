@@ -13,7 +13,7 @@ Win32WideStringTest >> exampleString [
 { #category : #testing }
 Win32WideStringTest >> isWindows [
 
-	^ OSPlatform current isWindows 
+	^ OSPlatform current isWindows
 ]
 
 { #category : #tests }

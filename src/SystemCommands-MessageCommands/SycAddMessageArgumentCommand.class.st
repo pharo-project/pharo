@@ -53,7 +53,6 @@ SycAddMessageArgumentCommand >> createRefactoring [
 { #category : #accessing }
 SycAddMessageArgumentCommand >> defaultMenuIconName [
 	^#smallAdd
-
 ]
 
 { #category : #accessing }

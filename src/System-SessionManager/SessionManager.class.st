@@ -111,7 +111,7 @@ Class {
 
 { #category : #accessing }
 SessionManager class >> default [
-	^ Default ifNil: [ Default := self new ] 
+	^ Default ifNil: [ Default := self new ]
 ]
 
 { #category : #accessing }
@@ -190,7 +190,6 @@ SessionManager >> addDeferredStartupAction: aBlock [
 	"Add the block to the list of actions that we will be performed immediately after the startup list is executed."
 	self currentSession 
 		addDeferredStartupAction: aBlock
-	
 ]
 
 { #category : #'category management' }
@@ -247,7 +246,6 @@ SessionManager >> hasRegistered: handledId [
 	
 	^ self startupList 
 			anySatisfy: [ :handler | handler handledId = handledId ]
-	
 ]
 
 { #category : #initialization }
