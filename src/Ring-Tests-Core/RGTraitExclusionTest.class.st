@@ -35,7 +35,6 @@ RGTraitExclusionTest >> testAliasesCollection [
 	traitAlias cleanAliases.
 	self assert: traitAlias aliases isEmpty.
 	self assert: (traitAlias hasResolved: #aliases).
-
 ]
 
 { #category : #tests }
@@ -69,7 +68,6 @@ RGTraitExclusionTest >> testExclusionsCollection [
 	traitExclusion cleanExclusions.
 	self assert: traitExclusion exclusions isEmpty.
 	self assert: (traitExclusion hasResolved: #exclusions).
-
 ]
 
 { #category : #tests }
@@ -98,7 +96,6 @@ RGTraitExclusionTest >> testImplicitEnvironment [
 	self checkImplicitSingleClassEnvironmentOf: def parent parent.	
 	
 	self assert: def parent transformations size equals: 2.
-
 ]
 
 { #category : #tests }
@@ -109,7 +106,6 @@ RGTraitExclusionTest >> testNewTraitAlias [
 	self assert: (traitAlias isRingResolved).
 	self assert: (traitAlias hasUnresolvedAll: #(name subject aliases)).
 	self assert: (traitAlias isTraitTransformation).
-	
 ]
 
 { #category : #tests }
@@ -120,7 +116,6 @@ RGTraitExclusionTest >> testNewTraitExlusion [
 	self assert: (traitExclusion isRingResolved).
 	self assert: (traitExclusion hasUnresolvedAll: #(name subject exclusions)).
 	self assert: (traitExclusion isTraitTransformation).
-	
 ]
 
 { #category : #tests }

@@ -149,7 +149,6 @@ RGMethodDefinition >> = aRGMethodDefinition [
 RGMethodDefinition >> addInContainer: aRGContainer [
 
 	aRGContainer addMethod: self
-	
 ]
 
 { #category : #traits }
@@ -212,7 +211,7 @@ RGMethodDefinition >> author [
 { #category : #'stamp values' }
 RGMethodDefinition >> author: aString [ 
 
-	self annotationNamed: self class authorKey put: aString 
+	self annotationNamed: self class authorKey put: aString
 ]
 
 { #category : #'backward compatibility' }
@@ -354,7 +353,7 @@ RGMethodDefinition >> isExtension [
 RGMethodDefinition >> isExtension: aBoolean [
 	"Explicitily set that the receiver is an extension"
 	
-	self annotationNamed: self class isExtensionKey put: aBoolean 
+	self annotationNamed: self class isExtensionKey put: aBoolean
 ]
 
 { #category : #'testing - SUnit-support' }
@@ -532,7 +531,7 @@ RGMethodDefinition >> protocol [
 		ifTrue: [ ^ self compiledMethod ifNil: [ protocol ] ifNotNil: [ self compiledMethod protocol ]].
 	self isHistorical
 		ifTrue: [ ^ self protocolAtPointer ifNil: [ self compiledMethod ifNil: [ protocol ] ifNotNil:[ :cm | cm protocol ] ] ].
-	^ protocol			
+	^ protocol
 ]
 
 { #category : #accessing }
@@ -614,7 +613,7 @@ RGMethodDefinition >> sourcePointer [
 { #category : #'source pointers' }
 RGMethodDefinition >> sourcePointer: aNumber [
 
-	self annotationNamed:  self class sourcePointerKey put: aNumber 
+	self annotationNamed:  self class sourcePointerKey put: aNumber
 ]
 
 { #category : #accessing }
@@ -667,5 +666,5 @@ RGMethodDefinition >> timeStamp [
 { #category : #'stamp values' }
 RGMethodDefinition >> timeStamp: aTimestamp [ 
 
-	self annotationNamed: self class timeStampKey put: aTimestamp 
+	self annotationNamed: self class timeStampKey put: aTimestamp
 ]

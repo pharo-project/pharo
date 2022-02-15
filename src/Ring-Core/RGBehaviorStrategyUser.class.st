@@ -19,7 +19,7 @@ RGBehaviorStrategyUser >> acceptVisitor: aVisitor [
 { #category : #strategy }
 RGBehaviorStrategyUser >> addClassVariable: anRGInstanceVariableDefinition [ 
 
-	^ self behaviorStrategy addClassVariable: anRGInstanceVariableDefinition 
+	^ self behaviorStrategy addClassVariable: anRGInstanceVariableDefinition
 ]
 
 { #category : #strategy }
@@ -91,14 +91,12 @@ RGBehaviorStrategyUser >> behaviorStrategy: anObject [
 	behaviorStrategy owner: self.
 	needsInitialization ifTrue: [ 
 		behaviorStrategy initializeUnresolved ].
-	
 ]
 
 { #category : #strategy }
 RGBehaviorStrategyUser >> bindingOf: varName [
 
 	^ self behaviorStrategy bindingOf: varName
-
 ]
 
 { #category : #strategy }
@@ -287,7 +285,6 @@ RGBehaviorStrategyUser >> makeResolved [
 
 	self behaviorStrategy makeResolved.
 	super makeResolved.
-
 ]
 
 { #category : #strategy }
@@ -300,7 +297,6 @@ RGBehaviorStrategyUser >> package [
 RGBehaviorStrategyUser >> package: anRGPackage [
 
 	^ self behaviorStrategy package: anRGPackage
-
 ]
 
 { #category : #strategy }

@@ -59,7 +59,6 @@ RGClassTest >> testClassVariablesCollection [
 	class cleanClassVariables.
 	self assert: class classVariables isEmpty.
 	self assert: (class hasResolved: #classVariables).
-
 ]
 
 { #category : #tests }
@@ -77,7 +76,6 @@ RGClassTest >> testConversionToTrait [
 	trait := env ensureTraitNamed: #SomeTrait.
 	self deny: behavior isClass.
 	self assert: behavior isTrait.
-	
 ]
 
 { #category : #tests }
@@ -138,7 +136,6 @@ RGClassTest >> testEnsureProtocol [
 	behavior ensureProtocolNamed: #SomeProtocol.
 	self assert: behavior protocols size equals: 1.
 	self assert: behavior protocols first equals: #SomeProtocol.
-	
 ]
 
 { #category : #tests }
@@ -151,7 +148,7 @@ RGClassTest >> testEnvironmentStubs [
 "	self assert: (env ask behaviors size = (2)). 
 	self assert: (env ask packages size = (1+2)).
 	self assert: (env ask packages anySatisfy: [ :each | each unresolvedProperties includes: #name]).
-"	
+"
 ]
 
 { #category : #tests }
@@ -161,7 +158,6 @@ RGClassTest >> testPrinting [
 	aClass := RGClass named: 'Object'.
 	
 	self assert: aClass printString equals: #Object.
-	
 ]
 
 { #category : #tests }
@@ -197,7 +193,6 @@ RGClassTest >> testSharedPoolsCollection [
 	class cleanSharedPools.
 	self assert: class sharedPools isEmpty.
 	self assert: (class hasResolved: #sharedPools).
-
 ]
 
 { #category : #tests }
@@ -231,7 +226,6 @@ RGClassTest >> testTagsCollection [
 	class cleanTags.
 	self assert: class tags isEmpty.
 	self assert: (class hasResolved: #tags).
-
 ]
 
 { #category : #tests }
@@ -263,10 +257,6 @@ RGClassTest >> testTagsForAllMethods [
 	method4 := trait1 ensureLocalMethodNamed: #method4.
 	method4 tagWith: #tag3.
 	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1 tag2 tag3).
-	
-
-
-
 ]
 
 { #category : #tests }
@@ -292,7 +282,6 @@ RGClassTest >> testTagsForAllMethodsForClassWithoutTraits [
 	method1 tagWith: #tag2.
 	self assertCollection: method1 tags sorted hasSameElements: #(#tag1 #tag2).
 	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2).
-	
 ]
 
 { #category : #tests }
@@ -344,7 +333,6 @@ RGClassTest >> testTagsForMethods [
 	self assert: (class methodsTaggedWith: #tag1) isEmpty.
 	self assert: (class methodsTaggedWith: #tag2) isEmpty.
 	self assert: (class methodsTaggedWith: #tag3) isEmpty.
-
 ]
 
 { #category : #tests }
@@ -378,7 +366,6 @@ RGClassTest >> testTagsForMethodsCollection [
 	class cleanTagsForMethods.
 	self assert: class tagsForMethods isEmpty.
 	self assert: (class hasResolved: #tagsForMethods).
-
 ]
 
 { #category : #tests }
@@ -404,7 +391,6 @@ RGClassTest >> testTagsForMethodsRemoval [
 	class removeMethodTag: #tag1.
 	self assert: method1 tags isEmpty.
 	self assert: class tagsForMethods isEmpty.
-
 ]
 
 { #category : #tests }
@@ -423,5 +409,4 @@ RGClassTest >> testTesting [
 	self deny: behavior isWeak.
 	self deny: behavior isWords.
 	self assert: behavior isPointers.
-
 ]

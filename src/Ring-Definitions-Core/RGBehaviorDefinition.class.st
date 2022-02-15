@@ -333,7 +333,6 @@ RGBehaviorDefinition >> isDefined [
 	"If the class exists in the environment"
 	
 	^self realClass notNil
-	
 ]
 
 { #category : #'managing container' }
@@ -411,7 +410,7 @@ RGBehaviorDefinition >> protocols: aCollection [
 RGBehaviorDefinition >> realClass [
 	"Retrieves the current class existing in the runtime environment"
 
-	^self rootEnvironment classNamed: self name 
+	^self rootEnvironment classNamed: self name
 ]
 
 { #category : #'managing container' }
@@ -560,7 +559,7 @@ RGBehaviorDefinition >> traitCompositionSource: anString [
 	"Stores aString representing the traits used by the receiver "
 
 	self annotationNamed: self class traitCompositionSourceKey
-		put: anString 
+		put: anString
 ]
 
 { #category : #accessing }

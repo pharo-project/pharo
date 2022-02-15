@@ -140,7 +140,6 @@ RGEnvironmentBackend >> classCommentAuthorFor: anRGComment [
 RGEnvironmentBackend >> classCommentContentFor: anRGComment [
 
 	^ anRGComment pvtContent
-
 ]
 
 { #category : #'class comment' }
@@ -282,9 +281,6 @@ RGEnvironmentBackend >> createNewUnresolvedClass [
 	self environment pvtAddPackage: packageStub.
 
 	^ classStub
-	
-
-
 ]
 
 { #category : #'unresolved objects' }
@@ -304,8 +300,7 @@ RGEnvironmentBackend >> createNewUnresolvedMetaclassFor: anRGBehavior [
 			metaclassStub pvtMetaclass: metaclassStub ].
 	self environment pvtAddBehavior: metaclassStub.
 
-	^ metaclassStub	
-
+	^ metaclassStub
 ]
 
 { #category : #'unresolved objects' }
@@ -370,7 +365,6 @@ RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 	^ 	anRGBehavior isMeta
 		ifFalse: [ metaclassStub ]
 		ifTrue: [ classStub ].
-
 ]
 
 { #category : #'unresolved objects' }
@@ -425,7 +419,6 @@ RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 	^ 	anRGBehavior isMeta
 		ifFalse: [ traitStub ]
 		ifTrue: [ classTraitStub ].
-
 ]
 
 { #category : #package }
@@ -438,7 +431,6 @@ RGEnvironmentBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 RGEnvironmentBackend >> definitionFor: anObject [ 
 
 	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
-
 ]
 
 { #category : #accessing }
@@ -482,25 +474,25 @@ RGEnvironmentBackend >> extensionMethodsFor: anRGPackage do: aBlock [
 { #category : #subbackends }
 RGEnvironmentBackend >> forBehavior [
 
-	^ self 
+	^ self
 ]
 
 { #category : #subbackends }
 RGEnvironmentBackend >> forEnvironment [
 
-	^ self 
+	^ self
 ]
 
 { #category : #subbackends }
 RGEnvironmentBackend >> forMethod [
 
-	^ self 
+	^ self
 ]
 
 { #category : #subbackends }
 RGEnvironmentBackend >> forPackage [
 
-	^ self 
+	^ self
 ]
 
 { #category : #environment }
@@ -513,7 +505,6 @@ RGEnvironmentBackend >> globalVariablesFor: anRGEnvironment do: aBlock [
 RGEnvironmentBackend >> hasFullyResolved: anRGObject [
 
 	^ anRGObject pvtFullyResolved
-
 ]
 
 { #category : #resolving }
@@ -594,8 +585,6 @@ RGEnvironmentBackend >> removeAlias: aSymbol from: anRGTraitAlias [
 RGEnvironmentBackend >> removeBehavior: anRGBehavior from: anRGEnvironment [
 
 	anRGEnvironment pvtRemoveBehavior: anRGBehavior.
-	
-
 ]
 
 { #category : #package }
@@ -698,7 +687,6 @@ RGEnvironmentBackend >> setClassCommentAuthorFor: anRGComment to: aString [
 RGEnvironmentBackend >> setClassCommentContentFor: anRGComment to: anObject [
 
 	anRGComment pvtContent: anObject.
-
 ]
 
 { #category : #'class comment' }
@@ -819,7 +807,6 @@ RGEnvironmentBackend >> slotsFor: anRGLayout do: aBlock [
 RGEnvironmentBackend >> sourceCodeFor: anRGMethod [ 
 
 	^ anRGMethod pvtSafeSourceCode
-
 ]
 
 { #category : #'trait transormation' }
@@ -916,6 +903,4 @@ RGEnvironmentBackend >> untagClass: anRGBehavior from: aSymbol [
 RGEnvironmentBackend >> untagMethod: anRGMethod from: aSymbol [
 
 	^ anRGMethod pvtUntagFrom: aSymbol
-	
-
 ]

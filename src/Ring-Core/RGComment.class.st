@@ -85,8 +85,7 @@ RGComment >> initialize [
 	
 	content := self unresolvedValue: self defaultContent.	
 	author := self unresolvedValue: self defaultAuthor.	
-	time := self unresolvedValue: self defaultTime.	
-	
+	time := self unresolvedValue: self defaultTime.
 ]
 
 { #category : #initialization }
@@ -96,8 +95,7 @@ RGComment >> initializeUnresolved [
 	
 	content := self unresolvedValue: self defaultContent.	
 	author := self unresolvedValue: self defaultAuthor.	
-	time := self unresolvedValue: self defaultTime.	
-	
+	time := self unresolvedValue: self defaultTime.
 ]
 
 { #category : #testing }
@@ -109,7 +107,7 @@ RGComment >> isComment [
 { #category : #testing }
 RGComment >> isEmptyOrNil [
 
-	^ self content isEmptyOrNil 
+	^ self content isEmptyOrNil
 ]
 
 { #category : #resolving }
@@ -163,8 +161,6 @@ RGComment >> pvtResolvableProperties [
 		#author -> author. 
 		#time -> time. 
 	}
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -182,7 +178,7 @@ RGComment >> pvtTime: aDateAndTime [
 { #category : #'backward compatibility' }
 RGComment >> sourceCode [
 
-	^ self content   
+	^ self content
 ]
 
 { #category : #'accessing - backend' }

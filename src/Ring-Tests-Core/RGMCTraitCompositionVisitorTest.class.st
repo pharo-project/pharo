@@ -20,7 +20,6 @@ RGMCTraitCompositionVisitorTest >> testAlias [
 	self assert: result first subject name equals: #Trait2.
 	self assert: result first aliases isCollection.
 	self assert: result first aliases first equals: (#a -> #c).
-	
 ]
 
 { #category : #tests }
@@ -41,7 +40,6 @@ RGMCTraitCompositionVisitorTest >> testAliasWithMultipleAliases [
 	self assert: result first aliases size equals: 2.
 	self assert: result first aliases first equals: (#a -> #b).
 	self assert: result first aliases second equals: (#c: -> #d:).
-	
 ]
 
 { #category : #tests }

@@ -13,7 +13,6 @@ RGEnvironment >> writeIntoFileTree: aMCFileTreeRepository [
 		IceMetadatalessFileTreeWriter
 			fileOut: (aVersion)
 			on: (aMCFileTreeRepository) ].
-		
 ]
 
 { #category : #'*Ring-Monticello' }
@@ -28,5 +27,5 @@ RGEnvironment >> writeIntoTonel: aFileReference [
 		aVersion := MCVersion package: (MCPackage new name: aPackage name) info: info snapshot: aSnapshot dependencies: #().
 		TonelWriter 
 			fileOut: (aVersion)
-			on: aFileReference ]		
+			on: aFileReference ]
 ]

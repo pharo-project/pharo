@@ -17,7 +17,6 @@ RGMetaclassTrait class >> newStrategy [
 RGMetaclassTrait class >> newStrategyFor: anRGEnvironment [
 
 	^ (self strategyClassForVersion: anRGEnvironment version) unresolved
-
 ]
 
 { #category : #'instance creation' }
@@ -26,5 +25,4 @@ RGMetaclassTrait class >> strategyClassForVersion: aVersionNumber [
 	^ (aVersionNumber <= 6)
 		ifTrue: [ RGMetaclassTraitStrategy ]
 		ifFalse: [ RGMetaclassTraitV2Strategy ]
-
 ]

@@ -15,8 +15,6 @@ RGObjectTest >> testFullCopy [
 	fullCopy := def fullCopy.
 	self assert: (fullCopy ~~ def).
 	self assert: fullCopy name equals: def name.
-	
-	
 ]
 
 { #category : #tests }
@@ -88,7 +86,6 @@ RGObjectTest >> testResolveability [
 		self deny: each isRGObject.
 		self assert: each isRingFullyResolved.
 		self deny: each isRingFullyUnresolved  ]
-	
 ]
 
 { #category : #tests }
@@ -103,7 +100,6 @@ RGObjectTest >> testResolvedNameOrNil [
 	
 	def := RGClass named: #SomeName.
 	self assert: def resolvedNameOrNil equals: #SomeName.
-		
 ]
 
 { #category : #tests }
@@ -114,9 +110,6 @@ RGObjectTest >> testTrivialMethods [
 	def := RGObject named: #SomeDefinition.
 
 	self deny: (def unresolvedValue isRingResolved).
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -148,7 +141,6 @@ RGObjectTest >> testTypes [
 	self deny: def isTraitExclusion.
 	self deny: def isTraitTransformation.
 	self deny: def isVariable.
-
 ]
 
 { #category : #tests }
@@ -180,7 +172,4 @@ RGObjectTest >> testUnresolvedValue [
 	def := RGObject named: #SomeDefinition.
 
 	self deny: (def unresolvedValue isRingResolved).
-	
-	
-	
 ]

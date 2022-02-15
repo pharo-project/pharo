@@ -20,7 +20,6 @@ MCDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
 	"by default do not set the package"
 
 	^ self ensureRingDefinitionIn: anRGEnvironment.
-	
 ]
 
 { #category : #'*Ring-Monticello' }
@@ -31,8 +30,7 @@ MCDefinition >> timeForStamp: stamp [
 		ifNotNil: [ 
 			| substrings |
 			substrings := stamp substrings.
-			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ]. 
-	
+			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ].
 ]
 
 { #category : #'*Ring-Monticello' }

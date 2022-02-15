@@ -16,8 +16,6 @@ RGEnvironmentBackendTest >> testAST [
 	anAst := method ast.
 	self assert: (anAst isMethod).
 	self assert: (anAst lastIsReturn)
-
-
 ]
 
 { #category : #tests }
@@ -90,8 +88,6 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForClassDefinition [
 	self deny: (def2 superclass isRingResolved).
 	self deny: (def2 metaclass isRingResolved).
 	self deny: (def2 superclass metaclass isRingResolved).
-	
-
 ]
 
 { #category : #tests }
@@ -117,8 +113,6 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMetaclassDefinition
 	self deny: (baseClass superclass isRingResolved).
 	self assert: (baseClass metaclass isRingResolved).
 	self deny: (baseClass superclass metaclass isRingResolved).
-	
-
 ]
 
 { #category : #tests }
@@ -143,6 +137,4 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMethodDefinition [
 	self deny: (def parent superclass isRingResolved).
 	self deny: (def parent metaclass isRingResolved).
 	self deny: (def parent superclass metaclass isRingResolved).
-	
-
 ]

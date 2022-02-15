@@ -11,6 +11,4 @@ InstanceVariableSlot >> asRingMinimalDefinitionIn: anRGEnvironment [
 					parent:
 						(self definingClass classLayout asRingMinimalDefinitionIn: anRGEnvironment)]]
 		ifFalse: [ super asRingMinimalDefinitionIn: anRGEnvironment ]
-
-
 ]

@@ -102,8 +102,6 @@ RGTraitStrategy >> defaultComment [
 RGTraitStrategy >> defaultPackage [
 
 	^ self owner defaultPackageStubIn: self environment
-
-	
 ]
 
 { #category : #testing }
@@ -134,7 +132,6 @@ RGTraitStrategy >> initialize [
 	"classTrait is set in the superclass"
 	comment := self unresolvedValue: self defaultComment.
 	package := self unresolvedValue: self defaultPackage.
-
 ]
 
 { #category : #testing }
@@ -145,7 +142,6 @@ RGTraitStrategy >> initializeUnresolved [
 	classTrait := RGUnresolvedValue recursive.
 	comment := self unresolvedValue: self defaultComment.
 	package := self unresolvedValue: self defaultPackage.
-
 ]
 
 { #category : #testing }
@@ -172,7 +168,6 @@ RGTraitStrategy >> makeResolved [
 	classTrait := self classTrait markAsRingResolved.
 	comment := self comment markAsRingResolved.
 	package := self package markAsRingResolved.
-	
 ]
 
 { #category : #accessing }
@@ -240,8 +235,6 @@ RGTraitStrategy >> pvtResolvableProperties [
 		#comment -> comment. 
 		#package -> package. 
    	}
-	
-	
 ]
 
 { #category : #accessing }

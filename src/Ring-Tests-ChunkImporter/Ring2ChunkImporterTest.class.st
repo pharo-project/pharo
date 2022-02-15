@@ -30,7 +30,6 @@ SomeClass superclass: nil!' readStream.
 	self assert: class instVarNames isEmpty.
 	self assert: class classVarNames isEmpty.
 	self assert: class package name equals: 'SomePackage'.
-
 ]
 
 { #category : #tests }
@@ -50,7 +49,6 @@ Ring2ChunkImporterTest >> testClassWithSimpleSlots [
 	self assert: class instVarNames asArray equals: #(#name #year #director #actors).
 	self assert: class classVarNames isEmpty.
 	self assert: class category equals: 'Slot-Tests-Associations'.
-
 ]
 
 { #category : #tests }
@@ -72,7 +70,6 @@ Ring2ChunkImporterTest >> testClassWithUnknownSlots [
 	self assert: class classVarNames isEmpty.
 	self assert: class category equals: 'Slot-Tests-Associations'.
 	self assert: ((class slots last: 2) allSatisfy: [ :each | each isKindOf: RGUnknownSlot  ]).
-
 ]
 
 { #category : #tests }
@@ -94,7 +91,6 @@ Ring2ChunkImporterTest >> testClassWithUnknownSlotsWithMessages [
 	self assert: class classVarNames isEmpty.
 	self assert: class category equals: 'Slot-Tests-Associations'.
 	self assert: ((class slots last: 2) allSatisfy: [ :each | each isKindOf: RGUnknownSlot  ])
-
 ]
 
 { #category : #tests }
@@ -119,7 +115,6 @@ Ring2ChunkImporterTest >> testHistoricalStandardComment [
 	self assert: comment content equals: 'I''m a nice comment!, treat me well :).'.
 	self assert: comment author equals: '<historical>'.
 	self assert: comment time equals: DateAndTime new.
-
 ]
 
 { #category : #tests }
@@ -141,8 +136,6 @@ Ring2ChunkImporterTest >> testMetaclassWithTrait [
 	self assert: class traitComposition transformations size equals: 1.
 	self assert: class traitComposition transformations first name equals: 'SomeTrait classTrait'.
 	self assert: class traitComposition transformations first isTrait.
-
-
 ]
 
 { #category : #tests }
@@ -229,8 +222,6 @@ Trait named: #TBehavior
 	method := trait methodNamed: #someMethod.
 	self assert: method notNil.
 	self assert: (method sourceCode endsWith: '^true')
-
-	
 ]
 
 { #category : #tests }
@@ -253,8 +244,6 @@ Trait named: #TBehavior
 	method := trait methodNamed: #someMethod.
 	self assert: method notNil.
 	self assert: (method sourceCode endsWith: '^true')
-
-	
 ]
 
 { #category : #tests }
@@ -276,7 +265,6 @@ ProtoObject superclass: nil!' readStream.
 	self assert: class instVarNames isEmpty.
 	self assert: class classVarNames isEmpty.
 	self assert: class package name equals: 'Kernel-Objects'.
-
 ]
 
 { #category : #tests }
@@ -345,7 +333,6 @@ Ring2ChunkImporterTest >> testStandardClass [
 	self assert: (class hasResolved: #sharedPools).
 	self assert: (class sharedPoolNames isEmpty).
 	self assert: class category equals: #SomePackage.
-
 ]
 
 { #category : #tests }
@@ -370,7 +357,6 @@ Ring2ChunkImporterTest >> testStandardClassWithPackage [
 	self assert: (class hasResolved: #sharedPools).
 	self assert: (class sharedPoolNames isEmpty).
 	self assert: class package name equals: #SomePackage.
-
 ]
 
 { #category : #tests }
@@ -402,7 +388,6 @@ Ring2ChunkImporterTest >> testStandardClassWithVariables [
 	self assert: (class sharedPoolNames allSatisfy: #isSymbol).
 
 	self assert: class category equals: #SomePackage.
-	
 ]
 
 { #category : #tests }
@@ -427,7 +412,6 @@ Ring2ChunkImporterTest >> testStandardComment [
 	self assert: comment content equals: 'I''m a nice comment!, treat me well :).'.
 	self assert: comment author equals: 'GuillermoPolito'.
 	self assert: comment time equals: ('5/2/2012 13:35' asDateAndTime).
-
 ]
 
 { #category : #tests }
@@ -451,7 +435,6 @@ Ring2ChunkImporterTest >> testStandardMetaclass [
 	self assert: class notNil.
 	self assert: class isMetaclass.
 	self assert: class instVarNames equals: #(var1 var2 var3).
-
 ]
 
 { #category : #tests }
@@ -495,7 +478,6 @@ Ring2ChunkImporterTest >> testStandardMetaclassTrait [
 	self assert: trait notNil.
 	self assert: trait isMetaclassTrait.
 	self assert: trait traitComposition transformations isEmpty.
-
 ]
 
 { #category : #tests }
@@ -512,9 +494,6 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithMultipleTraits [
 	usedTraits := trait traitComposition transformations.
 	self assert: (usedTraits allSatisfy: [:each | each isTrait]).
 	self assert: (usedTraits collect: [:each | each name]) asArray equals: #('TClassDescription classTrait' 'TComposingDescription classTrait' 'TTransformationCompatibility classTrait').
-
-	
-
 ]
 
 { #category : #tests }
@@ -722,8 +701,6 @@ Ring2ChunkImporterTest >> testStandardSubclasses [
 
 	class := importer environment ask behaviorNamed: #SomeClass.
 	self assert: class superclass name equals: #Object.
-	
-
 ]
 
 { #category : #tests }
@@ -742,7 +719,6 @@ Ring2ChunkImporterTest >> testStandardTrait [
 	self assert: (trait isTrait and: [trait isMetaclassTrait not]).
 	self assert: trait traitComposition transformations isEmpty.
 	self assert: trait package name equals: 'Traits-Kernel-Traits'.
-
 ]
 
 { #category : #tests }
@@ -765,7 +741,6 @@ Ring2ChunkImporterTest >> testStandardTraitWithExclusions [
 	self assert: usedTraits first exclusions asArray equals: #(msg1 msg2).
 	
 	self assert: trait category equals: 'Traits-Kernel'.
-
 ]
 
 { #category : #tests }
@@ -784,7 +759,6 @@ Ring2ChunkImporterTest >> testStandardTraitWithMultipleTraits [
 	self assert: (usedTraits allSatisfy: [:each | each isTrait]).
 	self assert: (usedTraits collect: [:each | each name]) asArray equals: #(TClassDescription TComposingDescription TTransformationCompatibility).
 	self assert: trait category equals: 'Traits-Kernel'.
-
 ]
 
 { #category : #tests }
@@ -822,7 +796,6 @@ Ring2ChunkImporterTest >> testStandardTraitWithTraits [
 	self assert: trait notNil.
 	self assert: trait traitComposition transformations isEmpty.
 	self assert: trait package name equals: 'Traits-Kernel-Traits'.
-
 ]
 
 { #category : #'private - utilities' }
@@ -833,7 +806,6 @@ Ring2ChunkImporterTest >> testingCommentFor: aClassName [
 	comment := 'I''m a nice comment!, treat me well :).'.
 	commentToWrite := 'I''m a nice comment!!, treat me well :).' replaceAll: '!' with: '!!'.
 	^ ('!{1} commentStamp: ''GuillermoPolito 5/2/2012 13:35'' prior: 0!{2}!' format: { aClassName. commentToWrite }).
-
 ]
 
 { #category : #'private - utilities' }
@@ -844,5 +816,4 @@ Ring2ChunkImporterTest >> testingHistoricalCommentFor: aClassName [
 	comment := 'I''m a nice comment!, treat me well :).'.
 	commentToWrite := 'I''m a nice comment!!, treat me well :).' replaceAll: '!' with: '!!'.
 	^ ('!{1} commentStamp: ''<historical>'' prior: 0!{2}!' format: { aClassName. commentToWrite }).
-
 ]

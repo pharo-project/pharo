@@ -29,7 +29,6 @@ RGUnresolvedValueTest >> testDefaultValue [
 	unresolved := RGUnresolvedValue recursive.
 	self deny: unresolved isRingResolved.
 	self deny: unresolved value isRingResolved.
-
 ]
 
 { #category : #tests }

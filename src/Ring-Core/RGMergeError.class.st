@@ -17,7 +17,6 @@ RGMergeError class >> property: propertySymbol target: targetDefinition source: 
 		target: targetDefinition;
 		source: sourceDefinition;
 		signal.
-		
 ]
 
 { #category : #accessing }

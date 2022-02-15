@@ -59,8 +59,6 @@ RGMetaclassStrategyTest >> testIncompatibleBehavior [
 
 	self checkIncompatible: [ 
 		anRGBehavior trait ].
-
-
 ]
 
 { #category : #tests }
@@ -73,7 +71,6 @@ RGMetaclassStrategyTest >> testKind [
 	self assert: strategy isMetaclassStrategy.
 	self deny: strategy isTraitStrategy.
 	self deny: strategy isMetaclassTraitStrategy.
-	
 ]
 
 { #category : #tests }
@@ -95,7 +92,6 @@ RGMetaclassStrategyTest >> testSetBaseClass [
 	self assert: class1 metaclass baseBehavior equals: class1.
 	class1 metaclass baseClass: class2.
 	self assert: class1 metaclass baseBehavior equals: class2.
-	
 ]
 
 { #category : #tests }
@@ -116,7 +112,7 @@ RGMetaclassStrategyTest >> testStoreString [
 	self assert: anRGBehavior storeString equals: '(RGMetaclass named: #unresolved)'.
 
 	anRGBehavior := RGMetaclass named: #SomeMetaclass.
-	self assert: anRGBehavior storeString equals: '(RGMetaclass named: #SomeMetaclass)'.	
+	self assert: anRGBehavior storeString equals: '(RGMetaclass named: #SomeMetaclass)'.
 ]
 
 { #category : #tests }
