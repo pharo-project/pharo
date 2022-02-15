@@ -31,5 +31,4 @@ MCTraitDefinition >> printMetaDefinitionOn: stream [
 
 	stream nextPutAll: self className, ' classTrait'.
 	self printDefinitionBodyOn: stream
-
 ]

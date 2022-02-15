@@ -11,8 +11,6 @@ MCMethodDefinition >> asRGDefinition [
 	self deny: (method2 environment == env1)."
 
 	^ self ensureRingDefinitionIn: RGEnvironment new
-	
-
 ]
 
 { #category : #'*Ring-Monticello' }
@@ -59,5 +57,4 @@ MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPacka
 	def package: anRGPackage.
 
 	^ def
-
 ]

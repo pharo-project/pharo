@@ -58,14 +58,14 @@ RGPackageDefinition >> classNames [
 
 	^ self classes isDictionary
 		ifTrue: [ self classes keys ]
-		ifFalse:[ self classes collect:[ :class|  class name ] ]	
+		ifFalse:[ self classes collect:[ :class|  class name ] ]
 ]
 
 { #category : #accessing }
 RGPackageDefinition >> classes [
 	"Retrieves a collection (by default a dictionary) of classes defined in the receiver and classes holding extension methods"
 	
-	^self definedClasses, self extendedClasses 
+	^self definedClasses, self extendedClasses
 ]
 
 { #category : #accessing }
@@ -179,7 +179,7 @@ RGPackageDefinition >> methods [
 	"Retrieves all the methods defined in the receiver. 
 	#methods holds the methods of defined classes"
 	
-	^super methods, self extensionMethods 
+	^super methods, self extensionMethods
 ]
 
 { #category : #metrics }

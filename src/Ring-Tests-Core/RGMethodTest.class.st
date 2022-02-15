@@ -13,10 +13,6 @@ RGMethodTest >> testAST [
 	ast := method ast.
 	self assert: ast isMethod.
 	self assert: ast selector equals: #someMethod.
-	
-
-	
-	
 ]
 
 { #category : #tests }
@@ -30,7 +26,7 @@ RGMethodTest >> testFullName [
 
 	method parent metaclass makeResolved.
 	method parent: method parent metaclass.
-	self assert: method fullName equals: 'SomeClass class>>#someMethod'.	
+	self assert: method fullName equals: 'SomeClass class>>#someMethod'.
 ]
 
 { #category : #tests }
@@ -58,7 +54,6 @@ RGMethodTest >> testImplicitEnvironment [
 
 	self assert: def parent protocols size equals: 1.
 	self assert: def2 parent localMethods size equals: 2.
-
 ]
 
 { #category : #tests }
@@ -79,8 +74,6 @@ RGMethodTest >> testMetaSide [
 	aMethod := (anEnvironemnt ensureTraitNamed: 'SomeTrait') ensureLocalMethodNamed: #someMethod.
 	self deny: aMethod isMetaSide.
 	self assert: aMethod isFromTrait.
-
-	
 ]
 
 { #category : #tests }
@@ -111,7 +104,6 @@ RGMethodTest >> testNewMethod [
 	method time: time.
 	self assert: (method hasUnresolved: #name).
 	self assert: method time equals: time.
-
 ]
 
 { #category : #tests }
@@ -130,7 +122,6 @@ RGMethodTest >> testNewNamedMethod [
 	self assert: method sourceCode lines first equals: 'someMessage'.
 
 	self deny: method isMetaSide.
-
 ]
 
 { #category : #tests }
@@ -208,9 +199,6 @@ RGMethodTest >> testSourceCode [
 	self assert: method numArgs equals: 1.
 	method := RGMethod named: #someMethod:arg:.
 	self assert: method numArgs equals: 2.
-
-	
-	
 ]
 
 { #category : #tests }
@@ -244,5 +232,4 @@ RGMethodTest >> testTagsCollection [
 	method cleanTags.
 	self assert: method tags isEmpty.
 	self assert: (method hasResolved: #tags).
-
 ]

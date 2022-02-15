@@ -21,6 +21,5 @@ MCTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 				author: (self authorForStamp: self commentStamp);
 				time: (self timeForStamp: self commentStamp);
 				yourself).
-		def]. 
-	
+		def].
 ]

@@ -21,9 +21,6 @@ RGGlobalVariableTest >> testNewGlobalVariable [
 	self assert: (classVariable isRingResolved).
 	self assert: (classVariable hasResolvedName).
 	self assert: (classVariable isGlobalVariable).
-
-
-	
 ]
 
 { #category : #tests }

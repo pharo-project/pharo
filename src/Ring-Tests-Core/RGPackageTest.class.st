@@ -19,7 +19,6 @@ RGPackageTest >> testAddingClass [
 	self assert: (env ask packages notEmpty).
 	
 	newPackage addDefinedBehavior: newClass.
-
 ]
 
 { #category : #testing }
@@ -106,7 +105,6 @@ RGPackageTest >> testClasses [
 
 	self assert: package definedTraits size equals: 1.
 	self assert: (package definedClasses includes: trait1).
-
 ]
 
 { #category : #testing }
@@ -140,7 +138,6 @@ RGPackageTest >> testDefinedBehaviorsCollection [
 	package cleanDefinedBehaviors.
 	self assert: package definedBehaviors isEmpty.
 	self assert: (package hasResolved: #definedBehaviors).
-
 ]
 
 { #category : #testing }
@@ -152,7 +149,6 @@ RGPackageTest >> testDefinedBehaviorsOfUnresolvedPackages [
 	class := env ensureClassNamed: #SomeClass.
 	self assert: class package definedBehaviors size equals: 1.
 	self assert: class package definedBehaviors anyOne equals: class.
-
 ]
 
 { #category : #'tests - new' }
@@ -201,7 +197,6 @@ RGPackageTest >> testPrinting [
 	newPackage := RGPackage named: 'Collections-Sequenceable'.
 	
 	self assert: newPackage printString equals: ('RGPackage(Collections-Sequenceable)').
-	
 ]
 
 { #category : #testing }
@@ -281,7 +276,6 @@ RGPackageTest >> testTagsForClasses [
 	self assert: (package classesTaggedWith: #tag1) isEmpty.
 	self assert: (package classesTaggedWith: #tag2) isEmpty.
 	self assert: (package classesTaggedWith: #tag3) isEmpty.
-
 ]
 
 { #category : #testing }
@@ -315,5 +309,4 @@ RGPackageTest >> testTagsForClassesCollection [
 	package cleanTagsForClasses.
 	self assert: package tagsForClasses isEmpty.
 	self assert: (package hasResolved: #tagsForClasses).
-
 ]

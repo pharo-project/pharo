@@ -22,7 +22,6 @@ RGMCTest >> compareTraitComposition: aTraitComposition with: anRGTraitCompositio
 			real aliases associations with: model aliases do: [:realAlias :modelAlias |
 				self assert: realAlias equals: modelAlias ]].
 	  ].
-	
 ]
 
 { #category : #tests }

@@ -35,21 +35,18 @@ RGReadOnlyImageBackend >> behaviorsFor: anRGEnvironment do: aBlock [
 RGReadOnlyImageBackend >> categoryFor: anRGBehavior [
 
 	^ (self realBehaviorFor: anRGBehavior) category
-
 ]
 
 { #category : #'class comment' }
 RGReadOnlyImageBackend >> classCommentAuthorFor: anRGComment [
 
 	^ RGStampParser authorForStamp: (self realBehaviorFor: anRGComment parent) organization commentStamp.
-
 ]
 
 { #category : #'class comment' }
 RGReadOnlyImageBackend >> classCommentContentFor: anRGComment [
 
 	^ (self realBehaviorFor: anRGComment parent) organization classComment.
-
 ]
 
 { #category : #'class comment' }
@@ -87,7 +84,6 @@ RGReadOnlyImageBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 	^ 	anRGBehavior isMeta
 		ifFalse: [ anRGBehavior ]
 		ifTrue: [ anRGBehavior metaclass].
-
 ]
 
 { #category : #package }
@@ -118,7 +114,6 @@ RGReadOnlyImageBackend >> expressionFor: anRGUnknownSlot [
 	realClass := self realBehaviorFor: anRGUnknownSlot parent parent.
 	realSlot := realClass slotNamed: anRGUnknownSlot name.
 	^ (realSlot printString copyAfter: $>) trimBoth
-
 ]
 
 { #category : #package }
@@ -147,7 +142,6 @@ RGReadOnlyImageBackend >> globalVariablesFor: anRGEnvironment do: aBlock [
 RGReadOnlyImageBackend >> hasFullyResolved: anRGObject [
 
 	^ true
-
 ]
 
 { #category : #resolving }
@@ -160,7 +154,6 @@ RGReadOnlyImageBackend >> hasFullyUnresolved: anRGObject [
 RGReadOnlyImageBackend >> hasResolved: anRGObject [
 
 	^ true
-
 ]
 
 { #category : #method }
@@ -189,7 +182,6 @@ RGReadOnlyImageBackend >> localMethodsFor: anRGBehavior do: aBlock [
 		def := self definitionFor: method ifAbsentRegister: [
 			method asRingMinimalDefinitionIn: anRGBehavior environment].
 		aBlock value: def]
-
 ]
 
 { #category : #'class description' }
@@ -202,7 +194,6 @@ RGReadOnlyImageBackend >> metaClassFor: anRGBehavior [
 	def := self 	definitionFor: realMetaclass ifAbsentRegister: [ 
 			realMetaclass asRingMinimalDefinitionIn: anRGBehavior environment ].
 	^ def
-
 ]
 
 { #category : #behavior }
@@ -215,7 +206,6 @@ RGReadOnlyImageBackend >> metaclassFor: anRGBehavior [
 	def := self 	definitionFor: realMetaclass ifAbsentRegister: [ 
 			realMetaclass asRingMinimalDefinitionIn: anRGBehavior environment ].
 	^ def
-
 ]
 
 { #category : #'metaclass trait' }
@@ -257,8 +247,6 @@ RGReadOnlyImageBackend >> realMethodFor: anRGMethod [
 
 	"TODO: should we cache the definition?"
 	^ ((self realBehaviorFor: anRGMethod parent) >> anRGMethod selector)
-	
-
 ]
 
 { #category : #accessing }
@@ -290,7 +278,6 @@ RGReadOnlyImageBackend >> slotsFor: anRGLayout do: aBlock [
 RGReadOnlyImageBackend >> sourceCodeFor: anRGMethod [ 
 
 	^ (self realMethodFor: anRGMethod) sourceCode
-
 ]
 
 { #category : #'trait transormation' }
@@ -310,7 +297,6 @@ RGReadOnlyImageBackend >> superclassFor: anRGBehavior [
 	def := self 	definitionFor: realSuperclass ifAbsentRegister: [ 
 			realSuperclass asRingMinimalDefinitionIn: anRGBehavior environment ].
 	^ def
-
 ]
 
 { #category : #behavior }
@@ -320,7 +306,6 @@ RGReadOnlyImageBackend >> tagsForClass: anRGBehavior do: aBlock [
 	
 	realClass := self realBehaviorFor: anRGBehavior.
 	realClass tags do: [:tag | aBlock value: tag ]
-
 ]
 
 { #category : #method }
@@ -336,7 +321,6 @@ RGReadOnlyImageBackend >> tagsForMethod: anRGMethod do: aBlock [
 RGReadOnlyImageBackend >> tagsForMethodsFor: anRGBehavior do: aBlock [
 
 	(self realBehaviorFor: anRGBehavior) protocols do: aBlock
-
 ]
 
 { #category : #method }
@@ -361,7 +345,6 @@ RGReadOnlyImageBackend >> traitCompositionFor: anRGBehavior [
 	def := self 	definitionFor: realTraitComposition ifAbsentRegister: [ 
 			realTraitComposition asRingMinimalDefinitionIn: anRGBehavior environment ].
 	^ def
-
 ]
 
 { #category : #trait }
@@ -384,7 +367,6 @@ RGReadOnlyImageBackend >> transformationsFor: anRGTraitComposition do: aBlock [
 		def := self definitionFor: transformation ifAbsentRegister: [
 			transformation asRingMinimalDefinitionIn: anRGTraitComposition environment].
 		aBlock value: def]
-
 ]
 
 { #category : #resolving }

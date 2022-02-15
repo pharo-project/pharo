@@ -85,13 +85,11 @@ RGMetaclassTraitV2Strategy >> initialize [
 	baseClass := RGUnresolvedValue recursive.
 	
 	super initialize.
-	
-	
 ]
 
 { #category : #'private - backend access' }
 RGMetaclassTraitV2Strategy >> instanceSide [
-	^ self baseClass 
+	^ self baseClass
 ]
 
 { #category : #'private - backend access' }
@@ -155,8 +153,6 @@ RGMetaclassTraitV2Strategy >> pvtAsMetaclassTrait [
 	newMetaclassTrait pvtLocalMethods: self owner localMethods.
 	
 	^ newMetaclassTrait
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -179,8 +175,6 @@ RGMetaclassTraitV2Strategy >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#baseClass -> baseClass. 
    	}
-	
-	
 ]
 
 { #category : #'private - backend access' }

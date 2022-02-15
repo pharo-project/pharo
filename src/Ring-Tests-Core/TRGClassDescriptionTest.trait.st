@@ -31,6 +31,4 @@ TRGClassDescriptionTest >> testTypes [
 	self deny: newBehavior isEphemeron.
 	self deny: newBehavior isWeak.
 	self deny: newBehavior isWords.
-
-	
 ]

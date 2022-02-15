@@ -4,5 +4,4 @@ Extension { #name : #Metaclass }
 Metaclass >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ RGMetaclass named: self name parent: anRGEnvironment.
-
 ]

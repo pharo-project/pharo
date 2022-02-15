@@ -21,8 +21,6 @@ RGClassStrategy >> addClassVariable: anRGInstanceVariableDefinition [
 
 	self owner announceDefinitionChangeDuring: [ 
 		self privAddClassVariable: anRGInstanceVariableDefinition ]
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -176,17 +174,12 @@ RGClassStrategy >> copyForBehaviorDefinitionPostCopy [
 	self pvtCleanSharedPools.
 	newVariables do: [ :each | self privAddClassVariable: each ].
 	newSharedPools do: [ :each | self privAddSharedPool: each ].
-
-
-
 ]
 
 { #category : #'default model values' }
 RGClassStrategy >> defaultClassVariables [
 
 	^ OrderedCollection new
-
-	
 ]
 
 { #category : #'default model values' }
@@ -205,16 +198,12 @@ RGClassStrategy >> defaultMetaClass [
 RGClassStrategy >> defaultPackage [
 
 	^ self owner defaultPackageStubIn: self environment
-
-	
 ]
 
 { #category : #'default model values' }
 RGClassStrategy >> defaultSharedPools [
 
 	^ OrderedCollection new
-
-	
 ]
 
 { #category : #testing }
@@ -320,9 +309,7 @@ RGClassStrategy >> initialize [
 	comment := self unresolvedValue: self defaultComment.	
 	classVariables := self unresolvedValue: self defaultClassVariables.	
 	package := self unresolvedValue: self defaultPackage.	
-	sharedPools := self unresolvedValue: self defaultSharedPools.	
-			
-	
+	sharedPools := self unresolvedValue: self defaultSharedPools.
 ]
 
 { #category : #initialization }
@@ -333,8 +320,7 @@ RGClassStrategy >> initializeUnresolved [
 	comment := self unresolvedValue: self defaultComment.	
 	classVariables := self unresolvedValue: self defaultClassVariables.	
 	package := self unresolvedValue: self defaultPackage.	
-	sharedPools := self unresolvedValue: self defaultSharedPools.	
-	
+	sharedPools := self unresolvedValue: self defaultSharedPools.
 ]
 
 { #category : #'private - backend access' }
@@ -377,7 +363,6 @@ RGClassStrategy >> makeResolved [
 	classVariables := self classVariables markAsRingResolved.
 	package := self package markAsRingResolved.
 	sharedPools := self sharedPools markAsRingResolved.
-
 ]
 
 { #category : #'accessing - backend' }
@@ -414,8 +399,7 @@ RGClassStrategy >> parent [
 { #category : #'private - backend access' }
 RGClassStrategy >> privAddClassVariable: anRGInstanceVariableDefinition [ 
 
-	self backend forBehavior addClassVariable: anRGInstanceVariableDefinition to: self owner	
-	
+	self backend forBehavior addClassVariable: anRGInstanceVariableDefinition to: self owner
 ]
 
 { #category : #'private - backend access' }
@@ -432,7 +416,7 @@ RGClassStrategy >> pvtAddClassVariable: anRGInstanceVariableDefinition [
 	classVariables isRingResolved ifFalse: [ 
 		self pvtCleanClassVariables  ].
 	
-	classVariables add: anRGInstanceVariableDefinition.	
+	classVariables add: anRGInstanceVariableDefinition.
 ]
 
 { #category : #'private - backend access' }
@@ -443,7 +427,7 @@ RGClassStrategy >> pvtAddSharedPool: anRGPoolVariable [
 	sharedPools isRingResolved ifFalse: [ 
 		self pvtCleanSharedPools  ].
 	
-	sharedPools add: anRGPoolVariable.	
+	sharedPools add: anRGPoolVariable.
 ]
 
 { #category : #'private - backend access' }
@@ -517,9 +501,6 @@ RGClassStrategy >> pvtResolvableProperties [
 		#package -> package. 
 		#sharedPools -> sharedPools. 
 	}
-	
-	
-
 ]
 
 { #category : #enumerating }
@@ -567,7 +548,7 @@ RGClassStrategy >> sharedPools [
 						beh := self environment ask behaviorNamed: each name.
 						beh ifNotNil: [ beh ] ifNil: [ each ] ]
 					ifFalse: [ each copy ]])].
-	^ allSharedPools 
+	^ allSharedPools
 ]
 
 { #category : #'private - backend access' }

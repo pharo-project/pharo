@@ -13,7 +13,6 @@ RGContainer class >> allManagers [
 	^ Smalltalk globals at: #MCWorkingCopy 
 		ifPresent: [:mcwc | mcwc allManagers ] 
 		ifAbsent: [OrderedCollection new ]
-
 ]
 
 { #category : #'image package loading' }
@@ -202,7 +201,7 @@ RGContainer >> classOrTraitNamed: className [
 	
 	^(self isMetaclassName: className)
 		ifTrue: [ theClass classSide ]
-		ifFalse:[ theClass ] 
+		ifFalse:[ theClass ]
 ]
 
 { #category : #'convenient accesses' }
@@ -491,7 +490,6 @@ RGContainer >> setPackageOfClass: rgClass using: packageKeys [
 
 	(self findPackageOfClass: rgClass using: packageKeys) 
 		ifNotNil:[ :pck| pck addClass: rgClass ]
-	
 ]
 
 { #category : #'image package loading' }

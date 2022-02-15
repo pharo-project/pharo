@@ -16,7 +16,7 @@ RGBehaviorStrategy class >> unresolved [
 { #category : #visiting }
 RGBehaviorStrategy >> acceptVisitor: aVisitor [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'private - backend access' }
@@ -34,7 +34,7 @@ RGBehaviorStrategy >> addSharedPool: anRGPoolVariable [
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> allClassVarNames [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'private - backend access' }
@@ -102,7 +102,7 @@ RGBehaviorStrategy >> bindingOf: varName [
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> category [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'private - backend access' }
@@ -193,7 +193,6 @@ RGBehaviorStrategy >> comment: anRGComment [
 RGBehaviorStrategy >> copyForBehaviorDefinitionPostCopy [
 
 	super postCopy.
-
 ]
 
 { #category : #copying }
@@ -324,14 +323,12 @@ RGBehaviorStrategy >> layout: anRGLayout [
 
 	self owner announceDefinitionChangeDuring: [ 
 		self backend forBehavior setLayoutFor: self owner to: anRGLayout ].
-
 ]
 
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> makeResolved [
 
 	"do nothing"
-
 ]
 
 { #category : #accessing }
@@ -401,13 +398,13 @@ RGBehaviorStrategy >> sharedPoolsDo: aBlock [
 { #category : #utilities }
 RGBehaviorStrategy >> sibling [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #utilities }
 RGBehaviorStrategy >> storeName [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }

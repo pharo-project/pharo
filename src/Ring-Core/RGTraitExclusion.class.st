@@ -19,7 +19,6 @@ RGTraitExclusion >> cleanExclusions [
 
 	self parent parent announceDefinitionChangeDuring: [ 
 		self backend forBehavior cleanExclusionsFor: self. ].
-	
 ]
 
 { #category : #'default model values' }
@@ -35,7 +34,6 @@ RGTraitExclusion >> exclusions [
 	allExclusions := OrderedCollection new.
 	self exclusionsDo: [ :each | allExclusions add: each].
 	^ allExclusions
-
 ]
 
 { #category : #'accessing - backend' }
@@ -72,7 +70,6 @@ RGTraitExclusion >> makeResolved [
 	super makeResolved.
 	
 	exclusions := self exclusions markAsRingResolved.
-
 ]
 
 { #category : #'queries - methods' }
@@ -88,7 +85,7 @@ RGTraitExclusion >> pvtAddExclusion: aSymbol [
 	exclusions isRingResolved ifFalse: [ 
 		self pvtCleanExclusions  ].
 	
-	exclusions add: aSymbol.	
+	exclusions add: aSymbol.
 ]
 
 { #category : #'private - backend access' }
@@ -115,8 +112,6 @@ RGTraitExclusion >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#exclusions -> exclusions. 
 	}
-	
-	
 ]
 
 { #category : #'accessing - backend' }

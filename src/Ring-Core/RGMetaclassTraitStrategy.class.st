@@ -118,8 +118,6 @@ RGMetaclassTraitStrategy >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, {
 		#baseTrait -> baseTrait. 
    	}
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -143,5 +141,5 @@ RGMetaclassTraitStrategy >> storeName [
 { #category : #'private - backend access' }
 RGMetaclassTraitStrategy >> traitTransformationString [		
 		
-	^ self owner name 
+	^ self owner name
 ]

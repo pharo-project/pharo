@@ -19,7 +19,7 @@ RGEnvironmentQueryInterface class >> for: anRGEnvironment [
 { #category : #accessing }
 RGEnvironmentQueryInterface >> allClasses [
 
-	^ self behaviors select: [ :each | each isClass ] 
+	^ self behaviors select: [ :each | each isClass ]
 ]
 
 { #category : #classes }
@@ -32,7 +32,6 @@ RGEnvironmentQueryInterface >> allClassesAndTraits [
 RGEnvironmentQueryInterface >> behaviorNamed: aSymbol [
 
 	^ self behaviorNamed: aSymbol ifAbsent: [ nil]
-
 ]
 
 { #category : #classes }
@@ -94,7 +93,6 @@ RGEnvironmentQueryInterface >> behaviors [
 	allBehaviors := IdentitySet new.
 	self behaviorsDo: [ :each | allBehaviors add: each].
 	^ allBehaviors asArray
-
 ]
 
 { #category : #caching }
@@ -144,7 +142,6 @@ RGEnvironmentQueryInterface >> globalVariables [
 	allGlobalVariables := IdentitySet new.
 	self globalVariablesDo: [ :each | allGlobalVariables add: each].
 	^ allGlobalVariables asArray
-
 ]
 
 { #category : #globals }
@@ -194,7 +191,6 @@ RGEnvironmentQueryInterface >> packages [
 	allPackages := IdentitySet new.
 	self packagesDo: [ :each | allPackages add: each].
 	^ allPackages asArray
-
 ]
 
 { #category : #packages }
@@ -212,7 +208,6 @@ RGEnvironmentQueryInterface >> replaceName: aSymbol with: aNewSymbol [
 		behaviorsDictionary removeKey: aSymbol.
 		behaviorsDictionary at: aNewSymbol put: anRGBehavior.
 		 ]
-	
 ]
 
 { #category : #caching }

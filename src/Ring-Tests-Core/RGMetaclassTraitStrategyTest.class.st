@@ -24,7 +24,6 @@ RGMetaclassTraitStrategyTest >> testKind [
 	self deny: strategy isMetaclassStrategy.
 	self deny: strategy isTraitStrategy.
 	self assert: strategy isMetaclassTraitStrategy.
-	
 ]
 
 { #category : #tests }

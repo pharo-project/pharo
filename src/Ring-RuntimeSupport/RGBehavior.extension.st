@@ -32,7 +32,7 @@ RGBehavior >> allSuperclasses [
 		ifTrue: [ OrderedCollection new]
 		ifFalse: [temp := self superclass allSuperclasses.
 			temp addFirst: self superclass.
-			temp] 
+			temp]
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
@@ -77,7 +77,6 @@ RGBehavior >> compile: aString classified: aCategory notifying: aController [
 		newMethod tagWith: aCategory ].
 	
 	^ selector.
-
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
@@ -95,7 +94,6 @@ RGBehavior >> compile: code notifying: requestor [
 	aMethod sourceCode: code.
 	
 	^ aMethod selector
-	
 ]
 
 { #category : #'*Ring-RuntimeSupport' }

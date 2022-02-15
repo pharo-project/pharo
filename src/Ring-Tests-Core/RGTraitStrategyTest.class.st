@@ -12,8 +12,6 @@ RGTraitStrategyTest >> testClassVariablesString [
 	anRGBehavior := RGBehavior newTrait.
 
 	self assert: anRGBehavior classVariablesString equals: ''
-
-
 ]
 
 { #category : #tests }
@@ -45,7 +43,6 @@ RGTraitStrategyTest >> testIncompatibleBehavior [
 		anRGBehavior sharedPoolsDo: [ :sharedPool | ] ].
 	self checkIncompatible: [ 
 		anRGBehavior defaultMetaClass ].
-
 ]
 
 { #category : #tests }
@@ -76,7 +73,6 @@ RGTraitStrategyTest >> testKind [
 	self deny: strategy isMetaclassStrategy.
 	self assert: strategy isTraitStrategy.
 	self deny: strategy isMetaclassTraitStrategy.
-	
 ]
 
 { #category : #tests }

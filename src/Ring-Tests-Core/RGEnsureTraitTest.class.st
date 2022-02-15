@@ -24,8 +24,7 @@ RGEnsureTraitTest >> testClassTrait [
 	self assert: definition isClass not. 
 	self assert: definition isMetaclass not. 	
 	self assert: definition isTrait. 	
-	self assert: definition isMetaclassTrait. 	
-
+	self assert: definition isMetaclassTrait.
 ]
 
 { #category : #running }
@@ -73,7 +72,7 @@ RGEnsureTraitTest >> testTrait [
 	self assert: definition isClass not. 
 	self assert: definition isMetaclass not. 	
 	self assert: definition isTrait. 	
-	self assert: definition isMetaclassTrait not. 	
+	self assert: definition isMetaclassTrait not.
 ]
 
 { #category : #running }

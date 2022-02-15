@@ -92,11 +92,6 @@ RGAnnouncementsTest >> testBehaviorCommentModified [
 	behavior comment time: DateAndTime new.
 	self assert: announcements size equals: 3.
 	self assert: (announcements allSatisfy: [:each | each classCommented == behavior ]).
-	
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -114,10 +109,6 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForCategory [
 	
 	class category: 'some category'.
 	self assert: announcements size equals: 1.
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -143,11 +134,6 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForSuperclass [
 	self assert: announcements size equals: 2.
 	class superclass: superclass2.
 	self assert: announcements size equals: 3.
-	
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -170,11 +156,6 @@ RGAnnouncementsTest >> testBehaviorParentRenamed [
 	self assert: announcements size equals: 0.
 	superclass name: #NewSuperclass1.
 	self assert: announcements size equals: 1.
-	
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -201,5 +182,4 @@ RGAnnouncementsTest >> testUnsubscribe [
 	
 	behavior := env ensureClassNamed: #SomeClass.
 	self assert: announcements isEmpty.
-
 ]

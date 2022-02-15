@@ -14,5 +14,4 @@ TRGReadOnlyTest >> testReadOnlyErrors [
 	
 	selectors do: [:selector |
 		self should: [backend perform: selector withEnoughArguments: #() ] raise: Error]
-
 ]

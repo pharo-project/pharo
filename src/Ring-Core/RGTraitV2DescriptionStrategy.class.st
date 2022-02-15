@@ -34,7 +34,6 @@ RGTraitV2DescriptionStrategy >> copyForBehaviorDefinitionPostCopy [
 	super copyForBehaviorDefinitionPostCopy.
 	layout := self layout copyForBehaviorDefinition.
 	layout parent: self owner.
-
 ]
 
 { #category : #initialization }
@@ -58,7 +57,6 @@ RGTraitV2DescriptionStrategy >> initializeUnresolved [
 	super initializeUnresolved.
 	
 	layout := self unresolvedValue: self defaultLayout.
-
 ]
 
 { #category : #initialization }
@@ -111,7 +109,6 @@ RGTraitV2DescriptionStrategy >> makeResolved [
 	super makeResolved. 
 	
 	layout := self layout makeResolved markAsRingResolved.
-
 ]
 
 { #category : #'private - backend interface' }
@@ -155,5 +152,5 @@ RGTraitV2DescriptionStrategy >> trait [
 { #category : #'private - backend access' }
 RGTraitV2DescriptionStrategy >> traitTransformationString [		
 		
-	^ self owner name 
+	^ self owner name
 ]

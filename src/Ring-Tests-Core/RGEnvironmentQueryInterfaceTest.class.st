@@ -35,6 +35,4 @@ RGEnvironmentQueryInterfaceTest >> testCachingBehaviors [
 	"change class to trait"
 	behavior := env ensureTraitNamed: #SomeBehavior.
 	self assert: (env ask behaviorsDictionary at: #SomeBehavior) equals: behavior.
-
-	
 ]

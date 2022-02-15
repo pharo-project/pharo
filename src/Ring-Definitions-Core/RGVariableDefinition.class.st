@@ -24,7 +24,7 @@ RGVariableDefinition >> = aRGVariableDefinition [
 { #category : #accessing }
 RGVariableDefinition >> environment [
 
-	^ self parent environment 
+	^ self parent environment
 ]
 
 { #category : #accessing }

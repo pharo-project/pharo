@@ -53,7 +53,7 @@ RGTraitCompositionVisitor >> traitComposition: anObject [
 { #category : #visiting }
 RGTraitCompositionVisitor >> visitArrayNode: anArrayNode [ 
 
-	^ anArrayNode children collect: [:each | self visitNode: each] 
+	^ anArrayNode children collect: [:each | self visitNode: each]
 ]
 
 { #category : #visiting }
@@ -123,5 +123,4 @@ RGTraitCompositionVisitor >> visitSequenceNode: aSequenceNode [
 RGTraitCompositionVisitor >> visitVariableNode: aVariableNode [
 	
 	^ self traitComposition environment ensureTraitNamed: aVariableNode name
-
 ]

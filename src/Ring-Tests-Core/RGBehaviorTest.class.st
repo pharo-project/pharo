@@ -13,7 +13,7 @@ RGBehaviorTest >> behaviorClass [
 { #category : #tests }
 RGBehaviorTest >> testBadInstantiation [
 
-	self should: [ RGBehavior named: #SomeBehavior ] raise: RGBadInstantiationError 
+	self should: [ RGBehavior named: #SomeBehavior ] raise: RGBadInstantiationError
 ]
 
 { #category : #tests }
@@ -119,5 +119,4 @@ RGBehaviorTest >> testUnresolveSuperclass [
 	self deny: class2 hasResolvedSuperclass. 
 	
 	self assert: class1 subclasses isEmpty.
-
 ]
