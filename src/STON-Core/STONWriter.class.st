@@ -122,7 +122,6 @@ STONWriter >> encodeCharacter: char [
 			(code > 16r9F and: [ asciiOnly not ])
 				ifTrue: [ writeStream nextPut: char ]
 				ifFalse: [ self escapeUnicode: code ] ]
-
 ]
 
 { #category : #private }
@@ -150,7 +149,6 @@ STONWriter >> encodeList: elements [
 					separatedBy: [ self listElementSeparator ] ].
 			self newlineIndent ].
 	writeStream nextPut: $]
-
 ]
 
 { #category : #writing }
@@ -267,13 +265,12 @@ STONWriter >> isSimpleSymbol: symbol [
 		findFirstInString: symbol 
 		inSet: STONSimpleSymbolCharacters 
 		startingAt: 1) = 0
-
 ]
 
 { #category : #accessing }
 STONWriter >> jsonMode [
 
-	^ jsonMode 
+	^ jsonMode
 ]
 
 { #category : #initialization }
@@ -302,14 +299,12 @@ STONWriter >> keepNewLines: boolean [
 STONWriter >> listElementSeparator [
 	writeStream nextPut: $,.
 	self newlineIndent
-
 ]
 
 { #category : #private }
 STONWriter >> mapElementSeparator [
 	writeStream nextPut: $,.
 	self newlineIndent
-
 ]
 
 { #category : #initialization }
@@ -334,7 +329,6 @@ STONWriter >> nextPut: anObject [
 { #category : #'private - initialization' }
 STONWriter >> on: aWriteStream [
 	writeStream := aWriteStream
-
 ]
 
 { #category : #initialization }
@@ -352,14 +346,12 @@ STONWriter >> prettyPrint: boolean [
 { #category : #private }
 STONWriter >> prettyPrintSpace [
 	prettyPrint ifTrue: [ writeStream space ]
-
 ]
 
 { #category : #initialization }
 STONWriter >> referencePolicy: policy [
 	self assert: ( #(#normal #ignore #error) includes: policy ).
 	referencePolicy := policy
-
 ]
 
 { #category : #initialization }
@@ -371,7 +363,6 @@ STONWriter >> reset [
 STONWriter >> shortListElementSeparator [
 	writeStream nextPut: $,.
 	self prettyPrintSpace
-
 ]
 
 { #category : #private }
