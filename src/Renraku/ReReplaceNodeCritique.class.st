@@ -43,8 +43,7 @@ ReReplaceNodeCritique >> initializeRule: aRule sourceAnchor: anAnchor oldNode: a
 
 	self initializeRule: aRule sourceAnchor: anAnchor.
 	oldNode := aNode.
-	newNode := anotherNode 
-
+	newNode := anotherNode
 ]
 
 { #category : #testing }

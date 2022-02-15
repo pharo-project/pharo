@@ -17,21 +17,21 @@ ReMissingMethodCritique class >> for: anEntity by: aRule class: aClass selector:
 
 	^ self basicNew 
 		initializeRule: aRule target: anEntity class: aClass selector: aSymbol;
-		yourself 
+		yourself
 ]
 
 { #category : #actions }
 ReMissingMethodCritique >> beShouldBeImplemented [
 	"set the sorce code of the method-to-be-created to shouldBeImplemented"
 
-	source := '^ self shouldBeImplemented' 
+	source := '^ self shouldBeImplemented'
 ]
 
 { #category : #actions }
 ReMissingMethodCritique >> beSubclassResponsibility [
 	"set the sorce code of the method-to-be-created to subclassResponsibility"
 
-	source := '^ self subclassResponsibility' 
+	source := '^ self subclassResponsibility'
 ]
 
 { #category : #accessing }

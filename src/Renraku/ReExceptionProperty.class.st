@@ -20,7 +20,6 @@ ReExceptionProperty class >> for: anEntity with: anException [
 		stack: anException signalerContext copyStack;
 		message: anException description;
 		yourself
-		
 ]
 
 { #category : #actions }

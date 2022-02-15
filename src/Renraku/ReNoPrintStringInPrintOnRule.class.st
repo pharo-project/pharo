@@ -16,7 +16,7 @@ ReNoPrintStringInPrintOnRule class >> checksMethod [
 
 { #category : #'class initialization' }
 ReNoPrintStringInPrintOnRule class >> initialize [
-    ReRuleManager cleanUp 
+    ReRuleManager cleanUp
 ]
 
 { #category : #running }
@@ -40,7 +40,7 @@ ReNoPrintStringInPrintOnRule >> group [
 
 { #category : #accessing }
 ReNoPrintStringInPrintOnRule >> name [
-	^ 'No printString inside printOn' 
+	^ 'No printString inside printOn'
 ]
 
 { #category : #accessing }

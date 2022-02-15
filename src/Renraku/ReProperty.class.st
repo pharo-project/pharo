@@ -56,5 +56,5 @@ ReProperty >> sourceAnchor [
 { #category : #accessing }
 ReProperty >> title [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

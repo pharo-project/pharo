@@ -44,7 +44,7 @@ ReSmalllintChecker >> checkMethodsForClass: aClass [
 							check: node
 							forCritiquesDo: [ :crit |
 								crit sourceAnchor initializeEnitity: method.
-								self addCritique: crit ] ] ]] 
+								self addCritique: crit ] ] ]]
 ]
 
 { #category : #private }
@@ -95,7 +95,7 @@ ReSmalllintChecker >> getCritiquesAbout: anEntity by: rules [
 { #category : #initialization }
 ReSmalllintChecker >> initialize [
 	super initialize.
-	self resetResult 
+	self resetResult
 ]
 
 { #category : #private }

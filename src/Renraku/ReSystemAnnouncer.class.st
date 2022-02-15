@@ -33,7 +33,6 @@ ReSystemAnnouncer >> notifyCritique: aCritique descriptionViewedFor: anEntity [
 			critique: aCritique;
 			entity: anEntity;
 			yourself)
-  
 ]
 
 { #category : #announce }
@@ -45,7 +44,6 @@ ReSystemAnnouncer >> notifyCritique: aCritique of: anEntity bannedOn: anEntityBa
 			entity: anEntity;
 			entityBanLevel: anEntityBanLevel;
 			yourself)
-
 ]
 
 { #category : #announce }
@@ -56,5 +54,4 @@ ReSystemAnnouncer >> notifyEntity: anEntity criticizedWith: critiques [
 			critiques: critiques;
 			entity: anEntity;
 			yourself)
-
 ]
