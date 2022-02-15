@@ -14,8 +14,6 @@ ReLogExceptionStrategy class >> handle: anException about: anEntity forPropertie
 		ReExceptionProperty
 			for: anEntity
 			with: anException)
-	
-	
 ]
 
 { #category : #accessing }

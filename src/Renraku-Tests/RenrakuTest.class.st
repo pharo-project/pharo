@@ -17,7 +17,6 @@ RenrakuTest >> testAsClassRuleTransformation [
 	
 	self assert: critique change class equals: RBAddMethodChange.
 	self assert: (critique change source includesSubstring: 'self class environment at:')
-	
 ]
 
 { #category : #tests }

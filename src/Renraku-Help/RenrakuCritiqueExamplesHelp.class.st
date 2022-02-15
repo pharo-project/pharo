@@ -35,13 +35,13 @@ RenrakuCritiqueExamplesHelp class >> pages [
 { #category : #pages }
 RenrakuCritiqueExamplesHelp class >> refactoring [
 
-	^ self topicForClass: ReRefactoringCritique  
+	^ self topicForClass: ReRefactoringCritique
 ]
 
 { #category : #pages }
 RenrakuCritiqueExamplesHelp class >> replaceNode [
 
-	^ self topicForClass: ReReplaceNodeCritique 
+	^ self topicForClass: ReReplaceNodeCritique
 ]
 
 { #category : #pages }

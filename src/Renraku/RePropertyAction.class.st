@@ -23,44 +23,37 @@ Class {
 { #category : #evaluating }
 RePropertyAction >> actOnCritic: aCritic ofEntity: anEntity [
 
-	action cull: aCritic cull: anEntity 
-
+	action cull: aCritic cull: anEntity
 ]
 
 { #category : #accessing }
 RePropertyAction >> action [
 	^ action
-
 ]
 
 { #category : #accessing }
 RePropertyAction >> action: anObject [
 	action := anObject
-
 ]
 
 { #category : #accessing }
 RePropertyAction >> description [
 	^ description
-
 ]
 
 { #category : #accessing }
 RePropertyAction >> description: anObject [
 	description := anObject
-
 ]
 
 { #category : #accessing }
 RePropertyAction >> icon [ 
 	^ icon
-
 ]
 
 { #category : #accessing }
 RePropertyAction >> icon: anObject [
 	icon := anObject
-
 ]
 
 { #category : #initialization }
@@ -69,5 +62,4 @@ RePropertyAction >> initialize [
 	icon := (Form extent: 16@16 depth: 32) fillColor: Color green.
 	description := ''.
 	action := [ :critic :entity | ]
-
 ]

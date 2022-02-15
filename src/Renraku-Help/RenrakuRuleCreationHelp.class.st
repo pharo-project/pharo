@@ -117,5 +117,4 @@ RenrakuRuleCreationHelp class >> testing [
 	RBExcessiveMethodsRule new check: Object
 
 should give you a collection with one critique (because the Object class always has many methods ;) ). Go on click on the critique item and inspect it. You will see that there is a special "description" tab. This is the power of critique objects, they can present themselves in a different way. Guess what: you can even visualize the critique if needed.'
-	
 ]

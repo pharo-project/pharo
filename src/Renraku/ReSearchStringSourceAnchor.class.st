@@ -23,7 +23,7 @@ ReSearchStringSourceAnchor class >> entity: anEntity string: aString [
 ReSearchStringSourceAnchor >> initializeEnitity: anEntiy searchString: aString [ 
 	
 	self initializeEnitity: anEntiy.
-	searchString := aString 
+	searchString := aString
 ]
 
 { #category : #accessing }

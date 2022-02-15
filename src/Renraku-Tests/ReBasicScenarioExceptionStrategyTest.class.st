@@ -58,5 +58,4 @@ ReBasicScenarioExceptionStrategyTest >> validationScenario [
 					critiques add: prop ] ].
 			
 	^ critiques
-	
 ]

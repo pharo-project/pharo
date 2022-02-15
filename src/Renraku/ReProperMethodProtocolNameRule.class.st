@@ -51,7 +51,7 @@ ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 	"Instead of directly creating an array we use this utility method for better readability
 	 in senders of this method"
 	
-	^valid -> arrayOfInvalid 
+	^valid -> arrayOfInvalid
 ]
 
 { #category : #running }

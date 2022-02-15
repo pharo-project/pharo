@@ -10,7 +10,6 @@ RBTransformationRule >> check: aMethod forCritiquesDo: aCriticBlock [
 					for: aMethod
 					by: self
 					tree: rewriteRule tree)  ]
-		
 ]
 
 { #category : #'*Renraku' }
@@ -20,5 +19,4 @@ RBTransformationRule >> suggestedCode: aCritic [
 			(ch  isMeta = aCritic  methodClass isMeta) &
 			(ch changeClassName = aCritic criticTheNonMetaclassClass name) & 
 			(ch selector = aCritic selector)]) source.
-		
 ]

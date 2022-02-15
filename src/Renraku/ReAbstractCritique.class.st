@@ -112,7 +112,7 @@ ReAbstractCritique >> ban [
 { #category : #accessing }
 ReAbstractCritique >> change [
 	
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -123,7 +123,6 @@ ReAbstractCritique >> color [
 	#warning -> Color yellow .
 	#information -> Color blue
 	 } asDictionary at: rule severity ifAbsent: [ super color ]) alpha: 0.1
-
 ]
 
 { #category : #accessing }
@@ -188,7 +187,7 @@ ReAbstractCritique >> providePositiveFeedback: aComment [
 { #category : #testing }
 ReAbstractCritique >> providesChange [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

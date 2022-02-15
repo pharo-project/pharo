@@ -23,13 +23,13 @@ ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
 ReIntervalSourceAnchor >> initializeEnitity: anEntiy interval: anInterval [ 
 	
 	self initializeEnitity: anEntiy.
-	interval := anInterval 
+	interval := anInterval
 ]
 
 { #category : #accessing }
 ReIntervalSourceAnchor >> interval [
 
-	^ interval 
+	^ interval
 ]
 
 { #category : #testing }

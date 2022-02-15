@@ -28,7 +28,7 @@ ReInvocationOrderCritique >> initializeRule: aRule sourceAnchor: anAnchor method
 
 	self initializeRule: aRule sourceAnchor: anAnchor.
 	targetMethodName := aString.
-	condition := aCondition 
+	condition := aCondition
 ]
 
 { #category : #testing }
