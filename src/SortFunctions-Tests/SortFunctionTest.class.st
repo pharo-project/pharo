@@ -71,7 +71,6 @@ SortFunctionTest >> testPropertyWithOddCollator [
 	data := { 1@10. 5@5. 10@4. 3@8. 1@1. 10@10 }.
 	sorted := data sorted: function.
 	self assert: sorted equals: { 1@1. 5@5. 10@4. 3@8. 1@10. 10@10 }.
-
 ]
 
 { #category : #tests }
@@ -122,7 +121,6 @@ SortFunctionTest >> testSortingChained [
 	sorted := data sorted: #x ascending , #y descending.
 	self assert: sorted equals: { 1@10. 1@1. 3@8. 5@5. 10@10. 10@4 }.
 	self assert: (sorted isSortedBy: #x ascending , #y descending).
-
 ]
 
 { #category : #'tests - sorting' }
@@ -135,7 +133,6 @@ SortFunctionTest >> testSortingChainedWithUndefined [
 	sorted := data sorted: #x ascending , #y descending undefinedLast.
 	self assert: sorted equals: { 1@10. 1@1. 3@8. 5@5. 10@10. 10@4. 10@nil }.
 	self assert: (sorted isSortedBy: #x ascending , #y descending undefinedLast).
-
 ]
 
 { #category : #'tests - sorting' }
