@@ -10,7 +10,7 @@ Class {
 { #category : #'tests - sunit' }
 ProperPackagesTest >> testNoPackageNameEndsWithTest [
 
-	self assert: (Smalltalk packages select: [:each | each name endsWith: 'Test' ]) isEmpty 
+	self assert: (Smalltalk packages select: [:each | each name endsWith: 'Test' ]) isEmpty
 ]
 
 { #category : #tests }

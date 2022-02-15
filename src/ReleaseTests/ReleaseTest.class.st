@@ -135,7 +135,6 @@ ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
 	self assertValidLintRule: ReExplicitRequirementMethodsRule new
-	
 ]
 
 { #category : #tests }
@@ -150,7 +149,6 @@ ReleaseTest >> testInstalledMethodsWithIncorrectTrailerKind [
 			s 
 				nextPutAll: 'Found methods with incorrect trailer kind: ';
 				print: incorrectMethods ]].
-	
 ]
 
 { #category : #tests }
@@ -165,7 +163,6 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 			s 
 				nextPutAll: 'Found methods with nil as last literal: ';
 				print: instanceSideMethodsWithNilKeyInLastLiteral ]].
-	
 ]
 
 { #category : #tests }
@@ -210,7 +207,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 		equals: expectedManifestNames size.
 	
 	actualManifestNames do: [:each |
-		 self assert: (expectedManifestNames includes: each)] 
+		 self assert: (expectedManifestNames includes: each)]
 ]
 
 { #category : #tests }
@@ -288,7 +285,6 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 	
 	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
-	
 ]
 
 { #category : #'tests - source' }
@@ -311,7 +307,6 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 			stream
 				nextPutAll: 'Found methods with period in signature:';
 				print: methods ] ]
-	
 ]
 
 { #category : #'tests - variables' }
@@ -377,9 +372,6 @@ ReleaseTest >> testProperManifestClasses [
 	manifests := self class environment allClasses select: [:each | each isManifest ].
 	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
 	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ]).
-
-
- 
 ]
 
 { #category : #'tests - rpackage' }
@@ -422,7 +414,6 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 { #category : #tests }
 ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
 	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
-	
 ]
 
 { #category : #'tests - rpackage' }
@@ -498,7 +489,6 @@ ReleaseTest >> testUnpackagedClasses [
 			unpackagedClasses
 				do: [ :cls| s tab print: cls ]
 				separatedBy: [ s cr ]])
-
 ]
 
 { #category : #'tests - rpackage' }
