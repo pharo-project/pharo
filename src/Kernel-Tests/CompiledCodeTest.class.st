@@ -185,9 +185,7 @@ CompiledCodeTest >> testLiteralEqual [
 	compiledBlocks := methodToTest literals select: [ :each | each isCompiledBlock ].
 	self assert: compiledBlocks size equals: 2.
 	self deny: (compiledBlocks first literalEqual: compiledBlocks second).
-	self assert: compiledBlocks first equals: compiledBlocks second.
-	
-	
+	self assert: compiledBlocks first equals: compiledBlocks second
 ]
 
 { #category : #'tests - literals' }

@@ -92,7 +92,7 @@ CompiledBlock >> isTestMethod [
 
 { #category : #comparing }
 CompiledBlock >> literalEqual: other [
-	"when ther are two blocks with the same code, we want to still have both in the literal array"
+	"when there are two blocks with the same code, we want to still have both in the literal array"
 	^self == other
 ]
 
