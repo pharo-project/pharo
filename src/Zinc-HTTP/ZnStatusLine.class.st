@@ -107,6 +107,11 @@ ZnStatusLine class >> seeOther [
 ]
 
 { #category : #'instance creation' }
+ZnStatusLine class >> serviceUnavailable [
+	^ self code: 503
+]
+
+{ #category : #'instance creation' }
 ZnStatusLine class >> unauthorized [
 	^ self code: 401
 ]

@@ -23,7 +23,7 @@ Class {
 { #category : #'instance creation' }
 ZnHeaders class >> defaultRequestHeaders [
 	^ self new
-		at: 'User-Agent' put: ZnConstants defaultUserAgent;
+		at: 'User-Agent' put: (ZnCurrentOptions at: #userAgentString);
 		at: 'Accept' put: '*/*';
 		yourself
 ]
@@ -31,7 +31,7 @@ ZnHeaders class >> defaultRequestHeaders [
 { #category : #'instance creation' }
 ZnHeaders class >> defaultResponseHeaders [
 	^ self new
-		at: 'Server' put: ZnConstants defaultServerString;
+		at: 'Server' put: (ZnCurrentOptions at: #serverString);
 		at: 'Date' put: ZnUtils httpDate;
 		yourself
 ]
@@ -122,7 +122,9 @@ ZnHeaders >> at: headerName add: value [
 
 { #category : #accessing }
 ZnHeaders >> at: headerName ifAbsent: block [
-	"Like #at: but executes block when the headerName is not found"
+	"Return the value stored under headerName,
+	a String for single-valued headers, an Array of Strings for multi-valued headers.
+	Executes block when the headerName is not found"
 	
 	self isEmpty ifTrue: [ ^ block value ].
 	^ self headers at: (self normalizeHeaderKey: headerName) ifAbsent: block
@@ -130,7 +132,9 @@ ZnHeaders >> at: headerName ifAbsent: block [
 
 { #category : #accessing }
 ZnHeaders >> at: headerName ifPresent: block [
-	"Like #at: but executes block when the headerName is found"
+	"Return the value stored under headerName,
+	a String for single-valued headers, an Array of Strings for multi-valued headers.
+	Executes block when the headerName is found"
 
 	^ self headers at: (self normalizeHeaderKey: headerName) ifPresent: block
 ]
@@ -146,17 +150,14 @@ ZnHeaders >> at: headerName put: value [
 ZnHeaders >> at: headerName put: value ifPresentMerge: binaryBlock [
 	"Store value under headerName, when there is an existing entry,
 	stored the result of evaluating binaryBlock with old and new value"
-	
-	| normalizedKey existingValue newValue |
+
+	| normalizedKey newValue |
 	normalizedKey := self normalizeHeaderKey: headerName.
-	existingValue := self headers at: normalizedKey ifAbsent: [ nil ].
-	newValue := existingValue isNil
-		ifTrue: [ value ] 
-		ifFalse: [ binaryBlock value: existingValue value: value ].
-	^ self headers at: normalizedKey put: newValue 
-		
-
-
+	newValue := self headers
+		at: normalizedKey
+		ifPresent: [ :existingValue | binaryBlock value: existingValue value: value ]
+		ifAbsent: [ value ].
+	^ self headers at: normalizedKey put: newValue
 ]
 
 { #category : #accessing }
@@ -190,7 +191,7 @@ ZnHeaders >> contentLength: object [
 { #category : #accessing }
 ZnHeaders >> contentType [
 	| headerValue |
-	headerValue := (self headers at: 'Content-Type') trimBoth.
+	headerValue := (self singleAt: 'Content-Type' ifAbsent: [ ^ ZnMimeType default ]) trimBoth.
 	headerValue isEmpty ifTrue: [ ^ ZnMimeType default ].
 	^ ZnMimeType fromString: headerValue
 ]
@@ -233,7 +234,7 @@ ZnHeaders >> hash [
 
 { #category : #private }
 ZnHeaders >> headers [
-	headers isNil ifTrue: [ headers := ZnMultiValueDictionary new ].
+	headers ifNil: [ headers := ZnMultiValueDictionary new ].
 	^ headers
 ]
 
@@ -285,7 +286,7 @@ ZnHeaders >> normalizeHeaderKey: string [
 	"Test string to see if it has proper header key capitalization,
 	if true, return string, if not, return a properly capitalized copy"
 	
-	"Optimization: if string is a know, properly capitalized header, use it as is"
+	"Optimization: if string is a know,, properly capitalized header, use it as is"
 	(CommonHeaders includes: string) 
 		ifTrue: [ ^ string ].
 	^ (ZnUtils isCapitalizedString: string)
@@ -347,6 +348,21 @@ ZnHeaders >> request: url [
 	(ZnNetworkingUtils proxyAuthorizationHeaderValueToUrl: url)
 		ifNotNil: [ :value | self at: 'Proxy-Authorization' put: value ].    
   
+]
+
+{ #category : #accessing }
+ZnHeaders >> singleAt: headerName ifAbsent: block [
+	"Return the value stored under headerName,
+	a String for single-valued headers, 
+	or the last String from an Array of Strings for multi-valued headers.
+	Executes block when the headerName is not found"
+	
+	| value |
+	self isEmpty ifTrue: [ ^ block value ].
+	value := self headers at: (self normalizeHeaderKey: headerName) ifAbsent: block.
+	^ value isString
+		ifTrue: [ value ]
+		ifFalse: [ value last ]
 ]
 
 { #category : #'initialize-release' }

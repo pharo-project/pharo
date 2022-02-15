@@ -42,14 +42,12 @@ ZnMimePart class >> fieldName: fieldName fileName: fileName entity: entity [
 ZnMimePart class >> fieldName: fieldName fileNamed: fileName [
 	| mimeType size fileStream entity baseName |
 	mimeType := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: fileName).
-	fileStream := ZnFileSystemUtils oldFileStreamFor: fileName.
-	mimeType isBinary ifTrue: [ fileStream binary ].
+	fileStream := ZnFileSystemUtils binaryReadStreamFor: fileName.
 	size := ZnFileSystemUtils fileSizeFor: fileName.
 	(entity := ZnStreamingEntity type: mimeType length: size)
 		stream: fileStream.
 	baseName := ZnFileSystemUtils baseNameFor: fileName.
 	^ self fieldName: fieldName fileName: baseName entity: entity
-	
 ]
 
 { #category : #'instance creation' }
@@ -87,16 +85,16 @@ ZnMimePart >> contentDisposition [
 { #category : #private }
 ZnMimePart >> contentDispositionValues [
 	| contentDisposition values start semiColonIndex |
-	(contentDisposition := self contentDisposition) isNil ifTrue: [ ^ #() ].
+	( contentDisposition := self contentDisposition ) ifNil: [ ^ #() ].
 	values := OrderedCollection new: 3.
 	start := 1.
 	semiColonIndex := contentDisposition indexOf: $; startingAt: start ifAbsent: [ 0 ].
-	[ semiColonIndex isZero ] whileFalse: [
+	[ semiColonIndex isZero ] whileFalse: [ 
 		| value |
 		value := contentDisposition copyFrom: start to: semiColonIndex - 1.
 		values add: (ZnUtils trimString: value).
 		start := semiColonIndex + 1.
-		semiColonIndex := contentDisposition indexOf: $; startingAt: start ifAbsent: [ 0 ] ].
+		semiColonIndex := contentDisposition indexOf: $; startingAt: start ifAbsent: [ 0 ]].
 	values add: (ZnUtils trimString: (contentDisposition copyFrom: start to: contentDisposition size)).
 	^ values
 ]
@@ -117,7 +115,8 @@ ZnMimePart >> contentType [
 
 { #category : #accessing }
 ZnMimePart >> contents [
-	^ entity isNil ifTrue: [ nil ] ifFalse: [ entity contents ]
+
+	^ entity ifNil: [ nil ] ifNotNil: [ entity contents ]
 ]
 
 { #category : #private }
@@ -204,7 +203,8 @@ ZnMimePart >> hash [
 
 { #category : #accessing }
 ZnMimePart >> headers [
-	headers isNil ifTrue: [ headers := ZnHeaders new ].
+
+	headers ifNil: [ headers := ZnHeaders new ].
 	^ headers
 ]
 

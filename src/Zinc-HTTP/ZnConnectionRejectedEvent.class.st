@@ -1,8 +1,8 @@
 "
-ZnConnectionAcceptedEvent is signalled when an HTTP server accepts an incoming connection from a client at address.
+ZnConnectionRejectedEvent is signalled when an HTTP server rejects an incoming connection from a client at address.
 "
 Class {
-	#name : #ZnConnectionAcceptedEvent,
+	#name : #ZnConnectionRejectedEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
 		'address'
@@ -11,19 +11,19 @@ Class {
 }
 
 { #category : #accessing }
-ZnConnectionAcceptedEvent >> address [
+ZnConnectionRejectedEvent >> address [
 	^ address
 ]
 
 { #category : #accessing }
-ZnConnectionAcceptedEvent >> address: anObject [
+ZnConnectionRejectedEvent >> address: anObject [
 	address := anObject
 ]
 
 { #category : #printing }
-ZnConnectionAcceptedEvent >> printContentsOn: stream [
+ZnConnectionRejectedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Connection Accepted '.
+	stream << ' Connection Rejected '.
 	address ifNotNil: [
 		address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ] ]
 ]

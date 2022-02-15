@@ -100,14 +100,14 @@ ZnUrl class >> defaultPortForScheme: scheme [
 
 { #category : #'instance creation' }
 ZnUrl class >> fromString: string [
-	^ (self new)
+	^ self new
 		parseFrom: string; 
 		yourself 
 ]
 
 { #category : #'instance creation' }
 ZnUrl class >> fromString: string defaultScheme: defaultScheme [
-	^ (self new)
+	^ self new
 		parseFrom: string defaultScheme: defaultScheme; 
 		yourself 
 ]
@@ -134,6 +134,14 @@ ZnUrl class >> schemesNotUsingPath [
 	but some don't, return a list of those"
 	
 	^ #( #mailto )
+]
+
+{ #category : #accessing }
+ZnUrl class >> schemesOptionallyNotUsingDoubleSlash [
+	"Most URL schemes use a double slash, as in http://
+	but some optionally don't, return a list of those"
+	
+	^ #( #file )
 ]
 
 { #category : #convenience }
@@ -165,9 +173,10 @@ ZnUrl >> ? association [
 { #category : #'accessing - path' }
 ZnUrl >> addPathSegment: segment [
 	"Modify the receiver's path by adding segment at the end"
-	
-	segments isNil ifTrue: [ 
-		segments := OrderedCollection new ].
+
+	segments ifNil: [ segments := OrderedCollection new ].
+	(segments notEmpty and: [ segments last = $/ ])
+		ifTrue: [ segments removeLast ].
 	segments add: segment
 ]
 
@@ -181,6 +190,21 @@ ZnUrl >> addPathSegments: pathSegments [
 { #category : #convenience }
 ZnUrl >> addedToZnUrl: url [
 	^ url withPathSegments: self pathSegments 
+]
+
+{ #category : #converting }
+ZnUrl >> asFileReference [
+	"Convert the receiver into a new FileReference object.
+	Note that for a FileReference a trailing slash is not relevant"
+
+	| path |
+	self assert: self scheme = #file description: 'Only a file:// URL can be converted to a FileReference'.
+	self isSlash
+		ifTrue: [ ^ FileSystem root ].
+	path := self isDirectoryPath
+		ifTrue: [ segments allButLast ]
+		ifFalse: [ segments copy ].
+	^ FileReference fileSystem: FileSystem disk path: (AbsolutePath withAll: path)
 ]
 
 { #category : #converting }
@@ -246,7 +270,7 @@ ZnUrl >> clearPath [
 { #category : #'accessing - path' }
 ZnUrl >> closePath [
 	self isDirectoryPath
-		ifFalse: [ self addPathSegment: #/ ]
+		ifFalse: [ self addPathSegment: $/ ]
 ]
 
 { #category : #private }
@@ -267,17 +291,31 @@ ZnUrl >> directory [
 
 { #category : #private }
 ZnUrl >> encode: string on: stream [
-	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #rfc3986SafeSet encoder: ZnCharacterEncoder utf8)
+	"Percent encode string on stream, using the smallest possible safe set.
+	This is used for the host, username and password parts."
+	
+	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #rfc3986SafeSet encoder: ZnDefaultCharacterEncoder value)
+]
+
+{ #category : #private }
+ZnUrl >> encodeFragment: string on: stream [
+	"Percent encode string, assumed to be a fragment, on stream using the query safe set."
+	
+	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #querySafeSet encoder: ZnDefaultCharacterEncoder value)
 ]
 
 { #category : #private }
 ZnUrl >> encodePath: string on: stream [
-	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #urlPathSafeSet encoder: ZnCharacterEncoder utf8)
+	"Percent encode string on stream using a safe set specific to path elements"
+	
+	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #urlPathSafeSet encoder: ZnDefaultCharacterEncoder value)
 ]
 
 { #category : #private }
-ZnUrl >> encodeQuery: string on: stream [
-	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #querySafeSet encoder: ZnCharacterEncoder utf8)
+ZnUrl >> encodeQueryFields: fields on: stream [
+	"Percent encode the key/value fields on stream, these constitute the query part"
+	
+	ZnResourceMetaUtils writeQueryFields: fields on: stream
 ]
 
 { #category : #convenience }
@@ -416,7 +454,7 @@ ZnUrl >> isAbsolute [
 { #category : #testing }
 ZnUrl >> isDirectoryPath [
 	^ self hasPath 
-		ifTrue: [ segments last = #/ ]
+		ifTrue: [ segments last = $/ ]
 		ifFalse: [ true ]
 	
 ]
@@ -458,7 +496,8 @@ ZnUrl >> isRelative [
 
 { #category : #private }
 ZnUrl >> isSchemeNotUsingDoubleSlash: schemeString [
-	^ self class schemesNotUsingDoubleSlash includes: schemeString asLowercase
+	^ self class schemesNotUsingDoubleSlash , self class schemesOptionallyNotUsingDoubleSlash 
+		includes: schemeString asLowercase
 ]
 
 { #category : #testing }
@@ -473,7 +512,8 @@ ZnUrl >> isSchemeUsingPath [
 
 { #category : #testing }
 ZnUrl >> isSlash [
-	^ self hasPath not or: [ segments size = 1 and: [ segments first = #/ ] ]
+	^ self hasPath not
+		or: [ segments size = 1 and: [ segments first = $/ ] ]
 ]
 
 { #category : #'accessing - path' }
@@ -517,7 +557,7 @@ ZnUrl >> parseFrom: string defaultScheme: defaultScheme [
 			end := index - 1 ].
 	(index := string indexOf: $?) > 0
 		ifTrue: [
-			self query: (ZnResourceMetaUtils parseQueryFrom: (ReadStream on: string from: index + 1 to: end)).
+			self query: (self parseQueryFrom: (ReadStream on: string from: index + 1 to: end)).
 			end := index - 1 ].
 	((index := string indexOfSubCollection: '://') > 0 and: [ index <= end ])
 		ifTrue: [
@@ -577,6 +617,11 @@ ZnUrl >> parsePath: stream [
 ]
 
 { #category : #parsing }
+ZnUrl >> parseQueryFrom: stream [
+	^ ZnResourceMetaUtils parseQueryFrom: stream
+]
+
+{ #category : #parsing }
 ZnUrl >> parseUserInfo: stream [
 	| userString |
 	(userString := stream upTo: $:) isEmpty 
@@ -597,13 +642,14 @@ ZnUrl >> password: string [
 	password := string
 ]
 
-{ #category : #'accessing - path' }
+{ #category : #'accessing-path' }
 ZnUrl >> path [
-	self hasPath ifFalse: [ ^ String new ].
+	self hasPath 
+		ifFalse: [ ^ String new ].
 	^ String streamContents: [ :stream | 
 		segments 
 			do: [ :each | 
-				each == #/
+				each = $/
 					ifFalse: [ stream nextPutAll: each ] ]
 			separatedBy: [ stream nextPut: $/ ] ]
 ]
@@ -698,12 +744,12 @@ ZnUrl >> printOn: stream [
 
 { #category : #printing }
 ZnUrl >> printPathOn: stream [
-	self hasPath ifFalse: [ ^ stream nextPut: $/ ].
- 	segments do: [ :each | 
+	self hasPath
+		ifFalse: [ ^ stream nextPut: $/ ].
+	segments do: [ :each | 
 		stream nextPut: $/.
-		each == #/
-			ifFalse: [ 
-				self encodePath: each on: stream ] ] 
+		each = $/
+			ifFalse: [ self encodePath: each on: stream ] ]
 ]
 
 { #category : #printing }
@@ -715,13 +761,13 @@ ZnUrl >> printPathQueryFragmentOn: stream [
 	self hasFragment
 		ifFalse: [ ^ self ].
 	stream nextPut: $#.
-	self encodeQuery: self fragment on: stream
+	self encodeFragment: self fragment on: stream
 ]
 
 { #category : #printing }
 ZnUrl >> printQueryOn: stream [
 	stream nextPut: $?. 
-	ZnResourceMetaUtils writeQueryFields: self query on: 	stream
+	self encodeQueryFields: self query on: stream
 ]
 
 { #category : #private }
@@ -775,14 +821,13 @@ ZnUrl >> queryAt: key [
 	^ self queryAt: key ifAbsent: [ KeyNotFound signalFor: key printString ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key add: value [
 	"Modify the receiver by adding a query variable key=value.
 	If key already exists, value is added to it."
 
-	query isNil 
-		ifTrue: [ query := ZnMultiValueDictionary new ].
-	query at: key asString add: (value ifNotNil: [value asString])
+	query ifNil: [ query := ZnMultiValueDictionary new ].
+	query at: key asString add: (value ifNotNil: [ value asString ])
 ]
 
 { #category : #'accessing - query' }
@@ -804,14 +849,13 @@ ZnUrl >> queryAt: key ifPresent: block [
 		ifTrue: [ self query at: key asString ifPresent: block ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key put: value [
 	"Modify the receiver by setting a query variable key=value.
 	If key is already exists, it is overwritten."
 
-	query isNil 
-		ifTrue: [ query := ZnMultiValueDictionary new ].
-	query at: key asString put: (value ifNotNil: [value asString])
+	query ifNil: [ query := ZnMultiValueDictionary new ].
+	query at: key asString put: (value ifNotNil: [ value asString ])
 ]
 
 { #category : #'accessing - query' }
@@ -867,9 +911,8 @@ ZnUrl >> scheme [
 
 { #category : #accessing }
 ZnUrl >> scheme: anObject [
-	anObject isNil
-		ifTrue: [ scheme := nil ]
-		ifFalse: [ scheme := anObject asLowercase asSymbol ]
+
+	anObject ifNil: [ scheme := nil ] ifNotNil: [ scheme := anObject asLowercase asSymbol ]
 ]
 
 { #category : #accessing }

@@ -1,13 +1,13 @@
 "
 I am ZnFileSystemUtils.
-I help is abstracting over API differences pre and post the introduction of FileSystem in Pharo 2.0
+I help is abstracting over API differences pre and post the introduction of FileSystem in Pharo 2.0 as well as pre and post the important stream and file changes midway in Pharo 7.0
 
 Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnFileSystemUtils,
 	#superclass : #Object,
-	#category : #'Zinc-FileSystem'
+	#category : #'Zinc-HTTP-Support'
 }
 
 { #category : #paths }
@@ -25,7 +25,44 @@ ZnFileSystemUtils class >> binaryFileReadStreamFor: fileName [
 ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
-	^ fileReference binaryWriteStream
+	^ (fileReference respondsTo: #binaryReadWriteStream)
+		ifTrue: [ fileReference binaryReadWriteStream ]
+		ifFalse: [ fileReference writeStream binary ]
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> binaryReadStreamFor: fileName [
+	| fileReference |
+	fileReference := fileName asFileReference.
+	^ (fileReference respondsTo: #binaryReadStream)
+		ifTrue: [ fileReference binaryReadStream ]
+		ifFalse: [ fileReference readStream binary ]
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> binaryWriteStreamFor: fileName [
+	| fileReference |
+	fileReference := fileName asFileReference.
+	^ (fileReference respondsTo: #binaryWriteStream)
+		ifTrue: [ fileReference binaryWriteStream ]
+		ifFalse: [ fileReference writeStream binary ]
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> binaryWriteStreamFor: fileName do: block [
+	| fileReference |
+	fileReference := fileName asFileReference.
+	^ (fileReference respondsTo: #binaryWriteStreamDo:ifPresent:)
+		ifTrue: [
+			fileName asFileReference 
+				binaryWriteStreamDo: block 
+				ifPresent: [ FileExists signalWith: fileReference ] ]
+		ifFalse: [ 
+			fileReference isFile 
+				ifTrue: [ FileExists signalWith: fileReference ] 
+				ifFalse: [ | binaryStream |
+					binaryStream := self binaryWriteStreamFor: fileName.
+					[ block value: binaryStream ] ensure: [ binaryStream close ] ] ]
 ]
 
 { #category : #defaults }
@@ -139,4 +176,23 @@ ZnFileSystemUtils class >> oldFileNamed: fileName do: block [
 ZnFileSystemUtils class >> oldFileStreamFor: fileName [
 	^ fileName asFileReference 
 		readStreamIfAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> readStreamFor: fileName [
+	^ fileName asFileReference readStream
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> readStreamFor: fileName do: block [
+	^ fileName asFileReference 
+		readStreamDo: block
+		ifAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> writeStreamFor: fileName do: block [
+	^ fileName asFileReference 
+		writeStreamDo: block 
+		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]
