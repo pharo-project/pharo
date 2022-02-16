@@ -146,6 +146,16 @@ ZnServerTest >> testCustomDefaultDelegate [
 ]
 
 { #category : #testing }
+ZnServerTest >> testCustomServerString [
+	self withServerDo: [ :server | | client |
+		server localOptions at: #serverString put: 'foobar server'.
+		(client := ZnClient new)
+			get: server localUrl;
+			close.
+		self assert: (client response headers at: 'Server') equals: 'foobar server' ]
+]
+
+{ #category : #testing }
 ZnServerTest >> testDefault [
 	| port server initialDefaultServer wasRunning |
 	wasRunning := ZnServer default ifNil: [ false ] ifNotNil: [ ZnServer default isRunning ].
@@ -332,6 +342,21 @@ ZnServerTest >> testFormTest3Unspecified [
 ]
 
 { #category : #testing }
+ZnServerTest >> testGetConflictingConnectionHeader [
+	self withServerDo: [ :server | | client |
+		client := ZnClient new.
+		client url: server localUrl; addPathSegment: #echo.
+		"There are not supposed to be 2 Connection headers, the last one should win"
+		client headerAt: 'Connection' add: 'keep-alive'.
+		client headerAt: 'Connection' add: 'close'.
+		client get.
+		self assert: client isSuccess.
+		self assert: (client contents includesSubstring: 'echo').
+		self assert: client response isConnectionClose.
+		client close ]
+]
+
+{ #category : #testing }
 ZnServerTest >> testGetConnectionClose [
 	self withServerDo: [ :server | | client |
 		client := ZnClient new.
@@ -409,20 +434,6 @@ ZnServerTest >> testOSAssignedPort [
 	self assert: (response entity contents includesSubstring: 'foo').
 	self assert: (response entity contents includesSubstring: server printString) ]
 		ensure: [ server stop ]
-]
-
-{ #category : #testing }
-ZnServerTest >> testReadEvalPrint [
-	self withServerDo: [ :server | | x y result |
-		server delegate: ZnReadEvalPrintDelegate new.
-		x := 100 atRandom.
-		y := 100 atRandom.
-		result := ZnClient new
-			url: server localUrl;
-			addPathSegment: #repl;
-			contents: ('{1}+{2}' format: { x. y });
-			post.
-		self assert: result asInteger equals: x + y ]
 ]
 
 { #category : #testing }
@@ -527,6 +538,33 @@ ZnServerTest >> testSmall [
 		self assert: client response contentType equals: ZnMimeType textHtml.
 		self assert: (client contents includesSubstring: 'Small').
 		self assert: (client contents includesSubstring: 'This is a small HTML document').
+		client close ]
+]
+
+{ #category : #testing }
+ZnServerTest >> testTooManyConcurrentConnections [
+	self withServerDo: [ :server | | client clients |
+		self deny: server debugMode.
+		server maximumNumberOfConcurrentConnections: 4.
+		clients := (1 to: 4) collect: [ :each | 
+			ZnClient new 
+				url: server localUrl;
+				addPathSegment: #random;
+				clientId: ('client-{1}' format: { each });
+				enforceHttpSuccess;
+				get;
+				yourself ].
+		client := ZnClient new 
+				url: server localUrl;
+				addPathSegment: #random;
+				clientId: 'client-5';
+				get;
+				yourself.
+		self assert: client response code equals: 503.
+		clients do: [ :each |
+			each get; close ].
+		client get.
+		self assert: client isSuccess.
 		client close ]
 ]
 
