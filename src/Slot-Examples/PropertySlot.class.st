@@ -24,7 +24,6 @@ PropertySlot >> emitStore: methodBuilder [
 		pushLiteral: self name;
 		pushTemp: tempName;
 		send: #at:put:
-	
 ]
 
 { #category : #'code generation' }
@@ -35,8 +34,6 @@ PropertySlot >> emitValue: methodBuilder [
 		pushLiteral: self name;
 		pushLiteral: nil;
 		send: #at:ifAbsent:
-	
-	
 ]
 
 { #category : #'class building' }
@@ -49,7 +46,6 @@ PropertySlot >> installingIn: aClass [
 		resolveSlot: #'_propertyBaseSlot'   
 		ifFound:  [: slot |  baseSlot := slot ]
 		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)]
-	
 ]
 
 { #category : #'meta-object-protocol' }

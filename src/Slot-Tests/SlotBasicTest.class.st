@@ -32,7 +32,6 @@ SlotBasicTest >> testAddSharedPool [
 		builder sharedPools: 'TestSharedPool' ].
 	
 	self assert: (aClass sharedPools includes: TestSharedPool)
-
 ]
 
 { #category : #'tests - shared variables' }
@@ -45,7 +44,6 @@ SlotBasicTest >> testAddSharedVariable [
 		builder sharedVariablesFromString: 'Var' ].
 	
 	self assert: aClass classVarNames equals: #(Var)
-
 ]
 
 { #category : #'tests - basic' }
@@ -67,8 +65,6 @@ SlotBasicTest >> testClassWithComment [
 	
 	self assert: aClass name equals: self aClassName.
 	self assert: aClass comment equals: 'A class Comment'
-	
-
 ]
 
 { #category : #'tests - comments' }
@@ -82,8 +78,6 @@ SlotBasicTest >> testClassWithCommentAndStamp [
 	self assert: aClass name equals: self aClassName.
 	self assert: aClass comment equals: 'A class Comment'.
 	self assert: aClass organization commentStamp equals: (Object>>#halt) stamp
-	
-
 ]
 
 { #category : #'tests - basic' }
@@ -161,7 +155,6 @@ SlotBasicTest >> testRemoveClassSlotAndMigrate [
 	
 	self assert: (classModified instVarNamed: #a) equals: $A.
 	self should: [ classModified instVarNamed: #b ] raise: Error
-
 ]
 
 { #category : #'tests - shared pools' }
@@ -211,7 +204,6 @@ SlotBasicTest >> testSwitchClassSlotAndMigrate [
 	"The methods were migrated"
 	self assert: classModified a equals: $A.
 	self assert: classModified b equals: $B
-
 ]
 
 { #category : #'tests - class slots' }

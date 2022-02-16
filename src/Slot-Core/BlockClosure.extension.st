@@ -13,6 +13,5 @@ BlockClosure >> temporaryVariableNamed: aName [
 
 { #category : #'*Slot-Core' }
 BlockClosure >> temporaryVariables [
-	^self sourceNode temporaries collect: [ :each | each binding ] 
-
+	^self sourceNode temporaries collect: [ :each | each binding ]
 ]

@@ -15,7 +15,6 @@ Class {
 { #category : #accessing }
 BooleanSlot >> baseSlotRead: anObject [
 	^ (baseSlot read: anObject) ifNil: [ 0 ].
-	
 ]
 
 { #category : #'code generation' }
@@ -33,7 +32,6 @@ BooleanSlot >> emitStore: methodBuilder [
 		pushTemp: tempName;
 		send: #bitAt:put:;
 		storeInstVar: baseSlot index
-	
 ]
 
 { #category : #'code generation' }
@@ -45,8 +43,6 @@ BooleanSlot >> emitValue: methodBuilder [
 		send: #bitAt:;
 		pushLiteral: 1;
 		send: #==
-	
-	
 ]
 
 { #category : #'class building' }
@@ -64,10 +60,6 @@ BooleanSlot >> installingIn: aClass [
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	booleanSlots := aClass allSlots select: [ :each | each isKindOf: self class ].	
 	offset := booleanSlots indexOf: self
-
-	
-
-	
 ]
 
 { #category : #accessing }

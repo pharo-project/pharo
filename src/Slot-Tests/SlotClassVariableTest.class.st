@@ -41,7 +41,6 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 			superclass: class1;
 			sharedVariablesFromString: 'ASharedVariable' ].
 	self assert: class1 subclasses equals: { class2 }
-
 ]
 
 { #category : #tests }
@@ -67,7 +66,6 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 	self assert: class1 class slots size equals: 1.
 	self assert: (class1 class slots at:1) name equals: #Foo.
 	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot
-
 ]
 
 { #category : #tests }
@@ -87,7 +85,6 @@ SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 	"validate 'self class initializeSlots: self' is the first message sent"
 	self assert: (class1 >> #initialize) literals first equals: #class.
 	self assert: (class1 >> #initialize) literals second equals: #initializeSlots:
-
 ]
 
 { #category : #tests }

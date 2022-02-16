@@ -41,7 +41,6 @@ SlotErrorsTest >> testCannotBeRecompiled [
 					name: self aClassName ] ]
 		raise: Error
 		description: 'Old class builder raises: X cannot be recompiled'
-
 ]
 
 { #category : #tests }
@@ -74,7 +73,7 @@ SlotErrorsTest >> testClassSlotDuplicationConflict [
 				superclass: aClass;
 				name: self anotherClassName;
 				classSlots: { #a } ] ]
-		raise: DuplicatedSlotName 
+		raise: DuplicatedSlotName
 ]
 
 { #category : #tests }
@@ -145,7 +144,7 @@ SlotErrorsTest >> testDirectCircularHierarchyError [
 			builder 
 				superclass: classA;
 				name: self aClassName ] ]
-		raise: CircularHierarchyError 
+		raise: CircularHierarchyError
 ]
 
 { #category : #tests }
@@ -168,7 +167,7 @@ SlotErrorsTest >> testIndirectCircularHierarchyError [
 			builder 
 				superclass: classB;
 				name: self aClassName ] ]
-		raise: CircularHierarchyError 
+		raise: CircularHierarchyError
 ]
 
 { #category : #tests }
@@ -183,7 +182,7 @@ SlotErrorsTest >> testSlotDuplicationConflict [
 				superclass: aClass;
 				name: self anotherClassName;
 				slots: { #a } ] ]
-		raise: DuplicatedSlotName 
+		raise: DuplicatedSlotName
 ]
 
 { #category : #tests }
@@ -214,7 +213,6 @@ SlotErrorsTest >> testUndeclareSlot [
 	self assert: (slot read: instance) equals: nil.
 	slot write: 1 to: instance.
 	self assert: (slot read: instance) equals: nil.
-
 ]
 
 { #category : #tests }

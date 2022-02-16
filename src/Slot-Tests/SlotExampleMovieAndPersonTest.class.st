@@ -22,7 +22,6 @@ SlotExampleMovieAndPersonTest >> testAddActors [
 	
 	m2 addActor: p2.
 	self assert: p2 actedInMovies size equals: 2
-
 ]
 
 { #category : #tests }

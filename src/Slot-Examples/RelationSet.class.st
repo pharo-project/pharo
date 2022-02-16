@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 RelationSet class >> owner: anObject slot: aToManyAssociation [
 
-	^self new initializeOwner: anObject slot: aToManyAssociation 
+	^self new initializeOwner: anObject slot: aToManyAssociation
 ]
 
 { #category : #adding }

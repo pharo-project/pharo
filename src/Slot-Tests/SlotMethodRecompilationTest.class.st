@@ -31,7 +31,6 @@ SlotMethodRecompilationTest >> setUp [
 	class := self make: [ :builder |
 		builder traitComposition: TOne ].
 	class compile: 'm1'
-	
 ]
 
 { #category : #tests }

@@ -37,7 +37,6 @@ ClassVariableTest >> testIsShadowing [
 	| variable |
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
 	self deny: variable isShadowing
-
 ]
 
 { #category : #'tests - properties' }
