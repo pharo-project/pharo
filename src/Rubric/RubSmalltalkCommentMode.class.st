@@ -27,7 +27,7 @@ RubSmalltalkCommentMode class >> menuOn: aBuilder [
 
 	<contextMenu>
 	<RubSmalltalkCommentMenu>
-	RubSmalltalkCodeMode menuOn: aBuilder 
+	RubSmalltalkCodeMode menuOn: aBuilder
 ]
 
 { #category : #helper }

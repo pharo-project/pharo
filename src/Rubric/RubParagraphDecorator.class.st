@@ -25,17 +25,17 @@ RubParagraphDecorator class >> isUsed [
 
 { #category : #querying }
 RubParagraphDecorator class >> key [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
 RubParagraphDecorator class >> next: aDecoratorOrAParagraph [
-	^ self new next: aDecoratorOrAParagraph 
+	^ self new next: aDecoratorOrAParagraph
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> aboutToBeUnplugged [ 
-	^self paragraph aboutToBeUnplugged 
+	^self paragraph aboutToBeUnplugged
 ]
 
 { #category : #drawing }
@@ -46,13 +46,12 @@ RubParagraphDecorator >> canDrawDecoratorsOn: aCanvas [
 			self selectionStop isNotNil
 		]
 	]
-	
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> characterBlockAtPoint: aPoint [
 
-	^self paragraph characterBlockAtPoint: aPoint 
+	^self paragraph characterBlockAtPoint: aPoint
 ]
 
 { #category : #delegating }
@@ -74,17 +73,17 @@ RubParagraphDecorator >> closingDelimiters [
 
 { #category : #delegating }
 RubParagraphDecorator >> compose [ 
-	^self paragraph compose 
+	^self paragraph compose
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> container [
-	^self paragraph container 
+	^self paragraph container
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> container: atextContainerOrRectangle [
-	^self paragraph container: atextContainerOrRectangle 
+	^self paragraph container: atextContainerOrRectangle
 ]
 
 { #category : #querying }
@@ -96,7 +95,7 @@ RubParagraphDecorator >> decoratorNamed: aKey [
 
 { #category : #delegating }
 RubParagraphDecorator >> defaultCharacterBlock [ 
-	^self paragraph defaultCharacterBlock 
+	^self paragraph defaultCharacterBlock
 ]
 
 { #category : #delegating }
@@ -153,7 +152,7 @@ RubParagraphDecorator >> drawingEnabled [
 
 { #category : #delegating }
 RubParagraphDecorator >> extent [ 
-	^self paragraph extent 
+	^self paragraph extent
 ]
 
 { #category : #querying }
@@ -174,17 +173,17 @@ RubParagraphDecorator >> key [
 { #category : #delegating }
 RubParagraphDecorator >> lineIndexForPoint: aPoint [
 
-	^self paragraph lineIndexForPoint: aPoint 
+	^self paragraph lineIndexForPoint: aPoint
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> lineIndexOfCharacterIndex: characterIndex [ 
-	^self paragraph lineIndexOfCharacterIndex: characterIndex 
+	^self paragraph lineIndexOfCharacterIndex: characterIndex
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> lines [ 
-	^self paragraph lines 
+	^self paragraph lines
 ]
 
 { #category : #delegating }
@@ -201,7 +200,7 @@ RubParagraphDecorator >> minimumExtent [
 
 { #category : #delegating }
 RubParagraphDecorator >> model [
-	^self paragraph model 
+	^self paragraph model
 ]
 
 { #category : #delegating }
@@ -213,7 +212,7 @@ RubParagraphDecorator >> move: anEvent for: model controller: editor [
 { #category : #delegating }
 RubParagraphDecorator >> moveBy: aPoint [
 
-	^self paragraph moveBy: aPoint 
+	^self paragraph moveBy: aPoint
 ]
 
 { #category : #accessing }
@@ -228,7 +227,7 @@ RubParagraphDecorator >> next: anObject [
 
 { #category : #delegating }
 RubParagraphDecorator >> numberOfLines [ 
-	^self paragraph numberOfLines 
+	^self paragraph numberOfLines
 ]
 
 { #category : #delegating }
@@ -245,12 +244,12 @@ RubParagraphDecorator >> openingDelimiters [
 
 { #category : #delegating }
 RubParagraphDecorator >> paragraph [
-	^next paragraph 
+	^next paragraph
 ]
 
 { #category : #delegating }
 RubParagraphDecorator >> replaceFrom: start to: stop with: aText [
-	^self paragraph replaceFrom: start to: stop with: aText 
+	^self paragraph replaceFrom: start to: stop with: aText
 ]
 
 { #category : #delegating }
@@ -349,7 +348,6 @@ RubParagraphDecorator >> visibleStringFrom: topLeft to: bottomRight [
 	stopIdx := bottomRightBlk stringIndex.
 	string := self text string.
 	^ self text string copyFrom: startIdx to: (stopIdx min: string size)
-
 ]
 
 { #category : #accessing }
@@ -358,5 +356,4 @@ RubParagraphDecorator >> withoutDecorator [
 	"for compatibility with the RubParagraph API"
 
 	^ self paragraph
-
 ]

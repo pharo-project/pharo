@@ -42,7 +42,6 @@ RubPluggableTextFieldMorph >> acceptTextInModel [
 				ifFalse: [self model perform: setTextSelector with: objectToAccept]].
 	result == true ifTrue: [ self closeChooser ].
 	^ result
-
 ]
 
 { #category : #accessing }
@@ -101,7 +100,7 @@ RubPluggableTextFieldMorph >> default: anObject [
 
 { #category : #accessing }
 RubPluggableTextFieldMorph >> getColorSelector [
-	^ self getBackgroundColorSelector 
+	^ self getBackgroundColorSelector
 ]
 
 { #category : #accessing }

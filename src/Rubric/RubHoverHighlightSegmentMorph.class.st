@@ -12,7 +12,6 @@ Class {
 { #category : #initialization }
 RubHoverHighlightSegmentMorph >> defaultBorderColor [
 	^ self defaultColor muchDarker
-
 ]
 
 { #category : #initialization }

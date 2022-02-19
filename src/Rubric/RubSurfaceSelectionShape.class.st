@@ -21,7 +21,6 @@ RubSurfaceSelectionShape class >> vertices: aCollectionOfPoints firstIndex: firs
 		color: aColor
 		borderWidth: aBorderWidth
 		borderColor: aBorderColor
-
 ]
 
 { #category : #accessing }
@@ -72,7 +71,7 @@ RubSurfaceSelectionShape >> drawOnAthensCanvas: aCanvas [
 
 { #category : #accessing }
 RubSurfaceSelectionShape >> firstIndex [
-	^ firstIndex 
+	^ firstIndex
 ]
 
 { #category : #accessing }

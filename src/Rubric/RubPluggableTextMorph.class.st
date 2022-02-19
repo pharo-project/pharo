@@ -44,17 +44,17 @@ RubPluggableTextMorph >> clearUndoManager [
 
 { #category : #scrolling }
 RubPluggableTextMorph >> disable [
-	self beReadOnly 
+	self beReadOnly
 ]
 
 { #category : #scrolling }
 RubPluggableTextMorph >> enable [
-	self beEditable 
+	self beEditable
 ]
 
 { #category : #accessing }
 RubPluggableTextMorph >> getColorSelector [
-	^ self getBackgroundColorSelector 
+	^ self getBackgroundColorSelector
 ]
 
 { #category : #accessing }

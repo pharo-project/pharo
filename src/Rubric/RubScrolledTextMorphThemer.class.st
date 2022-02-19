@@ -6,7 +6,7 @@ Class {
 
 { #category : #'border-styles' }
 RubScrolledTextMorphThemer >> disabledBorderStyleFor: aTextArea [
-	^ self normalBorderStyleFor: aTextArea 
+	^ self normalBorderStyleFor: aTextArea
 ]
 
 { #category : #colors }

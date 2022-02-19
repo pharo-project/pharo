@@ -107,7 +107,6 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		default: $2 meta
 		do: [ :target | target editor widenSelectionOfIt ]
 		description: 'Widen selection'.
-	
 ]
 
 { #category : #'completion engine' }
@@ -186,7 +185,6 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 	
 
 	^node
-
 ]
 
 { #category : #'source navigation' }
@@ -203,7 +201,6 @@ RubSmalltalkEditor >> bestNodeInTextArea [
 	] on: Error do: [^nil].
 	
 	^node bestNodeFor: (start to: stop).
-	
 ]
 
 { #category : #'source navigation' }
@@ -283,7 +280,7 @@ RubSmalltalkEditor >> browseFullClass [
 	
 
 	"previous code was: self browseClassFrom: self findClassFromAST"
-	self browseClassOfExpression 
+	self browseClassOfExpression
 ]
 
 { #category : #'editing keys' }
@@ -298,7 +295,7 @@ RubSmalltalkEditor >> classCommentsContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
 
 	self lineSelectAndEmptyCheck: [^ self].
-	self model systemNavigation  browseClassCommentsWithString: self selection string matchCase: false. 
+	self model systemNavigation  browseClassCommentsWithString: self selection string matchCase: false.
 ]
 
 { #category : #'menu messages' }
@@ -343,7 +340,6 @@ RubSmalltalkEditor >> completionAround: aBlock keyDown: anEvent [
 	aBlock value.
 	
 	completionEngine handleKeyDownAfter: anEvent editor: self
-
 ]
 
 { #category : #'completion engine' }
@@ -356,7 +352,6 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	
 	aBlock value.	
 	completionEngine handleKeystrokeAfter: anEvent editor: self
-
 ]
 
 { #category : #'completion engine' }
@@ -372,7 +367,7 @@ RubSmalltalkEditor >> completionEngine [
 RubSmalltalkEditor >> completionEngine: aCompletionEngine [
 
 	completionEngine := aCompletionEngine.
-	self textArea ifNotNil: [:txtArea | txtArea setCompletionEngine: aCompletionEngine] 
+	self textArea ifNotNil: [:txtArea | txtArea setCompletionEngine: aCompletionEngine]
 ]
 
 { #category : #'new selection' }
@@ -433,7 +428,6 @@ RubSmalltalkEditor >> copySelection [
 			ifFalse: [ self selection asString ].
 	self clipboardTextPut: selection.
 	self editingState previousInterval: self selectionInterval.
-
 ]
 
 { #category : #'do-its' }
@@ -707,8 +701,7 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 				ifTrue: [ validLocation := false ].
 			node isCommentNode ifTrue: [ validLocation := false ] ].
 			
-	validLocation ifTrue: aBlock 
-			
+	validLocation ifTrue: aBlock
 ]
 
 { #category : #'do-its' }
@@ -797,8 +790,6 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 	
 	 (self model systemNavigation allImplementorsOf: aSelector) isEmpty
 				ifFalse: [ self model systemNavigation browseAllImplementorsOf: aSelector]
-			
-	
 ]
 
 { #category : #'completion engine' }
@@ -815,7 +806,7 @@ RubSmalltalkEditor >> isScripting [
 
 { #category : #testing }
 RubSmalltalkEditor >> isSmalltalkEditor [
-	^ true 
+	^ true
 ]
 
 { #category : #private }
@@ -855,14 +846,12 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 RubSmalltalkEditor >> keyDown: aKeyboardEvent [
 
 	self completionAround: [super keyDown: aKeyboardEvent ] keyDown: aKeyboardEvent
-	
 ]
 
 { #category : #'typing support' }
 RubSmalltalkEditor >> keystroke: aKeyboardEvent [
 
 	self completionAround: [super keystroke: aKeyboardEvent ] keyStroke: aKeyboardEvent
-	
 ]
 
 { #category : #'menu messages' }
@@ -967,8 +956,7 @@ RubSmalltalkEditor >> notify: aString at: anInteger in: aStream [
 	^ self notificationStrategy 
 		notify: aString 
 		at: anInteger 
-		in: aStream 
-
+		in: aStream
 ]
 
 { #category : #'menu messages' }
@@ -1186,8 +1174,6 @@ RubSmalltalkEditor >> tally: aStream [
 	compiledMethod ifNil: [^ self].
 	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver arguments: #()].
 	profiler showResult: v.
-	
-
 ]
 
 { #category : #'do-its' }
@@ -1196,8 +1182,6 @@ RubSmalltalkEditor >> tallyHighlight [
 	
 	self highlightAndEmptyCheck: [ ^ self ].
 	self tally: self highlightedTextAsStream
-	
-
 ]
 
 { #category : #'do-its' }
@@ -1213,8 +1197,6 @@ RubSmalltalkEditor >> tallySelection [
 	self lineSelectAndEmptyCheck: [ ^ self ].
 	self lineSelectAndEmptyCheck: [ ^ self ].
 	self tally: self selectionAsStream
-	
-
 ]
 
 { #category : #'completion engine' }

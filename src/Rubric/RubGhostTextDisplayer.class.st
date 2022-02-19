@@ -16,25 +16,21 @@ RubGhostTextDisplayer class >> key [
 { #category : #accessing }
 RubGhostTextDisplayer >> bold [
 	self handleTextChangeWhile: [ghostText selectAll; bold; deselect]
-
 ]
 
 { #category : #alignment }
 RubGhostTextDisplayer >> centered [
 	self handleTextChangeWhile: [ ghostText centered ]
-
 ]
 
 { #category : #accessing }
 RubGhostTextDisplayer >> computedPositionFrom: aRectangle [
 	^ self scrollBounds topLeft
-
 ]
 
 { #category : #accessing }
 RubGhostTextDisplayer >> computedWidthFrom: aRectangle [
 	^  self scrollBounds width
-
 ]
 
 { #category : #initialization }
@@ -84,7 +80,6 @@ RubGhostTextDisplayer >> handleTextChangeWhile: aBlock [
 { #category : #alignment }
 RubGhostTextDisplayer >> leftFlush [
 	self handleTextChangeWhile: [ ghostText leftFlush ]
-
 ]
 
 { #category : #accessing }
@@ -112,14 +107,12 @@ RubGhostTextDisplayer >> noteNewOwner: aMorph [
 RubGhostTextDisplayer >> rightFlush [
 	self
 		handleTextChangeWhile: [ ghostText rightFlush ]
-
 ]
 
 { #category : #accessing }
 RubGhostTextDisplayer >> setTextWith: aText [
 	ghostText setTextWith: aText asText.
 	ghostText  textColor: self textColor
-
 ]
 
 { #category : #private }
@@ -135,7 +128,6 @@ RubGhostTextDisplayer >> showHideGhostText [
 RubGhostTextDisplayer >> textChanged [ 
 	self showHideGhostText.
 	super textChanged
-
 ]
 
 { #category : #accessing }
@@ -154,7 +146,6 @@ RubGhostTextDisplayer >> textColor: aColor [
 RubGhostTextDisplayer >> updateMarginsWith: aMargin [
 	self
 		handleTextChangeWhile: [ ghostText updateMarginsWith: aMargin]
-
 ]
 
 { #category : #accessing }

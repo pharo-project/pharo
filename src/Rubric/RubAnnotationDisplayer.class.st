@@ -29,7 +29,7 @@ RubAnnotationDisplayer class >> tabWidthMenuOn: aBuilder [
 
 	<contextMenu>
 	<RubTabWidthMenu>
-	(6 to: 200 by: 6) do: [ :t | (aBuilder item: t asString asSymbol) action: [ :model | model chosenTabWidth: t ] ] 
+	(6 to: 200 by: 6) do: [ :t | (aBuilder item: t asString asSymbol) action: [ :model | model chosenTabWidth: t ] ]
 ]
 
 { #category : #accessing }
@@ -98,7 +98,6 @@ RubAnnotationDisplayer >> editingModeLabelMorph [
 RubAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom.
-
 ]
 
 { #category : #accessing }
@@ -204,7 +203,6 @@ RubAnnotationDisplayer >> tabWidthMenu [
 { #category : #accessing }
 RubAnnotationDisplayer >> textColor [
 	^ self textArea lineNumbersTextColor muchDarker
-
 ]
 
 { #category : #'event handling' }

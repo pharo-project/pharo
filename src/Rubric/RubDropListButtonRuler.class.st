@@ -24,7 +24,6 @@ RubDropListButtonRuler >> computedWidthFrom: aRectangle [
 RubDropListButtonRuler >> initialize [ 
 	super initialize.
 	side := #right
-
 ]
 
 { #category : #accessing }

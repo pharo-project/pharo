@@ -48,7 +48,7 @@ RubDisplayScanner >> crossedX [
 	the normal case not visible and is in any case appropriately clipped by 
 	the scanner."
 
-	^ true 
+	^ true
 ]
 
 { #category : #private }
@@ -158,7 +158,6 @@ RubDisplayScanner >> fillTextBackground [
 RubDisplayScanner >> isBreakableAt: index in: sourceString [
 
 	^ false.
-
 ]
 
 { #category : #'stop conditions' }
@@ -215,7 +214,6 @@ RubDisplayScanner >> plainTab [
 RubDisplayScanner >> presentationText: t [
 
 	text := t.
-
 ]
 
 { #category : #'stop conditions' }
@@ -231,7 +229,6 @@ RubDisplayScanner >> setFont [
 	text ifNotNil:[
 		baselineY := lineY + line baseline.
 		destY := baselineY - font ascent].
-
 ]
 
 { #category : #'stop conditions' }
@@ -240,7 +237,6 @@ RubDisplayScanner >> setPort: aBitBlt [
 	bitBlt := aBitBlt.
 	bitBlt sourceX: 0; width: 0.	"Init BitBlt so that the first call to a primitive will not fail"
 	bitBlt sourceForm: nil. "Make sure font installation won't be confused"
-
 ]
 
 { #category : #'stop conditions' }

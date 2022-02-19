@@ -18,7 +18,6 @@ RubExtraSelectionDecorator class >> key [
 RubExtraSelectionDecorator >> cleanUpText [
 	self text removeAttribute: RubTextSelectionColor findReplaceSelection.
 	self text removeAttribute: RubTextSelectionColor secondarySelection.
-
 ]
 
 { #category : #computation }
@@ -135,7 +134,7 @@ RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock on: aCanvas [
 					]
 			)ifTrue: [ ^ self ] 
 		].	"regular selection and this selection block overlap"
-	aSelBlock drawOn: aCanvas 
+	aSelBlock drawOn: aCanvas
 ]
 
 { #category : #drawing }
@@ -192,5 +191,4 @@ RubExtraSelectionDecorator >> primarySelectionInterval [
 	].
 
    ^0 to: -1
-
 ]

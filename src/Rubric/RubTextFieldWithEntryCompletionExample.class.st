@@ -14,7 +14,6 @@ RubTextFieldWithEntryCompletionExample class >> exampleOpen [
 	st := self new newScrolledText.
  	st openInWorld.
 	^ st
-
 ]
 
 { #category : #accessing }

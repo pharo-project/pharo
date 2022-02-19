@@ -19,10 +19,10 @@ RubNotificationStrategy >> editor [
 
 { #category : #accessing }
 RubNotificationStrategy >> editor: aSmalltalkEditor [
-	editor := aSmalltalkEditor 
+	editor := aSmalltalkEditor
 ]
 
 { #category : #notifications }
 RubNotificationStrategy >> notify: aString at: anInteger in: aStream [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
