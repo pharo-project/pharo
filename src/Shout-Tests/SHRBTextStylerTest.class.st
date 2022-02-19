@@ -53,7 +53,6 @@ SHRBTextStylerTest >> tearDown [
 
 	SHRBTextStyler formatIncompleteIdentifiers: oldSetting.
 	super tearDown.
-	
 ]
 
 { #category : #tests }
