@@ -43,7 +43,6 @@ STONTestDomainObject class >> dummy [
  			with: #(#alpha #beta #gamma) atRandom 
 			with: #(#low #medium #high) atRandom);
 		yourself
-
 ]
 
 { #category : #'ston-core' }
@@ -75,7 +74,6 @@ STONTestDomainObject >> = anObject [
 														and: [ 
 															integer = anObject integer 
 																and: [ tags = anObject tags ] ] ] ] ] ] ] ]
-
 ]
 
 { #category : #accessing }

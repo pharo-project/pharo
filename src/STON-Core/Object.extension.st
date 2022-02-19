@@ -31,7 +31,7 @@ Object >> isStonReference [
 Object class >> stonAllInstVarNames [
 	"Override to encode my instances using a custom set of instance variables or to define their order."
 	
-	^ self allInstVarNames 
+	^ self allInstVarNames
 ]
 
 { #category : #'*STON-Core' }
@@ -63,7 +63,6 @@ Object >> stonOn: stonWriter [
 			stonWriter error: 'custom #stonOn: implementation needed for variable/indexable class' ]
 		ifFalse: [
 			stonWriter writeObject: self ]
-
 ]
 
 { #category : #'*STON-Core' }

@@ -132,7 +132,6 @@ STONReader >> lookupClass: name [
 			Object allSubclasses 
 				detect: [ :class | class isMeta not and: [ class stonName = name ]  ]
 				ifNone: [ NotFound signalFor: name ] ]
-	
 ]
 
 { #category : #private }
@@ -162,7 +161,7 @@ STONReader >> matchChar: character [
 STONReader >> newLine: string [
 	"Set the newline convention to be used when converting newlines, see #convertNewLines"
 	
-	newLine := string 
+	newLine := string
 ]
 
 { #category : #private }
@@ -269,7 +268,6 @@ STONReader >> parseClass [
 			stream nextPut: readStream next ] ].
 	self consumeWhitespace.
 	^ self lookupClass: className asSymbol
-	
 ]
 
 { #category : #'parsing-internal' }
@@ -292,8 +290,7 @@ STONReader >> parseConstantDo: block [
 					self match: 'il' do: [ block value: nil ] ].
 			(readStream peek = $u)
 				ifTrue: [
-					self match: 'ull' do: [ block value: nil ] ] ]		
-
+					self match: 'ull' do: [ block value: nil ] ] ]
 ]
 
 { #category : #'parsing-internal' }

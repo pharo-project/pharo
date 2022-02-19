@@ -38,7 +38,6 @@ STONWriteReadTest >> serializeAndMaterialize: object [
 	serialization := self serialize: object.
 	materialization := self materialize: serialization.
 	self assert: object equals: materialization
-	
 ]
 
 { #category : #private }
@@ -47,7 +46,6 @@ STONWriteReadTest >> serializeAndMaterializeJsonMode: object [
 	serialization := self serializeJson: object.
 	materialization := self materialize: serialization.
 	self assert: object equals: materialization
-
 ]
 
 { #category : #private }
@@ -136,7 +134,6 @@ STONWriteReadTest >> testColors [
 		Color red copy setAlpha: 0.4.
 		Color red lighter lighter }.
 	self serializeAndMaterialize: colors
-
 ]
 
 { #category : #tests }
@@ -156,7 +153,6 @@ STONWriteReadTest >> testDatesAndTimes [
 		Date today. 
 		DateAndTime now }.
 	self serializeAndMaterialize: datesAndTimes
-
 ]
 
 { #category : #tests }
@@ -169,7 +165,6 @@ STONWriteReadTest >> testDiskFiles [
 		'./readme.txt' asFileReference.
 		(FileLocator home / 'foo.txt') asFileReference }.
 	self serializeAndMaterialize: diskFiles
-
 ]
 
 { #category : #tests }
@@ -265,7 +260,6 @@ STONWriteReadTest >> testJsonMode [
 			yourself 
 	}.
 	self serializeAndMaterializeJsonMode: object
-
 ]
 
 { #category : #tests }
@@ -294,7 +288,6 @@ STONWriteReadTest >> testMimeTypes [
 		ZnMimeType applicationJson.
 		ZnMimeType textPlain }.
 	self serializeAndMaterialize: mimeTypes
-
 ]
 
 { #category : #tests }
@@ -336,7 +329,6 @@ STONWriteReadTest >> testSharedColors [
 	color2 := Color red.
 	colors := STON listClass withAll: { color1. color2. color2 }.
 	self serializeAndMaterialize: colors
-
 ]
 
 { #category : #tests }
@@ -453,7 +445,6 @@ STONWriteReadTest >> testURLs [
 		'file:///var/log/system.log' asUrl.
 		'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asUrl }.
 	self serializeAndMaterialize: urls
-
 ]
 
 { #category : #tests }
