@@ -21,12 +21,10 @@ ShDefaultBuilderEnhancer >> afterMethodsCompiled: builder [
 
 { #category : #migrating }
 ShDefaultBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
-
 ]
 
 { #category : #migrating }
 ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
-
 ]
 
 { #category : #events }
@@ -35,7 +33,7 @@ ShDefaultBuilderEnhancer >> classCreated: builder [
 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> compileMethodsFor: aBuilder [
-	aBuilder compileMethods 
+	aBuilder compileMethods
 ]
 
 { #category : #'class modifications' }
@@ -49,7 +47,7 @@ ShDefaultBuilderEnhancer >> configureMetaclass: newMetaclass superclass: supercl
 ]
 
 { #category : #initialization }
-ShDefaultBuilderEnhancer >> fillBuilder: aBuilder from: aClass [ 
+ShDefaultBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 ]
 
 { #category : #migrating }
@@ -68,7 +66,6 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShClassSlotChangeDetector.
 	aBuilder addChangeComparer: ShSuperclassChangedDetector.
 	aBuilder addChangeComparer: ShMetaclassChangeDetector
-
 ]
 
 { #category : #events }
@@ -103,7 +100,6 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
 	
 	newClass subclasses do: [ :e | installer remake: e ]
-
 ]
 
 { #category : #'class modifications' }

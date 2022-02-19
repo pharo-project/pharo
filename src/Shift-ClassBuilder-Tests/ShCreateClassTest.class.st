@@ -66,7 +66,6 @@ ShCreateClassTest >> testEmptyClass [
 	
 	self validateResult.
 	self validateSuperclass: Object
-
 ]
 
 { #category : #tests }
