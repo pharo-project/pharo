@@ -311,18 +311,6 @@ TFBasicType >> emitMarshallToPrimitive: builder [
 	"Nothing to do in this case"
 ]
 
-{ #category : #marshalling }
-TFBasicType >> emitRestorePinnedStateIn: builder of: argument context: sender index: index callout: anObject [
-	
-	"Nothing to do in this case"
-]
-
-{ #category : #marshalling }
-TFBasicType >> emitSavePinnedStateIn: builder index: index [
-	
-	"Nothing to do in this case"
-]
-
 { #category : #writing }
 TFBasicType >> freeValueIfNeeded: aValue [ 
 	
