@@ -313,8 +313,8 @@ Dictionary >> associationsDo: aBlock [
 	```
 	d := Dictionary withAll: #(4 5 9 6 76).
 	a := OrderedCollection new.
-	d keysAndValuesDo: [ :assoc | a add: assoc value. a add: assoc key ].
-	a. ""an OrderedCollection(75 5 8 3 3 1 5 4 4 2)""
+	d associationsDo: [ :assoc | a add: assoc value. a add: assoc key ].
+	a. ""an OrderedCollection(76 5 9 3 4 1 6 4 5 2)""
 	```
 	"
 
