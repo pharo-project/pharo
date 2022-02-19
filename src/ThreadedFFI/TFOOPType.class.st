@@ -27,7 +27,7 @@ TFOOPType >> emitMarshallToPrimitive: anIRBuilder [
 	anIRBuilder popTop.
 	anIRBuilder pushLiteral: PointerUtils.
 	anIRBuilder pushTemp: #__marshall_temp.
-	anIRBuilder send: #oopForObjectForcePinInMemory:
+	anIRBuilder send: #oopForObject:
 	
 ]
 

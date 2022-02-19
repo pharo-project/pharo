@@ -66,6 +66,23 @@ TFDerivedType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argum
 
 ]
 
+{ #category : #marshalling }
+TFDerivedType >> emitRestorePinnedStateIn: builder of: argument context: sender index: index callout: aCallout [
+
+	self basicType
+		emitRestorePinnedStateIn: builder
+		of: argument
+		context: sender
+		index: index
+		callout: aCallout
+]
+
+{ #category : #marshalling }
+TFDerivedType >> emitSavePinnedStateIn: anIRBuilder index: anInteger [
+	
+	self basicType emitSavePinnedStateIn: anIRBuilder index: anInteger
+]
+
 { #category : #freeing }
 TFDerivedType >> freeValueIfNeeded: aCHeapValueHolder [ 
 	
