@@ -8,5 +8,5 @@ RPackage >> testSuite [
 	suite := TestSuite named: self packageName.
 	suite addTests: ((self classes select: #isTestCase) flatCollect: [:aTestClass | aTestClass suite tests]).
 	
-	^ suite 
+	^ suite
 ]

@@ -161,7 +161,7 @@ TestExecutionService >> isEnabled [
 
 { #category : #accessing }
 TestExecutionService >> isEnabled: aBoolean [
-	isEnabled := aBoolean 
+	isEnabled := aBoolean
 ]
 
 { #category : #testing }

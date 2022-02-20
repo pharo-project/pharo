@@ -22,7 +22,6 @@ TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock [
 		| message |
 		message := aStringOrBlock value.
 		self classForTestResult failure signal: message]
-			
 ]
 
 { #category : #asserting }
@@ -36,7 +35,6 @@ TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock resumable: re
 						ifTrue: [self classForTestResult resumableFailure]
 						ifFalse: [self classForTestResult failure].
 			exception signal: aString]
-			
 ]
 
 { #category : #asserting }
@@ -154,13 +152,11 @@ TAssertable >> comparingStringBetween: actual and: expected [
 TAssertable >> deny: aBooleanOrBlock [
 
 	self assert: aBooleanOrBlock value not
-			
 ]
 
 { #category : #asserting }
 TAssertable >> deny: aBooleanOrBlock description: aString [
 	self assert: aBooleanOrBlock value not description: aString
-			
 ]
 
 { #category : #asserting }
@@ -169,7 +165,6 @@ TAssertable >> deny: aBooleanOrBlock description: aString resumable: resumableBo
 		assert: aBooleanOrBlock value not
 		description: aString
 		resumable: resumableBoolean
-			
 ]
 
 { #category : #asserting }
@@ -213,7 +208,6 @@ TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: true]
-			
 ]
 
 { #category : #asserting }
@@ -221,7 +215,6 @@ TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescripti
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) ]
-			
 ]
 
 { #category : #asserting }
@@ -229,7 +222,6 @@ TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescripti
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) not ]
-			
 ]
 
 { #category : #asserting }
@@ -258,13 +250,11 @@ TAssertable >> fail: aDescriptionString [
 { #category : #asserting }
 TAssertable >> should: aBlock [
 	self assert: aBlock value
-			
 ]
 
 { #category : #asserting }
 TAssertable >> should: aBlock description: aString [
 	self assert: aBlock value description: aString
-			
 ]
 
 { #category : #asserting }
@@ -277,8 +267,6 @@ TAssertable >> should: aBlock notTakeMoreThan: aDuration [
 			assert: false 
 			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
 	]
-	
-
 ]
 
 { #category : #asserting }
@@ -291,28 +279,24 @@ TAssertable >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
 { #category : #asserting }
 TAssertable >> should: aBlock raise: anExceptionalEvent [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
-			
 ]
 
 { #category : #asserting }
 TAssertable >> should: aBlock raise: anExceptionalEvent description: aString [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 		description: aString
-			
 ]
 
 { #category : #asserting }
 TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring)
 		description: aString
-
 ]
 
 { #category : #asserting }
 TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [ 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring)
 		description: aString
-
 ]
 
 { #category : #asserting }
@@ -330,20 +314,17 @@ TAssertable >> shouldFix: aBlock [
 { #category : #asserting }
 TAssertable >> shouldnt: aBlock [
 	self deny: aBlock value
-			
 ]
 
 { #category : #asserting }
 TAssertable >> shouldnt: aBlock description: aString [
 	self deny: aBlock value description: aString
-			
 ]
 
 { #category : #asserting }
 TAssertable >> shouldnt: aBlock raise: anExceptionalEvent [  
 	 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
-			
 ]
 
 { #category : #asserting }
@@ -352,7 +333,6 @@ TAssertable >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 		description: aString
-			
 ]
 
 { #category : #asserting }
@@ -361,7 +341,6 @@ TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNo
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring) not
 		description: aString
-
 ]
 
 { #category : #asserting }
@@ -370,7 +349,6 @@ TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionInclud
 	^self 
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring) not
 		description: aString
-
 ]
 
 { #category : #asserting }

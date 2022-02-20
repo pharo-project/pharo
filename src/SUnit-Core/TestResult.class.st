@@ -65,7 +65,6 @@ TestResult class >> error [
 { #category : #exceptions }
 TestResult class >> exError [
 	^Error
-			
 ]
 
 { #category : #exceptions }
@@ -77,7 +76,7 @@ TestResult class >> failure [
 TestResult class >> historyAt: aTestCaseClass [
 "I will return the last test dictionary for aTestCaseClass. If none found, I will create a new empty one and link it in the history."
 
-	^ aTestCaseClass history 
+	^ aTestCaseClass history
 ]
 
 { #category : #history }
@@ -107,7 +106,6 @@ TestResult class >> newTestDictionary [
 		at: #failures put: Set new;
 		at: #errors put: Set new;
 		yourself
-		
 ]
 
 { #category : #history }
@@ -117,7 +115,6 @@ TestResult class >> removeFromTestHistory: aSelector in: aTestCaseClass [
 	lastRun := self historyFor: aTestCaseClass.
 	#(#passed #failures #errors) do:
 		[ :set | (lastRun at: set) remove: aSelector ifAbsent: []].
-
 ]
 
 { #category : #exceptions }
@@ -128,13 +125,11 @@ TestResult class >> resumableFailure [
 { #category : #exceptions }
 TestResult class >> signalErrorWith: aString [ 
 	self error signal: aString
-			
 ]
 
 { #category : #exceptions }
 TestResult class >> signalFailureWith: aString [ 
 	self failure signal: aString
-			
 ]
 
 { #category : #exceptions }
@@ -155,8 +150,7 @@ TestResult class >> updateTestHistoryFor: aTestCase status: aSymbol [
 { #category : #exceptions }
 TestResult class >> warning [
 	"Warning that should be treated as test failure"
-	^Deprecation 
-			
+	^Deprecation
 ]
 
 { #category : #adding }
@@ -223,7 +217,6 @@ TestResult >> dispatchResultsIntoHistory [
 		self class
 			historyAt: testClass
 			put: (self selectResultsForTestCase: testClass) ].
-
 ]
 
 { #category : #accessing }
@@ -249,7 +242,7 @@ TestResult >> expectedDefectCount [
 
 { #category : #accessing }
 TestResult >> expectedDefects [
-	^ (errors, failures asOrderedCollection) select: [:each | each shouldPass not] 
+	^ (errors, failures asOrderedCollection) select: [:each | each shouldPass not]
 ]
 
 { #category : #accessing }
@@ -259,7 +252,7 @@ TestResult >> expectedPassCount [
 
 { #category : #accessing }
 TestResult >> expectedPasses [
-	^ passed select: [:each | each shouldPass] 
+	^ passed select: [:each | each shouldPass]
 ]
 
 { #category : #accessing }
@@ -270,7 +263,7 @@ TestResult >> failureCount [
 
 { #category : #compatibility }
 TestResult >> failures [
-	^ self unexpectedFailures, self unexpectedPasses 
+	^ self unexpectedFailures, self unexpectedPasses
 ]
 
 { #category : #accessing }
@@ -453,7 +446,6 @@ TestResult >> selectResultsForTestCase: aTestCaseClass [
 		at: #failures put: failuresSelectors asSet;
 		at: #errors put: errorsSelectors asSet;
 		yourself
-		
 ]
 
 { #category : #accessing }
@@ -494,7 +486,7 @@ TestResult >> unexpectedErrorCount [
 
 { #category : #accessing }
 TestResult >> unexpectedErrors [
-	^ errors select: [:each | each shouldPass] 
+	^ errors select: [:each | each shouldPass]
 ]
 
 { #category : #accessing }
@@ -504,7 +496,7 @@ TestResult >> unexpectedFailureCount [
 
 { #category : #accessing }
 TestResult >> unexpectedFailures [
-	^ failures select: [:each | each shouldPass] 
+	^ failures select: [:each | each shouldPass]
 ]
 
 { #category : #accessing }
@@ -514,7 +506,7 @@ TestResult >> unexpectedPassCount [
 
 { #category : #accessing }
 TestResult >> unexpectedPasses [
-	^ passed select: [:each | each shouldPass not] 
+	^ passed select: [:each | each shouldPass not]
 ]
 
 { #category : #history }

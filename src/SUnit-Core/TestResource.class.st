@@ -62,7 +62,6 @@ TestResource class >> current [
 TestResource class >> current: aTestResource [
 
 	current := aTestResource
-			
 ]
 
 { #category : #testing }
@@ -71,7 +70,6 @@ TestResource class >> isAbstract [
 	TestCase instances built from it"
 
 	^self name = #TestResource
-			
 ]
 
 { #category : #testing }
@@ -91,7 +89,6 @@ TestResource class >> isAvailable [
 TestResource class >> isUnavailable [
 
 	^self isAvailable not
-			
 ]
 
 { #category : #private }
@@ -186,7 +183,6 @@ TestResource >> isUnavailable [
 	"override to provide information on the readiness of the resource"
 	
 	^self isAvailable not
-			
 ]
 
 { #category : #accessing }
