@@ -30,8 +30,7 @@ TTLCacheTest >> testExpiring [
 	self assert: didComputeValue.
 	self assert: (cache includesKey: #foo).
 	self assert: (cache at: #foo ifAbsentPut: [ self fail ]) equals: 101.
-	cache validateInvariantWith: self 
-	
+	cache validateInvariantWith: self
 ]
 
 { #category : #testing }

@@ -31,7 +31,6 @@ ChangesLog class >> registerInterestToSystemAnnouncement [
 	DefaultInstance ifNotNil: [:defaultInstance |
 		SystemAnnouncer uniqueInstance unsubscribe: defaultInstance.
 		defaultInstance registerToAnnouncements. ].
-
 ]
 
 { #category : #'class initialization' }
@@ -85,7 +84,6 @@ ChangesLog >> logClassRemoved: announcement [
 	announcement classRemoved acceptsLoggingOfCompilation ifTrue: [
 		self logChange: 'Smalltalk globals removeClassNamed: #', announcement classRemoved name	
 	].
-
 ]
 
 { #category : #'event-listening' }
@@ -93,7 +91,6 @@ ChangesLog >> logClassRenamed: announcement [
 	announcement classRenamed acceptsLoggingOfCompilation ifTrue: [
 		self logChange: '(Smalltalk globals at: #', announcement oldName, ') rename: #', announcement newName.	
 	].
-
 ]
 
 { #category : #'event-listening' }
@@ -107,7 +104,6 @@ ChangesLog >> logMethodRemoved: announcement [
 		self logChange: 
 			announcement methodClass name, ' removeSelector: #', announcement selector
 	]
-	
 ]
 
 { #category : #logging }
@@ -152,7 +148,6 @@ ChangesLog >> logSnapshot: save andQuit: quit [
 ChangesLog >> recordStartupStamp [
 	
 	startupStamp := '----STARTUP----', DateAndTime now printString, ' as ', Smalltalk imagePath.
-
 ]
 
 { #category : #'event-listening' }

@@ -41,7 +41,6 @@ SaveCommandLineHandler >> activate [
 				^ self exitFailure: 'Missing Arguments' ].
 		
 	self saveImage.
-		
 ]
 
 { #category : #actions }

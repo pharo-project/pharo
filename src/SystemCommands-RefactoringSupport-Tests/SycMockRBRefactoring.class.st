@@ -21,12 +21,12 @@ SycMockRBRefactoring >> model [
 
 { #category : #accessing }
 SycMockRBRefactoring >> model: aRBNamespace [ 
-	^ self 	
+	^ self
 ]
 
 { #category : #accessing }
 SycMockRBRefactoring >> primitiveExecute [ 
-	^self 
+	^self
 ]
 
 { #category : #accessing }

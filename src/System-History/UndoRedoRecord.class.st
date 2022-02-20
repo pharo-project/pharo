@@ -74,7 +74,6 @@ UndoRedoRecord >> doMessage [
 { #category : #compatibility }
 UndoRedoRecord >> doMessage: aMessageSend [
 	^ self redoMessage: aMessageSend
-
 ]
 
 { #category : #'redo-undo' }

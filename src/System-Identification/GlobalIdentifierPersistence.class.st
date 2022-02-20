@@ -79,7 +79,7 @@ GlobalIdentifierPersistence >> ensure: existingDictionary [
 
 { #category : #operations }
 GlobalIdentifierPersistence >> ensureDirectory [
-	self preferences parent ensureCreateDirectory 
+	self preferences parent ensureCreateDirectory
 ]
 
 { #category : #configuration }

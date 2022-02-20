@@ -14,5 +14,4 @@ BlockClosure >> memoizedUsing: cache [
      passing a LRUCache for instance"
   
     ^[ :x | cache at: x ifAbsentPut: [ self value: x ] ]
-
 ]

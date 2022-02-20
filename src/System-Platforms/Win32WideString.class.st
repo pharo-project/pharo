@@ -67,7 +67,6 @@ Win32WideString class >> new: size [
 	^ self new
 		setHandle: (ByteArray new: (size + 1) * 2);
 		yourself.
-
 ]
 
 { #category : #converting }

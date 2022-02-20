@@ -17,7 +17,6 @@ Class {
 SystemDependenciesTest class >> dependenciesReport [
 
 	^ dependenciesReport ifNil: [ self rebuildDependenciesReport ]
-
 ]
 
 { #category : #accessing }
@@ -39,7 +38,6 @@ SystemDependenciesTest class >> resetDependenciesReport [
 SystemDependenciesTest >> dependenciesReport [
 
 	^ self class dependenciesReport
-
 ]
 
 { #category : #accessing }
@@ -148,14 +146,13 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets') 
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
 { #category : #utilities }
 SystemDependenciesTest >> longTestCase [
 
 	self timeLimit: 60 seconds.
-
 ]
 
 { #category : #accessing }
@@ -182,7 +179,6 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
 	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ]).
-
 ]
 
 { #category : #tests }

@@ -20,7 +20,7 @@ Class {
 { #category : #coverage }
 SHA256Test >> classToBeTested [
 	
-	^ SHA256 
+	^ SHA256
 ]
 
 { #category : #testing }

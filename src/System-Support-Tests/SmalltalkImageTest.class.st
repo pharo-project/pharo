@@ -118,7 +118,6 @@ SmalltalkImageTest >> testOpenLog [
 		
 	"clean the created log file"	
 	'file.log' asFileReference ensureDelete
-
 ]
 
 { #category : #utilities }

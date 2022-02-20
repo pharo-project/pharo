@@ -115,14 +115,13 @@ PragmaSetting >> description [
 	^ description 
 		ifNil: [description := ''] 
 		ifNotNil: [ description translated ]
-
 ]
 
 { #category : #accessing }
 PragmaSetting >> description: aString [
 	"Set the value of description"
 
-	description := aString 
+	description := aString
 ]
 
 { #category : #'user interface' }
@@ -180,7 +179,7 @@ PragmaSetting >> hasValue [
 
 { #category : #comparing }
 PragmaSetting >> hash [
-	^ self species hash bitXor: self name hash 
+	^ self species hash bitXor: self name hash
 ]
 
 { #category : #'user interface' }
@@ -210,7 +209,7 @@ PragmaSetting >> inputWidget [
 	^ self dialog
 		ifNotNil: [:d | d numArgs = 0
 				ifTrue: [d value]
-				ifFalse: [d value: self]] 
+				ifFalse: [d value: self]]
 ]
 
 { #category : #export }

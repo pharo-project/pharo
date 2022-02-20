@@ -102,7 +102,6 @@ PositionableStream >> parseLangTagFor: aString [
 		self position: pos
 	].
 	^ string.
-
 ]
 
 { #category : #'*System-Changes' }
@@ -118,7 +117,6 @@ PositionableStream >> skipStyleChunk [
 			ifFalse: [self nextChunk]]	"absorb ]style[ and its whole chunk"
 				
 		ifFalse: [self position: pos]	"leave untouched"
-
 ]
 
 { #category : #'*System-Changes' }

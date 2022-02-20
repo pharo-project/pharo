@@ -132,7 +132,6 @@ WorkingSession >> runStartup: isImageStarting [
 	self
 		runList: manager startupList
 		do: [ :each | each startup: isImageStarting ].
-	
 ]
 
 { #category : #'startup - shutdown' }

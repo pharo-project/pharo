@@ -47,7 +47,7 @@ EventManager class >> flushEvents [
 		evtDict keysDo: [:evtName| | msgSet |
 			msgSet := evtDict at: evtName ifAbsent:[nil].
 			(msgSet == nil) ifTrue:[rcvr removeActionsForEvent: evtName]]]].
-	EventManager actionMaps finalizeValues. 
+	EventManager actionMaps finalizeValues.
 ]
 
 { #category : #initialization }
@@ -162,6 +162,5 @@ EventManager >> updateEventSelector [
 EventManager >> updateableActionMap [
 	actionMap 
 		ifNil: [ actionMap := self createActionMap ].
-	^actionMap 
-	
+	^actionMap
 ]

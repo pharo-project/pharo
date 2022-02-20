@@ -26,7 +26,6 @@ PharoChangesCondenser >> backupOldChanges [
 	
 	changesFile := self originalFile.
 	changesFile moveTo: (changesFile , 'bak') asFileReference nextVersion.
-	
 ]
 
 { #category : #private }
@@ -77,7 +76,6 @@ PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 PharoChangesCondenser >> condenseClassesAndTraits [ 
 	Smalltalk allClassesAndTraitsDo: [ :classOrTrait | 
 		self condenseClassOrTrait: classOrTrait	]
-	
 ]
 
 { #category : #accessing }
@@ -174,7 +172,6 @@ PharoChangesCondenser >> swapSourcePointers [
 	Smalltalk allClassesAndTraitsDo: [ :classOrTrait |
 		job increment.
 		self swapSourcePointerOfClassOrTrait: classOrTrait ]
-	
 ]
 
 { #category : #accessing }

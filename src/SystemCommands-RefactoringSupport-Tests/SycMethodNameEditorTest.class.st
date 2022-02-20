@@ -17,13 +17,11 @@ Class {
 }
 
 { #category : #accessing }
-SycMethodNameEditorTest >> a [ 
-	 
+SycMethodNameEditorTest >> a [
 ]
 
 { #category : #accessing }
 SycMethodNameEditorTest >> a: a b: b c: c [
-	 
 ]
 
 { #category : #running }

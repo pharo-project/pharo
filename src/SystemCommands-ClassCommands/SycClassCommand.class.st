@@ -30,7 +30,7 @@ SycClassCommand class >> for: classes [
 
 { #category : #testing }
 SycClassCommand class >> isAbstract [
-	^self = SycClassCommand 
+	^self = SycClassCommand
 ]
 
 { #category : #accessing }

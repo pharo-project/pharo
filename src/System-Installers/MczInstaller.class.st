@@ -32,7 +32,6 @@ MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 	^({ self extension. '*' } includes: suffix)
 		ifTrue: [ self services ]
 		ifFalse: [#()].
-
 ]
 
 { #category : #'System-FileRegistry' }
@@ -53,7 +52,6 @@ MczInstaller class >> installStream: aStream [
 { #category : #'System-FileRegistry' }
 MczInstaller class >> loadVersionFile: fileName [
 	self installFileNamed: fileName
-
 ]
 
 { #category : #'instance creation' }
@@ -152,7 +150,6 @@ MczInstaller >> extractInfoFrom: dict [
 { #category : #accessing }
 MczInstaller >> extractPackageName [
 	^ (self parseMember: 'package') at: #name.
-	
 ]
 
 { #category : #accessing }

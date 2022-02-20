@@ -61,7 +61,7 @@ OSEnvironmentTest >> testEnvironmentFor [
 	compareDictionary keysAndValuesDo: [ :platformClass :envClassName |
 		self 
 			assert:  (OSEnvironment environmentFor: platformClass new) class name
-			equals: envClassName ] 
+			equals: envClassName ]
 ]
 
 { #category : #tests }

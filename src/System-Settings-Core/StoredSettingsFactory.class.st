@@ -111,7 +111,7 @@ StoredSettingsFactory >> visitClass: aClass [
 StoredSettingsFactory >> visitFileLocator: aFileLocator [ 
 	self newFileLocatorStoreSetting 
 			origin: aFileLocator origin;
-			pathSegments: aFileLocator path segments 
+			pathSegments: aFileLocator path segments
 ]
 
 { #category : #visitor }
@@ -147,7 +147,6 @@ StoredSettingsFactory >> visitSettingDeclaration: aSettingDeclaration [
 	aSettingDeclaration realValue acceptSettings: self.
 
 	storedSetting hasDefaultValue: aSettingDeclaration hasDefaultValue
-	
 ]
 
 { #category : #visitor }

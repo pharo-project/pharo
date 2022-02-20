@@ -28,7 +28,6 @@ ExternalSemaphoreTable class >> clearExternalObjects [
 
 	ProtectAdd critical: [
 		self unprotectedExternalObjects: Array new].
-
 ]
 
 { #category : #private }
@@ -108,7 +107,6 @@ ExternalSemaphoreTable class >> privateRegisterExternalObject: anObject [
 				self slotFor: anObject in: objects.].
 	objects at: firstEmptyIndex put: anObject.
 	^ firstEmptyIndex
-
 ]
 
 { #category : #private }
@@ -123,13 +121,11 @@ ExternalSemaphoreTable class >> privateUnregisterExternalObject: anObject [
 		(objects at: i) == anObject ifTrue: 
 		[objects at: i put: nil.
 		^self]].
-
 ]
 
 { #category : #accessing }
 ExternalSemaphoreTable class >> registerExternalObject: anObject [
 	^ ProtectAdd critical: [self privateRegisterExternalObject: anObject]
-
 ]
 
 { #category : #private }
@@ -163,5 +159,4 @@ ExternalSemaphoreTable class >> unprotectedExternalObjects: aCollection [
 { #category : #accessing }
 ExternalSemaphoreTable class >> unregisterExternalObject: anObject [
 	ProtectRemove critical: [self privateUnregisterExternalObject: anObject]
-
 ]

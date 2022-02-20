@@ -51,7 +51,6 @@ ISOLanguageDefinition class >> initISO3LanguageTable [
 	"self  initISO3LanguageTable"
 	
 	^ self readISOLanguagesFrom: self isoLanguages readStream.
-	
 ]
 
 { #category : #private }
@@ -64,7 +63,6 @@ ISOLanguageDefinition class >> initISOCountries [
 	iso3166Table do: [:entry | 
 		ISO2Countries at: (entry at: 2) put: (entry at: 1).
 		ISO3Countries at: (entry at: 3) put: (entry at: 1)].
-	
 ]
 
 { #category : #initialization }

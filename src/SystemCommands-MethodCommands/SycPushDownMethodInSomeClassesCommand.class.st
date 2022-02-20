@@ -16,7 +16,7 @@ SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 		pushDown: (methods collect: [ :each | each selector ])
 		from: methods first origin
 		in: self classes.
-	^ OrderedCollection with: refactoring 
+	^ OrderedCollection with: refactoring
 ]
 
 { #category : #converting }

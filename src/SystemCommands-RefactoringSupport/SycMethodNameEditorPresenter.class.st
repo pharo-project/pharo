@@ -300,7 +300,6 @@ SycMethodNameEditorPresenter >> getNewKeywordName [
 { #category : #services }
 SycMethodNameEditorPresenter >> getParametersOrder [
 	^ argumentsList items collect: [ :arg | arg newName ]
-	
 ]
 
 { #category : #initialization }
@@ -311,7 +310,7 @@ SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 		initialExtent: 600 @ 300 ;
 		title: 'Method name editor', (methodName selector 
 					ifNil: [ '' ] 
-					ifNotNil: [ :selector | ' : "', selector, '"' ]) 
+					ifNotNil: [ :selector | ' : "', selector, '"' ])
 ]
 
 { #category : #initialization }
@@ -333,7 +332,6 @@ SycMethodNameEditorPresenter >> initializePresenter [
 	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
 		contextMenu: self argumentsListMenu.
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
-
 ]
 
 { #category : #initialization }

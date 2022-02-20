@@ -53,7 +53,6 @@ DigitalSignatureAlgorithm class >> example [
 	(self verify: sig isSignatureOf: msg publicKey: keys last)
 		ifTrue: [self inform: 'Signature verified.']
 		ifFalse: [self error: 'ERROR! Signature verification failed'].
-
 ]
 
 { #category : #public }
@@ -69,7 +68,6 @@ DigitalSignatureAlgorithm class >> generateKeySet [
  		ifTrue: [dsa initRandomNonInteractively]
  		ifFalse: [dsa initRandomFromUser].
  	^ dsa generateKeySet
- 
 ]
 
 { #category : #initialization }
@@ -82,7 +80,6 @@ DigitalSignatureAlgorithm class >> initialize [
 
 	"HighBitOfByte maps a byte to the index of its top non-zero bit."
 	HighBitOfByte := (0 to: 255) collect: [:byte | byte highBit].
-
 ]
 
 { #category : #public }
@@ -125,7 +122,6 @@ DigitalSignatureAlgorithm class >> testKeySet [
 	^ #(
 		(8343811888543852523216773185009428259187948644369498021763210776677854991854533186365944349987509452133156416880596803846631577352387751880552969116768071 1197175832754339660404549606408619548226315875117 1433467472198821951822151391684734233265646022897503720591270330985699984763922266163182803556189497900262038518780931942996381297743579119123094520048965 957348690772296812)
 		(8343811888543852523216773185009428259187948644369498021763210776677854991854533186365944349987509452133156416880596803846631577352387751880552969116768071 1197175832754339660404549606408619548226315875117 1433467472198821951822151391684734233265646022897503720591270330985699984763922266163182803556189497900262038518780931942996381297743579119123094520048965 4645213122572190617807944614677917601101008235397095646475699959851618402406173485853587185431290863173614335452934961425661774118334228449202337038283799))
-
 ]
 
 { #category : #testing }
@@ -159,7 +155,6 @@ DigitalSignatureAlgorithm class >> timeDecode: count [
 			].
 		] as: 'verify msgLen = ',msg size printString count: count
 	].
-
 ]
 
 { #category : #testing }
@@ -210,7 +205,6 @@ DigitalSignatureAlgorithm >> computeSignatureForMessageHash: hash privateKey: pr
 		s := ((k reciprocalModulo: q) * tmp) \\ q].
 
 	^ Array with: r with: s
-
 ]
 
 { #category : #public }
@@ -235,7 +229,6 @@ DigitalSignatureAlgorithm >> generateKeySet [
 	^ Array
 		with: (Array with: p with: q with: g with: x)
 		with: (Array with: p with: q with: g with: y).
-
 ]
 
 { #category : #private }
@@ -267,7 +260,6 @@ DigitalSignatureAlgorithm >> generateQandP [
 					^ Array with: q with: p with: s]].
 			n := n + chunkCount + 1.
 			c := c + 1]].
-
 ]
 
 { #category : #private }
@@ -285,7 +277,6 @@ DigitalSignatureAlgorithm >> generateRandomLength: bitLength s: s n: n [
 			v := v - ((v >> extraBits) << extraBits)].
 		out := out bitOr: (v bitShift: (160 * k))].
 	^ out
-
 ]
 
 { #category : #private }
@@ -301,7 +292,6 @@ DigitalSignatureAlgorithm >> generateSandQ [
 		u := (hasher hashInteger: s) bitXor: (hasher hashInteger: sPlusOne).
 		q := u bitOr: ((1 bitShift: 159) bitOr: 1).
 		(self isProbablyPrime: q) ifTrue: [^ Array with: s with: q]].
-
 ]
 
 { #category : #initialization }
@@ -312,7 +302,6 @@ DigitalSignatureAlgorithm >> initRandom: randomInteger [
 	randSeed := 16rEFCDAB8998BADCFE10325476C3D2E1F067452301.  "initial seed"
 	randKey := randomInteger.
 	"Transcript show: 'Random seed: ', randomInteger printString; cr."
-
 ]
 
 { #category : #initialization }
@@ -328,7 +317,6 @@ DigitalSignatureAlgorithm >> initRandomFromString: aString [
 	k := k normalize + (Random new next * 16r7FFFFFFF) asInteger.  "a few additional bits randomness"
 	k highBit > 512 ifTrue: [k := k bitShift: k highBit - 512].
 	self initRandom: k.
-
 ]
 
 { #category : #initialization }
@@ -393,7 +381,6 @@ DigitalSignatureAlgorithm >> inverseOf: x mod: n [
 
 	u3 = 1 ifFalse: [self error: 'no inverse'].
 	^ u - u2
-
 ]
 
 { #category : #'large integer arithmetic' }
@@ -458,7 +445,6 @@ DigitalSignatureAlgorithm >> nextRandom160 [
 		result := SHA1 new hashInteger: randKey seed: randSeed.
 		randKey := randKey + result + 1].
 	^ result
-
 ]
 
 { #category : #public }
@@ -473,7 +459,6 @@ DigitalSignatureAlgorithm >> signatureToString: aSignature [
 	s nextPutAll: aSignature second printStringHex.
 	s nextPutAll: ']'.
 	^ s contents
-
 ]
 
 { #category : #public }
@@ -520,5 +505,4 @@ DigitalSignatureAlgorithm >> verifySignature: aSignature ofMessageHash: hash pub
 	v0 := (g raisedTo: u1 modulo: p) * (y raisedTo: u2 modulo: p).
 	v := ( v0 \\ p) \\ q.
 	^ v = r
-
 ]

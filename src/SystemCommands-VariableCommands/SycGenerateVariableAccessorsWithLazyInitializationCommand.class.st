@@ -20,7 +20,7 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecuted
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext
 ]
 
 { #category : #converting }

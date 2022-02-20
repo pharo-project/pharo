@@ -11,7 +11,6 @@ Class {
 { #category : #testing }
 MCMczInstallerTest class >> isAbstract [
 	^ (Smalltalk hasClassNamed: #MczInstaller) not
-		
 ]
 
 { #category : #accessing }
@@ -95,5 +94,4 @@ MCMczInstallerTest >> testInstallFromStream [
 	MczInstaller installStream: array readStream.
 	self assertNoChange.
 	self assertVersionInfoPresent.
-	
 ]

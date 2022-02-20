@@ -19,7 +19,6 @@ Class {
 SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 	^(self for: methods)
 		targetClass: targetClass
-		
 ]
 
 { #category : #accessing }

@@ -15,7 +15,6 @@ OSPlatformVisitor >> visit [
 
 { #category : #visiting }
 OSPlatformVisitor >> visitGeneric: aPlatform [
-	
 ]
 
 { #category : #visiting }

@@ -18,7 +18,7 @@ SycPushUpMethodCommand >> asRefactorings [
 		pullUp: (methods collect: [ :each | each selector ])
 		from: methods first origin.
 	refactoring superClass: superclass.
-	^ OrderedCollection with: refactoring 
+	^ OrderedCollection with: refactoring
 ]
 
 { #category : #accessing }

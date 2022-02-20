@@ -13,7 +13,7 @@ Class {
 { #category : #coverage }
 MD5Test >> classToBeTested [
 	
-	^ MD5 
+	^ MD5
 ]
 
 { #category : #testing }

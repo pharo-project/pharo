@@ -59,7 +59,7 @@ SycRemoveClassCommand >> executeRefactoringsAs: aClass [
 
 { #category : #testing }
 SycRemoveClassCommand >> isComplexRefactoring [
-	^removeStrategy isComplexRefactoring 
+	^removeStrategy isComplexRefactoring
 ]
 
 { #category : #execution }

@@ -81,7 +81,7 @@ ClassRemoved >> classRemoved: aClass [
 
 { #category : #accessing }
 ClassRemoved >> classTagAffected [
-	^ownerPackage toTagName: categoryName 
+	^ownerPackage toTagName: categoryName
 ]
 
 { #category : #accessing }
