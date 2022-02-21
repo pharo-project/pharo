@@ -237,21 +237,15 @@ SystemNavigation >> allSentMessages [
 { #category : #query }
 SystemNavigation >> allUnimplementedCalls [
 
-	"Answer an Array of each message that is sent by an expression in a  
-	method but is not implemented by any object in the system."
+	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
-	| all badMethods |
-	all := self allImplementedMessages.
-	badMethods := Set new.
-	self allMethods do: [ :meth | 
-		| ignored |
-		ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
-			           ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-			           ifNil: [ #(  ) ].
-		meth messages do: [ :m | 
-			((all includes: m) not and: [ (ignored includes: m) not ]) ifTrue: [ 
-				badMethods add: meth ] ] ].
-	^ badMethods
+	^ self allMethods select: [ :meth | 
+		  | ignored |
+		  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
+			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
+			             ifNil: [ #(  ) ].
+		  meth messages anySatisfy: [ :m | 
+			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
 ]
 
 { #category : #query }
