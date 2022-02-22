@@ -291,6 +291,12 @@ CompiledCode >> hasSourceCode [
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+CompiledCode >> hasTemporaries [
+	"Fast check that does not scan the bytecode, nor reifies the AST"
+	^ (self numTemps - self numArgs) > 0
+]
+
 { #category : #comparing }
 CompiledCode >> hash [
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.
