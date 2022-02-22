@@ -267,7 +267,6 @@ BaselineOfIDE >> newTools: spec [
 		spec 
 			repository: (self class environment at: #BaselineOfPharo) newToolsRepository;
 			loads: #('default') ].
-
 ]
 
 { #category : #'private - register' }

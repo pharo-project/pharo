@@ -127,7 +127,6 @@ BaselineOfBasicTools >> project [
 	aProject := super project.
 	aProject loadType: #atomic.
 	^ aProject.
-	
 ]
 
 { #category : #baseline }

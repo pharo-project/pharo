@@ -38,8 +38,6 @@ BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	
 ]
 
 { #category : #actions }
@@ -50,8 +48,4 @@ BaselineOfUnifiedFFI >> preload: loader package: packageSpec [
 
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: true.
-	
-
-	
-
 ]
