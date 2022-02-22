@@ -169,6 +169,17 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]
 
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testHasTemporaries [
+	| method block |
+	method := self class >> #testHasTemporaries.
+	self assert: method hasTemporaries.
+	block := [ | b | b := 2  ].
+	self assert: block method hasTemporaries.
+	block := [  2  ].
+	self deny: block method hasTemporaries
+]
+
 { #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
