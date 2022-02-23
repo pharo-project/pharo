@@ -101,7 +101,8 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
 	blockNode := compiledMethod ast statements last value.
 	pc := 27.
 	mappedNode := (blockNode sourceNodeForPC: pc).
-	expectedNode := blockNode body.
+	"the message node"
+	expectedNode := blockNode body statements first value.
 	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
 	self assert: mappedNode start equals: expectedNode start.
 	self assert: mappedNode stop equals: expectedNode stop
