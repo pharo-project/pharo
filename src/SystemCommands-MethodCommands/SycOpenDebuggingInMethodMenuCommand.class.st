@@ -17,7 +17,9 @@ SycOpenDebuggingInMethodMenuCommand class >> methodContextMenuActivation [
 
 { #category : #activation }
 SycOpenDebuggingInMethodMenuCommand class >> methodEditorShortcutActivation [
+	<classAnnotation>
 	
+	^CmdShortcutActivation by: $g meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

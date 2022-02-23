@@ -15,6 +15,13 @@ SycOpenAdvancedDebuggingInMethodMenuCommand class >> methodContextMenuActivation
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyMethod asCalypsoItemContext
 ]
 
+{ #category : #activation }
+SycOpenAdvancedDebuggingInMethodMenuCommand class >> methodEditorShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #execution }
 SycOpenAdvancedDebuggingInMethodMenuCommand >> activationStrategy [
 	^SycAdvancedDebuggingMenuActivation
