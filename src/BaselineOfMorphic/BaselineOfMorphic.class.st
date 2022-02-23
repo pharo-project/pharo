@@ -128,7 +128,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Tool-Base'.
 
 	].
-
 ]
 
 { #category : #actions }
@@ -200,7 +199,6 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 			fontCopy setGlyphs: fileName.
 
 			STON put: fontCopy onStream: (fileName, '.ston') asFileReference writeStream ]].
-
 ]
 
 { #category : #fonts }
@@ -214,7 +212,6 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
 	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejaVu.
 	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
-
 ]
 
 { #category : #fonts }
@@ -274,7 +271,6 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 
 	codePro := self loadBitmapFontFamily: 'Bitmap Source Code Pro' sizes: #(9 10 11 12 14 18 24).
 	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
-
 ]
 
 { #category : #actions }
@@ -392,5 +388,4 @@ BaselineOfMorphic >> project [
 	aProject := super project.
 	aProject loadType: #atomic.
 	^ aProject.
-	
 ]

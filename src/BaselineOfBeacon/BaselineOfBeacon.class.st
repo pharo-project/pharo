@@ -25,5 +25,4 @@ BaselineOfBeacon >> baseline: spec [
 			group: 'Core' with: #('Beacon-Core' );
 			group: 'CoreTests' with: #('Beacon-Core' 'Beacon-Core-Tests');
 			group: 'default' with: #('Beacon-Core' 'Beacon-Core-Tests' 'Beacon-SerializingLoggers' 'Beacon-Core-GT' 'Beacon-ExtraSignals' 'Beacon-Extra-Tests' 'Beacon-Syslog' 'Beacon-File' 'Beacon-Zinc'). ].
-
 ]

@@ -67,7 +67,5 @@ BaselineOfTraits >> baseline: spec [
 		spec group: 'core-traits' with: #(core 'traits-in-kernel' 'compatibility').		
 		spec group: 'default' with: #('core-traits').
 		spec group: 'traits-tests' with: #('default' 'TraitsV2-Tests').		
-	 ].		
-
+	 ].
 ]
-

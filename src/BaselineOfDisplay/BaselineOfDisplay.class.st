@@ -35,8 +35,7 @@ BaselineOfDisplay >> baseline: spec [
 			package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 			package: 'Graphics-Transformations'
 		
-		 ].		
-
+		 ].
 ]
 
 { #category : #actions }
@@ -86,8 +85,4 @@ BaselineOfDisplay >> preload: loader package: packageSpec [
 
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
-	
-
-	
-
 ]

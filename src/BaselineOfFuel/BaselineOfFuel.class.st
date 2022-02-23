@@ -58,7 +58,6 @@ BaselineOfFuel >> fuelPlatform: spec [
 			spec
 				repository: 'github://theseion/FuelPlatform:stable/repository';
   				loads: 'default' ]
-
 ]
 
 { #category : #'baselines-helpers' }
@@ -119,5 +118,4 @@ BaselineOfFuel >> smark: spec [
 			spec 
 				repository: 'http://smalltalkhub.com/mc/ClementBera/classic-bench/main';
 				requires: 'SMark' ]
-
 ]

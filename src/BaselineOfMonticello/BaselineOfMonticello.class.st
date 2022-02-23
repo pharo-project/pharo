@@ -46,6 +46,5 @@ BaselineOfMonticello >> baseline: spec [
 			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zinc-FileSystem' 'Zodiac-Core' );
 
-			group: 'default' with: #('Core' 'RemoteRepositories' ). ].		
-
+			group: 'default' with: #('Core' 'RemoteRepositories' ). ].
 ]
