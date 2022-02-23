@@ -242,35 +242,6 @@ FFICalloutAPITest >> testCallWithSelfParameter [
 	self assert: object handle asString equals: ('Hello, World' copyWith: (Character value: 0))
 ]
 
-{ #category : #'tests pointer' }
-FFICalloutAPITest >> testCalloutRestoresSetPinValue [
-	| dest argument |
-	
-	argument := 'Hello, World' asByteArray.
-	argument pinInMemory.
-
-	self 
-		primFromByteArray: argument
-		toExternalAddress: (dest := ExternalAddress allocate: 12) autoRelease 
-		size: 12.
-		
-	self assert: argument isPinnedInMemory
-]
-
-{ #category : #'tests pointer' }
-FFICalloutAPITest >> testCalloutRestoresUnsetPinValue [
-	| dest argument |
-	
-	argument := 'Hello, World' asByteArray.
-	self deny: argument isPinnedInMemory.
-	self 
-		primFromByteArray: argument
-		toExternalAddress: (dest := ExternalAddress allocate: 12) autoRelease 
-		size: 12.
-		
-	self deny: argument isPinnedInMemory
-]
-
 { #category : #'tests atomic' }
 FFICalloutAPITest >> testCharCall [
 	"Test using generic FFI spec"
