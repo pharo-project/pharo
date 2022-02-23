@@ -19,6 +19,14 @@ ClyRemoveWatchCommand class >> contextMenuOrder [
 ]
 
 { #category : #activation }
+ClyRemoveWatchCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+
+	^ SycAdvancedDebuggingMenuActivation 
+			byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
 ClyRemoveWatchCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	

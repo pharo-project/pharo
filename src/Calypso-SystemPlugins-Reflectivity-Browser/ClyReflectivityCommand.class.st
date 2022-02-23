@@ -36,7 +36,7 @@ ClyReflectivityCommand class >> isAbstract [
 ClyReflectivityCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
-	^ CmdContextMenuActivation 
+	^ SycReflectivityMenuActivation 
 		byItemOf: ClyReflectivityMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 

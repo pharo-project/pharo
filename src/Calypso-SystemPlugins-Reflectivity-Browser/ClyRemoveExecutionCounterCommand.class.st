@@ -19,6 +19,14 @@ ClyRemoveExecutionCounterCommand class >> contextMenuOrder [
 ]
 
 { #category : #activation }
+ClyRemoveExecutionCounterCommand class >> methodContextMenuActivation [
+
+	<classAnnotation>
+	^ SycAdvancedDebuggingMenuActivation 
+			byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
 ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	

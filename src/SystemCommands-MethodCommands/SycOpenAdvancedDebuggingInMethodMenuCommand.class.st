@@ -4,7 +4,7 @@ I show in menu all commands annotated by SycAdvancedDebuggingMenuActivation
 "
 Class {
 	#name : #SycOpenAdvancedDebuggingInMethodMenuCommand,
-	#superclass : #SycOpenContextMenuCommand,
+	#superclass : #SycOpenMethodMenuCommand,
 	#category : #'SystemCommands-MethodCommands'
 }
 
@@ -18,11 +18,6 @@ SycOpenAdvancedDebuggingInMethodMenuCommand class >> methodContextMenuActivation
 { #category : #execution }
 SycOpenAdvancedDebuggingInMethodMenuCommand >> activationStrategy [
 	^SycAdvancedDebuggingMenuActivation
-]
-
-{ #category : #'context menu' }
-SycOpenAdvancedDebuggingInMethodMenuCommand >> cmCommandClass [
-	^ SycAdvancedDebuggingInMethodCmCommand
 ]
 
 { #category : #accessing }
