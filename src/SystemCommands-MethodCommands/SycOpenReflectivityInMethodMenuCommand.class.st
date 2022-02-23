@@ -4,7 +4,7 @@ I show in menu all commands annotated by SycReflectivityMenuActivation
 "
 Class {
 	#name : #SycOpenReflectivityInMethodMenuCommand,
-	#superclass : #SycOpenMethodMenuCommand,
+	#superclass : #SycOpenDebuggingInMethodMenuCommand,
 	#category : #'SystemCommands-MethodCommands'
 }
 

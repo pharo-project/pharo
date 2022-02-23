@@ -15,6 +15,11 @@ SycOpenDebuggingInMethodMenuCommand class >> methodContextMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyMethod asCalypsoItemContext
 ]
 
+{ #category : #activation }
+SycOpenDebuggingInMethodMenuCommand class >> methodEditorShortcutActivation [
+	
+]
+
 { #category : #execution }
 SycOpenDebuggingInMethodMenuCommand >> activationStrategy [
 
@@ -23,8 +28,7 @@ SycOpenDebuggingInMethodMenuCommand >> activationStrategy [
 
 { #category : #'context menu' }
 SycOpenDebuggingInMethodMenuCommand >> cmCommandClass [
-
-	^ SycDebuggingInMethodCmCommand
+	^ SycDebuggingCommand
 ]
 
 { #category : #accessing }
