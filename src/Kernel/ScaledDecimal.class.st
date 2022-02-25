@@ -54,11 +54,11 @@ ScaledDecimal >> / aNumber [
 ScaledDecimal >> < aNumber [
 
 	aNumber class = self class ifTrue: [ 
-		aNumber integerPart < self integerPart ifTrue:[^true].
-		aNumber integerPart > self integerPart ifTrue:[^false].
-		aNumber integerPart = self integerPart 	
-			ifTrue: [ ^ self roundedFractionPart < aNumber roundedFractionPart ]
-			 ].
+		aNumber integerPart = self integerPart ifTrue: [ 
+			^ self roundedFractionPart < aNumber roundedFractionPart ] ].
+	aNumber integerPart < self integerPart ifTrue: [ ^ false ].
+	aNumber integerPart > self integerPart ifTrue: [ ^ true ].
+
 	^ self asFraction < aNumber
 ]
 
@@ -66,10 +66,10 @@ ScaledDecimal >> < aNumber [
 ScaledDecimal >> <= aNumber [
 
 	aNumber class = self class ifTrue: [ 
-		aNumber integerPart < self integerPart ifTrue: [ ^ true ].
-		aNumber integerPart > self integerPart ifTrue: [ ^ false ].
 		aNumber integerPart = self integerPart ifTrue: [ 
-			^ self roundedFractionPart <= aNumber roundedFractionPart ] ].
+			^ self roundedFractionPart <= aNumber roundedFractionPart ].
+		aNumber integerPart < self integerPart ifTrue: [ ^ false ].
+		aNumber integerPart > self integerPart ifTrue: [ ^ true ] ].
 	^ self asFraction < aNumber
 ]
 
@@ -87,11 +87,10 @@ ScaledDecimal >> = aNumber [
 ScaledDecimal >> > aNumber [
 
 	aNumber class = self class ifTrue: [ 
-		aNumber integerPart < self integerPart ifTrue: [ ^ true ].
-		aNumber integerPart > self integerPart ifTrue: [ ^ false ].
-		aNumber integerPart = self integerPart
-			ifTrue: [ ^ self roundedFractionPart > aNumber roundedFractionPart ]
-		 ].
+		aNumber integerPart = self integerPart ifTrue: [ 
+			^ self roundedFractionPart > aNumber roundedFractionPart ].
+		self integerPart > aNumber integerPart ifTrue: [ ^ true ].
+		self integerPart < aNumber integerPart ifTrue: [ ^ false ] ].
 	^ self asFraction < aNumber
 ]
 
@@ -99,10 +98,10 @@ ScaledDecimal >> > aNumber [
 ScaledDecimal >> >= aNumber [
 
 	aNumber class = self class ifTrue: [ 
-		aNumber integerPart < self integerPart ifTrue: [ ^ true ].
-		aNumber integerPart > self integerPart ifTrue: [ ^ false ].
 		aNumber integerPart = self integerPart ifTrue: [ 
-			^ self roundedFractionPart >= aNumber roundedFractionPart ] ].
+			^ self roundedFractionPart >= aNumber roundedFractionPart ].
+		self integerPart > aNumber integerPart ifTrue: [ ^ true ].
+		self integerPart < aNumber integerPart ifTrue: [ ^ false ] ].
 	^ self asFraction < aNumber
 ]
 
