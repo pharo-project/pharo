@@ -215,6 +215,21 @@ ScaledDecimal >> reciprocal [
 ]
 
 { #category : #accessing }
+ScaledDecimal >> roundedFractionPart [
+
+	| scaling integerPart roundedFractionPart |
+	scaling:= 10 raisedToInteger: scale.
+			integerPart := numerator abs quo: denominator.
+			roundedFractionPart := (numerator abs - (integerPart * denominator)) * scaling * 2 + denominator quo: denominator * 2.
+			roundedFractionPart = scaling
+				ifTrue:
+					[integerPart := integerPart + 1.
+					roundedFractionPart := 0].
+	
+			^roundedFractionPart/scaling
+]
+
+{ #category : #accessing }
 ScaledDecimal >> scale [
 	^scale
 ]
