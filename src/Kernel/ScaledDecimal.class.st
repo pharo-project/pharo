@@ -138,6 +138,12 @@ ScaledDecimal >> coerce: aNumber [
 	^aNumber
 ]
 
+{ #category : #comparing }
+ScaledDecimal >> hash [
+
+	^self integerPart hash bitXor: self roundedFractionPart hash
+]
+
 { #category : #testing }
 ScaledDecimal >> isFraction [
 	"Though kind of Fraction, pretend we are not a Fraction to let coercion works correctly"

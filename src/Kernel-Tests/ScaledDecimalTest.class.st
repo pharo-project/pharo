@@ -287,6 +287,20 @@ ScaledDecimalTest >> testRounded [
 ]
 
 { #category : #tests }
+ScaledDecimalTest >> testScaleDecimalsHash [
+
+	| firstScaleDecimals secondScaleDecimals |
+	firstScaleDecimals := ScaledDecimal new.
+	firstScaleDecimals setNumerator: 8617 denominator: 500 scale: 2.
+
+	secondScaleDecimals := ScaledDecimal new.
+	secondScaleDecimals setNumerator: 2425469874315723 denominator: 140737488355328 scale: 2.
+
+	self assert: firstScaleDecimals equals: secondScaleDecimals.
+	self assert: firstScaleDecimals hash equals: secondScaleDecimals hash
+]
+
+{ #category : #tests }
 ScaledDecimalTest >> testScaleExtension [
 
 	#( #+ #- #/ ) do: [ :op | "The scale is extended to the larger one in case of arithmetic operation"
