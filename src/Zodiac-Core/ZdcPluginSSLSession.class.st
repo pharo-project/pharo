@@ -80,9 +80,10 @@ ZdcPluginSSLSession >> decrypt: srcBuf from: start to: stop into: dstBuf [
 
 { #category : #initialization }
 ZdcPluginSSLSession >> destroy [
+
 	"Destroys the platform handle in the VM plugin"
 
-	handle isNil ifTrue: [ ^ self ].  
+	handle ifNil: [ ^ self ].
 	self primitiveSSLDestroy: handle.
 	handle := nil
 ]

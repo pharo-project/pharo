@@ -307,15 +307,16 @@ ZnByteEncoder class >> generateByteToUnicodeSpec: url [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-2.TXT'."
 
 	| mapping |
-	mapping := self parseUnicodeOrgSpec: url.  
-	^ String streamContents: [ :stream |
-		stream tab; << '"'; << 'self generateByteToUnicodeSpec: '; print: url; << '"'; cr; cr; tab; << '^ #('.
-		(self top128FromUnicodeSpec: mapping) doWithIndex: [ :each :index |
-			index - 1 \\ 8 = 0 ifTrue: [ stream cr; tab ].
-			each isNil
-				ifTrue: [ stream print: nil; space ]  
-				ifFalse: [ stream << '16r' << (each printPaddedWith: $0 to: 4 base: 16); space ] ].
-		stream nextPut: $); cr ]
+	mapping := self parseUnicodeOrgSpec: url.
+	^ String streamContents: [ :stream | 
+			stream tab; << '"'; << 'self generateByteToUnicodeSpec: '; print: url; << '"'; cr; cr; tab; << '^ #('.
+			(self top128FromUnicodeSpec: mapping) doWithIndex: [ :each :index | 
+					index - 1 \\ 8 = 0 ifTrue: [ stream cr; tab ].
+					each
+						ifNil: [ stream print: nil; space ]
+						ifNotNil: [ (stream << '16r') << (each printPaddedWith: $0 to: 4 base: 16); space ]
+					].
+			stream nextPut: $); cr ]
 ]
 
 { #category : #mappings }

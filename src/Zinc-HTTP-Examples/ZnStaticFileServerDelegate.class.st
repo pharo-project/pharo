@@ -22,7 +22,7 @@ Class {
 		'directory',
 		'mimeTypeExpirations'
 	],
-	#category : #'Zinc-FileSystem'
+	#category : #'Zinc-HTTP-Examples'
 }
 
 { #category : #accessing }
@@ -172,7 +172,7 @@ ZnStaticFileServerDelegate >> redirectNeededFor: uri actualFilename: actualFilen
 { #category : #private }
 ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 	| file entry size time mimeType fileStream entity response modified |
-	file := filename asFileReference.
+	file := directory fileSystem referenceTo: filename.
 	entry := file entry.
 	size := entry size.
 	time := entry modificationTime.

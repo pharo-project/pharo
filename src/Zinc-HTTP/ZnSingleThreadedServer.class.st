@@ -168,16 +168,13 @@ ZnSingleThreadedServer >> executeOneRequestResponseOn: stream [
 	#readRequest: #handleRequest: and #writeResponse:on:
 	Indicate that we intend to close the connection afterwards"
 
-	| request response timing|
-	ZnCurrentServer
-		value: self
-		during: [ 
-			timing := ZnServerTransactionTiming new.
-			request := self readRequest: stream timing: timing.
-			response := self handleRequest: request timing: timing.
-			response setConnectionClose.
-			self writeResponse: response on: stream timing: timing.
-			self logServerTransactionRequest: request response: response timing: timing ]
+	| request response timing |
+	timing := ZnServerTransactionTiming new.
+	request := self readRequest: stream timing: timing.
+	response := self handleRequest: request timing: timing.
+	response setConnectionClose.
+	self writeResponse: response on: stream timing: timing.
+	self logServerTransactionRequest: request response: response timing: timing
 ]
 
 { #category : #'request handling' }
@@ -280,6 +277,14 @@ ZnSingleThreadedServer >> logConnectionClosed: socketStream [
 	socketStream socket ifNil: [ ^ nil ].
 	^ (self newLogEvent: ZnServerConnectionClosedEvent)
 		address: ([ socketStream socket remoteAddress] on: Error do: [ nil ]);
+		emit
+]
+
+{ #category : #'private logging' }
+ZnSingleThreadedServer >> logConnectionRejected: socketStream [
+	logLevel < 3 ifTrue: [ ^ nil ].
+	^ (self newLogEvent: ZnConnectionRejectedEvent)
+		address: ([ socketStream socket remoteAddress ] on: Error do: [ nil ]);
 		emit
 ]
 
@@ -489,10 +494,9 @@ ZnSingleThreadedServer >> readRequest: stream timing: timing [
 
 	| request initialMilliseconds |
 	initialMilliseconds := Time millisecondClockValue.
-	request := self withMaximumEntitySizeDo: [ 
-		self withMaximumNumberOfDictionaryEntriesDo: [ 
+	request := self withMaximumNumberOfDictionaryEntriesDo: [ 
 			self withDefaultCharacterEncoderDo: [
-				self reader value: stream ] ] ].
+				self reader value: stream ] ].
 	request headers 
 		at: ZnConstants remoteAddressHeader
 		put: (ZnNetworkingUtils ipAddressToString: stream socket remoteAddress).
@@ -525,7 +529,7 @@ ZnSingleThreadedServer >> serveConnectionOn: listeningSocket [
 	socket ifNil: [ ^ self noteAcceptWaitTimedOut ].
 	stream := self socketStreamOn: socket.
 	[ 
-	[ self executeOneRequestResponseOn: stream ]
+	[ self withDynamicVariablesDo: [ self executeOneRequestResponseOn: stream ] ]
 		ensure: [ 
 			self logConnectionClosed: stream.
 			stream close ] ]
@@ -592,13 +596,11 @@ ZnSingleThreadedServer >> withDefaultCharacterEncoderDo: block [
 ]
 
 { #category : #private }
-ZnSingleThreadedServer >> withMaximumEntitySizeDo: block [
-	^ self maximumEntitySize = ZnMaximumEntitySize value
-			ifTrue: block
-			ifFalse: [ 
-				ZnMaximumEntitySize 
-					value: self maximumEntitySize  
-					during: block ]
+ZnSingleThreadedServer >> withDynamicVariablesDo: block [
+	^ ZnCurrentServer
+		value: self
+		during: [ 
+			self localOptions conditionallyDuring: block ]
 ]
 
 { #category : #private }

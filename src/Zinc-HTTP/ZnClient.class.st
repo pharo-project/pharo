@@ -36,7 +36,8 @@ Class {
 		'lastUsed',
 		'options',
 		'session',
-		'logLevel'
+		'logLevel',
+		'newOptions'
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }
@@ -154,7 +155,10 @@ ZnClient >> certificate: anObject [
 
 { #category : #private }
 ZnClient >> cleanupConnection [
-	(self isOneShot or: [ request notNil and: [ request wantsConnectionClose ] ])
+	(self isOneShot 
+		or: [ 
+			(request notNil and: [ request wantsConnectionClose ])
+				or: [ response notNil and: [ response wantsConnectionClose ] ] ])
 		ifTrue: [
 			self close ]
 ]
@@ -367,9 +371,9 @@ ZnClient >> downloadEntityTo: path [
 	self entity ifNil: [ ^ self ].
 	target := ZnFileSystemUtils downloadPathTo: path for: self request uri lastPathSegment.
 	ZnFileSystemUtils
-		newBinaryFileNamed: target
+		binaryWriteStreamFor: target
 		do: [ :fileStream |
-			self withProgressDo: [ self entity writeOn: fileStream ] ]
+			self withDynamicVariablesDo: [ self entity writeOn: fileStream ] ]
 ]
 
 { #category : #convenience }
@@ -446,11 +450,12 @@ ZnClient >> execute [
 	"Execute the currently set up request to generate a response.
 	Return the #contents of the response, if any."
 
-	| result |
-	self prepareRequest.
-	self withProgressDo: [ result := self executeWithTimeout ].
-	self prepareNextRequest.
-	^ result
+	^ self withDynamicVariablesDo: [ 
+		| result |
+		self prepareRequest.
+		result := self executeWithTimeout.
+		self prepareNextRequest.
+		result ]
 ]
 
 { #category : #'private - protocol' }
@@ -520,6 +525,31 @@ ZnClient >> followRedirects: boolean [
 	When set to false, redirects will be returned as normal responses."
 
 	self optionAt: #followRedirects put: boolean 
+]
+
+{ #category : #initialization }
+ZnClient >> forJsonREST [
+	"Configure me for JSON REST interaction: I assume that the entities that I read and write are JSON.
+	This requires either NeoJSON or STON to be present."
+
+	| reader writer |
+	reader := self class environment
+		at: #NeoJSONObject
+		ifAbsent: [ 
+			self class environment 
+				at: #STONJSON 
+				ifAbsent: [ self error: 'Could not find a suitabe JSON parser' ] ].
+	writer := self class environment
+		at: #NeoJSONWriter
+		ifAbsent: [ 
+			self class environment 
+				at: #STONJSON 
+				ifAbsent: [ self error: 'Could not find a suitabe JSON writer' ] ].
+	self
+		accept: ZnMimeType applicationJson;
+		contentReader: [ :entity | reader fromString: entity contents ];
+		contentWriter: [ :data | ZnEntity json: (writer toString: data) ]
+
 ]
 
 { #category : #'accessing - request' }
@@ -678,7 +708,7 @@ ZnClient >> https [
 
 { #category : #options }
 ZnClient >> ifFail: block [
-	"Set the block that will be executed if the request fails.
+	"Set the block that I will be execute when the request fails.
 	The exception of the failure will be passed as argument."
 	
 	self optionAt: #ifFailBlock put: block
@@ -788,6 +818,15 @@ ZnClient >> isSuccess [
 	^ response 
 		ifNil: [ self error: 'Request not yet executed' ]
 		ifNotNil: [ response isSuccess ]
+]
+
+{ #category : #accessing }
+ZnClient >> localOptions [
+	"Return my options. This is a writable clone of the global options.
+	My options are applicable to everything I do, unless they were dynamically overwritten."
+	
+	newOptions ifNil: [ newOptions := ZnOptions globalDefault clone ].
+	^ newOptions
 ]
 
 { #category : #'private - logging' }
@@ -931,17 +970,10 @@ ZnClient >> maxNumberOfRedirects: count [
 ]
 
 { #category : #options }
-ZnClient >> maximumEntitySize [
-	"Return the maximum entity size in bytes that I will read from a stream before signalling ZnEntityTooLarge"
-	
-	^ self optionAt: #maximumEntitySize ifAbsent: [ ZnMaximumEntitySize value ]
-]
-
-{ #category : #options }
 ZnClient >> maximumEntitySize: integer [
 	"Set the maximum entity size in bytes that I will read from a stream before signalling ZnEntityTooLarge"
 	
-	^ self optionAt: #maximumEntitySize put: integer
+	self localOptions at: #maximumEntitySize put: integer
 ]
 
 { #category : #options }
@@ -1126,6 +1158,19 @@ ZnClient >> post: url contents: object [
 		post
 ]
 
+{ #category : #private }
+ZnClient >> postLocalOptionsChanged [
+	"local options were just changed, if they apply (are not already dynamically overwritte),
+	apply those options that impact objects that fall outside the local options scope"
+	
+	ZnCurrentOptions value
+		ifNil: [ 
+			"request already exists (seen #initialize), set the user-agent should it have been customized"
+			request headers
+				at: 'User-Agent'
+				put: (self localOptions at: #userAgentString) ]
+]
+
 { #category : #'private - protocol' }
 ZnClient >> prepareNextRequest [
 	"The request could be modified destructively in the next run,
@@ -1250,7 +1295,7 @@ ZnClient >> readResponse [
 					self streaming
 						ifTrue: [ ZnResponse readStreamingFrom: connection ]
 						ifFalse: [ 
-							self withMaximumEntitySizeDo: [ self reader value: connection ] ] ] ] ].
+							self reader value: connection ] ] ] ].
 	lastUsed := Time totalSeconds
 ]
 
@@ -1275,15 +1320,14 @@ ZnClient >> receiveCookies [
 		self session cookieJar add: each ]
 ]
 
-{ #category : #'private - protocol' }
+{ #category : #'private protocol' }
 ZnClient >> redirectUrl [
-	"We support relative locations although they are not the standard (http://en.wikipedia.org/wiki/HTTP_location)"
+	"We support both absolute and relative locations (http://en.wikipedia.org/wiki/HTTP_location)"
 
-	| redirectUrl |
-	redirectUrl := response location asZnUrl.
-	^ redirectUrl isAbsolute
-		ifTrue: [ redirectUrl ]
-		ifFalse: [ redirectUrl inContextOf: request url ]
+	"Interpret the response location (the target of the redirect) relative to the original request's url.
+	Note that if the response location is absolute, it will be used as is (see #withRelativeReference:)"
+
+	^ request url withRelativeReference: response location
 ]
 
 { #category : #'accessing - request' }
@@ -1306,6 +1350,11 @@ ZnClient >> request: aRequest [
 { #category : #accessing }
 ZnClient >> resetCookies [
 	session ifNotNil: [ session resetCookies ]
+]
+
+{ #category : #accessing }
+ZnClient >> resetCredentials [
+	session ifNotNil: [ session resetCredentials ]
 ]
 
 { #category : #'accessing - request' }
@@ -1362,9 +1411,17 @@ ZnClient >> sendCookies [
 { #category : #accessing }
 ZnClient >> session [
 	"Return the current HTTP session object that I am using.
-	This session object holds cookies among other things."
+	This session object holds cookies and credentials."
 
 	^ session ifNil: [ session := ZnUserAgentSession new ]
+]
+
+{ #category : #accessing }
+ZnClient >> session: userAgentSession [
+	"Set the current HTTP session object that I am using.
+	This session object holds cookies and credentials."
+
+	session := userAgentSession
 ]
 
 { #category : #'accessing - request' }
@@ -1381,6 +1438,13 @@ ZnClient >> setBasicAuthenticationUsername: username password: password [
 	
 	self request setBasicAuthenticationUsername: username password: password
 
+]
+
+{ #category : #'accessing request' }
+ZnClient >> setBearerAuthentication: token [
+	"Set the bearer token for authentication (e.g. OAuth 2.0) for the current request."
+	
+	self request setBearerAuthentication: token
 ]
 
 { #category : #'accessing - request' }
@@ -1416,22 +1480,15 @@ ZnClient >> setupTLSTo: url [
 
 { #category : #private }
 ZnClient >> signalHTTPProgress: message [
-	self signalProgress
+	(ZnCurrentOptions at: #signalProgress)
 		ifTrue: [ HTTPProgress signal: message ]
-]
-
-{ #category : #options }
-ZnClient >> signalProgress [
-	"Return true if I signal HTTPProgress notifications during execution."
-	
-	^ self optionAt: #signalProgress ifAbsent: [ false ]
 ]
 
 { #category : #options }
 ZnClient >> signalProgress: boolean [
 	"Set whether I will signal HTTPProgress notifications during execution to boolean."
 	
-	self optionAt: #signalProgress put: boolean
+	self localOptions at: #signalProgress put: boolean
 ]
 
 { #category : #options }
@@ -1486,7 +1543,7 @@ ZnClient >> uploadEntityFrom: path [
 	You can then use #put or #post to actually do an upload."
 	
 	| stream type length |
-	stream := ZnFileSystemUtils binaryFileReadStreamFor: path.
+	stream := ZnFileSystemUtils binaryReadStreamFor: path.
 	type := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: path).
 	length := ZnFileSystemUtils fileSizeFor: path.
 	self entity: (ZnStreamingEntity readFrom: stream usingType: type andLength: length)
@@ -1538,13 +1595,8 @@ ZnClient >> withDefaultCharacterEncoderDo: block [
 ]
 
 { #category : #private }
-ZnClient >> withMaximumEntitySizeDo: block [
-	^ self maximumEntitySize = ZnMaximumEntitySize value
-			ifTrue: block
-			ifFalse: [ 
-				ZnMaximumEntitySize 
-					value: self maximumEntitySize  
-					during: block ]
+ZnClient >> withDynamicVariablesDo: block [
+	^ self localOptions conditionallyDuring: block
 ]
 
 { #category : #private }
@@ -1557,15 +1609,15 @@ ZnClient >> withMaximumNumberOfDictionaryEntriesDo: block [
 					during: block ]
 ]
 
-{ #category : #private }
-ZnClient >> withProgressDo: block [
-	^ ZnSignalProgress value
-		ifNil: [
-			ZnSignalProgress 
-				value: self signalProgress 
-				during: [ ^ block value ] ]
-		ifNotNil: [ 
-			block value ]
+{ #category : #initialization }
+ZnClient >> withOptions: block [
+	"Execute block with my options as argument.
+	This is useful when using me in a builder fashion."
+
+	| result |
+	result := block value: self localOptions.
+	self postLocalOptionsChanged.
+	^ result
 ]
 
 { #category : #private }

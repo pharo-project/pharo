@@ -51,26 +51,34 @@ ZnResourceMetaUtils class >> parseQueryFrom: stream [
 
 { #category : #accessing }
 ZnResourceMetaUtils class >> queryKeyValueSafeSet [
-	"When a query is interpreted as a list of key=value&.. pairs,
-	it is better to encode = and & and leave them out of the safe set.
-	Furthermore, since + is interpreted as space in the query part,
-	it is unsafe as well"
+	"There is a tension between encoding as much as possible and leaving as much characters unencoded 
+	as allowed by the specifications. Since there is no single best answer, this became an option."
 	
-	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~!$''()*,;:@/?'
+	^ ZnCurrentOptions at: #queryKeyValueSafeSet
 ]
 
 { #category : #accessing }
 ZnResourceMetaUtils class >> querySafeSet [
+	"See RFC 3986 section 3.4. The safe set for the query part consists of
+	the basic safe set #rfc3986SafeSet plus the 'sub-delimiters' !$&''()*+,;= 
+	plus : and @ plus / and ?"
+	
 	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~!$&''()*+,;=:@/?'
 ]
 
 { #category : #accessing }
 ZnResourceMetaUtils class >> rfc3986SafeSet [
+	"Return the unreserved characters according to RFC 3986 section 2.3.
+	This is the most narrow safe set to be used in a better safe than sorry approach."
+
 	^ ZnPercentEncoder rfc3986UnreservedCharacters 
 ]
 
 { #category : #accessing }
 ZnResourceMetaUtils class >> urlPathSafeSet [
+	"See RFC 3986 section 3.3. The safe set for the path consists of
+	the basic safe set #rfc3986SafeSet plus the 'sub-delimiters' !$&''()*+,;= plus : and @"
+
 	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~!$&''()*+,;=:@'
 ]
 

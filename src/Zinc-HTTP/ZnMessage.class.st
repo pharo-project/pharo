@@ -73,12 +73,13 @@ ZnMessage >> contentType [
 
 { #category : #accessing }
 ZnMessage >> contents [
-	^ entity isNil ifTrue: [ nil ] ifFalse: [ entity contents ]
+
+	^ entity ifNil: [ nil ] ifNotNil: [ entity contents ]
 ]
 
 { #category : #accessing }
 ZnMessage >> cookies [
-	self subclassResponsibility 
+	^ #()
 ]
 
 { #category : #accessing }
@@ -137,7 +138,8 @@ ZnMessage >> hash [
 
 { #category : #accessing }
 ZnMessage >> headers [
-	headers isNil ifTrue: [ headers := ZnHeaders new ].
+
+	headers ifNil: [ headers := ZnHeaders new ].
 	^ headers
 ]
 
@@ -155,14 +157,14 @@ ZnMessage >> headersDo: twoArgumentBlock [
 { #category : #testing }
 ZnMessage >> isConnectionClose [
 	| value |
-	value := self headers at: 'Connection' ifAbsent: [ ^ false ].
+	value := self headers singleAt: 'Connection' ifAbsent: [ ^ false ].
 	^ value sameAs: 'close'
 ]
 
 { #category : #testing }
 ZnMessage >> isConnectionKeepAlive [
 	| value |
-	value := self headers at: 'Connection' ifAbsent: [ ^ false ].
+	value := self headers singleAt: 'Connection' ifAbsent: [ ^ false ].
 	^ value sameAs: 'keep-alive'
 ]
 
@@ -258,9 +260,10 @@ ZnMessage >> setContentType: mimeType [
 
 { #category : #testing }
 ZnMessage >> wantsConnectionClose [
-	"Return if the HTTP protocol should close the connection after processing the receiver"
-	
-	^ false
+	"Return if the HTTP protocol should close the connection after processing the receiver.
+	True in case of the presense of an explicit connection close request header."
+
+	^ self isConnectionClose
 ]
 
 { #category : #writing }

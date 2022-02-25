@@ -4,6 +4,14 @@ Class {
 	#category : #'Zinc-Tests'
 }
 
+{ #category : #tests }
+ZnRequestTest >> testAcceptsEncodingGzip [
+	| request |
+	request := ZnRequest new.
+	request setAcceptEncodingGzip.
+	self assert: request acceptsEncodingGzip
+]
+
 { #category : #testing }
 ZnRequestTest >> testBasicAuthenticate [
 	| request |
@@ -22,19 +30,24 @@ ZnRequestTest >> testBasicAuthenticate [
 { #category : #testing }
 ZnRequestTest >> testCookiesParsing [
 	| input request cookies testCookie1 testCookie2 |
-	input := 'GET /foo.html HTTP/1.1' , String crlf , 'Cookie: testCookie1=123; testCookie2=321' , String crlf , 'Host: foo.com' , String crlf , 'Agent: SUnit'
-		, String crlf , String crlf.
+	input := 'GET /foo.html HTTP/1.1', String crlf, 
+		'Cookie: testCookie1=123; testCookie2=321', String crlf,
+		'Host: foo.com', String crlf, 
+		'Agent: SUnit', String crlf, 
+		String crlf.
 	request := ZnRequest readFrom: input readStream.
-
+	
 	cookies := request cookies.
 	testCookie1 := cookies detect: [ :each | each name = 'testCookie1' ].
 	testCookie2 := cookies detect: [ :each | each name = 'testCookie2' ].
-
+	
 	self assert: testCookie1 notNil.
-	self assert: testCookie1 value equals: '123'.
-
+	self assert: testCookie1 value equals: '123'.	
+	
 	self assert: testCookie2 notNil.
-	self assert: testCookie2 value equals: '321'
+	self assert: testCookie2 value equals: '321'.	
+
+
 ]
 
 { #category : #testing }
@@ -78,12 +91,16 @@ ZnRequestTest >> testMergedFields [
 { #category : #testing }
 ZnRequestTest >> testReading [
 	| input request |
-	input := 'GET /foo.html HTTP/1.1' , String crlf , 'Host: foo.com' , String crlf , 'Agent: SUnit' , String crlf , String crlf.
+	input := 'GET /foo.html HTTP/1.1', String crlf, 
+		'Host: foo.com', String crlf, 
+		'Agent: SUnit', String crlf, 
+		String crlf.
 	request := ZnRequest readFrom: input readStream.
 	self assert: request method equals: #GET.
 	self assert: request hasHeaders.
 	self assert: (request headers at: 'Host') equals: 'foo.com'.
 	self assert: request hasEntity not
+
 ]
 
 { #category : #testing }

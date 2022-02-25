@@ -1,7 +1,10 @@
+"
+Functional unit tests for ZnImageExample
+"
 Class {
 	#name : #ZnImageExampleDelegateTest,
 	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#category : #'Zinc-HTTP-Examples'
 }
 
 { #category : #private }
@@ -14,9 +17,6 @@ ZnImageExampleDelegateTest >> image [
 
 { #category : #testing }
 ZnImageExampleDelegateTest >> testDefaultImage [
-	self flag: #flakyTest.
-	self skip.
-	
 	self withServerDo: [ :server |
 		| client |
 		client := ZnClient new.

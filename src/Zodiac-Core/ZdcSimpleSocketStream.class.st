@@ -35,12 +35,14 @@ ZdcSimpleSocketStream class >> openConnectionToHost: hostIP port: portNumber tim
 
 { #category : #'instance creation' }
 ZdcSimpleSocketStream class >> openConnectionToHostNamed: hostName port: portNumber [
-	| platformSocket socketStream hostIP |
+	| platformSocket socketStream hostIPAddress |
 	platformSocket := Socket newTCP.
 	socketStream := self on: platformSocket.
-	hostIP := NetNameResolver addressForName: hostName timeout: socketStream timeout.
+	hostIPAddress := NetNameResolver addressForName: hostName timeout: socketStream timeout.
+	(hostIPAddress isNil or: [ hostIPAddress = SocketAddress zero ])
+		ifTrue: [ ^ NameLookupFailure signalFor: hostName ].
 	^ socketStream 
-		connectTo: hostIP port: portNumber;
+		connectTo: hostIPAddress port: portNumber;
 		yourself
 ]
 

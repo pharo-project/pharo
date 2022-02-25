@@ -42,8 +42,8 @@ ZnBufferedWriteStream class >> on: writeStream do: block [
 
 { #category : #private }
 ZnBufferedWriteStream >> buffer [
-	buffer isNil 
-		ifTrue: [ self sizeBuffer: self defaultBufferSize ].
+
+	buffer ifNil: [ self sizeBuffer: self defaultBufferSize ].
 	^ buffer
 ]
 
@@ -54,9 +54,8 @@ ZnBufferedWriteStream >> bufferFreeSize [
 
 { #category : #accessing }
 ZnBufferedWriteStream >> bufferSize [
-	^ buffer isNil 
-		ifTrue: [ self defaultBufferSize ]
-		ifFalse: [ buffer size ]
+
+	^ buffer ifNil: [ self defaultBufferSize ] ifNotNil: [ buffer size ]
 ]
 
 { #category : #'initialize-release' }
@@ -67,7 +66,6 @@ ZnBufferedWriteStream >> close [
 
 { #category : #testing }
 ZnBufferedWriteStream >> closed [
-	
 	^ stream closed
 ]
 
@@ -298,6 +296,7 @@ ZnBufferedWriteStream >> tab [
 { #category : #accessing }
 ZnBufferedWriteStream >> truncate [
 	
+	self flushBuffer.
 	stream truncate
 ]
 

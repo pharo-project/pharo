@@ -138,6 +138,11 @@ ZnEncodedReadStream >> readInto: collection startingAt: offset count: requestedC
 ]
 
 { #category : #accessing }
+ZnEncodedReadStream >> readStream [
+	^ self
+]
+
+{ #category : #accessing }
 ZnEncodedReadStream >> skip: count [
 	count timesRepeat: [ self next ]
 ]

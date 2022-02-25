@@ -17,7 +17,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'options',
-		'sessionManager'
+		'sessionManager',
+		'newOptions'
 	],
 	#classVars : [
 		'AlwaysRestart',
@@ -272,6 +273,15 @@ ZnServer >> isRunning [
 ]
 
 { #category : #accessing }
+ZnServer >> localOptions [
+	"Return my options. This is a writable clone of the global options.
+	My options are applicable to everything I do, unless they were dynamically overwritten."
+
+	newOptions ifNil: [ newOptions := ZnOptions globalDefault clone ].
+	^ newOptions
+]
+
+{ #category : #accessing }
 ZnServer >> localUrl [
 	"Return a ZnUrl to access me."
 	
@@ -297,17 +307,20 @@ ZnServer >> logServerErrorDetails: boolean [
 ]
 
 { #category : #options }
-ZnServer >> maximumEntitySize [
-	"Return the maximum entity size in bytes that I will read from a stream before signalling ZnEntityTooLarge"
-	
-	^ self optionAt: #maximumEntitySize ifAbsent: [ ZnMaximumEntitySize value ]
-]
-
-{ #category : #options }
 ZnServer >> maximumEntitySize: integer [
 	"Set the maximum entity size in bytes that I will read from a stream before signalling ZnEntityTooLarge"
 	
-	^ self optionAt: #maximumEntitySize put: integer
+	self localOptions at: #maximumEntitySize put: integer
+]
+
+{ #category : #options }
+ZnServer >> maximumNumberOfConcurrentConnections: count [
+	"Set the maximum number of concurrent connections that I will accept.
+	When this threshold is reached, a 503 Service Unavailable response will be sent
+	and the connection will be closed. This protects me from certain forms of attacks.
+	It is possible to raise this number when other system parameters are adjusted as well."
+	
+	self localOptions at: #maximumNumberOfConcurrentConnections put: count
 ]
 
 { #category : #options }
@@ -500,7 +513,7 @@ ZnServer >> unregister [
 { #category : #accessing }
 ZnServer >> url [
 	"Return the base external URL (a new ZnUrl instance) to access me.
-	This defaults to #localUrl but can be set explicitly using the #serverUrl option.
+	This defaults to #localUrl but can be set explicitely using the #serverUrl option.
 	Missing elements from #serverUrl are merged in from #localUrl."
 
 	^ self serverUrl 
@@ -520,4 +533,12 @@ ZnServer >> useGzipCompressionAndChunking: boolean [
 	"Set whether we should try to use gzip content encoding and chunked transfer encoding, the default being false."
 	
 	self optionAt: #useGzipCompressionAndChunking put: boolean
+]
+
+{ #category : #initialization }
+ZnServer >> withOptions: block [
+	"Execute block with my options as argument.
+	This is useful when using me in a builder fashion."
+
+	^ block value: self localOptions
 ]

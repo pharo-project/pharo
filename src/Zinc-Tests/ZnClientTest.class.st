@@ -1,6 +1,6 @@
 Class {
 	#name : #ZnClientTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#superclass : #TestCase,
 	#category : #'Zinc-Tests'
 }
 
@@ -12,6 +12,21 @@ ZnClientTest >> smallHtmlUrl [
 { #category : #accessing }
 ZnClientTest >> t3EasyGeoIPUrl [
 	^ 'http://easy.t3-platform.net/rest/geo-ip' asZnUrl
+]
+
+{ #category : #testing }
+ZnClientTest >> testConnectionClose [
+	self withServerDo: [ :server | | client |
+		server onRequestRespond: [ :request |
+			(ZnResponse ok: (ZnEntity textCRLF: 'OK'))
+				setConnectionClose;
+				yourself ].
+		client := ZnClient new.
+		client url: server localUrl.
+		client get.
+		self assert: client isSuccess.
+		self deny: client isConnected.
+		self assert: client connection isNil ]
 ]
 
 { #category : #testing }
@@ -84,6 +99,42 @@ ZnClientTest >> testCookies [
 ]
 
 { #category : #testing }
+ZnClientTest >> testCustomUserAgentString [
+	self withServerDo: [ :server | | client |
+		"change ZnClient's local options"
+		(client := ZnClient new)
+			withOptions: [ :options | 
+				options at: #userAgentString put: 'foobar client' ];
+			url: server localUrl;
+			addPathSegment: #echo;
+			get;
+			close.
+		self assert: (client contents includesSubstring: 'foobar client').
+		"dynamically change an option starting from the global default"
+		ZnOptions globalDefault clone
+			at: #userAgentString put: 'foobar client';
+			during: [ 
+				(client := ZnClient new)
+					url: server localUrl;
+					addPathSegment: #echo;
+					get;
+					close.
+				self assert: (client contents includesSubstring: 'foobar client') ].
+		"dynamically change an option starting from the local options"
+		client := ZnClient new.
+		client localOptions clone
+			at: #userAgentString put: 'foobar client';
+			during: [ 
+				(client := ZnClient new)
+					url: server localUrl;
+					addPathSegment: #echo;
+					get;
+					close.
+				self assert: (client contents includesSubstring: 'foobar client') ].
+		 ]
+]
+
+{ #category : #testing }
 ZnClientTest >> testDownloadSmallHTML [
 	| client |
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last.
@@ -93,47 +144,54 @@ ZnClientTest >> testDownloadSmallHTML [
 		downloadTo: ZnFileSystemUtils defaultDirectoryPath.
 	self assert: client isSuccess.
 	self assert: client response contentType equals: ZnMimeType textHtml.
-	ZnFileSystemUtils oldFileNamed: self smallHtmlUrl pathSegments last do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].
+	ZnFileSystemUtils 
+		readStreamFor: self smallHtmlUrl pathSegments last
+		do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last.
 	"Second download to an explicitly named file"
-	client
+	client 
 		url: self smallHtmlUrl;
 		downloadTo: self smallHtmlUrl pathSegments last.
 	self assert: client isSuccess.
 	self assert: client response contentType equals: ZnMimeType textHtml.
-	ZnFileSystemUtils oldFileNamed: self smallHtmlUrl pathSegments last do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].
+	ZnFileSystemUtils 
+		readStreamFor: self smallHtmlUrl pathSegments last
+		do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].	
 	client close.
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last
+
 ]
 
 { #category : #testing }
 ZnClientTest >> testGetAfterPost [
-	self
-		withServerDo: [ :server | 
-			| client |
-			server
-				onRequestRespond: [ :request | 
-					request uri firstPathSegment = 'one'
-						ifTrue:
-							[ (request method = #POST and: [ request hasEntity ]) ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK for one') ] ifFalse: [ ZnResponse badRequest: request ] ]
-						ifFalse: [ request uri firstPathSegment = 'two'
-								ifTrue:
-									[ (request method = #GET and: [ request hasEntity not ]) ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK for two') ] ifFalse: [ ZnResponse badRequest: request ] ]
-								ifFalse: [ ZnResponse notFound: request uri ] ] ].
-			(client := ZnClient new)
-				autoResetEntityMethods: #(HEAD DELETE GET);
-				url: server localUrl;
-				url: 'one';
-				entity: (ZnEntity text: 'One two three');
-				post.
-			self assert: client isSuccess.
-			self assert: client contents equals: 'OK for one'.
-			client
-				url: 'two';
-				get.
-			self assert: client isSuccess.
-			self assert: client contents equals: 'OK for two'.
-			client close ]
+	self withServerDo: [ :server | | client |
+		server onRequestRespond: [ :request | 
+			request uri firstPathSegment = 'one'
+				ifTrue: [
+					(request method = #POST and: [ request hasEntity ])
+						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK for one') ]
+						ifFalse: [ ZnResponse badRequest: request ] ]
+				ifFalse: [
+					request uri firstPathSegment = 'two'
+						ifTrue: [ 
+							(request method = #GET and: [ request hasEntity not ])
+								ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK for two') ]
+								ifFalse: [ ZnResponse badRequest: request ] ]
+		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
+		(client := ZnClient new) 
+			autoResetEntityMethods: #(HEAD DELETE GET);
+			url: server localUrl;
+			url: 'one';
+			entity: (ZnEntity text: 'One two three');
+			post.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK for one'.
+		client
+			url: 'two';
+			get.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK for two'.
+		client close ]
 ]
 
 { #category : #testing }
@@ -159,8 +217,11 @@ ZnClientTest >> testGetGeoIP [
 		url: self t3EasyGeoIPUrl;
 		queryAt: 'address' put: '81.83.7.35';
 		accept: ZnMimeType applicationJson;
-		contentReader:
-				[ :entity | testingEnvironment at: #NeoJSONReader ifPresent: [ :parserClass | parserClass fromString: entity contents ] ifAbsent: [ ^ self ] ];
+		contentReader: [ :entity | 
+					self class environment
+						at: #NeoJSONReader
+						ifPresent: [ :parserClass | parserClass fromString: entity contents ]
+						ifAbsent: [ ^ self ] ];
 		ifFail: [ ^ self fail ];
 		get.
 	self assert: result isDictionary.
@@ -376,6 +437,42 @@ ZnClientTest >> testIfModifiedSinceNotModified [
 ]
 
 { #category : #testing }
+ZnClientTest >> testJsonRESTGet [
+	| client |
+	self class environment at: #STONJSON ifAbsent: [ ^ self skip ].
+	self withServerDo: [ :server |
+		server onRequestRespond: [ :request | 
+			request method = #GET
+				ifTrue: [ ZnResponse ok: (ZnEntity json: '{"name":"pi","symbol":"π","value":3.141592653589793}') ]
+				ifFalse: [ ZnResponse badRequest: request ] ].
+		(client := ZnClient new)
+			forJsonREST;
+			get: server localUrl.
+		self assert: client isSuccess.
+		self assert: (client contents at: #name) equals: 'pi'.
+		client close ]
+]
+
+{ #category : #testing }
+ZnClientTest >> testJsonRESTPost [
+	| client |
+	self class environment at: #STONJSON ifAbsent: [ ^ self skip ].
+	self withServerDo: [ :server |
+		server onRequestRespond: [ :request | 
+			request method = #POST
+				ifTrue: [
+					self assert: request contentType equals: ZnMimeType applicationJson.  
+					ZnResponse ok: request entity ]
+				ifFalse: [ ZnResponse badRequest: request ] ].
+		(client := ZnClient new)
+			forJsonREST;
+			post: server localUrl contents: { #foo->1. #bar->'Test' } asDictionary.
+		self assert: client isSuccess.
+		self assert: (client contents at: #foo) equals: 1.
+		client close ]
+]
+
+{ #category : #testing }
 ZnClientTest >> testLogging [
 	| client logEventCollection count |
 	logEventCollection := OrderedCollection new.
@@ -452,7 +549,47 @@ ZnClientTest >> testPostMultipart [
 	| client filename |
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
 	filename := ZnFileSystemUtils fullNameFor: 'testPostMultiPart.txt'.
-	ZnFileSystemUtils newFileNamed: filename do: [ :stream | stream nextPutAll: '0123456789' ].
+	ZnFileSystemUtils writeStreamFor: filename do: [ :stream | stream nextPutAll: '0123456789' ].
+	self withServerDo: [ :server |
+		(client := ZnClient new)
+			url: server localUrl;
+			addPath: 'echo';
+			addPart: (ZnMimePart fieldName: 'username' value: 'john');
+			addPart: (ZnMimePart fieldName: 'foo' entity: (ZnEntity text: '123'));
+			addPart: (ZnMimePart fieldName: 'file' fileNamed: filename);
+			post.
+		self assert: client isSuccess.
+		self assert: (client contents includesSubstring: 'multipart') ].
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
+
+]
+
+{ #category : #testing }
+ZnClientTest >> testPostMultipartBinary [
+	| client filename |
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.bin'.
+	filename := ZnFileSystemUtils fullNameFor: 'testPostMultiPart.bin'.
+	ZnFileSystemUtils binaryWriteStreamFor: filename do: [ :stream | stream nextPutAll: #[0 1 2 3 4 5 6 7 8 9] ].
+	self withServerDo: [ :server |
+		(client := ZnClient new)
+			url: server localUrl;
+			addPath: 'echo';
+			addPart: (ZnMimePart fieldName: 'username' value: 'john');
+			addPart: (ZnMimePart fieldName: 'foo' entity: (ZnEntity bytes: #[1 2 3]));
+			addPart: (ZnMimePart fieldName: 'file' fileNamed: filename);
+			post.
+		self assert: client isSuccess.
+		self assert: (client contents includesSubstring: 'multipart') ].
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.bin'.
+
+]
+
+{ #category : #testing }
+ZnClientTest >> testPostMultipartNonASCII [
+	| client filename |
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
+	filename := ZnFileSystemUtils fullNameFor: 'testPostMultiPart.txt'.
+	ZnFileSystemUtils writeStreamFor: filename do: [ :stream | stream nextPutAll: 'Ελλάδα' ].
 	self withServerDo: [ :server |
 		(client := ZnClient new)
 			url: server localUrl;
@@ -597,91 +734,103 @@ ZnClientTest >> testRedirectDontFollow [
 
 { #category : #testing }
 ZnClientTest >> testRedirectWithCookies [
-	self
-		withServerDo: [ :server | 
-			| client cookie |
-			server
-				onRequestRespond: [ :request | 
-					request uri firstPathSegment = 'one'
-						ifTrue: [ (ZnResponse redirect: 'two')
-								addCookie: (ZnCookie name: 'session' value: '123456');
-								yourself ]
-						ifFalse: [ cookie := request cookies detect: [ :each | each name = 'session' ] ifNone: [ nil ].
-							(request uri firstPathSegment = 'two' and: [ cookie notNil and: [ cookie value = '123456' ] ])
-								ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
-								ifFalse: [ ZnResponse badRequest: request ] ] ].
-			(client := ZnClient new)
-				url: server localUrl;
-				addPath: 'one';
-				post.
-			self assert: client isSuccess.
-			self assert: client contents equals: 'OK!'.
-			client close ]
+	self withServerDo: [ :server | | client cookie |
+		server onRequestRespond: [ :request | 
+			request uri firstPathSegment = 'one'
+				ifTrue: [ 
+					(ZnResponse redirect: 'two')
+						addCookie: (ZnCookie name: 'session' value: '123456');
+						yourself ]
+				ifFalse: [
+					cookie := request cookies detect: [ :each | each name = 'session' ] ifNone: [ nil ].
+					(request uri firstPathSegment = 'two' and: [ cookie notNil and: [ cookie value = '123456' ] ])
+						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
+		 				ifFalse: [ ZnResponse badRequest: request ] ] ].
+		(client := ZnClient new) 
+			url: server localUrl; addPath: 'one'; 
+			post.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK!'.
+		client close ]
 ]
 
 { #category : #testing }
 ZnClientTest >> testRedirectWithCustomHeader [
-	self
-		withServerDo: [ :server | 
-			| client cookie |
-			server
-				onRequestRespond: [ :request | 
-					(request headers at: 'X-Custom' ifAbsent: [ nil ]) = 'The Secret'
-						ifFalse: [ ZnResponse badRequest: request ]
-						ifTrue: [ request uri firstPathSegment = 'one'
-								ifTrue: [ ZnResponse redirect: 'two' ]
-								ifFalse: [ request uri firstPathSegment = 'two' ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ] ifFalse: [ ZnResponse badRequest: request ] ] ] ].
-			(client := ZnClient new)
-				url: server localUrl;
-				addPath: 'one';
-				headerAt: 'X-Custom' put: 'The Secret';
-				get.
-			self assert: client isSuccess.
-			self assert: client contents equals: 'OK!'.
-			client close ]
+	self withServerDo: [ :server | | client |
+		server onRequestRespond: [ :request | 
+			(request headers at: 'X-Custom' ifAbsent: [ nil ]) = 'The Secret'
+				ifFalse: [ ZnResponse badRequest: request ]
+				ifTrue: [
+					request uri firstPathSegment = 'one'
+						ifTrue: [ ZnResponse redirect: 'two' ]
+						ifFalse: [
+							request uri firstPathSegment = 'two'
+								ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
+		 						ifFalse: [ ZnResponse badRequest: request ] ] ] ].
+		(client := ZnClient new) 
+			url: server localUrl; 
+			addPath: 'one';
+			headerAt: 'X-Custom' put: 'The Secret'; 
+			get.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK!'.
+		client close ]
 ]
 
 { #category : #testing }
 ZnClientTest >> testRelativeRedirect [
-	self
-		withServerDo: [ :server | 
-			| client |
-			server
-				onRequestRespond: [ :request | 
-					request uri firstPathSegment = 'one'
-						ifTrue: [ ZnResponse redirect: 'two' ]
-						ifFalse: [ request uri firstPathSegment = 'two' ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ] ifFalse: [ ZnResponse notFound: request uri ] ] ].
-			(client := ZnClient new)
-				url: server localUrl;
-				addPath: 'one';
-				post.
-			self assert: client isSuccess.
-			self assert: client contents equals: 'OK!'.
-			client close ]
+	self withServerDo: [ :server | | client |
+		server onRequestRespond: [ :request | 
+			request uri firstPathSegment = 'one'
+				ifTrue: [ ZnResponse redirect: 'two' ]
+				ifFalse: [
+					request uri firstPathSegment = 'two'
+						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
+		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
+		(client := ZnClient new) 
+			url: server localUrl; addPath: 'one'; 
+			post.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK!'.
+		client close ]
 ]
 
 { #category : #testing }
 ZnClientTest >> testRelativeRedirect307 [
-	self
-		withServerDo: [ :server | 
-			| client |
-			server
-				onRequestRespond: [ :request | 
-					request uri firstPathSegment = 'one'
-						ifTrue: [ (ZnResponse redirect: 'two')
-								statusLine: (ZnStatusLine code: 307);
-								yourself ]
-						ifFalse: [ (request uri firstPathSegment = 'two' and: [ request method = #POST and: [ request contents = 'BODY' ] ])
-								ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
-								ifFalse: [ ZnResponse notFound: request uri ] ] ].
-			(client := ZnClient new)
-				url: server localUrl;
-				addPath: 'one';
-				entity: (ZnEntity text: 'BODY');
-				post.
-			self assert: client isSuccess.
-			self assert: client contents equals: 'OK!'.
-			client close ]
+	self withServerDo: [ :server | | client |
+		server onRequestRespond: [ :request | 
+			request uri firstPathSegment = 'one'
+				ifTrue: [ (ZnResponse redirect: 'two') statusLine: (ZnStatusLine code: 307); yourself ]
+				ifFalse: [
+					((request uri firstPathSegment = 'two') 
+							and: [ request method = #POST and: [ request contents = 'BODY' ] ])
+						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
+		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
+		(client := ZnClient new) 
+			url: server localUrl; addPath: 'one'; 
+			entity: (ZnEntity text: 'BODY');
+			post.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK!'.
+		client close ]
+]
+
+{ #category : #testing }
+ZnClientTest >> testRelativeRedirectUp [
+	self withServerDo: [ :server | | client |
+		server onRequestRespond: [ :request | 
+			request uri pathSegments asArray = #('a' 'b' 'c.txt')
+				ifTrue: [ ZnResponse redirect: '../d.txt' ]
+				ifFalse: [
+					request uri pathSegments asArray = #('a' 'd.txt')
+						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
+		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
+		(client := ZnClient new) 
+			url: server localUrl; addPath: #('a' 'b' 'c.txt'); 
+			post.
+		self assert: client isSuccess.
+		self assert: client contents equals: 'OK!'.
+		client close ]
 ]
 
 { #category : #testing }
@@ -725,31 +874,25 @@ ZnClientTest >> testTimeout [
 
 { #category : #testing }
 ZnClientTest >> testUploadSmallDocument [
-	self
-		withServerDo: [ :server | 
-			| client contents path |
-			path := ZnFileSystemUtils fullNameFor: 'small.txt'.
-			contents := String
-				streamContents: [ :stream | 
-					stream
-						print: DateAndTime now;
-						space;
-						print: 9999 atRandom ].
-			ZnFileSystemUtils deleteIfExists: 'small.txt'.
-			ZnFileSystemUtils newFileNamed: path do: [ :stream | stream nextPutAll: contents ].
-			(client := ZnClient new)
-				url: server localUrl;
-				addPath: 'echo';
-				uploadEntityFrom: path.
-			self assert: client request entity contentType equals: ZnMimeType textPlain.
-			client contentType: ZnMimeType textPlain.	"Not needed, just test the code path"
-			self assert: client request entity contentType equals: ZnMimeType textPlain.
-			client post.
-			self assert: client isSuccess.
-			self assert: client entity contentType equals: ZnMimeType textPlain.
-			self assert: (client contents includesSubstring: contents).
-			client close.
-			ZnFileSystemUtils deleteIfExists: 'small.txt' ]
+	self withServerDo: [ :server | | client contents path |
+		path := ZnFileSystemUtils fullNameFor: 'small.txt'.
+		contents := String streamContents: [ :stream |
+			stream print: DateAndTime now; space; print: 9999 atRandom ].
+		ZnFileSystemUtils deleteIfExists: 'small.txt'.
+		ZnFileSystemUtils writeStreamFor: path do: [ :stream | stream nextPutAll: contents ].
+		(client := ZnClient new)
+			url: server localUrl;
+			addPath: 'echo';
+			uploadEntityFrom: path.
+		self assert: client request entity contentType equals: ZnMimeType textPlain.
+		client contentType: ZnMimeType textPlain. "Not needed, just test the code path"
+		self assert: client request entity contentType equals: ZnMimeType textPlain.
+		client post.
+		self assert: client isSuccess.
+		self assert: client entity contentType equals: ZnMimeType textPlain.
+		self assert: (client contents includesSubstring: contents).
+		client close.
+		ZnFileSystemUtils deleteIfExists: 'small.txt' ]
 ]
 
 { #category : #testing }

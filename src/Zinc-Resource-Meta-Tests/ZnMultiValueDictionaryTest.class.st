@@ -37,6 +37,18 @@ ZnMultiValueDictionaryTest >> testMultiValues [
 	self assert: keys equals: (OrderedCollection with: 'foo' with: 'foo')
 ]
 
+{ #category : #tests }
+ZnMultiValueDictionaryTest >> testOrder [
+	| keys dictionary index |
+	keys := #(z a y b x c m n).
+	dictionary := ZnMultiValueDictionary new.
+	keys do: [ :each | dictionary at: each put: each ].
+	index := 1.
+	dictionary keysDo: [ :each | 
+		self assert: each equals: (keys at: index).
+		index := index + 1 ]
+]
+
 { #category : #testing }
 ZnMultiValueDictionaryTest >> testTooManyEntries [
 	| dictionary |

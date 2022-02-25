@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'directory'
 	],
-	#category : #'Zinc-FileSystem'
+	#category : #'Zinc-HTTP-Examples'
 }
 
 { #category : #accessing }
