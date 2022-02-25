@@ -35,7 +35,14 @@ MCPatcher >> initializeWithSnapshot: aSnapshot [
 
 { #category : #operations }
 MCPatcher >> modifyDefinition: baseDefinition to: targetDefinition [
-	self addDefinition: targetDefinition
+	
+	"Only modify the definition if present"
+	self definitions
+		definitionLike: baseDefinition
+		ifPresent: [ :found |
+			found = baseDefinition
+				ifTrue: [ self addDefinition: targetDefinition ]]
+		ifAbsent: [ "nothing" ]
 ]
 
 { #category : #accessing }
