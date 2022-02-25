@@ -52,32 +52,50 @@ ScaledDecimal >> / aNumber [
 
 { #category : #comparing }
 ScaledDecimal >> < aNumber [
-	aNumber class = self class ifTrue: [^self asFraction < aNumber asFraction].
-	^self asFraction < aNumber
+
+	aNumber class = self class ifTrue: [ 
+		aNumber integerPart = self integerPart
+			ifTrue: [ ^ self roundedFractionPart < aNumber roundedFractionPart ]
+			ifFalse: [ ^ false ] ].
+	^ self asFraction < aNumber
 ]
 
 { #category : #comparing }
 ScaledDecimal >> <= aNumber [
-	aNumber class = self class ifTrue: [^self asFraction <= aNumber asFraction].
-	^self asFraction <= aNumber
+		aNumber class = self class ifTrue: [ 
+		aNumber integerPart = self integerPart
+			ifTrue: [ ^ self roundedFractionPart <= aNumber roundedFractionPart ]
+			ifFalse: [ ^ false ] ].
+	^ self asFraction < aNumber
 ]
 
 { #category : #comparing }
 ScaledDecimal >> = aNumber [
-	aNumber class = self class ifTrue: [^self asFraction = aNumber asFraction].
-	^self asFraction = aNumber
+
+	aNumber class = self class ifTrue: [ 
+		aNumber integerPart = self integerPart ifTrue: [ 
+			^ aNumber roundedFractionPart = self roundedFractionPart ]
+		ifFalse: [ ^false ] ].
+	^ self asFraction = aNumber
 ]
 
 { #category : #comparing }
 ScaledDecimal >> > aNumber [
-	aNumber class = self class ifTrue: [^self asFraction > aNumber asFraction].
-	^self asFraction > aNumber
+
+	aNumber class = self class ifTrue: [ 
+		aNumber integerPart = self integerPart
+			ifTrue: [ ^ self roundedFractionPart > aNumber roundedFractionPart ]
+			ifFalse: [ ^ false ] ].
+	^ self asFraction < aNumber
 ]
 
 { #category : #comparing }
 ScaledDecimal >> >= aNumber [
-	aNumber class = self class ifTrue: [^self asFraction >= aNumber asFraction].
-	^self asFraction >= aNumber
+		aNumber class = self class ifTrue: [ 
+		aNumber integerPart = self integerPart
+			ifTrue: [ ^ self roundedFractionPart >= aNumber roundedFractionPart ]
+			ifFalse: [ ^ false ] ].
+	^ self asFraction < aNumber
 ]
 
 { #category : #converting }

@@ -298,6 +298,46 @@ ScaledDecimalTest >> testScaleExtension [
 ]
 
 { #category : #tests }
+ScaledDecimalTest >> testScaledDecimalsEquality [
+
+	
+	self assert: 1.234s2 = 1.23s2. "1.23 = 1.23"
+	
+	self deny: 1.023s3 = 1.23s2. "1.023 != 1.23 "
+	
+	self assert: 1.230s3 = 1.23s2.  " 1.230 = 1.23"
+]
+
+{ #category : #tests }
+ScaledDecimalTest >> testScaledDecimalsInequality [
+
+	
+	self deny: 1.234s2 < 1.23s2. 
+	self assert: 1.023s3 < 1.23s2. 
+	self deny: 1.230s3 < 1.23s2.  
+	self deny: 1.234s2 < 1.111s2.
+	self assert: 1.111s2 < 1.234s2.
+	
+	self deny: 1.234s2 > 1.23s2. 
+	self deny: 1.023s3 > 1.23s2. 
+	self deny: 1.230s3 > 1.23s2.
+	self assert: 1.234s2 > 1.111s2.
+	self deny: 1.111s2 > 1.234s2.
+	
+	self assert: 1.234s2 >= 1.23s2. 
+	self deny: 1.023s3 >= 1.23s2. 
+	self assert: 1.230s3 >= 1.23s2.
+	self assert: 1.234s2 >= 1.111s2.
+	self deny: 1.111s2 >= 1.234s2.
+	
+	self assert: 1.234s2 <= 1.23s2. 
+	self assert: 1.023s3 <= 1.23s2. 
+	self assert: 1.230s3 <= 1.23s2.
+	self deny: 1.234s2 <= 1.111s2.
+	self assert: 1.111s2 <= 1.234s2.
+]
+
+{ #category : #tests }
 ScaledDecimalTest >> testZeroRaisedToInteger [
 	"Zero might be handle specially"
 	
