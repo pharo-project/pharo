@@ -290,6 +290,8 @@ ScaledDecimalTest >> testRounded [
 ScaledDecimalTest >> testScaleDecimalsHash [
 
 	| firstScaleDecimals secondScaleDecimals |
+	"Creating 2 equivalent scaled decimals by hands, the magic literals are just examples taken from the issue"
+	
 	firstScaleDecimals := ScaledDecimal new.
 	firstScaleDecimals setNumerator: 8617 denominator: 500 scale: 2.
 
