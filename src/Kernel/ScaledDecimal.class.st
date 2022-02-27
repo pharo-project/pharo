@@ -68,7 +68,8 @@ ScaledDecimal >> <= aNumber [
 		aNumber integerPart = self integerPart ifTrue: [ 
 			^ self roundedFractionPart <= aNumber roundedFractionPart ].
 		^self integerPart < aNumber integerPart ].
-	^ self asFraction < aNumber
+	
+	^ self asFraction <= aNumber
 ]
 
 { #category : #comparing }
@@ -89,7 +90,7 @@ ScaledDecimal >> > aNumber [
 			^ self roundedFractionPart > aNumber roundedFractionPart ].
 		^ self integerPart > aNumber integerPart ].
 	
-	^ self asFraction < aNumber
+	^ self asFraction > aNumber
 ]
 
 { #category : #comparing }
@@ -100,7 +101,7 @@ ScaledDecimal >> >= aNumber [
 			^ self roundedFractionPart >= aNumber roundedFractionPart ].
 		^self integerPart > aNumber integerPart ].
 	
-	^ self asFraction < aNumber
+	^ self asFraction >= aNumber
 ]
 
 { #category : #converting }
