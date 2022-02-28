@@ -22,7 +22,7 @@ ClyAdvancedDebuggingCommand class >> isAbstract [
 ClyAdvancedDebuggingCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
-	^ CmdContextMenuActivation
+	^ SycAdvancedDebuggingMenuActivation
 		  byItemOf: ClyAdvancedDebuggingMenuGroup
 		  order: self contextMenuOrder
 		  for: ClyMethod asCalypsoItemContext

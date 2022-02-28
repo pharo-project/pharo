@@ -11,5 +11,5 @@ SycOpenReflectivityMenuCommand class >> methodEditorShortcutActivation [
 SycOpenReflectivityMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 8 for: ClySourceCodeContext
+	^CmdContextMenuActivation byRootGroupItemOrder: 0.3 for: ClySourceCodeContext
 ]

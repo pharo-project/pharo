@@ -1,5 +1,5 @@
 "
-I represent an activation of advanced debugging commands using a separate debugging menu.
+I am the activation strategy of commands in the debugging sub-menu (watchpoints and counters)
 "
 Class {
 	#name : #SycAdvancedDebuggingMenuActivation,
