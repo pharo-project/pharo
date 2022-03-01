@@ -70,7 +70,8 @@ ClyMethodCodeEditorToolMorph >> attachToSystem [
 	browser system 
 		when: (ClyMethodChange of: self editingMethod)
 		send: #triggerUpdate
-		to: self
+		to: self.
+	SystemAnnouncer uniqueInstance when: ASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : #testing }
@@ -258,6 +259,12 @@ ClyMethodCodeEditorToolMorph >> modifiesExtension [
 { #category : #printing }
 ClyMethodCodeEditorToolMorph >> printContext [
 	^self editingMethod printSystemPath
+]
+
+{ #category : #initialization }
+ClyMethodCodeEditorToolMorph >> resetASTCache [
+	"when the AST cache is cleared, we have to rescue the AST we are looking at"
+	ASTCache default at: ast compiledMethod ifAbsentPut: ast
 ]
 
 { #category : #'selecting text' }
