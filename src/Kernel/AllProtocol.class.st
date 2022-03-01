@@ -34,6 +34,12 @@ AllProtocol >> canBeRenamed [
 	^ false
 ]
 
+{ #category : #initialization }
+AllProtocol >> initialize [
+	"overridden to not itialize unsused methodSelectors, more cleanup needed"
+	name := self class defaultName.
+]
+
 { #category : #testing }
 AllProtocol >> isVirtualProtocol [ 
 	^ true
