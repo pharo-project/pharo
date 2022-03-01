@@ -71,7 +71,7 @@ ClyMethodCodeEditorToolMorph >> attachToSystem [
 		when: (ClyMethodChange of: self editingMethod)
 		send: #triggerUpdate
 		to: self.
-	SystemAnnouncer uniqueInstance when: ASTCacheReset send: #resetASTCache to: self
+	SystemAnnouncer uniqueInstance weak when: ASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : #testing }
