@@ -12,9 +12,10 @@ ReClassSideResetMethodProtocolRule class >> checksMethod [
 
 { #category : #running }
 ReClassSideResetMethodProtocolRule >> basicCheck: aMethod [
-	"If you end here, you should most likely implement this in a subclass"
-	
-	^ aMethod selector = #reset and: [ aMethod protocol ~= #'class initialization' ]
+
+	^ aMethod isClassSide and: [ 
+		  aMethod selector = #reset and: [ 
+			  aMethod protocol ~= #'class initialization' ] ]
 ]
 
 { #category : #helpers }
