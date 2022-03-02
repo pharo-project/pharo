@@ -14,6 +14,7 @@ FTTableMorphTest >> setUp [
 	super setUp.
 	table := FTTableMorph new.
 	table extent: 800@600.
+	self initializeSemaphore.
 ]
 
 { #category : #running }
