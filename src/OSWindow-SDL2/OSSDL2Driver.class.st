@@ -74,14 +74,14 @@ OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
 
 	self
-		traceCr: ('Game controller <1s> removed' expandMacrosWith: index)
+		traceCr: ('Game controller <1s> removed' expandMacrosWith: index asString)
 ]
 
 { #category : #private }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
 
-	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index)
+	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index asString)
 ]
 
 { #category : #'window creation and deletion' }
