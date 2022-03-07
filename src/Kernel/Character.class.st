@@ -720,6 +720,12 @@ Character >> isParagraphSeparator [
 ]
 
 { #category : #testing }
+Character >> isPinnedInMemory [
+
+	^ false
+]
+
+{ #category : #testing }
 Character >> isPrivateOther [
 ^ self characterSet isPrivateOther: self
 ]

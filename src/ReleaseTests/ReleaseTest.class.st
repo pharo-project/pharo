@@ -281,6 +281,19 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 				print: methods ] ]"
 ]
 
+{ #category : #'tests - variables' }
+ReleaseTest >> testNoLiteralIsPinnedInMemory [
+	| methodsWithPinnedLiterals |
+	
+	methodsWithPinnedLiterals := SystemNavigation default allMethods flatCollect: [ :each | 
+	(each allLiterals select: [ :eachLiteral | eachLiteral isPinnedInMemory ])
+		ifNotEmpty: [ { each } ]
+		ifEmpty: [ #() ] ].
+	
+	self assertEmpty: methodsWithPinnedLiterals
+	
+]
+
 { #category : #tests }
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 	
