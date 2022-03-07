@@ -493,6 +493,7 @@ SmallInteger >> isLarge [
 
 { #category : #testing }
 SmallInteger >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
 
 	^ false
 ]

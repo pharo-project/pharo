@@ -721,6 +721,7 @@ Character >> isParagraphSeparator [
 
 { #category : #testing }
 Character >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
 
 	^ false
 ]

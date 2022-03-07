@@ -227,6 +227,7 @@ SmallFloat64 >> isImmediateObject [
 
 { #category : #testing }
 SmallFloat64 >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
 
 	^ false
 ]
