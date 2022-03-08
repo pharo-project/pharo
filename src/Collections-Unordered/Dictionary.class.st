@@ -11,6 +11,8 @@ I'm used when we need a collection of objects which I can access with a key. For
 
 Internally I use Associations. The Association class can help to use me. (See examples lower)
 
+I assume that my keys do not change after they have been added. The behavior of operations involving keys that have changed is undefined.
+
 ## Public API and Key Messages
 
 ### Initializing and Adding
