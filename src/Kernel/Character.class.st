@@ -720,6 +720,13 @@ Character >> isParagraphSeparator [
 ]
 
 { #category : #testing }
+Character >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
+
+	^ false
+]
+
+{ #category : #testing }
 Character >> isPrivateOther [
 ^ self characterSet isPrivateOther: self
 ]
