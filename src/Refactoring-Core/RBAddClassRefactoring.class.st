@@ -14,7 +14,8 @@ Class {
 	#instVars : [
 		'category',
 		'superclass',
-		'subclasses'
+		'subclasses',
+		'traits'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -29,6 +30,17 @@ RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aC
 ]
 
 { #category : #'instance creation' }
+RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection traits: traitsCollection category: aSymbol [
+
+	^ self new
+		  addClass: aName
+		  superclass: aClass
+		  subclasses: aCollection
+		  traits: traitsCollection
+		  category: aSymbol
+]
+
+{ #category : #'instance creation' }
 RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
 	^ self new
 		model: aRBSmalltalk;
@@ -39,31 +51,61 @@ RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: a
 		yourself
 ]
 
+{ #category : #'instance creation' }
+RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection traits: traitsCollection category: aSymbol [
+
+	^ self new
+		  model: aRBSmalltalk;
+		  addClass: aName
+		  superclass: aClass
+		  subclasses: aCollection
+		  traits: traitsCollection
+		  category: aSymbol;
+		  yourself
+]
+
 { #category : #initialization }
-RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
+RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+
 	self className: aName.
 	superclass := self classObjectFor: aClass.
-	subclasses := aCollection collect: [:each | self classObjectFor: each].
+	subclasses := aCollection collect: [ :each | 
+		              self classObjectFor: each ].
+
+	traits := #(  ).
+	category := aSymbol
+]
+
+{ #category : #initialization }
+RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: subclassesCollection traits: traitsCollection category: aSymbol [
+
+	self className: aName.
+	superclass := self classObjectFor: aClass.
+	subclasses := subclassesCollection collect: [ :each | 
+		              self classObjectFor: each ].
+	traits := traitsCollection collect: [ :each | 
+		          self classObjectFor: each ].
 	category := aSymbol
 ]
 
 { #category : #preconditions }
 RBAddClassRefactoring >> preconditions [
+
 	| cond |
-	cond := ((RBCondition isMetaclass: superclass) 
-				errorMacro: 'Superclass must not be a metaclass') not.
-	cond := subclasses inject: cond
-				into: 
-					[:sub :each | 
-					sub 
-						& ((RBCondition isMetaclass: each) 
-								errorMacro: 'Subclass must <1?not :>be a metaclass') not 
-							& (RBCondition isImmediateSubclass: each of: superclass)].
-	^cond & (RBCondition isValidClassName: className) 
-		& (RBCondition isGlobal: className in: self model) not 
-			& (RBCondition isSymbol: category) 
-			& ((RBCondition withBlock: [category isNotEmpty ]) 
-					errorMacro: 'Invalid category name')
+	cond := ((RBCondition isMetaclass: superclass) errorMacro:
+		         'Superclass must not be a metaclass') not.
+	cond := subclasses inject: cond into: [ :sub :each | 
+		        sub & ((RBCondition isMetaclass: each) errorMacro:
+			         'Subclass must <1?not :>be a metaclass') not
+		        & (RBCondition isImmediateSubclass: each of: superclass) ].
+	cond := traits
+		        inject: cond
+		        into: [ :tr :each | tr & (RBCondition isTrait: each) ].
+	^ cond & (RBCondition isValidClassName: className)
+	  & (RBCondition isGlobal: className in: self model) not
+	  & (RBCondition isSymbol: category)
+	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro:
+			   'Invalid category name')
 ]
 
 { #category : #printing }
@@ -77,6 +119,8 @@ RBAddClassRefactoring >> storeOn: aStream [
 	superclass storeOn: aStream.
 	aStream nextPutAll: ' subclasses: '.
 	subclasses asArray storeOn: aStream.
+	aStream nextPutAll: ' traits: '.
+	traits asArray storeOn: aStream.
 	aStream nextPutAll: ' category: '.
 	category storeOn: aStream.
 	aStream nextPut: $)
@@ -84,10 +128,17 @@ RBAddClassRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBAddClassRefactoring >> transform [
-	(self model)
-		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
-					expandMacrosWith: superclass
-					with: className
-					with: category asString);
-		reparentClasses: subclasses to: (self model classNamed: className asSymbol)
+
+	self model
+		defineClass:
+			('<1p> subclass: #<2s> uses: <3s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
+				 expandMacrosWith: superclass
+				 with: className
+				 with: (String streamContents: [ :stream | 
+							  traits
+								  do: [ :each | stream nextPutAll: each name ]
+								  separatedBy: [ stream nextPutAll: ' + ' ] ])
+				 with: category asString);
+		reparentClasses: subclasses
+		to: (self model classNamed: className asSymbol)
 ]

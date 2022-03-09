@@ -313,6 +313,14 @@ RBCondition class >> isSymbol: aString [
 ]
 
 { #category : #'instance creation' }
+RBCondition class >> isTrait: anObject [
+	^self new
+		type: (Array with: #IsTrait with: anObject)
+		block: [anObject isTrait]
+		errorString: anObject printString , ' is <1?:not >a trait'
+]
+
+{ #category : #'instance creation' }
 RBCondition class >> isValidClassName: aString [
 	^self new
 		type: (Array with: #validClassName with: aString)
