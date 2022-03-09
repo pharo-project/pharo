@@ -131,13 +131,15 @@ RBAddClassRefactoring >> transform [
 
 	self model
 		defineClass:
-			('<1p> subclass: #<2s> uses: <3s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
+			('<1p> subclass: #<2s><3s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
 				 expandMacrosWith: superclass
 				 with: className
 				 with: (String streamContents: [ :stream | 
-							  traits
-								  do: [ :each | stream nextPutAll: each name ]
-								  separatedBy: [ stream nextPutAll: ' + ' ] ])
+							  traits ifNotEmpty: [ 
+									  stream nextPutAll: ' uses: '.
+									  traits
+										  do: [ :each | stream nextPutAll: each name ]
+										  separatedBy: [ stream nextPutAll: ' + ' ] ] ])
 				 with: category asString);
 		reparentClasses: subclasses
 		to: (self model classNamed: className asSymbol)
