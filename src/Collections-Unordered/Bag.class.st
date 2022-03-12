@@ -23,8 +23,15 @@ It is possible to iterate over each individual occurrance of an object using the
 
 ```
 b := #(1 1 1 1) asBag.
-b do: [:obj | obj].  ""will be 1. 1. 1. 1."" 
-b doWithOccurences: [:obj :count | ...].  ""will be 1->4""
+
+""The block will receive each occurrence. obj = 1 and there will be 4 iterations""
+|counter|
+counter := 0
+b do: [:obj | counter := counter + 1].
+counter = 4  
+
+""The block will receive the obj and it's count. obj = 1 count = 4""
+b doWithOccurences: [:obj :count | ...].
 ```
 
 ## Accessing 
@@ -139,8 +146,8 @@ Bag >> cumulativeCounts [
 Bag >> do: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	
-	This will print all of the occurrences of the value. Use doWithOccurrences: 
-	to gets pairs of values and their count.
+	This will enumerate all of the occurrences of the object. Use doWithOccurrences: 
+	to gets pairs of objects and their count.
 	"
 
 	contents associationsDo: [:assoc | assoc value timesRepeat: [aBlock value: assoc key]]
