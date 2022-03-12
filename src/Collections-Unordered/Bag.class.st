@@ -2,6 +2,39 @@
 I represent an unordered collection of possibly duplicate elements.
 	
 I store these elements in a dictionary, tallying up occurrences of equal objects. Because I store an occurrence only once, my clients should beware that objects they store will not necessarily be retrieved such that == is true. If the client cares, a subclass of me should be created.
+
+## Creating 
+Bags can be created from other collections or built up progressively using the `Bag>>#add:` message. The example below shows four different ways to create a `Bag` with 3 occurrences of 1.
+```
+b := #(1 1 1) asBag.
+""or""
+b:= Bag newFrom: #(1 1 1).
+""or""
+b := Bag new add: 1; add: 1; add: 1.
+""or"" 
+b add: 1 withOccurrences: 3.
+
+b valuesAndCounts.  ""Dictionary(1->3)""
+```
+
+## Enumerating
+
+It is possible to iterate over each individual occurrance of an object using the `Bag>>#do:` message, or pairs of objects and their occurances using `Bag>>#doWithOccurrences:` or the synonymous messages `Bag>>#associationsDo:` and `Bag>>#keysAndValuesDo:`.
+
+```
+b := #(1 1 1 1) asBag.
+b do: [:obj | obj].  ""will be 1. 1. 1. 1."" 
+b doWithOccurences: [:obj :count | ...].  ""will be 1->4""
+```
+
+## Accessing 
+As well as enumerating the contents it is possible to get a dictionary of all object counts using the `Bag>>#valuesAndCounts` message or get the counts of a single object using `Bag>>#occurrencesOf:`.
+
+```
+b := #(1 1 1 2 2 3) asBag.
+b valuesAndCounts.  ""Dictionary(1->3 2->2 3->1)""
+b occurrencesOf: 1  ""3""
+```
 "
 Class {
 	#name : #Bag,
@@ -104,7 +137,11 @@ Bag >> cumulativeCounts [
 
 { #category : #enumerating }
 Bag >> do: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument."
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	
+	This will print all of the occurrences of the value. Use doWithOccurrences: 
+	to gets pairs of values and their count.
+	"
 
 	contents associationsDo: [:assoc | assoc value timesRepeat: [aBlock value: assoc key]]
 ]
