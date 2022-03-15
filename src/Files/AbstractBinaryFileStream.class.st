@@ -353,3 +353,13 @@ AbstractBinaryFileStream >> waitForData [
 	File primitiveWaitForDataOn: handle signalling: semaphoreIndex.
 	semaphore wait.
 ]
+
+{ #category : #writing }
+AbstractBinaryFileStream >> writeFrom: writeBuffer startingAt: aNumber count: length [
+
+	^ File 
+		write: handle 
+		from: writeBuffer 
+		startingAt: aNumber 
+		count: length
+]
