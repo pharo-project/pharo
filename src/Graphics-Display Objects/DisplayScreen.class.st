@@ -179,10 +179,15 @@ DisplayScreen >> fullscreen [
 
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
+    "Set fullscreen status as per aBoolean"
+    
+    "Guard clause to prevent setting fullscreen on Unix platforms"
+    (aBoolean and: [Smalltalk os isUnix])
+        ifTrue:[^ self inform: 'Fullscreen not supported under Unix O/S'].
 
-	SystemAnnouncer uniqueInstance announce: (FullscreenAnnouncement new 
-		displayScreen: self;
-		fullscreen: (LastScreenModeSelected := aBoolean))
+    SystemAnnouncer uniqueInstance announce: (FullscreenAnnouncement new 
+        displayScreen: self;
+        fullscreen: (LastScreenModeSelected := aBoolean))
 ]
 
 { #category : #other }
