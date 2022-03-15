@@ -944,6 +944,14 @@ ClassDescription >> oldDefinition [
 		definitionString
 ]
 
+{ #category : #'file in/out' }
+ClassDescription >> oldPharoDefinition [
+	
+	^ ClassDefinitionPrinter oldPharo
+		for: self;
+		definitionString
+]
+
 { #category : #organization }
 ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization 
