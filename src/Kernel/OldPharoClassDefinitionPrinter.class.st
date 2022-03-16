@@ -1,3 +1,9 @@
+"
+This prints the class definition as it was till Pharo9: ST80 style, but with extensions/changes:
+- package: instead of category:
+- if no pool is imported, the pool import is not printed
+- support for traits
+"
 Class {
 	#name : #OldPharoClassDefinitionPrinter,
 	#superclass : #ClassDefinitionPrinter,

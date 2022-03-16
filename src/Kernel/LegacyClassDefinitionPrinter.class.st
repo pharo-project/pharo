@@ -1,3 +1,10 @@
+"
+This is a printer that generates the ST80 class defintion syntax (that is, including pool defintion and category:).
+
+The reason we still need this is that there are still parts of the system that use this in Monticello and the Refactoring engine.
+
+When the last users have been fixed, we can remove this class
+"
 Class {
 	#name : #LegacyClassDefinitionPrinter,
 	#superclass : #ClassDefinitionPrinter,

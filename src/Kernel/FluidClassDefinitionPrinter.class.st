@@ -121,29 +121,35 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 { #category : #'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedDefinitionString [
 
-	^ String streamContents: [ :s | 
-		"in case of ProtoObject"
-		forClass superclass isNil 
-			ifTrue: [ s nextPutAll: 'nil' ]
-			ifFalse: [ s nextPutAll: forClass superclass name ].
-		self msgAndClassNameOn: s.
-		self layoutOn: s.
-		s crtab.
-		s nextPutAll: 'traits: '.
-		forClass hasTraitComposition
-			ifTrue: [ s nextPutAll: '{'; nextPutAll: forClass traitCompositionString; nextPutAll: '};' ]
-			ifFalse: [ s nextPutAll: '{};' ].
-		self slotsOn: s.
-		self sharedVariablesOn: s.
-		self sharedPoolsOn: s.
-		
-		(forClass package classTagForClass: forClass) ifNotNil: [ :t |
-			| tag | 
-			tag := t name.
-			tag = forClass package name 
-				ifTrue: [ s crtab; nextPutAll: 'tag: '''';' ]
-				ifFalse: [ self tagOn: s]].
-			self packageOn: s ]
+	^ String streamContents: [ :s | "in case of ProtoObject"
+		  forClass superclass
+			  ifNil: [ s nextPutAll: 'nil' ]
+			  ifNotNil: [ s nextPutAll: forClass superclass name ].
+		  self msgAndClassNameOn: s.
+		  self layoutOn: s.
+		  s crtab.
+		  s nextPutAll: 'traits: '.
+		  forClass hasTraitComposition
+			  ifTrue: [ 
+				  s
+					  nextPutAll: '{';
+					  nextPutAll: forClass traitCompositionString;
+					  nextPutAll: '};' ]
+			  ifFalse: [ s nextPutAll: '{};' ].
+		  self slotsOn: s.
+		  self sharedVariablesOn: s.
+		  self sharedPoolsOn: s.
+
+		  (forClass package classTagForClass: forClass) ifNotNil: [ :t | 
+			  | tag |
+			  tag := t name.
+			  tag = forClass package name
+				  ifTrue: [ 
+					  s
+						  crtab;
+						  nextPutAll: 'tag: '''';' ]
+				  ifFalse: [ self tagOn: s ] ].
+		  self packageOn: s ]
 ]
 
 { #category : #'expanded double dispatch API' }
