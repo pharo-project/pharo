@@ -420,6 +420,11 @@ RBInlineMethodRefactoring >> rewriteInlinedTree [
 				addSelfReturn]
 ]
 
+{ #category : #accessing }
+RBInlineMethodRefactoring >> sourceSelector [
+	^ sourceSelector
+]
+
 { #category : #printing }
 RBInlineMethodRefactoring >> storeOn: aStream [ 
 	aStream nextPut: $(.
