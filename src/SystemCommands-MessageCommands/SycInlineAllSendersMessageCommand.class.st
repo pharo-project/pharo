@@ -27,8 +27,7 @@ SycInlineAllSendersMessageCommand >> createRefactoring [
 		sendersOf: originalMessage selector 
 		in: methodOrigin.
 	refactoring setOption: #inlineExpression toUse: [ :ref :aString | 
-		(self confirm: ('Do you want to extract the expression ''<1s>'' into a variable in method ''',
-			ref sourceSelector,''' ?' expandMacrosWith: aString)) not ] .
+		(self confirm: ('Do you want to extract the expression ''<1s>'' into a variable in method ''<2s>''?' expandMacrosWith: aString with: ref sourceSelector)) not ] .
 	^ refactoring
 ]
 
