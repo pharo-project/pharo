@@ -60,6 +60,12 @@ ShiftClassBuilder >> addChangeComparer: aChangeComparer [
 	changeComparers add: aChangeComparer.
 ]
 
+{ #category : #accessing }
+ShiftClassBuilder >> allSlots [ 
+	
+	^ self builderEnhancer allSlotsForBuilder: self
+]
+
 { #category : #building }
 ShiftClassBuilder >> build [	
 	self tryToFillOldClass.

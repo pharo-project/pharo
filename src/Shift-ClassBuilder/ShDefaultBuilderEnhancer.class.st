@@ -24,6 +24,12 @@ ShDefaultBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller
 
 ]
 
+{ #category : #accessing }
+ShDefaultBuilderEnhancer >> allSlotsForBuilder: aBuilder [
+
+	^ aBuilder layoutDefinition allSlots
+]
+
 { #category : #migrating }
 ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 
