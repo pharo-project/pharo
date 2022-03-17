@@ -10,7 +10,8 @@ Class {
 	#name : #SycRemoveMessageArgumentCommand,
 	#superclass : #SycChangeMessageSignatureCommand,
 	#instVars : [
-		'argumentName'
+		'argumentName',
+		'methodName'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -19,6 +20,11 @@ Class {
 SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
+]
+
+{ #category : #private }
+SycRemoveMessageArgumentCommand >> abort [
+	CmdCommandAborted signal
 ]
 
 { #category : #accessing }
@@ -31,14 +37,22 @@ SycRemoveMessageArgumentCommand >> argumentName: anObject [
 	argumentName := anObject
 ]
 
+{ #category : #private }
+SycRemoveMessageArgumentCommand >> computeArgumentName [
+
+	^ (originalMessage argumentNames reject: [ :arg | 
+		   (self methodName arguments indexOf: arg) > 0 ]) first
+]
+
 { #category : #execution }
 SycRemoveMessageArgumentCommand >> createRefactoring [
 
-	^RBRemoveParameterRefactoring
+	^(RBRemoveParameterRefactoring
 		model: model
 		removeParameter: argumentName
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
-		selector: originalMessage selector
+		selector: originalMessage selector)
+		newSelector: self resultMessageSelector 
 ]
 
 { #category : #accessing }
@@ -51,28 +65,39 @@ SycRemoveMessageArgumentCommand >> defaultMenuItemName [
 	^'Remove argument'
 ]
 
+{ #category : #private }
+SycRemoveMessageArgumentCommand >> informArgumentError [
+	self inform:
+				'Argument ' , self argumentName , ' not found in method '''
+				, originalMessage selector , ''''
+]
+
+{ #category : #accessing }
+SycRemoveMessageArgumentCommand >> methodName [
+
+	^ methodName ifNil: [ 
+		  methodName := RBMethodName
+			                selector: originalMessage selector
+			                arguments: originalMessage argumentNames ]
+]
+
 { #category : #execution }
 SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
+
+	| dialog |
 	super prepareFullExecutionInContext: aToolContext.
+	dialog := SycMethodArgumentsRemoverPresenter openOn: self methodName.
+	dialog cancelled ifTrue: [ self abort ].
+
+	self argumentName: self computeArgumentName.
 	
-	argumentName := originalMessage argumentNames size = 1 
-		ifTrue: [ originalMessage argumentNames first]
-		ifFalse: [ UIManager default
-						chooseFrom: originalMessage argumentNames 
-						values: originalMessage argumentNames 
-						message: 'Choose an argument to remove:'].
-					
 	(originalMessage argumentNames includes: argumentName) 
-		ifFalse: [ CmdCommandAborted signal ].
+		ifTrue: [ ^ self ].
+	self informArgumentError.
+	self abort
 ]
 
 { #category : #execution }
 SycRemoveMessageArgumentCommand >> resultMessageSelector [
-	| argIndex keywords |
-	argIndex := originalMessage argumentNames indexOf: argumentName.
-	keywords := originalMessage selector keywords asOrderedCollection.
-	keywords size = 1
-		ifTrue: [ ^ (keywords first copyWithout: $:) asSymbol ].
-	keywords removeAt: argIndex.
-	^(keywords joinUsing: '') asSymbol
+	^ self methodName selector
 ]

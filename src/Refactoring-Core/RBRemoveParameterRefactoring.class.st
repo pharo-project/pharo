@@ -34,13 +34,31 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 		selector: aSelector
 ]
 
+{ #category : #validating }
+RBRemoveParameterRefactoring >> applyValidations [
+
+	| tree |
+	(class directlyDefinesMethod: oldSelector) ifFalse: [ 
+		self refactoringFailure: 'Method doesn''t exist' ].
+	tree := class parseTreeFor: oldSelector.
+	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
+	argument ifNil: [ 
+		self refactoringFailure: 'This method does not have an argument' ].
+	parameterIndex := tree argumentNames
+		                  indexOf: argument
+		                  ifAbsent: [ 
+		                  self refactoringFailure: 'Select a parameter!!' ].
+	oldSelector numArgs == 0 ifTrue: [ 
+		self refactoringFailure: 'This method contains no arguments' ].
+	oldSelector isInfix ifTrue: [ 
+		self refactoringFailure:
+			'Cannot remove parameters of infix selectors' ]
+]
+
 { #category : #private }
 RBRemoveParameterRefactoring >> computeNewSelector [
 	| keywords |
-	oldSelector numArgs == 0
-		ifTrue: [ self refactoringFailure: 'This method contains no arguments' ].
-	oldSelector isInfix
-		ifTrue: [ self refactoringFailure: 'Cannot remove parameters of infix selectors' ].
+	
 	keywords := oldSelector keywords asOrderedCollection.
 	keywords size = 1
 		ifTrue: [ ^ (keywords first copyWithout: $:) asSymbol ].
@@ -50,15 +68,9 @@ RBRemoveParameterRefactoring >> computeNewSelector [
 
 { #category : #transforming }
 RBRemoveParameterRefactoring >> getNewSelector [
-	| tree |
-	(class directlyDefinesMethod: oldSelector)
-		ifFalse: [ self refactoringFailure: 'Method doesn''t exist' ].
-	tree := class parseTreeFor: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
-	argument ifNil:[ self refactoringFailure: 'This method does not have an argument' ].
-	parameterIndex := tree argumentNames indexOf: argument ifAbsent: [ self refactoringFailure: 'Select a parameter!!' ].
+	self applyValidations.
 	permutation := (1 to: oldSelector numArgs) copyWithout: parameterIndex.
-	newSelector := self computeNewSelector
+	^ newSelector ifNil: [ newSelector := self computeNewSelector ]
 ]
 
 { #category : #transforming }
@@ -82,6 +94,11 @@ RBRemoveParameterRefactoring >> myConditions [
 			cond 
 				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
 						errorString: 'This argument is still referenced in at least one implementor!!')]
+]
+
+{ #category : #accessing }
+RBRemoveParameterRefactoring >> newSelector: aSelector [
+	newSelector := aSelector
 ]
 
 { #category : #initialization }
