@@ -15,7 +15,7 @@ Class {
 		'category',
 		'superclass',
 		'subclasses',
-		'traits'
+		'traitComposition'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -30,13 +30,13 @@ RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aC
 ]
 
 { #category : #'instance creation' }
-RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection traits: traitsCollection category: aSymbol [
+RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection traits: aTraitsComposition category: aSymbol [
 
 	^ self new
 		  addClass: aName
 		  superclass: aClass
 		  subclasses: aCollection
-		  traits: traitsCollection
+		  traits: aTraitsComposition
 		  category: aSymbol
 ]
 
@@ -52,14 +52,14 @@ RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: a
 ]
 
 { #category : #'instance creation' }
-RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection traits: traitsCollection category: aSymbol [
+RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection traits: aTraitsComposition category: aSymbol [
 
 	^ self new
 		  model: aRBSmalltalk;
 		  addClass: aName
 		  superclass: aClass
 		  subclasses: aCollection
-		  traits: traitsCollection
+		  traits: aTraitsComposition
 		  category: aSymbol;
 		  yourself
 ]
@@ -67,24 +67,22 @@ RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: a
 { #category : #initialization }
 RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
-	self
-		addClass: aName
-		superclass: aClass
-		subclasses: aCollection
-		traits: #(  )
-		category: aSymbol
+	self className: aName.
+	superclass := self classObjectFor: aClass.
+	subclasses := aCollection collect: [ :each | 
+		              self classObjectFor: each ].
+	category := aSymbol
 ]
 
 { #category : #initialization }
-RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: subclassesCollection traits: traitsCollection category: aSymbol [
+RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: subclassesCollection traits: aTraitsComposition category: aSymbol [
 
-	self className: aName.
-	superclass := self classObjectFor: aClass.
-	subclasses := subclassesCollection collect: [ :each | 
-		              self classObjectFor: each ].
-	traits := traitsCollection collect: [ :each | 
-		          self classObjectFor: each ].
-	category := aSymbol
+	self
+		addClass: aName
+		superclass: aClass
+		subclasses: subclassesCollection
+		category: aSymbol.
+	traitComposition := aTraitsComposition
 ]
 
 { #category : #preconditions }
@@ -97,9 +95,6 @@ RBAddClassRefactoring >> preconditions [
 		        sub & ((RBCondition isMetaclass: each) errorMacro:
 			         'Subclass must <1?not :>be a metaclass') not
 		        & (RBCondition isImmediateSubclass: each of: superclass) ].
-	cond := traits
-		        inject: cond
-		        into: [ :tr :each | tr & (RBCondition isTrait: each) ].
 	^ cond & (RBCondition isValidClassName: className)
 	  & (RBCondition isGlobal: className in: self model) not
 	  & (RBCondition isSymbol: category)
@@ -108,7 +103,8 @@ RBAddClassRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBAddClassRefactoring >> storeOn: aStream [ 
+RBAddClassRefactoring >> storeOn: aStream [
+
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -118,8 +114,9 @@ RBAddClassRefactoring >> storeOn: aStream [
 	superclass storeOn: aStream.
 	aStream nextPutAll: ' subclasses: '.
 	subclasses asArray storeOn: aStream.
-	aStream nextPutAll: ' traits: '.
-	traits asArray storeOn: aStream.
+	traitComposition ifNotNil: [ 
+		aStream nextPutAll: ' traits: '.
+		traitComposition traitCompositionExpression ].
 	aStream nextPutAll: ' category: '.
 	category storeOn: aStream.
 	aStream nextPut: $)
@@ -134,11 +131,9 @@ RBAddClassRefactoring >> transform [
 				 expandMacrosWith: superclass
 				 with: className
 				 with: (String streamContents: [ :stream | 
-							  traits ifNotEmpty: [ 
+							  traitComposition ifNotEmpty: [ 
 									  stream nextPutAll: ' uses: '.
-									  traits
-										  do: [ :each | stream nextPutAll: each name ]
-										  separatedBy: [ stream nextPutAll: ' + ' ] ] ])
+									  traitComposition traitCompositionExpression ] ])
 				 with: category asString);
 		reparentClasses: subclasses
 		to: (self model classNamed: className asSymbol)
