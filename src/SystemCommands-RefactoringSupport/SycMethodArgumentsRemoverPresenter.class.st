@@ -67,6 +67,23 @@ SycMethodArgumentsRemoverPresenter class >> openOn: aMethod [
 	^ temp openBlockedDialog
 ]
 
+{ #category : #initialization }
+SycMethodArgumentsRemoverPresenter >> connectPresenters [
+
+	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
+	argumentsList whenSelectionChangedDo: [ :selection | 
+		selection selectedItem ifNotNil: [ 
+			selectorInput text:
+				(self defaultSelectorAfterRemoving: selection selectedItem name) ] ].
+	argumentsList displayColor: [ :arg | 
+		arg = argumentsList selection selectedItem
+			ifTrue: [ Color lightGray ]
+			ifFalse: [ self theme textColor ] ].
+	argumentsList items:
+		(methodName arguments collect: [ :arg | RBArgumentName name: arg ]).
+	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
+]
+
 { #category : #action }
 SycMethodArgumentsRemoverPresenter >> defaultSelectorAfterRemoving: argumentName [
 
@@ -129,6 +146,13 @@ SycMethodArgumentsRemoverPresenter >> setFocus [
 	self focusOrder
 		add: argumentsList;
 		add: selectorInput
+]
+
+{ #category : #'accessing - model' }
+SycMethodArgumentsRemoverPresenter >> setModelBeforeInitialization: aRBMethodName [
+
+	methodName := aRBMethodName.
+	args := methodName arguments copy
 ]
 
 { #category : #action }
