@@ -101,7 +101,8 @@ ClassDefinitionPrinter class >> for: aClass [
 
 { #category : #testing }
 ClassDefinitionPrinter class >> isAbstract [
-	^true
+		
+	^ self == ClassDefinitionPrinter
 ]
 
 { #category : #'instance creation' }
