@@ -265,7 +265,7 @@ FTTableMorph >> dataSource: anObject [
 { #category : #initialization }
 FTTableMorph >> defaultColor [
 
-	^self class defaultBackgroundColor
+	^self class defaultBackgroundColor 
 ]
 
 { #category : #accessing }

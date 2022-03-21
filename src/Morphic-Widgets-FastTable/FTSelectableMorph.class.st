@@ -10,7 +10,8 @@ Class {
 	#name : #FTSelectableMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'selectionColor'
+		'selectionColor',
+		'colorBeforeOver'
 	],
 	#category : #'Morphic-Widgets-FastTable-Base'
 }
@@ -28,17 +29,21 @@ FTSelectableMorph >> initialize [
 
 { #category : #'event handling' }
 FTSelectableMorph >> mouseEnter: evt [
-	self color: (selectionColor isTransparent ifTrue: [ self mouseOverColor ] ifFalse: [ self mouseOverColor mixed: 0.5 with: selectionColor ])
+
+	colorBeforeOver := self color.
+	self color: (selectionColor isTransparent
+			 ifTrue: [ self mouseOverColor ]
+			 ifFalse: [ self mouseOverColor mixed: 0.5 with: selectionColor ])
 ]
 
 { #category : #'event handling' }
 FTSelectableMorph >> mouseLeave: evt [
-	self color: self selectionColor
+	self color: colorBeforeOver
 ]
 
 { #category : #accessing }
 FTSelectableMorph >> mouseOverColor [
-	^ self theme lightBackgroundColor
+	^ self theme backgroundColor darker darker
 ]
 
 { #category : #initialization }
