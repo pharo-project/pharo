@@ -4,13 +4,19 @@ I show in the menu all commands annotated by SycReflectiveActivation
 "
 Class {
 	#name : #SycOpenReflectivityMenuCommand,
-	#superclass : #SycOpenSourceCodeMenuCommand,
+	#superclass : #SycOpenContextMenuCommand,
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
 { #category : #execution }
 SycOpenReflectivityMenuCommand >> activationStrategy [
 	^SycReflectivityMenuActivation
+]
+
+{ #category : #'context menu' }
+SycOpenReflectivityMenuCommand >> cmCommandClass [
+
+	^ SycSourceCodeCmCommand
 ]
 
 { #category : #accessing }
