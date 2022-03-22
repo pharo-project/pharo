@@ -125,6 +125,12 @@ CmdCommand class >> isAbstract [
 	^self = CmdCommand
 ]
 
+{ #category : #testing }
+CmdCommand class >> isUsed [
+	"subclasses are discovered reflectively"
+	^true
+]
+
 { #category : #execution }
 CmdCommand >> applyResultInContext: aToolContext [
 ]
