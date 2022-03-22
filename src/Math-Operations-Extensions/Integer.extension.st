@@ -144,7 +144,7 @@ Integer >> isPrime [
 
 { #category : #'*Math-Operations-Extensions' }
 Integer >> isProbablyPrime [
-	"See isProbablyPrimeWithK:andQ:randomIndex: for the algoritm description."
+	"See isProbablyPrimeWithK:andQ:randomIndex: for the algorithm description."
 	
 	| k q |
 	self <= 1 ifTrue: [ ^false ].
