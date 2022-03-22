@@ -89,7 +89,7 @@ PharoDarkTheme >> buttonColor [
 	^ self backgroundColor lighter lighter
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoDarkTheme >> buttonDisabledBorderStyleFor: aButton [
 	"Return the disabled button fillStyle for the given color."
 
@@ -98,14 +98,14 @@ PharoDarkTheme >> buttonDisabledBorderStyleFor: aButton [
 		color: Color transparent
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoDarkTheme >> buttonDisabledFillStyleFor: aButton [
 	"Return the disabled button fillStyle for the given color."
 
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #'border-styles-buttons' }
+{ #category : #'border-styles - buttons' }
 PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 	
@@ -120,7 +120,7 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 		baseColor: self buttonColor lighter
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
@@ -129,7 +129,7 @@ PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	^ SolidFillStyle color: self buttonColor
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
@@ -186,7 +186,7 @@ PharoDarkTheme >> configureWindowBorderFor: aWindow [
 	aWindow borderStyle: aStyle
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoDarkTheme >> controlButtonNormalFillStyleFor: aButton [
 	"Return the normal control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
@@ -209,28 +209,28 @@ PharoDarkTheme >> desktopColor [
 	^ Color darkGray darker
 ]
 
-{ #category : #'basic-colors-diffs' }
+{ #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffAdditionalLineBackgroundColor [
 	"Answer the color used to highlight additional text lines in a diff view."
 	
 	^ Color r: 0.0 g: 0.76 b: 0.0 alpha: 0.2
 ]
 
-{ #category : #'basic-colors-diffs' }
+{ #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffEdgeColor [
 	"Answer the color used to show the border of the changes."
 	
 	^ Color white alpha: 0.5
 ]
 
-{ #category : #'basic-colors-diffs' }
+{ #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffModificatedLineBackgroundColor [
 	"Answer the color used to highlight changed text lines in a diff view."
 	
 	^ Color gray alpha: 0.2
 ]
 
-{ #category : #'basic-colors-diffs' }
+{ #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to highlight removed text lines in a diff view."
 	
@@ -353,14 +353,14 @@ PharoDarkTheme >> scrollbarColor [
 	^ self buttonColor
 ]
 
-{ #category : #'border-styles-scrollbars' }
+{ #category : #'border-styles - scrollbars' }
 PharoDarkTheme >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 	
 	^ SolidFillStyle color: self backgroundColor lighter.
 ]
 
-{ #category : #'border-styles-scrollbars' }
+{ #category : #'border-styles - scrollbars' }
 PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
 	
@@ -404,17 +404,17 @@ PharoDarkTheme >> successTextColor [
 	^ Color green darker darker darker
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarFillStyleFor: aTaskbar [
 	^ SolidFillStyle color: (Color black lighter alpha: 0.8)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemDisabledBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemDisabledFillStyleFor: aButton [
 	"Return the disabled taskbar item fillStyle for the given color."
 
@@ -435,7 +435,7 @@ PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 	^ Color white
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 	^ BottomBorderStyle new
 		color: Color white;
@@ -443,12 +443,12 @@ PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 		yourself
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.15)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
 	^ BottomBorderStyle new
 		color: Color white;
@@ -457,57 +457,57 @@ PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
 		yourself
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemNormalFillStyleFor: aButton [
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemPressedBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.4)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedDisaledFillStyleFor: aButton [
 	^ self taskbarItemSelectedFillStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.15)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.25)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedPressedBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.35)
 ]
@@ -542,7 +542,7 @@ PharoDarkTheme >> windowActiveLabelFillStyleFor: aWindow [
 	^ self textColor
 ]
 
-{ #category : #'label-styles' }
+{ #category : #'label-styles - windows' }
 PharoDarkTheme >> windowLabelForText: aTextOrString [
 	^ (super windowLabelForText: aTextOrString)
 		color: self textColor;
