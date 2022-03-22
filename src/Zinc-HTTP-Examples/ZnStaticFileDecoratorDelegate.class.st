@@ -44,7 +44,7 @@ ZnStaticFileDecoratorDelegate >> handleRequest: znRequest [
 	^ delegate handleRequest: znRequest
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 ZnStaticFileDecoratorDelegate >> path: aString [ 
 	staticDelegate := ZnStaticFileServerDelegate new
 		directory: aString asFileReference 
