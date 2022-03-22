@@ -1440,7 +1440,7 @@ ZnClient >> setBasicAuthenticationUsername: username password: password [
 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> setBearerAuthentication: token [
 	"Set the bearer token for authentication (e.g. OAuth 2.0) for the current request."
 	
