@@ -128,83 +128,83 @@ MorphicEventDispatcher >> dispatchWindowEvent: anEvent with: aMorph [
 	^aMorph handleEvent: anEvent
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleDropFiles: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleDropMorph: anEvent [ 
 
 	^ self dispatchDropEvent: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleKeyDown: anEvent [ 
 
 		^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleKeyUp: anEvent [ 
 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleKeystroke: anEvent [ 
 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseDown: anEvent [ 
 
 	^ self dispatchMouseDown: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseEnter: anEvent [ 
 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseLeave: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseMove: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseOver: anEvent [ 	
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseUp: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseWheel: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleStep: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleUnknownEvent: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching-callback' }
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleWindowEvent: anEvent [ 
 
 	^ self dispatchWindowEvent: anEvent with: morph
