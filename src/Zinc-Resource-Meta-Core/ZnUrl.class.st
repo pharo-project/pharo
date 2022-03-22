@@ -642,7 +642,7 @@ ZnUrl >> password: string [
 	password := string
 ]
 
-{ #category : #'accessing-path' }
+{ #category : #'accessing - path' }
 ZnUrl >> path [
 	self hasPath 
 		ifFalse: [ ^ String new ].
@@ -821,7 +821,7 @@ ZnUrl >> queryAt: key [
 	^ self queryAt: key ifAbsent: [ KeyNotFound signalFor: key printString ]
 ]
 
-{ #category : #'accessing-query' }
+{ #category : #'accessing - query' }
 ZnUrl >> queryAt: key add: value [
 	"Modify the receiver by adding a query variable key=value.
 	If key already exists, value is added to it."
@@ -849,7 +849,7 @@ ZnUrl >> queryAt: key ifPresent: block [
 		ifTrue: [ self query at: key asString ifPresent: block ]
 ]
 
-{ #category : #'accessing-query' }
+{ #category : #'accessing - query' }
 ZnUrl >> queryAt: key put: value [
 	"Modify the receiver by setting a query variable key=value.
 	If key is already exists, it is overwritten."

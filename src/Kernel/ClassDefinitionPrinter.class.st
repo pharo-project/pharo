@@ -99,6 +99,12 @@ ClassDefinitionPrinter class >> for: aClass [
 		yourself
 ]
 
+{ #category : #testing }
+ClassDefinitionPrinter class >> isAbstract [
+		
+	^ self == ClassDefinitionPrinter
+]
+
 { #category : #'instance creation' }
 ClassDefinitionPrinter class >> legacy [
 	^ LegacyClassDefinitionPrinter basicNew initialize
@@ -170,6 +176,16 @@ ClassDefinitionPrinter class >> toggleShowFluidClassDefinition [
 	self showFluidClassDefinition: self showFluidClassDefinition not
 ]
 
+{ #category : #'public api' }
+ClassDefinitionPrinter >> classDefinitionString [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [ 
+	^ self subclassResponsibility
+]
+
 { #category : #printing }
 ClassDefinitionPrinter >> definitionString [
 	"The method is part of the double dispatch. It is an extra starting point. 
@@ -191,4 +207,24 @@ ClassDefinitionPrinter >> expandedDefinitionString [
 { #category : #accessing }
 ClassDefinitionPrinter >> for: aClass [ 
 	forClass := aClass
+]
+
+{ #category : #'public api' }
+ClassDefinitionPrinter >> metaclassDefinitionString [
+	^ self subclassResponsibility
+]
+
+{ #category : #template }
+ClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #'public api' }
+ClassDefinitionPrinter >> traitDefinitionString [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+ClassDefinitionPrinter >> traitedMetaclassDefinitionString [
+	^ self subclassResponsibility
 ]
