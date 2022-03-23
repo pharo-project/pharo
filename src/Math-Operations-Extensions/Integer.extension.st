@@ -139,8 +139,8 @@ Integer >> isPrime [
 	self <= 1 ifTrue: [ ^false ].
 	self even ifTrue: [ ^self = 2].
 	self \\ 3 = 0 ifTrue: [ ^false].
-	j := 5. jmax := self sqrtFloor - 1.
-	[j < jmax] whileTrue: [ 
+	j := 5. jmax := self sqrtFloor.
+	[j <= jmax] whileTrue: [ 
 		self \\ j = 0 ifTrue: [ ^false ].
 		j := j + 2.
 		self \\ j = 0 ifTrue: [ ^false ].
