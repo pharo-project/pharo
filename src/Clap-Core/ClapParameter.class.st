@@ -35,18 +35,18 @@ ClapParameter class >> isAbstract [
 	^ self == ClapParameter
 ]
 
-{ #category : #activating }
+{ #category : #activation }
 ClapParameter >> activateWith: arguments [
 	"Convenience method for activating in an interactive context"
 	^ (self activationWith: arguments) execute
 ]
 
-{ #category : #activating }
+{ #category : #activation }
 ClapParameter >> activation [
 	^ ClapContext specification: self
 ]
 
-{ #category : #activating }
+{ #category : #activation }
 ClapParameter >> activationWith: arguments [
 	^ self activation
 		arguments: arguments;

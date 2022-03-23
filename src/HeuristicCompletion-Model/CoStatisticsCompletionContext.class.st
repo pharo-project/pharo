@@ -8,7 +8,7 @@ Class {
 	#category : #'HeuristicCompletion-Model-Statistics'
 }
 
-{ #category : #activating }
+{ #category : #activation }
 CoStatisticsCompletionContext >> activateEntryAt: anIndex [
 
 	^ (self entries at: anIndex)
