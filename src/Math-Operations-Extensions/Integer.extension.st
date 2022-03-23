@@ -131,15 +131,22 @@ Integer >> factorial [
 
 { #category : #'*Math-Operations-Extensions' }
 Integer >> isPrime [
+	| j jmax |
 	"Answer true if the receiver is a prime number. See isProbablyPrime for a probabilistic
-	implementation that is much faster for large integers, and that is correct to an extremely
-	high statistical level of confidence (effectively deterministic)."
+	implementation for larger Integers.  Not all odd numbers need to be checked,
+	beyond 2 & 3 all primes are 6k±1, yielding an approx. 2x speed-up."
 	
 	self <= 1 ifTrue: [ ^false ].
 	self even ifTrue: [ ^self = 2].
-	3 to: self sqrtFloor by: 2 do: [ :each |
-		self \\ each = 0 ifTrue: [ ^false ] ].
-	^true
+	self \\ 3 = 0 ifTrue: [ ^false].
+	j := 5. jmax := self sqrtFloor - 1.
+	[j < jmax] whileTrue: [ 
+		self \\ j = 0 ifTrue: [ ^false ].
+		j := j + 2.
+		self \\ j = 0 ifTrue: [ ^false ].
+		j := j + 4].
+	^true	
+	
 ]
 
 { #category : #'*Math-Operations-Extensions' }
