@@ -3039,14 +3039,6 @@ Morph >> handlerForBlueButtonDown: anEvent [
 		ifTrue: [ "let me have it" self ]
 ]
 
-{ #category : #'meta-actions' }
-Morph >> handlerForMetaMenu: evt [
-	"Return the prospective handler for invoking the meta menu. By default, the top-most morph in the innermost world gets this menu"
-	self isWorldMorph ifTrue:[^self].
-	evt handler ifNotNil:[evt handler isWorldMorph ifTrue:[^self]].
-	^nil
-]
-
 { #category : #'event handling' }
 Morph >> handlerForMouseDown: anEvent [ 
 	"Return the (prospective) handler for a mouse down event. The handler is temporarily 
@@ -3057,8 +3049,6 @@ Morph >> handlerForMouseDown: anEvent [
 		ifTrue: [^ self handlerForBlueButtonDown: anEvent].
 	anEvent yellowButtonPressed
 		ifTrue: [^ self handlerForYellowButtonDown: anEvent].
-	anEvent controlKeyPressed
-		ifTrue: [^ self handlerForMetaMenu: anEvent].
 	(self handlesMouseDown: anEvent)
 		ifFalse: [^ nil].	"not interested"
 
