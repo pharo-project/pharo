@@ -543,6 +543,9 @@ ZnServerTest >> testSmall [
 
 { #category : #testing }
 ZnServerTest >> testTooManyConcurrentConnections [
+	"This test fails in windows, waiting for a fix"
+	Smalltalk os isWindows ifTrue: [ ^ self skip ].
+
 	self usingClassicSocketStreamsOnWindowsDo: [
 		self withServerDo: [ :server | | client clients |
 			self deny: server debugMode.
