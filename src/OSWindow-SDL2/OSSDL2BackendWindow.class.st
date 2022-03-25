@@ -15,6 +15,9 @@ Class {
 		'verticalDPI',
 		'diagonalDPI'
 	],
+	#classVars : [
+		'ScreenScaleFactorBaseDPI'
+	],
 	#pools : [
 		'SDL2Constants'
 	],
@@ -26,6 +29,18 @@ OSSDL2BackendWindow class >> newWithHandle: handle attributes: attributes [
 	^ self basicNew 
 		initWithHandle: handle attributes: attributes; 
 		yourself
+]
+
+{ #category : #accessing }
+OSSDL2BackendWindow class >> screenScaleFactorBaseDPI [
+
+	^ ScreenScaleFactorBaseDPI
+]
+
+{ #category : #accessing }
+OSSDL2BackendWindow class >> screenScaleFactorBaseDPI: aNumber [
+
+	ScreenScaleFactorBaseDPI := aNumber
 ]
 
 { #category : #accessing }
@@ -450,6 +465,13 @@ OSSDL2BackendWindow >> restore [
 OSSDL2BackendWindow >> screenScaleFactor [
 	self fetchDPIAndRaiseEvent.
 	^ screenScaleFactor
+]
+
+{ #category : #accessing }
+OSSDL2BackendWindow >> screenScaleFactorBaseDPI [
+
+	^ self class screenScaleFactorBaseDPI 
+		ifNil: [ super screenScaleFactorBaseDPI ]
 ]
 
 { #category : #accessing }
