@@ -296,7 +296,9 @@ Interval >> isSelfEvaluating [
 
 { #category : #accessing }
 Interval >> last [ 
-	"Refer to the comment in SequenceableCollection|last."
+	"Answer the last element of the receiver. Pay attention, last is not equivalent to stop in certain situations. See below."
+	"(1 to: 10 by: 2) last >>> 9"
+	"(0 to: 10 by: 2) last >>> 10"
 
 	^stop - (stop - start \\ step)
 ]
@@ -407,6 +409,15 @@ Interval >> sorted: aSortBlockOrNil [
 Interval >> species [
 
 	^Array
+]
+
+{ #category : #accessing }
+Interval >> stop [
+	"Return the stop element of an interval. Pay attention this is not necessary the same as the last element."
+	"(1 to: 10 by: 2) last >>> 9"
+	"(1 to: 10 by: 2) stop >>> 10"
+	
+	^ stop
 ]
 
 { #category : #printing }
