@@ -19,7 +19,7 @@ SycOpenReflectivityInMethodMenuCommand class >> methodContextMenuActivation [
 SycOpenReflectivityInMethodMenuCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $r meta for: ClyMethod asCalypsoItemContext
+	^CmdShortcutActivation by: $r meta shift for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }
