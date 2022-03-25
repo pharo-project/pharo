@@ -43,6 +43,18 @@ OSSDL2BackendWindow class >> screenScaleFactorBaseDPI: aNumber [
 	ScreenScaleFactorBaseDPI := aNumber
 ]
 
+{ #category : #settings }
+OSSDL2BackendWindow class >> settingsOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #screenScaleFactorBaseDPI)
+		parent: #pharoSystem;
+		label: 'SDL2 Screen Scale Factor Base DPI';
+		description: 'Set the screen scale factore base DPI for SDL2.';
+		target: self;
+		default: 96.0
+]
+
 { #category : #accessing }
 OSSDL2BackendWindow >> borderless [
 	^ sdl2Window getFlags anyMask: SDL_WINDOW_BORDERLESS
