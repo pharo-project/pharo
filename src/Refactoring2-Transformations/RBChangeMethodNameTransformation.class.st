@@ -82,7 +82,7 @@ RBChangeMethodNameTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : #support }
+{ #category : #preconditions }
 RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
@@ -95,12 +95,7 @@ RBChangeMethodNameTransformation >> preconditions [
 		inject: conditions into: [ :condition :each | 
 			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
 		
-	^conditions & (RBCondition withBlock: 
-		[self implementors size > 1 
-			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?' 
-							expandMacrosWith: self implementors size)].
-		true])
+	^conditions
 ]
 
 { #category : #support }
