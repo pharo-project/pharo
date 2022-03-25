@@ -93,7 +93,7 @@ ClySubclassHierarchy class >> settingsOn: aBuilder [
 		target: self.
 	(aBuilder setting: #isDefaultHierarchyForMethodVisibility)
 		parent: #Calypso;
-		default: false;		
+		default: true;		
 		label: 'Show method visibility classes in standard hierarchical order?';
 		description: 'If true, FullBrowser will show "inherited method" expanded classes in the order from superclass to subclass';
 		target: self
