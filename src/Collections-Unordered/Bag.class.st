@@ -120,8 +120,8 @@ Bag >> doWithOccurrences: aTwoArgBlock [
 Bag >> includes: anObject [ 
 	"Answer whether anObject is one of the receiver's elements."
 
-	"(#(1 2 2 3 1 1 1) includes: 5) >>> false"
-	"(#(1 2 2 3 1 1 1) includes: 1) >>> true"
+	"(#(1 2 2 3 1 1 1) asBag includes: 5) >>> false"
+	"(#(1 2 2 3 1 1 1) asBag includes: 1) >>> true"
 	
 	^ contents includesKey: anObject
 ]
@@ -220,7 +220,7 @@ Bag >> sum [
 	"Return the sum (+) of the elements held in the receiver."
 	"Faster than the superclass implementation when you hold many instances of the same value (which you probably do, otherwise you wouldn't be using a Bag)."
 	
-	"#(1 2 2 3 1 1 1) sum >>> 11"
+	"#(1 2 2 3 1 1 1) asBag sum >>> 11"
 	
 	| sum first |
 	first := true.
