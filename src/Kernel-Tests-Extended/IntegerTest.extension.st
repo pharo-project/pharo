@@ -200,7 +200,7 @@ IntegerTest >> testIsPrime [
 IntegerTest >> testIsPrime2 [
 
 	"Not primes:"
-	#(-100 -5 -3 -2 -1 0 1) do: [ :each |
+	#(-100 -5 -3 -2 -1 0 1 25 121) do: [ :each |
 		self deny: each isPrime ].
 
 	"The following tests should return 'true'"
