@@ -66,7 +66,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-CodeNavigation-Tests';
 			package: 'Tools-Tests';
-			package: 'Zinc-Resource-Meta-FileSystem';
 			package: 'Zinc-Resource-Meta-Tests';
 			package: 'Zinc-HTTP-Examples';
 			package: 'Zinc-Tests';	"requires Zinc-Resource-Meta-Tests"
