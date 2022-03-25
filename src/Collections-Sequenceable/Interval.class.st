@@ -409,6 +409,12 @@ Interval >> species [
 	^Array
 ]
 
+{ #category : #accessing }
+Interval >> stop [
+
+	^ stop
+]
+
 { #category : #printing }
 Interval >> storeOn: aStream [ 
 	aStream nextPut: $(;
