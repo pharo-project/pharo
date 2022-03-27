@@ -113,6 +113,13 @@ SycRefactoringPreviewPresenter >> changes: aCollection [
 	self generateChanges
 ]
 
+{ #category : #utilities }
+SycRefactoringPreviewPresenter >> changesFrom: aCompositeChange forEnvironment: anEnvironment [
+
+	^ (aCompositeChange whatToDisplayIn: self) select: [ :change | 
+		  anEnvironment includesClass: change changeClass ]
+]
+
 { #category : #initialization }
 SycRefactoringPreviewPresenter >> columns [
 
@@ -148,12 +155,12 @@ SycRefactoringPreviewPresenter >> existChanges [
 	^ existsChanges ifNil: [ existsChanges := false ]
 ]
 
-{ #category : #update }
+{ #category : #actions }
 SycRefactoringPreviewPresenter >> generateChanges [
 
 	| rbEnvironment |
 	changes := command asRefactorings.
-	rbEnvironment := changes first model environment.
+	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each | 
 		each model environment: rbEnvironment.
 		each primitiveExecute ]
@@ -234,7 +241,7 @@ SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [
 	self table selectIndex: nextIndex scrollToSelection: true
 ]
 
-{ #category : #update }
+{ #category : #actions }
 SycRefactoringPreviewPresenter >> selectectAllCheckBox [
 	selectedRefactorings := Dictionary new.
 	table items do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
@@ -274,15 +281,16 @@ SycRefactoringPreviewPresenter >> updateChanges [
 
 { #category : #update }
 SycRefactoringPreviewPresenter >> updateTablePresenter [
+
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"
-	anEnvironment := changes
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ changes anyOne model environment ].
-	aCompositeChange := RBCompositeRefactoryChange new onSystemDictionary: anEnvironment.
+	anEnvironment := self activeRBEnvironment.
+	aCompositeChange := RBCompositeRefactoryChange new 
+		onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
-	table items: (aCompositeChange whatToDisplayIn: self).
-	table items
-		ifNotEmpty: [ table selectIndex: 1.
-			existsChanges := true ]
+
+	table items: (self changesFrom: aCompositeChange forEnvironment: anEnvironment).
+	table items ifNotEmpty: [ 
+		table selectIndex: 1.
+		existsChanges := true ]
 ]
