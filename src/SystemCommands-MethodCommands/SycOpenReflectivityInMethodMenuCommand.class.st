@@ -15,13 +15,6 @@ SycOpenReflectivityInMethodMenuCommand class >> methodContextMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
-SycOpenReflectivityInMethodMenuCommand class >> methodEditorShortcutActivation [
-	<classAnnotation>
-	
-	^CmdShortcutActivation by: $r meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycOpenReflectivityInMethodMenuCommand >> activationStrategy [
 	^SycReflectivityMenuActivation
