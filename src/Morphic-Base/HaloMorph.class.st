@@ -659,22 +659,6 @@ HaloMorph >> basicBoxForSimpleHalos [
 		  ifNone: [ self error: 'should not happen' ]
 ]
 
-{ #category : #'meta-actions' }
-HaloMorph >> blueButtonDown: event [
-	"Transfer the halo to the next likely recipient"
-
-	target ifNil: [ ^ self delete ].
-	event hand obtainHalo: self.
-	positionOffset := event position
-	                  - (target point: target position in: owner).
-	"wait for drags or transfer"
-	event hand
-		waitForClicksOrDrag: self
-		event: event
-		selectors: { #transferHalo:. nil. nil. #dragTarget: }
-		threshold: 5
-]
-
 { #category : #accessing }
 HaloMorph >> borderStyle [
 	"Answer the border style to use for the receiver.
@@ -988,6 +972,22 @@ HaloMorph >> handleListenEvent: anEvent [
 HaloMorph >> handleSize [
 
 	^ 30
+]
+
+{ #category : #'meta-actions' }
+HaloMorph >> handleSpecialGesture: event [
+	"Transfer the halo to the next likely recipient"
+
+	target ifNil: [ ^ self delete ].
+	event hand obtainHalo: self.
+	positionOffset := event position
+	                  - (target point: target position in: owner).
+	"wait for drags or transfer"
+	event hand
+		waitForClicksOrDrag: self
+		event: event
+		selectors: { #transferHalo:. nil. nil. #dragTarget: }
+		threshold: 5
 ]
 
 { #category : #'meta-actions' }

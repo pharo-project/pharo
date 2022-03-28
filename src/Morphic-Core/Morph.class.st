@@ -1231,34 +1231,6 @@ Morph >> beginsWith: aString fromList: aMorph [
 ]
 
 { #category : #'meta-actions' }
-Morph >> blueButtonDown: anEvent [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
-	| h tfm doNotDrag |
-	h := anEvent hand halo.
-	"Prevent wrap around halo transfers originating from throwing the event back in"
-	doNotDrag := false.
-	h ifNotNil:[
-		(h innerTarget == self) ifTrue:[doNotDrag := true].
-		(h innerTarget hasOwner: self) ifTrue:[doNotDrag := true].
-		(self hasOwner: h target) ifTrue:[doNotDrag := true]].
-
-	tfm := (self transformedFrom: nil) inverseTransformation.
-
-	"cmd-drag on flexed morphs works better this way"
-	h := self addHalo: (anEvent transformedBy: tfm).
-	h ifNil: [^ self].
-	doNotDrag ifTrue:[^self].
-	"Initiate drag transition if requested"
-	anEvent hand 
-		waitForClicksOrDrag: h
-		event: (anEvent transformedBy: tfm)
-		selectors: { nil. nil. nil. #dragTarget:. }
-		threshold: 5.
-	"Pass focus explicitly here"
-	anEvent hand newMouseFocus: h.
-]
-
-{ #category : #'meta-actions' }
 Morph >> blueButtonUp: anEvent [
 	"Ignored. Theoretically we should never get here since control is transferred to the halo on #blueButtonDown: but subclasses may implement this differently."
 ]
@@ -2876,31 +2848,39 @@ Morph >> handleListenEvent: anEvent [
 
 { #category : #'events - processing' }
 Morph >> handleMouseDown: anEvent [
+
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self]. "not interested"
+
+	anEvent wasHandled ifTrue: [ ^ self ]. "not interested"
 	anEvent hand removePendingBalloonFor: self.
 	anEvent wasHandled: true.
-	
-	(anEvent controlKeyPressed
-			and: [self cmdGesturesEnabled and: [ anEvent shiftPressed]])
-		ifTrue: [
-			self invokeMetaMenu: anEvent.
-			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ] ].
+
+	(anEvent controlKeyPressed and: [ 
+		 self cmdGesturesEnabled and: [ anEvent shiftPressed ] ]) ifTrue: [ 
+		self invokeMetaMenu: anEvent.
+		^ self eventHandler ifNotNil: [ :handler | 
+			  handler mouseDown: anEvent fromMorph: self ] ].
 
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
-	anEvent blueButtonChanged ifTrue:[^self blueButtonDown: anEvent].
 	
+	"Check to open halo"
+	(anEvent blueButtonChanged or: [ "HACK"
+		 anEvent redButtonChanged & anEvent altKeyPressed
+		 & anEvent shiftPressed ]) ifTrue: [ ^ self handleSpecialGesture: anEvent ].
+
 	self mouseDown: anEvent.
-	
+
 	anEvent hand removeHaloFromClick: anEvent on: self.
-	(self handlesMouseStillDown: anEvent) ifTrue:[
-		self startStepping: #handleMouseStillDown: 
+	(self handlesMouseStillDown: anEvent) ifTrue: [ 
+		self
+			startStepping: #handleMouseStillDown:
 			at: Time millisecondClockValue + self mouseStillDownThreshold
-			arguments: {anEvent copy resetHandlerFields}
+			arguments: { anEvent copy resetHandlerFields }
 			stepTime: self mouseStillDownStepRate ].
-		
-	^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ]
+
+	^ self eventHandler ifNotNil: [ :handler | 
+		  handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events - processing' }
@@ -2999,6 +2979,34 @@ Morph >> handleMouseWheel: anEvent [
 	(self handlesMouseWheel: anEvent) ifTrue:[
 		anEvent wasHandled: true.
 		self mouseWheel: anEvent]
+]
+
+{ #category : #'meta-actions' }
+Morph >> handleSpecialGesture: mouseDownEvent [
+	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
+	| h tfm doNotDrag |
+	h := mouseDownEvent hand halo.
+	"Prevent wrap around halo transfers originating from throwing the event back in"
+	doNotDrag := false.
+	h ifNotNil:[
+		(h innerTarget == self) ifTrue:[doNotDrag := true].
+		(h innerTarget hasOwner: self) ifTrue:[doNotDrag := true].
+		(self hasOwner: h target) ifTrue:[doNotDrag := true]].
+
+	tfm := (self transformedFrom: nil) inverseTransformation.
+
+	"cmd-drag on flexed morphs works better this way"
+	h := self addHalo: (mouseDownEvent transformedBy: tfm).
+	h ifNil: [^ self].
+	doNotDrag ifTrue:[^self].
+	"Initiate drag transition if requested"
+	mouseDownEvent hand 
+		waitForClicksOrDrag: h
+		event: (mouseDownEvent transformedBy: tfm)
+		selectors: { nil. nil. nil. #dragTarget:. }
+		threshold: 5.
+	"Pass focus explicitly here"
+	mouseDownEvent hand newMouseFocus: h.
 ]
 
 { #category : #'events - processing' }
