@@ -106,7 +106,7 @@ RBReplaceMethodRefactoring >> newSelectorString [
 	^stream contents
 ]
 
-{ #category : #private }
+{ #category : #transforming }
 RBReplaceMethodRefactoring >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	rewriteRule := self parseTreeRewriterClass new.
