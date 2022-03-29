@@ -23,12 +23,6 @@ RBRenameMethodParametrizedTest >> testExistingSelector [
 		{ #checkClass: . RBBasicLintRuleTestData . #runOnEnvironment: . (1 to: 1) })
 ]
 
-{ #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testMultipleSelectors [
-	self shouldWarn: (self createRefactoringWithArguments:  
-		{ #checkClass: . RBBasicLintRuleTestData . #foo: . (1 to: 1) })
-]
-
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 	| refactoring class |
