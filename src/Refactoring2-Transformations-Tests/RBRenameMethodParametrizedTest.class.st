@@ -25,6 +25,7 @@ RBRenameMethodParametrizedTest >> testExistingSelector [
 
 { #category : #'failure tests' }
 RBRenameMethodParametrizedTest >> testMultipleSelectors [
+	"Renaming a method with multiple selectors should raise warning"
 	self shouldWarn: (self createRefactoringWithArguments:  
 		{ #checkClass: . RBBasicLintRuleTestData . #foo: . (1 to: 1) })
 ]
