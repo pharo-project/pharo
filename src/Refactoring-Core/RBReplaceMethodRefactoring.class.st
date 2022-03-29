@@ -127,7 +127,16 @@ RBReplaceMethodRefactoring >> preconditions [
 						&(RBCondition definesSelector: oldSelector in: class )
 						& (RBCondition definesSelector: newSelector in: class ).
 	
-	^ conditions
+	^ conditions & (RBCondition withBlock: 
+		[ |senders|
+		senders := self replaceInAllClasses 
+			ifTrue: [ self model allReferencesTo: oldSelector ]
+			ifFalse: [ self model allReferencesTo: oldSelector in: {class} ].
+		senders size > 1 
+			ifTrue: 
+				[self refactoringWarning: ('This will modify all <1p> senders.<n>Proceed anyway?' 
+							expandMacrosWith: senders size)].
+		true])
 ]
 
 { #category : #initialization }
