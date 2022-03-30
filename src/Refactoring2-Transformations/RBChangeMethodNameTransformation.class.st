@@ -95,7 +95,12 @@ RBChangeMethodNameTransformation >> preconditions [
 		inject: conditions into: [ :condition :each | 
 			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
 		
-	^conditions
+	^conditions & (RBCondition withBlock: 
+		[self implementors size > 1 
+			ifTrue: 
+				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?' 
+							expandMacrosWith: self implementors size)].
+		true])
 ]
 
 { #category : #support }
