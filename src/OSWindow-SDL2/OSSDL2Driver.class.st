@@ -132,6 +132,10 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
 		osWindow setJustCreatedHandle: aBackendWindow.
 	].
+
+	"Workaround to https://github.com/pharo-project/pharo/issues/10981"
+	20 milliSeconds wait.
+
 	^ aBackendWindow
 ]
 
