@@ -39,7 +39,7 @@ The bootstrapping can be done on a properly-named branch using the following scr
 BUILD_NUMBER=42 BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/bootstrap.sh
 ```
 
-This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo8.0-32bit-hhhhhhh.zip where hhhhhhh is the hash of the current checkout.
+This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo10.0-64bit-hhhhhhh.zip where hhhhhhh is the hash of the current checkout.
 
 Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
 
