@@ -249,7 +249,7 @@ Interval >> hash [
 	"Hash is reimplemented because = is implemented."
 
 	^(((start hash bitShift: 2)
-		bitOr: stop hash)
+		bitOr: self last hash)
 		bitShift: 1)
 		bitOr: self size
 ]
