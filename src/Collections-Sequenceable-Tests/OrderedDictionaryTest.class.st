@@ -767,20 +767,18 @@ OrderedDictionaryTest >> testDo [
 
 { #category : #tests }
 OrderedDictionaryTest >> testEquals [
-	| dictionaryOne dictionaryTwo dictionaryThree |
 
+	| dictionaryOne dictionaryTwo dictionaryThree |
 	dictionaryOne := self emptyDictionary.
 	dictionaryTwo := self emptyDictionary.
 	dictionaryThree := self emptyDictionary.
 
-	self
-		assertDictionary: dictionaryOne
-		equals: dictionaryTwo.
+	self assertDictionary: dictionaryOne equals: dictionaryTwo.
 
 	"Order now matters for equality of Ordered dictionaries"
 	self orderedAssociations
 		with: self orderedAssociations reversed
-		do: [:firstAssociation :secondAssociation |
+		do: [ :firstAssociation :secondAssociation | 
 			dictionaryOne add: firstAssociation.
 			dictionaryTwo add: secondAssociation.
 			dictionaryThree add: firstAssociation.
@@ -790,26 +788,22 @@ OrderedDictionaryTest >> testEquals [
 			self
 				assertDictionary: dictionaryTwo
 				doesNotEqual: self emptyDictionary.
-			dictionaryOne size < self orderedAssociations size
-				ifTrue: [
-					self
-						assertDictionary: dictionaryOne
-						doesNotEqual: dictionaryTwo]].
+			dictionaryOne size < self orderedAssociations size ifTrue: [ 
+				self assertDictionary: dictionaryOne doesNotEqual: dictionaryTwo ] ].
 
-	self
-		assertDictionary: dictionaryOne
-		doesNotEqual: dictionaryTwo.
+	self assertDictionary: dictionaryOne doesNotEqual: dictionaryTwo.
+	self assertDictionary: dictionaryOne equals: dictionaryThree.
 
-	self
-		assertDictionary: dictionaryOne
-		equals: dictionaryThree.
-	
-	"New way to test for equality regardless of ordering"	
-	self
-		assertDictionary: dictionaryOne asDictionary
-		equals: dictionaryTwo asDictionary	
-	
-	
+	"New way to test for equality regardless of ordering"
+	self isTestingIdentityDictionary
+		ifFalse: [ 
+			self
+				assertDictionary: dictionaryOne asDictionary
+				equals: dictionaryTwo asDictionary ]
+		ifTrue: [ 
+			self
+				assertDictionary: dictionaryOne asIdentityDictionary
+				equals: dictionaryTwo asIdentityDictionary ]
 ]
 
 { #category : #tests }
