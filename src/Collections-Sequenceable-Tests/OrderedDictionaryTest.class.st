@@ -767,20 +767,23 @@ OrderedDictionaryTest >> testDo [
 
 { #category : #tests }
 OrderedDictionaryTest >> testEquals [
-	| dictionaryOne dictionaryTwo |
+	| dictionaryOne dictionaryTwo dictionaryThree |
 
 	dictionaryOne := self emptyDictionary.
 	dictionaryTwo := self emptyDictionary.
+	dictionaryThree := self emptyDictionary.
+
 	self
 		assertDictionary: dictionaryOne
 		equals: dictionaryTwo.
 
-	"For equality, order will not matter"
+	"Order now matters for equality of Ordered dictionaries"
 	self orderedAssociations
 		with: self orderedAssociations reversed
 		do: [:firstAssociation :secondAssociation |
 			dictionaryOne add: firstAssociation.
 			dictionaryTwo add: secondAssociation.
+			dictionaryThree add: firstAssociation.
 			self
 				assertDictionary: dictionaryOne
 				doesNotEqual: self emptyDictionary.
@@ -795,7 +798,18 @@ OrderedDictionaryTest >> testEquals [
 
 	self
 		assertDictionary: dictionaryOne
-		equals: dictionaryTwo.
+		doesNotEqual: dictionaryTwo.
+
+	self
+		assertDictionary: dictionaryOne
+		equals: dictionaryThree.
+	
+	"New way to test for equality regardless of ordering"	
+	self
+		assertDictionary: dictionaryOne asDictionary
+		equals: dictionaryTwo asDictionary	
+	
+	
 ]
 
 { #category : #tests }

@@ -1,5 +1,9 @@
 "
-I am a collection that act as a Dictionary except that I use key insertion order when enumerating, printing, or returing collections of keys/values/associations, but not when testing for equality (but it does not matters in this case).
+I am a collection that act as a Dictionary except that I use key insertion order when comparing, enumerating, printing, or returning collections of keys/values/associations.
+
+NB: Prior implementation ignored order in testing for equality: to ignore order now, simply compare 'orderedDict1 asDictionary = orderedDict2 asDictionary' in 
+a similar manner to using #asSet when comparing OrderedCollections for equality of content regardless of ordering.
+
 I will assume that you know the Dictionary class in this comment.
 
 I work mainly as a Dictionary except that I also store the keys in an Array that keeps the order of elements. 
@@ -93,10 +97,7 @@ OrderedDictionary >> = anObject [
 		and: [self size = anObject size])
 		ifFalse: [^ false].
 
-	dictionary associationsDo: [:each |
-		(anObject at: each key ifAbsent: [^ false]) = each value
-			ifFalse: [^ false]].
-	^ true.
+	^self associations = anObject associations.
 ]
 
 { #category : #adding }
