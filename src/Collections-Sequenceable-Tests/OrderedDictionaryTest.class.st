@@ -802,8 +802,8 @@ OrderedDictionaryTest >> testEquals [
 				equals: dictionaryTwo asDictionary ]
 		ifTrue: [ 
 			self
-				assertDictionary: dictionaryOne asIdentityDictionary
-				equals: dictionaryTwo asIdentityDictionary ]
+				assertDictionary: (dictionaryOne as: IdentityDictionary)
+				equals: (dictionaryTwo as: IdentityDictionary) ]
 ]
 
 { #category : #tests }

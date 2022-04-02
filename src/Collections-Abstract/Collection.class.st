@@ -292,12 +292,6 @@ Collection >> asDictionary [
 ]
 
 { #category : #converting }
-Collection >> asIdentityDictionary [
-
-	^ self as: IdentityDictionary
-]
-
-{ #category : #converting }
 Collection >> asIdentitySet [
 	^(IdentitySet new: self size) addAll: self; yourself
 ]
