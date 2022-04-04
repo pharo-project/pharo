@@ -341,6 +341,11 @@ PharoDarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
 	^ Color lightGray
 ]
 
+{ #category : #'accessing - colors' }
+PharoDarkTheme >> mouseOverColor [ 
+	^ self lightBackgroundColor
+]
+
 { #category : #initialization }
 PharoDarkTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
