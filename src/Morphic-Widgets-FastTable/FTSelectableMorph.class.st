@@ -43,7 +43,7 @@ FTSelectableMorph >> mouseLeave: evt [
 
 { #category : #accessing }
 FTSelectableMorph >> mouseOverColor [
-	^ self theme backgroundColor darker darker
+	^ self theme mouseOverColor
 ]
 
 { #category : #initialization }
