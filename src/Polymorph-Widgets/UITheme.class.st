@@ -2752,6 +2752,15 @@ UITheme >> morphTreeSplitterPressedFillStyleFor: aSplitter [
 		radial: false
 ]
 
+{ #category : #'accessing - colors' }
+UITheme >> mouseOverColor [ 
+	"This color is used when hovering a raw of a list / table.
+	This color should be different from the default background color and from the raw alternate color
+	(see FTTableContainerMorph>>#alternateRowsColor."
+	
+	^ self backgroundColor darker darker
+]
+
 { #category : #'fill-styles' }
 UITheme >> multiFormFillStyleFrom: anArray cornerWidths: widthArray in: aRectangle [
 	"Answer a composite fill style from the given forms and central colour

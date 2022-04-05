@@ -18,7 +18,7 @@ BaselineOfPharo class >> declareExternalProjects [
 
 	^ { 
 	PharoExternalProject newName: 'Iceberg' owner: 'pharo-vcs' project: 'iceberg' version: 'v2.0.6' sourceDir: nil.
-	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'v1.1.1'.
+	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'v1.1.2'.
 	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'v0.7.0'.	
 	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.	
 	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.	
