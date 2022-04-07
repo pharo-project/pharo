@@ -433,6 +433,13 @@ Collection >> collect: collectBlock thenSelect: selectBlock [
 	^ (self collect: collectBlock) select: selectBlock
 ]
 
+{ #category : #hotfix }
+Collection >> collectionSizeThreshold [ 
+	"This method should be in newtools, as a workaround it is added here. This is solved
+	correctly in Pharo10"
+	^ 3000
+]
+
 { #category : #testing }
 Collection >> contains: aBlock [
 	"For compatibility, please use #anySatisfy: instead!"
