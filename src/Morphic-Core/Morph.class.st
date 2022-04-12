@@ -437,18 +437,19 @@ Morph >> addFillStyleMenuItems: aMenu hand: aHand [
 
 { #category : #'rotate scale and flex' }
 Morph >> addFlexShell [
+
 	"Wrap a rotating and scaling shell around this morph."
 
 	| oldHalo flexMorph myWorld anIndex |
-
 	myWorld := self world.
 	oldHalo := self halo.
 	anIndex := self owner submorphIndexOf: self.
-	self owner addMorph: (flexMorph := self newTransformationMorph asFlexOf: self)
+	self owner
+		addMorph: (flexMorph := self newTransformationMorph asFlexOf: self)
 		asElementNumber: anIndex.
 	self transferStateToRenderer: flexMorph.
-	oldHalo ifNotNil: [oldHalo setTarget: flexMorph].
-	myWorld ifNotNil: [myWorld startSteppingSubmorphsOf: flexMorph].
+	oldHalo ifNotNil: [ oldHalo setTarget: flexMorph ].
+	myWorld ifNotNil: [ flexMorph startSteppingSubmorphs ].
 
 	^ flexMorph
 ]
@@ -4655,7 +4656,7 @@ Morph >> positionSubmorphs [
 { #category : #opening }
 Morph >> postOpenInWorld: aWorld [
 
-	aWorld startSteppingSubmorphsOf: self
+	self startSteppingSubmorphs
 ]
 
 { #category : #'meta-actions' }
@@ -5199,6 +5200,7 @@ Morph >> repelsMorph: aMorph event: ev [
 
 { #category : #'submorphs - add/remove' }
 Morph >> replaceSubmorph: oldMorph by: newMorph [
+
 	| index itsPosition w |
 	oldMorph stopStepping.
 	itsPosition := oldMorph referencePositionInWorld.
@@ -5206,8 +5208,7 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 	oldMorph privateDelete.
 	self privateAddMorph: newMorph atIndex: index.
 	newMorph referencePositionInWorld: itsPosition.
-	(w := newMorph world) ifNotNil:
-		[w startSteppingSubmorphsOf: newMorph]
+	(w := newMorph world) ifNotNil: [ newMorph startSteppingSubmorphs ]
 ]
 
 { #category : #'accessing - extension' }
@@ -5877,6 +5878,15 @@ Morph >> startStepping: aSelector at: scheduledTime arguments: args stepTime: st
 Morph >> startSteppingSelector: aSelector [
 	"Start getting sent the 'step' message."
 	self startStepping: aSelector at: Time millisecondClockValue arguments: nil stepTime: nil.
+]
+
+{ #category : #'stepping and presenter' }
+Morph >> startSteppingSubmorphs [
+	"Ensure that all submorphs of the given morph that want to be stepped are added to the step list.   Typically used after adding a morph to the world."
+
+	self allMorphsDo: [:submorph |
+		submorph wantsSteps ifTrue: [submorph arrangeToStartSteppingIn: submorph world].
+	]
 ]
 
 { #category : #'stepping and presenter' }
