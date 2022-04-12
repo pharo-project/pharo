@@ -102,6 +102,18 @@ MethodDictionary >> associationsDo: aBlock [
 ]
 
 { #category : #accessing }
+MethodDictionary >> at: key [
+	"Answer the value associated with the key. 
+	To avoid block creation, we do not re-use #at:ifAbsent:"
+	
+	| index |
+	index := self findElementOrNil: key.
+	^(self basicAt: index) 
+		ifNil: [ self errorKeyNotFound: key ]
+		ifNotNil: [ array at: index ]
+]
+
+{ #category : #accessing }
 MethodDictionary >> at: key ifAbsent: aBlock [
 
 	| index |
