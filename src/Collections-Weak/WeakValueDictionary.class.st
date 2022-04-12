@@ -38,6 +38,16 @@ WeakValueDictionary >> associationsDo: aBlock [
 	array do: [ :each | each value ifNotNil: [ :value | aBlock value: each key -> value enclosedElement ] ]
 ]
 
+{ #category : #accessing }
+WeakValueDictionary >> at: key [
+	"Answer the value associated with the key. 
+	To avoid block creation, we do not re-use #at:ifAbsent:"
+
+	^ (array at: (self findElementOrNil: key)) value
+			ifNil: [ self errorKeyNotFound: key ]
+			ifNotNil: [ :value | value enclosedElement ]
+]
+
 { #category : #adding }
 WeakValueDictionary >> at: key ifAbsent: aBlock [
 	"Answer the value associated with the key or, if key isn't found,
