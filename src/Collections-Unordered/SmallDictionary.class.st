@@ -217,10 +217,14 @@ SmallDictionary >> associationsSelect: aBlock [
 ]
 
 { #category : #accessing }
-SmallDictionary >> at: key [ 
-	"Answer the value associated with the key."
+SmallDictionary >> at: key [
+		"Answer the value associated with the key.
+		To avoid block creation, we do not re-use #at:ifAbsent:"
 
-	^ self at: key ifAbsent: [self errorKeyNotFound: key]
+		| index |
+		index := self findIndexForKey: key.
+		index = 0 ifTrue: [ ^ self errorKeyNotFound: key ].
+		^ values at: index
 ]
 
 { #category : #'nested dictionaries' }

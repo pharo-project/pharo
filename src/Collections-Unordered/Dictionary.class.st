@@ -339,10 +339,13 @@ Dictionary >> associationsSelect: aBlock [
 ]
 
 { #category : #accessing }
-Dictionary >> at: key [ 
-	"Answer the value associated with the key."
+Dictionary >> at: key [
+	"Answer the value associated with the key. 
+	To avoid block creation, we do not re-use #at:ifAbsent:"
 
-	^ self at: key ifAbsent: [self errorKeyNotFound: key]
+	^ (array at: (self findElementOrNil: key))
+		  ifNil: [ self errorKeyNotFound: key ]
+		  ifNotNil: [ :assoc | assoc value ]
 ]
 
 { #category : #'nested dictionaries' }
