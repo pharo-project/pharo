@@ -19,11 +19,12 @@ OmFuelEntryReader >> entryPositionsDo: aBlock [
 { #category : #initialization }
 OmFuelEntryReader >> initialize [
 	super initialize.
-	materializer := FLMaterializer new.
+	materializer := FLMaterializer new
 ]
 
 { #category : #reading }
 OmFuelEntryReader >> nextEntry [
-
-	^ (materializer materializeFrom: stream) root
+	^ materializer
+		onStream: stream;
+		materializeRoot
 ]

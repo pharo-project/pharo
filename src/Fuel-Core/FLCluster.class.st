@@ -40,7 +40,7 @@ FLCluster >> afterMaterializationStepWith: aDecoder [
 ]
 
 { #category : #'serialize/materialize' }
-FLCluster >> clusterMaterializeStepWith: aMaterialization [
+FLCluster >> clusterMaterializeStepWith: aDecoder [
 	"Materialize cluster stuff"
 ]
 
@@ -50,7 +50,7 @@ FLCluster >> clusterReferencesDo: aBlock [
 ]
 
 { #category : #'serialize/materialize' }
-FLCluster >> clusterSerializeStepWith: aSerialization [
+FLCluster >> clusterSerializeStepWith: anEncoder [
 	"Serialize cluster stuff"
 ]
 

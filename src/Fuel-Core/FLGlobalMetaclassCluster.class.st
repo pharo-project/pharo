@@ -2,19 +2,19 @@
 I am a cluster for those Metaclasses and ClassTrait who are not stored in detail.
 "
 Class {
-	#name : #FLGlobalClassSideCluster,
+	#name : #FLGlobalMetaclassCluster,
 	#superclass : #FLGlobalCluster,
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #'serialize/materialize' }
-FLGlobalClassSideCluster >> materializeInstanceWith: aDecoder [
+FLGlobalMetaclassCluster >> materializeInstanceWith: aDecoder [
 
 	^(self materializeGlobalClassFrom: aDecoder) classSide
 ]
 
 { #category : #'serialize/materialize' }
-FLGlobalClassSideCluster >> serializeInstance: aClassOrTraitClassSide with: anEncoder [
+FLGlobalMetaclassCluster >> serializeInstance: aClassOrTraitClassSide with: anEncoder [
 
 	self serializeGlobalClass: aClassOrTraitClassSide instanceSide on: anEncoder
 ]

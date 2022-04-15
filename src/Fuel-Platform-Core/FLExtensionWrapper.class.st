@@ -5,7 +5,8 @@ Class {
 		'targetClass',
 		'method',
 		'selector',
-		'isSource'
+		'isSource',
+		'isClassSide'
 	],
 	#category : #'Fuel-Platform-Core'
 }
@@ -62,6 +63,10 @@ FLExtensionWrapper >> initializeWithPragma: aPragma [
 			readSelectorFrom: aPragma
 			argumentNames: argumentNamesAndValues first
 			argumentValues: argumentNamesAndValues second);
+		isClassSide: (self
+			readIsClassSideFrom: aPragma
+			argumentNames: argumentNamesAndValues first
+			argumentValues: argumentNamesAndValues second);
 		isSource: (self
 			readIsSourceFrom: aPragma
 			argumentNames: argumentNamesAndValues first
@@ -80,6 +85,16 @@ FLExtensionWrapper >> install [
 	self selector = self method selector ifFalse: [ ^ self renameAndCompileInTarget ].
 	
 	self copyToTarget
+]
+
+{ #category : #accessing }
+FLExtensionWrapper >> isClassSide [
+	^ isClassSide
+]
+
+{ #category : #accessing }
+FLExtensionWrapper >> isClassSide: aBoolean [
+	isClassSide := aBoolean
 ]
 
 { #category : #accessing }
@@ -110,6 +125,16 @@ FLExtensionWrapper >> readArgumentsFrom: aPragma [
 ]
 
 { #category : #'initialize-release' }
+FLExtensionWrapper >> readIsClassSideFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
+	| index |
+	index := argumentNames
+		indexOf: 'isClassSide:'
+		ifAbsent: [ ^ false ].
+	
+	^ argumentValues at: index
+]
+
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> readIsSourceFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
 	| index |
 	index := argumentNames
@@ -136,10 +161,9 @@ FLExtensionWrapper >> readTargetClassFrom: aPragma argumentNames: argumentNames 
 		at: (argumentValues at: (argumentNames indexOf: 'flExtensionOf:'))
 		ifAbsent: [ ^ nil ].
 		
-	^ (aPragma method pragmas anySatisfy: [ :pragma |
-		pragma key = #flExtensionClassSide ])
-			ifTrue: [ class class ]
-			ifFalse: [ class ]
+	^ self isClassSide
+		ifTrue: [ class classSide ]
+		ifFalse: [ class instanceSide ]
 ]
 
 { #category : #private }

@@ -18,8 +18,8 @@ OmFuelEntryWriter >> initialize [
 
 { #category : #writing }
 OmFuelEntryWriter >> on: aStream nextEntryPut: anEntry [ 
-
 	serializer
-		serialize: anEntry 
-		on: aStream
+		onStream: aStream;
+		object: anEntry;
+		serialize
 ]

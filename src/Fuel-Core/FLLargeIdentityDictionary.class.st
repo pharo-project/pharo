@@ -13,24 +13,18 @@ Class {
 
 { #category : #accessing }
 FLLargeIdentityDictionary >> at: key [
-
-	| hash |
-	(keys at: (hash := key largeIdentityHash \\ 4096 + 1)) ifNotNil: [ :keyList | 
-		1 to: (tallies at: hash) do: [ :index |
-			(keyList at: index) == key ifTrue: [
-				^(values at: hash) at: index ] ] ].
-	self errorKeyNotFound: key
+	self
+		at: key
+		ifPresent: [ :value | ^ value ]
+		ifAbsent: [ self errorKeyNotFound: key ]
 ]
 
 { #category : #accessing }
 FLLargeIdentityDictionary >> at: key ifAbsent: aBlock [
-
-	| hash |
-	(keys at: (hash := key largeIdentityHash \\ 4096 + 1)) ifNotNil: [ :keyList | 
-		1 to: (tallies at: hash) do: [ :index |
-			(keyList at: index) == key ifTrue: [
-				^(values at: hash) at: index ] ] ].
-	^aBlock value
+	^ self
+		at: key
+		ifPresent: [ :value | ^ value ]
+		ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -43,14 +37,21 @@ FLLargeIdentityDictionary >> at: key ifAbsentPut: aBlock [
 ]
 
 { #category : #accessing }
-FLLargeIdentityDictionary >> at: key ifPresent: presentBlock ifAbsent: absentBlock [
+FLLargeIdentityDictionary >> at: key ifPresent: presentBlock [
+	^ self
+		at: key
+		ifPresent: presentBlock
+		ifAbsent: []
+]
 
+{ #category : #accessing }
+FLLargeIdentityDictionary >> at: key ifPresent: presentBlock ifAbsent: absentBlock [
 	| hash |
-	(keys at: (hash := key largeIdentityHash + 1)) ifNotNil: [ :keyList | 
+	(keys at: (hash := key largeIdentityHash \\ 4096 + 1)) ifNotNil: [ :keyList | 
 		1 to: (tallies at: hash) do: [ :index |
 			(keyList at: index) == key ifTrue: [
 				^ presentBlock cull: ((values at: hash) at: index) ] ] ].
-	^absentBlock value
+	^ absentBlock value
 ]
 
 { #category : #accessing }

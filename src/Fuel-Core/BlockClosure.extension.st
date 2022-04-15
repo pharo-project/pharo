@@ -19,13 +19,20 @@ BlockClosure >> cleanOuterContext [
 { #category : #'*Fuel-Core' }
 BlockClosure >> fuelAccept: aGeneralMapper [
 
-	^ self shouldBeSubstitutedByCleanCopy
-		"The 'onRecursionDo:' is just to avoid an infinitive loop for the substitution. The cleanCopy MUST be a clean copy so it can be serialized normally"
-		ifTrue: [ aGeneralMapper visitSubstitution: self by: self cleanCopy onRecursionDo: [ aGeneralMapper visitVariableObject: self ]  ]
+	^ self shouldBeSubstitutedByMinimalCopy
+		"The 'onRecursionDo:' is just to avoid an infinitive loop for the substitution"
+		ifTrue: [
+			aGeneralMapper
+				visitSubstitution: self
+				by: self cleanCopy
+				onRecursionDo: [ aGeneralMapper visitVariableObject: self ]  ]
 		ifFalse: [ aGeneralMapper visitVariableObject: self ]
 ]
 
 { #category : #'*Fuel-Core' }
-BlockClosure >> shouldBeSubstitutedByCleanCopy [
+BlockClosure >> shouldBeSubstitutedByMinimalCopy [
+	"Clean blocks can be made smaller by replacing the outer context.
+	Un unclean closure can't be 'cleaned' so it will just be serialized
+	as is. This is an optimization."
 	^ self isClean
 ]
