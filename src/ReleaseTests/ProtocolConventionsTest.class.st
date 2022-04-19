@@ -72,7 +72,7 @@ ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass notMoreViolationsT
 { #category : #tests }
 ProtocolConventionsTest >> testProperAccessingProtocolIsUsed [
 
-	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAccessingRule notMoreViolationsThan: 1
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAccessingRule
 ]
 
 { #category : #tests }
