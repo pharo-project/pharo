@@ -7,15 +7,33 @@ This class absorb the difference of internal and external representation of the 
 Class {
 	#name : #FilePathEncoder,
 	#superclass : #Object,
-	#category : #'Files-Directories'
+	#category : #Deprecated11
 }
 
 { #category : #encoding }
 FilePathEncoder class >> decode: aString [
+
+	self 
+		deprecated: 'Please use #utf8Decoded directly' 
+		transformWith:  '`@receiver decode: `@arg' 
+						-> '`@arg utf8Decoded'.
+						
 	^ aString utf8Decoded
 ]
 
 { #category : #encoding }
 FilePathEncoder class >> encode: pathString [
+
+	self 
+		deprecated: 'Please use #utf8Encoded directly' 
+		transformWith:  '`@receiver encode: `@arg' 
+						-> '`@arg utf8Encoded'.
+
 	^ pathString utf8Encoded
+]
+
+{ #category : #testing }
+FilePathEncoder class >> isDeprecated [ 
+
+	^true
 ]

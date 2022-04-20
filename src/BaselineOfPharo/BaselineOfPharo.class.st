@@ -1,3 +1,6 @@
+"
+Baseline for Pharo IDE
+"
 Class {
 	#name : #BaselineOfPharo,
 	#superclass : #BaselineOf,
@@ -88,7 +91,7 @@ BaselineOfPharo class >> specVersion [
 	^ 'Pharo10'
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfPharo >> baseline: spec [
 	<baseline>
 	| repository |
@@ -103,13 +106,14 @@ BaselineOfPharo >> baseline: spec [
 			spec repository: repository; loads: #('IcebergSupport'). ].
 
 		spec package: 'Deprecated10'.
+		spec package: 'Deprecated11'.
 		
 		spec package: 'FluidClassBuilder'.
 		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
 	]
 ]
 
-{ #category : #baseline }
+{ #category : #actions }
 BaselineOfPharo >> postload: loader package: packageSpec [
 
 	WelcomeHelp openForRelease
