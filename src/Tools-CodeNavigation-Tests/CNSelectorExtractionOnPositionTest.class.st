@@ -107,7 +107,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlock [
 	| selector |
 	selector := '[]'.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod
 ]
@@ -117,7 +117,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlockWithArgument [
 	| selector |
 	selector := '[:even| ]'.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod
 ]
@@ -127,7 +127,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArray [
 	| selector |
 	selector := '{}'.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod
 ]
@@ -137,7 +137,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArrayWithAnElement [
 	| selector |
 	selector := '{even}'.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod
 ]
@@ -147,7 +147,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArray [
 	| selector |
 	selector := '#()'.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod
 ]
@@ -157,7 +157,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArrayWithAnElement [
 	| selector |
 	selector := '#(even)'.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod
 ]
@@ -239,7 +239,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterVariableNode [
 	| selector |
 	selector := #even.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: selector
 ]
@@ -458,7 +458,7 @@ CNSelectorExtractionOnPositionTest >> testCaretOnNonValidCode [
 
 	
 	sourceCode := 'anObjectdo : 2'.
-	ast := (RBParser parseFaultyExpression: sourceCode).
+	ast := (ASTParser parseFaultyExpression: sourceCode).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: #noMethod.
 ]
@@ -468,7 +468,7 @@ CNSelectorExtractionOnPositionTest >> testCaretWithEmptyString [
 	| selector |
 	selector := ''.
 	sourceCode := selector.
-	ast := (RBParser parseFaultyExpression: selector).
+	ast := (ASTParser parseFaultyExpression: selector).
 	self caretAfter: ast.
 	self assert: self selectedSelector equals: nil
 ]

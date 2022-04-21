@@ -110,7 +110,7 @@ RGMethod >> ast [
 { #category : #private }
 RGMethod >> astFromSource [
 
-	^ RBParser parseMethod: self sourceCode
+	^ ASTParser parseMethod: self sourceCode
 ]
 
 { #category : #'accessing - backend' }
@@ -303,7 +303,7 @@ RGMethod >> package: anRGPackage [
 { #category : #accessing }
 RGMethod >> parseTree [
 
-	^(RBParser 
+	^(ASTParser 
 		parseMethod: self sourceCode 
 		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass.
 ]

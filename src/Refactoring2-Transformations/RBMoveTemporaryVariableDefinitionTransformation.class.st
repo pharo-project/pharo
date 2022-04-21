@@ -108,7 +108,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBlocks [
 
 	(candidateBlocks 
-		detect: [:each | RBReadBeforeWrittenTester
+		detect: [:each | ASTReadBeforeWrittenTester
 							isVariable: variableName readBeforeWrittenIn: each]
 		ifNone: [nil]) notNil 
 		ifTrue: [^false].

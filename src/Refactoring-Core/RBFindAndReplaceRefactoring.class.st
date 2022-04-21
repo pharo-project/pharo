@@ -204,7 +204,7 @@ RBFindAndReplaceRefactoring >> nodesOf: methodNode [
 
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> patternParserClass [
-	^ RBPatternParser
+	^ ASTPatternParser
 ]
 
 { #category : #preconditions }

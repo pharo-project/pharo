@@ -87,7 +87,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 			toReturn: 'transformationRule'.
 		self 
 			setupVariableTypesFor: refactoring
-			toReturn: (Array with: (refactoring model classNamed: #RBParseTreeSearcher)).
+			toReturn: (Array with: (refactoring model classNamed: #ASTParseTreeSearcher)).
 		self 
 			setupMethodNameFor: refactoring
 			toReturn: #foo:foo:
@@ -95,7 +95,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext RecursiveSelfRule foo: self foo: aSmalllintContext').
-	self assert: ((refactoring model classNamed: #RBParseTreeSearcher) parseTreeFor: #foo:foo:) equals: (self parseMethod: 'foo: transformationRule foo: aSmalllintContext
+	self assert: ((refactoring model classNamed: #ASTParseTreeSearcher) parseTreeFor: #foo:foo:) equals: (self parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
 	(transformationRule rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 			[(self executeTree: transformationRule rewriteRule tree initialAnswer: false)
@@ -122,7 +122,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 			toReturn: 'transformationRule'.
 		self 
 			setupVariableTypesFor: refactoring
-			toReturn: (Array with: (refactoring model classNamed: #RBParseTreeRewriter)).
+			toReturn: (Array with: (refactoring model classNamed: #ASTParseTreeRewriter)).
 		self 
 			setupMethodNameFor: refactoring
 			toReturn: #foo:foo:
@@ -130,7 +130,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext rewriteRule foo: self foo: aSmalllintContext').
-	self assert: ((refactoring model classNamed: #RBParseTreeRewriter) parseTreeFor: #foo:foo:) equals: (self parseMethod: 'foo: transformationRule foo: aSmalllintContext
+	self assert: ((refactoring model classNamed: #ASTParseTreeRewriter) parseTreeFor: #foo:foo:) equals: (self parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
 	(self executeTree: aSmalllintContext parseTree) ifTrue: 
 			[(transformationRule class recursiveSelfRule executeTree: self tree initialAnswer: false)

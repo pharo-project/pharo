@@ -38,7 +38,7 @@ RBMoveVariableDefinitionRefactoring class >> model: aRBSmalltalk bindTight: anIn
 { #category : #transforming }
 RBMoveVariableDefinitionRefactoring >> checkNodes: sequenceNodes [ 
 	(sequenceNodes 
-		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]) 
+		anySatisfy: [:each | ASTReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]) 
 		ifTrue: [^false].
 	sequenceNodes do: 
 			[:each | 

@@ -49,7 +49,7 @@ RBAddSubtreeTransformation class >> model: aRBModel interval: anInterval with: a
 ]
 
 { #category : #utilities }
-RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
+RBAddSubtreeTransformation >> addNode: anASTNode toSequence: aSequenceNode [
 	"Searches for the statement before which the new code should be added.
 	 If not found, it just adds the new code at the end of the block"
 	
@@ -57,8 +57,8 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 		detect: [ :node | node intersectsInterval: interval ]
 		ifFound: [ :node |
 						node isBlock "special case when a block is empty"
-							ifTrue: [ node body addNode: aRBNode ]
-							ifFalse: [ aSequenceNode addNode: aRBNode before: node ]].
+							ifTrue: [ node body addNode: anASTNode ]
+							ifFalse: [ aSequenceNode addNode: anASTNode before: node ]].
 	^ aSequenceNode methodNode
 ]
 

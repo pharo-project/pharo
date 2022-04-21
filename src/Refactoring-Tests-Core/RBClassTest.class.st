@@ -15,7 +15,7 @@ RBClassTest >> setUp [
 	super setUp.
 	rbNamespace := RBClassModelFactory rbNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
-	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
+	messageNodeClass := rbNamespace classNamed: #ASTMessageNode.
 	rbNamespace defineClass: 'Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''

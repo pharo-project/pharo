@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : #EFFormatter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #ASTProgramNodeVisitor,
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -1041,7 +1041,7 @@ EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
 	(anArrayNode statements
-		reject: [ :each | each class = RBLiteralValueNode ])
+		reject: [ :each | each class = ASTLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
 				do: [ :each | 
 					current := each.
@@ -1285,10 +1285,10 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 ]
 
 { #category : #'private - formatting' }
-EFFormatter >> formatSingleArrayElement: aRBNode [ 
+EFFormatter >> formatSingleArrayElement: anASTNode [ 
 	"Imagine that you have {1 factorial}, you do not want an ending period. This method is only invoked on the last array element."
 	
-	self visitNode: aRBNode
+	self visitNode: anASTNode
 ]
 
 { #category : #'private - formatting' }

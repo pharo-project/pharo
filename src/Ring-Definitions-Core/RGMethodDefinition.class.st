@@ -197,7 +197,7 @@ RGMethodDefinition >> ast [
 
 { #category : #private }
 RGMethodDefinition >> astFromSource [
-	^ RBParser parseMethod: self sourceCode
+	^ ASTParser parseMethod: self sourceCode
 ]
 
 { #category : #'stamp values' }

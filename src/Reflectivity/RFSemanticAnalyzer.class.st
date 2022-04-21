@@ -68,7 +68,7 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
-	self declareTemporaryNode: (RBVariableNode named: #RFReifyValueVar).
+	self declareTemporaryNode: (ASTVariableNode named: #RFReifyValueVar).
 	self analyseForLinksForNodes: aMethodNode.
 	self visitNode: aMethodNode body.
 ]

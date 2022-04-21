@@ -142,7 +142,7 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
-	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
+	tree := ASTParser parseMethod: source onError: [ :msg :pos | ^ self ].
 	formatted := tree formattedCode.
 	formatted = source
 		ifTrue: [ ^ self ].
@@ -158,13 +158,13 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 { #category : #parsing }
 RubSmalltalkCodeMode >> parseExpression: aString [
 
-	^RBParser parseFaultyExpression: aString
+	^ASTParser parseFaultyExpression: aString
 ]
 
 { #category : #parsing }
 RubSmalltalkCodeMode >> parseSource: aString [
 
-	^RBParser parseFaultyMethod: aString
+	^ASTParser parseFaultyMethod: aString
 ]
 
 { #category : #shout }

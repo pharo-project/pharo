@@ -48,7 +48,7 @@ OpalCompiler class >> compilerClasses [
 	^self package definedClasses
 	
 	"Compiler and AST:
-	self package definedClasses, RBProgramNode package definedClasses, {TRBProgramNodeVisitor}
+	self package definedClasses, ASTProgramNode package definedClasses, {TRBProgramNodeVisitor}
 	"
 ]
 
@@ -270,7 +270,7 @@ OpalCompiler >> compileDoit [
 	cm := ast generateWithSource.
 	"We need to re-parse so that the AST is in sync with the 
 	bytecode to be able to debug the doit. Recompile not needed"
-	ast := RBParser parseMethod: ast formattedCode.
+	ast := ASTParser parseMethod: ast formattedCode.
 	ast compilationContext: self compilationContext.
 	self doSemanticAnalysis.
 	"we store the ast in the doit method so that the debugger can read variables from the requestor"
@@ -311,8 +311,8 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		at: #FBDDecompiler  
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error 
-			do: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
-		ifAbsent: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
+			do: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
+		ifAbsent: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : #private }

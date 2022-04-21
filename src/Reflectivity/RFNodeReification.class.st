@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFNodeReification class >> entities [
-	^{RBProgramNode}.
+	^{ASTProgramNode}
 ]
 
 { #category : #'plugin interface' }
@@ -19,5 +19,5 @@ RFNodeReification class >> key [
 
 { #category : #generate }
 RFNodeReification >> genForRBProgramNode [
-	^RBLiteralNode value: entity
+	^ASTLiteralNode value: entity
 ]

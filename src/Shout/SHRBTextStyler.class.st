@@ -4,8 +4,8 @@ I'm the one who visits node to coloring the code
 Class {
 	#name : #SHRBTextStyler,
 	#superclass : #SHTextStyler,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#traits : 'TASTProgramNodeVisitor',
+	#classTraits : 'TASTProgramNodeVisitor classTrait',
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -839,11 +839,11 @@ SHRBTextStyler class >> vintageStyleTable [
 ]
 
 { #category : #formatting }
-SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
+SHRBTextStyler >> addAttributes: attributes forNode: anASTNode [
 	self 
 		addAttributes: attributes
-		from: anRBNode start
-		to: anRBNode stop
+		from: anASTNode start
+		to: anASTNode stop
 ]
 
 { #category : #formatting }
@@ -870,11 +870,11 @@ SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aT
 ]
 
 { #category : #formatting }
-SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute forNode: anRBNode [
+SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute forNode: anASTNode [
 	self 
 		addStyle:styleSymbol
 		attributes: { additionalAttribute }
-		forNode: anRBNode.
+		forNode: anASTNode 
 ]
 
 { #category : #formatting }
@@ -883,15 +883,15 @@ SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: sta
 ]
 
 { #category : #formatting }
-SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
+SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anASTNode [
 	self 
 		addAttributes: (self attributesFor: styleSymbol), additionalAttributes 
-		forNode: anRBNode.
+		forNode: anASTNode 
 ]
 
 { #category : #formatting }
-SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode.
+SHRBTextStyler >> addStyle: styleSymbol forNode: anASTNode [
+	self addAttributes: (self attributesFor: styleSymbol) forNode: anASTNode
 ]
 
 { #category : #formatting }

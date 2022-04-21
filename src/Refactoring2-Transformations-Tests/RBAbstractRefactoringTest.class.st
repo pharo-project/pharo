@@ -53,7 +53,7 @@ RBAbstractRefactoringTest >> parseMethod: aString [
 
 { #category : #parsing }
 RBAbstractRefactoringTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #actions }

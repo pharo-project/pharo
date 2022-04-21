@@ -111,7 +111,7 @@ RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	(parseTree allArgumentVariables includes: temporaryVariableName) 
 		ifTrue: 
 			[self refactoringFailure: temporaryVariableName , ' is a block parameter'].
-	(RBReadBeforeWrittenTester isVariable: temporaryVariableName
+	(ASTReadBeforeWrittenTester isVariable: temporaryVariableName
 		readBeforeWrittenIn: parseTree) 
 			ifTrue: 
 				[self 

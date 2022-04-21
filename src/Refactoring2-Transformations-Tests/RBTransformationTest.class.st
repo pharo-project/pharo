@@ -108,7 +108,7 @@ RBTransformationTest >> parseMethod: aString [
 
 { #category : #parsing }
 RBTransformationTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #running }

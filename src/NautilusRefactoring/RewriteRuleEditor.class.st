@@ -97,7 +97,7 @@ RewriteRuleEditor >> runReplace [
 	| env rewriter changes |
 	env := RBBrowserEnvironment default forPackages: (RPackageOrganizer default packages ).
 
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	rewriter  
 		replace: searchPattern text with: replacePattern text.
 

@@ -9,5 +9,5 @@ Class {
 
 { #category : #building }
 RBASTClassesHelp class >> rootHelpClass [
-	^ RBProgramNode
+	^ ASTProgramNode
 ]

@@ -235,7 +235,7 @@ CDAbstractClassDefinitionParser >> parseSelectorPart: aString withArgument: aNod
 
 { #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #'private - class factory' }

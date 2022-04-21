@@ -32,7 +32,7 @@ RBRefactoringBrowserTest >> parseMethod: aString [
 
 { #category : #private }
 RBRefactoringBrowserTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #private }

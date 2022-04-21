@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFClassReification class >> entities [
-	^{RBProgramNode. Variable}
+	^{ASTProgramNode. Variable}
 ]
 
 { #category : #'plugin interface' }
@@ -34,7 +34,7 @@ RFClassReification >> genForRBProgramNode [
 
 { #category : #generate }
 RFClassReification >> generate [
-	^RBMessageNode 
-		receiver: RBVariableNode selfNode
+	^ASTMessageNode 
+		receiver: ASTVariableNode selfNode
 		selector: #class
 ]

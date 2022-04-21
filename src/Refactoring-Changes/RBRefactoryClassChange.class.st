@@ -113,7 +113,7 @@ RBRefactoryClassChange >> methodSourceFor: aSymbol [
 { #category : #accessing }
 RBRefactoryClassChange >> parserClass [
 
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #private }

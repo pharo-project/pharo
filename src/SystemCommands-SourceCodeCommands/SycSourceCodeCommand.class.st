@@ -25,10 +25,10 @@ SycSourceCodeCommand class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
+SycSourceCodeCommand class >> method: aMethod node: anASTProgramNode [
 	^self new 
 		method: aMethod;
-		sourceNode: aRBProgramNode
+		sourceNode: anASTProgramNode
 ]
 
 { #category : #execution }

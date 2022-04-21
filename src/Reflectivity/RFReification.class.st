@@ -178,7 +178,7 @@ RFReification >> postamble: aNode [
 
 { #category : #preamble }
 RFReification >> preamble: aNode [
-	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ]. "variables not yet suported"
+	(aNode isKindOf: ASTProgramNode) ifFalse: [ ^#() ]. "variables not yet suported"
 	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
 	aNode isMethod	ifTrue: [ ^self preambleForMethod: aNode ].
 	aNode isSequence ifTrue: [ ^self preambleSequence: aNode ].
@@ -186,7 +186,7 @@ RFReification >> preamble: aNode [
 	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
 	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
 	aNode isVariable ifTrue: [ ^self preambleForVariable: aNode ].
-	^#().
+	^#()
 ]
 
 { #category : #preamble }

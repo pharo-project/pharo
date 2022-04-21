@@ -11,7 +11,7 @@ OCCompilerDynamicASTPluginTest >> testCreatingAndUsingDynamicCompilerPlugin [
 	Object compiler
 		addPlugin: 
 			(OCCompilerDynamicASTPlugin 
-				newFromTransformBlock: [ :ast | (RBParseTreeRewriter replaceLiteral: 42 with: 'meaning of life') executeTree: ast. ast. ]
+				newFromTransformBlock: [ :ast | (ASTParseTreeRewriter replaceLiteral: 42 with: 'meaning of life') executeTree: ast. ast. ]
 				andPriority: 0
 			);
 		evaluate: '42'.

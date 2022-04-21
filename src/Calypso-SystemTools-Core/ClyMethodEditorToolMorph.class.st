@@ -132,7 +132,7 @@ ClyMethodEditorToolMorph >> formatSourceCode [
 
 { #category : #building }
 ClyMethodEditorToolMorph >> formatTextIfNeeded [
-	RBProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
+	ASTProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
 	
 	textMorph formatSourceCode. 
 	textModel clearUserEdits

@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 ClyAddConditionalBreakpointCommandTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #tests }

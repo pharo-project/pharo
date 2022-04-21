@@ -63,6 +63,6 @@ RBRealizeClassTransformation >> transform: targetClass [
 				parseTree body
 					temporaries: OrderedCollection new;
 					statements: OrderedCollection new;
-					addNode: (RBMessageNode receiver: RBVariableNode selfNode selector: #shouldBeImplemented).
+					addNode: (ASTMessageNode receiver: ASTVariableNode selfNode selector: #shouldBeImplemented).
 				targetClass compile: parseTree newSource withAttributesFrom: method ] ] ]
 ]

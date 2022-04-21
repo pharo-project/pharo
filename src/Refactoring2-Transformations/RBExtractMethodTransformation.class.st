@@ -226,14 +226,14 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments
-		collect: [ :p | RBVariableNode named: p ].
+		collect: [ :p | ASTVariableNode named: p ].
 	
-	newMethodNode := RBMethodNode
+	newMethodNode := ASTMethodNode
 							selector: aMethodName selector
 							arguments: args asArray
 							body: (subtree isSequence 
 								ifTrue: [ subtree ]
-								ifFalse: [ RBSequenceNode
+								ifFalse: [ ASTSequenceNode
 									temporaries: #()
 									statements: (OrderedCollection with: subtree)]).						
 	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
@@ -243,8 +243,8 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 	
 	assignments size = 1 ifTrue: [
 		newMethodNode addNode: 
-			(RBReturnNode value: 
-			(RBVariableNode named: assignments first asString)) ].
+			(ASTReturnNode value: 
+			(ASTVariableNode named: assignments first asString)) ].
 	
 	^ newMethodNode.
 ]
@@ -323,7 +323,7 @@ RBExtractMethodTransformation >> preconditions [
 		& (RBCondition withBlock: [
 			| tempVariables |
 			tempVariables := self calculateTemporaries.
-			(RBReadBeforeWrittenTester readBeforeWritten: tempVariables in: aSubtree) ifNotEmpty: [
+			(ASTReadBeforeWrittenTester readBeforeWritten: tempVariables in: aSubtree) ifNotEmpty: [
 				self refactoringError: 'Cannot extract temporaries if they are read before written.' ]. true ])
 		& (RBCondition withBlock: [
 			self calculateAssignments size > 1 ifTrue: [ 
@@ -332,7 +332,7 @@ RBExtractMethodTransformation >> preconditions [
 			| assignmentCollection |
 			assignmentCollection := self calculateAssignments.
 			assignmentCollection ifNotEmpty: [ 
-			((RBReadBeforeWrittenTester isVariable: assignmentCollection first
+			((ASTReadBeforeWrittenTester isVariable: assignmentCollection first
 				readBeforeWrittenIn: aSubtree) 
 				or: [aSubtree containsReturn])
 				ifTrue: [ self refactoringError: ('Cannot extract assignment to <1s> without also extracting all the references.' expandMacrosWith: assignments asString)] ]. true ])

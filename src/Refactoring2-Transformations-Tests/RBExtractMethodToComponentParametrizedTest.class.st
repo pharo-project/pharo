@@ -70,11 +70,11 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 { #category : #tests }
 RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
-	refactoring := self createRefactoringWithArguments: { (118 to: 286) . #copyDictionary: . RBReadBeforeWrittenTester }.
+	refactoring := self createRefactoringWithArguments: { (118 to: 286) . #copyDictionary: . ASTReadBeforeWrittenTester }.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Dictionary)).
-	class := refactoring model classNamed: #RBReadBeforeWrittenTester.
+	class := refactoring model classNamed: #ASTReadBeforeWrittenTester.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 

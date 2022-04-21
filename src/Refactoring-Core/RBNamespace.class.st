@@ -697,7 +697,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [ 
 	| parseTree |
 	parseTree := self parserClass parseExpression: definitionString.
-	parseTree receiver: (RBVariableNode named: aSymbol).
+	parseTree receiver: (ASTVariableNode named: aSymbol).
 	^parseTree formattedCode
 ]
 

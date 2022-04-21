@@ -7,7 +7,7 @@ Note that  I only override a single method, and that method is somewhat deprecat
 "
 Class {
 	#name : #OCTargetCompilerParser,
-	#superclass : #RBParser,
+	#superclass : #ASTParser,
 	#category : #'OpalCompiler-Tests-Semantic'
 }
 

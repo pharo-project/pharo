@@ -11,7 +11,7 @@ I only rewrite nodes with ""reconstructed"" property to ensure that I reoptimize
 "
 Class {
 	#name : #FBDOptimizedMessagesRewriter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #ASTProgramNodeVisitor,
 	#category : #'Flashback-Decompiler-Utilities'
 }
 
@@ -125,7 +125,7 @@ FBDOptimizedMessagesRewriter >> handleBigArray: msgNode [
 	seq := msgNode parent parent.
 	cascade := seq statements at: (seq statements indexOf: msgNode parent) +1 .
 	seq removeNode: msgNode parent.
-	seq replaceNode: cascade withNode: (RBArrayNode statements: (cascade  messages removeLast; collect: [ :msg | msg arguments first ]))
+	seq replaceNode: cascade withNode: (ASTArrayNode statements: (cascade  messages removeLast; collect: [ :msg | msg arguments first ]))
 ]
 
 { #category : #handling }
@@ -319,7 +319,7 @@ FBDOptimizedMessagesRewriter >> rewriteStatements: statements in: seq [
 RemoveNode first uses == to detect the node , then =
 So if you don't remove the first statement of the collection (which has been replaced by the cascade and no longer exists), then this will remove all nodes = to first node (and not ==).
 So if you have the same node twice in the sequence, and this node is the first message of a cascade, then all occurrences of this node would be removed"
-	seq replaceNode: statements first withNode: (RBCascadeNode messages: statements copy).
+	seq replaceNode: statements first withNode: (ASTCascadeNode messages: statements copy).
 	(statements
 		removeFirst;
 		yourself) do: [ :each | seq removeNode: each ]

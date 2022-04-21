@@ -2,7 +2,7 @@ Extension { #name : #Object }
 
 { #category : #'*Reflectivity' }
 Object >> asLiteralNode [
-	^RBLiteralNode value: self
+	^ASTLiteralNode value: self
 ]
 
 { #category : #'*Reflectivity' }

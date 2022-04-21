@@ -25,7 +25,7 @@ RBTRefactoringBuilder >> parseTreeRewriter [
 
 { #category : #parsing }
 RBTRefactoringBuilder >> parseTreeRewriterClass [
-	^ RBParseTreeRewriter
+	^ ASTParseTreeRewriter
 ]
 
 { #category : #parsing }
@@ -35,12 +35,12 @@ RBTRefactoringBuilder >> parseTreeSearcher [
 
 { #category : #parsing }
 RBTRefactoringBuilder >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : #parsing }
 RBTRefactoringBuilder >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #exceptions }

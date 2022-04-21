@@ -330,7 +330,7 @@ BlockClosureTest >> testOneArgument [
 
 { #category : #'tests - printing' }
 BlockClosureTest >> testPrintOn [
-	self assert: (RBParser parseExpression: [ 1 + 2 ] printString) equals: (RBParser parseExpression: '[ 1 + 2 ]')
+	self assert: (ASTParser parseExpression: [ 1 + 2 ] printString) equals: (ASTParser parseExpression: '[ 1 + 2 ]')
 ]
 
 { #category : #'tests - printing' }
@@ -346,7 +346,7 @@ BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 		block := nil method.
 		
 		self deny: method hasSourceCode.
-		self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
+		self assert: (ASTParser parseExpression: block printString) equals: (ASTParser parseExpression: '[ 1 + 2 ]').
 	] ensure: [ method removeFromSystem ]
 ]
 

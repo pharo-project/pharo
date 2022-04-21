@@ -17,7 +17,7 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 { #category : #utilities }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : #utilities }

@@ -82,25 +82,25 @@ RBGenerateEqualHashRefactoring >> compileEqual [
 		do: [ :each | 
 			| accessor |
 			accessor := self accessorForVariable: each.
-			comparison := RBMessageNode
-				receiver: (RBVariableNode named: each)
+			comparison := ASTMessageNode
+				receiver: (ASTVariableNode named: each)
 				selector: #=
 				arguments:
 					(Array
 						with:
-							(RBMessageNode
-								receiver: (RBVariableNode named: 'anObject')
+							(ASTMessageNode
+								receiver: (ASTVariableNode named: 'anObject')
 								selector: accessor)).
 			statement := statement
 				ifNil: [ comparison ]
-				ifNotNil: [ RBMessageNode
+				ifNotNil: [ ASTMessageNode
 						receiver: comparison
 						selector: #and:
 						arguments:
 							(Array
 								with:
-									(RBBlockNode
-										body: (RBSequenceNode statements: (Array with: statement)))) ] ].
+									(ASTBlockNode
+										body: (ASTSequenceNode statements: (Array with: statement)))) ] ].
 	method
 		addNode: statement;
 		addReturn.
@@ -117,12 +117,12 @@ RBGenerateEqualHashRefactoring >> compileHash [
 	statement := nil.
 	variables reversed
 		do: [ :each | 
-			hash := RBMessageNode
-				receiver: (RBVariableNode named: each)
+			hash := ASTMessageNode
+				receiver: (ASTVariableNode named: each)
 				selector: #hash.
 			statement := statement
 				ifNil: [ hash ]
-				ifNotNil: [ RBMessageNode
+				ifNotNil: [ ASTMessageNode
 						receiver: hash
 						selector: #bitXor:
 						arguments: (Array with: statement) ] ].

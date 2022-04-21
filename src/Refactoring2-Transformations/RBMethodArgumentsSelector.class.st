@@ -57,7 +57,7 @@ RBMethodArgumentsSelector >> addAssociation [
 		value := valuesList at: self valueIndex.
 			
 		"replace occurrences in code"
-		tree := RBParseTreeRewriter 
+		tree := ASTParseTreeRewriter 
 			replace: value
 			with: argument in: tree.
 		
@@ -215,7 +215,7 @@ RBMethodArgumentsSelector >> removeAssociation [
 		value := association value.
 		
 		"replace occurrences in code"
-		tree := RBParseTreeRewriter 
+		tree := ASTParseTreeRewriter 
 			replace: argument
 			with: value in: tree.
 

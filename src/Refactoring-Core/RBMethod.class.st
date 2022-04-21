@@ -121,7 +121,7 @@ RBMethod >> parseTree [
 
 { #category : #testing }
 RBMethod >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : #testing }

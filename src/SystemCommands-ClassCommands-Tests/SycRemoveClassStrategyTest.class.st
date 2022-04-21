@@ -84,7 +84,7 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForUsedTrait [
 	browser := ClyFullBrowserMorph onDefaultEnvironment.
 	strategies := SycRemoveClassStrategy
 		              createForBrowser: browser
-		              classes: { TRBProgramNodeVisitor }.
+		              classes: { TASTProgramNodeVisitor }.
 	self
 		assert: strategies size > 2;
 		assert: (strategies anySatisfy: [ :each | 

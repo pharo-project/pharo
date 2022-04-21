@@ -61,7 +61,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [RBSimpleFormatter]).
+	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ASTSimpleFormatter]).
 
 	Color flushCache.
 	

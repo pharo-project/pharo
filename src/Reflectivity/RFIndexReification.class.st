@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFIndexReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode}.
+	^{ASTVariableNode. ASTAssignmentNode}.
 ]
 
 { #category : #'plugin interface' }

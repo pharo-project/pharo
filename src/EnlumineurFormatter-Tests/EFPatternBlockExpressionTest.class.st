@@ -16,5 +16,5 @@ EFPatternBlockExpressionTest >> openBracket [
 
 { #category : #hooks }
 EFPatternBlockExpressionTest >> parserClass [
-	^ RBPatternParser
+	^ ASTPatternParser
 ]

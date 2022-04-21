@@ -25,7 +25,7 @@ ReIconHardcodedMessageRule >> initialize [
 	self
 		replace: 'Smalltalk ui icons `iconName'
 		byEvaluating: [ :node :matchMap | 
-			RBParser
+			ASTParser
 				parseExpression: 'self iconNamed: #' , (matchMap at: #'`iconName') ]
 ]
 

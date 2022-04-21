@@ -47,7 +47,7 @@ DocCommentIconStyler >> notifySourceError: aNode [
 	^ [ | examples faultyExample |
 		examples := aNode pharoDocCommentNodes.
 		faultyExample := examples detect: [ :example | example expression expressionCode isFaulty ].
-		RBParser parseExpression: faultyExample expression expression ]
+		ASTParser parseExpression: faultyExample expression expression ]
 ]
 
 { #category : #private }

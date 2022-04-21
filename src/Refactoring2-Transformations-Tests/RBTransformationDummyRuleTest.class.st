@@ -222,7 +222,7 @@ RBTransformationDummyRuleTest class >> nuke [
 { #category : #'instance creation' }
 RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [ 
 	| rewriteRule |
-	rewriteRule := RBParseTreeRewriter new.
+	rewriteRule := ASTParseTreeRewriter new.
 	stringArrays do: 
 			[:each | 
 			aBoolean
@@ -296,7 +296,7 @@ RBTransformationDummyRuleTest >> newUnclassifiedMethod [
 
 { #category : #rules }
 RBTransformationDummyRuleTest >> parseTreeRewriter [
-	^ RBParseTreeRewriter new
+	^ ASTParseTreeRewriter new
 ]
 
 { #category : #accessing }

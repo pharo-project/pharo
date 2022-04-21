@@ -60,8 +60,8 @@ RBExtractToTemporaryRefactoring >> compileNewMethod [
 { #category : #transforming }
 RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [ 
 	| valueNode |
-	valueNode := RBVariableNode named: newVariableName.
-	^RBAssignmentNode variable: valueNode value: aNode
+	valueNode := ASTVariableNode named: newVariableName.
+	^ASTAssignmentNode variable: valueNode value: aNode
 ]
 
 { #category : #initialization }
@@ -81,12 +81,12 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 	children := self parseTree body allChildren.
 	nodeReferences := children select: [ :each | each = node ] thenCollect: [ :each | each ].
 	statementNode := node statementNode.
-	nodeReferences do: [ :each | each replaceWith: (RBVariableNode named: newVariableName) ].
+	nodeReferences do: [ :each | each replaceWith: (ASTVariableNode named: newVariableName) ].
 	statementNode parent
 		addNode: (self constructAssignmentFrom: node)
 			before:
 				(node == statementNode
-						ifTrue: [ RBVariableNode named: newVariableName ]
+						ifTrue: [ ASTVariableNode named: newVariableName ]
 						ifFalse: [ statementNode ]);
 		addTemporaryNamed: newVariableName
 ]

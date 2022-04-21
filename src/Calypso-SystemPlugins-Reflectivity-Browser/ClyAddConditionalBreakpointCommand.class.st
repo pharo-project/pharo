@@ -40,16 +40,16 @@ ClyAddConditionalBreakpointCommand >> conditionBlock: anObject [
 ClyAddConditionalBreakpointCommand >> conditionBlockProducerMethodAST: conditionString [
 	| conditionBlockProducerMethodAST conditionAST |
 	conditionAST := self parserClass parseExpression: conditionString.
-	conditionBlockProducerMethodAST := RBMethodNode
+	conditionBlockProducerMethodAST := ASTMethodNode
 		selector: #conditionBlockGenerator
 		body:
-			(RBReturnNode
+			(ASTReturnNode
 				value:
-					(RBBlockNode
-						arguments: {(RBVariableNode named: 'ThisContext')}
+					(ASTBlockNode
+						arguments: {(ASTVariableNode named: 'ThisContext')}
 						body:
-							(RBMessageNode
-								receiver: (RBVariableNode named: 'Breakpoint')
+							(ASTMessageNode
+								receiver: (ASTVariableNode named: 'Breakpoint')
 								selector: #checkBreakConditionValue:
 								arguments: {conditionAST}) asSequenceNode)) asSequenceNode.
 	conditionBlockProducerMethodAST := self
@@ -77,7 +77,7 @@ ClyAddConditionalBreakpointCommand >> generateConditionBlockFrom: aString [
 
 { #category : #'block generation' }
 ClyAddConditionalBreakpointCommand >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : #execution }
@@ -115,13 +115,13 @@ ClyAddConditionalBreakpointCommand >> rewriteASTToSimulateExecutionInADifferentC
 		For example, a reference to a variable named flower is rewritten into `ThisContext readVariableNamed: #flower`
 	4) Rewriting references to `thisContext` into references to `ThisContext`
 	5) Rewriting references to `self` into references to `ThisContext receiver`"
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis.	"To find which variables are undefined"
 	rewriter
-		replace: (RBVariableNode named: #ThisContext) name
+		replace: (ASTVariableNode named: #ThisContext) name
 		with:
 			'(ThisContext readVariableNamed: #'
-				, (RBVariableNode named: #ThisContext) name , ')'.
+				, (ASTVariableNode named: #ThisContext) name , ')'.
 	allMessageNodes := semanticallyAnalysedMethodAST allChildren
 		select: [ :astElem | astElem isMessage ].
 	receiverSuperclassValueNode := self parserClass
@@ -132,18 +132,18 @@ ClyAddConditionalBreakpointCommand >> rewriteASTToSimulateExecutionInADifferentC
 				ifTrue: [ rewriter
 						replaceTree: msgNode
 						withTree:
-							(RBMessageNode
+							(ASTMessageNode
 								receiver: (self parserClass parseExpression: 'ThisContext receiver')
 								selector: #perform:withArguments:inSuperclass:
 								arguments:
-									{(RBLiteralValueNode value: msgNode selector).
-									(RBArrayNode statements: msgNode arguments).
+									{(ASTLiteralValueNode value: msgNode selector).
+									(ASTArrayNode statements: msgNode arguments).
 									receiverSuperclassValueNode}) ] ].
 	intermediateAST := rewriter
 		executeTree: semanticallyAnalysedMethodAST;
 		tree.
 	analysedIntermediateAST := intermediateAST doSemanticAnalysis.
-	rewriter2 := RBParseTreeRewriter new.
+	rewriter2 := ASTParseTreeRewriter new.
 	allUndeclaredVariableNodes := analysedIntermediateAST allChildren
 		select: [ :astElem | astElem isVariable and: [ astElem isUndeclaredVariable ] ].
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes

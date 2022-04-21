@@ -37,7 +37,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 	theTextString := self requestor textMorph editor paragraph text.
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
-	newMethodNode := RBParser parseMethod: theTextString.
+	newMethodNode := ASTParser parseMethod: theTextString.
 	
 	"We check if there is a declaration of temporary variables"
 	tempsMark :=  newMethodNode body  rightBar ifNil: [ self methodNode body start ].	
@@ -224,7 +224,7 @@ OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterva
 		wordInterval: anInterval
 		offset: 0.
 	self methodNode source: self requestor text.
-	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
+	node replaceWith:((ASTVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
 	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
 	^ (node owningScope lookupVar: varName)
 		ifNil: [self error: 'should be found'].

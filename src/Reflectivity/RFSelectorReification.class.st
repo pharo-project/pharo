@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFSelectorReification class >> entities [
-	^{RBMessageNode. RBMethodNode}
+	^{ASTMessageNode. ASTMethodNode}
 ]
 
 { #category : #'plugin interface' }

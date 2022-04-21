@@ -47,8 +47,8 @@ A brief overview of the core components.
 RBScanner and RBParser
 The Refactoring Framework has its own parser and scanner, creating an abstract syntax tree (AST) from the methods source code.
 
-RBProgramNode and subclasses
-These are the base and concrete subclasses for all RB-Nodes representing a syntax node class, like RBMethodNode, RBAssignmentNode, RBBlockNode et cetera.
+ASTProgramNode and subclasses
+These are the base and concrete subclasses for all AST-Nodes representing a syntax node class, like ASTMethodNode, ASTAssignmentNode, ASTBlockNode et cetera.
 
 RBParseTreeSearcher and RBParseTreeRewriter
 A refactoring operation uses the tree searcher and rewriter for applying a transformation on the abstract syntax tree.

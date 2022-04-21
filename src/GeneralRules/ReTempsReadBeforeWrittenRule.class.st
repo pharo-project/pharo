@@ -33,7 +33,7 @@ ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReTempsReadBeforeWrittenRule >> basicCheck: aMethod [
-	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) isNotEmpty
+	^ (ASTReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) isNotEmpty
 ]
 
 { #category : #accessing }
