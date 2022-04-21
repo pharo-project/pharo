@@ -10,7 +10,7 @@ Class {
 
 { #category : #'private - classes' }
 ASTPatternParser >> messageNodeClass [
-	^RBPatternMessageNode
+	^ASTPatternMessageNode
 ]
 
 { #category : #'private - classes' }
@@ -65,14 +65,14 @@ ASTPatternParser >> parsePatternBlock: aClass [
 ASTPatternParser >> parsePragmaLiteral [
 	| node |
 	currentToken isPatternBlock 
-		ifTrue: [ ^ self parsePatternBlock: RBPatternBlockNode ].
+		ifTrue: [ ^ self parsePatternBlock: ASTPatternBlockNode ].
 	(currentToken isIdentifier and: [ currentToken isPatternVariable ]) ifTrue: [
 		node := self variableNodeClass identifierNamed: currentToken value at: currentToken start.
 		node isLiteralNode 
 			ifFalse: [ self parseError: 'Literal pattern expected' ].
 		self step.
 		currentToken isPatternBlock ifTrue: [
-			node := (self parsePatternBlock: RBPatternWrapperBlockNode)
+			node := (self parsePatternBlock: ASTPatternWrapperBlockNode)
 				wrappedNode: node;
 				yourself ].
 		^ node ].
@@ -99,7 +99,7 @@ ASTPatternParser >> parsePrimitiveLiteral [
 { #category : #'private - parsing' }
 ASTPatternParser >> parsePrimitiveObject [
 	currentToken isPatternBlock 
-		ifTrue: [^self parsePatternBlock: RBPatternBlockNode].
+		ifTrue: [^self parsePatternBlock: ASTPatternBlockNode].
 	^super parsePrimitiveObject
 ]
 
@@ -126,8 +126,8 @@ ASTPatternParser >> parseUnaryMessage [
 ASTPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 	| node |
 
-	node := self parsePatternBlock: RBPatternWrapperBlockNode.
-	node class == RBPatternWrapperBlockNode ifTrue: [ 
+	node := self parsePatternBlock: ASTPatternWrapperBlockNode.
+	node class == ASTPatternWrapperBlockNode ifTrue: [ 
 		self flag: 'I think this is ugly, but I don''t know how to avoid checking the result of #parsePatternBlock:'.
 		node wrappedNode: wrappedNode ].
 	

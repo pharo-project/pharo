@@ -20,7 +20,7 @@ ASTDumpVisitorTest >> testAPI [
 	node := self parseExpression: 'self foo'.
 	self 
 		assert: (ASTDumpVisitor new visit: node) contents
-		equals:  'RBMessageNode receiver: (RBVariableNode named: #self) selector: #foo'
+		equals:  'ASTMessageNode receiver: (ASTVariableNode named: #self) selector: #foo'
 ]
 
 { #category : #tests }

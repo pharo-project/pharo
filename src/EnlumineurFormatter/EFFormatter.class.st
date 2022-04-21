@@ -2163,12 +2163,12 @@ EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
 ]
 
 { #category : #'visiting - patterns' }
-EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+EFFormatter >> visitPatternWrapperBlockNode: anASTPatternWrapperBlockNode [
+	self visitNode: anASTPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternWrapperBlockNode]
+		around: [self formatBlock: anASTPatternWrapperBlockNode]
 ]
 
 { #category : #visiting }

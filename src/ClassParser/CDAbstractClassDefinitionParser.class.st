@@ -246,7 +246,7 @@ CDAbstractClassDefinitionParser >> sharedPoolNodeClass [
 { #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> slotInitializationNodeClass [
 
-	^ RBSlotInitializationNode
+	^ ASTSlotInitializationNode
 ]
 
 { #category : #'private - class factory' }

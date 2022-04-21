@@ -149,10 +149,10 @@ ASTProgramNodeVisitor >> visitPatternBlockNode: aRBPatternBlockNode [
 ]
 
 { #category : #visiting }
-ASTProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
-	self visitNode: aRBPatternWrapperBlockNode body
+ASTProgramNodeVisitor >> visitPatternWrapperBlockNode: anASTPatternWrapperBlockNode [
+	self visitNode: anASTPatternWrapperBlockNode wrappedNode.
+	self visitArgumentNodes: anASTPatternWrapperBlockNode arguments.
+	self visitNode: anASTPatternWrapperBlockNode body
 ]
 
 { #category : #visiting }

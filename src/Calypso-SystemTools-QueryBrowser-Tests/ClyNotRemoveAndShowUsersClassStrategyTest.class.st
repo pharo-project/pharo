@@ -12,7 +12,7 @@ ClyNotRemoveAndShowUsersClassStrategyTest >> testExecutingCommand [
 	| browser command strategy |
 	browser := ClyBrowserMock new.
 	strategy := ClyNotRemoveAndShowUsersClassStrategy newForBrowser: browser.
-	command := SycRemoveClassCommand for: { TASTProgramNodeVisitor }.
+	command := SycRemoveClassCommand for: { ASTTProgramNodeVisitor }.
 	strategy execute: command.
-	self assert: (browser hasSpawnedQueryBrowserOn: TASTProgramNodeVisitor users)
+	self assert: (browser hasSpawnedQueryBrowserOn: ASTTProgramNodeVisitor users)
 ]

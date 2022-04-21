@@ -4,8 +4,8 @@ I'm the one who visits node to coloring the code
 Class {
 	#name : #SHRBTextStyler,
 	#superclass : #SHTextStyler,
-	#traits : 'TASTProgramNodeVisitor',
-	#classTraits : 'TASTProgramNodeVisitor classTrait',
+	#traits : 'ASTTProgramNodeVisitor',
+	#classTraits : 'ASTTProgramNodeVisitor classTrait',
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -1275,6 +1275,14 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 	self 
 		addStyle: #invalid
 		forNode: anErrorNode
+]
+
+{ #category : #visiting }
+SHRBTextStyler >> visitPatternWrapperBlockNode: anASTPatternWrapperBlockNode [ 
+	self 
+		visitNode: anASTPatternWrapperBlockNode wrappedNode;
+		visitArgumentNodes: anASTPatternWrapperBlockNode arguments;
+		visitNode: anASTPatternWrapperBlockNode body
 ]
 
 { #category : #visiting }

@@ -479,12 +479,12 @@ ASTSimpleFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
 ]
 
 { #category : #visiting }
-ASTSimpleFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+ASTSimpleFormatter >> visitPatternWrapperBlockNode: anASTPatternWrapperBlockNode [
+	self visitNode: anASTPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [ self formatBlock: aRBPatternWrapperBlockNode ]
+		around: [ self formatBlock: anASTPatternWrapperBlockNode ]
 ]
 
 { #category : #visiting }
