@@ -45,7 +45,7 @@ With this hierarchy of classes, the operations and programs working with the AST
 
 AST node visitors are subclasses of a ProgramNodeVisitor, or a just any other class implementing the appropriate visitNode: / visitXXX: methods.
 
-Some examples of ProgramNodeVisitors operating on the RBParsers AST:
+Some examples of ProgramNodeVisitors operating on the ASTParsers AST:
 
 Opal Compiler
 Opals translator visits the AST tree to create a intermediate representation that is finally used to generated method byte code. Another step in the compiler work flow, the ClosureAnalyzer, is implemented as
@@ -61,7 +61,7 @@ TextStyler
 SHRBTextStyler builds a attributed text representation of the source code, augmented with text font, color or emphasis attributes based on the current style settings. 
 
 And of course
-RBParseTreeSearcher and RBParseTreeRewriter
+ASTParseTreeSearcher and ASTParseTreeRewriter
 The original users of this AST structure for searching and rewriting code, more on this in its own chapter.
 '
 ]
@@ -148,9 +148,9 @@ RBRefactoringCoreHelp class >> overview [
 '
 This book contains some chapter about the core components
 the Abstract Syntax Tree (AST)
-the parser (RBParser)
-the extended pattern parser (RBPatternParser)
-the tree searcher / rewriter (RBParseTreeSearcher/RBParseTreeRewriter)
+the parser (ASTParser)
+the extended pattern parser (ASTPatternParser)
+the tree searcher / rewriter (ASTParseTreeSearcher/ASTParseTreeRewriter)
 '
 ]
 
@@ -218,14 +218,14 @@ RBRefactoringCoreHelp class >> pages [
 { #category : #pages }
 RBRefactoringCoreHelp class >> patternParser [
 	^HelpTopic
-		title: 'RBPatternParser and metavariables'
+		title: 'ASTPatternParser and metavariables'
 		contents: 
 '
 Generating an AST of Smalltalk source code and implementing a program node visitor gives already great and powerful capabilities. The refactoring framework extends this expressiveness by including so called "metavariables".
 
-As this expressions are using an extended syntax - metavariables aren''t known to the RBParser - a special parser is needed to parse this expression, the RBPatternParser.
+As this expressions are using an extended syntax - metavariables aren''t known to the ASTParser - a special parser is needed to parse this expression, the ASTPatternParser.
 The following pages describe the added syntax elements. Examples on how to use or tests these expressions
-can be found in the chapter "RBPatternParser examples".
+can be found in the chapter "ASTPatternParser examples".
 
 metavariables are a part of a parser expression, just like any other Smalltalk code, but instead of representing an expression with the exact name, they form a variable that can be unify with any real code expression with the same *structure*.
 
@@ -234,7 +234,7 @@ Parsing an expression like:
 a := a + 1 
 creates a parse tree with an assignment node assigning to ''a'', the value of sending the message ''+'' with argument 1 to the object ''a''.
 
-We could implement a refactoring operation (or directly use the RBParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
+We could implement a refactoring operation (or directly use the ASTParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
 
 We can define the expression with the meaning of ''increment a variable by one'' by using a metavariable. All metavariables start with a ´ (backquote).
 `a := `a + 1
@@ -315,10 +315,10 @@ If we want to find the same call in the argument, we need to recurse into it by 
 { #category : #pages }
 RBRefactoringCoreHelp class >> patternParserExamples [
 	^HelpTopic
-		title: 'Examples and usage of RBPatternParser expressions'
+		title: 'Examples and usage of ASTPatternParser expressions'
 		contents: 
 '
-The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (RBParseTreeSearcher/RBParseTreeRewriter).
+The chapter "ASTPatternParser and metavariables" describes the added syntax elements for the ASTPatternParser used in the refactoring engine (ASTParseTreeSearcher/ASTParseTreeRewriter).
 
 In this chapter we show some example expressions and how to test and use them.
 
@@ -327,7 +327,7 @@ Calypso has a search function that is the simples way to use and see the result 
 Search code
 The search code menu will put a search pattern template in the code pane:
 
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matches: ''`@object'' do: [ :node :answer | node ];
 	matchesMethod: ''`@method: `@args | `@temps | `@.statements'' do: [ :node :answer | node ];
 	yourself
@@ -339,7 +339,7 @@ You can replace the example pattern ''`@object'' or ''`@method: `@args | `@temps
 the search pattern you want to use. And most of the time you only want to use one, the code expression search or the method search.
 
 A first example, replace the code pane content by:
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matchesMethod: ''drawOn: `@args | `@temps | `@.statements'' do: [ :node :answer | node ];
 	yourself
 
@@ -347,7 +347,7 @@ You can now accept this code, instead of saving this method it will just spawn a
 The result is actually the same as if we had searched for all implementors of #drawOn:
 
 Next example, replace the code pane content by:
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matches: ''`@object drawOn: `@args'' do: [ :node :answer | node ];
 	yourself
 
@@ -357,7 +357,7 @@ The #do: block can be used to further test or filter the found matches. The node
 
 Example, search for all methods with at least one argument where the method name starts with ''permform'':
 
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 		matchesMethod: ''`@method: `@args | `@temps | `@.statements''
 			do: [ :node :answer | 
 			((node selector beginsWith: ''perform'') and: [ node arguments isEmpty not ])
@@ -365,12 +365,12 @@ RBParseTreeSearcher new
 				ifFalse: [ nil ] ];
 		yourself
 
-Another way to use extended pattern syntax is to directly instantiate a RBParseTreeSearcher and execute it on a parse tree.
+Another way to use extended pattern syntax is to directly instantiate a ASTParseTreeSearcher and execute it on a parse tree.
 First we define the pattern, instantiate a tree searcher and tell him what to do when matching this pattern (just return the matched node) and execute it on the AST of Numbers method #asPoint.
 
 | searcher pattern parseTree |
 pattern := ''^ self''.
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher matches: pattern do:[:node :answer |node].
 searcher executeTree: (Number>>#asPoint) ast initialAnswer: nil.
 
@@ -384,7 +384,7 @@ If we don''t just want to match an expression but collecting all matching nodes,
 | searcher pattern parseTree  selfMessages |
 selfMessages := Set new.
 pattern := ''self `@message: ``@args''.
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher matches: pattern do:[:node :answer |  selfMessages add: node selector].
 searcher executeTree: (Morph>>#fullDrawOn:) ast initialAnswer: nil.
 selfMessages inspect.

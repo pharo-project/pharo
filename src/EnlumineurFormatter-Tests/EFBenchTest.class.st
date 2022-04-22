@@ -71,7 +71,7 @@ EFBenchTest >> testEF [
   "
 	[ EFFormatter format: (EFBenchTest >> #longNestedMethodShort) ast ] bench  '0.159 per second'
 
-  [ RBSimpleFormatter format: (EFBenchTest >> #longNestedMethodShort) ast ] bench 
+  [ ASTSimpleFormatter format: (EFBenchTest >> #longNestedMethodShort) ast ] bench 
 	>>>'15597.361 per second'
 	
   [ BIConfigurableFormatter  format: (EFBenchTest >> #longNestedMethodShort) ast ] bench  '7341.000 per second'
