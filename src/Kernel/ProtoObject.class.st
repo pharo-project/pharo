@@ -347,9 +347,8 @@ ProtoObject >> pointersToExcept: objectsToExclude among: aCollectionOfObjects [
 
 { #category : #'pointing to' }
 ProtoObject >> pointsTo: anObject [
-	"Answers true if I hold a reference to anObject, or false otherwise
-	an object points to a class via the header either directly or indirectly 
-	via the compact classes array"
+	"Answers true if I hold a reference to anObject, or false otherwise.
+	Note: an object points to the class via the header"
 
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
 ]
