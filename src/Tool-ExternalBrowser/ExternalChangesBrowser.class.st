@@ -142,7 +142,7 @@ ExternalChangesBrowser >> buildMenu [
 	aMenu 	addItem: [ :item | 
 			item
 				name: 'File in all selected';
-				action: [ self fileIn: changes selectedItems ] ].
+				action: [ self fileIn: changes selectedItemsSorted ] ].
 
 	aMenu 	addItem: [ :item | 
 			item
