@@ -507,11 +507,6 @@ ReSmalllintTest >> testThreeElementPoint [
 ]
 
 { #category : #tests }
-ReSmalllintTest >> testToDo [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
 ReSmalllintTest >> testToDoCollect [
 	self ruleFor: self currentSelector
 ]
