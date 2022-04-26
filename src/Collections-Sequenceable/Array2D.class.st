@@ -508,6 +508,28 @@ Array2D >> indicesInject: start into: aBlock [
 	^ current
 ]
 
+{ #category : #inspector }
+Array2D >> inspectorExtension [
+
+	<inspectorPresentationOrder: 0 title: 'Matrix'>
+	
+	| specTable |
+	specTable := SpTablePresenter new.
+	specTable addColumn: (SpIndexTableColumn new
+		title: '#';
+		width: 30;
+		yourself).
+
+	1 to: numberOfColumns do: [ :index | 
+		specTable addColumn: (SpStringTableColumn new
+			title: index asString;
+			evaluated: [ :each | each at: index ];
+			beNotExpandable) ].
+	
+	specTable items: ((1 to: numberOfRows) collect: [ :index | self atRow: index ]).
+	^ specTable 
+]
+
 { #category : #enumerating }
 Array2D >> intersection: aCollection [
 	"Union is in because the result is always a Set.
