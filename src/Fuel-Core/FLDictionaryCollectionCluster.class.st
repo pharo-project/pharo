@@ -4,9 +4,6 @@ A FLDictionaryCollectionCluster is a cluster that rather than using the default 
 Class {
 	#name : #FLDictionaryCollectionCluster,
 	#superclass : #FLAbstractCollectionCluster,
-	#instVars : [
-		'associationNames'
-	],
 	#category : #'Fuel-Core-Clusters-Optimized'
 }
 

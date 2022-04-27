@@ -17,7 +17,6 @@ Class {
 		'objectStack',
 		'firstMapper',
 		'clusterization',
-		'root',
 		'privateObjectStack',
 		'privateFirstMapper'
 	],

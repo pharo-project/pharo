@@ -193,11 +193,6 @@ FLEncoder >> flush [
 	^ stream flush.
 ]
 
-{ #category : #hooks }
-FLEncoder >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
-]
-
 { #category : #accessing }
 FLEncoder >> globalEnvironment [
 	"Answer a dictionary where the look up for global symbols will be done during serialization."

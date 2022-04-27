@@ -88,7 +88,7 @@ FLLimitingSerializationTest >> testEnableObjectsLimitWarning [
 
 { #category : #tests }
 FLLimitingSerializationTest >> testEnableObjectsLimitWarningWithDepthLimit [
-	| root materialized |
+	| root |
 	root := FLPair new
 		left: (FLPair new
 			left: 2;

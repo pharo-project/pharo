@@ -8,8 +8,7 @@ Class {
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'encoder',
-		'clusters',
-		'analyzer'
+		'clusters'
 	],
 	#category : #'Fuel-Core-Base'
 }
@@ -79,11 +78,6 @@ FLSerialization >> fileHeaderStep [
 	encoder
 		encodeSignature;
 		encodeVersion
-]
-
-{ #category : #hooks }
-FLSerialization >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
 ]
 
 { #category : #private }

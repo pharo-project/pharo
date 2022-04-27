@@ -9,9 +9,7 @@ Class {
 	#name : #FLConfiguration,
 	#superclass : #Object,
 	#instVars : [
-		'map',
-		'serializer',
-		'materializer'
+		'map'
 	],
 	#classInstVars : [
 		'default'

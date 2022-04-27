@@ -52,11 +52,6 @@ FLMapper >> clusterKeyedByObjectClass: clusterClass class: objectClass [
 		factory: [ clusterClass newAnalyzing: objectClass ]
 ]
 
-{ #category : #hooks }
-FLMapper >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
-]
-
 { #category : #initialization }
 FLMapper >> initialize [
 	super initialize.
