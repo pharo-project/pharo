@@ -23,7 +23,7 @@ FLVersion class >> current [
 		Current := self
 			newWithMajor: 5
 			minor: 0
-			patch: 3 ]
+			patch: 4 ]
 ]
 
 { #category : #'instance creation' }
