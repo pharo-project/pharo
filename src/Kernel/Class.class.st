@@ -992,7 +992,7 @@ Class >> sharedPoolOfVarNamed: aString [
 { #category : #'pool variables' }
 Class >> sharedPools [
 	"Answer an orderedCollection of the shared pools declared in the receiver.
-	Note: To save memory, the variable is inialized by #addSharedPool:"
+	Note: To save memory, the variable is initialized by #addSharedPool:"
 
 	^ sharedPools ifNil: [ super sharedPools ]
 ]
