@@ -141,16 +141,17 @@ Class >> addInstVarNamed: aString [
 ]
 
 { #category : #'pool variables' }
-Class >> addSharedPool: aSharedPool [ 
+Class >> addSharedPool: aSharedPool [
+
 	"Add the argument, aSharedPool, as one of the receiver's shared pools. 
 	Create an error if the shared pool is already one of the pools.
 	This method will work with shared pools that are plain Dictionaries or thenewer SharedPool subclasses"
 
-	(self sharedPools includes: aSharedPool)
-		ifTrue: [^self error: 'This is already in my shared pool list'].
-	self sharedPools == nil
-		ifTrue: [self sharedPools: (OrderedCollection with: aSharedPool)]
-		ifFalse: [self sharedPools add: aSharedPool]
+	(self sharedPools includes: aSharedPool) ifTrue: [ 
+		^ self error: 'This is already in my shared pool list' ].
+	sharedPools
+		ifNil: [ sharedPools := (OrderedCollection with: aSharedPool) ]
+		ifNotNil: [ self sharedPools add: aSharedPool ]
 ]
 
 { #category : #'pool variables' }
@@ -990,9 +991,10 @@ Class >> sharedPoolOfVarNamed: aString [
 
 { #category : #'pool variables' }
 Class >> sharedPools [
-	"Answer an orderedCollection  of the shared pools declared in the receiver."
+	"Answer an orderedCollection of the shared pools declared in the receiver.
+	Note: To save memory, the variable is initialized by #addSharedPool:"
 
-	^ sharedPools ifNil: [ sharedPools := OrderedCollection new ]
+	^ sharedPools ifNil: [ super sharedPools ]
 ]
 
 { #category : #'pool variables' }
