@@ -158,23 +158,20 @@ Class {
 }
 
 { #category : #'instance creation' }
-Dictionary class >> newFrom: aDict [ 
-	"Answer an instance of me containing the same associations as aDict.
+Dictionary class >> newFrom: aDictionaryOrCollectionOfAssociations [
+	"Answer an instance of me containing the same associations as the argument.
 	 Error if any key appears twice."
+		
+	"Dictionary newFrom: {1->#a. 2->#b. 3->#c} >>> {1->#a. 2->#b. 3->#c} asDictionary"
+	
 	| newDictionary |
-	newDictionary := self new: aDict size.
-	aDict associationsDo:
+	newDictionary := self new: aDictionaryOrCollectionOfAssociations size.
+	aDictionaryOrCollectionOfAssociations associationsDo:
 		[:x |
 		(newDictionary includesKey: x key)
 			ifTrue: [self error: 'Duplicate key: ', x key printString]
 			ifFalse: [newDictionary add: x]].
 	^ newDictionary
-
-"	NewDictionary newFrom: {1->#a. 2->#b. 3->#c}
-	{1->#a. 2->#b. 3->#c} as: NewDictionary
-	NewDictionary newFrom: {1->#a. 2->#b. 1->#c}
-	{1->#a. 2->#b. 1->#c} as: NewDictionary
-"
 ]
 
 { #category : #'instance creation' }
