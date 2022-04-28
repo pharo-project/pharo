@@ -78,7 +78,7 @@ AbstractProtocol >> name [
 ]
 
 { #category : #accessing }
-AbstractProtocol >> name: arg1 [ 
+AbstractProtocol >> name: aString [ 
 	^ self subclassResponsibility
 ]
 
