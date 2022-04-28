@@ -3,7 +3,7 @@ An AllProtocol is a special protocol to hanlde the ""all"" case
 "
 Class {
 	#name : #AllProtocol,
-	#superclass : #Protocol,
+	#superclass : #AbstractProtocol,
 	#instVars : [
 		'protocolOrganizer'
 	],
@@ -24,7 +24,7 @@ AllProtocol class >> protocolOrganizer: protocolOrganizer [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : #private }
 AllProtocol >> canBeRemoved [
 	^ false
 ]
@@ -32,12 +32,6 @@ AllProtocol >> canBeRemoved [
 { #category : #testing }
 AllProtocol >> canBeRenamed [
 	^ false
-]
-
-{ #category : #initialization }
-AllProtocol >> initialize [
-	"overridden to not itialize unsused methodSelectors, more cleanup needed"
-	name := self class defaultName.
 ]
 
 { #category : #testing }
@@ -54,7 +48,7 @@ AllProtocol >> methodSelectors [
 AllProtocol >> name [
 	^ (self isEmpty and: [ protocolOrganizer protocols isEmpty ])
 		ifTrue: [ self class nullCategory ]
-		ifFalse: [ name ]
+		ifFalse: [  self class defaultName ]
 ]
 
 { #category : #accessing }
