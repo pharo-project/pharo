@@ -160,17 +160,13 @@ Class {
 { #category : #'instance creation' }
 Dictionary class >> newFrom: aDictionaryOrCollectionOfAssociations [
 	"Answer an instance of me containing the same associations as the argument.
-	 Error if any key appears twice."
+	If the same key appears twice, the last one enumerated will win"
 		
 	"Dictionary newFrom: {1->#a. 2->#b. 3->#c} >>> {1->#a. 2->#b. 3->#c} asDictionary"
 	
 	| newDictionary |
 	newDictionary := self new: aDictionaryOrCollectionOfAssociations size.
-	aDictionaryOrCollectionOfAssociations associationsDo:
-		[:x |
-		(newDictionary includesKey: x key)
-			ifTrue: [self error: 'Duplicate key: ', x key printString]
-			ifFalse: [newDictionary add: x]].
+	aDictionaryOrCollectionOfAssociations associationsDo: [:x |newDictionary add: x].
 	^ newDictionary
 ]
 
