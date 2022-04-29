@@ -230,6 +230,8 @@ Class >> basicDeclareClassVariable: aClassVariable [
 	- When a class of a variable is changed we must recompile using methods because new variable can implement specific compilation logic (method bytecode can become different).
 	- Undeclared case requires much more clever logic. Now in that case the class variable will be shared between all classes previously referencing undeclared variable despite on the fact that they do no see a class variables from other classes"
 	self flag: #todo.
+	
+	classPool ifNil: [ classPool := Dictionary new ].
 	aClassVariable owningClass: self.
 
 	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
@@ -323,9 +325,10 @@ Class >> classInstaller [
 
 { #category : #accessing }
 Class >> classPool [
-	"Answer the dictionary of class variables."
+	"Answer the dictionary of class variables. 
+	We initialize in basicDeclareClassVariable: to not allocate unused empty dictionaries"
 
-	^classPool ifNil: [ classPool := Dictionary new ]
+	^classPool ifNil: [ Dictionary new ]
 ]
 
 { #category : #accessing }
