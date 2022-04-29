@@ -15,7 +15,7 @@ Class {
 CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
 	globals do: [ :e |
-		(aString isEmpty or: [ e beginsWith: aString ])
+		(e beginsWith: aString)
 			ifTrue: [ aBlock value: e ] ]
 ]
 
@@ -23,7 +23,7 @@ CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 CoMockSystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 
 	selectors do: [ :e |
-		(aString isEmpty or: [ e beginsWith: aString ])
+		( e beginsWith: aString )
 			ifTrue: [ aBlock value: e ] ]
 ]
 
