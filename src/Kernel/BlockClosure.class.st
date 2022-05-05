@@ -39,7 +39,7 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'outerContext',
-		'startpc',
+		'compiledBlock',
 		'numArgs'
 	],
 	#category : #'Kernel-Methods'
@@ -108,14 +108,12 @@ BlockClosure >> clearTemporariesOn: aContext [
 
 { #category : #accessing }
 BlockClosure >> compiledBlock [
-	"To be able to inherit from BlockClosure"
-	^ startpc
+	^ compiledBlock
 ]
 
 { #category : #accessing }
 BlockClosure >> compiledBlock: aCompiledMethod [
-	"To be able to inherit from BlockClosure"
-	startpc := aCompiledMethod
+	compiledBlock := aCompiledMethod
 ]
 
 { #category : #accessing }
@@ -617,7 +615,7 @@ BlockClosure >> startpc [
 
 { #category : #accessing }
 BlockClosure >> startpcOrOuterCode [
-	^ startpc
+	^ compiledBlock
 ]
 
 { #category : #accessing }

@@ -337,7 +337,7 @@ AbstractFileReference >> deviceId [
 
 { #category : #enumerating }
 AbstractFileReference >> directories [
-	"Return all the directories (by opposition to files) contained in the receiver"
+	"Return all the directories (by opposition to self >> #files) contained in the receiver"
 
 	| reference |
 	reference := self resolve.
@@ -453,7 +453,7 @@ AbstractFileReference >> fileSystem [
 
 { #category : #enumerating }
 AbstractFileReference >> files [
-	"Return all the files (as opposed to folders) contained in the receiver"
+	"Return all the files (as opposed to self >> #directories) contained in the receiver"
 	
 	| reference |
 	reference := self resolve.
