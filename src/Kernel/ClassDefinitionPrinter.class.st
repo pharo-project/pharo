@@ -131,7 +131,7 @@ ClassDefinitionPrinter class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showFluidClassDefinition)
 		parent: #codeBrowsing;
-		default: false;
+		default: true;
 		label: 'Use fluid class definition';
 		description: 'If true, the system will display the class definition using a fluid interface e.g., 
 
@@ -161,7 +161,7 @@ Object << #Faked
 { #category : #configure }
 ClassDefinitionPrinter class >> showFluidClassDefinition [
 
-	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := false ]
+	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := true ]
 ]
 
 { #category : #configure }
