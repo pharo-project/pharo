@@ -1,17 +1,6 @@
 Extension { #name : #JobProgressBarMorph }
 
 { #category : #'*Deprecated10' }
-JobProgressBarMorph >> isInterruptable [
-
-	self
-		deprecated: 'Please use #isInterruptible instead'
-		transformWith:
-		'`@receiver isInterruptable' -> '`@receiver isInterruptible'.
-
-	^ self class isInterruptible
-]
-
-{ #category : #'*Deprecated10' }
 JobProgressBarMorph class >> isInterruptable [
 
 	self
