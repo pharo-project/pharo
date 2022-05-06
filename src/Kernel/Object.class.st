@@ -1650,11 +1650,11 @@ Object >> printStringLimitedTo: limit [
 Object >> printStringLimitedTo: limit using: printBlock [
 	"Answer a String whose characters are a description of the receiver
 	produced by given printBlock. It ensures the result will be not bigger than given limit.
-	Given that the '...etc...' is itself nine characters long, limit should be at least 10."
+	Given that the '[..]' is itself four characters long, limit should be at least 5."
 	| limitedString |
 	limitedString := String streamContents: printBlock limitedTo: limit + 1.
 	limitedString size <= limit ifTrue: [^ limitedString].
-	^ (limitedString truncateTo: limit - 9), '...etc...'
+	^ (limitedString truncateTo: limit - 4), '[..]'
 ]
 
 { #category : #streaming }
