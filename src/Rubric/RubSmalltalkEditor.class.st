@@ -96,7 +96,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor jumpToNextKeywordOfIt: true ]
 		description: 'Jump to next keyword'.
 		
-	(aBuilder shortcut: #jumpToNextKeywordOfIt)
+	(aBuilder shortcut: #jumpToPrevKeywordOfIt)
 		category: RubSmalltalkEditor name
 		default: $j shift meta
 		do: [ :target | target editor jumpToNextKeywordOfIt: false ]
