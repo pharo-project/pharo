@@ -819,9 +819,10 @@ RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
 		"Check that it is a keyword selector.
 		 - followed by a colon
 		 - but not by an assignment "
-		character = $: and: [ 
-			aString size > index
-				and: [  (aString at: index + 1) ~= $= ] ] ]
+		(character = $_) or: [ 
+			(character = $:) and: [ 
+				aString size > index
+					and: [  (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : #'menu messages' }

@@ -68,7 +68,7 @@ CompletionEngine >> completionTokenStart [
 
 { #category : #accessing }
 CompletionEngine >> context [
-	^context
+	^context ifNil: [ context := self createContext ]
 ]
 
 { #category : #private }
