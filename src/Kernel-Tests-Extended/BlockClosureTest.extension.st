@@ -41,7 +41,15 @@ BlockClosureTest >> testSourceNodeOptimized [
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyInstructions [
-	self assert: (Context tallyInstructions: aBlockContext ) size equals: 26
+
+	| expected |
+	expected := Smalltalk compiler compilationContext
+		            optionCleanBlockClosure
+		            ifTrue: [ 25 ]
+		            ifFalse: [ 26 ].
+	self
+		assert: (Context tallyInstructions: aBlockContext) size
+		equals: expected
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
