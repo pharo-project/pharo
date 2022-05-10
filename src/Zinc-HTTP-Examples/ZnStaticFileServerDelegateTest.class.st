@@ -8,6 +8,15 @@ Class {
 }
 
 { #category : #private }
+ZnStaticFileServerDelegateTest >> indexHtml [
+	^ '<html>
+<head><title>Index</title></head>
+<body><h1>Hi, i''m the index page</h1></body>
+</html>
+'
+]
+
+{ #category : #private }
 ZnStaticFileServerDelegateTest >> largeHtml [
 	^ String streamContents: [ :out |
 		out << '<html><body>'.
@@ -31,6 +40,10 @@ ZnStaticFileServerDelegateTest >> setUp [
 		writeStreamFor: 'wide.html' 
 		do: [ :stream |
 			stream nextPutAll: self wideHtml ].
+	ZnFileSystemUtils
+		writeStreamFor: 'index.html' 
+		do: [ :stream |
+			stream nextPutAll: self indexHtml ].
 ]
 
 { #category : #private }
@@ -47,7 +60,8 @@ ZnStaticFileServerDelegateTest >> tearDown [
 	ZnFileSystemUtils 
 		deleteIfExists: 'small.html'; 
 		deleteIfExists: 'large.html'; 
-		deleteIfExists: 'wide.html'.
+		deleteIfExists: 'wide.html';
+		deleteIfExists: 'index.html'.
 	super tearDown	
 	
 ]
@@ -149,6 +163,24 @@ ZnStaticFileServerDelegateTest >> testIfModifiedSinceNotModified [
 			get.
 		self assert: client response isNotModified.
 		self deny: client response hasEntity ]
+]
+
+{ #category : #tests }
+ZnStaticFileServerDelegateTest >> testRedirect [
+	self
+		withServerDo: [ :server | 
+			| client |
+			(client := ZnClient new)
+				beOneShot;
+				url: server localUrl;
+				addPath: #('local-files');
+				get.
+			self assert: client isSuccess.
+			self assert: client response contentType equals: ZnMimeType textHtml.
+			self assert: client contents equals: self indexHtml.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'index.html') asUTC.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
 { #category : #private }
