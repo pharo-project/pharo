@@ -454,11 +454,6 @@ RBSmalllintTestObject >> threeElementPoint [
 ]
 
 { #category : #methods }
-RBSmalllintTestObject >> toDo [
-	1 to: self size do: [:i | (self at: i) printString]
-]
-
-{ #category : #methods }
 RBSmalllintTestObject >> toDoCollect [
 	| array |
 	array := Array new: 10.
