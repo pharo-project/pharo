@@ -769,7 +769,7 @@ OrderedCollectionTest >> testBeginsWithAnyOf [
 	self assert: (la beginsWithAnyOf: #((17) (1 2) (42))).
 	self assert: (la beginsWithAnyOf: #((17) (1 2 3) (42))).
 	self deny: (la beginsWithAnyOf: #()).
-	self deny: (la beginsWithAnyOf: #(())).
+	self assert: (la beginsWithAnyOf: #(())).
 	self deny: (la beginsWithAnyOf: #((42))).
 ]
 
@@ -926,7 +926,7 @@ OrderedCollectionTest >> testEndsWithAnyOf [
 	self assert: (la endsWithAnyOf: #((17) (2 1) (42))).
 	self assert: (la endsWithAnyOf: #((17) (3 2 1) (42))).
 	self deny: (la endsWithAnyOf: #()).
-	self deny: (la endsWithAnyOf: #(())).
+	self assert: (la endsWithAnyOf: #(())).
 	self deny: (la endsWithAnyOf: #((42))).
 ]
 

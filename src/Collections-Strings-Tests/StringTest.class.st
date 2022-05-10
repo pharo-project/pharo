@@ -553,8 +553,8 @@ StringTest >> testAt [
 { #category : #tests }
 StringTest >> testBeginsWithCaseSensitive [
 	| w1 w2 |
-	self deny: ('abc' beginsWith: '' caseSensitive: true). "consistent to #beginsWith:"
-	self deny: ('abc' beginsWith: '' caseSensitive: false). "consistent to #beginsWith:"
+	self assert: ('abc' beginsWith: '' caseSensitive: true). "consistent to #beginsWith:"
+	self assert: ('abc' beginsWith: '' caseSensitive: false). "consistent to #beginsWith:"
 	self deny: ('abc' beginsWith: 'abcd' caseSensitive: true).
 	self deny: ('abc' beginsWith: 'abcd' caseSensitive: false).
 	self deny: ('abc' beginsWith: 'c' caseSensitive: true).
@@ -745,7 +745,7 @@ StringTest >> testDisplayString [
 StringTest >> testEndsWith [ 
 
 	self deny: ('éèàôüößäóñíá' endsWith: 'ia').
-	self deny: ('éèàôüößäóñíá' endsWith: '').
+	self assert: ('éèàôüößäóñíá' endsWith: '').
 	self assert: ('éèàôüößäóñíá' endsWith: 'éèàôüößäóñíá').
 	self deny: ('test' endsWith: 'ST').
 	self assert: ('test' endsWith: 'st').
@@ -764,7 +764,7 @@ StringTest >> testEndsWithAColon [
 { #category : #tests }
 StringTest >> testEndsWithAnyOf [
 
-	self deny: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
+	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
 	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
 	self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't')).
 ]
@@ -772,8 +772,8 @@ StringTest >> testEndsWithAnyOf [
 { #category : #tests }
 StringTest >> testEndsWithCaseSensitive [
 	| w1 w2 |
-	self deny: ('abc' endsWith: '' caseSensitive: true). "consistent to #beginsWith:"
-	self deny: ('abc' endsWith: '' caseSensitive: false). "consistent to #beginsWith:"
+	self assert: ('abc' endsWith: '' caseSensitive: true). "consistent to #beginsWith:"
+	self assert: ('abc' endsWith: '' caseSensitive: false). "consistent to #beginsWith:"
 	self deny: ('abc' endsWith: 'qabc' caseSensitive: false).
 	self deny: ('abc' endsWith: 'qabc' caseSensitive: true).
 	self deny: ('abc' endsWith: 'a' caseSensitive: true).
