@@ -50,7 +50,7 @@ MessageTallyTest >> testSampling1 [
 
 { #category : #tallying }
 MessageTallyTest >> testTallySends [
-	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest |
+	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest|
 	allProcesses := Process allInstances.
 
 	blockToTest := [ 3.14159s printString ].
@@ -66,8 +66,7 @@ MessageTallyTest >> testTallySends [
 	thisMethod := blockToTest method.
 	self assert: tally hash equals: thisMethod hash.
 	self assert: tally method identicalTo: thisMethod.
-	self assert: tally theClass identicalTo: self class.
-
+	"we do not check the return of theClass, as the block is clean and does not know the instance".
 
 	processUsedByTally := tally process.
 	self deny: (allProcesses includes: processUsedByTally).
