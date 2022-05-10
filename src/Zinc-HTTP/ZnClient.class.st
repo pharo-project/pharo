@@ -156,9 +156,11 @@ ZnClient >> certificate: anObject [
 { #category : #private }
 ZnClient >> cleanupConnection [
 	(self isOneShot 
-		or: [ 
-			(request notNil and: [ request wantsConnectionClose ])
-				or: [ response notNil and: [ response wantsConnectionClose ] ] ])
+		or: [
+			self streaming not
+				and: [
+					(request notNil and: [ request wantsConnectionClose ])
+						or: [ response notNil and: [ response wantsConnectionClose ] ] ] ])
 		ifTrue: [
 			self close ]
 ]
@@ -1445,6 +1447,7 @@ ZnClient >> setBearerAuthentication: token [
 	"Set the bearer token for authentication (e.g. OAuth 2.0) for the current request."
 	
 	self request setBearerAuthentication: token
+
 ]
 
 { #category : #'accessing - request' }
