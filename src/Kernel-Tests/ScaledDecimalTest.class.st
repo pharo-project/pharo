@@ -186,14 +186,13 @@ ScaledDecimalTest >> testConvertFromIntegerWithScale [
 { #category : #tests }
 ScaledDecimalTest >> testConvertFromNonDecimalFraction [
 	"Converting a Fraction with asScaledDecimal use default number of decimals when the series of decimals is infinite."
+	
 	| defaultNumberOfDecimals |
 	defaultNumberOfDecimals := (1/3) asScaledDecimal scale.
 	#(6 7 9 11 12 13 14 17 18 19 21 22 23 24) do: [:den |
-		| sd sd2 |
+		| sd |
 		sd := (1/den) asScaledDecimal.
 		self assert: sd scale equals: defaultNumberOfDecimals.
-		sd2 := ScaledDecimal readFrom: sd printString.
-		self deny: sd equals: sd2
 		]
 ]
 
@@ -287,6 +286,22 @@ ScaledDecimalTest >> testRounded [
 ]
 
 { #category : #tests }
+ScaledDecimalTest >> testScaleDecimalsHash [
+
+	| firstScaleDecimals secondScaleDecimals |
+	"Creating 2 equivalent scaled decimals by hands, the magic literals are just examples taken from the issue"
+	
+	firstScaleDecimals := ScaledDecimal new.
+	firstScaleDecimals setNumerator: 8617 denominator: 500 scale: 2.
+
+	secondScaleDecimals := ScaledDecimal new.
+	secondScaleDecimals setNumerator: 2425469874315723 denominator: 140737488355328 scale: 2.
+
+	self assert: firstScaleDecimals equals: secondScaleDecimals.
+	self assert: firstScaleDecimals hash equals: secondScaleDecimals hash
+]
+
+{ #category : #tests }
 ScaledDecimalTest >> testScaleExtension [
 
 	#( #+ #- #/ ) do: [ :op | "The scale is extended to the larger one in case of arithmetic operation"
@@ -295,6 +310,50 @@ ScaledDecimalTest >> testScaleExtension [
 	"The scale for multiplication is the sum of the operand scales"
 	self assert: (2.5s1 * 1.000s3) scale equals: 4.
 	self assert: (3.5000s4 * 1.0s1) scale equals: 5
+]
+
+{ #category : #tests }
+ScaledDecimalTest >> testScaledDecimalsEquality [
+
+	
+	self assert: 1.234s2 = 1.23s2. "1.23 = 1.23"
+	
+	self deny: 1.023s3 = 1.23s2. "1.023 != 1.23 "
+	
+	self assert: 1.230s3 = 1.23s2.  " 1.230 = 1.23"
+]
+
+{ #category : #tests }
+ScaledDecimalTest >> testScaledDecimalsInequality [
+
+	
+	self deny: 1.234s2 < 1.23s2. 
+	self assert: 1.023s3 < 1.23s2. 
+	self deny: 1.230s3 < 1.23s2.  
+	self deny: 1.234s2 < 1.111s2.
+	self assert: 1.111s2 < 1.234s2.
+	self deny: 2.111s2 < 1.222s2.
+	
+	self deny: 1.234s2 > 1.23s2. 
+	self deny: 1.023s3 > 1.23s2. 
+	self deny: 1.230s3 > 1.23s2.
+	self assert: 1.234s2 > 1.111s2.
+	self deny: 1.111s2 > 1.234s2.
+	self assert: 2.111s2 > 1.222s2.
+	
+	self assert: 1.234s2 >= 1.23s2. 
+	self deny: 1.023s3 >= 1.23s2. 
+	self assert: 1.230s3 >= 1.23s2.
+	self assert: 1.234s2 >= 1.111s2.
+	self deny: 1.111s2 >= 1.234s2.
+	self assert: 2.111s2 >= 1.222s2.
+	
+	self assert: 1.234s2 <= 1.23s2. 
+	self assert: 1.023s3 <= 1.23s2. 
+	self assert: 1.230s3 <= 1.23s2.
+	self deny: 1.234s2 <= 1.111s2.
+	self assert: 1.111s2 <= 1.234s2.
+	self deny: 2.111s2 <= 1.222s2.
 ]
 
 { #category : #tests }
