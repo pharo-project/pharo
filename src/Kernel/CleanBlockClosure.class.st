@@ -96,7 +96,7 @@ CleanBlockClosure >> readsThisContext [
 
 { #category : #accessing }
 CleanBlockClosure >> receiver [
-	^nil
+	^ receiver
 ]
 
 { #category : #accessing }
