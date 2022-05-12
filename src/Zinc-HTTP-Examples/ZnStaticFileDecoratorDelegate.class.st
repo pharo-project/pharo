@@ -19,7 +19,7 @@ Class {
 	#category : #'Zinc-HTTP-Examples'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 ZnStaticFileDecoratorDelegate class >> decorate: aDelegate servingFilesFrom: aPathString [
 	^ self new
 		delegate: aDelegate;
