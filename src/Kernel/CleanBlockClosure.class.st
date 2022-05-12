@@ -16,15 +16,11 @@ at compile time instead.
 CleanBlockClosure is exactly that: a closure created at compile time, it is stored in the literal frame and just
 pushed on the stack.
 
-For debugging, it does implement all needed machinary to read temps (via tempNamed:) just like a FullBlockClosure.
-
-
-Cleanup for later:
-- This should not be a subclass of FullBlock (as it does not need the receiver ivar, for example)
+For debugging, it does implement all needed machinary to read temps (via tempNamed:) just like a FullBlockClosure
 "
 Class {
 	#name : #CleanBlockClosure,
-	#superclass : #FullBlockClosure,
+	#superclass : #BlockClosure,
 	#type : #variable,
 	#category : #'Kernel-Methods'
 }
@@ -93,6 +89,11 @@ CleanBlockClosure >> readsSelf [
 { #category : #scanning }
 CleanBlockClosure >> readsThisContext [
 	^self compiledBlock readsThisContext
+]
+
+{ #category : #accessing }
+CleanBlockClosure >> receiver [
+	^nil
 ]
 
 { #category : #accessing }
