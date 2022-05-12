@@ -22,6 +22,9 @@ Class {
 	#name : #CleanBlockClosure,
 	#superclass : #BlockClosure,
 	#type : #variable,
+	#instVars : [
+		'receiver'
+	],
 	#category : #'Kernel-Methods'
 }
 
