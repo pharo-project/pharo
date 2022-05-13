@@ -210,7 +210,7 @@ RBChildrenToSiblingsRefactoring >> reparentSubclasses [
 RBChildrenToSiblingsRefactoring >> selectorsToPushUpFrom: aClass [ 
 	| superSelectors |
 	superSelectors := self computeSubclassSupersOf: aClass.
-	^aClass selectors select: 
+	^aClass localSelectors select: 
 			[:each | 
 			(superSelectors includes: each) or: [self shouldPushUp: each from: aClass]]
 ]
