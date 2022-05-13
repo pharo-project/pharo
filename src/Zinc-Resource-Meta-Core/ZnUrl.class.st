@@ -652,6 +652,7 @@ ZnUrl >> path [
 				each = $/
 					ifFalse: [ stream nextPutAll: each ] ]
 			separatedBy: [ stream nextPut: $/ ] ]
+
 ]
 
 { #category : #printing }
@@ -828,6 +829,7 @@ ZnUrl >> queryAt: key add: value [
 
 	query ifNil: [ query := ZnMultiValueDictionary new ].
 	query at: key asString add: (value ifNotNil: [ value asString ])
+
 ]
 
 { #category : #'accessing - query' }
@@ -856,6 +858,7 @@ ZnUrl >> queryAt: key put: value [
 
 	query ifNil: [ query := ZnMultiValueDictionary new ].
 	query at: key asString put: (value ifNotNil: [ value asString ])
+
 ]
 
 { #category : #'accessing - query' }
