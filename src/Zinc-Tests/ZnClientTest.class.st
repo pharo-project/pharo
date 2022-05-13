@@ -348,6 +348,27 @@ ZnClientTest >> testGetSmallHTMLUrlConstruction [
 ]
 
 { #category : #testing }
+ZnClientTest >> testGetStreamingConnectionClose [
+	self withServerDo: [ :server | 
+		| client result contents |
+		server onRequestRespond: [ :request |
+			(ZnResponse ok: (ZnEntity textCRLF: 'OK'))
+				setConnectionClose;
+				yourself ].
+		result := (client := ZnClient new)
+			url: server localUrl;
+			streaming: true;
+			get.
+		self assert: client isSuccess.
+		self assert: client response contentType equals: ZnMimeType textPlain.
+		self assert: result isStream.
+		self assert: client entity stream equals: result.
+		contents := result upToEnd utf8Decoded.
+		self assert: (contents includesSubstring: 'OK').
+		client close ]
+]
+
+{ #category : #testing }
 ZnClientTest >> testGetWideStringHTML [
 	| client text |
 	text := '<html><h1>Czech is in Czech {1}e{2}tina.</h1></html>' format: { 269 asCharacter. 353 asCharacter}.
