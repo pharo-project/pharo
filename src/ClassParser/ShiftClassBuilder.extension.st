@@ -17,7 +17,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 		
 	self layoutClass: aCDClassDefinitionNode layoutClass.
 		
-	self slots: (aCDClassDefinitionNode slots collect: [ :e | e asSlot ]).
+	self slots: (aCDClassDefinitionNode slots collect: [ :e | e asSlot]).
 	
 	self sharedVariables: (aCDClassDefinitionNode sharedSlots collect: [ :e | e ]).
 	

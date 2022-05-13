@@ -1,6 +1,9 @@
+"
+This class models definiton of Class Variables
+"
 Class {
 	#name : #CDSharedVariableNode,
-	#superclass : #CDSlotNode,
+	#superclass : #CDVariableNode,
 	#category : #'ClassParser-Model'
 }
 
@@ -15,6 +18,8 @@ CDSharedVariableNode class >> slot: aSlot node: aNode [
 
 { #category : #transforming }
 CDSharedVariableNode >> asClassVariable [
+	"for not this only supports ClassVariables. 
+	We need to create a ClassVariable here using the Variable Definition"
 	^ ClassVariable named: self name.
 ]
 
