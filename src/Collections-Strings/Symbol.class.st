@@ -67,7 +67,7 @@ Symbol class >> cleanUp [
 	"Flush caches"
 
 	self compactSymbolTable.
-	self rebuildSelectorTable
+	self resetSelectorTable
 ]
 
 { #category : #accessing }
@@ -110,11 +110,6 @@ Symbol class >> hasInterned: aString ifTrue: symBlock [
 		ifNotNil: [ :symbol | 
 			symBlock value: symbol.
 			true ]
-]
-
-{ #category : #private }
-Symbol class >> initSelectorTable [
-	^ SelectorTable := WeakSet new
 ]
 
 { #category : #'class initialization' }
@@ -227,12 +222,14 @@ Symbol class >> readFrom: strm [
 
 { #category : #cleanup }
 Symbol class >> rebuildSelectorTable [
-	self initSelectorTable.
+	| selectorTable |
+	selectorTable := WeakSet new.
 	CompiledMethod
 		allInstancesDo: [ :method | 
 			| selector |
 			selector := method selector.
-			selector ifNotNil: [ SelectorTable add: selector ] ]
+			selector ifNotNil: [ selectorTable add: selector ] ].
+	^selectorTable.
 ]
 
 { #category : #private }
@@ -242,12 +239,17 @@ Symbol class >> rehash [
 
 	SymbolTable := WeakSet withAll: self allSubInstances.
 	NewSymbols := WeakSet new.
-	self rebuildSelectorTable.
+	self resetSelectorTable.
+]
+
+{ #category : #private }
+Symbol class >> resetSelectorTable [
+	^ SelectorTable := nil
 ]
 
 { #category : #private }
 Symbol class >> selectorTable [
-	^SelectorTable ifNil: [self initSelectorTable]
+	^SelectorTable ifNil: [SelectorTable := self rebuildSelectorTable]
 ]
 
 { #category : #accessing }
