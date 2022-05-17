@@ -148,6 +148,7 @@ Symbol class >> internCharacter: aCharacter [
 { #category : #'instance creation' }
 Symbol class >> internSelector: aStringOrSymbol [
 	| selector |
+	aStringOrSymbol isDoIt ifTrue: [ ^self ].
 	selector := (self selectorTable like: aStringOrSymbol)
 		ifNil: [ self selectorTable add: aStringOrSymbol asSymbol ].
 	^ selector
