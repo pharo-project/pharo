@@ -224,6 +224,7 @@ Symbol class >> readFrom: strm [
 { #category : #cleanup }
 Symbol class >> rebuildSelectorTable [
 	| selectorTable |
+	Transcript show: '#rebuildSelectorTable';cr.
 	selectorTable := WeakSet new.
 	CompiledMethod
 		allInstancesDo: [ :method | 
@@ -245,6 +246,7 @@ Symbol class >> rehash [
 
 { #category : #private }
 Symbol class >> resetSelectorTable [
+	Transcript show: '#resetSelectorTable';cr.
 	^ SelectorTable := nil
 ]
 
