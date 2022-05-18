@@ -224,7 +224,7 @@ Symbol class >> readFrom: strm [
 { #category : #cleanup }
 Symbol class >> rebuildSelectorTable [
 	| selectorTable |
-	Smalltalk globals at: #Transcript ifPresent: [:tr | tr show: '#rebuildSelectorTable';cr].
+	Smalltalk globals at: #Transcript ifPresent: [:tr | tr ifNotNil: [tr show: '#rebuildSelectorTable';cr]].
 	selectorTable := WeakSet new.
 	CompiledMethod
 		allInstancesDo: [ :method | 
