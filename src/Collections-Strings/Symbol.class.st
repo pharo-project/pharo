@@ -246,7 +246,7 @@ Symbol class >> rehash [
 
 { #category : #private }
 Symbol class >> resetSelectorTable [
-	Smalltalk globals at: #Transcript ifPresent: [:tr | tr show: '#rebuildSelectorTable';cr].
+		Smalltalk globals at: #Transcript ifPresent: [:tr | tr ifNotNil: [tr show: '#resetSelectorTable';cr]].
 	^ SelectorTable := nil
 ]
 
