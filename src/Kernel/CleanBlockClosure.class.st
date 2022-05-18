@@ -76,6 +76,11 @@ CleanBlockClosure >> messages [
 ]
 
 { #category : #accessing }
+CleanBlockClosure >> outerCode [
+	^self compiledBlock outerCode
+]
+
+{ #category : #accessing }
 CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
 ]
