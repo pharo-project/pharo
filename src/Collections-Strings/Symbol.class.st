@@ -57,9 +57,8 @@ Symbol class >> allSymbols [
 	"Answer all interned symbols"
 	^Array streamContents:[:s|
 		s nextPutAll: NewSymbols.
-		s nextPutAll: OneCharacterSymbols.
 		s nextPutAll: SymbolTable.
-	].
+	]
 ]
 
 { #category : #cleanup }
@@ -120,9 +119,6 @@ Symbol class >> initSelectorTable [
 { #category : #'class initialization' }
 Symbol class >> initialize [
 	self rehash.
-	OneCharacterSymbols := nil.
-	OneCharacterSymbols := (1 to: 256) collect: [ :i | (i - 1) asCharacter asSymbol].
-
 	SessionManager default
 		registerSystemClassNamed: #Symbol
 ]
@@ -145,9 +141,7 @@ Symbol class >> intern: aStringOrSymbol [
 
 { #category : #'instance creation' }
 Symbol class >> internCharacter: aCharacter [
-	aCharacter asciiValue > 256 ifTrue:[^self intern: aCharacter asString].
-	OneCharacterSymbols ifNil: [^self intern: aCharacter asString].
-	^OneCharacterSymbols at: aCharacter asciiValue + 1
+	^self intern: aCharacter asString
 ]
 
 { #category : #'instance creation' }
@@ -270,43 +264,6 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 		] after: skipSym.
 
 	^nil
-]
-
-{ #category : #accessing }
-Symbol class >> selectorsContaining: aString [
-	"Answer a list of selectors that contain aString within them. Case-insensitive.  Does return symbols that begin with a capital letter."
-
-	| size selectorList ascii |
-
-	selectorList := OrderedCollection new.
-	(size := aString size) = 0 ifTrue: [^selectorList].
-
-	aString size = 1 ifTrue:
-		[
-			ascii := aString first asciiValue.
-			ascii < 128 ifTrue: [selectorList add: (OneCharacterSymbols at: ascii+1)]
-		].
-
-	(aString first isAlphaNumeric) ifFalse:
-		[
-			aString size = 2 ifTrue: 
-				[Symbol hasInterned: aString ifTrue:
-					[:s | selectorList add: s]].
-			^selectorList
-		].
-
-	selectorList := selectorList copyFrom: 2 to: selectorList size.
-
-	self allSymbolTablesDo: [:each |
-		each size >= size ifTrue:
-			[(each findSubstring: aString in: each startingAt: 1 
-				matchTable: CaseInsensitiveOrder) > 0
-						ifTrue: [selectorList add: each]]].
-
-	^selectorList reject: [:each | "reject non-selectors, but keep ones that begin with an uppercase"
-		each numArgs < 0 and: [each asString uncapitalized numArgs < 0]].
-
-"Symbol selectorsContaining: 'scon'"
 ]
 
 { #category : #'system startup' }
