@@ -149,7 +149,6 @@ Symbol class >> internCharacter: aCharacter [
 Symbol class >> internSelector: aStringOrSymbol [
 	| selector |
 	aStringOrSymbol isDoIt ifTrue: [ ^self ].
-	(aStringOrSymbol == #UndefinedMethod) ifTrue: [ ^self ].
 	Smalltalk globals at: #Transcript ifPresent: [:tr | tr ifNotNil: [tr show: 'InterningSelector: ', aStringOrSymbol asString;cr]].
 	selector := (self selectorTable like: aStringOrSymbol)
 		ifNil: [ self selectorTable add: aStringOrSymbol asSymbol ].

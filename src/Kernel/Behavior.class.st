@@ -98,7 +98,9 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
-	compiledMethod selector: selector
+	compiledMethod selector: selector.
+	"We record all selectors that are used as method names"
+	Symbol internSelector: selector
 ]
 
 { #category : #'adding-removing methods' }
