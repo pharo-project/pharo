@@ -147,12 +147,9 @@ Symbol class >> internCharacter: aCharacter [
 
 { #category : #'instance creation' }
 Symbol class >> internSelector: aStringOrSymbol [
-	| selector |
-	aStringOrSymbol isDoIt ifTrue: [ ^self ].
-	Smalltalk globals at: #Transcript ifPresent: [:tr | tr ifNotNil: [tr show: 'InterningSelector: ', aStringOrSymbol asString;cr]].
-	selector := (self selectorTable like: aStringOrSymbol)
-		ifNil: [ self selectorTable add: aStringOrSymbol asSymbol ].
-	^ selector
+
+	^ (self selectorTable like: aStringOrSymbol) ifNil: [ 
+		  self selectorTable add: aStringOrSymbol asSymbol ]
 ]
 
 { #category : #'instance creation' }
@@ -225,7 +222,6 @@ Symbol class >> readFrom: strm [
 { #category : #cleanup }
 Symbol class >> rebuildSelectorTable [
 	| selectorTable |
-	Smalltalk globals at: #Transcript ifPresent: [:tr | tr ifNotNil: [tr show: '#rebuildSelectorTable';cr]].
 	selectorTable := WeakSet new.
 	CompiledMethod
 		allInstancesDo: [ :method | 
@@ -247,7 +243,6 @@ Symbol class >> rehash [
 
 { #category : #private }
 Symbol class >> resetSelectorTable [
-		Smalltalk globals at: #Transcript ifPresent: [:tr | tr ifNotNil: [tr show: '#resetSelectorTable';cr]].
 	^ SelectorTable := nil
 ]
 
