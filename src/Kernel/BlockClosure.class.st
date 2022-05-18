@@ -15,14 +15,13 @@ Implementation:
 
 Instance variables:
 	outerContext <Context|nil> context that defined me
-	startpc: <SmallInteger> (pc = program counter) offset of my first bytecode instruction in the compiledMethod bytecode  
+	compiledBlock <CompiledBlock>  
 	numArgs: <SmallInteger> my number of arguments
 
-I am created at runtime through a special bytecode:
-closureNumCopied: x numArgs: y bytes z1 to z2
-On creation, the currently executed context is set to my outerContext, z1 is set as my startpc and y is set as my numArgs. After my creation, the current execution flow jumps to my last bytecode, z2, to skip the execution of my bytecode which is deferred until I execute a variant of #value.
+I am created at runtime through a special pushFullBlock: bytecode.
+On creation, the currently executed context is set to my outerContext and the compiledBlock is taken from the literals.
 
-I am executed when I receive a variant of the message value. This message creates a new context, a block context <MethodContext>, which reference me in its variable closureOrNil. This new context executes my bytecode, which correspond to a subset of the bytecode of my enclosing method, starting at startpc and ending in blockReturn/return bytecode.
+I am executed when I receive a variant of the message value. This message creates a new context, a block context <Context>, which reference me in its variable closureOrNil.
 
 Accessing variables of the my enclosing context is different depending on variables because of various optimizations:
 - self: I access the receiver of my enclosing method by accessing my context's receiver, which is always set to the enclosing method receiver.
@@ -44,6 +43,12 @@ Class {
 	],
 	#category : #'Kernel-Methods'
 }
+
+{ #category : #testing }
+BlockClosure class >> isAbstract [
+		
+	^ self == BlockClosure
+]
 
 { #category : #accessing }
 BlockClosure >> argumentCount [
@@ -554,7 +559,7 @@ BlockClosure >> printOn: aStream [
 
 { #category : #accessing }
 BlockClosure >> receiver [
-	^outerContext receiver
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
@@ -580,11 +585,9 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
-{ #category : #'debugger access' }
+{ #category : #accessing }
 BlockClosure >> sender [
-	"Answer the context that sent the message that created the receiver."
-
-	^outerContext sender
+	^ self subclassResponsibility
 ]
 
 { #category : #evaluating }
