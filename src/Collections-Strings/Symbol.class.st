@@ -140,11 +140,6 @@ Symbol class >> intern: aStringOrSymbol [
 ]
 
 { #category : #'instance creation' }
-Symbol class >> internCharacter: aCharacter [
-	^self intern: aCharacter asString
-]
-
-{ #category : #'instance creation' }
 Symbol class >> internSelector: aStringOrSymbol [
 	| selector |
 	selector := (self selectorTable like: aStringOrSymbol)

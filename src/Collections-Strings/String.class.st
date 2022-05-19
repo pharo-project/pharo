@@ -740,8 +740,7 @@ String >> asString [
 
 { #category : #converting }
 String >> asSymbol [
-	"Answer the unique Symbol whose characters are the characters of the 
-	string."
+	"Answer the unique Symbol whose characters are the characters of the string."
 	^Symbol intern: self
 ]
 
