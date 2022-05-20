@@ -1860,6 +1860,16 @@ SystemWindow >> taskbarIcon [
 	^super taskbarIcon
 ]
 
+{ #category : #'as yet unclassified' }
+SystemWindow >> taskbarMoveLeft [ "TODO add to protocol"
+	| selectedTask |
+	self worldTaskbar ifNotNil: [ :worldTaskbar |
+		selectedTask := (worldTaskbar orderedTasks select: [:task | task morph = self]) first.
+		1halt.
+		worldTaskbar orderedTasks: (worldTaskbar orderedTasks indexOf: selectedTask)
+	].
+]
+
 { #category : #'open/close' }
 SystemWindow >> toggleClosable [
 	"Reinstate the close box. Go via theme to maintain box order."

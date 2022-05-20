@@ -55,7 +55,7 @@ SystemWindow >> taskThumbnailOfSize: thumbExtent [
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
-SystemWindow >> taskbarButtonClicked [
+SystemWindow >> taskbarButtonClicked [ "TODO add protocol"
 	"The taskbar button for the receiver has been clicked.
 	If minimised then restore.
 	If active then minimize.
@@ -110,7 +110,7 @@ SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
-	| menu theme submenu  |
+	| menu theme submenu  moveSubmenu |
 	theme :=  self theme.	
 	menu := theme newMenuIn: self for: self.
 	
@@ -146,6 +146,20 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		
 	menu addLine.
 
+	moveSubmenu := theme newMenuIn: self for: self.
+	menu
+		add: 'Move'
+		icon: self theme windowCloseForm "TODO add icon"
+		subMenu: moveSubmenu.
+	moveSubmenu
+		addToggle: 'Move left' translated
+		target: self
+		selector: #taskbarMoveLeft
+		getStateSelector: nil
+		enablementSelector: true.
+
+	menu addLine.
+	
 	submenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Close all'
