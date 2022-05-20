@@ -120,13 +120,6 @@ FinderUI class >> on: aFinder [
 	^instance
 ]
 
-{ #category : #accessing }
-FinderUI class >> searchedTextListMaxSize: anInteger [
-
-	self allInstancesDo: [:each | each searchedTextListMaxSize: anInteger].
-	searchedTextListMaxSize := anInteger
-]
-
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesDisableUseRegExOn: aFinder to: anInstance [
 
@@ -872,12 +865,6 @@ FinderUI >> searchedTextList: aCollection [
 { #category : #accessing }
 FinderUI >> searchedTextListMaxSize [
 	^20
-]
-
-{ #category : #accessing }
-FinderUI >> searchedTextListMaxSize: anInteger [
-	[ self searchedTextList size > anInteger ] whileTrue: [ self searchedTextList removeLast ].
-	self changed: #searchedTextList
 ]
 
 { #category : #'text areas behavior' }
