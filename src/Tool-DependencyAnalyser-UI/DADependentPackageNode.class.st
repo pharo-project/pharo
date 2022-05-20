@@ -14,9 +14,8 @@ DADependentPackageNode >> childNodeClassFor: anItem [
 
 { #category : #accessing }
 DADependentPackageNode >> children [
-	| aCompositeDependency |
-	aCompositeDependency := self compositeDependencyTo.
-	^ aCompositeDependency dependencies
+	^ self compositeDependencyTo dependencies
+
 ]
 
 { #category : #accessing }
