@@ -655,7 +655,7 @@ Character >> isLineSeparator [
 	^ self characterSet isLineSeparator: self
 ]
 
-{ #category : #'testing - kind' }
+{ #category : #testing }
 Character >> isLiteral [
 
 	^ true
