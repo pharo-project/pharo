@@ -177,8 +177,8 @@ ClassTest >> tearDown [
 	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
 			RPackage organizer unregisterPackageNamed: category].
 		
-	"self cleanUpGeneratedClasses.
-	self cleanUpGeneratedReferencingMethods."
+	self cleanUpGeneratedClasses.
+	self cleanUpGeneratedReferencingMethods.
 	
 	super tearDown
 ]
