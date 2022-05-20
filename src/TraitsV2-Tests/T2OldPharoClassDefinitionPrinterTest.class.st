@@ -43,7 +43,7 @@ T2OldPharoClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShould
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testComplexTrait [
 
-	self assert: (self forClass: MOPTestClassD) equals: 'Object subclass: #MOPTestClassD
+	self assert: (self forClass: testClassD) equals: 'Object subclass: #MOPTestClassD
 	uses: Trait2 @ {#c3->#c2}
 	instanceVariableNames: ''''
 	classVariableNames: ''''
@@ -123,7 +123,7 @@ T2OldPharoClassDefinitionPrinterTest >> testTrait [
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testTrait3 [
 
-	self assert: (self forClass: Trait3 classTrait) equals: 'Trait3 classTrait
+	self assert: (self forClass: trait3 classTrait) equals: 'Trait3 classTrait
 	uses: Trait2 classTrait
 	instanceVariableNames: '''''
 ]
@@ -132,7 +132,7 @@ T2OldPharoClassDefinitionPrinterTest >> testTrait3 [
 T2OldPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self 
-		assert: (self forClass: Trait3) 
+		assert: (self forClass: trait3) 
 		equals: 
  'Trait named: #Trait3
 	uses: Trait2

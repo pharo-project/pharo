@@ -1,8 +1,26 @@
 Class {
 	#name : #MOPTraitTest,
 	#superclass : #TestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Tests-Traits-MOP'
 }
+
+{ #category : #running }
+MOPTraitTest >> setUp [
+	super setUp.
+	
+	self generateTraitForTests.
+	self generateTestClasses.
+]
+
+{ #category : #running }
+MOPTraitTest >> tearDown [
+	
+	self removeTraitForTests.
+	self removeTestClasses.
+	super tearDown. 
+]
 
 { #category : #tests }
 MOPTraitTest >> testClass [	
@@ -11,32 +29,35 @@ MOPTraitTest >> testClass [
 	"methodClass could call 
 		-> methodClassOrTrait"
 	
-	self assert: (Trait1>>#c) methodClass equals: Trait1.
-	self assert: (Trait2>>#c) methodClass equals: Trait2.
-	self assert: (MOPTestClassC>>#c) methodClass equals: MOPTestClassC.
-	self assert: (MOPTestClassC>>#c2) methodClass equals: MOPTestClassC.
-	self assert: (MOPTestClassD>>#c) methodClass equals: MOPTestClassD.
-	self assert: (MOPTestClassD>>#c2) methodClass equals: MOPTestClassD.
-	self assert: (MOPTestClassD>>#c3) methodClass equals: MOPTestClassD.
-	self assert: (MOPTestClassA>>#c2) methodClass equals: MOPTestClassA.
+	self assert: (trait1>>#c) methodClass equals: trait1.
+	self assert: (trait2>>#c) methodClass equals: trait2.
+	self assert: (testClassC>>#c) methodClass equals: testClassC.
+	self assert: (testClassC>>#c2) methodClass equals: testClassC.
+	self assert: (testClassD>>#c) methodClass equals: testClassD.
+	self assert: (testClassD>>#c2) methodClass equals: testClassD.
+	self assert: (testClassD>>#c3) methodClass equals: testClassD.
+	self assert: (testClassA>>#c2) methodClass equals: testClassA.
 	
 ]
 
 { #category : #tests }
 MOPTraitTest >> testOrigin [
+
 	"The origin of a compiledMethod is its defining class or trait."
 
 	| aliasedMethod |
-	self assert: (MOPTestClassC >> #c) origin equals: MOPTestClassC.
-	self assert: (MOPTestClassA >> #c) origin equals: Trait3.
-	self assert: (Trait3 >> #c2) origin equals: Trait2.
-	self assert: (MOPTestClassA >> #c2) origin equals: Trait2.
-	self assert: (MOPTestClassB >> #c) origin equals: Trait1.
-	self assert: (MOPTestClassD >> #c3) origin equals: Trait2.
-	self assert: (MOPTestClassD >> #c2) origin equals: Trait2.
+	self assert: (testClassC >> #c) origin equals: testClassC.
+	self assert: (testClassA >> #c) origin equals: trait3.
+	self assert: (trait3 >> #c2) origin equals: trait2.
+	self assert: (testClassA >> #c2) origin equals: trait2.
+	self assert: (testClassB >> #c) origin equals: trait1.
+	self assert: (testClassD >> #c3) origin equals: trait2.
+	self assert: (testClassD >> #c2) origin equals: trait2.
 
-	aliasedMethod := MOPTestClassD >> #c3.
-	self assert: aliasedMethod origin identicalTo: aliasedMethod originMethod methodClass
+	aliasedMethod := testClassD >> #c3.
+	self
+		assert: aliasedMethod origin
+		identicalTo: aliasedMethod originMethod methodClass
 ]
 
 { #category : #tests }
@@ -44,9 +65,9 @@ MOPTraitTest >> testSelector [
 	"The selector of a compiled method should be its name. 
 	An aliased method should have the name of its alias name."
 	
-	self assert: (MOPTestClassA>>#c) selector equals: #c.
-	self assert: (MOPTestClassC>>#c) selector equals: #c.
-	self assert: (Trait3>>#c) selector equals: #c.
-	self assert: (Trait3>>#c2) selector equals: #c2.
-	self assert: (MOPTestClassD>>#c3) selector equals: #c3.
+	self assert: (testClassA>>#c) selector equals: #c.
+	self assert: (testClassC>>#c) selector equals: #c.
+	self assert: (trait3>>#c) selector equals: #c.
+	self assert: (trait3>>#c2) selector equals: #c2.
+	self assert: (testClassD>>#c3) selector equals: #c3.
 ]

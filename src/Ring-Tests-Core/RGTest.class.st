@@ -1,6 +1,8 @@
 Class {
 	#name : #RGTest,
 	#superclass : #TestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Ring-Tests-Core'
 }
 
@@ -67,4 +69,20 @@ RGTest >> checkIncompatible: aBlock [
 	"prove that the block tries to do an action not suitable for a particular behavior strategy"
 
 	self should: aBlock raise: RGIncompatibleBehaviorTypeError
+]
+
+{ #category : #running }
+RGTest >> setUp [
+	super setUp.
+	self generateTraitForTests.
+	self generateTestClasses.
+	"Put here a common initialization logic for tests"
+]
+
+{ #category : #running }
+RGTest >> tearDown [
+	
+	self removeTestClasses.
+	self removeTraitForTests.
+	super tearDown.
 ]

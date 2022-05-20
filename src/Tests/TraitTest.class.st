@@ -1,6 +1,8 @@
 Class {
 	#name : #TraitTest,
 	#superclass : #TraitsTestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Tests-Traits'
 }
 
@@ -25,6 +27,24 @@ TraitTest >> createTrait [
 
 	trait compile: 'm1 ^1' classified: 'test'.
 	^ trait
+]
+
+{ #category : #running }
+TraitTest >> setUp [
+
+	super setUp.
+	self generateTraitForTests.
+	self generateTestClasses.
+
+]
+
+{ #category : #running }
+TraitTest >> tearDown [
+
+	self removeTraitForTests.
+	self removeTestClasses.
+	super tearDown. 
+
 ]
 
 { #category : #tests }
@@ -64,9 +84,9 @@ TraitTest >> testAllClassVarNames [
 TraitTest >> testComposedBy [
 	"tests the #isComposedBy: aTrait method"
 	
-	self assert: (Trait3 isComposedBy: Trait2).
-	self deny: (Trait2 isComposedBy: Trait3).
-	self deny: (Trait3 isComposedBy: Object).
+	self assert: (trait3 isComposedBy: trait2).
+	self deny: (trait2 isComposedBy: trait3).
+	self deny: (trait3 isComposedBy: Object).
 	
 ]
 
@@ -267,8 +287,8 @@ TraitTest >> testIsRootInEnvironment [
 { #category : #tests }
 TraitTest >> testIsUsed [
 
-	self assert: Trait1 isUsed.
-	self assert: Trait1 classTrait isUsed.
+	self assert: trait1 isUsed.
+	self assert: trait1 classTrait isUsed.
 
 ]
 

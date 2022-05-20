@@ -4,8 +4,27 @@ SUnit tests for trait definitions
 Class {
 	#name : #RGTraitDefinitionTest,
 	#superclass : #TestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Ring-Definitions-Tests-Core-Base'
 }
+
+{ #category : #running }
+RGTraitDefinitionTest >> setUp [
+	super setUp.
+	self generateTraitForTests.
+	self generateTestClasses.
+	
+	"Put here a common initialization logic for tests"
+]
+
+{ #category : #running }
+RGTraitDefinitionTest >> tearDown [ 
+
+	self removeTraitForTests.
+	self removeTestClasses.
+	super tearDown.
+]
 
 { #category : #testing }
 RGTraitDefinitionTest >> testAddingMethods [
@@ -63,7 +82,7 @@ RGTraitDefinitionTest >> testAsTraitDefinition [
 { #category : #testing }
 RGTraitDefinitionTest >> testAsTraitDefinition2 [
 	| newTrait newClass newSlice |
-	newClass := MOPTestClassC
+	newClass := testClassC
 		asRingDefinitionWithMethods: false
 		withSuperclasses: false
 		withSubclasses: true
@@ -73,7 +92,7 @@ RGTraitDefinitionTest >> testAsTraitDefinition2 [
 	self assert: newClass traitNames size equals: 1.
 	self assert: newClass traits first equals: (newSlice traitNamed: #Trait2).
 
-	newTrait := MOPTestClassA
+	newTrait := testClassA
 		asRingDefinitionWithMethods: true
 		withSuperclasses: true
 		withSubclasses: false

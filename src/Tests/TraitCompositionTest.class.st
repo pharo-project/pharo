@@ -1,8 +1,28 @@
 Class {
 	#name : #TraitCompositionTest,
 	#superclass : #TraitsTestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Tests-Traits'
 }
+
+{ #category : #running }
+TraitCompositionTest >> setUp [
+
+	super setUp.
+ 	self generateTraitForTests.
+	self generateTestClasses.
+
+]
+
+{ #category : #running }
+TraitCompositionTest >> tearDown [
+
+	self removeTestClasses.
+	self removeTraitForTests.
+	super tearDown.
+
+]
 
 { #category : #'tests - basic' }
 TraitCompositionTest >> testAliasCompositions [
@@ -98,11 +118,11 @@ TraitCompositionTest >> testInvalidComposition [
 TraitCompositionTest >> testOriginSelectorOf [
 	
 	"regular method "
-	self assert: (MOPTestClassC traitComposition originSelectorOf: #c) equals: #c.	
+	self assert: (testClassC traitComposition originSelectorOf: #c) equals: #c.	
 	"non aliased trait method "
-	self assert: (MOPTestClassD traitComposition originSelectorOf: #c2) equals: #c2.	
+	self assert: (testClassD traitComposition originSelectorOf: #c2) equals: #c2.	
 	"aliased method "
-	self assert: (MOPTestClassD traitComposition originSelectorOf: #c3) equals: #c2.
+	self assert: (testClassD traitComposition originSelectorOf: #c3) equals: #c2.
 ]
 
 { #category : #'tests - basic' }

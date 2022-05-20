@@ -49,7 +49,8 @@ T2FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeD
 { #category : #'tests - metaclasses' }
 T2FluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
-	self assert: (self forClass: MOPTraitTest class) equals: 'TestCase class << MOPTraitTest class'
+	self assert: (self forClass: MOPTraitTest class) equals: 'TestCase class << MOPTraitTest class
+	traits: {THelperTraitTest classTrait}'
 ]
 
 { #category : #'tests - template' }
@@ -65,7 +66,7 @@ T2FluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
 { #category : #'tests - traits' }
 T2FluidClassDefinitionPrinterTest >> testComplexTrait [
 
-	self assert: (self forClass: MOPTestClassD) equals: 'Object << #MOPTestClassD
+	self assert: (self forClass: testClassD) equals: 'Object << #MOPTestClassD
 	traits: {Trait2 @ {#c3->#c2}};
 	tag: ''Traits-MOP'';
 	package: ''Tests''' 
@@ -120,7 +121,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorTrait [
 { #category : #'tests - expanded' }
 T2FluidClassDefinitionPrinterTest >> testExpandedMetaclassWithTrait [
 	
-	self assert: (self expandedForClass: MOPTestClassD class) equals: 'Object class << MOPTestClassD class
+	self assert: (self expandedForClass: testClassD class) equals: 'Object class << MOPTestClassD class
 	traits: {Trait2 classTrait};
 	slots: {}' 
 ]
@@ -140,7 +141,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedTComparableClassTrait [
 T2FluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 
 	self 
-		assert: (self expandedForClass: Trait3 classTrait) 
+		assert: (self expandedForClass: trait3 classTrait) 
 		equals:  'Trait << Trait3 classTrait
 	traits: {Trait2 classTrait};
 	slots: {}'
@@ -161,7 +162,7 @@ T2FluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 { #category : #'tests - metaclasses' }
 T2FluidClassDefinitionPrinterTest >> testMetaclassWithTrait [
 	
-	self assert: (self forClass: MOPTestClassD class) equals: 'Object class << MOPTestClassD class
+	self assert: (self forClass: testClassD class) equals: 'Object class << MOPTestClassD class
 	traits: {Trait2 classTrait}' 
 ]
 
@@ -243,7 +244,7 @@ T2FluidClassDefinitionPrinterTest >> testTrait3 [
 T2FluidClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self 
-		assert: (self forClass: Trait3) 
+		assert: (self forClass: trait3) 
 		equals: 'Trait << #Trait3
 	traits: {Trait2};
 	tag: ''Traits-MOP'';

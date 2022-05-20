@@ -30,7 +30,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 T2LegacyPharoClassDefinitionPrinterTest >> testClassUsingComplexTrait [
 
 	self
-		assert: (self forClass: MOPTestClassD)
+		assert: (self forClass: testClassD)
 		equals: 'Object subclass: #MOPTestClassD
 	uses: Trait2 @ {#c3->#c2}
 	instanceVariableNames: ''''
@@ -43,7 +43,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testClassUsingComplexTrait [
 T2LegacyPharoClassDefinitionPrinterTest >> testComplexTrait [
 
 	self
-		assert: (self forClass: Trait4)
+		assert: (self forClass: trait4)
 		equals: 'Trait named: #Trait4
 	 uses: Trait1 + (Trait2 - {#c})
 	 package: ''Tests-Traits-MOP'''
@@ -105,7 +105,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testTrait [
 { #category : #'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait3 [
 
-	self assert: (self forClass: Trait3 classTrait) equals: 'Trait3 classTrait
+	self assert: (self forClass: trait3 classTrait) equals: 'Trait3 classTrait
 	instanceVariableNames: '''''
 ]
 
@@ -113,7 +113,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testTrait3 [
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self 
-		assert: (self forClass: Trait3) 
+		assert: (self forClass: trait3) 
 		equals: 'Trait named: #Trait3
 	 uses: Trait2
 	 package: ''Tests-Traits-MOP'''

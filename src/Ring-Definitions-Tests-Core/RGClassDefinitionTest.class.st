@@ -4,8 +4,28 @@ SUnit tests for class definitions
 Class {
 	#name : #RGClassDefinitionTest,
 	#superclass : #TestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Ring-Definitions-Tests-Core-Base'
 }
+
+{ #category : #running }
+RGClassDefinitionTest >> setUp [
+	super setUp.
+	self generateTraitForTests.
+	self generateTestClasses.
+	
+	"Put here a common initialization logic for tests"
+]
+
+{ #category : #running }
+RGClassDefinitionTest >> tearDown [
+	self removeTestClasses.
+	self removeTraitForTests.
+	super tearDown.
+	
+	"Put here a common initialization logic for tests"
+]
 
 { #category : #testing }
 RGClassDefinitionTest >> testAddingMethods [
@@ -62,7 +82,7 @@ RGClassDefinitionTest >> testAsClassDefinition [
 { #category : #testing }
 RGClassDefinitionTest >> testAsClassDefinition2 [
 	| newClass |
-	newClass := MOPTestClassC asRingDefinition.
+	newClass := testClassC asRingDefinition.
 
 	self assert: newClass isRingObject.
 	self assert: newClass isClass.
@@ -79,14 +99,14 @@ RGClassDefinitionTest >> testAsClassDefinition2 [
 { #category : #testing }
 RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
 	| newClass |
-	newClass := MOPTestClassC asRingDefinition.
+	newClass := testClassC asRingDefinition.
 	self
 		assert: newClass definitionSource 
-		equals: (ClassDefinitionPrinter new for: MOPTestClassC) definitionString.
+		equals: (ClassDefinitionPrinter new for: testClassC) definitionString.
 
 	self
 		assert: newClass classSide definitionSource
-		equals: (ClassDefinitionPrinter new for: MOPTestClassC class) definitionString
+		equals: (ClassDefinitionPrinter new for: testClassC class) definitionString
 ]
 
 { #category : #testing }
