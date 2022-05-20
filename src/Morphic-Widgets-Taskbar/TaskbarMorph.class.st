@@ -112,6 +112,18 @@ TaskbarMorph >> buttonForMorph: aMorph [
 	^index = 0 ifTrue: [nil] ifFalse: [self submorphs at: index ifAbsent: []]
 ]
 
+{ #category : #taskbar }
+TaskbarMorph >> canMoveLeft: task [
+
+ ^ ((self orderedTasks first morph) ~= task).
+]
+
+{ #category : #taskbar }
+TaskbarMorph >> canMoveRight: task [
+
+ ^ ((self orderedTasks last morph) ~= task).
+]
+
 { #category : #drawing }
 TaskbarMorph >> clipSubmorphs [ 
 

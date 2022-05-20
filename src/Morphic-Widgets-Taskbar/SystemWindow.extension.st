@@ -12,14 +12,14 @@ SystemWindow >> canBeMovedToLeft [
 	
 	
 	self worldTaskbar ifNil: [ ^ false ].
-	^ ((self worldTaskbar orderedTasks first morph) ~= self).
+	^ self worldTaskbar canMoveLeft: self.
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> canBeMovedToRight [
 
 	self worldTaskbar ifNil: [ ^ false ].
-	^ ((self worldTaskbar orderedTasks last morph) ~= self).
+	^ self worldTaskbar canMoveRight: self.
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }

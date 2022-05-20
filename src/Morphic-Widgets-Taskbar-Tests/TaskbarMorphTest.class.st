@@ -82,6 +82,71 @@ TaskbarMorphTest >> tasks [
 ]
 
 { #category : #tests }
+TaskbarMorphTest >> testCanBeMoveLeftIfItsNotTheFirstTask [
+	| firstTask secondTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	secondTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask. secondTask } asOrderedCollection.
+	
+	
+	self assert: (taskbarMorph canMoveLeft: (secondTask  morph) ).
+]
+
+{ #category : #tests }
+TaskbarMorphTest >> testCanBeMoveRightIfItsNotTheLastTask [
+	| firstTask secondTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	secondTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask. secondTask } asOrderedCollection.
+	
+	
+	self assert: (taskbarMorph canMoveRight: (firstTask morph) ).
+]
+
+{ #category : #tests }
+TaskbarMorphTest >> testCantBeMoveLeftIfItsTheFirstTask [
+	| firstTask secondTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	secondTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask. secondTask } asOrderedCollection.
+	
+	
+	self assert: (taskbarMorph canMoveLeft: (firstTask   morph) ) equals: false.
+]
+
+{ #category : #tests }
+TaskbarMorphTest >> testCantBeMoveRightIfItsTheLastTask [
+
+	| firstTask secondTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	secondTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { 
+			firstTask.
+			secondTask } asOrderedCollection.
+
+
+	self
+		assert: (taskbarMorph canMoveRight: secondTask morph)
+		equals: false
+]
+
+{ #category : #tests }
 TaskbarMorphTest >> testEmptyTaskBarList [
 	taskbar := self.
 	world := self.
