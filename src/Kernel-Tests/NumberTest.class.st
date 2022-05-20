@@ -20,6 +20,30 @@ NumberTest >> testAsInteger [
 	self assert: (1/2) asInteger equals: 0
 ]
 
+{ #category : #test }
+NumberTest >> testClampReturnsMaxIfNumberIsOverMax [
+
+	self assert: (80 clampBetween: 10 and: 20) equals: 20. 
+
+	
+]
+
+{ #category : #test }
+NumberTest >> testClampReturnsMinIfNumberIsBelowMin [
+
+	self assert: (8 clampBetween: 10 and: 20) equals: 10. 
+
+	
+]
+
+{ #category : #test }
+NumberTest >> testClampReturnsSameNumberIfBetweenMinAndMax [
+
+	self assert: (17 clampBetween: 10 and: 20) equals: 17. 
+
+	
+]
+
 { #category : #tests }
 NumberTest >> testFractionPart [
 	self
