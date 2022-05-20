@@ -172,10 +172,7 @@ OrderedCollection >> add: newObject after: oldObject [
 	"(OrderedCollection new add: 41; add: 42 after: 41; yourself) asArray >>>  #(41 42)"
 	"(OrderedCollection new add: 41; add: 42 after: 41; add: 43 after: 41; yourself) asArray >>>  #(41 43 42)"
 		
-	| index |
-	index := self find: oldObject.
-	self insert: newObject before: index + 1.
-	^newObject
+	^self insert: newObject before: (self find: oldObject) + 1
 ]
 
 { #category : #adding }
@@ -183,8 +180,7 @@ OrderedCollection >> add: newObject afterIndex: index [
 	"Add the argument, newObject, as an element of the receiver. Put it in 
 	the sequence just after index. Answer newObject."
 	(index between: 0 and: self size) ifFalse:[^self errorSubscriptBounds: index].
-	self insert: newObject before: firstIndex + index.
-	^ newObject
+	^self insert: newObject before: firstIndex + index
 ]
 
 { #category : #adding }
@@ -194,10 +190,7 @@ OrderedCollection >> add: newObject before: oldObject [
 	
 	"(OrderedCollection new add: 42; add: 41 before: 42; yourself) asArray >>> #(41 42)"
 	
-	| index |
-	index := self find: oldObject.
-	self insert: newObject before: index.
-	^newObject
+	^ self insert: newObject before: (self find: oldObject)
 ]
 
 { #category : #adding }
@@ -205,8 +198,7 @@ OrderedCollection >> add: newObject beforeIndex: index [
 	"Add the argument, newObject, as an element of the receiver. Put it in 
 	the sequence just before index. Answer newObject."
 	(index between: 1 and: self size+1) ifFalse:[^self errorSubscriptBounds: index].
-	self insert: newObject before: firstIndex + index - 1.
-	^ newObject
+	^self insert: newObject before: firstIndex + index - 1
 ]
 
 { #category : #adding }
@@ -254,8 +246,7 @@ OrderedCollection >> addFirst: newObject [
 
 	firstIndex = 1 ifTrue: [self makeRoomAtFirst].
 	firstIndex := firstIndex - 1.
-	array at: firstIndex put: newObject.
-	^ newObject
+	^array at: firstIndex put: newObject
 ]
 
 { #category : #adding }
@@ -264,8 +255,7 @@ OrderedCollection >> addLast: newObject [
 
 	lastIndex = array size ifTrue: [self makeRoomAtLast].
 	lastIndex := lastIndex + 1.
-	array at: lastIndex put: newObject.
-	^ newObject
+	^array at: lastIndex put: newObject
 ]
 
 { #category : #converting }
