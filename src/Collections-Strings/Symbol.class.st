@@ -31,7 +31,6 @@ Class {
 	#superclass : #String,
 	#classVars : [
 		'NewSymbols',
-		'OneCharacterSymbols',
 		'SelectorTable',
 		'SymbolTable'
 	],
