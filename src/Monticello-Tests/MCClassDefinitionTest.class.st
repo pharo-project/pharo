@@ -1,6 +1,8 @@
 Class {
 	#name : #MCClassDefinitionTest,
 	#superclass : #MCTestCase,
+	#traits : 'THelperTraitTest',
+	#classTraits : 'THelperTraitTest classTrait',
 	#category : #'Monticello-Tests-Base'
 }
 
@@ -32,12 +34,16 @@ MCClassDefinitionTest >> classAComment [
 { #category : #running }
 MCClassDefinitionTest >> setUp [
 	super setUp.
-	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
+	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
+	self generateTraitForTests.
+	self generateTestClasses.
 ]
 
 { #category : #running }
 MCClassDefinitionTest >> tearDown [
 	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
+	self removeTestClasses.
+	self removeTraitForTests.
 	super tearDown
 ]
 
@@ -170,7 +176,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: trait1)
 ]
 
 { #category : #tests }
@@ -196,7 +202,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: trait1)
 ]
 
 { #category : #tests }
@@ -223,8 +229,8 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
 	self assert: (cls includesSelector: #c2).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait2)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: trait1).
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: trait2)
 ]
 
 { #category : #tests }
