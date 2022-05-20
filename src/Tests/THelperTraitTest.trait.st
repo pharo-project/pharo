@@ -18,6 +18,50 @@ Trait {
 	#category : #'Tests-Traits-MOP'
 }
 
+{ #category : #'Method generation' }
+THelperTraitTest classSide >> installMethodForClass: aClass [ 
+
+	aClass compile: 'c
+
+	^ ''C>>c'''
+]
+
+{ #category : #'method generation' }
+THelperTraitTest classSide >> installMethodsForTrait1: aTrait [
+
+	aTrait compile: 'c
+
+	^ ''Trait1>>c'' '.
+
+	aTrait compile: 'c1
+
+	^ ''Trait1>>c1'' '
+]
+
+{ #category : #'Method generation' }
+THelperTraitTest classSide >> installMethodsForTrait2: aTrait [ 
+	
+	aTrait compile: 'c
+
+	^ ''Trait2>>c'' '.
+
+	aTrait compile: 'c2
+
+	^ ''Trait2>>c2'' '
+]
+
+{ #category : #'Method generation' }
+THelperTraitTest classSide >> installMethodsForTrait3: aTrait [ 
+
+	aTrait compile: 'c
+
+	^ ''Trait3>>c'' '.
+
+	aTrait compile: 'c3
+
+	^ ''Trait3>>c3'' '
+]
+
 { #category : #'Class generation' }
 THelperTraitTest >> generateTestClassA [
 
@@ -62,6 +106,19 @@ THelperTraitTest >> generateTestClassD [
 		  package: 'Tests-Traits-MOP'
 ]
 
+{ #category : #'Class generation' }
+THelperTraitTest >> generateTestClasses [
+
+	testClassA := self generateTestClassA.
+
+	testClassB := self generateTestClassB.
+
+	testClassC := self generateTestClassC.
+	self class installMethodForClass: testClassC.
+
+	testClassD := self generateTestClassD
+]
+
 { #category : #Generating }
 THelperTraitTest >> generateTrait1 [
 
@@ -98,6 +155,21 @@ THelperTraitTest >> generateTrait4 [
 		          tag: 'Traits-MOP';
 		          package: 'Tests';
 		          install
+]
+
+{ #category : #Generating }
+THelperTraitTest >> generateTraitForTests [
+
+	trait1 := self generateTrait1.
+	self class installMethodsForTrait1: trait1.
+
+	trait2 := self generateTrait2.
+	self class installMethodsForTrait2: trait2.
+
+	trait3 := self generateTrait3.
+	self class installMethodsForTrait3: trait3.
+
+	trait4 := self generateTrait4
 ]
 
 { #category : #cleaning }
