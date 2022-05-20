@@ -1861,13 +1861,23 @@ SystemWindow >> taskbarIcon [
 ]
 
 { #category : #'as yet unclassified' }
-SystemWindow >> taskbarMoveLeft [ "TODO add to protocol"
-	| selectedTask |
-	self worldTaskbar ifNotNil: [ :worldTaskbar |
-		selectedTask := (worldTaskbar orderedTasks select: [:task | task morph = self]) first.
-		1halt.
-		worldTaskbar orderedTasks: (worldTaskbar orderedTasks indexOf: selectedTask)
-	].
+SystemWindow >> taskbarMoveLeft [
+
+	"TODO add to protocol"
+
+	| selectedTask taskIndex newOrderedTasks |
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
+		| currentOrderedTasks |
+		currentOrderedTasks := worldTaskbar orderedTasks.
+		selectedTask := currentOrderedTasks detect: [ :task | 
+			                 task morph = self ].
+		taskIndex := currentOrderedTasks indexOf: selectedTask.
+		newOrderedTasks := currentOrderedTasks copy.
+		newOrderedTasks removeAt: taskIndex.
+		newOrderedTasks add: selectedTask beforeIndex: taskIndex - 1. "TODO handle first element?"
+		worldTaskbar orderedTasks: newOrderedTasks.
+		worldTaskbar updateTaskButtons."TODO is this the right way to update the toolbar?"
+		 ]
 ]
 
 { #category : #'open/close' }
