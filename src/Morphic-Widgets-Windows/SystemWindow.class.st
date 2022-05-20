@@ -1173,7 +1173,9 @@ SystemWindow >> initialize [
 	
 	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
-	updatablePanes := Array new
+	updatablePanes := Array new.
+	self bindKeyCombination: (Character arrowLeft meta shift alt ) toAction: [self taskbarMoveLeft ].
+	self bindKeyCombination: (Character arrowRight meta shift alt) toAction: [self taskbarMoveRight ].
 ]
 
 { #category : #keymapping }
