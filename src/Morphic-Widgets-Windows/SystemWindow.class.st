@@ -1870,9 +1870,14 @@ SystemWindow >> taskbarIcon [
 { #category : #move }
 SystemWindow >> taskbarMoveLeft [
 
-	| offset |
-	offset := -1.
-	self moveTaskbarTaskToOffset: offset "TODO handle first element?"
+	self moveTaskbarTaskToOffset: -1 
+]
+
+{ #category : #move }
+SystemWindow >> taskbarMoveRight [
+	
+
+	self moveTaskbarTaskToOffset: 1.
 ]
 
 { #category : #'open/close' }

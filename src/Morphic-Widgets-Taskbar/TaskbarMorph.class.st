@@ -258,7 +258,7 @@ TaskbarMorph >> move: task withOffset: offset [
 	currentTaskIndex := currentOrderedTasks indexOf: selectedTask.
 	newOrderedTasks := currentOrderedTasks copy.
 	newOrderedTasks removeAt: currentTaskIndex.
-	newTaskIndex := currentTaskIndex + offset.
+	newTaskIndex := ((currentTaskIndex + offset) clampBetween: 1 and: (self orderedTasks size)) .
 	newOrderedTasks add: selectedTask beforeIndex: newTaskIndex.
 	self orderedTasks: newOrderedTasks.
 	^ self updateTaskButtons "TODO is this the right way to update the toolbar?"

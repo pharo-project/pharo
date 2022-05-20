@@ -96,6 +96,20 @@ TaskbarMorphTest >> testIfTheTestedMethodIstheSameThatTheOneUsedInProd [
 ]
 
 { #category : #tests }
+TaskbarMorphTest >> testMoveTaskbarTaskLeftDoesNothingOnFirstTask [
+	| firstTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask } asOrderedCollection.
+	taskbarMorph move: firstTask withOffset: -1.
+	
+	self assert: firstTask equals: taskbarMorph orderedTasks first.
+]
+
+{ #category : #tests }
 TaskbarMorphTest >> testMoveTaskbarTaskLeftMovesItOnePositionToTheLeft [
 	| firstTask secondTask systemWindow taskbarMorph |
 	taskbar := self.
@@ -108,6 +122,35 @@ TaskbarMorphTest >> testMoveTaskbarTaskLeftMovesItOnePositionToTheLeft [
 	taskbarMorph move: secondTask withOffset: -1.
 	
 	self assert: secondTask equals: taskbarMorph orderedTasks first.
+]
+
+{ #category : #tests }
+TaskbarMorphTest >> testMoveTaskbarTaskRightDoesNothingOnLastTask [
+	| firstTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask } asOrderedCollection.
+	taskbarMorph move: firstTask withOffset: 1.
+	
+	self assert: firstTask equals: taskbarMorph orderedTasks first.
+]
+
+{ #category : #tests }
+TaskbarMorphTest >> testMoveTaskbarTaskRightMovesItOnePositionToTheRight [
+	| firstTask secondTask taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	secondTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask. secondTask } asOrderedCollection.
+	taskbarMorph move: firstTask withOffset: 1.
+	
+	self assert: firstTask equals: taskbarMorph orderedTasks last.
 ]
 
 { #category : #tests }
