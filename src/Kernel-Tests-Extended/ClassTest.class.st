@@ -6,7 +6,12 @@ Class {
 	#superclass : #ClassTestCase,
 	#instVars : [
 		'className',
-		'testEnvironment'
+		'testEnvironment',
+		'classExampleForTest1',
+		'classExampleForTest11',
+		'classExampleForTest111',
+		'classExampleForTest112',
+		'classExampleForTest12'
 	],
 	#category : #'Kernel-Tests-Extended-Classes'
 }
@@ -24,6 +29,14 @@ ClassTest >> classToBeTested [
 	^ Class
 ]
 
+{ #category : #'method generation' }
+ClassTest >> cleanUpGeneratedReferencingMethods [
+
+	self class removeSelectorSilently: #referencingMethod1.
+	self class removeSelectorSilently: #referencingMethod2.
+	self class removeSelectorSilently: #referencingMethod111.
+]
+
 { #category : #setup }
 ClassTest >> deleteClass [
 	| cl |
@@ -33,6 +46,23 @@ ClassTest >> deleteClass [
 		cl removeFromChanges ].
 	
 	cl removeFromSystemUnlogged
+]
+
+{ #category : #'method generation' }
+ClassTest >> generateReferencingMethods [
+	
+	self class compile: 'referencingMethod1
+
+	^ExampleForTest1'.
+	
+	self class compile: 'referencingMethod2
+
+	^ {ExampleForTest12. ExampleForTest1}'.
+	
+	self class compile: 'referencingMethod111
+
+	^ExampleForTest111'.
+
 ]
 
 { #category : #'referencing methods' }
@@ -49,7 +79,7 @@ ClassTest >> referencingMethod2 [
 
 { #category : #'referencing methods' }
 ClassTest >> referencingMethod3 [
-	"no reference"
+	"no reference, no need to generate this one"
 
 	^ self
 ]
@@ -60,6 +90,9 @@ ClassTest >> setUp [
 	className := #TUTU.
 	testEnvironment:= Smalltalk globals.
 	self deleteClass.
+	
+	self generateClassForTests.
+	self generateReferencingMethods.
 	
 	self class classInstaller make: [ :aBuilder |
 		aBuilder 
@@ -72,6 +105,10 @@ ClassTest >> tearDown [
 	self deleteClass.
 	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
 			RPackage organizer unregisterPackageNamed: category].
+		
+	"self cleanUpGeneratedClasses.
+	self cleanUpGeneratedReferencingMethods."
+	
 	super tearDown
 ]
 
@@ -326,10 +363,10 @@ ClassTest >> testIsInstanceSide [
 
 { #category : #'tests - navigation' }
 ClassTest >> testMethodsReferencingClass [
-	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
+	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #referencingMethod111)}.
 	self
 		assert: ((ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest1)) sort: [ :a :b | a name <= b name ]) asArray
-		equals: {(ClassTest >> #referencingMethod1) . (ClassTest >> #referencingMethod2) . (ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
+		equals: {(ClassTest >> #referencingMethod1) . (ClassTest >> #referencingMethod2)}.
 	self assertEmpty: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTest))
 ]
 
@@ -337,13 +374,11 @@ ClassTest >> testMethodsReferencingClass [
 ClassTest >> testMethodsReferencingClasses [
 
 	| collectionOfMethods collectionOfMethodsShouldBe |
-	
 	collectionOfMethods := ((ClassTest methodsReferencingClasses: {Smalltalk classNamed: #ExampleForTest12. Smalltalk classNamed: #ExampleForTest1}) sort: [ :a :b | a name <= b name]) asArray.
 	
 	collectionOfMethodsShouldBe := {
 		ClassTest>>#referencingMethod1.
-		ClassTest>>#referencingMethod2.
-		ClassTest>>#testOrdersACollectionOfClassesBySuperclass}.
+		ClassTest>>#referencingMethod2.}.
 		
 	self assert: collectionOfMethods asSet equals: collectionOfMethodsShouldBe asSet
 ]
@@ -367,17 +402,17 @@ ClassTest >> testOrdersACollectionOfClassesBySuperclass [
 	| ordered |
 	ordered := (Class superclassOrder:  
 		(OrderedCollection 
-				with: ExampleForTest11 class 
-				with: ExampleForTest111 class 
-				with: ExampleForTest12 class 
-				with: ExampleForTest1 class 
-				with: ExampleForTest12 class 
-				with: ExampleForTest112 class)).
+				with: classExampleForTest11 class 
+				with: classExampleForTest111 class 
+				with: classExampleForTest12 class 
+				with: classExampleForTest1 class 
+				with: classExampleForTest12 class
+				with: classExampleForTest112 class)).
 	
-	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest11 class).
-	self assert: (ordered indexOf: ExampleForTest11 class) < (ordered indexOf: ExampleForTest111 class).
-	self assert: (ordered indexOf: ExampleForTest11 class) < (ordered indexOf: ExampleForTest112 class).
-	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest12 class).
+	self assert: (ordered indexOf: classExampleForTest1 class) < (ordered indexOf: classExampleForTest11 class).
+	self assert: (ordered indexOf: classExampleForTest11 class) < (ordered indexOf: classExampleForTest111 class).
+	self assert: (ordered indexOf: classExampleForTest11 class) < (ordered indexOf: classExampleForTest112 class).
+	self assert: (ordered indexOf: classExampleForTest1 class) < (ordered indexOf: classExampleForTest12 class).
 ]
 
 { #category : #'tests - file in/out' }
