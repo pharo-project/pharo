@@ -78,6 +78,20 @@ OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 	^ (aPosition / self screenScaleFactor) rounded
 ]
 
+{ #category : #screenshot }
+OSWorldRenderer >> copyRectangle: aRectangle into: aForm [ 
+
+	aForm
+		copyBits: (aRectangle origin extent: aForm extent)
+		from: display
+		at: 0 @ 0
+		clippingBox: aForm boundingBox
+		rule: Form over
+		fillColor: nil.
+		
+	^ aForm
+]
+
 { #category : #private }
 OSWorldRenderer >> deactivate [
 

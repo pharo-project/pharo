@@ -184,7 +184,7 @@ ImageMorph >> form: aForm [
 { #category : #'menu commands' }
 ImageMorph >> grabFromScreen [
 
-	self form: Form fromUser.
+	self form: Screenshot new formScreenshotFromUserSelection.
 ]
 
 { #category : #accessing }

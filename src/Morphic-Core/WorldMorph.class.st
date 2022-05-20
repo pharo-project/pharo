@@ -269,6 +269,12 @@ WorldMorph >> contentsMenuTitle [
 	^ 'World contents' translated
 ]
 
+{ #category : #screenshot }
+WorldMorph >> copyRectangle: aRectangle into: aForm [ 
+	
+	^ worldState worldRenderer copyRectangle: aRectangle into: aForm
+]
+
 { #category : #'world state' }
 WorldMorph >> defaultWorldColor [
 	^ self class defaultWorldColor
