@@ -15,9 +15,6 @@ Class {
 		'searchedTextList',
 		'sourceTextModel'
 	],
-	#classInstVars : [
-		'searchedTextListMaxSize'
-	],
 	#category : #'Tool-Finder-UI'
 }
 
@@ -35,11 +32,6 @@ FinderUI class >> doAllSubscriptionsOn: aFinder to: anInstance [
 { #category : #icons }
 FinderUI class >> icon [
 	^ self iconNamed: #smallFindIcon
-]
-
-{ #category : #'class initialization' }
-FinderUI class >> initialize [
-	searchedTextListMaxSize := 15
 ]
 
 { #category : #explanations }
