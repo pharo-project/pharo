@@ -149,7 +149,7 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : #testing }
 Boolean >> isLiteral [ 
 	^ true
 ]

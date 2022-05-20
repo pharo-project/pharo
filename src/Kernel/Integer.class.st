@@ -1077,7 +1077,7 @@ Integer >> isInteger [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : #testing }
 Integer >> isLiteral [
 
 	^true
