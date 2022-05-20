@@ -261,15 +261,16 @@ SystemWindow >> taskbarState [
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarTask [
-	"Answer a new taskbar task for the receiver.
+	"Answer a taskbar task for the receiver.
 	Answer nil if not required."
 
 	(self valueOfProperty: #noTaskbarTask ifAbsent: [false]) ifTrue: [^nil].
-	^TaskbarTask
+	taskbarTask := TaskbarTask
 		morph: self
 		state: self taskbarState
 		icon: self taskbarIcon
-		label: self taskbarLabel
+		label: self taskbarLabel.
+	^taskbarTask.
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }

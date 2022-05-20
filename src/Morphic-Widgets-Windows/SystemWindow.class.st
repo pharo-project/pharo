@@ -23,7 +23,8 @@ Class {
 		'labelArea',
 		'expandBox',
 		'embeddable',
-		'isResizeable'
+		'isResizeable',
+		'taskbarTask'
 	],
 	#classVars : [
 		'CloseBoxImage',
@@ -1447,6 +1448,12 @@ SystemWindow >> mouseUp: evt [
 	submorphs do: [:m | (m containsPoint: cp) ifTrue: [m mouseUp: evt]]
 ]
 
+{ #category : #move }
+SystemWindow >> moveTaskbarTaskToOffset: offset [
+
+	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar move: self taskbarTask withOffset: offset ]
+]
+
 { #category : #'open/close' }
 SystemWindow >> mustNotClose [
 	^ mustNotClose == true
@@ -1860,24 +1867,12 @@ SystemWindow >> taskbarIcon [
 	^super taskbarIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #move }
 SystemWindow >> taskbarMoveLeft [
 
-	"TODO add to protocol"
-
-	| selectedTask taskIndex newOrderedTasks |
-	self worldTaskbar ifNotNil: [ :worldTaskbar | 
-		| currentOrderedTasks |
-		currentOrderedTasks := worldTaskbar orderedTasks.
-		selectedTask := currentOrderedTasks detect: [ :task | 
-			                 task morph = self ].
-		taskIndex := currentOrderedTasks indexOf: selectedTask.
-		newOrderedTasks := currentOrderedTasks copy.
-		newOrderedTasks removeAt: taskIndex.
-		newOrderedTasks add: selectedTask beforeIndex: taskIndex - 1. "TODO handle first element?"
-		worldTaskbar orderedTasks: newOrderedTasks.
-		worldTaskbar updateTaskButtons."TODO is this the right way to update the toolbar?"
-		 ]
+	| offset |
+	offset := -1.
+	self moveTaskbarTaskToOffset: offset "TODO handle first element?"
 ]
 
 { #category : #'open/close' }

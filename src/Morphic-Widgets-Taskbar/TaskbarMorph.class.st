@@ -249,6 +249,21 @@ TaskbarMorph >> morphicLayerNumber [
 	^11
 ]
 
+{ #category : #initialization }
+TaskbarMorph >> move: task withOffset: offset [
+
+	| selectedTask currentTaskIndex newOrderedTasks newTaskIndex currentOrderedTasks |
+	currentOrderedTasks := self orderedTasks.
+	selectedTask := task.
+	currentTaskIndex := currentOrderedTasks indexOf: selectedTask.
+	newOrderedTasks := currentOrderedTasks copy.
+	newOrderedTasks removeAt: currentTaskIndex.
+	newTaskIndex := currentTaskIndex + offset.
+	newOrderedTasks add: selectedTask beforeIndex: newTaskIndex.
+	self orderedTasks: newOrderedTasks.
+	^ self updateTaskButtons "TODO is this the right way to update the toolbar?"
+]
+
 { #category : #accessing }
 TaskbarMorph >> orderedTasks [
 	"Answer the value of orderedTasks"

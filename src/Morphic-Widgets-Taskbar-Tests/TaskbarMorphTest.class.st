@@ -13,6 +13,18 @@ Class {
 	#category : #'Morphic-Widgets-Taskbar-Tests'
 }
 
+{ #category : #'mocking taskbar' }
+TaskbarMorphTest >> addTaskWithWindow [
+
+	| newTask morph |
+	morph := SystemWindow new.
+	"morph privateOwner: self.
+	morph world: world."
+	newTask := taskbar newTaskFor: morph.
+	self orderedTasks add: newTask.
+	^ newTask
+]
+
 { #category : #'mocking world' }
 TaskbarMorphTest >> addWindow [
 	^world addWindowToWorld
@@ -81,6 +93,21 @@ TaskbarMorphTest >> testEmptyTaskBarList [
 TaskbarMorphTest >> testIfTheTestedMethodIstheSameThatTheOneUsedInProd [
 
 	self assert: self theMethodInProdThatShouldBeTested bytecode equals: (self class >> #updateOrderedTasksFrom:) bytecode
+]
+
+{ #category : #tests }
+TaskbarMorphTest >> testMoveTaskbarTaskLeftMovesItOnePositionToTheLeft [
+	| firstTask secondTask systemWindow taskbarMorph |
+	taskbar := self.
+	world := self.
+	taskbar updateTasks.
+	taskbarMorph := TaskbarMorph new.
+	firstTask := self addTaskWithWindow.
+	secondTask := self addTaskWithWindow.
+	taskbarMorph orderedTasks: { firstTask. secondTask } asOrderedCollection.
+	taskbarMorph move: secondTask withOffset: -1.
+	
+	self assert: secondTask equals: taskbarMorph orderedTasks first.
 ]
 
 { #category : #tests }
