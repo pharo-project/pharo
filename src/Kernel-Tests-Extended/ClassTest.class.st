@@ -84,39 +84,58 @@ ClassTest >> deleteClass [
 
 { #category : #generating }
 ClassTest >> generateClassForTests [
-	
-	| builderExampleForTest1 |
-	builderExampleForTest1 := Object << #ExampleForTest1
-	slots: { #aSuperclassVariable };
-	tag: 'Classes';
-	package: 'Kernel-Tests'. 
-	classExampleForTest1 := builderExampleForTest1 install.
+
+	classExampleForTest1 := self generateExampleClass1.
 	self class setUpMethodForTest1: classExampleForTest1.
-	
-	builderExampleForTest1 := classExampleForTest1 << #ExampleForTest11
-	slots: { #aSubclassVariable };
-	tag: 'Classes';
-	package: 'Kernel-Tests'.
-	classExampleForTest11 := builderExampleForTest1 install.
+
+	classExampleForTest11 := self generateExampleClass11.
 	self class setUpMethodForTest11: classExampleForTest11.
-	
-	classExampleForTest111:= classExampleForTest11 << #ExampleForTest111
-	slots: {};
-	tag: 'Classes';
-	package: 'Kernel-Tests';
-	install.
-	
-	classExampleForTest112 := classExampleForTest11 << #ExampleForTest112
-	slots: {};
-	tag: 'Classes';
-	package: 'Kernel-Tests';
-	install.
-	
-	classExampleForTest12 := classExampleForTest1 << #ExampleForTest12
-	slots: {};
-	tag: 'Classes';
-	package: 'Kernel-Tests';
-	install.
+
+	classExampleForTest111 := self generateExampleClass111.
+
+	classExampleForTest112 := self generateExampleClass112.
+
+	classExampleForTest12 := self generateExampleClass12
+]
+
+{ #category : #generating }
+ClassTest >> generateExampleClass11 [
+
+	^ (classExampleForTest1 << #ExampleForTest11)
+		  slots: { #aSubclassVariable };
+		  tag: 'Classes';
+		  package: 'Kernel-Tests';
+		  install
+]
+
+{ #category : #generating }
+ClassTest >> generateExampleClass111 [
+
+	^ (classExampleForTest11 << #ExampleForTest111)
+		  slots: {  };
+		  tag: 'Classes';
+		  package: 'Kernel-Tests';
+		  install
+]
+
+{ #category : #generating }
+ClassTest >> generateExampleClass112 [
+
+	^ (classExampleForTest11 << #ExampleForTest112)
+		  slots: {  };
+		  tag: 'Classes';
+		  package: 'Kernel-Tests';
+		  install
+]
+
+{ #category : #generating }
+ClassTest >> generateExampleClass12 [
+
+	^ (classExampleForTest1 << #ExampleForTest12)
+		  slots: {  };
+		  tag: 'Classes';
+		  package: 'Kernel-Tests';
+		  install
 ]
 
 { #category : #'method generation' }
