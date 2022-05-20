@@ -16,6 +16,30 @@ Class {
 	#category : #'Kernel-Tests-Extended-Classes'
 }
 
+{ #category : #'method generation' }
+ClassTest class >> setUpMethodForTest11: aClass [ 
+	
+	aClass compile: 'aSubclassVariable
+
+	^ aSubclassVariable'.
+	
+	aClass compile: 'aSubclassVariable: anObject
+
+	aSubclassVariable := anObject'.
+]
+
+{ #category : #'method generation' }
+ClassTest class >> setUpMethodForTest1: aClass [ 
+	aClass compile: 'aSuperclassVariable
+
+	^ aSuperclassVariable'.
+	
+	aClass compile: 'aSuperclassVariable: anObject
+
+	aSuperclassVariable := anObject'.
+	
+]
+
 { #category : #setup }
 ClassTest >> categoryNameForTemporaryClasses [
 	"Answer the category where to classify temporarily created classes"
@@ -27,6 +51,16 @@ ClassTest >> categoryNameForTemporaryClasses [
 ClassTest >> classToBeTested [
 	
 	^ Class
+]
+
+{ #category : #setup }
+ClassTest >> cleanUpGeneratedClasses [
+
+	classExampleForTest1 removeFromSystemUnlogged.
+	classExampleForTest11 removeFromSystemUnlogged.
+	classExampleForTest111 removeFromSystemUnlogged.
+	classExampleForTest112 removeFromSystemUnlogged.
+	classExampleForTest12 removeFromSystemUnlogged.
 ]
 
 { #category : #'method generation' }
@@ -46,6 +80,43 @@ ClassTest >> deleteClass [
 		cl removeFromChanges ].
 	
 	cl removeFromSystemUnlogged
+]
+
+{ #category : #generating }
+ClassTest >> generateClassForTests [
+	
+	| builderExampleForTest1 |
+	builderExampleForTest1 := Object << #ExampleForTest1
+	slots: { #aSuperclassVariable };
+	tag: 'Classes';
+	package: 'Kernel-Tests'. 
+	classExampleForTest1 := builderExampleForTest1 install.
+	self class setUpMethodForTest1: classExampleForTest1.
+	
+	builderExampleForTest1 := classExampleForTest1 << #ExampleForTest11
+	slots: { #aSubclassVariable };
+	tag: 'Classes';
+	package: 'Kernel-Tests'.
+	classExampleForTest11 := builderExampleForTest1 install.
+	self class setUpMethodForTest11: classExampleForTest11.
+	
+	classExampleForTest111:= classExampleForTest11 << #ExampleForTest111
+	slots: {};
+	tag: 'Classes';
+	package: 'Kernel-Tests';
+	install.
+	
+	classExampleForTest112 := classExampleForTest11 << #ExampleForTest112
+	slots: {};
+	tag: 'Classes';
+	package: 'Kernel-Tests';
+	install.
+	
+	classExampleForTest12 := classExampleForTest1 << #ExampleForTest12
+	slots: {};
+	tag: 'Classes';
+	package: 'Kernel-Tests';
+	install.
 ]
 
 { #category : #'method generation' }
