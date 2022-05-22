@@ -141,11 +141,6 @@ TestRunner >> browseSelectedTest: aTest [
 	(aTest class lookupSelector: aTest selector) browse
 ]
 
-{ #category : #private }
-TestRunner >> browserEnvironment [
-	^ Smalltalk globals classNamed: #BrowserEnvironment
-]
-
 { #category : #building }
 TestRunner >> build [
 	"self new build openInWorld"
