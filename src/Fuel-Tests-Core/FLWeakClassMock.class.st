@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 FLWeakClassMock >> instVar1 [
-	^ instVar1 
+	^ instVar1
 ]
 
 { #category : #accessing }

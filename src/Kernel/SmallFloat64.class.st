@@ -225,6 +225,13 @@ SmallFloat64 >> isImmediateObject [
 	^ true
 ]
 
+{ #category : #testing }
+SmallFloat64 >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
+
+	^ false
+]
+
 { #category : #'mathematical functions' }
 SmallFloat64 >> ln [
 	"Answer the natural logarithm of the receiver.

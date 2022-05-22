@@ -14,7 +14,7 @@ RBRemovePragmaTransformationTest >> methodAfter [
 
 { #category : #utilities }
 RBRemovePragmaTransformationTest >> methodBefore [
-	<gtInspectorPresentationOrder: 34>
+	<pragmaForTesting: 34>
 
 	| variable |
 	variable := 'String'.
@@ -25,20 +25,20 @@ RBRemovePragmaTransformationTest >> methodBefore [
 RBRemovePragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation 
-							pragma: '<gtInspectorPresentationOrder: 34>'
+							pragma: '<pragmaForTesting: 34>'
 							inMethod: #methodBefore
 							inClass: #RBPragmaTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
 RBRemovePragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation 
-							pragma: '<gtInspectorPresentationOrder: 34>'
+							pragma: '<pragmaForTesting: 34>'
 							inMethod: #method
 							inClass: #RBRemovePragmaTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -56,7 +56,7 @@ RBRemovePragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBRemovePragmaTransformation 
-						pragma: '<gtInspectorPresentationOrder: 34>'
+						pragma: '<pragmaForTesting: 34>'
 						inMethod: #methodBefore
 						inClass: #RBRemovePragmaTransformationTest)
 						asRefactoring transform.
@@ -73,7 +73,7 @@ RBRemovePragmaTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBRemovePragmaTransformation new
-		pragma: '<gtInspectorPresentationOrder: 34>'
+		pragma: '<pragmaForTesting: 34>'
 		inMethod: #methodBefore
 		inClass: self class name)
 		transform.

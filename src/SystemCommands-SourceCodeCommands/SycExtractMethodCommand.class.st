@@ -12,11 +12,11 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not 
+
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+		  aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : #converting }
@@ -88,7 +88,7 @@ SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
 
 	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :class :selector | 
-		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name]. 
+		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name].
 ]
 
 { #category : #execution }
@@ -97,8 +97,7 @@ SycExtractMethodCommand >> setUpOptionToUseExistingMethodDuring: aRefactoring [
 	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector | 
 		UIManager default 
 			confirm: 'Do you want to use existing method ', selector printString, '?'
-			label: 'Warninig']. 	
-	
+			label: 'Warninig'].
 ]
 
 { #category : #execution }

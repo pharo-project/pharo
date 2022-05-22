@@ -39,5 +39,4 @@ RBRenamePackageParametrizedTest >> testRenamePackage [
 	self executeRefactoring: refactoring.
 	self assert: (aModel packageNamed: #'Refactoring-Tests-Core') isNil.
 	self assert: (aModel packageNamed: #'Refactoring-Tests-Core1') isNotNil.
-	
 ]

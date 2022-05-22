@@ -15,7 +15,7 @@ The correct way to use class Random is to store one in an instance or class vari
 Then use it every time you need another number between 0.0 and 1.0 (excluding)
 		myGenerator next
 You can also generate a positive integer
-		myGenerator nextInt: 10
+		myGenerator nextInteger: 10
 		
 [1] 'Random Number Generators:  Good Ones Are Hard to Find' 
 by Stephen K. Park and Keith W. Miller 
@@ -85,7 +85,6 @@ Random >> initialize [
 	m := 16r7FFFFFFF asFloat.    " magic constant = 2147483647 = 2^31 - 1"
 	q := (m quo: a) asFloat.
 	r  := (m \\ a) asFloat.
-
 ]
 
 { #category : #accessing }
@@ -169,7 +168,6 @@ Random >> seed: aNumber [
 	[ newSeed < m ] whileFalse:
 		[ newSeed := newSeed - m ].
 	seed := newSeed.
-
 ]
 
 { #category : #initialization }

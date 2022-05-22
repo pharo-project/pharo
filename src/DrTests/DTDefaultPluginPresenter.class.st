@@ -73,20 +73,20 @@ DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
 		yourself
 ]
 
-{ #category : #specs }
-DTDefaultPluginPresenter class >> defaultSpec [
+{ #category : #layout }
+DTDefaultPluginPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
-		add: (SpPanedLayout newHorizontal
-		  add: (SpPanedLayout newHorizontal
-				   add: (SpBoxLayout newVertical
+		add: (SpPanedLayout newLeftToRight
+		  add: (SpPanedLayout newLeftToRight
+				   add: (SpBoxLayout newTopToBottom
 						    add: #packagesList;
 						    yourself);
-				   add: (SpBoxLayout newVertical
+				   add: (SpBoxLayout newTopToBottom
 						    add: #itemsList;
 						    yourself);
 				   yourself);
-		  add: (SpBoxLayout newVertical
+		  add: (SpBoxLayout newTopToBottom
 				   add: #resultViewsDropList
 				   withConstraints: [ :constraints | constraints expand: false ];
 				   add: #resultLabel

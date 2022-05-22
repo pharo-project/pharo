@@ -195,6 +195,4 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSimpleSenderOfMessage [
 	self executeRefactoring: refactoring .
 	transformedMethod := ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) .
 	self assert: (transformedMethod = afterRefactoring1 or: [transformedMethod = afterRefactoring2 ])
-	
-
 ]

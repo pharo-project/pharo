@@ -20,7 +20,6 @@ RubLipsumBasicExample class >> openNotWrapped [
 	"self openNotWrapped"
 
 	self openScrolledText: self new newScrolledTextNotWrapped.
-
 ]
 
 { #category : #examples }
@@ -37,7 +36,6 @@ RubLipsumBasicExample class >> openScrolledText: aScrolledText [
 RubLipsumBasicExample class >> openWrapped [
 	"self openWrapped"
 	self openScrolledText: self new newScrolledTextWrapped.
-
 ]
 
 { #category : #examples }
@@ -66,7 +64,7 @@ RubLipsumBasicExample >> newScrolledText [
 
 { #category : #'user interface' }
 RubLipsumBasicExample >> newScrolledTextNotWrapped [
-	^ self newScrolledText 
+	^ self newScrolledText
 ]
 
 { #category : #'user interface' }

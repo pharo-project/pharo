@@ -7,5 +7,4 @@ StrikeFontSet >> settingStoreOn: aStream [
 	aStream nextPut: Character space.
 	aStream nextPutAll: 'familyName: ''', self familyName, ''' size: ', self pointSize asString, ' emphasized: ', self emphasis asString.
 	aStream nextPut: $)
-
 ]

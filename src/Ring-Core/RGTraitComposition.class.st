@@ -69,7 +69,6 @@ RGTraitComposition >> makeResolved [
 	super makeResolved.
 	
 	transformations := self transformations markAsRingResolved.
-
 ]
 
 { #category : #'queries - methods' }
@@ -87,7 +86,7 @@ RGTraitComposition >> pvtAddTransformation: anRGTraitTransformation [
 	transformations isRingResolved ifFalse: [ 
 		self pvtCleanTransformations  ].
 	
-	transformations add: anRGTraitTransformation.	
+	transformations add: anRGTraitTransformation.
 ]
 
 { #category : #'private - backend access' }
@@ -110,8 +109,6 @@ RGTraitComposition >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#transformations -> transformations. 
 	}
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -144,8 +141,7 @@ RGTraitComposition >> traitCompositionString [
 	^String streamContents: [ :stream | 
 		self transformations 
 			do: [ :each | stream nextPutAll: each traitTransformationString ]
-			separatedBy: [ stream nextPutAll: ' + ' ] ]	
-	
+			separatedBy: [ stream nextPutAll: ' + ' ] ]
 ]
 
 { #category : #accessing }
@@ -161,7 +157,6 @@ RGTraitComposition >> transformations [
 	allTransformations := OrderedCollection new.
 	self transformationsDo: [ :each | allTransformations add: each].
 	^ allTransformations
-
 ]
 
 { #category : #'accessing - backend' }

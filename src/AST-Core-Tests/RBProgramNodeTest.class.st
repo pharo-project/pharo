@@ -409,6 +409,20 @@ RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 ]
 
 { #category : #'tests - bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
+
+	| bestNode string |
+
+	string := self getMethodString findString: '.'.
+	bestNode := (RBParser parseMethod: self getMethodString) 
+		        bestNodeForPosition: string + 1.
+	self
+		assert: bestNode isAssignment;
+		assert: bestNode sourceCode
+		equals: 'assignement := " Third comment " #node'
+]
+
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	| ast string start |
 	string := '#node'.
@@ -451,8 +465,73 @@ RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 ]
 
 { #category : #'tests - adding' }
-RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
+RBProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
+	"toto: arg
+		arg m1.|
+		arg m2"
+	| sourceCode ast bestNode |
+	sourceCode := 'toto
+	var m1.
+	var m2'.
+	
+	ast := RBParser parseMethod: sourceCode.
+	bestNode := ast bestNodeForPosition: 13.
+	
+	self assert: bestNode isMessage.
+	self assert: bestNode selector equals: #m1
+]
 
+{ #category : #'tests - adding' }
+RBProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
+	"toto: arg
+	   arg m1 |
+	m2"
+	| sourceCode ast bestNode |
+	sourceCode := 'toto: arg
+	               arg m1 
+	 m2'.
+	
+	ast := RBParser parseMethod: sourceCode.
+	bestNode := ast bestNodeForPosition: 33.
+	
+	self assert: bestNode isMessage.
+	self assert: bestNode selector equals: #m1
+]
+
+{ #category : #'tests - adding' }
+RBProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
+	"toto: arg
+	   arg m1 | m2"
+	| sourceCode ast bestNode |
+	sourceCode := 'toto: arg
+	               arg m1  m2'.
+	
+	ast := RBParser parseMethod: sourceCode.
+	bestNode := ast bestNodeForPosition: 33.
+	
+	self assert: bestNode isMessage.
+	self assert: bestNode selector equals: #m1
+]
+
+{ #category : #'tests - adding' }
+RBProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
+	"toto: arg
+	   arg m1| m2"
+	| sourceCode ast bestNode |
+	sourceCode := 'toto: arg
+	               arg m1 m2'.
+	
+	ast := RBParser parseMethod: sourceCode.
+	bestNode := ast bestNodeForPosition: 32.
+	
+	self assert: bestNode isMessage.
+	self assert: bestNode selector equals: #m1
+]
+
+{ #category : #'tests - adding' }
+RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
+	"toto: m1
+	   m1 |aMessage"
 	| sourceCode ast bestNode |
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
@@ -487,6 +566,23 @@ RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 	bestNode := ast bestNodeForPosition: 7.
 	
 	self assert: bestNode isVariable
+]
+
+{ #category : #'tests - adding' }
+RBProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
+	"toto: arg
+	   arg m1 
+|	m2"
+	| sourceCode ast bestNode |
+	sourceCode := 'toto: arg
+	               arg m1 
+	 m2'.
+	
+	ast := RBParser parseMethod: sourceCode.
+	bestNode := ast bestNodeForPosition: 34.
+	
+	self assert: bestNode isMessage.
+	self assert: bestNode selector equals: #m2
 ]
 
 { #category : #'tests - adding' }

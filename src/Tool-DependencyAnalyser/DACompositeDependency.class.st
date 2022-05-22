@@ -17,6 +17,11 @@ DACompositeDependency >> add: aDependency [
 	dependencies add: aDependency
 ]
 
+{ #category : #accessing }
+DACompositeDependency >> children [
+	^ self dependencies
+]
+
 { #category : #testing }
 DACompositeDependency >> containsOnlyExtensionDependency [
 	(self dependencies isEmpty ) ifTrue: [ ^ false ].

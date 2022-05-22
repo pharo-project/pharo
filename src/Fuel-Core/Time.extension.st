@@ -4,7 +4,6 @@ Extension { #name : #Time }
 Time >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper visitHookPrimitive: self
-
 ]
 
 { #category : #'*Fuel-Core' }
@@ -21,5 +20,4 @@ Time >> serializeOn: anEncoder [
 	anEncoder 
 		encodeUint24: self asSeconds;
 		encodeUint32: self nanoSecond.
-		
 ]

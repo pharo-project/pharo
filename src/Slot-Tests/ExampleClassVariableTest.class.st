@@ -21,9 +21,6 @@ ExampleClassVariableTest >> testCreateClassWithClassVariable [
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar')
-
-
-
 ]
 
 { #category : #tests }
@@ -42,9 +39,6 @@ ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar1').
 	self assert: (aClass hasClassVarNamed: 'ClassVar2')
-
-
-
 ]
 
 { #category : #tests }

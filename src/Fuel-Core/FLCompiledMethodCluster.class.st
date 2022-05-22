@@ -14,7 +14,7 @@ Class {
 
 { #category : #cleanup }
 FLCompiledMethodCluster class >> cleanUp [
-	self initialize 
+	self initialize
 ]
 
 { #category : #'class initialization' }

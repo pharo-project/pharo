@@ -15,8 +15,8 @@ Class {
 	#category : #'DrTests-Spec'
 }
 
-{ #category : #specs }
-DTFilterableListPresenter class >> defaultSpec [
+{ #category : #layout }
+DTFilterableListPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		add: #labelPresenter withConstraints: [ :constraints | constraints height: self labelHeight ];

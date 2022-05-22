@@ -50,7 +50,7 @@ RBSelectorEnvironment class >> implementorsMatching: aString in: anEnvironment [
 RBSelectorEnvironment class >> implementorsOf: aSelector [
 	^ self
 		implementorsOf: aSelector
-		in: self default 
+		in: self default
 ]
 
 { #category : #'instance creation' }
@@ -100,7 +100,7 @@ RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass [
 	^ self
 		onMethods: selectorCollection
 		forClass: aClass
-		in: self default 
+		in: self default
 ]
 
 { #category : #'instance creation' }
@@ -115,7 +115,7 @@ RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass in
 RBSelectorEnvironment class >> referencesTo: aLiteral [
 	^ self
 		referencesTo: aLiteral
-		in: self default 
+		in: self default
 ]
 
 { #category : #'instance creation' }
@@ -316,18 +316,25 @@ RBSelectorEnvironment >> removeClass: aClass [
 ]
 
 { #category : #removing }
-RBSelectorEnvironment >> removeClass: aClass selector: aSelector [ 
-	(aClass isMeta 
-		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [^self]]
-		ifFalse: [classSelectors at: aClass name ifAbsent: [^self]]) 
-			remove: aSelector
-			ifAbsent: []
+RBSelectorEnvironment >> removeClass: aClass selector: aSelector [
+
+	| class |
+	class := aClass isMeta
+		         ifTrue: [ 
+			         metaClassSelectors
+				         at: aClass soleInstance name
+				         ifAbsent: [ ^ self ] ]
+		         ifFalse: [ 
+		         classSelectors at: aClass name ifAbsent: [ ^ self ] ].
+	class remove: aSelector ifAbsent: [  ].
+	class ifEmpty: [ self removeClass: aClass ]
 ]
 
 { #category : #accessing }
-RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [ 
-	^(self privateSelectorsForClass: aClass) 
-		do: [:each | (aClass includesSelector: each) ifTrue: [aBlock value: each]]
+RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [
+
+	^ (self privateSelectorsForClass: aClass) copy do: [ :each | 
+		  (aClass includesSelector: each) ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #printing }

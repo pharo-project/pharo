@@ -6,7 +6,7 @@ For further comments read comments of `WordArray`.
 Class {
 	#name : #DoubleByteArray,
 	#superclass : #ArrayedCollection,
-	#type : #bytes,
+	#type : #DoubleByteLayout,
 	#category : #'Collections-Native-Base'
 }
 

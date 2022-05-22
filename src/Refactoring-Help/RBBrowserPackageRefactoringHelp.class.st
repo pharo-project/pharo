@@ -22,5 +22,4 @@ RBBrowserPackageRefactoringHelp class >> renamePackage [
 	^HelpTopic
 		title: 'Rename'
 		contents: RBRenamePackageRefactoring comment
-
 ]

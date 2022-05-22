@@ -21,7 +21,6 @@ RGCommentTest >> testClass [
 	self assert: aClass hasComment.
 	
 	self assert: aComment fullName equals: 'SomeClass comment'.
-
 ]
 
 { #category : #tests }
@@ -37,8 +36,7 @@ RGCommentTest >> testImplicitEnvironment [
 	self assert: (def isRingResolved).
 	
 	def2 := RGComment parent: def parent .
-	self checkImplicitSingleClassEnvironmentOf: def parent.	
-
+	self checkImplicitSingleClassEnvironmentOf: def parent.
 ]
 
 { #category : #tests }
@@ -52,7 +50,6 @@ RGCommentTest >> testMakeReslolved [
 	self assert: comment content equals: ''.
 	self assert: comment author equals: ''.
 	self assert: (comment time isKindOf: DateAndTime).
-	
 ]
 
 { #category : #tests }
@@ -85,7 +82,6 @@ RGCommentTest >> testNewComment [
 	comment time: time.
 	self assert: (comment hasUnresolved: #name).
 	self assert: comment time equals: time.
-
 ]
 
 { #category : #tests }
@@ -121,5 +117,4 @@ RGCommentTest >> testTransformations [
 	comment time: time.
 	self assert: (comment hasUnresolved: #name).
 	self assert: comment time equals: time.
-
 ]

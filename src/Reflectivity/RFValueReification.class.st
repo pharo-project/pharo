@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBValueNode . RBReturnNode. RBMethodNode . Variable} 
+	^{RBValueNode . RBReturnNode. RBMethodNode . Variable}
 ]
 
 { #category : #'plugin interface' }
@@ -104,7 +104,6 @@ RFValueReification >> postamble: aNode [
 	aNode isCascade ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: self varName].
 	^super postamble: aNode.
-	 
 ]
 
 { #category : #preamble }
@@ -128,8 +127,7 @@ RFValueReification >> preambleForArray: aNode [
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
-	^ preamble 
-	
+	^ preamble
 ]
 
 { #category : #preamble }

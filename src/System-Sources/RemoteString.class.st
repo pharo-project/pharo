@@ -68,14 +68,14 @@ RemoteString >> fileNumber: fileNumber position: position [
 
 { #category : #accessing }
 RemoteString >> last [
-	^self string ifNotNil: [ :s | s last ] 
+	^self string ifNotNil: [ :s | s last ]
 ]
 
 { #category : #accessing }
 RemoteString >> position [ 
 	"Answer the location of the string on a file."
 
-	^ filePositionHi 
+	^ filePositionHi
 ]
 
 { #category : #accessing }
@@ -132,5 +132,5 @@ RemoteString >> string: aString onFileNumber: fileNumber toFile: aFileStream [
 	position := aFileStream position.
 	self fileNumber: fileNumber position: position.
 	(ChunkWriteStream on: aFileStream) nextPut: aString.
-	^ self 
+	^ self
 ]

@@ -6,7 +6,8 @@ Class {
 
 { #category : #helpers }
 FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
-	^ (FluidClassDefinitionPrinter for: aClass) expandedDefinitionString
+	
+	^ aClass expandedDefinitionStringFor: (FluidClassDefinitionPrinter for: aClass)
 ]
 
 { #category : #helpers }
@@ -130,7 +131,7 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
 	self 
 		assert: (self expandedForClass: EmptyLayout class)  
-		equals: 'EmptyLayout class
+		equals: 'AbstractLayout class << #EmptyLayout class
 	traits: {};
 	slots: { #instance }'
 ]
@@ -163,6 +164,31 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 	sharedPools: {};
 	tag: ''BasicObjects'';
 	package: ''Kernel'''
+]
+
+{ #category : #'tests - expanded' }
+FluidClassDefinitionPrinterTest >> testExpandedProtoObject [
+
+	self 
+		assert: (self expandedForClass: ProtoObject)  
+		equals: 'nil << #ProtoObject
+	layout: FixedLayout;
+	traits: {};
+	slots: {};
+	sharedVariables: {};
+	sharedPools: {};
+	tag: ''Objects'';
+	package: ''Kernel'''
+]
+
+{ #category : #'tests - expanded' }
+FluidClassDefinitionPrinterTest >> testExpandedProtoObjectClass [
+
+	self 
+		assert: (self expandedForClass: ProtoObject class)  
+		equals: 'Class class << ProtoObject class
+	traits: {};
+	slots: {}'
 ]
 
 { #category : #'tests - expanded' }

@@ -197,6 +197,9 @@ ZnHTTPSTest >> testRequestResponse [
 { #category : #testing }
 ZnHTTPSTest >> testSNIPage [
 	| client |
+	self skipOnPharoCITestingEnvironment.
+	"test fails, we for now do not run it on the CI
+	See https://github.com/pharo-project/pharo/issues/10760"
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self skip ].
 	self doesNativeSSLPluginSupportSNI ifFalse: [ ^ self skip ].

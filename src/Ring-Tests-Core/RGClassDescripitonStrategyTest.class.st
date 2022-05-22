@@ -12,8 +12,6 @@ RGClassDescripitonStrategyTest >> checkBasicPropertiesOf: anRGBehavior [
 	self assert: anRGBehavior behaviorStrategy owner equals: anRGBehavior.
 	self assert: anRGBehavior layout isRingResolved not.
 	self assert: anRGBehavior layout isFixedLayout.
-
-	
 ]
 
 { #category : #tests }
@@ -42,8 +40,6 @@ RGClassDescripitonStrategyTest >> testClassDescriptionMakeResolved [
 	self deny: (anRGBehavior hasResolved: #layout).
 	anRGBehavior makeResolved.
 	self assert: (anRGBehavior hasResolved: #layout).
-	
-	
 ]
 
 { #category : #tests }
@@ -84,7 +80,6 @@ RGClassDescripitonStrategyTest >> testCreationByNamed [
 	anRGBehavior := RGClass named: #SomeClass.
 	self checkBasicPropertiesOf: anRGBehavior.
 	self assert: anRGBehavior name equals: #SomeClass.
-
 ]
 
 { #category : #tests }
@@ -97,7 +92,6 @@ RGClassDescripitonStrategyTest >> testCreationByNamedParent [
 	self checkBasicPropertiesOf: anRGBehavior.
 	self assert: anRGBehavior name equals: #SomeClass.
 	self assert: anRGBehavior parent equals: parent.
-
 ]
 
 { #category : #tests }
@@ -120,7 +114,6 @@ RGClassDescripitonStrategyTest >> testCreationByUnnamed [
 	anRGBehavior := RGClass unnamed.
 	self checkBasicPropertiesOf: anRGBehavior.
 	self assert: (anRGBehavior hasResolvedName) not.
-
 ]
 
 { #category : #tests }
@@ -132,7 +125,6 @@ RGClassDescripitonStrategyTest >> testCreationByUnresolved [
 	self checkBasicPropertiesOf: anRGBehavior.
 	self assert: (anRGBehavior hasResolvedName) not.
 	self assert: anRGBehavior isRingResolved not.
-
 ]
 
 { #category : #tests }
@@ -146,7 +138,6 @@ RGClassDescripitonStrategyTest >> testCreationByUnresolvedNamed [
 	self assert: anRGBehavior name equals: #SomeClass.
 	self assert: anRGBehavior parent equals: parent.
 	self assert: anRGBehavior isRingResolved not.
-	
 ]
 
 { #category : #tests }
@@ -155,7 +146,7 @@ RGClassDescripitonStrategyTest >> testDefaultLayout [
 	| anRGBehavior |
 	
 	anRGBehavior := RGBehavior newClass.
-	self assert: anRGBehavior defaultLayout isPointerLayout 
+	self assert: anRGBehavior defaultLayout isPointerLayout
 ]
 
 { #category : #tests }
@@ -164,7 +155,7 @@ RGClassDescripitonStrategyTest >> testDefaultMetaclass [
 	| anRGBehavior |
 	
 	anRGBehavior := RGBehavior newClass.
-	self assert: anRGBehavior defaultMetaClass isMeta 
+	self assert: anRGBehavior defaultMetaClass isMeta
 ]
 
 { #category : #tests }
@@ -174,7 +165,6 @@ RGClassDescripitonStrategyTest >> testEmtpyClassVariableString [
 	
 	anRGBehavior := RGBehavior newClass.
 	self assert: anRGBehavior classVariablesString equals: ''.
-
 ]
 
 { #category : #tests }
@@ -217,7 +207,7 @@ RGClassDescripitonStrategyTest >> testLayout [
 	| anRGBehavior |
 	
 	anRGBehavior := RGBehavior newClass.
-	self assert: anRGBehavior layout isPointerLayout 
+	self assert: anRGBehavior layout isPointerLayout
 ]
 
 { #category : #tests }
@@ -262,7 +252,6 @@ RGClassDescripitonStrategyTest >> testUnresolvedClassGroupCreatorProperties [
 	self assert: (anRGBehavior superclass propertyNamed: #creator) equals: anRGBehavior.
 	self assert: (anRGBehavior metaclass propertyNamed: #creator) equals: anRGBehavior.
 	self assert: (anRGBehavior metaclass superclass propertyNamed: #creator) equals: anRGBehavior.
-
 ]
 
 { #category : #tests }
@@ -274,5 +263,4 @@ RGClassDescripitonStrategyTest >> testUnresolvedClassGroupRoleProperties [
 	self assert: (anRGBehavior superclass propertyNamed: #role) equals: #superclass.
 	self assert: (anRGBehavior metaclass propertyNamed: #role) equals: #metaclass.
 	self assert: (anRGBehavior metaclass superclass propertyNamed: #role) equals: #superclassMetaclass.
-
 ]

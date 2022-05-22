@@ -21,7 +21,6 @@ RubFindReplaceService >> caseSensitive [
 RubFindReplaceService >> dialog [
 	^ dialog ifNil: [ 
 		dialog := self newDialog ]
-	
 ]
 
 { #category : #'user-interface' }
@@ -30,7 +29,6 @@ RubFindReplaceService >> dialogIsActiveFor: aTextArea [
 	dialog ifNil: [ ^ false ].
 
 	^ (self textArea = aTextArea) and: [ self dialog world notNil ].
-
 ]
 
 { #category : #services }
@@ -77,7 +75,6 @@ RubFindReplaceService >> findNext [
 	(where isNil and: [self wrapAround])
 		ifTrue: [where := self textArea findNextString: self findString asString startingAt: 1].
 	^ where
-
 ]
 
 { #category : #updating }
@@ -103,7 +100,7 @@ RubFindReplaceService >> findTextSilently: aStringOrText [
 RubFindReplaceService >> initialize [
 	super initialize.
 	
-	textAreaHolder := WeakArray new: 1 
+	textAreaHolder := WeakArray new: 1
 ]
 
 { #category : #'user-interface' }
@@ -113,7 +110,6 @@ RubFindReplaceService >> newDialog [
 	d findPolicyChanged.
 	d announcer when: MorphDeleted send: #whenDialogDeleted to: self.
 	^ d
-	
 ]
 
 { #category : #services }
@@ -130,7 +126,6 @@ RubFindReplaceService >> replaceAll [
 	| startIdx |
 	startIdx := self wrapAround ifTrue: [1] ifFalse: [self textArea editor selectionInterval first].
 	self textArea replaceAll: self findRegex with: self replaceText startingAt: startIdx
-
 ]
 
 { #category : #accessing }
@@ -138,7 +133,6 @@ RubFindReplaceService >> searchBackwards: aBoolean [
 	searchBackwards := aBoolean.
 	self updateFindStartIndex.
 	self findPolicyChanged
-
 ]
 
 { #category : #private }
@@ -151,15 +145,14 @@ RubFindReplaceService >> setStartIndex [
 
 { #category : #accessing }
 RubFindReplaceService >> textArea [
-	^ textAreaHolder at: 1 
+	^ textAreaHolder at: 1
 ]
 
 { #category : #accessing }
 RubFindReplaceService >> textArea: aTextArea [
 	textAreaHolder at: 1 put: aTextArea.
 	aTextArea announcer 
-		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self. 
-
+		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self.
 ]
 
 { #category : #updating }
@@ -177,7 +170,6 @@ RubFindReplaceService >> updateFindStartIndex [
 { #category : #'user-interface' }
 RubFindReplaceService >> whenDialogDeleted [
 	dialog := nil.
-
 ]
 
 { #category : #'events handling' }
@@ -196,14 +188,12 @@ RubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
 	self changed: #findText.
 	self changed: #caseSensitive.
 	self changed: #replaceEnabled.
-
 ]
 
 { #category : #'events handling' }
 RubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 	self dialog isInWorld ifFalse: [ ^self ].
 	self textArea whenFindTextChanged: RubFindTextChanged new
-
 ]
 
 { #category : #'events handling' }

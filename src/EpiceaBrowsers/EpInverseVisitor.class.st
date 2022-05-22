@@ -125,7 +125,9 @@ EpInverseVisitor >> visitTraitAddition: aChange [
 { #category : #visitor }
 EpInverseVisitor >> visitTraitModification: aTraitModification [
 
-	self notYetImplemented
+  	^ EpTraitModification
+    		  oldTrait: aTraitModification newTrait
+          		  newTrait: aTraitModification oldTrait
 ]
 
 { #category : #visitor }

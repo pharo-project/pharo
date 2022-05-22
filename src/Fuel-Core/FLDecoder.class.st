@@ -33,7 +33,6 @@ FLDecoder >> classNamed: className [
 		detect: [:m | m sourceClassName = className ]
 		ifNone: [ ^ self globalClassNamed: className ])
 		targetClass.
-		
 ]
 
 { #category : #decoding }
@@ -90,7 +89,7 @@ FLDecoder >> nextEncodedByte [
 
 { #category : #decoding }
 FLDecoder >> nextEncodedBytesInto: aBytesObject [
-	stream next: aBytesObject basicSize into: aBytesObject 
+	stream next: aBytesObject basicSize into: aBytesObject
 ]
 
 { #category : #decoding }
@@ -169,14 +168,12 @@ FLDecoder >> nextEncodedString [
 
 	stream nextInto: aByteArray.
 	^aByteArray asString.
-
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedUint16 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 	^ (stream next bitShift: 8) + (stream next).
-	
 ]
 
 { #category : #decoding }
@@ -187,7 +184,6 @@ FLDecoder >> nextEncodedUint24 [
 	n := stream next.
 	n := (n bitShift: 8) + stream next.
 	^ (n bitShift: 8) + stream next
-
 ]
 
 { #category : #decoding }
@@ -199,7 +195,6 @@ FLDecoder >> nextEncodedUint32 [
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	^ (n bitShift: 8) + stream next
-
 ]
 
 { #category : #decoding }
@@ -215,20 +210,17 @@ FLDecoder >> nextEncodedUint64 [
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	^ (n bitShift: 8) + stream next
-
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedUint8 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 	^ stream next
-	
-
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedWordsInto: aWordsObject [ 
-	stream fuelNextWordsInto: aWordsObject 
+	stream fuelNextWordsInto: aWordsObject
 ]
 
 { #category : #accessing }
@@ -253,5 +245,4 @@ FLDecoder >> variablesMappingFor: aClass [
 		thenDo: [ :m | m applyTo: variables ].
 		
 	^ variables
-	
 ]

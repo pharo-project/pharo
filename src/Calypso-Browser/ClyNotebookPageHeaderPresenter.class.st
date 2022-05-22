@@ -12,9 +12,8 @@ Class {
 	#category : #'Calypso-Browser-Tabs'
 }
 
-{ #category : #specs }
-ClyNotebookPageHeaderPresenter class >> defaultSpec [
-
+{ #category : #layout }
+ClyNotebookPageHeaderPresenter class >> defaultLayout [
 	^ SpBoxLayout newLeftToRight
 		spacing: 3;
 		add: #iconImage expand: false;

@@ -17,202 +17,16 @@ WelcomeHelp class >> bookName [
 { #category : #pages }
 WelcomeHelp class >> changeLog [
 	^ HelpTopic 
-		title: 'Changes in Pharo 9'
-		contents:
-		(self heading: 'Changes in Pharo 9') , 
-'Pharo 9 is a massive release of Pharo. It brings a large set of features and increases the stability, speed, and versatility of Pharo.  
-
-Here are the key features of Pharo 9:   
-
-- Full redesign of the Spec UI framework:
-	- new logic, application, style, GTK back-end
-- NewTools: new playground, new inspector, new debugger
-- New error infrastructure and emergency debugger)
-- New composable completion framework
-- General speed up 
-- Compiler optimisations
-- Better Refactorings
-- Better parser for error recognition
-- Fluid (composable) class syntax
-- Comments in Microdown format (Markdown compatible)
-- Fast universal FFI (Foreign Function Interface)
-- Idle VM + SDL20 and back-end 
-	- Extended event handling, including trackpad support
-- ARM 64 bits 
-- Full block closures
-- Much more more tests
-
-Now in details. 
-
-', 
-(self heading: 'Amazing development activity'),
-' Pharo 9 got an amazing development activity. It saw the raise of enhancements and bug fixes.  
-- 252 forks on github
-- 1437+ issues fixed.
-- 2231+ Pull requests integrated, not counting separately managed projects such as:
-	- ',(self url: 'http://github.com/pharo-spec/Spec'),'
-	- ',(self url: 'http://github.com/pharo-spec/NewTools' ),'
-	- ',(self url: 'http://github.com/pharo-spec/Iceberg'),'
-	- ',(self url: 'http://github.com/pharo-spec/opensmalltalk'),
-(self subheading: 'General Speed up'),
-'Pharo 9 got a general speed up due to Pragma speed, compiler improvements and the simplification of the UI framework.', 
-(self subheading: 'Pharo 9 generalizes executable comments'),
-'You read the method and you systematically get examples to show you how to use the message.  
-And you can execute the comment (they are also accesible as tests through the DrTest GUI)! ', 
-(self subheading: 'New and enhanced refactorings'),
-'Pharo 9 did a large effort on refactorings.  
-Pharo 9 is shipped with new refactorings (such as Extract to Setup XXX more?).  
-Many refactorings got enhanced. Extract method can now extract a method out of methods in a full hierarchy in one click.  
-Refactorings are now accessible inplace i.e., instance variables, class variables...', 
-(self subsubheading: 'New refactorings'),
-'1. Extract setUp method 
-2. Remove senders of method refactoring
-3. Copy package as refactoring 
-4. Rename package (rename manifest)
-5. Merge instance var x in y
-6. Move to class side method
-7. Create accessors with lazy initialization', 
-(self subsubheading: 'Improved refactors'),
-'1. Deprecate method (simple version)
-2. Deprecate class
-3. Extract method refactoring (comparing btw symbols and strings, show occurrences replaced)
-4. Replace senders by another
-5. Rename vars (traits)
-6. Convert temporary to instance variable (check in the methods and methods of the subclasses if the same name of the temporary variable is used)
-7. Push up method refactoring (improve messages)
-8. Add access to pushUp and pushDown refactorings from source code
-9. Permute parameters when add an argument
-10. Abstract instance variable (now applies abstract methods when there is a reference to more than one variable in a method)
-
-Migrate commands to commander2
-- Change to use specific scopes (call refactorings with a selected scope as model)
-	- Add previews to refactorings
-- Expose variable refactoring commands
-- Auto select protocol selected when rename
-
-', (self heading: 'Amazing documentation activity'),
-'A large set of new books is arriving with Pharo 9. Documenting many aspects of programming
-in Pharo:
-- Testing in Pharo
-- Version control in Pharo
-- Calling Foreign Functions with Pharo 
-- Pharo with Style
-- Zinc 
-- Concurrent Programming in Pharo
-- Commander 2.0
-- Pharo by Example 9 soon out. 
-
-', 
-(self heading: 'New Interface Builder'),
-'After 7 years of Spec was redesigned and drastically improved.  
-Spec 2.0 is the foundation for all the tools of Pharo.  
-It is faster and comes with:
-- Different layouts and drop the slow interpreter design
-- Application concept introduced (support groups of windows)
-- New dialog builder
-- Styling support
-- Dynamic layouts are now simple and the norm
-- Transmissions 
-- Support for roassal and cairo drawings
-- Tests
-- Multiple back-ends: GTK and Morphic
-
-', (self heading: 'New tools'),
-'Pharo 9 comes with three redesigned tools: the inspector, the playground, and a new debugger.  
-- Pharo arrives with a brand new inspector that can be extended based on Spec 2.0. Following the GTInspector, any object can have dedicated panes. Now defining advanced panes is as simple as defining a new spec presenter.
-- The New playground supports variable sharing between multiple playgrounds.
-- The New debugger supports
-	- Unique object-centric debugging features: you can halt on only one specific object
-	- A plugin architecture for scripting
-	- A rewamped emergency debugger
-	- Architecture to plug different debuggers
--  Pharo 9 includes a new code completion framework opening doors to statically learning. 
-In addition, the Pharo parser has been enhanced to support better error handling. 
-- Pharo 9 is has support for extra larges images (ones that can contain 30 millions lines of code).
-Special search and completions are provided. 
-- An extensible commander framework has been designed and is now in use.
-
-', (self heading: 'Large clean up effort'),
-' Pharo 9 got a large clean up effort. 
-- Glamour and GTTools as well as their private widget sets got deprecated and  replaced by new tools. 
-- Spec1 is still deprecated all tools are being rewrite to take advantage of Spec 2.0 new features.
-
-', (self heading: 'Language improvement'),
-'Pharo 9 comes also with a set of new language features. ', 
-(self subheading: 'Slots'),
-'First a continuous effort has be made to better support for first class instance variables (Slots)', 
-(self subheading: 'Full block closures'),
-'All the compiler chain and debugger got adapted to support the new format of block closures.
-Such new format will enable to put in production dynamic optimisers such as Scorch or variations. It means that future Pharo versions will be able to have modern JIT compiler architecture with a speculative optimizers and not just a baseline JIT.', 
-(self subheading: 'New class definition'),
-'A new class definition has been designed as presented at ESUG in Slovenia.
-It is based on a fluid API that controls combinatorial explosion of features.
-
-',
-(self sourceCode:'SpAbstractPresenter << #SpPresenter
-	trait: SpTPresenterBuilder;
-	slots: {
-			 #application .
-			 #focusOrder .
-			 #contextKeyBindings => SpObservableSlot .
-			 #windowIcon => SpObservableSlot .
-			 #aboutText => SpObservableSlot .
-			 #extent => SpObservableSlot .
-			 #styles };
-	tag: ''Base'';
-	package: ''Spec2-Core''')
-,'
-
-This class definition is optional in Pharo 9 and will be default version of Pharo 10.', 
-(self subheading: 'Microdown'),
-'Class comments are now written in Microdown a retro-compatible version of Markdown
-extended with Pillar features. In addition any class can customise the rendering of the comments
-and enhance it.  
-Future help will be take advantage of Microdown and its architecture.', 
-(self subheading: '"Dynamic call rewriting of deprecated methods" is now systematically used'),
-'With Dynamic call rewriting of deprecated methods Pharo offers a unique feature that supports the automatic migration of your code at runtime. You run your tests or your application and you can get it automatically migrated to the new API.
-
-', 
-(self heading: 'More robust and enhanced virtual machine'),
-'Pharo 9 saw a massive investment and results on the Virtual machine side.  
-It is available for Windows (Intel 64bits/ARM 64bits), Linux (Intel 64bits / ARM 32 bits / ARM 64bits), OSX (Intel 64bits / ARM 64 bits).  
-A new VM with
-- Idle support.
-	- No more pulling of events).
-	- Better support for server and preserves battery.
-
-- Primitive speed improvements in Windows.
-
-- Full image side events handling is now based on SDL2. 
-	- The complete and total event information is managed at the image level. 
-	- It supports gesture definition.
-
-- First fully working ARM-based JIT for Windows, Raspberian and Apple Silicon. 
-
-- Image can be now embeddable in the executable optionally.
-
-- More stability due to active chasing of difficult to track bugs. 
-	- Bugs are now all covered by regression tests, even the assembly level, and code compaction. 
-
-- Pharo have more than 3000 tests on the VM. These tests have been developed and are run on all platforms on any commits. 
-
-- Builds using OBS: Pharo is built on Arch, Debian 10, Debian 9, Fedora 31, 32, 33, Raspbian 10, Raspbian 90, openSuse Leap 15.1, openSuse Leap 15.2, openSuse Tumbleweed, Ubuntu 18.04, 19.04, 20.04, 21.04
-
-- Native windows compilation
-	- New UFFI based on [libFFI](https://sourceware.org/libffi/) with speed improvements
-	- Clean up of code, repetible generation of VM code
-	- Unification of Socket implementations on the different platform
-	- Optional compilation
-	- Documentation
-	- Cleanup of Plugins
-
-', 
-(self heading: 'New threaded architecture'),
-'Pharo 9 comes also with a new Threaded FFI support. In fact Threaded FFI is not a single architecture but a set of alternatives that can be choosen depending on the constraints of the OS. TFFI offers adaptability to the different constraints imposed by Cocoa or GTK.	
-		
-You can see the Pharo 10.0 changelog at: 
-
-', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo100ChangeLogs.md')
+		title: 'Changes in Pharo 10'
+		contents: (
+			(self section: 'Changes in Pharo 10 ' with: [ self sectionIntro ]), 
+			(self section: 'Activity' with: [ self sectionActivity ]), 
+			(self section: 'General' with: [ self sectionGeneral ]), 
+			(self section: 'Spec' with: [ self sectionSpec ]), 
+			(self section: 'NewTools' with: [ self sectionNewTools ]), 
+			(self section: 'Roassal' with: [ self sectionRoassal ]), 
+			(self section: 'Virtual Machine' with: [ self sectionVM ]),
+			(self section: 'Details' with: [ self sectionDetails ]))
 ]
 
 { #category : #pages }
@@ -366,6 +180,148 @@ WelcomeHelp class >> pharoVersionString [
 		   nextPutAll: version commitHashShort;
 			nextPutAll: ', date: ';
 			nextPutAll: version date asString]
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> section: heading with: aBlock [ 
+
+	^ 
+(self heading: heading), 
+aBlock value, '
+	
+'
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionActivity [
+
+	^ 'Current Pharo development status.  
+- 275 forks on github
+- 600+ issues fixed.
+- 700+ Pull requests integrated, not counting separately managed projects such as:
+	- ' asText, (self url: 'http://github.com/pharo-spec/Spec'),'
+	- ',(self url: 'http://github.com/pharo-spec/NewTools' ),'
+	- ',(self url: 'http://github.com/pharo-spec/Iceberg'),'
+	- ',(self url: 'http://github.com/pharo-spec/opensmalltalk-vm')
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionDetails [
+
+	^ 'You can see the Pharo 10.0 changelog at: 
+
+' asText, (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo100ChangeLogs.md')
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionGeneral [
+			
+	^ '- Fluid class definition greatly improved (and now functional, even if not activated by default)
+- Improve refactors (push down, extract method, ...)
+- Improve code critiques (and migrated to Spec2)
+- Improve FileReference (fixes in relative Paths, canonicalization of names)
+- Improve quality rules (test categorisation, better explanation of rules) 
+- Improve debugging infrastructure (sindarin, 
+- Fixes in compiler (when using whileTrue:)
+- Fixes on shortcut printing (on OSX)
+- Fixes undo/redo in the rubric editor
+- Microdown V2 (and beautiful comments) revamped
+- Enhanced FFI: exposing the function ABI, add TFProcessLocalWorker.
+- All repeated literals in image are now shared.
+- Enhanced autocompletion support for large images.
+- Fuel serializer now supports stateful traits.
+- Metacello implements the function "lock" to avoid further modifications to a loaded project.
+- Modularisation work: Keymapping, Freetype, ThreadedFFI, Athens, TaskIT
+- Networking: improve ipv6
+- Removed GTTools
+- Removed Glamour
+- Removed Spec1
+- Removed unused FFI package (Alien, most of FFI-Kernel)
+- Removed old EncoderForV3PlusClosures
+- ... and many (many for real) clean ups and small enhancements that would be impossible to sumarize here.'
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionIntro [
+			
+	^ 'A large international community of developers worked hard to prepare a new release of the Pharo platform.
+
+Here are the key features of Pharo 10:   
+
+- Spec 2 major release	
+	- all layouts are now dynamic
+	- API cleaning	
+	- add support for more presenters
+- A lot of cleaning
+	- lots of code removed (image and VM)
+	- Image is smaller (58 instead ion 66 MB)
+- Removal of Spec 1 (tools written in Spec 1 have been rewritten in Spec 2)
+- Removal of Glamour and GTTools (were not maintained anymore and got rewritten in Spec 2)
+- Drop support of V3PlusClosures byte code set
+- Removal of unused FFI packages
+- Improved debugging infrastructure
+- Zinc (HTTP client/server) components update
+- Roassal 3 update
+
+Now in details.'
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionNewTools [
+			
+	^ '- For the new tools already included in the image, this was largely a maintenance release, with a lot of small improvements in performance and usability.
+- Spotter has received several iterations looking to improve its reliability and responsibility. It now incorporates also some improvements oriented to large images too.
+- Playground has incorporated hooks allowing better extensibility and received several fixes on how code works (mostly due to fixes on `SpCodePresenter`).
+- Debugger received some stability fixes. 
+- We incorporated also other migrated tools: Dependency Analyser, Critiques Browser, Font Chooser and several minor tools, allowing the removal of Spec1.
+- Increment the amount of tests.
+- Fixed printing of object information in inspector, to prevent huge chunks of text.'
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionRoassal [
+			
+	^ '- The visualisation engine now is in version v0.9.9f, full changelog can be seen here: ' asText, (self url: 'https://github.com/ObjectProfile/Roassal3/releases')
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionSpec [
+			
+	^ '- Deprecation of class side defaultSpec, now all layouts can be defined in instance side (but defaultLayout can still be defined in class side, in case of need)
+- Deprecation of all withSpec suffixes. Now to open a presenter window you just use #open/#openModal, etc. (this was a lot more work as you may think).
+- Added #asWindow, #asModalWindow to allow user to modify the window presenter (adding extent, ot title, for example) without needing to override `initializeWindow:` and before the window is opened.
+- All layouts are dynamic and can be modified at run time (API depending the layout). 
+- Enhancement SpApplication with notion of iconProvider
+- Added some standard dialogs (inform, request, confirm) to SpApplication
+- Added a progress bar standard dialog/processor (SpJobListPresenter)
+- Enhanced CommonWidgets: SpFilteringListPresenter, etc.
+- Many improvements to SpCodePresenter, including syntax highlight, better code operations, text search, etc. 
+- Implemented drag&drop (not all widget, but required).
+- Enhanced styleSheets usage
+- Box, grid and scrollable layouts implement SpTAlignable (to better place its contents).
+- Enhanced API for building grid layouts.
+- Fix all remaining memory leaks (well, some may remain, as always... but we removed all we found ;)'
+]
+
+{ #category : #'private - sections' }
+WelcomeHelp class >> sectionVM [
+			
+	^ 'Virtual Machine is now v9.0.13, full changelog can be seen here: ' asText, (self url: 'https://github.com/pharo-project/opensmalltalk-vm/blob/pharo-9/CHANGELOG.md'), '
+
+- Improving the Socket implementation:
+    - Better Out of Band Data Handling
+    - Better Name Resolution
+    - Faster Handling of Network Events in OSX
+- Improvements in the Asynchronous I/O Support and native implementations for each OS
+- Improvements in FFI
+    - Multiple ABI support
+    - Better Marshalling of LargeIntegers
+- Improving Debugging in Windows
+- Automatic Build and Test in all Platforms (OSX Intel & ARM / Linux Intel & ARM 32/64 / Windows Intel)
+- Message Profiling
+- Fixes in Floats ARM 32 Bits
+- Cleanups / Tests 
+- Third Party Libraries Update'
 ]
 
 { #category : #pages }

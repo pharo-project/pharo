@@ -36,7 +36,6 @@ RBCopyPackageParametrizedTest >> testCopyPackage [
 	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) instanceVariableNames asArray
 		equals: #( 'changes' 'workingEnvironment' 'changeFactory').
 	self assert: (aModel classNamed: #RBRefactoringChangeManagerTestCopy) category equals: #'Refactoring-Tests-Changes1'.
-	
 ]
 
 { #category : #tests }

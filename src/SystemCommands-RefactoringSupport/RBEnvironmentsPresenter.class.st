@@ -7,8 +7,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 
-{ #category : #specs }
-RBEnvironmentsPresenter class >> defaultSpec [
+{ #category : #layout }
+RBEnvironmentsPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add:
 			(SpBoxLayout newLeftToRight
@@ -30,7 +30,7 @@ RBEnvironmentsPresenter class >> menuCommandOn: aBuilder [
 { #category : #specs }
 RBEnvironmentsPresenter class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #accessing }
@@ -107,7 +107,7 @@ RBEnvironmentsPresenter >> initializeWidgets [
 { #category : #actions }
 RBEnvironmentsPresenter >> inspect: anItem [
 
-	(anItem inspectIn: self) openWithSpec title: anItem shortDescription.
+	(anItem inspectIn: self) open title: anItem shortDescription.
 ]
 
 { #category : #actions }
@@ -147,7 +147,7 @@ RBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 { #category : #actions }
 RBEnvironmentsPresenter >> remove: anItem [
 	RefactoringSettings removeScopeNamed: anItem description.
-	self updateList 
+	self updateList
 ]
 
 { #category : #actions }
@@ -158,7 +158,7 @@ RBEnvironmentsPresenter >> selectAnotherScopeWhitout: anItem [
 			chooseFrom: (list collect: #shortDescription)
 			values: list
 			title: 'Select another scope (RBEnvironment)'.
-	^ anotherScope 
+	^ anotherScope
 ]
 
 { #category : #actions }

@@ -24,7 +24,6 @@ FLCompiledCodeCluster >> decodeHeaderWith: aDecoder [
 	^ signBit = 1
 		ifTrue: [ header + SmallInteger minVal ]
 		ifFalse: [ header ]
-
 ]
 
 { #category : #protected }

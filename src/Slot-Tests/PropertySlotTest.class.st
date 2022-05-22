@@ -22,8 +22,6 @@ PropertySlotTest >> testCreateClassWithPropertySlot [
 
 	self assert: (aClass hasSlot: propertySlot).
 	self assert: (aClass classLayout hasSlot: (propertySlot instVarNamed: 'baseSlot'))
-	
-
 ]
 
 { #category : #tests }
@@ -69,9 +67,6 @@ PropertySlotTest >> testCreateClassWithTwoPropertySlots [
 	
 	self assert: (aClass hasSlot: propertySlot2).
 	self assert: (aClass classLayout  hasSlot: (propertySlot2 instVarNamed: 'baseSlot'))
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -157,8 +152,6 @@ PropertySlotTest >> testRemovePropertySlotWithInstance [
 	
 	self assert:	(aClass hasSlot: propertySlot2).
 	self deny: 	(aClass hasSlot: propertySlot1)
-	
-	
 ]
 
 { #category : #tests }
@@ -187,8 +180,6 @@ PropertySlotTest >> testRemovePropertySlotWithTwoInstances [
 	
 	propertySlot1 write: 5 to: instance2.
 	self assert: (propertySlot1 read: instance2) equals: 5
-	
-	
 ]
 
 { #category : #tests }

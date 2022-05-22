@@ -68,7 +68,7 @@ FLGlobalSendMock >> hash [
 FLGlobalSendMock >> initializeWith: aByteSymbol [
 	
 	super initialize.
-	contents := aByteSymbol 
+	contents := aByteSymbol
 ]
 
 { #category : #printing }

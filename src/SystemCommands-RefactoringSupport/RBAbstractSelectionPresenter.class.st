@@ -9,8 +9,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBAbstractSelectionPresenter class >> defaultSpec [
+{ #category : #layout }
+RBAbstractSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #dropLabel withConstraints: [ :c | c height: self labelHeight ];
 		add:
@@ -34,7 +34,7 @@ RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 		selecting: selectedItems
 		dropItems: dropItems
 		acceptBlock: aBlock;
-		openBlockedDialogWithSpec
+		openBlockedDialog
 ]
 
 { #category : #actions }
@@ -49,10 +49,11 @@ RBAbstractSelectionPresenter >> components [
 
 { #category : #initialization }
 RBAbstractSelectionPresenter >> initializeDropList [
+
 	dropList := self newDropList.
 	dropList
 		display: [ :scope | scope name ];
-		iconBlock: [ :e | e systemIcon ]
+		displayIcon: [ :e | e systemIcon ]
 ]
 
 { #category : #initialization }
@@ -68,7 +69,6 @@ RBAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: 
 	dropLabel label: dropString.
 	dropList items: dropItems.
 	acceptBlock := aBlock.
-	
 ]
 
 { #category : #accessing }

@@ -109,19 +109,6 @@ FreeTypeSystemSettings class >> loadFt2Library [
 ]
 
 { #category : #settings }
-FreeTypeSystemSettings class >> loadFt2Library: aBoolean [
-	(LoadFT2Library = aBoolean) 
-		ifTrue: [ ^ self ].
-	LoadFT2Library := aBoolean.
-	aBoolean 
-		ifTrue: [ 
-			FreeTypeFontProvider current updateFromSystem ]
-		ifFalse: [
-			StandardFonts setSmallBitmapFonts.
-			FreeTypeFontProvider unload ]
-]
-
-{ #category : #settings }
 FreeTypeSystemSettings class >> noFt2Library [
 	^ 'Free type fonts are not available'
 ]

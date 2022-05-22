@@ -41,7 +41,7 @@ CollatorBlockFunction >> = anObject [
 { #category : #evaluating }
 CollatorBlockFunction >> collate: anObject1 with: anObject2 [
 
-	^collatorBlock value: anObject1 value: anObject2 
+	^collatorBlock value: anObject1 value: anObject2
 ]
 
 { #category : #accessing }

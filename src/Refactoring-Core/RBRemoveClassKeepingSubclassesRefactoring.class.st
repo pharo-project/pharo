@@ -87,5 +87,5 @@ RBRemoveClassKeepingSubclassesRefactoring >> transform [
 	self initalizeRefactorings.
 	refactorings do: [ :ref | ref primitiveExecute ].
 	self reparentSubclasses.
-	self removeClasses	
+	self removeClasses
 ]

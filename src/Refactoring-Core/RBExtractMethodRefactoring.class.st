@@ -332,12 +332,12 @@ RBExtractMethodRefactoring >> parameterMap [
 
 { #category : #accessing }
 RBExtractMethodRefactoring >> parameterMap: aDictionary [
-	parameterMap := aDictionary 
+	parameterMap := aDictionary
 ]
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> parameters: anOrderedCollection [
-	parameters := anOrderedCollection 
+	parameters := anOrderedCollection
 ]
 
 { #category : #transforming }
@@ -385,7 +385,6 @@ RBExtractMethodRefactoring >> renameNode: aParseTree withOldName: oldName toWith
 { #category : #renaming }
 RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
 	self renameNode: extractedParseTree withOldName: oldName toWithName: newName.
-	
 ]
 
 { #category : #transforming }
@@ -422,7 +421,7 @@ RBExtractMethodRefactoring >> selectorsToSearch [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> startLimit: aNumber [
-	^ aNumber 
+	^ aNumber
 ]
 
 { #category : #printing }
@@ -484,5 +483,5 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 
 { #category : #renaming }
 RBExtractMethodRefactoring >> validateRenameOf: oldName to: newName [
-	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName 
+	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName
 ]

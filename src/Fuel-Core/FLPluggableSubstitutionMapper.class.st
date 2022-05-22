@@ -53,5 +53,4 @@ FLPluggableSubstitutionMapper >> mapAndTraceSubstitutionIfNotRecursive: anObject
 				add: anObject
 				substitutedBy: (substitutionFactory value: anObject)
 				traceWith: analysis ]
-
 ]

@@ -41,7 +41,6 @@ FLClusterization >> clusterBuckets [
 FLClusterization >> clusters [
 	
 	^self clusterBuckets flatCollect: [:c | c ].
-
 ]
 
 { #category : #hooks }
@@ -52,7 +51,7 @@ FLClusterization >> fuelAccept: aGeneralMapper [
 { #category : #'cluster buckets' }
 FLClusterization >> globalsBucket [
 	
-	^ globalsBucket 
+	^ globalsBucket
 ]
 
 { #category : #initialization }
@@ -66,7 +65,6 @@ FLClusterization >> initialize [
 	metalevelClassSideBucket := IdentityDictionary new.
 	substitutionsBucket := IdentityDictionary new.
 	postBaselevelBucket := IdentityDictionary new.
-
 ]
 
 { #category : #'cluster buckets' }
@@ -78,7 +76,7 @@ FLClusterization >> metalevelClassSideBucket [
 { #category : #'cluster buckets' }
 FLClusterization >> metalevelInstanceSideBucket [
 	
-	^ metalevelInstanceSideBucket 
+	^ metalevelInstanceSideBucket
 ]
 
 { #category : #accessing }

@@ -10,7 +10,6 @@ RGInstanceVariableSlot >> emitStore: methodBuilder [
 RGInstanceVariableSlot >> emitValue: methodBuilder [
 
 	methodBuilder pushInstVar: self index.
-
 ]
 
 { #category : #'*Ring-RuntimeSupport' }

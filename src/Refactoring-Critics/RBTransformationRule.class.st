@@ -109,7 +109,7 @@ RBTransformationRule >> isEmpty [
 { #category : #testing }
 RBTransformationRule >> isTransformationRule [
 
-	^ true 
+	^ true
 ]
 
 { #category : #accessing }

@@ -18,7 +18,7 @@ ChangeRecord >> createCommentDefinition [
 	^ (RGCommentDefinition class: self commentClass)
 		content: self string;
 		stamp: stamp;
-		yourself 
+		yourself
 ]
 
 { #category : #'*Ring-Definitions-Core' }

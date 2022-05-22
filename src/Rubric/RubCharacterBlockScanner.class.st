@@ -241,7 +241,6 @@ RubCharacterBlockScanner >> paddedSpace [
 	lastIndex := lastIndex + 1.
 	destX := destX + lastSpaceOrTabExtent x.
 	^ false
-
 ]
 
 { #category : #scanning }
@@ -265,7 +264,6 @@ RubCharacterBlockScanner >> setStopConditions [
 	
 	self setFont.
 	self setConditionArray: (alignment = Justified ifTrue: [#paddedSpace]).
-
 ]
 
 { #category : #'stop conditions' }

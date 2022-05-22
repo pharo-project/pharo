@@ -17,7 +17,6 @@ RGTrait class >> newStrategy [
 RGTrait class >> newStrategyFor: anRGEnvironment [
 
 	^ (self strategyClassForVersion: anRGEnvironment version) basicNew
-
 ]
 
 { #category : #'instance creation' }
@@ -26,5 +25,4 @@ RGTrait class >> strategyClassForVersion: aVersionNumber [
 	^ (aVersionNumber <= 6)
 		ifTrue: [ RGTraitStrategy ]
 		ifFalse: [ RGTraitV2Strategy ]
-
 ]

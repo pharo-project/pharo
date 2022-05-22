@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 RGBackendTest >> backendClass [
 
-	^ RGEnvironmentBackend  
+	^ RGEnvironmentBackend
 ]
 
 { #category : #accessing }

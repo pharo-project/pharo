@@ -44,5 +44,4 @@ ReflectivityDemos >> demoSelfSendLogging [
 		control: #before.
 		
 	theClass methods do: [ :each | each ast link: CachedLink ].
-
 ]

@@ -4,26 +4,14 @@ It implies to be open from a PDPackageAnalyzerWindowPackageDependencies instance
 "
 Class {
 	#name : #DAAddPackagePresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'packageList',
 		'buttonAddPackage',
-		'packageAnalyzerTreeModel'
+		'dependenciesPresenter'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
-
-{ #category : #specs }
-DAAddPackagePresenter class >> defaultSpec [
-	<spec: #default>
-	^ SpecLayout composed
-		newColumn:
-			[ :col | 
-			col
-				add: #packageList;
-				add: #buttonAddPackage height: 30
-				] yourself
-]
 
 { #category : #protocol }
 DAAddPackagePresenter >> actionOnAddPackage [
@@ -32,11 +20,11 @@ DAAddPackagePresenter >> actionOnAddPackage [
 		action: [ 
 			self selectedItemsFromPackageList
 				ifNotEmpty: [ 
-					relationGraph := self packageAnalyzerTreeModel relationGraph.
+					relationGraph := self dependenciesPresenter relationGraph.
 					packagesToAdd := self selectedItemsFromPackageList
 						collect: [ :packageName | (DAPackage on: (RPackageSet named: packageName)) beSeen ].
 					relationGraph addPackages: packagesToAdd.
-					self packageAnalyzerTreeModel
+					self dependenciesPresenter
 						refresh;
 						resetDefaultSettings.
 					self delete ] ]
@@ -45,15 +33,35 @@ DAAddPackagePresenter >> actionOnAddPackage [
 { #category : #actions }
 DAAddPackagePresenter >> buildList [
 	| packagesAdded packagesNotAdded |
-	packagesAdded := self packageAnalyzerTreeModel seenPackagesName.
+	packagesAdded := self dependenciesPresenter seenPackagesName.
 	packagesNotAdded := self systemPackages.
 	packagesNotAdded removeAll: packagesAdded.
-	packageList items: packagesNotAdded.
+	packageList sourceItems: packagesNotAdded.
+]
+
+{ #category : #initialization }
+DAAddPackagePresenter >> connectPresenters [
+	self actionOnAddPackage
+]
+
+{ #category : #layout }
+DAAddPackagePresenter >> defaultLayout [
+	
+	^ SpBoxLayout newTopToBottom
+			add: packageList;
+			add: buttonAddPackage expand: false;
+			yourself
 ]
 
 { #category : #accessing }
-DAAddPackagePresenter >> buttonAddPackage [
-	^ buttonAddPackage
+DAAddPackagePresenter >> dependenciesPresenter [
+	^ dependenciesPresenter
+]
+
+{ #category : #accessing }
+DAAddPackagePresenter >> dependenciesPresenter: aPackageTreePresenter [
+	dependenciesPresenter := aPackageTreePresenter.
+	self buildList
 ]
 
 { #category : #api }
@@ -62,48 +70,20 @@ DAAddPackagePresenter >> initialExtent [
 ]
 
 { #category : #initialization }
-DAAddPackagePresenter >> initializePresenter [
-	self actionOnAddPackage
-]
-
-{ #category : #initialization }
-DAAddPackagePresenter >> initializeWidgets [
-	
-	packageList := self newList
-		multiSelection: true;
-		yourself.
+DAAddPackagePresenter >> initializePresenters [
 	
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
 		icon: (self iconNamed: #addIcon);
 		yourself.
-]
 
-{ #category : #'instance creation' }
-DAAddPackagePresenter >> open [
-	^ self openWithSpec
-]
-
-{ #category : #accessing }
-DAAddPackagePresenter >> packageAnalyzerTreeModel [
-	^ packageAnalyzerTreeModel
-]
-
-{ #category : #accessing }
-DAAddPackagePresenter >> packageAnalyzerTreeModel: aPackageAnalyzerTreeModel [
-	packageAnalyzerTreeModel := aPackageAnalyzerTreeModel.
-	self buildList
-]
-
-{ #category : #accessing }
-DAAddPackagePresenter >> packageList [
-	^ packageList
+	packageList := SpChooserPresenter new.
 ]
 
 { #category : #initialization }
 DAAddPackagePresenter >> selectedItemsFromPackageList [
-	^ self packageList selectedItems
+	^ packageList chosenItems
 ]
 
 { #category : #accessing }

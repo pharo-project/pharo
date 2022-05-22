@@ -77,10 +77,10 @@ ClyNotebookPageMorph >> initialize [
 	labelPresenter := ClyNotebookPageHeaderPresenter on: self.
 	self flag: #TODO. "I'm hardcoding this width because I need to keep this sizes consistent. 
 	But this is not good, think a better way."
-	labelMorph := (labelPresenter buildWithSpec
-		hResizing: #rigid;
-		width: 120;
-		yourself)
+	labelMorph := labelPresenter build
+		              hResizing: #rigid;
+		              width: 120;
+		              yourself
 ]
 
 { #category : #testing }

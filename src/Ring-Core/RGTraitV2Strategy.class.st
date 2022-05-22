@@ -22,8 +22,6 @@ RGTraitV2Strategy >> addClassVariable: anRGInstanceVariableDefinition [
 
 	self owner announceDefinitionChangeDuring: [ 
 		self privAddClassVariable: anRGInstanceVariableDefinition ]
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -194,17 +192,12 @@ RGTraitV2Strategy >> copyForBehaviorDefinitionPostCopy [
 	
 	newVariables do: [ :each | self privAddClassVariable: each ].
 	newSharedPools do: [ :each | self privAddSharedPool: each ].
-
-
-
 ]
 
 { #category : #'default model values' }
 RGTraitV2Strategy >> defaultClassVariables [
 
 	^ OrderedCollection new
-
-	
 ]
 
 { #category : #'default model values' }
@@ -223,16 +216,12 @@ RGTraitV2Strategy >> defaultMetaClass [
 RGTraitV2Strategy >> defaultPackage [
 
 	^ self owner defaultPackageStubIn: self environment
-
-	
 ]
 
 { #category : #'default model values' }
 RGTraitV2Strategy >> defaultSharedPools [
 
 	^ OrderedCollection new
-
-	
 ]
 
 { #category : #testing }
@@ -300,9 +289,7 @@ RGTraitV2Strategy >> initialize [
 	comment := self unresolvedValue: self defaultComment.	
 	classVariables := self unresolvedValue: self defaultClassVariables.	
 	package := self unresolvedValue: self defaultPackage.	
-	sharedPools := self unresolvedValue: self defaultSharedPools.	
-			
-	
+	sharedPools := self unresolvedValue: self defaultSharedPools.
 ]
 
 { #category : #initialization }
@@ -313,8 +300,7 @@ RGTraitV2Strategy >> initializeUnresolved [
 	comment := self unresolvedValue: self defaultComment.	
 	classVariables := self unresolvedValue: self defaultClassVariables.	
 	package := self unresolvedValue: self defaultPackage.	
-	sharedPools := self unresolvedValue: self defaultSharedPools.	
-	
+	sharedPools := self unresolvedValue: self defaultSharedPools.
 ]
 
 { #category : #'private - backend access' }
@@ -352,7 +338,6 @@ RGTraitV2Strategy >> makeResolved [
 	classVariables := self classVariables markAsRingResolved.
 	package := self package markAsRingResolved.
 	sharedPools := self sharedPools markAsRingResolved.
-
 ]
 
 { #category : #'accessing - backend' }
@@ -383,8 +368,7 @@ RGTraitV2Strategy >> package: anRGPackage [
 { #category : #'private - backend access' }
 RGTraitV2Strategy >> privAddClassVariable: anRGInstanceVariableDefinition [ 
 
-	self backend forBehavior addClassVariable: anRGInstanceVariableDefinition to: self owner	
-	
+	self backend forBehavior addClassVariable: anRGInstanceVariableDefinition to: self owner
 ]
 
 { #category : #'private - backend access' }
@@ -401,7 +385,7 @@ RGTraitV2Strategy >> pvtAddClassVariable: anRGInstanceVariableDefinition [
 	classVariables isRingResolved ifFalse: [ 
 		self pvtCleanClassVariables  ].
 	
-	classVariables add: anRGInstanceVariableDefinition.	
+	classVariables add: anRGInstanceVariableDefinition.
 ]
 
 { #category : #'private - backend access' }
@@ -412,7 +396,7 @@ RGTraitV2Strategy >> pvtAddSharedPool: anRGPoolVariable [
 	sharedPools isRingResolved ifFalse: [ 
 		self pvtCleanSharedPools  ].
 	
-	sharedPools add: anRGPoolVariable.	
+	sharedPools add: anRGPoolVariable.
 ]
 
 { #category : #testing }
@@ -500,9 +484,6 @@ RGTraitV2Strategy >> pvtResolvableProperties [
 		#package -> package. 
 		#sharedPools -> sharedPools. 
 	}
-	
-	
-
 ]
 
 { #category : #enumerating }
@@ -550,7 +531,7 @@ RGTraitV2Strategy >> sharedPools [
 						beh := self environment ask behaviorNamed: each name.
 						beh ifNotNil: [ beh ] ifNil: [ each ] ]
 					ifFalse: [ each copy ]])].
-	^ allSharedPools 
+	^ allSharedPools
 ]
 
 { #category : #'private - backend access' }

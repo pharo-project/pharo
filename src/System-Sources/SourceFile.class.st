@@ -134,7 +134,6 @@ SourceFile >> next: anInteger [
 SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
 
 	stream next: anInteger putAll: aString startingAt: startIndex
-
 ]
 
 { #category : #'file in/out' }

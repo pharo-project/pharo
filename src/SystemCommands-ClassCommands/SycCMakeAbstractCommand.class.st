@@ -32,12 +32,6 @@ SycCMakeAbstractCommand >> isApplicable [
 ]
 
 { #category : #testing }
-SycCMakeAbstractCommand >> isEnabled [
-
-	^ true
-]
-
-{ #category : #testing }
 SycCMakeAbstractCommand >> name [
 	^ 'Make Abstract'
 ]

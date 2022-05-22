@@ -43,24 +43,18 @@ Class {
 }
 
 { #category : #parsing }
-CDFluidClassDefinitionParser class >> fromASTNode: aNode [ 
-	
-	^ self new parseRootNode: aNode
-]
-
-{ #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 	superclassNode ifNotNil: [ self handleSuperclassNode: superclassNode ].
 	self handleClassName: classNameNode.
 ]
 
-{ #category : #'handling  nodes' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
 	classDefinition layoutClass: aNode binding value
 ]
 
-{ #category : #metaclass }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [ 
 
 	| className classNode node |
@@ -72,7 +66,7 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
 	classDefinition className: node astNode: classNode
 ]
 
-{ #category : #metaclass }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [ 
 
 	| className classNode node |
@@ -84,7 +78,7 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [
 	classDefinition className: node astNode: classNode
 ]
 
-{ #category : #'handling  nodes' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| sharedPoolNodes |
 	sharedPoolNodes := aNode children
@@ -98,7 +92,7 @@ CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	classDefinition sharedPools: sharedPoolNodes
 ]
 
-{ #category : #'handling  nodes' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [ 
 	
 	| slotNodes classVariablesString |
@@ -117,7 +111,7 @@ CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [
 	classDefinition sharedSlots: slotNodes
 ]
 
-{ #category : #'handling  nodes' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 	| aSuperclassName newSuperclassNode |
 
@@ -132,13 +126,13 @@ CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 		astNode: newSuperclassNode
 ]
 
-{ #category : #'handling  nodes' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> handleTag: aNode [
 
 	classDefinition tag: (CDClassTagNode new name: aNode value)
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	
 	| searcher |
@@ -165,7 +159,7 @@ CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	^ classDefinition
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
@@ -191,7 +185,7 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		signal
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [ 
 	"See class comment. Here we handle the cascade version of the class definition."
 	" 
@@ -209,7 +203,7 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 			self parseSelectorPart: selectorPart withArgument: argument ] ]
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : #parsing }
 CDFluidClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	"

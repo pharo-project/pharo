@@ -49,6 +49,36 @@ ZnUrlTest >> testComponentSpecifcEncoding [
 ]
 
 { #category : #testing }
+ZnUrlTest >> testConcatenation [
+	self 
+		assert: 'http://example.com/foo/bar' asZnUrl / 'xyz' 
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	self
+		assert: 'http://example.com/foo/bar/' asUrl / 'xyz' 
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	self
+		assert: 'http://example.com/foo/bar' asUrl + 'xyz' 
+		equals: 'http://example.com/foo/xyz' asZnUrl.
+	self
+		assert: 'http://example.com/foo/bar/' asUrl + 'xyz' 
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	
+	self 
+		assert: ('http://example.com/foo/bar' asZnUrl addPathSegment: 'xyz') 
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	self
+		assert: ('http://example.com/foo/bar/' asUrl addPathSegment: 'xyz') 
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	self
+		assert: ('http://example.com/foo/bar' asUrl withRelativeReference: 'xyz') 
+		equals: 'http://example.com/foo/xyz' asZnUrl.
+	self
+		assert: ('http://example.com/foo/bar/' asUrl withRelativeReference: 'xyz') 
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+
+]
+
+{ #category : #testing }
 ZnUrlTest >> testConvenienceMethods [
 	| baseUrl |
 	baseUrl := 'http://api.host.com' asZnUrl.
@@ -135,10 +165,18 @@ ZnUrlTest >> testEncodedSlash [
 { #category : #testing }
 ZnUrlTest >> testFileUrl [
 	| url |
-	url := 'file://localhost/users/Sven/Desktop/foo.txt' asZnUrl.
+	url := 'file://localhost/Users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self assert: url host equals: 'localhost'.
-	self assert: url pathSegments equals: #( 'users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection 
+	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection.
+	url := 'file:///Users/Sven/Desktop/foo.txt' asZnUrl.
+	self assert: url isFile.
+	self deny: url hasHost.
+	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection.
+	url := 'file:/Users/Sven/Desktop/foo.txt' asZnUrl.
+	self assert: url isFile.
+	self deny: url hasHost.
+	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection  
 ]
 
 { #category : #testing }
@@ -394,6 +432,23 @@ ZnUrlTest >> testPortIfAbsent [
 ]
 
 { #category : #testing }
+ZnUrlTest >> testPrintingConsidersDefaultCharacterConverter [
+	ZnDefaultCharacterEncoder
+		value: ZnNullEncoder new
+		during: [
+			| url |
+			(url := ZnUrl new)
+				scheme: #http;
+				host: 'www.seaside.st';
+				port: 8080;
+				addPathSegment: 'exampleWithUTF-8Ã¤Ã¶Ã¼';
+				addPathSegment: 'foo.html';
+				queryAt: 'qWithUTF-8Ã¤Ã¶Ã¼' put: '100ithUTF-8Ã¤Ã¶Ã¼';
+				fragment: 'markithUTF-8Ã¤Ã¶Ã¼'.
+			self assert: url printString equals: 'http://www.seaside.st:8080/exampleWithUTF-8%C3%A4%C3%B6%C3%BC/foo.html?qWithUTF-8%C3%83%C2%A4%C3%83%C2%B6%C3%83%C2%BC=100ithUTF-8%C3%83%C2%A4%C3%83%C2%B6%C3%83%C2%BC#markithUTF-8%C3%A4%C3%B6%C3%BC' ]
+]
+
+{ #category : #testing }
 ZnUrlTest >> testPrintingSimple [
 	| url |
 	(url := ZnUrl new)
@@ -472,6 +527,13 @@ ZnUrlTest >> testQueryManipulation [
 	self assert: (url queryAt: 'three') equals: '3'.
 	url queryRemoveAll.
 	self deny: url hasQuery
+]
+
+{ #category : #testing }
+ZnUrlTest >> testQueryParametersOrderPreserving [
+	| url |
+	url := 'http://foo.com/api/do?z=0&a=1&b=2&m=7&c=3'.
+	self assert: url asZnUrl printString equals: url
 ]
 
 { #category : #testing }

@@ -61,7 +61,7 @@ LocaleID >> = anotherObject [
 
 { #category : #accessing }
 LocaleID >> displayCountry [
-	^(ISOLanguageDefinition iso2Countries at: self isoCountry asUppercase ifAbsent: [ self isoCountry ]) 
+	^(ISOLanguageDefinition iso2Countries at: self isoCountry asUppercase ifAbsent: [ self isoCountry ])
 ]
 
 { #category : #accessing }
@@ -136,5 +136,4 @@ LocaleID >> storeOn: aStream [
 	aStream nextPutAll: ' isoString: '.
 	aStream nextPutAll: '''' , self printString , ''''.
 	aStream nextPut: $).
-
 ]

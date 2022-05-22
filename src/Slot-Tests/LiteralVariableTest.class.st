@@ -16,7 +16,6 @@ LiteralVariableTest >> testComparison [
 	var2 value: #value2.
 	self deny: var1 equals: var2.
 	self deny: var1 equals: #var1 -> var1 value
-
 ]
 
 { #category : #tests }

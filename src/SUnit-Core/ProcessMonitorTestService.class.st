@@ -194,7 +194,6 @@ ProcessMonitorTestService >> allowRunningProcessesToFinish [
 ProcessMonitorTestService >> allowTestToLeaveProcesses [
 
 	shouldFailTestLeavingProcesses := false
-
 ]
 
 { #category : #controlling }
@@ -207,7 +206,7 @@ ProcessMonitorTestService >> cleanUpAfterTest [
 	testFailures removeAll.
 	self enableBackgroudFailuresSuspension.
 	self useDefaultFailingStrategyForRunningProcesses.
-	self useDefaultTerminationStrategyForRunningProcesses 
+	self useDefaultTerminationStrategyForRunningProcesses
 ]
 
 { #category : #accessing }
@@ -335,7 +334,6 @@ ProcessMonitorTestService >> initialize [
 	self useDefaultTerminationStrategyForRunningProcesses.
 	forkedProcesses := WeakSet new.
 	testFailures := OrderedIdentityDictionary new.
-	 
 ]
 
 { #category : #testing }
@@ -457,7 +455,6 @@ ProcessMonitorTestService >> testFailures [
 ProcessMonitorTestService >> useDefaultFailingStrategyForRunningProcesses [
 
 	shouldFailTestLeavingProcesses := self class shouldFailTestLeavingProcesses.
-
 ]
 
 { #category : #initialization }

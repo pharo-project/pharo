@@ -118,7 +118,7 @@ FLSerializer >> analyzer: anObject [
 { #category : #header }
 FLSerializer >> at: key putAdditionalObject: anObject [ 
 	"This is useful if we want to attach objects to a package that will also be serialized. The way they are stored is key-value."
-	header at: key putAdditionalObject: anObject 
+	header at: key putAdditionalObject: anObject
 ]
 
 { #category : #protected }
@@ -145,7 +145,6 @@ FLSerializer >> encodeSignatureWith: anEncoder [
 { #category : #protected }
 FLSerializer >> encodeVersionWith: anEncoder [
 	anEncoder encodeUint16: self version
-
 ]
 
 { #category : #hooks }
@@ -203,7 +202,6 @@ FLSerializer >> serialize: anObject toFileNamed: aFilename [
 		fileNamed: aFilename 
 		writeStreamDo: [ :aFileStream |
 			self serialize: anObject on: aFileStream ]
-	
 ]
 
 { #category : #protected }

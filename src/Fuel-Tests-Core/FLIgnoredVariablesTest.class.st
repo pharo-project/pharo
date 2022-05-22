@@ -22,7 +22,6 @@ FLIgnoredVariablesTest >> testAllVariablesIgnored [
 
 	self assert: (result instVarAt: 1) isNil.
 	self assert: (result instVarAt: 2) isNil.
-
 ]
 
 { #category : #tests }
@@ -39,7 +38,6 @@ FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 	materializedInstances := self materializedObjects.
 
 	self deny: (materializedInstances includes: #A)
-
 ]
 
 { #category : #tests }

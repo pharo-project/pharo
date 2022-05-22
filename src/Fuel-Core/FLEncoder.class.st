@@ -36,7 +36,6 @@ FLEncoder class >> on: aStream globalEnvironment: aDictionary do: aBlock [
 FLEncoder >> encodeBitmap: aBitmap [ 
 	"Append to the receiver an Integer as the next two bytes."
 	aBitmap writeOn: stream.
-
 ]
 
 { #category : #encoding }
@@ -46,7 +45,7 @@ FLEncoder >> encodeByte: aSmallInteger [
 
 { #category : #encoding }
 FLEncoder >> encodeBytes: aBytesObject [
-	stream nextBytesPutAll: aBytesObject 
+	stream nextBytesPutAll: aBytesObject
 ]
 
 { #category : #encoding }
@@ -137,8 +136,6 @@ FLEncoder >> encodeUint24: aSmallInteger [
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
-
-
 ]
 
 { #category : #encoding }
@@ -149,7 +146,6 @@ FLEncoder >> encodeUint32: aSmallInteger [
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
-
 ]
 
 { #category : #encoding }
@@ -164,7 +160,6 @@ FLEncoder >> encodeUint64: aSmallInteger [
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
-
 ]
 
 { #category : #encoding }
@@ -177,8 +172,7 @@ FLEncoder >> encodeUint8: aSmallInteger [
 FLEncoder >> encodeWeakReferenceTo: anObject [
 
 	indexStream 
-		nextIndexPut: (objectsIndexes at: anObject ifAbsent: [objectsIndexes at: nil]) 
-
+		nextIndexPut: (objectsIndexes at: anObject ifAbsent: [objectsIndexes at: nil])
 ]
 
 { #category : #encoding }

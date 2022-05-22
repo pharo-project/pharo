@@ -453,6 +453,21 @@ MessageTally >> copyWithTally: hitCount [
 ]
 
 { #category : #printing }
+MessageTally >> displayIdentifierOn: aStream [
+	self isClosed ifTrue: [ ^ self ].
+	
+	class displayStringOn: aStream.
+	self method methodClass ~~ class ifTrue: [ 
+		aStream
+			nextPut: $(;
+			print: self method methodClass;
+			nextPut: $) ].
+	aStream
+		nextPutAll: '>>';
+		store: self method selector
+]
+
+{ #category : #printing }
 MessageTally >> displayStringOn: aStream [
 	self displayIdentifierOn: aStream.
 	aStream 
@@ -524,6 +539,15 @@ MessageTally >> into: leafDict fromSender: senderTally [
 						reportOtherProcesses: reportOtherProcesses ].
 					
 	leafNode bump: tally fromSender: senderTally
+]
+
+{ #category : #testing }
+MessageTally >> isClosed [
+
+	^ class isNil 
+		and: [ method isNil 
+		and: [ tally isNil 
+		and: [ receivers isNil ] ] ] 
 ]
 
 { #category : #comparing }

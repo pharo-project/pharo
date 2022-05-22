@@ -185,25 +185,6 @@ DiskDirectoryEntry >> gid [
 	^self statAttributes at: 7
 ]
 
-{ #category : #inspecting }
-DiskDirectoryEntry >> gtInspectAttributesIn: composite [
-	<gtInspectorPresentationOrder: 2>
-
-	| attrDictionary |
-
-	attrDictionary := Dictionary new.
-	self class methodsDo: [ :method |
-		method methodNode arguments size = 0 ifTrue:
-			[ attrDictionary at: method selector put:
-				([ (method selector value: self) ]
-					on: Error
-					do: [ 'N/A' translated ]) ] ].
-	^(attrDictionary gtInspectorItemsIn: composite)
-		when: [ attrDictionary isNotEmpty ];
-		title: 'Attributes' translated;
-		yourself.
-]
-
 { #category : #testing }
 DiskDirectoryEntry >> hasCreationTime [
 	"Answer a boolean indicating whether the receiver has a creation timestamp, or is just using the change timestamp."

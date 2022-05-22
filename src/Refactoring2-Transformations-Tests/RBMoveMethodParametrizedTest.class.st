@@ -8,6 +8,7 @@ Class {
 RBMoveMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodRefactoring };
+		addCase: { #rbClass -> RBMoveMethodTransformation };
 		yourself
 ]
 
@@ -73,7 +74,6 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
 	self
 		assert: ((refactoring model classNamed: #OrderedCollection) classSide parseTreeFor: #oneToOneHundred)
 		equals: (self parseMethod: 'oneToOneHundred ^ self new addAll: (1 to: 100); yourself')
-
 ]
 
 { #category : #test }

@@ -54,13 +54,12 @@ RGTraitTransformation >> makeResolved [
 	super makeResolved.
 	
 	subject := self subject markAsRingResolved.
-
 ]
 
 { #category : #'queries - methods' }
 RGTraitTransformation >> methods [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - backend' }
@@ -76,8 +75,6 @@ RGTraitTransformation >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#subject -> subject. 
 	}
-	
-	
 ]
 
 { #category : #'private - backend interface' }

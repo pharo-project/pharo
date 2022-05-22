@@ -128,7 +128,7 @@ HistoryNode >> copyFrom: start to: stop [
 { #category : #accessing }
 HistoryNode >> current [
 	^ self history isEmpty
-		ifFalse: [self history last] 
+		ifFalse: [self history last]
 ]
 
 { #category : #accessing }
@@ -143,7 +143,7 @@ HistoryNode >> groupClass [
 
 { #category : #accessing }
 HistoryNode >> history [
-	^ history ifNil: [history := OrderedCollection new] 
+	^ history ifNil: [history := OrderedCollection new]
 ]
 
 { #category : #testing }

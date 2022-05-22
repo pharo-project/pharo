@@ -30,7 +30,7 @@ RBReplaceSubtreeTransformation class >> model: aRBModel replace: oldSourceCode t
 		to: newSourceCode
 		inMethod: aSelector
 		inClass: aClass;
-		yourself 
+		yourself
 ]
 
 { #category : #api }
@@ -41,7 +41,7 @@ RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode
 		to: newSourceCode
 		inMethod: aSelector
 		inClass: aClass;
-		yourself 
+		yourself
 ]
 
 { #category : #preconditions }

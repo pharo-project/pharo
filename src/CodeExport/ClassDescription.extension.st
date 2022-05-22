@@ -70,8 +70,9 @@ ClassDescription >> fileOutMethod: selector on: aStream [
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
-
-	aFileStream nextChunkPut: self definitionString.
+	
+	"we for now file out old style class definitions"
+	aFileStream nextChunkPut: self oldPharoDefinition.
 	self organization putCommentOnFile: aFileStream forClass: self.
 	self organization categories 
 		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]

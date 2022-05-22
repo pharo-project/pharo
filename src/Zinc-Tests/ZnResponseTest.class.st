@@ -150,10 +150,12 @@ ZnResponseTest >> testSlashdotGzipChunked [
 		setConnectionClose;
 		setAcceptEncodingGzip.
 	stream := ZnNetworkingUtils socketStreamToUrl: request url.
-	response := [ request writeOn: stream.
-	stream flush.
-	ZnDefaultCharacterEncoder value: ZnNullEncoder new during: [ ZnResponse readFrom: stream ] ]
-		ensure: [ stream close ].
+	response := [ 
+  		request writeOn: stream. 
+  		stream flush. 
+  		ZnDefaultCharacterEncoder 
+			value: ZnNullEncoder new
+			during: [ ZnResponse readFrom: stream ] ] ensure: [ stream close ].
 	response isRedirect ifTrue: [ ^ self ].
 	self assert: response code equals: 200.
 	self assert: ((response headers at: 'Content-Type') beginsWith: 'text/html').
@@ -161,6 +163,7 @@ ZnResponseTest >> testSlashdotGzipChunked [
 	self assert: (response headers at: 'Transfer-Encoding' ifAbsent: [ 'chunked' ]) equals: 'chunked'.
 	contents := response entity contents.
 	self assert: ((contents includesSubstring: 'Slashdot') or: [ contents includesSubstring: 'refresh' ])
+
 ]
 
 { #category : #testing }

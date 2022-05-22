@@ -53,7 +53,6 @@ FLAnalysis >> initializeWith: aMapper private: privateMapper root: anObject [
 	objectStack := FLSimpleStack new.
 	privateObjectStack := FLSimpleStack new.
 	clusterization := FLClusterization new.
-
 ]
 
 { #category : #mapping }

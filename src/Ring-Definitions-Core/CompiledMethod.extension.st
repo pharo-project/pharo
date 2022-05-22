@@ -10,7 +10,6 @@ CompiledMethod >> asActiveRingDefinition [
 			parentName: self methodClass name;
 			isMetaSide: self methodClass isMeta;
 			asActive.
-
 ]
 
 { #category : #'*Ring-Definitions-Core' }
@@ -79,7 +78,6 @@ CompiledMethod >> methodReference [
 	selector := self selector ifNil: [^nil].
 	^(RGMethodDefinition realClass: class selector: selector) 
 		package: self package asRingDefinition; yourself
-	
 ]
 
 { #category : #'*Ring-Definitions-Core' }

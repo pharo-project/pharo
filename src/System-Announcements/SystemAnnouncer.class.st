@@ -311,5 +311,4 @@ SystemAnnouncer >> traitDefinitionChangedFrom: oldTrait to: newTrait [
 SystemAnnouncer >> unsubscribe: anObject [
 	self private unsubscribe: anObject.	
 	super unsubscribe: anObject.
-
 ]

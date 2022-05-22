@@ -133,7 +133,6 @@ RubTextFieldAreaTest >> testMaxLengthIsNegative [
 		yourself.
 	m setTextWith: '01234567890123456'.
 	self assert: m text size equals: 0.
-
 ]
 
 { #category : #tests }

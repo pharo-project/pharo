@@ -60,6 +60,12 @@ ShiftClassBuilder >> addChangeComparer: aChangeComparer [
 	changeComparers add: aChangeComparer.
 ]
 
+{ #category : #accessing }
+ShiftClassBuilder >> allSlots [ 
+	
+	^ self builderEnhancer allSlotsForBuilder: self
+]
+
 { #category : #building }
 ShiftClassBuilder >> build [	
 	self tryToFillOldClass.
@@ -200,7 +206,6 @@ ShiftClassBuilder >> compileMethods [
 
 	toRemove := newClass organization allMethodSelectors reject: [ :aSelector | newClass includesSelector: aSelector ].
 	toRemove do: [ :aSelector | newClass organization removeElement: aSelector  ]
-
 ]
 
 { #category : #building }
@@ -244,7 +249,6 @@ ShiftClassBuilder >> createSharedVariables [
 		on: newClass
 		declareClassVariables: self layoutDefinition sharedVariables
 		sharing: self layoutDefinition sharedPoolsString.
-	
 ]
 
 { #category : #initialization }
@@ -277,7 +281,6 @@ ShiftClassBuilder >> doesNotUnderstand: aMessage [
 	setter 
 		ifTrue:[ extensibleProperties at: variable put: aMessage argument] 
 		ifFalse:[ ^ extensibleProperties at: variable].
-	
 ]
 
 { #category : #accessing }
@@ -305,7 +308,6 @@ ShiftClassBuilder >> fillFor: aClass [
 		oldClass: aClass.
 		
 	self builderEnhancer fillBuilder: self from: aClass.
-
 ]
 
 { #category : #testing }
@@ -338,7 +340,6 @@ ShiftClassBuilder >> installSlotsAndVariables [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
 	newClass classVariables do: [ :each | each installingIn: newClass ].
-
 ]
 
 { #category : #accessing }
@@ -346,7 +347,7 @@ ShiftClassBuilder >> isInRemake [
 	
 	"If the builder is in remake (when propagating changes to subclasses)"
 	
-	^ inRemake 
+	^ inRemake
 ]
 
 { #category : #accessing }
@@ -549,7 +550,7 @@ ShiftClassBuilder >> validateClassName [
 	name isValidGlobalName ifFalse: [ 
 		InvalidGlobalName signal: 'Class name is not a valid global name. It must start with uppercase letter and continue with alphanumeric characters or underscore. Default names used in class or trait templates are not allowed.' for: name ].
 		
-	DangerousClassNotifier check: name 
+	DangerousClassNotifier check: name
 ]
 
 { #category : #'private - validating' }
@@ -560,5 +561,4 @@ ShiftClassBuilder >> validateSuperclass [
 	self superclass withAllSuperclassesDo: [ :aSuperclass |
 		aSuperclass = oldClass ifTrue:[
 			CircularHierarchyError signalFor: oldClass ]]
-
 ]

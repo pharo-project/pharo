@@ -29,7 +29,6 @@ RGEnvironmentTest >> testBehaviortNamed [
 	self assert: (env ask behaviorNamed: 'NonexistingBehavior') equals: nil.
 	self assert: (env ask behaviorNamed: 'NonexistingBehavior class') equals: nil.
 	self assert: (env ask behaviorNamed: 'NonexistingBehavior classTrait') equals: nil.
-
 ]
 
 { #category : #tests }
@@ -60,7 +59,6 @@ RGEnvironmentTest >> testBehaviortNamedIndirect [
 	self assert: (env ask behaviorNamed: 'SomeTrait classTrait') equals: behavior.
 	self assert: (env ask behaviorNamed: 'SomeTrait') equals: behavior baseTrait.
 	self assert: (env ask behaviorNamed: 'SomeTrait class') equals: nil.
-
 ]
 
 { #category : #tests }
@@ -83,12 +81,7 @@ RGEnvironmentTest >> testCleanUnusedUnreferencedBehaviors [
 	self assert: env ask behaviors size equals: 8. "nothing changed"
 	
 	env cleanUnusedUnreferencedBehaviors.
-	self assert: env ask behaviors size equals: 6. 
-	
-	
-	
-	
-
+	self assert: env ask behaviors size equals: 6.
 ]
 
 { #category : #tests }
@@ -114,8 +107,7 @@ RGEnvironmentTest >> testCleanUnusedUnreferencedPackages [
 	self assert: (env ask packages includes: package2).  
 	env cleanUnusedUnreferencedPackages.
 	self assert: (env ask packages includes: package1).  
-	self deny: (env ask packages includes: package2).  
-	
+	self deny: (env ask packages includes: package2).
 ]
 
 { #category : #tests }
@@ -150,7 +142,6 @@ RGEnvironmentTest >> testCompatibility [
 	self assert: (env1 compatibleWith: env2).
 
 "
-
 ]
 
 { #category : #tests }
@@ -183,9 +174,7 @@ RGEnvironmentTest >> testEnsureClassNamed [
 	self assert: definition isClass not. 
 	self assert: definition isMetaclass. 	
 	self assert: definition isTrait not. 	
-	self assert: definition isMetaclassTrait not. 	
-
-
+	self assert: definition isMetaclassTrait not.
 ]
 
 { #category : #tests }
@@ -397,6 +386,4 @@ RGEnvironmentTest >> testUnpackagedPackage [
 	package := env ensurePackageNamed: '_UnpackagedPackage'.
 	
 	self assert: env unpackagedPackageOrNil equals: package.
-	
-	
 ]

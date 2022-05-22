@@ -18,7 +18,7 @@ RBNotEnvironment >> definesClass: aClass [
 
 { #category : #description }
 RBNotEnvironment >> description [
-	^ '(', environment shortDescription, ') not' 
+	^ '(', environment shortDescription, ') not'
 ]
 
 { #category : #testing }

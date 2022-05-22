@@ -12,7 +12,6 @@ ShModifyClassTest >> testEmptyClass [
 	self validateResult.
 	self validateSuperclass: Object.
 	self validateMethods: #()
-
 ]
 
 { #category : #tests }
@@ -23,5 +22,4 @@ ShModifyClassTest >> testEmptyClassWithMethods [
 	self validateResult.
 	self validateSuperclass: Object.
 	self validateMethods: #(aMethod anotherMethod:)
-
 ]

@@ -3,11 +3,13 @@ This is an abstract class for to display nodes in a tree.
 "
 Class {
 	#name : #DANode,
-	#superclass : #TreeNodePresenter,
+	#superclass : #Object,
 	#instVars : [
 		'treeModelParent',
 		'cycle',
-		'browser'
+		'browser',
+		'content',
+		'parent'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
@@ -36,6 +38,35 @@ DANode >> browser [
 { #category : #accessing }
 DANode >> browser: anObject [
 	browser := anObject
+]
+
+{ #category : #private }
+DANode >> buildChildren [
+	self flag: 'to remove'.
+	
+	^ self children value collect: [ :each || node | 
+		node := (each isKindOf: DANode) 
+			ifTrue: [ each ]
+			ifFalse: [  (self childNodeClassFor: each) new
+				content: each  ].
+		node 
+			parentNode: self;
+			yourself ].
+]
+
+{ #category : #accessing }
+DANode >> children [ 
+	^ #()
+]
+
+{ #category : #accessing }
+DANode >> content [
+	^ content
+]
+
+{ #category : #accessing }
+DANode >> content: aDAPackage [ 
+	content := aDAPackage 
 ]
 
 { #category : #accessing }
@@ -76,6 +107,16 @@ DANode >> label [
 { #category : #accessing }
 DANode >> packageUnderAnalysis [
 	^ self rootNode daPackage rPackageSet packages first
+]
+
+{ #category : #accessing }
+DANode >> parentNode [
+	^ parent
+]
+
+{ #category : #accessing }
+DANode >> parentNode: aDANode [ 
+	parent := aDANode
 ]
 
 { #category : #private }

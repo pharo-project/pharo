@@ -168,9 +168,7 @@ DAPackageCycleDetector >> initializeWithRPackageSet: aCollection [
 	relationGraph := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: each ]).
 	cycles := OrderedCollection new.
 	self relationGraph build.
-	sccs := DATarjanAlgorithm new
-		run: self relationGraph;
-		stronglyConnectedComponents
+	sccs := self runTarjan.
 ]
 
 { #category : #testing }
@@ -208,6 +206,12 @@ DAPackageCycleDetector >> runAlgorithm [
 	self stronglyConnectedComponents
 		do: [ :scc | self findCycles: scc ]
 		displayingProgress: 'finding cycles'
+]
+
+{ #category : #actions }
+DAPackageCycleDetector >> runTarjan [
+
+    ^ AITarjan new runOnDAPackageRelationGraph: self relationGraph
 ]
 
 { #category : #actions }

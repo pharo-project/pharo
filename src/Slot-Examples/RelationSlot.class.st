@@ -32,7 +32,7 @@ Class {
 { #category : #'instance creation' }
 RelationSlot class >> named: aSymbol inverse: anInverseSymbol inClass: aTargetClassOrSymbol [ 
 
-	^(super named: aSymbol) inverse: anInverseSymbol inClass: aTargetClassOrSymbol 
+	^(super named: aSymbol) inverse: anInverseSymbol inClass: aTargetClassOrSymbol
 ]
 
 { #category : #comparing }
@@ -41,8 +41,6 @@ RelationSlot >> = anObject [
 	^super = anObject and: [ 
 		self targetClassName = anObject targetClassName and: [ 
 			inverseName = anObject inverseName ] ]
-
-	
 ]
 
 { #category : #internal }
@@ -165,7 +163,6 @@ RelationSlot >> printOn: aStream [
 	aStream
 		nextPutAll: ' inClass: ';
 		store: self targetClassName
-
 ]
 
 { #category : #internal }

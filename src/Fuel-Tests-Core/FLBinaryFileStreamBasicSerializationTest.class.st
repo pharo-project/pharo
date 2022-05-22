@@ -8,5 +8,4 @@ Class {
 FLBinaryFileStreamBasicSerializationTest >> setUp [
 	super setUp.
 	self useBinaryFileStream
-
 ]

@@ -15,7 +15,7 @@ SycPushDownMethodCommand >> asRefactorings [
 		model: model
 		pushDown: (methods collect: [ :each | each selector ])
 		from: methods first origin.
-	^ OrderedCollection with: refactoring 
+	^ OrderedCollection with: refactoring
 ]
 
 { #category : #accessing }

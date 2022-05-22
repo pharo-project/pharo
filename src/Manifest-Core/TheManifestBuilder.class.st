@@ -149,7 +149,7 @@ TheManifestBuilder >> = aObject [
 	^ aObject class = self class and: [ self manifest = aObject manifest ]
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addAllFalsePositive: fp of: ruleId version: versionId [
 
 	| selector  |	
@@ -176,7 +176,7 @@ TheManifestBuilder >> addAllItem: aSet selector: selector [
 	self compileSelector: selector returnValue: arrayString
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addAllToDo: aSet of: ruleId version: versionId [
 
 	| selector |
@@ -184,7 +184,7 @@ TheManifestBuilder >> addAllToDo: aSet of: ruleId version: versionId [
 	self addAllItem: aSet selector: selector.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addFalsePositive: fp of: ruleId version: versionId [
 
 	| selector |
@@ -199,7 +199,7 @@ TheManifestBuilder >> addItem: fp selector: selector [
 	self addAllItem: {fp} selector: selector
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addRejectClass: aClass [
 
 	|  falsePositives |
@@ -210,7 +210,7 @@ TheManifestBuilder >> addRejectClass: aClass [
 	self compileSelector:  (self class rejectClassesTag) returnValue: (self buildArrayString: falsePositives)
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addRejectRule: ruleId [ 
 
 	|  nfp |	
@@ -220,7 +220,7 @@ TheManifestBuilder >> addRejectRule: ruleId [
 	self compileSelector: (self class rejectRulesTag) returnValue: nfp asString
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addToDo: fp of: ruleId version: versionId [
 
 	| selector |	
@@ -230,7 +230,7 @@ TheManifestBuilder >> addToDo: fp of: ruleId version: versionId [
 		ifTrue: [ self removeFalsePositive: fp of:  ruleId version: versionId ]
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> addTruePositive: fp of: ruleId version: versionId [
 
 	| selector  |	
@@ -261,7 +261,7 @@ TheManifestBuilder >> buildArrayString: aCollection [
 		stream << ')']
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> cleanUp [
 
 	| tagfp |
@@ -486,7 +486,7 @@ TheManifestBuilder >> rejectRules [
 	^ self manifest rejectRules
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeAllFalsePositive: aSet of: ruleId version: versionId [
 
 	| selector |
@@ -507,13 +507,13 @@ TheManifestBuilder >> removeAllItem: aSet selector: selector [
 	self compileSelector: selector returnValue: arrayString
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeAllManifest [
  
 	self removeClasses: (self class allManifestClasses)
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 	
 	| selector |
@@ -521,7 +521,7 @@ TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 	self removeAllItem: fp selector: selector.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeFalsePositive: fp of: ruleId version: versionId [
 	
 	| selector |
@@ -534,7 +534,7 @@ TheManifestBuilder >> removeItem: fp selector: selector [
 	self removeAllItem: {fp} selector: selector
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeManifestOf: aItem [
 	
 	(self manifestOf: aItem) ifNotNil: [ :myManifest | 
@@ -551,7 +551,7 @@ TheManifestBuilder >> removeObsoleteFalsePositiveOf: aMethod [
 	self compileSelector: aMethod selector returnValue: arrayString
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeRejectClass: aClass [
 
 	|  classes |
@@ -561,7 +561,7 @@ TheManifestBuilder >> removeRejectClass: aClass [
 	self compileSelector: (self class rejectClassesTag) returnValue:  (self buildArrayString: classes)
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeRejectRule: ruleId [ 
 
 	|  nfp |	
@@ -571,7 +571,7 @@ TheManifestBuilder >> removeRejectRule: ruleId [
 	self compileSelector: (self class rejectRulesTag) returnValue:   nfp asString
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> removeToDo: fp of: ruleId version: versionId [
 	
 	| selector |
@@ -579,13 +579,13 @@ TheManifestBuilder >> removeToDo: fp of: ruleId version: versionId [
 	self removeItem: fp selector: selector.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> resetFalsePositiveOf: ruleId version: versionId [
  
 	self  installFalsePositiveOf: ruleId version: versionId.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 TheManifestBuilder >> resetToDoOf: ruleId version: versionId [
  	
 	self installToDoOf: ruleId version: versionId.

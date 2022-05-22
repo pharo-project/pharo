@@ -15,8 +15,8 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
 
-{ #category : #specs }
-ClyMetaLinkInstallationPresenter class >> defaultSpec [
+{ #category : #layout }
+ClyMetaLinkInstallationPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		  add: #toolBar
 		  expand: false
@@ -36,12 +36,13 @@ ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: f
 
 { #category : #opening }
 ClyMetaLinkInstallationPresenter class >> openInstallerOnNode: aSourceNode [
-	(self onNode: aSourceNode forInstallation: true) openWithSpec
+
+	(self onNode: aSourceNode forInstallation: true) open
 ]
 
 { #category : #opening }
 ClyMetaLinkInstallationPresenter class >> openUninstallerOnNode: aSourceNode [
-	(self onNode: aSourceNode forInstallation: false) openWithSpec
+	(self onNode: aSourceNode forInstallation: false) open
 ]
 
 { #category : #accessing }

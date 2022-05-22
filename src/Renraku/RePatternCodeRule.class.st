@@ -30,7 +30,7 @@ RePatternCodeRule class >> noteCompilationOf: aSelector meta: isMeta [
 RePatternCodeRule >> afterCheck: aNode mappings: mappingDict [
 	"after a node was match you can do a post-validation here on the node and the dictionalry of wildcars with matched nodes as values"
 
-	^ true	
+	^ true
 ]
 
 { #category : #private }
@@ -41,5 +41,5 @@ RePatternCodeRule >> flattenMatchMap: aDictionary [
 			ifTrue: [
 				aDictionary
 					at: key pattern
-					put: val ] ] 
+					put: val ] ]
 ]

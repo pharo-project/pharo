@@ -14,7 +14,6 @@ Float class >> materializeFrom: aDecoder [
 		at: 1 put: aDecoder nextEncodedUint32;
 		at: 2 put: aDecoder nextEncodedUint32;
 		* 1.
-
 ]
 
 { #category : #'*Fuel-Core' }

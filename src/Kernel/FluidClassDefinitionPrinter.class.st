@@ -119,37 +119,55 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 ]
 
 { #category : #'expanded double dispatch API' }
-FluidClassDefinitionPrinter >> expandedClassDefinitionString [
+FluidClassDefinitionPrinter >> expandedDefinitionString [
 
-	^ String streamContents: [ :s | 
-		s nextPutAll: forClass superclass name.
-		self msgAndClassNameOn: s.
-		self layoutOn: s.
-		s crtab.
-		s nextPutAll: 'traits: '.
-		forClass hasTraitComposition
-			ifTrue: [ s nextPutAll: '{'; nextPutAll: forClass traitCompositionString; nextPutAll: '};' ]
-			ifFalse: [ s nextPutAll: '{};' ].
-		self slotsOn: s.
-		self sharedVariablesOn: s.
-		self sharedPoolsOn: s.
-		
-		(forClass package classTagForClass: forClass) ifNotNil: [ :t |
-			| tag | 
-			tag := t name.
-			tag = forClass package name 
-				ifTrue: [ s crtab; nextPutAll: 'tag: '''';' ]
-				ifFalse: [ self tagOn: s]].
-			self packageOn: s ]
+	^ String streamContents: [ :s | "in case of ProtoObject"
+		  forClass superclass
+			  ifNil: [ s nextPutAll: 'nil' ]
+			  ifNotNil: [ s nextPutAll: forClass superclass name ].
+		  self msgAndClassNameOn: s.
+		  self layoutOn: s.
+		  s crtab.
+		  s nextPutAll: 'traits: '.
+		  forClass hasTraitComposition
+			  ifTrue: [ 
+				  s
+					  nextPutAll: '{';
+					  nextPutAll: forClass traitCompositionString;
+					  nextPutAll: '};' ]
+			  ifFalse: [ s nextPutAll: '{};' ].
+		  self slotsOn: s.
+		  self sharedVariablesOn: s.
+		  self sharedPoolsOn: s.
+
+		  (forClass package classTagForClass: forClass) ifNotNil: [ :t | 
+			  | tag |
+			  tag := t name.
+			  tag = forClass package name
+				  ifTrue: [ 
+					  s
+						  crtab;
+						  nextPutAll: 'tag: '''';' ]
+				  ifFalse: [ self tagOn: s ] ].
+		  self packageOn: s ]
 ]
 
 { #category : #'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 	
 	^ String streamContents: [ :s | 
-		forClass  
-			ifNotNil: [ s nextPutAll: forClass name ]
-			ifNil: [ s nextPutAll: 'ProtoObject ' ].
+		
+		forClass soleInstance = ProtoObject
+			ifTrue: [ 
+				"we are on the class of ProtoObject class.
+				Yes this is strange but the fluid printer is printing
+				this." 
+				s nextPutAll: 'Class class << ProtoObject class'
+				]
+			ifFalse: [		
+				s nextPutAll: forClass superclass name.
+				s nextPutAll: ' << #'.
+				s nextPutAll: forClass name. ].
 		s crtab. 
 		forClass hasTraitComposition 
 			ifTrue: [
@@ -168,7 +186,6 @@ FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 
 	^ String streamContents: [ :s | 
-		  | tag |
 		  s nextPutAll: 'Trait << '.
 		  s nextPutAll: forClass name.
 

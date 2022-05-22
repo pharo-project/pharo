@@ -14,8 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 SettingTreeBuilder class >> acceptableKeywords: aCollectionOfRegExps [ 
-	^ self new acceptableKeywords: aCollectionOfRegExps 
-
+	^ self new acceptableKeywords: aCollectionOfRegExps
 ]
 
 { #category : #accessing }
@@ -28,13 +27,11 @@ SettingTreeBuilder >> buildPragma: aPragma [
 { #category : #'tree building' }
 SettingTreeBuilder >> group: aSymbol [
 	^ self nodeClass: PragmaSetting name: aSymbol
-
 ]
 
 { #category : #'tree building' }
 SettingTreeBuilder >> launcher: aSymbol [
 	^ self nodeClass: SystemSettingLauncher name: aSymbol
-
 ]
 
 { #category : #accessing }
@@ -56,7 +53,6 @@ SettingTreeBuilder >> nodeClass: aClass name: aSymbol [
 { #category : #accessing }
 SettingTreeBuilder >> nodeList [
 	^ nodeList ifNil: [nodeList := OrderedCollection new]
-
 ]
 
 { #category : #'private - tree building' }
@@ -71,19 +67,16 @@ SettingTreeBuilder >> parent: aNode while: aBlock [
 { #category : #'tree building' }
 SettingTreeBuilder >> pickOne: aSymbol [
 	^ self nodeClass: PickOneSettingDeclaration name: aSymbol
-
 ]
 
 { #category : #'tree building' }
 SettingTreeBuilder >> range: aSymbol [
 	^ self nodeClass: RangeSettingDeclaration name: aSymbol
-
 ]
 
 { #category : #'tree building' }
 SettingTreeBuilder >> setting: aSymbol [
 	^ self nodeClass: SettingDeclaration name: aSymbol
-
 ]
 
 { #category : #pragmas }

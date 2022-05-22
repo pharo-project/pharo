@@ -17,8 +17,8 @@ Class {
 	#category : #'Reflectivity-Examples'
 }
 
-{ #category : #specs }
-CoverageDemo class >> defaultSpec [
+{ #category : #layout }
+CoverageDemo class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #codePanelMorph;
 		add:
@@ -35,7 +35,7 @@ CoverageDemo class >> exampleIfTrueIfFalse [
 	| t |
 	t := false.
 	t ifTrue: [ self bar ] ifFalse: [ 'hello' ].
-	^ 5 
+	^ 5
 ]
 
 { #category : #examples }
@@ -46,7 +46,7 @@ CoverageDemo class >> exampleMethod [
 { #category : #open }
 CoverageDemo class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #specs }
@@ -82,7 +82,7 @@ CoverageDemo >> coverageCode: anObject [
 { #category : #examples }
 CoverageDemo >> exampleMethod [
 
-	self openWithSpec.
+	self open.
 ]
 
 { #category : #examples }
@@ -91,7 +91,7 @@ CoverageDemo >> exampleNotCompleteCoverage [
 	self coverageCode: [ CoverageDemo exampleIfTrueIfFalse. ].
 	self compiledMethods add: CoverageDemo class >>#exampleIfTrueIfFalse.
 	
-	self openWithSpec.
+	self open.
 ]
 
 { #category : #initialization }
@@ -150,16 +150,15 @@ CoverageDemo >> metalinkBlock: anObject [
 ]
 
 { #category : #api }
-CoverageDemo >> openWithSpec [
+CoverageDemo >> open [
 	self addCards.
-	^ super openWithSpec
+	^ super open
 ]
 
 { #category : #action }
 CoverageDemo >> removeMetalink [
 	
 	compiledMethods do:[:method| method methodClass recompile].
-	
 ]
 
 { #category : #action }

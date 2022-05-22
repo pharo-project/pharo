@@ -26,7 +26,7 @@ RGBehaviorFactory class >> named: aString parent: anRGObject [
 { #category : #'instance creation' }
 RGBehaviorFactory class >> newStrategy [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
@@ -46,14 +46,12 @@ RGBehaviorFactory class >> parent: anRGObject [
 RGBehaviorFactory class >> unnamed [
 
 	^ RGBehavior unnamedWithBehaviorStrategy: self newStrategy
-
 ]
 
 { #category : #'instance creation' }
 RGBehaviorFactory class >> unresolved [
 
 	^ RGBehavior unresolvedWithBehaviorStrategy: self newStrategy
-
 ]
 
 { #category : #'instance creation' }
@@ -65,5 +63,5 @@ RGBehaviorFactory class >> unresolvedNamed: aString withParent: anRGDefintion [
 { #category : #'instance creation' }
 RGBehaviorFactory class >> unresolvedWithParent: anRGDefintion [
 
-	^ RGBehavior unresolvedWithParent: anRGDefintion behaviorStrategy: (self newStrategyFor: anRGDefintion environment) 
+	^ RGBehavior unresolvedWithParent: anRGDefintion behaviorStrategy: (self newStrategyFor: anRGDefintion environment)
 ]

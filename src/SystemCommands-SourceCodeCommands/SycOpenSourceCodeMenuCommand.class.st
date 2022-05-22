@@ -10,7 +10,7 @@ Class {
 
 { #category : #execution }
 SycOpenSourceCodeMenuCommand >> activationStrategy [
-	^SycSourceCodeMenuActivation 
+	^SycSourceCodeMenuActivation
 ]
 
 { #category : #'context menu' }

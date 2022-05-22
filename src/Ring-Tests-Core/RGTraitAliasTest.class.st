@@ -35,7 +35,6 @@ RGTraitAliasTest >> testAliasesCollection [
 	traitAlias cleanAliases.
 	self assert: traitAlias aliases isEmpty.
 	self assert: (traitAlias hasResolved: #aliases).
-
 ]
 
 { #category : #tests }
@@ -64,7 +63,6 @@ RGTraitAliasTest >> testImplicitEnvironment [
 	self checkImplicitSingleClassEnvironmentOf: def parent parent.	
 	
 	self assert: def parent transformations size equals: 2.
-
 ]
 
 { #category : #tests }
@@ -75,7 +73,6 @@ RGTraitAliasTest >> testNewTraitAlias [
 	self assert: (traitAlias isRingResolved).
 	self assert: (traitAlias hasUnresolvedAll: #(name subject aliases)).
 	self assert: (traitAlias isTraitTransformation).
-	
 ]
 
 { #category : #tests }

@@ -62,7 +62,7 @@ RGCommentDefinition >> author [
 RGCommentDefinition >> author: aString [ 
 
 	self annotationNamed: self class authorKey
-			put: aString 
+			put: aString
 ]
 
 { #category : #'to remove as soon as possible' }
@@ -142,8 +142,6 @@ RGCommentDefinition >> hasAuthor [
 RGCommentDefinition >> hasStamp [
 
 	^stamp isEmptyOrNil not
-
-	
 ]
 
 { #category : #'type of comments' }
@@ -164,7 +162,7 @@ RGCommentDefinition >> isComment [
 { #category : #testing }
 RGCommentDefinition >> isEmptyOrNil [
 
-	^content isEmptyOrNil 
+	^content isEmptyOrNil
 ]
 
 { #category : #testing }
@@ -234,20 +232,20 @@ RGCommentDefinition >> selector [
 { #category : #'backward compatibility' }
 RGCommentDefinition >> sourceCode [
 
-	^ self content   
+	^ self content
 ]
 
 { #category : #'source pointers' }
 RGCommentDefinition >> sourcePointer [
 	"Retrieves the sourcePointer for this definition if exists"
 	
-	^self annotationNamed:  self class sourcePointerKey   
+	^self annotationNamed:  self class sourcePointerKey
 ]
 
 { #category : #'source pointers' }
 RGCommentDefinition >> sourcePointer: aNumber [
 
-	self annotationNamed:  self class sourcePointerKey put: aNumber 
+	self annotationNamed:  self class sourcePointerKey put: aNumber
 ]
 
 { #category : #accessing }
@@ -273,7 +271,7 @@ RGCommentDefinition >> stampAtPointer [
 
 	^ self sourcePointer notNil
 		ifTrue: [ SourceFiles timeStampAt: self sourcePointer for: self commentDataPointers ]
-		ifFalse:[ nil ]	
+		ifFalse:[ nil ]
 ]
 
 { #category : #'stamp values' }
@@ -289,5 +287,5 @@ RGCommentDefinition >> timeStamp [
 RGCommentDefinition >> timeStamp: aTimestamp [ 
 
 	self annotationNamed: self class timeStampKey
-			put: aTimestamp 
+			put: aTimestamp
 ]

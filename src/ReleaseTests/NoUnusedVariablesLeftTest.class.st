@@ -22,7 +22,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 	
-	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject).	
+	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character Symbol STONAlternativeRepresentationTestObject).	
 	
 	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
 	self assert: remaining isEmpty description: ('the following classes have unused class variables and should be cleaned: ', remaining asString)
@@ -46,17 +46,13 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
-	| found validExceptions remaining |
+	| found validExceptions |
 	found := SystemNavigation default allMethodsSelect: [ :m | 
-		((m numTemps - m numArgs) > 0) and: [  
-		m ast temporaries anySatisfy: [ :x | x binding isUsed not] ] ].
+		m hasTemporaries and: [m ast temporaries anySatisfy: [ :x | x binding isUsed not] ] ].
 	
 	"No other exceptions beside the ones mentioned here should be allowed"	
 	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2 . TemporaryVariableTest>>#testIsReferenced }.	
-	
-	remaining := found asOrderedCollection 
-								removeAll: validExceptions;
-								yourself.
+	found removeAll: validExceptions.
 								
-	self assert: remaining isEmpty description: ('the following methods have unused temporary variables and should be cleaned: ', remaining asString)
+	self assert: found isEmpty description: ('the following methods have unused temporary variables and should be cleaned: ', found asString)
 ]

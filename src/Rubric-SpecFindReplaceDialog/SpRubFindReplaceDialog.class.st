@@ -22,8 +22,8 @@ Class {
 	#category : #'Rubric-SpecFindReplaceDialog'
 }
 
-{ #category : #specs }
-SpRubFindReplaceDialog class >> defaultSpec [
+{ #category : #layout }
+SpRubFindReplaceDialog class >> defaultLayout [
 	<spec>
 	^ SpBoxLayout newVertical
 		add: #findInput expand: false;
@@ -120,7 +120,6 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 		initialExtent: 430 @ 220.
 		
 	aDialogWindowPresenter whenClosedDo: [ service discardDialog ]
-
 ]
 
 { #category : #initialization }
@@ -151,7 +150,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 		add: caseCheckBox;
 		add: wrapCheckBox;
 		add: entireCheckBox.
-		
 ]
 
 { #category : #private }
@@ -160,7 +158,6 @@ SpRubFindReplaceDialog >> newReplacement [
 	(t := replaceTextInput text asString) ifEmpty: [^ self ].
 	
 	service replaceText: replaceTextInput text asString.
-
 ]
 
 { #category : #operations }
@@ -212,8 +209,6 @@ SpRubFindReplaceDialog >> updateFromModel [
 	findInput text: (self service findText
 		ifEmpty: [ '' ]
 		ifNotEmpty: [ :aText | aText asString lines first ]).
-
-
 ]
 
 { #category : #private }
@@ -224,5 +219,4 @@ SpRubFindReplaceDialog >> updateService [
 	service entireWordsOnly: entireCheckBox state.
 	service wrapAround: wrapCheckBox state.
 	service searchBackwards: backwardsCheckBox state.
-	
 ]

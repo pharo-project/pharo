@@ -6,8 +6,8 @@ Class {
 
 { #category : #helpers }
 T2FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
-	^ (FluidClassDefinitionPrinter for: aClass) expandedDefinitionString 
-
+	
+	^ aClass expandedDefinitionStringFor: (FluidClassDefinitionPrinter for: aClass)
 ]
 
 { #category : #helpers }

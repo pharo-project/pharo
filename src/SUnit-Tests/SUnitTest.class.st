@@ -47,7 +47,7 @@ SUnitTest >> assertTerminationOfFailedChildProcesses [
 	| failedProcesses |
 	failedProcesses := self failedChildProcesses.
 	self assert: failedProcesses notEmpty.
-	self assert: (failedProcesses allSatisfy: #isTerminated) 
+	self assert: (failedProcesses allSatisfy: #isTerminated)
 ]
 
 { #category : #helpers }
@@ -126,9 +126,6 @@ SUnitTest >> hangedTestDueToFailedChildProcess [
 	self failedChildProcessTest.
 	
 	20 milliSeconds wait.
-
-	
-	
 ]
 
 { #category : #accessing }
@@ -612,7 +609,6 @@ SUnitTest >> testResult [
 SUnitTest >> testRunning [
 
 	10 milliSeconds wait
-			
 ]
 
 { #category : #testing }
@@ -620,7 +616,6 @@ SUnitTest >> testRunningLongTime [
 	self timeLimit: 3 seconds.
 	
 	2 seconds wait
-			
 ]
 
 { #category : #testing }
@@ -682,5 +677,4 @@ SUnitTest >> testWithExceptionDo [
 		withExceptionDo: [:exception |
 			self assert: (exception description includesSubstring: 'foo')
 		]
-			
 ]

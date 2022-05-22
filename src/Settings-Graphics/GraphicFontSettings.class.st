@@ -13,7 +13,6 @@ GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.4) #(#large 1.6) #(veryLarge 2) #(huge 2.7))
 		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
 			ifNotNil: [:info | info second]
-
 ]
 
 { #category : #fonts }
@@ -33,7 +32,6 @@ GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 		help: ('Change font style to ', aLabel) translated)
 			label: label;
 			yourself
-
 ]
 
 { #category : #fonts }
@@ -53,8 +51,6 @@ GraphicFontSettings class >> resetAllFontToDefault [
 	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
 	SettingBrowser refreshAllSettingBrowsers.
 	EditorFindReplaceDialogWindow cleanUp.
-	 
-
 ]
 
 { #category : #fonts }
@@ -135,6 +131,4 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
 				description: 'The morphic halo font' ;
 				label: 'Morphic halo' ]
-				
-				
 ]

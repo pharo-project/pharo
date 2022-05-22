@@ -22,12 +22,3 @@ SycOpenMethodMenuCommand >> cmCommandClass [
 SycOpenMethodMenuCommand >> defaultMenuItemName [
 	^'Refactorings'
 ]
-
-{ #category : #execution }
-SycOpenMethodMenuCommand >> execute [
-
-	context selectedTextInterval ifEmpty: [ 
-		context showSourceNode].
-	
-	super execute
-]

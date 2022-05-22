@@ -21,7 +21,7 @@ ClassModificationApplied class >> toClass: aClassOrTrait [
 
 { #category : #accessing }
 ClassModificationApplied >> classAffected [
-	^modifiedClass 
+	^modifiedClass
 ]
 
 { #category : #accessing }

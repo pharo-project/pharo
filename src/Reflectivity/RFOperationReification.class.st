@@ -54,7 +54,7 @@ RFOperationReification >> genForRBBlockNode [
 	^RBMessageNode 
 		receiver: (RBVariableNode named: #RFBlockOperation)
 		selector: #block: 
-		arguments: {blockNode} 
+		arguments: {blockNode}
 ]
 
 { #category : #generate }
@@ -75,7 +75,6 @@ RFOperationReification >> genForRBMessageNode [
 			receiver: RFReceiverReificationVar 
 			selector: #{1} 
 			arguments: RFArgumentsReificationVar.' format: {entity selector})
-
 ]
 
 { #category : #generate }
@@ -118,8 +117,6 @@ RFOperationReification >> genForRBVariableNode [
 		].
 		
 	self error: 'not supported'
-
-
 ]
 
 { #category : #preamble }
@@ -143,8 +140,7 @@ RFOperationReification >> preambleForArray: aNode [
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
 	preamble addAll: arguments.
-	^ preamble 
-	
+	^ preamble
 ]
 
 { #category : #preamble }
@@ -175,7 +171,7 @@ RFOperationReification >> preambleForMessage: aNode [
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	preamble addAll: arguments.
-	^ preamble 
+	^ preamble
 ]
 
 { #category : #preamble }
@@ -185,7 +181,7 @@ RFOperationReification >> preambleForMethod: aNode [
 	arguments := aNode argumentNames collect: [ :name | RBVariableNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
-	^ preamble 
+	^ preamble
 ]
 
 { #category : #preamble }

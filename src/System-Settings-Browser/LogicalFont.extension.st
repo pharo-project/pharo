@@ -38,5 +38,5 @@ LogicalFont >> withSizeIncrementedBy: anInteger [
 		pointSize: self pointSize + anInteger
 		stretchValue: self stretchValue
 		weightValue: self weightValue
-		slantValue: self slantValue 
+		slantValue: self slantValue
 ]

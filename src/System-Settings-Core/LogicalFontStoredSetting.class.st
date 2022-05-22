@@ -20,7 +20,7 @@ LogicalFontStoredSetting >> fallbackFamilyNames [
 
 { #category : #accessing }
 LogicalFontStoredSetting >> fallbackFamilyNames: aCollectionOrNil [ 
-	fallbackFamilyNames := aCollectionOrNil 
+	fallbackFamilyNames := aCollectionOrNil
 ]
 
 { #category : #accessing }
@@ -41,7 +41,7 @@ LogicalFontStoredSetting >> slantValue [
 
 { #category : #accessing }
 LogicalFontStoredSetting >> slantValue: anInteger [ 
-	slantValue := anInteger 
+	slantValue := anInteger
 ]
 
 { #category : #accessing }
@@ -61,5 +61,5 @@ LogicalFontStoredSetting >> weightValue [
 
 { #category : #accessing }
 LogicalFontStoredSetting >> weightValue: anInteger [ 
-	weightValue := anInteger 
+	weightValue := anInteger
 ]

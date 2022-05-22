@@ -28,7 +28,7 @@ CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aSt
 		yourself
 ]
 
-{ #category : #activating }
+{ #category : #activation }
 CoCompletionContext >> activateEntryAt: anIndex [
 
 	(self entries at: anIndex) activateOn: self

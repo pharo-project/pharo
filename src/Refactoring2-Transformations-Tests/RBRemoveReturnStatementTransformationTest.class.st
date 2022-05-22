@@ -36,7 +36,7 @@ RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 							return: '^ variable'
 							inMethod: #method
 							inClass: #RBRemoveReturnStatementTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }

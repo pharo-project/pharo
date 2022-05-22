@@ -72,7 +72,7 @@ ReCriticEngine >> critiquesOf: anEntity [
 	
 	ReSystemAnnouncer uniqueInstance notifyEntity: anEntity criticizedWith: critiques.
 	
-	^ critiques 
+	^ critiques
 ]
 
 { #category : #banning }

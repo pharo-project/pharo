@@ -91,7 +91,6 @@ RFASTTranslator >> visitArrayNode: anArrayNode [
 		ifTrue: [ self emitMetaLinkInstead: anArrayNode ]
 		ifFalse: [ methodBuilder pushConsArray: elementNodes size ].
 	self emitMetaLinkAfterNoEnsure: anArrayNode.
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -110,7 +109,6 @@ RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
 						ifFalse: [ anAssignmentNode variable binding emitStore: methodBuilder]].
 	self emitMetaLinkAfterNoEnsure: anAssignmentNode variable.
 	self emitMetaLinkAfterNoEnsure: anAssignmentNode.
-	
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -190,8 +188,6 @@ RFASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
 		ifTrue: [ self emitMetaLinkInstead: aRBLiteralArrayNode ]
 		ifFalse: [ methodBuilder pushLiteral: aRBLiteralArrayNode value ].
 	self emitMetaLinkAfterNoEnsure: aRBLiteralArrayNode.
-	
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -202,9 +198,6 @@ RFASTTranslator >> visitLiteralNode: aLiteralNode [
 		ifTrue: [ self emitMetaLinkInstead: aLiteralNode ]
 		ifFalse: [ methodBuilder pushLiteral: aLiteralNode value ].
 	self emitMetaLinkAfterNoEnsure: aLiteralNode.
-
-	
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -254,7 +247,17 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
 	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFReifyValueVar; returnTop].
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
+]
 
+{ #category : #'visitor - double dispatching' }
+RFASTTranslator >> visitPragmaNode: aPragmaNode [  
+
+	self emitPreamble: aPragmaNode.
+	self emitMetaLinkBefore: aPragmaNode.
+	aPragmaNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aPragmaNode ]
+		ifFalse: [super visitPragmaNode: aPragmaNode  ].
+	self emitMetaLinkAfterNoEnsure: aPragmaNode
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -266,9 +269,6 @@ RFASTTranslator >> visitReturnNode: aReturnNode [
 	aReturnNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aReturnNode ]
 		ifFalse: [ methodBuilder returnTop ].
-
-		
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -290,7 +290,6 @@ RFASTTranslator >> visitStoreIntoTempNode: aNode [
 	"we store the TOS into the temp defined by the reification node"
 
 	aNode binding emitStore: methodBuilder.
-
 ]
 
 { #category : #reflectivity }
@@ -309,8 +308,6 @@ RFASTTranslator >> visitVariableNode: aVariableNode [
 				ifTrue: [ self emitMetaLinkInstead: aVariableNode ]
 				ifFalse: [ self visitVariableValue: aVariableNode binding].
 	self emitMetaLinkAfterNoEnsure: aVariableNode.
-	
-	
 ]
 
 { #category : #reflectivity }

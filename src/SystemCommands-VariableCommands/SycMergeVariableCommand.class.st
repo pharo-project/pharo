@@ -14,7 +14,6 @@ SycMergeVariableCommand class >> defaultMenuIconName [
 
 { #category : #activation }
 SycMergeVariableCommand class >> fullBrowserShortcutActivation [
-	
 ]
 
 { #category : #activation }
@@ -23,7 +22,6 @@ SycMergeVariableCommand class >> sourceCodeMenuActivation [
 
 { #category : #activation }
 SycMergeVariableCommand class >> sourceCodeShortcutActivation [
-	
 ]
 
 { #category : #execution }

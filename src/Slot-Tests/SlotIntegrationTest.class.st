@@ -224,7 +224,6 @@ SlotIntegrationTest >> testRemoveInstVarNamed [
 			ifFound: [ #found ] 
 			ifNone: [ #none ].
 	self assert: answer equals: #none
-
 ]
 
 { #category : #tests }
@@ -376,7 +375,6 @@ SlotIntegrationTest >> testSlotNamedIfFoundIfNone [
 	self 
 		assert: (aClass slotNamed: 'b' ifFound: [ #found ] ifNone: [ #none ])
 		equals: #none
-
 ]
 
 { #category : #tests }

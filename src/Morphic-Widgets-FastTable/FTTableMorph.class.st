@@ -131,6 +131,13 @@ FTTableMorph >> allowsDeselection: aBoolean [
 	allowsDeselection := aBoolean
 ]
 
+{ #category : #configuring }
+FTTableMorph >> alternateRowsColor: shouldAlternate [
+	shouldAlternate ifFalse: [ ^ self ].
+	
+	self container alternateRowsColor
+]
+
 { #category : #private }
 FTTableMorph >> announceScrollChangedFrom: oldIndex to: newIndex [
 	"If the index did not change, do nothing"
@@ -258,7 +265,7 @@ FTTableMorph >> dataSource: anObject [
 { #category : #initialization }
 FTTableMorph >> defaultColor [
 
-	^self class defaultBackgroundColor
+	^self class defaultBackgroundColor 
 ]
 
 { #category : #accessing }

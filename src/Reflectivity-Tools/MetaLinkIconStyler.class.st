@@ -19,7 +19,7 @@ MetaLinkIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 MetaLinkIconStyler >> iconFor: aNode [
-	^ self iconNamed: #smallDebugIcon 
+	^ self iconNamed: #smallDebugIcon
 ]
 
 { #category : #defaults }

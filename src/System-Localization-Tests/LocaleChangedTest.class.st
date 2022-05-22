@@ -24,6 +24,5 @@ LocaleChangedTest >> testInstanceCreation [
 	
 	self 
 		assert: instance oldLocale equals: self englishLocale;
-		assert: instance newLocale equals: self germanLocale 
-	
+		assert: instance newLocale equals: self germanLocale
 ]

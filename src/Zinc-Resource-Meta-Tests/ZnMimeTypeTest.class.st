@@ -96,27 +96,39 @@ ZnMimeTypeTest >> testIsBinary [
 
 { #category : #testing }
 ZnMimeTypeTest >> testMatches [
-	#(#('text/plain' 'text/*') #('text/plain' '*/*') #('text/plain;charset=utf-8' 'text/*') #('text/plain;charset=utf-8' 'text/plain') #('text/plain' 'text/plain;charset=utf-8') #('text/plain;charset=utf-8' 'text/plain;charset=ascii'))
-		do: [ :each | 
+	#(
+		( 'text/plain' 'text/*' )
+		( 'text/plain' '*/*' )
+		( 'text/plain;charset=utf-8' 'text/*' ) 
+		( 'text/plain;charset=utf-8' 'text/plain' )
+		( 'text/plain' 'text/plain;charset=utf-8' )
+		( 'text/plain;charset=utf-8' 'text/plain;charset=ascii' ) ) do: [ :each |
 			self deny: each first asZnMimeType equals: each second asZnMimeType.
 			self assert: (each first asZnMimeType matches: each second asZnMimeType) ]
 ]
 
-{ #category : #testing }
-ZnMimeTypeTest >> testParameters [
+{ #category : #tests }
+ZnMimeTypeTest >> testParameterCase [
 
 	| mimeType |
 
+	mimeType := ZnMimeType fromString: 'Content-type: multipart/mixed; Boundary="0__=4EBB090CDFA161078f9e8a93df938690918c4EBB090CDFA16107"'.
+	self assert: (mimeType parameters includesKey: 'boundary')
+]
+
+{ #category : #testing }
+ZnMimeTypeTest >> testParameters [
+	| mimeType |
 	mimeType := ZnMimeType main: 'text' sub: 'plain'.
 	self should: [ mimeType parameterAt: 'foo' ] raise: KeyNotFound.
-	self assert: ( mimeType parameterAt: 'foo' ifAbsent: [ #none ] ) equals: #none.
+	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) equals: #none.
 	mimeType parameterAt: 'foo' put: '1'.
-	self assert: ( mimeType parameterAt: 'foo' ) equals: '1'.
-	self assert: ( mimeType parameterAt: 'foo' ifAbsent: [ #none ] ) equals: '1'.
+	self assert: (mimeType parameterAt: 'foo') equals: '1'.
+	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) equals: '1'.
 	mimeType removeParameter: 'foo'.
 	mimeType removeParameter: 'bar'.
 	self should: [ mimeType parameterAt: 'foo' ] raise: KeyNotFound.
-	self assert: ( mimeType parameterAt: 'foo' ifAbsent: [ #none ] ) equals: #none
+	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) equals: #none	
 ]
 
 { #category : #testing }

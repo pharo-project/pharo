@@ -172,7 +172,7 @@ IRBytecodeGenerator >> compiledBlockWith: trailer [
 		nextPutAll: self bytecodes.
 	lits withIndexDo: [:obj :i | cb literalAt: i put: obj].
 	cb needsFrameSize: self stackFrameSize.
-	self updateLiterals: cb.
+	self updateOuterCodeBlocks: cb.
 	^ cb
 ]
 
@@ -208,7 +208,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits
 		nextPutAll: self bytecodes.
 	lits withIndexDo: [:obj :i | cm literalAt: i put: obj].
 	cm needsFrameSize: self stackFrameSize.
-	self updateLiterals: cm.
+	self updateOuterCodeBlocks: cm.
 	self addProperties: cm.
 	^ cm
 ]
@@ -754,8 +754,12 @@ IRBytecodeGenerator >> updateJumpOffsets [
 ]
 
 { #category : #results }
-IRBytecodeGenerator >> updateLiterals: code [
-	"Add back pointer from compiled block to outer code"
-	code literals do: [ :each |
-		each isEmbeddedBlock ifTrue: [ each outerCode: code ] ]
+IRBytecodeGenerator >> updateOuterCodeBlocks: code [
+	"Add back pointer from compiled block to outer code for all blocks referenced from the literals"
+
+	| blocksToUpdate |
+	"Only do that for blocks the compiler created, where the outerCode is not yet set"
+	blocksToUpdate := code literals select: [ :each | 
+		                  each isEmbeddedBlock and: [ each outerCode isNil ] ].
+	blocksToUpdate do: [ :each | each outerCode: code ]
 ]

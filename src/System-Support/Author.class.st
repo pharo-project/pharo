@@ -27,7 +27,6 @@ Author class >> authorSettingOn: aBuilder [
 		default: '';
 		ghostHelp: 'VincentVanGogh';
 		description: AuthorNameRequest messagePrompt
-
 ]
 
 { #category : #utilities }
@@ -70,7 +69,7 @@ Author class >> fullName: aString [
 
 { #category : #convenience }
 Author class >> fullNamePerSe [
-	^ self uniqueInstance fullNamePerSe 
+	^ self uniqueInstance fullNamePerSe
 ]
 
 { #category : #'instance creation' }
@@ -108,9 +107,6 @@ Author >> checkAndSetFullNameWith: aString [
 	].
 	
 	(fullName = aString and: [ fullName isNotEmpty ]) ifFalse: [ self requestFullName ]
-	
-	
-	
 ]
 
 { #category : #accessing }
@@ -127,8 +123,7 @@ Author >> fullName [
 
 { #category : #accessing }
 Author >> fullName: aString [
-	fullName := aString.	
-
+	fullName := aString.
 ]
 
 { #category : #accessing }

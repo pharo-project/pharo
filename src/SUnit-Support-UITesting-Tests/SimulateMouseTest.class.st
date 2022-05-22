@@ -23,7 +23,7 @@ SimulateMouseTest >> menuOpenedDuring: aBlock [
 SimulateMouseTest >> tearDown [
 
 	morph delete.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -40,7 +40,6 @@ SimulateMouseTest >> testSimulateMiddleClick [
 	morph := MorphHandlingMiddleButton new openInWorld.
 	morph simulateMiddleClick.
 	self assert: morph wasClickedWithMiddleButton.
-
 ]
 
 { #category : #tests }

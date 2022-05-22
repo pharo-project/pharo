@@ -87,7 +87,7 @@ SycMessageDescription >> contextUser: anObject [
 
 { #category : #testing }
 SycMessageDescription >> describesSelector: someSelector withArguments: someArgumentNames [ 
-	^selector = someSelector & (argumentNames = someArgumentNames) 
+	^selector = someSelector & (argumentNames = someArgumentNames)
 ]
 
 { #category : #accessing }

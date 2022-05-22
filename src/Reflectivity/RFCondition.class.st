@@ -68,7 +68,7 @@ RFCondition >> originalLinkCondition: aCondition [
 { #category : #accessing }
 RFCondition >> reifications [
 	(condition isKindOf: Boolean) ifTrue: [ ^#() ].
-	^condition argumentNames. 
+	^condition argumentNames.
 ]
 
 { #category : #evaluating }

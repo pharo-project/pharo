@@ -95,7 +95,7 @@ ClyAbstractClassScope class >> defaultName [
 
 { #category : #'scope names' }
 ClyAbstractClassScope class >> hierarchyScopeName [
-	^'hier'
+	^ 'hierarchy'
 ]
 
 { #category : #'scope names' }

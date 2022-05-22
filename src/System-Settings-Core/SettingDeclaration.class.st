@@ -96,8 +96,6 @@ SettingDeclaration >> = other [
 	self getSelector = other getSelector ifFalse: [^ false].
 	self setSelector = other setSelector ifFalse: [^ false].
 	^ true
-	
-
 ]
 
 { #category : #visitor }
@@ -116,14 +114,13 @@ SettingDeclaration >> addToList: anItem [
 
 { #category : #accessing }
 SettingDeclaration >> default [
-	^ default 
+	^ default
 ]
 
 { #category : #accessing }
 SettingDeclaration >> default: anObject [ 
 	"initialize the default value"
 	default := anObject.
-
 ]
 
 { #category : #'user interface' }
@@ -182,7 +179,7 @@ SettingDeclaration >> getSelector: aSymbol [
 
 { #category : #accessing }
 SettingDeclaration >> ghostHelp [
-	^ ghostHelp 
+	^ ghostHelp
 ]
 
 { #category : #accessing }
@@ -198,7 +195,7 @@ SettingDeclaration >> hasDefault [
 { #category : #testing }
 SettingDeclaration >> hasDefaultValue [
 		
-	^ self preferenceValue = self defaultValue 
+	^ self preferenceValue = self defaultValue
 ]
 
 { #category : #'user interface' }
@@ -221,7 +218,7 @@ SettingDeclaration >> hash [
 	"hash is re-implemented because #= is re-implemented"
 	^ self target hash
 		bitXor: (self targetSelector hash
-				bitXor: (self getSelector hash bitXor: self setSelector hash)) 
+				bitXor: (self getSelector hash bitXor: self setSelector hash))
 ]
 
 { #category : #'user interface' }
@@ -271,7 +268,7 @@ SettingDeclaration >> inputWidget [
 	xtraDialogWidget 
 		ifNotNil: [inputWidget := inputWidget ifNil: [xtraDialogWidget] 
 			ifNotNil: [ self theme  newRowIn: self for: {inputWidget. xtraDialogWidget}]].
-	^ inputWidget 
+	^ inputWidget
 ]
 
 { #category : #'user interface' }
@@ -351,7 +348,6 @@ SettingDeclaration >> inputWidgetForFont [
 		getEnabled: #enabled
 		getLabel: #fontButtonLabel
 		help: 'Choose a font ...' translated) cornerStyle: #square
-
 ]
 
 { #category : #'user interface' }
@@ -366,7 +362,6 @@ SettingDeclaration >> inputWidgetForLabel [
 { #category : #'user interface' }
 SettingDeclaration >> inputWidgetForNumber [
 	^ self inputWidgetForString width: 200.
-
 ]
 
 { #category : #'user interface' }
@@ -391,7 +386,6 @@ SettingDeclaration >> inputWidgetForPassword [
 { #category : #'user interface' }
 SettingDeclaration >> inputWidgetForPoint [
 	^ self inputWidgetForString width: 200.
-
 ]
 
 { #category : #'user interface' }
@@ -418,7 +412,7 @@ SettingDeclaration >> inputWidgetForString [
 SettingDeclaration >> inputWidgetSelectorInClass: aClass [ 
 	| selector |
 	^ (aClass respondsTo: (selector := #settingInputWidgetForNode:))
-		ifTrue: [selector] 
+		ifTrue: [selector]
 ]
 
 { #category : #export }
@@ -464,7 +458,7 @@ SettingDeclaration >> maxNameWidthForFont: aFont [
 	max := 0.
 	self domainValuesLabels
 		do: [:v | max := max max: (aFont widthOfStringOrText: v)].
-	^ max 
+	^ max
 ]
 
 { #category : #'user interface' }
@@ -533,7 +527,6 @@ SettingDeclaration >> setSelector: aSymbol [
 SettingDeclaration >> setToDefault [
 
 	self realValue: self defaultValue.
-
 ]
 
 { #category : #'user interface' }

@@ -78,7 +78,7 @@ PolymorphSystemSettings class >> desktopBackgroundChanged [
 
 { #category : #desktop }
 PolymorphSystemSettings class >> desktopColor [
-	^ DesktopColor ifNil: [DesktopColor := self currentWorld defaultWorldColor] 
+	^ DesktopColor ifNil: [DesktopColor := self currentWorld defaultWorldColor]
 ]
 
 { #category : #desktop }
@@ -126,7 +126,6 @@ PolymorphSystemSettings class >> desktopGradientDirection: aSymbol [
 	"#Radial #Vertical or #Horizontal"
 	DesktopGradientDirection := aSymbol.
 	self desktopBackgroundChanged
-
 ]
 
 { #category : #desktop }
@@ -151,7 +150,6 @@ PolymorphSystemSettings class >> desktopGradientOrigin: aSymbol [
 	"#Radial #Vertical or #Horizontal"
 	DesktopGradientOrigin := aSymbol.
 	self desktopBackgroundChanged
-
 ]
 
 { #category : #desktop }
@@ -178,7 +176,7 @@ PolymorphSystemSettings class >> desktopImageLayout: aSymbol [
 
 { #category : #desktop }
 PolymorphSystemSettings class >> desktopLogo [
-	^ DesktopLogo ifNil: [self showDesktopLogo ifTrue: [DesktopLogo := self pharoLogo]]	
+	^ DesktopLogo ifNil: [self showDesktopLogo ifTrue: [DesktopLogo := self pharoLogo]]
 ]
 
 { #category : #desktop }
@@ -197,7 +195,6 @@ PolymorphSystemSettings class >> desktopLogoChanged [
 				setDesktopLogoWith: (ImageMorph withForm: (Form fromFileNamed: self desktopLogoFileName))]
 				on: Error
 				do: [self setDesktopLogoWith: self pharoLogo]].
-
 ]
 
 { #category : #desktop }
@@ -209,7 +206,7 @@ PolymorphSystemSettings class >> desktopLogoFileName [
 PolymorphSystemSettings class >> desktopLogoFileName: aFileName [
 	DesktopLogoFileName = aFileName ifTrue: [^ self].
 	DesktopLogoFileName := aFileName.
-	self desktopLogoChanged 
+	self desktopLogoChanged
 ]
 
 { #category : #desktop }
@@ -245,8 +242,6 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 		#topLeft #topCenter #topRight #rightCenter
 		#bottomRight #bottomCenter #bottomLeft #leftCenter).
 				]]
-		
-						
 ]
 
 { #category : #settings }
@@ -393,10 +388,6 @@ PolymorphSystemSettings class >> morphicWindowsSettingsOn: aBuilder [
 				selector: #minimumWidth;
 				range: (100 to: 800);
 				description: 'Set the default text field width of the text entry dialog window' ]
-			
-			
-			
-
 ]
 
 { #category : #desktop }
@@ -972,7 +963,6 @@ PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
 { #category : #sound }
 PolymorphSystemSettings class >> soundThemeClass [
 	^ SoundTheme current class
-
 ]
 
 { #category : #sound }
@@ -990,7 +980,6 @@ PolymorphSystemSettings class >> soundThemeClassChoices [
 { #category : #morphic }
 PolymorphSystemSettings class >> uiThemeClass [
 	^ UITheme current class
-
 ]
 
 { #category : #morphic }

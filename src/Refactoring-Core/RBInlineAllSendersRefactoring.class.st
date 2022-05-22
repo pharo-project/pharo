@@ -105,7 +105,6 @@ RBInlineAllSendersRefactoring >> inlineSelfSends [
 			selectors := each localSelectors.
 			class = each ifTrue: [ selectors remove: selector ifAbsent: []].
 			selectors do: [:sel | self inlineMessagesInClass: each andSelector: sel]]]
-	
 ]
 
 { #category : #transforming }

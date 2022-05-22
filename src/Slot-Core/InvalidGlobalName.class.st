@@ -9,5 +9,5 @@ Class {
 
 { #category : #signalling }
 InvalidGlobalName class >> signal: aMessage for: aName [
-	self signal: aName asString, ': ', aMessage 
+	self signal: aName asString, ': ', aMessage
 ]

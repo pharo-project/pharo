@@ -3,14 +3,15 @@ I am a command to install watchpoint into the given method or source node
 "
 Class {
 	#name : #ClyAddWatchCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyAdvancedDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyAddWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasWatch not
+	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+		  aBrowserContext isSelectedItemHasWatch not ]
 ]
 
 { #category : #activation }
@@ -25,7 +26,7 @@ ClyAddWatchCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddWatchCommand >> defaultMenuItemName [
-	^'Add Watchpoint'
+	^' Add Watchpoint to  ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }

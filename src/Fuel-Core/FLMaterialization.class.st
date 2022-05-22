@@ -20,7 +20,6 @@ FLMaterialization class >> with: aDecoder [
 	^self basicNew
 		initializeWith: aDecoder;
 		yourself
-
 ]
 
 { #category : #header }
@@ -54,7 +53,6 @@ FLMaterialization >> decoder [
 { #category : #accessing }
 FLMaterialization >> header: aHeader [
 	header := aHeader
-	
 ]
 
 { #category : #private }
@@ -71,21 +69,19 @@ FLMaterialization >> initializeWith: aDecoder [
 
 	self initialize.
 	decoder := aDecoder.
-
 ]
 
 { #category : #private }
 FLMaterialization >> instancesStep [
 
 	clusterCount timesRepeat: [ self clusterInstancesStep ]
-
 ]
 
 { #category : #accessing }
 FLMaterialization >> objects [
 	"Answer a collection with the materialized objects."
 
-	^ decoder objects 
+	^ decoder objects
 ]
 
 { #category : #private }
@@ -97,13 +93,13 @@ FLMaterialization >> referencesStep [
 { #category : #private }
 FLMaterialization >> registerAll: materializedObjects [
 	
-	decoder registerAll: materializedObjects 
+	decoder registerAll: materializedObjects
 ]
 
 { #category : #accessing }
 FLMaterialization >> root [
 
-	^ root 
+	^ root
 ]
 
 { #category : #materializing }

@@ -63,7 +63,6 @@ MethodAnnouncement >> classAffected [
 MethodAnnouncement >> isProvidedByATrait [
 
 	^ self methodOrigin ~= self methodClass
-
 ]
 
 { #category : #testing }

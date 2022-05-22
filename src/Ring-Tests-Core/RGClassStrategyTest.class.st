@@ -60,8 +60,7 @@ RGClassStrategyTest >> testDefinition [
 	aClass := RGClass named: #SomeClass.
 	aClass superclass name: #Object.
 	
-	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass')	
-
+	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass')
 ]
 
 { #category : #tests }
@@ -78,7 +77,6 @@ RGClassStrategyTest >> testDefinitionWithSlots [
 	
 	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass').
 	self assert: (aClass definition includesSubstring: ('#iVar => ', expression)).
-
 ]
 
 { #category : #tests }
@@ -94,7 +92,6 @@ RGClassStrategyTest >> testIncompatibleBehavior [
 		anRGBehavior baseTrait ].
 	self checkIncompatible: [ 
 		anRGBehavior baseTrait: (anRGBehavior environment ensureTraitNamed: #SomeTrait) ].
-
 ]
 
 { #category : #tests }
@@ -107,7 +104,6 @@ RGClassStrategyTest >> testKind [
 	self deny: strategy isMetaclassStrategy.
 	self deny: strategy isTraitStrategy.
 	self deny: strategy isMetaclassTraitStrategy.
-	
 ]
 
 { #category : #tests }
@@ -137,5 +133,5 @@ RGClassStrategyTest >> testStoreString [
 	self assert: anRGBehavior storeString equals: '(RGClass named: #unresolved)'.
 
 	anRGBehavior := RGClass named: #SomeClass.
-	self assert: anRGBehavior storeString equals: '(RGClass named: #SomeClass)'.	
+	self assert: anRGBehavior storeString equals: '(RGClass named: #SomeClass)'.
 ]

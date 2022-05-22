@@ -16,7 +16,6 @@ RubTextFieldArea >> defaultMargins [
 { #category : #private }
 RubTextFieldArea >> newParagraph [
 	^ RubExtraSelectionDecorator next: super newParagraph
-
 ]
 
 { #category : #private }

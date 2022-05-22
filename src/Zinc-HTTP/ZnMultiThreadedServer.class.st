@@ -49,17 +49,17 @@ ZnMultiThreadedServer >> executeOneRequestResponseOn: stream [
 	#readRequest: #handleRequest: and #writeResponse:on:
 	Return true when the outer loop we are in should stop."
 
-	| request response timing|
+	| request response timing |
 	timing := ZnServerTransactionTiming new.
-	(request := self readRequestSafely: stream timing: timing)
-		ifNil: [ ^ true ]
+	^ (request := self readRequestSafely: stream timing: timing)
+		ifNil: [ true ]
 		ifNotNil: [ 
 			response := self handleRequest: request timing: timing.
 			self augmentResponse: response forRequest: request.
 			self writeResponseSafely: response on: stream timing: timing.
 			self logServerTransactionRequest: request response: response timing: timing.
-			response useConnection: stream ].
-	^ request wantsConnectionClose or: [ response wantsConnectionClose ]
+			response useConnection: stream.
+			request wantsConnectionClose or: [ response wantsConnectionClose ] ]
 ]
 
 { #category : #'request handling' }
@@ -67,10 +67,8 @@ ZnMultiThreadedServer >> executeRequestResponseLoopOn: stream [
 	"Execute the HTTP request / response loop on stream one cycle at a time
 	until the other end indicates it wants to stop or times out"
 
-	ZnCurrentServer 
-		value: self 
-		during: [ 
-			[ self executeOneRequestResponseOn: stream ] whileFalse ]
+	self withDynamicVariablesDo: [ 
+		[ self executeOneRequestResponseOn: stream ] whileFalse ]
 ]
 
 { #category : #'request handling' }
@@ -131,16 +129,17 @@ ZnMultiThreadedServer >> readRequestTerminationExceptionSet [
 ZnMultiThreadedServer >> serveConnectionsOn: listeningSocket [
 	"We wait up to acceptWaitTimeout seconds for an incoming connection.
 	If we get one we wrap it in a SocketStream and #executeRequestResponseLoopOn: on it"
-		 
+
 	| stream socket |
 	socket := listeningSocket waitForAcceptFor: self acceptWaitTimeout.
 	socket ifNil: [ ^ self noteAcceptWaitTimedOut ].
-	stream := self socketStreamOn: socket.
+	stream := [ self withDynamicVariablesDo: [ self socketStreamOn: socket ] ]
+						on: ZnTooManyConcurrentConnections do: [ ^ self ].
 	[ [ [ self executeRequestResponseLoopOn: stream ]
 		ensure: [ self logConnectionClosed: stream. self closeSocketStream: stream ] ]
 			ifCurtailed: [ socket destroy ] ]
 				forkAt: Processor lowIOPriority
-				named: self workerProcessName 
+				named: self workerProcessName
 ]
 
 { #category : #private }

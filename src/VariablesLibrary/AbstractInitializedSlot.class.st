@@ -26,6 +26,11 @@ AbstractInitializedSlot >> = other [
 ]
 
 { #category : #accessing }
+AbstractInitializedSlot >> default [
+	^default
+]
+
+{ #category : #accessing }
 AbstractInitializedSlot >> default: anObject [
 	default := anObject
 ]

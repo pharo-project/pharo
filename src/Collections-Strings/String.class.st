@@ -740,8 +740,7 @@ String >> asString [
 
 { #category : #converting }
 String >> asSymbol [
-	"Answer the unique Symbol whose characters are the characters of the 
-	string."
+	"Answer the unique Symbol whose characters are the characters of the string."
 	^Symbol intern: self
 ]
 
@@ -837,11 +836,11 @@ String >> beginsWith: prefix [
 	Otherwise, if self is wide, then super outperforms,
 	Otherwise, if prefix is wide, primitive is not correct"
 	
-	"('pharo' beginsWith: '') >>> false"
+	"('pharo' beginsWith: '') >>> true"
 	"('pharo' beginsWith: 'pharo-project') >>> false"
 	"('pharo' beginsWith: 'phuro') >>> false"
 	"('pharo' beginsWith: 'pha') >>> true"
-	
+	prefix ifEmpty: [ ^true ].
 	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
 	
 	self size < prefix size ifTrue: [^ false].
@@ -858,11 +857,11 @@ String >> beginsWith: prefix caseSensitive: aBoolean [
 	Otherwise, if self or prefix are wide strings, then slow version with asLowercase convertation,
 	(primitive is not correct for wide strings)"
 	
-	"('pharo' beginsWith: '' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: '' caseSensitive: false) >>> true"
 	"('pharo' beginsWith: 'pharo-project' caseSensitive: false) >>> false"
 	"('pharo' beginsWith: 'phuro' caseSensitive: false) >>> false"
 	"('pharo' beginsWith: 'Pha' caseSensitive: false) >>> true"
-
+	prefix ifEmpty: [ ^true ].
 	aBoolean ifTrue: [ ^self beginsWith: prefix ].
 	self size < prefix size ifTrue: [^ false].
 	(self class isBytes and: [prefix class isBytes]) ifTrue: [
@@ -1146,13 +1145,14 @@ String >> endsWith: suffix [
 	Otherwise, if self is wide, then super outperforms,
 	Otherwise, if prefix is wide, primitive is not correct"
 	
-	"('pharo' endsWith: '') >>> false"
+	"('pharo' endsWith: '') >>> true"
 	"('pharo' endsWith: 'project-pharo') >>> false"
 	"('pharo' endsWith: 'phuro') >>> false"
 	"('pharo' endsWith: 'aro') >>> true"
 	"('pharo' endsWith: 'aRo') >>> false"
 	
 	| requiredStart |
+	suffix ifEmpty: [ ^ true ].
 	(self class isBytes and: [ suffix class isBytes ]) ifFalse: [^super endsWith: suffix].	
 	requiredStart := self size - suffix size + 1.
 	requiredStart <= 0 ifTrue: [  ^false ].
@@ -1170,10 +1170,11 @@ String >> endsWith: suffix caseSensitive: aBoolean [
 	Otherwise, if self or suffix are wide strings, then slow version with asLowercase convertation,
 	(primitive is not correct for wide strings)"
 	
-	"('pharo' endsWith: '' caseSensitive: false) >>> false"
+	"('pharo' endsWith: '' caseSensitive: false) >>> true"
 	"('pharo' endsWith: 'project-pharo' caseSensitive: false) >>> false"
 	"('pharo' endsWith: 'phuro' caseSensitive: false) >>> false"
 	"('pharo' endsWith: 'aRo' caseSensitive: false) >>> true"
+	suffix ifEmpty: [ ^ true ].
 	aBoolean ifTrue: [ ^self endsWith: suffix ].
 	self size < suffix size ifTrue: [^ false].
 	(self class isBytes and: [suffix class isBytes]) ifTrue: [
@@ -1497,36 +1498,33 @@ String >> findString: key startingAt: start caseSensitive: caseSensitive [
 
 { #category : #comparing }
 String >> findSubstring: key in: body startingAt: start matchTable: matchTable [
-	"Answer the index in the string body at which the substring key first occurs, at or beyond start.  The match is determined using matchTable, which can be used to effect, eg, case-insensitive matches.  If no match is found, zero will be returned."
-	| index c1 c2 |
-	matchTable == nil ifTrue: [
-		key size = 0 ifTrue: [^ 0].
-		start to: body size - key size + 1 do:
-			[:startIndex |
-			index := 1.
-				[(body at: startIndex+index-1)
-					= (key at: index)]
-					whileTrue:
-					[index = key size ifTrue: [^ startIndex].
-					index := index+1]].
-		^ 0
-	].
 
-	key size = 0 ifTrue: [^ 0].
-	start to: body size - key size + 1 do:
-		[:startIndex |
+	"Answer the index in the string body at which the substring key first occurs, at or beyond start.  The match is determined using matchTable, which can be used to effect, eg, case-insensitive matches.  If no match is found, zero will be returned."
+
+	| index c1 c2 |
+	matchTable == nil ifTrue: [ 
+		key size = 0 ifTrue: [ ^ 0 ].
+		start to: body size - key size + 1 do: [ :startIndex | 
+			index := 1.
+			[ (body at: startIndex + index - 1) = (key at: index) ] whileTrue: [ 
+				index = key size ifTrue: [ ^ startIndex ].
+				index := index + 1 ] ].
+		^ 0 ].
+
+	key size = 0 ifTrue: [ ^ 0 ].
+	start to: body size - key size + 1 do: [ :startIndex | 
 		index := 1.
-		[c1 := body at: startIndex+index-1.
+		[ 
+		c1 := body at: startIndex + index - 1.
 		c2 := key at: index.
-		((c1 leadingChar = 0 and: [ c1 asciiValue < matchTable size ]) 
-			ifTrue: [ matchTable at: c1 asciiValue + 1 ]
-			ifFalse: [ c1 asciiValue + 1 ]) = 
-			((c2 leadingChar = 0 and: [ c2 asciiValue < matchTable size ])
-				ifTrue: [ matchTable at: c2 asciiValue + 1 ]
-				ifFalse: [c2 asciiValue + 1 ]) ]
-			whileTrue:
-				[index = key size ifTrue: [^ startIndex].
-				index := index+1]].
+		(c1 asciiValue < matchTable size
+			 ifTrue: [ matchTable at: c1 asciiValue + 1 ]
+			 ifFalse: [ c1 asciiValue + 1 ])
+		= (c2 asciiValue < matchTable size
+				 ifTrue: [ matchTable at: c2 asciiValue + 1 ]
+				 ifFalse: [ c2 asciiValue + 1 ]) ] whileTrue: [ 
+			index = key size ifTrue: [ ^ startIndex ].
+			index := index + 1 ] ].
 	^ 0
 ]
 
@@ -1674,7 +1672,8 @@ String >> findWordStart: key startingAt: start [
 
 { #category : #enumerating }
 String >> flattenOn: aStream [
-		aStream nextPut: self
+	"Strings are not flattend to characters"
+	aStream nextPut: self
 ]
 
 { #category : #formatting }

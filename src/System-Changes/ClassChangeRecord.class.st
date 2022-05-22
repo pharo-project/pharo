@@ -89,7 +89,6 @@ ClassChangeRecord >> assimilateAllChangesIn: otherRecord [
 						lastMethodInfo: changeRecord methodInfoFromRemoval]
 			ifFalse: 
 				[self atSelector: selector put: changeType]].
-
 ]
 
 { #category : #'method changes' }
@@ -281,8 +280,6 @@ ClassChangeRecord >> noteRemoveSelector: selector priorMethod: priorMethod lastM
 	infoOrNil ifNotNil:
 		["Save the source code pointer and category so can still browse old versions"
 		methodChange noteMethodInfoFromRemoval: infoOrNil]
-
-
 ]
 
 { #category : #definition }
@@ -335,5 +332,4 @@ ClassChangeRecord >> trimHistory [
 	"Forget renaming and reorganization of newly-added classes."
 	(changeTypes includes: #add) ifTrue:
 		[changeTypes removeAllFoundIn: #(rename reorganize)].
-
 ]

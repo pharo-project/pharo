@@ -73,5 +73,5 @@ VTermTestRunner >> writeError: anError of: aTestCase [
 { #category : #helper }
 VTermTestRunner >> writeFailure: anError of: aTestCase [ 
 	self stderr yellow.
-	^ super writeFailure: anError of: aTestCase 
+	^ super writeFailure: anError of: aTestCase
 ]

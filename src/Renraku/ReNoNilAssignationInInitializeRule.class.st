@@ -22,7 +22,6 @@ ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBloc
 	problemAssigments do: [ :assignment | 
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: 'nil').
 		 ]
-
 ]
 
 { #category : #accessing }

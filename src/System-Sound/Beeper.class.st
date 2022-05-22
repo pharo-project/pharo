@@ -36,7 +36,6 @@ Beeper class >> beep [
 	self default 
 		ifNil: [self beepPrimitive]
 		ifNotNil: [ self default play].
-
 ]
 
 { #category : #beeping }
@@ -64,7 +63,7 @@ Beeper class >> default [
 	"When the default is not defined it is
 	initialized using #newDefault."
 
-	^ default ifNil: [default := self newDefault ] 
+	^ default ifNil: [default := self newDefault ]
 ]
 
 { #category : #customize }

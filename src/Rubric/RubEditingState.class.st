@@ -69,7 +69,6 @@ RubEditingState >> markBlock: markCharacterBlock pointBlock: pointCharacterBlock
 { #category : #accessing }
 RubEditingState >> markIndex [
 	^ self markBlock ifNotNil: [:m | m stringIndex] ifNil: [ 1 ]
-
 ]
 
 { #category : #accessing }
@@ -108,12 +107,11 @@ RubEditingState >> previousInterval [
 RubEditingState >> previousInterval: anInterval [
 
 	previousInterval := anInterval.
-
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> redo [
-	^ self undoManager redo 
+	^ self undoManager redo
 ]
 
 { #category : #'undo - redo' }
@@ -155,26 +153,23 @@ RubEditingState >> startOfTyping: anIntegerIndex [
 { #category : #accessing }
 RubEditingState >> textArea: aTextArea [
 	textArea := aTextArea.
-
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> undo [
-	^ self undoManager undo 
+	^ self undoManager undo
 ]
 
 { #category : #accessing }
 RubEditingState >> undoManager [
 
 	^ undoManager ifNil: [ undoManager := HistoryIterator new].
-
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> undoRedoTransaction: aBlock [
 	self undoManager openRecordGroup.
 	aBlock ensure: [  self undoManager closeRecordGroup ].
-
 ]
 
 { #category : #private }

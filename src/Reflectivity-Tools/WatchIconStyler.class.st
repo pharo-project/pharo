@@ -14,7 +14,7 @@ WatchIconStyler >> highlightColor [
 
 { #category : #defaults }
 WatchIconStyler >> iconBlock: aNode [
-	^[ WatchesWindow openOn: aNode watch]
+	^[ WatchesWindowPresenter openOn: aNode watch]
 ]
 
 { #category : #defaults }
@@ -22,7 +22,6 @@ WatchIconStyler >> iconFor: aNode [
 	^aNode watch isRecording
 		ifTrue: [ self iconNamed: #testGreen]
 		ifFalse: [ self iconNamed: #testNotRunIcon ]
-	
 ]
 
 { #category : #defaults }

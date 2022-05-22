@@ -10,14 +10,17 @@ Class {
 
 { #category : #testing }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
+
+	^ (super canBeExecutedInContext: aToolContext) and: [ 
+		  aToolContext isVariableSelected and: [ 
+			  aToolContext isGlobalVariableSelected not ] ]
 ]
 
 { #category : #activation }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext
 ]
 
 { #category : #converting }

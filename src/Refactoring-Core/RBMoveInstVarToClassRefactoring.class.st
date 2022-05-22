@@ -69,5 +69,5 @@ RBMoveInstVarToClassRefactoring >> transform [
 		Smalltalk tools messageList
 			browse: (brokenSenders collect: [:each | each method])
 			title: 'Broken methods' 
-			autoSelect: brokenSenders first selector] 
+			autoSelect: brokenSenders first selector]
 ]

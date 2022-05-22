@@ -29,5 +29,4 @@ StoredSettingsMergerTest >> testStoredSettings [
 	self assert: merger storedSettings size equals: numberOfNodeSettings.
 	merger addStoredSettings: MockSettings storedSettings.
 	self assert: merger storedSettings size equals: numberOfNodeSettings.
-
 ]

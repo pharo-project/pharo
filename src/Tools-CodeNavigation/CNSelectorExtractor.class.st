@@ -83,8 +83,9 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 	
 	"In the case of doIt methods"
 	(node selector = #noMethod and: [ aNode isVariable ])
-		ifTrue: [  ^ aNode name ].
-
+		ifTrue: [  ^ aNode name ].		
+	(node selector = #noMethod and: [ aNode isParseError ])
+		ifTrue: [ ^ aNode value asSymbol ifEmpty: [ nil ] ].
 
 	^ node selector
 ]

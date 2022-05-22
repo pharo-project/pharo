@@ -18,7 +18,7 @@ FLStreamStrategy >> fuelAccept: aGeneralMapper [
 FLStreamStrategy >> readStreamDo: aValuable [
 	"Evaluates the argument with a read stream. Answer the result."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'test support' }
@@ -29,5 +29,5 @@ FLStreamStrategy >> tearDown [
 FLStreamStrategy >> writeStreamDo: aValuable [
 	"Evaluates the argument with a write stream. Answer the result."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

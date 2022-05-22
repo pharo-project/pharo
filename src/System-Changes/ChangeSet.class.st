@@ -365,7 +365,6 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
 			
 	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
-	
 ]
 
 { #category : #services }
@@ -419,7 +418,6 @@ ChangeSet class >> removeChangeSet: aChangeSet [
 
 	AllChangeSets remove: aChangeSet ifAbsent: [].
 	aChangeSet wither
-
 ]
 
 { #category : #enumerating }
@@ -445,14 +443,13 @@ ChangeSet class >> reorderChangeSets [
 						ifTrue: [newMid add: aChangeSet]
 						ifFalse: [newTail add: aChangeSet]].
 	self allChangeSets: newMid, newTail.
-	
 ]
 
 { #category : #'current changeset' }
 ChangeSet class >> resetCurrentToNewUnnamedChangeSet [
  
 	current := self new.  
-	self newChanges: current 
+	self newChanges: current
 ]
 
 { #category : #scanning }
@@ -494,7 +491,6 @@ ChangeSet class >> uniqueNameLike: aString [
 	  (self named: try)
 		ifNil: [ ^ try ].
 	  index := index + 1 ] repeat
-
 ]
 
 { #category : #'moving changes' }
@@ -554,7 +550,6 @@ ChangeSet >> assimilateAllChangesFoundIn: otherChangeSet [
 
 	otherChangeSet changedClassNames do:
 		[:className | self absorbClass: className from: otherChangeSet]
-
 ]
 
 { #category : #'file in/out' }
@@ -648,7 +643,7 @@ ChangeSet >> changedClassNames [
 	"Answer a OrderedCollection of the names of changed or edited classes.
 	Does include removed classes.  Sort alphabetically."
 
-	^ changeRecords keysSortedSafely 
+	^ changeRecords keysSortedSafely
 ]
 
 { #category : #'class changes' }
@@ -809,7 +804,6 @@ ChangeSet >> doItChunkImported: anAnnouncemnet [
 		ifTrue: [ self preambleString: anAnnouncemnet contents ].
 	((anAnnouncemnet contents beginsWith: '"Postscript:') and: [ self postscriptString isNil ])
 		ifTrue: [ self postscriptString: anAnnouncemnet contents ]
-
 ]
 
 { #category : #accessing }
@@ -1020,7 +1014,6 @@ ChangeSet >> forgetAllChangesFoundIn: otherChangeSet [
 	otherChangeSet changedClassNames do:
 		[:className | self forgetChangesForClass: className in: otherChangeSet].
 	self expungeEmptyClassChangeEntries.
-
 ]
 
 { #category : #'moving changes' }
@@ -1075,7 +1068,7 @@ ChangeSet >> initialize [
 ChangeSet >> isEmpty [
 	"Answer whether the receiver contains any elements."
 	
-	^ changeRecords isEmptyOrNil 
+	^ changeRecords isEmptyOrNil
 ]
 
 { #category : #initialization }
@@ -1204,7 +1197,6 @@ ChangeSet >> noteNewMethod: newMethod forClass: class selector: selector priorMe
 	class wantsChangeSetLogging ifFalse: [^ self].
 	(self changeRecorderFor: class)
 		noteNewMethod: newMethod selector: selector priorMethod: methodOrNil
-
 ]
 
 { #category : #'class changes' }
@@ -1344,7 +1336,6 @@ ChangeSet >> removeClassAndMetaClassChanges: class [
 	changeRecords 
 		removeKey: class name ifAbsent: [];
 		removeKey: class class name ifAbsent: []
-
 ]
 
 { #category : #'moving changes' }
@@ -1379,7 +1370,6 @@ ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod last
 	class wantsChangeSetLogging ifFalse: [^ self].
 	(self changeRecorderFor: class)
 		noteRemoveSelector: selector priorMethod: priorMethod lastMethodInfo: info
-
 ]
 
 { #category : #'method changes' }

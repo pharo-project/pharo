@@ -60,7 +60,7 @@ AbstractCache >> at: key ifAbsentPut: block [
 	Furthermore this could result in the least recently used key/value pair 
 	being removed when the specified maximum cache weight is exceeded."
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -138,7 +138,7 @@ AbstractCache >> keysAndValuesDo: block [
 	"Execute block with each key and value present in me.
 	This will be from least to most recently used."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialize }
@@ -180,7 +180,7 @@ AbstractCache >> removeAll [
 	"Remove all key/value pairs that I currently hold,
 	effectiley resetting me, but not my statistics."
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #removing }
@@ -200,14 +200,14 @@ AbstractCache >> removeKey: key ifAbsent: block [
 	Execute block when key is currently absent.
 	Return the removed value."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - statistics' }
 AbstractCache >> size [
 	"Return the count of items currently present."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - statistics' }

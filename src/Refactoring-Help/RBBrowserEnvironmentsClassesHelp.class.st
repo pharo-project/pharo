@@ -9,5 +9,5 @@ Class {
 
 { #category : #building }
 RBBrowserEnvironmentsClassesHelp class >> rootHelpClass [
-	^ RBBrowserEnvironment 
+	^ RBBrowserEnvironment
 ]

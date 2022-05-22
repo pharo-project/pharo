@@ -54,7 +54,7 @@ VTermOutputDriver >> << aStringOrCharacter [
 { #category : #removing }
 VTermOutputDriver >> backspace [
 	outStream nextPut: Character backspace.
-	self deleteCharacter 
+	self deleteCharacter
 ]
 
 { #category : #coloring }

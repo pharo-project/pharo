@@ -25,7 +25,6 @@ GlobalIdentifierWithDefaultConfigurationTest >> setUpPersistenceStrategyAndCheck
 	identifier persistenceStrategy previous preferences: oldPreferences.
 	identifier persistenceStrategy checker: (self newChecker answer: [ FileLocator workingDirectory exists ]; yourself).
 	identifier persistenceStrategy previous checker: (self newChecker answer: [ FileLocator workingDirectory exists ]; yourself).
-	
 ]
 
 { #category : #running }

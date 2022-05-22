@@ -298,10 +298,10 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 
 	aClass := classFactory newClass.
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	self class compiler evaluate: aClass definitionString.
+	(self class compiler evaluate: aClass definitionString) fluidInstall.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	self class compiler evaluate: aClass classSide definitionString.
+	(self class compiler evaluate: aClass classSide definitionString) fluidInstall.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 ]

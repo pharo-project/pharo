@@ -106,6 +106,13 @@ ClassDescription >> addSlot: aSlot [
 	^self subclassResponsibility
 ]
 
+{ #category : #'accessing - instances and variables' }
+ClassDescription >> allInstVarNames [
+	"Answer an Array of the receiver's instance variable names."
+
+	^self allSlots collect: [ :each | each name ] as: Array
+]
+
 { #category : #'instance variables' }
 ClassDescription >> allInstVarNamesEverywhere [
 	"Answer the set of inst var names used by the receiver, all superclasses, and all subclasses"
@@ -933,6 +940,14 @@ ClassDescription >> obsolete [
 ClassDescription >> oldDefinition [
 	
 	^ ClassDefinitionPrinter legacy
+		for: self;
+		definitionString
+]
+
+{ #category : #'file in/out' }
+ClassDescription >> oldPharoDefinition [
+	
+	^ ClassDefinitionPrinter oldPharo
 		for: self;
 		definitionString
 ]

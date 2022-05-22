@@ -41,7 +41,7 @@ ReflectivityTest >> tearDown [
 	count := 0.
 	(ReflectivityExamples>>#exampleWithArg:) recompile.
 	ASTCache default: cache.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -79,7 +79,6 @@ ReflectivityTest >> testDisableThenCleanASTCacheThenEnableLink [
 	link enable.
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 2.
-
 ]
 
 { #category : #tests }
@@ -100,7 +99,6 @@ ReflectivityTest >> testDisableThenEnableLink [
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 2.
 	self assert: link condition isNil.
-
 ]
 
 { #category : #tests }
@@ -122,7 +120,6 @@ ReflectivityTest >> testDisableThenEnableLinkWithCondition [
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 0.
 	self assert: link condition equals: false
-
 ]
 
 { #category : #tests }

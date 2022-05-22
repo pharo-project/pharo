@@ -92,12 +92,12 @@ RBMethodNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitMethodNode: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMethodNode >> addNode: aNode [
 	^ body addNode: aNode
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMethodNode >> addPragma: aPragmaNode [
 
 	pragmas := pragmas copyWith: aPragmaNode.
@@ -110,12 +110,12 @@ RBMethodNode >> addReplacement: aStringReplacement [
 	replacements add: aStringReplacement
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMethodNode >> addReturn [
 	^ body addReturn
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMethodNode >> addSelfReturn [
 	^ body addSelfReturn
 ]
@@ -597,13 +597,13 @@ RBMethodNode >> reformatSource [
 	^ newSource
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMethodNode >> removePragma: aPragmaNode [
 
 	pragmas := pragmas copyWithout: aPragmaNode
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBMethodNode >> removeSubtree: aTree [
 
 	^ aTree isReturn 

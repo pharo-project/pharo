@@ -43,8 +43,7 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 				metaclassDef layout addSlot: (RGInstanceVariableSlot named: each name parent: metaclassDef layout)].
 			(each class type = #pool) ifTrue: [ 
 				def addSharedPool: (RGPoolVariable named: each name parent: def)]. ]. 
-		def]. 
-	
+		def].
 ]
 
 { #category : #'*Ring-Monticello' }
@@ -73,6 +72,5 @@ MCClassDefinition >> ring2LayoutType [
 		#weak -> RGWeakLayout.
 		#DoubleByteLayout -> RGDoubleByteLayout.
 		#DoubleWordLayout -> RGDoubleWordLayout
-	}) at: type.		
-
+	}) at: type.
 ]

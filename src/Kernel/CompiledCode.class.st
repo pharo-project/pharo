@@ -218,6 +218,12 @@ CompiledCode >> flag [
 	^((self header bitShift: -29) bitAnd: 1) = 1
 ]
 
+{ #category : #enumerating }
+CompiledCode >> flattenOn: aStream [
+	"We do not flatten code into bytecode/literals but add the whole object"
+	aStream nextPut: self
+]
+
 { #category : #accessing }
 CompiledCode >> frameSize [
 	"Answer the size of temporary frame needed to run the receiver."
@@ -283,6 +289,12 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 { #category : #accessing }
 CompiledCode >> hasSourceCode [
 	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+CompiledCode >> hasTemporaries [
+	"Fast check that does not scan the bytecode, nor reifies the AST"
+	^ (self numTemps - self numArgs) > 0
 ]
 
 { #category : #comparing }

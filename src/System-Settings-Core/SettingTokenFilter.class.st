@@ -27,7 +27,6 @@ SettingTokenFilter >> keepSettingDeclaration: aSettingDeclaration [
 		aSettingDeclaration description}
 				collect: [:e | (e ifNil: ['']) asUppercase])
 				includesSubstringAnywhere: self token asUppercase)
-
 ]
 
 { #category : #filtering }

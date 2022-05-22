@@ -145,7 +145,6 @@ RubPlainTextMode >> changeEmphasis: aSymbol [
 	"Change the alignment of the receiver. Alignment can be #normal, #bold,  #italic, #narrow, #underlined, or #struckOut"
 
 	self changeAttribute: (TextEmphasis perform: aSymbol)
-
 ]
 
 { #category : #'text area font' }
@@ -196,7 +195,6 @@ RubPlainTextMode >> justified [
 RubPlainTextMode >> leftFlush [ 
 
 	self changeAlignment: #leftFlush
-
 ]
 
 { #category : #'text area emphasis' }
@@ -215,7 +213,6 @@ RubPlainTextMode >> normal [
 RubPlainTextMode >> rightFlush [ 
 	
 	self changeAlignment: #rightFlush
-
 ]
 
 { #category : #'text area emphasis' }

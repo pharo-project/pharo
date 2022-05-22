@@ -47,7 +47,7 @@ CairoScaledFont class >> fromFreetypeFont: aFont cairoFace: face [
 	fontMatrix := AthensCairoMatrix new.
 	deviceMatrix := AthensCairoMatrix new.
 
-	fontMatrix scaleBy: (TextStyle pointsToPixels: aFont pointSize).
+	fontMatrix scaleBy: (self pointsToPixels: aFont pointSize).
 	
 	font := self primCreate: face fontMatrix: fontMatrix  userToDeviceMatrix: deviceMatrix options: options. 
 	
@@ -55,6 +55,20 @@ CairoScaledFont class >> fromFreetypeFont: aFont cairoFace: face [
 	^ (font initWithFace: face)
 			freeTypeFont: aFont;
 			yourself.
+]
+
+{ #category : #private }
+CairoScaledFont class >> pixelsPerInch [
+
+	self flag: #TODO. "Hardcoded, but it need to come from the right place (which varies depending on 
+	the graphics backend)"
+	^ 96.0 
+]
+
+{ #category : #accessing }
+CairoScaledFont class >> pointsToPixels: points [
+
+	^ points * self pixelsPerInch / 72.0
 ]
 
 { #category : #private }

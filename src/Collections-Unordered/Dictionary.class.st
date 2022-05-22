@@ -11,6 +11,8 @@ I'm used when we need a collection of objects which I can access with a key. For
 
 Internally I use Associations. The Association class can help to use me. (See examples lower)
 
+I assume that my keys do not change after they have been added. The behavior of operations involving keys that have changed is undefined.
+
 ## Public API and Key Messages
 
 ### Initializing and Adding
@@ -156,23 +158,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-Dictionary class >> newFrom: aDict [ 
-	"Answer an instance of me containing the same associations as aDict.
-	 Error if any key appears twice."
+Dictionary class >> newFrom: aDictionaryOrCollectionOfAssociations [
+	"Answer an instance of me containing the same associations as the argument.
+	If the same key appears twice, the last one enumerated will win"
+		
+	"Dictionary newFrom: {1->#a. 2->#b. 3->#c} >>> {1->#a. 2->#b. 3->#c} asDictionary"
+	
 	| newDictionary |
-	newDictionary := self new: aDict size.
-	aDict associationsDo:
-		[:x |
-		(newDictionary includesKey: x key)
-			ifTrue: [self error: 'Duplicate key: ', x key printString]
-			ifFalse: [newDictionary add: x]].
+	newDictionary := self new: aDictionaryOrCollectionOfAssociations size.
+	aDictionaryOrCollectionOfAssociations associationsDo: [:x |newDictionary add: x].
 	^ newDictionary
-
-"	NewDictionary newFrom: {1->#a. 2->#b. 3->#c}
-	{1->#a. 2->#b. 3->#c} as: NewDictionary
-	NewDictionary newFrom: {1->#a. 2->#b. 1->#c}
-	{1->#a. 2->#b. 1->#c} as: NewDictionary
-"
 ]
 
 { #category : #'instance creation' }
@@ -313,8 +308,8 @@ Dictionary >> associationsDo: aBlock [
 	```
 	d := Dictionary withAll: #(4 5 9 6 76).
 	a := OrderedCollection new.
-	d keysAndValuesDo: [ :assoc | a add: assoc value. a add: assoc key ].
-	a. ""an OrderedCollection(75 5 8 3 3 1 5 4 4 2)""
+	d associationsDo: [ :assoc | a add: assoc value. a add: assoc key ].
+	a. ""an OrderedCollection(76 5 9 3 4 1 6 4 5 2)""
 	```
 	"
 

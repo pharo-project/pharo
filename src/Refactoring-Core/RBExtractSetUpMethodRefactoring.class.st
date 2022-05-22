@@ -119,7 +119,6 @@ RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 	node := class parseTreeFor: selector.
 	^ node statements ifEmpty: [ node body start ]
 		ifNotEmpty: [ node statements first start ]
-	
 ]
 
 { #category : #transforming }
@@ -138,5 +137,4 @@ RBExtractSetUpMethodRefactoring >> transform [
 
 { #category : #transforming }
 RBExtractSetUpMethodRefactoring >> updateTemporariesInExtractedMethodFor: variableNames [
-	
 ]

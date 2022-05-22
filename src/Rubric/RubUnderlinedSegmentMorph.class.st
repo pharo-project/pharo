@@ -33,19 +33,16 @@ RubUnderlinedSegmentMorph >> computeVertices [
 { #category : #initialization }
 RubUnderlinedSegmentMorph >> defaultBorderColor [
 	^ super defaultColor alpha: 0.5.
-
 ]
 
 { #category : #initialization }
 RubUnderlinedSegmentMorph >> defaultColor [
 	^ Color white alpha: 0.05
-
 ]
 
 { #category : #initialization }
 RubUnderlinedSegmentMorph >> defaultUnderlineColor [
 	^ super defaultColor
-
 ]
 
 { #category : #drawing }
@@ -104,19 +101,17 @@ RubUnderlinedSegmentMorph >> drawUnderlineOnAthensCanvas: aCanvas [
 { #category : #accessing }
 RubUnderlinedSegmentMorph >> straight [
 	^ straight ifNil: [ straight := true ]
-	
 ]
 
 { #category : #accessing }
 RubUnderlinedSegmentMorph >> straight: aBoolean [
 	straight := aBoolean.
-	self computeVertices 
-	
+	self computeVertices
 ]
 
 { #category : #drawing }
 RubUnderlinedSegmentMorph >> tabLineDashes [
-	^ { 1. 1} 
+	^ { 1. 1}
 ]
 
 { #category : #accessing }

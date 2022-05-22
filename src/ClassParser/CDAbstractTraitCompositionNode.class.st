@@ -8,6 +8,12 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
+{ #category : #testing }
+CDAbstractTraitCompositionNode class >> isAbstract [
+		
+	^ self == CDAbstractTraitCompositionNode
+]
+
 { #category : #composing }
 CDAbstractTraitCompositionNode >> + aNode [
 	

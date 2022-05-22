@@ -32,7 +32,6 @@ PickOneSettingDeclaration >> content [
 { #category : #'user interface' }
 PickOneSettingDeclaration >> defaultValue [
 	^ self default value ifNil: [self domainValues first realValue]
-
 ]
 
 { #category : #'user interface' }
@@ -44,7 +43,6 @@ PickOneSettingDeclaration >> index [
 { #category : #'user interface' }
 PickOneSettingDeclaration >> index: anInteger [
 	self realValue: (self domainValues at: anInteger) realValue.
-
 ]
 
 { #category : #'user interface' }

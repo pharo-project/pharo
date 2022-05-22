@@ -9,7 +9,7 @@ Class {
 	#category : #'Ring-Definitions-Containers-Base'
 }
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGSlice >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition environment: self.

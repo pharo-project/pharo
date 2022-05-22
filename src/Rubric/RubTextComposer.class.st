@@ -70,8 +70,7 @@ RubTextComposer >> addNullLineWithIndex: index andRectangle: aRectangle [
 	nullLine firstIndex: index lastIndex: index - 1.
 	nullLine internalSpaces: 0 paddingWidth: 0.
 	nullLine rectangle: ( aRectangle withBottom: nullLine bottom).
-	lines addLast: nullLine 
-
+	lines addLast: nullLine
 ]
 
 { #category : #testing }
@@ -258,7 +257,7 @@ RubTextComposer >> emphasisHere [
 
 { #category : #accessing }
 RubTextComposer >> emphasisHere: aListOfTextAttribute [
-	emphasisHere := aListOfTextAttribute 
+	emphasisHere := aListOfTextAttribute
 ]
 
 { #category : #querying }
@@ -304,7 +303,6 @@ RubTextComposer >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	last := (self lines at: arrayIndex) last.
 	
 	^(self text string copyFrom: first to: last) indentationIfBlank: aBlock.
-
 ]
 
 { #category : #querying }
@@ -400,7 +398,6 @@ RubTextComposer >> recomposeFrom: start to: stop delta: delta [
 		into: newLines
 		priorLines: self lines
 		atY: (self lines at: startLine) top.
-
 ]
 
 { #category : #composition }
@@ -408,7 +405,6 @@ RubTextComposer >> replaceFrom: start to: stop with: aText [
 	"Edit the text, and then recompose the lines."
 	self text replaceFrom: start to: stop with: aText.
 	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1).
-
 ]
 
 { #category : #private }
@@ -447,19 +443,17 @@ RubTextComposer >> tabWidth [
 
 { #category : #accessing }
 RubTextComposer >> text [
-	^ theText 
-	
+	^ theText
 ]
 
 { #category : #accessing }
 RubTextComposer >> text: aText [
 	theText := aText
-	
 ]
 
 { #category : #accessing }
 RubTextComposer >> textStyle [
-	^ theTextStyle 
+	^ theTextStyle
 ]
 
 { #category : #accessing }

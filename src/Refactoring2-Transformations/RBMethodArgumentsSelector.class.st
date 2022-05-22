@@ -71,7 +71,6 @@ RBMethodArgumentsSelector >> addAssociation [
 		self changed: #associations; changed: #arguments; 
 				changed: #values; changed: #isOkEnabled ]
 	on: Error do: [ self inform: 'Please select one argument and one value.' ]
-	
 ]
 
 { #category : #accessing }
@@ -193,7 +192,6 @@ RBMethodArgumentsSelector >> newContentMorph [
 			hResizing: #shrinkWrap }).		
 		
 	 }) vResizing: #shrinkWrap
-
 ]
 
 { #category : #controls }
@@ -230,7 +228,6 @@ RBMethodArgumentsSelector >> removeAssociation [
 		self changed: #associations; changed: #arguments;
 				changed: #values; changed: #isOkEnabled ]
 	on: Error do: [ self inform: 'Please select one association to remove.' ]
-	
 ]
 
 { #category : #accessing }

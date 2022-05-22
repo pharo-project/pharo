@@ -9,5 +9,4 @@ SetTest >> testAtRandom [
 	full add: 4.
 	full add: 1.
 	self assert: (full includes: (full atRandom: rand)).
-	
 ]

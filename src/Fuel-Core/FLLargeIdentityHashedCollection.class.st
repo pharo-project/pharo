@@ -40,7 +40,6 @@ FLLargeIdentityHashedCollection >> initialize [
 FLLargeIdentityHashedCollection >> postCopy [
 
 	tallies := tallies copy
-
 ]
 
 { #category : #accessing }

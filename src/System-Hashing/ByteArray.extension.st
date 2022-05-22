@@ -17,7 +17,6 @@ ByteArray >> asByteArrayOfSize: size [
 		ifTrue: [^ self error: 'bytearray bigger than ', size asString].
 	bytes := self asByteArray.
 	^ (ByteArray new: (size - bytes size)), bytes
-
 ]
 
 { #category : #'*System-Hashing-Core' }

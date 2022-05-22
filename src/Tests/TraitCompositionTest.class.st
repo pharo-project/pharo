@@ -90,13 +90,6 @@ TraitCompositionTest >> testInvalidComposition [
 			self t1
 				@
 					{(#a -> #m11).
-					(#a -> #m12)} ]
-		raise: Error.
-	self
-		should: [ 
-			self t1
-				@
-					{(#a -> #m11).
 					(#b -> #a)} ]
 		raise: Error
 ]

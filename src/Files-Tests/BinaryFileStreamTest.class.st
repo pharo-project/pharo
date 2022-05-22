@@ -170,6 +170,19 @@ BinaryFileStreamTest >> testSkipLecture [
 ]
 
 { #category : #testing }
+BinaryFileStreamTest >> testWriteFromStartingAtCount [
+	
+	| file |
+	file := self fileStreamForFileNamed: 'testFile'.
+	file writeFrom: #[1 2 3] startingAt: 2 count: 2.
+	file close.
+
+	file := self fileStreamForFileNamed: 'testFile'.
+	self assert: file next equals: 2.
+	self assert: file next equals: 3.
+]
+
+{ #category : #testing }
 BinaryFileStreamTest >> testWriteMultipleBytes [
 	
 	| file |

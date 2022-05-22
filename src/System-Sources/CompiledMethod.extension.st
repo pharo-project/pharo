@@ -27,5 +27,4 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 			self setSourcePointer: newSourcePointer ]
 		onFail: [ 
 			self becomeForward: (self copyWithSource: source) ]
-
 ]

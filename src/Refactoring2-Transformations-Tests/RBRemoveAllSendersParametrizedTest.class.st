@@ -28,5 +28,4 @@ RBRemoveAllSendersParametrizedTest >> testRemoveMessageInsideBlock [
 	"it doesn't remove the sender, because its result is used"
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineLast) equals: (self parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^self caller2]').
-	
 ]

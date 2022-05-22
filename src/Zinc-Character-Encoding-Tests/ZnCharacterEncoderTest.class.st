@@ -143,8 +143,9 @@ ZnCharacterEncoderTest >> testConvencienceMethods [
 	string := 'élève en Français'.
 	self assert: (encoder decodeBytes: (encoder encodeString: string)) equals: string.
 	self assert: (encoder encodedByteCountForString: string) equals: 20.
-
-	#('ccc' 'ççç' 'c' 'ç' 'çc' 'cç') do: [ :each | self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
+	
+	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' ) do: [ :each |
+		self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
 ]
 
 { #category : #testing }
@@ -213,11 +214,11 @@ ZnCharacterEncoderTest >> testLatin2Encoder [
 	| encoder inputBytes outputBytes inputString outputString |
 	encoder := ZnCharacterEncoder newForEncoding: 'latin2'.
 	inputString := String
-		with: 16r0154 asCharacter
-		with: 16r0110 asCharacter
-		with: 16r0155 asCharacter
-		with: 16r0111 asCharacter.
-	inputBytes := #(192 208 224 240) asByteArray.
+		               with: 16r0154 asCharacter
+		               with: 16r0110 asCharacter
+		               with: 16r0155 asCharacter
+		               with: 16r0111 asCharacter.
+	inputBytes := #( 192 208 224 240 ) asByteArray.
 	outputBytes := self encodeString: inputString with: encoder.
 	self assert: outputBytes equals: inputBytes.
 	outputString := self decodeBytes: inputBytes with: encoder.
@@ -244,11 +245,12 @@ ZnCharacterEncoderTest >> testNextPutAllStartingAtToStream [
 
 { #category : #testing }
 ZnCharacterEncoderTest >> testNullEncoder [
+
 	| encoder bytes string |
 	encoder := ZnNullEncoder new.
 	bytes := self encodeString: 'abc' with: encoder.
-	self assert: bytes equals: #(97 98 99) asByteArray.
-	string := self decodeBytes: #(65 66 67) asByteArray with: encoder.
+	self assert: bytes equals: #( 97 98 99 ) asByteArray.
+	string := self decodeBytes: #( 65 66 67 ) asByteArray with: encoder.
 	self assert: string equals: 'ABC'
 ]
 
@@ -539,16 +541,18 @@ ZnCharacterEncoderTest >> testUTF8ByteOrderMark [
 
 { #category : #testing }
 ZnCharacterEncoderTest >> testUTF8Encoder [
+
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
 
 	| encoder inputBytes outputBytes inputString outputString |
 	encoder := ZnUTF8Encoder new.
 	inputString := String
-		with: $$
-		with: 16r00A2 asCharacter
-		with: 16r20AC asCharacter
-		with: 16r024B62 asCharacter.
-	inputBytes := #(16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4 16rAD 16rA2) asByteArray.
+		               with: $$
+		               with: 16r00A2 asCharacter
+		               with: 16r20AC asCharacter
+		               with: 16r024B62 asCharacter.
+	inputBytes := #( 16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4
+	                 16rAD 16rA2 ) asByteArray.
 	outputBytes := self encodeString: inputString with: encoder.
 	self assert: outputBytes equals: inputBytes.
 	outputString := self decodeBytes: inputBytes with: encoder.
@@ -557,9 +561,12 @@ ZnCharacterEncoderTest >> testUTF8Encoder [
 
 { #category : #testing }
 ZnCharacterEncoderTest >> testUTF8EncoderAuto [
+
 	| encoder inputString bytes outputString |
 	encoder := ZnUTF8Encoder new.
-	inputString := String withAll: ((1 to: 3072) collect: [ :each | Character value: each ]).
+	inputString := String withAll:
+		               ((1 to: 3072) collect: [ :each | 
+			                Character value: each ]).
 	bytes := self encodeString: inputString with: encoder.
 	outputString := self decodeBytes: bytes with: encoder.
 	self assert: inputString equals: outputString
@@ -567,6 +574,7 @@ ZnCharacterEncoderTest >> testUTF8EncoderAuto [
 
 { #category : #testing }
 ZnCharacterEncoderTest >> testUTF8EncoderByteCount [
+
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	self assert: (encoder encodedByteCountFor: $$) equals: 1.

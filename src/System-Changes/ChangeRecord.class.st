@@ -23,7 +23,7 @@ ChangeRecord >> <= anotherOne [
 
 	self stamp ifNil: [ ^ false ].
 	anotherOne stamp ifNil: [ ^ true ].
-	^ self timeStamp <= anotherOne timeStamp 
+	^ self timeStamp <= anotherOne timeStamp
 ]
 
 { #category : #accessing }
@@ -47,7 +47,6 @@ ChangeRecord >> commentClass [
 	commentClass := Smalltalk at: class asSymbol.
 	^meta ifTrue: [commentClass class]
 		ifFalse: [commentClass]
-
 ]
 
 { #category : #initialization }
@@ -195,7 +194,6 @@ ChangeRecord >> printOn: aStream [
 
 	self type printOn: aStream.
 	self stamp ifNotNil: [ :s | s printOn: aStream ].
-	
 ]
 
 { #category : #accessing }

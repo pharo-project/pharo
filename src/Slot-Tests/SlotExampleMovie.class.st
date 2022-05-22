@@ -29,7 +29,7 @@ SlotExampleMovie >> actors: anObject [
 	actors := anObject
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 SlotExampleMovie >> addActor: aPerson [
 
 	^actors add: aPerson
@@ -62,7 +62,7 @@ SlotExampleMovie >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 SlotExampleMovie >> removeActor: aPerson [
 
 	^actors remove: aPerson

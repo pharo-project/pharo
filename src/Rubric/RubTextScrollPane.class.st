@@ -30,7 +30,6 @@ RubTextScrollPane >> appendText: stringOrText [
 	Fit my width and height to the result."
 	self textArea appendText: stringOrText.
 	self scrollSelectionIntoView.
-
 ]
 
 { #category : #'text area protocol' }
@@ -83,7 +82,6 @@ RubTextScrollPane >> drawSubmorphsOn: aCanvas [
 	self drawFocusBorder ifFalse: [ ^ self ].
 	(self hasKeyboardFocus or: [ self textArea hasFindReplaceFocus ]) 
 		ifTrue: [self drawKeyboardFocusOn: aCanvas].
-
 ]
 
 { #category : #drawing }
@@ -96,7 +94,6 @@ RubTextScrollPane >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	self drawFocusBorder ifFalse: [ ^self ].
 	(self hasKeyboardFocus or: [ self textArea hasFindReplaceFocus ]) 
 		ifTrue: [self drawKeyboardFocusOnAthensCanvas: anAthensCanvas].
-
 ]
 
 { #category : #geometry }
@@ -128,7 +125,7 @@ RubTextScrollPane >> fitScrollTarget [
 	
 	self wrapped
 		ifFalse: [ ^ self ].
-	self fitScrollTargetWidth 
+	self fitScrollTargetWidth
 ]
 
 { #category : #geometry }
@@ -252,7 +249,7 @@ RubTextScrollPane >> offset [
 
 { #category : #accessing }
 RubTextScrollPane >> paragraph [
-	^ self textArea paragraph 
+	^ self textArea paragraph
 ]
 
 { #category : #geometry }
@@ -314,7 +311,6 @@ RubTextScrollPane >> scrollByKeyboard: event [
 RubTextScrollPane >> scrollSelectionIntoView [
 	"Scroll my text into view if necessary and return true, else return false"
 	self scrollSelectionIntoView: nil.
-
 ]
 
 { #category : #'text area protocol' }
@@ -361,7 +357,7 @@ RubTextScrollPane >> scrollSelectionIntoView: event [
 RubTextScrollPane >> scrollTarget: aTextArea [
 	self unregisterTextArea.
 	super scrollTarget: aTextArea.
-	self registerTextArea 
+	self registerTextArea
 ]
 
 { #category : #'scrollbar managing' }
@@ -421,8 +417,7 @@ RubTextScrollPane >> setTextWith: stringOrText [
 	Fit my width and height to the result."
 	self textArea width: self scroller width.
 	self textArea setTextWith: stringOrText.
-	self updateScrollbars 
-
+	self updateScrollbars
 ]
 
 { #category : #accessing }
@@ -434,7 +429,6 @@ RubTextScrollPane >> textArea [
 RubTextScrollPane >> textAreaExtentChanged [
 	self fitScrollTarget.
 	self owner ifNotNil: [ :o | o textAreaExtentChanged ]
-
 ]
 
 { #category : #'event handling' }
@@ -477,8 +471,7 @@ RubTextScrollPane >> updateTextWith: stringOrText [
 	Fit my width and height to the result."
 	self textArea width: self scroller width.
 	self textArea updateTextWith: stringOrText.
-	self updateScrollbars 
-
+	self updateScrollbars
 ]
 
 { #category : #'scrollbar managing' }

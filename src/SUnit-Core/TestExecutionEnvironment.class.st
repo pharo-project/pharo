@@ -129,7 +129,7 @@ TestExecutionEnvironment >> disableService: aTestExecutionServiceClass [
 
 	| service |
 	service := self findService: aTestExecutionServiceClass ifAbsent: [^self].
-	service disable 
+	service disable
 ]
 
 { #category : #private }
@@ -239,7 +239,7 @@ TestExecutionEnvironment >> maxTimeForTest: aDuration [
 	maxTimeForTest := aDuration.
 	watchDogSemaphore ifNotNil: [ 
 		"we need restart watch dog timer for new timeout"
-		watchDogSemaphore signal ]. 
+		watchDogSemaphore signal ].
 ]
 
 { #category : #controlling }
@@ -271,7 +271,7 @@ TestExecutionEnvironment >> registerService: aTestExecutionService [
 
 	aTestExecutionService executionEnvironment: self.
 	services add: aTestExecutionService.
-	^aTestExecutionService 
+	^aTestExecutionService
 ]
 
 { #category : #accessing }
@@ -303,7 +303,6 @@ TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
 	] on: Exception do: [ :err | 
 			self handleException: err 
 	]
-	
 ]
 
 { #category : #controlling }
@@ -360,8 +359,6 @@ TestExecutionEnvironment >> watchDogLoop [
 				mainTestProcess isSuspended ifFalse: [
 					mainTestProcess signalException: TestTookTooMuchTime new]]	].
 	] repeat
-
-
 ]
 
 { #category : #accessing }

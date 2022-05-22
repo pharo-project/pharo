@@ -55,7 +55,7 @@ ExecutionCounter class >> handleMethodRemoved: anAnnouncement [
 
 { #category : #'class initialization' }
 ExecutionCounter class >> initialize [
-	self registerInterestToSystemAnnouncement 
+	self registerInterestToSystemAnnouncement
 ]
 
 { #category : #'instance creation' }

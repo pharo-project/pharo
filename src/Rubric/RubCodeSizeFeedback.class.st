@@ -64,18 +64,16 @@ RubCodeSizeFeedback >> backgroundColor [
 { #category : #accessing }
 RubCodeSizeFeedback >> computedPositionFrom: aRectangle [
 	^  ((aRectangle right min: self scrollBounds right) - (self computedWidthFrom: aRectangle)) @ aRectangle top
-
 ]
 
 { #category : #accessing }
 RubCodeSizeFeedback >> computedWidthFrom: aRectangle [
 	^  (super computedWidthFrom: aRectangle) min: 50.
-
 ]
 
 { #category : #defaults }
 RubCodeSizeFeedback >> defaultBackgroundColor [
-	^ self backgroundColor 
+	^ self backgroundColor
 ]
 
 { #category : #drawing }

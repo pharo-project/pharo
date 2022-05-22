@@ -21,7 +21,6 @@ RubAdornmentDisplayer >> computedHeightFrom: aRectangle [
 { #category : #accessing }
 RubAdornmentDisplayer >> computedPositionFrom: aRectangle [
 	^  ((aRectangle right min: self scrollBounds right) - (self computedWidthFrom: aRectangle)) @ aRectangle top
-
 ]
 
 { #category : #accessing }
@@ -32,7 +31,6 @@ RubAdornmentDisplayer >> computedSize [
 { #category : #accessing }
 RubAdornmentDisplayer >> computedWidthFrom: aRectangle [
 	^  (super computedWidthFrom: aRectangle) min: self computedSize
-
 ]
 
 { #category : #drawing }
@@ -90,5 +88,5 @@ RubAdornmentDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 
 { #category : #accessing }
 RubAdornmentDisplayer >> level [
-	^ SmallInteger maxVal 
+	^ SmallInteger maxVal
 ]

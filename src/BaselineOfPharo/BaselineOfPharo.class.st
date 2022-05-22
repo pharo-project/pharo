@@ -1,13 +1,49 @@
 Class {
 	#name : #BaselineOfPharo,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'ExternalProjects'
+	],
 	#category : #BaselineOfPharo
 }
 
 { #category : #'repository urls' }
+BaselineOfPharo class >> beautifulCommentsRepository [
+
+	^ (self externalProjectNamed: 'BeautifulComments') repository
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> declareExternalProjects [
+
+	^ { 
+	PharoExternalProject newName: 'Iceberg' owner: 'pharo-vcs' project: 'iceberg' version: 'dev-2.0' sourceDir: nil.
+	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'Pharo11'.
+	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo11'.	
+	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.	
+	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.	
+	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9f'	
+	 }
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> externalProjectNamed: aName [
+
+	^ self externalProjects 
+		detect: [ :each | each name = aName ]
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> externalProjects [
+
+	^ ExternalProjects ifNil: [ 
+		ExternalProjects := self declareExternalProjects ]
+]
+
+{ #category : #'repository urls' }
 BaselineOfPharo class >> icebergRepository [
 
-	^ 'github://pharo-vcs/iceberg:{1}' format: { self icebergVersion }
+	^ (self externalProjectNamed: 'Iceberg') repository
 ]
 
 { #category : #versions }
@@ -16,18 +52,16 @@ BaselineOfPharo class >> icebergVersion [
 	^ 'dev-2.0'
 ]
 
-{ #category : #versions }
-BaselineOfPharo class >> newToolsReleaseCommit [
-	"The commit corresponding to current release (to be used on bootstrap process)"
+{ #category : #'repository urls' }
+BaselineOfPharo class >> microdownRepository [
 
-	"Pharo10"
-	^ '0a30d62222168b54ba9c12608bd10a7c1cfed6a1'
+	^ (self externalProjectNamed: 'Microdown') repository
 ]
 
 { #category : #'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
-	^ 'github://pharo-spec/NewTools:{1}/src' format: { self newToolsVersion }
+	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
 { #category : #versions }
@@ -36,18 +70,16 @@ BaselineOfPharo class >> newToolsVersion [
 	^ 'Pharo10'
 ]
 
-{ #category : #versions }
-BaselineOfPharo class >> specReleaseCommit [
-	"The commit corresponding to current release (to be used on bootstrap process)"
+{ #category : #'repository urls' }
+BaselineOfPharo class >> roassal3Repository [
 
-	"Pharo10- fix paginator in presence of fast dragging"
-	^ '8fe65f1d49f090bb739ae6ef5113a05b4e89109f'
+	^ (self externalProjectNamed: 'Roassal3') repository
 ]
 
 { #category : #'repository urls' }
 BaselineOfPharo class >> specRepository [
 
-	^ 'github://pharo-spec/Spec:{1}/src' format: { self specVersion }
+	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
 { #category : #versions }
@@ -70,7 +102,6 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
 
-		spec package: 'Deprecated90'.
 		spec package: 'Deprecated10'.
 		
 		spec package: 'FluidClassBuilder'.

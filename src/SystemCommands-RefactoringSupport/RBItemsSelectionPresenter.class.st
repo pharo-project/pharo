@@ -27,8 +27,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBItemsSelectionPresenter class >> defaultSpec [
+{ #category : #layout }
+RBItemsSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -42,7 +42,7 @@ RBItemsSelectionPresenter class >> defaultSpec [
 RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new 
 		label: aString withItems: items selecting: selectedItems;
-		openBlockedDialogWithSpec 
+		openBlockedDialog
 ]
 
 { #category : #actions }
@@ -66,7 +66,7 @@ RBItemsSelectionPresenter >> columnName [
 
 { #category : #attributes }
 RBItemsSelectionPresenter >> columnSelector [ 
-	self shouldBeImplemented 
+	self shouldBeImplemented
 ]
 
 { #category : #accessing }
@@ -91,7 +91,7 @@ RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 		addButton: 'Cancel' do: [ :presenter | 
 			presenter
 				beCancel;
-				close ]        
+				close ]
 ]
 
 { #category : #initialization }
@@ -106,10 +106,10 @@ RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 	label label: aString.
 	
 	table items: coll1;
-		selectItems: coll2	
+		selectItems: coll2
 ]
 
 { #category : #accessing }
 RBItemsSelectionPresenter >> selectedItems [
-	^ selectedItems 
+	^ selectedItems
 ]

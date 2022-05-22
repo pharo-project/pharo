@@ -29,5 +29,4 @@ RFSenderReification >> genForRBMethodNode [
 			receiver: RBVariableNode thisContextNode
 			selector: #sender)
 		selector: #receiver.
-		
 ]

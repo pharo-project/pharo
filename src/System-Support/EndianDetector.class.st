@@ -40,7 +40,6 @@ EndianDetector class >> endianness [
 
 	EndianCache ifNil: [EndianCache := self calcEndianness].
 	^ EndianCache
-
 ]
 
 { #category : #'class initialization' }

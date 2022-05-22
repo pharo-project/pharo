@@ -137,6 +137,13 @@ FractionTest >> testCeiling [
 	self assert: (-3 / 2) ceiling equals: -1
 ]
 
+{ #category : #'tests - basic' }
+FractionTest >> testDenominator [
+	
+	self assert: (1 / 2) denominator  equals: 2.
+	self assert: 1 denominator  equals: 1.
+]
+
 { #category : #'tests - conversions' }
 FractionTest >> testFloor [
 	self assert: (3 / 2) floor equals: 1.
@@ -251,6 +258,13 @@ FractionTest >> testIvalidReadFrom [
 	self assert: (Fraction readFromString: '1 / 2') = 1 description: 'A space behind numerator interrupt decoding'.
 	self assert: (Fraction readFromString: '22.0/3') = 22 description: 'decimal point interrupt decoding'.
 	self assert: (Fraction readFromString: '23s0/3') = 23 description: 'scale specification interrupt decoding'.
+]
+
+{ #category : #'tests - basic' }
+FractionTest >> testNumerator [
+	
+	self assert: (1 / 2) numerator equals: 1.
+	self assert: 1 numerator equals: 1.
 ]
 
 { #category : #'tests - mathematical functions' }

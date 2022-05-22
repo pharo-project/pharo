@@ -9,7 +9,7 @@ Class {
 { #category : #tests }
 RGReadOnlyImageBackendTest >> backendClass [
 
-	^ RGReadOnlyImageBackend 
+	^ RGReadOnlyImageBackend
 ]
 
 { #category : #accessing }
@@ -59,8 +59,6 @@ RGReadOnlyImageBackendTest >> testBehaviorLocalMethods [
 	selectors := point ask localMethods collect: [ :each | each ask selector ].
 	self assert: (selectors allSatisfy: [:each | each isSymbol]).
 	self assert: selectors asSortedCollection equals: Point localSelectors asSortedCollection.
-	
-	
 ]
 
 { #category : #tests }
@@ -77,8 +75,6 @@ RGReadOnlyImageBackendTest >> testClassComment [
 	comment author notEmpty.
 	comment time > DateAndTime new.
 	comment time <= DateAndTime now.
-	
-	
 ]
 
 { #category : #tests }
@@ -101,8 +97,6 @@ RGReadOnlyImageBackendTest >> testClassTrait [
 	self assert: classTrait protocols asSortedCollection equals: RGTestTrait classTrait protocols asSortedCollection.
 	self assert: classTrait metaclass name equals: #MetaclassForTraits.
 	self assert: classTrait package name equals: 'Ring-Tests-Core'.
-	
-
 ]
 
 { #category : #tests }
@@ -126,11 +120,6 @@ RGReadOnlyImageBackendTest >> testDefaultEnvironmentContent [
 	env backend: (RGReadOnlyImageBackend for: env).
 	
 	self testDefaultContentFor: env.
-	
-			
-	
-	
-
 ]
 
 { #category : #tests }
@@ -209,9 +198,7 @@ RGReadOnlyImageBackendTest >> testLayouts [
 
 	layout := (WeakArray asRingMinimalDefinitionIn: env) layout.
 	self assert: layout isLayout.
-	self assert: layout isWeakLayout.				
-
-			
+	self assert: layout isWeakLayout.
 ]
 
 { #category : #tests }
@@ -269,8 +256,6 @@ RGReadOnlyImageBackendTest >> testSlots [
 	self assert: slot parent isLayout.
 	self assert: slot parent isFixedLayout.
 	self assert: slot parent parent name equals: #Point.
-	
-
 ]
 
 { #category : #tests }
@@ -324,7 +309,6 @@ RGReadOnlyImageBackendTest >> testTraitComposition [
 	self assert: traitComposition transformations first isRGObject.
 	
 	self assert: traitComposition parent traitComposition equals: traitComposition.
-	
 ]
 
 { #category : #tests }
@@ -340,10 +324,6 @@ RGReadOnlyImageBackendTest >> testTraitExclusions [
 	self assert: traitExclusion subject name equals: #Trait2.
 	self assert: traitExclusion exclusions size equals: 1.
 	self assert: traitExclusion exclusions first equals: #c.
-
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -361,7 +341,4 @@ RGReadOnlyImageBackendTest >> testUnknownSlots [
 	self assert: slot parent isLayout.
 	self assert: slot parent isFixedLayout.
 	self assert: slot parent parent name equals: #SlotExamplePerson.
-	
-	
-
 ]

@@ -22,7 +22,7 @@ MCFileTreeRepository >> asRingEnvironment [
 	anRGEnvironment clean.
 	anRGEnvironment behaviorsDo: [ :beh |
 		beh superclass == beh ifTrue: [ beh superclass: nil. ] ].			
-	^ anRGEnvironment 
+	^ anRGEnvironment
 ]
 
 { #category : #'*Ring-Monticello' }
@@ -47,5 +47,5 @@ MCFileTreeRepository >> asRingEnvironmentWith: packageNames [
 	anRGEnvironment clean.
 	anRGEnvironment behaviorsDo: [ :beh |
 		beh superclass == beh ifTrue: [ beh superclass: nil. ] ].			
-	^ anRGEnvironment 
+	^ anRGEnvironment
 ]

@@ -29,7 +29,7 @@ MetaLinkRegistryTest >> testPermaLinksForMethod [
 	|plinks|
 	plinks := registry permaLinksForMethod: ReflectivityExamples2Subclass>>#useInstVarInSubclass.
 	self assert: plinks size equals: 1.
-	self assert: plinks first identicalTo: permalink 
+	self assert: plinks first identicalTo: permalink
 ]
 
 { #category : #tests }
@@ -42,5 +42,5 @@ MetaLinkRegistryTest >> testSlotSourcesConsiderClassesHierarchy [
 	self assert: slotSources size equals: 1.
 	self
 		assert: slotSources asArray first
-		identicalTo: permalink slotOrVariable 
+		identicalTo: permalink slotOrVariable
 ]

@@ -25,8 +25,6 @@ RBRealizeClassParametrizedTest >> createAbstractClass [
 	(model classNamed: #RBFooLintRuleTestData) classSide
 		compile: 'foo ^ self subclassResponsibility'
 		classified: #(#accessing).
-	
-	
 ]
 
 { #category : #tests }
@@ -53,7 +51,7 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 		self shouldBeImplemented').
 	self assert: (class parseTreeFor: #viewResults) equals: 
 	(self parseMethod: 'viewResults
-		self shouldBeImplemented') 
+		self shouldBeImplemented')
 ]
 
 { #category : #tests }
@@ -70,7 +68,7 @@ RBRealizeClassParametrizedTest >> testRealizeClass [
 		self shouldBeImplemented').
 	self assert: (class parseTreeFor: #viewResults) equals: 
 	(self parseMethod: 'viewResults
-		self shouldBeImplemented') 
+		self shouldBeImplemented')
 ]
 
 { #category : #tests }
@@ -90,5 +88,5 @@ RBRealizeClassParametrizedTest >> testRealizeWithAbstractSubclass [
 		self shouldBeImplemented').
 	self assert: (class parseTreeFor: #viewResults) equals: 
 	(self parseMethod: 'viewResults
-		self shouldBeImplemented') 
+		self shouldBeImplemented')
 ]

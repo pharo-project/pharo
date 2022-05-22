@@ -154,7 +154,7 @@ RubShoutStylerDecorator >> styler [
 RubShoutStylerDecorator >> styler: aTextStyler [
 
 	styler := aTextStyler.
-	styler view: self.	
+	styler view: self.
 ]
 
 { #category : #editing }
@@ -180,7 +180,6 @@ RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 RubShoutStylerDecorator >> stylerStyledInBackground: styledCopyOfText [
 	text ifNil: [ ^self ].
 	self stylerStyled: styledCopyOfText.
-
 ]
 
 { #category : #accessing }

@@ -7,15 +7,13 @@ Class {
 { #category : #tests }
 MethodConstantTest >> constFromBlock: aBlock [
 
-	^aBlock asMethodConstant 
-
+	^aBlock asMethodConstant
 ]
 
 { #category : #tests }
 MethodConstantTest >> constFromReceiverExpression [
 
-	^DateAndTime now asMethodConstant 
-
+	^DateAndTime now asMethodConstant
 ]
 
 { #category : #tests }

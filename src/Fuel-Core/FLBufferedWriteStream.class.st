@@ -81,9 +81,6 @@ FLBufferedWriteStream >> copyWordObjectToBuffer: aWordObject [
 { #category : #accessing }
 FLBufferedWriteStream >> defaultBufferSize [
 	^ 8192 "2 raisedTo: 13  "
-	
-
-
 ]
 
 { #category : #accessing }
@@ -109,7 +106,6 @@ FLBufferedWriteStream >> flushBuffer [
 FLBufferedWriteStream >> flushBufferIfFull [
 	position = buffer size 
 		ifTrue: [ self flushBuffer ]
-
 ]
 
 { #category : #'initialize-release' }
@@ -140,14 +136,13 @@ FLBufferedWriteStream >> nextBytesPutAll: collection [
 			collection size > (self buffer size / 2)
 				ifTrue: [ stream nextBytesPutAll: collection ]
 				ifFalse: [ self nextBytesPutAll: collection ] ]
-
 ]
 
 { #category : #accessing }
 FLBufferedWriteStream >> nextPut: object [
 	self flushBufferIfFull.
 	position := position + 1.
-	self buffer at: position put: object 
+	self buffer at: position put: object
 ]
 
 { #category : #accessing }
@@ -162,7 +157,6 @@ FLBufferedWriteStream >> nextPutAll: collection [
 			collection size > (self buffer size / 2)
 				ifTrue: [ stream nextPutAll: collection ]
 				ifFalse: [ self nextPutAll: collection ] ]
-
 ]
 
 { #category : #writing }
@@ -199,5 +193,4 @@ FLBufferedWriteStream >> printOn: aStream [
 FLBufferedWriteStream >> sizeBuffer: size [
     buffer ifNotNil: [self flushBuffer].
     buffer := (stream isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]) new: size
-
 ]

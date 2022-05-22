@@ -12,7 +12,6 @@ Class {
 
 { #category : #accessing }
 ShiftAnonymousClassInstaller >> comment: newClass [
-
 ]
 
 { #category : #building }
@@ -31,10 +30,8 @@ ShiftAnonymousClassInstaller >> lookupOldClass [
 
 { #category : #notifications }
 ShiftAnonymousClassInstaller >> notifyChanges [
-	
 ]
 
 { #category : #notifications }
 ShiftAnonymousClassInstaller >> recategorize: newClass to: category [
-
 ]

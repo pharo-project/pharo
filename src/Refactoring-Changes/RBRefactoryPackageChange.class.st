@@ -12,7 +12,7 @@ Class {
 
 { #category : #converting }
 RBRefactoryPackageChange >> asUndoOperation [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }

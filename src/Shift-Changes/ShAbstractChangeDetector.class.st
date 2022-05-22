@@ -31,7 +31,7 @@ ShAbstractChangeDetector class >> compareClass: oldClass with: aBuilder [
 { #category : #testing }
 ShAbstractChangeDetector class >> isAbstract [
 
-	^ self == ShAbstractChangeDetector 
+	^ self == ShAbstractChangeDetector
 ]
 
 { #category : #accessing }
@@ -46,5 +46,5 @@ ShAbstractChangeDetector >> builder: anObject [
 
 { #category : #comparing }
 ShAbstractChangeDetector >> compareClass [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

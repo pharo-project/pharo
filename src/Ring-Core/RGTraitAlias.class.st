@@ -20,8 +20,7 @@ RGTraitAlias >> aliases [
 	| allAliases |
 	allAliases := OrderedCollection new.
 	self aliasesDo: [ :each | allAliases add: each].
-	^ allAliases 
-
+	^ allAliases
 ]
 
 { #category : #'accessing - backend' }
@@ -71,7 +70,6 @@ RGTraitAlias >> makeResolved [
 	super makeResolved.
 	
 	aliases := self aliases markAsRingResolved.
-
 ]
 
 { #category : #'queries - methods' }
@@ -87,7 +85,7 @@ RGTraitAlias >> pvtAddAlias: aSymbol [
 	aliases isRingResolved ifFalse: [ 
 		self pvtCleanAliases  ].
 	
-	aliases add: aSymbol.	
+	aliases add: aSymbol.
 ]
 
 { #category : #'private - backend access' }
@@ -114,8 +112,6 @@ RGTraitAlias >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#aliases -> aliases. 
 	}
-	
-	
 ]
 
 { #category : #'accessing - backend' }

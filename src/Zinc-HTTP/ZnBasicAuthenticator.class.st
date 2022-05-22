@@ -23,13 +23,6 @@ ZnBasicAuthenticator class >> defaultRealm [
 ]
 
 { #category : #'instance creation' }
-ZnBasicAuthenticator class >> new [
-	^ super new 
-		initialize;
-		yourself
-]
-
-{ #category : #'instance creation' }
 ZnBasicAuthenticator class >> username: username password: password [
 	^ self new
 		atUsername: username putPassword: password;

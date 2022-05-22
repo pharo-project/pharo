@@ -15,7 +15,6 @@ Class {
 { #category : #keymap }
 RubEditingMode class >> buildTabKeymapOn: aBuilder [
 	<keymap>
-	
 ]
 
 { #category : #menu }
@@ -56,7 +55,7 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 { #category : #menu }
 RubEditingMode class >> menuKeyword [
 	"Returns the name of the pragma to use to build the menu"
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -76,7 +75,7 @@ RubEditingMode >> editor [
 
 { #category : #accessing }
 RubEditingMode >> editorClass [
-	^ RubTextEditor 
+	^ RubTextEditor
 ]
 
 { #category : #initialization }
@@ -161,7 +160,6 @@ RubEditingMode >> unplug [
 			self textArea releaseEditor ].
 	self updateTextAreaWhenUnplugged.
 	textArea := nil.
-
 ]
 
 { #category : #initialization }
@@ -176,5 +174,4 @@ RubEditingMode >> updateTextAreaWhenPlugged [
 
 { #category : #initialization }
 RubEditingMode >> updateTextAreaWhenUnplugged [
-
 ]

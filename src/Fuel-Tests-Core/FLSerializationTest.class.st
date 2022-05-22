@@ -99,7 +99,6 @@ FLSerializationTest >> newClass [
 	^ self newSubclassOf: Object 
 		instanceVariableNames: '' 
 		classVariableNames: ''
-
 ]
 
 { #category : #'class-factory' }
@@ -151,7 +150,6 @@ FLSerializationTest >> resultOfSerializeAndMaterialize: anObject [
 
 	self serialize: anObject.
 	^ self materialized
-
 ]
 
 { #category : #running }
@@ -166,7 +164,6 @@ FLSerializationTest >> resultOfSerializeAndMaterializeMethod: aCompiledMethod [
 	self analyzer considerInternalMethod: aCompiledMethod. 
 	self serialize: aCompiledMethod.
 	^ self materialized
-
 ]
 
 { #category : #running }
@@ -180,7 +177,6 @@ FLSerializationTest >> resultOfSerializeAndMaterializeMethodDictionary: aMethodD
 FLSerializationTest >> serializationOf: anObject [ 
 	self streamFactory writeStreamDo: [:aStream |
 	^ serializer serialize: anObject on: aStream. ].
-
 ]
 
 { #category : #running }
@@ -222,7 +218,6 @@ FLSerializationTest >> setUp [
 { #category : #running }
 FLSerializationTest >> setUpClassFactory [
 	classFactory := FLPlatform current classFactoryForTestCaseClass new
-
 ]
 
 { #category : #running }

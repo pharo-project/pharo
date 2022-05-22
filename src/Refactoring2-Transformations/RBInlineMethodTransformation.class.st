@@ -184,7 +184,6 @@ RBInlineMethodTransformation >> isOverridden [
 		(each directlyDefinesMethod: aSelector)
 			ifTrue: [ ^ true ]].
 	^ false
-	
 ]
 
 { #category : #adding }

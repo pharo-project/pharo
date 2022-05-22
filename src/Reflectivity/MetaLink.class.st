@@ -147,19 +147,12 @@ MetaLink >> condition: aCondition [
 		methodNode := node methodNode.
 		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineCondition)
 			 ifTrue: [ methodNode method invalidate ] ].
-	
-
-	
-
 ]
 
 { #category : #'link api' }
 MetaLink >> condition: aCondition arguments: anArray [
 	self condition: aCondition.
 	conditionArguments := anArray.
-
-	
-
 ]
 
 { #category : #accessing }
@@ -170,7 +163,6 @@ MetaLink >> conditionArguments [
 { #category : #accessing }
 MetaLink >> control [
 	^control
-	
 ]
 
 { #category : #'link api' }
@@ -227,8 +219,6 @@ MetaLink >> enable [
 	self condition: (self condition originalLinkCondition)
 	"self hasReifiedCondition
 		ifTrue: [self condition enable]."
-	
-
 ]
 
 { #category : #testing }
@@ -270,7 +260,6 @@ MetaLink >> initialize [
 { #category : #installing }
 MetaLink >> installOn: aNode [ 
 	nodes add: aNode
-	
 ]
 
 { #category : #installing }
@@ -341,8 +330,6 @@ MetaLink >> metaObject: anObject [
 		methodNode := node methodNode.
 		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineMetaObject)
 			 ifTrue: [ methodNode method invalidate ] ].
-	
-	
 ]
 
 { #category : #accessing }
@@ -530,7 +517,6 @@ MetaLink >> removeNode: aNode [
 { #category : #accessing }
 MetaLink >> selector [
 	^selector
-	
 ]
 
 { #category : #'link api' }
@@ -548,7 +534,7 @@ MetaLink >> uninstall [
 	self linkInstaller uninstallFromAllAnonymousNodes: self.
 	self linkInstaller uninstallPermaLinkFor: self.
 	nodes do: [ :node | node removeLink: self ].
-	nodes removeAll 
+	nodes removeAll
 ]
 
 { #category : #'installing - link installer' }
@@ -566,5 +552,4 @@ MetaLink >> valueInContext: aBlock [
 		ifFalse: [ ^ self ].
 	process shiftLevelUp.
 	[aBlock value] rfEnsure: [process shiftLevelDown]
-	
 ]

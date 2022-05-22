@@ -89,7 +89,7 @@ RGBehaviorDefinition >> addInContainer: aRGContainer [
 	aRGContainer addClass: self
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> addMethod: aRGMethodDefinition [
 	"Adds aRGMethodDefinition in the methods dictionary.
 	 Adds the protocol of such method too"
@@ -107,7 +107,7 @@ RGBehaviorDefinition >> addMethod: aRGMethodDefinition in: aCollection [
 		put: aRGMethodDefinition
 ]
 
-{ #category : #'adding/removing protocols' }
+{ #category : #'adding-removing protocols' }
 RGBehaviorDefinition >> addProtocol: anObject [
 	"Adds a protocol named anObject.
 	Protocols are not repeated"
@@ -116,7 +116,7 @@ RGBehaviorDefinition >> addProtocol: anObject [
 	protocols add: anObject
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> addSelector: selectorName classified: protocolName sourced: source [
 
 	self addMethod: ((RGMethodDefinition named: selectorName) 
@@ -333,7 +333,6 @@ RGBehaviorDefinition >> isDefined [
 	"If the class exists in the environment"
 	
 	^self realClass notNil
-	
 ]
 
 { #category : #'managing container' }
@@ -411,7 +410,7 @@ RGBehaviorDefinition >> protocols: aCollection [
 RGBehaviorDefinition >> realClass [
 	"Retrieves the current class existing in the runtime environment"
 
-	^self rootEnvironment classNamed: self name 
+	^self rootEnvironment classNamed: self name
 ]
 
 { #category : #'managing container' }
@@ -420,7 +419,7 @@ RGBehaviorDefinition >> removeFromContainer: aRGContainer [
 	aRGContainer removeClass: self
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> removeMethod: aRGMethodDefinition [
 	"Removes aRGMethodDefinition from the methods dictionary"
 
@@ -434,14 +433,14 @@ RGBehaviorDefinition >> removeMethod: aRGMethodDefinition from: aCollection [
 	aCollection removeKey: aRGMethodDefinition selector ifAbsent:[]
 ]
 
-{ #category : #'adding/removing protocols' }
+{ #category : #'adding-removing protocols' }
 RGBehaviorDefinition >> removeProtocol: aString [
 	"Removes a protocol named aString (if exists)"
 
 	protocols remove: aString ifAbsent:[]
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 RGBehaviorDefinition >> removeSelector: selector [
 	"Removes a method named as selector"
 
@@ -560,7 +559,7 @@ RGBehaviorDefinition >> traitCompositionSource: anString [
 	"Stores aString representing the traits used by the receiver "
 
 	self annotationNamed: self class traitCompositionSourceKey
-		put: anString 
+		put: anString
 ]
 
 { #category : #accessing }

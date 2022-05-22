@@ -260,7 +260,7 @@ Monitor >> signalReallyAll [
 		self signalAllInQueue: queue].
 ]
 
-{ #category : #'waiting-basic' }
+{ #category : #'waiting - basic' }
 Monitor >> wait [
 	"Unconditional waiting for the default event.
 	The current process gets blocked and leaves the monitor, which means that the monitor
@@ -270,7 +270,7 @@ Monitor >> wait [
 	^ self waitMaxMilliseconds: nil
 ]
 
-{ #category : #'waiting-specific' }
+{ #category : #'waiting - specific' }
 Monitor >> waitFor: aSymbolOrNil [
 	"Unconditional waiting for the non-default event represented by the argument symbol.
 	Same as Monitor>>wait, but the process gets only reactivated by the specific event and 
@@ -279,7 +279,7 @@ Monitor >> waitFor: aSymbolOrNil [
 	^ self waitFor: aSymbolOrNil maxMilliseconds: nil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitFor: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitFor:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -288,7 +288,7 @@ Monitor >> waitFor: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	self waitInQueue: (self queueFor: aSymbolOrNil) maxMilliseconds: anIntegerOrNil.
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitFor: aSymbolOrNil maxSeconds: aNumber [
 	"Same as Monitor>>waitFor:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -301,7 +301,7 @@ Monitor >> waitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil [
 	self exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil.
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitMaxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>wait, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -309,7 +309,7 @@ Monitor >> waitMaxMilliseconds: anIntegerOrNil [
 	^ self waitFor: nil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitMaxSeconds: aNumber [
 	"Same as Monitor>>wait, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -317,7 +317,7 @@ Monitor >> waitMaxSeconds: aNumber [
 	^ self waitMaxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #'waiting-basic' }
+{ #category : #'waiting - basic' }
 Monitor >> waitUntil: aBlock [
 	"Conditional waiting for the default event.
 	See Monitor>>waitWhile: aBlock."
@@ -325,7 +325,7 @@ Monitor >> waitUntil: aBlock [
 	^ self waitUntil: aBlock for: nil
 ]
 
-{ #category : #'waiting-specific' }
+{ #category : #'waiting - specific' }
 Monitor >> waitUntil: aBlock for: aSymbolOrNil [
 	"Confitional waiting for the non-default event represented by the argument symbol.
 	See Monitor>>waitWhile:for: aBlock."
@@ -333,7 +333,7 @@ Monitor >> waitUntil: aBlock for: aSymbolOrNil [
 	^ self waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: nil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitUntil:for:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -341,7 +341,7 @@ Monitor >> waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	^ self waitWhile: [aBlock value not] for: aSymbolOrNil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitUntil: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	"Same as Monitor>>waitUntil:for:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -349,7 +349,7 @@ Monitor >> waitUntil: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	^ self waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitUntil: aBlock maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitUntil:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -357,7 +357,7 @@ Monitor >> waitUntil: aBlock maxMilliseconds: anIntegerOrNil [
 	^ self waitUntil: aBlock for: nil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitUntil: aBlock maxSeconds: aNumber [
 	"Same as Monitor>>waitUntil:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -365,7 +365,7 @@ Monitor >> waitUntil: aBlock maxSeconds: aNumber [
 	^ self waitUntil: aBlock maxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #'waiting-basic' }
+{ #category : #'waiting - basic' }
 Monitor >> waitWhile: aBlock [
 	"Conditional waiting for the default event.
 	The current process gets blocked and leaves the monitor only if the argument block
@@ -377,7 +377,7 @@ Monitor >> waitWhile: aBlock [
 	^ self waitWhile: aBlock for: nil
 ]
 
-{ #category : #'waiting-specific' }
+{ #category : #'waiting - specific' }
 Monitor >> waitWhile: aBlock for: aSymbolOrNil [
 	"Confitional waiting for the non-default event represented by the argument symbol.
 	Same as Monitor>>waitWhile:for:, but the process gets only reactivated by the specific 
@@ -386,7 +386,7 @@ Monitor >> waitWhile: aBlock for: aSymbolOrNil [
 	^ self waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: nil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitWhile:for:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -395,7 +395,7 @@ Monitor >> waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	self waitWhile: aBlock inQueue: (self queueFor: aSymbolOrNil) maxMilliseconds: anIntegerOrNil.
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitWhile: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	"Same as Monitor>>waitWhile:for:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -408,7 +408,7 @@ Monitor >> waitWhile: aBlock inQueue: anOrderedCollection maxMilliseconds: anInt
 	[aBlock value] whileTrue: [self exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil].
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitWhile: aBlock maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitWhile:, but the process gets automatically woken up when the 
 	specified time has passed."
@@ -416,7 +416,7 @@ Monitor >> waitWhile: aBlock maxMilliseconds: anIntegerOrNil [
 	^ self waitWhile: aBlock for: nil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting-timeout' }
+{ #category : #'waiting - timeout' }
 Monitor >> waitWhile: aBlock maxSeconds: aNumber [
 	"Same as Monitor>>waitWhile:, but the process gets automatically woken up when the 
 	specified time has passed."

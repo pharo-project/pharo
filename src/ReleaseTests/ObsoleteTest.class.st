@@ -27,7 +27,7 @@ ObsoleteTest >> tearDown [
 
 	classFactory cleanUp.
 	Smalltalk fixObsoleteReferences.
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
@@ -83,5 +83,4 @@ ObsoleteTest >> testTraitObsolete [
 	aTrait removeFromSystem.
 	self assert: aTrait isObsolete.
 	self deny: aClass isObsolete
-
 ]

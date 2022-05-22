@@ -163,7 +163,7 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 
 	self assert: self collectedAnnouncements size equals: 2.
 	self assert: self collectedAnnouncements second newClassDefinition equals: aClass.
-	self assert: self collectedAnnouncements first newClassDefinition equals: anotherClass.	
+	self assert: self collectedAnnouncements first newClassDefinition equals: anotherClass.
 ]
 
 { #category : #'tests - integration' }

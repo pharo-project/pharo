@@ -25,12 +25,11 @@ RubLineNumberDisplayer class >> menuOn: aBuilder [
 		keyText: 'f';
 		selector: #find;
 		iconName: #smallFindIcon
-
 ]
 
 { #category : #accessing }
 RubLineNumberDisplayer >> backgroundColor [
-	^ self paragraphProvider lineNumbersBackgroundColor 
+	^ self paragraphProvider lineNumbersBackgroundColor
 ]
 
 { #category : #geometry }
@@ -137,7 +136,7 @@ RubLineNumberDisplayer >> drawOnAthensCanvas: aCanvas [
 
 { #category : #accessing }
 RubLineNumberDisplayer >> fontToUse [
-	^ RubAbstractTextArea lineNumbersFont 
+	^ RubAbstractTextArea lineNumbersFont
 ]
 
 { #category : #menus }
@@ -177,13 +176,11 @@ RubLineNumberDisplayer >> menu [
 { #category : #menus }
 RubLineNumberDisplayer >> menuKeyword [ 
 	^ #RubLineNumberMenu
-	
 ]
 
 { #category : #geometry }
 RubLineNumberDisplayer >> minimumWidth [
-	^ (self fontToUse widthOfString: 'MM') + self horizontalGapAfter + self horizontalGapBefore + self  verticalSeparatorWidth 
-
+	^ (self fontToUse widthOfString: 'MM') + self horizontalGapAfter + self horizontalGapBefore + self  verticalSeparatorWidth
 ]
 
 { #category : #'event handling' }
@@ -205,7 +202,6 @@ RubLineNumberDisplayer >> mouseMove: anEvent [
 	line := self lines at: lineIndex.
 	anEvent setPosition: line topLeft.
 	self textArea mouseMove: anEvent
-
 ]
 
 { #category : #'event handling' }
@@ -215,7 +211,6 @@ RubLineNumberDisplayer >> mouseUp: anEvent [
 	line := self lines at: lineIndex.
 	anEvent setPosition: line topLeft.
 	self textArea mouseUp: anEvent.
-
 ]
 
 { #category : #accessing }
@@ -225,8 +220,7 @@ RubLineNumberDisplayer >> selectionColorToUse [
 
 { #category : #accessing }
 RubLineNumberDisplayer >> textColor [
-	^ self textArea lineNumbersTextColor 
-
+	^ self textArea lineNumbersTextColor
 ]
 
 { #category : #accessing }

@@ -25,6 +25,7 @@ RBRenameMethodParametrizedTest >> testExistingSelector [
 
 { #category : #'failure tests' }
 RBRenameMethodParametrizedTest >> testMultipleSelectors [
+	"Renaming a method with multiple selectors should raise warning"
 	self shouldWarn: (self createRefactoringWithArguments:  
 		{ #checkClass: . RBBasicLintRuleTestData . #foo: . (1 to: 1) })
 ]
@@ -55,7 +56,6 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	self assert: (class parseTreeFor: #checkClass1:) 
 		equals: (self parseMethod: 'checkClass1: aSmalllintContext 
 	^classBlock value: aSmalllintContext value: result').
-	
 ]
 
 { #category : #tests }

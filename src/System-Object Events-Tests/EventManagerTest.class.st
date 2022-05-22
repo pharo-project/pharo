@@ -70,7 +70,6 @@ EventManagerTest >> tearDown [
 	eventSource := nil.
 	eventListener := nil.
 	super tearDown.
-
 ]
 
 { #category : #'running - dependent action' }

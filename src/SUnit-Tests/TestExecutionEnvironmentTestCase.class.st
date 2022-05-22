@@ -11,13 +11,13 @@ Class {
 
 { #category : #testing }
 TestExecutionEnvironmentTestCase class >> isAbstract [ 
-	^self = TestExecutionEnvironmentTestCase 
+	^self = TestExecutionEnvironmentTestCase
 ]
 
 { #category : #running }
 TestExecutionEnvironmentTestCase >> createTestService [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -61,7 +61,6 @@ TestExecutionEnvironmentTestCase >> setUp [
 	testService enable.
 	executionEnvironment := TestExecutionEnvironment new.
 	executionEnvironment registerService: testService.
-
 ]
 
 { #category : #running }

@@ -70,7 +70,6 @@ SystemSettingsPersistenceTest >> tearDown [
 	
 	MockSettings cleanUp.
 	super tearDown.
-
 ]
 
 { #category : #tests }
@@ -140,25 +139,22 @@ SystemSettingsPersistenceTest >> testRealValueModification [
 	self rangeSettingNode realValue: 55.
 	self assert: self booleanSettingNode realValue equals: false.
 	self assert: self rangeSettingNode realValue equals: 55.
-
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testRealValues [
 	self assert: (systemSettings nodeNamed: #booleanSetting) realValue equals: true.
 	self assert: (systemSettings nodeNamed: #rangeSetting) realValue equals: 10.
-	
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testSettingNodeIdentifierForChildNode [
 	self assert: MockSettings cacheDirectorySettingNode settingNodeIdentifier equals: '#monticello#cacheDirectory'.
-	
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testSettingNodeIdentifierForRootNode [
-	self assert: MockSettings rangeSettingNode settingNodeIdentifier equals: '#rangeSetting'.	
+	self assert: MockSettings rangeSettingNode settingNodeIdentifier equals: '#rangeSetting'.
 ]
 
 { #category : #'tests - loading' }
@@ -198,7 +194,6 @@ SystemSettingsPersistenceTest >> testStoreIdentifier [
 	systemSettings storeIdentifier: MockSettings booleanSettingNode settingNodeIdentifier.
 	self assert: preferences exists.
 	self assert: preferences size > 0.
-	
 ]
 
 { #category : #'tests - storing' }
@@ -207,7 +202,6 @@ SystemSettingsPersistenceTest >> testStoreSettingNode [
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
 	self assert: preferences exists.
 	self assert: preferences size > 0.
-	
 ]
 
 { #category : #'tests - storing' }
@@ -235,7 +229,6 @@ SystemSettingsPersistenceTest >> testStoreSettingNodes [
 	self assert: preferences exists.
 	self assert: preferences size > 0.
 	self assert: preferences contents equals: MockSettings twoStoredSettingsSTONString
-
 ]
 
 { #category : #'tests - storing' }

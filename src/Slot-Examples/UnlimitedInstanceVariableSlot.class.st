@@ -32,7 +32,6 @@ UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
 		pushInstVar: baseSlot index;
 		pushLiteral: offset;
 		send: #at:
-			
 ]
 
 { #category : #'class building' }
@@ -55,7 +54,6 @@ UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
 	offset := unlimitedSlots indexOf: self
-
 ]
 
 { #category : #accessing }
@@ -66,7 +64,6 @@ UnlimitedInstanceVariableSlot >> offset [
 { #category : #'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> read: anObject [
 	^(baseSlot read: anObject) at: offset
-		
 ]
 
 { #category : #TODO }
@@ -82,5 +79,4 @@ UnlimitedInstanceVariableSlot >> todo [
 { #category : #'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> write: aValue to: anObject [
 	^(baseSlot read: anObject) at: offset put: aValue.
-	
 ]

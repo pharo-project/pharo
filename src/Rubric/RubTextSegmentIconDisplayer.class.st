@@ -14,12 +14,12 @@ RubTextSegmentIconDisplayer class >> key [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> backgroundColor [
-	^ self paragraphProvider lineNumbersBackgroundColor 
+	^ self paragraphProvider lineNumbersBackgroundColor
 ]
 
 { #category : #geometry }
 RubTextSegmentIconDisplayer >> computedWidthFrom: aRectangle [
-	^  (self horizontalGapBefore + self itemWidth + self horizontalGapAfter + self verticalSeparatorWidth) truncated 
+	^  (self horizontalGapBefore + self itemWidth + self horizontalGapAfter + self verticalSeparatorWidth) truncated
 ]
 
 { #category : #drawing }
@@ -101,7 +101,7 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> fontToUse [
-	^ RubAbstractTextArea lineNumbersFont 
+	^ RubAbstractTextArea lineNumbersFont
 ]
 
 { #category : #'event handling' }
@@ -113,9 +113,6 @@ RubTextSegmentIconDisplayer >> handleMouseOver: anEvent [
 	previouslyIn ifNotNil: [
 		previouslyIn showMouseHasLeaved.
 		previouslyIn := nil ].
-
-	
-
 ]
 
 { #category : #'event handling' }
@@ -199,7 +196,6 @@ RubTextSegmentIconDisplayer >> mouseEnter: anEvent in: aSegmentList [
 		ifTrue: [ ^ self ].
 	previouslyIn := aSegmentList first.
 	self invokeIconMenuOfSegments: aSegmentList event: anEvent.
-
 ]
 
 { #category : #'event handling' }
@@ -212,13 +208,12 @@ RubTextSegmentIconDisplayer >> mouseLeave: anEvent [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> textColor [
-	^ self textArea lineNumbersTextColor 
-
+	^ self textArea lineNumbersTextColor
 ]
 
 { #category : #structure }
 RubTextSegmentIconDisplayer >> topRendererOrSelf [
-	^self 
+	^self
 ]
 
 { #category : #accessing }

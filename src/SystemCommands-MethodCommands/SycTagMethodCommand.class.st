@@ -31,7 +31,6 @@ SycTagMethodCommand >> applyResultInContext: aToolContext [
 { #category : #accessing }
 SycTagMethodCommand >> defaultMenuIconName [
 	^#glamorousBrowse
-
 ]
 
 { #category : #accessing }

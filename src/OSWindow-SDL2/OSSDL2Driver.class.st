@@ -74,14 +74,14 @@ OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
 
 	self
-		traceCr: ('Game controller <1s> removed' expandMacrosWith: index)
+		traceCr: ('Game controller <1s> removed' expandMacrosWith: index asString)
 ]
 
 { #category : #private }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
 
-	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index)
+	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index asString)
 ]
 
 { #category : #'window creation and deletion' }
@@ -132,6 +132,10 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
 		osWindow setJustCreatedHandle: aBackendWindow.
 	].
+
+	"Workaround to https://github.com/pharo-project/pharo/issues/10981"
+	20 milliSeconds wait.
+
 	^ aBackendWindow
 ]
 

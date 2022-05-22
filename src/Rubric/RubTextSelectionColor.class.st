@@ -72,7 +72,7 @@ RubTextSelectionColor class >> secondarySelection [
 
 { #category : #'default accessing' }
 RubTextSelectionColor class >> theme [
-	^ UITheme current 
+	^ UITheme current
 ]
 
 { #category : #accessing }
@@ -83,13 +83,13 @@ RubTextSelectionColor >> backgroundColor [
 { #category : #accessing }
 RubTextSelectionColor >> backgroundColorBlock [
 
-	^ backgroundColorBlock 
+	^ backgroundColorBlock
 ]
 
 { #category : #accessing }
 RubTextSelectionColor >> backgroundColorBlock: aBlock [
 
-	 backgroundColorBlock := aBlock 
+	 backgroundColorBlock := aBlock
 ]
 
 { #category : #accessing }
@@ -135,5 +135,5 @@ RubTextSelectionColor >> textColor [
 
 { #category : #accessing }
 RubTextSelectionColor >> theme [
-	^ UITheme current 
+	^ UITheme current
 ]

@@ -139,7 +139,7 @@ CommandLineHandler >> activateHelpWithoutArguments [
 
 { #category : #accessing }
 CommandLineHandler >> allHandlers [ 
-	^ CommandLineHandler allHandlers 
+	^ CommandLineHandler allHandlers
 ]
 
 { #category : #'accessing - arguments' }
@@ -181,14 +181,14 @@ CommandLineHandler >> exitFailure [
 CommandLineHandler >> exitFailure: aMessage [ 
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
-	Exit signalFailure: aMessage 
+	Exit signalFailure: aMessage
 ]
 
 { #category : #utilities }
 CommandLineHandler >> exitSuccess [
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
-	Exit signalSuccess 
+	Exit signalSuccess
 ]
 
 { #category : #testing }
@@ -223,7 +223,6 @@ CommandLineHandler >> initialize [
 	self 
 		initializeStdout;
 		initializeStderr.
-	
 ]
 
 { #category : #initialization }

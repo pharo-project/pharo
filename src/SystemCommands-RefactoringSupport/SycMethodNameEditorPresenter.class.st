@@ -47,8 +47,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-SycMethodNameEditorPresenter class >> defaultSpec [
+{ #category : #layout }
+SycMethodNameEditorPresenter class >> defaultLayout [
 	<spec>
 	^ SpBoxLayout newTopToBottom
 		add:
@@ -94,22 +94,12 @@ SycMethodNameEditorPresenter class >> example2 [
 		canAddArgs: true
 ]
 
-{ #category : #'instance creation' }
-SycMethodNameEditorPresenter class >> newApplication: anApplication model: aModel [
-
-	^ self basicNew
-		application: anApplication;
-		setModelBeforeInitialization: aModel;
-		initialize;
-		yourself
-]
-
 { #category : #specs }
 SycMethodNameEditorPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
 	temp := self on: aMethod.
-	^ temp openBlockedDialogWithSpec
+	^ temp openBlockedDialog
 ]
 
 { #category : #specs }
@@ -120,7 +110,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 c
 	temp canRenameArgs: aBoolean1.
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
-	^ temp openBlockedDialogWithSpec
+	^ temp openBlockedDialog
 ]
 
 { #category : #specs }
@@ -132,20 +122,22 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	temp canRenameArgs: aBoolean1.
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
-	^ temp openBlockedDialogWithSpec
+	^ temp openBlockedDialog
 ]
 
 { #category : #specs }
 SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 canEditName: aBoolean4 [
+
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
-	|temp|
+
+	| temp |
 	temp := self on: aMethod.
-	temp invalidArgNames: aSet. 
+	temp invalidArgNames: aSet.
 	temp canRenameArgs: aBoolean1.
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
 	temp canEditName: aBoolean4.
-	^ temp openBlockedDialogWithSpec
+	^ temp openBlockedDialog
 ]
 
 { #category : #action }
@@ -308,7 +300,6 @@ SycMethodNameEditorPresenter >> getNewKeywordName [
 { #category : #services }
 SycMethodNameEditorPresenter >> getParametersOrder [
 	^ argumentsList items collect: [ :arg | arg newName ]
-	
 ]
 
 { #category : #initialization }
@@ -317,7 +308,9 @@ SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		initialExtent: 600 @ 300 ;
-		title: 'Method name editor : "', methodName selector ,'"'
+		title: 'Method name editor', (methodName selector 
+					ifNil: [ '' ] 
+					ifNotNil: [ :selector | ' : "', selector, '"' ])
 ]
 
 { #category : #initialization }
@@ -339,7 +332,6 @@ SycMethodNameEditorPresenter >> initializePresenter [
 	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
 		contextMenu: self argumentsListMenu.
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
-
 ]
 
 { #category : #initialization }

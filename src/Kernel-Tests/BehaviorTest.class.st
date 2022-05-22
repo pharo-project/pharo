@@ -25,6 +25,20 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 ]
 
 { #category : #tests }
+BehaviorTest >> testAllInstVarNames [
+
+	self assert: Point allInstVarNames equals: #( x y ).
+	"superclass ivars are first"
+	self assert: Association allInstVarNames equals: #( key value ).
+	"For now, allInstVarNames is implemented by returning all slot names. This has the be improved 
+	later: for ST80 compatibilty, we should have allInstVarNames just returning the indexed slots, 
+	while allInstanceVariableNames should return all"
+	self assert:
+		(SystemNavigation new allBehaviors allSatisfy: [ :behavior | 
+			 behavior allInstVarNames size = behavior allSlots size ])
+]
+
+{ #category : #tests }
 BehaviorTest >> testAllMethods [
 	| allMethods nonOverridenMethods |
 	allMethods := IdentitySet new

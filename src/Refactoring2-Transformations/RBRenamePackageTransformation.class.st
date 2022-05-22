@@ -45,8 +45,6 @@ RBRenamePackageTransformation >> buildTransformations [
 		renameManifestClass.
 		
 	^ transformations
-
-	
 ]
 
 { #category : #executing }
@@ -83,7 +81,6 @@ RBRenamePackageTransformation >> renameManifestClass [
 		model: self model
 		rename: manifest
 		to: (self manifestClassNameFor: newName)) ]
-
 ]
 
 { #category : #executing }

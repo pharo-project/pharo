@@ -80,7 +80,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 	targetClasses size = 1 ifTrue: [ ^ targetClasses first].
 
 	^[self browser searchDialog 
-			requestSingleObject: 'Where install new method?'
+			requestSingleObject: 'Where to install new method?'
 			from: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult) 
 			inScope: (ClyClassScope ofAll: targetClasses)]
 		on: CmdCommandAborted do: [:err | aBlock value ]

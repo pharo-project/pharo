@@ -31,5 +31,4 @@ BlockClosureTest >> testMemoizedLRUCache [
 	result := (1 to: 5) collect: factorial.
 	self assert: result equals: #(1 2 6 24 120).
 	self assert: cache testSupportGetCachedAssociations equals: { 3->6.   4->24.   5->120 }
-
 ]

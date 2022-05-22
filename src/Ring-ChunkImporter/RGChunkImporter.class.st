@@ -144,7 +144,6 @@ RGChunkImporter >> classNamed: className [
 	^ behavior 
 		ifNotNil: [ behavior ]
 		ifNil: [ self environment ensureClassNamed: className asSymbol. ]
-
 ]
 
 { #category : #accessing }
@@ -223,7 +222,6 @@ RGChunkImporter >> createBehavior: subclassName superclassName: superclassName i
 		transformations do: [ :each |
 			composition addTransformation: each ].
 		].
-	
 ]
 
 { #category : #private }
@@ -295,7 +293,6 @@ RGChunkImporter >> isNilSuperclassDefinition: ast [
 		and: [(ast statements second selector = #superclass:)
 		and: [(ast statements second arguments first value isNil)
 		and: [((ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver formattedCode)]]]]]]
-		
 ]
 
 { #category : #private }
@@ -375,7 +372,6 @@ RGChunkImporter >> visitClassCommentChunk: aChunk [
 	comment author: (RGStampParser authorForStamp: aChunk stamp).
 	comment time: (RGStampParser timeForStamp: aChunk stamp).
 	class comment: comment.
-	
 ]
 
 { #category : #visitor }
@@ -496,7 +492,7 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 			hasNilSuperclass: hasNilSuperclass.
 	].
 
-	doIts add: aChunk. 
+	doIts add: aChunk.
 ]
 
 { #category : #visitor }

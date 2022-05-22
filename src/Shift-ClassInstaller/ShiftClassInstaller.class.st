@@ -110,16 +110,13 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 		ifFalse: [ newClass classLayout slotScope parentScope: newClass superclass classLayout slotScope ].
 		
 	self assert: newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope.
-
 ]
 
 { #category : #initialization }
 ShiftClassInstaller >> initialize [
 	super initialize.
 	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new	
-	
-	
+	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
 ]
 
 { #category : #building }
@@ -251,7 +248,6 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 
 		newClass classPool rehash.
 	] valueUninterruptably
-
 ]
 
 { #category : #migrating }
@@ -268,7 +264,7 @@ ShiftClassInstaller >> migrateInstancesTo: newClass [
 
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true.
 	
-	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ] 
+	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ]
 ]
 
 { #category : #notifications }

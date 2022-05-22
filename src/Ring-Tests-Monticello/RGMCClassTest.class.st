@@ -15,14 +15,13 @@ RGMCClassTest >> testClassesWithTraits [
 	Smalltalk allClasses
 		select: [ :each | each isTrait not and: [each traits notEmpty or: [ each class traits notEmpty ]] ] 
 		thenDo: [ :each | self testClass: each ]
-	
 ]
 
 { #category : #tests }
 RGMCClassTest >> testNormalClass [
 	
 	"a class with instance variables, class variables and class instance variables"
-	self testClass: MCMockClassB 
+	self testClass: MCMockClassB
 ]
 
 { #category : #tests }

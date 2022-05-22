@@ -3,19 +3,13 @@ A PDPackageAnalyzerDiffTreeModel is to watch what are the difference between two
 "
 Class {
 	#name : #DAPackageAnalyzerDiffTreePresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'treeDiff',
 		'packageRelationGraphDiff'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
-
-{ #category : #specs }
-DAPackageAnalyzerDiffTreePresenter class >> defaultSpec [
-	<spec: #default>
-	^ SpecLayout composed newColumn: [ :col | col add: #treeDiff ] yourself
-]
 
 { #category : #'instance creation' }
 DAPackageAnalyzerDiffTreePresenter class >> newWith: oldRelationGraph on: newRelationGraph [
@@ -30,17 +24,23 @@ DAPackageAnalyzerDiffTreePresenter >> buildRoots [
 	self treeDiff whenBuiltDo: [ treeDiff rootNodeHolder: [ :item | DAPackageItemDiffNode new content: item ] ]
 ]
 
+{ #category : #specs }
+DAPackageAnalyzerDiffTreePresenter >> defaultLayout [
+	
+	^ SpBoxLayout newTopToBottom 
+		add: #treeDiff;
+		yourself
+]
+
 { #category : #protocol }
 DAPackageAnalyzerDiffTreePresenter >> extent [
 	^ 900@900
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerDiffTreePresenter >> initializeWidgets [
+DAPackageAnalyzerDiffTreePresenter >> initializePresenters [
 	
-	treeDiff := self newTree
-		multiSelection: true;
-		yourself.
+	treeDiff := self newTree.
 ]
 
 { #category : #initialization }
@@ -53,11 +53,6 @@ DAPackageAnalyzerDiffTreePresenter >> initializeWith: oldRelationGraph on: newRe
 	self buildRoots
 	
 	
-]
-
-{ #category : #'instance creation' }
-DAPackageAnalyzerDiffTreePresenter >> open [	
-	^ self openWithSpec
 ]
 
 { #category : #protocol }

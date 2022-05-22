@@ -50,6 +50,7 @@ FreeTypeExternalMemory >> primCopyToExternalMemory: aByteArray [
 
 	handle := ExternalAddress allocate: aByteArray size.
 	LibC memCopy: aByteArray to: handle size: aByteArray size.
+	aByteArray unpinInMemory
 ]
 
 { #category : #validation }

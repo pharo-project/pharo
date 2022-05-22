@@ -57,7 +57,6 @@ STONWriterTest >> testBag [
 	self 
 		assert: (self serialize: Bag new)
 		equals: 'Bag{}'
-
 ]
 
 { #category : #tests }
@@ -87,7 +86,6 @@ STONWriterTest >> testColor [
 	self 
 		assert: (self serialize: Color red lighter lighter) 
 		equals: 'Color{#red:1.0,#green:0.061,#blue:0.061,#alpha:1.0}'.
-
 ]
 
 { #category : #tests }
@@ -166,12 +164,12 @@ STONWriterTest >> testDoubleQuotedString [
 
 { #category : #tests }
 STONWriterTest >> testEmptyArrayPretty [
-	self assert: (self serializePretty: STON listClass new) equals: '[ ]' 
+	self assert: (self serializePretty: STON listClass new) equals: '[ ]'
 ]
 
 { #category : #tests }
 STONWriterTest >> testEmptyDictionaryPretty [
-	self assert: (self serializePretty: STON mapClass new) equals: '{ }' 
+	self assert: (self serializePretty: STON mapClass new) equals: '{ }'
 ]
 
 { #category : #tests }
@@ -353,7 +351,6 @@ STONWriterTest >> testReferenceSharingError [
 	self 
 		should: [ (serializer value: array) = '[[#one],[#one],[#one]]' ] 
 		raise: STONWriterError
-
 ]
 
 { #category : #tests }
@@ -376,7 +373,6 @@ STONWriterTest >> testRestrictedClassesInJsonMode [
 	self should: [ self serializeJson: 1@2 ] raise: STONWriterError.
 	self should: [ self serializeJson: #foo->100 ] raise: STONWriterError.
 	self should: [ self serializeJson: STONTestUser dummy ] raise: STONWriterError.
-
 ]
 
 { #category : #tests }
@@ -424,7 +420,6 @@ STONWriterTest >> testTime [
 	self assert: (self serialize: time) equals: 'Time[''06:30:15'']'.
 	time := Time hour: 6 minute: 30 second: 15 nanoSecond: 123.
 	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'.
-
 ]
 
 { #category : #tests }

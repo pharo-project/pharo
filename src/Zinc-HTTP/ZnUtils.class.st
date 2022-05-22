@@ -169,7 +169,7 @@ ZnUtils class >> readUpToEnd: inputStream limit: limit [
 
 { #category : #streaming }
 ZnUtils class >> signalProgress: amount total: total [
-	ZnSignalProgress enabled
+	(ZnCurrentOptions at: #signalProgress)
 		ifTrue: [ 
 			total 
 				ifNil: [ 

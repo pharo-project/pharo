@@ -7,5 +7,4 @@ OrderedDictionaryTest >> testAtRandom [
 	random := dict atRandom.
 	self assert: (#(1 2 3) includes: random).
 	self assert: (dict includes: random).
-	
 ]

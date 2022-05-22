@@ -20,13 +20,13 @@ Class {
 FLHeader >> addPostMaterializationAction: aCleanBlockClosure [
 	"The closure may (or not) have one parameter and it will be the materialization."
 	aCleanBlockClosure isClean ifFalse: [ self error: 'Post materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean' ].
-	postMaterializationActions add: aCleanBlockClosure 
+	postMaterializationActions add: aCleanBlockClosure
 ]
 
 { #category : #accessing }
 FLHeader >> addPreMaterializationAction: aCleanBlockClosure [
 	aCleanBlockClosure isClean ifFalse: [ self error: 'Pre materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean' ].
-	preMaterializationActions add: aCleanBlockClosure 
+	preMaterializationActions add: aCleanBlockClosure
 ]
 
 { #category : #accessing }
@@ -67,17 +67,15 @@ FLHeader >> isEmpty [
 { #category : #accessing }
 FLHeader >> materialization: aMaterialization [
 	"This is just set once the materialization had happened"
-	materialization := aMaterialization 
+	materialization := aMaterialization
 ]
 
 { #category : #accessing }
 FLHeader >> postMaterializationActions: listOfPostMaterializationActions [
 	postMaterializationActions := listOfPostMaterializationActions.
-	
 ]
 
 { #category : #accessing }
 FLHeader >> preMaterializationActions: listOfPreMaterializationActions [
 	preMaterializationActions := listOfPreMaterializationActions.
-	
 ]

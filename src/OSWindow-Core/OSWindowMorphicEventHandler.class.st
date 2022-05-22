@@ -99,9 +99,6 @@ OSWindowMorphicEventHandler >> activeHand [
 { #category : #converting }
 OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 
-	(self class simulateMiddleClick and: [anEvent button = 1 and: [ anEvent modifiers alt ]])
-		ifTrue: [ ^ MouseButtonEvent blueButton ].
-
 	anEvent button = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
 	anEvent button = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
 	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
@@ -112,14 +109,7 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	| buttons |
 	buttons := 0.
 	
-	"Alt/Option key"
-	modifiers alt ifTrue: [
-		"On windows and unix, treat alt key as command key"
-		buttons := Smalltalk os isWin32 | Smalltalk os isUnix
-			ifTrue: [ buttons | 2r01000000 ]
-			ifFalse: [ buttons | 2r00100000 ]
-	]. 
-	
+	modifiers alt ifTrue: [ buttons := buttons | 2r00100000 ]. "Alt key"
 	modifiers ctrl ifTrue: [ buttons := buttons | 2r00010000 ]. "Control key"
 	modifiers shift ifTrue: [ buttons := buttons | 8 ]. "Shift key"
 	modifiers cmd ifTrue: [ buttons := buttons | 2r01000000 ]. "Cmd key"

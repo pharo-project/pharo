@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 RubTextFieldMorph >> acceptOnCR [
-	^ acceptOnCR 
+	^ acceptOnCR
 ]
 
 { #category : #accessing }
@@ -34,7 +34,6 @@ RubTextFieldMorph >> acceptTextInModel [
 	That's bad but  some models don't return true of false"
 	result == true ifTrue: [ self closeChooser ].
 	^ result
-
 ]
 
 { #category : #drawing }
@@ -83,22 +82,22 @@ RubTextFieldMorph >> configureGhostText: aTextArea [
 
 	super configureGhostText: aTextArea.
 	aTextArea center: self scrollBounds center.
-	aTextArea left: self scrollBounds left 
+	aTextArea left: self scrollBounds left
 ]
 
 { #category : #compatibility }
 RubTextFieldMorph >> cursorEnd: aKeyboardEvent [ 
-	^ self textMorph editor cursorEnd: aKeyboardEvent 
+	^ self textMorph editor cursorEnd: aKeyboardEvent
 ]
 
 { #category : #defaults }
 RubTextFieldMorph >> defaultGhostTextMorph [
-	^ super defaultGhostTextMorph beNotWrapped 
+	^ super defaultGhostTextMorph beNotWrapped
 ]
 
 { #category : #protocol }
 RubTextFieldMorph >> disable [
-	self beReadOnly 
+	self beReadOnly
 ]
 
 { #category : #accessing }
@@ -111,7 +110,7 @@ RubTextFieldMorph >> encrypted: aBoolean [
 
 { #category : #accessing }
 RubTextFieldMorph >> entryCompletion [ 
-	^ entryCompletion 
+	^ entryCompletion
 ]
 
 { #category : #accessing }
@@ -151,7 +150,6 @@ RubTextFieldMorph >> focusChanged [
 	(self hasFocus or: [self chooserHasFocus])
 		ifFalse: [self closeChooser].
 	super focusChanged
-
 ]
 
 { #category : #'accessing - text area' }
@@ -191,13 +189,12 @@ RubTextFieldMorph >> initialize [
 RubTextFieldMorph >> keyboardFocusChange: aBoolean [
 	self closeChooser.
 	super keyboardFocusChange: aBoolean.
-
 ]
 
 { #category : #defaults }
 RubTextFieldMorph >> manageLayoutInBounds: aRectangle [
 	super manageLayoutInBounds: aRectangle.
-	self closeChooser 
+	self closeChooser
 ]
 
 { #category : #accessing }
@@ -273,7 +270,6 @@ RubTextFieldMorph >> textAreaClass [
 RubTextFieldMorph >> textChanged [
 	super textChanged.
 	self updateChooser.
-
 ]
 
 { #category : #geometry }
@@ -288,7 +284,7 @@ RubTextFieldMorph >> textFieldHeight [
 { #category : #'event handling' }
 RubTextFieldMorph >> updateChooser [
 	entryCompletion
-		ifNotNil: [  self openChooser ] 
+		ifNotNil: [  self openChooser ]
 ]
 
 { #category : #accessing }

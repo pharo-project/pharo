@@ -51,12 +51,13 @@ ZnDigestCredential >> authTokenForUrl: urlObject method: method [
 		nextPutAll: 'response="';
 		nextPutAll: (self responseForUrl: urlObject method: method);
 		nextPutAll: '", '.
-	self opaque isNil
-		ifFalse: [ 
+	self opaque
+		ifNotNil: [:opaqueValue | 
 			result
 				nextPutAll: 'opaque="';
-				nextPutAll: self opaque;
-				nextPutAll: '"' ].
+				nextPutAll: opaqueValue;
+				nextPutAll: '"'
+			].
 	^ result contents
 ]
 

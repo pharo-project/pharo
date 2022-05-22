@@ -94,7 +94,7 @@ RBVariableEnvironment class >> referencesToClassVariable: aSymbol in: aClass [
 	^ self 
 		on: self default
 		referencesToClassVariable: aSymbol 
-		in: aClass 
+		in: aClass
 ]
 
 { #category : #'instance creation' }
@@ -102,7 +102,7 @@ RBVariableEnvironment class >> referencesToInstanceVariable: aString in: aClass 
 	^ self
 		on: self default 
 		referencesToInstanceVariable: aString 
-		in: aClass 
+		in: aClass
 ]
 
 { #category : #'instance creation' }
@@ -110,7 +110,7 @@ RBVariableEnvironment class >> writersOfInstanceVariable: aString in: aClass [
 	^ self
 		on: self default
 		writersOfInstanceVariable: aString 
-		in: aClass 
+		in: aClass
 ]
 
 { #category : #private }

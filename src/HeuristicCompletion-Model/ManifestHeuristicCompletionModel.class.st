@@ -32,11 +32,6 @@ Class {
 }
 
 { #category : #'code-critics' }
-ManifestHeuristicCompletionModel class >> ruleReInspectorPresentationsNonlazyCodeV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#CoStaticBenchmarks #gtResultsTableIn: #false)) #'2020-03-26T14:49:28.1129+01:00') )
-]
-
-{ #category : #'code-critics' }
 ManifestHeuristicCompletionModel class >> ruleReSendsDifferentSuperRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'CoSystemEnvironment class' #forSmalltalkGlobals #true)) #'2020-03-26T14:29:31.095031+01:00') )
 ]

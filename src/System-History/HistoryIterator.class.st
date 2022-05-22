@@ -46,7 +46,6 @@ HistoryIterator >> addItem: anHistoryItem [
 { #category : #adding }
 HistoryIterator >> addRecord: anItem [
 	^ self addItem: anItem
-
 ]
 
 { #category : #accessing }
@@ -62,7 +61,6 @@ HistoryIterator >> at: anInteger put: anItem [
 { #category : #grouping }
 HistoryIterator >> closeGroup [
 	self recorder closeGroup
-
 ]
 
 { #category : #compatibility }
@@ -168,7 +166,6 @@ HistoryIterator >> nextList [
 HistoryIterator >> openGroup [
 	self recorder openGroup.
 	self updateIndex.
-
 ]
 
 { #category : #compatibility }
@@ -255,5 +252,4 @@ HistoryIterator >> updateIndex [
 	self size <= self maxSize
 		ifFalse: [self removeFirst].
 	index := self size.
-
 ]

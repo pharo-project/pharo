@@ -10,7 +10,7 @@ Class {
 
 { #category : #'context menu' }
 SycOpenContextMenuCommand >> cmCommandClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }

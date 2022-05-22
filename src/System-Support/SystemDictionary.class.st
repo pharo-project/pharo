@@ -74,9 +74,6 @@ SystemDictionary >> allClassesAndTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each class and trait in the system."
 	
 	^self classAndTraitNames do: [:each | aBlock value: (self at: each) ]
-	
-	
-
 ]
 
 { #category : #'accessing - classes and traits' }
@@ -132,7 +129,6 @@ SystemDictionary >> classAndTraitNames [
 	Do not bother to sort"
 	
 	^self classNames
-	
 ]
 
 { #category : #'accessing - classes and traits' }
@@ -281,6 +277,11 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
 	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
+]
+
+{ #category : #'accessing - variable lookup' }
+SystemDictionary >> lookupVar: name declare: aBoolean [
+	^ self lookupVar: name
 ]
 
 { #category : #'accessing - system attributes' }

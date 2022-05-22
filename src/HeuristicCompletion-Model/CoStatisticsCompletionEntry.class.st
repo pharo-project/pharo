@@ -31,7 +31,7 @@ CoStatisticsCompletionEntry >> = anEntry [
 	^ self contents = anEntry contents
 ]
 
-{ #category : #activating }
+{ #category : #activation }
 CoStatisticsCompletionEntry >> activateOn: aCoCompletionContext [ 
 	
 	| entry |

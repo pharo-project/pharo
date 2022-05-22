@@ -28,7 +28,6 @@ DummySoundSystem >> beepPrimitive [
 { #category : #playing }
 DummySoundSystem >> playSampledSound: samples rate: rate [
 	"Do nothing."
-	
 ]
 
 { #category : #playing }

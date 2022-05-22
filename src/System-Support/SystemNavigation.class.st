@@ -50,8 +50,6 @@ SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 
 	^ self environment allClasses
-
-	
 ]
 
 { #category : #query }
@@ -65,8 +63,6 @@ SystemNavigation >> allClassesAndTraits [
 SystemNavigation >> allClassesDo: aBlock [
 
 	^ self environment allClassesDo: aBlock
-
-	
 ]
 
 { #category : #query }
@@ -90,8 +86,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 	| binding|
 	binding := self environment bindingOf: aSymbol.
 	binding ifNil: [ ^ #() ].
-	^ self allReferencesTo: binding	
-	
+	^ self allReferencesTo: binding
 ]
 
 { #category : #query }
@@ -113,7 +108,6 @@ SystemNavigation >> allImplementorsOf: aSelector [
 { #category : #query }
 SystemNavigation >> allMethods [
 	^ self environment allMethods
-
 ]
 
 { #category : #query }
@@ -200,6 +194,14 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 	^ self allBehaviors flatCollect: [ :class | class whichMethodsReferTo: aVariablesBinding ]
 ]
 
+{ #category : #query }
+SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
+
+	Symbol selectorTable do: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
 	^self allReferencesTo: selector
@@ -228,25 +230,16 @@ SystemNavigation >> allSentMessages [
 
 { #category : #query }
 SystemNavigation >> allUnimplementedCalls [
-	"Answer an Array of each message that is sent by an expression in a  
-	method but is not implemented by any object in the system."
-	| aStream all |
-	all := self allImplementedMessages.
-	aStream := (Array new: 50) writeStream.
-	self
-		allBehaviorsDo: [:cl | cl
-				selectorsAndMethodsDo: [:sel :meth |
-					| secondStream ignored | 
-					secondStream := (String new: 5) writeStream.
-					ignored := (meth pragmaAt: #ignoreUnimplementedCalls:) 
-						ifNotNil: [ :pragma | (pragma argumentAt: 1)  ] 
-						ifNil: [ #() ].
-					meth messages
-						do: [:m | ((all includes: m) not and: [ (ignored includes: m) not])
-								ifTrue: [ secondStream nextPutAll: m; space ]].
-					secondStream position = 0
-						ifFalse: [aStream nextPut: cl name , ' ' , sel , ' calls: ' , secondStream contents]]].
-	^ aStream contents
+
+	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
+
+	^ self allMethods select: [ :meth | 
+		  | ignored |
+		  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
+			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
+			             ifNil: [ #(  ) ].
+		  meth messages anySatisfy: [ :m | 
+			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
 ]
 
 { #category : #query }
@@ -254,12 +247,12 @@ SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
 	
 	^ (selectorSet copyWithoutAll: self allSentMessages) 
-			select: [ :each | (self allCallsOn: each) isEmpty ]   
+			select: [ :each | (self allCallsOn: each) isEmpty ]
 ]
 
 { #category : #accessing }
 SystemNavigation >> environment [
-	^ environment 
+	^ environment
 ]
 
 { #category : #accessing }

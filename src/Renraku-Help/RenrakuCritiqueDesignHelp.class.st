@@ -10,7 +10,7 @@ Class {
 { #category : #pages }
 RenrakuCritiqueDesignHelp class >> actionRef [
 
-	^ self topicForClass: RePropertyAction 
+	^ self topicForClass: RePropertyAction
 ]
 
 { #category : #pages }

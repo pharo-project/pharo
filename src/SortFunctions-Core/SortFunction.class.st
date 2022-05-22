@@ -71,7 +71,7 @@ SortFunction >> collate: anObject1 with: anObject2 [
 	1 if anObject1 > anObject2
 	This assumes a total order in accordance with the mathematical law of trichotomy.
 	See also:  http://en.wikipedia.org/wiki/Three-way_comparison"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }

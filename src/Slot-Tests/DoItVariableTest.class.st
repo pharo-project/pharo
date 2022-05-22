@@ -13,7 +13,7 @@ DoItVariableTest >> readVarInDifferentContext: aVar [
 	self assert: aVar name equals: #temp.
 	
 	temp := #thisTemp.
-	^aVar readInContext: thisContext 
+	^aVar readInContext: thisContext
 ]
 
 { #category : #tests }

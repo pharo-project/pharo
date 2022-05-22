@@ -17,26 +17,6 @@ Class {
 	#category : #'Multilingual-Encodings-CharSets'
 }
 
-{ #category : #'character classification' }
-EncodedCharSet class >> canBeGlobalVarInitial: char [
-
-	| leadingChar |
-	leadingChar := char leadingChar.
-
-	leadingChar = 0 ifTrue: [^ self isUppercase: char].
-	^ self isLetter: char.
-]
-
-{ #category : #'character classification' }
-EncodedCharSet class >> canBeNonGlobalVarInitial: char [
-
-	| leadingChar |
-	leadingChar := char leadingChar.
-
-	leadingChar = 0 ifTrue: [^ self isLowercase: char].
-	^ self isLetter: char.
-]
-
 { #category : #'class methods' }
 EncodedCharSet class >> charsetAt: encoding [
 

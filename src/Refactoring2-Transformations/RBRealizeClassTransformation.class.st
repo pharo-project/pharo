@@ -35,7 +35,6 @@ RBRealizeClassTransformation >> preconditions [
 RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass.
 	self transform: self theClass classSide.
-
 ]
 
 { #category : #printing }

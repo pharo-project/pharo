@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 ReVarSearchSourceAnchor >> interval [
-	^ super interval allButLast 
+	^ super interval allButLast
 ]
 
 { #category : #private }

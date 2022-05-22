@@ -36,5 +36,4 @@ String >> asClassInEnvironment: anEnvironment ifAbsent: absentBlock [
 					description: [ self printString, ' is not a Class but an instance of a ', aClass class name ].
 				aClass ]
 			ifAbsent: absentBlock
-	
 ]

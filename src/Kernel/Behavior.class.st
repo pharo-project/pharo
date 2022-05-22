@@ -80,17 +80,17 @@ Behavior >> addObsoleteSubclass: aClass [
 	self basicObsoleteSubclasses at: self put: obs.
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelector: selector withMethod: compiledMethod [ 
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [ 
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the 
 	receiver's method dictionary.
@@ -98,10 +98,12 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
-	compiledMethod selector: selector
+	compiledMethod selector: selector.
+	"We record all selectors that are used as method names"
+	Symbol internSelector: selector
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> adoptInstance: anInstance [
 	"Change the class of anInstance to me.
 	Primitive (found in Cog and new VMs)  follows the same rules as primitiveChangeClassTo:, but returns the 	class rather than the modified instance"
@@ -464,7 +466,7 @@ Behavior >> byteSizeOfInstanceOfSize: basicSize [
 
 { #category : #'testing - method dictionary' }
 Behavior >> canPerform: selector [
-	"Answer whether the receiver can safely perform to the message whose selector 
+	"Answer whether the receiver's instances can safely perform to the message whose selector 
 	is the argument: it is not an abstract or cancelled method"
 
 	^ self classAndMethodFor: selector do: [:c :m | m isProvided] ifAbsent: [false].
@@ -472,7 +474,7 @@ Behavior >> canPerform: selector [
 
 { #category : #'testing - method dictionary' }
 Behavior >> canUnderstand: selector [
-	"Answer whether the receiver can respond to the message whose selector 
+	"Answer whether the receiver's instances can respond to the message whose selector 
 	is the argument."
 
 	^ self
@@ -1372,7 +1374,7 @@ Behavior >> removeSelector: aSelector [
 	self methodDict removeKey: aSelector ifAbsent: []
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> removeSelectorSilently: selector [ 
 	"Remove selector without sending system change notifications"
 

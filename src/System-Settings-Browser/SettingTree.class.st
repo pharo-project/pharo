@@ -25,8 +25,7 @@ Class {
 
 { #category : #'instance creation' }
 SettingTree class >> acceptableKeywords: aCollectionOfStrings [
-	^ self new acceptableKeywords: aCollectionOfStrings 
-
+	^ self new acceptableKeywords: aCollectionOfStrings
 ]
 
 { #category : #accessing }
@@ -59,7 +58,6 @@ SettingTree >> checkForUnknownTarget [
 	"check only root because other nodes with unknown target inherits it from its parent"
 	self settingTreeRoots do: [:node | node item target ifNil: [node item target: (node pragma ifNotNil: [:prg | prg methodClass instanceSide])]].
 	self settingTreeRoots do: [:node | node checkForUnknownTarget].
-
 ]
 
 { #category : #querying }
@@ -94,13 +92,12 @@ SettingTree >> deeplyDetect: aBlock [
 	self settingTreeRoots
 		do: [:sub | (sub deeplyDetect: aBlock)
 				ifNotNil: [:found | ^ found]].
-	^ nil 
+	^ nil
 ]
 
 { #category : #querying }
 SettingTree >> deeplySelect: aBlock [
 	^ self deeplySelect: aBlock in: OrderedCollection new
-
 ]
 
 { #category : #querying }
@@ -113,7 +110,6 @@ SettingTree >> deeplySelect: aBlock in: aCollection [
 { #category : #'private - tree building' }
 SettingTree >> emptyNodeNamed: aSymbol [
 	(self nodeNamed: aSymbol)
-
 ]
 
 { #category : #accessing }
@@ -143,7 +139,6 @@ SettingTree >> nodeList [
 { #category : #'private - tree building' }
 SettingTree >> nodeNamed: aSymbol [
 	^ self nodeNamed: aSymbol ifAbsent: []
-
 ]
 
 { #category : #'private - tree building' }
@@ -172,7 +167,6 @@ SettingTree >> retainedNodesFromList: aListOfNodes [
 { #category : #querying }
 SettingTree >> settingTreeRoots [
 	^ self retainedNodesFromList: ((self nodeList select: [:n | n parentName isNil]) asArray sort: self sortBlock) asOrderedCollection.
-
 ]
 
 { #category : #accessing }
@@ -193,7 +187,6 @@ SettingTree >> unclassified [
 { #category : #accessing }
 SettingTree >> updateList [
 	nodeList := nil.
-
 ]
 
 { #category : #persistence }

@@ -70,7 +70,8 @@ ClyMethodCodeEditorToolMorph >> attachToSystem [
 	browser system 
 		when: (ClyMethodChange of: self editingMethod)
 		send: #triggerUpdate
-		to: self
+		to: self.
+	SystemAnnouncer uniqueInstance weak when: ASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : #testing }
@@ -96,7 +97,8 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 	super buildLeftSideBar.
 
-	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self
+	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self.	
+	self leftSideBar enableMouseCommands: CmdTextLeftBarDoubleClickActivation withContextFrom: self
 ]
 
 { #category : #operations }
@@ -257,6 +259,12 @@ ClyMethodCodeEditorToolMorph >> modifiesExtension [
 { #category : #printing }
 ClyMethodCodeEditorToolMorph >> printContext [
 	^self editingMethod printSystemPath
+]
+
+{ #category : #initialization }
+ClyMethodCodeEditorToolMorph >> resetASTCache [
+	"when the AST cache is cleared, we have to rescue the AST we are looking at"
+	ASTCache default at: ast compiledMethod ifAbsentPut: ast
 ]
 
 { #category : #'selecting text' }

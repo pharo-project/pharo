@@ -39,7 +39,6 @@ SystemVersion class >> invalidBuildNumber [
 	"Return -1 to depict an invalid build number (allows to also accept 0 as build number)"
 	
 	^ -1
-
 ]
 
 { #category : #'instance creation' }
@@ -112,9 +111,7 @@ SystemVersion >> calculateHighestUpdate [
 	|result|
 	result := (major * 10000) + (minor * 1000).
 	self hasValidBuildNumber ifTrue: [ result := result + build ].
-	^result 
-	
-
+	^result
 ]
 
 { #category : #'accessing - properties' }
@@ -172,7 +169,7 @@ SystemVersion >> dottedMajorMinorPatch [
 SystemVersion >> hasMetadataIdentifiers [
 	"Return true if we have metadata identifiers (see rule 10 on semver.org) that need to be separated with a + sign"
 	
-	^self suffix notEmpty | self hasValidBuildNumber | self commitHash notEmpty 
+	^self suffix notEmpty | self hasValidBuildNumber | self commitHash notEmpty
 ]
 
 { #category : #testing }
@@ -185,9 +182,6 @@ SystemVersion >> hasValidBuildNumber [
 { #category : #compatibility }
 SystemVersion >> highestUpdate [
 	 ^highestUpdate ifNil: [ highestUpdate := self calculateHighestUpdate ].
-
-	
-
 ]
 
 { #category : #compatibility }

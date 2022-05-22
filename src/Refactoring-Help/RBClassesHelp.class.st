@@ -28,5 +28,5 @@ RBClassesHelp class >> buildClassHierarchyHelpFrom: aRootClass [
 
 { #category : #building }
 RBClassesHelp class >> rootHelpClass [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

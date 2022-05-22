@@ -92,9 +92,6 @@ RGMethod >> addoptToParentStub [
 	super addoptToParentStub.
 	self environment backend createUnresolvedClassGroupFor: self parent.
 	self parent pvtAddLocalMethod: self.
-	
-	
-
 ]
 
 { #category : #accessing }
@@ -108,8 +105,6 @@ RGMethod >> ast [
 	"Answer my AST with semantic analysis. See #parseTree."
 	
 	^ self propertyNamed: #ast ifAbsentPut: [ self parseTree doSemanticAnalysisIn: self methodClass ]
-
-
 ]
 
 { #category : #private }
@@ -217,7 +212,6 @@ RGMethod >> initialize [
 	package := self unresolvedValue: self parent package.
 	author := self unresolvedValue: self defaultAuthor.
 	time := self unresolvedValue: self defaultTime.
-	
 ]
 
 { #category : #initialization }
@@ -230,7 +224,6 @@ RGMethod >> initializeUnresolved [
 	package := self unresolvedValue: self parent package.
 	author := self unresolvedValue: self defaultAuthor.
 	time := self unresolvedValue: self defaultTime.
-	
 ]
 
 { #category : #accessing }
@@ -266,7 +259,7 @@ RGMethod >> isMethod [
 { #category : #'queries - tags' }
 RGMethod >> isTaggedWith: aSymbol [
 
-	^self tags includes: aSymbol 
+	^self tags includes: aSymbol
 ]
 
 { #category : #resolving }
@@ -305,7 +298,6 @@ RGMethod >> package: anRGPackage [
 	self environment addPackage: anRGPackage.
 	(self parent package = anRGPackage)
 		ifFalse: [ self package addExtensionMethod: self ].
-
 ]
 
 { #category : #accessing }
@@ -314,7 +306,6 @@ RGMethod >> parseTree [
 	^(RBParser 
 		parseMethod: self sourceCode 
 		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass.
-
 ]
 
 { #category : #printing }
@@ -335,7 +326,6 @@ RGMethod >> protocol [
 	^	methodTags
 		ifEmpty: [  self class asYetUnclassifiedProtocolName]
 		ifNotEmpty: [ methodTags sorted first ]
-
 ]
 
 { #category : #'accessing - backend' }
@@ -343,8 +333,6 @@ RGMethod >> protocol: aSymbol [
 
 	self cleanTagsWithoutAnnouncemnt.
 	self tagWith: aSymbol.
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -365,8 +353,6 @@ RGMethod >> pvtCleanTags [
 	tags := self defaultTags.
 		
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -393,8 +379,6 @@ RGMethod >> pvtResolvableProperties [
 		#time -> time. 
 		#tags -> tags. 
 	}
-	
-	
 ]
 
 { #category : #private }
@@ -413,7 +397,7 @@ RGMethod >> pvtSafeSourceCode [
 { #category : #private }
 RGMethod >> pvtSourceCode [
 
-	^ sourceCode 
+	^ sourceCode
 ]
 
 { #category : #private }
@@ -428,8 +412,7 @@ RGMethod >> pvtTagWith: aSymbol [
 	tags isRingResolved ifFalse: [ 
 		self pvtCleanTags  ].
 	
-	tags add: aSymbol.	
-	
+	tags add: aSymbol.
 ]
 
 { #category : #private }
@@ -457,8 +440,6 @@ RGMethod >> pvtUntagFrom: aSymbol [
 		ifTrue: [ tags remove: aSymbol ].
 	
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #removing }
@@ -508,7 +489,6 @@ RGMethod >> tagWith: aSymbol [
 		self backend forMethod tagMethod: self with: aSymbol.
 		self parent addMethodTag: aSymbol.
 	]
-
 ]
 
 { #category : #'accessing - model' }
@@ -518,7 +498,6 @@ RGMethod >> tags [
 	allTags := IdentitySet new.
 	self tagsDo: [ :each | allTags add: each].
 	^ allTags asArray
-
 ]
 
 { #category : #'accessing - backend' }

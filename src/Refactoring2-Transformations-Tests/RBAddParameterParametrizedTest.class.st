@@ -227,7 +227,6 @@ RBAddParameterParametrizedTest >> testPrimitiveMethods [
 	refactoring := self createRefactoringWithArguments:  
 		{ #at: . Object . #at:foo: . #(1 -1) . {newArg}}.
 	self shouldFail: refactoring.
-	
 ]
 
 { #category : #'failure tests' }

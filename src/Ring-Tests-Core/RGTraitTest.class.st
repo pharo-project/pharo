@@ -29,7 +29,6 @@ RGTraitTest >> testEnsureProtocol [
 	behavior ensureProtocolNamed: #SomeProtocol.
 	self assert: behavior protocols size equals: 1.
 	self assert: behavior protocols first equals: #SomeProtocol.
-	
 ]
 
 { #category : #tests }
@@ -80,9 +79,4 @@ RGTraitTest >> testTraitImplicitEnvironment [
 	trait := RGTrait unnamed.
 	self assert: (trait hasUnresolved: #name).
 	self checkImplicitSingleTraitEnvironmentOf: trait.
-	
-	
-	
-	
-
 ]

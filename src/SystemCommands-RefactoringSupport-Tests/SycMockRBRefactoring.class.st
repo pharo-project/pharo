@@ -1,17 +1,24 @@
+"
+I am a mock to emulate a RBRefactoring
+"
 Class {
 	#name : #SycMockRBRefactoring,
 	#superclass : #Object,
+	#instVars : [
+		'environment'
+	],
 	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }
 SycMockRBRefactoring >> environment [
-	^ self
+	^ environment
 ]
 
 { #category : #accessing }
 SycMockRBRefactoring >> environment: anEnvironement [
-	^ self
+	
+	environment := anEnvironement 
 ]
 
 { #category : #accessing }
@@ -21,12 +28,12 @@ SycMockRBRefactoring >> model [
 
 { #category : #accessing }
 SycMockRBRefactoring >> model: aRBNamespace [ 
-	^ self 	
+	^ self
 ]
 
 { #category : #accessing }
 SycMockRBRefactoring >> primitiveExecute [ 
-	^self 
+	^self
 ]
 
 { #category : #accessing }

@@ -55,7 +55,7 @@ RenrakuBaseTestCase >> tearDown [
 	self tearDownscreamerRule.
 	testPackage unregister.
 	testPackage := nil.	
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #running }

@@ -13,11 +13,6 @@ RGPoolVariableTest >> testPoolVariableImplicitEnvironment [
 	self assert: (poolVariable hasUnresolved: #name).
 	self assert: (poolVariable parent isClass).
 	self checkImplicitSingleClassEnvironmentOf: poolVariable parent.
-	
-	
-	
-	
-
 ]
 
 { #category : #tests }

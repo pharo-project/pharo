@@ -72,7 +72,6 @@ RBClassTest >> testDefinesTraitMethod [
 	trait := rbNamespace classNamed: #Trait2.
 	self assert: (user methodFor: #c2) modelClass equals: trait.
 	self assert: (user methodFor: #c) modelClass equals: trait.
-	
 ]
 
 { #category : #'method tests' }

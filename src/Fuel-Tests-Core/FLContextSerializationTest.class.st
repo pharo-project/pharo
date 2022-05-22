@@ -80,8 +80,6 @@ FLContextSerializationTest >> testContextWithClosure [
 	context1 := self class blockClosureContextTesting.
 	materializedContext1 := self resultOfSerializeAndMaterialize: context1.
 	context1 assertWellMaterializedInto: materializedContext1 in: self.
-	
-
 ]
 
 { #category : #tests }
@@ -100,8 +98,6 @@ FLContextSerializationTest >> testContextWithClosureAndSender [
 	context2 := self class blockClosureContextTestingWithSender: context1.
 	materializedContext2 := self resultOfSerializeAndMaterialize: context2.
 	context2 assertWellMaterializedInto: materializedContext2 in: self.
-	
-
 ]
 
 { #category : #tests }

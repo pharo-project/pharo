@@ -18,7 +18,6 @@ STONTestUser2 >> fromSton: stonReader [
 		key = #username ifTrue: [ username := value ].
 		key = #password ifTrue: [ password := value ].
 		key = #enabled ifTrue: [ enabled := value ] ]
-	
 ]
 
 { #category : #'ston-core' }

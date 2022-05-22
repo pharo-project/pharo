@@ -15,7 +15,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'socketStreamClass',
-		'secureSocketStreamClass'
+		'secureSocketStreamClass',
+		'sslSessionClass'
 	],
 	#classVars : [
 		'Default',
@@ -174,7 +175,8 @@ ZnNetworkingUtils >> httpProxyUser [
 ZnNetworkingUtils >> initialize [
 	super initialize.
 	self socketStreamClass: (Smalltalk globals at: #ZdcSocketStream ifAbsent: [ SocketStream ]).
-	self secureSocketStreamClass: (Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ])
+	self secureSocketStreamClass: (Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ]).	
+	self sslSessionClass: (Smalltalk globals at: #ZdcPluginSSLSession ifAbsent: [ nil ]).
 ]
 
 { #category : #proxy }
@@ -322,7 +324,9 @@ ZnNetworkingUtils >> socketStreamToUrl: url [
 { #category : #public }
 ZnNetworkingUtils >> socketStreamToUrlDirectly: url [
 	| stream address |
-	address := NetNameResolver addressForName: url host timeout: self timeout. 
+	address := NetNameResolver addressForName: url host timeout: self timeout.
+	(address isNil or: [ address = SocketAddress zero ])
+		ifTrue: [ ^ NameLookupFailure signalFor: url host ].
 	stream := (self streamClassForScheme: url scheme) 
 		openConnectionToHost: address
 		port: url portOrDefault
@@ -330,6 +334,17 @@ ZnNetworkingUtils >> socketStreamToUrlDirectly: url [
 	self setSocketStreamParameters: stream. 
 	"note that for TLS/SSL, #connect should be called"
 	^ stream
+]
+
+{ #category : #accessing }
+ZnNetworkingUtils >> sslSessionClass [
+	^ sslSessionClass ifNil: [ 
+		sslSessionClass := Smalltalk globals at: #ZdcPluginSSLSession ifAbsent: [ nil ] ]
+]
+
+{ #category : #'initialize-release' }
+ZnNetworkingUtils >> sslSessionClass: anObject [
+	sslSessionClass := anObject
 ]
 
 { #category : #accessing }

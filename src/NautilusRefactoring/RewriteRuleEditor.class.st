@@ -15,8 +15,8 @@ Class {
 	#category : #'NautilusRefactoring-Utilities'
 }
 
-{ #category : #specs }
-RewriteRuleEditor class >> defaultSpec [
+{ #category : #layout }
+RewriteRuleEditor class >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
 		add: (SpBoxLayout newTopToBottom
@@ -44,8 +44,9 @@ RewriteRuleEditor class >> menuCommandOn: aBuilder [
 
 { #category : #examples }
 RewriteRuleEditor class >> open [
+
 	<example>
-	^self new openWithSpec
+	^ self new open
 ]
 
 { #category : #initialization }

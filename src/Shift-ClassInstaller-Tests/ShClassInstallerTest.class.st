@@ -101,7 +101,6 @@ ShClassInstallerTest >> testChangingHierarchy [
 	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
 	self assert: superClass classLayout slotScope parentScope equals: superClass2 classLayout slotScope.	
 	self assertCollection: (newClass allSlots collect: [:each | each name]) hasSameElements: #(aSlot anotherSlot)
-
 ]
 
 { #category : #tests }
@@ -133,7 +132,6 @@ ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
 	self assertCollection: superClass subclasses equals: { superClass2 }. 
 	self assert: subClass superclass equals: superClass2.
 	self assert: superClass2 superclass equals: superClass
-
 ]
 
 { #category : #tests }
@@ -210,7 +208,6 @@ ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 	
 	self assert: (newClass2 class hasSlotNamed: #aClassInstanceVariable).
 	self assert: (newClass2 class slotNamed: #aClassInstanceVariable) class equals: InstanceVariableSlot
-	
 ]
 
 { #category : #tests }
@@ -223,7 +220,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 	
 	self assert: (newClass2 includesSelector: #m1).
-	self assert: (newClass2 class includesSelector: #m2)	
+	self assert: (newClass2 class includesSelector: #m2)
 ]
 
 { #category : #tests }
@@ -234,7 +231,6 @@ ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 	
 	self assert: (newClass2 hasSlotNamed: #anInstanceVariable).
 	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot
-	
 ]
 
 { #category : #tests }
@@ -292,7 +288,6 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 
 	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
 	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'
-
 ]
 
 { #category : #tests }
@@ -320,7 +315,6 @@ ShClassInstallerTest >> testModifyingSuperclass [
 	newClass new instVarNamed: #anInstanceVariable.	
 	superClass new instVarNamed: #otherVariable.
 	newClass new instVarNamed: #otherVariable
-
 ]
 
 { #category : #tests }
@@ -341,7 +335,6 @@ ShClassInstallerTest >> testModifyingSuperclassInOtherOrder [
 
 	self assert: (obj instVarNamed: #anInstanceVariable) equals: 7.
 	self assert: (obj instVarNamed: #anSubInstanceVariable) equals: 17
-
 ]
 
 { #category : #tests }
@@ -358,8 +351,7 @@ ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 
 	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
 
-	self assert: obj isReadOnlyObject	
-
+	self assert: obj isReadOnlyObject
 ]
 
 { #category : #tests }
@@ -379,6 +371,5 @@ ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
 
 	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
 	
-	self assert: obj isReadOnlyObject	
-
+	self assert: obj isReadOnlyObject
 ]

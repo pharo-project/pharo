@@ -17,7 +17,6 @@ FLHeaderSerializationTest >> testAdditionalObjects [
 
 	self assert: (self materialization additionalObjectAt: #test) equals: 'test'.
 	self assert: (self materialization additionalObjectAt: 42) equals: 68.
-	
 ]
 
 { #category : #tests }
@@ -30,7 +29,6 @@ FLHeaderSerializationTest >> testJustMaterializeHeader [
 	
 	self assert: (self materializationHeader additionalObjectAt: #test) equals: 'test'.
 	self assert: (self materializationHeader additionalObjectAt: 42) equals: 68.
-	
 ]
 
 { #category : #tests }

@@ -9,8 +9,6 @@ CompiledMethod >> hasTemporaryVariableNamed: aName [
 CompiledMethod >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
 	^self sourceNode scope lookupVar: aName
-
-
 ]
 
 { #category : #'*Slot-Core' }

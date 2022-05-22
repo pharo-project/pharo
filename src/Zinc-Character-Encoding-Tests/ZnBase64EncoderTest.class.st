@@ -55,6 +55,21 @@ ZnBase64EncoderTest class >> benchmarks [
 ]
 
 { #category : #testing }
+ZnBase64EncoderTest >> testCustomAlphabetFullSpectrum [
+	| encoder input output |
+	encoder := ZnBase64Encoder new.
+	encoder standardAlphabetWith: $- and: $_.
+	encoder noPadding; beLenient. 
+	input := (0 to: 255) asByteArray , (255 to: 0) asByteArray.
+	output := encoder encode: input.
+	self assert: (encoder decode: output) equals: input.
+	encoder breakLines.
+	output := encoder encode: input.
+	self assert: (encoder decode: output) equals: input.
+
+]
+
+{ #category : #testing }
 ZnBase64EncoderTest >> testCustomLineBreaking [
 	| encoder input output charCount |
 	encoder := ZnBase64Encoder new.
@@ -129,7 +144,12 @@ ZnBase64EncoderTest >> testPadding [
 	self assert: (encoder encode: 'M' asByteArray) equals: 'TQ=='.
 	self assert: (encoder decode: 'TQ==') equals: 'M' asByteArray.
 	self assert: (encoder encode: 'Ma' asByteArray) equals: 'TWE='.
-	self assert: (encoder decode: 'TWE=') equals: 'Ma' asByteArray
+	self assert: (encoder decode: 'TWE=') equals: 'Ma' asByteArray.
+	encoder noPadding; beLenient.
+	self assert: (encoder encode: 'M' asByteArray) equals: 'TQ'.
+	self assert: (encoder decode: 'TQ') equals: 'M' asByteArray.
+	self assert: (encoder encode: 'Ma' asByteArray) equals: 'TWE'.
+	self assert: (encoder decode: 'TWE') equals: 'Ma' asByteArray.
 ]
 
 { #category : #testing }

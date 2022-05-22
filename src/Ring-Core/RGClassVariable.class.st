@@ -27,7 +27,6 @@ RGClassVariable >> definitionString [
 	"TODO: special class variables?"
 
 	^ self name printString
-
 ]
 
 { #category : #testing }

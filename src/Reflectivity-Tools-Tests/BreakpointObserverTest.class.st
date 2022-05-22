@@ -66,7 +66,6 @@ BreakpointObserverTest >> testNotifyBreakpointHit [
 	self assert: observer tag class equals: BreakpointHit.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assert: observer tag valueOrNil isNil
-	
 ]
 
 { #category : #tests }

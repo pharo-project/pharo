@@ -38,7 +38,6 @@ FLBasicSerializationTest >> testAllRangeOfIntegers [
 	1 to: 100 do: [:shift |
 		self assertSerializationEqualityOrIdentityOf: 1 << shift.
 		self assertSerializationEqualityOrIdentityOf: 0 - (1 << shift) ]
-
 ]
 
 { #category : #'tests-collections' }
@@ -46,9 +45,6 @@ FLBasicSerializationTest >> testArray [
 	self assertSerializationEqualityOf: #(1).
 	self assertSerializationEqualityOf: #(10 20).
 	self assertSerializationEqualityOf: #(1 2 3 #('Hello' 2 3)).
-	
-
-
 ]
 
 { #category : #tests }
@@ -126,7 +122,6 @@ FLBasicSerializationTest >> testClassSideCompiledMethod [
 	"They should be considered as globals by default."
 	
 	self assertSerializationIdentityOf: FLGlobalSendMock class >> #newInstanceToSerialize
-
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
@@ -141,7 +136,6 @@ FLBasicSerializationTest >> testColor [
 
 	self assertSerializationEqualityOf: Color blue.
 	self assertSerializationEqualityOf: Color black.
-	
 ]
 
 { #category : #'tests-collections' }
@@ -155,7 +149,6 @@ FLBasicSerializationTest >> testCompiledMethod [
 	"They should be considered as globals by default."
 	
 	self assertSerializationIdentityOf: FLPair >> #left
-
 ]
 
 { #category : #'tests-globals' }
@@ -172,7 +165,6 @@ FLBasicSerializationTest >> testConsiderCustomGlobal [
 		testingEnvironment at: globalKey put: aPerson.
 		self assertSerializationIdentityOf: aPerson.
 	] ensure: [ testingEnvironment removeKey: globalKey ]
-
 ]
 
 { #category : #'tests-globals' }
@@ -193,7 +185,6 @@ FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 			raise: Error
 	] ensure: [ 
 		testingEnvironment removeKey: aWideSymbol ].
-
 ]
 
 { #category : #'tests-cycles' }
@@ -267,11 +258,6 @@ FLBasicSerializationTest >> testDate [
 	self assertSerializationEqualityOf: (Date today).
 	self assertSerializationEqualityOf: (Date year: 3050 month: 12 day: 31).
 	self assertSerializationEqualityOf: (Date year: 1600 month: 12 day: 31).
-	 
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -326,7 +312,6 @@ FLBasicSerializationTest >> testDateOffsets [
 	self assert: object start offset equals: 0 hours.
 	materialized := self resultOfSerializeAndMaterialize: object.
 	self assert: materialized start offset equals: 0 hours
-	
 ]
 
 { #category : #tests }
@@ -346,7 +331,6 @@ FLBasicSerializationTest >> testDateOffsetsChanging [
 	object := Date fromDays: 37023.
 	self assert: object start offset equals: 0 hours.
 	self assert: self materialized start offset equals: 0 hours
-	
 ]
 
 { #category : #'tests-collections' }
@@ -377,8 +361,6 @@ FLBasicSerializationTest >> testDuration [
 		Duration 
 			seconds: 3 
 			nanoSeconds: 35).
-	
-
 ]
 
 { #category : #'tests-collections' }
@@ -415,8 +397,6 @@ FLBasicSerializationTest >> testExceptions [
 	
 	ex := (Notification new messageText: 'sample notification').
 	self assert: (self resultOfSerializeAndMaterialize: ex) messageText equals: ex messageText.
-	
-
 ]
 
 { #category : #'tests-fuelAfterMaterialization' }
@@ -467,10 +447,7 @@ FLBasicSerializationTest >> testFraction [
 	self assertSerializationEqualityOf: (-4 / -3).
 	self assertSerializationEqualityOf: (4 / -3).	
 	self assertSerializationIdentityOf: (0-0 / -3).	
-	self assertSerializationEqualityOf: 0-(1001/1000).	
-
-
-
+	self assertSerializationEqualityOf: 0-(1001/1000).
 ]
 
 { #category : #'tests-graph-modification' }
@@ -502,7 +479,6 @@ FLBasicSerializationTest >> testGlobalClass [
 	"A class should be global by default."
 	
 	self assertSerializationIdentityOf: Integer.
-
 ]
 
 { #category : #'tests-globals' }
@@ -510,7 +486,6 @@ FLBasicSerializationTest >> testGlobalMetaclass [
 	"A metaclass should be global by default."
 	
 	self assertSerializationIdentityOf: Integer class.
-
 ]
 
 { #category : #'tests-not-so-basic' }
@@ -527,7 +502,6 @@ FLBasicSerializationTest >> testInterval [
 	self assertSerializationEqualityOf: (1 to: 10 by: 2).
 	self assertSerializationEqualityOf: (33333333333333331 to: 1444444444444444440 by: 2).
 	self assertSerializationEqualityOf: (0 to: 1 by: 2).
-	
 ]
 
 { #category : #'tests-numbers' }
@@ -542,7 +516,6 @@ FLBasicSerializationTest >> testLargePositiveInteger [
 
 	self assertSerializationEqualityOf: 354314316134313999999999.
 	self assertSerializationEqualityOf: 100 factorial.
-	
 ]
 
 { #category : #tests }
@@ -564,7 +537,6 @@ FLBasicSerializationTest >> testLotsOfNils [
 { #category : #'tests-collections' }
 FLBasicSerializationTest >> testMethodDictionary [
 	self resultOfSerializeAndMaterializeMethodDictionary: FLPair methodDict.
-	
 ]
 
 { #category : #'tests-collections' }
@@ -623,7 +595,6 @@ FLBasicSerializationTest >> testPoint [
 	self assertSerializationEqualityOf: -10@ -20.
 	self assertSerializationEqualityOf: 1.1@2.2.
 	self assertSerializationEqualityOf: 1.1@ -2.2.
-	
 ]
 
 { #category : #'tests-streams' }
@@ -681,7 +652,6 @@ FLBasicSerializationTest >> testRemoteString [
 FLBasicSerializationTest >> testRunArray [
 
 	self assertSerializationEqualityOf: (RunArray runs: #(1 2 1) values: #(1 2 3))
-
 ]
 
 { #category : #'tests-numbers' }
@@ -694,7 +664,6 @@ FLBasicSerializationTest >> testScaledDecimal [
 	self assertSerializationEqualityOf: (-0/9007199254740992s8).
 	self assertSerializationEqualityOf: ((13 / 11) asScaledDecimal: 6).
 	self assertSerializationEqualityOf: ((11 / 13) asFloat asScaledDecimal).
-
 ]
 
 { #category : #'tests-collections' }
@@ -751,21 +720,18 @@ FLBasicSerializationTest >> testSmallInteger [
 	self assertSerializationIdentityOf: 0.
 	self assertSerializationIdentityOf: 1111.
 	self assertSerializationIdentityOf: SmallInteger one.
-
-
 ]
 
 { #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerMaxValue [
 
 	self assertSerializationIdentityOf: SmallInteger maxVal .
-	
 ]
 
 { #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerMinValue [
 
-	self assertSerializationIdentityOf: SmallInteger minVal 
+	self assertSerializationIdentityOf: SmallInteger minVal
 ]
 
 { #category : #'tests-numbers' }
@@ -786,8 +752,6 @@ FLBasicSerializationTest >> testSmallIntegerSerializationForAllBits [
 			integer := 0 - integer.
 			integer isLarge ifFalse: [
 				self assertSerializationIdentityOf: integer ] ]
-
-
 ]
 
 { #category : #'tests-globals' }
@@ -804,8 +768,6 @@ FLBasicSerializationTest >> testString [
 	self assertSerializationEqualityOf:  'Hi, I''m String-object'.
 	self assertSerializationEqualityOf:  String new.
 	self assertSerializationEqualityOf:  (0 to: 255) asByteArray asString.
-	
-
 ]
 
 { #category : #'tests-strings' }
@@ -855,7 +817,6 @@ FLBasicSerializationTest >> testUUID [
 	self assertSerializationEqualityOf: (UUID fromString: 'a3b64357-377a-5b41-b575-1c653084a121').
 	self assertSerializationEqualityOf: UUID nilUUID.
 	self assertSerializationEqualityOf: UUID new.
-	
 ]
 
 { #category : #tests }

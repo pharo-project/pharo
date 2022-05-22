@@ -58,7 +58,6 @@ RBBasicLintRule >> filteredResult [
 RBBasicLintRule >> initialize [
 	super initialize.
 	self resetResult
-	
 ]
 
 { #category : #testing }

@@ -55,18 +55,17 @@ RubFindReplaceDialogWindow >> buildWindowMenu [
 { #category : #action }
 RubFindReplaceDialogWindow >> cancel [
 	self model findText: ''.
-	super cancel 
+	super cancel
 ]
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> caseSensitive [
-	^ self model ifNil: [false] ifNotNil: [:m | m caseSensitive] 
+	^ self model ifNil: [false] ifNotNil: [:m | m caseSensitive]
 ]
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> caseSensitive: aBoolean [
 	self model caseSensitive: aBoolean.
-
 ]
 
 { #category : #'user-interface' }
@@ -75,7 +74,7 @@ RubFindReplaceDialogWindow >> defaultButton [
 	^self
 		findDeepSubmorphThat: [:m |
 			(m isKindOf: PluggableButtonMorph) and: [m actionSelector = #find]]
-		ifAbsent: [] 
+		ifAbsent: []
 ]
 
 { #category : #'user-interface' }
@@ -95,13 +94,12 @@ RubFindReplaceDialogWindow >> delete [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> entireWordsOnly [
-	^ self model ifNil: [false] ifNotNil: [:m | m entireWordsOnly] 
+	^ self model ifNil: [false] ifNotNil: [:m | m entireWordsOnly]
 ]
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> entireWordsOnly: aBoolean [
 	self model entireWordsOnly: aBoolean.
-
 ]
 
 { #category : #'user-interface' }
@@ -117,7 +115,7 @@ RubFindReplaceDialogWindow >> find [
 
 { #category : #'user-interface' }
 RubFindReplaceDialogWindow >> findEnabled [
-	^ self findString isEmptyOrNil not 
+	^ self findString isEmptyOrNil not
 ]
 
 { #category : #updating }
@@ -131,8 +129,6 @@ RubFindReplaceDialogWindow >> findPolicyChanged [
 	self changed: #replaceEnabled.
 	self changed: #replaceAllEnabled.
 	self findTextFieldMorph textColor: self theme textColor
-
-
 ]
 
 { #category : #accessing }
@@ -148,7 +144,6 @@ RubFindReplaceDialogWindow >> findText [
 { #category : #accessing }
 RubFindReplaceDialogWindow >> findText: aStringOrText [
 	^ self model findText: aStringOrText.
-
 ]
 
 { #category : #'user-interface' }
@@ -163,13 +158,12 @@ RubFindReplaceDialogWindow >> initialExtent [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> isRegex [
-	^ self model ifNil: [false] ifNotNil: [:m | m isRegex] 
+	^ self model ifNil: [false] ifNotNil: [:m | m isRegex]
 ]
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> isRegex: aBoolean [
 	self model isRegex: aBoolean.
-
 ]
 
 { #category : #'user-interface' }
@@ -211,9 +205,7 @@ RubFindReplaceDialogWindow >> newContentMorph [
 				)
 			).
 			(self newLabelGroup: {'Replace with: ' translated -> self newReplaceTextEntryMorph}) vResizing: #shrinkWrap}
-		) 
-
-
+		)
 ]
 
 { #category : #'user-interface' }
@@ -252,7 +244,6 @@ RubFindReplaceDialogWindow >> newFindTextEntryMorph [
 		yourself.
 	findTextField := pt.
 	^ pt
-
 ]
 
 { #category : #updating }
@@ -314,7 +305,6 @@ RubFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 			withDropListButton;
 			yourself.
 	^ pt
-
 ]
 
 { #category : #updating }
@@ -375,8 +365,6 @@ RubFindReplaceDialogWindow >> replaceText [
 RubFindReplaceDialogWindow >> replaceText: aStringOrText [
 	self model replaceText: aStringOrText asString.
 	^ true
-
-
 ]
 
 { #category : #accessing }
@@ -406,7 +394,6 @@ RubFindReplaceDialogWindow >> textView [
 { #category : #'user-interface' }
 RubFindReplaceDialogWindow >> title [
 	^ 'Find & Replace' translated.
-
 ]
 
 { #category : #updating }
@@ -423,11 +410,10 @@ RubFindReplaceDialogWindow >> update: aSymbol [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> wrapAround [
-	^ self model ifNil: [true] ifNotNil: [:m | m wrapAround] 
+	^ self model ifNil: [true] ifNotNil: [:m | m wrapAround]
 ]
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> wrapAround: aBoolean [
 	self model wrapAround: aBoolean.
-
 ]

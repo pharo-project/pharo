@@ -18,11 +18,12 @@ Class {
 
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
+
 	<script>
 	^ self new
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -138,7 +139,7 @@ EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
 { #category : #actions }
 EpUnifiedBrowserPresenter >> openDashboard [
 
-	(EpDashboardPresenter newApplication: self application) openWithSpec
+	(EpDashboardPresenter newApplication: self application) open
 ]
 
 { #category : #refreshing }

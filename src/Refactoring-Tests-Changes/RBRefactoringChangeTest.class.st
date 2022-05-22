@@ -356,7 +356,6 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 		self assert: change definedClass isBehavior ].
 	self deny: (workingEnvironment hasClassNamed: change changeClassName).
 	self assert: change definedClass isObsolete
-	
 ]
 
 { #category : #'tests - perform' }
@@ -464,7 +463,7 @@ RBRefactoringChangeTest >> testPerformCompositeChange [
 		self assert: (self changeMock canUnderstand: #method1).
 		self assert: (self changeMock canUnderstand: #method2) ].
 	self deny: (self changeMock canUnderstand: #method1).
-	self deny: (self changeMock canUnderstand: #method2) 
+	self deny: (self changeMock canUnderstand: #method2)
 ]
 
 { #category : #'tests - perform' }

@@ -78,7 +78,6 @@ STONCStyleCommentsSkipStreamTest >> testSTON [
 	self 
 		should: [ STON fromStream: (STONCStyleCommentsSkipStream on: '//456' readStream) ] 
 		raise: STONReaderError
-
 ]
 
 { #category : #testing }

@@ -43,7 +43,6 @@ RubWorkspaceExample class >> exampleWithCustomShortcut [
 RubWorkspaceExample class >> open [
 	<script>
 	(self windowWithScrolledText: (self new newScrolledText)) openInWorld
-
 ]
 
 { #category : #'private - accessing' }

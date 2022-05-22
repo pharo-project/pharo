@@ -99,7 +99,7 @@ Class {
 
 { #category : #testing }
 CmdCommand class >> canBeExecutedInContext: aToolContext [
-	^true
+	^self isAbstract not
 ]
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 RBNamespaceTest >> setUp [ 
 	super setUp.
-	modelFactory := RBClassModelFactory new. 
+	modelFactory := RBClassModelFactory new.
 ]
 
 { #category : #'class tests' }
@@ -117,7 +117,6 @@ RBNamespaceTest >> testModelImplementorsSenders [
 					[	self 
 						assert: (refs includesSelector: each selector in: each modelClass realClass)]].
 	self assert: found
-
 ]
 
 { #category : #'class tests' }

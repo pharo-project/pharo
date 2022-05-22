@@ -53,8 +53,6 @@ FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 
 	mapping := notIgnoredVariables  
 		collect: [ :name | theClass instVarIndexFor: name ifAbsent: [ nil ] ].
-
-
 ]
 
 { #category : #'initialize-release' }
@@ -95,7 +93,6 @@ FLVariablesMapping >> map: sourceName to: destinationName [
 			put: (theClass
 				instVarIndexFor: destinationName
 				ifAbsent: [self error: 'Bad variable destination.'])].
-
 ]
 
 { #category : #'serialize/materialize' }

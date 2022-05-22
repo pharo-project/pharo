@@ -30,7 +30,6 @@ RGTraitCompositionTest >> testGlobalVariablesCollection [
 	env cleanGlobalVariables.
 	self assert: env ask globalVariables isEmpty.
 	self assert: (env hasResolved: #globalVariables).
-
 ]
 
 { #category : #tests }
@@ -46,8 +45,7 @@ RGTraitCompositionTest >> testImplicitEnvironment [
 	self assert: (def isRingResolved).
 	
 	def2 := RGTraitComposition parent: def parent .
-	self checkImplicitSingleClassEnvironmentOf: def parent.	
-
+	self checkImplicitSingleClassEnvironmentOf: def parent.
 ]
 
 { #category : #tests }
@@ -58,7 +56,6 @@ RGTraitCompositionTest >> testNewTraitComposition [
 	self assert: (traitComposition isRingResolved).
 	self assert: (traitComposition hasUnresolvedAll: #(name transformations)).
 	self assert: (traitComposition isTraitComposition).
-	
 ]
 
 { #category : #tests }
@@ -101,7 +98,6 @@ RGTraitCompositionTest >> testTransformationsCollection [
 	traitComposition cleanTransformations.
 	self assert: traitComposition transformations isEmpty.
 	self assert: (traitComposition hasResolved: #transformations).
-
 ]
 
 { #category : #tests }

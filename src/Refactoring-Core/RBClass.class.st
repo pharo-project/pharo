@@ -201,7 +201,7 @@ RBClass >> initialize [
 { #category : #accessing }
 RBClass >> instanceSide [
 
-	^ self 
+	^ self
 ]
 
 { #category : #testing }

@@ -8,5 +8,4 @@ LRUCache >> testSupportGetCachedAssociations [
 		result add: (key -> value)
 		].
 	^result asArray.
-
 ]

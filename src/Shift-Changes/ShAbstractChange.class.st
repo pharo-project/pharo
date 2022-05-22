@@ -33,7 +33,6 @@ ShAbstractChange >> = another [
 
 { #category : #announcing }
 ShAbstractChange >> announceChanges [
-	
 ]
 
 { #category : #accessing }
@@ -44,7 +43,6 @@ ShAbstractChange >> builder [
 { #category : #accessing }
 ShAbstractChange >> builder: anObject [
 	builder := anObject.
-
 ]
 
 { #category : #testing }

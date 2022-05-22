@@ -35,8 +35,8 @@ DrTests class >> beDefaultTestRunner [
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #specs }
-DrTests class >> defaultSpec [
+{ #category : #layout }
+DrTests class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		add:
@@ -69,11 +69,11 @@ DrTests class >> menuCommandOn: aBuilder [
 
 { #category : #api }
 DrTests class >> open [
+
 	<script>
-	
 	^ self new
-		openWithSpec;
-		yourself
+		  open;
+		  yourself
 ]
 
 { #category : #'tools registry' }
@@ -142,8 +142,9 @@ DrTests >> initializePluginsDropList [
 		help: 'Select the plugin used by Dr Tests UI.';
 		items: self plugins;
 		display: [ :pluginClass | pluginClass pluginName ];
-		iconBlock: [ :pluginClass | pluginClass pluginIcon ];
-		whenSelectedItemChangedDo: [ :pluginClass | self currentPlugin: pluginClass new ]
+		displayIcon: [ :pluginClass | pluginClass pluginIcon ];
+		whenSelectedItemChangedDo: [ :pluginClass | 
+			self currentPlugin: pluginClass new ]
 ]
 
 { #category : #initialization }
@@ -230,10 +231,10 @@ DrTests >> subwidgetsToLock [
 DrTests >> switchToMiniDrTest [
 
 	(MiniDrTests new
-		testsConfiguration: self testsConfiguration;
-		currentPlugin: self currentPlugin;
-		updateWithPluginResult:self pluginResult ;
-		yourself) openWithSpec
+		 testsConfiguration: self testsConfiguration;
+		 currentPlugin: self currentPlugin;
+		 updateWithPluginResult: self pluginResult;
+		 yourself) open
 ]
 
 { #category : #actions }

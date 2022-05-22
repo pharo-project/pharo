@@ -46,27 +46,27 @@ Class {
 	#category : #'System-Platforms-Utilities'
 }
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> A [
 	^ self named: 'A'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> B [
 	^ self named: 'B'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> C [
 	^ self named: 'C'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> D [
 	^ self named: 'D'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> E [
 	^ self named: 'E'
 ]
@@ -76,170 +76,274 @@ KeyboardKey class >> F [
 	^ self named: 'F'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F1 [
+	^ self named: #F1
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F10 [
+	^ self named: #F10
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F11 [
+	^ self named: #F11
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F12 [
+	^ self named: #F12
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F2 [
+	^ self named: #F2
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F3 [
+	^ self named: #F3
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F4 [
+	^ self named: #F4
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F5 [
+	^ self named: #F5
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F6 [
+	^ self named: #F6
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F7 [
+	^ self named: #F7
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F8 [
+	^ self named: #F8
+]
+
+{ #category : #'accessing - keys - functions' }
+KeyboardKey class >> F9 [
+	^ self named: #F9
+]
+
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> G [
 	^ self named: 'G'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> H [
 	^ self named: 'H'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> I [
 	^ self named: 'I'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> J [
 	^ self named: 'J'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> K [
 	^ self named: 'K'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> L [
 	^ self named: 'L'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> M [
 	^ self named: 'M'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> N [
 	^ self named: 'N'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> O [
 	^ self named: 'O'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> P [
 	^ self named: 'P'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> Q [
 	^ self named: 'Q'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> R [
 	^ self named: 'R'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> S [
 	^ self named: 'S'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> T [
 	^ self named: 'T'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> U [
 	^ self named: 'U'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> V [
 	^ self named: 'V'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> W [
 	^ self named: 'W'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> X [
 	^ self named: 'X'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> Y [
 	^ self named: 'Y'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - letters' }
 KeyboardKey class >> Z [
 	^ self named: 'Z'
 ]
 
-{ #category : #accessing }
-KeyboardKey class >> backspace [
-
-	^ self named: 'BACKSPACE'
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> altLeft [
+	^ self named: #ALT_L
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> altRight [
+	^ self named: #ALT_R
+]
+
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> backslash [
+	^ self named: #BACKSLASH
+]
+
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> backspace [
+	^ self named: #BACKSPACE
+]
+
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> braceLeft [
 	
 	^ self named: 'BRACELEFT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> bracketLeft [
 	
 	^ self named: 'BRACKETLEFT'
 ]
 
-{ #category : #accessing }
-KeyboardKey class >> comma [
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> bracketRight [
 	
-	^ self named: 'COMMA'
+	^ self named: 'BRACKETRIGHT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> capsLock [
+	^ self named: #CAPS_LOCK
+]
+
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> comma [
+	^ self named: #COMMA
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> controlLeft [
+	^ self named: #CONTROL_L
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> controlRight [
+	^ self named: #CONTROL_R
+]
+
+{ #category : #'accessing - keys - special' }
 KeyboardKey class >> delete [
-
-	^ self named: 'DELETE'
+	^ self named: #DELETE
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> doubleQuote [
 
 	^ self named: 'QUOTEDBL'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> down [
 
 	^ self named: 'DOWN'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> eight [
+	^ self named: #'8'
+]
+
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> end [
-	
-	^ self named: 'END'
+	^self named: #END
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - special' }
 KeyboardKey class >> enter [
-
-	^ self named: 'RETURN'
+	^ self named: #RETURN
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> equal [
-
-	^ self named: 'EQUAL'
+	^ self named: #EQUAL
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - special' }
 KeyboardKey class >> escape [
+	^ self named: #ESCAPE
+]
 
-	^ self named: 'ESCAPE'
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> five [
+	^ self named: #'5'
+]
+
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> four [
+	^ self named: #'4'
 ]
 
 { #category : #'instance creation' }
@@ -271,10 +375,19 @@ KeyboardKey class >> fromCharacter: aCharacter ifNone: aBlock [
 				ifNone: aBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> function [
+	^ self named: #FUNCTION
+]
+
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> grave [
+	^ self named: #GRAVE
+]
+
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> home [
-	
-	^ self named: 'HOME'
+	^self named: #HOME
 ]
 
 { #category : #'class initialization' }
@@ -926,43 +1039,43 @@ KeyboardKey class >> keyFromCharacterTable [
 	^ KeyFromCharacterTable
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - keypad' }
 KeyboardKey class >> keypadDown [
 
 	^ self named: 'KP_DOWN'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - keypad' }
 KeyboardKey class >> keypadEnter [
 
 	^ self named: 'KP_ENTER'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - keypad' }
 KeyboardKey class >> keypadLeft [
 
 	^ self named: 'KP_LEFT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - keypad' }
 KeyboardKey class >> keypadRight [
 
 	^ self named: 'KP_RIGHT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - keypad' }
 KeyboardKey class >> keypadUp [
 
 	^ self named: 'KP_UP'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> left [
 
 	^ self named: 'LEFT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> lessThan [
 
 	^ self named: 'LESS'
@@ -974,10 +1087,19 @@ KeyboardKey class >> macOSVirtualKeyTable [
 	^MacosVirtualKeyTable
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> metaLeft [
+	^ self named: #META_L
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> metaRight [
+	^ self named: #META_R
+]
+
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> minus [
-	
-	^ self named: 'MINUS'
+	^ self named: #MINUS
 ]
 
 { #category : #'instance creation' }
@@ -1000,46 +1122,112 @@ KeyboardKey class >> named: aString ifNone: aBlock [
 	^ KeyNameTable at: aString ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> nine [
+	^ self named: #'9'
+]
+
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> one [
+	^ self named: #'1'
+]
+
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> pageDown [
-
-	^ self named: 'PAGE_DOWN'
+	^self named: #PAGE_DOWN
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> pageUp [
-	
-	^ self named: 'PAGE_UP'
+	^self named: #PAGE_UP
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> parenthesisLeft [
 	
 	^ self named: 'PARENLEFT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> period [
+	^ self named: #PERIOD
+]
+
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> quote [
+	^ self named: #APOSTROPHE
+]
+
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> right [
 
 	^ self named: 'RIGHT'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> semicolon [
+	^ self named: #SEMICOLON
+]
+
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> seven [
+	^ self named: #'7'
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> shiftLeft [
+	^ self named: #SHIFT_L
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> shiftRight [
+	^ self named: #SHIFT_R
+]
+
+{ #category : #'accessing - keys - symbols' }
 KeyboardKey class >> singleQuote [
 
 	^ self named: 'APOSTROPHE'
 ]
 
-{ #category : #accessing }
-KeyboardKey class >> space [
-
-	^ self named: 'SPACE'
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> six [
+	^ self named: #'6'
 ]
 
-{ #category : #accessing }
-KeyboardKey class >> tab [
+{ #category : #'accessing - keys - symbols' }
+KeyboardKey class >> slash [
+	^ self named: #SLASH
+]
 
-	^ self named: 'TAB'
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> space [
+	^ self named: #SPACE
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> superLeft [
+	^ self named: #SUPER_L
+]
+
+{ #category : #'accessing - keys - modifiers' }
+KeyboardKey class >> superRight [
+	^ self named: #SUPER_R
+]
+
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> tab [
+	^ self named: #TAB
+]
+
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> three [
+	^ self named: #'3'
+]
+
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> two [
+	^ self named: #'2'
 ]
 
 { #category : #unix }
@@ -1053,7 +1241,7 @@ KeyboardKey class >> unknownKeyName [
 	^#Unknown
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys - navigation' }
 KeyboardKey class >> up [
 
 	^ self named: 'UP'
@@ -1067,19 +1255,25 @@ KeyboardKey class >> value: aKeyValue [
 { #category : #macos }
 KeyboardKey class >> valueForMacOSXPlatform: aKeyValue [
 
-	^self macOSVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue andName: #Unknown) ] 
+	^ self macOSVirtualKeyTable
+		  at: aKeyValue
+		  ifAbsent: [ self basicNew withValue: aKeyValue ]
 ]
 
 { #category : #unix }
 KeyboardKey class >> valueForUnixPlatform: aKeyValue [
 
-	^self unixVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue) ] 
+	^ self unixVirtualKeyTable
+		  at: aKeyValue
+		  ifAbsent: [ self basicNew withValue: aKeyValue ]
 ]
 
 { #category : #windows }
 KeyboardKey class >> valueForWindowsPlatform: aKeyCode [
 
-	^self windowsVirtualKeyTable at: aKeyCode ifAbsent: [ (self basicNew withValue: aKeyCode andName: #Unknown) ] 
+	^ self windowsVirtualKeyTable
+		  at: aKeyCode
+		  ifAbsent: [ self basicNew withValue: aKeyCode ]
 ]
 
 { #category : #windows }
@@ -1087,6 +1281,11 @@ KeyboardKey class >> windowsVirtualKeyTable [
 
 	WindowsVirtualKeyTable ifNil: [ self initializeWindowsVirtualKeyTable. ].
 	^WindowsVirtualKeyTable
+]
+
+{ #category : #'accessing - keys - digits' }
+KeyboardKey class >> zero [
+	^ self named: #'0'
 ]
 
 { #category : #comparing }

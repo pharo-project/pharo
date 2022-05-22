@@ -23,8 +23,6 @@ BaselineOfReflectivity >> baseline: spec [
 				group: 'default' with: #('Reflectivity');
 				group: 'tools' with: #('Reflectivity-Tools' 'Reflectivity-Tools-Tests');
 				group: 'tests' with: #('default' 'tools' 'Reflectivity-Tests' 'Reflectivity-Examples') ]
-		
-	
 ]
 
 { #category : #baselines }

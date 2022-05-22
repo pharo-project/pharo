@@ -11,7 +11,6 @@ Class {
 RubSegmentIconMenuItemMorph >> deselect: anEvent [
 	self segment showMouseHasLeaved.
 	super deselect: anEvent.
-
 ]
 
 { #category : #events }
@@ -36,5 +35,4 @@ RubSegmentIconMenuItemMorph >> segment: aSegment [
 RubSegmentIconMenuItemMorph >> select: anEvent [
 	self segment showMouseHasEntered.
 	super select: anEvent.
-
 ]

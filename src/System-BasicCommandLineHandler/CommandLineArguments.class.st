@@ -38,7 +38,7 @@ CommandLineArguments >> allFilesWithExtension: anExtension [
 
 { #category : #accessing }
 CommandLineArguments >> argumentAt: index [
-	^ arguments at: index 
+	^ arguments at: index
 ]
 
 { #category : #accessing }

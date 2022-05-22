@@ -14,10 +14,16 @@ Class {
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [
 		'AthensCairoDefinitions',
-		'FT2Constants'
+		'AthensFT2Constants'
 	],
 	#category : #'Athens-Cairo-Text'
 }
+
+{ #category : #private }
+CairoFontFace class >> boldEmphasisCode [
+
+	^ 1
+]
 
 { #category : #finalizing }
 CairoFontFace class >> countReferences: handle [
@@ -49,6 +55,12 @@ CairoFontFace class >> fromFreetypeFace: aFace [
 CairoFontFace class >> hasSharedResourceData: handle [
 	"Answer wether the external cairo_font_face resource is shared (referenced) by other external objects."
 	^(self countReferences: handle) > 1
+]
+
+{ #category : #private }
+CairoFontFace class >> italicEmphasisCode [
+
+	^ 2
 ]
 
 { #category : #'instance creation' }
@@ -111,11 +123,12 @@ CairoFontFace >> synthesizeBoldAndOblique [
 
 { #category : #accessing }
 CairoFontFace >> synthesizeEmphasis: emphasisCode [
-	emphasisCode = (TextEmphasis bold emphasisCode | TextEmphasis italic emphasisCode)
+
+	emphasisCode = (self class boldEmphasisCode | self class italicEmphasisCode)
 		ifTrue: [ ^ self synthesizeBoldAndOblique ].
-	emphasisCode = TextEmphasis bold emphasisCode
+	emphasisCode = self class boldEmphasisCode
 		ifTrue: [ ^ self synthesizeBold ].
-	emphasisCode = TextEmphasis italic emphasisCode
+	emphasisCode = self class italicEmphasisCode
 		ifTrue: [ ^ self synthesizeOblique ]
 ]
 

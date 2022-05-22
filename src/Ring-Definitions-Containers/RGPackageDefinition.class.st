@@ -13,7 +13,7 @@ Class {
 	#category : #'Ring-Definitions-Containers-Base'
 }
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition package: self.
@@ -26,7 +26,7 @@ RGPackageDefinition >> addInContainer: anRGContainer [
 	anRGContainer addPackage: self
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> addMethod: aRGMethodDefinition [
 	"aRGMethodDefinition needs to satisfy the status isMethod"
 
@@ -58,14 +58,14 @@ RGPackageDefinition >> classNames [
 
 	^ self classes isDictionary
 		ifTrue: [ self classes keys ]
-		ifFalse:[ self classes collect:[ :class|  class name ] ]	
+		ifFalse:[ self classes collect:[ :class|  class name ] ]
 ]
 
 { #category : #accessing }
 RGPackageDefinition >> classes [
 	"Retrieves a collection (by default a dictionary) of classes defined in the receiver and classes holding extension methods"
 	
-	^self definedClasses, self extendedClasses 
+	^self definedClasses, self extendedClasses
 ]
 
 { #category : #accessing }
@@ -179,7 +179,7 @@ RGPackageDefinition >> methods [
 	"Retrieves all the methods defined in the receiver. 
 	#methods holds the methods of defined classes"
 	
-	^super methods, self extensionMethods 
+	^super methods, self extensionMethods
 ]
 
 { #category : #metrics }
@@ -230,7 +230,7 @@ RGPackageDefinition >> realPackage [
 	^ RPackageOrganizer default packageNamed: self name
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 
 	self 
@@ -240,7 +240,7 @@ RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 				ifFalse:[ super methods ])
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RGPackageDefinition >> withoutCategories [
 
 	self removeElementsCategorized: #categories

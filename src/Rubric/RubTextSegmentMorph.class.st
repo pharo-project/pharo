@@ -52,7 +52,6 @@ RubTextSegmentMorph >> beExtendable [
 RubTextSegmentMorph >> beSmoothCurve [
 	super beSmoothCurve.
 	self textArea ifNotNil: [ self computeVertices ].
-
 ]
 
 { #category : #accessing }
@@ -186,13 +185,13 @@ RubTextSegmentMorph >> displayIconAt: aPosition onAthensCanvas: aCanvas [
 
 { #category : #accessing }
 RubTextSegmentMorph >> firstIndex [
-	^ firstIndex 
+	^ firstIndex
 ]
 
 { #category : #accessing }
 RubTextSegmentMorph >> firstIndex: anInteger [
 	firstIndex := anInteger.
-	self computeVertices 
+	self computeVertices
 ]
 
 { #category : #accessing }
@@ -218,7 +217,7 @@ RubTextSegmentMorph >> handlesMouseOver: evt [
 
 { #category : #accessing }
 RubTextSegmentMorph >> icon [
-	^ icon 
+	^ icon
 ]
 
 { #category : #accessing }
@@ -246,7 +245,6 @@ RubTextSegmentMorph >> inTextArea: aTextArea [
 RubTextSegmentMorph >> inTextArea: aTextArea from: aFirstCharIndex to: aLastCharIndex [
 	self from: aFirstCharIndex to: aLastCharIndex.
 	self inTextArea:  aTextArea
-
 ]
 
 { #category : #initialization }
@@ -255,7 +253,6 @@ RubTextSegmentMorph >> initialize [
 	self borderWidth: 0.
 	self beStraightSegments.
 	self clipSubmorphs: false
-
 ]
 
 { #category : #accessing }
@@ -275,13 +272,13 @@ RubTextSegmentMorph >> label: aStringOrBlock [
 
 { #category : #accessing }
 RubTextSegmentMorph >> lastIndex [
-	^ lastIndex 
+	^ lastIndex
 ]
 
 { #category : #accessing }
 RubTextSegmentMorph >> lastIndex: anInteger [
 	lastIndex := anInteger.
-	self computeVertices 
+	self computeVertices
 ]
 
 { #category : #accessing }
@@ -369,13 +366,11 @@ RubTextSegmentMorph >> setText: aText from: aView [
 { #category : #'event handling' }
 RubTextSegmentMorph >> showMouseHasEntered [
 	self borderWidth: 1.
-
 ]
 
 { #category : #'event handling' }
 RubTextSegmentMorph >> showMouseHasLeaved [
 	self borderWidth: 0.
-
 ]
 
 { #category : #accessing }
@@ -417,7 +412,6 @@ RubTextSegmentMorph >> topRendererOrSelf [
 { #category : #'event handling' }
 RubTextSegmentMorph >> whenExtentChanged: anAnnouncement [ 
 	self computeVertices.
-
 ]
 
 { #category : #'event handling' }
@@ -431,5 +425,4 @@ RubTextSegmentMorph >> whenTextChanged: anAnnouncement [
 	textArea ifNil: [ ^self ].
 	self computeVertices.
 	self changed
-
 ]

@@ -12,7 +12,6 @@ Class {
 
 { #category : #accessing }
 RBAbstractRefactoringTest >> constructor [
-	
 ]
 
 { #category : #helpers }

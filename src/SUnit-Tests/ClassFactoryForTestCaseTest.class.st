@@ -77,7 +77,6 @@ ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
 	self deny: (SystemOrganization categories includes: factory defaultCategory). 
 	self class environment at: #ChangeSet ifPresent: [:changeSet |
 		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ].
-
 ]
 
 { #category : #testing }
@@ -91,8 +90,6 @@ ClassFactoryForTestCaseTest >> testDuplicateClassWithNewName [
 		self assert: (factory createdClasses allSatisfy: [:class| self class environment includesKey: class name ]).
 		factory cleanUp.
 		self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]) ]
-	
-
 ]
 
 { #category : #testing }

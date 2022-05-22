@@ -28,11 +28,6 @@ FFIExternalValueHolderType >> externalType [
 ]
 
 { #category : #accessing }
-FFIExternalValueHolderType >> externalTypeSize [ 
-	^ self pointerSize
-]
-
-{ #category : #accessing }
 FFIExternalValueHolderType >> instanceVariableName [
 	^ #data
 ]

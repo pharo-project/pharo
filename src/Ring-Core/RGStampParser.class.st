@@ -129,6 +129,5 @@ RGStampParser >> timeForStamp: stamp [
 		ifNotNil: [ 
 			| substrings |
 			substrings := stamp substrings.
-			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ]. 
-	
+			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ].
 ]

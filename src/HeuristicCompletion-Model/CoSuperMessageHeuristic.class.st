@@ -29,5 +29,8 @@ CoSuperMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 	"When in the playground, the completion class is not available.
 	But self is bound to nil"
 	completionClass := completionContext completionClass ifNil: [ nil class ].
+	"In Traits, superclass is nil"
+	completionClass superclass
+		ifNil: [ ^ CoEmptyFetcher new ].
 	^ self newMessageInHierarchyFetcherForClass: completionClass superclass inASTNode: aNode
 ]

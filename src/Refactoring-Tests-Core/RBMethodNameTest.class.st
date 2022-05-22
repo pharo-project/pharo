@@ -12,7 +12,6 @@ RBMethodNameTest >> testCreation [
 	rbmethod := RBMethodName selector: #foo: arguments: #('x').
 	self assert: rbmethod selector equals: #foo:.
 	self assert: rbmethod arguments equals: #('x').
-	
 ]
 
 { #category : #tests }

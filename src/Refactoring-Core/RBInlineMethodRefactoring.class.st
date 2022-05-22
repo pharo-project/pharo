@@ -199,8 +199,6 @@ RBInlineMethodRefactoring >> isOverridden [
 		(each directlyDefinesMethod: selector)
 			ifTrue: [ ^ true ]].
 	^ false
-	
-		
 ]
 
 { #category : #testing }
@@ -420,6 +418,11 @@ RBInlineMethodRefactoring >> rewriteInlinedTree [
 				normalizeIfTrues;
 				normalizeReturns;
 				addSelfReturn]
+]
+
+{ #category : #accessing }
+RBInlineMethodRefactoring >> sourceSelector [
+	^ sourceSelector
 ]
 
 { #category : #printing }

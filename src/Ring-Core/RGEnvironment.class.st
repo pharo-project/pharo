@@ -38,8 +38,6 @@ RGEnvironment >> addBehavior: anRGBehavior [
 
 	(anRGBehavior hasResolvedName)
 		ifTrue: [ self queryInterface behaviorsDictionary at: anRGBehavior name asSymbol put: anRGBehavior ].
-				
-
 ]
 
 { #category : #'accessing - backend' }
@@ -54,7 +52,6 @@ RGEnvironment >> addPackage: anRGPackage [
 	self backend forPackage addPackage: anRGPackage to: self.
 	
 	self announce: (RPackageRegistered to: anRGPackage).
-
 ]
 
 { #category : #accessing }
@@ -112,14 +109,12 @@ RGEnvironment >> child: aChildDefinition renamedFrom: oldName to: newName [
 
 	self queryInterface behaviorsDictionary removeKey: oldName ifAbsent: [].
 	self queryInterface behaviorsDictionary at: newName asSymbol put: aChildDefinition.
-
 ]
 
 { #category : #cleaning }
 RGEnvironment >> clean [
 
 	self cleanWithMetaclassNamed: #Metaclass
-
 ]
 
 { #category : #'accessing - backend' }
@@ -135,7 +130,6 @@ RGEnvironment >> cleanBehaviors [
 		self announcer behaviorRemoved: each ].
 	
 	self queryInterface resetBehaviorsDictionary.
-
 ]
 
 { #category : #'accessing - backend' }
@@ -160,7 +154,6 @@ RGEnvironment >> cleanSuperclassesOfMetaclasses [
 			ifTrue: [ 
 				each baseClass superclass ifNotNil: [ 
 					each superclass: each baseClass superclass metaclass] ] ].
-
 ]
 
 { #category : #cleaning }
@@ -296,9 +289,6 @@ RGEnvironment >> createDefaultEnvironment [
 
 	metaclassClass pvtSuperclass: classDescriptionClass.
 	metaclassClass pvtMetaclass: metaclass.
-
-
-		
 ]
 
 { #category : #'default model values' }
@@ -357,7 +347,7 @@ RGEnvironment >> ensureClassNamed: aSymbol [
 				ifTrue: [ RGMetaclass ].
 			newBehavior := behaviorClass named: aSymbol parent: self.
 			self addBehavior: newBehavior.
-			newBehavior ] 
+			newBehavior ]
 ]
 
 { #category : #cleaning }
@@ -489,9 +479,6 @@ RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 			found metaclass becomeForward: newMetaclassTrait.
 			originalMetaclass becomeForward: newMetaclassTrait."
 			found ].
-	
-				
-
 ]
 
 { #category : #cleaning }
@@ -503,8 +490,6 @@ RGEnvironment >> ensurePackageNamed: aSymbol [
 				newPackage := RGPackage named: aSymbol parent: self.
 				self addPackage: newPackage.
 				newPackage ].
-			
-
 ]
 
 { #category : #cleaning }
@@ -565,8 +550,6 @@ RGEnvironment >> ensureTraitNamed: aSymbol [
 			found convertToTrait.
 			found metaclass convertToMetaclassTrait.
 			found ].
-	
-	
 ]
 
 { #category : #unpackaged }
@@ -591,7 +574,6 @@ RGEnvironment >> environment [
 RGEnvironment >> fixProtoObjectClassSuperclass [
 
 	(self ask classNamed: #'ProtoObject class') superclass: (self ask classNamed: #Class).
-
 ]
 
 { #category : #binding }
@@ -625,8 +607,6 @@ RGEnvironment >> initialize [
 	globalVariables := self unresolvedValue: self defaultGlobalVariables.
 	
 	version := self defaultVersion
-	
-
 ]
 
 { #category : #initialization }
@@ -639,7 +619,6 @@ RGEnvironment >> initializeUnresolved [
 	globalVariables := self unresolvedValue: self defaultGlobalVariables.
 	
 	version := self defaultVersion
-
 ]
 
 { #category : #'testing - types' }
@@ -656,8 +635,6 @@ RGEnvironment >> makeResolved [
 	behaviors := self ask behaviors markAsRingResolved.
 	packages := self ask packages markAsRingResolved.
 	globalVariables := self ask globalVariables markAsRingResolved.
-	
-
 ]
 
 { #category : #accessing }
@@ -684,9 +661,6 @@ RGEnvironment >> pvtAddBehavior: anRGBehavior [
 		ifFalse: [ 
 			behaviors add: anRGBehavior.
 			self announcer behaviorAdded: anRGBehavior].
-		
-	
-		
 ]
 
 { #category : #'private - backend access' }
@@ -697,7 +671,7 @@ RGEnvironment >> pvtAddGlobalVariable: anRGGlobalVariable [
 	globalVariables isRingResolved ifFalse: [ 
 		self pvtCleanGlobalVariables  ].
 	
-	globalVariables add: anRGGlobalVariable.	
+	globalVariables add: anRGGlobalVariable.
 ]
 
 { #category : #'private - backend interface' }
@@ -708,8 +682,7 @@ RGEnvironment >> pvtAddPackage: anRGPackage [
 	packages isRingResolved ifFalse: [ 
 		self pvtCleanPackages ].
 	
-	packages add: anRGPackage.	
-		
+	packages add: anRGPackage.
 ]
 
 { #category : #'private - backend interface' }
@@ -724,8 +697,6 @@ RGEnvironment >> pvtCleanBehaviors [
 	behaviors := self defaultBehaviors.
 		
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -740,8 +711,6 @@ RGEnvironment >> pvtCleanPackages [
 	packages := self defaultPackages.
 		
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -764,8 +733,6 @@ RGEnvironment >> pvtRemoveBehavior: anRGBehavior [
 	behaviors remove: anRGBehavior.
 	
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -784,8 +751,6 @@ RGEnvironment >> pvtRemovePackage: anRGPackage [
 	packages remove: anRGPackage.
 	
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -796,8 +761,6 @@ RGEnvironment >> pvtResolvableProperties [
 		#packages -> packages. 
 		#globalVariables -> globalVariables. 
 	}
-	
-	
 ]
 
 { #category : #accessing }
@@ -823,7 +786,6 @@ RGEnvironment >> removeBehavior: anRGBehavior [
 	
 	(anRGBehavior hasResolvedName) ifTrue: [ 
 		self queryInterface behaviorsDictionary removeKey: anRGBehavior name ifAbsent: []].
-
 ]
 
 { #category : #'accessing - backend' }
@@ -838,7 +800,6 @@ RGEnvironment >> removePackage: anRGPackage [
 	self backend forPackage removePackage: anRGPackage from: self.
 	
 	self announce: (RPackageUnregistered to: anRGPackage).
-
 ]
 
 { #category : #unpackaged }
@@ -874,7 +835,6 @@ RGEnvironment >> unifyClassTrait [
 	self ask behaviorsDo: [ :each | 
 		(each isMetaclassTrait)
 			ifTrue: [ each metaclass: aTrait]].
-
 ]
 
 { #category : #cleaning }
@@ -889,7 +849,6 @@ RGEnvironment >> unifyMetaclass [
 	self ask behaviorsDo: [ :each | 
 		(each isMetaclass)
 			ifTrue: [ each metaclass: aMetaclass] ].
-
 ]
 
 { #category : #cleaning }
@@ -904,7 +863,6 @@ RGEnvironment >> unifyMetaclass: aProposedName [
 	self ask behaviorsDo: [ :each | 
 		(each isMetaclass)
 			ifTrue: [ each metaclass: aMetaclass] ].
-
 ]
 
 { #category : #cleaning }
@@ -921,8 +879,6 @@ RGEnvironment >> unifyTrait [
 			ifTrue: [ each metaclass: aTrait]].
 		
 	(self ask behaviors select: [ :each | each isRingResolved not and: [(each propertyNamed: #role) = #trait] ]) do: [:each | self removeBehavior: each  ].
-			
-
 ]
 
 { #category : #unpackaged }
@@ -933,7 +889,6 @@ RGEnvironment >> unpackagedPackage [
 	aProtocol pvtName: self unpackagedPackageName.
 	
 	^ aProtocol
-
 ]
 
 { #category : #unpackaged }
@@ -949,7 +904,6 @@ RGEnvironment >> unpackagedPackageOrNil [
 		(each name = self unpackagedPackageName) ifTrue: [ ^ each ] ].
 	
 	^ nil.
-
 ]
 
 { #category : #utilities }

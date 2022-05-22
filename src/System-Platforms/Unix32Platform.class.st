@@ -12,7 +12,7 @@ Unix32Platform class >> isActivePlatform [
 
 	^ (Smalltalk vm operatingSystemName = 'unix') 
 		and: [ Smalltalk vm wordSize = 4 
-			and: [ Smalltalk vm architectureName ~= 'armv7l' ] ] 
+			and: [ Smalltalk vm architectureName ~= 'armv7l' ] ]
 ]
 
 { #category : #visiting }

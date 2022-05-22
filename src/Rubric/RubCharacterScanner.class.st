@@ -58,7 +58,6 @@ RubCharacterScanner class >> initialize [
 	
 	SpaceCondition := a copy.
 	SpaceCondition at: Character space asciiValue + 1 put: #space.
-
 ]
 
 { #category : #private }
@@ -139,8 +138,6 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 
 { #category : #'scanner methods' }
 RubCharacterScanner >> combinableChar: char for: prevEntity [
-
-
 ]
 
 { #category : #scanning }
@@ -195,7 +192,6 @@ RubCharacterScanner >> isBreakableAt: index in: sourceString [
 	char = Character cr ifTrue: [^ true].
 
 	^ false.
-
 ]
 
 { #category : #'text constants' }
@@ -234,7 +230,7 @@ RubCharacterScanner >> nextTabXFrom: anX [
 	[ tabX <= normalizedX and: [ tabX < mx ] ] whileTrue: [ tabX := tabX + self tabWidth ].
 	^ tabX < mx
 		ifTrue: [ leftMargin + tabX min: rightMargin ]
-		ifFalse: [ rightMargin ] 
+		ifFalse: [ rightMargin ]
 ]
 
 { #category : #scanning }
@@ -273,7 +269,6 @@ RubCharacterScanner >> registerBreakableIndex [
 	The default implementation here does nothing."
 
 	^ false.
-
 ]
 
 { #category : #scanning }
@@ -302,9 +297,6 @@ RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceSt
 		rightX: rightX
 		stopConditions: stops
 		kern: kernDelta.
-
-	
-
 ]
 
 { #category : #scanning }
@@ -372,7 +364,6 @@ RubCharacterScanner >> setActualFont: aFont [
 { #category : #private }
 RubCharacterScanner >> setAlignment: style [
 	alignment := style.
-	
 ]
 
 { #category : #private }
@@ -382,7 +373,6 @@ RubCharacterScanner >> setConditionArray: aSymbol [
 	"aSymbol == #space ifTrue: [^stopConditions := SpaceCondition copy]."
 	aSymbol == nil ifTrue: [^stopConditions := NilCondition "copy"].
 	self error: 'undefined stopcondition for space character'.
-
 ]
 
 { #category : #private }

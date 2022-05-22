@@ -23,7 +23,6 @@ STCommandLineHandlerTest >> testCommandLineHandlerCondition [
 	  commandLine := CommandLineArguments withArguments: {reference fullName}. 
 	  self assert: (STCommandLineHandler isResponsibleFor: commandLine) ]
 	ensure: [ reference delete ]
-
 ]
 
 { #category : #tests }

@@ -191,7 +191,7 @@ PharoLightTheme >> balloonBackgroundColor [
 	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
 	"Return the disabled button fillStyle for the given color."
 
@@ -200,14 +200,14 @@ PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
 		color: Color transparent
 ]
 
-{ #category : #'fill-styles-buttons' }
+{ #category : #'fill-styles - buttons' }
 PharoLightTheme >> buttonDisabledFillStyleFor: aButton [
 	"Return the disabled button fillStyle for the given color."
 
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #'border-styles-buttons' }
+{ #category : #'border-styles - buttons' }
 PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
@@ -267,24 +267,24 @@ PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	^ self selectedFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarFillStyleFor: aTaskbar [
 	^ SolidFillStyle color: (Color gray muchLighter alpha: 0.8)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemDisabledBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 	"Return the disabled taskbar item fillStyle for the given color."
 
 	^ self taskbarItemNormalFillStyleFor: aButton
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 	^ BottomBorderStyle new
 		color: (Color fromHexString: '616161');
@@ -292,12 +292,12 @@ PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 		yourself
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color black alpha: 0.07)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
 	^ BottomBorderStyle new
 		color: (Color fromHexString: '757575');
@@ -306,52 +306,52 @@ PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
 		yourself
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemNormalFillStyleFor: aButton [
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemPressedBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color black alpha: 0.15)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color black alpha: 0.1)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color black alpha: 0.15)
 ]
 
-{ #category : #'border-styles-taskbar' }
+{ #category : #'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedPressedBorderStyleFor: aButton [
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
 ]
 
-{ #category : #'fill-styles-taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color black alpha: 0.2)
 ]

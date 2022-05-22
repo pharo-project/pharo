@@ -163,8 +163,6 @@ SlotTraitsTest >> testTraitUsersAfterClassReshape [
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
 	self assert: (anotherClass class canUnderstand: #two).
-
-
 ]
 
 { #category : #tests }
@@ -206,6 +204,4 @@ SlotTraitsTest >> testTraitUsersAfterMetaclassReshape [
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
 	self assert: (anotherClass class canUnderstand: #two)
-
-
 ]

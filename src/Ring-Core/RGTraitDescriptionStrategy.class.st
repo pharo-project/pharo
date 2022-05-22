@@ -22,7 +22,6 @@ RGTraitDescriptionStrategy >> initialize [
 	super initialize.
 	
 	self owner environment backend createUnresolvedTraitGroupFor: self owner.
-	
 ]
 
 { #category : #variables }
@@ -50,7 +49,6 @@ RGTraitDescriptionStrategy >> methods [
 	allMethods := IdentitySet new.
 	self localMethodsDo: [ :each | allMethods add: each].
 	^ allMethods asArray
-
 ]
 
 { #category : #variables }
@@ -65,7 +63,7 @@ RGTraitDescriptionStrategy >> name: aString [
 	
 	usersWithOldDefinition do: [ :assoc |
 		self trait announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
-		self trait announcer behaviorModificationAppliedTo: assoc key. ].		
+		self trait announcer behaviorModificationAppliedTo: assoc key. ].
 ]
 
 { #category : #variables }

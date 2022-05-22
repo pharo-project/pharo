@@ -20,7 +20,7 @@ InterpolatedGradientFillStyle >> computePixelRampOfSize: length [
 	ramp do:[:assoc| | distance nextColor theta nextWord nextIndex step |
 		nextIndex := (assoc key * length) rounded.
 		nextColor := assoc value.
-		nextWord := nextColor pixelWord32.
+		nextWord := self pixelWord32Of: nextColor.
 		distance := nextIndex - lastIndex.
 		distance = 0 ifTrue: [distance := 1].
 		step := 1.0 / distance.

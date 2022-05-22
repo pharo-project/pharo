@@ -165,7 +165,7 @@ WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
-	array do: [:m | self startSteppingSubmorphsOf: m]
+	array do: [ :m | m startSteppingSubmorphs ]
 ]
 
 { #category : #'world state' }

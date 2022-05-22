@@ -23,7 +23,6 @@ Class {
 ReflectiveMethod class >> on: aCompiledMethod [ 
 	^self new
 		compiledMethod: aCompiledMethod
-
 ]
 
 { #category : #accessing }
@@ -35,7 +34,7 @@ ReflectiveMethod >> ast [
 ReflectiveMethod >> compileAndInstallCompiledMethod [
 	self wrapperNeeded ifTrue: [ self generatePrimitiveWrapper ].
 	self recompileAST.
-	self installCompiledMethod. 
+	self installCompiledMethod.
 ]
 
 { #category : #accessing }
@@ -72,7 +71,6 @@ ReflectiveMethod >> destroyTwin [
 { #category : #forwarding }
 ReflectiveMethod >> doesNotUnderstand: aMessage [
 	^aMessage sendTo: compiledMethod
-
 ]
 
 { #category : #forwarding }
@@ -109,30 +107,6 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	wrapperMethod propertyAt: #wrappedPrimitive put: true.
 	ast hasMetalink ifTrue: [wrapperMethod propertyAt: #links put: (ast propertyAt: #links)].
 	ast := wrapperMethod.
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorASTIn: composite [
-	<gtInspectorPresentationOrder: 35> 
-	self compiledMethod gtInspectorASTIn: composite
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorIrIn: composite [
-	<gtInspectorPresentationOrder: 35> 
-	self compiledMethod gtInspectorIrIn: composite
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorPragmasIn: composite [
-	<gtInspectorPresentationOrder: 30> 
-	self compiledMethod gtInspectorPragmasIn: composite
-]
-
-{ #category : #'inspector extensions' }
-ReflectiveMethod >> gtInspectorSourceIn: composite [
-	<gtInspectorPresentationOrder: 30> 
-	self compiledMethod gtInspectorSourceIn: composite
 ]
 
 { #category : #testing }

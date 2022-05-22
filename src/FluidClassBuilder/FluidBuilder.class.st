@@ -119,6 +119,13 @@ FluidBuilder >> fillShiftClassBuilder [
 	shiftClassBuilder classTraitComposition: classTraitsToBuild.
 ]
 
+{ #category : #building }
+FluidBuilder >> fluidInstall [
+	"Install the class in the system environment, method #fluidInstall is implemented in behavior, too"
+	
+	^ self install
+]
+
 { #category : #initialization }
 FluidBuilder >> initialize [
 

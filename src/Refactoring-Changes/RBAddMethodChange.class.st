@@ -48,7 +48,7 @@ RBAddMethodChange class >> compile: aString in: aBehavior classified: aProtocol 
 { #category : #'instance creation' }
 RBAddMethodChange class >> compile: aString in: aClass for: aController [
 
-	^ self new class: aClass source: aString contoller: aController
+	^ self new class: aClass source: aString controller: aController
 ]
 
 { #category : #comparing }
@@ -116,7 +116,7 @@ RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controlle
 ]
 
 { #category : #initialization }
-RBAddMethodChange >> class: aClass source: aString contoller: aController [
+RBAddMethodChange >> class: aClass source: aString controller: aController [
 
 	self changeClass: aClass.
 	source := aString.

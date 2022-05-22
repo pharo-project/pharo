@@ -88,7 +88,6 @@ ReInvocationSequenceRule >> critic: aCriticClass for: ast at: node regarding: se
 		by: self
 		method: node selector
 		condition: sequence
-		
 ]
 
 { #category : #initialization }
@@ -136,7 +135,7 @@ ReInvocationSequenceRule >> postCheck: anAST forCriticsDo: aCriticBlock [
 { #category : #'critic creation' }
 ReInvocationSequenceRule >> postCriticFor: ast at: node regarding: sequence [
 
-	^ self critic: ReLaterInvocationCritique for: ast at: node regarding: sequence 
+	^ self critic: ReLaterInvocationCritique for: ast at: node regarding: sequence
 ]
 
 { #category : #running }
@@ -170,5 +169,5 @@ ReInvocationSequenceRule >> preCheck: anAST forCriticsDo: aCriticBlock [
 { #category : #'critic creation' }
 ReInvocationSequenceRule >> preCriticFor: ast at: node regarding: sequence [
 
-	^ self critic: RePriorInvocationCritique for: ast at: node regarding: sequence 
+	^ self critic: RePriorInvocationCritique for: ast at: node regarding: sequence
 ]

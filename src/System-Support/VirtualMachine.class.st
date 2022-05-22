@@ -73,14 +73,12 @@ VirtualMachine >> command [
 VirtualMachine >> compiledBlocksCount [
 
 	^ self parameterAt: 77
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> compiledMethodsCount [
 
 	^ self parameterAt: 75
-
 ]
 
 { #category : #accessing }
@@ -153,7 +151,6 @@ VirtualMachine >> edenSpaceSize [
 	"for spur, size of eden, in bytes"
 		
 	^ self parameterAt: 44
-
 ]
 
 { #category : #attributes }
@@ -161,7 +158,6 @@ VirtualMachine >> extraVMMemory [
 	"Answer the current setting of the 'extraVMMemory' VM parameter. See the comment in extraVMMemory: for details."
 
 	^ self parameterAt: 23
-
 ]
 
 { #category : #attributes }
@@ -171,7 +167,6 @@ VirtualMachine >> extraVMMemory: extraBytesToReserve [
 	extraBytesToReserve < 0
 		ifTrue: [self error: 'VM memory reservation must be non-negative'].
 	^ self parameterAt: 23 put: extraBytesToReserve
-
 ]
 
 { #category : #accessing }
@@ -209,7 +204,6 @@ VirtualMachine >> freeOldSpaceSize [
 	"for spur, total size of free old space, otherwise nil"
 		
 	^ self parameterAt: 54
-
 ]
 
 { #category : #gc }
@@ -224,7 +218,6 @@ VirtualMachine >> fullGCCount [
 	"Answer the total number of full GCs since startup (read-only)."
 
 	^ self parameterAt: 7
-
 ]
 
 { #category : #accessing }
@@ -336,7 +329,6 @@ VirtualMachine >> incrementalGCCount [
 	"Answer the total number of incremental GCs since startup (read-only)."
 
 	^ self parameterAt: 9
-
 ]
 
 { #category : #accessing }
@@ -367,7 +359,7 @@ VirtualMachine >> interpreterSourceDate [
 			nextPutAll: (parts at: 3 ); space; "day of month"
 			nextPutAll: (parts at: 4 ); space; "time"
 			nextPutAll: (parts last); space    "timezone"].
-	^ dateString asDateAndTime 
+	^ dateString asDateAndTime
 ]
 
 { #category : #accessing }
@@ -589,7 +581,6 @@ VirtualMachine >> maxOldSpaceSize: aValue [
 VirtualMachine >> maximumPauseTimeDueToSegmentAllocation [
 
 	^ self parameterAt: 74
-
 ]
 
 { #category : #gc }
@@ -597,7 +588,6 @@ VirtualMachine >> memoryEnd [
 	"end of memory"
 		
 	^ self parameterAt: 3
-
 ]
 
 { #category : #gc }
@@ -613,7 +603,6 @@ VirtualMachine >> oldSpace [
 		
 
 	^ self parameterAt: 1
-
 ]
 
 { #category : #gc }
@@ -622,7 +611,6 @@ VirtualMachine >> oldSpaceEnd [
 		
 
 	^ self parameterAt: 1
-
 ]
 
 { #category : #accessing }
@@ -810,8 +798,6 @@ VirtualMachine >> processHasThreadIdInstVar: aBoolean [
 	 This flag persists across snapshots, stored in the image header."
 	aBoolean ifTrue: [self assert: (Process instVarNames at: 4) ='threadId'].
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 1) + (aBoolean asBit)
-	
-
 ]
 
 { #category : #testing }
@@ -1002,7 +988,6 @@ ifNotNil: [
 	LastStats at: 6 put: tenureCount.
 
 	^ str contents
-
 ]
 
 { #category : #testing }
@@ -1037,7 +1022,6 @@ VirtualMachine >> tenureCount [
 	"tenures of surving objects since startup (read-only)."
 
 	^ self parameterAt: 11
-
 ]
 
 { #category : #gc }
@@ -1059,21 +1043,18 @@ VirtualMachine >> totalFullGCTime [
 	"Answer the total time in milliseconds spent in full GCs since startup (read-only)."
 
 	^ self parameterAt: 8
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalGCMarkPhaseTime [
 
 	^ self parameterAt: 72
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalGCSweepPhaseTime [
 
 	^ self parameterAt: 73
-
 ]
 
 { #category : #statistics }
@@ -1086,21 +1067,18 @@ VirtualMachine >> totalIncrementalGCTime [
 	"Answer the total time in milliseconds spent in incremental GCs since startup (read-only)."
 
 	^ self parameterAt: 10
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalJITCompileBlocksTime [
 
 	^ self parameterAt: 78
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalJITCompileMethodsTime [
 
 	^ self parameterAt: 76
-
 ]
 
 { #category : #statistics }
@@ -1178,7 +1156,6 @@ VirtualMachine >> youngSpaceEnd [
 	"end of young-space"
 		
 	^ self parameterAt: 2
-
 ]
 
 { #category : #gc }
@@ -1186,5 +1163,4 @@ VirtualMachine >> youngSpaceSize [
 	"for spur, size of young/new-space (read-only)"
 		
 	^ self parameterAt: 2
-
 ]

@@ -22,6 +22,12 @@ Class {
 	#category : #'AST-Core-Nodes'
 }
 
+{ #category : #testing }
+RBValueNode class >> isAbstract [
+		
+	^ self == RBValueNode
+]
+
 { #category : #accessing }
 RBValueNode >> addParenthesis: anInterval [ 
 	parentheses ifNil: [parentheses := OrderedCollection new: 1].

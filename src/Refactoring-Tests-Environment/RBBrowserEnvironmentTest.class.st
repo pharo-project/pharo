@@ -128,7 +128,6 @@ RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
 	newEnvironment := Smalltalk compiler evaluate: aBrowserEnvironment storeString.
 	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
 	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
-	
 ]
 
 { #category : #'tests - environments' }
@@ -417,6 +416,17 @@ RBBrowserEnvironmentTest >> testSelectorEnvironment [
 	self assert: printString numberClasses equals: (printString referencesTo: #printString) numberClasses
 ]
 
+{ #category : #'tests - environments' }
+RBBrowserEnvironmentTest >> testSelectorEnvironmentRemovesEmptyClasses [
+
+	| printString class |
+	printString := RBBrowserEnvironment new referencesTo: #printString.
+	class := printString classes anyOne.
+	printString selectorsForClass: class do: [ :eachSelector | 
+		printString removeClass: class selector: eachSelector ].
+	self deny: (printString classes includes: class)
+]
+
 { #category : #tests }
 RBBrowserEnvironmentTest >> testSystemIntegrity [
 	| classes environment |
@@ -456,7 +466,6 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentAddRemove [
 	refs removeClass: self class classVariable: 'AClassVariable'.
 	self assert: refs numberSelectors equals: 0.
 	self assert: refs numberClasses equals: 0
-	
 ]
 
 { #category : #tests }

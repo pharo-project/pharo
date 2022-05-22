@@ -63,7 +63,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 			[^ true].
 	(class whoDefinesClassVariable: aString) ifNotNil: 
 			[^ true].
-	^ (self parseTree allDefinedVariables includes: aString) 
+	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
 { #category : #transforming }
@@ -92,7 +92,7 @@ RBMoveMethodToClassSideRefactoring >> getNewSource [
 				(RBParser parseExpression: temp , ' := self new').
 			node body addTemporaryNamed: temp.
 			^ node newSource ]
-		ifFalse: [ ^ node sourceCode ] 
+		ifFalse: [ ^ node sourceCode ]
 ]
 
 { #category : #transforming }
@@ -105,12 +105,6 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 	whileTrue: [ counter := counter + 1.
 		tempName := aString , counter asString ].
 	^ tempName
-]
-
-{ #category : #initialization }
-RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
-	method := aMethod.
-	class := self classObjectFor: aClass.
 ]
 
 { #category : #accessing }

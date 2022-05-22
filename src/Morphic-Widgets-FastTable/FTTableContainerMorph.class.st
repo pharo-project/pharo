@@ -34,7 +34,8 @@ Class {
 		'needsRefreshExposedRows',
 		'headerRow',
 		'exposedRows',
-		'startColumnIndex'
+		'startColumnIndex',
+		'rowColors'
 	],
 	#category : #'Morphic-Widgets-FastTable-Base'
 }
@@ -72,6 +73,13 @@ FTTableContainerMorph >> adjustToHorizontalScrollBarValue: aNumber [
 		ifTrue: [ 
 			self startColumnIndex: newStartColumnIndex.
 			self changed  ]
+]
+
+{ #category : #drawing }
+FTTableContainerMorph >> alternateRowsColor [
+	rowColors := Array
+		with: self theme backgroundColor lighter
+		with: self theme backgroundColor darker
 ]
 
 { #category : #private }
@@ -257,6 +265,7 @@ FTTableContainerMorph >> drawRowsOn: canvas [
 		y := y + visibleHeight + self table intercellSpacing y.
 
 		rowSubviews add: row.
+		self setColorRow: row index: rowIndex.
 
 		(self table selectionModeStrategy
 				selectablesToHighlightFromRow: row
@@ -387,6 +396,12 @@ FTTableContainerMorph >> rowIndexContainingPoint: aPoint [
 		(row bounds containsPoint: aPoint)
 			ifTrue: [ ^ rowIndex ] ].
 	^ nil
+]
+
+{ #category : #private }
+FTTableContainerMorph >> setColorRow: aFTTableRowMorph index: rowIndex [
+	"Set the raw color if needed, e.g. when alternateRowsColor is configured"
+	rowColors ifNotNil: [ aFTTableRowMorph color: (rowColors at: ((rowIndex \\ 2) + 1)) ].
 ]
 
 { #category : #private }

@@ -40,12 +40,11 @@ TestSuite >> , aTestSuite [
 TestSuite >> addDependentToHierachy: anObject [
 	self addDependent: anObject.
 	self tests do: [ :each | each addDependentToHierachy: anObject]
-			
 ]
 
 { #category : #accessing }
 TestSuite >> addTest: aTest [
-	self tests add: aTest 
+	self tests add: aTest
 ]
 
 { #category : #accessing }
@@ -70,8 +69,6 @@ TestSuite >> debug [
 	] ensure:[ 
 		self tearDown. 
 	].
-
-
 ]
 
 { #category : #accessing }
@@ -102,7 +99,6 @@ TestSuite >> name: aString [
 TestSuite >> removeDependentFromHierachy: anObject [
 	self removeDependent: anObject.
 	self tests do: [ :each | each removeDependentFromHierachy: anObject]
-			
 ]
 
 { #category : #running }

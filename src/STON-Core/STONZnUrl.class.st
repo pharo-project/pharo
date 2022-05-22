@@ -11,10 +11,10 @@ Class {
 
 { #category : #'instance creation' }
 STONZnUrl class >> fromSton: stonReader [
-	^ ZnUrl fromString: stonReader parseListSingleton 
+	^ ZnUrl fromString: stonReader parseListSingleton
 ]
 
-{ #category : #'accessing' }
+{ #category : #accessing }
 STONZnUrl class >> stonName [
 	^ #URL
 ]

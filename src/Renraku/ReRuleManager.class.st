@@ -37,7 +37,7 @@ ReRuleManager class >> classAddedOrRemoved: aClassAddedAnnouncement [
 
 	((class inheritsFrom: RBLintRule) or: [ 
 	  class inheritsFrom: ReAbstractRule ]) 
-		ifTrue: [ self reset ] 
+		ifTrue: [ self reset ]
 ]
 
 { #category : #cleanup }
@@ -120,7 +120,6 @@ ReRuleManager class >> removeManagerFor: anRPackage [
 	self managers
 		removeKey: anRPackage 
 		ifAbsent: [  ]
-	
 ]
 
 { #category : #'class initialization' }
@@ -188,7 +187,7 @@ ReRuleManager class >> rulesProfile [
 ReRuleManager class >> rulesProfile: aSelector [
 
 	RulesProfile := aSelector.
-	self perform: RulesProfile 
+	self perform: RulesProfile
 ]
 
 { #category : #accessing }

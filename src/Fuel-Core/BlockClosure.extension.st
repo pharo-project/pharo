@@ -27,5 +27,5 @@ BlockClosure >> fuelAccept: aGeneralMapper [
 
 { #category : #'*Fuel-Core' }
 BlockClosure >> shouldBeSubstitutedByCleanCopy [
-	^ self isClean 
+	^ self isClean
 ]

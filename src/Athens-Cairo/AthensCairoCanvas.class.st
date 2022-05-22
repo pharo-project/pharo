@@ -40,7 +40,7 @@ AthensCairoCanvas class >> primCreate: cairoSurface [
 AthensCairoCanvas >> clipBy: aRectangle during: aBlock [
 	| oldClip transformedClipRectangle newClip |
 
-	oldClip := currentClipRect.
+	oldClip := 	currentClipRect.
 	transformedClipRectangle := pathTransform transformRectangle: aRectangle.
 	newClip := oldClip
 		ifNil: [ transformedClipRectangle ]
@@ -61,10 +61,13 @@ AthensCairoCanvas >> clipBy: aRectangle during: aBlock [
 
 { #category : #accessing }
 AthensCairoCanvas >> clipRect [
-   ^ currentClipRect
-        ifNil: [ pathTransform
-                ifNotNil: [ (pathTransform inverted transform: 0 @ 0) extent: self surface extent ]
-                ifNil: (0 @ 0 extent: self surface extent) ]
+
+	^ currentClipRect ifNil: [ 
+		  currentClipRect := pathTransform
+			                     ifNotNil: [ 
+				                     (pathTransform inverted transform: 0 @ 0) 
+					                     extent: self surface extent ]
+			                     ifNil: (0 @ 0 extent: self surface extent) ]
 ]
 
 { #category : #private }

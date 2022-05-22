@@ -42,7 +42,8 @@ ZnMultiPartFormDataEntity >> computeRepresentation [
 
 { #category : #accessing }
 ZnMultiPartFormDataEntity >> contentLength [
-	contentLength isNil ifTrue: [ self computeRepresentation ].
+
+	contentLength ifNil: [ self computeRepresentation ].
 	^ contentLength
 ]
 
@@ -135,20 +136,23 @@ ZnMultiPartFormDataEntity >> partNamed: fieldName [
 
 { #category : #accessing }
 ZnMultiPartFormDataEntity >> partNamed: fieldName ifNone: block [
-	parts isNil ifTrue: [ block value ].
+
+	parts ifNil: block.
 	^ self parts detect: [ :each | each fieldName = fieldName ] ifNone: block
 ]
 
 { #category : #accessing }
 ZnMultiPartFormDataEntity >> parts [
-	parts isNil ifTrue: [ parts := OrderedCollection new ].
+
+	parts ifNil: [ parts := OrderedCollection new ].
 	^ parts
 ]
 
 { #category : #enumerating }
 ZnMultiPartFormDataEntity >> partsDo: block [
-	parts isNil ifTrue: [ ^ self ].
-	parts do: block  
+
+	parts ifNil: [ ^ self ].
+	parts do: block
 ]
 
 { #category : #printing }
@@ -163,14 +167,14 @@ ZnMultiPartFormDataEntity >> printContentsOn: stream [
 { #category : #'initialize-release' }
 ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	"Switch to streaming implementation later on"
-	
+
 	| bytes |
+
 	"We have to use the contentLength instance variable instead of the accessor else a representation will be computed"
-	contentLength isNil
-		ifTrue: [ 
-			bytes := ZnUtils readUpToEnd: stream limit: ZnMaximumEntitySize value ]
-		ifFalse: [
-			self contentLength > ZnMaximumEntitySize value ifTrue: [ ZnEntityTooLarge signal ].
+	contentLength
+		ifNil: [ bytes := ZnUtils readUpToEnd: stream limit: ( ZnCurrentOptions at: #maximumEntitySize ) ]
+		ifNotNil: [ 
+			self contentLength > ( ZnCurrentOptions at: #maximumEntitySize ) ifTrue: [ ZnEntityTooLarge signal ].
 			bytes := ByteArray ofSize: contentLength.
 			stream next: contentLength into: bytes ].
 	self parse: bytes boundary: self getBoundary asByteArray binary: true
@@ -179,14 +183,14 @@ ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 { #category : #'initialize-release' }
 ZnMultiPartFormDataEntity >> readFrom: stream [
 	"Switch to streaming implementation later on"
-	
+
 	| bytes |
+
 	"We have to use the contentLength instance variable instead of the accessor else a representation will be computed"
-	contentLength isNil
-		ifTrue: [ 
-			bytes := ZnUtils readUpToEnd: stream limit: ZnMaximumEntitySize value ]
-		ifFalse: [
-			self contentLength > ZnMaximumEntitySize value ifTrue: [ ZnEntityTooLarge signal ].
+	contentLength
+		ifNil: [ bytes := ZnUtils readUpToEnd: stream limit: ( ZnCurrentOptions at: #maximumEntitySize ) ]
+		ifNotNil: [ 
+			self contentLength > ( ZnCurrentOptions at: #maximumEntitySize ) ifTrue: [ ZnEntityTooLarge signal ].
 			bytes := ByteArray ofSize: contentLength.
 			stream next: contentLength into: bytes ].
 	self parse: bytes boundary: self getBoundary asByteArray binary: false
@@ -194,9 +198,10 @@ ZnMultiPartFormDataEntity >> readFrom: stream [
 
 { #category : #writing }
 ZnMultiPartFormDataEntity >> writeOn: stream [
+
 	"We always go via our representation because we need a bivalent stream"
-	
-	representation isNil ifTrue: [ self computeRepresentation ].
+
+	representation ifNil: [ self computeRepresentation ].
 	ZnUtils nextPutAll: representation on: stream
 ]
 

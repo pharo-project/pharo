@@ -42,7 +42,7 @@ ReExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo
 	"do something with anException that occured during anEntity validation.
 	in case you want to produce a new renraku property evaluate aBlock with it"
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #settings }

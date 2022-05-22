@@ -17,7 +17,6 @@ Class {
 SystemDependenciesTest class >> dependenciesReport [
 
 	^ dependenciesReport ifNil: [ self rebuildDependenciesReport ]
-
 ]
 
 { #category : #accessing }
@@ -39,7 +38,6 @@ SystemDependenciesTest class >> resetDependenciesReport [
 SystemDependenciesTest >> dependenciesReport [
 
 	^ self class dependenciesReport
-
 ]
 
 { #category : #accessing }
@@ -83,7 +81,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits')
+	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph')
 ]
 
 { #category : #'known dependencies' }
@@ -106,7 +104,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Chooser' #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
 ]
 
@@ -139,7 +137,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' 'Graphics-Primitives')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -148,14 +146,13 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets') 
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
 { #category : #utilities }
 SystemDependenciesTest >> longTestCase [
 
 	self timeLimit: 60 seconds.
-
 ]
 
 { #category : #accessing }
@@ -182,7 +179,6 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
 	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ]).
-
 ]
 
 { #category : #tests }
@@ -191,7 +187,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	| dependencies | 
 	
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -199,14 +195,15 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
-		{ BaselineOfKeymapping name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #core),
+		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
-		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #core),
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #ui),
+		{ BaselineOfNewValueHolder name }, (BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		{ BaselineOfSpecCore name }, (BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
@@ -282,7 +279,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphic.
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
-	BaselineOfSpec.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
@@ -313,8 +309,9 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfHeuristicCompletion.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
-	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'core' on: BaselineOfFreeType ).
+	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
 	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).
+	packages := packages ,  { BaselineOfNewValueHolder name }, (self packagesOfGroupNamed: 'core' on: BaselineOfNewValueHolder ).
 	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
 	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'Methods' on: BaselineOfNewTools ).
@@ -336,6 +333,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
 	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
+	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
@@ -375,7 +373,9 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
-	
+
+	self flag: 'TODO: remove next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP.'.
+	dependencies := dependencies copyWithout: #'Zinc-HTTP'.
 	self assert: dependencies isEmpty.
 ]
 
@@ -446,11 +446,12 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #morphic),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #core),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfFuelPlatform allPackageNames,
 		BaselineOfThreadedFFI corePackageNames ).
 	
@@ -508,7 +509,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		"Morphic - for Morphic backend"
 		BaselineOfDisplay allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #morphic),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
@@ -517,6 +518,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		BaselineOfThreadedFFI corePackageNames,
@@ -563,11 +565,11 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #morphic),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
-		BaselineOfSpec allPackageNames,
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),

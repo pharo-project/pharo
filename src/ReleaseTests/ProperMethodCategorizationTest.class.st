@@ -20,7 +20,6 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 		description: ('Violations: {1}.
 		Reason: {1} subclasses should have #{2} in protocol {3}' 
 			format: { self explanationFrom: violating . aClass asString. selector. protocol })
-
 ]
 
 { #category : #utilities }
@@ -38,7 +37,6 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 		description: ('Violations are: {1}. 
 		Reason: {2} subclasses should have #{3} in protocols: {4}' 
 			format: { self explanationFrom: violating . aClass asString. selector. protocols })
-
 ]
 
 { #category : #utilities }
@@ -54,7 +52,6 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 	"The #basicNew methods should be in method protocol 'instance creation'"
 	
 	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
-
 ]
 
 { #category : #'tests - object' }
@@ -62,7 +59,6 @@ ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 	"The #clone methods should be in method protocol 'copying'"
 	
 	self assureAll: #clone areCategorizedIn: #copying whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - object' }
@@ -70,7 +66,6 @@ ProperMethodCategorizationTest >> testCopyMethodNeedsToBeInCopyingProtocol [
 	"The #copy methods should be in method protocol 'copying'"
 	
 	self assureAll: #copy areCategorizedIn: #copying whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - object' }
@@ -78,7 +73,6 @@ ProperMethodCategorizationTest >> testDeepCopyMethodNeedsToBeInCopyingProtocol [
 	"The #deepCopy methods should be in method protocol 'copying'"
 	
 	self assureAll: #deepCopy areCategorizedIn: #copying whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - object' }
@@ -86,7 +80,6 @@ ProperMethodCategorizationTest >> testEqualMethodNeedsToBeInComparingProtocol [
 	"The #= method should be in method protocol 'comparing'"
 	
 	self assureAll: #= areCategorizedIn: #comparing whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - object' }
@@ -94,7 +87,6 @@ ProperMethodCategorizationTest >> testFinalizeMethodNeedsToBeInComparingProtocol
 	"The #finalize method should be in method protocol 'finalization'"
 	
 	self assureAll: #finalize areCategorizedIn: #finalization whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - object' }
@@ -102,7 +94,6 @@ ProperMethodCategorizationTest >> testFinalizeValuesMethodNeedsToBeInComparingPr
 	"The #finalizeValues methods should be in method protocol 'finalization'"
 	
 	self assureAll: #finalizeValues areCategorizedIn: #finalization whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - object' }
@@ -110,7 +101,6 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	"The #hash method should be in method protocol 'comparing'"
 	
 	self assureAll: #hash areCategorizedIn: #comparing whenSubclassOf: Object
-
 ]
 
 { #category : #tests }
@@ -146,12 +136,17 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
-	| violating |
+	| violating validExceptions remaining|
 	violating := Smalltalk globals allBehaviors select: [ :class | 
 		             class protocols includes: Protocol unclassified ].
 
+
+	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass).	
+	
+	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 33
+	self assert: remaining size <= 3
 ]
 
 { #category : #tests }
@@ -171,7 +166,6 @@ ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 	"The #postCopy methods should be in method protocol 'copying'"
 	
 	self assureAll: #postCopy areCategorizedIn: #copying whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - sunit' }
@@ -179,7 +173,6 @@ ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunnin
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 	
 	self assureAll: #runCase areCategorizedIn: #running whenSubclassOf: TestCase
-
 ]
 
 { #category : #'tests - sunit' }
@@ -187,7 +180,6 @@ ProperMethodCategorizationTest >> testSetUpMethodInSUnitTestsNeedsToBeInRunningP
 	"The #setUp method in SUnit test classes should be in method protocol 'running'"
 
 	self assureAll: #setUp areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
-
 ]
 
 { #category : #'tests - object' }
@@ -195,7 +187,6 @@ ProperMethodCategorizationTest >> testShallowCopyMethodNeedsToBeInCopyingProtoco
 	"The #shallowCopy methods should be in method protocol 'copying'"
 	
 	self assureAll: #shallowCopy areCategorizedIn: #copying whenSubclassOf: Object
-
 ]
 
 { #category : #'tests - sunit' }
@@ -203,7 +194,6 @@ ProperMethodCategorizationTest >> testTearDownMethodInSUnitTestsNeedsToBeInRunni
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 	
 	self assureAll: #tearDown areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
-
 ]
 
 { #category : #'tests - object' }
@@ -211,5 +201,4 @@ ProperMethodCategorizationTest >> testVeryDeepCopyMethodNeedsToBeInCopyingProtoc
 	"The #veryDeepCopy methods should be in method protocol 'copying'"
 	
 	self assureAll: #veryDeepCopy areCategorizedIn: #copying whenSubclassOf: Object
-
 ]

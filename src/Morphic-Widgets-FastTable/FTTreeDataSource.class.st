@@ -136,6 +136,12 @@ FTTreeDataSource >> addSourceToRootItem [
 ]
 
 { #category : #accessing }
+FTTreeDataSource >> allShownItems [
+
+	^ rootItem children flatCollect: [ :e | e withExpandedChildren ].
+]
+
+{ #category : #accessing }
 FTTreeDataSource >> buttonFor: item [
 	^ ( (self canDisplayChildrenOf: item) and: [item children isNotEmpty])
 		ifTrue: [ item generateButton ]
@@ -244,6 +250,29 @@ FTTreeDataSource >> newDataSourceMatching: aFTFilter [
 { #category : #accessing }
 FTTreeDataSource >> numberOfRows [
 	^ self rootItem numberOfVisibleChildren
+]
+
+{ #category : #'expanding-collapsing' }
+FTTreeDataSource >> preservingScrollbarPositionDo: aBlock [
+
+	| oldScroll oldItems newScroll newItems |
+	oldItems := self allShownItems size.
+	oldScroll := self table verticalScrollBar value asFraction.
+
+	aBlock value.
+
+	newItems := self allShownItems size.
+	newScroll := oldScroll = 0
+		             ifTrue: [ 0 ]
+		             ifFalse: [ 
+			             oldScroll = 1
+				             ifTrue: [ oldItems / newItems ]
+				             ifFalse: [ 
+					             oldScroll numerator
+					             * (oldItems / oldScroll denominator)
+					             / newItems ] ].
+
+	self table verticalScrollBar setValue: newScroll
 ]
 
 { #category : #accessing }

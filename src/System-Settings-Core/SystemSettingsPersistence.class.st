@@ -52,7 +52,7 @@ SystemSettingsPersistence class >> defaultPreferenceFileReference [
 
 { #category : #deleting }
 SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [ 
-	self default deleteSettingNode: aSettingNode 
+	self default deleteSettingNode: aSettingNode
 ]
 
 { #category : #'class initialization' }
@@ -213,7 +213,7 @@ SystemSettingsPersistence >> settingTree [
 
 { #category : #accessing }
 SystemSettingsPersistence >> settingTree: aSettingTree [ 
-	settingTree := aSettingTree 
+	settingTree := aSettingTree
 ]
 
 { #category : #enumerating }

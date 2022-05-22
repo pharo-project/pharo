@@ -1,7 +1,6 @@
 "
 I am a write stream wrapping a second stream. Whenever they ask me to write a cr, a lf, or a crlf I'll instead print a new line depending on a configured convention. By default I use the current platform convention. 
 
-| stream converter |
 stream := '' writeStream.
 converter := ZnNewLineWriterStream on: stream.
 converter cr; cr; lf; nextPut: $a.
@@ -37,9 +36,8 @@ ZnNewLineWriterStream class >> on: aStream [
 ]
 
 { #category : #'open/close' }
-ZnNewLineWriterStream >> close [ 
-
-	^stream close
+ZnNewLineWriterStream >> close [
+	stream close
 ]
 
 { #category : #flushing }

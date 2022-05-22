@@ -27,6 +27,22 @@ T2TraitWithSlotsTest >> createT1 [
 ]
 
 { #category : #tests }
+T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
+
+	| t1 c1 obj |
+	t1 := self newTrait: #T1 with: #(aSlot).
+	c1 := self newClass: #C1 superclass: Object with: #(anotherSlot) uses: {}. 
+
+	obj := c1 new.
+
+	self should: [ obj instVarAt: 2 ] raise: PrimitiveFailed.	
+
+	c1 := self newClass: #C1 superclass: Object with: #(anotherSlot) uses: {t1}.	
+
+	self assert: (obj instVarAt: 2) isNil. 
+]
+
+{ #category : #tests }
 T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |

@@ -98,7 +98,6 @@ BreakpointTest >> testBreakInContextNode [
 	self assert: observer tag notNil.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: #(#node).
-	
 ]
 
 { #category : #tests }
@@ -109,7 +108,7 @@ BreakpointTest >> testBreakLink [
 	self assert: link metaObject identicalTo: breakpoint.
 	self assert: link selector equals: #breakInContext:node:.
 	self assertCollection: link options equals: (MetaLink new parseOptions: breakpoint options) options.
-	self assertCollection: link arguments equals: #(#context #node) 
+	self assertCollection: link arguments equals: #(#context #node)
 ]
 
 { #category : #tests }
@@ -176,7 +175,6 @@ BreakpointTest >> testDisableEnableBreakpoint [
 	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
 	breakpoint enable.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break
-
 ]
 
 { #category : #tests }

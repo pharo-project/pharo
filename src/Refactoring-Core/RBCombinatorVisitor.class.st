@@ -28,6 +28,4 @@ RBCombinatorVisitor >> visitSequenceNode: aSequenceNode [
 	starts do: [ :start | ends do: [ :end | start < end ifTrue: [
 		combinations add: (Array with: start with: end) ] ] ].
 	super visitSequenceNode: aSequenceNode
-	
-	
 ]

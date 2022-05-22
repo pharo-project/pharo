@@ -17,13 +17,11 @@ Class {
 }
 
 { #category : #accessing }
-SycMethodNameEditorTest >> a [ 
-	 
+SycMethodNameEditorTest >> a [
 ]
 
 { #category : #accessing }
 SycMethodNameEditorTest >> a: a b: b c: c [
-	 
 ]
 
 { #category : #running }
@@ -41,7 +39,8 @@ SycMethodNameEditorTest >> setUp [
 
 { #category : #running }
 SycMethodNameEditorTest >> tearDown [
-	methodNameEditor ifNotNil: [ :x | x application close ].
+
+	methodNameEditor ifNotNil: [ :x | x application closeAllWindows ].
 	super tearDown
 ]
 

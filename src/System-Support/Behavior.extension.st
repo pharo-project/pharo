@@ -12,7 +12,6 @@ Behavior >> allCallsOn: aSymbol [
 	"Answer of all the methods that call on aSymbol."
 
 	^self withAllSubclasses flatCollect: [ :cls | cls thoroughWhichMethodsReferTo: aSymbol]
-	
 ]
 
 { #category : #'*System-Support' }

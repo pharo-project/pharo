@@ -141,16 +141,17 @@ Class >> addInstVarNamed: aString [
 ]
 
 { #category : #'pool variables' }
-Class >> addSharedPool: aSharedPool [ 
+Class >> addSharedPool: aSharedPool [
+
 	"Add the argument, aSharedPool, as one of the receiver's shared pools. 
 	Create an error if the shared pool is already one of the pools.
 	This method will work with shared pools that are plain Dictionaries or thenewer SharedPool subclasses"
 
-	(self sharedPools includes: aSharedPool)
-		ifTrue: [^self error: 'This is already in my shared pool list'].
-	self sharedPools == nil
-		ifTrue: [self sharedPools: (OrderedCollection with: aSharedPool)]
-		ifFalse: [self sharedPools add: aSharedPool]
+	(self sharedPools includes: aSharedPool) ifTrue: [ 
+		^ self error: 'This is already in my shared pool list' ].
+	sharedPools
+		ifNil: [ sharedPools := (OrderedCollection with: aSharedPool) ]
+		ifNotNil: [ self sharedPools add: aSharedPool ]
 ]
 
 { #category : #'pool variables' }
@@ -229,6 +230,8 @@ Class >> basicDeclareClassVariable: aClassVariable [
 	- When a class of a variable is changed we must recompile using methods because new variable can implement specific compilation logic (method bytecode can become different).
 	- Undeclared case requires much more clever logic. Now in that case the class variable will be shared between all classes previously referencing undeclared variable despite on the fact that they do no see a class variables from other classes"
 	self flag: #todo.
+	
+	classPool ifNil: [ classPool := Dictionary new ].
 	aClassVariable owningClass: self.
 
 	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
@@ -322,9 +325,10 @@ Class >> classInstaller [
 
 { #category : #accessing }
 Class >> classPool [
-	"Answer the dictionary of class variables."
+	"Answer the dictionary of class variables. 
+	We initialize in basicDeclareClassVariable: to not allocate unused empty dictionaries"
 
-	^classPool ifNil: [ classPool := Dictionary new ]
+	^classPool ifNil: [ Dictionary new ]
 ]
 
 { #category : #accessing }
@@ -564,7 +568,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 { #category : #fileout }
 Class >> expandedDefinitionStringFor: aPrinter [
 
-	^ aPrinter expandedClassDefinitionString
+	^ aPrinter expandedDefinitionString
 ]
 
 { #category : #private }
@@ -698,13 +702,6 @@ Class >> instanceSide [
 ]
 
 { #category : #testing }
-Class >> isAbstract [
-	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
-
-	^ super isAbstract or: [ self classSide isAbstract ]
-]
-
-{ #category : #testing }
 Class >> isAnonymous [
 	^self getName isNil
 ]
@@ -738,13 +735,6 @@ Class >> isUsed [
 	^ self hasSubclasses
 		ifFalse: [ super isUsed ]
 		ifTrue: [ true ]
-]
-
-{ #category : #private }
-Class >> isValidTraitName: aSymbol [
-
-	aSymbol ifNil: [ ^ false ].
-	^ aSymbol isValidGlobalName.
 ]
 
 { #category : #accessing }
@@ -1004,9 +994,10 @@ Class >> sharedPoolOfVarNamed: aString [
 
 { #category : #'pool variables' }
 Class >> sharedPools [
-	"Answer an orderedCollection  of the shared pools declared in the receiver."
+	"Answer an orderedCollection of the shared pools declared in the receiver.
+	Note: To save memory, the variable is initialized by #addSharedPool:"
 
-	^ sharedPools ifNil: [ sharedPools := OrderedCollection new ]
+	^ sharedPools ifNil: [ super sharedPools ]
 ]
 
 { #category : #'pool variables' }
@@ -1038,7 +1029,7 @@ Class >> sharing: poolString [
 							builder superclass: SharedPool;
 							name: poolName;
 							category: self category ]]
-				ifFalse:[^self error: poolName,' does not exist']])].
+				ifFalse:[^self inform: poolName,' does not exist']])].
 	self sharedPools isEmpty ifTrue: [self sharedPools: nil].
 	oldPools do: [:pool |
 				| found |

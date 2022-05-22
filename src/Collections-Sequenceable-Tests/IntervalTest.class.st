@@ -446,6 +446,16 @@ IntervalTest >> testEquals4 [
 ]
 
 { #category : #tests }
+IntervalTest >> testEquals5 [
+	"Interval>>= and Interval>>hash do not match #11070"
+	self assert: (2 to: 10 by: 3) equals: (2 to: 9 by: 3). 
+	self assert: (2 to: 10 by: 3) hash equals: (2 to: 9 by: 3) hash. 
+
+	self deny: (2 to: 10 by: 3) equals: (2 to: 10 by: 4). 
+	self deny: (2 to: 10 by: 3) hash equals: (2 to: 10 by: 4) hash	
+]
+
+{ #category : #tests }
 IntervalTest >> testExtent [
 	self assert: (1 to: 10) extent equals: 9.
 	self assert: (1 to: 10 by: 2) extent equals: 9.

@@ -172,8 +172,6 @@ RGClassDefinition >> comment: anObject [
 				content: anObject; 
 				yourself ]
 		ifTrue: [anObject ]
-	
-	 
 ]
 
 { #category : #compiling }
@@ -355,7 +353,6 @@ RGClassDefinition >> withMetaclass [
 	"Registers explicitly the metaclass of a class"
 
 	metaClass:= RGMetaclassDefinition class: self
-
 ]
 
 { #category : #behavior }
@@ -363,6 +360,5 @@ RGClassDefinition >> withMetaclass: aRGMetaclassDefinition [
 	"Registers explicitly the metaclass of a class"
 
 	metaClass:= aRGMetaclassDefinition.
-	metaClass baseClass: self.  
-
+	metaClass baseClass: self.
 ]

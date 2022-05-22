@@ -25,7 +25,6 @@ RFReceiverReification >> genForRBMessageNode [
 { #category : #generate }
 RFReceiverReification >> genForRBMethodNode [
 	^RBVariableNode selfNode
-	
 ]
 
 { #category : #preamble }

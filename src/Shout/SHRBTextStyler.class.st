@@ -404,7 +404,6 @@ SHRBTextStyler class >> settingsOn: aBuilder [
 		label: 'Format Incomplete Identifiers';
 		parentName: #'Syntax Highlighting';
 		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recommended for big images, as it traverse all the image to get the information'
-
 ]
 
 { #category : #styles }
@@ -852,7 +851,7 @@ SHRBTextStyler >> addAttributes: attributes from: start to: stop [
 	charAttr
 		from: (start max: 1)
 		to: (stop min: charAttr size)
-		put: attributes 
+		put: attributes
 ]
 
 { #category : #converting }
@@ -1033,6 +1032,8 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	
 	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
 		ifTrue:[ ^#incompleteIdentifier] .
+	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
+	aVariableNode isUndeclaredVariable ifTrue: [ ^#undefinedIdentifier ].
 
 	^#invalid.
 ]
@@ -1065,8 +1066,7 @@ SHRBTextStyler >> style: aText ast: ast [
 	bracketLevel := 0.
 	parentheseLevel:=0.
 	self visitNode: ast.
-	^aText runs: (RunArray newFrom: charAttr)	
-
+	^aText runs: (RunArray newFrom: charAttr)
 ]
 
 { #category : #private }

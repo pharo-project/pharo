@@ -117,5 +117,4 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarNotAccessors [
 	self deny: (class definesMethod: #whatever).
 	self deny: (class definesMethod: #whatever:).
 	self assert: (class definesMethod: #result).
-
 ]

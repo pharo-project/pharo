@@ -102,5 +102,5 @@ ExecutionCounterTest >> testReseting [
 ExecutionCounterTest >> testUninstallCounter [
 	counter := ExecutionCounter installOn: node.
 	counter uninstall.
-	self deny: node hasExecutionCounter 
+	self deny: node hasExecutionCounter
 ]

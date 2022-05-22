@@ -76,7 +76,6 @@ SessionCategory >> renamedClass: aClass from: oldName to: newName [
 		handlers 
 			detect: [ :handler | handler handledId = oldName ]
 			ifFound: [ :handler | handler registeredClassName: newName ] ]
-
 ]
 
 { #category : #registration }

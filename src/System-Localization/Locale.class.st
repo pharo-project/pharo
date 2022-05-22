@@ -133,7 +133,6 @@ Locale class >> initializePlatformEncodings [
 		at: 'default' put: 'gb2312';
 		at: 'unix' put: 'euc-cn';
 		at: 'Win32 CE' put: 'utf-8'.
-
 ]
 
 { #category : #accessing }
@@ -178,7 +177,6 @@ Locale class >> localeID: id [
 Locale class >> platformEncodings [
 	PlatformEncodings isEmptyOrNil ifTrue: [ self initializePlatformEncodings ].
 	^PlatformEncodings
-
 ]
 
 { #category : #'system startup' }
@@ -339,7 +337,6 @@ Locale >> primLongDateFormat [
 	mmmm month name"
 	<primitive:'primitiveLongDateFormat' module: 'LocalePlugin'>
 	^'dddd, mmmm d, yyyy'
-
 ]
 
 { #category : #'system primitives' }
@@ -347,7 +344,6 @@ Locale >> primMeasurement [
 	"Returns boolean denoting metric(true) or imperial(false)."
 	<primitive:'primitiveMeasurementMetric' module: 'LocalePlugin'>
 	^true
-
 ]
 
 { #category : #'system primitives' }
@@ -359,7 +355,6 @@ Locale >> primShortDateFormat [
 	mmmm month name"
 	<primitive:'primitiveShortDateFormat' module: 'LocalePlugin'>
 	^'m/d/yy'
-
 ]
 
 { #category : #'system primitives' }
@@ -370,7 +365,6 @@ Locale >> primTimeFormat [
 	double symbol is null padded, single not padded (h=6, hh=06)"
 	<primitive:'primitiveTimeFormat' module: 'LocalePlugin'>
 	^'h:mmx'
-
 ]
 
 { #category : #'system primitives' }

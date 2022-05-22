@@ -27,10 +27,10 @@ Class {
 
 { #category : #execution }
 SycRemoveMethodStrategy >> removeMethods: methods [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }
 SycRemoveMethodStrategy >> userRequestString [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

@@ -83,5 +83,5 @@ FLSubstitutionCluster >> registerIndexesOn: anEncoder [
 
 { #category : #accessing }
 FLSubstitutionCluster >> substitutions [
-	^ substitutions 
+	^ substitutions
 ]

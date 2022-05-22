@@ -19,9 +19,7 @@ TRGBehaviorTest >> testBehavior [
 	
 	self deny: (newBehavior isRingFullyUnresolved).
 
-	self deny: newBehavior hasTraitComposition.	
-	
-
+	self deny: newBehavior hasTraitComposition.
 ]
 
 { #category : #tests }
@@ -38,7 +36,6 @@ TRGBehaviorTest >> testBehaviorWithCategorizedMethods [
 	method := RGMethod named: #someMethod parent: newBehavior.
 	newBehavior addLocalMethod: method.
 	self assert: (newBehavior hasResolved: #tagsForMethods).
-
 ]
 
 { #category : #tests }
@@ -144,8 +141,6 @@ TRGBehaviorTest >> testBehaviorWithUnategorizedMethod [
 	
 	newBehavior cleanLocalMethods.
 	self assert: (newBehavior protocols isEmpty).
-	
-
 ]
 
 { #category : #tests }
@@ -206,7 +201,6 @@ TRGBehaviorTest >> testHasMethods [
 	self assert: newBehavior hasMethods.	
 	newBehavior cleanLocalMethods.
 	self deny: newBehavior hasMethods.
-
 ]
 
 { #category : #tests }
@@ -216,8 +210,6 @@ TRGBehaviorTest >> testIsBehavior [
 	newBehavior := self behaviorClass unnamed.
 	
 	self assert: newBehavior isBehavior
-
-	
 ]
 
 { #category : #tests }
@@ -262,6 +254,4 @@ TRGBehaviorTest >> testProtocols [
 	newBehavior := self behaviorClass unnamed.
 	
 	self assert: newBehavior asYetUnclassifiedProtocolName isSymbol.
-
-	
 ]

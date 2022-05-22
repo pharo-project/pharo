@@ -43,12 +43,19 @@ OSWorldRenderer >> actualScreenSize [
 
 { #category : #events }
 OSWorldRenderer >> checkForNewScreenSize [
+	| windowRenderer |
+
+	"Under certain circunstances, it may happen that renderer is still being 
+	 created when the UI process call this method. In that case, we need to 
+	 skip the check. "
+	windowRenderer := self osWindowRenderer.
+	windowRenderer ifNil: [ ^ self ].
 
 	(display isNil or: [ display extent = self actualScreenSize ]) 
 		ifTrue: [ ^ self ].
 
 	display := Form extent: self actualScreenSize depth: 32.
-	self osWindowRenderer form: display.
+	windowRenderer form: display.
 
 	world worldState realWindowExtent: self actualScreenSize.
 

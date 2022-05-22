@@ -40,5 +40,4 @@ RBMethodNode >> optionsFor: aLink [
 	options := aLink options copy.
 	options addAll: self metaLinkOptionsFromClassAndMethod.
 	^options
-	
 ]

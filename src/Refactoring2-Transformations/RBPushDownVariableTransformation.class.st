@@ -105,5 +105,5 @@ RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
 		ifTrue: [ self definingClass allSubclasses reject: [ :each |
 			(each whichSelectorsReferToClassVariable: variableName) isEmpty
 			and: [ (each theMetaClass whichSelectorsReferToClassVariable: variableName) isEmpty ] ] ]
-		ifFalse: [ self definingClass subclasses ] 
+		ifFalse: [ self definingClass subclasses ]
 ]

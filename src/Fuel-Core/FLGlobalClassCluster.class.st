@@ -10,7 +10,7 @@ Class {
 { #category : #'serialize/materialize' }
 FLGlobalClassCluster >> materializeInstanceWith: aDecoder [
 
-	^self materializeGlobalClassFrom: aDecoder 
+	^self materializeGlobalClassFrom: aDecoder
 ]
 
 { #category : #'serialize/materialize' }

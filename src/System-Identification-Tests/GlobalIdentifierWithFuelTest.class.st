@@ -19,5 +19,4 @@ GlobalIdentifierWithFuelTest >> setUpPersistenceStrategyAndChecker [
 	identifier persistenceStrategy: GlobalIdentifierPersistence fuel.
 	identifier persistenceStrategy preferences: preferences.
 	identifier persistenceStrategy checker: (self newChecker answer: [ FileLocator workingDirectory exists ]; yourself).
-
 ]

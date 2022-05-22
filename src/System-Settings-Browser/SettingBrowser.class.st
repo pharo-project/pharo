@@ -237,7 +237,6 @@ SettingBrowser class >> forKeywords: aCollectionOfKeywords [
 SettingBrowser class >> initialExtent [
 	"Initial extent of the SettingBrowser window"
 	^ 900@600
-		
 ]
 
 { #category : #'world menu' }
@@ -286,7 +285,6 @@ SettingBrowser class >> searchedTextList [
 { #category : #accessing }
 SettingBrowser class >> settingsKeywords [ 
 	^ (Pragma allNamed: #settingPragmaProcessor) collect: [:p | p method selector]
-
 ]
 
 { #category : #icons }
@@ -297,8 +295,7 @@ SettingBrowser class >> taskbarIconName [
 { #category : #'private helpers' }
 SettingBrowser class >> viewAllSettings [
 	"self viewAllSettings"
-	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments' 
-
+	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
 ]
 
 { #category : #'help system' }
@@ -314,7 +311,7 @@ SettingBrowser >> about [
 
 { #category : #accessing }
 SettingBrowser >> acceptableKeywords: aCollectionOfRegExps [ 
-	self treeHolder acceptableKeywords: aCollectionOfRegExps 
+	self treeHolder acceptableKeywords: aCollectionOfRegExps
 ]
 
 { #category : #accessing }
@@ -327,7 +324,6 @@ SettingBrowser >> addToSearchedTextList: aString [
 { #category : #accessing }
 SettingBrowser >> addToStatus: aText [ 
 	self status nextPutAll: aText.
-
 ]
 
 { #category : #accessing }
@@ -346,7 +342,6 @@ SettingBrowser >> applyFilters [
 			packages: self viewedPackages.
 			self updateAccordingTo: filter].
 	self updateList
-
 ]
 
 { #category : #'user interface' }
@@ -397,7 +392,7 @@ SettingBrowser >> changePackageSet: aSet [
 SettingBrowser >> changeSearchedText: aString [ 
 	self searchedText: aString.
 	self applyFilters.
-	^ true 
+	^ true
 ]
 
 { #category : #'user interface' }
@@ -488,8 +483,7 @@ SettingBrowser >> getViewedPackageNames [
 { #category : #'user interface' }
 SettingBrowser >> helpDeclaringAndManagingSettings [
 	"Open up a workspace with explanatory info in it about the Setting Browser"
-	UIManager default edit: 'To be documented here later' label: 'Declaring and managing settings' translated. 
-	
+	UIManager default edit: 'To be documented here later' label: 'Declaring and managing settings' translated.
 ]
 
 { #category : #'user interface' }
@@ -507,7 +501,6 @@ SettingBrowser >> helpMenuIn: aWindow [
 		selector: #helpDeclaringAndManagingSettings.
 	helpMenu lastItem font: aWindow theme menuFont.
 	^ helpMenu
-
 ]
 
 { #category : #'user interface' }
@@ -632,7 +625,6 @@ SettingBrowser >> packageListViewIn: aWindow [
 				newTextEditorFor: self
 				getText: #getViewedPackageNames
 				setText: #setViewedPackageNames:.
-
 ]
 
 { #category : #accessing }
@@ -648,7 +640,6 @@ SettingBrowser >> regexpSearch [
 { #category : #accessing }
 SettingBrowser >> regexpSearch: aBoolean [
 	self class regexpSearch: aBoolean.
-
 ]
 
 { #category : #initialization }
@@ -665,7 +656,6 @@ SettingBrowser >> release [
 { #category : #accessing }
 SettingBrowser >> rootNodes [
 	^ roots ifNil: [roots := self treeHolder settingTreeRoots]
-
 ]
 
 { #category : #accessing }
@@ -676,7 +666,6 @@ SettingBrowser >> searchedText [
 { #category : #accessing }
 SettingBrowser >> searchedText: aString [
 	searchedText := aString.
-
 ]
 
 { #category : #accessing }
@@ -689,7 +678,6 @@ SettingBrowser >> selection: aSelectionHolder [
 	super selection: aSelectionHolder.
 	self setDescription: ''.
 	self changed: #getDescription
-
 ]
 
 { #category : #menu }
@@ -717,7 +705,6 @@ SettingBrowser >> setViewedPackageNames: aText [
 				ifNotNil: [:pkg | allViewed add: pkg]].
 	self changePackageSet: allViewed.
 	self changed: #getViewedPackageNames
-
 ]
 
 { #category : #accessing }
@@ -734,7 +721,7 @@ SettingBrowser >> settingValueChanged: aSetting [
 	aSetting changed: #realValue.
 	aSetting changed: #fontButtonLabel.
 	aSetting changed: #index.
-	aSetting changed: #content 
+	aSetting changed: #content
 ]
 
 { #category : #'user interface' }
@@ -755,7 +742,6 @@ SettingBrowser >> statusViewIn: aMorph [
 				getText: #getDescription
 				setText: #setDescription:.
 	^ statusView
- 
 ]
 
 { #category : #menu }
@@ -768,7 +754,7 @@ SettingBrowser >> storeSettings [
 SettingBrowser >> textFilter [
 	^ self regexpSearch
 		ifFalse: [SettingTokenFilter new token: self searchedText]
-		ifTrue: [SettingRegexpFilter new regexp: self searchedText] 
+		ifTrue: [SettingRegexpFilter new regexp: self searchedText]
 ]
 
 { #category : #'user interface' }
@@ -886,15 +872,13 @@ SettingBrowser >> updateList [
 		self treeHolder updateList.
 		self changed: #getDescription.
 		self changed: #getViewedPackageNames.
-		super updateList].	
-
+		super updateList].
 ]
 
 { #category : #updating }
 SettingBrowser >> updateStatusWith: aMessage [
 	self addToStatus: aMessage.
 	self addToStatus: Character cr.
-
 ]
 
 { #category : #accessing }

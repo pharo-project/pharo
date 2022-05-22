@@ -59,7 +59,6 @@ RBRenamePackageRefactoring >> preconditions [
 			on: Error 
 			do: [ :e | self refactoringError: e messageText ]
 		])
-	
 ]
 
 { #category : #transforming }

@@ -16,5 +16,5 @@ ReRewriteWrapper class >> isAbstract [
 { #category : #actions }
 ReRewriteWrapper >> rewriten: aNode with: aMap [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

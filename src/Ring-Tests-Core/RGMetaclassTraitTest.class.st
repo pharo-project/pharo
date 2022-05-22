@@ -21,7 +21,6 @@ RGMetaclassTraitTest >> testEnsureProtocol [
 	behavior ensureProtocolNamed: #SomeProtocol.
 	self assert: behavior protocols size equals: 1.
 	self assert: behavior protocols first equals: #SomeProtocol.
-	
 ]
 
 { #category : #tests }
@@ -39,7 +38,6 @@ RGMetaclassTraitTest >> testImplicitConversionFromClass [
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait classTrait' ]) size equals: 0.
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait clss' ]) size equals: 0.
 	env.
-
 ]
 
 { #category : #tests }
@@ -52,7 +50,6 @@ RGMetaclassTraitTest >> testImplicitConversionFromClassProperties [
 	entity := env ensureTraitNamed: #'SomeTrait'.
 	self assert: entity classTrait isTrait.
 	self assert: entity classTrait baseTrait equals: entity.
-
 ]
 
 { #category : #tests }
@@ -63,11 +60,6 @@ RGMetaclassTraitTest >> testMetaclassTraitImplicitEnvironment [
 	trait := RGMetaclassTrait unnamed.
 	self assert: (trait hasUnresolved: #name).
 	self checkImplicitSingleTraitEnvironmentOf: trait baseTrait.
-	
-	
-	
-	
-
 ]
 
 { #category : #tests }

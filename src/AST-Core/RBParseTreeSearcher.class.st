@@ -7,6 +7,59 @@ Instance Variables:
 	context	<RBSmallDictionary>	a dictionary that contains what each meta-node matches against. This could be a normal Dictionary that is created for each search but is created once and reused (efficiency).
 	messages	<Collection>	the sent messages in our searches
 	searches	<Collection of: (Association key: RBProgramNode value: BlockClosure)>	non-argument searches (search for the RBProgramNode and perform the BlockClosure when its found)
+	
+***********************
+		
+""
+	New comments: These comments are added in order to understand more how the RBParseTreeSearcher is working in Pharo, in addition of what special characters we can use to define the patterns we want to match.	
+""
+
+A- Instance side:
+	-	context
+		dictionary: contains the matched patterns
+	-	searches
+		Ordered collection: contains all the rules like ArgumentRule, MethodRule, TreeRule, Rule ...
+	-	argumentSearches
+		Ordered collection: filled when addArgumentRule or addArgumentRules is called
+	-	matches:do: 
+		looks for matches and if match found 
+		--> the block in do is executed
+		--> a new rule is added to the list of rules 'searches'
+	-	executeTree
+		-	Executes the tree
+		-	Fills context when successful match ???
+	-	addRule:
+		add rules to the to searches
+	-	addRules:
+		add multiple rules to searches
+	-	addArgumentSearches:
+		adds arguments to argumentSearches collection
+	-	messages
+		returns the list of messages found in a match
+	-	hasRules
+		returns searches list.
+		
+B- Patterns:		 
+
+In order to unserstand more how pattern matching work, you can refer to the below description:
+Supported charcters are listed below:
+
+	1- Backtick: `
+			--> Type: Recurse into
+			--> Description: Whenever a match is found, look inside the matched NODE for more matches.
+	2- Arobase: @
+			--> Type: list
+			--> Description: First position matching, list with O or more elements
+				* When applied to a variable node --> it will match a literal, variable or a sequence of messages sent to a literal or variable
+				* When applied to a keyword message --> it will match a list of keyword messages
+				* When applied with a statement character --> Il will match a list of statements.
+	3- 	Dot: .
+			--> Type: Statement
+			--> Description: matches a statement in a sequence node
+	4- Hash: #
+			--> Type: Literal
+			--> Description: maches only literal Objects
+		
 "
 Class {
 	#name : #RBParseTreeSearcher,
@@ -154,7 +207,7 @@ RBParseTreeSearcher >> answer [
 	^answer
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RBParseTreeSearcher >> answer: anObject [
 	answer := anObject
 ]
@@ -225,8 +278,10 @@ RBParseTreeSearcher >> lookForMoreMatchesInContext: oldContext [
 ]
 
 { #category : #searching }
-RBParseTreeSearcher >> matches: aString do: aBlock [ 
-	self addRule: (RBSearchRule searchFor: aString thenDo: aBlock)
+RBParseTreeSearcher >> matches: aPatternedString do: aBlock [
+	"Configure the receiver to execute the block when the pattern will match a tree during the actual matching phase (see method executeTree:). A better name for this method could be ifMatches:do:.
+	aPattern can be any tree with patterns: '`@x' or '{ `@x . `@m}"
+	self addRule: (RBSearchRule searchFor: aPatternedString thenDo: aBlock)
 ]
 
 { #category : #searching }
@@ -251,6 +306,7 @@ RBParseTreeSearcher >> matchesAnyTreeOf: treeCollection do: aBlock [
 
 { #category : #searching }
 RBParseTreeSearcher >> matchesArgument: aString do: aBlock [ 
+	 
 	self addArgumentRule: (RBSearchRule searchFor: aString thenDo: aBlock)
 ]
 

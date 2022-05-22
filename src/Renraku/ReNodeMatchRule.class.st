@@ -63,7 +63,6 @@ ReNodeMatchRule >> check: aNode forCritiquesDo: aCriticBlock [
 						ifTrue: [
 							aCriticBlock cull: (self critiqueFor: aNode) ] ]
 			onFailure: [  ] ]
-	
 ]
 
 { #category : #initialization }

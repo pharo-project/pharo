@@ -292,7 +292,7 @@ RBBlockNode >> references: aVariableName [
 	^body references: aVariableName
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBBlockNode >> removeTemporaryNamed: aName [
 
 	self body removeTemporaryNamed: aName

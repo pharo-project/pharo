@@ -14,6 +14,24 @@ RBPatternParserTest class >> parserClass [
 	^ RBPatternParser
 ]
 
+{ #category : #'tests - matching' }
+RBPatternParserTest >> testMatchingPatternBlockNode1 [
+	| searchPattern tree |
+	searchPattern := RBPatternParser
+		parseExpression: '(`a = `b) `{`a name size = `b name size}'.
+	tree := self parseExpression: 'a = c'.
+	self assert: (searchPattern match: tree inContext: Dictionary new)
+]
+
+{ #category : #'tests - matching' }
+RBPatternParserTest >> testMatchingPatternBlockNode2 [
+	| searchPattern tree |
+	searchPattern := RBPatternParser
+		parseExpression: '(`a = `b) `{`a name anySatisfy: [ :e | `b name includes: e]}'.
+	tree := self parseExpression: 'a = a1'.
+	self assert: (searchPattern match: tree inContext: Dictionary new)
+]
+
 { #category : #'tests - parsing' }
 RBPatternParserTest >> testParseFaultyPatternBlock [
 	| node patternBlockNoArgButBar patternBlockNoArgButColon unfinishedBlock varWithUnfinishedBlock |
@@ -31,19 +49,25 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 ]
 
 { #category : #'tests - parsing' }
-RBPatternParserTest >> testPatternBlockNode1 [
-	| searchPattern tree |
-	searchPattern := RBPatternParser
-		parseExpression: '(`a = `b) `{`a name size = `b name size}'.
-	tree := self parseExpression: 'a = c'.
-	self assert: (searchPattern match: tree inContext: Dictionary new)
+RBPatternParserTest >> testPatternVariable [
+	| searchPattern |
+	searchPattern := RBPatternParser parseExpression: '`a'.
+	self assert: searchPattern class = RBPatternVariableNode.
+	self assert: searchPattern name equals: #'`a'
 ]
 
 { #category : #'tests - parsing' }
-RBPatternParserTest >> testPatternBlockNode2 [
-	| searchPattern tree |
-	searchPattern := RBPatternParser
-		parseExpression: '(`a = `b) `{`a name anySatisfy: [ :e | `b name includes: e]}'.
-	tree := self parseExpression: 'a = a1'.
-	self assert: (searchPattern match: tree inContext: Dictionary new)
+RBPatternParserTest >> testPatternVariableSimpleVariable [
+	| searchPattern |
+	searchPattern := RBPatternParser parseExpression: '`a'.
+	self assert: searchPattern class = RBPatternVariableNode.
+	self assert: searchPattern name equals: #'`a'
+]
+
+{ #category : #'tests - parsing' }
+RBPatternParserTest >> testPatternVariableSymbol [
+	| searchPattern |
+	searchPattern := RBPatternParser parseExpression: '`#aSymbol'.
+	self assert: searchPattern class = RBPatternVariableNode.
+	self assert: searchPattern name equals: #'`#aSymbol'
 ]

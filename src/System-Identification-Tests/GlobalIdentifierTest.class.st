@@ -13,7 +13,7 @@ Class {
 
 { #category : #testing }
 GlobalIdentifierTest class >> isAbstract [
-	^ self = GlobalIdentifierTest 
+	^ self = GlobalIdentifierTest
 ]
 
 { #category : #accessing }
@@ -49,7 +49,7 @@ GlobalIdentifierTest >> tearDown [
 	(FileLocator workingDirectory / self folderName) 
 		ensureDeleteAllChildren; 
 		ensureDelete.
-	super tearDown.	
+	super tearDown.
 ]
 
 { #category : #tests }
@@ -199,7 +199,6 @@ GlobalIdentifierTest >> testDoNotStoreIfHomeDoesNotExists [
 		strategy := strategy previous.
 	].
 	self assert: identifier computerUUID notNil.
-
 ]
 
 { #category : #tests }
@@ -212,7 +211,6 @@ GlobalIdentifierTest >> testEnsure [
 	self assert: preferences exists description: 'The actual preferences should be stored now.'.
 	stored := identifier persistenceStrategy load.
 	self assert: stored equals: identifier persistedInformation.
-
 ]
 
 { #category : #tests }

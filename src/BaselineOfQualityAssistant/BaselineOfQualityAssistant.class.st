@@ -11,12 +11,11 @@ BaselineOfQualityAssistant >> baseline: spec [
 	spec for: #'common' do: [
 			
 		spec 
-			package: 'Tool-CriticBrowser';
 			package: 'Renraku';
 			package: 'Renraku-Tests';
 			package: 'Renraku-Help'.
 		spec 
-			group: 'Core' with: #('Renraku' 'Tool-CriticBrowser');
+			group: 'Core' with: #('Renraku');
 			group: 'Tests' with: #('Renraku-Tests');
 			group: 'Help' with: #('Renraku-Help');
 			group: 'default' with: #('Core' 'Help' 'Tests') ]

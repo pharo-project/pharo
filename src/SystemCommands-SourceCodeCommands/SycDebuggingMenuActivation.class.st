@@ -1,5 +1,5 @@
 "
-I represent an activation of debugging commands using a separate debugging menu.
+I am the activation strategy of commands in the breakpoints sub-menu
 "
 Class {
 	#name : #SycDebuggingMenuActivation,

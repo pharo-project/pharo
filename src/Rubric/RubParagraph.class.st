@@ -103,7 +103,6 @@ RubParagraph >> click: anEvent for: model controller: editor [
 { #category : #'accessing - text area' }
 RubParagraph >> closingDelimiters [
 	^ textArea closingDelimiters
-
 ]
 
 { #category : #composition }
@@ -152,7 +151,6 @@ RubParagraph >> container [
 { #category : #accessing }
 RubParagraph >> container: atextContainerOrRectangle [
 	container := atextContainerOrRectangle.
-
 ]
 
 { #category : #querying }
@@ -170,7 +168,6 @@ RubParagraph >> copy [
 { #category : #'accessing - text area' }
 RubParagraph >> cursorWidth [
 	^ textArea cursorWidth
-
 ]
 
 { #category : #querying }
@@ -312,7 +309,7 @@ RubParagraph >> firstNonBlankCharacterBlockInLine: aLine [
 			(blanks includes: c)
 				ifFalse: [ ^ self characterBlockForIndex: idx ].
 			idx := idx + 1 ].
-	^ self characterBlockForIndex: aLine last 
+	^ self characterBlockForIndex: aLine last
 ]
 
 { #category : #drawing }
@@ -351,7 +348,6 @@ RubParagraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 RubParagraph >> initialize [ 
 	super initialize.
 	drawingEnabled := true.
-
 ]
 
 { #category : #querying }
@@ -379,7 +375,7 @@ RubParagraph >> lastNonBlankCharacterBlockInLine: aLine [
 			(blanks includes: (str at: idx))
 				ifFalse: [ ^ self characterBlockForIndex: idx ].
 			idx := idx - 1 ].
-	^ self characterBlockForIndex: aLine first 
+	^ self characterBlockForIndex: aLine first
 ]
 
 { #category : #querying }
@@ -393,7 +389,6 @@ RubParagraph >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	"apparently the selector changed with NewParagraph"
 	^ self composer lineIndexOfCharacterIndex: characterIndex
-
 ]
 
 { #category : #'accessing - composer' }
@@ -404,7 +399,6 @@ RubParagraph >> lines [
 { #category : #'accessing - text area' }
 RubParagraph >> margins [
 	^textArea margins.
-
 ]
 
 { #category : #'accessing - composer' }
@@ -455,12 +449,11 @@ RubParagraph >> moveBy: aPoint [
 	self composer moveBy: aPoint.
 	textArea recomputeSelection.
 	textArea invalidRect: (self position extent: self extent)
-
 ]
 
 { #category : #'accessing - composer' }
 RubParagraph >> newComposer [
-	^ RubTextComposer new 
+	^ RubTextComposer new
 ]
 
 { #category : #accessing }
@@ -483,7 +476,6 @@ RubParagraph >> numberOfPhysicalLines [
 { #category : #'accessing - text area' }
 RubParagraph >> openingDelimiters [
 	^ textArea openingDelimiters
-
 ]
 
 { #category : #accessing }
@@ -532,7 +524,6 @@ RubParagraph >> replaceFrom: start to: stop with: aText [
 RubParagraph >> replaceFrom: start to: stop with: aText displaying: displayBoolean [ 
 	"Edit the text, and then recompose the lines." 
 	self composer replaceFrom: start to: stop with: aText.
-
 ]
 
 { #category : #'accessing - text area' }
@@ -643,7 +634,7 @@ RubParagraph >> textArea [
 RubParagraph >> textArea: aClient [
 	"Classically, the client is a Morph which holds the text, the textstyle, the textColor.
 	client must never be nil except when I'm released"
-	textArea := aClient 
+	textArea := aClient
 ]
 
 { #category : #'accessing - text area' }
@@ -673,7 +664,6 @@ RubParagraph >> unplug [
 { #category : #'geometry updating' }
 RubParagraph >> updateClientExtent [
 	textArea updateExtentFromParagraph.
-
 ]
 
 { #category : #'accessing - composer' }
@@ -731,7 +721,6 @@ RubParagraph >> width [
 { #category : #accessing }
 RubParagraph >> withoutDecorator [
 	^ self
-
 ]
 
 { #category : #'accessing - text area' }

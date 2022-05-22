@@ -34,7 +34,7 @@ MethodRemoved >> methodOrigin [
 
 { #category : #accessing }
 MethodRemoved >> methodOrigin: anObject [
-	methodOrigin := anObject 
+	methodOrigin := anObject
 ]
 
 { #category : #accessing }

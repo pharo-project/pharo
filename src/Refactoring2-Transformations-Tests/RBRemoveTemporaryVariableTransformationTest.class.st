@@ -11,7 +11,7 @@ RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 							variable: 'temp'
 							inMethod: #foo
 							inClass: #RBTemporaryVariableTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -21,7 +21,7 @@ RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 							variable: 'temp'
 							inMethod: #foofoo
 							inClass: #RBRemoveTemporaryVariableTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -89,5 +89,5 @@ RBRemoveTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 							variable: 'temp123'
 							inMethod: #foo
 							inClass: #RBRemoveTemporaryVariableTransformationTest)
-							asRefactoring 
+							asRefactoring
 ]

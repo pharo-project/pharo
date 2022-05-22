@@ -104,11 +104,6 @@ HistoryNodeTest >> testTwoConsecutiveCloseGroup [
 	h addItem: (i3 := HistoryLeaf new).
 	self assert: h size equals: 3.
 	self assert: h current equals: i3.
-	
-
-	
-	
-
 ]
 
 { #category : #tests }

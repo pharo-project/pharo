@@ -36,15 +36,11 @@ DangerousClassNotifier class >> check: classSymbol [
 	
 	(self shouldNotBeRedefined: classSymbol)		
 			ifTrue: [ self notify: '"' , classSymbol , '" should not be redefined as its structure is known to the VM. \Only proceed if you know what you are doing!' withCRs ].
-
-
 ]
 
 { #category : #accessing }
 DangerousClassNotifier class >> disable [
 	enabled := false.
-	
-	
 ]
 
 { #category : #accessing }
@@ -60,14 +56,11 @@ DangerousClassNotifier class >> disableDuring: aBlock [
 { #category : #accessing }
 DangerousClassNotifier class >> enable [
 	enabled := true.
-	
-	
 ]
 
 { #category : #accessing }
 DangerousClassNotifier class >> enabled [
 	^enabled ifNil: [  enabled := false ]
-
 ]
 
 { #category : #accessing }
@@ -82,7 +75,6 @@ DangerousClassNotifier class >> shouldNotBeRedefined: classSymbol [
 		at: classSymbol 
 		ifPresent: [ :class | (Smalltalk specialObjectsArray includes: class) or: [class isKindOf: class]]
 		ifAbsent: false .
-
 ]
 
 { #category : #accessing }

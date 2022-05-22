@@ -15,11 +15,11 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^ aSourceCodeContext isArgOrTempVariableSelected 
+
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+		  aSourceCodeContext isArgOrTempVariableSelected ]
 ]
 
 { #category : #execution }

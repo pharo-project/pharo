@@ -491,6 +491,13 @@ SmallInteger >> isLarge [
 	^false
 ]
 
+{ #category : #testing }
+SmallInteger >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
+
+	^ false
+]
+
 { #category : #'bit manipulation' }
 SmallInteger >> lowBit [
 	" Answer the index of the low order one bit.

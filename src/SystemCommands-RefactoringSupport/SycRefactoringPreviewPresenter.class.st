@@ -33,8 +33,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-SycRefactoringPreviewPresenter class >> defaultSpec [
+{ #category : #layout }
+SycRefactoringPreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #scopeDropList withConstraints: [ :constraints | constraints height: 30 ];
@@ -110,7 +110,14 @@ SycRefactoringPreviewPresenter >> changes [
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> changes: aCollection [
 	changes := aCollection.
-	self generateChanges 
+	self generateChanges
+]
+
+{ #category : #utilities }
+SycRefactoringPreviewPresenter >> changesFrom: aCompositeChange forEnvironment: anEnvironment [
+
+	^ (aCompositeChange whatToDisplayIn: self) select: [ :change | 
+		  anEnvironment includesClass: change changeClass ]
 ]
 
 { #category : #initialization }
@@ -148,12 +155,12 @@ SycRefactoringPreviewPresenter >> existChanges [
 	^ existsChanges ifNil: [ existsChanges := false ]
 ]
 
-{ #category : #update }
+{ #category : #actions }
 SycRefactoringPreviewPresenter >> generateChanges [
 
 	| rbEnvironment |
 	changes := command asRefactorings.
-	rbEnvironment := changes first model environment.
+	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each | 
 		each model environment: rbEnvironment.
 		each primitiveExecute ]
@@ -216,12 +223,6 @@ SycRefactoringPreviewPresenter >> pickedChanges [
 	^ table items select: [ :item | selectedRefactorings at: item ]
 ]
 
-{ #category : #update }
-SycRefactoringPreviewPresenter >> rebuild [
-	self needRebuild: false.
-	self buildWithSpec
-]
-
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> scopeDropList [
 	^ scopeDropList
@@ -232,7 +233,15 @@ SycRefactoringPreviewPresenter >> scopes: aCollectionOfScopes [
 	scopeDropList items: aCollectionOfScopes "It also sets up first item as selection"
 ]
 
-{ #category : #update }
+{ #category : #private }
+SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [ 
+
+	| nextIndex |
+	nextIndex := (self table items indexOf: aRefactoring) + 1.
+	self table selectIndex: nextIndex scrollToSelection: true
+]
+
+{ #category : #actions }
 SycRefactoringPreviewPresenter >> selectectAllCheckBox [
 	selectedRefactorings := Dictionary new.
 	table items do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
@@ -259,9 +268,8 @@ SycRefactoringPreviewPresenter >> title [
 { #category : #private }
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
 	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
-
 	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
-	self rebuild 
+	self selectItemBelow: aRefactoring
 ]
 
 { #category : #update }
@@ -273,15 +281,16 @@ SycRefactoringPreviewPresenter >> updateChanges [
 
 { #category : #update }
 SycRefactoringPreviewPresenter >> updateTablePresenter [
+
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"
-	anEnvironment := changes
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ changes anyOne model environment ].
-	aCompositeChange := RBCompositeRefactoryChange new onSystemDictionary: anEnvironment.
+	anEnvironment := self activeRBEnvironment.
+	aCompositeChange := RBCompositeRefactoryChange new 
+		onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
-	table items: (aCompositeChange whatToDisplayIn: self).
-	table items
-		ifNotEmpty: [ table selectIndex: 1.
-			existsChanges := true ]
+
+	table items: (self changesFrom: aCompositeChange forEnvironment: anEnvironment).
+	table items ifNotEmpty: [ 
+		table selectIndex: 1.
+		existsChanges := true ]
 ]

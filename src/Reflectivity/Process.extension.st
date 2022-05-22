@@ -3,7 +3,7 @@ Extension { #name : #Process }
 { #category : #'*Reflectivity' }
 Process >> isActive: n [
 	<metaLinkOptions: #( + optionDisabledLink)>
-	^level = n or: [ level == nil ]. 
+	^level = n or: [ level == nil ].
 ]
 
 { #category : #'*Reflectivity' }
@@ -23,7 +23,7 @@ Process >> level [
 Process >> rfeffectiveProcess [
 	"same as #effectiveProcess but for internal use for metalink activation"
 	<metaLinkOptions: #( + optionDisabledLink)>
-	^effectiveProcess ifNil: [self] 
+	^effectiveProcess ifNil: [self]
 ]
 
 { #category : #'*Reflectivity' }

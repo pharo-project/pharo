@@ -56,7 +56,7 @@ BaselineOfFuel >> fuelPlatform: spec [
 		baseline: 'FuelPlatform' 
 		with: [ 
 			spec
-				repository: self packageRepositoryURL;
+				repository: 'github://theseion/FuelPlatform:stable/repository';
   				loads: 'default' ]
 ]
 
@@ -118,5 +118,4 @@ BaselineOfFuel >> smark: spec [
 			spec 
 				repository: 'http://smalltalkhub.com/mc/ClementBera/classic-bench/main';
 				requires: 'SMark' ]
-
 ]

@@ -70,7 +70,7 @@ RubCharacterBlock >> bottomLeft [
 
 { #category : #accessing }
 RubCharacterBlock >> bottomRight [
-	^ surface bottomRight 
+	^ surface bottomRight
 ]
 
 { #category : #accessing }
@@ -174,7 +174,6 @@ RubCharacterBlock >> stringIndex [
 RubCharacterBlock >> stringIndex: anInteger topLeft: topLeft extent: extent [ 
 	stringIndex := anInteger.
 	surface := topLeft extent: extent
-
 ]
 
 { #category : #accessing }
@@ -227,7 +226,6 @@ RubCharacterBlock >> width [
 { #category : #accessing }
 RubCharacterBlock >> withLeft: anInteger [
 	^ self copy surface: (surface withLeft: anInteger)
-
 ]
 
 { #category : #accessing }

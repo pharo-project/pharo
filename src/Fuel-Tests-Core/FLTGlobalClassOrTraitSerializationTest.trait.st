@@ -21,9 +21,7 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodNotFoundAfterRemova
 		should: [self materialized] 
 		raise: FLMethodNotFound
 		whoseDescriptionIncludes: classOrTrait classSide printString 
-		description: 'Should raise an error when method is not present.' 
-	
-
+		description: 'Should raise an error when method is not present.'
 ]
 
 { #category : #tests }
@@ -48,14 +46,14 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideObsolete [
 		should: [self serialize: classOrTrait ] 
 		raise: FLObsolete
 		whoseDescriptionIncludes: classOrTrait name
-		description: 'Should raise an error when serializing as global an obsolete class or trait.' 
+		description: 'Should raise an error when serializing as global an obsolete class or trait.'
 ]
 
 { #category : #tests }
 FLTGlobalClassOrTraitSerializationTest >> testClassSidePreservesIdentity [
 	"Tests that serialization of the class side preserves identity"
 	
-	self assertSerializationIdentityOf: self newClassOrTrait classSide 
+	self assertSerializationIdentityOf: self newClassOrTrait classSide
 ]
 
 { #category : #tests }
@@ -73,9 +71,7 @@ FLTGlobalClassOrTraitSerializationTest >> testMethodNotFoundAfterRemoval [
 		should: [self materialized] 
 		raise: FLMethodNotFound
 		whoseDescriptionIncludes: classOrTrait name, '>>#you' 
-		description: 'Should raise an error when method is not present.' 
-	
-
+		description: 'Should raise an error when method is not present.'
 ]
 
 { #category : #tests }
@@ -126,7 +122,7 @@ FLTGlobalClassOrTraitSerializationTest >> testObsolete [
 		should: [self serialize: classOrTrait ] 
 		raise: FLObsolete
 		whoseDescriptionIncludes: classOrTrait name
-		description: 'Should raise an error when serializing as global an obsolete class or trait.' 
+		description: 'Should raise an error when serializing as global an obsolete class or trait.'
 ]
 
 { #category : #tests }

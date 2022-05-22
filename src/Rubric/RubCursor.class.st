@@ -51,7 +51,7 @@ RubCursor class >> defaultWidth: anInteger [
 
 { #category : #accessing }
 RubCursor class >> period [
-	^ Period ifNil: [ Period :=  700 ] 
+	^ Period ifNil: [ Period :=  700 ]
 ]
 
 { #category : #accessing }
@@ -192,7 +192,6 @@ RubCursor >> noteNewOwner: aMorph [
 	self textArea announcer when: RubExtentChanged send: #whenTextAreaExtentChanged: to: self.
 	self textArea announcer when: RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self.
 	self textArea announcer when: RubTextStyleChanged send: #whenTextAreaTextStyleChanged: to: self.
-
 ]
 
 { #category : #accessing }
@@ -204,7 +203,7 @@ RubCursor >> period [
 RubCursor >> removeAlarm [
 	self world
 		ifNotNil: [ :wld | 
-			wld removeAlarm: #hideShow for: self ] 
+			wld removeAlarm: #hideShow for: self ]
 ]
 
 { #category : #blinking }
@@ -221,7 +220,7 @@ RubCursor >> stayVisible [
 { #category : #accessing }
 RubCursor >> stayVisible: aBoolean [
 	stayVisible := aBoolean.
-	self color: self visibleCursorColor 
+	self color: self visibleCursorColor
 ]
 
 { #category : #blinking }
@@ -229,7 +228,6 @@ RubCursor >> switchColor [
 	self color = self invisibleCursorColor
 		ifTrue: [ self color: self actualCursorColor ]
 		ifFalse: [ self beNotVisible ].
-
 ]
 
 { #category : #accessing }
@@ -274,7 +272,7 @@ RubCursor >> updateVisibility [
 RubCursor >> visibleCursorColor [
 	self class cursorWithFixedColor 
 		ifTrue: [ ^ self class defaultColor ].
-	^ visibleCursorColor ifNil: [ self defaultVisibleCursorColor ] 
+	^ visibleCursorColor ifNil: [ self defaultVisibleCursorColor ]
 ]
 
 { #category : #accessing }
@@ -285,7 +283,7 @@ RubCursor >> visibleCursorColor: aColor [
 { #category : #'event handling' }
 RubCursor >> whenGotFocus: anAnnouncement [
 	self updateBounds.
-	self updateVisibility 
+	self updateVisibility
 ]
 
 { #category : #'event handling' }
@@ -304,11 +302,10 @@ RubCursor >> whenTextAreaExtentChanged: anAnnouncement [
 { #category : #'event handling' }
 RubCursor >> whenTextAreaSelectionChanged: anAnnouncement [
 	self updateBounds.
-	self updateVisibility 
+	self updateVisibility
 ]
 
 { #category : #'event handling' }
 RubCursor >> whenTextAreaTextStyleChanged: anAnnouncement [
 	self updateBounds.
-
 ]

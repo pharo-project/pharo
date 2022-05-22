@@ -10,15 +10,13 @@ Class {
 { #category : #'serialize/materialize' }
 FLPointCluster >> materializeInstanceWith: aDecoder [
 	"Since in Pharo #@ is associated with a special bytecode, it is faster than doing  Point basicNew"
-	^ 0@0 
-	
+	^ 0@0
 ]
 
 { #category : #'serialize/materialize' }
 FLPointCluster >> materializeReferencesOf: aPoint with: aDecoder [
 
-		aPoint setX: aDecoder nextEncodedReference setY: aDecoder nextEncodedReference.	
-
+		aPoint setX: aDecoder nextEncodedReference setY: aDecoder nextEncodedReference.
 ]
 
 { #category : #analyzing }
@@ -26,5 +24,4 @@ FLPointCluster >> referencesOf: aPoint do: aBlock [
 
 	aBlock value: aPoint x.
 	aBlock value: aPoint y.
-	
 ]

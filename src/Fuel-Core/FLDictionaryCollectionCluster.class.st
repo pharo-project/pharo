@@ -20,5 +20,4 @@ FLDictionaryCollectionCluster >> referencesOf: anObject do: aBlock [
 		keysAndValuesDo: [ :key :value | 
 			aBlock value: key. 
 			aBlock value: value.  ]
-
 ]

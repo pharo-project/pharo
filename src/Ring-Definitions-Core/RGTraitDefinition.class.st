@@ -56,7 +56,6 @@ RGTraitDefinition >> comment: anObject [
 				content: anObject; 
 				yourself ]
 		ifTrue: [anObject ]
-	
 ]
 
 { #category : #testing }
@@ -147,7 +146,6 @@ RGTraitDefinition >> withMetaclass [
 	"Registers explicitly the metaclass of a trait"
 
 	metaClass:= RGMetatraitDefinition class: self.
-
 ]
 
 { #category : #behavior }
@@ -155,6 +153,5 @@ RGTraitDefinition >> withMetaclass: aRGMetatraitDefinition [
 	"Registers explicitly the metaclass of a class"
 
 	metaClass:= aRGMetatraitDefinition.
-	metaClass baseClass: self.  
-
+	metaClass baseClass: self.
 ]

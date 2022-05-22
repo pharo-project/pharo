@@ -135,56 +135,6 @@ FreeTypeFont >> descentKern [
 ]
 
 { #category : #displaying }
-FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoint [
-	|  oldCombinationRule oldHalftoneForm originalColorMap clr depth foreColorVal foreColorAlpha glyph width height
-	startPointX startPointY endPointX endPointY foreColor |
-	oldCombinationRule := aDisplayContext combinationRule .
-	oldHalftoneForm := aDisplayContext halftoneForm .
-	originalColorMap := aDisplayContext colorMap.
-	clr := (foreColor := aDisplayContext lastFontForegroundColor ifNil:[Color black asNontranslucentColor]) 
-		pixelValueForDepth: 32.
-	depth := aDisplayContext destForm depth.
-	foreColorVal := clr bitAnd: 16rFFFFFF.
-	foreColorAlpha := (clr bitAnd: 16rFF000000) >> 24.
-	depth <= 8
-		ifTrue:[
-			aDisplayContext colorMap: (aDisplayContext cachedFontColormapFrom:32 to: depth)]
-		ifFalse:[
-			aDisplayContext colorMap: nil].
-	startPointX := startPoint x truncated.
-	startPointY := startPoint y.
-	endPointX := endPoint x ceiling.
-	endPointY := endPoint y.
-	width := endPointX - startPointX.
-	height := endPointY - startPointY.
-	glyph := (Form extent: width@height depth: 32) fillWhite. "we could cache a big white glyph somewhere to save having to create this. Clipping will make only a part of it display"
-	aDisplayContext sourceForm: glyph.
-	aDisplayContext destOrigin: startPointX@startPointY.
-	aDisplayContext width: width.
-	aDisplayContext height: height.
-	aDisplayContext 
-		sourceOrigin: 0@0;
-		halftoneForm: nil.
-	(FreeTypeSettings current useSubPixelAntiAliasing and: [depth >= 8])
-		ifTrue:[
-			aDisplayContext 
-				combinationRule: 41.
-			aDisplayContext 
-				copyBitsColor: foreColorVal 
-				alpha: foreColorAlpha 
-				gammaTable: FreeTypeSettings current gammaTable
-				ungammaTable: FreeTypeSettings current gammaInverseTable]
-		ifFalse:[
-			glyph fillWithColor: foreColor.
-			aDisplayContext combinationRule: (depth <= 8 ifTrue: [Form paint] ifFalse: [34]).
-			aDisplayContext copyBits].		
-	aDisplayContext 
-		colorMap: originalColorMap;
-		combinationRule: oldCombinationRule;
-		halftoneForm: oldHalftoneForm.
-]
-
-{ #category : #displaying }
 FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
 	| top bottom strikeoutThickness s e |
 	
@@ -328,7 +278,7 @@ FreeTypeFont >> getLinearWidthOf: aCharacter [
 			(self face charmaps includes:'armn')
 				ifTrue:[ "select apple roman char map, and map character from unicode to mac encoding"
 					self face setCharMap:'armn'.
-					charCode := aCharacter unicodeToMacRoman asUnicode asInteger. "check this!"]].
+					charCode := self unicodeToMacRoman: aCharacter. "check this!"]].
 	em := self pixelSize.
 	face validate.
 	face setPixelWidth: em height: em.
@@ -366,7 +316,7 @@ FreeTypeFont >> getWidthOf: aCharacter [
 			(self face charmaps includes:'armn')
 				ifTrue:[ "select apple roman char map, and map character from unicode to mac encoding"
 					self face setCharMap:'armn'.
-					charCode := aCharacter unicodeToMacRoman asUnicode asInteger. "check this!"]].
+					charCode := self unicodeToMacRoman: aCharacter. "check this!"]].
 	em := self pixelSize.
 	face validate.
 	face isValid ifFalse:[^0].
@@ -615,9 +565,9 @@ FreeTypeFont >> linearKerningLeft: leftChar right: rightChar [
 				ifTrue:[ "select apple roman char map, and map characters from unicode to mac encoding"
 					self face setCharMap:'armn'.
 					(l asInteger between: 16r20 and: 16rFF)
-						ifTrue:[l := (Character value: l asInteger) unicodeToMacRoman].
+						ifTrue:[l := (self unicodeToMacRoman: (Character value: l asInteger)) asCharacter ].
 					(r asInteger between: 16r20 and: 16rFF)
-						ifTrue:[r := (Character value: r asInteger) unicodeToMacRoman]]].
+						ifTrue:[r := (self unicodeToMacRoman: (Character value: r asInteger)) asCharacter]]].
 	^(f kerningLeft: l right: r) x asFloat *  self pixelSize / f unitsPerEm
 ]
 
@@ -824,6 +774,12 @@ FreeTypeFont >> underlineThickness [
 { #category : #metrics }
 FreeTypeFont >> underlineTop [
 	^ ((self face underlinePosition * self pixelSize / self face unitsPerEm) negated - (self underlineThickness/2)) rounded + 1 "needs the +1 , possibly because glyph origins are moved down by 1 so that their baselines line up with strike fonts"
+]
+
+{ #category : #measuring }
+FreeTypeFont >> unicodeToMacRoman: aCharacter [
+
+	^ (#macroman asZnCharacterEncoder decodeAsCodePoints: { aCharacter codePoint }) first
 ]
 
 { #category : #validation }

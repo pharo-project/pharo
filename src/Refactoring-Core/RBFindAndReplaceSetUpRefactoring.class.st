@@ -85,7 +85,7 @@ RBFindAndReplaceSetUpRefactoring >> extractMethodRefactoring [
 			setOption: #extractAssignment 
 			toUse:  [ :ref :aSelector | 
 				true];
-			yourself 
+			yourself
 ]
 
 { #category : #accessing }
@@ -104,7 +104,6 @@ RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
 	^ combinations ifEmpty: [ combinations ]
 		ifNotEmpty: [ limit :=  methodNode body statements first start.
 		combinations select: [ :e | e first <= limit ] ]
-	
 ]
 
 { #category : #'instance creation' }

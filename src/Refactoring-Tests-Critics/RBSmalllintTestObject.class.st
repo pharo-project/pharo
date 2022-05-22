@@ -76,7 +76,6 @@ RBSmalllintTestObject >> codeCruftLeftInMethods [
 	^ a > 0
 		ifTrue: [ b ]
 		ifFalse: [ c ]
-		
 ]
 
 { #category : #methods }
@@ -297,7 +296,6 @@ RBSmalllintTestObject >> multiplePeriodsTerminatingAssignmentStatement [
 		add: 'one';
 		add: 'two'.
 	^ strings.
-	
 ]
 
 { #category : #methods }
@@ -334,8 +332,6 @@ RBSmalllintTestObject >> nonUnaryAccessingMessageStatementMethodWithoutReturn: a
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMethodWithoutReturn: anObject [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
-
-	
 ]
 
 { #category : #methods }
@@ -458,11 +454,6 @@ RBSmalllintTestObject >> threeElementPoint [
 ]
 
 { #category : #methods }
-RBSmalllintTestObject >> toDo [
-	1 to: self size do: [:i | (self at: i) printString]
-]
-
-{ #category : #methods }
 RBSmalllintTestObject >> toDoCollect [
 	| array |
 	array := Array new: 10.
@@ -527,8 +518,6 @@ RBSmalllintTestObject >> unaryAccessingMethodWithReturn [
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMethodWithoutReturn [
 	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
-
-	
 ]
 
 { #category : #'non-accessing' }
@@ -550,8 +539,6 @@ RBSmalllintTestObject >> unaryNonAccessingMessageStatementMethodWithoutReturn [
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMethodWithoutReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
-
-	
 ]
 
 { #category : #'as yet unclassified' }
@@ -589,7 +576,7 @@ RBSmalllintTestObject >> usesTrue [
 
 { #category : #methods }
 RBSmalllintTestObject >> variableAssignedLiteral [
-	temporaryVariable := #() 
+	temporaryVariable := #()
 ]
 
 { #category : #methods }

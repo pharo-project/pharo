@@ -14,7 +14,7 @@ DoOnlyOnceIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 DoOnlyOnceIconStyler >> iconFor: aNode [
-	^ self iconNamed: #smallWarningIcon 
+	^ self iconNamed: #smallWarningIcon
 ]
 
 { #category : #defaults }

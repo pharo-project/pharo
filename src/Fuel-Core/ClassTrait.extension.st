@@ -4,5 +4,4 @@ Extension { #name : #ClassTrait }
 ClassTrait >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitClassTrait: self
-
 ]

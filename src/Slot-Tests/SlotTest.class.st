@@ -18,11 +18,6 @@ SlotTest >> testAsSlotCollection [
 	self should: ['1' asSlotCollection] raise: Error.
 	self should: ['ivarA ivarB i%varD iv2arF' asSlotCollection] raise: Error.
 	self should: ['iva|rG' asSlotCollection] raise: Error
-
-
-
-
-
 ]
 
 { #category : #'tests - read/write' }

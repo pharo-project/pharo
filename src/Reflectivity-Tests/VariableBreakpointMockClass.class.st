@@ -32,7 +32,7 @@ VariableBreakpointMockClass >> initialize [
 VariableBreakpointMockClass >> methodWithTempsAndArg: arg [
 	| temp |
 	temp := arg.
-	^ temp 
+	^ temp
 ]
 
 { #category : #accessing }

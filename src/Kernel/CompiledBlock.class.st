@@ -90,6 +90,12 @@ CompiledBlock >> isTestMethod [
 	^ false
 ]
 
+{ #category : #comparing }
+CompiledBlock >> literalEqual: other [
+	"when there are two blocks with the same code, we want to still have both in the literal array"
+	^self == other
+]
+
 { #category : #literals }
 CompiledBlock >> literalsToSkip [
 

@@ -38,7 +38,6 @@ STONReaderTest >> testBag [
 	self 
 		assert: (self materialize: 'Bag{}') 
 		equals: Bag new.
-
 ]
 
 { #category : #tests }
@@ -203,7 +202,7 @@ STONReaderTest >> testDictionaryWithIndirectReferenceKeys [
 	object := (STON reader on: ston readStream) next.
 	object first doWithIndex: [ :each :index |
 		self assert: (object second at: (Array with: each)) equals: index ].
-	self assert: object second isHealthy 
+	self assert: object second isHealthy
 ]
 
 { #category : #tests }
@@ -219,7 +218,7 @@ STONReaderTest >> testDictionaryWithReferenceKeys [
 	object := (STON reader on: ston readStream) next.
 	object first doWithIndex: [ :each :index |
 		self assert: (object second at: each) equals: index ].
-	self assert: object second isHealthy 
+	self assert: object second isHealthy
 ]
 
 { #category : #tests }
@@ -236,7 +235,6 @@ STONReaderTest >> testError [
 		self 
 			should: [ self materialize: each ] 
 			raise: STONReaderError ]
-
 ]
 
 { #category : #tests }
@@ -275,7 +273,6 @@ STONReaderTest >> testFraction [
 	self assert: (self materialize: '1/3') equals: 1/3.
 	self assert: (self materialize: '-1/3') equals: -1/3.
 	self assert: (self materialize: '100/11') equals: 100/11.
-
 ]
 
 { #category : #tests }
@@ -367,7 +364,6 @@ STONReaderTest >> testMultiple [
 	self assert: reader next equals: false. 
 	self assert: reader next equals: (Dictionary with: #one -> 1). 
 	self assert: reader atEnd.
-
 ]
 
 { #category : #tests }
@@ -381,7 +377,6 @@ STONReaderTest >> testNewSymbol [
 	"Parsing the new, not yet interned name should create a new Symbol"
 	shouldBeSymbol := self materialize: '#', notASymbol.
 	self assert: (shouldBeSymbol isSymbol and: [ notASymbol = shouldBeSymbol asString ])
-
 ]
 
 { #category : #tests }
@@ -449,7 +444,6 @@ STONReaderTest >> testScaledDecimal [
 	self assert: (self materialize: '-1/3s2') equals: -1/3s2.
 	self assert: (self materialize: '1/3s10') equals: 1/3s10.
 	self assert: (self materialize: '-1/3s10') equals: -1/3s10.
-
 ]
 
 { #category : #tests }
@@ -463,7 +457,7 @@ STONReaderTest >> testSetWithIndirectReferenceElements [
 	object := STON fromString: ston readStream.
 	object first do: [ :each |
 		self assert: (object second includes: (Array with: each)) ].
-	self assert: object second isHealthy 
+	self assert: object second isHealthy
 ]
 
 { #category : #tests }
@@ -477,7 +471,7 @@ STONReaderTest >> testSetWithReferenceElements [
 	object := STON fromString: ston readStream.
 	object first do: [ :each |
 		self assert: (object second includes: each) ].
-	self assert: object second isHealthy 
+	self assert: object second isHealthy
 ]
 
 { #category : #tests }
@@ -515,7 +509,6 @@ STONReaderTest >> testTime [
 	self assert: (self materialize: 'Time[''06:30:15'']') equals: time.
 	time := Time hour: 6 minute: 30 second: 15 nanoSecond: 123.
 	self assert: (self materialize: 'Time[''06:30:15.000000123'']') equals: time.
-
 ]
 
 { #category : #tests }

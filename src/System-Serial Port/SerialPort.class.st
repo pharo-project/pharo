@@ -23,7 +23,6 @@ Class {
 SerialPort >> baudRate [
 
 	^ baudRate
-
 ]
 
 { #category : #accessing }
@@ -47,7 +46,6 @@ SerialPort >> close [
 SerialPort >> dataBits [
 
 	^ dataBits
-
 ]
 
 { #category : #accessing }
@@ -55,7 +53,6 @@ SerialPort >> dataBits: anInteger [
 	"Set the number of data bits for this serial port to 5, 6, 7, or 8."
 
 	dataBits := anInteger
-
 ]
 
 { #category : #initialization }
@@ -77,7 +74,6 @@ SerialPort >> initialize [
 SerialPort >> inputFlowControlType [
 
 	^ inputFlowControlType
-
 ]
 
 { #category : #accessing }
@@ -88,7 +84,6 @@ SerialPort >> inputFlowControlType: anInteger [
 		2 - hardware handshaking"
 
 	inputFlowControlType := anInteger
-
 ]
 
 { #category : #'input/output' }
@@ -149,7 +144,6 @@ SerialPort >> openPort: portId [
 SerialPort >> outputFlowControlType [
 
 	^ outputFlowControlType
-
 ]
 
 { #category : #accessing }
@@ -160,14 +154,12 @@ SerialPort >> outputFlowControlType: anInteger [
 		2 - hardware handshaking"
 
 	outputFlowControlType := anInteger
-
 ]
 
 { #category : #accessing }
 SerialPort >> parityType [
 
 	^ parityType
-
 ]
 
 { #category : #accessing }
@@ -178,7 +170,6 @@ SerialPort >> parityType: anInteger [
 		2 - even parity"
 
 	parityType := anInteger
-
 ]
 
 { #category : #primitives }
@@ -187,7 +178,6 @@ SerialPort >> primClosePort: portNumber [
 	<primitive: 'primitiveSerialPortClose' module: 'SerialPlugin'>
 	^ nil  "(DNS)"
 	"self primitiveFailed."
-
 ]
 
 { #category : #primitives }
@@ -205,7 +195,6 @@ SerialPort >> primOpenPort: portNumber baudRate: baud stopBitsType: stop
 
 	<primitive: 'primitiveSerialPortOpen' module: 'SerialPlugin'>
 	^ nil  "(DNS)"
-
 ]
 
 { #category : #primitives }
@@ -219,7 +208,6 @@ SerialPort >> primReadPort: portNumber into: byteArray startingAt: startIndex co
 
 	<primitive: 'primitiveSerialPortRead' module: 'SerialPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -233,7 +221,6 @@ SerialPort >> primWritePort: portNumber from: byteArray startingAt: startIndex c
 
 	<primitive: 'primitiveSerialPortWrite' module: 'SerialPlugin'>
 	self primitiveFailed.
-
 ]
 
 { #category : #primitives }
@@ -254,7 +241,6 @@ SerialPort >> printOn: aStream [
 		print: dataBits; nextPutAll: ' bits, ';
 		nextPutAll: (#('1.5' '1' '2') at: stopBitsType + 1); nextPutAll: ' stopbits, ';
 		nextPutAll: (#('no' 'odd' 'even') at: parityType + 1); nextPutAll: ' parity)'
-
 ]
 
 { #category : #'input/output' }
@@ -318,7 +304,6 @@ SerialPort >> readString [
 SerialPort >> stopBitsType [
 
 	^ stopBitsType
-
 ]
 
 { #category : #accessing }
@@ -329,14 +314,12 @@ SerialPort >> stopBitsType: anInteger [
 		2 - two stop bits"
 
 	stopBitsType := anInteger
-
 ]
 
 { #category : #accessing }
 SerialPort >> xOffByte [
 
 	^ xOffByte
-
 ]
 
 { #category : #accessing }
@@ -344,14 +327,12 @@ SerialPort >> xOffByte: anInteger [
 	"Set the value of the XOff byte to be used if XOn/XOff flow control is enabled."
 
 	xOffByte := anInteger
-
 ]
 
 { #category : #accessing }
 SerialPort >> xOnByte [
 
 	^ xOnByte
-
 ]
 
 { #category : #accessing }
@@ -359,5 +340,4 @@ SerialPort >> xOnByte: anInteger [
 	"Set the value of the XOn byte to be used if XOn/XOff flow control is enabled."
 
 	xOnByte := anInteger
-
 ]

@@ -54,7 +54,6 @@ RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector 
 	self className: aClassName.
 	selector := aSelector.
 	message := aMessageSend
-	
 ]
 
 { #category : #preconditions }

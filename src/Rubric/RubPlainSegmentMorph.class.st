@@ -7,11 +7,9 @@ Class {
 { #category : #initialization }
 RubPlainSegmentMorph >> defaultBorderColor [
 	^ Color yellow
-
 ]
 
 { #category : #initialization }
 RubPlainSegmentMorph >> defaultColor [
 	^ Color yellow alpha: 0.5.
-
 ]

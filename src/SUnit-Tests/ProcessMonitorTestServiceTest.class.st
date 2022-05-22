@@ -28,7 +28,7 @@ ProcessMonitorTestServiceTest >> setUp [
 	"Following settings ensure that we are testing full behavior independently from default settings"
 	testService failTestLeavingProcesses. 
 	testService terminateProcessesAfterTest.
-	executionEnvironment activated 
+	executionEnvironment activated
 ]
 
 { #category : #tests }
@@ -220,7 +220,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenProcessWa
 
 	testService handleNewProcess: [  ] newProcess.
 	
-	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess 
+	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess
 ]
 
 { #category : #tests }
@@ -335,7 +335,7 @@ ProcessMonitorTestServiceTest >> testGettingForkedProcessesFromEnvironment [
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
 
-	self assert: executionEnvironment processMonitor identicalTo: testService 
+	self assert: executionEnvironment processMonitor identicalTo: testService
 ]
 
 { #category : #tests }
@@ -346,7 +346,7 @@ ProcessMonitorTestServiceTest >> testGettingServiceFromTestCase [
 		actual := self executionProcessMonitor
 	].
 
-	self assert: actual identicalTo: testService 
+	self assert: actual identicalTo: testService
 ]
 
 { #category : #tests }
@@ -470,7 +470,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessWhenItFailsTestWithUnhan
 			self deny: failedProcess isSuspended]
 	].
 
-	self assert: executed 
+	self assert: executed
 ]
 
 { #category : #tests }
@@ -510,13 +510,13 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhan
 	testService handleException: UnhandledError new.
 	self assert: executed.
 	"Unhandled exception opens debugger and therefore any new errors should not be suspended"
-	self deny: testService shouldSuspendBackgroundFailures 
+	self deny: testService shouldSuspendBackgroundFailures
 ]
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testShouldSuspendBackgroundFailuresByDefault [
 
-	self assert: testService shouldSuspendBackgroundFailures 
+	self assert: testService shouldSuspendBackgroundFailures
 ]
 
 { #category : #tests }

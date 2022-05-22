@@ -31,7 +31,6 @@ FLMigration >> applyTo: aVariablesMapping [
 		aVariablesMapping 
 			map: link key 
 			to: link value ]
-	
 ]
 
 { #category : #initializing }

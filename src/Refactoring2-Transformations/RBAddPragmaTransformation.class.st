@@ -4,7 +4,7 @@ I am responsible for adding a pragma inside a method. In this implementation, al
 Usage:
 | transformation |
 transformation := (RBAddPragmaTransformation
-				pragma: '<gtInspectorPresentationOrder: 213>'
+				pragma: '<pragaForTesting: 213>'
 				inMethod: #methodBefore
 				inClass: #RBAddPragmaTransformationTest)
 				transform.

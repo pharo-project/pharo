@@ -11,12 +11,10 @@ Class {
 FLContextCluster >> materializeInstanceWith: aDecoder [
 
 	^ theClass newFromFrameSize: aDecoder nextEncodedByte
-
 ]
 
 { #category : #'serialize/materialize' }
 FLContextCluster >> serializeInstance: aMethodContext with: anEncoder [
 
 	anEncoder encodeByte: aMethodContext method frameSize.
-
 ]

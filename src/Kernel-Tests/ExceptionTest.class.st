@@ -30,6 +30,14 @@ ExceptionTest >> assertSuccess: anExceptionTester [
 	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded'].
 ]
 
+{ #category : #utilities }
+ExceptionTest >> methodSignallingZeroDivide [
+
+	^ [ 1 / 0 ]
+		  on: ZeroDivide
+		  do: [ :e | e signal ]
+]
+
 { #category : #private }
 ExceptionTest >> runCaseManaged [
 	"We should disable TestEnvironment to avoid any logic for unhandled errors from background processes.
@@ -312,6 +320,19 @@ ExceptionTest >> testResignalAsUnwinds [
 			on: ZeroDivide do: [:ex | self assert: unwound.  ex return: 5]
 	] on: Error do: [:ex | [ex resignalAs: ZeroDivide] ifCurtailed: [unwound := true]].
 	self assert: answer == 5
+]
+
+{ #category : #'tests - resignal' }
+ExceptionTest >> testResignalExceptionThatHasBeenSignaledTwice [
+
+	| shouldBe17 |
+	shouldBe17 := nil.
+
+	[ shouldBe17 := self methodSignallingZeroDivide ]
+		on: ZeroDivide
+		do: [ :e | e resume: 17 ].
+
+	self assert: shouldBe17 notNil
 ]
 
 { #category : #'tests - exceptiontester' }

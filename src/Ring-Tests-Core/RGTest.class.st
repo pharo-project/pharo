@@ -12,7 +12,7 @@ RGTest >> checkClassesConsistency: object1 and: object2 [
 	self assert: (object1 class instVarNames collect: [ :var | 
 		var -> (object1 instVarNamed: var) value class ]) 
 		equals: (object2 class instVarNames collect: [ :var | 
-		var -> (object2 instVarNamed: var) value class ]) 
+		var -> (object2 instVarNamed: var) value class ])
 ]
 
 { #category : #utilities }
@@ -47,10 +47,6 @@ RGTest >> checkImplicitSingleClassEnvironmentOf: anRGClass [
 	self assert: anRGClass environment ask packages size equals: 2.
 
 	self checkHierarchyConsistencyOf: anRGClass.
-	
-	
-	
-
 ]
 
 { #category : #utilities }
@@ -71,5 +67,4 @@ RGTest >> checkIncompatible: aBlock [
 	"prove that the block tries to do an action not suitable for a particular behavior strategy"
 
 	self should: aBlock raise: RGIncompatibleBehaviorTypeError
-
 ]

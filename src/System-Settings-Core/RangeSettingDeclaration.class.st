@@ -55,7 +55,7 @@ RangeSettingDeclaration >> inputWidget [
 
 { #category : #accessing }
 RangeSettingDeclaration >> range [
-	^ range 
+	^ range
 ]
 
 { #category : #accessing }
@@ -70,5 +70,4 @@ RangeSettingDeclaration >> realValue: aValue [
 		ifNotNil: [self settingReceiver perform: self setSelector with: ((aValue max: self range first) min: self range last)].
 	self triggerEvent: self privateChangeEvent with: self.
 	^ true
-	
 ]

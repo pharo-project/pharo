@@ -156,7 +156,7 @@ ReAbstractRule >> anchorFor: anEntity [
 ReAbstractRule >> basicCheck: anEntity [
 	"If you end here, you should most likely implement this in a subclass"
 	
-	^ self shouldBeImplemented  
+	^ self shouldBeImplemented
 ]
 
 { #category : #running }

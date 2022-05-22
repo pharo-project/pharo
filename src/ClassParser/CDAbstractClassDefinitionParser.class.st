@@ -11,6 +11,18 @@ Class {
 	#category : #'ClassParser-Parser'
 }
 
+{ #category : #parsing }
+CDAbstractClassDefinitionParser class >> fromASTNode: aNode [ 
+	
+	^ self new parseRootNode: aNode
+]
+
+{ #category : #testing }
+CDAbstractClassDefinitionParser class >> isAbstract [
+		
+	^ self == CDAbstractClassDefinitionParser
+]
+
 { #category : #'instance creation' }
 CDAbstractClassDefinitionParser class >> parse: aString [ 
 	
@@ -81,8 +93,9 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 	"we are in situation ClassX class << ClassZ class
 				slots: {xxxx} so grab the class"
-	
+				
 	aNode handleMetaclassName: self		
+	
 	"| className classNode node |
 	node := aNode receiver arguments first. 
 	className := node receiver binding value class name.
@@ -93,13 +106,18 @@ CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 	"
 ]
 
-{ #category : #accessing }
+{ #category : #parsing }
 CDAbstractClassDefinitionParser >> handlePackage: aNode [ 
 	
 	classDefinition packageNameNode: aNode astNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSharedPoolsFromNode: aNode [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #parsing }
 CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [ 
 	
 	| slots slotNodes classVariablesString |
@@ -182,6 +200,11 @@ CDAbstractClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
 ]
 
 { #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSuperclassNode: aNode [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #parsing }
 CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 	
 	| traitComposition |
@@ -200,7 +223,17 @@ CDAbstractClassDefinitionParser >> parse: aString [
 	^ self parseRootNode: expressionTree
 ]
 
-{ #category : #hooks }
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> parseRootNode: aNode [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> parserClass [
 	^ RBParser
 ]
@@ -219,4 +252,9 @@ CDAbstractClassDefinitionParser >> slotInitializationNodeClass [
 { #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> slotNodeClass [
 	^ CDSlotNode
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> visitMessageNode: aNode [ 
+	^ self subclassResponsibility
 ]

@@ -26,7 +26,6 @@ RBExtractMethodTransformationTest >> testBadInterval [
 							from: #subclassOf:overrides: to: #bla
 							in: #'RBBasicLintRuleTestData class')
 							asRefactoring
-	
 ]
 
 { #category : #'tests - failures' }

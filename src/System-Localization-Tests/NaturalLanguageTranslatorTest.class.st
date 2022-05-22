@@ -31,8 +31,6 @@ NaturalLanguageTranslatorTest >> testRegisterCustomTranslator [
 	
 	"Our custom translator translates the string differently"
 	self assert: 'TestCase' translated equals: 'Testfall'
-	
-	
 ]
 
 { #category : #tests }

@@ -3,14 +3,15 @@ I am a command to install execution counter into given method or source node
 "
 Class {
 	#name : #ClyAddExecutionCounterCommand,
-	#superclass : #ClyDebuggingCommand,
+	#superclass : #ClyAdvancedDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyAddExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasExecutionCounter not
+	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+		  aBrowserContext isSelectedItemHasExecutionCounter not ]
 ]
 
 { #category : #activation }
@@ -25,11 +26,21 @@ ClyAddExecutionCounterCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddExecutionCounterCommand >> defaultMenuItemName [
-	^'Add Counter'
+	^' Add     Counter    to  ', sourceNode displaySourceCode
+]
+
+{ #category : #accessing }
+ClyAddExecutionCounterCommand >> description [
+	^ self defaultMenuItemName, ' to  ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }
 ClyAddExecutionCounterCommand >> execute [
 	
 	ExecutionCounter installOn: sourceNode
+]
+
+{ #category : #execution }
+ClyAddExecutionCounterCommand >> information [
+	self defaultMenuItemName, ' to  ',  sourceNode displaySourceCode
 ]

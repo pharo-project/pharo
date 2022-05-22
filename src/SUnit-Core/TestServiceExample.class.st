@@ -53,7 +53,7 @@ TestServiceExample >> handleCompletedTest [
 TestServiceExample >> handleException: anUnhandledException [
 	super handleException: anUnhandledException.
 	
-	signaledExceptions add: anUnhandledException 
+	signaledExceptions add: anUnhandledException
 ]
 
 { #category : #controlling }

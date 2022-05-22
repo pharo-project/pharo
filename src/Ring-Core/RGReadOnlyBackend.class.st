@@ -7,7 +7,7 @@ Class {
 { #category : #'trait alias' }
 RGReadOnlyBackend >> addAlias: aSymbol to: anRGTraitAlias [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #environment }
@@ -37,7 +37,7 @@ RGReadOnlyBackend >> addDefinedBehavior: anRGBehavior to: anRGPackage [
 { #category : #'trait exclusion' }
 RGReadOnlyBackend >> addExclusion: aSymbol to: anRGTraitExclusion [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #package }
@@ -91,19 +91,19 @@ RGReadOnlyBackend >> addSharedPool: anRGPoolVariable to: anRGBehavior [
 { #category : #'pointer layout' }
 RGReadOnlyBackend >> addSlot: anRGSlot to: anRGLayout [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #'trait composition' }
 RGReadOnlyBackend >> addTransformation: anRGTraitTransformation to: anRGTraitComposition [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #'trait alias' }
 RGReadOnlyBackend >> cleanAliasesFor: anRGTraitAlias [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #environment }
@@ -133,7 +133,7 @@ RGReadOnlyBackend >> cleanDefinedBehaviorsFor: anRGPackage [
 { #category : #'trait exclusion' }
 RGReadOnlyBackend >> cleanExclusionsFor: anRGTraitExclusion [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #package }
@@ -187,7 +187,7 @@ RGReadOnlyBackend >> cleanSharedPoolsFor: anRGBehavior [
 { #category : #'pointer layout' }
 RGReadOnlyBackend >> cleanSlotsFor: anRGLayout [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #package }
@@ -205,7 +205,7 @@ RGReadOnlyBackend >> cleanTagsForMethodsFor: anRGBehavior [
 { #category : #'trait composition' }
 RGReadOnlyBackend >> cleanTransformationsFor: anRGTraitComposition [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #'unresolved objects' }
@@ -217,7 +217,6 @@ RGReadOnlyBackend >> createNewUnresolvedClass [
 	unresolvedValue := RGUnresolvedValue new.
 	unresolvedValue default: unresolvedValue.
 	^ unresolvedValue."
-
 ]
 
 { #category : #'unresolved objects' }
@@ -247,7 +246,7 @@ RGReadOnlyBackend >> readOnlyError [
 { #category : #'trait alias' }
 RGReadOnlyBackend >> removeAlias: aSymbol from: anRGTraitAlias [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #environment }
@@ -277,7 +276,7 @@ RGReadOnlyBackend >> removeDefinedBehavior: anRGBehavior from: anRGPackage [
 { #category : #'trait exclusion' }
 RGReadOnlyBackend >> removeExclusion: aSymbol from: anRGTraitExclusion [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #package }
@@ -331,13 +330,13 @@ RGReadOnlyBackend >> removeSharedPool: anRGPoolVariable from: anRGBehavior [
 { #category : #'pointer layout' }
 RGReadOnlyBackend >> removeSlot: anRGSlot from: anRGLayout [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #'trait composition' }
 RGReadOnlyBackend >> removeTransformation: anRGTraitTransformation from: anRGTraitComposition [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #metaclass }
@@ -367,7 +366,7 @@ RGReadOnlyBackend >> setClassCommentTimeFor: anRGComment to: aDateAndTime [
 { #category : #trait }
 RGReadOnlyBackend >> setClassTraitFor: anRGTrait to: anRGMetatraitDefinition [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #class }
@@ -433,7 +432,7 @@ RGReadOnlyBackend >> setSourceCodeFor: anRGMethod to: anObject [
 { #category : #'trait transormation' }
 RGReadOnlyBackend >> setSubjectFor: anRGTraitComposition to: anRGTrait [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #behavior }
@@ -445,13 +444,13 @@ RGReadOnlyBackend >> setSuperclassFor: anRGBehavior to: anObject [
 { #category : #trait }
 RGReadOnlyBackend >> setTraitCommentFor: anRGBehavior to: anRGComment [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #trait }
 RGReadOnlyBackend >> setTraitPackageFor: anRGBehavior to: anRGPackageDefinition [
 
-	self readOnlyError 
+	self readOnlyError
 ]
 
 { #category : #class }

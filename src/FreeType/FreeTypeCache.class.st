@@ -250,7 +250,6 @@ FreeTypeCache >> shrinkTo: newSize [
 
 { #category : #'private - accessing' }
 FreeTypeCache >> sizeOf: anObject [
-	^(anObject isKindOf: Form)
-		ifTrue:[(anObject bitsSize * 4) + 32]
-		ifFalse:[4]
+
+	^ anObject ftSize
 ]

@@ -158,7 +158,7 @@ RBCascadeNode >> receiver [
 	^self messages first receiver
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBCascadeNode >> removeNode: aNode [
 
 	self messages remove: aNode ifAbsent: [ ]

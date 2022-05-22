@@ -36,7 +36,17 @@ ClyToolbarMorph class >> of: aBrowser [
 
 { #category : #accessing }
 ClyToolbarMorph >> addNewItem: aMorph [
-	self addMorphBack: aMorph
+
+	| offsetX offsetY |
+	offsetX := self submorphs
+		           inject: 0
+		           into: [ :sum :each | sum + each extent x ].
+	offsetY := 5.
+	self addMorphBack: aMorph.
+	self computeFullBounds.
+	self minHeight: self defaultHeight.
+	aMorph bounds: (offsetX @ offsetY corner:
+			 aMorph extent x + offsetX @ (aMorph extent y + offsetY))
 ]
 
 { #category : #accessing }
@@ -57,15 +67,16 @@ ClyToolbarMorph >> defaultHeight [
 { #category : #initialization }
 ClyToolbarMorph >> initialize [
 	super initialize.
-	self 
-		color: self theme windowColor;
-		changeTableLayout;
-		height: self defaultHeight;	
-		layoutInset: 2@0; 
-		listDirection: #leftToRight;
-		wrapCentering: #center;
+	"setting layoutPolicy to nil because existing layouts fix my owner's minimum width, hiding other widgets when the windows shrinks"
+	self layoutPolicy: nil.
+	self
+		listDirection: #rightToLeft;
 		hResizing: #spaceFill;
-		vResizing: #rigid
+		vResizing: #shrinkWrap;
+		wrapCentering: #left;
+		color: self defaultColor;
+		extent: 0 @ 0.
+	self layoutChanged
 ]
 
 { #category : #updating }
@@ -77,5 +88,6 @@ ClyToolbarMorph >> updateItems [
 	
 	self hide.
 	self removeAllMorphs.
+	self initialize.
 	[menu buildBrowserToolbar: self] ensure: [self show]
 ]

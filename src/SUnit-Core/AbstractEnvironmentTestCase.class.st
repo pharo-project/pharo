@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 AbstractEnvironmentTestCase class >> isAbstract [
 
-	^self = AbstractEnvironmentTestCase 
+	^self = AbstractEnvironmentTestCase
 ]
 
 { #category : #accessing }

@@ -838,7 +838,7 @@ FTExamples class >> exampleTree1 [
 	| ds |
 	ds := FTTreeDataSource
 		roots:
-			((ProtoObject allSubclasses reject: [ :e | e name endsWith: 'class' ])
+			((Collection allSubclasses reject: [ :e | e name endsWith: 'class' ])
 				sort: [ :a :b | a name < b name ])
 		children: [ :data | data subclasses sort: [ :a :b | a name < b name ] ].
 	FTTableMorph new

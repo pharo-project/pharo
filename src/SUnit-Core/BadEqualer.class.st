@@ -11,5 +11,5 @@ Class {
 BadEqualer >> = other [ 
 	self class = other class
 		ifFalse: [^ false].
-	^ 100 atRandom < 30 
+	^ 100 atRandom < 30
 ]

@@ -11,5 +11,4 @@ EmptyLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
 		RGEmptyLayout parent: aHost]
-
 ]

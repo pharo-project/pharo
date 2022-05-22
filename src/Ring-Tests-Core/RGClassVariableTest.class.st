@@ -16,10 +16,6 @@ RGClassVariableTest >> testClassVariableImplicitEnvironment [
 	classVariable := RGClassVariable named: #SomeClassVariable.
 	self assert: (classVariable hasResolvedName).
 	self checkImplicitSingleClassEnvironmentOf: classVariable parent.
-	
-	
-	
-
 ]
 
 { #category : #tests }
@@ -38,8 +34,7 @@ RGClassVariableTest >> testNewClassVariable [
 	self assert: (classVariable hasResolvedAll: #(name)).
 	self assert: classVariable name equals: #SomeClassVariable.
 	self assert: (classVariable isClassVariable).
-	self assert: (classVariable isClassVariable).	
-	
+	self assert: (classVariable isClassVariable).
 ]
 
 { #category : #tests }

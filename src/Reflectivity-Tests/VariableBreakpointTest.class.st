@@ -195,7 +195,6 @@ VariableBreakpointTest >> testAccessStrategy [
 	wp := VariableBreakpoint watchVariablesReadsInObject: obj1.
 	self assert: wp accessStrategy equals: #read.
 	wp remove.
-	
 ]
 
 { #category : #'tests - initialization' }
@@ -295,8 +294,7 @@ VariableBreakpointTest >> testBreakpointOnAllTempAccesses [
 	self assert: wp targetInstance equals: nil.
 	
 	self assertCollection: wp link nodes asIdentitySet equals: self allTempNodes asIdentitySet.	
-	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
-	
+	self should: [obj1 methodWithTempsAndArg: 42] raise: Break
 ]
 
 { #category : #'tests - temp var breakpoints' }
@@ -310,8 +308,7 @@ VariableBreakpointTest >> testBreakpointOnArgument [
 	self assert: wp targetInstance equals: nil.
 	
 	self assertCollection: wp link nodes asIdentitySet equals: self argNodes asIdentitySet.	
-	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
-	
+	self should: [obj1 methodWithTempsAndArg: 42] raise: Break
 ]
 
 { #category : #'tests - class var breakpoints' }
@@ -326,7 +323,7 @@ VariableBreakpointTest >> testBreakpointOnClassVarAccesses [
 	
 	self assertCollection: wp link nodes asIdentitySet equals: (VariableBreakpointMockClass classVariableNamed: #ClassVar) accessingNodes asIdentitySet.
 	self should: [obj1 classVarRead] raise: Break.
-	self should: [obj1 classVarWrite] raise: Break	
+	self should: [obj1 classVarWrite] raise: Break
 ]
 
 { #category : #'tests - class var breakpoints' }
@@ -340,7 +337,7 @@ VariableBreakpointTest >> testBreakpointOnClassVarReads [
 	self assert: wp targetInstance equals: nil.
 	
 	self assertCollection: wp link nodes asIdentitySet equals: (VariableBreakpointMockClass classVariableNamed: #ClassVar) readNodes asIdentitySet.
-	self should: [obj1 classVarRead] raise: Break	
+	self should: [obj1 classVarRead] raise: Break
 ]
 
 { #category : #'tests - class var breakpoints' }
@@ -354,7 +351,7 @@ VariableBreakpointTest >> testBreakpointOnClassVarWrites [
 	self assert: wp targetInstance equals: nil.
 	
 	self assertCollection: wp link nodes asIdentitySet equals: (VariableBreakpointMockClass classVariableNamed: #ClassVar) assignmentNodes asIdentitySet.
-	self should: [obj1 classVarWrite] raise: Break	
+	self should: [obj1 classVarWrite] raise: Break
 ]
 
 { #category : #'tests - temp var breakpoints' }
@@ -368,8 +365,7 @@ VariableBreakpointTest >> testBreakpointOnTempReads [
 	self assert: wp targetInstance equals: nil.
 	
 	self assertCollection: wp link nodes asIdentitySet equals: self tempReadNodes asIdentitySet.	
-	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
-	
+	self should: [obj1 methodWithTempsAndArg: 42] raise: Break
 ]
 
 { #category : #'tests - temp var breakpoints' }
@@ -383,8 +379,7 @@ VariableBreakpointTest >> testBreakpointOnTempWrites [
 	self assert: wp targetInstance equals: nil.
 	
 	self assertCollection: wp link nodes asIdentitySet equals: self tempWriteNodes asIdentitySet.	
-	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
-	
+	self should: [obj1 methodWithTempsAndArg: 42] raise: Break
 ]
 
 { #category : #'tests - initialization' }
@@ -409,7 +404,7 @@ VariableBreakpointTest >> testInstrumentedMethodIsCompiledMethod [
 
 	wp := VariableBreakpointMockClass newBreakpointForVariable: #v1.
 	wp install.
-	self assert: (VariableBreakpointMockClass>>#v1) isCompiledMethod 
+	self assert: (VariableBreakpointMockClass>>#v1) isCompiledMethod
 ]
 
 { #category : #'tests - installation' }
@@ -467,7 +462,6 @@ VariableBreakpointTest >> testNoRemoveAfterSubclassRemoved [
 	self assert: (wp link nodes anySatisfy:[:n| n == testClassNode]).
 	self assert: wp isInstalled.
 	self should: [ testClass basicNew accessingV1 ] raise: Break
-
 ]
 
 { #category : #'tests - notifications' }
@@ -555,7 +549,6 @@ VariableBreakpointTest >> testRemove [
 	self shouldnt: [obj2 v2: 0] raise: Break.
 	self shouldnt: [obj2 v1] raise: Break.	
 	self shouldnt: [obj2 v1: 0] raise: Break.
-	
 ]
 
 { #category : #'tests - removing' }
@@ -572,7 +565,6 @@ VariableBreakpointTest >> testRemoveAfterClassRemoved [
 	self denyCollection: wp link nodes includesAny: testClassNodes.
 	self deny: wp isInstalled.
 	self shouldnt: [ VariableBreakpointMockClass new v1 ] raise: Break
-
 ]
 
 { #category : #'tests - removing' }
@@ -590,7 +582,6 @@ VariableBreakpointTest >> testRemoveAfterClassWithTempVarRemoved [
 	self denyCollection: wp link nodes includesAny: testClassNodes.
 	self deny: wp isInstalled.
 	self shouldnt: [ testClass basicNew accessingtemp ] raise: Break
-
 ]
 
 { #category : #'tests - removing' }
@@ -610,7 +601,6 @@ VariableBreakpointTest >> testRemoveAfterSuperclassRemoved [
 	self denyCollection: wp link nodes includesAny: testClassNodes.
 	self deny: wp isInstalled.
 	self shouldnt: [ testSubclass basicNew accessingV1 ] raise: Break
-
 ]
 
 { #category : #'tests - removing' }
@@ -635,7 +625,6 @@ VariableBreakpointTest >> testRemoveFromMethod [
 	
 	"Second, the old method ast's is not referenced by the breakpoint's link anymore"
 	self assert: (wp link nodes noneSatisfy: [ :n| n == ast ])
-	
 ]
 
 { #category : #'tests - installation' }
@@ -685,8 +674,6 @@ VariableBreakpointTest >> testWatchVariableInClass [
 	self should: [ VariableBreakpointMockSubclass new ] raise: Break.
 	self should: [ obj2 instVarReads] raise: Break.
 	self should: [ obj2 instVarWrites] raise: Break
-	
-	
 ]
 
 { #category : #'tests - object-centric' }
@@ -700,8 +687,6 @@ VariableBreakpointTest >> testWatchVariableInObject [
 	self shouldnt: [VariableBreakpointMockClass new] raise: Break.
 	self shouldnt: [obj3 v1] raise: Break.
 	self shouldnt: [obj3 v1: 0] raise: Break
-	
-	
 ]
 
 { #category : #'tests - class wide watchpoints' }
@@ -722,8 +707,6 @@ VariableBreakpointTest >> testWatchVariableReadsInClass [
 	self shouldnt: [ VariableBreakpointMockSubclass new ] raise: Break.
 	self should: [ obj2 instVarReads] raise: Break.
 	self shouldnt: [ obj2 instVarWrites] raise: Break
-	
-	
 ]
 
 { #category : #'tests - object-centric' }
@@ -739,8 +722,6 @@ VariableBreakpointTest >> testWatchVariableReadsInObject [
 	self shouldnt: [VariableBreakpointMockClass new] raise: Break.
 	self shouldnt: [obj3 v1] raise: Break.
 	self shouldnt: [obj3 v1: 0] raise: Break
-	
-	
 ]
 
 { #category : #'tests - class wide watchpoints' }
@@ -761,10 +742,6 @@ VariableBreakpointTest >> testWatchVariableWritesInClass [
 	self should: [ VariableBreakpointMockSubclass new ] raise: Break.
 	self shouldnt: [ obj2 instVarReads] raise: Break.
 	self should: [ obj2 instVarWrites] raise: Break
-	
-	
-	
-	
 ]
 
 { #category : #'tests - object-centric' }
@@ -780,10 +757,6 @@ VariableBreakpointTest >> testWatchVariableWritesInObject [
 	self shouldnt: [VariableBreakpointMockClass new] raise: Break.
 	self shouldnt: [obj3 v1] raise: Break.
 	self shouldnt: [obj3 v1: 0] raise: Break
-	
-	
-	
-	
 ]
 
 { #category : #'tests - class wide watchpoints' }
@@ -807,7 +780,6 @@ VariableBreakpointTest >> testWatchVariablesInClass [
 	self should: [obj2 v2: 0] raise: Break.
 	self should: [obj2 v1] raise: Break.	
 	self should: [obj2 v1: 0] raise: Break.
-	
 ]
 
 { #category : #'tests - object-centric' }
@@ -834,7 +806,6 @@ VariableBreakpointTest >> testWatchVariablesInObject [
 	self shouldnt: [obj1 v1: 0] raise: Break.
 	self shouldnt: [VariableBreakpointMockClass new] raise: Break.
 	self shouldnt: [VariableBreakpointMockSubclass new ] raise: Break.
-	
 ]
 
 { #category : #'tests - class wide watchpoints' }
@@ -859,7 +830,6 @@ VariableBreakpointTest >> testWatchVariablesReadsInClass [
 	self shouldnt: [obj2 v2: 0] raise: Break.
 	self should: [obj2 v1] raise: Break.	
 	self shouldnt: [obj2 v1: 0] raise: Break.
-	
 ]
 
 { #category : #'tests - object-centric' }
@@ -888,7 +858,6 @@ VariableBreakpointTest >> testWatchVariablesReadsInObject [
 	self shouldnt: [obj1 v1: 0] raise: Break.
 	self shouldnt: [VariableBreakpointMockClass new] raise: Break.
 	self shouldnt: [VariableBreakpointMockSubclass new ] raise: Break.
-	
 ]
 
 { #category : #'tests - class wide watchpoints' }
@@ -913,7 +882,6 @@ VariableBreakpointTest >> testWatchVariablesWritesInClass [
 	self should: [obj2 v2: 0] raise: Break.
 	self shouldnt: [obj2 v1] raise: Break.	
 	self should: [obj2 v1: 0] raise: Break.
-	
 ]
 
 { #category : #'tests - object-centric' }
@@ -941,5 +909,4 @@ VariableBreakpointTest >> testWatchVariablesWritesInObject [
 	self shouldnt: [obj1 v1: 0] raise: Break.
 	self shouldnt: [VariableBreakpointMockClass new] raise: Break.
 	self shouldnt: [VariableBreakpointMockSubclass new ] raise: Break.
-	
 ]

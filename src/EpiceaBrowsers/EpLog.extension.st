@@ -14,5 +14,5 @@ EpLog >> browseVersionsOf: aMethod [
 	^ (EpLogBrowserPresenter newWithLog: self)
 			addFilter: (EpPluggableFilter isMethod: aMethod);
 			refresh;
-			openWithSpec
+			open
 ]

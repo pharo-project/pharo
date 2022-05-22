@@ -106,7 +106,7 @@ RBFindAndReplaceRefactoring >> extractMethodRefactoring [
 			setOption: #useExistingMethod 
 			toUse:  [ :ref :aSelector | 
 				true];
-			yourself 
+			yourself
 ]
 
 { #category : #initialization }
@@ -199,12 +199,12 @@ RBFindAndReplaceRefactoring >> nodesOf: methodNode [
 	visitor := RBCombinatorVisitor new.
 	node := methodNode copy.
 	node acceptVisitor: visitor.
-	^ visitor combinations 
+	^ visitor combinations
 ]
 
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> patternParserClass [
-	^ RBPatternParser 
+	^ RBPatternParser
 ]
 
 { #category : #preconditions }
@@ -232,8 +232,7 @@ RBFindAndReplaceRefactoring >> replaceArgumentsByPattern: sourceCode [
 	|newSource|
 	newSource := sourceCode copyWithRegex: 'tempMatch*' matchesReplacedWith: '`@tempMatch' .
 	newSource := newSource copyWithRegex: 'argMatch*' matchesReplacedWith: '`@argMatch'.
-	^ newSource 
-	
+	^ newSource
 ]
 
 { #category : #preconditions }

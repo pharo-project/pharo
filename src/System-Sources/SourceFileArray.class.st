@@ -207,7 +207,7 @@ SourceFileArray >> forceChangesToDisk [
 
 { #category : #'public - string reading' }
 SourceFileArray >> getPreambleFrom: aSourceFileStream at: position [
-	^ aSourceFileStream getPreambleAt: position 
+	^ aSourceFileStream getPreambleAt: position
 ]
 
 { #category : #initialization }
@@ -334,7 +334,6 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
 	self finishedReading: rofa from: queue. 
                       
     ^ result
-
 ]
 
 { #category : #'public - string reading' }
@@ -395,7 +394,6 @@ SourceFileArray >> sourcePointerFromFileIndex: index andPosition: position [
 	hi := position // 16r1000000 *2 + index.
 	lo := position \\ 16r1000000.
 	^ hi * 16r1000000 + lo
-
 ]
 
 { #category : #'public - string reading' }
@@ -466,5 +464,4 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	successBlock cull: (self sourcePointerFromFileIndex: 2 andPosition: position) cull: file.
 
 	self flushChangesFile.
-
 ]

@@ -26,7 +26,6 @@ RubEditingArea >> beForPlainText [
 { #category : #initialization }
 RubEditingArea >> beForSmalltalkCode [
 	self editingMode: RubSmalltalkCodeMode new
-
 ]
 
 { #category : #initialization }
@@ -222,7 +221,7 @@ RubEditingArea >> withoutShoutStyler [
 
 { #category : #accessing }
 RubEditingArea >> wrapped [
-	^ wrapped ifNil: [ wrapped := false ] 
+	^ wrapped ifNil: [ wrapped := false ]
 ]
 
 { #category : #accessing }

@@ -16,7 +16,7 @@ RGMetaclassStrategy >> acceptVisitor: aVisitor [
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> allClassVarNames [
 
-	self owner instanceSide allClassVarNames 
+	self owner instanceSide allClassVarNames
 ]
 
 { #category : #'private - backend access' }
@@ -100,8 +100,6 @@ RGMetaclassStrategy >> initialize [
 	baseClass := RGUnresolvedValue recursive.
 	
 	super initialize.
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -112,7 +110,7 @@ RGMetaclassStrategy >> innerBindingOf: varName [
 
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> instanceSide [
-	^ self baseClass 
+	^ self baseClass
 ]
 
 { #category : #'private - backend access' }
@@ -176,8 +174,6 @@ RGMetaclassStrategy >> pvtAsMetaclassTrait [
 	newMetaclassTrait pvtLocalMethods: self owner localMethods.
 	
 	^ newMetaclassTrait
-	
-	
 ]
 
 { #category : #'private - backend access' }
@@ -200,8 +196,6 @@ RGMetaclassStrategy >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#baseClass -> baseClass. 
    	}
-	
-	
 ]
 
 { #category : #'private - backend access' }

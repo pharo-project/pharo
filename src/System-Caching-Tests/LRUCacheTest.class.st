@@ -230,7 +230,6 @@ LRUCacheTest >> testOneHit [
 	self assert: cache hits equals: 1.
 	self assert: cache misses equals: 1.
 	cache validateInvariantWith: self
-	
 ]
 
 { #category : #testing }

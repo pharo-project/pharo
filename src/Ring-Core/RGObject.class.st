@@ -16,7 +16,7 @@ Class {
 { #category : #'instance creation' }
 RGObject class >> asYetUnclassifiedProtocolName [
 
-	^ Protocol unclassified 
+	^ Protocol unclassified
 ]
 
 { #category : #'instance creation' }
@@ -106,7 +106,7 @@ RGObject >> asRGDefinition [
 { #category : #accessing }
 RGObject >> ask [
 
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
@@ -132,9 +132,6 @@ RGObject >> copyForBehaviorDefinition [
 { #category : #copying }
 RGObject >> copyForBehaviorDefinitionPostCopy [
 	super postCopy
-	
-	
-	
 ]
 
 { #category : #properties }
@@ -245,25 +242,18 @@ RGObject >> hasProperty: propertyName [
 	^ self hasProperties
 		ifTrue: [ properties includesKey: propertyName ]	
 		ifFalse:[ false ].
-
 ]
 
 { #category : #resolving }
 RGObject >> hasResolved: propertySymbol [
 
 	^ self resolvedProperties includes: propertySymbol
-
-
-
 ]
 
 { #category : #resolving }
 RGObject >> hasResolvedAll: aCollectionOfSymbols [
 
 	^ self resolvedProperties includesAll: aCollectionOfSymbols
-
-
-
 ]
 
 { #category : #testing }
@@ -276,18 +266,12 @@ RGObject >> hasResolvedName [
 RGObject >> hasUnresolved: propertySymbol [
 
 	^ (self resolvedProperties includes: propertySymbol) not
-
-
-
 ]
 
 { #category : #resolving }
 RGObject >> hasUnresolvedAll: aCollectionOfSymbols [
 
 	^ (self resolvedProperties includesAll: aCollectionOfSymbols) not
-
-
-
 ]
 
 { #category : #initialization }
@@ -296,8 +280,6 @@ RGObject >> initialize [
 	super initialize.
 
 	name := self unresolvedValue: self unresolvedName.
-
-
 ]
 
 { #category : #initialization }
@@ -305,9 +287,6 @@ RGObject >> initializeUnresolved [
 
 	self propertyNamed: #resolved put: false. 
 	name := self unresolvedValue: self unresolvedName.
-	
-
-
 ]
 
 { #category : #'testing - types' }
@@ -385,9 +364,7 @@ RGObject >> isRingFullyResolved [
 { #category : #resolving }
 RGObject >> isRingFullyUnresolved [		
 	
-	^ self backend hasFullyUnresolved: self 		
-
-
+	^ self backend hasFullyUnresolved: self
 ]
 
 { #category : #testing }
@@ -446,13 +423,12 @@ RGObject >> makeResolved [
 RGObject >> markAsRingResolved [
 
 	self propertyNamed: #resolved put: true.
-	
 ]
 
 { #category : #accessing }
 RGObject >> name [
 
-	^ (self backend nameFor: self) orDefaultForUnresolved 
+	^ (self backend nameFor: self) orDefaultForUnresolved
 ]
 
 { #category : #accessing }
@@ -463,7 +439,6 @@ RGObject >> name: aString [
 	oldName := name.
 	self backend setNameFor: self to: aString.
 	self parent child: self renamedFrom: oldName to: aString.
-
 ]
 
 { #category : #accessing }
@@ -490,8 +465,6 @@ RGObject >> parent: anRGBehavior [
 
 	parent := anRGBehavior.
 	"self addoptToParentStub."
-
-	
 ]
 
 { #category : #copying }
@@ -608,7 +581,7 @@ RGObject >> resolvedNameOrNil [
 
 	^ self hasResolvedName
 		ifTrue: [ self name. ]
-		ifFalse: [ nil ].		
+		ifFalse: [ nil ].
 ]
 
 { #category : #resolving }

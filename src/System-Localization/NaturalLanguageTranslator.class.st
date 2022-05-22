@@ -28,7 +28,7 @@ NaturalLanguageTranslator class >> cleanUp [
 NaturalLanguageTranslator class >> current [ 
 	"Return the currently registered translator"
 	
-	^Current 
+	^Current
 ]
 
 { #category : #accessing }

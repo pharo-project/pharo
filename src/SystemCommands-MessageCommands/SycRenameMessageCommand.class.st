@@ -41,7 +41,6 @@ SycRenameMessageCommand >> createRefactoring [
 { #category : #accessing }
 SycRenameMessageCommand >> defaultMenuIconName [
 	^#edit
-
 ]
 
 { #category : #accessing }
@@ -64,8 +63,6 @@ SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	newSignature := self requestNewMessageIn: aToolContext
-	
-
 ]
 
 { #category : #execution }

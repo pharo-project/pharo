@@ -16,7 +16,7 @@ RGTraitDescriptionDefinition class >> isAbstract [
 	^ self == RGTraitDescriptionDefinition
 ]
 
-{ #category : #'adding/removing users' }
+{ #category : #'adding-removing users' }
 RGTraitDescriptionDefinition >> addUser: aRGBehavior [
 
 	self users add: aRGBehavior
@@ -46,7 +46,7 @@ RGTraitDescriptionDefinition >> isTrait [
 	^true
 ]
 
-{ #category : #'adding/removing users' }
+{ #category : #'adding-removing users' }
 RGTraitDescriptionDefinition >> removeUser: aRGBehavior [
 
 	self users remove: aRGBehavior ifAbsent:[]

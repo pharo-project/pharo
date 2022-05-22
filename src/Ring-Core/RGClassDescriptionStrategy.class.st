@@ -34,7 +34,6 @@ RGClassDescriptionStrategy >> copyForBehaviorDefinitionPostCopy [
 	super copyForBehaviorDefinitionPostCopy.
 	layout := self layout copyForBehaviorDefinition.
 	layout parent: self owner.
-
 ]
 
 { #category : #initialization }
@@ -58,7 +57,6 @@ RGClassDescriptionStrategy >> initializeUnresolved [
 	super initializeUnresolved.
 	
 	layout := self unresolvedValue: self defaultLayout.
-
 ]
 
 { #category : #initialization }
@@ -105,7 +103,6 @@ RGClassDescriptionStrategy >> makeResolved [
 	super makeResolved. 
 	
 	layout := self layout makeResolved markAsRingResolved.
-
 ]
 
 { #category : #'private - backend interface' }

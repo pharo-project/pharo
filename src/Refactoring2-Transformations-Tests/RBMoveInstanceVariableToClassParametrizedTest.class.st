@@ -36,7 +36,6 @@ RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 	newClass := refactoring model classNamed: #RBFooLintRuleTestData.
 	self deny: (oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self assert: (newClass directlyDefinesInstanceVariable: 'methodBlock').
-	
 ]
 
 { #category : #'failure tests' }

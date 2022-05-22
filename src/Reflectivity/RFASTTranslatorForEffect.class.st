@@ -23,7 +23,6 @@ RFASTTranslatorForEffect >> emitIfFalse: aMessageNode [
 	methodBuilder jumpAheadTo: #else if: true.
 		self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTarget: #else.
-
 ]
 
 { #category : #'inline messages' }
@@ -37,7 +36,6 @@ RFASTTranslatorForEffect >> emitIfNotNil: aMessageNode [
 	methodBuilder jumpAheadTo: #end if: true.
 	self visitInlinedBlockNode: args first.
 	methodBuilder jumpAheadTarget: #end.
-	
 ]
 
 { #category : #'inline messages' }
@@ -54,7 +52,6 @@ RFASTTranslatorForEffect >> emitMessageNode: aMessageNode [
 
 	super emitMessageNode: aMessageNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'inline messages' }
@@ -70,14 +67,13 @@ RFASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 
 	super visitArrayNode: anArrayNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [ 
 
 	super visitAssignmentNode: anAssignmentNode .
-	methodBuilder popTop. 
+	methodBuilder popTop.
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -105,7 +101,6 @@ RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 	super visitParseErrorNode: anErrorNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -141,5 +136,4 @@ RFASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 		ifTrue: [ methodBuilder addLiteral: binding ].
 		
 	self emitMetaLinkAfterNoEnsure: aVariableNode.
-
 ]

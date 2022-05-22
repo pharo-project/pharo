@@ -19,7 +19,7 @@ Class {
 { #category : #running }
 DATarjanAlgorithmTest >> setUp [
 	super setUp.
-	tarjanPackage := DATarjanAlgorithm new.
+	tarjanPackage := AITarjan new.
 	anArray := Array new: 8.
 	packageA := DAPackage on: (RPackageSet named: 'A').
 	packageB := DAPackage on: (RPackageSet named: 'B').
@@ -48,7 +48,7 @@ DATarjanAlgorithmTest >> stackSize [
 DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	"test if we have 0 outgoing dependencies in each SCC after the algorithm"
 
-	| aRelation aCollection |
+	| aRelation aCollection sccs |
 	aCollection := OrderedCollection
 		withAll:
 			(RPackageOrganizer default packages
@@ -61,23 +61,16 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 		removeInternalDependencies;
 		removeOutgoingDependencies;
 		combineDependencies.
-	tarjanPackage run: aRelation.
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :scc | scc outgoing isEmpty ])
-]
-
-{ #category : #tests }
-DATarjanAlgorithmTest >> testPush [
-	self assert: self stackSize equals: 0.
-	self deny: packageA isInStack.
-	tarjanPackage push: packageA.
-	self assert: self stackSize equals: 1.
-	self assert: packageA isInStack
+		
+	sccs := tarjanPackage runOnDAPackageRelationGraph: aRelation.
+	
+	self assert: (sccs anySatisfy: [ :scc | scc outgoing isEmpty ])
 ]
 
 { #category : #tests }
 DATarjanAlgorithmTest >> testRunTarjan [
 	"test the Tarjan algorithm on a simple graph with 8 nodes"
-	| aPDPackageRelation  |
+	| aPDPackageRelation  sccs |
 	packageA add: (DAPackageDependency from: packageA to: packageB).
 	packageB add: (DAPackageDependency from: packageB to: packageC).
 	packageC add: (DAPackageDependency from: packageC to: packageD).
@@ -88,12 +81,13 @@ DATarjanAlgorithmTest >> testRunTarjan [
 	packageG add: (DAPackageDependency from: packageG to: packageH).
 	packageH add: (DAPackageDependency from: packageH to: packageG).
 	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
-	tarjanPackage run: aPDPackageRelation.
+	sccs := tarjanPackage runOnDAPackageRelationGraph: aPDPackageRelation.
+	
 	"we must find 3 sccs, five two and one nodes"
-	self assert: tarjanPackage stronglyConnectedComponents size equals: 3.
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 5 ]).
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 2 ]).
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 1 ]).
+	self assert: sccs size equals: 3.
+	self assert: (sccs anySatisfy: [ :each | each packages size = 5 ]).
+	self assert: (sccs anySatisfy: [ :each | each packages size = 2 ]).
+	self assert: (sccs anySatisfy: [ :each | each packages size = 1 ]).
 	
 	
 	
@@ -101,33 +95,4 @@ DATarjanAlgorithmTest >> testRunTarjan [
 
 	
 	
-]
-
-{ #category : #tests }
-DATarjanAlgorithmTest >> testRunTarjanWikipedia [
-	"test the Tarjan algorithm on the Wikipedia graph (page Tarjan's strongly connected components algorithm"
-	| aPDPackageRelation |
-	packageA add: (DAPackageDependency from: packageA to: packageB).
-	packageB add: (DAPackageDependency from: packageB to: packageC).
-	packageC add: (DAPackageDependency from: packageC to: packageA).
-	packageD add: (DAPackageDependency from: packageD to: packageB).
-	packageD add: (DAPackageDependency from: packageD to: packageC).
-	packageD add: (DAPackageDependency from: packageD to: packageF).
-	packageE add: (DAPackageDependency from: packageE to: packageC).
-	packageE add: (DAPackageDependency from: packageE to: packageG).
-	packageF add: (DAPackageDependency from: packageF to: packageD).
-	packageF add: (DAPackageDependency from: packageF to: packageE).
-	packageG add: (DAPackageDependency from: packageG to: packageE).
-	"packageG add: (PDPackageDependency from: packageG to: packageF)."
-	packageH add: (DAPackageDependency from: packageH to: packageH).
-	packageH add: (DAPackageDependency from: packageH to: packageF).
-	packageH add: (DAPackageDependency from: packageH to: packageG).
-	
-	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
-	tarjanPackage run: aPDPackageRelation.
-	"we must find 4 sccs"
-	self assert: tarjanPackage stronglyConnectedComponents size equals: 4.
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 3 ]).
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 2 ]).
-	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 1 ]).
 ]

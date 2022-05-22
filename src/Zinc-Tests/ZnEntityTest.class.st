@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ZnEntityTest >> testApplicationUrlEncodingAddAll [
-	| entity string data |
+	| entity bytes data |
 	data := Dictionary new.
 	data at: 'foo' put: 1 asString.
 	data at: 'bar' put: 2 asString.
@@ -14,11 +14,30 @@ ZnEntityTest >> testApplicationUrlEncodingAddAll [
 	"Asking for the content length will force an internal computation of the representation"
 	self assert: entity contentLength equals: 0.
 	entity addAll: data.
-	string := String streamContents: [ :stream | entity writeOn: stream ].
+	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
 	self assert: entity contentLength > 0.
-	entity := ZnEntity readFrom: string readStream usingType: ZnApplicationFormUrlEncodedEntity designatedMimeType andLength: string size.
+	entity := ZnEntity 
+		readFrom: bytes readStream 
+		usingType: ZnApplicationFormUrlEncodedEntity designatedMimeType 
+		andLength: bytes size.
 	self assert: (entity at: 'foo') equals: '1'.
 	self assert: (entity at: 'bar') equals: '2'
+]
+
+{ #category : #testing }
+ZnEntityTest >> testApplicationUrlEncodingWriteRead [
+	| originalEntity bytes parsedEntity |
+	originalEntity := ZnApplicationFormUrlEncodedEntity new.
+	originalEntity 
+		at: 'Param1' put: 'ValueA';
+		at: 'Param2' put: 'ValueB'.
+	bytes := originalEntity asByteArray.
+	parsedEntity := ZnEntity 
+		readFrom: bytes readStream 
+		usingType: ZnMimeType applicationFormUrlEncoded 
+		andLength: bytes size.
+	self assert: (parsedEntity at: 'Param1') equals: 'ValueA'.
+	self assert: (parsedEntity at: 'Param2') equals: 'ValueB'.
 ]
 
 { #category : #testing }
@@ -72,11 +91,14 @@ ZnEntityTest >> testMultiPartFormDataWriteReadBinary [
 ZnEntityTest >> testReading [
 	| contents entity |
 	contents := 'This is a test'.
-	entity := ZnEntity readFrom: contents asByteArray readStream usingType: ZnMimeType textPlain andLength: contents size.
+	entity := ZnEntity 
+				readFrom: contents asByteArray readStream 
+				usingType: ZnMimeType textPlain 
+				andLength: contents size.
 	self assert: entity contents isString.
 	self assert: entity string equals: contents.
 	self assert: entity contentLength equals: contents size.
-	self assert: entity contentType equals: ZnMimeType textPlain
+	self assert: entity contentType equals: ZnMimeType textPlain 
 ]
 
 { #category : #testing }
@@ -109,30 +131,37 @@ ZnEntityTest >> testReadingApplicationFormUrlEncodingNoLength [
 ZnEntityTest >> testReadingBinary [
 	| contents entity |
 	contents := 'This is a test'.
-	entity := ZnEntity readBinaryFrom: contents asByteArray readStream usingType: ZnMimeType textPlain andLength: contents size.
+	entity := ZnEntity 
+				readBinaryFrom: contents asByteArray readStream 
+				usingType: ZnMimeType textPlain 
+				andLength: contents size.
 	self deny: entity contents isString.
 	self assert: entity contents equals: contents asByteArray.
 	self assert: entity contentLength equals: contents size.
-	self assert: entity contentType equals: ZnMimeType textPlain
+	self assert: entity contentType equals: ZnMimeType textPlain 
 ]
 
 { #category : #testing }
 ZnEntityTest >> testReadingLimited [
 	| contents |
 	contents := String new: 1025 withAll: $X.
-	ZnMaximumEntitySize value: 1024 during: [
-		self should: [
-			ZnEntity 
-				readFrom: contents asByteArray readStream 
-				usingType: ZnMimeType textPlain 
-				andLength: contents size ]
-			raise: ZnEntityTooLarge.
-		self should: [
-			ZnEntity 
-				readFrom: contents asByteArray readStream 
-				usingType: ZnMimeType textPlain 
-				andLength: nil ]
-			raise: ZnEntityTooLarge ] 
+	ZnOptions globalDefault clone 
+		at: #maximumEntitySize put: 1024;
+		during: [
+			self 
+				should: [
+					ZnEntity 
+						readFrom: contents asByteArray readStream 
+						usingType: ZnMimeType textPlain 
+						andLength: contents size ]
+				raise: ZnEntityTooLarge.
+			self 
+				should: [
+					ZnEntity 
+						readFrom: contents asByteArray readStream 
+						usingType: ZnMimeType textPlain 
+						andLength: nil ]
+						raise: ZnEntityTooLarge ] 
 ]
 
 { #category : #testing }
@@ -214,32 +243,33 @@ ZnEntityTest >> testUnspecifiedEncoding [
 
 { #category : #testing }
 ZnEntityTest >> testWritingApplicationUrlEncoding [
-	| entity string |
+	| entity bytes |
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	entity at: 'foo' put: 'bar'.
-	string := String streamContents: [ :stream | entity writeOn: stream ].
-	self assert: string equals: 'foo=bar'.
+	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
+	self assert: bytes equals: (ZnNullEncoder new encodeString: 'foo=bar').
 	self assert: entity contentLength equals: 7
 ]
 
 { #category : #testing }
 ZnEntityTest >> testWritingApplicationUrlEncodingWithTextEncodingLatin1 [
-	| entity string |
+	| entity bytes |
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	entity contentType charSet: 'iso-8859-1'.
 	entity at: 'foo' put: (Character value: 246) asString.
-	string := String streamContents: [ :stream | entity writeOn: stream ].
-	self assert: string equals: 'foo=%F6'.
+	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
+	self assert: bytes equals: (ZnNullEncoder new encodeString: 'foo=%F6').
 	self assert: entity contentLength equals: 7
+	
 ]
 
 { #category : #testing }
 ZnEntityTest >> testWritingApplicationUrlEncodingWithTextEncodingUtf8 [
-	| entity string |
+	| entity bytes |
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	entity contentType charSet: 'utf-8'.
 	entity at: 'foo' put: (Character value: 246) asString.
-	string := String streamContents: [ :stream | entity writeOn: stream ].
-	self assert: string equals: 'foo=%C3%B6'.
+	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
+	self assert: bytes equals: (ZnNullEncoder new encodeString: 'foo=%C3%B6').
 	self assert: entity contentLength equals: 10
 ]

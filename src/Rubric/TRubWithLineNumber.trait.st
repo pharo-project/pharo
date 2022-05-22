@@ -17,7 +17,7 @@ TRubWithLineNumber >> changeLineNumbersDisplay [
 
 { #category : #accessing }
 TRubWithLineNumber >> fontToUse [
-	^ RubAbstractTextArea lineNumbersFont 
+	^ RubAbstractTextArea lineNumbersFont
 ]
 
 { #category : #'managing line numbers' }

@@ -29,6 +29,5 @@ PositionableStream >> fuelNextWordsInto: aWordObject [
 		 destY: 0.
 	blt copyBits.
 
-	^ aWordObject 	
-
+	^ aWordObject
 ]

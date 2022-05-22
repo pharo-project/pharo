@@ -82,13 +82,13 @@ ZnRequest >> absoluteUrl [
 
 { #category : #accessing }
 ZnRequest >> accept [
-	^ self headers at: 'Accept'
+	^ self headers singleAt: 'Accept' ifAbsent: [ '*/*' ]
 ]
 
 { #category : #testing }
 ZnRequest >> acceptsEncodingGzip [
 	| value |
-	value := self headers at: 'Accept-Encoding' ifAbsent: [ ^ false ].
+	value := self headers singleAt: 'Accept-Encoding' ifAbsent: [ ^ false ].
 	^ value includesSubstring: 'gzip'
 ]
 
@@ -241,6 +241,14 @@ ZnRequest >> setBasicAuthenticationUsername: username password: password [
 		ifFalse: [
 			self setAuthorization: 'Basic ', (ZnUtils encodeBase64: (username, ':', password)) ]
 
+]
+
+{ #category : #accessing }
+ZnRequest >> setBearerAuthentication: token [
+
+	token
+		ifNil: [ self headers removeKey: 'Authorization' ifAbsent: [  ] ]
+		ifNotNil: [ self setAuthorization: 'Bearer ' , token ]
 ]
 
 { #category : #accessing }

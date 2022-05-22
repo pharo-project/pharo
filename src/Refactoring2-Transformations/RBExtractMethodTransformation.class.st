@@ -132,7 +132,6 @@ RBExtractMethodTransformation >> calculateArguments [
 	assigned := allVariables select: [ :each | subtree assigns: each ].
 	
 	^ accesses asOrderedCollection difference: assigned.
-	
 ]
 
 { #category : #querying }

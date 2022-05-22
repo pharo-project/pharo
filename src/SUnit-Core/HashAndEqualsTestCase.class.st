@@ -15,7 +15,7 @@ Class {
 { #category : #tests }
 HashAndEqualsTestCase class >> isAbstract [ 
 
-	^self == HashAndEqualsTestCase 
+	^self == HashAndEqualsTestCase
 ]
 
 { #category : #running }

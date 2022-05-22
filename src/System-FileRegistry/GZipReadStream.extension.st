@@ -35,8 +35,6 @@ GZipReadStream class >> serviceFileIn [
 		selector: #fileIn:
 		description: 'File in the entire decompressed contents of the file, which is expected to contain Smalltalk code in fileout ("chunk") format'
 		buttonLabel: 'Filein'
-
-
 ]
 
 { #category : #'*System-FileRegistry' }
@@ -46,8 +44,7 @@ GZipReadStream class >> serviceViewDecompress [
 				provider: self 
 				label: 'View decompressed'
 				selector: #viewContents:
-				description: 'View decompressed' 
-
+				description: 'View decompressed'
 ]
 
 { #category : #'*System-FileRegistry' }
@@ -56,5 +53,4 @@ GZipReadStream class >> services [
 	^ Array 
 		with: self serviceViewDecompress
 		with: self serviceDecompressToFile
-	
 ]

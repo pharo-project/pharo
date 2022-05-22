@@ -1,6 +1,16 @@
 Extension { #name : #Object }
 
 { #category : #'*STON-Core' }
+Object class >> fromSton: stonReader [
+	"Create a new instance and delegate decoding to instance side.
+	Override only when new instance should be created directly (see implementors). "
+	
+	^ self new
+		fromSton: stonReader;
+		yourself
+]
+
+{ #category : #'*STON-Core' }
 Object >> fromSton: stonReader [
 	"Decode non-variable classes from a map of their instance variables and values.
 	Override to customize and add a matching #toSton: (see implementors)."
@@ -13,16 +23,6 @@ Object >> fromSton: stonReader [
 ]
 
 { #category : #'*STON-Core' }
-Object class >> fromSton: stonReader [
-	"Create a new instance and delegate decoding to instance side.
-	Override only when new instance should be created directly (see implementors). "
-	
-	^ self new
-		fromSton: stonReader;
-		yourself
-]
-
-{ #category : #'*STON-Core' }
 Object >> isStonReference [
 	^ false
 ]
@@ -31,7 +31,7 @@ Object >> isStonReference [
 Object class >> stonAllInstVarNames [
 	"Override to encode my instances using a custom set of instance variables or to define their order."
 	
-	^ self allInstVarNames 
+	^ self allInstVarNames
 ]
 
 { #category : #'*STON-Core' }
@@ -63,7 +63,6 @@ Object >> stonOn: stonWriter [
 			stonWriter error: 'custom #stonOn: implementation needed for variable/indexable class' ]
 		ifFalse: [
 			stonWriter writeObject: self ]
-
 ]
 
 { #category : #'*STON-Core' }

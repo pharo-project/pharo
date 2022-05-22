@@ -28,7 +28,7 @@ MergeJoinSection >> allowClick: anObject [
 	allowClick := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MergeJoinSection >> appendToCompositeText: aText [
 	"If appropriate append the relevant src or dst text to the given text."
 	
@@ -40,7 +40,7 @@ MergeJoinSection >> appendToCompositeText: aText [
 			append: self dst text]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MergeJoinSection >> borderColorToUse [
 	"Answer the border color to use based on the selection state."
 	
@@ -49,7 +49,7 @@ MergeJoinSection >> borderColorToUse [
 		ifFalse: [super borderColorToUse]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MergeJoinSection >> clicked [
 	"The receiver or a highlight was clicked."
 
@@ -58,7 +58,7 @@ MergeJoinSection >> clicked [
 	^true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MergeJoinSection >> containsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 
@@ -66,7 +66,7 @@ MergeJoinSection >> containsPoint: aPoint [
 		self stateIcon notNil and: [self stateIconBounds containsPoint: aPoint]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MergeJoinSection >> defaultStateIcons [
 	"Answer the default state icons."
 
@@ -74,7 +74,7 @@ MergeJoinSection >> defaultStateIcons [
 	(self iconNamed: #smallOkIcon) . (self iconNamed: #smallCancelIcon)}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 MergeJoinSection >> drawOn: aCanvas [
 	"Draw the join on the given canvas."
 	
@@ -98,7 +98,7 @@ MergeJoinSection >> initialize [
 	super initialize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MergeJoinSection >> selectNextState [
 	"Set the selection state to the next one with wraparound."
 
@@ -153,14 +153,14 @@ MergeJoinSection >> selectionState: anObject [
 	selectionState := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MergeJoinSection >> selectionStates [
 	"Answer the valid selection states in order."
 
 	^#(src dst both neither)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MergeJoinSection >> stateIcon [
 	"Answer the state icon to use."
 
@@ -168,7 +168,7 @@ MergeJoinSection >> stateIcon [
 	^self stateIcons at: (self selectionStates indexOf: self selectionState)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MergeJoinSection >> stateIconBounds [
 	"Answer the bounds of the state icon."
 	
@@ -192,7 +192,7 @@ MergeJoinSection >> stateIcons: anObject [
 	stateIcons := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MergeJoinSection >> wantsClick [
 	"Allow if explictly enabled and super."
 

@@ -30,5 +30,5 @@ FLClassWithRecursiveSubstitution >> index [
 
 { #category : #accessing }
 FLClassWithRecursiveSubstitution >> index: anObject [
-	index := anObject 
+	index := anObject
 ]
