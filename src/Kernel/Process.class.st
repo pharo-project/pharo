@@ -217,41 +217,14 @@ Process >> doTerminationFromAnotherProcess [
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is not the active process and the termination is requested from another process"	
 		
-	| ctxt oldList outerMost top newTop |
-
-	[ ] ensure: [ "Execute termination as an ensure block to ensure it completes even if terminated by another process before the termination is finished; see testTerminateInTerminate."
-		self isTerminating ifTrue: [ ProcessAlreadyTerminating signal. ^self ].
+	[ ] ensure: [ | oldList context |
+		self isTerminating ifTrue: [ProcessAlreadyTerminating signal. ^self].
 		terminating := true.
-		"Always suspend the process first so it doesn't accidentally get woken up"
 		oldList := self suspend.
-		suspendedContext ifNil: [^self].
-		"Figure out if we are terminating the process while waiting inside special object like in Semaphore>>critical:. So if waiting object is interesting on this situation we will ask it to handle it. In case of Semaphore>>critical, Semaphore will pop the suspendedContext so that we leave the ensure: block inside Semaphore>>critical: without signaling the semaphore.
-		This methods allow to not be restricted only on Semaphore case."
 		suspendedContext := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
-
-		top := suspendedContext.
-		suspendedContext := nil.  "Disable terminating process while running its stack in active process below.
-		If terminating a process halfways through an unwind, try to complete that unwind block first; if there are multiple such nested unwind blocks, try to complete the outer-most one; nested unwind blocks will be completed in the process; see testTerminationDuringUnwind, testNestedUnwind.
-		Note: Halfway-through blocks have already set the complete variable (unwindComplete) in their defining #ensure:/#ifCurtailed contexts from nil to true; we'll search for the bottom-most one.
-		Note: #findNextUnwindContextUpTo: starts searching from the receiver's sender but the receiver 	itself may be an unwind context (see testTerminateEnsureAsTopContext)."
-		ctxt := top.
-		ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
-		[ctxt isNil] whileFalse: [
-			ctxt unwindComplete ifNotNil: [
-				outerMost := ctxt].
-			ctxt := ctxt findNextUnwindContextUpTo: nil].
-		outerMost ifNotNil: [newTop := top runUnwindTo: outerMost onBehalfOf: self].
-		"By now no halfway-through unwind blocks are on the stack. Create a new top context for each pending unwind block (unwindBlock) and execute it on the unwind block's stack on behalf of self, i.e. the process being terminated, to preserve process identity; see testProcessFaithfulTermination. Cf. the unwind pattern in #resume:through:: using #value instead of #runUnwindTo:onBehalfOf: would lead to an incorrect evaluation of non-local returns on the wrong stack (active process's).
-		Note: newTop sender points to the former outerMost sender, i.e. the next unexplored context."
-		ctxt := newTop ifNil: [top] ifNotNil: [newTop sender].
-		ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
-		[ctxt isNil] whileFalse: [
-			ctxt unwindComplete ifNil: [
-				ctxt unwindComplete: true.
-				newTop := ctxt unwindBlock asContextWithSender: ctxt.
-				newTop runUnwindTo: newTop onBehalfOf: self].
-			ctxt := ctxt findNextUnwindContextUpTo: nil].
-		suspendedContext := top setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
+		context := suspendedContext ifNil: [^self].
+		suspendedContext := [context unwindTo: nil. self endProcess] asContext.
+		self priority: Processor activePriority + 1; resume
 	]
 ]
 
@@ -260,9 +233,11 @@ Process >> doTerminationFromYourself [
 	"Stop this process forever from the process itself. 
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is the active process. "
+	
+	| context |
 	terminating := true.
-	thisContext unwindForTermination.
-	^self endProcess
+	context := thisContext.
+	^[context unwindTo: nil. self endProcess] asContext jump
 
 ]
 
@@ -725,9 +700,28 @@ Process >> suspendingList [
 
 { #category : #'changing process state' }
 Process >> terminate [ 
-	"Stop the process that the receiver represents forever.  Unwind to execute pending ensure:/ifCurtailed: blocks before terminating."
+	"Stop the process that the receiver represents forever. Unwind to execute pending ensure: and
+	ifCurtailed: blocks before terminating; allow all unwind blocks to run; if they are currently in
+	progress, let them finish. If the process is in the middle of a #critical: section, release it properly."
+	
+	"If terminating the active process, create a parallel stack and run unwinds from there;
+	if terminating a suspended process, create a parallel stack for the process being terminated
+	and resume the suspended process to complete its termination from the parallel stack. Use
+	a priority higher than the active priority to make the process that invoked the termination
+	wait for its completion."
 
+	"If terminating a suspended process (including runnable or blocked), always suspend the 
+	terminating process first so it doesn't accidentally get woken up. Equally important is the
+	side effect of the suspension. In 2022 a new suspend semantics has been introduced:
+	the revised #suspend backs up a process waiting on a conditional variable to the send that
+	invoked the wait state, while the pre-2022 #suspend simply removed the process from
+	the conditional variable's list it was previously waiting on; figure out if we are terminating
+	the process while waiting in Semaphore>>critical:. In this case, pop the suspendedContext
+	so that we leave the ensure: block inside Semaphore>>critical: without signaling the semaphore.
+	Execute termination wrapped in #ensure to ensure it completes even if the terminator
+	process itself gets terminated before it's finished; see testTerminateInTerminate."
+	
 	self isActiveProcess 
-		ifTrue: [ self doTerminationFromYourself ]
-		ifFalse: [ self doTerminationFromAnotherProcess]
+		ifTrue: [self doTerminationFromYourself]
+		ifFalse: [self doTerminationFromAnotherProcess]
 ]
