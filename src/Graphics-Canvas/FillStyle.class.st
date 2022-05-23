@@ -21,7 +21,8 @@ FillStyle >> fillRectangle: aRectangle on: aCanvas [
 
 { #category : #testing }
 FillStyle >> isBitmapFill [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
@@ -34,12 +35,14 @@ FillStyle >> isCompositeFill [
 
 { #category : #testing }
 FillStyle >> isGradientFill [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 FillStyle >> isOrientedFill [
 	"Return true if the receiver keeps an orientation (e.g., origin, direction, and normal)"
+	
 	^false
 ]
 
@@ -50,11 +53,13 @@ FillStyle >> isSolidFill [
 
 { #category : #testing }
 FillStyle >> isTranslucent [
-	^true "Since we don't know better"
+
+	^ true "Since we don't know better"
 ]
 
 { #category : #testing }
 FillStyle >> isTransparent [
+
 	^false
 ]
 

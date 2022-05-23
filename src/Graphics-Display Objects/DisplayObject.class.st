@@ -198,8 +198,9 @@ DisplayObject >> initialExtent [
 	^ self extent + (4@4)
 ]
 
-{ #category : #'displaying - display' }
+{ #category : #testing }
 DisplayObject >> isTransparent [
+
 	^ false
 ]
 

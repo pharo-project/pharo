@@ -157,36 +157,42 @@ InfiniteForm >> form: aForm [
 	patternForm := aForm
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : #testing }
 InfiniteForm >> isBitmapFill [
-	^true
+
+	^ true
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : #testing }
 InfiniteForm >> isGradientFill [
-	^false
+
+	^ false
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : #testing }
 InfiniteForm >> isOrientedFill [
-	^true
+
+	^ true
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : #testing }
 InfiniteForm >> isSolidFill [
-	^false
+
+	^ false
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : #testing }
 InfiniteForm >> isTiled [
 	"Return true if the receiver should be drawn as a tiled pattern"
-	^true
+	
+	^ true
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : #testing }
 InfiniteForm >> isTranslucent [
 	"Return true since the bitmap may be translucent and we don't really want to check"
-	^true
+	
+	^ true
 ]
 
 { #category : #testing }
