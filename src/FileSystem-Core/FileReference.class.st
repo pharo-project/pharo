@@ -297,6 +297,7 @@ FileReference >> isAbsolute [
 { #category : #testing }
 FileReference >> isBlock [
 	"Return a boolean indicating whether the File described by aPath is a block device"
+	
 	^ filesystem isBlock: path
 ]
 

@@ -222,7 +222,8 @@ RBBlockNode >> initialize [
 
 { #category : #testing }
 RBBlockNode >> isBlock [
-	^true
+
+	^ true
 ]
 
 { #category : #testing }
