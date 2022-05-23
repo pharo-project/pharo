@@ -303,6 +303,7 @@ FileReference >> isBlock [
 { #category : #testing }
 FileReference >> isCharacter [
 	"Return a boolean indicating whether the File described by aPath is character based"
+
 	^ filesystem isCharacter: path
 ]
 

@@ -1097,7 +1097,7 @@ Object >> isBlock [
 { #category : #testing }
 Object >> isCharacter [
 
-	^ false.
+	^ false
 ]
 
 { #category : #testing }

@@ -218,7 +218,7 @@ DiskDirectoryEntry >> isBlock [
 DiskDirectoryEntry >> isCharacter [
 	"Answer true if the receiver is a character device"
 	
-	^self primitives modeIsCharacter: self mode
+	^ self primitives modeIsCharacter: self mode
 ]
 
 { #category : #testing }
