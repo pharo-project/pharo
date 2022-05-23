@@ -11,6 +11,16 @@ Class {
 	#category : #'TraitsV2-Tests'
 }
 
+{ #category : #'Class generation' }
+T2CommonClassDefinitionPrinterTest >> generateTraitedTrait [
+
+	traitedTrait := (Trait << #TMockWithUseAndSlot)
+		                traits: { trait3 };
+		                slots: { #simpleSlot };
+		                package: 'TraitsV2-Tests';
+		                install
+]
+
 { #category : #removing }
 T2CommonClassDefinitionPrinterTest >> removeTraitedTrait [
 

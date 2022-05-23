@@ -233,10 +233,10 @@ T2FluidClassDefinitionPrinterTest >> testTrait [
 	package: ''Rubric''' 
 ]
 
-{ #category : #'tests - traits' }
+{ #category : #accessing }
 T2FluidClassDefinitionPrinterTest >> testTrait3 [
 
-	self assert: (self forClass: Trait3 classTrait) equals: 'Trait << Trait3 classTrait
+	self assert: (self forClass: trait3 classTrait) equals: 'Trait << Trait3 classTrait
 	traits: {Trait2 classTrait}'
 ]
 

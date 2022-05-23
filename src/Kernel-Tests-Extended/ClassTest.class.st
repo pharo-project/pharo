@@ -98,6 +98,16 @@ ClassTest >> generateClassForTests [
 	classExampleForTest12 := self generateExampleClass12
 ]
 
+{ #category : #'method generation' }
+ClassTest >> generateExampleClass1 [
+
+	^ Object << #ExampleForTest1
+		slots: { #aSuperclassVariable };
+		tag: 'Classes';
+		package: 'Kernel-Tests';
+		install.
+]
+
 { #category : #generating }
 ClassTest >> generateExampleClass11 [
 
