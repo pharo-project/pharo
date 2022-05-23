@@ -1071,7 +1071,7 @@ ChangeSet >> isEmpty [
 	^ changeRecords isEmptyOrNil
 ]
 
-{ #category : #initialization }
+{ #category : #testing }
 ChangeSet >> isMoribund [
 	"Answer whether the receiver is obsolete and about to die; part of an effort to get such guys cleared out from the change sorter."
 
