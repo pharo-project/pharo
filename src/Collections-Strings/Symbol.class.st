@@ -213,7 +213,7 @@ Symbol class >> rebuildSelectorTable [
 
 	^ SystemNavigation new allMethods
 		  collect: [ :method | method selector ]
-		  as: WeakIdentitySet
+		  as: WeakSet
 ]
 
 { #category : #private }
