@@ -179,10 +179,10 @@ Delay >> delaySemaphore [
 	^ delaySemaphore
 ]
 
-{ #category : #delaying }
+{ #category : #testing }
 Delay >> isExpired [
 
-	^delaySemaphore isSignaled.
+	^ delaySemaphore isSignaled 
 ]
 
 { #category : #public }
