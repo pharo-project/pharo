@@ -110,8 +110,6 @@ RPackage class >> help [
 
 { #category : #'class initialization' }
 RPackage class >> initialize [
-	"self initialize"
-	
 	"Ensure the organizer will be the RPackageOrganizer default"
 	self organizer: nil.
 	Properties

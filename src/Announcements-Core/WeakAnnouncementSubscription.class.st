@@ -46,8 +46,6 @@ WeakAnnouncementSubscription class >> finalizeValues [
 
 { #category : #'class initialization' }
 WeakAnnouncementSubscription class >> initialize [
-	"self initialize"
-	
 	
 	WeakArray 
 		removeWeakDependent: self;

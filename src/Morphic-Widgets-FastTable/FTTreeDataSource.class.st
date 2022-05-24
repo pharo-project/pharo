@@ -94,7 +94,6 @@ FTTreeDataSource class >> emptyMorph [
 
 { #category : #'class initialization' }
 FTTreeDataSource class >> initialize [
-	"self initialize"
 
 	SearchStrategies := nil
 ]

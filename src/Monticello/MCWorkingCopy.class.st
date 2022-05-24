@@ -72,7 +72,7 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 
 { #category : #initialize }
 MCWorkingCopy class >> initialize [
-	"self initialize"
+
 	registry ifNotNil: [ registry rehash ].
 	self registerForNotifications.
 ]

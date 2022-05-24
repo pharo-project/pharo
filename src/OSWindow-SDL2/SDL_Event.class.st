@@ -18,7 +18,6 @@ SDL_Event class >> eventNameFromType: aType [
 
 { #category : #'class initialization' }
 SDL_Event class >> initialize [
-	"self initialize"
 
 	SDL2Types initialize.  "make sure its initialized"
 	self initializeEventTypeMap

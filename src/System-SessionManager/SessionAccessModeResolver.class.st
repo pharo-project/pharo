@@ -10,8 +10,6 @@ Class {
 { #category : #'class initialization' }
 SessionAccessModeResolver class >> initialize [
 
-	"self initialize"
-
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
 		inCategory: SessionManager default systemCategory  

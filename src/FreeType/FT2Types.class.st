@@ -49,7 +49,7 @@ Class {
 
 { #category : #'class initialization' }
 FT2Types class >> initialize [
-	"self initialize"
+
 	IntHolder := FFIExternalValueHolder ofType: 'int'.
 	PointerHolder := FFIExternalValueHolder ofType: 'void*'.
 	

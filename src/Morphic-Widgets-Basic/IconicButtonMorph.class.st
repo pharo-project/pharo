@@ -15,15 +15,14 @@ Class {
 	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
-{ #category : #initialize }
+{ #category : #accessing }
 IconicButtonMorph class >> defaultGraphics [
 
 	^ DefaultGraphics ifNil: [ DefaultGraphics := (Form extent: 20 @ 1 depth: 8)].
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 IconicButtonMorph class >> initialize [
-	"self initialize"
 	
 	DefaultGraphics := self defaultGraphics
 ]
