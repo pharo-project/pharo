@@ -92,8 +92,8 @@ Symbol class >> findInternedSelector: aString [
 	"return a selector if the argument is used as a selector, nil if not"
 
 	^ (self lookup: aString) ifNotNil: [ :symbol | 
-		 ( self selectorTable like: symbol)
-			  ifNotNil: [ :selectorSymbol | selectorSymbol | selectorSymbol ] ]
+		  (self selectorTable like: symbol) ifNotNil: [ :selectorSymbol | 
+			  selectorSymbol ] ]
 ]
 
 { #category : #private }
