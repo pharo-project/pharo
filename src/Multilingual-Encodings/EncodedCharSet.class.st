@@ -64,9 +64,8 @@ EncodedCharSet class >> digitValueOf: char [
 	^ -1
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 EncodedCharSet class >> initialize [
-	"self initialize"
 	
 	EncodedCharSets := Array new: 256.
 	self allSubclassesDo: [:each | each initialize]

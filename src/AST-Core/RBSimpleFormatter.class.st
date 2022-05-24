@@ -43,8 +43,8 @@ RBSimpleFormatter class >> formatAsYouReadPolicy: anObject [
 
 { #category : #'class initialization' }
 RBSimpleFormatter class >> initialize [
-  "self initialize"
-  FormatAsYouReadPolicy := false.
+
+  FormatAsYouReadPolicy := false
 ]
 
 { #category : #private }

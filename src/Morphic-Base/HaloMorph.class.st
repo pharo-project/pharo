@@ -180,9 +180,8 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolorIcon) )
 ]
 
-{ #category : #'halo theme' }
+{ #category : #'class initialization' }
 HaloMorph class >> initialize [
-	"self initialize"
 	
 	self installHaloTheme: #iconicHaloSpecifications
 ]

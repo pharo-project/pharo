@@ -42,7 +42,6 @@ RxsPredicate class >> forNamedClass: aString [
 
 { #category : #'class initialization' }
 RxsPredicate class >> initialize [
-	"self initialize"
 
 	self
 		initializeNamedClassSelectors;

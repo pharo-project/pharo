@@ -13,7 +13,6 @@ Class {
 
 { #category : #'class initialization' }
 FT2FFILibrary class >> initialize [
-	"self initialize"
 
 	ErrorCodeTable := {
 	(16r00 -> 'no error').
