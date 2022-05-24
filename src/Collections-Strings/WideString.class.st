@@ -160,6 +160,15 @@ WideString >> byteSize [
 	^ self size * 4.
 ]
 
+{ #category : #converting }
+WideString >> ceateSymbol [
+	"We have to check if the string can be represented by a Bytesymbol to avoid two symbols
+	that represent the same string"
+	^ ((self isOctetString
+		    ifTrue: [ ByteSymbol ]
+		    ifFalse: [ WideSymbol ]) basicNew: self size) string: self
+]
+
 { #category : #copying }
 WideString >> copyFrom: start to: stop [
 

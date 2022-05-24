@@ -184,6 +184,12 @@ ByteString >> byteSize [
 	^self size
 ]
 
+{ #category : #converting }
+ByteString >> createSymbol [
+
+	^(ByteSymbol basicNew: self size) string: self
+]
+
 { #category : #comparing }
 ByteString >> findSubstring: key in: body startingAt: start matchTable: matchTable [
 	
