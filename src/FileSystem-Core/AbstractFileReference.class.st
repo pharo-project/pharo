@@ -586,8 +586,9 @@ AbstractFileReference >> isAbsolute [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 AbstractFileReference >> isBlock [
+
 	^ self resolve isBlock
 ]
 

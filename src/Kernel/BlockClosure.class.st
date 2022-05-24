@@ -318,7 +318,7 @@ BlockClosure >> initialStackPointer [
 	^ self numTemps
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 BlockClosure >> isBlock [
 
 	^ true

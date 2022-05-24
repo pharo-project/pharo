@@ -211,7 +211,7 @@ DiskDirectoryEntry >> inode [
 DiskDirectoryEntry >> isBlock [
 	"Answer true if the receiver is a block device"
 	
-	^self primitives modeIsBlock: self mode.
+	^ self primitives modeIsBlock: self mode.
 ]
 
 { #category : #testing }
