@@ -113,19 +113,19 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 	^ pathClass withAll: (aDelimiterCharacter split: aString)
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 Path class >> isAbsolutePath: aString delimiter: aCharacter [
 	"Answer a boolean indicating whether the supplied path is considered absolute"
 
 	^ aString first = aCharacter
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 Path class >> isAbsoluteUnixPath: aString [
 	^aString first = $/
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 Path class >> isAbsoluteWindowsPath: aString [
 
 	aString ifEmpty: [ ^ false ].
