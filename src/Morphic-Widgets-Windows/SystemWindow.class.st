@@ -1453,7 +1453,7 @@ SystemWindow >> mouseUp: evt [
 { #category : #move }
 SystemWindow >> moveTaskbarTaskToOffset: offset [
 
-	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar move: self taskbarTask withOffset: offset ]
+	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar updateTasks; move: self taskbarTask withOffset: offset ]
 ]
 
 { #category : #'open/close' }

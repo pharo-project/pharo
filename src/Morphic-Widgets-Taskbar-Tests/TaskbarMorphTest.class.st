@@ -176,7 +176,7 @@ TaskbarMorphTest >> testMoveTaskbarTaskLeftDoesNothingOnFirstTask [
 
 { #category : #tests }
 TaskbarMorphTest >> testMoveTaskbarTaskLeftMovesItOnePositionToTheLeft [
-	| firstTask secondTask systemWindow taskbarMorph |
+	| firstTask secondTask taskbarMorph |
 	taskbar := self.
 	world := self.
 	taskbar updateTasks.

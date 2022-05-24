@@ -265,7 +265,7 @@ TaskbarMorph >> morphicLayerNumber [
 TaskbarMorph >> move: task withOffset: offset [
 
 	| currentTaskIndex newOrderedTasks newTaskIndex currentOrderedTasks |
-	self updateTasks . " update tasks because if a new window is not added actually on the task bar the shortcut won't work"
+	"self updateTasks . update tasks because if a new window is not added actually on the task bar the shortcut won't work"
 	currentOrderedTasks := self orderedTasks.
 	currentTaskIndex := currentOrderedTasks indexOf: task .
 	(currentTaskIndex = 0 ) ifTrue: [ ^ nil ].
