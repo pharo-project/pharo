@@ -9,5 +9,6 @@ Class {
 
 { #category : #testing }
 CRCError >> isResumable [
-	^true
+
+	^ true
 ]

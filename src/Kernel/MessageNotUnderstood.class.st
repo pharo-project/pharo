@@ -39,11 +39,11 @@ MessageNotUnderstood >> initialize [
 	reachedDefaultHandler := false
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 MessageNotUnderstood >> isResumable [
 	"Determine whether an exception is resumable."
 
-	^true
+	^ true
 ]
 
 { #category : #accessing }

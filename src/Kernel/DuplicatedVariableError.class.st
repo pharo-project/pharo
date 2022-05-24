@@ -20,7 +20,8 @@ DuplicatedVariableError class >> signalWith: existingVariable [
 
 { #category : #testing }
 DuplicatedVariableError >> isResumable [
-        ^true
+
+	^ true
 ]
 
 { #category : #accessing }
