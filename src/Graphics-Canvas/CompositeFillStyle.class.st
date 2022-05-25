@@ -99,9 +99,9 @@ CompositeFillStyle >> isCompositeFill [
 CompositeFillStyle >> isGradientFill [
 	"Answer whether any of the composited fill styles are gradients."
 
-	self fillStyles reverseDo: [:fs |
-		fs isGradientFill ifTrue: [^true]].
-	^false
+	self fillStyles reverseDo: [ :fs | 
+		fs isGradientFill ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }
@@ -117,14 +117,14 @@ CompositeFillStyle >> isOrientedFill [
 CompositeFillStyle >> isTranslucent [
 	"Answer whether all of the composited fill styles are transparent."
 
-	^self fillStyles allSatisfy: [:fs | fs isTranslucent]
+	^ self fillStyles allSatisfy: [ :fs | fs isTranslucent ]
 ]
 
 { #category : #testing }
 CompositeFillStyle >> isTransparent [
 	"Answer whether all of the composited fill styles are transparent."
 
-	^self fillStyles allSatisfy: [:fs | fs isTransparent]
+	^ self fillStyles allSatisfy: [ :fs | fs isTransparent ]
 ]
 
 { #category : #accessing }

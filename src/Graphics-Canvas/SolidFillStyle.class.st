@@ -51,12 +51,14 @@ SolidFillStyle >> isSolidFill [
 
 { #category : #testing }
 SolidFillStyle >> isTranslucent [
-	^color isTranslucent
+
+	^ color isTranslucent
 ]
 
 { #category : #testing }
 SolidFillStyle >> isTransparent [
-	^color isTransparent
+
+	^ color isTransparent
 ]
 
 { #category : #printing }

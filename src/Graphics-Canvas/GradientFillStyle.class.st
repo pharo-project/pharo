@@ -158,7 +158,8 @@ GradientFillStyle >> hash [
 
 { #category : #testing }
 GradientFillStyle >> isGradientFill [
-	^true
+
+	^ true
 ]
 
 { #category : #testing }
@@ -168,7 +169,8 @@ GradientFillStyle >> isRadialFill [
 
 { #category : #testing }
 GradientFillStyle >> isTranslucent [
-	^isTranslucent ifNil:[isTranslucent := self checkTranslucency]
+
+	^ isTranslucent ifNil: [ isTranslucent := self checkTranslucency ]
 ]
 
 { #category : #converting }

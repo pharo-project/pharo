@@ -1588,42 +1588,47 @@ Color >> initializeRed: r green: g blue: b range: range [
 	self setAlpha: 1.0.
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isBitmapFill [
-	^false
+
+	^ false
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isBlack [
 	"Return true if the receiver represents black"
-	^rgb = 0
+	
+	^ rgb = 0
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isColor [
 
 	^ true
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isGradientFill [
-	^false
+
+	^ false
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isGray [
 	"Return true if the receiver represents a shade of gray"
+	
 	^(self privateRed = self privateGreen) and: [self privateRed = self privateBlue]
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isOpaque [
 	^ alpha = 255
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isOrientedFill [
 	"Return true if the receiver keeps an orientation (e.g., origin, direction, and normal)"
+	
 	^false
 ]
 
@@ -1632,25 +1637,25 @@ Color >> isSelfEvaluating [
 	^ true
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isSolidFill [
 	^true
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isTranslucent [
 
 	^ alpha < 255
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
 	
 	^ self isTranslucent and: [ self isTransparent not ]
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 Color >> isTransparent [
 
 	^ alpha = 0
