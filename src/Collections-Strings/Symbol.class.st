@@ -209,14 +209,10 @@ Symbol class >> readFrom: strm [
 
 { #category : #cleanup }
 Symbol class >> rebuildSelectorTable [
-	| selectorTable |
-	selectorTable := WeakSet new.
-	CompiledMethod
-		allInstancesDo: [ :method | 
-			| selector |
-			selector := method selector.
-			selector ifNotNil: [ selectorTable add: selector ] ].
-	^selectorTable.
+
+	^ SystemNavigation new allMethods
+		  collect: [ :method | method selector ]
+		  as: WeakSet
 ]
 
 { #category : #private }
