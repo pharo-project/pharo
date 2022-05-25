@@ -592,8 +592,9 @@ AbstractFileReference >> isBlock [
 	^ self resolve isBlock
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 AbstractFileReference >> isCharacter [
+
 	^ self resolve isCharacter
 ]
 
