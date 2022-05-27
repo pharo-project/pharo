@@ -15,9 +15,6 @@ Class {
 		'searchedTextList',
 		'sourceTextModel'
 	],
-	#classInstVars : [
-		'searchedTextListMaxSize'
-	],
 	#category : #'Tool-Finder-UI'
 }
 
@@ -35,11 +32,6 @@ FinderUI class >> doAllSubscriptionsOn: aFinder to: anInstance [
 { #category : #icons }
 FinderUI class >> icon [
 	^ self iconNamed: #smallFindIcon
-]
-
-{ #category : #'class initialization' }
-FinderUI class >> initialize [
-	searchedTextListMaxSize := 15
 ]
 
 { #category : #explanations }
@@ -118,13 +110,6 @@ FinderUI class >> on: aFinder [
 	instance := self new finder: aFinder.
 	self doAllSubscriptionsOn: aFinder to: instance.
 	^instance
-]
-
-{ #category : #accessing }
-FinderUI class >> searchedTextListMaxSize: anInteger [
-
-	self allInstancesDo: [:each | each searchedTextListMaxSize: anInteger].
-	searchedTextListMaxSize := anInteger
 ]
 
 { #category : #'event subscriptions' }
@@ -872,12 +857,6 @@ FinderUI >> searchedTextList: aCollection [
 { #category : #accessing }
 FinderUI >> searchedTextListMaxSize [
 	^20
-]
-
-{ #category : #accessing }
-FinderUI >> searchedTextListMaxSize: anInteger [
-	[ self searchedTextList size > anInteger ] whileTrue: [ self searchedTextList removeLast ].
-	self changed: #searchedTextList
 ]
 
 { #category : #'text areas behavior' }
