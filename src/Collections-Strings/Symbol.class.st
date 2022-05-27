@@ -83,19 +83,17 @@ Symbol class >> compactSymbolTable [
 { #category : #'instance creation' }
 Symbol class >> findInterned: aString [
 
-	self hasInterned:aString ifTrue:[:symbol| ^symbol].
-	^nil.
+	^ self lookup: aString
+
 ]
 
 { #category : #'instance creation' }
 Symbol class >> findInternedSelector: aString [
-	| symbol |
-	symbol := self findInterned: aString.
-	"if it isn't found or not a SelectorSymbol - return nil"
-	(symbol isNil or: [ symbol isSelectorSymbol not ])
-		ifTrue: [ ^ nil ].
-	"otherwise, return this symbol"
-	^ symbol
+	"return a selector if the argument is used as a selector, nil if not"
+
+	^ (self lookup: aString) ifNotNil: [ :symbol | 
+		  (self selectorTable like: symbol) ifNotNil: [ :selectorSymbol | 
+			  selectorSymbol ] ]
 ]
 
 { #category : #private }

@@ -355,6 +355,13 @@ SymbolTest >> testEndsWithAColon [
 	self deny: #fred endsWithAColon.
 ]
 
+{ #category : #'tests - selectors' }
+SymbolTest >> testFindInternedSelector [
+	self assert:( Symbol findInternedSelector: 'no selector exist with spaces') equals: nil.
+	self assert:( Symbol findInternedSelector: 'assert:equals:') equals: #assert:equals:.
+	self assert:( Symbol findInternedSelector: 'do:') equals: #do:
+]
+
 { #category : #tests }
 SymbolTest >> testIsLiteralSymbol [
 
