@@ -2278,13 +2278,13 @@ Context >> unwindTo: aContext [
 		ctx unwindComplete ifNotNil: [
 			outerMost := ctx].
 		ctx := ctx findNextUnwindContextUpTo: aContext].
-	outerMost ifNotNil: [top := (top runUntilReturnFrom: outerMost) sender].
+	outerMost ifNotNil: [top := top runUntilReturnFrom: outerMost].
 	"By now no halfway-through unwind blocks are on the stack. Create a new top context for each 
 	pending unwind block (tempAt: 1) and execute it on the unwind block's stack to execute non-local 
 	returns correctly. Cf. the unwind pattern in #resume:through:. In #unwindTo, using #value instead of 
 	#runUntilReturnFrom: would lead to an incorrect evaluation of non-local returns on the wrong stack. 
 	Note: top points to the former outerMost sender now, i.e. to the next unexplored context."
-	ctx := top.
+	ctx := top ifNil: [^self].
 	ctx isUnwindContext ifFalse: [ctx := ctx findNextUnwindContextUpTo: aContext].
 	[ctx isNil] whileFalse: [
 		ctx unwindComplete ifNil: [
