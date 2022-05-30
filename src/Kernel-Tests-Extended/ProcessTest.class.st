@@ -7,14 +7,6 @@ Class {
 	#category : #'Kernel-Tests-Extended-Processes'
 }
 
-{ #category : #tests }
-ProcessTest >> expectedFailures [
-	^#("these two tests fail after fixing the root cause of an unwind error in Process>>terminate"
-		#testIsTerminatingForcedTermination
-		#testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
-	)
-]
-
 { #category : #running }
 ProcessTest >> setUp [ 
 	super setUp.
@@ -563,6 +555,20 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 	effectiveProcess terminate
 ]
 
+{ #category : #'tests - termination' }
+ProcessTest >> testProcessFaithfulTermination [
+	"When terminating a process, unwind blocks should be evaluated as if they were executed by the process being terminated."
+
+	| process |
+	[[process := Processor activeProcess.
+		Processor activeProcess suspend] ensure: [
+		self assert: process = Processor activeProcess]
+	] fork.
+	Processor yield.
+	process terminate.
+	self assert: process isTerminated
+]
+
 { #category : #tests }
 ProcessTest >> testRealActiveProcessFromProcesor [
 	
@@ -671,8 +677,30 @@ ProcessTest >> testTerminateAnswersSelf [
 ]
 
 { #category : #'tests - termination' }
-ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
+ProcessTest >> testTerminateInTerminate [
+	"Terminating a terminator process should unwind both the terminator and its terminatee process"
+	
+	| terminator terminatee unwound |
+	unwound := false.
+	terminatee := [[Processor activeProcess suspend] ensure: [unwound := true]] fork.
+	Processor yield.
+	terminator := [terminatee terminate] newProcess.
+	self assert: terminatee isSuspended.
+	self assert: terminator isSuspended.
+	"run terminator and stop inside #terminate, e.g. before executing #suspend in #terminate"
+	[(InstructionStream on: terminator suspendedContext method pc: terminator suspendedContext pc) selectorToSendOrSelf = #handleProcessTerminationOfWaitingContext:]
+		whileFalse: [terminator step].
+	self assert: terminator isSuspended.
+	terminator terminate.
+	self assert: terminator isTerminated. 
+	self assert: unwound
+]
 
+{ #category : #'tests - termination' }
+ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
+"
+	<expectedFailure>
+		
 	| ensureCalled process ensureFailure started unwindError |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
@@ -685,12 +713,13 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 		] on: UnwindError do: [ :err | unwindError := err ]
 	] forkAt: Processor activePriority + 1.
 
-	"We terminate the process in backround using higher priority
+	""We terminate the process in backround using higher priority
 	to ensure that all forked processes during the termination logic will finish before the test continue.
-	The UnwindError during termination is always signalled by fork"
+	The UnwindError during termination is always signalled by fork""
 	[ process terminate ] forkAt: Processor activePriority + 1.
 	self assert: ensureCalled.
 	self assert: unwindError signalerContext sender exception equals: ensureFailure
+"
 ]
 
 { #category : #'tests - termination' }
