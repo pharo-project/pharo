@@ -169,6 +169,15 @@ WideString >> copyFrom: start to: stop [
 	^ n.
 ]
 
+{ #category : #converting }
+WideString >> createSymbol [
+	"We have to check if the string can be represented by a Bytesymbol to avoid two symbols
+	that represent the same string"
+	^ ((self isOctetString
+		    ifTrue: [ ByteSymbol ]
+		    ifFalse: [ WideSymbol ]) basicNew: self size) string: self
+]
+
 { #category : #comparing }
 WideString >> findIn: body startingAt: start matchTable: matchTable [
 	

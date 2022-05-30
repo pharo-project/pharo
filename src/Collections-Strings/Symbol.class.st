@@ -116,19 +116,10 @@ Symbol class >> initialize [
 ]
 
 { #category : #'instance creation' }
-Symbol class >> intern: aStringOrSymbol [ 
+Symbol class >> intern: aStringOrSymbol [
 
-	^(self lookup: aStringOrSymbol) ifNil:[
-		| aClass aSymbol |
-		aStringOrSymbol isSymbol ifTrue:[
-			aSymbol := aStringOrSymbol.
-		] ifFalse:[
-			aClass := aStringOrSymbol isOctetString ifTrue:[ByteSymbol] ifFalse:[WideSymbol].
-			aSymbol := aClass basicNew: aStringOrSymbol size.
-			aSymbol string: aStringOrSymbol.
-		].
-		NewSymbols add: aSymbol.
-		aSymbol].
+	^ (self lookup: aStringOrSymbol) ifNil: [ 
+		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
 { #category : #'instance creation' }
@@ -402,6 +393,12 @@ Symbol >> capitalized [
 { #category : #copying }
 Symbol >> copy [
 	"Answer with the receiver, because Symbols are unique."
+]
+
+{ #category : #converting }
+Symbol >> createSymbol [
+
+	^ self
 ]
 
 { #category : #evaluating }
