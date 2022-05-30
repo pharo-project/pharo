@@ -218,13 +218,13 @@ Process >> doTerminationFromAnotherProcess [
 	It assumes that self is not the active process and the termination is requested from another process"	
 		
 	[ ] ensure: [ | oldList context |
+		oldList := self suspend.
+		self isTerminated ifTrue: [^self].
 		self isTerminating ifTrue: [ProcessAlreadyTerminating signal. ^self].
 		terminating := true.
-		oldList := self suspend.
-		suspendedContext := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
-		context := suspendedContext ifNil: [^self].
+		context := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
 		suspendedContext := [context unwindTo: nil. self endProcess] asContext.
-		self priority: Processor activePriority + 1; resume
+		self priority: (Processor activePriority + 1 min: Processor highestPriority); resume
 	]
 ]
 
