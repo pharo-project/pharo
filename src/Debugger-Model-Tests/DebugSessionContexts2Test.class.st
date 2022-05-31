@@ -36,6 +36,8 @@ DebugSessionContexts2Test >> testContextsAfterStepInto [
 
 	session stepInto.
 	expectedMethod := (self class >> #setUp) literalAt: 2.
+	"for cleanblocks, we have to get the compiledBlock"
+	expectedMethod isBlock ifTrue: [ expectedMethod := expectedMethod compiledBlock  ].
 
 	self
 		assert: session interruptedProcess suspendedContext method
@@ -53,6 +55,9 @@ DebugSessionContexts2Test >> testInterruptedContext [
 	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
 	| expectedMethod |
 	expectedMethod := (self class >> #setUp) literalAt: 2.
+	"for cleanblocks, we have to get the compiledBlock"
+	expectedMethod isBlock ifTrue: [ expectedMethod := expectedMethod compiledBlock ].
+
 
 	self assert: (session interruptedContext method) equals: expectedMethod.
 ]

@@ -884,12 +884,13 @@ Context >> hasTemporaryVariableNamed: aName [
 ]
 
 { #category : #accessing }
-Context >> home [ 
-	"Answer the context in which the receiver was defined, i.e. the context from which an ^-return should return from."
+Context >> home [
+	"Answer the context in which the receiver was defined, i.e. the context from which an ^-return ] should return from."
 
-	closureOrNil == nil ifTrue:
-		[^self].
-	^closureOrNil outerContext home
+	closureOrNil ifNil: [ ^ self ].
+	"this happens for clean blocks. We should later check if it is not better to return nil"
+	closureOrNil outerContext ifNil: [ ^ self ].
+	^ closureOrNil outerContext home
 ]
 
 { #category : #private }

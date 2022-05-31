@@ -6,7 +6,8 @@ Class {
 
 { #category : #helper }
 StepOverTest >> methodWithUnwindReturn [
-	[ #body ] ensure: [ ^#unwindReturn ]
+	| temp | "temp to make sure the block is not clean"
+	[ temp ] ensure: [ ^#unwindReturn ]
 ]
 
 { #category : #helper }
@@ -212,7 +213,8 @@ StepOverTest >> testStepOverNonErrorExceptionSignalWithHandlerDeeperInTheContext
 { #category : #tests }
 StepOverTest >> testStepOverReturnInUnwindBlock [
 	"methodWithUnwindReturn
-		[ #body ] ensure: [ ^#unwindReturn ]
+		| temp | ""temp to make sure the block is not clean""
+		[ temp ] ensure: [ ^#unwindReturn ]
 	"
 	| rootBlock |
 	rootBlock := [ self methodWithUnwindReturn ].
