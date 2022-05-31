@@ -68,7 +68,7 @@ Symbol class >> cleanUp [
 	self resetSelectorTable
 ]
 
-{ #category : #accessing }
+{ #category : #cleanup }
 Symbol class >> compactSymbolTable [
 	"Reduce the size of the symbol table so that it holds all existing symbols + 25% (changed from 1000 since sets like to have 25% free and the extra space would grow back in a hurry)"
 
@@ -87,7 +87,7 @@ Symbol class >> findInterned: aString [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'selector table' }
 Symbol class >> findInternedSelector: aString [
 	"return a selector if the argument is used as a selector, nil if not"
 
@@ -120,13 +120,6 @@ Symbol class >> intern: aStringOrSymbol [
 
 	^ (self lookup: aStringOrSymbol) ifNil: [ 
 		  NewSymbols add: aStringOrSymbol createSymbol ]
-]
-
-{ #category : #'instance creation' }
-Symbol class >> internSelector: aStringOrSymbol [
-
-	^ (self selectorTable like: aStringOrSymbol) ifNil: [ 
-		  self selectorTable add: aStringOrSymbol asSymbol ]
 ]
 
 { #category : #'instance creation' }
@@ -196,12 +189,17 @@ Symbol class >> readFrom: strm [
     	^ strm contents parseLiterals first.
 ]
 
-{ #category : #cleanup }
+{ #category : #'selector table' }
 Symbol class >> rebuildSelectorTable [
 
 	^ SystemNavigation new allMethods
 		  collect: [ :method | method selector ]
 		  as: WeakIdentitySet
+]
+
+{ #category : #'selector table' }
+Symbol class >> recordSelector: aSymbol [
+	self selectorTable add: aSymbol
 ]
 
 { #category : #private }
@@ -214,17 +212,17 @@ Symbol class >> rehash [
 	self resetSelectorTable.
 ]
 
-{ #category : #private }
+{ #category : #cleanup }
 Symbol class >> resetSelectorTable [
 	^ SelectorTable := nil
 ]
 
-{ #category : #private }
+{ #category : #'selector table' }
 Symbol class >> selectorTable [
 	^SelectorTable ifNil: [SelectorTable := self rebuildSelectorTable]
 ]
 
-{ #category : #accessing }
+{ #category : #'selector table' }
 Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 	"Same as thatStartsCaseSensitive:skipping: but on the SelectorTable only"
 	| size firstMatch key |
