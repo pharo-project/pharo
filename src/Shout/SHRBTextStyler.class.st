@@ -1216,10 +1216,10 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
-	style := #keyword.
 	
-	aMessageNode selector isSelectorSymbol 
-		ifFalse: [ style := self formatIncompleteSelector: aMessageNode ].
+	style := aMessageNode selector isSelectorSymbol 
+		ifTrue: [ #keyword ]
+		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 		
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
