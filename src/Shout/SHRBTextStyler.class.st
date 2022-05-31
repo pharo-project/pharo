@@ -1218,7 +1218,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 	style := #keyword.
 	
-	aMessageNode selector isSelectorsSymbol 
+	aMessageNode selector isSelectorSymbol 
 		ifFalse: [ style := self formatIncompleteSelector: aMessageNode ].
 		
 	link := TextMethodLink sourceNode: aMessageNode.
