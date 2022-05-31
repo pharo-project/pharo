@@ -475,7 +475,7 @@ Symbol >> isOrientedFill [
 
 { #category : #testing }
 Symbol >> isSelectorSymbol [
-	^ (self class selectorTable like: self) notNil
+	^ self class selectorTable includes: self
 ]
 
 { #category : #testing }
