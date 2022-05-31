@@ -1218,8 +1218,8 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 	style := #keyword.
 	
-	(Symbol findInternedSelector: aMessageNode selector asString)
-		ifNil:[ style := self formatIncompleteSelector: aMessageNode ].
+	aMessageNode selector isSelectorsSymbol 
+		ifFalse: [ style := self formatIncompleteSelector: aMessageNode ].
 		
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
