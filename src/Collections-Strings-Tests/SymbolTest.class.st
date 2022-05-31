@@ -372,6 +372,12 @@ SymbolTest >> testIsLiteralSymbol [
 		description: 'valid ascii selector symbols can be printed without string quotes'.
 ]
 
+{ #category : #'tests - selectors' }
+SymbolTest >> testIsSelectorSymbol [
+	self deny: #'no selector exist with spaces' isSelectorSymbol.
+	self assert: #assert:equals: isSelectorSymbol
+]
+
 { #category : #requirements }
 SymbolTest >> testNew [
 	

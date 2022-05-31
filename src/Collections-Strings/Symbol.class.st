@@ -201,7 +201,7 @@ Symbol class >> rebuildSelectorTable [
 
 	^ SystemNavigation new allMethods
 		  collect: [ :method | method selector ]
-		  as: WeakSet
+		  as: WeakIdentitySet
 ]
 
 { #category : #private }
@@ -472,7 +472,7 @@ Symbol >> isOrientedFill [
 
 { #category : #testing }
 Symbol >> isSelectorSymbol [
-	^ (self class selectorTable like: self) notNil
+	^ self class selectorTable includes: self
 ]
 
 { #category : #testing }
