@@ -261,11 +261,10 @@ TaskbarMorph >> morphicLayerNumber [
 	^11
 ]
 
-{ #category : #initialization }
+{ #category : #taskbar }
 TaskbarMorph >> move: task withOffset: offset [
 
 	| currentTaskIndex newOrderedTasks newTaskIndex currentOrderedTasks |
-	"self updateTasks . update tasks because if a new window is not added actually on the task bar the shortcut won't work"
 	currentOrderedTasks := self orderedTasks.
 	currentTaskIndex := currentOrderedTasks indexOf: task .
 	(currentTaskIndex = 0 ) ifTrue: [ ^ nil ].
@@ -274,7 +273,7 @@ TaskbarMorph >> move: task withOffset: offset [
 	newTaskIndex := ((currentTaskIndex + offset) clampBetween: 1 and: (self orderedTasks size)) .
 	newOrderedTasks add: task beforeIndex: newTaskIndex.
 	self orderedTasks: newOrderedTasks.
-	^ self updateTaskButtons "TODO is this the right way to update the toolbar?"
+	^ self updateTaskButtons
 ]
 
 { #category : #accessing }

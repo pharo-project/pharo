@@ -70,7 +70,7 @@ SystemWindow >> taskThumbnailOfSize: thumbExtent [
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
-SystemWindow >> taskbarButtonClicked [ "TODO add protocol"
+SystemWindow >> taskbarButtonClicked [
 	"The taskbar button for the receiver has been clicked.
 	If minimised then restore.
 	If active then minimize.
