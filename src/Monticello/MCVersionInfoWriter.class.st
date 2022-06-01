@@ -25,7 +25,7 @@ MCVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	#(name message id date time author) do: [:sel | 
 		stream 
 			nextPutAll: sel; space;
-			print: (((aVersionInfo perform: sel) ifNil: ['']) asString encodeWith: 'latin-1' ) asString; space ].
+			print: (((aVersionInfo perform: sel) ifNil: ['']) asString encodeWith: #utf8 ) asString; space ].
 	stream nextPutAll: 'ancestors ('.
 	aVersionInfo ancestors do: [:ea | self writeVersionInfo: ea].
 	stream nextPutAll: ') stepChildren ('.
