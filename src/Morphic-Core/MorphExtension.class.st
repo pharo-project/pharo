@@ -28,7 +28,7 @@ Class {
 MorphExtension >> actionMap [
 	"Answer the value of actionMap"
 
-	^actionMap ifNil: [self valueOfProperty: #actionMap ifAbsent: []]
+	^actionMap ifNil: [self valueOfProperty: #actionMap]
 ]
 
 { #category : #accessing }
@@ -352,11 +352,10 @@ MorphExtension >> sticky: aBoolean [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> valueOfProperty: aSymbol [ 
-"answer the value of the receiver's property named aSymbol"
-	^ self
-		valueOfProperty: aSymbol
-		ifAbsent: []
+MorphExtension >> valueOfProperty: aSymbol [
+	"Answer the value of the receiver's property named aSymbol"
+
+	^ otherProperties ifNotNil: [ :prop | prop at: aSymbol ifAbsent: nil ]
 ]
 
 { #category : #'accessing - other properties' }
