@@ -100,7 +100,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	compiledMethod methodClass: self.
 	compiledMethod selector: selector.
 	"We record all selectors that are used as method names"
-	Symbol internSelector: selector
+	Symbol recordSelector: selector
 ]
 
 { #category : #'adding-removing methods' }
