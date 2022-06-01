@@ -207,8 +207,8 @@ ObjectTest >> testDisplayString [
 ObjectTest >> testDisplayStringLimitedString [
 
 	| actual |
-	actual := Object new displayStringLimitedTo: 4.
-	self assert: actual equals: 'an O...etc...'
+	actual := Object new displayStringLimitedTo: 8.
+	self assert: actual equals: 'an O[..]'
 ]
 
 { #category : #tests }
@@ -243,8 +243,8 @@ ObjectTest >> testInstVarNamedPut [
 ObjectTest >> testPrintLimitedString [
 
 	| actual |
-	actual := Object new printStringLimitedTo: 4.
-	self assert: actual equals: 'an O...etc...'
+	actual := Object new printStringLimitedTo: 8.
+	self assert: actual equals: 'an O[..]'
 ]
 
 { #category : #'tests - printing' }
