@@ -122,7 +122,7 @@ ClassFactoryForTestCase >> deleteClass: aClass [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deleteClasses [
 
-	self createdClasses do: [ :class | self deleteClass: class ]
+	self createdClasses do: [ :class | self delete: class ]
 ]
 
 { #category : #cleaning }
