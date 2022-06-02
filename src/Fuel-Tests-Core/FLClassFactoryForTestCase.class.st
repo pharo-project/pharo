@@ -47,7 +47,8 @@ FLClassFactoryForTestCase >> cleanUp [
 	createdTraitNames := self createdTraitNames.
 	self deleteClasses.
 	self deleteTraits.
-	"self deletePackage."
+	self cleanUpSystemOrganization.
+	self deletePackage.
 	self cleanUpChangeSetForClassNames: createdClassNames.
 	self cleanUpChangeSetForClassNames: createdTraitNames
 ]
@@ -62,6 +63,19 @@ FLClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 			changeSet 
 				removeClassChanges: name;
 				removeClassChanges: name, ' class']]
+]
+
+{ #category : #'private-cleaning' }
+FLClassFactoryForTestCase >> cleanUpSystemOrganization [
+	"This method is necessary because we create classes in a non-default environment. The
+	SystemOrganization is global and ClassFactoryForTestCase interacts with it to clean out
+	categories."
+	| categoriesMatchString categories |
+	categoriesMatchString := self defaultPackageName, '-*'.
+	categories := SystemOrganization categoriesMatching: categoriesMatchString.
+	categories do: [ :category |
+		(SystemOrganization listAtCategoryNamed: category) do: [ :behavior |
+			SystemOrganization removeElement: behavior ] ]
 ]
 
 { #category : #accessing }
