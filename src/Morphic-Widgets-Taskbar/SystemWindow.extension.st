@@ -164,7 +164,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	moveSubmenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Move'
-		icon: self theme windowCloseForm "TODO add icon"
+		icon: (self iconNamed: #blank)
 		subMenu: moveSubmenu.
 	moveSubmenu
 		addToggle: 'Move left' translated
