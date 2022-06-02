@@ -64,8 +64,7 @@ Symbol class >> allSymbols [
 Symbol class >> cleanUp [
 	"Flush caches"
 
-	self compactSymbolTable.
-	self resetSelectorTable
+	self rehash
 ]
 
 { #category : #cleanup }
