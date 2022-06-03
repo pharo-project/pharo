@@ -27,13 +27,19 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes [
 	"Raise an error when materializing a closure whose method has changed bytecodes."
 
 	| aClass aClosure |
-	aClass := self newClass
-		duringTestCompileSilently: 'methodWithClosure  ^ [ 42 ]';
-		yourself.
+	aClass := self classFactory silentlyNewClass.
+	self classFactory
+		silentlyCompile: 'methodWithClosure  ^ [ 42 ]'
+		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self serialize: aClosure.
-	aClass duringTestCompileSilently: 'methodWithClosure  ^ 42'.
-	self should: [ self materialized ] raise: FLMethodChanged
+	self classFactory
+		silentlyCompile: 'methodWithClosure  ^ 42'
+		in: aClass.
+	self should: [ self materialized ] raise: FLMethodChanged.
+	
+	self materializer disableMethodChangedWarning.
+	self materialized
 ]
 
 { #category : #'tests-change' }
@@ -41,12 +47,15 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 	"Tolerate materializing a closure whose method has changed but not the bytecodes."
 
 	| aClass aClosure materializedClosure |
-	aClass := self newClass
-		duringTestCompileSilently: 'methodWithClosure  ^ [ 41 ]';
-		yourself.
+	aClass := self classFactory silentlyNewClass.
+	self classFactory
+		silentlyCompile: 'methodWithClosure  ^ [ 41 ]'
+		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self serialize: aClosure.
-	aClass duringTestCompileSilently: 'methodWithClosure  ^ [ 42 ]'.
+	self classFactory
+		silentlyCompile:  'methodWithClosure  ^ [ 42 ]'
+		in: aClass.
 	self deny: aClosure method isInstalled.
 	materializedClosure := self materialized.
 	self assert: materializedClosure value equals: 42
@@ -55,20 +64,17 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 { #category : #'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCorrectly [
 	| class closure method |
-	class := (self
-		newSubclassOf: Object
-		instanceVariableNames: ''
-		classVariableNames: 'ClassVariableForTesting')
-			duringTestCompileSilently: 'methodWithClosure  ^ [ ClassVariableForTesting ]';
-			yourself.
-	"Make sure we don't use global clusters here, which would simply perform a lookup"
+	class := self classFactory silentlyNewClassWithClassVariableNames: 'ClassVariableForTesting'.
+	self classFactory
+		silentlyCompile: 'methodWithClosure  ^ [ ClassVariableForTesting ]'
+		in: class.
+	
 	method := class methodNamed: #methodWithClosure.
+	"Make sure we don't use global clusters here, which would simply perform a lookup"
+	self serializer fullySerializeBehavior: method methodClass.
 	closure := method
 		valueWithReceiver: class new
 		arguments: #().
-	class removeSelectorSilently: #methodWithClosure.
-	self deny: method isInstalled.
-	self deny: closure compiledBlock isInstalled.
 	
 	self serialize: closure.
 	
@@ -85,9 +91,10 @@ FLBlockClosureSerializationTest >> testBlockClosureRemoved [
 	"Raise an error when materializing a closure whose method was removed."
 
 	| aClass aClosure |
-	aClass := self newClass
-		duringTestCompileSilently: 'methodWithClosure  ^ [ 42 ]';
-		yourself.
+	aClass := self classFactory silentlyNewClass.
+	self classFactory
+		silentlyCompile:  'methodWithClosure  ^ [ 42 ]'
+		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self serialize: aClosure.
 	aClass removeSelectorSilently: #methodWithClosure.

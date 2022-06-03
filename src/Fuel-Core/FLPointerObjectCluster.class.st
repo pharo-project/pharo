@@ -12,22 +12,23 @@ Class {
 
 { #category : #'serialize/materialize' }
 FLPointerObjectCluster >> afterMaterializationStepWith: aDecoder [  
-
-	objects do: [ :anObject | anObject fuelAfterMaterialization ]
+	objects do: [ :anObject |
+		variablesMapping materializeTraitVariablesWith: anObject.
+		anObject fuelAfterMaterialization ]
 ]
 
 { #category : #'serialize/materialize' }
-FLPointerObjectCluster >> clusterMaterializeStepWith: aMaterialization [
+FLPointerObjectCluster >> clusterMaterializeStepWith: aDecoder [
 
-	super clusterMaterializeStepWith: aMaterialization.
-	variablesMapping := aMaterialization decoder variablesMappingFor: theClass.
+	super clusterMaterializeStepWith: aDecoder.
+	variablesMapping := aDecoder variablesMappingFor: theClass
 ]
 
 { #category : #'serialize/materialize' }
-FLPointerObjectCluster >> clusterSerializeStepWith: aSerialization [
+FLPointerObjectCluster >> clusterSerializeStepWith: anEncoder [
 
-	super clusterSerializeStepWith: aSerialization.
-	variablesMapping serializeOn: aSerialization encoder.
+	super clusterSerializeStepWith: anEncoder.
+	variablesMapping serializeOn: anEncoder
 ]
 
 { #category : #'initialize-release' }

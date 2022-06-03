@@ -9,9 +9,13 @@ Class {
 
 { #category : #tests }
 FLSignatureTest >> testBadSignature [
-
-	serializer signature: 'FUELx'.
-	materializer signature: 'FUELy'.
+	self serializer
+		at: #signature
+		put: 'FUELx'.
+	self materializer
+		at: #signature
+		put: 'FUELy'.
+		
 	self
 		should: [ self resultOfSerializeAndMaterialize: 'content' ]
 		raise: FLBadSignature
@@ -21,8 +25,11 @@ FLSignatureTest >> testBadSignature [
 
 { #category : #tests }
 FLSignatureTest >> testSameSignature [
-
-	serializer signature: 'FUELx'.
-	materializer signature: 'FUELx'.
+	self serializer
+		at: #signature
+		put: 'FUELx'.
+	self materializer
+		at: #signature
+		put: 'FUELx'.
 	self assertSerializationEqualityOf: 'content'
 ]

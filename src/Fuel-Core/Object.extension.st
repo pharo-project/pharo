@@ -23,11 +23,10 @@ Object >> fuelAfterMaterialization [
 ]
 
 { #category : #'*Fuel-Core' }
-Object >> fuelReplacement [
-	^ self
-]
-
-{ #category : #'*Fuel-Core' }
 Object >> serializeToFileNamed: aFilename [
-	^ FLSerializer serialize: self toFileNamed: aFilename
+	^ FLSerializer new
+		filePath: aFilename;
+		object: self;
+		serialize;
+		yourself
 ]

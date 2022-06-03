@@ -32,13 +32,6 @@ FLLightGeneralMapper >> mapAndTrace: anObject [
 	anObject fuelAccept: self
 ]
 
-{ #category : #'protected-mapping' }
-FLLightGeneralMapper >> mapAndTraceInstanceSideGlobal: aClassOrTrait [
-
-	(self clusterKeyedByClusterName: FLGlobalClassCluster)
-		add: aClassOrTrait traceWith: analysis
-]
-
 { #category : #visiting }
 FLLightGeneralMapper >> visitBytesObject: anObject [
 
@@ -47,14 +40,21 @@ FLLightGeneralMapper >> visitBytesObject: anObject [
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitClass: aClass [
-
-	self mapAndTraceInstanceSideGlobal: aClass
+	self
+		mapAndTraceByClusterName: aClass
+		to: FLGlobalClassCluster
 ]
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitClassTrait: aClassTrait [
+	self
+		mapAndTraceByClusterName: aClassTrait
+		to: FLGlobalMetaclassCluster
+]
 
-	self mapAndTraceByClusterName: aClassTrait to: FLGlobalClassSideCluster
+{ #category : #visiting }
+FLLightGeneralMapper >> visitClassVariable: aClassVariable [
+	self visitFixedObject: aClassVariable
 ]
 
 { #category : #visiting }
@@ -70,9 +70,7 @@ FLLightGeneralMapper >> visitCompiledBlock: aCompiledBlock [
 FLLightGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 	self
 		mapAndTraceByClusterName: aCompiledMethod
-		to: ((aCompiledMethod isInstalled not or: [aCompiledMethod isDoIt ])
-			ifTrue: [ FLCompiledMethodCluster ]
-			ifFalse: [ FLGlobalCompiledMethodCluster ])
+		to: FLGlobalCompiledMethodCluster
 ]
 
 { #category : #visiting }
@@ -102,6 +100,11 @@ FLLightGeneralMapper >> visitGlobalSend: anObject name: globalName selector: aSy
 ]
 
 { #category : #visiting }
+FLLightGeneralMapper >> visitGlobalVariable: aGlobalVariable [
+	self visitFixedObject: aGlobalVariable
+]
+
+{ #category : #visiting }
 FLLightGeneralMapper >> visitHookPrimitive: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLHookPrimitiveCluster
@@ -109,15 +112,16 @@ FLLightGeneralMapper >> visitHookPrimitive: anObject [
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitMetaclass: aMetaclass [
-
-	self mapAndTraceByClusterName: aMetaclass to: FLGlobalClassSideCluster
+	self
+		mapAndTraceByClusterName: aMetaclass
+		to: FLGlobalMetaclassCluster
 ]
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitMetaclassForTraits: aMetaclass [
 	self
 		mapAndTraceByClusterName: aMetaclass
-		to: FLGlobalClassSideCluster
+		to: FLGlobalMetaclassCluster
 ]
 
 { #category : #visiting }
@@ -178,15 +182,16 @@ FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject onRecursio
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitTrait: aTrait [
-
-	self mapAndTraceInstanceSideGlobal: aTrait
+	self
+		mapAndTraceByClusterName: aTrait
+		to: FLGlobalClassCluster
 ]
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitTraitedMetaclass: aMetaclass [
 	self
 		mapAndTraceByClusterName: aMetaclass
-		to: FLGlobalClassSideCluster
+		to: FLGlobalMetaclassCluster
 ]
 
 { #category : #visiting }

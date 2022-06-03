@@ -8,7 +8,7 @@ Class {
 EpAsEpiceaRingDefinitionTest >> definitions [
 	"FIX: it should not have this external dependency to Fuel code entities."
 
-	^ {	(FLSerializer >> #serialize:on:).
+	^ {	(FLSerializer >> #serialize).
 		(Object >> #fuelAccept:).
 		FLSerializer.
 		FLSerializer class. 

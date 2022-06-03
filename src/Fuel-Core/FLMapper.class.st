@@ -4,19 +4,14 @@ The purpose of my hierarchy is to map objects with clusters.
 Class {
 	#name : #FLMapper,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'next',
 		'analysis'
 	],
 	#category : #'Fuel-Core-Mappers'
 }
-
-{ #category : #accessing }
-FLMapper >> analysis: anAnalysis [
-
-	analysis := anAnalysis.
-	next ifNotNil: [ next analysis: anAnalysis ]
-]
 
 { #category : #'protected-mapping' }
 FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: clusterFactory [
@@ -57,9 +52,11 @@ FLMapper >> clusterKeyedByObjectClass: clusterClass class: objectClass [
 		factory: [ clusterClass newAnalyzing: objectClass ]
 ]
 
-{ #category : #hooks }
-FLMapper >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
+{ #category : #initialization }
+FLMapper >> initialize [
+	super initialize.
+	
+	analysis := self context analysis
 ]
 
 { #category : #mapping }
@@ -85,4 +82,11 @@ FLMapper >> mapAndTraceByObjectClass: anObject to: aClusterClass [
 { #category : #accessing }
 FLMapper >> next: anObject [
 	next := anObject
+]
+
+{ #category : #visiting }
+FLMapper >> visitSubstitution: anObject by: aSubstitute [
+	next
+		visitSubstitution: anObject
+		by: aSubstitute
 ]

@@ -8,10 +8,19 @@ Class {
 }
 
 { #category : #tests }
-FLVersionTest >> testBadVersion [
-
-	serializer version: 2.
-	materializer version: 1.
+FLVersionTest >> testDifferentMajor [
+	self serializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 2
+			minor: 2
+			patch: 3).
+	self materializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 3
+			minor: 2
+			patch: 3).
 	self
 		should: [ self resultOfSerializeAndMaterialize: 'content' ]
 		raise: FLBadVersion
@@ -20,9 +29,52 @@ FLVersionTest >> testBadVersion [
 ]
 
 { #category : #tests }
-FLVersionTest >> testSameVersion [
+FLVersionTest >> testDifferentMinor [
+	self serializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 1
+			minor: 2
+			patch: 3).
+	self materializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 1
+			minor: 3
+			patch: 3).
+	self assertSerializationEqualityOf: 'content'
+]
 
-	serializer version: 1.
-	materializer version: 1.
+{ #category : #tests }
+FLVersionTest >> testDifferentPatch [
+	self serializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 1
+			minor: 2
+			patch: 3).
+	self materializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 1
+			minor: 2
+			patch: 4).
+	self assertSerializationEqualityOf: 'content'
+]
+
+{ #category : #tests }
+FLVersionTest >> testSameVersion [
+	self serializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 1
+			minor: 2
+			patch: 3).
+	self materializer
+		at: #version
+		put: (FLVersion
+			newWithMajor: 1
+			minor: 2
+			patch: 3).
 	self assertSerializationEqualityOf: 'content'
 ]

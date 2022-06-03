@@ -19,14 +19,17 @@ Class {
 
 { #category : #private }
 DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile [ 
-	^ self new
-		oldRelationGraph: (FLMaterializer materializationFromFileNamed: aSerializeFile).
+	^ self new oldRelationGraph: (FLMaterializer new
+		filePath: aSerializeFile;
+		materializeRoot)
 ]
 
 { #category : #private }
 DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile with: newRelationGraph [
 	^ self new
-		oldRelationGraph: (FLMaterializer materializationFromFileNamed: aSerializeFile);
+		oldRelationGraph: (FLMaterializer new
+			filePath: aSerializeFile;
+			materializeRoot);
 		newRelationGraph: newRelationGraph
 ]
 
