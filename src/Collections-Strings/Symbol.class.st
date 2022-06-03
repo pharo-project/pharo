@@ -37,14 +37,14 @@ Class {
 	#category : #'Collections-Strings-Base'
 }
 
-{ #category : #accessing }
+{ #category : #'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock [
 
 	NewSymbols do: aBlock.
 	SymbolTable do: aBlock.
 ]
 
-{ #category : #accessing }
+{ #category : #'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
 
 	NewSymbols do: aBlock after: aSymbol.
@@ -79,28 +79,38 @@ Symbol class >> compactSymbolTable [
 	^oldSize printString,'  ',(oldSize - SymbolTable array size) printString, ' slot(s) reclaimed'
 ]
 
-{ #category : #'instance creation' }
-Symbol class >> findInterned: aString [
+{ #category : #'symbol table' }
+Symbol class >> findInterned: aStringOrSymbol [
 
-	^ self lookup: aString
+	^(SymbolTable like: aStringOrSymbol) ifNil: [
+		NewSymbols like: aStringOrSymbol
+	]
 
 ]
 
 { #category : #'selector table' }
 Symbol class >> findInternedSelector: aString [
 	"return a selector if the argument is used as a selector, nil if not"
-
-	^ (self lookup: aString) ifNotNil: [ :symbol | 
+	self deprecated: 'use #isSelectorSymbol instead'.
+	^ (self findInterned: aString) ifNotNil: [ :symbol | 
 		  (self selectorTable like: symbol) ifNotNil: [ :selectorSymbol | 
 			  selectorSymbol ] ]
 ]
 
-{ #category : #private }
+{ #category : #'symbol table' }
+Symbol class >> hasInterned: aStringOrSymbol [
+	"Answer with false if aString hasnt been interned (into a Symbol)"
+
+	^(SymbolTable includes: aStringOrSymbol) or: [ NewSymbols includes: aStringOrSymbol ]
+]
+
+{ #category : #'symbol table' }
 Symbol class >> hasInterned: aString ifTrue: symBlock [
 	"Answer with false if aString hasnt been interned (into a Symbol),  
-	otherwise supply the symbol to symBlock and return true."
+	otherwise supply the symbol to symBlock and return true.
+	Consider using #findInterned: with #ifNotNil: instead"
 
-	^ (self lookup: aString)
+	^ (self findInterned: aString)
 		ifNil: [ false ]
 		ifNotNil: [ :symbol | 
 			symBlock value: symbol.
@@ -114,19 +124,20 @@ Symbol class >> initialize [
 		registerSystemClassNamed: #Symbol
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	^ (self lookup: aStringOrSymbol) ifNil: [ 
+	^ (self findInterned: aStringOrSymbol) ifNil: [ 
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'symbol table' }
 Symbol class >> lookup: aStringOrSymbol [
-
-	^(SymbolTable like: aStringOrSymbol) ifNil: [
-		NewSymbols like: aStringOrSymbol
-	]
+	self 
+		deprecated: 'Use #findInterned: instead' 
+		transformWith: '`@receiver lookup: `@statements1' -> '`@receiver findInterned: `@statements1'.
+	
+	^ self findInterned: aStringOrSymbol
 ]
 
 { #category : #'instance creation' }
@@ -151,7 +162,7 @@ Symbol class >> newFrom: aCollection [
 "
 ]
 
-{ #category : #private }
+{ #category : #'selector table' }
 Symbol class >> possibleSelectorsFor: misspelled [ 
 	"Answer an ordered collection of possible corrections
 	for the misspelled selector in order of likelyhood"
@@ -201,7 +212,7 @@ Symbol class >> recordSelector: aSymbol [
 	self selectorTable add: aSymbol
 ]
 
-{ #category : #private }
+{ #category : #cleanup }
 Symbol class >> rehash [
    "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
@@ -255,7 +266,7 @@ Symbol class >> streamSpecies [
 	^ String
 ]
 
-{ #category : #accessing }
+{ #category : #'symbol table' }
 Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 	"Answer a selector symbol that starts with leadingCharacters.
 	Symbols beginning with a lower-case letter handled directly here.
@@ -289,7 +300,7 @@ Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 "Symbol thatStarts: 'candidate' skipping: nil"
 ]
 
-{ #category : #accessing }
+{ #category : #'symbol table' }
 Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 	"Same as thatStarts:skipping: but caseSensitive"
 	| size firstMatch key |
