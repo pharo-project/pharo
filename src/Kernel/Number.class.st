@@ -254,6 +254,15 @@ Number >> ceiling [
                ifFalse: [ truncation + 1 ]
 ]
 
+{ #category : #calculating }
+Number >> clampBetween: min and: max [ 
+	
+	 (self between: min and: max ) ifTrue: [ ^ self  ]
+	ifFalse: [( self < min )  ifTrue: [ ^ min]].
+	^ max
+	
+]
+
 { #category : #converting }
 Number >> copySignTo: aNumber [
 	"Return a number with same magnitude as aNumber and same sign as self."

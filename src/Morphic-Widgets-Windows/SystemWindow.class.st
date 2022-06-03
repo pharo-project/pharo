@@ -23,7 +23,8 @@ Class {
 		'labelArea',
 		'expandBox',
 		'embeddable',
-		'isResizeable'
+		'isResizeable',
+		'taskbarTask'
 	],
 	#classVars : [
 		'CloseBoxImage',
@@ -1172,7 +1173,9 @@ SystemWindow >> initialize [
 	
 	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
-	updatablePanes := Array new
+	updatablePanes := Array new.
+	self bindKeyCombination: (Character arrowLeft meta shift alt ) toAction: [self taskbarMoveLeft ].
+	self bindKeyCombination: (Character arrowRight meta shift alt) toAction: [self taskbarMoveRight ].
 ]
 
 { #category : #keymapping }
@@ -1445,6 +1448,12 @@ SystemWindow >> mouseUp: evt [
 	| cp |
 	cp := evt cursorPoint.
 	submorphs do: [:m | (m containsPoint: cp) ifTrue: [m mouseUp: evt]]
+]
+
+{ #category : #move }
+SystemWindow >> moveTaskbarTaskToOffset: offset [
+
+	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar updateTasks; move: self taskbarTask withOffset: offset ]
 ]
 
 { #category : #'open/close' }
@@ -1858,6 +1867,19 @@ SystemWindow >> taskbarIcon [
 
 	self model ifNotNil: [self model taskbarIcon ifNotNil: [:ico | ^ico]].
 	^super taskbarIcon
+]
+
+{ #category : #move }
+SystemWindow >> taskbarMoveLeft [
+
+	self moveTaskbarTaskToOffset: -1 
+]
+
+{ #category : #move }
+SystemWindow >> taskbarMoveRight [
+	
+
+	self moveTaskbarTaskToOffset: 1.
 ]
 
 { #category : #'open/close' }
