@@ -123,10 +123,7 @@ SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 
 { #category : #accessing }
 SubscriptionRegistry >> subscriptionsHandling: anAnnouncement [
-	^ Array streamContents: [ :s|
-			subscriptions do: [:each| 
-				(each handlesAnnouncement: anAnnouncement)
-					ifTrue: [ s nextPut: each ]]]
+	^ (subscriptions select: [:each| each handlesAnnouncement: anAnnouncement]) asArray
 ]
 
 { #category : #iterating }
