@@ -885,6 +885,12 @@ Morph >> adhereToEdge [
 Morph >> adhereToEdge: edgeSymbol [ 
 	| edgeMessage |
 	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
+	
+	"these are implemented in Morph, no need to use perform:"
+	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
+	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
+	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
+	
 	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
 	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
 		 ifFalse:  [^self].
