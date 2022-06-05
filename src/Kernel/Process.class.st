@@ -217,11 +217,13 @@ Process >> doTerminationFromAnotherProcess [
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is not the active process and the termination is requested from another process.
 	It assumes the terminator process won't resume before the process represented by self is terminated."	
-		
-	[ ] ensure: [ | context terminator |
+
+	[ ] ensure: [ | oldList context terminator |
 		self isTerminating ifTrue: [ProcessAlreadyTerminating signal. ^self].
 		terminating := true.
-		context := self suspend handleProcessTerminationOfWaitingContext: (suspendedContext ifNil: [^self]).
+		oldList := self suspend.
+		suspendedContext ifNil: [^self].
+		context := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
 		terminator := Semaphore new.
 		suspendedContext := [context unwindTo: nil. terminator signal. self endProcess] asContext.
 		self priority: Processor activePriority; resume.
