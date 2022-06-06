@@ -225,7 +225,8 @@ Process >> doTerminationFromAnotherProcess [
 		suspendedContext ifNil: [^self].
 		context := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
 		terminator := Semaphore new.
-		suspendedContext := [context unwindTo: nil. terminator signal. self endProcess] asContext.
+		context bottomContext insertSender: (Context contextEnsure: [terminator signal]).
+		suspendedContext := [context unwindTo: nil. self endProcess] asContext.
 		self priority: Processor activePriority; resume.
 		terminator wait
 	]
