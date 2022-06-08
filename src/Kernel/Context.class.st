@@ -1781,9 +1781,9 @@ Context >> runUntilReturnFrom: aContext [
 
 	| here unwindBottom newTop |
 	here := thisContext.
-	"Avoid a context that cannot return (see Note 1 below)"
-	unwindBottom := (self findContextSuchThat: [:ctx | ctx selector = #cannotReturn:]) ifNil: [aContext].
-	newTop := aContext sender.
+	"Avoid a context that cannot return between self and aContext (see Note 1 below)"
+	unwindBottom := self findContextSuchThat: [:ctx | ctx == aContext or: [ctx selector = #cannotReturn:]].
+	newTop := unwindBottom sender.
 	"Insert ensure context under unwindBottom in self's stack (see Note 2 below)"
 	unwindBottom insertSender: (Context contextEnsure: [here jump]).
 	self jump.  "Control jumps to self (see Note 2 below)"
