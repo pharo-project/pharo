@@ -41,10 +41,12 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 { #category : #tests }
 CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectly [
 
-	| originalSearch narrowedResults |
+	| originalSearch narrowedResults selectors |
+	
+	selectors := Symbol selectorTable asArray.
 	
 	"First execution with complete query"
-	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
+	fetcher := (CoCollectionFetcher onCollection: selectors)
 		           withNarrowHistory.
 	fetcher := fetcher
 		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
@@ -52,7 +54,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectl
 	originalSearch := fetcher next: 10.
 
 	"Second execution with query using narrowing"
-	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
+	fetcher := (CoCollectionFetcher onCollection: selectors)
 		           withNarrowHistory.
 	fetcher := fetcher
 		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
