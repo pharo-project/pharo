@@ -83,7 +83,6 @@ RBClass >> allClassVariableNames [
 RBClass >> allPoolDictionaryNames [
 
 	| sprClass |
-
 	sprClass := self superclass.
 	^ sprClass
 		ifNil: [ self sharedPoolNames ]
