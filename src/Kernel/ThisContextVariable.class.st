@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 ThisContextVariable class >> variableName [
-	^'thisContext'
+	^#thisContext
 ]
 
 { #category : #visiting }

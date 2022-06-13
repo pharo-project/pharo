@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 SuperVariable class >> variableName [
-	^'super'
+	^#super
 ]
 
 { #category : #visiting }
