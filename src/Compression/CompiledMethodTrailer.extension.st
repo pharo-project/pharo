@@ -47,5 +47,6 @@ CompiledMethodTrailer >> encodeUsingZip [
 	"trailing byte"
 	stream nextPut: (self kindAsByte + encodedLength size - 1).
 	
-	encodedData := stream contents
+	encodedData := stream contents.
+	size := encodedData size.
 ]
