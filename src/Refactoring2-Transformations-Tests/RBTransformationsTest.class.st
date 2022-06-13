@@ -278,7 +278,7 @@ RBTransformationsTest >> testRemoveClassTransform [
 	self assert: newClass isNil.
 	newClass := self changeMock name.
 	self assert: ((superclass subclasses collect: [:each | each name]) includes: newClass) not.
-	self assert: ((superclass theMetaClass subclasses collect: [:each | each name]) includes: newClass) not.
+	self assert: ((superclass classSide subclasses collect: [:each | each name]) includes: newClass) not.
 ]
 
 { #category : #tests }

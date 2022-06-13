@@ -31,9 +31,7 @@ RBClassTransformation >> className: anObject [
 { #category : #accessing }
 RBClassTransformation >> definingClass [
 
-	^ class ifNil: [ 
-		class := self model 
-					classObjectFor: self className ]
+	^ class ifNil: [ class := self model classObjectFor: self className ]
 ]
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTra
 									referencesToClassVariable: variableName
 									in: aClass realClass) ] ] ] ].
 			aClass withAllSubclasses do: block.
-			aClass theMetaClass withAllSubclasses do: block.
+			aClass classSide withAllSubclasses do: block.
 			true ]
 ]
 
