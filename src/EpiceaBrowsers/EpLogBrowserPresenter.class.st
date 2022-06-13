@@ -97,7 +97,7 @@ EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
 		aGroup addItem: [ :anItem | 
 			anItem
 				name: 'Filters';
-				icon: (self iconNamed: #smallFindIcon);
+				icon: (self iconNamed: #smallFind);
 				subMenu: self filtersSubMenu ] ].
 
 	aMenu addGroup: [ :aGroup | 

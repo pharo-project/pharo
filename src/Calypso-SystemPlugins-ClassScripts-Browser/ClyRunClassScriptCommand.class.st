@@ -40,7 +40,7 @@ ClyRunClassScriptCommand >> defaultMenuIcon [
 
 { #category : #accessing }
 ClyRunClassScriptCommand >> defaultMenuIconName [
-	^#scriptManagerIcon
+	^#scriptManager
 ]
 
 { #category : #accessing }

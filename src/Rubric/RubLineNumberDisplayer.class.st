@@ -24,7 +24,7 @@ RubLineNumberDisplayer class >> menuOn: aBuilder [
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		iconName: #smallFindIcon
+		iconName: #smallFind
 ]
 
 { #category : #accessing }

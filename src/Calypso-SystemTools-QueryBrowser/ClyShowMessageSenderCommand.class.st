@@ -74,7 +74,7 @@ ClyShowMessageSenderCommand >> browser: anObject [
 
 { #category : #accessing }
 ClyShowMessageSenderCommand >> defaultMenuIconName [ 
-	^ #smallFindIcon
+	^ #smallFind
 ]
 
 { #category : #accessing }

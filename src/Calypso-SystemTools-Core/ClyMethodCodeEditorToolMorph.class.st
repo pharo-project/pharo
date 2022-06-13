@@ -138,7 +138,7 @@ ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 
 { #category : #initialization }
 ClyMethodCodeEditorToolMorph >> defaultIconName [
-	^#scriptManagerIcon
+	^#scriptManager
 ]
 
 { #category : #controlling }

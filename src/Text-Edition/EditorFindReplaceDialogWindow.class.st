@@ -456,7 +456,7 @@ EditorFindReplaceDialogWindow >> taskbarButtonFor: aTaskBar [
 
 { #category : #icons }
 EditorFindReplaceDialogWindow >> taskbarIcon [
-	^ self iconNamed: #smallFindIcon
+	^ self iconNamed: #smallFind
 ]
 
 { #category : #'user-interface' }

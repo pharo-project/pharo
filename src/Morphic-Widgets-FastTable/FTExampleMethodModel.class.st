@@ -31,7 +31,7 @@ FTExampleMethodModel >> actionOn: aBrowser [
 
 { #category : #factory }
 FTExampleMethodModel >> createActionIconOn: aBrowser [
-	^Smalltalk ui icons iconNamed: #scriptManagerIcon
+	^Smalltalk ui icons iconNamed: #scriptManager
 ]
 
 { #category : #initialization }

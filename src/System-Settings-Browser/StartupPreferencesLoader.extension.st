@@ -21,7 +21,7 @@ StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 		parent: #SystemStartup;
 		order: 1;
 		help: 'Run startup scripts.';
-		iconName: #scriptManagerIcon.
+		iconName: #scriptManager.
 	aBuilder withSeparatorAfter
 ]
 
@@ -47,5 +47,5 @@ StartupPreferencesLoader class >> systemStartupMenuOn: aBuilder [
 		parent: #Startup;
 		order: 2;
 		help: 'System startup related.';
-		iconName: #scriptManagerIcon
+		iconName: #scriptManager
 ]

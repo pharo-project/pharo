@@ -977,14 +977,14 @@ UITheme >> checkboxMarkerForm [
 UITheme >> checkboxSelectedForm [
 	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxSelectedForm
+	^ self iconNamed: #checkboxSelected
 ]
 
 { #category : #forms }
 UITheme >> checkboxUnselectedForm [
 	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxUnselectedForm
+	^ self iconNamed: #checkboxUnselected
 ]
 
 { #category : #services }
@@ -4811,7 +4811,7 @@ UITheme >> radioButtonDisabledFillStyleFor: aRadioButton [
 UITheme >> radioButtonForm [
 	"Answer the form to use for a normal radio button."
 
-	^ self iconNamed: #radioButtonUnselectedForm
+	^ self iconNamed: #radioButtonUnselected
 ]
 
 { #category : #'label-styles' }
@@ -4867,7 +4867,7 @@ UITheme >> radioButtonSelectedFillStyleFor: aRadioButton [
 UITheme >> radioButtonSelectedForm [
 	"Answer the form to use for a selected radio button."
 
-	^ self iconNamed: #radioButtonSelectedForm
+	^ self iconNamed: #radioButtonSelected
 ]
 
 { #category : #'fill-styles' }
@@ -6217,7 +6217,7 @@ UITheme >> windowMaximizeOverForm [
 UITheme >> windowMaximizePassiveForm [
 	"Answer the form to use for passive (background) window maximize/restore buttons"
 
-	^ self iconNamed: #windowMaximizeInactiveForm
+	^ self iconNamed: #windowMaximizeInactive
 ]
 
 { #category : #sounds }
@@ -6273,7 +6273,7 @@ UITheme >> windowMinimizeOverForm [
 UITheme >> windowMinimizePassiveForm [
 	"Answer the form to use for passive (background) window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeInactiveForm
+	^ self iconNamed: #windowMinimizeInactive
 ]
 
 { #category : #sounds }

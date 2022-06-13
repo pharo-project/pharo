@@ -89,7 +89,7 @@ ClyClassScript >> executeOn: aClass [
 
 { #category : #accessing }
 ClyClassScript >> iconName [
-	^ #scriptManagerIcon
+	^ #scriptManager
 ]
 
 { #category : #accessing }

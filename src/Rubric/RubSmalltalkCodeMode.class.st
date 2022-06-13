@@ -70,12 +70,12 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'f';
 		selector: #find;
 		help: nil;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
 		help: nil;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	self extendedSearchMenuOn: aBuilder.
 	(aBuilder item: #'Redo' translated)
 		keyText: 'Z';
