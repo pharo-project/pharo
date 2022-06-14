@@ -111,7 +111,7 @@ TabExample >> redMorphTab [
 TabExample >> storedListTab [
 	^ TabMorph
 		label: 'Stored List Model'
-		icon: (self iconNamed: #smallHelpIcon)
+		icon: (self iconNamed: #smallHelp)
 		retrievingBlock: [ listModel build ]
 ]
 

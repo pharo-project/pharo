@@ -302,7 +302,7 @@ Morph >> showBalloon: msgString hand: aHand [
 { #category : #'*Polymorph-Widgets-Themes' }
 Morph class >> systemIconName [
 
-	^ #morphIcon
+	^ #morph
 ]
 
 { #category : #'*Polymorph-Widgets' }

@@ -127,8 +127,8 @@ SettingDeclaration >> default: anObject [
 SettingDeclaration >> defaultIcon [
 	^ (self type = #LogicalFont
 		or: [ self realValue isKindOf: AbstractFont ])
-		ifTrue: [ self iconNamed: #smallFontsIcon ]
-		ifFalse: [ self iconNamed: #smallPaintIcon ]
+		ifTrue: [ self iconNamed: #smallFonts ]
+		ifFalse: [ self iconNamed: #smallPaint ]
 ]
 
 { #category : #accessing }
@@ -328,7 +328,7 @@ SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 		getEnabled: nil
 		label:
 			(AlphaImageMorph new
-				image: (self iconNamed: #smallOpenIcon))
+				image: (self iconNamed: #smallOpen))
 		help: 'Open directory chooser dialog' translated.
 	^ self theme
 		newRowIn: self

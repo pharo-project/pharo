@@ -376,7 +376,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 	fileMenu addToggle: 'Open' translated target: nil selector: #openFile.	"would be model"
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallOpenIcon);
+		icon: (self iconNamed: #smallOpen);
 		keyText: 'Ctrl+O'.
 	fileMenu
 		addToggle: 'Save' translated
@@ -386,7 +386,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		enablementSelector: nil.
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallSaveIcon);
+		icon: (self iconNamed: #smallSave);
 		keyText: 'Ctrl+S'.
 	fileMenu
 		addToggle: 'Print...' translated

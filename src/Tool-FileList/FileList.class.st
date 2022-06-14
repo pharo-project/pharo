@@ -104,7 +104,7 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Cancel' translated)
 		keyText: 'l';
 		selector: #cancel;
-		iconName: #smallCancelIcon;
+		iconName: #smallCancel;
 		withSeparatorAfter.
 
 ]
@@ -252,7 +252,7 @@ FileList class >> suffixOf: aName [
 FileList class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallOpenIcon
+	^#smallOpen
 ]
 
 { #category : #'drag\'n\'drop' }

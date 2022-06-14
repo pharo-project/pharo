@@ -51,7 +51,7 @@ DAPackageUnderAnalysisNode >> hasChildren [
 
 { #category : #accessing }
 DAPackageUnderAnalysisNode >> icon [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #testing }

@@ -464,7 +464,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		withSeparatorAfter.
 	(aBuilder item: #About)
 		action: [ aBuilder model showAbout ];
-		iconName: #smallHelpIcon;
+		iconName: #smallHelp;
 		withSeparatorAfter.
 	(aBuilder item: #'Change title')
 		action: [ aBuilder model relabel ].

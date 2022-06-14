@@ -9,7 +9,7 @@ StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuil
 		parent: #SystemStartup;
 		order: 3;
 		help: 'Open the folder with general preferences.';
-		iconName: #smallOpenIcon
+		iconName: #smallOpen
 ]
 
 { #category : #'*System-Settings-Browser' }
@@ -36,7 +36,7 @@ StartupPreferencesLoader class >> startupPreferencesVersionFolderMenuOn: aBuilde
 		parent: #SystemStartup;
 		order: 2;
 		help: 'Open the preferences per version folder.';
-		iconName: #smallOpenIcon
+		iconName: #smallOpen
 ]
 
 { #category : #'*System-Settings-Browser' }

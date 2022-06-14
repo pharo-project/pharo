@@ -58,7 +58,7 @@ ClyPackageCommentEditorToolMorph >> attachToSystem [
 
 { #category : #initialization }
 ClyPackageCommentEditorToolMorph >> defaultIconName [
-	^#commentsIcon
+	^#comments
 ]
 
 { #category : #initialization }

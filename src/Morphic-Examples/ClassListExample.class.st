@@ -99,7 +99,7 @@ ClassListExample >> treeMorph [
 				rowMorphGetSelector: #classButton;
 				headerButtonLabel: 'Class'
 					font: nil
-					icon: (self iconNamed: #smallOpenIcon)
+					icon: (self iconNamed: #smallOpen)
 					target: nil
 					actionSelector: nil
 					arguments: #()).

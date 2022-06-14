@@ -146,7 +146,7 @@ GroupWindowMorph >> offerWindowMenu [
 	aMenu
 		addLine;
 		add: 'Grab window...' target: self selector: #grabWindow.
-	aMenu lastItem icon: (self iconNamed: #smallWindowIcon).
+	aMenu lastItem icon: (self iconNamed: #smallWindow).
 	self tabGroup page
 		ifNotNil: [ :page | page model addModelItemsToWindowMenu: aMenu ].
 	aMenu popUpEvent: self currentEvent in: self world

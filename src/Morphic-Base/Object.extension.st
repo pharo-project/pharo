@@ -103,7 +103,7 @@ Object class >> taskbarIcon [
 Object class >> taskbarIconName [
 	"Answer the icon for an instance of the receiver in a task bar"
 
-	^#smallWindowIcon
+	^#smallWindow
 ]
 
 { #category : #'*Morphic-Base' }

@@ -155,7 +155,7 @@ TimeProfiler class >> spyOnProcess: aProcess forMilliseconds: msecDuration [
 
 { #category : #icons }
 TimeProfiler class >> taskbarIconName [
-	^#smallProfileIcon
+	^#smallProfile
 ]
 
 { #category : #actions }

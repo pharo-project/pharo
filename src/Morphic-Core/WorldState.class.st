@@ -206,13 +206,13 @@ WorldState class >> pharoItemsOn: aBuilder [
 						help: 'Save the current version of the image on disk.';
 						order: 1;
 						keyText: 'S';
-						iconName: #smallSaveIcon.
+						iconName: #smallSave.
 					(aBuilder item: #'Save as...')
 						target: self;
 						selector: #saveAs;
 						help: 'Save the current version of the image on disk under a new name.';
 						order: 2;
-						iconName: #smallSaveAsIcon.
+						iconName: #smallSaveAs.
 					(aBuilder item: #'Save and quit')
 						target: self;
 						selector: #saveAndQuit;
@@ -280,7 +280,7 @@ WorldState class >> screenShotCommandOn: aBuilder [
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
 		help: 'Take a screenshot';
-		iconName: #smallScreenshotIcon
+		iconName: #smallScreenshot
 ]
 
 { #category : #settings }

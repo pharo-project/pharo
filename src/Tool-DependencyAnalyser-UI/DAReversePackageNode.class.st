@@ -25,7 +25,7 @@ DAReversePackageNode >> hasChildren [
 
 { #category : #accessing }
 DAReversePackageNode >> icon [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #accessing }

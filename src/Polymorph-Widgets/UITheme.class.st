@@ -4586,7 +4586,7 @@ UITheme >> newWindowMenuOverForm [
 UITheme >> newWindowMenuPassiveForm [
 	"Answer a new form for a window menu box."
 
-	^ self iconNamed: #windowMenuInactiveForm
+	^ self iconNamed: #windowMenuInactive
 ]
 
 { #category : #initialization }
@@ -6088,7 +6088,7 @@ UITheme >> windowCloseOverForm [
 UITheme >> windowClosePassiveForm [
 	"Answer the form to use for passive (background) window close buttons"
 
-	^ self iconNamed: #windowCloseInactiveForm
+	^ self iconNamed: #windowCloseInactive
 ]
 
 { #category : #sounds }

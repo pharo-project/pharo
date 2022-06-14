@@ -15,7 +15,7 @@ Class {
 ChooseDropListDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #accessing }
