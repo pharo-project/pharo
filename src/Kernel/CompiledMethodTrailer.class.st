@@ -393,16 +393,22 @@ CompiledMethodTrailer >> embeddedSourceCode: aString [
 
 { #category : #encoding }
 CompiledMethodTrailer >> encode [
-
+	"encode the trailer into byte array"
+	
 	encodedData := nil.
 	
-	"encode the trailer into byte array"
-	self perform: ('encode' , kind) asSymbol.
-
-	[encodedData notNil and: [encodedData size > 0 ]] assert.
+	"inline some common types to speed up encoding"
+	kind == #SourcePointer
+		ifTrue: [ ^self encodeSourcePointer ].
+   kind == #VarLengthSourcePointer
+		ifTrue: [ ^self encodeVarLengthSourcePointer ].
+	kind == #EmbeddedSource
+		ifTrue: [ ^self encodeEmbeddedSource ].
+	kind == #NoTrailer
+		ifTrue: [ ^self encodeNoTrailer ].
 	
-	"set the size"
-	size := encodedData size.
+	"slow but general decoding using perform"
+	self perform: ('encode' , kind) asSymbol
 ]
 
 { #category : #encoding }
@@ -427,7 +433,8 @@ CompiledMethodTrailer >> encodeEmbeddedSource [
 		nextPutAll: data asByteArray;
 		nextPutAll: encodedLength;	"trailing byte"
 	 	nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents
+	encodedData := str contents.
+	size := encodedData size
 ]
 
 { #category : #encoding }
@@ -441,7 +448,8 @@ CompiledMethodTrailer >> encodeEmbeddedSourceQCompress [
 	encodedLength := self encodeLengthField: length.
 	str nextPutAll: encodedLength.	"trailing byte"
 	str nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents
+	encodedData := str contents.
+	size := encodedData size
 ]
 
 { #category : #encoding }
@@ -458,6 +466,7 @@ CompiledMethodTrailer >> encodeEmbeddedSourceWide [
 	str nextPutAll: encodedLength.	"trailing byte"
 	str nextPut: self kindAsByte + encodedLength size - 1.
 	encodedData := str contents.
+	size := encodedData size
 ]
 
 { #category : #private }
@@ -490,7 +499,8 @@ CompiledMethodTrailer >> encodeSourcePointer [
 	encodedData := ByteArray new: 4.
 	encodedData at: 4 put: (data >> 24) + 251.
 	1 to: 3 do: [:i |
-		encodedData at: 4-i put: ((data bitShift: (i-3)*8) bitAnd: 16rFF)]
+		encodedData at: 4-i put: ((data bitShift: (i-3)*8) bitAnd: 16rFF)].
+	size := encodedData size
 ]
 
 { #category : #encoding }
@@ -503,7 +513,7 @@ CompiledMethodTrailer >> encodeUndefined [
 CompiledMethodTrailer >> encodeVarLengthSourcePointer [
 
 	"source pointer must be >=0"
-	[data >= 0] assert.
+	"[data >= 0] assert."
 	
 	encodedData := 
 		data = 0 ifTrue: [ #[0] ] 
@@ -516,7 +526,8 @@ CompiledMethodTrailer >> encodeVarLengthSourcePointer [
 			value := value >> 7.
 			].
 		]].
-	encodedData := encodedData reversed copyWith: (self kindAsByte)
+	encodedData := encodedData reversed copyWith: (self kindAsByte).
+	size := encodedData size
 ]
 
 { #category : #accessing }
