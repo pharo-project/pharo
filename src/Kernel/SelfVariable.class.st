@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 SelfVariable class >> variableName [
-	^'self'
+	^#self
 ]
 
 { #category : #visiting }
