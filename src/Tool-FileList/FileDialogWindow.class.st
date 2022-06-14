@@ -43,7 +43,7 @@ FileDialogWindow class >> onFileSystem: aFileSystem [
 FileDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallOpenIcon
+	^#smallOpen
 ]
 
 { #category : #accessing }
@@ -439,9 +439,9 @@ FileDialogWindow >> iconFor: anEntry [
 	"Answer the icon to use for the directory entry."
 
 	^ anEntry isDirectory
-		ifTrue: [ self iconNamed: #smallOpenIcon ]
+		ifTrue: [ self iconNamed: #smallOpen ]
 		ifFalse: [ (self isImageFile: anEntry basename)
-				ifTrue: [ self iconNamed: #smallPaintIcon ]
+				ifTrue: [ self iconNamed: #smallPaint ]
 				ifFalse: [ self iconNamed: #smallLeftFlushIcon ] ]
 ]
 
@@ -642,7 +642,7 @@ FileDialogWindow >> newNewDirectoryButton [
 		action: #newDirectory
 		arguments: nil
 		getEnabled: nil
-		labelForm: (self iconNamed: #smallOpenIcon)
+		labelForm: (self iconNamed: #smallOpen)
 		help:
 			'Press to create a new directory within the current directory'
 				translated

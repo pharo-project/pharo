@@ -105,7 +105,7 @@ EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
 			anItem
 				name: 'Write Ombu file';
 				description: 'Write selected entries to an Ombu file';
-				icon: (self iconNamed: #smallSaveAsIcon);
+				icon: (self iconNamed: #smallSaveAs);
 				action: [ self ombuFileSaveSelection ] ] ].
 ]
 

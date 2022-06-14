@@ -13,7 +13,7 @@ ClyFlagMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: 
 	| icon |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 	
-	icon := anItemCellMorph definitionIcon: #flagIcon.
+	icon := anItemCellMorph definitionIcon: #flag.
 	icon setBalloonText: 'Method has a flag'
 ]
 

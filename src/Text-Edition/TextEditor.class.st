@@ -510,7 +510,7 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #Cancel translated)
 		keyText: 'l';
 		selector: #cancel;
-		iconName: #smallCancelIcon
+		iconName: #smallCancel
 ]
 
 { #category : #'menu declaration' }

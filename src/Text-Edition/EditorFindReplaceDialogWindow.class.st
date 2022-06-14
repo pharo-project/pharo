@@ -79,7 +79,7 @@ EditorFindReplaceDialogWindow >> buildWindowMenu [
 	aMenu lastItem icon: self theme windowCloseForm.
 	aMenu addLine.
 	aMenu add: 'About' selector: #showAbout.
-	aMenu lastItem icon: (self iconNamed: #smallHelpIcon).
+	aMenu lastItem icon: (self iconNamed: #smallHelp).
 	^ aMenu
 ]
 

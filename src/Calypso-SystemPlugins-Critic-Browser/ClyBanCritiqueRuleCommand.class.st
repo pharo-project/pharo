@@ -16,7 +16,7 @@ ClyBanCritiqueRuleCommand >> applyResultInContext: aToolContext [
 
 { #category : #initialization }
 ClyBanCritiqueRuleCommand >> defaultMenuIconName [
-	^#smallCancelIcon
+	^#smallCancel
 ]
 
 { #category : #'table decoration' }

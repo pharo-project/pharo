@@ -164,7 +164,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionHasActualClass.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallWindowIcon);
+		icon: (self iconNamed: #smallWindow);
 		keyText: 'Cmd+b'.
 	menu addLine.
 	menu
@@ -213,7 +213,7 @@ PSMCPatchMorph >> changesMenu: m [
 		getStateSelector: nil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallCancelIcon).
+		icon: (self iconNamed: #smallCancel).
 	menu
 		add: 'Expand All' translated
 		target: self model

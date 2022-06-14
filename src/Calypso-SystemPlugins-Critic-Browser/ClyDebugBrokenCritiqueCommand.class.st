@@ -26,7 +26,7 @@ ClyDebugBrokenCritiqueCommand class >> criticTableIconActivation [
 ClyDebugBrokenCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 	super decorateTableCell: anItemCellMorph with: aMorph.
 	
-	anItemCellMorph definitionIcon: #exceptionIcon
+	anItemCellMorph definitionIcon: #exception
 ]
 
 { #category : #accessing }

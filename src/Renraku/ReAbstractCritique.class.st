@@ -69,7 +69,7 @@ ReAbstractCritique >> actions [
 	actions := OrderedCollection new: 3.
 
 	actions add: (RePropertyAction new
-			icon: (self iconNamed: #smallQuestionIcon);
+			icon: (self iconNamed: #smallQuestion);
 			description: 'View rationale behind the rule';
 			action: [ :crit |
 				crit popDescriptionUp.
@@ -80,7 +80,7 @@ ReAbstractCritique >> actions [
 	
 	self providesChange ifTrue: [ 
 		actions add: (RePropertyAction new
-			icon: (self iconNamed: #repairIcon);
+			icon: (self iconNamed: #repair);
 			description: 'Automatically resolve the issue';
 			action: [ :crit |
 				| changesBrowser |
@@ -96,7 +96,7 @@ ReAbstractCritique >> actions [
 			yourself) ].
 	
 	actions add: (RePropertyAction new
-			icon: (self iconNamed: #smallCancelIcon);
+			icon: (self iconNamed: #smallCancel);
 			description: 'Ban this rule';
 			action: [ :crit | crit guidedBan ];
 			yourself).

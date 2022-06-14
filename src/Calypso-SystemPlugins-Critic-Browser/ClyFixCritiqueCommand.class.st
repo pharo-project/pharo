@@ -17,7 +17,7 @@ ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 
 { #category : #initialization }
 ClyFixCritiqueCommand >> defaultMenuIconName [
-	^#repairIcon
+	^#repair
 ]
 
 { #category : #'table decoration' }

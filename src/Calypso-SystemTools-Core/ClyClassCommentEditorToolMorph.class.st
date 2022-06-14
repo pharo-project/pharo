@@ -34,7 +34,7 @@ ClyClassCommentEditorToolMorph >> applyChanges [
 ClyClassCommentEditorToolMorph >> defaultIconName [
 	^(context lastSelectedItem isMarkedWith: ClyNoCommentTag)
 		ifTrue: [ #uncommentedClass ]
-		ifFalse: [ #commentsIcon]
+		ifFalse: [ #comments]
 ]
 
 { #category : #initialization }
@@ -64,7 +64,7 @@ ClyClassCommentEditorToolMorph >> setUpDefaultIcon [
 	So it does not really affect performance which is critical for remote scenario"
 	
 	| iconName |
-	iconName := editingClass hasComment ifTrue: [ #commentsIcon ] ifFalse: [ #uncommentedClass ].
+	iconName := editingClass hasComment ifTrue: [ #comments ] ifFalse: [ #uncommentedClass ].
 	containerTab icon: (self iconNamed: iconName)
 ]
 

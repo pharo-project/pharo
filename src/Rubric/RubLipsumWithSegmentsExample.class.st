@@ -24,11 +24,11 @@ RubLipsumWithSegmentsExample >> newScrolledText [
 		configurationBlock: [ :scrolledText | 
 			scrolledText withTextSegmentIcons.
 			scrolledText addSegment: (r := RubUnderlinedSegmentMorph from: 1 to: 29).
-			r icon: (self iconNamed: #smallErrorIcon).
+			r icon: (self iconNamed: #smallError).
 			r label: 'Please review'.
 			r iconBlock: [ :seg | seg delete ].
 			scrolledText addSegment: (r := RubUnderlinedSegmentMorph from: 35 to: 59).
-			r icon: (self iconNamed: #smallErrorIcon).
+			r icon: (self iconNamed: #smallError).
 			r label: 'Remove'.
 			r
 				iconBlock: [ :seg :event | 
@@ -41,13 +41,13 @@ RubLipsumWithSegmentsExample >> newScrolledText [
 			r label: 'Edit separately'.
 			r iconBlock: [ :seg :event | (seg readWriteView embeddedInMorphicWindowLabeled: 'Lipsum part view') openInHand ].
 			r straight: false.
-			r icon: (self iconNamed: #smallWarningIcon).
+			r icon: (self iconNamed: #smallWarning).
 			scrolledText addSegment: (r := RubUnderlinedSegmentMorph from: 810 to: 1000).
 			r color: (Color blue alpha: 0.1).
 			r borderColor: Color black.
 			r label: 'Explore'.
 			r changeable: false.
-			r icon: (self iconNamed: #smallHelpIcon).
+			r icon: (self iconNamed: #smallHelp).
 			r iconBlock: [ :seg :event | seg inspect ].
 			scrolledText addSegment: (r := RubPlainSegmentMorph from: 1300 to: 1610).
 			r label: 'Remove'.

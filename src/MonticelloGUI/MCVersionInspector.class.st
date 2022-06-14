@@ -18,7 +18,7 @@ Class {
 MCVersionInspector class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^ #smallSaveIcon
+	^ #smallSave
 ]
 
 { #category : #actions }

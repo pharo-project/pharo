@@ -190,7 +190,7 @@ WorldState class >> windowsOn: aBuilder [
 				action: [ self currentWorld collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
 			(aBuilder item: #'Expand all windows')
-				iconName: #expandBoxIcon;
+				iconName: #expandBox;
 				action: [ self currentWorld expandAll ];
 				help: 'Expand all collapsed windows back to their expanded forms' translated.
 			(aBuilder item: #'Fit all windows')

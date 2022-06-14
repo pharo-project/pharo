@@ -57,7 +57,7 @@ JobProgressBarMorph >> addInterruptionButton [
 
 	self isInterruptible ifFalse: [ ^ self ].
 
-	self addMorphBack: (self iconNamed: #stopIcon) asMorph
+	self addMorphBack: (self iconNamed: #stop) asMorph
 ]
 
 { #category : #accessing }

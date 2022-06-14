@@ -4,7 +4,7 @@ Extension { #name : #ClyExternalPackageMethodGroup }
 ClyExternalPackageMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	super decorateTableCell: anItemCellMorph of: groupItem.
 	
-	anItemCellMorph definitionIcon: #protocolExtensionIcon.
+	anItemCellMorph definitionIcon: #protocolExtension.
 		
 	(anItemCellMorph browser isPackagePartOfSelection: self package)
 		ifTrue: [ anItemCellMorph label emphasis: TextEmphasis bold emphasisCode]

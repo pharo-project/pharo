@@ -4,5 +4,5 @@ Extension { #name : #ClyAllExtensionMethodsQuery }
 ClyAllExtensionMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 	
-	anItemCellMorph definitionIcon: #protocolExtensionIcon
+	anItemCellMorph definitionIcon: #protocolExtension
 ]

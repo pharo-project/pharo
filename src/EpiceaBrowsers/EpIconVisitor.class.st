@@ -14,7 +14,7 @@ EpIconVisitor >> additionIcon [
 
 { #category : #private }
 EpIconVisitor >> emptyIcon [
-	^ self iconNamed: #emptyIcon
+	^ self iconNamed: #empty
 ]
 
 { #category : #private }
@@ -79,7 +79,7 @@ EpIconVisitor >> visitClassRemoval: aClassRemovedChange [
 
 { #category : #visitor }
 EpIconVisitor >> visitEvent: anEvent [ 
-	^ self emptyIcon
+	^ self empty
 ]
 
 { #category : #visitor }
@@ -109,12 +109,12 @@ EpIconVisitor >> visitMethodRemoval: aMethodRemoved [
 
 { #category : #visitor }
 EpIconVisitor >> visitMonticelloVersionSave: aChange [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #visitor }
@@ -144,7 +144,7 @@ EpIconVisitor >> visitSessionEnd: anEvent [
 
 { #category : #visitor }
 EpIconVisitor >> visitSessionSnapshot: aSnapshotChange [
-	^ self iconNamed: #smallSaveIcon
+	^ self iconNamed: #smallSave
 ]
 
 { #category : #visitor }

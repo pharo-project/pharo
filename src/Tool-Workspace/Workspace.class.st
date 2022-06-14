@@ -91,9 +91,9 @@ Workspace class >> title [
 Workspace >> addModelItemsToWindowMenu: aMenu [
 	aMenu addLine.
 	aMenu add: 'Open...' target: self selector: #openMenuAction.
-	aMenu lastItem icon: (self iconNamed: #smallOpenIcon).
+	aMenu lastItem icon: (self iconNamed: #smallOpen).
 	aMenu add: 'Save as...' target: self selector: #saveAsMenuAction.
-	aMenu lastItem icon: (self iconNamed: #smallSaveAsIcon).
+	aMenu lastItem icon: (self iconNamed: #smallSaveAs).
 	aMenu addLine.
 	aMenu add: 'Inspect variables' target: self selector: #browseBindings.
 	aMenu

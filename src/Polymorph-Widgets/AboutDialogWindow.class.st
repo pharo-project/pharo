@@ -27,7 +27,7 @@ AboutDialogWindow class >> openForPharo [
 			width := width
 				max: (self theme textFont widthOfStringOrText: l) ].
 	dialog := self new entryText: text.
-	dialog iconMorph image: (self iconNamed: #pharoIcon).
+	dialog iconMorph image: (self iconNamed: #pharo).
 	dialog title: 'About Pharo'.
 	dialog open.
 	dialog textMorph

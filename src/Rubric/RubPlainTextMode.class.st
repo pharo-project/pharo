@@ -102,7 +102,7 @@ RubPlainTextMode class >> menuOn: aBuilder [
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;
-						iconName: #smallCancelIcon ] ]
+						iconName: #smallCancel ] ]
 ]
 
 { #category : #'text area font' }

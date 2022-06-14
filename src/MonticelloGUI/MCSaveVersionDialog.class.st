@@ -41,7 +41,7 @@ MCSaveVersionDialog class >> previousMessages [
 MCSaveVersionDialog class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallSaveAsIcon
+	^#smallSaveAs
 ]
 
 { #category : #'morphic ui' }
