@@ -64,7 +64,7 @@ ClyRemoveExecutionCounterCommand >> defaultMenuItemName [
 
 { #category : #'table decoration' }
 ClyRemoveExecutionCounterCommand >> tableCellIcon [
-	^Smalltalk ui iconNamed: #classIcon
+	^Smalltalk ui iconNamed: #class
 ]
 
 { #category : #accessing }

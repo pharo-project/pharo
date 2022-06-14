@@ -5,5 +5,5 @@ ClyMethodCallCountersQuery >> decorateMethodGroupTableCell: anItemCellMorph of: 
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 	
 	anItemCellMorph label color: Color red.
-	anItemCellMorph definitionIcon: #classIcon
+	anItemCellMorph definitionIcon: #class
 ]

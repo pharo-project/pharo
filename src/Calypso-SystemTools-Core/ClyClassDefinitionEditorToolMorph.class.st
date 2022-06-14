@@ -81,7 +81,7 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 
 { #category : #initialization }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
-	^#classIcon
+	^#class
 ]
 
 { #category : #'to sort' }

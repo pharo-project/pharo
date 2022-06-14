@@ -24,7 +24,7 @@ Object >> systemIcon [
 { #category : #'*Polymorph-Widgets' }
 Object >> systemIconName [
 
-	^ #classIcon
+	^ #class
 ]
 
 { #category : #'*Polymorph-Widgets' }

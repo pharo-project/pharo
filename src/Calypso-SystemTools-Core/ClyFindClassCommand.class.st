@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 ClyFindClassCommand >> defaultMenuIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #accessing }

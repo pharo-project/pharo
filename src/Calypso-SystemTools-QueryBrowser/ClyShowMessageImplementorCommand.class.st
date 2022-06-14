@@ -56,7 +56,7 @@ ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 
 { #category : #accessing }
 ClyShowMessageImplementorCommand >> defaultMenuIconName [ 
-	^ #smallFindIcon
+	^ #smallFind
 ]
 
 { #category : #accessing }

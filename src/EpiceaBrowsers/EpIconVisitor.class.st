@@ -139,7 +139,7 @@ EpIconVisitor >> visitRefactoring: aRefactoring [
 
 { #category : #visitor }
 EpIconVisitor >> visitSessionEnd: anEvent [
-	^ self iconNamed: #smallQuitIcon
+	^ self iconNamed: #smallQuit
 ]
 
 { #category : #visitor }

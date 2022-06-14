@@ -27,7 +27,7 @@ ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
 
 { #category : #accessing }
 ClyFindMethodInBrowserCommand >> defaultMenuIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #accessing }

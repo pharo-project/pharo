@@ -36,7 +36,7 @@ EpLogBrowserToolbarPresenter >> beApplyMode [
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beHistoryMode [
 	filtersButton
-		icon: (self iconNamed: #smallFindIcon);
+		icon: (self iconNamed: #smallFind);
 		action: [
 			logBrowserPresenter filtersSubMenu
 				openWithSpecAt: self currentWorld activeHand position ]

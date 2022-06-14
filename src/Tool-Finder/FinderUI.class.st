@@ -31,7 +31,7 @@ FinderUI class >> doAllSubscriptionsOn: aFinder to: anInstance [
 
 { #category : #icons }
 FinderUI class >> icon [
-	^ self iconNamed: #smallFindIcon
+	^ self iconNamed: #smallFind
 ]
 
 { #category : #explanations }
@@ -177,7 +177,7 @@ FinderUI class >> subscribesUpdateSourceCodeOn: aFinder to: anInstance [
 
 { #category : #icons }
 FinderUI class >> taskbarIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #'items creation' }
