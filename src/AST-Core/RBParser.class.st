@@ -584,15 +584,16 @@ RBParser >> parseKeywordMessageWith: node [
 	| args isKeyword keywordsStartPositions selector|
 	args := OrderedCollection new: 3.
 	keywordsStartPositions := OrderedCollection new: 3.
-	selector := self selectorNodeClass value: ''.
+	selector := ''.
 	
 	isKeyword := false.
 	[currentToken isKeyword] whileTrue: 
 			[keywordsStartPositions add: currentToken start.
-			selector value: selector value, currentToken value.
+			selector := selector, currentToken value.
 			self step.
 			args add: self parseBinaryMessage.
 			isKeyword := true].
+	selector := self selectorNodeClass value: selector.
 	selector keywordPositions: keywordsStartPositions.
 	^isKeyword
 		ifTrue: 
