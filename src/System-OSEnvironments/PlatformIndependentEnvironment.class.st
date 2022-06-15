@@ -16,8 +16,8 @@ PlatformIndependentEnvironment class >> isAvailable [
 
 { #category : #accessing }
 PlatformIndependentEnvironment >> at: aKey ifAbsent: aBlock [
-
-	^ nil
+   "As there is nowhere to look up the key just evaluate the given block"
+	^ aBlock value
 ]
 
 { #category : #accessing }
