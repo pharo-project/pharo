@@ -49,7 +49,7 @@ ShortcutReminder class >> settingsOn: aBuilder [
 		default: true;
 		description: 'Shortcut reminder is a reminding tool which pops up when a menu entry which includes a keyboard shortcut is invoked by the mouse instead';
 		selector: #enabled;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		with: [ self defaultReminder customSettingsOn: aBuilder ]
 ]
 

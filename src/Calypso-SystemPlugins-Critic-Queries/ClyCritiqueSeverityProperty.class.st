@@ -51,7 +51,7 @@ ClyCritiqueSeverityProperty >> color: anObject [
 
 { #category : #accessing }
 ClyCritiqueSeverityProperty >> iconName [
-	^ 'small', name capitalized, 'Icon'
+	^ 'small', name capitalized
 ]
 
 { #category : #testing }

@@ -58,7 +58,7 @@ RubLipsumWithSegmentsExample >> newScrolledText [
 					seg delete ].
 			r color: (Color green alpha: 0.1).
 			r borderColor: Color gray.
-			r icon: (self iconNamed: #smallWarningIcon) ].
+			r icon: (self iconNamed: #smallWarning) ].
 	self textModel announce: conf.
 	^ st
 ]

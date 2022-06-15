@@ -82,7 +82,7 @@ MCWorkingCopyBrowser class >> repositorySearchMaxSize [
 MCWorkingCopyBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#versionControlIcon
+	^#versionControl
 ]
 
 { #category : #settings }

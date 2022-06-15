@@ -70,14 +70,14 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Cut' translated)
 		keyText: 'x';
 		selector: #cut;
-		iconName: #smallCutIcon.
+		iconName: #smallCut.
 	(aBuilder item: #'Paste' translated)
 		keyText: 'v';
 		selector: #paste;
-		iconName: #smallPasteIcon.
+		iconName: #smallPaste.
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
-		iconName: #smallPasteIcon;
+		iconName: #smallPaste;
 		withSeparatorAfter .
 		
 	(aBuilder item: #'Do it' translated)
@@ -87,11 +87,11 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
-		iconName: #smallPrintItIcon.
+		iconName: #smallPrintIt.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
-		iconName: #smallInspectItIcon.
+		iconName: #smallInspectIt.
 	(aBuilder item: #'FileIn selection' translated)
 		keyText: 'G';
 		selector: #fileItIn;
@@ -100,7 +100,7 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Accept' translated)
 		keyText: 's';
 		selector: #accept;
-		iconName: #smallOkIcon.
+		iconName: #smallOk.
 	(aBuilder item: #'Cancel' translated)
 		keyText: 'l';
 		selector: #cancel;

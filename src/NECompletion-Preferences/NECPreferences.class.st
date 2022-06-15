@@ -185,7 +185,7 @@ NECPreferences class >> settingsOn: aBuilder [
 		parentName: #codeBrowsing;
 		selector: #enabled;
 		default: true;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
 					| availableControllers availableSorters |

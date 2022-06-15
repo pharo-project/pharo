@@ -101,7 +101,7 @@ HelpBrowser class >> openOn: aHelpTopic [
 HelpBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^ #bookIcon
+	^ #book
 ]
 
 { #category : #ui }

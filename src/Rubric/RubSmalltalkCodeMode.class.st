@@ -46,25 +46,25 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
-		iconName: #smallPrintItIcon.
+		iconName: #smallPrintIt.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		iconName: #smallInspectItIcon.
+		iconName: #smallInspectIt.
 	(aBuilder item: #'Basic Inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
-		iconName: #smallInspectItIcon.
+		iconName: #smallInspectIt.
 	(aBuilder item: #'Debug it' translated)
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		iconName: #smallDebugIcon.
+		iconName: #smallDebug.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		iconName: #smallDebugIcon;
+		iconName: #smallDebug;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
@@ -92,17 +92,17 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'c';
 		selector: #copySelection;
 		help: nil;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	(aBuilder item: #Cut translated)
 		keyText: 'x';
 		selector: #cut;
 		help: nil;
-		iconName: #smallCutIcon.
+		iconName: #smallCut.
 	(aBuilder item: #Paste translated)
 		keyText: 'v';
 		selector: #paste;
 		help: nil;
-		iconName: #smallPasteIcon.
+		iconName: #smallPaste.
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;

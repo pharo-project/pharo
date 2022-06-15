@@ -412,7 +412,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #saveFile
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallSaveIcon)
+				labelForm: (self iconNamed: #smallSave)
 				help: 'Save file' translated).
 			(win
 				newButtonFor: nil

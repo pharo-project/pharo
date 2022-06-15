@@ -21,7 +21,7 @@ DAMissingMethodNode >> hasChildren [
 
 { #category : #accessing }
 DAMissingMethodNode >> icon [
-	^ self iconNamed: #testNotRunIcon
+	^ self iconNamed: #testNotRun
 ]
 
 { #category : #displaying }

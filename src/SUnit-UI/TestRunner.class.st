@@ -69,7 +69,7 @@ TestRunner class >> registerToolsOn: registry [
 TestRunner class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#testRunnerIcon
+	^#testRunner
 ]
 
 { #category : #actions }

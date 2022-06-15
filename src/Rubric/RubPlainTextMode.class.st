@@ -78,17 +78,17 @@ RubPlainTextMode class >> menuOn: aBuilder [
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	aBuilder model canChangeText
 		ifTrue: [ 
 			(aBuilder item: #Cut translated)
 				keyText: 'x';
 				selector: #cut;
-				iconName: #smallCutIcon.
+				iconName: #smallCut.
 			(aBuilder item: #Paste translated)
 				keyText: 'v';
 				selector: #paste;
-				iconName: #smallPasteIcon.
+				iconName: #smallPaste.
 			(aBuilder item: #'Paste Recent' translated)
 				selector: #pasteRecent;
 				iconName: #smallCopyIcon;

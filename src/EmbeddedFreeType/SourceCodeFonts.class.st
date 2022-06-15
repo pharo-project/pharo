@@ -93,7 +93,7 @@ SourceCodeFonts class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 4;
 		target: self;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		label: 'Source Code Fonts';
 		description: 'Use Source Code Pro Fonts';
 		default: SourceCodeFonts;

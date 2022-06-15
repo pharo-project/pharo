@@ -29,7 +29,7 @@ EpUnifiedBrowserPresenter class >> open [
 { #category : #accessing }
 EpUnifiedBrowserPresenter class >> taskbarIconName [
 
-	^ #recoverLostChangesIcon
+	^ #recoverLostChanges
 ]
 
 { #category : #accessing }

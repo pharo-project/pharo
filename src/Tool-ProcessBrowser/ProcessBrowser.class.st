@@ -338,7 +338,7 @@ ProcessBrowser class >> tallyCPUUsageFor: seconds every: msec [
 ProcessBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#processBrowserIcon
+	^#processBrowser
 ]
 
 { #category : #'process control' }
