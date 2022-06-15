@@ -16,7 +16,8 @@ PlatformIndependentEnvironment class >> isAvailable [
 
 { #category : #accessing }
 PlatformIndependentEnvironment >> at: aKey ifAbsent: aBlock [
-	"As there is nowhere to look up the key just evaluate the given block"
+	"Gets the value of an environment variable called `aKey`. Execute aBlock if absent. 
+	As there is nowhere to look up the key just evaluate the given block"
 
 	^ aBlock value
 ]
@@ -34,4 +35,9 @@ PlatformIndependentEnvironment >> keysAndValuesDo: aBlock [
 { #category : #accessing }
 PlatformIndependentEnvironment >> removeKey: key [
 	"Do nothing"
+]
+
+{ #category : #accessing }
+PlatformIndependentEnvironment >> setEnv: nameString value: valueString [
+	"We do not support environment Variables. Do Nothing"
 ]
