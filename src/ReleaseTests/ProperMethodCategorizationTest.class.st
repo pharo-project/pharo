@@ -141,12 +141,11 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: Protocol unclassified ].
 
 
-	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass).	
+	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand).	
 	
 	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
 
-	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: remaining size <= 2
+	self assert: remaining isEmpty description: ('the following classes have uncategorized methods: ', remaining asString)
 ]
 
 { #category : #tests }
