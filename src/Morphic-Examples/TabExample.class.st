@@ -41,7 +41,7 @@ TabExample >> blueMorphTab [
 		actions:
 			{(TabAction
 				action: [ tab morph color: Color random ]
-				icon: (self iconNamed: #smallConfigurationIcon)
+				icon: (self iconNamed: #smallConfiguration)
 				label: 'Randomize color')}.
 	tab
 		closeable: false;
@@ -68,7 +68,7 @@ TabExample >> freshListTab [
 		actions:
 		{(TabAction
 				action: [ self halt ]
-				icon: (self iconNamed: #smallConfigurationIcon)
+				icon: (self iconNamed: #smallConfiguration)
 				label: 'Halt!')})
 		menu: [ :menu | menu add: 'Fubu' target: self selector: #halt ];
 		yourself

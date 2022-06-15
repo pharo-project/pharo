@@ -102,7 +102,7 @@ CustomHelp2 class >> heading: aString [
 CustomHelp2 class >> icon [
 	"Returns an icon used for displaying the custom help book"
 
-	^ self iconNamed: #bookIcon
+	^ self iconNamed: #book
 ]
 
 { #category : #testing }

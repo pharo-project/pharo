@@ -38,7 +38,7 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
+			^ self iconNamed: #testNotRun ].
 	class organization classComment
 		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
 	((class
@@ -50,9 +50,9 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
+			^ self iconNamed: #testNotRun ].
 	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
 	^ class systemIcon
 ]
 

@@ -117,7 +117,7 @@ ClassAPIHelpBuilder >> buildSubnodesForMethods [
 	| instanceSide classSide |
 	instanceSide := HelpTopic named: 'Instance side'.
 	classSide := HelpTopic named: 'Class side'.
-	topicToBuild iconName: #bookIcon.
+	topicToBuild iconName: #book.
 	topicToBuild
 		addSubtopic: instanceSide;
 		addSubtopic: classSide.
@@ -130,7 +130,7 @@ ClassAPIHelpBuilder >> buildSubnodesForSubclasses [
 	| topic |
 	rootToBuildFrom subclasses isEmpty
 		ifTrue: [ ^ self ].
-	topicToBuild iconName: #bookIcon.
+	topicToBuild iconName: #book.
 	topic := subclassesAsSeparateTopic
 		ifTrue: [ topicToBuild addSubtopic: (HelpTopic named: 'Subclasses') ]
 		ifFalse: [ topicToBuild ].

@@ -15,7 +15,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
 		target: self;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		type: #Label;
 		label: 'Free type';
 		default: 'Free type fonts are not available';
@@ -28,7 +28,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		target: self;
 		default: true;
 		dialog: [ self ft2LibraryVersion ];
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		label: 'Use Free type';
 		description:
 			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';

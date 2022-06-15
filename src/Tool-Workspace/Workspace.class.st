@@ -79,7 +79,7 @@ Workspace class >> registerToolsOn: registry [
 Workspace class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#workspaceIcon
+	^#workspace
 ]
 
 { #category : #'instance creation' }

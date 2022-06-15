@@ -341,7 +341,7 @@ Morph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 { #category : #'debug and other' }
 Morph >> addDebuggingItemsTo: aMenu hand: aHandMorph [
 	aMenu add: 'debug...' subMenu: (self buildDebugMenu: aHandMorph).
-	aMenu lastItem icon: (self iconNamed: #smallDebugIcon)
+	aMenu lastItem icon: (self iconNamed: #smallDebug)
 ]
 
 { #category : #updating }
@@ -1429,10 +1429,10 @@ Morph >> buildDebugMenu: aHand [
 			aMenu addLine ].
 	aMenu add: 'inspect morph' selector: #inspectInMorphic:.
 	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
 	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'
@@ -1491,7 +1491,7 @@ Morph >> buildMetaMenu: evt [
 		argument: evt position.
 	menu add: 'explore' selector: #inspect.
 	menu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	menu addLine.
 	menu add: 'show actions' selector: #showActions.
 	menu addLine.

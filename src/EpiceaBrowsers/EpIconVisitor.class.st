@@ -84,7 +84,7 @@ EpIconVisitor >> visitEvent: anEvent [
 
 { #category : #visitor }
 EpIconVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
-	^ self iconNamed: #workspaceIcon
+	^ self iconNamed: #workspace
 ]
 
 { #category : #visitor }

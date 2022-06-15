@@ -68,7 +68,7 @@ TimeProfiler class >> fullReportMenuOn: aBuilder [
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon
+		iconName: #smallCopy
 ]
 
 { #category : #'world menu' }
