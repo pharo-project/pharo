@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Morphic-Core'
+	#category : #'Morphic-Core-Utilities'
 }
 
 { #category : #accessing }
