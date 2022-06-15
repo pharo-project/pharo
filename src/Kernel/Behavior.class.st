@@ -911,8 +911,8 @@ Behavior >> instVarNames [
 
 { #category : #'accessing - instances and variables' }
 Behavior >> instanceCount [
-	"Answer the number of instances of the receiver that are currently in 
-	use."
+	"Answer the number of instances of the receiver that are currently in use.
+	Note: we do not use #allInstances as allInstancesDo: has a fallback for low memory"
 
 	| count |
 	count := 0.
@@ -928,7 +928,8 @@ Behavior >> instanceVariables [
 
 { #category : #'memory usage' }
 Behavior >> instancesSizeInMemory [
-	"Answers the number of bytes consumed by all its instances including their object header"
+	"Answers the number of bytes consumed by all its instances including their object header.
+	Note: we do not use #allInstances as allInstancesDo: has a fallback for low memory"
 	
 	| bytes |
 	bytes := 0.
