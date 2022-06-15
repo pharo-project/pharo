@@ -92,10 +92,7 @@ MiniDrTests >> updateUI [
 
 	super updateUI.
 	startButton color: self evaluateBackgroundColor.
-	startButton label: pluginResult summarizeInfo.
-	"The next line doesn't work because Spec2 does not handle button label's styles.
-	Should be changed at some point"
-	startButton label makeAllColor: pluginResult textColor.
+	startButton label: pluginResult summarizeInfo
 ]
 
 { #category : #initialization }
