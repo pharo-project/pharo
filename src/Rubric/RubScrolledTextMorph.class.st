@@ -603,6 +603,22 @@ RubScrolledTextMorph >> handlesMouseWheel: evt [
 	^ true
 ]
 
+{ #category : #'event handling' }
+RubScrolledTextMorph >> handlesTextEditionEvent: anEvent [
+
+	^ self scrollPane
+		  ifNotNil: [ :pane | pane handlesTextEditionEvent: anEvent ]
+		  ifNil: [ super handlesTextEditionEvent: anEvent ]
+]
+
+{ #category : #'event handling' }
+RubScrolledTextMorph >> handlesTextInputEvent: anEvent [
+
+	^ self scrollPane
+		  ifNotNil: [ :pane | pane handlesTextInputEvent: anEvent ]
+		  ifNil: [ super handlesTextInputEvent: anEvent ]
+]
+
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasEditingConflicts [
 	^ hasEditingConflicts
@@ -1075,6 +1091,13 @@ RubScrolledTextMorph >> textColor: aColor [
 	self textArea textColor: aColor
 ]
 
+{ #category : #'event handling' }
+RubScrolledTextMorph >> textEdition: aTextEditionEvent [
+
+	self scrollPane ifNotNil: [ :scrollpane | 
+		scrollpane textEdition: aTextEditionEvent ]
+]
+
 { #category : #accessing }
 RubScrolledTextMorph >> textFont [
 	"We should clean"
@@ -1085,6 +1108,13 @@ RubScrolledTextMorph >> textFont [
 { #category : #accessing }
 RubScrolledTextMorph >> textFont: aFont [
 	self textArea font: aFont
+]
+
+{ #category : #'event handling' }
+RubScrolledTextMorph >> textInput: aTextInputEvent [
+
+	self scrollPane ifNotNil: [ :scrollpane | 
+		scrollpane textInput: aTextInputEvent ]
 ]
 
 { #category : #accessing }

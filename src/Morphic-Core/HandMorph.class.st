@@ -526,6 +526,9 @@ HandMorph >> handleEvent: anEvent [
 	"Notify listeners"
 	self sendListenEvent: evt to: self eventListeners.
 
+	(evt isTextEditionEvent or: [evt isTextInputEvent]) ifTrue: [
+		^ self sendEvent: evt focus: keyboardFocus  ].
+
 	evt isWindowEvent ifTrue: [
 		^ self sendEvent: evt focus: nil ].
 	
@@ -577,6 +580,7 @@ HandMorph >> handleEvent: anEvent [
 	].
 	self showMouseFocusEvent: evt.
 	self mouseOverHandler processMouseOver: lastMouseEvent.
+
 ]
 
 { #category : #drawing }

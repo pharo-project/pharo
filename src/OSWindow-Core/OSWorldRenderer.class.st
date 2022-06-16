@@ -214,6 +214,18 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 	^ driver
 ]
 
+{ #category : #events }
+OSWorldRenderer >> requestStopTextEditing [
+	
+	osWindow stopTextInput
+]
+
+{ #category : #events }
+OSWorldRenderer >> requestTextEditingAt: aRectangle [ 
+	
+	osWindow startTextInputAtRectangle: aRectangle
+]
+
 { #category : #accessing }
 OSWorldRenderer >> screenScaleFactor [
 

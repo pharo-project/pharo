@@ -470,6 +470,18 @@ WorldMorph >> removeHand: aHandMorph [
 	worldState removeHand: aHandMorph
 ]
 
+{ #category : #'event handling' }
+WorldMorph >> requestStopTextEditing [
+
+	self worldState worldRenderer requestStopTextEditing
+]
+
+{ #category : #'event handling' }
+WorldMorph >> requestTextEditingAt: aRectangle [
+
+	self worldState worldRenderer requestTextEditingAt: aRectangle
+]
+
 { #category : #'world state' }
 WorldMorph >> restoreMorphicDisplay [
 

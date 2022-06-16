@@ -3016,6 +3016,26 @@ Morph >> handleSpecialGesture: mouseDownEvent [
 	mouseDownEvent hand newMouseFocus: h.
 ]
 
+{ #category : #'event handling' }
+Morph >> handleTextEditionEvent: anEvent [
+	"System level event handling."
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+	(self handlesTextEditionEvent: anEvent) ifTrue: [ 
+		anEvent wasHandled: true.
+		self textEdition: anEvent ]
+]
+
+{ #category : #'event handling' }
+Morph >> handleTextInputEvent: anEvent [
+	"System level event handling."
+	
+	anEvent wasHandled ifTrue:[^self].
+	(self handlesTextInputEvent: anEvent) ifTrue:[
+		anEvent wasHandled: true.
+		self textInput: anEvent]
+]
+
 { #category : #'events - processing' }
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
@@ -3179,6 +3199,20 @@ Morph >> handlesMouseStillDown: evt [
 { #category : #'events - processing' }
 Morph >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?." 
+
+	^false
+]
+
+{ #category : #'event handling' }
+Morph >> handlesTextEditionEvent: evt [
+	"Do I want to receive text edition events?" 
+
+	^false
+]
+
+{ #category : #'event handling' }
+Morph >> handlesTextInputEvent: evt [
+	"Do I want to receive text edition events?" 
 
 	^false
 ]
@@ -5217,6 +5251,36 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 	(w := newMorph world) ifNotNil: [ newMorph startSteppingSubmorphs ]
 ]
 
+{ #category : #'event handling' }
+Morph >> requestStopTextEditing [
+
+	"Used by a morph to request stop text edition capabilities.
+	The rendering backend can use this, for example, close the IME (input-method-editor).
+	Use it in pair with requestTextEditingAt:
+	
+	By default, propagate the request to the owner.
+	If this morph has no owner, do nothing.
+	Particular morphs (e.g., the root of the composition hierarchy should override)"
+	self owner ifNil: [ ^ self ].
+	self owner requestStopTextEditing
+]
+
+{ #category : #'event handling' }
+Morph >> requestTextEditingAt: aRectangle [
+
+	"Used by a morph to request text edition capabilities.
+	The rendering backend can use this information to, for example, open the IME (input-method-editor).
+	The rectangle indicates the position where the IME menu could be shown.
+	
+	Use it in pair with requestStopTextEditing
+	
+	By default, propagate the request to the owner.
+	If this morph has no owner, do nothing.
+	Particular morphs (e.g., the root of the composition hierarchy should override)"
+	self owner ifNil: [ ^ self ].
+	self owner requestTextEditingAt: aRectangle
+]
+
 { #category : #'accessing - extension' }
 Morph >> resetExtension [
 	"reset the extension slot if it is not needed"
@@ -6104,6 +6168,14 @@ Morph >> textAnchorType: aSymbol [
 	^ aSymbol == #document
 		ifTrue: [ self removeProperty: #textAnchorType ]
 		ifFalse: [ self setProperty: #textAnchorType toValue: aSymbol ]
+]
+
+{ #category : #'event handling' }
+Morph >> textEdition: aTextEditionEvent [
+]
+
+{ #category : #'event handling' }
+Morph >> textInput: aTextInputEvent [
 ]
 
 { #category : #theme }

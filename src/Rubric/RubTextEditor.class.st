@@ -654,6 +654,7 @@ RubTextEditor >> cursorLeft: aKeyboardEvent [
 	selecting or extending current selection. Don't allow cursor past 
 	beginning of text"
 
+	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
 	self
 		moveCursor:[:position | position - 1 max: 1]
@@ -702,6 +703,7 @@ RubTextEditor >> cursorRight: aKeyboardEvent [
 	start selecting characters or extending already selected characters. 
 	Don't allow cursor past end of text"
 
+	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
 	self
 		moveCursor: [:position | position + 1]
@@ -1547,7 +1549,11 @@ RubTextEditor >> moveCursor: directionBlock forward: forward specialBlock: speci
 	shift
 		ifTrue: [self selectMark: (indices at: #fixed) point: newPosition - 1]
 		ifFalse: [self selectAt: newPosition].
-	self setEmphasisHereFromTextForward: forward
+	self setEmphasisHereFromTextForward: forward.
+
+	textArea
+		requestTextEditingAt: (textArea cursor positionInWorld
+			corner: textArea cursor positionInWorld).
 ]
 
 { #category : #nesting }

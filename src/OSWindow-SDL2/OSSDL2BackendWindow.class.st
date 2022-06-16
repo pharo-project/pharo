@@ -535,6 +535,16 @@ OSSDL2BackendWindow >> startTextInput [
 ]
 
 { #category : #'text input' }
+OSSDL2BackendWindow >> startTextInputAtRectangle: aRectangle [
+
+	"See https://wiki.libsdl.org/SDL_StartTextInput"
+
+	sdl2Window
+		startTextInput;
+		setTextInputRectangle: aRectangle asSDLRect
+]
+
+{ #category : #'text input' }
 OSSDL2BackendWindow >> stopTextInput [
 	"See https://wiki.libsdl.org/SDL_StopTextInput"
 
@@ -668,6 +678,19 @@ OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
 		diagonalDPI: diagonalDPI;
 		screenScaleFactor: screenScaleFactor;
 		deliver
+]
+
+{ #category : #'event handling' }
+OSSDL2BackendWindow >> visitTextEditingEvent: event [
+	| osEvent |
+	"Nothing for now"
+	osEvent := OSTextEditingEvent for: osWindow.
+	osEvent
+		text: (ZnUTF8Encoder new decodeBytes: event text);
+		position: self mousePosition;
+		start: event start;
+		length: event length.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
