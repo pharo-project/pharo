@@ -1,20 +1,20 @@
 Extension { #name : #MetacelloTestsMCPackage }
 
-{ #category : #'*metacello-testscommonmc' }
+{ #category : #'*Metacello-TestsCommonMC' }
 MetacelloTestsMCPackage >> packageInfo [
 	"Aiming for speeding up the running of the tests"
 
 	^ MetacelloTestsPackageSet named: name
 ]
 
-{ #category : #'*metacello-testscommonmc' }
+{ #category : #'*Metacello-TestsCommonMC' }
 MetacelloTestsMCPackage >> packageSet [
 	"Aiming for speeding up the running of the tests"
 
 	^ MetacelloTestsPackageSet named: name
 ]
 
-{ #category : #'*metacello-testscommonmc' }
+{ #category : #'*Metacello-TestsCommonMC' }
 MetacelloTestsMCPackage >> species [
 	^ MCPackage
 ]
