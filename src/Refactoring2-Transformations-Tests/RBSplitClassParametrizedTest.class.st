@@ -60,3 +60,16 @@ RBSplitClassParametrizedTest >> testSplitClass [
 				equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 	^blocks methodBlock value: aSmalllintContext value: result')
 ]
+
+{ #category : #tests }
+RBSplitClassParametrizedTest >> testSplitClassHandleMethodAccessingTwoMovedInstanceVariables [
+	|ref aModel|
+	ref := self createRefactoringWithArguments:  
+		{ #RBBasicLintRuleTestData . #(#methodBlock #classBlock) . #BlockClass . #blocks }.
+	aModel := ref model.
+	self executeRefactoring: ref.
+			
+	self assert: ((aModel classNamed: #RBBasicLintRuleTestData) parseTreeFor: #checkClassAccessingTheTwoInstanceVariables:) 
+				equals: (self parseMethod: 'checkClassAccessingTheTwoInstanceVariables: aSmalllintContext 
+	^blocks classBlock + blocks methodBlock value: aSmalllintContext value: result').
+]

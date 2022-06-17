@@ -273,6 +273,11 @@ RBBasicLintRuleTestData >> checkClass: aSmalllintContext [
 ]
 
 { #category : #accessing }
+RBBasicLintRuleTestData >> checkClassAccessingTheTwoInstanceVariables: aSmalllintContext [ 
+	^classBlock + methodBlock value: aSmalllintContext value: result
+]
+
+{ #category : #accessing }
 RBBasicLintRuleTestData >> checkMethod: aSmalllintContext [ 
 	^methodBlock value: aSmalllintContext value: result
 ]
