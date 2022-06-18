@@ -58,11 +58,6 @@ FLConfiguration class >> defaultSignature [
 	^ 'FUEL'
 ]
 
-{ #category : #'accessing-defaults' }
-FLConfiguration class >> defaultStreamStrategy [
-	^ FLBinaryFileStreamStrategy new
-]
-
 { #category : #accessing }
 FLConfiguration class >> new [
 	self == FLConfiguration ifTrue: [
@@ -249,9 +244,10 @@ FLConfiguration >> useDuring: aBlock [
 	^ FLCurrentConfiguration
 		value: self
 		during: [
-			FLCurrentContext
-				value: FLContext new
-				during: aBlock ]
+			| context |
+			context := FLContext new.
+			[ context useDuring: aBlock ] ensure: [
+				context finalizeStream ] ]
 ]
 
 { #category : #accessing }

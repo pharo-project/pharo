@@ -12,6 +12,80 @@ FLMaterializerTest >> testDisableMethodChangedWarning [
 	self assert: self materializer isMethodChangedWarningDisabled
 ]
 
+{ #category : #'tests-running' }
+FLMaterializerTest >> testMaterialize [
+	| object materialized |
+	object := FLPair new
+		left: 'a';
+		right: 'b';
+		yourself.
+	self serializer
+		at: #homer putAdditionalObject: 'simpson';
+		object: object;
+		serialize.
+	
+	materialized := self materializer materialize.
+	self assert: FLMaterializedObjects equals: materialized class.
+	self assert: 'simpson' equals: (materialized header additionalObjectAt: #homer).
+	self assert: object equals: materialized root.
+	self assert: 1 equals: materialized roots size
+]
+
+{ #category : #'tests-running' }
+FLMaterializerTest >> testMaterializeHeader [
+	| object materialized |
+	object := FLPair new
+		left: 'a';
+		right: 'b';
+		yourself.
+	self serializer
+		at: #homer putAdditionalObject: 'simpson';
+		object: object;
+		serialize.
+	
+	materialized := self materializer materializeHeader.
+	self assert: 'simpson' equals: (materialized additionalObjectAt: #homer)
+]
+
+{ #category : #'tests-running' }
+FLMaterializerTest >> testMaterializeObjectCollection [
+	| object1 object2 materialized |
+	object1 := FLPair new
+		left: 'a';
+		right: 'b';
+		yourself.
+	object2 := FLPair new
+		left: 'c';
+		yourself.
+	self serializer
+		at: #homer putAdditionalObject: 'simpson';
+		objectCollection: {object1. object2};
+		serialize.
+	
+	materialized := self materializer materializeObjectCollection.
+	self assert: FLMaterializedObjects equals: materialized class.
+	self assert: 'simpson' equals: (materialized header additionalObjectAt: #homer).
+	self assert: object2 equals: materialized root.
+	self assert: 2 equals: materialized roots size.
+	self assert: object1 equals: materialized roots first.
+	self assert: object2 equals: materialized roots second
+]
+
+{ #category : #'tests-running' }
+FLMaterializerTest >> testMaterializeRoot [
+	| object materialized |
+	object := FLPair new
+		left: 'a';
+		right: 'b';
+		yourself.
+	self serializer
+		object: object;
+		serialize.
+	
+	materialized := self materializer materializeRoot.
+	self assert: object equals: materialized
+]
+
 { #category : #'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedToClass [
 	| migration |
