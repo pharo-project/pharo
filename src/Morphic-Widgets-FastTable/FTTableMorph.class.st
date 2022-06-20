@@ -734,6 +734,8 @@ FTTableMorph >> mouseDown: event [
 
 	needToggleAtMouseUp ifTrue: [ ^ self ].
 
+	event yellowButtonPressed ifTrue: [ ^ self click: event ].
+
 	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint)
 		ifNotNil: [ :index | 
 			(self selectedIndexes includes: index)
