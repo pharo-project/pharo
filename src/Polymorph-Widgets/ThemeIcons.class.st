@@ -229,6 +229,17 @@ ThemeIcons >> blankIcon [
 
 { #category : #utilities }
 ThemeIcons >> blankIconOfWidth: aNumber [ 
+
+	"We hard-code the most used cases to avoid symbol creation"
+
+	aNumber == 16 ifTrue: [ ^ self icons
+		at: #blank16
+		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
+	
+	aNumber == 10 ifTrue: [ ^ self icons
+		at: #blank10
+		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
+
 	^ self icons
 		at: ('blank-' , aNumber asString) asSymbol
 		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]

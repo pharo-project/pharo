@@ -22,15 +22,16 @@ FLHeaderSerializationTest >> testAdditionalObjects [
 
 { #category : #tests }
 FLHeaderSerializationTest >> testJustMaterializeHeader [
-
+	| header |
 	self serializer
 		at: #test putAdditionalObject: 'test';
 		at: 42 putAdditionalObject: 68.
 	
 	self serialize: 'foo'.
 	
-	self assert: (self materializationHeader additionalObjectAt: #test) equals: 'test'.
-	self assert: (self materializationHeader additionalObjectAt: 42) equals: 68.
+	header := self materializer materializeHeader.
+	self assert: (header additionalObjectAt: #test) equals: 'test'.
+	self assert: (header additionalObjectAt: 42) equals: 68
 ]
 
 { #category : #tests }

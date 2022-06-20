@@ -28,17 +28,20 @@ FLContext >> analysis: anAnalysis [
 		put: anAnalysis
 ]
 
-{ #category : #accessing }
+{ #category : #finalization }
 FLContext >> finalizeOperations [
 	self finalizers do: [ :finalizer |
-		finalizer value ].
-	
+		finalizer value ]
+]
+
+{ #category : #finalization }
+FLContext >> finalizeStream [
 	self configuration shouldFinalizeStream ifFalse: [ ^ self ].
 	
 	self configuration streamFinalizer value: self stream
 ]
 
-{ #category : #accessing }
+{ #category : #finalization }
 FLContext >> finalizers [
 	^ map
 		at: #finalizers
@@ -85,7 +88,7 @@ FLContext >> object: anObject [
 		put: anObject
 ]
 
-{ #category : #accessing }
+{ #category : #finalization }
 FLContext >> registerFinalizer: aBlock [
 	(map
 		at: #finalizers

@@ -1,6 +1,6 @@
 Extension { #name : #MCDictionaryRepository }
 
-{ #category : #'*metacello-platform' }
+{ #category : #'*Metacello-Platform' }
 MCDictionaryRepository >> possiblyNewerVersionsOfAnyOf: versionNames [ 
 
 	^#()
