@@ -136,7 +136,7 @@ SDL_TextEditingEvent >> start: anObject [
 	handle signedLongAt: OFFSET_START put: anObject
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 SDL_TextEditingEvent >> strlen [
 	| len |
 	len := 0.
@@ -148,7 +148,7 @@ SDL_TextEditingEvent >> strlen [
 	^ len
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 SDL_TextEditingEvent >> text [
 	| len text |
 	len := self strlen.
