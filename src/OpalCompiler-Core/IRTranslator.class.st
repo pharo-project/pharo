@@ -145,9 +145,10 @@ IRTranslator >> visitMethod: anIr [
 	gen numArgs: anIr numArgs.
 	gen properties: anIr properties.
 	gen numTemps: (anIr tempMap size).
-	gen additionalLiterals: anIr additionalLiterals.
 	gen forceLongForm: anIr forceLongForm.
 	self visitSequences: anIr allSequences.
+	"we can just add the additional literals as normal literls with the new bytecode set"
+	anIr additionalLiterals do: [ :each | gen addLiteral: each ]
 ]
 
 { #category : #visiting }

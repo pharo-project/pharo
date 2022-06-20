@@ -71,7 +71,6 @@ Class {
 		'numArgs',
 		'properties',
 		'numberOfTemps',
-		'additionalLiterals',
 		'forceLongForm',
 		'primNumber',
 		'encoderClass',
@@ -119,11 +118,6 @@ IRBytecodeGenerator >> addProperties: cm [
 		ifNotNil: [ cm penultimateLiteral: properties.
 			properties method: cm.
 			properties pragmas do: [ :each | each method: cm ] ]
-]
-
-{ #category : #accessing }
-IRBytecodeGenerator >> additionalLiterals: aSet [
-	additionalLiterals := aSet.
 ]
 
 { #category : #instructions }
@@ -346,7 +340,6 @@ IRBytecodeGenerator >> initialize [
 	numArgs := 0.
 	currentSeqNum := 0.
 	orderSeq := OrderedCollection new.  "reverse map of seqOrder"
-	additionalLiterals := OCLiteralSet new.
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
 	self label: self newDummySeqId
@@ -419,14 +412,7 @@ IRBytecodeGenerator >> literalIndexOf: object [
 
 { #category : #results }
 IRBytecodeGenerator >> literals [
-	literals := literals asArray.	"Put the optimized selectors in literals so as to browse senders more easily"
-	additionalLiterals := additionalLiterals asArray reject: [ :e | literals hasLiteral: e ].
-	additionalLiterals isEmpty
-		ifFalse: [ 
-			"Use one entry per literal if enough room, else make anArray"
-			literals := literals size + additionalLiterals size + 2 > 255
-				ifTrue: [ literals copyWith: additionalLiterals ]
-				ifFalse: [ literals , additionalLiterals ] ].
+	literals := literals asArray.	
 	(literals anySatisfy: [ :each | each isMethodProperties ])
 		ifFalse: [ literals := literals copyWith: nil ].
 	^ lastLiteral ifNil: [ literals copyWith: nil ] ifNotNil: [ literals copyWith: lastLiteral ]
