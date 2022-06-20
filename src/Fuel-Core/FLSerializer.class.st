@@ -24,6 +24,33 @@ FLSerializer class >> defaultObjectsLimit [
 	^ -1
 ]
 
+{ #category : #convenience }
+FLSerializer class >> serialize: anObject on: aStream [
+	self new
+		object: anObject;
+		onStream: aStream;
+		serialize
+]
+
+{ #category : #convenience }
+FLSerializer class >> serialize: anObject toFileNamed: aFilePath [
+	self new
+		object: anObject;
+		filePath: aFilePath;
+		serialize
+]
+
+{ #category : #convenience }
+FLSerializer class >> serializeToByteArray: anObject [
+	^ ByteArray
+		new: 100
+		streamContents: [ :stream |
+			self new
+				object: anObject;
+				onStream: stream;
+				serialize ]
+]
+
 { #category : #'configuring-materialization' }
 FLSerializer >> addPostMaterializationAction: aCleanBlockClosure [
 	"Takes a clean (no dependency on outer variables) block closure which will be

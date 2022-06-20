@@ -19,6 +19,45 @@ FLMaterializer class >> defaultShouldMaterializeHeaderOnly [
 	^ false
 ]
 
+{ #category : #convenience }
+FLMaterializer class >> materializeFrom: aStream [
+	^ self new
+		onStream: aStream;
+		materializeRoot
+]
+
+{ #category : #convenience }
+FLMaterializer class >> materializeFromByteArray: aByteArray [
+	^ self materializeFrom: aByteArray readStream
+]
+
+{ #category : #convenience }
+FLMaterializer class >> materializeFromFileNamed: aFilePath [
+	^ self new
+		filePath: aFilePath;
+		materializeRoot
+
+]
+
+{ #category : #convenience }
+FLMaterializer class >> materializeHeaderFrom: aStream [
+	^ self new
+		onStream: aStream;
+		materializeHeader
+]
+
+{ #category : #convenience }
+FLMaterializer class >> materializeHeaderFromByteArray: aByteArray [
+	^ self materializeHeaderFrom: aByteArray readStream
+]
+
+{ #category : #convenience }
+FLMaterializer class >> materializeHeaderFromFileNamed: aFilePath [
+	^ self new
+		filePath: aFilePath;
+		materializeHeader
+]
+
 { #category : #private }
 FLMaterializer >> basicMigrateClassNamed: aSymbol toClass: aClass variables: aDictionary [
 	self
@@ -60,7 +99,7 @@ FLMaterializer >> materializeHeader [
 		at: #shouldMaterializeHeaderOnly
 		put: true.
 		
-	^ self materialize
+	^ self materialize header
 ]
 
 { #category : #running }

@@ -23,10 +23,20 @@ Object >> fuelAfterMaterialization [
 ]
 
 { #category : #'*Fuel-Core' }
+Object >> serializeOn: aStream [
+	FLSerializer
+		serialize: self
+		on: aStream
+]
+
+{ #category : #'*Fuel-Core' }
+Object >> serializeToByteArray [
+	^ FLSerializer serializeToByteArray: self
+]
+
+{ #category : #'*Fuel-Core' }
 Object >> serializeToFileNamed: aFilename [
-	^ FLSerializer new
-		filePath: aFilename;
-		object: self;
-		serialize;
-		yourself
+	FLSerializer
+		serialize: self
+		toFileNamed: aFilename
 ]

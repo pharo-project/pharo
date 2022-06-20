@@ -70,11 +70,6 @@ FLSerializationTest >> expectedFailures [
 ]
 
 { #category : #helpers }
-FLSerializationTest >> materializationHeader [
-	^ self materializer materializeHeader header
-]
-
-{ #category : #helpers }
 FLSerializationTest >> materialized [
 	^ self materializedObjects root
 ]
