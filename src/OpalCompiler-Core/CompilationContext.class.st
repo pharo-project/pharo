@@ -20,7 +20,6 @@ Class {
 		'noPattern',
 		'class',
 		'logged',
-		'interactive',
 		'compiledMethod',
 		'options',
 		'environment',
@@ -449,12 +448,13 @@ CompilationContext >> initialize [
 
 { #category : #accessing }
 CompilationContext >> interactive [
-	^ interactive ifNil: [ false ]
-]
 
-{ #category : #accessing }
-CompilationContext >> interactive: anObject [
-	interactive := anObject
+	requestor ifNil: [ ^ false ].
+	"we asume requestors are interactive, but they can override.
+	this should be simplified "
+	^ (requestor respondsTo: #interactive)
+		  ifTrue: [ requestor interactive ]
+		  ifFalse: [ true ]
 ]
 
 { #category : #accessing }
