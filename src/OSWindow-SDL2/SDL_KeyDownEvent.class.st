@@ -31,14 +31,6 @@ SDL_KeyDownEvent >> isUserInterrupt [
 			and: [ self keysym sym = $. asInteger ] ]
 ]
 
-{ #category : #testing }
-SDL_KeyDownEvent >> isUserInterruptKillAll [
-
-	^ ((self keysym mod bitAnd: 16r200) = 0) "ignore all if AltGr is pressed" 
-		and: [(self keysym mod anyMask: 1344) 
-			and: [ self keysym sym = $, asInteger ] ]
-]
-
 { #category : #'accessing - structure variables' }
 SDL_KeyDownEvent >> keysym [
 	"This method was automatically generated"
