@@ -28,7 +28,7 @@ EpLogBrowserToolbarPresenter >> activeFiltersString [
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beApplyMode [
 	filtersButton
-		icon: (self iconNamed: #smallRedoIcon);
+		icon: (self iconNamed: #smallRedo);
 		label: 'Confirm All Changes';
 		action: [ logBrowserPresenter applyAllChangesAndCloseWindow ]
 ]
@@ -45,7 +45,7 @@ EpLogBrowserToolbarPresenter >> beHistoryMode [
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beRevertMode [
 	filtersButton
-		icon: (self iconNamed: #smallUndoIcon);
+		icon: (self iconNamed: #smallUndo);
 		label: 'Confirm All Changes';
 		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]

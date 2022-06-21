@@ -99,7 +99,7 @@ EpUnifiedBrowserPresenter >> initializeToolbar [
 			action: [ self refreshLogs ];
 			yourself);
 		add: (self newToolbarButton 
-			icon: (self application iconNamed: #openIcon);
+			icon: (self application iconNamed: #open);
 			label: 'Directory';
 			help: 'Select directory to browse logs (i.e. files with ombu extension)';
 			action: [ self selectDirectory ];

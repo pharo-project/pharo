@@ -22,7 +22,7 @@ ChooseDropListDialogWindow class >> taskbarIconName [
 ChooseDropListDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #questionIcon
+	^ self iconNamed: #question
 ]
 
 { #category : #initialization }

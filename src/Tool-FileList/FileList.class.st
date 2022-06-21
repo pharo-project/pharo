@@ -60,13 +60,13 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Undo' translated)
 		keyText: 'z';
 		selector: #undo;
-		iconName: #smallUndoIcon;
+		iconName: #smallUndo;
 		withSeparatorAfter.
 		
 	(aBuilder item: #'Copy' translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	(aBuilder item: #'Cut' translated)
 		keyText: 'x';
 		selector: #cut;
@@ -83,7 +83,7 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Do it' translated)
 		keyText: 'd';
 		selector: #doIt;
-		iconName: #smallDoItIcon.
+		iconName: #smallDoIt.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;

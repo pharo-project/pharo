@@ -90,11 +90,11 @@ ClyTestResultProperty >> createIcon [
 
 	allCount = 0 ifTrue: [ ^ self iconNamed: #testNotRun ].
 	allCount = successCount
-		ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+		ifTrue: [ ^ self iconNamed: #testGreen ].
 	errorCount = 0 & (failureCount > 0)
-		ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+		ifTrue: [ ^ self iconNamed: #testYellow ].
 	errorCount > 0
-		ifTrue: [ ^ self iconNamed: #testRedIcon ].
+		ifTrue: [ ^ self iconNamed: #testRed].
 		
 	^ self iconNamed: #testNotRun
 ]

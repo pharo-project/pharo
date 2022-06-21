@@ -394,7 +394,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		selector: #print.
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallPrintIcon);
+		icon: (self iconNamed: #smallPrint);
 		keyText: 'Ctrl+P'.
 	tools := win
 		newToolbar:
@@ -404,7 +404,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #openFile
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallOpenIcon)
+				labelForm: (self iconNamed: #smallOpen)
 				help: 'Open file' translated).	"if we had a model it would go here"
 			(win
 				newButtonFor: nil
@@ -420,7 +420,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #print
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallPrintIcon)
+				labelForm: (self iconNamed: #smallPrint)
 				help: 'Print' translated)}.
 	holder := NewValueHolder new.
 	text := win
@@ -431,7 +431,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 	dock
 		add: 'File' translated
 			font: win theme menuBarFont
-			icon: (self iconNamed: #smallOpenIcon)
+			icon: (self iconNamed: #smallOpen)
 			help: 'File operations' translated
 			subMenu: fileMenu;
 		addMorphBack: tools.

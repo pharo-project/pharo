@@ -415,10 +415,10 @@ Morph >> addExportMenuItems: aMenu hand: aHandMorph [
 			aSubMenu add: 'PNG file' selector: #exportAsPNG.
 			aMenu
 				add: 'export...'
-				icon: (self iconNamed: #smallExportIcon)
+				icon: (self iconNamed: #smallExport)
 				subMenu: aSubMenu.
 			aMenu lastItem
-				icon: (self iconNamed: #smallExportIcon) ]
+				icon: (self iconNamed: #smallExport) ]
 ]
 
 { #category : #menus }

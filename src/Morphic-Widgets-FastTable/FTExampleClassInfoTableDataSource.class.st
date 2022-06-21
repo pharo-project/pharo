@@ -33,23 +33,23 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
 		ifTrue: [ class hasPassedTest
-				ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+				ifTrue: [ ^ self iconNamed: #testGreen ].
 			class hasFailedTest
-				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+				ifTrue: [ ^ self iconNamed: #testYellow ].
 			class hasErrorTest
-				ifTrue: [ ^ self iconNamed: #testRedIcon ].
+				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
 	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+		ifEmpty: [ ^ self iconNamed: #uncommentedClass].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
 		ifTrue: [ class hasPassedTest
-				ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+				ifTrue: [ ^ self iconNamed: #testGreen ].
 			class hasFailedTest
-				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+				ifTrue: [ ^ self iconNamed: #testYellow ].
 			class hasErrorTest
-				ifTrue: [ ^ self iconNamed: #testRedIcon ].
+				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
 	class organization classComment
 		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].

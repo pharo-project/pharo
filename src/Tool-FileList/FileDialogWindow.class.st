@@ -689,7 +689,7 @@ FileDialogWindow >> newUpButton [
 		action: #selectParentDirectory
 		arguments: nil
 		getEnabled: #hasParentDirectory
-		labelForm: (self iconNamed: #smallUndoIcon)
+		labelForm: (self iconNamed: #smallUndo)
 		help: 'Press to switch to the parent of the current directory' translated
 ]
 

@@ -713,7 +713,7 @@ TimeProfiler >> toolBarOn: aWindow [
 						newRowIn: self
 						for:
 							{(AlphaImageMorph new
-								image: (self iconNamed: #smallDoItIcon)).
+								image: (self iconNamed: #smallDoIt)).
 							(uiTheme buttonLabelForText: 'Profile it' translated)});
 				yourself).
 			aWindow newToolSpacer.
