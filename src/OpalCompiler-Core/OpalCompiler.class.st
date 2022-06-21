@@ -400,17 +400,7 @@ OpalCompiler >> getSourceFromRequestorSelection [
 
 { #category : #testing }
 OpalCompiler >> isInteractive [
-	^self isInteractiveFor: compilationContext requestor
-]
-
-{ #category : #private }
-OpalCompiler >> isInteractiveFor: aRequestor [
-	"the requester can override if the compiler is interactive or not"
-	aRequestor ifNil: [^ false ].
-	
-	^ (aRequestor respondsTo: #interactive)
-		ifTrue: [ aRequestor interactive ]
-		ifFalse: [ true ]
+	^ compilationContext interactive
 ]
 
 { #category : #private }
@@ -513,8 +503,7 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
-	self compilationContext requestor: aRequestor.
-	self compilationContext interactive: (self isInteractiveFor: aRequestor).
+	self compilationContext requestor: aRequestor
 ]
 
 { #category : #plugins }

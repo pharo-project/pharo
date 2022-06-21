@@ -26,7 +26,6 @@ OCASTTranslatorTest >> compilationContext [
 	context := CompilationContext new
 		encoderClass: self encoder;
 		bindings: globals;
-		interactive: true;
 		yourself.
 	^ context
 ]
