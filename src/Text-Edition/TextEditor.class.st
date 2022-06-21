@@ -476,7 +476,7 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
-		iconName: #smallUndoIcon;
+		iconName: #smallUndo;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
@@ -492,7 +492,7 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 		iconName: #smallPaste.
 	(aBuilder item: #'Paste recent' translated)
 		selector: #pasteRecent;
-		iconName: #smallCopyIcon;
+		iconName: #smallCopy;
 		withSeparatorAfter.
 	(aBuilder item: #'Set font...' translated)
 		keyText: 'k';
@@ -506,7 +506,7 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #Accept translated)
 		keyText: 's';
 		selector: #accept;
-		iconName: #smallOkIcon.
+		iconName: #smallOk.
 	(aBuilder item: #Cancel translated)
 		keyText: 'l';
 		selector: #cancel;

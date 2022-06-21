@@ -72,7 +72,7 @@ RubPlainTextMode class >> menuOn: aBuilder [
 			(aBuilder item: #Undo translated)
 				keyText: 'z';
 				selector: #undo;
-				iconName: #smallUndoIcon;
+				iconName: #smallUndo;
 				withSeparatorAfter.
 			self fontMenuOn: aBuilder ].
 	(aBuilder item: #Copy translated)
@@ -91,14 +91,14 @@ RubPlainTextMode class >> menuOn: aBuilder [
 				iconName: #smallPaste.
 			(aBuilder item: #'Paste Recent' translated)
 				selector: #pasteRecent;
-				iconName: #smallCopyIcon;
+				iconName: #smallCopy;
 				withSeparatorAfter.
 			(aBuilder model model notNil and: [ aBuilder model acceptAllowed ])
 				ifTrue: [ 
 					(aBuilder item: #Accept translated)
 						keyText: 's';
 						selector: #accept;
-						iconName: #smallOkIcon.
+						iconName: #smallOk.
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;

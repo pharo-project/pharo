@@ -129,7 +129,7 @@ EpIconVisitor >> visitProtocolRemoval: aProtocolChange [
 
 { #category : #visitor }
 EpIconVisitor >> visitRedo: aRedoEvent [
-	^ self iconNamed: #smallRedoIcon
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : #visitor }
@@ -149,7 +149,7 @@ EpIconVisitor >> visitSessionSnapshot: aSnapshotChange [
 
 { #category : #visitor }
 EpIconVisitor >> visitSessionStart: anEvent [
-	^ self iconNamed: #smallDoItIcon
+	^ self iconNamed: #smallDoIt
 ]
 
 { #category : #visitor }
@@ -169,5 +169,5 @@ EpIconVisitor >> visitTraitRemoval:  aTraitRemoval [
 
 { #category : #visitor }
 EpIconVisitor >> visitUndo: anUndoEvent [
-	^ self iconNamed: #smallUndoIcon
+	^ self iconNamed: #smallUndo
 ]

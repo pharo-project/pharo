@@ -107,7 +107,7 @@ ClassListExample >> treeMorph [
 				rowMorphGetSelector: #commentText;
 				headerButtonLabel: 'Comments'
 					font: nil
-					icon: (self iconNamed: #smallPrintIcon)
+					icon: (self iconNamed: #smallPrint)
 					target: nil
 					actionSelector: nil
 					arguments: #())};

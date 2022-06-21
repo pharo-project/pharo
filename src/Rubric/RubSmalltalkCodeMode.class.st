@@ -27,7 +27,7 @@ RubSmalltalkCodeMode class >> label [
 
 { #category : #menu }
 RubSmalltalkCodeMode class >> menuKeyword [
-	^ 'RubSmalltalkCodeMenu'
+	^ #RubSmalltalkCodeMenu
 ]
 
 { #category : #menu }
@@ -41,7 +41,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
-		iconName: #smallDoItIcon.
+		iconName: #smallDoIt.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
@@ -81,12 +81,12 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'Z';
 		selector: #redo;
 		help: nil;
-		iconName: #smallRedoIcon.
+		iconName: #smallRedo.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
 		help: nil;
-		iconName: #smallUndoIcon;
+		iconName: #smallUndo;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
@@ -106,7 +106,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
-		iconName: #smallCopyIcon;
+		iconName: #smallCopy;
 		withSeparatorAfter.
 	aBuilder model
 		ifNotNil: [ :mod | 
@@ -114,7 +114,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 				ifNotNil: [ (aBuilder item: #Accept translated)
 						keyText: 's';
 						selector: #accept;
-						iconName: #smallOkIcon.
+						iconName: #smallOk.
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;

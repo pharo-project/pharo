@@ -231,12 +231,12 @@ EpLogBrowserPresenter >> codeChangesMenuActions [
 		{ 'Apply...'.
 		#openPreviewToApplySelectedChanges.
 		'Preview the application of selected code changes (open a new window to show the effect of re-applying the changes in current image)'.
-		#smallRedoIcon.
+		#smallRedo.
 		$p command }.
 		{ 'Revert...'.
 		#openPreviewToRevertSelectedChanges.
 		'Preview the reversion of selected code changes (open a new window to show the effect of reverting the changes in current image)'.
-		#smallUndoIcon.
+		#smallUndo.
 		$r command }.
 		{ 'Browse current'.
 		#browseSelection.
@@ -712,12 +712,12 @@ EpLogBrowserPresenter >> refactoringMenuActions [
 		{ 'Apply refactoring'.
 		#applyCompleteRefactoringInSelection.
 		'Apply selected refactoring'.
-		#smallRedoIcon.
+		#smallRedo.
 		$y command }.
 		{ 'Apply secondary effects of refactoring'.
 		#applyPropagateRefactoringInSelection.
 		'Apply only the secondary effects of the selected refactoring'.
-		#smallRedoIcon.
+		#smallRedo.
 		$s command }
 	}
 ]
