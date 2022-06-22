@@ -194,6 +194,11 @@ OSBackendWindow >> startTextInput [
 ]
 
 { #category : #'text input' }
+OSBackendWindow >> startTextInputAtRectangle: anObject [
+	self subclassResponsibility
+]
+
+{ #category : #'text input' }
 OSBackendWindow >> stopTextInput [
 	self subclassResponsibility
 ]

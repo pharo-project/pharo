@@ -96,7 +96,8 @@ Class {
 		'mouseDownPoint',
 		'completionEngine',
 		'maxLength',
-		'findReplaceService'
+		'findReplaceService',
+		'editing'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -780,6 +781,12 @@ RubAbstractTextArea >> editPrimarySelectionSeparately [
 	(view embeddedInMorphicWindowLabeled: 'Selection editing') openInHand.
 ]
 
+{ #category : #'accessing - im text input' }
+RubAbstractTextArea >> editing [
+
+	^ editing = true
+]
+
 { #category : #'accessing - editing mode' }
 RubAbstractTextArea >> editingMode [
 	^ editingMode
@@ -988,6 +995,13 @@ RubAbstractTextArea >> handleEdit: editBlock [
 ]
 
 { #category : #'event handling' }
+RubAbstractTextArea >> handleKeyDown: anEvent [
+
+	editing = true ifTrue: [ ^ self ].
+	^ super handleKeyDown: anEvent
+]
+
+{ #category : #'event handling' }
 RubAbstractTextArea >> handleKeystroke: anEvent [ 
 	"System level event handling."
 
@@ -1064,6 +1078,18 @@ RubAbstractTextArea >> handlesMouseOver: evt [
 	^ self enabled
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> handlesTextEditionEvent: anEvent [
+
+	^ true
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> handlesTextInputEvent: anEvent [
+
+	^ true
+]
+
 { #category : #completion }
 RubAbstractTextArea >> hasCompletionEngine [
 	
@@ -1116,7 +1142,8 @@ RubAbstractTextArea >> initialize [
 	self compose.
 	self addCursor.
 	self plugFindReplace.
-	DefaultTextColor := self theme textColor
+	DefaultTextColor := self theme textColor.
+	editing := false
 ]
 
 { #category : #keymapping }
@@ -1156,24 +1183,36 @@ RubAbstractTextArea >> keyDown: anEvent [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
+
 	"Handle a keystroke event."
-	anEvent hand anyButtonPressed
-		ifTrue: [ ^ self ].
-	self handleEdit: [ self editor keystroke: anEvent ].
+
+	anEvent hand anyButtonPressed ifTrue: [ ^ self ].
+	self handleEdit: [ 
+		editing = true
+			ifTrue: [ 
+				editing := false.
+				self editor unselect ]
+			ifFalse: [ self editor keystroke: anEvent ] ].
 	self scrollSelectionIntoView: nil
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> keyboardFocusChange: aBoolean [
+
 	aBoolean
-		ifTrue: [
+		ifTrue: [ 
 			self hasFocus: true.
+			editing := false.
+			self requestTextEditingAt:
+				((self cursor positionInWorld corner: self cursor positionInWorld) 
+					 translateBy: 0 @ (self font height + 4)) truncated.
 			self showOverEditableTextCursor ]
 		ifFalse: [ 
 			self hasFocus: false.
+			self requestStopTextEditing.
+			editing = true ifTrue: [ editing := false ].
 			self hideOverEditableTextCursor ].
-	super keyboardFocusChange: aBoolean.
-	self focusChanged.
+	super keyboardFocusChange: aBoolean
 ]
 
 { #category : #accessing }
@@ -1906,12 +1945,32 @@ RubAbstractTextArea >> textColor: newColor [
 	self changed.
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> textEdition: aTextEditionEvent [
+
+	aTextEditionEvent text
+		ifNotEmpty: [ :editText | 
+			self editor zapSelectionWith: editText.
+			editing := true ]
+		ifEmpty: [ 
+			editing = true ifTrue: [ 
+				self editor zapSelectionWith: ''.
+				editing := false ] ]
+]
+
 { #category : #'accessing - text' }
 RubAbstractTextArea >> textFont: aFont [
 	self addAttribute: (TextFontReference toFont: aFont).
 	self paragraph compose.
 	self recomputeSelection.
 	self  announce: (RubTextStyleChanged morph: self).
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> textInput: aTextInputEvent [
+	self editor zapSelectionWith: aTextInputEvent text.
+	self editor unselect.
+	editing := false
 ]
 
 { #category : #'accessing - text' }

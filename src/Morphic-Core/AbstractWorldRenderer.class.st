@@ -299,6 +299,17 @@ AbstractWorldRenderer >> logRenderingTimeMeasurements: measurements [
 	self class logRenderingTimeMeasurements: measurements
 ]
 
+{ #category : #events }
+AbstractWorldRenderer >> requestStopTextEditing [
+	^ self subclassResponsibility 
+]
+
+{ #category : #events }
+AbstractWorldRenderer >> requestTextEditingAt: aRectangle [ 
+	
+	self subclassResponsibility
+]
+
 { #category : #operations }
 AbstractWorldRenderer >> restoreMorphicDisplay [ 
 

@@ -114,6 +114,11 @@ OSNullBackendWindow >> startTextInput [
 ]
 
 { #category : #'text input' }
+OSNullBackendWindow >> startTextInputAtRectangle: anObject [
+	isTextInputActive := true
+]
+
+{ #category : #'text input' }
 OSNullBackendWindow >> stopTextInput [
 	isTextInputActive := false
 ]
