@@ -880,13 +880,14 @@ Cursor class >> resizeBottomRight [
 
 { #category : #'instance creation' }
 Cursor class >> resizeForEdge: aSymbol [
-	"most common cases hard coded to avoid perform: and asSymbol"
-	aSymbol == #right ifTrue: [ ^self resizeRight ].
-	aSymbol == #left ifTrue: [ ^self resizeLeft ].
+	"Most common cases hard coded to avoid perform: and asSymbol. It is 55 times faster."
+	
+	aSymbol == #right ifTrue: [ ^ self resizeRight ].
+	aSymbol == #left ifTrue: [ ^ self resizeLeft ].
 	aSymbol == #top ifTrue: [ ^ self resizeTop ].
 	aSymbol == #bottom ifTrue: [ ^ self resizeBottom ].
-	aSymbol == #bottomLeft ifTrue: [ ^self resizeBottomLeft ].
-	aSymbol == #bottomRight ifTrue: [ ^self resizeBottomRight ].
+	aSymbol == #bottomLeft ifTrue: [ ^ self resizeBottomLeft ].
+	aSymbol == #bottomRight ifTrue: [ ^ self resizeBottomRight ].
 	aSymbol == #topRight ifTrue: [ ^ self resizeTopRight ].
 	aSymbol == #topLeft ifTrue: [ ^ self resizeTopLeft ].
 	^self perform: ('resize', aSymbol asString capitalized) asSymbol.
