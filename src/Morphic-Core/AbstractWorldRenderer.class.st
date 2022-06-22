@@ -300,6 +300,11 @@ AbstractWorldRenderer >> logRenderingTimeMeasurements: measurements [
 ]
 
 { #category : #events }
+AbstractWorldRenderer >> requestStopTextEditing [
+	^ self subclassResponsibility 
+]
+
+{ #category : #events }
 AbstractWorldRenderer >> requestTextEditingAt: aRectangle [ 
 	
 	self subclassResponsibility
