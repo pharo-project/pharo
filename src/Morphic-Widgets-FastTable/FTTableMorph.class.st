@@ -736,10 +736,11 @@ FTTableMorph >> mouseDown: event [
 
 	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint)
 		ifNotNil: [ :index | 
+			"If the cell is selected we let the mouse up toggle to avoid any problem with 
+			 the drag and drop"
 			(self selectedIndexes includes: index)
 				ifFalse: [ self selectIndex: index event: event ]
-				ifTrue: [ needToggleAtMouseUp := true ] "If the cell is selected we let the mouse up toggle to avoid any problem with the drag and drop" ]
-		ifNil: [ ^ self ].
+				ifTrue: [ needToggleAtMouseUp := true ] ].
 
 	self wantsKeyboardFocus ifTrue: [ self takeKeyboardFocus ].
 	event hand waitForClicksOrDrag: self event: event
