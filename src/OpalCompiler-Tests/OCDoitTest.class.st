@@ -50,7 +50,7 @@ OCDoitTest >> testDoItContextReadIvar [
 		          context: thisContext;
 		          compile.
 
-	value := method valueWithReceiver: self arguments: { thisContext }.
+	value := method valueWithReceiver: self arguments: #().
 	self assert: value equals: #someValue
 ]
 
