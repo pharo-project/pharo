@@ -17,7 +17,7 @@ SycCmInsertSubclassCommand >> executeRefactoring [
 		superclass: targetClass asString
 		subclasses: targetClass subclasses
 		category: targetClass category.
-	refactoring execute
+	refactoring asRefactoring execute
 ]
 
 { #category : #accessing }
