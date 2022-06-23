@@ -12,9 +12,9 @@ Class {
 SycCmInsertSuperclassCommand >> executeRefactoring [
 	
 	| refactoring |
-	refactoring := RBAddClassRefactoring
+	refactoring := RBAddClassTransformation 
 		addClass: newClassName
-		superclass: targetClass superclass
+		superclass: targetClass superclass asString
 		subclasses: {targetClass}
 		category: targetClass category.
 	refactoring execute
