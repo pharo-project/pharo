@@ -225,8 +225,7 @@ Process >> doTerminationFromAnotherProcess [
 		context := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
 		terminator := Semaphore new.
 		context bottomContext insertSender: 
-			(Context contextOn: UnhandledException do: [:ex | 
-				UIManager default uiProcess suspendingList == terminator ifTrue: [terminator signal]. ex pass]).
+			(Context contextOn: UnhandledException do: [:ex | terminator signal. ex pass]).
 		context bottomContext insertSender: (Context contextEnsure: [terminator signal]).
 		suspendedContext := [[] ensure: [context unwindTo: nil]. self endProcess] asContext.
 		self priority: Processor activePriority; resume.
