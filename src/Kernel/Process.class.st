@@ -219,14 +219,16 @@ Process >> doTerminationFromAnotherProcess [
 	It assumes the terminator process won't resume before the process represented by self is terminated."	
 
 	[ ] ensure: [ | oldList context terminator |
-		self isTerminating ifTrue: [ProcessAlreadyTerminating signal. ^self].
 		terminating := true.
 		oldList := self suspend.
 		suspendedContext ifNil: [^self].
 		context := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
 		terminator := Semaphore new.
+		context bottomContext insertSender: 
+			(Context contextOn: UnhandledException do: [:ex | 
+				UIManager default uiProcess suspendingList == terminator ifTrue: [terminator signal]. ex pass]).
 		context bottomContext insertSender: (Context contextEnsure: [terminator signal]).
-		suspendedContext := [context unwindTo: nil. self endProcess] asContext.
+		suspendedContext := [[] ensure: [context unwindTo: nil]. self endProcess] asContext.
 		self priority: Processor activePriority; resume.
 		terminator wait
 	]
@@ -241,8 +243,7 @@ Process >> doTerminationFromYourself [
 	| context |
 	terminating := true.
 	context := thisContext.
-	^[context unwindTo: nil. self endProcess] asContext jump
-
+	^[[] ensure: [context unwindTo: nil]. self endProcess] asContext jump
 ]
 
 { #category : #accessing }
