@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #accessing }

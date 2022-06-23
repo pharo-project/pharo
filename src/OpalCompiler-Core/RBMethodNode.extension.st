@@ -74,6 +74,15 @@ RBMethodNode >> generateIR [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> generateMethod [
+	| methodTrailer |
+	methodTrailer := self compilationContext optionEmbeddSources
+			ifTrue: [ CompiledMethodTrailer new sourceCode: source ]
+			ifFalse: [self compilationContext compiledMethodTrailer ].
+	^self generate: methodTrailer
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateWithSource [
 	"Answer a CompiledMethod with source encoded in trailer."
 	^self generate: (CompiledMethodTrailer new sourceCode: source).

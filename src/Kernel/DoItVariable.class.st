@@ -68,6 +68,11 @@ DoItVariable >> actualVariable: aVariable [
 	name := actualVariable name
 ]
 
+{ #category : #testing }
+DoItVariable >> allowsShadowing [
+	^true
+]
+
 { #category : #accessing }
 DoItVariable >> doItContext [
 	^ doItContext
