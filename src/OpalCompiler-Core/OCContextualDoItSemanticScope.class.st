@@ -48,7 +48,7 @@ OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [
 { #category : #'code evaluation' }
 OCContextualDoItSemanticScope >> evaluateDoIt: doItMethod [
 
-	^targetContext receiver withArgs: { targetContext } executeMethod: doItMethod
+	^targetContext receiver withArgs: #() executeMethod: doItMethod
 ]
 
 { #category : #testing }
