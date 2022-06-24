@@ -1,3 +1,9 @@
+"
+Class: RBRealizeClassTransformation
+                                                                                                    
+Complete the set of defined methods of this class, by generating a ""self shouldBeImplemented"" method for all abstract methods defined in its superclass hierarchy. Where an abstract method is a method sending ""self subclassResponsibilty.
+Shows a warning if this class has abstract methods on its own.
+"
 Class {
 	#name : #RBRealizeClassTransformation,
 	#superclass : #RBClassTransformation,
