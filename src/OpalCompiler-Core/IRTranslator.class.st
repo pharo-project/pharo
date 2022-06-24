@@ -148,7 +148,7 @@ IRTranslator >> visitMethod: anIr [
 	gen forceLongForm: anIr forceLongForm.
 	self visitSequences: anIr allSequences.
 	"Literals for sends and pushLiteral: are added later, here we
-	add all the additionalLiterals from e.g. optimized contructs like #ifTrue:.
+	add all the additionalLiterals from e.g. optimized constructs like #ifTrue:.
 	that have been added with #addLiteral:.
 	With the new bytecode set we have no constraints and can just add all of them."
 	anIr additionalLiterals do: [ :each | gen addLiteral: each ]
