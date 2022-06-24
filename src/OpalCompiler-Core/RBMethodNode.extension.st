@@ -139,13 +139,6 @@ RBMethodNode >> methodPropertyAt: aKey put: anObject [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> notShadowedTemporaryNamesFrom: aContext [
-	| ownVariableNames |
-	ownVariableNames := self allDefinedVariables collect: [ :var | var asString ].
-	^ aContext tempNames difference: ownVariableNames
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> owningScope [
 	^ self scope
 ]
@@ -156,23 +149,6 @@ RBMethodNode >> primitiveFromPragma [
 		detect: [ :each | each isPrimitive ]
 		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
 		ifNone: [ IRPrimitive null ]
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> rewriteTempsForContext: aContext [
-	| rewriter contextOnlyTemps |
-	rewriter := RBParseTreeRewriter new.
-	contextOnlyTemps := self notShadowedTemporaryNamesFrom: aContext.
-	aContext tempNames do:
-			[ :tempName | 
-			(contextOnlyTemps includes: tempName)
-				ifTrue:
-					[ rewriter
-						replace: tempName , ' := ``@object' with: 'ThisContext writeVariableNamed: ', tempName asString printString  , ' value: ``@object';
-						replace: tempName with: 'ThisContext readVariableNamed: ' , tempName asString printString ] ].
-	^ rewriter
-		executeTree: self;
-		tree
 ]
 
 { #category : #'*OpalCompiler-Core' }

@@ -451,7 +451,7 @@ Symbol >> isBinary [
 { #category : #testing }
 Symbol >> isDoIt [
 
-	^ (self == #DoIt) or: [self == #DoItIn:].
+	^ self == #DoIt
 ]
 
 { #category : #testing }
