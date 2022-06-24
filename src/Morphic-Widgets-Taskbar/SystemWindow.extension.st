@@ -186,6 +186,12 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		icon: self theme windowCloseForm
 		subMenu: submenu.
 	submenu
+		addToggle: 'close all windows' translated
+		target: self
+		selector: #taskbarCloseAllWindows
+		getStateSelector: nil
+		enablementSelector: true.
+	submenu
 		addToggle: 'windows to left' translated
 		target: self
 		selector: #taskbarCloseAllToLeft
@@ -256,6 +262,16 @@ SystemWindow >> taskbarCloseAllToRight [
 				ifFalse: [ wasFound := task morph == self ].
 			]. 
 		].
+]
+
+{ #category : #'*Morphic-Widgets-Taskbar' }
+SystemWindow >> taskbarCloseAllWindows [
+
+	(self confirm: 'Do you really want to close all windows ?') ifFalse: [ 
+		^ self ].
+
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
+		worldTaskbar tasks do: [ :task | task morph delete ] ]
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
