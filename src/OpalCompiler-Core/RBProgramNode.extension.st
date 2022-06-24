@@ -3,10 +3,9 @@ Extension { #name : #RBProgramNode }
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asDoItForContext: aContext [
 	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
-	|methodNode|
-	methodNode := self asDoit.	
-	methodNode semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext).
-	^methodNode
+
+	^ self asDoit semanticScope:
+		  (OCContextualDoItSemanticScope targetingContext: aContext)
 ]
 
 { #category : #'*OpalCompiler-Core' }

@@ -32,7 +32,8 @@ OCDoItSemanticScope >> compileMethodFromASTBy: aCompiler [
 
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
-	self subclassResponsibility 
+
+	^self receiver withArgs: #() executeMethod: doItMethod
 ]
 
 { #category : #testing }
@@ -43,6 +44,11 @@ OCDoItSemanticScope >> isDoItScope [
 { #category : #parsing }
 OCDoItSemanticScope >> parseASTBy: aParser [
 	^aParser parseExpression
+]
+
+{ #category : #accessing }
+OCDoItSemanticScope >> receiver [
+	^ self subclassResponsibility
 ]
 
 { #category : #'code compilation' }

@@ -25,7 +25,6 @@ SHRBTextStylerTest >> style: aText [
 		source: aText asString;
 		noPattern: false ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: nil;
 		parse.				
 	styler style: aText ast: ast.
 	
@@ -41,7 +40,6 @@ SHRBTextStylerTest >> styleExpression: aText [
 		source: aText asString;
 		noPattern: true ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: nil;
 		parse.				
 	styler style: aText ast: ast.
 	

@@ -32,12 +32,6 @@ OCReceiverDoItSemanticScope class >> targetingReceiver: anObject [
 		targetReceiver: anObject
 ]
 
-{ #category : #'code evaluation' }
-OCReceiverDoItSemanticScope >> evaluateDoIt: doItMethod [
-
-	^targetReceiver withArgs: #() executeMethod: doItMethod
-]
-
 { #category : #accessing }
 OCReceiverDoItSemanticScope >> receiver [
 
