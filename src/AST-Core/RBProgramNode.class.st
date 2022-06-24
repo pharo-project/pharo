@@ -399,9 +399,16 @@ RBProgramNode >> evaluatedFirst: aNode [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 RBProgramNode >> formattedCode [
-	^ self formatterClass new format: self
+
+	^ self formattedCodeIn: self class
+]
+
+{ #category : #printing }
+RBProgramNode >> formattedCodeIn: context [
+
+	^ context formatter format: self
 ]
 
 { #category : #accessing }
