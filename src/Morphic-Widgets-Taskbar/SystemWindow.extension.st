@@ -238,30 +238,34 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllLikeThis [
 
+	(self confirm: 'Do you really want to close all windows like this ?') ifFalse: [ 
+		^ self ].
 	(SystemWindow allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ].
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToLeft [
-	| wasFound |
-	wasFound := false.
-	self worldTaskbar ifNotNil: [ :worldTaskbar |
+
+	(self confirm: 'Do you really want to close all windows to left ?') 
+		ifFalse: [ ^ self ].
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
 		worldTaskbar orderedTasks copy do: [ :task | 
-			(task morph == self) ifTrue: [ ^ self ].
-			task morph delete ] ].
+			task morph == self ifTrue: [ ^ self ].
+			task morph delete ] ]
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToRight [
+
 	| wasFound |
+	(self confirm: 'Do you really want to close all windows to right ?') 
+		ifFalse: [ ^ self ].
 	wasFound := false.
-	self worldTaskbar ifNotNil: [ :worldTaskbar |
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
 		worldTaskbar orderedTasks copy do: [ :task | 
-			wasFound 
-				ifTrue:  [ task morph delete ] 
-				ifFalse: [ wasFound := task morph == self ].
-			]. 
-		].
+			wasFound
+				ifTrue: [ task morph delete ]
+				ifFalse: [ wasFound := task morph == self ] ] ]
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
