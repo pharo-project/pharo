@@ -45,12 +45,6 @@ OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [
 	^self
 ]
 
-{ #category : #'code evaluation' }
-OCContextualDoItSemanticScope >> evaluateDoIt: doItMethod [
-
-	^targetContext receiver withArgs: #() executeMethod: doItMethod
-]
-
 { #category : #testing }
 OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
 	
@@ -93,6 +87,11 @@ OCContextualDoItSemanticScope >> lookupVar: name declare: aBoolean [
 	(targetContext lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^self importVariable: v].
 
 	^super lookupVar: name declare: aBoolean
+]
+
+{ #category : #accessing }
+OCContextualDoItSemanticScope >> receiver [
+	^targetContext receiver
 ]
 
 { #category : #accessing }

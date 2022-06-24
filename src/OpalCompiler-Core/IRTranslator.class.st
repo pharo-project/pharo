@@ -104,7 +104,7 @@ IRTranslator >> pushScope: anIRBlockOrMethod [
 	currentScope push: anIRBlockOrMethod
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
 IRTranslator >> trailer: aTrailer [
 
 	trailer := aTrailer
@@ -147,7 +147,10 @@ IRTranslator >> visitMethod: anIr [
 	gen numTemps: (anIr tempMap size).
 	gen forceLongForm: anIr forceLongForm.
 	self visitSequences: anIr allSequences.
-	"we can just add the additional literals as normal literls with the new bytecode set"
+	"Literals for sends and pushLiteral: are added later, here we
+	add all the additionalLiterals from e.g. optimized constructs like #ifTrue:.
+	that have been added with #addLiteral:.
+	With the new bytecode set we have no constraints and can just add all of them."
 	anIr additionalLiterals do: [ :each | gen addLiteral: each ]
 ]
 

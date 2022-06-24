@@ -12,14 +12,12 @@ Class {
 
 { #category : #exceptionInstantiator }
 SyntaxErrorNotification class >> inClass: aClass withCode: codeString doitFlag: doitFlag errorMessage: errorString location: location [
-	| sourceCode |
-	sourceCode := (self new
+	^ (self new
 		setClass: aClass
 		code: codeString
 		doitFlag: doitFlag
 		errorMessage: errorString
-		location: location) signal.
-	^sourceCode ifNil: [ self error: 'source nil, should not happen' ].
+		location: location) signal
 ]
 
 { #category : #exceptiondescription }
