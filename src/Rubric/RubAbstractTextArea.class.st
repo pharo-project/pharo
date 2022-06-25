@@ -1154,11 +1154,6 @@ RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	self editor initializeShortcuts: aKMDispatcher
 ]
 
-{ #category : #accessing }
-RubAbstractTextArea >> interactive [
-	^ self editingMode interactive
-]
-
 { #category : #testing }
 RubAbstractTextArea >> isReadOnly [
 	^ self readOnly
