@@ -84,14 +84,6 @@ RubEditingMode >> initialize [
 	acceptAllowed := true
 ]
 
-{ #category : #accessing }
-RubEditingMode >> interactive [
-
-	"when returning true, it avoids that we can assign to class, i.e., Array := 55."
-	
-	^ true
-]
-
 { #category : #testing }
 RubEditingMode >> isCompletionEnabled [
 	^ false
