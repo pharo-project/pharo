@@ -162,6 +162,11 @@ ClyMethodEditorToolMorph >> isForScripting [
 	^false
 ]
 
+{ #category : #'rubric interaction model' }
+ClyMethodEditorToolMorph >> isScripting [
+	^false
+]
+
 { #category : #accessing }
 ClyMethodEditorToolMorph >> methodClass [
 	self subclassResponsibility

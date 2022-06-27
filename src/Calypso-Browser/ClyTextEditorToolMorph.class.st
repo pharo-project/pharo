@@ -181,7 +181,7 @@ ClyTextEditorToolMorph >> editingMode [
 	editingMode := ClyTextEditingMode browserTool: self.
 	editingMode
 		classOrMetaClass: self selectedClassOrMetaClass;
-		isForScripting: self isForScripting.
+		isScripting: self isScripting.
 	^editingMode
 ]
 
@@ -222,6 +222,11 @@ ClyTextEditorToolMorph >> initialize [
 
 { #category : #'rubric interaction model' }
 ClyTextEditorToolMorph >> isForScripting [
+	^true
+]
+
+{ #category : #'rubric interaction model' }
+ClyTextEditorToolMorph >> isScripting [
 	^true
 ]
 
