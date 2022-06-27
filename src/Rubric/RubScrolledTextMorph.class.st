@@ -711,6 +711,11 @@ RubScrolledTextMorph >> isRenderer [
 	^ true
 ]
 
+{ #category : #testing }
+RubScrolledTextMorph >> isScripting [
+	^ self textArea isScripting
+]
+
 { #category : #'event handling' }
 RubScrolledTextMorph >> keyStroke: event [
 	self scrollPane

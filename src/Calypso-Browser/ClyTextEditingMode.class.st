@@ -61,6 +61,11 @@ ClyTextEditingMode >> isForScripting: anObject [
 	isForScripting := anObject
 ]
 
+{ #category : #accessing }
+ClyTextEditingMode >> isScripting: anObject [
+	isForScripting := anObject
+]
+
 { #category : #'initialize-release' }
 ClyTextEditingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.
