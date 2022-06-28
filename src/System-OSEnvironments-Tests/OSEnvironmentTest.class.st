@@ -42,6 +42,22 @@ OSEnvironmentTest >> testAtPut [
 ]
 
 { #category : #tests }
+OSEnvironmentTest >> testEncodingDebug [
+	
+	| environmentStringsPointer index aByte bytes |
+	environmentStringsPointer := OSEnvironment current environmentStrings.
+	bytes := (ByteArray streamContents: [ :aStream |
+			index := 1.
+			[(aByte := environmentStringsPointer unsignedByteAt: index) = 0] 
+				whileFalse: [
+					aStream nextPut: aByte.
+					index := index + 1]]).
+	self traceCr: bytes
+	
+	
+]
+
+{ #category : #tests }
 OSEnvironmentTest >> testEnvironmentFor [
 	
 	| compareDictionary |
