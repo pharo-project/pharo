@@ -52,7 +52,9 @@ OSEnvironmentTest >> testEncodingDebug [
 				whileFalse: [
 					aStream nextPut: aByte.
 					index := index + 1]]).
-	self traceCr: bytes
+	self 
+		assert: false 
+		description: 'DEBUG: ', bytes printString
 	
 	
 ]
