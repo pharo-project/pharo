@@ -7,6 +7,18 @@ Class {
 	#category : #'System-OSEnvironments-Tests'
 }
 
+{ #category : #'as yet unclassified' }
+OSEnvironmentTest >> byteArrayfromCString: externalAddress [
+	| index aByte |
+
+	^ (ByteArray streamContents: [ :aStream |
+			index := 1.
+			[(aByte := externalAddress unsignedByteAt: index) = 0] 
+				whileFalse: [
+					aStream nextPut: aByte.
+					index := index + 1]])
+]
+
 { #category : #helper }
 OSEnvironmentTest >> instance [
 	^ Smalltalk os environment
@@ -44,17 +56,21 @@ OSEnvironmentTest >> testAtPut [
 { #category : #tests }
 OSEnvironmentTest >> testEncodingDebug [
 	
-	| environmentStringsPointer index aByte bytes |
+	| environmentStringsPointer bytes environmentBytes nextBytes strings |
+	strings := OrderedCollection new.
 	environmentStringsPointer := OSEnvironment current environmentStrings.
-	bytes := (ByteArray streamContents: [ :aStream |
-			index := 1.
-			[(aByte := environmentStringsPointer unsignedByteAt: index) = 0] 
-				whileFalse: [
-					aStream nextPut: aByte.
-					index := index + 1]]).
+	environmentBytes := self byteArrayfromCString: OSEnvironment current environmentStrings.
+	
+	[ 
+	nextBytes := self byteArrayfromCString: environmentBytes.
+	nextBytes ifEmpty: [ ^ self ].
+	nextBytes first = $=
+		ifFalse: [ strings add: nextBytes printString ].
+	environmentStringsPointer := environmentStringsPointer + nextBytes size + 1 ] repeat.
+	
 	self 
 		assert: false 
-		description: 'DEBUG: ', bytes printString
+		description: 'DEBUG: ', (' ** ' join: (bytes collect: #printString))
 	
 	
 ]
