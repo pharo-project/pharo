@@ -61,7 +61,7 @@ OSEnvironmentTest >> testEncodingDebug [
 	environmentStringsPointer := OSEnvironment current environmentStrings.
 	
 	[ 
-	nextBytes := self byteArrayfromCString: environmentBytes.
+	nextBytes := self byteArrayfromCString: environmentStringsPointer.
 	nextBytes ifEmpty: [ ^ self ].
 	nextBytes first = $=
 		ifFalse: [ environmentBytes add: nextBytes printString ].
