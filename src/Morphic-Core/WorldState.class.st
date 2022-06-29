@@ -94,7 +94,7 @@ WorldState class >> desktopMenuTitle: aString [
 
 { #category : #settings }
 WorldState class >> discoveredMenuPragmaKeyword [
-	^ DesktopMenuPragmaKeyword ifNil: [DesktopMenuPragmaKeyword := 'worldMenu']
+	^ DesktopMenuPragmaKeyword ifNil: [DesktopMenuPragmaKeyword := #worldMenu]
 ]
 
 { #category : #settings }
