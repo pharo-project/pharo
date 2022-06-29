@@ -27,6 +27,6 @@ SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 SycMoveMethodsToInstanceSideCommand >> execute [
 	
 	methods 
-		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: each origin instanceSide]
+		collect: [ :each | RBMoveMethodToClassTransformation model: model method: each class: each origin instanceSide]
 		thenDo: [ :each | each execute ]
 ]

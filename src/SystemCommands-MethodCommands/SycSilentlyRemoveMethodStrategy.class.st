@@ -8,27 +8,15 @@ Class {
 }
 
 { #category : #removing }
-SycSilentlyRemoveMethodStrategy >> collectMethodTagsFrom: methods [
-	"It will return map class->tags where tags are related to given methods"
-	| result tags |
-	result := IdentityDictionary new.
-	methods do: [ :each | 
-		tags := result at: each origin ifAbsentPut: [IdentitySet new].
-		tags addAll: each tags].
-	^result
-]
-
-{ #category : #removing }
 SycSilentlyRemoveMethodStrategy >> removeMethods: methods [
 	
-	| methodTags |
-	methodTags := self collectMethodTagsFrom: methods. "we will remove empty tags of removed methods".
-	
-	methods do: [ :each | each removeFromSystem ].
-	
-	methodTags keysAndValuesDo: [:class :tags | tags do: [ :eachTag | 
-		(class methodsTaggedWith: eachTag) 
-			ifEmpty: [class removeMethodTag: eachTag] ]]
+	| refactorings |
+	refactorings := OrderedCollection new.
+	refactorings := methods collect: [ :each | 
+		RBRemoveMethodTransformation 
+			selector: each selector 
+			from: each methodClass ].
+	refactorings do: [ :each | each asRefactoring execute ]
 ]
 
 { #category : #removing }
