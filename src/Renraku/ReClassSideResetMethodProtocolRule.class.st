@@ -34,6 +34,11 @@ ReClassSideResetMethodProtocolRule >> critiqueFor: aMethod [
 ]
 
 { #category : #accessing }
+ReClassSideResetMethodProtocolRule >> group [
+	^ 'Clean Code'
+]
+
+{ #category : #accessing }
 ReClassSideResetMethodProtocolRule >> name [
 
 	^ 'Class side methods called #reset should be in the ''class initialization'' protocol'

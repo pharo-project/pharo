@@ -37,6 +37,11 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 ]
 
 { #category : #accessing }
+ReTestCaseShouldNotUseInitializeRule >> group [
+	^ 'Clean Code'
+]
+
+{ #category : #accessing }
 ReTestCaseShouldNotUseInitializeRule >> name [
 	
 	^ 'Tests should not use initialize'
