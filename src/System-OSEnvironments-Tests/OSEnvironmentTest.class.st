@@ -56,21 +56,20 @@ OSEnvironmentTest >> testAtPut [
 { #category : #tests }
 OSEnvironmentTest >> testEncodingDebug [
 	
-	| environmentStringsPointer bytes environmentBytes nextBytes strings |
-	strings := OrderedCollection new.
+	| environmentStringsPointer environmentBytes nextBytes |
+	environmentBytes := OrderedCollection new.
 	environmentStringsPointer := OSEnvironment current environmentStrings.
-	environmentBytes := self byteArrayfromCString: OSEnvironment current environmentStrings.
 	
 	[ 
 	nextBytes := self byteArrayfromCString: environmentBytes.
 	nextBytes ifEmpty: [ ^ self ].
 	nextBytes first = $=
-		ifFalse: [ strings add: nextBytes printString ].
+		ifFalse: [ environmentBytes add: nextBytes printString ].
 	environmentStringsPointer := environmentStringsPointer + nextBytes size + 1 ] repeat.
 	
 	self 
 		assert: false 
-		description: 'DEBUG: ', (' ** ' join: (bytes collect: #printString))
+		description: 'DEBUG: ', (' ** ' join: (environmentBytes collect: #printString))
 	
 	
 ]
