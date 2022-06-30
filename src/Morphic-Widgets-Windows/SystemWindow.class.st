@@ -935,7 +935,7 @@ SystemWindow >> deleteDiscardingChanges [
 { #category : #'menu building' }
 SystemWindow >> discoveredMenuPragmaKeyword [
 
-	^ 'windowMenu'.
+	^ #windowMenu
 ]
 
 { #category : #events }
