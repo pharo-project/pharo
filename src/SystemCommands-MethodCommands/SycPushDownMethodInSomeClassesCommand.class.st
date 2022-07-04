@@ -11,7 +11,7 @@ Class {
 SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 	"Return push down method refactoring using method"
 	| refactoring |
-	refactoring := RBPushDownMethodTransformation 
+	refactoring := RBPushDownMethodRefactoring 
 		model: model
 		pushDown: (methods collect: [ :each | each selector ])
 		from: methods first origin
