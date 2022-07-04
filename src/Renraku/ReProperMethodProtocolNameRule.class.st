@@ -16,7 +16,7 @@ Class {
 { #category : #'private - accessing' }
 ReProperMethodProtocolNameRule class >> badMethodProtocolNames [
 
-	^self protocolIdiom value collect: [:each | each asSymbol ]
+	^self protocolIdiom value
 ]
 
 { #category : #'testing - interest' }
