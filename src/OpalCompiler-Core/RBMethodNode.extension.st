@@ -70,12 +70,9 @@ RBMethodNode >> generateIR [
 	
 	self pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
 		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
-		copy := self copy;
-			arguments: #();
-			selector: #irDoIt;
-			yourself.
+		copy := self copy.
 		copy removePragmaNamed: pragma selector.
-		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: #().
+		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
 		ir sourceNode: self.
 		^ ir
 	].
