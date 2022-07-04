@@ -11,7 +11,6 @@ Class {
 		'EncodedCharSets'
 	],
 	#classInstVars : [
-		'compoundTextSequence',
 		'ucsTable'
 	],
 	#category : #'Multilingual-Encodings-CharSets'
