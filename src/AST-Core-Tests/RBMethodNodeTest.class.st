@@ -11,6 +11,30 @@ Class {
 RBMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
 ]
 
+{ #category : #helpers }
+RBMethodNodeTest >> sampleBytecodeMethod [
+
+	<opalBytecodeMethod>
+	^ IRBuilder buildIR: [ :builder |
+		builder
+				pushLiteral: 5;
+				returnTop
+		 ].
+]
+
+{ #category : #helpers }
+RBMethodNodeTest >> sampleBytecodeMethodWithArg: anArg [
+
+	<opalBytecodeMethod>
+	^ IRBuilder buildIR: [ :builder |
+		builder
+				numArgs: 1;
+				addTemps: { #arg };
+				pushTemp: #arg;
+				returnTop
+		 ].
+]
+
 { #category : #tests }
 RBMethodNodeTest >> testAddingMethodProperties [
 
@@ -85,6 +109,18 @@ RBMethodNodeTest >> testBlockHeadIsNotEmpty3 [
 		]'.
 
 	self deny: tree body statements first headIsNotEmpty
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBytecodeMethodWithArguments [
+
+	self assert: (self sampleBytecodeMethodWithArg: 1) equals: 1
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBytecodeMethodWithNoArguments [
+
+	self assert: self sampleBytecodeMethod equals: 5
 ]
 
 { #category : #tests }
