@@ -188,7 +188,7 @@ ClyFullBrowserMorph >> buildTitleFromSelections [
 		ifTrue: [ self classSelection lastSelectedItem ]
 		ifFalse: [ self methodSelection lastSelectedItem].
 
-	newTitle := mainItem systemDefinition printDefiningClass.
+	newTitle := mainItem systemDefinition printDefiningClass asString.
 	mainItem systemDefinition isInstanceSide & (metaLevelScope = ClyClassSideScope)
 		ifTrue: [ newTitle := newTitle , ' class' ].
 	self methodSelection isEmpty ifFalse: [ 
