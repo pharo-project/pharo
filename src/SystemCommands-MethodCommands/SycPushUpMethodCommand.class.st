@@ -13,7 +13,7 @@ Class {
 { #category : #execution }
 SycPushUpMethodCommand >> asRefactorings [
 	| refactoring |
-	refactoring :=  RBPullUpMethodTransformation  
+	refactoring :=  RBPullUpMethodRefactoring 
 		model: model
 		pullUp: (methods collect: [ :each | each selector ])
 		from: methods first origin.
