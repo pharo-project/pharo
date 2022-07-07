@@ -1193,7 +1193,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	"An array of the 255 Characters in ascii order.
 	 Cog inlines table into machine code at: prim so do not regenerate it.
 	 This is nil in Spur, which has immediate Characters."
-	newArray at: 25 put: (self primitiveGetSpecialObjectsArray at: 25).
+	newArray at: 25 put: Float64Array.
 	newArray at: 26 put: #mustBeBoolean.
 	newArray at: 27 put: ByteArray.
 	newArray at: 28 put: Process.
