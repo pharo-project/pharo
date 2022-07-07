@@ -1,19 +1,16 @@
 Class {
 	#name : #TestRunnerTest,
-	#superclass : #BasicTestRunnerTest,
+	#superclass : #TestCase,
+	#instVars : [
+		'runner'
+	],
 	#category : #'TestRunner-Tests-Core'
 }
-
-{ #category : #testing }
-TestRunnerTest class >> shouldInheritSelectors [
-
-	^ self == TestRunnerTest
-]
 
 { #category : #tests }
 TestRunnerTest >> classForRunner [
 
-	^ TestRunner2
+	^ NewTestRunner
 ]
 
 { #category : #tests }
@@ -23,19 +20,157 @@ TestRunnerTest >> setUp [
 ]
 
 { #category : #tests }
+TestRunnerTest >> testDefaultSuitePreparatorOfTheRunnerIsNotNil [
+
+	self assert: runner suitePreparator isNotNil
+]
+
+{ #category : #tests }
+TestRunnerTest >> testFailedTestFaildWhileRerunningDoesNotChangeTheResult [
+
+	"first execution"
+
+	[ 
+	YellowTest doNotIgnoreTest.
+	runner runClass: YellowTest.
+	self
+		assert: runner testsCount equals: 2;
+		assert: runner failureCount equals: 1.
+
+	"second execution"
+	runner runFailures.
+	self
+		assert: runner testsCount equals: 2;
+		assert: runner failureCount equals: 1 ] ensure: [ 
+		YellowTest ignoreTest ]
+]
+
+{ #category : #tests }
+TestRunnerTest >> testGivingTestToTheRunner [
+
+	"test that a runner has initialy any test to run.
+	That ensure it runs only tests added by user.
+	"
+
+	runner testSuiteFromClass: ExampleSetTest.
+	self assert: runner hasTestsToRun
+]
+
+{ #category : #tests }
+TestRunnerTest >> testNewCreatedRunnerHasAnyTestsToRun [
+
+	"test that a runner has initialy any test to run.
+	that ensure when running a tests that the result contain
+	only the tests added by user.
+	"
+
+	self deny: runner hasTestsToRun
+]
+
+{ #category : #tests }
+TestRunnerTest >> testOnRunnerResultWithGreenTest [
+
+	runner runClass: GreenTest.
+	self
+		assert: runner runCount equals: 2;
+		assert: runner passedCount equals: 2;
+		assert: runner failureCount equals: 0
+]
+
+{ #category : #tests }
+TestRunnerTest >> testOnRunnerResultWithRedTest [
+
+	[ 
+	RedTest doNotIgnoreTest.
+	runner runClass: RedTest.
+	self
+		assert: runner runCount equals: 3;
+		assert: runner passedCount equals: 1;
+		assert: runner failureCount equals: 1;
+		assert: runner errorCount equals: 1 ] ensure: [ RedTest ignoreTest ]
+]
+
+{ #category : #tests }
+TestRunnerTest >> testOnRunnerResultWithYellowTest [
+
+	[ 
+	YellowTest doNotIgnoreTest.
+	runner runClass: YellowTest.
+	self
+		assert: runner testsCount equals: 2;
+		assert: runner passedCount equals: 1;
+		assert: runner failureCount equals: 1 ] ensure: [ 
+		YellowTest ignoreTest ]
+]
+
+{ #category : #tests }
+TestRunnerTest >> testRerunningFailedTest [
+
+	"we will run a test who fail only during the first execution"
+
+	"first execution"
+
+	[ 
+	FailThenPass doNotIgnoreTest.
+	runner runClass: FailThenPass.
+	self assert: runner runCount equals: 2.
+	self assert: runner failureCount equals: 1.
+
+	"second execution"
+	runner runFailures.
+	self assert: runner runCount equals: 2.
+	self assert: runner failureCount equals: 0 ] ensure: [ 
+		FailThenPass ignoreTest ]
+]
+
+{ #category : #tests }
+TestRunnerTest >> testRerunningFailedTest2 [
+
+	"we will run a test who fail only during the first execution"
+
+	"first execution"
+
+	[ 
+	RedTest doNotIgnoreTest.
+	runner runClass: RedTest.
+	self
+		assert: runner runCount equals: 3;
+		assert: runner failureCount equals: 1;
+		assert: runner errorCount equals: 1.
+
+	"second execution"
+	runner runFailures.
+	runner result.
+	self
+		assert: runner runCount equals: 3;
+		assert: runner failureCount equals: 1;
+		assert: runner errorCount equals: 1 ] ensure: [ RedTest ignoreTest ]
+]
+
+{ #category : #tests }
 TestRunnerTest >> testRunnerCanAccumulateResult [
 
 	| firstRunningCount secondRunningCount |
 	[ 
 	YellowTest doNotIgnoreTest.
 	runner accumulateResult.
-	runner run: GreenTest. "2 tests"
+	runner runClass: GreenTest. "2 tests"
 	firstRunningCount := runner runCount.
 
-	runner run: YellowTest. "2 tests"
+	runner runClass: YellowTest. "2 tests"
 	secondRunningCount := runner runCount.
 	self assert: secondRunningCount equals: firstRunningCount + 2 ] 
 		ensure: [ YellowTest ignoreTest ]
+]
+
+{ #category : #tests }
+TestRunnerTest >> testRunnerDoesNotAccumulateRsult [
+
+	| firstRunningCount secondRunningCount |
+	firstRunningCount := (runner runClass: GreenTest) runCount.
+
+	secondRunningCount := (runner runClass: GreenTest) runCount.
+	self assert: secondRunningCount equals: firstRunningCount
 ]
 
 { #category : #tests }
@@ -88,31 +223,54 @@ TestRunnerTest >> testRunningFromAnEmptyCollectionOfPackages [
 { #category : #tests }
 TestRunnerTest >> testRunningTestClassSide [
 
-	"/!\ check others ways to run tests in class side (packages, collection of tests) "
-
 	self
-		assert: (self classForRunner run: GreenTest) passedCount
+		assert: (self classForRunner runClass: GreenTest) passedCount
 		equals: 2.
 
 	self
-		assert: (self classForRunner run: GreenTest) failureCount
+		assert: (self classForRunner runClass: GreenTest) failureCount
 		equals: 0
 ]
 
 { #category : #tests }
 TestRunnerTest >> testSuiteCreation [
 
-	self assert: runner suites isEmpty.
+	self deny: runner hasTestsToRun.
 
 	runner testSuiteFromClass: GreenTest.
 
-	self deny: runner suitesTotal equals: 0
+	self assert: runner hasTestsToRun
+]
+
+{ #category : #tests }
+TestRunnerTest >> testSuiteCreationFromAbstractClass [
+
+	self deny: runner hasTestsToRun.
+
+	runner testSuiteFromClass: AbstractEnumerationVisitorTest.
+
+	self deny: runner hasTestsToRun
+]
+
+{ #category : #tests }
+TestRunnerTest >> testSuiteCreationFromTestClassWithSubClasses [
+
+	self deny: runner hasTestsToRun.
+
+	runner testSuiteFromClass: AbstractEnumerationVisitorTest.
+
+	self deny: runner hasTestsToRun
 ]
 
 { #category : #tests }
 TestRunnerTest >> testSuiteWithMultipleTestCase [
 
-	self assert: runner suites isEmpty.
+	| exepectedNumberOfTest |
+	self deny: runner hasTestsToRun.
+
+	exepectedNumberOfTest := YellowTest suite tests size
+	                         + GreenTest suite tests size
+	                         + RedTest suite tests size.
 
 	[ 
 	YellowTest doNotIgnoreTest.
@@ -121,9 +279,24 @@ TestRunnerTest >> testSuiteWithMultipleTestCase [
 			GreenTest.
 			YellowTest.
 			RedTest }.
-	self assert: runner suitesTotal equals: 3 ] ensure: [ 
-		YellowTest ignoreTest.
-		RedTest ignoreTest ]
+	self assert: runner suite tests size equals: exepectedNumberOfTest ] 
+		ensure: [ 
+			YellowTest ignoreTest.
+			RedTest ignoreTest ]
+]
+
+{ #category : #tests }
+TestRunnerTest >> testSuitesFromANonTestCaseIsEmpty [
+
+	runner testSuiteFromClass: Integer.
+	self deny: runner hasTestsToRun
+]
+
+{ #category : #tests }
+TestRunnerTest >> testSuitesFromAnAbstractTestCaseIsEmpty [
+
+	self classForRunner runClass: AthensCairoExportSurfaceTest.
+	self deny: runner hasTestsToRun
 ]
 
 { #category : #tests }
