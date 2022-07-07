@@ -107,6 +107,14 @@ Float >> asIEEE32BitWord [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
+Float >> asIEEE64BitWord [
+	"Convert the receiver into a 64 bit Integer value representing the same number in IEEE 64 bit format.
+	Used for conversion in Float64Arrays only."
+
+	^ ((self basicAt: 1) bitShift: 32) + (self basicAt: 2)
+]
+
+{ #category : #'*Math-Operations-Extensions' }
 Float >> closeTo: num [
  	"Tell whether the receiver and arguments are close from each."
 	

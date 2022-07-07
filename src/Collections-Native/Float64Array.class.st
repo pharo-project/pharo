@@ -9,14 +9,18 @@ Class {
 Float64Array >> at64Bits: byteIndex [
 
 	<primitive: 614>
-	^ Float fromIEEE64BitWord: (self basicAt: byteIndex) 
+	| elementIndex |
+	elementIndex := byteIndex / 8 + 1.
+	^ Float fromIEEE64BitWord: (self basicAt: elementIndex) 
 ]
 
 { #category : #accessing }
 Float64Array >> at64Bits: byteIndex put: aFloat [
 
 	<primitive: 629>
-	self basicAt: byteIndex put: aFloat asIEEE64BitWord.
+	| elementIndex |
+	elementIndex := byteIndex / 8 + 1.
+	self basicAt: elementIndex put: aFloat asIEEE64BitWord.
 	^ aFloat
 ]
 
