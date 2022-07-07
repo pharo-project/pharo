@@ -66,7 +66,7 @@ CoverageRunner >> coverage [
 { #category : #adding }
 CoverageRunner >> defaultRunner [
 
-	^ TestRunner2 new
+	^ NewTestRunner new
 ]
 
 { #category : #testing }

@@ -10,21 +10,8 @@ Class {
 { #category : #execution }
 RunExecutionMode class >> executeCase: aTestCase [
 
-	| aResult |
-	aResult := TestResult new.
-	[ 
-	[ 
-	aTestCase announce: TestCaseStarted withResult: aResult.
-	CurrentExecutionEnvironment runTestCase: aTestCase.
-	aTestCase announce: TestCaseEnded withResult: aResult.
-	aResult addPass: aTestCase ]
-		on:
-			aResult class failure , aResult class skip , aResult class warning
-			, aResult class error
-		do: [ :ex | ex sunitAnnounce: aTestCase toResult: aResult ] ] 
-		ensure: [ 
-		aTestCase classForTestResource resetResources: aTestCase resources ].
-	^ aResult
+	aTestCase class isTestCase ifFalse: [ ^ TestResult new ].
+	^ aTestCase run
 ]
 
 { #category : #execution }

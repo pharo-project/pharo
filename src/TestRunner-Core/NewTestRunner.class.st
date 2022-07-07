@@ -34,6 +34,17 @@ NewTestRunner class >> example [
 	inspect
 ]
 
+{ #category : #tests }
+NewTestRunner class >> isValidClass: aClass [
+
+	| criterias |
+	criterias := { 
+		             [ :class | class isTestCase ].
+		             [ :class | class isAbstract not ] }.
+
+	^ criterias allSatisfy: [ :criteria | criteria value: aClass ]
+]
+
 { #category : #running }
 NewTestRunner class >> runCase: aTestCase [
 
@@ -102,10 +113,24 @@ NewTestRunner >> defaultExecutionModeClass [
 	^ RunExecutionMode
 ]
 
+{ #category : #processing }
+NewTestRunner >> defaultSuitePreparator [
+
+	^ AnyEffectSuitePreparator
+]
+
 { #category : #running }
 NewTestRunner >> defaultTestResultClass [
 
 	^ TestResult
+]
+
+{ #category : #processing }
+NewTestRunner >> doNotAccumulateResult [
+
+	"activate the results accumulation behavior"
+
+	self shouldAccumulate: false
 ]
 
 { #category : #accessing }
@@ -118,6 +143,12 @@ NewTestRunner >> errorCount [
 NewTestRunner >> executionMode [
 
 	^ executionMode ifNil: [ self defaultExecutionModeClass ]
+]
+
+{ #category : #running }
+NewTestRunner >> executionMode: anExecutionMode [
+
+	executionMode := anExecutionMode
 ]
 
 { #category : #accessing }
@@ -346,6 +377,16 @@ NewTestRunner >> switchToRunMode [
 NewTestRunner >> tearDown [
 
 	self resetSuite
+]
+
+{ #category : #tests }
+NewTestRunner >> testSuiteFromClass: aClass [
+
+	"build a suite from the giving class then add it to the internal collections of suites. 
+	The giving class should be a test case"
+
+	(self class isValidClass: aClass) ifTrue: [ 
+		self addToSuite: aClass suite ]
 ]
 
 { #category : #'suite-building' }
