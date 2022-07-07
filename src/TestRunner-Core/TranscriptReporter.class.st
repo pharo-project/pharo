@@ -36,6 +36,16 @@ TranscriptReporter >> reportCase: aTestCase runBlock: aBlock [
 ]
 
 { #category : #reporting }
+TranscriptReporter >> reportResult: aTestResult [
+
+	"report the execution's result of a testSuite"
+
+	self defaultTranscript
+		show: 'result: ';
+		show: aTestResult
+]
+
+{ #category : #reporting }
 TranscriptReporter >> reportSuite: aTestSuite runBlock: aBlock [
 
 	"run an report the execution's result of a testSuite"

@@ -12,9 +12,22 @@ Class {
 }
 
 { #category : #reporting }
+XmlReporter class >> generateTesCaseClassName: aTestCase [
+
+	^ (aTestCase class category copyReplaceAll: '-' with: '.') , '.'
+	  , aTestCase class name
+]
+
+{ #category : #reporting }
 XmlReporter >> finishReporting [
 
 	stream close
+]
+
+{ #category : #reporting }
+XmlReporter >> generateTesCaseClassName: aTestCase [
+
+	self class generateTesCaseClassName: aTestCase
 ]
 
 { #category : #reporting }

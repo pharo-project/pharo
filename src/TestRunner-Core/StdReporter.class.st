@@ -19,6 +19,12 @@ StdReporter >> currentTest [
 	^ currentTest ifNil: [ currentTest := 0 ]
 ]
 
+{ #category : #processing }
+StdReporter >> incrementCurrentTest [
+
+	currentTest := self currentTest + 1
+]
+
 { #category : #accessing }
 StdReporter >> maxTest [
 
@@ -50,10 +56,35 @@ StdReporter >> reportCase: aTestCase runBlock: aBlock [
 ]
 
 { #category : #reporting }
+StdReporter >> reportResult: aTestResult [
+
+	"report the execution's result of a testSuite"
+
+	self stderr
+		startOfLine;
+		print:
+			'Finishished running ' , aTestResult runCount asString , ' tests';
+		startOfLine;
+		print: aTestResult asString
+]
+
+{ #category : #reporting }
 StdReporter >> reportSuite: aTestSuite runBlock: aBlock [
 
 	"run an report the execution's result of a testSuite"
 
 	maxTest := aTestSuite tests size.
 	aBlock value
+]
+
+{ #category : #accessing }
+StdReporter >> stderr [
+
+	^ stderr ifNil: [ stderr := VTermOutputDriver stderr ]
+]
+
+{ #category : #accessing }
+StdReporter >> stdout [
+
+	^ stdout ifNil: [ stdout := VTermOutputDriver stdout ]
 ]
