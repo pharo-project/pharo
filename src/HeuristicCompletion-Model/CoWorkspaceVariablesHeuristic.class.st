@@ -12,7 +12,7 @@ Class {
 { #category : #requests }
 CoWorkspaceVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 
-	^ aContext isWorkspace
+	^ aContext isScripting
 ]
 
 { #category : #requests }

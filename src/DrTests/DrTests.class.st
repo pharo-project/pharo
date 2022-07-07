@@ -98,7 +98,9 @@ DrTests class >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPlu
 DrTests >> connectPresenters [
 
 	super connectPresenters.
-	self pluginsDropList selectIndex: 1
+	"Take the first element in list"
+	self pluginsDropList selectIndex: 1.
+	self currentPlugin: self pluginsDropList selectedItem new
 ]
 
 { #category : #accessing }

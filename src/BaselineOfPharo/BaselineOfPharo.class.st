@@ -101,8 +101,6 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'IDE' with: [spec repository: repository].
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
-
-		spec package: 'Deprecated10'.
 		
 		spec package: 'FluidClassBuilder'.
 		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].

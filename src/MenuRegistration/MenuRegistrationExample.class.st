@@ -68,7 +68,7 @@ MenuRegistrationExample class >> pharoItemsOn: aBuilder [
 
 { #category : #'menu declaring' }
 MenuRegistrationExample class >> pragmaKeyword [
-	^ 'worldMenuExample'
+	^ #worldMenuExample
 ]
 
 { #category : #'menu actions' }

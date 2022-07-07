@@ -148,7 +148,7 @@ BehaviorTest >> testIncludesMethod [
 BehaviorTest >> testInstSize [
 	self assert: Object instSize equals: 0.
 	self assert: Point instSize equals: 2.
-	self assert: Metaclass instSize equals: 6
+	self assert: Metaclass instSize equals: 7
 ]
 
 { #category : #tests }
