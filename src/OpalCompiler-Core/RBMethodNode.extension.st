@@ -67,6 +67,16 @@ RBMethodNode >> generate: trailer [
 RBMethodNode >> generateIR [
 	| ir |
 	scope ifNil: [self doSemanticAnalysis].
+	
+	self pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
+		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
+		copy := self copy.
+		copy removePragmaNamed: pragma selector.
+		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
+		ir sourceNode: self.
+		^ ir
+	].
+	
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
