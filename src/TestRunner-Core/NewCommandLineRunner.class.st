@@ -17,6 +17,12 @@ NewCommandLineRunner >> defaultReporterClass [
 	^ TranscriptReporter
 ]
 
+{ #category : #test }
+NewCommandLineRunner >> hasDefaultReporter [
+
+	^ self reporter isNotNil
+]
+
 { #category : #private }
 NewCommandLineRunner >> incrementTestCount [
 
@@ -46,6 +52,34 @@ NewCommandLineRunner >> reporter [
 NewCommandLineRunner >> reporter: aReporter [
 
 	reporter := aReporter
+]
+
+{ #category : #running }
+NewCommandLineRunner >> runCase: aTestCase [
+
+	"run and report a testCase"
+
+	self incrementTestCount.
+	self reporter 
+	 reportCase: aTestCase 
+	 runBlock: [ 
+		aTestCase runCaseManaged.
+		aTestCase shouldPass
+			ifTrue: [ self recordPassOf: aTestCase ]
+			ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
+]
+
+{ #category : #running }
+NewCommandLineRunner >> runSuite [
+
+	self reporter reportSuite: self suite runBlock: [ super runSuite ]
+]
+
+{ #category : #running }
+NewCommandLineRunner >> tearDown [
+
+	super tearDown.
+	self reporter reportResult: self result
 ]
 
 { #category : #private }
