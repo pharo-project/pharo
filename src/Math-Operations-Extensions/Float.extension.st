@@ -45,7 +45,7 @@ Float >> arcTan: denominator [
 { #category : #'*Math-Operations-Extensions' }
 Float >> asIEEE32BitWord [
 	"Convert the receiver into a 32 bit Integer value representing the same number in IEEE 32 bit format.
-	Used for conversion in FloatArrays only."
+	Used for conversion in Float32Arrays only."
 	
 	| word1 word2 sign mantissa exponent destWord truncatedBits mask roundToUpper |
 	
