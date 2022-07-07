@@ -13,7 +13,7 @@ TestRunnerTest >> classForRunner [
 	^ NewTestRunner
 ]
 
-{ #category : #tests }
+{ #category : #running }
 TestRunnerTest >> setUp [
 	super setUp.
 	runner := self classForRunner new suitePreparator: ShuffleSuitePreparator.
