@@ -1172,7 +1172,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 9 put: Smalltalk.
 	newArray at: 10 put: BoxedFloat64.
 	newArray at: 11 put: (self globals at: #MethodContext ifAbsent: [self globals at: #Context]).
-	newArray at: 12 put: nil. "was BlockContext."
+	newArray at: 12 put: Float32Array. "was BlockContext."
 	newArray at: 13 put: Point.
 	newArray at: 14 put: LargePositiveInteger.
 	newArray at: 15 put: (self globals at: #Display ifAbsent: [nil]).
