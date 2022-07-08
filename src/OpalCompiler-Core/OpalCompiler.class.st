@@ -388,13 +388,13 @@ OpalCompiler >> format: textOrString [
 
 { #category : #private }
 OpalCompiler >> getSourceFromRequestorSelection [
-    | selectionString |
+    | selection |
     "if the requestor can provide a selection, we use that as the source"
      (self compilationContext requestor respondsTo: #selection) ifFalse: [ ^self ].
     
-    selectionString := self compilationContext requestor selection asString.
-    selectionString isEmptyOrNil ifTrue: [ ^self ].
-    self source: selectionString.
+    selection := self compilationContext requestor selection .
+    selection isEmptyOrNil ifTrue: [ ^self ].
+    self source: selection asString.
 ]
 
 { #category : #testing }
