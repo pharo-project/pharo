@@ -6,15 +6,15 @@ Class {
 	#name : #InstructionClient,
 	#superclass : #Object,
 	#instVars : [
-		'mappedInlinePrimitiveIndex'
+		'mappedInlinePrimitiveHandlers'
 	],
 	#category : #'Kernel-Methods'
 }
 
 { #category : #'extended instruction decoding' }
-InstructionClient >> addMappedInlinePrimitive: decoder at: bytecodeNumber [
+InstructionClient >> addMappedInlinePrimitiveHandler: handler at: bytecodeNumber [
 
-	mappedInlinePrimitiveIndex at: bytecodeNumber put: decoder
+	mappedInlinePrimitiveHandlers at: bytecodeNumber put: handler
 ]
 
 { #category : #'instruction decoding' }
@@ -60,7 +60,9 @@ InstructionClient >> doPop [
 
 { #category : #initialization }
 InstructionClient >> initialize [
-	mappedInlinePrimitiveIndex := Dictionary new
+	mappedInlinePrimitiveHandlers := Dictionary new.
+	"Configuration classes are expected to send the `addMappedInlinePrimitiveHandler:at:` message to add bytecode handlers to this instance"
+	BytecodeMappedInlinePrimitiveConfiguration subclasses do: [ :each | each configure: self ]
 ]
 
 { #category : #'instruction decoding' }
@@ -88,7 +90,9 @@ InstructionClient >> jump: offset withInterpreter: anInterpreter [
 { #category : #'instruction decoding' }
 InstructionClient >> mappedInlinePrimitive: extensionBytecodeNumber [
 
-	(mappedInlinePrimitiveIndex at: extensionBytecodeNumber ifAbsent: []) value
+	(mappedInlinePrimitiveHandlers
+		 at: extensionBytecodeNumber
+		 ifAbsent: [ self unusedBytecode ]) value
 ]
 
 { #category : #'instruction decoding' }
