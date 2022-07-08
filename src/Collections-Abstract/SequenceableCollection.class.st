@@ -252,7 +252,7 @@ SequenceableCollection >> asFloatArray [
 	the same order."
 
 	| floatArray |
-	floatArray := FloatArray new: self size.
+	floatArray := Float32Array new: self size.
 	1 to: self size do:[:i| floatArray at: i put: (self at: i) asFloat ].
 	^floatArray
 ]
