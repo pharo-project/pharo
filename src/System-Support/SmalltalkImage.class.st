@@ -1172,7 +1172,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 9 put: Smalltalk.
 	newArray at: 10 put: BoxedFloat64.
 	newArray at: 11 put: (self globals at: #MethodContext ifAbsent: [self globals at: #Context]).
-	newArray at: 12 put: Float32Array. "was BlockContext."
+	newArray at: 12 put: nil. "was BlockContext."
 	newArray at: 13 put: Point.
 	newArray at: 14 put: LargePositiveInteger.
 	newArray at: 15 put: (self globals at: #Display ifAbsent: [nil]).
@@ -1193,7 +1193,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	"An array of the 255 Characters in ascii order.
 	 Cog inlines table into machine code at: prim so do not regenerate it.
 	 This is nil in Spur, which has immediate Characters."
-	newArray at: 25 put: Float64Array.
+	newArray at: 25 put: nil.
 	newArray at: 26 put: #mustBeBoolean.
 	newArray at: 27 put: ByteArray.
 	newArray at: 28 put: Process.
@@ -1202,8 +1202,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 30 put: ((self primitiveGetSpecialObjectsArray at: 30) ifNil: [Semaphore new]). "delay Semaphore"
 	newArray at: 31 put: ((self primitiveGetSpecialObjectsArray at: 31) ifNil: [Semaphore new]). "user interrupt Semaphore"
 	"Entries 32 - 34 unreferenced. Previously these contained prototype instances to be copied for fast initialization"
-	newArray at: 32 put: nil. "was the prototype Float"
-	newArray at: 33 put: nil. "was the prototype 4-byte LargePositiveInteger"
+	newArray at: 32 put: Float32Array. "was the prototype Float"
+	newArray at: 33 put: Float64Array. "was the prototype 4-byte LargePositiveInteger"
 	newArray at: 34 put: nil. "was the prototype Point"
 	newArray at: 35 put: #cannotInterpret:.
 	newArray at: 36 put: nil. "was the prototype MethodContext"
