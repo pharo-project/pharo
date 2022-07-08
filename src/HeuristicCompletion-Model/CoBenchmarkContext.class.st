@@ -48,7 +48,7 @@ CoBenchmarkContext >> environmentAt: aString ifPresent: aBlockClosure [
 ]
 
 { #category : #testing }
-CoBenchmarkContext >> isScripting [
+CoBenchmarkContext >> isWorkspace [
 	
 	^ false
 ]

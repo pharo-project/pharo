@@ -147,7 +147,7 @@ CoCompletionContext >> initialize [
 ]
 
 { #category : #testing }
-CoCompletionContext >> isScripting [
+CoCompletionContext >> isWorkspace [
 	
 	^ engine notNil and: [ engine isScripting ]
 ]

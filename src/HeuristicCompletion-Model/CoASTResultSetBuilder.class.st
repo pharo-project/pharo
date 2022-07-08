@@ -71,7 +71,7 @@ CoASTResultSetBuilder >> parseNode [
 	^ node ifNil: [
 		(completionContext completionClass compiler
 			source: completionContext source;
-			noPattern: completionContext isScripting; 
+			noPattern: completionContext isWorkspace; 
 			options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 			parse) nodeForOffset: completionContext position ]
 ]

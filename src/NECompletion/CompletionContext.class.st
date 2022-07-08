@@ -94,7 +94,7 @@ CompletionContext >> initEntries [
 ]
 
 { #category : #parsing }
-CompletionContext >> isScripting [
+CompletionContext >> isWorkspace [
 	^ engine notNil and: [ engine isScripting ]
 ]
 
@@ -124,7 +124,7 @@ CompletionContext >> node [
 CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
-		noPattern: self isScripting;
+		noPattern: self isWorkspace;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	TypingVisitor new visitNode: ast

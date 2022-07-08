@@ -697,6 +697,11 @@ RubScrolledTextMorph >> initialize [
 ]
 
 { #category : #testing }
+RubScrolledTextMorph >> isForScripting [
+	^ self textArea isForScripting
+]
+
+{ #category : #testing }
 RubScrolledTextMorph >> isReadOnly [
 	^ self textArea isReadOnly
 ]

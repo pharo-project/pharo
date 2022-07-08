@@ -52,6 +52,11 @@ ClyTextEditingMode >> initialize [
 ]
 
 { #category : #accessing }
+ClyTextEditingMode >> isForScripting [
+	^ isForScripting
+]
+
+{ #category : #accessing }
 ClyTextEditingMode >> isForScripting: anObject [
 	isForScripting := anObject
 ]

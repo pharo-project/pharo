@@ -181,7 +181,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 						do: [ self openMenuIn: aBlock ] ].
 			labels add: 'Declare new global'.
 			actions add: [ self declareGlobal ].
-			compilationContext requestor isScripting ifFalse: 
+			compilationContext requestor isForScripting ifFalse: 
 				[labels add: 'Declare new class variable'.
 				actions add: [ self declareClassVar ]].
 			labels add: 'Define new trait'.
