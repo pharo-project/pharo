@@ -1,12 +1,28 @@
 "
-I add a number of facilities to basic Behaviors:
-	Named instance variables
-	Category organization for methods
-	The notion of a name of this class (implemented as subclass responsibility)
-	The maintenance of a ChangeSet, and logging changes on a file
-	Most of the mechanism for fileOut.
-	
-I am an abstract class, in particular, my facilities are intended for inheritance by two subclasses, Class and Metaclass.
+Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+
+For the Class part:  State a one line summary. For example, ""I represent a paragraph of text"".
+
+For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
+
+For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
+
+Public API and Key Messages
+
+- message one   
+- message two 
+- (for bonus points) how to create instances.
+
+   One simple example is simply gorgeous.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	commentSourcePointer:		<Object>
+	organization:		<Object>
+
+
+    Implementation Points
 "
 Class {
 	#name : #ClassDescription,
@@ -208,15 +224,15 @@ ClassDescription >> classComment: aString [
 
 { #category : #'file in/out' }
 ClassDescription >> classComment: aString stamp: aStamp [
-	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
+	"Store the comment, aString or Text or RemoteString. Empty string gets stored only if had a non-empty one before."
 
 	| pointer header oldComment oldStamp preamble |
-	oldComment := self organization classComment.
-	oldStamp := self organization commentStamp.
+	oldComment := self comment.
+	oldStamp := self commentStamp.
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	pointer := self organization commentSourcePointer ifNil: [0]. 
+	pointer := self commentSourcePointer ifNil: [0]. 
 		
 	
 	preamble := String streamContents: [ :file |
@@ -233,8 +249,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		writeSource: aString
 		preamble: preamble
 		onSuccess: [ :newSourcePointer | 
-			self organization 
-				commentSourcePointer: newSourcePointer]
+			self   commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 	
 	SystemAnnouncer uniqueInstance 
@@ -348,8 +363,12 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing - comment' }
 ClassDescription >> comment [
-    "Answer the receiver's comment. (If missing, supply a template) "
-    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
+
+	"Answer the receiver's comment. (If missing, supply a template) "
+
+	^ commentSourcePointer
+		  ifNil: [ self classCommentBlank ]
+		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
 ]
 
 { #category : #'accessing - comment' }
@@ -364,6 +383,24 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	"Set the receiver's comment to be the argument, aStringOrText."
 
 	self instanceSide classComment: aStringOrText stamp: aStamp.
+]
+
+{ #category : #'accessing - comment' }
+ClassDescription >> commentSourcePointer [
+	^ commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+ClassDescription >> commentSourcePointer: anObject [
+	commentSourcePointer := anObject
+]
+
+{ #category : #'accessing - comment' }
+ClassDescription >> commentStamp [
+
+	^ commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
 { #category : #'file in/out' }
@@ -638,7 +675,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing - comment' }
 ClassDescription >> hasComment [
 	"Return whether this class truly has a comment other than the default"
-	^self instanceSide organization hasComment
+	^ commentSourcePointer isNotNil
 ]
 
 { #category : #'instance variables' }
