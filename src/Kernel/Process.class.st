@@ -359,6 +359,14 @@ Process >> isActiveProcess [
 ]
 
 { #category : #testing }
+Process >> isBlocked [
+	"Answer true if blocked on a semaphore."
+	self isActiveProcess ifTrue: [ ^false ].
+	self isTerminated ifTrue: [ ^false ].
+	^myList class == Semaphore
+]
+
+{ #category : #testing }
 Process >> isSuspended [
 	"Answer true if I was never scheduled yet (new process, never been sent #resume) or paused (was sent #suspend)"
 	self isActiveProcess ifTrue: [ ^false ].
