@@ -358,6 +358,14 @@ Process >> isReady [
 ]
 
 { #category : 'testing' }
+Process >> isBlocked [
+	"Answer true if blocked on a semaphore."
+	self isActiveProcess ifTrue: [ ^false ].
+	self isTerminated ifTrue: [ ^false ].
+	^myList class == Semaphore
+]
+
+{ #category : 'testing'. }
 Process >> isSuspended [
 	"A #suspended process will not run until sent #resume. New processes
 	start in this state (though the #fork family sends #resume internally),
