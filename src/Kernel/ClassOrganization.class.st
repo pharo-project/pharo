@@ -73,7 +73,7 @@ ClassOrganization >> categoriesSorted [
 { #category : #'backward compatibility' }
 ClassOrganization >> categoryOfElement: aSelector [
 
-	^ self categoryOfElement: aSelector ifAbsent: [ nil ]
+	^ self categoryOfElement: aSelector ifAbsent: nil
 ]
 
 { #category : #'backward compatibility' }
@@ -83,7 +83,7 @@ ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 		ifEmpty: [ 
 			(organizedClass includesSelector: aSelector)
 				ifTrue: [ Protocol unclassified ]
-				ifFalse: aBlock ]
+				ifFalse: [ aBlock value ]]
 		ifNotEmpty: [:col | col first name ]
 ]
 
