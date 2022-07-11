@@ -42,7 +42,7 @@ The bootstrapping can be done on a properly-named branch using the following scr
 This will generate and archive images at various stages of the bootstrap process up to the full image in `Pharo11.0-64bit-hhhhhhh.zip` where hhhhhhh is the hash of the current checkout. Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
 
 * You can set the `BUILD_NUMBER` environment variable to to a unique integer (this is typically used only for the [official builds](https://files.pharo.org/image/110/) and will default to `0` if not specified).
-* You can set the `BOOTSTRAP_ARCH` environment variables to either `64` (the default) or `32`.
+* You can set the `BOOTSTRAP_ARCH` environment variable to either `64` (the default) or `32`.
 * You can set the `BOOTSTRAP_REPOSITORY` and `BOOTSTRAP_CACHE` environment variables to do the bootstrap outside of the source repository.
 * You can set the `BOOTSTRAP_VMTARGET` environment variable to make the bootstrap use a virtual machine already present in your system (otherwise it will download it).
 * If you are on a branch that doesn't follow the expected naming convention ('`PharoX.Y`'), then the script will pick an appropriate default (such as `Pharo11.0`). To build Pharo11.0 from a custom branch, you need to set `BRANCH_NAME=Pharo11` before the bootstrap script is run.
