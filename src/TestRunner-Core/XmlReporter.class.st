@@ -16,7 +16,9 @@ XmlReporter class >> buildAttributesForFailure: aTestFailure duringTest: aTestCa
 
 	| aDictionnary |
 	aDictionnary := Dictionary new.
-	aDictionnary at: 'type' put: aTestFailure class.
+	aDictionnary
+		at: 'type' put: aTestFailure class;
+		at: 'message:' put: aTestFailure messageText.
 
 	^ aDictionnary
 ]
@@ -195,8 +197,7 @@ XmlReporter >> reportSuite: aTestSuite runBlock: aBlock [
 	aBlock value.
 	self generateStandardPart.
 	stream
-		nextPutAll: '</testsuite>';
-		lf
+		nextPutAll: '</testsuite>'
 ]
 
 { #category : #reporting }

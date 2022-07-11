@@ -16,7 +16,7 @@ Class {
 { #category : #accessing }
 StdReporter >> currentTest [
 
-	^ currentTest ifNil: [ currentTest := 0 ]
+	^ currentTest ifNil: [ currentTest := 1 ]
 ]
 
 { #category : #processing }
@@ -45,13 +45,46 @@ StdReporter >> reportCase: aTestCase runBlock: aBlock [
 	"run an report the execution's result of a testCase"
 
 	super reportCase: aTestCase runBlock: aBlock.
+	self incrementCurrentTest.
+]
+
+{ #category : #reporting }
+StdReporter >> reportError: aTestError of: aTestCase [
+
+	self stderr
+		startOfLine;
+		clearToEnd;
+		red;
+		print: aTestCase;
+		nextPutAll: '     X error';
+		clear.
+	self printProgress.
+]
+
+{ #category : #reporting }
+StdReporter >> reportFailure: aTestFailure of: aTestCase [
+
+	self stderr
+		startOfLine;
+		clearToEnd;
+		yellow;
+		print: aTestCase;
+		nextPutAll: '     /!\ failure';
+		clear.
+	self printProgress.
+]
+
+{ #category : #reporting }
+StdReporter >> reportPass: aTestCase [
+
+	"report the execution's result of a passed test"
+
 	self stderr
 		startOfLine;
 		clearToEnd;
 		green;
 		print: aTestCase;
 		clear.
-	self incrementCurrentTest.
 	self printProgress
 ]
 
@@ -62,9 +95,11 @@ StdReporter >> reportResult: aTestResult [
 
 	self stderr
 		startOfLine;
+		clearToEnd;
 		print:
 			'Finishished running ' , aTestResult runCount asString , ' tests';
 		startOfLine;
+		clearToEnd;
 		print: aTestResult asString
 ]
 
