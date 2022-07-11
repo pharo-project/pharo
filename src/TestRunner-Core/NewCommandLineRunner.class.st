@@ -30,16 +30,53 @@ NewCommandLineRunner >> incrementTestCount [
 	testCount := testCount + 1
 ]
 
+{ #category : #running }
+NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
+	
+	aTestCase shouldPass ifFalse: [ ^ self ].
+	self addError: aTestCase.
+
+	self reportError: aTestFailure of: aTestCase
+]
+
+{ #category : #running }
+NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
+
+	aTestCase shouldPass ifFalse: [ ^ self ].
+	self addFailure: aTestCase.
+
+	self reportFailure: aTestFailure of: aTestCase.
+]
+
 { #category : #private }
 NewCommandLineRunner >> recordPassOf: aTestCase [
 
-	self result addPass: aTestCase
+	self result addPass: aTestCase.
+	self reporter reportPass: aTestCase
+]
+
+{ #category : #internal }
+NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aProcessMonitorTestServiceTest [
+
+	self result addSkip: aTestSkipped
 ]
 
 { #category : #private }
 NewCommandLineRunner >> recordUnexpectedPassOf: aTestCase [
 
 	self notYetImplemented
+]
+
+{ #category : #reporting }
+NewCommandLineRunner >> reportError: aTestError of: aTestCase [
+
+	self reporter reportError: aTestError of: aTestCase
+]
+
+{ #category : #reporting }
+NewCommandLineRunner >> reportFailure: aTestFailure of: aTestCase [
+
+	self reporter reportFailure: aTestFailure of: aTestCase
 ]
 
 { #category : #private }
@@ -60,13 +97,23 @@ NewCommandLineRunner >> runCase: aTestCase [
 	"run and report a testCase"
 
 	self incrementTestCount.
-	self reporter 
-	 reportCase: aTestCase 
-	 runBlock: [ 
-		aTestCase runCaseManaged.
-		aTestCase shouldPass
-			ifTrue: [ self recordPassOf: aTestCase ]
-			ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
+	self reporter
+		reportCase: aTestCase
+		runBlock: [self runCaseManaged: aTestCase ]
+]
+
+{ #category : #running }
+NewCommandLineRunner >> runCaseManaged: aTestCase [
+
+	"saving the failure context"
+
+	[ 
+	self timeToRun: aTestCase.
+	aTestCase shouldPass
+		ifTrue: [ self recordPassOf: aTestCase ]
+		ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
+		on: Exception
+		do: [ :error | error recordResultOf: aTestCase inHDTestReport: self ]
 ]
 
 { #category : #running }
@@ -82,10 +129,21 @@ NewCommandLineRunner >> tearDown [
 	self reporter reportResult: self result
 ]
 
-{ #category : #private }
-NewCommandLineRunner >> testCount [
+{ #category : #running }
+NewCommandLineRunner >> timeToRun: aTestCase [
 
-	"return the number of executed testCases"
+	| initialMicroseconds finalMicroseconds duration |
+	initialMicroseconds := Time microsecondClockValue.
 
-	^ testCount
+	[ aTestCase runCaseManaged ]
+		on: Exception
+		do: [ :e | 
+			finalMicroseconds := Time microsecondClockValue.
+			duration := finalMicroseconds - initialMicroseconds.
+			self reporter currentCaseDuration:
+				(Duration milliSeconds: duration).
+			e pass ].
+	duration ifNil: [ 
+		duration := Time microsecondClockValue - initialMicroseconds.
+		self reporter currentCaseDuration: (Duration milliSeconds: duration) ]
 ]

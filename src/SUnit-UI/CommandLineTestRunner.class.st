@@ -59,6 +59,7 @@ CommandLineTestRunner >> printReport [
 
 { #category : #printing }
 CommandLineTestRunner >> printTestCase: aTestCase [
+	
 ]
 
 { #category : #helper }

@@ -89,6 +89,24 @@ NewTestRunner >> accumulateResult [
 	self shouldAccumulate: true
 ]
 
+{ #category : #internal }
+NewTestRunner >> addError: aTestError [
+
+	self result addError: aTestError
+]
+
+{ #category : #internal }
+NewTestRunner >> addFailure: aTestFailure [
+
+	self result addFailure: aTestFailure
+]
+
+{ #category : #internal }
+NewTestRunner >> addPass: aPassedTest [
+
+	self result addPass: aPassedTest
+]
+
 { #category : #tests }
 NewTestRunner >> addToSuite: aTestSuite [
 
@@ -275,7 +293,7 @@ NewTestRunner >> runFailures [
 	self result failures do: [ :testCase | self runFailure: testCase ]
 ]
 
-{ #category : #runninh }
+{ #category : #running }
 NewTestRunner >> runPackage: aRPackage [
 
 	self shouldAccumulate ifFalse: [ self resetResult ].

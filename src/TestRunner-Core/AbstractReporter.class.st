@@ -18,9 +18,15 @@ AbstractReporter class >> isAbstract [
 ]
 
 { #category : #internal }
-AbstractReporter >> addTosuiteExecutionDuration: aDuration [
+AbstractReporter >> addToSuiteExecutionDuration: aDuration [
 
 	suiteExecutionDuration := self suiteExecutionDuration + aDuration
+]
+
+{ #category : #reporting }
+AbstractReporter >> currentCaseDuration: aDuration [
+
+	currentCaseDuration := aDuration
 ]
 
 { #category : #reporting }
@@ -28,7 +34,28 @@ AbstractReporter >> reportCase: aTestCase runBlock: aBlock [
 
 	"run an report the execution's result of a testCase"
 
-	currentCaseDuration := aBlock timeToRun
+	aBlock value.
+	self updateSuiteExecutionDuration
+]
+
+{ #category : #reporting }
+AbstractReporter >> reportError: aTestError of: aTestCase [
+
+	self subclassResponsibility
+]
+
+{ #category : #reporting }
+AbstractReporter >> reportFailure: aTestFailure of: aTestCase [
+
+	self subclassResponsibility
+]
+
+{ #category : #reporting }
+AbstractReporter >> reportPass: aTestCase [
+
+	"report the execution's result of a passed test"
+
+	self subclassResponsibility
 ]
 
 { #category : #reporting }
@@ -50,6 +77,12 @@ AbstractReporter >> reportSuite: aTestSuite runBlock: aBlock [
 { #category : #accessing }
 AbstractReporter >> suiteExecutionDuration [
 
-	^ self suiteExecutionDuration ifNil: [ 
+	^ suiteExecutionDuration ifNil: [ 
 		  suiteExecutionDuration := Duration new ]
+]
+
+{ #category : #reporting }
+AbstractReporter >> updateSuiteExecutionDuration [
+
+	self addToSuiteExecutionDuration: currentCaseDuration
 ]

@@ -14,25 +14,43 @@ TranscriptReporter >> defaultTranscript [
 ]
 
 { #category : #reporting }
-TranscriptReporter >> reportCase: aTestCase runBlock: aBlock [
+TranscriptReporter >> partialReport: aTestCase [
 
-	"run an report the execution's result of a testCase"
-
-	| testCaseExecutionDuration result |
-	testCaseExecutionDuration := [ result := aBlock value ] timeToRun.
-	self addTosuiteExecutionDuration: testCaseExecutionDuration.
 	self defaultTranscript
 		tab;
 		show: aTestCase asString;
 		show: ' duration: ';
-		show: testCaseExecutionDuration;
-		show: ' state: ';
-		show: (result hasPassed
-				 ifTrue: [ ' [passed]' ]
-				 ifFalse: [ 
-					 result hasFailures ifTrue: [ '[failure]' ].
-					 result hasErrors ifTrue: [ '[errors]' ] ]);
+		show: currentCaseDuration;
+		show: ' state:'
+]
+
+{ #category : #reporting }
+TranscriptReporter >> reportError: aTestError of: aTestCase [
+
+	self partialReport: aTestCase.
+	self defaultTranscript
+		show: ' [error]';
 		cr
+]
+
+{ #category : #reporting }
+TranscriptReporter >> reportFailure: aTestFailure of: aTestCase [
+
+	self partialReport: aTestCase.
+	self defaultTranscript
+		show: ' [failure]';
+		cr
+]
+
+{ #category : #reporting }
+TranscriptReporter >> reportPass: aTestCase [
+
+	"report the execution's result of a passed test"
+
+	self partialReport: aTestCase.
+	self defaultTranscript
+		show: ' [passed]';
+		lf
 ]
 
 { #category : #reporting }
