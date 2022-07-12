@@ -1,12 +1,13 @@
 "
-This class manages a protocol organizer
+This class manages the class comment and a protocol organizer
 "
 Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
 		'protocolOrganizer',
-		'organizedClass'
+		'organizedClass',
+		'commentSourcePointer'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -135,7 +136,7 @@ ClassOrganization >> cleanUpCategoriesForClass: aClass [
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	^ organizedClass comment
+	^ commentSourcePointer ifNil: [''] ifNotNil: [:ptr | SourceFiles sourceCodeAt: ptr ]
 ]
 
 { #category : #accessing }
@@ -145,22 +146,25 @@ ClassOrganization >> comment: aString [
 
 { #category : #accessing }
 ClassOrganization >> commentSourcePointer [
-	^ organizedClass commentSourcePointer
+	^ commentSourcePointer
 ]
 
 { #category : #accessing }
 ClassOrganization >> commentSourcePointer: anObject [
-	organizedClass commentSourcePointer: anObject
+	commentSourcePointer := anObject
 ]
 
 { #category : #accessing }
 ClassOrganization >> commentStamp [
 
-	^ organizedClass commentStamp
+	^ commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
+	commentSourcePointer  := otherOrganization commentSourcePointer.
 	otherOrganization protocols do: [ :p | p methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: p name ] ]
 ]
 
@@ -171,7 +175,7 @@ ClassOrganization >> extensionProtocols [
 
 { #category : #testing }
 ClassOrganization >> hasComment [
-	^ organizedClass hasComment
+	^ commentSourcePointer isNotNil
 ]
 
 { #category : #'backward compatibility' }
