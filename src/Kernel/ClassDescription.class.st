@@ -208,15 +208,15 @@ ClassDescription >> classComment: aString [
 
 { #category : #'file in/out' }
 ClassDescription >> classComment: aString stamp: aStamp [
-	"Store the comment, aString or Text or RemoteString. Empty string gets stored only if had a non-empty one before."
+	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
 	| pointer header oldComment oldStamp preamble |
-	oldComment := self comment.
-	oldStamp := self commentStamp.
+	oldComment := self organization classComment.
+	oldStamp := self organization commentStamp.
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	pointer := self commentSourcePointer ifNil: [0]. 
+	pointer := self organization commentSourcePointer ifNil: [0]. 
 		
 	
 	preamble := String streamContents: [ :file |
@@ -233,7 +233,8 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		writeSource: aString
 		preamble: preamble
 		onSuccess: [ :newSourcePointer | 
-			self   commentSourcePointer: newSourcePointer]
+			self organization 
+				commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 	
 	SystemAnnouncer uniqueInstance 
@@ -347,12 +348,8 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing - comment' }
 ClassDescription >> comment [
-
-	"Answer the receiver's comment. (If missing, supply a template) "
-
-	^ commentSourcePointer
-		  ifNil: [ self classCommentBlank ]
-		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+    "Answer the receiver's comment. (If missing, supply a template) "
+    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
 { #category : #'accessing - comment' }
@@ -367,24 +364,6 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	"Set the receiver's comment to be the argument, aStringOrText."
 
 	self instanceSide classComment: aStringOrText stamp: aStamp.
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> commentSourcePointer [
-	^ commentSourcePointer
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> commentSourcePointer: anObject [
-	commentSourcePointer := anObject
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> commentStamp [
-
-	^ commentSourcePointer
-		  ifNil: [ '' ]
-		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
 { #category : #'file in/out' }
@@ -659,7 +638,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing - comment' }
 ClassDescription >> hasComment [
 	"Return whether this class truly has a comment other than the default"
-	^ commentSourcePointer isNotNil
+	^self instanceSide organization hasComment
 ]
 
 { #category : #'instance variables' }
