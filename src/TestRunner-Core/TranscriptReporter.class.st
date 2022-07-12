@@ -4,7 +4,7 @@ I report tests execution result in the Transcript
 Class {
 	#name : #TranscriptReporter,
 	#superclass : #AbstractReporter,
-	#category : #'TestRunner-Core-Reporter'
+	#category : #'TestRunner-Core-Reporters'
 }
 
 { #category : #reporting }

@@ -8,7 +8,7 @@ Class {
 		'stream',
 		'suitePosition'
 	],
-	#category : #'TestRunner-Core-Reporter'
+	#category : #'TestRunner-Core-Reporters'
 }
 
 { #category : #reporting }

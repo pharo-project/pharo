@@ -10,7 +10,7 @@ Class {
 		'maxTest',
 		'currentTest'
 	],
-	#category : #'TestRunner-Core-Reporter'
+	#category : #'TestRunner-Core-Reporters'
 }
 
 { #category : #accessing }

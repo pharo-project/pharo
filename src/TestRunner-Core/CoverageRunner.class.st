@@ -19,7 +19,7 @@ Class {
 		'suites',
 		'runner'
 	],
-	#category : #'TestRunner-Core-Core'
+	#category : #'TestRunner-Core-Extensions'
 }
 
 { #category : #adding }

@@ -8,7 +8,7 @@ Class {
 		'testCount',
 		'reporter'
 	],
-	#category : #'TestRunner-Core-Core'
+	#category : #'TestRunner-Core-Extensions'
 }
 
 { #category : #private }
