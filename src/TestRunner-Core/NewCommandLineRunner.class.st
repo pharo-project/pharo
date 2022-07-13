@@ -51,7 +51,6 @@ NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 
 	"aTestCase shouldPass ifFalse: [ ^ self ]."
 	self addFailure: aTestCase.
-
 	self reportFailure: aTestFailure of: aTestCase
 ]
 
@@ -73,6 +72,7 @@ NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aTestCase [
 
 { #category : #private }
 NewCommandLineRunner >> recordUnexpectedPassOf: aTestCase [
+
 	"store the testcase as failure. A test which is excpected to fail should not pass"
 
 	| exception |
@@ -118,13 +118,14 @@ NewCommandLineRunner >> runCase: aTestCase [
 
 { #category : #running }
 NewCommandLineRunner >> runCaseManaged: aTestCase [
+
 	"saving the failure context"
 
 	[ 
 	self timeToRun: aTestCase.
 	aTestCase shouldPass
 		ifTrue: [ self recordPassOf: aTestCase ]
-		ifFalse: [self recordUnexpectedPassOf: aTestCase ] ]
+		ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
 		on: Exception
 		do: [ :error | error recordResultOf: aTestCase inHDTestReport: self ]
 ]
