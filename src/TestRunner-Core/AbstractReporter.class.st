@@ -68,6 +68,13 @@ AbstractReporter >> reportResult: aTestResult [
 ]
 
 { #category : #reporting }
+AbstractReporter >> reportSkipped: aTestCase [
+	"report the giving testcase"
+	
+	
+]
+
+{ #category : #reporting }
 AbstractReporter >> reportSuite: aTestSuite runBlock: aBlock [
 
 	"run an report the execution's result of a testSuite"
