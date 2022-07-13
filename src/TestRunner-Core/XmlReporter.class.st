@@ -18,7 +18,7 @@ XmlReporter class >> buildAttributesForFailure: aTestFailure duringTest: aTestCa
 	aDictionnary := Dictionary new.
 	aDictionnary
 		at: 'type' put: aTestFailure class;
-		at: 'message:' put: aTestFailure messageText.
+		at: 'message' put: aTestFailure messageText.
 
 	^ aDictionnary
 ]
@@ -126,18 +126,19 @@ XmlReporter >> reportFailure: aTestFailure of: aTestCase [
 		                           duringTest: aTestCase.
 	attributesForTestCaseTag := self buildAttributesForTestCase:
 		                            aTestCase.
+	[ 
 	self
 		writeOpeningTestCaseTag: aTestCase
 		withProperties: attributesForTestCaseTag;
 		writeOpeningFailureTag: aTestFailure
 		withProperties: attributesForFailureTag.
 	stream nextPutAll: self tabCaracter3Times.
-	self writeException: aTestFailure of: aTestCase.
-	stream
-		nextPutAll: self tabCaracter2Times;
-		nextPutAll: '</failure>';
-		lf.
-	self writeClosingTag: aTestCase
+	self writeException: aTestFailure of: aTestCase ] ensure: [ 
+		stream
+			nextPutAll: self tabCaracter2Times;
+			nextPutAll: '</failure>';
+			lf.
+		self writeClosingTag: aTestCase ]
 ]
 
 { #category : #reporting }
@@ -251,14 +252,14 @@ XmlReporter >> writeException: aTestFailure [
 		lf;
 		nextPutAll: self tabCaracter3Times;
 		nextPutAll: aTestFailure messageText;
-		lf
+		lf.
 ]
 
 { #category : #reporting }
 XmlReporter >> writeException: aTestFailure of: aTestCase [
 
 	self writeException: aTestFailure.
-	self writeExceptionStack: aTestFailure of: aTestCase
+	self writeExceptionStack: aTestFailure of: aTestCase.
 ]
 
 { #category : #reporting }
@@ -284,6 +285,7 @@ XmlReporter >> writeExceptionStack: anException of: aTestCase [
 { #category : #reporting }
 XmlReporter >> writeOpeningFailureTag: aTestCase withProperties: aDictionnary [
 
+	stream nextPutAll: self tabCaracter.
 	self
 		writeOpeningTagOf: 'failure'
 		duringTest: aTestCase
