@@ -157,7 +157,7 @@ TIterateTest >> testDo2 [
 	collection do: 
 		[ :each | 
 		cptElementsViewed := cptElementsViewed + 1.
-		" #do doesn't iterate with the same objects than those in the collection for FloatArray( I don' t know why ) . That's why I use #includes: and not #identityIncludes:  '"
+		" #do doesn't iterate with the same objects than those in the collection for Float32Array( I don' t know why ) . That's why I use #includes: and not #identityIncludes:  '"
 		(collection includes: each) ifTrue: [
 			" the collection used doesn't include equal elements. Therefore each element viewed should not have been viewed before "
 			( cptElementsIn includes: each ) ifFalse: [ cptElementsIn add: each ] .

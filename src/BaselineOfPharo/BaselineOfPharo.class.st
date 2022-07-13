@@ -46,12 +46,6 @@ BaselineOfPharo class >> icebergRepository [
 	^ (self externalProjectNamed: 'Iceberg') repository
 ]
 
-{ #category : #versions }
-BaselineOfPharo class >> icebergVersion [
-
-	^ 'dev-2.0'
-]
-
 { #category : #'repository urls' }
 BaselineOfPharo class >> microdownRepository [
 
@@ -64,12 +58,6 @@ BaselineOfPharo class >> newToolsRepository [
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
-{ #category : #versions }
-BaselineOfPharo class >> newToolsVersion [
-
-	^ 'Pharo10'
-]
-
 { #category : #'repository urls' }
 BaselineOfPharo class >> roassal3Repository [
 
@@ -80,12 +68,6 @@ BaselineOfPharo class >> roassal3Repository [
 BaselineOfPharo class >> specRepository [
 
 	^ (self externalProjectNamed: 'Spec2') repository
-]
-
-{ #category : #versions }
-BaselineOfPharo class >> specVersion [
-
-	^ 'Pharo10'
 ]
 
 { #category : #baseline }

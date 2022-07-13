@@ -1,53 +1,53 @@
-Extension { #name : #FloatArray }
+Extension { #name : #Float32Array }
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> * anObject [
+Float32Array >> * anObject [
 	^self copy *= anObject
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> *= anObject [
+Float32Array >> *= anObject [
 	^anObject isNumber
 		ifTrue:[self primMulScalar: anObject asFloat]
 		ifFalse:[self primMulArray: anObject]
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> + anObject [
+Float32Array >> + anObject [
 	^self copy += anObject
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> += anObject [
+Float32Array >> += anObject [
 	^ anObject addAssignToFloatArray: self
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> - anObject [
+Float32Array >> - anObject [
 	^self shallowCopy -= anObject
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> -= anObject [
+Float32Array >> -= anObject [
 	^anObject isNumber
 		ifTrue:[self primSubScalar: anObject asFloat]
 		ifFalse:[self primSubArray: anObject]
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> / anObject [
+Float32Array >> / anObject [
 	^self copy /= anObject
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> /= anObject [
+Float32Array >> /= anObject [
 	^anObject isNumber
 		ifTrue:[self primDivScalar: anObject asFloat]
 		ifFalse:[self primDivArray: anObject]
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> \\= other [
+Float32Array >> \\= other [
 
 	other isNumber ifTrue: [
 		1 to: self size do: [:i |
@@ -61,7 +61,7 @@ FloatArray >> \\= other [
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> adaptToNumber: rcvr andSend: selector [
+Float32Array >> adaptToNumber: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Number. If possible,
 	convert it to a float and perform the (more efficient) primitive operation."
 	selector == #+ ifTrue:[^self + rcvr].
@@ -71,13 +71,13 @@ FloatArray >> adaptToNumber: rcvr andSend: selector [
 		"DO NOT USE TRIVIAL CODE
 			^self reciprocal * rcvr
 		BECAUSE OF GRADUAL UNDERFLOW
-		self should: (1.0e-39 / (FloatArray with: 1.0e-39)) first < 2."
+		self should: (1.0e-39 / (Float32Array with: 1.0e-39)) first < 2."
 			^(self class new: self size withAll: rcvr) / self
 		].
 	^super adaptToNumber: rcvr andSend: selector
 ]
 
 { #category : #'*Collections-arithmetic' }
-FloatArray >> negated [
+Float32Array >> negated [
 	^self copy *= -1
 ]

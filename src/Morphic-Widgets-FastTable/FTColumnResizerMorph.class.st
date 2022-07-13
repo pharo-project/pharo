@@ -178,7 +178,7 @@ FTColumnResizerMorph >> updateFromEvent: anEvent [
 	(delta < 0 and: [ delta negated > (leftColumn width - (self width) - 5) ])
 		ifTrue: [ delta := (leftColumn width - (self width) - 5) negated ].
 
-	leftColumn column width: (leftColumn column width ifNil: [ leftColumn width ]) + delta.
-	rightColumn column width: (rightColumn column width ifNil: [ rightColumn width ]) - delta.	
+	leftColumn column model width: (leftColumn column width ifNil: [ leftColumn width ]) + delta.
+	rightColumn column model width: (rightColumn column width ifNil: [ rightColumn width ]) - delta.	
 	container changed
 ]

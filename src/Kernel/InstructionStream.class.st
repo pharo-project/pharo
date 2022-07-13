@@ -95,7 +95,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 				numArgs: (extB bitShift: 3) + (byte \\ 8)].
 
 		 bytecode = 236 ifTrue:
-			[^client trapIfNotInstanceOf: (method literalAt: (extA bitShift: 8) + byte + 1)].
+			[^client mappedInlinePrimitive: byte].
 		bytecode = 237 ifTrue:
 			[^client jump: (extB bitShift: 8) + byte withInterpreter: self].
 		 ^client jump: (extB bitShift: 8) + byte if: bytecode = 238 withInterpreter: self].
