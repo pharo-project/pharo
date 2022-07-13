@@ -20,7 +20,7 @@ Class {
 { #category : #accessing }
 NewCommandLineRunner >> defaultReporterClass [
 
-	^ TranscriptReporter
+	^ StdReporter
 ]
 
 { #category : #test }
@@ -43,7 +43,7 @@ NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
 NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	"store the test case then report it as failure"
 
-	aTestCase shouldPass ifFalse: [ ^ self ].
+	"aTestCase shouldPass ifFalse: [ ^ self ]."
 	self addFailure: aTestCase.
 
 	self reportFailure: aTestFailure of: aTestCase
@@ -118,7 +118,7 @@ NewCommandLineRunner >> runCaseManaged: aTestCase [
 	self timeToRun: aTestCase.
 	aTestCase shouldPass
 		ifTrue: [ self recordPassOf: aTestCase ]
-		ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
+		ifFalse: [self recordUnexpectedPassOf: aTestCase ] ]
 		on: Exception
 		do: [ :error | error recordResultOf: aTestCase inHDTestReport: self ]
 ]
