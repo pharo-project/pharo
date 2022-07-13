@@ -17,6 +17,12 @@ Class {
 	#category : #'TestRunner-Core-Extensions'
 }
 
+{ #category : #'instance creation' }
+NewCommandLineRunner class >> with: aReporterClass [
+
+	^ self new reporter: aReporterClass new
+]
+
 { #category : #accessing }
 NewCommandLineRunner >> defaultReporterClass [
 
