@@ -50,7 +50,7 @@ TranscriptReporter >> reportPass: aTestCase [
 	self partialReport: aTestCase.
 	self defaultTranscript
 		show: ' [passed]';
-		lf
+		cr
 ]
 
 { #category : #reporting }

@@ -277,6 +277,7 @@ NewTestRunner >> runClass: aClass [
 
 	self shouldAccumulate ifFalse: [ self resetResult ].
 	self testSuiteFromClass: aClass.
+	self suite name: aClass name.
 	self runAll.
 
 	^ result
