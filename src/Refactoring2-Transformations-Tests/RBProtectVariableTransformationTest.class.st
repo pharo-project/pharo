@@ -46,7 +46,7 @@ RBProtectVariableTransformationTest >> testClassVariable [
 						class: #RBTransformationRuleTestData)
 						asRefactoring transform.
 	
-	class := (refactoring model classNamed: #RBTransformationRuleTestData) theMetaClass.
+	class := (refactoring model classNamed: #RBTransformationRuleTestData) classSide.
 	self assert: (class parseTreeFor: #recursiveSelfRule)
 			equals: (self parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
 	self assert: (class parseTreeFor: #recursiveSelfRule:) 
@@ -81,7 +81,7 @@ RBProtectVariableTransformationTest >> testClassVariableInModel [
 		class: #Foo)
 		asRefactoring transform.
 	
-	class := (model classNamed: #Foo) theMetaClass.
+	class := (model classNamed: #Foo) classSide.
 	self assert: (class parseTreeFor: #classVarName1) 
 			equals: (self parseMethod: 'classVarName1 ^ClassVarName1').
 	self assert: (class parseTreeFor: #classVarName1:) 
