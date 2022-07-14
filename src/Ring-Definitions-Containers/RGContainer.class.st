@@ -176,7 +176,7 @@ RGContainer >> allTraitsDo: aBlock [
 { #category : #'lookup by name' }
 RGContainer >> classNamed: className [
 	"Retrieves an RGBehaviorDefinition object.
-	className could be theMetaClass name"
+	className could be classSide name"
 	
 	^self classOrTraitNamed: className
 ]
@@ -523,7 +523,7 @@ RGContainer >> theNonMetaClassNameOf: aSymbol [
 { #category : #'lookup by name' }
 RGContainer >> traitNamed: traitName [
 	"Retrieves an RGTraitDefinition object.
-	traitName could be theMetaClass name"
+	traitName could be classSide name"
 	| trait |
 	
 	^(trait:= self classOrTraitNamed: traitName) isTrait
