@@ -91,13 +91,13 @@ RBProtectVariableTransformationTest >> testClassVariableInModel [
 			equals: (self parseMethod: 'foo
 				^self classVarName1: self classVarName1 * self classVarName1 * self classVarName1').
 					
-	self assert: (class theNonMetaClass parseTreeFor: #classVarName1)
+	self assert: (class instanceSide parseTreeFor: #classVarName1)
 			equals: (self parseMethod: 'classVarName1 ^self class classVarName1').
-	self assert: (class theNonMetaClass parseTreeFor: #classVarName1:) 
+	self assert: (class instanceSide parseTreeFor: #classVarName1:) 
 			equals: (self parseMethod: 'classVarName1: anObject
 				^self class classVarName1: anObject').
 				
-	"self assert: (class theNonMetaClass parseTreeFor: #asdf)
+	"self assert: (class instanceSide parseTreeFor: #asdf)
 			equals: (RBParser parseMethod: 'asdf
 				^self classVarName1: (self class classVarName1: self class classVarName1 + 1)').
 	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)

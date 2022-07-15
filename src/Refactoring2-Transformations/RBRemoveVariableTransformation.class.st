@@ -22,7 +22,7 @@ Class {
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditions [
 
-	class := self definingClass theNonMetaClass.
+	class := self definingClass instanceSide.
 
 	^ isClassVariable
 		ifTrue: [ self preconditionsForClassVariable ]
@@ -48,6 +48,6 @@ RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
 RBRemoveVariableTransformation >> privateTransform [
 
 	isClassVariable
-		ifTrue: [ self definingClass theNonMetaClass removeClassVariable: variableName ]
+		ifTrue: [ self definingClass instanceSide removeClassVariable: variableName ]
 		ifFalse: [ self definingClass removeInstanceVariable: variableName ]
 ]

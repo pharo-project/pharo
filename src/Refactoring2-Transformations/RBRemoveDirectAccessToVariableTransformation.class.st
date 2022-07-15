@@ -92,7 +92,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 		getter: 'class ' , self getterMethod
 		setter: 'class ' , self setterMethod.
 	self model
-		convertClasses: self definingClass theNonMetaClass withAllSubclasses
+		convertClasses: self definingClass instanceSide withAllSubclasses
 		select: [ :aClass | aClass whichSelectorsReferToClassVariable: variableName ]
 		using: replacer
 ]
