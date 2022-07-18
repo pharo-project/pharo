@@ -4,23 +4,17 @@ I am an abstract execution mode. I defined the way a testsuite should be execute
 Class {
 	#name : #AbstractExecutionMode,
 	#superclass : #Object,
-	#category : #'TestRunner-Core-Configuration'
+	#category : #'TestRunner-Core-ExecutionModes'
 }
 
 { #category : #execution }
-AbstractExecutionMode class >> defaultTestResultClass [
-
-	^ TestResult
-]
-
-{ #category : #execution }
-AbstractExecutionMode class >> executeSuite: aTestSuite [
-	"executes the giving test suite then returns the result"
+AbstractExecutionMode class >> executeCase: aTestCase [
+	"executes the giving test case then returns the result"
 
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : #testing }
 AbstractExecutionMode class >> isAbstract [
 
 	^ self == AbstractExecutionMode
