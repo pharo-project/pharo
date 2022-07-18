@@ -13,3 +13,9 @@ NewCommandLineRunnerTest >> setUp [
 	super setUp.
 	runner := NewCommandLineRunner new
 ]
+
+{ #category : #tests }
+NewCommandLineRunnerTest >> testRunnerHasDefaultReporter [
+
+	runner hasDefaultReporter
+]
