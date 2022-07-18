@@ -53,7 +53,7 @@ NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	"aTestCase shouldPass ifFalse: [ ^ self ]."
 	self addFailure: aTestCase.
 	self reportFailure: aTestFailure of: aTestCase
-
+]
 
 { #category : #private }
 NewCommandLineRunner >> recordPassOf: aTestCase [
