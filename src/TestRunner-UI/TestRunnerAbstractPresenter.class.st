@@ -158,7 +158,7 @@ TestRunnerAbstractPresenter >> executeSelectedClasses [
 	self initializeRunner.
 	self selectedClasses
 		do: [ :testCase | 
-			runner run: testCase.
+			runner runClass: testCase.
 			self updateResultPresenter ]
 		displayingProgress: 'Running Tests'
 ]
