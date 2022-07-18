@@ -78,11 +78,11 @@ RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 		setter: self setterMethod
 		receiver: self receiver.
 	self model
-		convertClasses: self definingClass theMetaClass withAllSubclasses
+		convertClasses: self definingClass classSide withAllSubclasses
 		select: [ :aClass | 
 			(aClass whichSelectorsReferToClassVariable: variableName)
 				reject: [ :each | 
-					aClass == self definingClass theMetaClass
+					aClass == self definingClass classSide
 						and: [ each == self getterMethod or: [ each == self setterMethod ] ] ] ]
 		using: replacer.
 
@@ -92,7 +92,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 		getter: 'class ' , self getterMethod
 		setter: 'class ' , self setterMethod.
 	self model
-		convertClasses: self definingClass theNonMetaClass withAllSubclasses
+		convertClasses: self definingClass instanceSide withAllSubclasses
 		select: [ :aClass | aClass whichSelectorsReferToClassVariable: variableName ]
 		using: replacer
 ]

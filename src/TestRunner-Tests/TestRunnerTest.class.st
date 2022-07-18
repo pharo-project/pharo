@@ -180,7 +180,7 @@ TestRunnerTest >> testRunningACollectionOfTestCases [
 
 	[ 
 	YellowTest doNotIgnoreTest.
-	runner runAll: { 
+	runner runClasses: { 
 			GreenTest.
 			YellowTest }.
 	self assert: runner runCount equals: 4.
@@ -191,7 +191,7 @@ TestRunnerTest >> testRunningACollectionOfTestCases [
 { #category : #tests }
 TestRunnerTest >> testRunningACollectionOfTestCasesWithSomeAbstractClass [
 
-	runner runAll: { 
+	runner runClasses: { 
 			AthensCairoExportSurfaceTest.
 			AthensCairoPDFSurfaceTest.
 			AthensCairoSVGSurfaceTest }.
@@ -204,7 +204,7 @@ TestRunnerTest >> testRunningAnEmptyCollectionOfTestCases [
 
 	"first execution"
 
-	runner runAll: {  }.
+	runner runClasses: {  }.
 	self assert: runner runCount equals: 0
 ]
 
@@ -309,7 +309,7 @@ TestRunnerTest >> testTryingToRunFailuresAfterRunningMultipleTestCaseClass [
 
 	runner
 		accumulateResult;
-		runAll: { 
+		runClasses: { 
 				FailThenPass.
 				YellowTest }.
 

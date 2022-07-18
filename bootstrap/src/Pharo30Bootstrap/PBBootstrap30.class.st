@@ -485,7 +485,7 @@ PBBootstrap30 >> installMethodsInBehaviorMapping: aBehaviorMapping using: aMetho
 	| newMethods theClass |
 	newMethods := aMethodBuilder methodsFromDefinition: aBehaviorMapping.
 	newMethods := newMethods sorted: [ :m1 :m2 | m1 selector < m2 selector ].
-	theClass := (self classNamed: aBehaviorMapping theNonMetaClass name) mirror.
+	theClass := (self classNamed: aBehaviorMapping instanceSide name) mirror.
 	aBehaviorMapping isMeta ifTrue: [ theClass := theClass basicClass ].
 	newMethods do: [ :m |
 		self log: aPrefix, ': Installing method ', 

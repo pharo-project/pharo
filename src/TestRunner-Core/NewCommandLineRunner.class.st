@@ -1,39 +1,102 @@
 "
-I allow to run tests from commandLine
+I allow to run tests from commandLine and export it according to the giving Reporter: 
+- XmlReporter 
+- StdReporter
+- TranscriptReporter 
+I extend NewTestRunner so i share it public API. In addition:
+
+## Public API
+- reporter:
 "
 Class {
 	#name : #NewCommandLineRunner,
 	#superclass : #NewTestRunner,
 	#instVars : [
-		'testCount',
+
 		'reporter'
 	],
-	#category : #'TestRunner-Core-Core'
+	#category : #'TestRunner-Core-Extensions'
 }
 
-{ #category : #private }
+{ #category : #'instance creation' }
+NewCommandLineRunner class >> with: aReporterClass [
+
+	^ self new reporter: aReporterClass new
+]
+
+{ #category : #accessing }
 NewCommandLineRunner >> defaultReporterClass [
 
-	^ TranscriptReporter
+	^ StdReporter
 ]
 
-{ #category : #private }
-NewCommandLineRunner >> incrementTestCount [
+{ #category : #test }
+NewCommandLineRunner >> hasDefaultReporter [
+	"check if the Runner has a default reporter"
 
-	testCount ifNil: [ testCount := 0 ].
-	testCount := testCount + 1
+	^ self reporter isNotNil
 ]
+
+{ #category : #recording }
+NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
+	"store the test case then report it as error"
+
+	aTestCase shouldPass ifFalse: [ ^ self ].
+	self addError: aTestCase.
+	self reportError: aTestFailure of: aTestCase
+]
+
+{ #category : #running }
+NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
+	"store the test case then report it as failure"
+
+	"aTestCase shouldPass ifFalse: [ ^ self ]."
+	self addFailure: aTestCase.
+	self reportFailure: aTestFailure of: aTestCase
+
 
 { #category : #private }
 NewCommandLineRunner >> recordPassOf: aTestCase [
 
-	self result addPass: aTestCase
+	"store the test case then report it as passed test"
+
+	self result addPass: aTestCase.
+	self reporter reportPass: aTestCase
+]
+
+{ #category : #internal }
+NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aTestCase [
+	"store the test case then report it as skipped test"
+
+	self result addSkip: aTestCase.
+	self reporter reportSkipped: aTestCase
+
 ]
 
 { #category : #private }
 NewCommandLineRunner >> recordUnexpectedPassOf: aTestCase [
 
-	self notYetImplemented
+	"store the testcase as failure. A test which is excpected to fail should not pass"
+
+	| exception |
+	exception := TestFailure new messageText:
+		             'Unexpected pass (test is marked as expected failure)'.
+	self recordFailure: exception duringTest: aTestCase
+]
+
+{ #category : #reporting }
+NewCommandLineRunner >> reportError: aTestError of: aTestCase [
+	"store the test case then report it as error"
+
+	self reporter reportError: aTestError of: aTestCase
+]
+
+{ #category : #reporting }
+NewCommandLineRunner >> reportFailure: aTestFailure of: aTestCase [
+	"store the test case then report it as failure"
+
+	self reporter reportFailure: aTestFailure of: aTestCase
+
 ]
 
 { #category : #private }
@@ -42,16 +105,68 @@ NewCommandLineRunner >> reporter [
 	^ reporter ifNil: [ reporter := self defaultReporterClass new ]
 ]
 
-{ #category : #private }
+{ #category : #accessing }
+
 NewCommandLineRunner >> reporter: aReporter [
 
 	reporter := aReporter
 ]
 
+{ #category : #running }
+NewCommandLineRunner >> runCase: aTestCase [
+	"run and report a testCase"
+
+	self reporter
+		reportCase: aTestCase
+		runBlock: [self runCaseManaged: aTestCase ]
+]
+
+{ #category : #running }
+NewCommandLineRunner >> runCaseManaged: aTestCase [
+
+	"saving the failure context"
+
+	[ 
+	self timeToRun: aTestCase.
+	aTestCase shouldPass
+		ifTrue: [ self recordPassOf: aTestCase ]
+		ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
+		on: Exception
+		do: [ :error | error recordResultOf: aTestCase inHDTestReport: self ]
+]
+
+{ #category : #running }
+NewCommandLineRunner >> runSuite [
+	"report a testsuite while running it"
+	
+	self reporter 
+	 reportSuite: self suite 
+	 runBlock: [ super runSuite ]
+]
+
+{ #category : #processing }
+NewCommandLineRunner >> tearDown [
+
+	super tearDown.
+	self reporter reportResult: self result
+]
+
 { #category : #private }
-NewCommandLineRunner >> testCount [
+NewCommandLineRunner >> timeToRun: aTestCase [
+	"run a testcase and compute the duration"
+	
+	| initialMicroseconds duration |
+	initialMicroseconds := Time microsecondClockValue.
 
-	"return the number of executed testCases"
+	[ aTestCase runCaseManaged ]
+		on: Exception
+		do: [ :e | 
+			duration := Time microsecondClockValue - initialMicroseconds.
+			self reporter currentCaseDuration:
+				(Duration milliSeconds: duration).
+			e pass ].
+	duration ifNil: [ 
+		duration := Time microsecondClockValue - initialMicroseconds.
+		self reporter currentCaseDuration: (Duration milliSeconds: duration) ]
 
-	^ testCount
 ]

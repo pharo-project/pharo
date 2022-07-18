@@ -4,18 +4,15 @@ I ececute a test suite then return its TestResult.
 Class {
 	#name : #RunExecutionMode,
 	#superclass : #AbstractExecutionMode,
-	#category : #'TestRunner-Core-Configuration'
+	#category : #'TestRunner-Core-ExecutionModes'
 }
 
 { #category : #execution }
 RunExecutionMode class >> executeCase: aTestCase [
 
-	aTestCase class isTestCase ifFalse: [ ^ TestResult new ].
+
+	"executes the giving test case then returns the result"
+
+
 	^ aTestCase run
-]
-
-{ #category : #execution }
-RunExecutionMode class >> executeSuite: aTestSuite [
-
-	^ aTestSuite run
 ]
