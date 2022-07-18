@@ -221,11 +221,6 @@ ClyTextEditorToolMorph >> initialize [
 ]
 
 { #category : #'rubric interaction model' }
-ClyTextEditorToolMorph >> isForScripting [
-	^true
-]
-
-{ #category : #'rubric interaction model' }
 ClyTextEditorToolMorph >> isScripting [
 	^true
 ]

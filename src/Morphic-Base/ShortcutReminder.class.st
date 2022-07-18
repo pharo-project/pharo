@@ -278,7 +278,14 @@ ShortcutReminder >> positionShortcut: aMorph [
 	fullBounds. 
 	"the layout has to be computed before changing the position."
 	
-	aMorph perform: (position , ':') asSymbol with: (position value: area).
+	"#position: setter makes sure that just these are possible, no need for #perform:"
+	position == #topLeft ifTrue: [^aMorph topLeft: (position value: area) ].
+	position == #topRight  ifTrue: [ ^aMorph topRight: (position value: area) ].
+	position == #center  ifTrue: [ ^aMorph center: (position value: area) ].
+	position == #bottomLeft  ifTrue: [ ^aMorph bottomLeft: (position value: area) ].
+	position == #bottomRight ifTrue: [ ^aMorph bottomRight: (position value: area) ].
+	
+	
 ]
 
 { #category : #private }

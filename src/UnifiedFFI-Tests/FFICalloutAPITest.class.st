@@ -153,8 +153,6 @@ FFICalloutAPITest >> testCallWithAllConstParameter [
 	"
 	| result buffer |
 
-	self skipOnAppleARM.
-
 	buffer := (ByteArray new: 100)
 		pinInMemory;
 		yourself. 
@@ -172,8 +170,6 @@ FFICalloutAPITest >> testCallWithConstParameter [
 	(passing constants as parameters)
 	"
 	| result buffer |
-
-	self skipOnAppleARM.
 
 	buffer := (ByteArray new: 100)
 		pinInMemory; yourself.

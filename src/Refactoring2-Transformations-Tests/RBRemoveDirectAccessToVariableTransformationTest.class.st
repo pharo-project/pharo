@@ -22,10 +22,10 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	
 	self assert: refactoring model changes changes size equals: 2.
 	
-	class := (refactoring model classNamed: #RBRefactoryChangeManager) theMetaClass.
+	class := (refactoring model classNamed: #RBRefactoryChangeManager) classSide.
 	self assert: (class parseTreeFor: #initialize) 
 			equals: (self parseMethod: 'initialize self nuke. self undoSize: 20').
-	self assert: (class theNonMetaClass parseTreeFor: #addUndo:) 
+	self assert: (class instanceSide parseTreeFor: #addUndo:) 
 			equals: (self parseMethod: 'addUndo: aRefactoringChange
 				undo push: aRefactoringChange.
 				undo size > self class undoSize

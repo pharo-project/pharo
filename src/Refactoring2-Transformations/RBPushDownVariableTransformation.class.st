@@ -64,7 +64,7 @@ RBPushDownVariableTransformation >> preconditionsForClassVariable [
 			numSubclassesAccessing := self definingClass subclasses count: [ :subclass |
 				subclass withAllSubclasses anySatisfy: [ :e |
 					(e whichSelectorsReferToClassVariable: variableName) isNotEmpty
-					or: [ (e theMetaClass whichSelectorsReferToClassVariable: variableName) isNotEmpty ] ] ].
+					or: [ (e classSide whichSelectorsReferToClassVariable: variableName) isNotEmpty ] ] ].
 			numSubclassesAccessing < 2 ])
 ]
 
@@ -104,6 +104,6 @@ RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
 	^ isClassVariable
 		ifTrue: [ self definingClass allSubclasses reject: [ :each |
 			(each whichSelectorsReferToClassVariable: variableName) isEmpty
-			and: [ (each theMetaClass whichSelectorsReferToClassVariable: variableName) isEmpty ] ] ]
+			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ] ]
 		ifFalse: [ self definingClass subclasses ]
 ]

@@ -97,7 +97,7 @@ Float class >> emin [
 Float class >> fromIEEE32Bit: word [
 	"Convert the given 32 bit word (which is supposed to be a positive 32-bit value) from
 	 a 32 bit IEEE floating point representation into an actual float object (being
-	 64 bits wide). Should only be used for conversion in FloatArrays or likewise objects."
+	 64 bits wide). Should only be used for conversion in Float32Arrays or likewise objects."
 	
 	| sign mantissa exponent delta |
 	word <= 0 ifTrue:
@@ -137,6 +137,22 @@ Float class >> fromIEEE32Bit: word [
 Float class >> fromIEEE64Bit: doubleWord [
 
     ^ (self new: 2) basicAt: 1 put: (doubleWord bitShift: -32); basicAt: 2 put: (doubleWord bitAnd: 16rFFFFFFFF); yourself
+]
+
+{ #category : #'instance creation' }
+Float class >> fromIEEE64BitWord: anInteger [
+	"Convert the given 64 bit word from a 64 bit IEEE floating point representation
+	into an actual float object.
+	Should only be used for conversion in Float64Arrays or likewise objects."
+
+	| value |
+	value := self basicNew: 2.
+	value
+		basicAt: 1 put: (anInteger bitShift: -32);
+		basicAt: 2 put: (anInteger bitAnd: 16rFFFFFFFF).
+	^value isFinite
+		ifTrue: [value * 1.0] "reduce to SmallFloat64 if possible"
+		ifFalse: [value]
 ]
 
 { #category : #constants }

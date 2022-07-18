@@ -158,11 +158,6 @@ ClyMethodEditorToolMorph >> isCommandAvailable: aCommand [
 ]
 
 { #category : #'rubric interaction model' }
-ClyMethodEditorToolMorph >> isForScripting [
-	^false
-]
-
-{ #category : #'rubric interaction model' }
 ClyMethodEditorToolMorph >> isScripting [
 	^false
 ]

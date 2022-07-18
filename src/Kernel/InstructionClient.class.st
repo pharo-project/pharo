@@ -5,8 +5,17 @@ as an example.
 Class {
 	#name : #InstructionClient,
 	#superclass : #Object,
+	#instVars : [
+		'mappedInlinePrimitiveHandlers'
+	],
 	#category : #'Kernel-Methods'
 }
+
+{ #category : #'extended instruction decoding' }
+InstructionClient >> addMappedInlinePrimitiveHandler: handler at: bytecodeNumber [
+
+	mappedInlinePrimitiveHandlers at: bytecodeNumber put: handler
+]
 
 { #category : #'instruction decoding' }
 InstructionClient >> blockReturnConstant: value [ 
@@ -49,6 +58,13 @@ InstructionClient >> doPop [
 	"Remove Top Of Stack bytecode."
 ]
 
+{ #category : #initialization }
+InstructionClient >> initialize [
+	mappedInlinePrimitiveHandlers := Dictionary new.
+	"Configuration classes are expected to send the `addMappedInlinePrimitiveHandler:at:` message to add bytecode handlers to this instance"
+	BytecodeMappedInlinePrimitiveConfiguration subclasses do: [ :each | each configure: self ]
+]
+
 { #category : #'instruction decoding' }
 InstructionClient >> jump: offset [
 	"Unconditional Jump bytecode."
@@ -69,6 +85,14 @@ InstructionClient >> jump: offset if: condition withInterpreter: anInterpreter [
 InstructionClient >> jump: offset withInterpreter: anInterpreter [
 	
 	^ self jump: offset
+]
+
+{ #category : #'instruction decoding' }
+InstructionClient >> mappedInlinePrimitive: extensionBytecodeNumber [
+
+	(mappedInlinePrimitiveHandlers
+		 at: extensionBytecodeNumber
+		 ifAbsent: [ self unusedBytecode ]) value
 ]
 
 { #category : #'instruction decoding' }
@@ -206,14 +230,6 @@ InstructionClient >> storeIntoTemporaryVariable: offset [
 { #category : #'instruction decoding' }
 InstructionClient >> trap [
 	"send the class trap message to the current context."
-]
-
-{ #category : #'instruction decoding' }
-InstructionClient >> trapIfNotInstanceOf: behaviorOrArrayOfBehavior [ 
-	"If the top of stack is not an instance of either the argument, or, if the
-	argument is an Array,
-	any of the elements of the argument, send the class trap message
-	to the current context."
 ]
 
 { #category : #'instruction decoding' }

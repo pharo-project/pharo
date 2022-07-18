@@ -603,6 +603,12 @@ RBMethodNode >> removePragma: aPragmaNode [
 ]
 
 { #category : #'adding-removing' }
+RBMethodNode >> removePragmaNamed: aPragmaName [
+
+	self pragmaNamed: aPragmaName ifPresent: [ :pragma | self removePragma: pragma ]
+]
+
+{ #category : #'adding-removing' }
 RBMethodNode >> removeSubtree: aTree [
 
 	^ aTree isReturn 

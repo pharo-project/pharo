@@ -811,20 +811,6 @@ RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector2 [
 	
 ]
 
-{ #category : #tests }
-RBParseTreeSearcherTest >> testWithoutAListDoesNotMatchComposedMessages [
-	"Using `arg, and not `@arg, we looking for multiple lists in one match pattern at the same time. 
-	Lists can be any receiver or args."
-
-	| contextDictionary |
-	searcher
-		matches: '`@receiver assert: `arg equals: true'
-		do: [ :aNode :answer | contextDictionary := searcher context ].
-	searcher executeTree: (self parseExpression:
-			 'self assert: reader storedSettings first realValue equals: true.').
-	self assert: contextDictionary isNil
-]
-
 { #category : #'tests - add search' }
 RBParseTreeSearcherTest >> testSimpleAddSearch [
 
@@ -841,4 +827,18 @@ RBParseTreeSearcherTest >> testSimpleAddSearches [
 	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
 	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
+]
+
+{ #category : #tests }
+RBParseTreeSearcherTest >> testWithoutAListDoesNotMatchComposedMessages [
+	"Using `arg, and not `@arg, we looking for multiple lists in one match pattern at the same time. 
+	Lists can be any receiver or args."
+
+	| contextDictionary |
+	searcher
+		matches: '`@receiver assert: `arg equals: true'
+		do: [ :aNode :answer | contextDictionary := searcher context ].
+	searcher executeTree: (self parseExpression:
+			 'self assert: reader storedSettings first realValue equals: true.').
+	self assert: contextDictionary isNil
 ]

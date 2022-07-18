@@ -1,7 +1,7 @@
-Extension { #name : #FloatArray }
+Extension { #name : #Float32Array }
 
 { #category : #'*ThreadedFFI' }
-FloatArray >> tfPointerAddress [
+Float32Array >> tfPointerAddress [
 
 	self pinInMemory.
 	^ PointerUtils oopForObject: self
