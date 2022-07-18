@@ -12,6 +12,7 @@ Class {
 	#name : #NewCommandLineRunner,
 	#superclass : #NewTestRunner,
 	#instVars : [
+
 		'reporter'
 	],
 	#category : #'TestRunner-Core-Extensions'
@@ -52,10 +53,11 @@ NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	"aTestCase shouldPass ifFalse: [ ^ self ]."
 	self addFailure: aTestCase.
 	self reportFailure: aTestFailure of: aTestCase
-]
+
 
 { #category : #private }
 NewCommandLineRunner >> recordPassOf: aTestCase [
+
 	"store the test case then report it as passed test"
 
 	self result addPass: aTestCase.
@@ -68,6 +70,7 @@ NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aTestCase [
 
 	self result addSkip: aTestCase.
 	self reporter reportSkipped: aTestCase
+
 ]
 
 { #category : #private }
@@ -93,6 +96,7 @@ NewCommandLineRunner >> reportFailure: aTestFailure of: aTestCase [
 	"store the test case then report it as failure"
 
 	self reporter reportFailure: aTestFailure of: aTestCase
+
 ]
 
 { #category : #private }
@@ -102,6 +106,7 @@ NewCommandLineRunner >> reporter [
 ]
 
 { #category : #accessing }
+
 NewCommandLineRunner >> reporter: aReporter [
 
 	reporter := aReporter
@@ -163,4 +168,5 @@ NewCommandLineRunner >> timeToRun: aTestCase [
 	duration ifNil: [ 
 		duration := Time microsecondClockValue - initialMicroseconds.
 		self reporter currentCaseDuration: (Duration milliSeconds: duration) ]
+
 ]

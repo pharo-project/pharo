@@ -10,7 +10,9 @@ Class {
 { #category : #execution }
 RunExecutionMode class >> executeCase: aTestCase [
 
+
 	"executes the giving test case then returns the result"
+
 
 	^ aTestCase run
 ]
