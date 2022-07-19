@@ -4,6 +4,13 @@ Class {
 	#category : #'TestRunner-Tests-Reporters'
 }
 
+{ #category : #running }
+StdReporterTest >> setUp [
+
+	super setUp.
+	reporter := StdReporter new
+]
+
 { #category : #tests }
 StdReporterTest >> testCurrentTestIsIncrementAfterEachTestCaseExecution [
 
