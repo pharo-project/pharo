@@ -110,6 +110,12 @@ NewCommandLineRunner >> reporter: aReporter [
 	reporter := aReporter
 ]
 
+{ #category : #processing }
+NewCommandLineRunner >> resetReporter [
+
+	self reporter: self reporter class new
+]
+
 { #category : #running }
 NewCommandLineRunner >> runCase: aTestCase [
 	"run and report a testCase"
@@ -146,7 +152,8 @@ NewCommandLineRunner >> runSuite [
 NewCommandLineRunner >> tearDown [
 
 	super tearDown.
-	self reporter reportResult: self result
+	self reporter reportResult: self result.
+	self resetReporter.
 ]
 
 { #category : #private }

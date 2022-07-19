@@ -1,5 +1,5 @@
 Class {
-	#name : #TestRunnerTest,
+	#name : #NewTestRunnerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'runner'
@@ -8,25 +8,26 @@ Class {
 }
 
 { #category : #tests }
-TestRunnerTest >> classForRunner [
+NewTestRunnerTest >> classForRunner [
 
 	^ NewTestRunner
 ]
 
 { #category : #running }
-TestRunnerTest >> setUp [
+NewTestRunnerTest >> setUp [
+
 	super setUp.
-	runner := self classForRunner new suitePreparator: ShuffleSuitePreparator.
+	runner := self classForRunner new
 ]
 
 { #category : #tests }
-TestRunnerTest >> testDefaultSuitePreparatorOfTheRunnerIsNotNil [
+NewTestRunnerTest >> testDefaultSuitePreparatorOfTheRunnerIsNotNil [
 
 	self assert: runner suitePreparator isNotNil
 ]
 
 { #category : #tests }
-TestRunnerTest >> testFailedTestFaildWhileRerunningDoesNotChangeTheResult [
+NewTestRunnerTest >> testFailedTestFaildWhileRerunningDoesNotChangeTheResult [
 
 	"first execution"
 
@@ -46,7 +47,7 @@ TestRunnerTest >> testFailedTestFaildWhileRerunningDoesNotChangeTheResult [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testGivingTestToTheRunner [
+NewTestRunnerTest >> testGivingTestToTheRunner [
 
 	"test that a runner has initialy any test to run.
 	That ensure it runs only tests added by user.
@@ -57,7 +58,7 @@ TestRunnerTest >> testGivingTestToTheRunner [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testNewCreatedRunnerHasAnyTestsToRun [
+NewTestRunnerTest >> testNewCreatedRunnerHasAnyTestsToRun [
 
 	"test that a runner has initialy any test to run.
 	that ensure when running a tests that the result contain
@@ -68,7 +69,7 @@ TestRunnerTest >> testNewCreatedRunnerHasAnyTestsToRun [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testOnRunnerResultWithGreenTest [
+NewTestRunnerTest >> testOnRunnerResultWithGreenTest [
 
 	runner runClass: GreenTest.
 	self
@@ -78,7 +79,7 @@ TestRunnerTest >> testOnRunnerResultWithGreenTest [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testOnRunnerResultWithRedTest [
+NewTestRunnerTest >> testOnRunnerResultWithRedTest [
 
 	[ 
 	RedTest doNotIgnoreTest.
@@ -91,7 +92,7 @@ TestRunnerTest >> testOnRunnerResultWithRedTest [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testOnRunnerResultWithYellowTest [
+NewTestRunnerTest >> testOnRunnerResultWithYellowTest [
 
 	[ 
 	YellowTest doNotIgnoreTest.
@@ -104,7 +105,7 @@ TestRunnerTest >> testOnRunnerResultWithYellowTest [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRerunningFailedTest [
+NewTestRunnerTest >> testRerunningFailedTest [
 
 	"we will run a test who fail only during the first execution"
 
@@ -124,7 +125,7 @@ TestRunnerTest >> testRerunningFailedTest [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRerunningFailedTest2 [
+NewTestRunnerTest >> testRerunningFailedTest2 [
 
 	"we will run a test who fail only during the first execution"
 
@@ -148,7 +149,7 @@ TestRunnerTest >> testRerunningFailedTest2 [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunnerCanAccumulateResult [
+NewTestRunnerTest >> testRunnerCanAccumulateResult [
 
 	| firstRunningCount secondRunningCount |
 	[ 
@@ -164,7 +165,7 @@ TestRunnerTest >> testRunnerCanAccumulateResult [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunnerDoesNotAccumulateRsult [
+NewTestRunnerTest >> testRunnerDoesNotAccumulateRsult [
 
 	| firstRunningCount secondRunningCount |
 	firstRunningCount := (runner runClass: GreenTest) runCount.
@@ -174,7 +175,7 @@ TestRunnerTest >> testRunnerDoesNotAccumulateRsult [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunningACollectionOfTestCases [
+NewTestRunnerTest >> testRunningACollectionOfTestCases [
 
 	"first execution"
 
@@ -189,7 +190,7 @@ TestRunnerTest >> testRunningACollectionOfTestCases [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunningACollectionOfTestCasesWithSomeAbstractClass [
+NewTestRunnerTest >> testRunningACollectionOfTestCasesWithSomeAbstractClass [
 
 	runner runClasses: { 
 			AthensCairoExportSurfaceTest.
@@ -200,7 +201,7 @@ TestRunnerTest >> testRunningACollectionOfTestCasesWithSomeAbstractClass [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunningAnEmptyCollectionOfTestCases [
+NewTestRunnerTest >> testRunningAnEmptyCollectionOfTestCases [
 
 	"first execution"
 
@@ -209,7 +210,7 @@ TestRunnerTest >> testRunningAnEmptyCollectionOfTestCases [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunningFromAnEmptyCollectionOfPackages [
+NewTestRunnerTest >> testRunningFromAnEmptyCollectionOfPackages [
 
 	"first execution"
 
@@ -221,7 +222,7 @@ TestRunnerTest >> testRunningFromAnEmptyCollectionOfPackages [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testRunningTestClassSide [
+NewTestRunnerTest >> testRunningTestClassSide [
 
 	self
 		assert: (self classForRunner runClass: GreenTest) passedCount
@@ -233,7 +234,7 @@ TestRunnerTest >> testRunningTestClassSide [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testSuiteCreation [
+NewTestRunnerTest >> testSuiteCreation [
 
 	self deny: runner hasTestsToRun.
 
@@ -243,7 +244,7 @@ TestRunnerTest >> testSuiteCreation [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testSuiteCreationFromAbstractClass [
+NewTestRunnerTest >> testSuiteCreationFromAbstractClass [
 
 	self deny: runner hasTestsToRun.
 
@@ -253,7 +254,7 @@ TestRunnerTest >> testSuiteCreationFromAbstractClass [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testSuiteCreationFromTestClassWithSubClasses [
+NewTestRunnerTest >> testSuiteCreationFromTestClassWithSubClasses [
 
 	self deny: runner hasTestsToRun.
 
@@ -263,7 +264,7 @@ TestRunnerTest >> testSuiteCreationFromTestClassWithSubClasses [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testSuiteWithMultipleTestCase [
+NewTestRunnerTest >> testSuiteWithMultipleTestCase [
 
 	| exepectedNumberOfTest |
 	self deny: runner hasTestsToRun.
@@ -286,21 +287,21 @@ TestRunnerTest >> testSuiteWithMultipleTestCase [
 ]
 
 { #category : #tests }
-TestRunnerTest >> testSuitesFromANonTestCaseIsEmpty [
+NewTestRunnerTest >> testSuitesFromANonTestCaseIsEmpty [
 
 	runner testSuiteFromClass: Integer.
 	self deny: runner hasTestsToRun
 ]
 
 { #category : #tests }
-TestRunnerTest >> testSuitesFromAnAbstractTestCaseIsEmpty [
+NewTestRunnerTest >> testSuitesFromAnAbstractTestCaseIsEmpty [
 
 	self classForRunner runClass: AthensCairoExportSurfaceTest.
 	self deny: runner hasTestsToRun
 ]
 
 { #category : #tests }
-TestRunnerTest >> testTryingToRunFailuresAfterRunningMultipleTestCaseClass [
+NewTestRunnerTest >> testTryingToRunFailuresAfterRunningMultipleTestCaseClass [
 
 	[ 
 	FailThenPass reset.

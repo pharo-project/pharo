@@ -30,6 +30,12 @@ AbstractReporter >> currentCaseDuration: aDuration [
 ]
 
 { #category : #reporting }
+AbstractReporter >> datasAreReseted [
+
+	^ suiteExecutionDuration isNil and: currentCaseDuration isNil
+]
+
+{ #category : #reporting }
 AbstractReporter >> reportCase: aTestCase runBlock: aBlock [
 
 	"run an report the execution's result of a testCase"

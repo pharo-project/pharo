@@ -344,7 +344,7 @@ NewTestRunner >> runError: aTestCase [
 	Usefull if we want only to rerun the failure after some execution. See self >> runErrors"
 
 	| rerunningResult |
-	rerunningResult := self runCase: aTestCase.
+	rerunningResult := aTestCase run.
 	rerunningResult hasPassed ifTrue: [ result removeError: aTestCase ].
 	self updateResultWith: rerunningResult
 
@@ -366,7 +366,7 @@ NewTestRunner >> runFailure: aTestCase [
 	"rerun the giving failure then update the result"
 
 	| rerunningResult |
-	rerunningResult := self runCase: aTestCase.
+	rerunningResult := aTestCase run.
 
 	rerunningResult hasPassed ifTrue: [ result removeFailure: aTestCase ].
 	self updateResultWith: rerunningResult
