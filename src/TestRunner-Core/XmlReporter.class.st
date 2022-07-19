@@ -82,6 +82,12 @@ XmlReporter >> currentCaseDuration [
 ]
 
 { #category : #reporting }
+XmlReporter >> datasAreReseted [
+
+	^ super datasAreReseted and: (stream isNil and: suitePosition isNil)
+]
+
+{ #category : #reporting }
 XmlReporter >> encode: aString [
 
 	^ self class encode: aString

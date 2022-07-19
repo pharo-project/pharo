@@ -4,6 +4,11 @@ Class {
 	#category : #'TestRunner-Tests-Core'
 }
 
+{ #category : #testing }
+NewCommandLineRunnerTest class >> shouldInheritSelectors [
+	^ true
+]
+
 { #category : #tests }
 NewCommandLineRunnerTest >> ignoredSelectors [
 
