@@ -90,7 +90,7 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	localHeaderRelativeOffset := endianStream nextLittleEndianNumber: 4.
 
 	fileName := (aStream next: fileNameLength) asString.
-	cdExtraField := (aStream next: extraFieldLength) asByteArray asString.
+	cdExtraField := (aStream next: extraFieldLength) asByteArray utf8Decoded.
 	fileComment := (aStream next: fileCommentLength) asByteArray utf8Decoded.
 
 	self desiredCompressionMethod: compressionMethod
@@ -133,7 +133,7 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	fileNameLength := endianStream nextLittleEndianNumber: 2.
 	extraFieldLength := endianStream nextLittleEndianNumber: 2.
 
-	fileName := (aStream next: fileNameLength) asString.
+	fileName := (aStream next: fileNameLength) utf8Decoded.
 	localExtraField := (aStream next: extraFieldLength) asByteArray.
 
 	dataOffset := aStream position.
