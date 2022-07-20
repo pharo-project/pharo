@@ -1597,14 +1597,18 @@ RBParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: SyntaxErrorNotification.
 ]
 
-{ #category : #'error testing' }
-RBParserTest >> testPragmaInExpressionRaiseError [
+{ #category : #tests }
+RBParserTest >> testPragmaInExpression [
 	"Test if a working pragma in a method is faulty in an expression."
-	self should: [(self parserClass parseExpression: '| token | <some: #tag> true')] 
-		  raise: SyntaxErrorNotification.
-		
-	self shouldnt: [(self parserClass parseExpression: '| token | true')] 
-		  raise: SyntaxErrorNotification.
+	| node |
+	node := self parserClass parseExpression: '| token | <some: #tag> true'.
+	self assert: (node methodNode hasPragmaNamed: #some:).
+	
+	node := self parserClass parseExpression: '<some: #tag> true'.
+	self assert: (node methodNode hasPragmaNamed: #some:).
+	
+	self should: [(self parserClass parseExpression: '| token | 1+2. <some: #tag> true')] 
+		  raise: SyntaxErrorNotification
 ]
 
 { #category : #'error testing' }

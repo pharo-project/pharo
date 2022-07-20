@@ -28,7 +28,7 @@ CommentsToTestsTest >> testCommentWithSyntaxError [
 	docComment := thisContext method ast pharoDocCommentNodes first.
 	commentTestCase := CommentTestCase for: docComment.
 	
-	self should: [commentTestCase testIt] raise: SyntaxErrorNotification
+	self should: [commentTestCase testIt] raise: RuntimeSyntaxError
 ]
 
 { #category : #tests }

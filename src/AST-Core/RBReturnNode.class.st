@@ -11,20 +11,23 @@ Class {
 	#name : #RBReturnNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'return',
-		'value'
+		'value',
+		'start'
 	],
 	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
-RBReturnNode class >> return: returnInteger value: aValueNode [ 
-	^self new return: returnInteger value: aValueNode
+RBReturnNode class >> start: returnInteger value: aValueNode [ 
+	^self new 
+		start: returnInteger;
+		value: aValueNode
 ]
 
 { #category : #'instance creation' }
 RBReturnNode class >> value: aNode [
-	^self return: 0 value: aNode
+	^self new 
+		value: aNode
 ]
 
 { #category : #comparing }
@@ -73,7 +76,7 @@ RBReturnNode >> hash [
 RBReturnNode >> initialize [
 	super initialize.
 
-	return := 0
+	start := 0
 ]
 
 { #category : #testing }
@@ -109,25 +112,14 @@ RBReturnNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [ self value: anotherNode ]
 ]
 
-{ #category : #'accessing - token' }
-RBReturnNode >> return [
-	^ return
-]
-
-{ #category : #'accessing - token' }
-RBReturnNode >> return: anInteger [
-	return := anInteger
-]
-
-{ #category : #initialization }
-RBReturnNode >> return: returnInteger value: anExpression [ 
-	return := returnInteger.
-	self value: anExpression
-]
-
 { #category : #accessing }
 RBReturnNode >> start [
-	^ return
+	^ start
+]
+
+{ #category : #'accessing - token' }
+RBReturnNode >> start: anInteger [
+	start := anInteger
 ]
 
 { #category : #accessing }
