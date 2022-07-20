@@ -304,8 +304,3 @@ RBClass >> sharedPoolNames [
 RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
 ]
-
-{ #category : #'accessing - deprecated' }
-RBClass >> theNonMetaClass [
-	^ self
-]
