@@ -1,3 +1,10 @@
+"
+RBDoItMethodNode is the node that represents AST of DoIt expressions.
+It allows to distinguish between ASTs of real methods and DoIts. 
+
+- aMethodNode isDoIt
+
+"
 Class {
 	#name : #RBDoItMethodNode,
 	#superclass : #RBMethodNode,
