@@ -22,7 +22,7 @@ UtilityTest class >> ignoreTest [
 	ignore := true
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 UtilityTest class >> initialize [
 
 	self ignoreTest
@@ -31,7 +31,7 @@ UtilityTest class >> initialize [
 { #category : #accessing }
 UtilityTest class >> shouldBeIgnored [
 
-	^ ignore ifNil: [ self ignoreTest ]
+	^ ignore ifNil: [ ignore := true ]
 ]
 
 { #category : #asserting }
