@@ -377,6 +377,11 @@ Context >> basicSize [
 	^self primitiveFail
 ]
 
+{ #category : #testing }
+Context >> belongsToDoIt [
+	^self home method isDoIt
+]
+
 { #category : #'instruction decoding' }
 Context >> blockReturnConstant: value [ 
 	"Simulate the interpreter's action when a ReturnConstantToCaller
