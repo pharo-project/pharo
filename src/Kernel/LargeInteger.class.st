@@ -8,6 +8,12 @@ Class {
 	#category : #'Kernel-Numbers'
 }
 
+{ #category : #testing }
+LargeInteger class >> isAbstract [
+		
+	^ self == LargeInteger
+]
+
 { #category : #arithmetic }
 LargeInteger >> * anInteger [ 
 	"Primitive. Multiply the receiver by the argument and answer with an
