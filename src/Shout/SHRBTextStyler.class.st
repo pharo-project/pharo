@@ -948,9 +948,18 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 			ifFalse: [ #undefinedKeyword ]
 ]
 
+{ #category : #initialization }
+SHRBTextStyler >> initialize [ 
+	super initialize.
+	
+	isForWorkspace := false
+]
+
 { #category : #accessing }
-SHRBTextStyler >> isForWorkspace [
-	^ isForWorkspace ifNil: [ workspace notNil ]
+SHRBTextStyler >> isForWorkspace [  
+	^workspace 
+		ifNil: [ isForWorkspace ]
+		ifNotNil: [ workspace isScripting ]
 ]
 
 { #category : #accessing }
@@ -1349,6 +1358,5 @@ SHRBTextStyler >> visitVariableNode: aVariableNode [
 
 { #category : #accessing }
 SHRBTextStyler >> workspace: aWorkspace [ 
-	workspace := aWorkspace.
-	isForWorkspace ifNil: [ isForWorkspace := true ]
+	workspace := aWorkspace
 ]

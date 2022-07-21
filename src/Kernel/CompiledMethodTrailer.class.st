@@ -472,7 +472,8 @@ CompiledMethodTrailer >> encodeEmbeddedSourceWide [
 { #category : #private }
 CompiledMethodTrailer >> encodeLengthField: integer [
 	| bytes value |
-	[integer > 0] assert.
+	[integer >= 0] assert.
+	integer = 0 ifTrue: [ ^#[0] ].
 	value := integer.
 	bytes := ByteArray streamContents: [:str |
 		[ value > 0 ] whileTrue: [

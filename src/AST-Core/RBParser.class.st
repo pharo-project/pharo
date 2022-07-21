@@ -187,7 +187,7 @@ RBParser >> beFaulty [
 	errorBlock := self class errorNodeBlock
 ]
 
-{ #category : #'private-classes' }
+{ #category : #'private - classes' }
 RBParser >> blockNodeClass [
 	^ RBBlockNode
 ]
@@ -200,6 +200,11 @@ RBParser >> cascadeNodeClass [
 { #category : #accessing }
 RBParser >> currentToken [
 	^currentToken
+]
+
+{ #category : #'private - classes' }
+RBParser >> doItMethodNodeClass [
+	^ RBDoItMethodNode
 ]
 
 { #category : #'private - classes' }
@@ -525,6 +530,16 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 	^ errorNode
 ]
 
+{ #category : #parsing }
+RBParser >> parseDoIt [
+	"Parse and return an DoIt corresponding to the expression passed as a #source"
+	| methodNode |
+	methodNode := self doItMethodNodeClass new.
+	self parseMethodBodyInto: methodNode.
+	methodNode addReturn.
+	^methodNode
+]
+
 { #category : #'private - classes' }
 RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
 	| firstParse |
@@ -549,16 +564,13 @@ RBParser >> parseErrorNode: aMessageString [
 
 { #category : #parsing }
 RBParser >> parseExpression [
-	"Parse and return an AST corresponding to the expression passed as a #source"
-	| node |
-	node := self parseStatements: false.
-	(self methodNodeClass selector: #noMethod body: node) source: source.	"Make the sequence node have a method node as its parent"
-	self atEnd ifFalse: [ ^ self parseIncompleteExpression: node ].
-	(node statements isEmpty and: [currentToken comments notNil]) 
-			ifTrue: [self extractCommentsFrom: currentToken. self addCommentsTo: node.].
-	^(node statements size == 1 and: [ node temporaries isEmpty ])
-		  ifTrue: [ node statements first ]
-		  ifFalse: [ node ]
+	"Parse and return an AST node corresponding to the expression passed as a #source"
+	| methodNode |
+	methodNode := self doItMethodNodeClass new.
+	self parseMethodBodyInto: methodNode.	
+	^(methodNode statements size == 1 and: [ methodNode temporaries isEmpty ])
+		  ifTrue: [ methodNode statements first ]
+		  ifFalse: [ methodNode body ]
 ]
 
 { #category : #'private - parsing' }
@@ -742,22 +754,26 @@ RBParser >> parseMessagePattern [
 
 { #category : #parsing }
 RBParser >> parseMethod [
-	| methodNode sequenceNode | 
+	| methodNode | 
 	methodNode := self parseMessagePattern.
 	self parsePragmas.
 	self addCommentsTo: methodNode.
-	
-	methodNode body ifNil: [
-		sequenceNode := self sequenceNodeClass new.
-		methodNode body: sequenceNode ].
-	
-	self parseStatements: true into: methodNode body untilAnyCloserOf: #().
+	self parseMethodBodyInto: methodNode.
+	^methodNode
+]
+
+{ #category : #'private - parsing' }
+RBParser >> parseMethodBodyInto: aMethodNode [ 
+	aMethodNode source: source.
+	aMethodNode body ifNil: [ aMethodNode body: self sequenceNodeClass new ].	
+			
+	self parseStatements: true into: aMethodNode body untilAnyCloserOf: #().
 		
-	pragmas ifNotNil: [ methodNode pragmas: pragmas ].
-	methodNode source: source.
-	self atEnd ifFalse: [ ^ self parseIncompleteExpression: methodNode body ]. 
-	methodNode source: source.
-	^ methodNode
+	pragmas ifNotNil: [ aMethodNode pragmas: pragmas ].	
+	self atEnd ifFalse: [ self parseIncompleteExpression: aMethodNode body ].
+	(aMethodNode body statements isEmpty and: [currentToken comments notNil]) ifTrue: [
+		self extractCommentsFrom: currentToken. 
+		self addCommentsTo: aMethodNode body ].
 ]
 
 { #category : #'private - parsing' }
@@ -910,7 +926,7 @@ RBParser >> parseStatementInto: statementList periodList: periods [
 			returnPosition := currentToken start.
 			self step.
 			node := self returnNodeClass
-				        return: returnPosition
+				        start: returnPosition
 				        value: self parseAssignment ]
 		ifFalse: [ node := self parseAssignment ].
 
@@ -982,7 +998,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 			returnPosition := currentToken start.
 			self step.
 			node := self returnNodeClass
-				        return: returnPosition
+				        start: returnPosition
 				        value: self parseAssignment ]
 		ifFalse: [ node := self parseAssignment ].
 		
@@ -1110,14 +1126,6 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserO
 		statements: statements;
 		periods: periods.
 	^ sequenceNode
-]
-
-{ #category : #'private - parsing' }
-RBParser >> parseStatements: pragmaBoolean [
-	^ self
-		parseStatements: pragmaBoolean
-		into: self sequenceNodeClass new
-		untilAnyCloserOf: #()
 ]
 
 { #category : #'private - parsing' }

@@ -26,7 +26,8 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
     options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
     requestor: self;
     parse. 
-	self assert: result isReturn
+	self assert: result isDoIt.
+	self assert: result statements first isReturn
 ]
 
 { #category : #tests }

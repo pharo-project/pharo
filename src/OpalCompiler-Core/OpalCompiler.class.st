@@ -259,17 +259,7 @@ OpalCompiler >> compile: textOrString [
 { #category : #private }
 OpalCompiler >> compileDoItFromAST [ 
 	| method |
-	ast := self semanticScope transformDoItExpressionToMethodAST: ast.
-	ast compilationContext: self compilationContext.
-	self doSemanticAnalysis.
 	method := self compileMethodFromAST.
-	"The method source at this point is pure expression without DoIt method header (pattern)
-	Thefore We need to re-parse so that the AST and its source is in sync with the 
-	bytecode to be able to debug the doIt. Recompile not needed"
-	ast := RBParser parseMethod: ast formattedCode.
-	ast compilationContext: self compilationContext.
-	self doSemanticAnalysis.
-	"we store the ast in the DoIt method so that the debugger can read variables from the requestor"
 	method propertyAt: #ast put: ast.
 	^method
 ]

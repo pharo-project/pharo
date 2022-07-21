@@ -44,6 +44,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 	RBProgramNode
 		RBComment
 		RBMethodNode
+			RBDoItMethodNode
 		RBPragmaNode
 		RBReturnNode
 		RBSequenceNode
