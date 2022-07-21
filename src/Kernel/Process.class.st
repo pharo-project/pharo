@@ -227,7 +227,7 @@ Process >> doTerminationFromAnotherProcess [
 		context bottomContext insertSender: 
 			(Context contextOn: UnhandledException do: [:ex | terminator signal. ex pass]).
 		context bottomContext insertSender: (Context contextEnsure: [terminator signal]).
-		suspendedContext := [[] ensure: [context unwindTo: nil]. self endProcess] asContext.
+		suspendedContext := context unwindAndStop: self.
 		self priority: Processor activePriority; resume.
 		terminator wait
 	]
@@ -239,10 +239,9 @@ Process >> doTerminationFromYourself [
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is the active process. "
 	
-	| context |
 	terminating := true.
-	context := thisContext.
-	^[[] ensure: [context unwindTo: nil]. self endProcess] asContext jump
+	^(thisContext unwindAndStop: self) jump
+
 ]
 
 { #category : #accessing }

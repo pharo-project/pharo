@@ -2223,6 +2223,16 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 	^ self doPrimitive: primIndex method: aMethod receiver: aReceiver args: arguments
 ]
 
+{ #category : #private }
+Context >> unwindAndStop: aProcess [
+	"I'm a helper method to #terminate; I create and answer
+	 a helper stack for a terminating process to unwind itself from."
+
+	^(Context contextEnsure: [self unwindTo: nil]) 
+		privSender: [aProcess endProcess] asContext
+
+]
+
 { #category : #'special context access' }
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
