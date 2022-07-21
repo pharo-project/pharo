@@ -239,9 +239,10 @@ Process >> doTerminationFromYourself [
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is the active process. "
 	
+	| context |
 	terminating := true.
-	^(thisContext unwindAndStop: self) jump
-
+	context := thisContext.
+	^[[] ensure: [context unwindTo: nil]. self endProcess] asContext jump
 ]
 
 { #category : #accessing }
