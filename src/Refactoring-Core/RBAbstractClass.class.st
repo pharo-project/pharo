@@ -749,12 +749,16 @@ RBAbstractClass >> superclassRedefines: aSelector [
 
 { #category : #'accessing - deprecated' }
 RBAbstractClass >> theMetaClass [
-	^ model metaclassNamed: self name
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass' 
+						-> '`@receiver classSide'.
+	^ self classSide
 ]
 
 { #category : #'accessing - deprecated' }
 RBAbstractClass >> theNonMetaClass [
-	^ model classNamed: self name
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass' 
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
 ]
 
 { #category : #'variable accessing' }

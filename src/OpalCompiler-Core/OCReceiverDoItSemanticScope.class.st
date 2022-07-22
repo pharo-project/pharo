@@ -60,8 +60,3 @@ OCReceiverDoItSemanticScope >> targetReceiver: anObject [
 
 	targetReceiver := anObject
 ]
-
-{ #category : #'code compilation' }
-OCReceiverDoItSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
-	^expressionAST asDoit
-]

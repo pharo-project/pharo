@@ -110,8 +110,3 @@ OCContextualDoItSemanticScope >> targetContext: aContext [
 
 	targetContext := aContext
 ]
-
-{ #category : #'code compilation' }
-OCContextualDoItSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
-	^expressionAST asDoItForContext: targetContext
-]

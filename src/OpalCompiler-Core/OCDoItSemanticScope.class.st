@@ -43,15 +43,11 @@ OCDoItSemanticScope >> isDoItScope [
 
 { #category : #parsing }
 OCDoItSemanticScope >> parseASTBy: aParser [
-	^aParser parseExpression
+
+	^aParser parseDoIt
 ]
 
 { #category : #accessing }
 OCDoItSemanticScope >> receiver [
 	^ self subclassResponsibility
-]
-
-{ #category : #'code compilation' }
-OCDoItSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
-	self subclassResponsibility 
 ]

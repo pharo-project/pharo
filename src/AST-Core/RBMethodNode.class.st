@@ -37,6 +37,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+RBMethodNode class >> selector: aSymbol [
+	^self selector: aSymbol arguments: #()
+]
+
+{ #category : #'instance creation' }
 RBMethodNode class >> selector: aSymbol arguments: valueNodes [
 	^(self new)
 		selector: aSymbol;
@@ -372,12 +377,18 @@ RBMethodNode >> hash [
 
 { #category : #initialization }
 RBMethodNode >> initialize [
+	arguments := #().
 	pragmas := #().
 	replacements := SortedCollection sortBlock: 
 					[:a :b | 
 					a startPosition < b startPosition 
 						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]].
 	nodeReplacements := IdentityDictionary new
+]
+
+{ #category : #testing }
+RBMethodNode >> isDoIt [ 
+	^false
 ]
 
 { #category : #testing }
