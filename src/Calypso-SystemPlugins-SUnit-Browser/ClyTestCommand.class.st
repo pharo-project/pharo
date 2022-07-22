@@ -51,3 +51,9 @@ ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 ClyTestCommand >> testResult [
 	self subclassResponsibility
 ]
+
+{ #category : #accessing }
+ClyTestCommand >> testRunnerClass [
+
+	^ NewTestRunner
+]

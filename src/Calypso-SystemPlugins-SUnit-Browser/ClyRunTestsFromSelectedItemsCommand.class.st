@@ -71,7 +71,7 @@ ClyRunTestsFromSelectedItemsCommand >> readParametersFromContext: aToolContext [
 ClyRunTestsFromSelectedItemsCommand >> runTestCase: testCase results: testResult [
 
 	testCase resetHistory.
-	testCase suite run: testResult
+	testResult + (self testRunnerClass run: testCase)
 ]
 
 { #category : #accessing }

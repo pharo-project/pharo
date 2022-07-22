@@ -50,10 +50,8 @@ ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 
 { #category : #execution }
 ClyRunTestsFromMethodDataSourceCommand >> execute [
-	| testSuite result |
-	testSuite := self buildTestSuite.
-	
-	result := testSuite run.
+	| result |
+	result := self testRunnerClass run: self buildTestSuite.
 	
 	result updateResultsInHistory.
 	
