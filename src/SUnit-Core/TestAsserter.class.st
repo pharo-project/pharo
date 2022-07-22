@@ -470,6 +470,16 @@ TestAsserter >> logFailure: aString [
 	self class logFailure: aString.
 ]
 
+{ #category : #accessing }
+TestAsserter >> resources [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+TestAsserter >> setUp [
+	^ self subclassResponsibility
+]
+
 { #category : #asserting }
 TestAsserter >> should: aBlock [
 	"Evaluate the Block first then execute the assertion"
@@ -594,6 +604,11 @@ TestAsserter >> skip [
 TestAsserter >> skip: aComment [
 	"Don't run this test, and don't mark it as failure"
 	TestSkipped signal: aComment
+]
+
+{ #category : #accessing }
+TestAsserter >> tearDown [
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
