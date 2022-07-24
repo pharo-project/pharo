@@ -359,10 +359,11 @@ Process >> isReady [
 
 { #category : 'testing' }
 Process >> isBlocked [
-	"Answer true if blocked on a semaphore."
-	self isActiveProcess ifTrue: [ ^false ].
-	self isTerminated ifTrue: [ ^false ].
-	^myList class == Semaphore
+	"Answer true if blocked on a condition variable.
+	A process is blocked if it is waiting on some list
+	(e.g. a Semaphore), other than the runnable process lists."
+	myList ifNotNil: [ :list | ^list class ~~ ProcessList ].
+	^false
 ]
 
 { #category : 'testing'. }
