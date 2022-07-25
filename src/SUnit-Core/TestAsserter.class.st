@@ -91,7 +91,11 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of
 	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
 	"
-	self assert: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
+
+	self
+		assert: actualNumber
+		closeTo: expectedNumber
+		precision: self class defaultPrecisionsForCloseToComparison
 ]
 
 { #category : #asserting }
@@ -214,7 +218,11 @@ TestAsserter >> assertCollection: actualCollection includesAny: subcollection [
 
 { #category : #asserting }
 TestAsserter >> assertEmpty: aCollection [
-	^ self assert: aCollection isEmpty description: aCollection asString , ' should have been empty'
+	"Raise an AssertionFailure if the giving collection is not empty. I also provide a specialized message in case i failed"
+
+	^ self
+		  assert: aCollection isEmpty
+		  description: aCollection asString , ' should have been empty'
 ]
 
 { #category : #factory }
@@ -425,44 +433,61 @@ TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
 
 { #category : #asserting }
 TestAsserter >> denyEmpty: aCollection [
-	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
+	"I raise an AssertionFailure if the giving collection is empty. I also provide a specialized message in case i failed"
+
+	^ self
+		  assert: aCollection isNotEmpty
+		  description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : #asserting }
-TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [ 
-	^[aBlock value.
- 	false] on: anExceptionalEvent
-		do: [:ex | ex return: true]
+TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
+	"I check if the giving bloc evaluation raises the giving exception"
+
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anExceptionalEvent
+		  do: [ :ex | ex return: true ]
 ]
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: aString [
-	^[aBlock value.
- 	false] on: anExceptionalEvent
-		do: [:ex | ex return: (ex description includesSubstring: aString) not ]
+	"I check if the giving bloc (aBlock) evaluation raises the giving exception (anExceptionalEvent)"
+
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anExceptionalEvent
+		  do: [ :ex | 
+		  ex return: (ex description includesSubstring: aString) not ]
 ]
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock [
+	"I check if the first giving bloc (aBlock) evaluation raises the giving exception (anExceptionalEvent) in which case, i evaluate the second block (anotherBlock) with the exception"
 
-	^[aBlock value.
- 	false] 
-		on: anException
-		do: [:exception | 
-			anotherBlock value: exception.
-			exception return: true]
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anException
+		  do: [ :exception | 
+			  anotherBlock value: exception.
+			  exception return: true ]
 ]
 
 { #category : #asserting }
 TestAsserter >> fail [
+	"I make my receiver fail with TestFailure"
 
-	^self assert: false
+	^ self assert: false
 ]
 
 { #category : #asserting }
 TestAsserter >> fail: aDescriptionString [
+	"I make my receiver fail with the giving descripiton for TestFailure"
 
-	^self assert: false description: aDescriptionString
+	^ self assert: false description: aDescriptionString
 ]
 
 { #category : #logging }
@@ -489,6 +514,8 @@ TestAsserter >> should: aBlock [
 
 { #category : #asserting }
 TestAsserter >> should: aBlock description: aString [
+	"evaluate the block first then checks for the assertion with the giving description"
+
 	self assert: aBlock value description: aString
 ]
 
@@ -519,21 +546,34 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent [
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent description: aString [ 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
-		description: aString
+TestAsserter >> should: aBlock raise: anExceptionalEvent description: aString [
+	"Check first if the block raise the giving exception then check with assert for the result with description in case of failure"
+
+	^ self
+		  assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
+		  description: aString
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring)
-		description: aString
+TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
+
+	^ self
+		  assert: (self
+				   executeShould: aBlock
+				   inScopeOf: anExceptionalEvent
+				   withDescriptionNotContaining: substring)
+		  description: aString
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [ 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring)
-		description: aString
+TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
+
+	^ self
+		  assert: (self
+				   executeShould: aBlock
+				   inScopeOf: anExceptionalEvent
+				   withDescriptionContaining: substring)
+		  description: aString
 ]
 
 { #category : #asserting }
@@ -551,22 +591,29 @@ TestAsserter >> shouldFix: aBlock [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock [
+	"Test that block is evaluated to false"
 	self deny: aBlock value
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock description: aString [
+	"Test that block is evaluated to false. 
+	Otherwise raises an AssertionFailure with the giving description"
+	
 	self deny: aBlock value description: aString
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [  
+	"To test that a particular exception is not raised during the execution of a Block"
 	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString [  
+TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
+	"To test that a particular exception is not raised during the execution of a Block. 
+	Otherwise raise an AssertionFailure with the giving description"
  
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
@@ -574,11 +621,14 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString 
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
-	 
-	^self
-		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring) not
-		description: aString
+TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
+
+	^ self
+		  assert: (self
+				   executeShould: aBlock
+				   inScopeOf: anExceptionalEvent
+				   withDescriptionNotContaining: substring) not
+		  description: aString
 ]
 
 { #category : #asserting }
@@ -591,6 +641,8 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionInclu
 
 { #category : #asserting }
 TestAsserter >> signalFailure: aString [
+	"Raise a TestFailure with the giving string as description"
+
 	self classForTestResult failure signal: aString
 ]
 
