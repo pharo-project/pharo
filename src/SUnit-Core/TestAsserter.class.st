@@ -500,7 +500,7 @@ TestAsserter >> resources [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 TestAsserter >> setUp [
 	^ self subclassResponsibility
 ]
@@ -658,7 +658,7 @@ TestAsserter >> skip: aComment [
 	TestSkipped signal: aComment
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 TestAsserter >> tearDown [
 	^ self subclassResponsibility
 ]
