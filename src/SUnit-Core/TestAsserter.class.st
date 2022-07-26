@@ -218,7 +218,7 @@ TestAsserter >> assertCollection: actualCollection includesAny: subcollection [
 
 { #category : #asserting }
 TestAsserter >> assertEmpty: aCollection [
-	"Raise an AssertionFailure if the giving collection is not empty. I also provide a specialized message in case i failed"
+	"I Raise an AssertionFailure if the given collection is not empty. I also provide a specialized message in case I failed"
 
 	^ self
 		  assert: aCollection isEmpty
@@ -442,7 +442,7 @@ TestAsserter >> denyEmpty: aCollection [
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
-	"I check if the giving bloc evaluation raises the giving exception"
+	"I check if the given block evaluation raises the given exception"
 
 	^ [ 
 	  aBlock value.
@@ -453,7 +453,7 @@ TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: aString [
-	"I check if the giving bloc (aBlock) evaluation raises the giving exception (anExceptionalEvent)"
+	"I check if the giving block (aBlock) evaluation raises the giving exception (anExceptionalEvent)"
 
 	^ [ 
 	  aBlock value.
@@ -465,7 +465,9 @@ TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescript
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock [
-	"I check if the first giving bloc (aBlock) evaluation raises the giving exception (anExceptionalEvent) in which case, i evaluate the second block (anotherBlock) with the exception"
+	"I check if the first given block (aBlock) evaluation raises the given exception 
+	(anExceptionalEvent) in which case I evaluate the second block (anotherBlock) 
+	with the exception as argument"
 
 	^ [ 
 	  aBlock value.
@@ -485,7 +487,7 @@ TestAsserter >> fail [
 
 { #category : #asserting }
 TestAsserter >> fail: aDescriptionString [
-	"I make my receiver fail with the giving descripiton for TestFailure"
+	"I make my receiver fail with the given description for TestFailure"
 
 	^ self assert: false description: aDescriptionString
 ]
@@ -597,8 +599,8 @@ TestAsserter >> shouldnt: aBlock [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock description: aString [
-	"Test that block is evaluated to false. 
-	Otherwise raises an AssertionFailure with the giving description"
+	"I test that block is evaluated to false. 
+	Otherwise I raise an AssertionFailure with the given description"
 	
 	self deny: aBlock value description: aString
 ]
@@ -613,7 +615,7 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
 	"To test that a particular exception is not raised during the execution of a Block. 
-	Otherwise raise an AssertionFailure with the giving description"
+	Otherwise raise an AssertionFailure with the given description"
  
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
@@ -641,7 +643,7 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionInclu
 
 { #category : #asserting }
 TestAsserter >> signalFailure: aString [
-	"Raise a TestFailure with the giving string as description"
+	"Raise a TestFailure with the given string as description"
 
 	self classForTestResult failure signal: aString
 ]
