@@ -652,9 +652,9 @@ TestCase >> cleanUpInstanceVariables [
 
 { #category : #running }
 TestCase >> debug [
-	"During the execution, if the receiver fail 
-	du to error or assertion failure,
-	i open the debuger user can se the context of failure"
+	"During the execution, if the receiver fails 
+	due to an error or an assertion failure,
+	I open the debuger so user can see the context of failure"
 
 	| result |
 	result := self classForTestResult new.
@@ -676,7 +676,7 @@ TestCase >> debugAsFailure [
 
 { #category : #accessing }
 TestCase >> defaultTimeLimit [
-	"I define the limit that any testcase should not exced."
+	"I define the limit that any testcase should not exceed."
 	
 	^self class defaultTimeLimit
 ]
@@ -704,7 +704,7 @@ TestCase >> executionProcessMonitor [
 { #category : #testing }
 TestCase >> expectedFailures [
 	"I return the collection of tests which are expected to fail.
-	A Test which is excpected to fail includes <expectedFailure> pragma in its body"
+	A Test which is expected to fail includes <expectedFailure> pragma in its body"
 	
 	| pragmas |
 	^ expectedFails ifNil: [
@@ -726,7 +726,7 @@ TestCase >> instanceVariablesToKeep [
 
 { #category : #testing }
 TestCase >> isExpectedFailure [
-	"I tell if my receiver is excepected to fail.
+	"I tell if my receiver is expected to fail.
 	It is the case if it has the pragma <expectedFailure>"
 	
 	^self expectedFailures includes: testSelector
@@ -837,7 +837,7 @@ TestCase >> run [
 
 { #category : #running }
 TestCase >> run: aResult [
-	"run the case and use the giving object to store result"
+	"run the testcase (receiver) by using the given object to store the result"
 	
 	aResult runCase: self
 ]
