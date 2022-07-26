@@ -182,14 +182,14 @@ TestResult >> addSkip: aTestCase [
 
 { #category : #accessing }
 TestResult >> classesTested [
-	"I return the set of Classes under tests"
+	"I return the set of Classes under test"
 	
 	^ (self tests collect: [ :testCase | testCase class ]) asSet
 ]
 
 { #category : #accessing }
 TestResult >> defects [
-	"I return the collection of tests which failed du to assertion failure or error"
+	"I return the collection of tests which failed due to an assertion failure or an error"
 
 	^OrderedCollection new
 		addAll: self errors;
@@ -248,7 +248,7 @@ TestResult >> expectedDefectCount [
 
 { #category : #accessing }
 TestResult >> expectedDefects [
-	"I return the collection of tests which was expected to not pass. see (<expectedFailure> pragma)"
+	"I return the collection of tests which was expected to not pass. See (<expectedFailure> pragma)"
 
 	^ errors , failures asOrderedCollection reject: [ :each | each shouldPass ]
 ]
@@ -261,7 +261,7 @@ TestResult >> expectedPassCount [
 { #category : #accessing }
 TestResult >> expectedPasses [
 	"I return the collection of tests which are expected to pass. 
-	A test which doesn't not include the pragma (<expectedFailure>) if expected to pass"
+	A test which does not include the pragma (<expectedFailure>) is expected to pass"
 
 	^ passed select: [ :each | each shouldPass ]
 ]
@@ -274,8 +274,8 @@ TestResult >> failureCount [
 
 { #category : #compatibility }
 TestResult >> failures [
-	"Don't half bind me. I return failures tests.
-	I do not considere the following cases as failure: 
+	"I return failures tests.
+	I don't considere the following cases as failure: 
 	1) A failure test which was supposed to fail
 	2) A passed test which was supposed to pass"
 	
@@ -370,7 +370,7 @@ TestResult >> isPassedFor: class selector: selector [
 
 { #category : #combining }
 TestResult >> mergeWith: aTestResult [
-	"merge the gicing test result with the receiver"
+	"merge the given test result with the receiver"
 	
 	timeStamp := DateAndTime now.
 	failures addAll: aTestResult failures.
@@ -525,7 +525,7 @@ TestResult >> unexpectedPassCount [
 
 { #category : #accessing }
 TestResult >> unexpectedPasses [
-	"I return passed tests which was supposed to fail"
+	"I return passed tests which were supposed to fail"
 	
 	^ passed reject: [ :each | each shouldPass ]
 ]
