@@ -1198,9 +1198,9 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 		ifTrue: [ 
 			self hasFocus: true.
 			editing := false.
-			self requestTextEditingAt:
-				((self cursor positionInWorld corner: self cursor positionInWorld) 
-					 translateBy: 0 @ (self font height + 4)) truncated.
+			self requestTextEditingAt: (self cursor positionInWorld corner:
+					 (self cursor positionInWorld translateBy:
+						  0 @ (self font height + 4))) truncated.
 			self showOverEditableTextCursor ]
 		ifFalse: [ 
 			self hasFocus: false.
