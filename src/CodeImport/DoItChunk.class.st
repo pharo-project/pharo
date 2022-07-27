@@ -35,10 +35,9 @@ DoItChunk >> importFor: requestor logSource: logSource [
 		yourself). 
 	
 	^Smalltalk compiler class new
-		source: contents;
 		requestor: requestor;
 		logged: logSource;
-		evaluate.
+		evaluate: contents
 ]
 
 { #category : #testing }

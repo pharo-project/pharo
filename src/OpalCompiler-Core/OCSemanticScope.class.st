@@ -28,6 +28,9 @@ Configuration methods like #class:, #context:, #receiver:, #noPattern: perform t
 Class {
 	#name : #OCSemanticScope,
 	#superclass : #OCAbstractScope,
+	#instVars : [
+		'targetEnvironment'
+	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
@@ -62,11 +65,6 @@ OCSemanticScope >> asDoItScopeForReceiver: anObject [
 	^OCReceiverDoItSemanticScope targetingReceiver: anObject
 ]
 
-{ #category : #'code compilation' }
-OCSemanticScope >> compileMethodFromASTBy: aCompiler [
-	self subclassResponsibility 
-]
-
 { #category : #testing }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
 	
@@ -84,8 +82,9 @@ OCSemanticScope >> isDoItScope [
 { #category : #lookup }
 OCSemanticScope >> lookupVar: name declare: aBoolean [
 
-	(self targetClass lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^v ].
-	
+	(self targetClass lookupLocalVar: name) ifNotNil: [ :v | ^v ].
+	(self targetEnvironment lookupVar: name) ifNotNil: [ :v | ^v ].	
+		
 	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
 	
 ]
@@ -107,5 +106,11 @@ OCSemanticScope >> targetClass [
 
 { #category : #accessing }
 OCSemanticScope >> targetEnvironment [ 
-	^self targetClass environment 
+	^targetEnvironment ifNil: [ self targetClass environment ]
+]
+
+{ #category : #accessing }
+OCSemanticScope >> targetEnvironment: anObject [
+
+	targetEnvironment := anObject
 ]

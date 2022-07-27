@@ -591,9 +591,8 @@ CompiledMethod >> isFaulty [
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
 	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
 	ast := self methodClass compiler 
-				source: self sourceCode;
 				options: #(+ optionParseErrors);
-				parse.
+				parse: self sourceCode.
 	^ ast isFaulty.
 ]
 

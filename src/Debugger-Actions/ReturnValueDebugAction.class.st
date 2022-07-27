@@ -31,10 +31,9 @@ ReturnValueDebugAction >> executeAction [
 	
 	expression := UIManager default request: 'Enter expression for return value:'.
 	value := self class compiler
-			source: expression;
 			context: self currentContext;
 			receiver: self currentContext receiver;
-			evaluate.
+			evaluate: expression.
 
 	self session returnValue: value from: self currentContext
 ]

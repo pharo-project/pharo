@@ -4,8 +4,7 @@ Extension { #name : #Class }
 Class >> classSideCompiler [
 	"Redefine this method if you want to customize the compiler for class-side methods"
 	^self classSideCompilerClass new
-		environment: self classSide environment;
-		class: self classSide
+		semanticScope: (OCMethodSemanticScope targetingClass: self classSide)
 ]
 
 { #category : #'*OpalCompiler-Core' }

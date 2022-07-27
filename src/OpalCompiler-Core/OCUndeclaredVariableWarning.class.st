@@ -105,9 +105,8 @@ OCUndeclaredVariableWarning >> defineClass: className [
 	(classDefinition isNil or: [ classDefinition isEmpty ])
 		ifTrue: [ ^ Abort signal ].
 	self class compiler
-		source: classDefinition;
 		logged: true;
-		evaluate.
+		evaluate: classDefinition.
 	classBinding := node owningScope lookupVar: className.
 	"make sure to recompile all methods referencing this class"
 	classBinding usingMethods do: [:method | method recompile].
@@ -132,9 +131,8 @@ OCUndeclaredVariableWarning >> defineTrait: traitName [
 	(traitDefinition isNil or: [ traitDefinition isEmpty ])
 		ifTrue: [ ^ Abort signal ].
 	self class compiler
-		source: traitDefinition;
 		logged: true;
-		evaluate.
+		evaluate: traitDefinition.
 	^ (node owningScope lookupVar: traitSymbol)
 		ifNil: [self error: 'should be not happen']
 ]

@@ -311,9 +311,8 @@ when this button is pressed separated by periods' translated
 		initialAnswer: (String streamContents: [ :str | arguments do: [ :arg | arg printOn: str. str nextPutAll: '. ' ] ]).
 	newArgs isEmptyOrNil ifFalse: [ 
 			newArgsArray := self class compiler
-				source: '{' , newArgs , '}';
 				receiver: self;
-				evaluate.
+				evaluate: '{' , newArgs , '}'.
 			self arguments: newArgsArray ]
 ]
 

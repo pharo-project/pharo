@@ -25,10 +25,9 @@ Behavior >> compile: code notifying: requestor [
 	
 	| method |
 	method  := self compiler
-		source: code;
 		requestor: requestor;
 		failBlock: [ ^nil ];
-		compile.
+		compile: code.
 		
 	method putSource: code
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Behavior method'; cr].
@@ -54,8 +53,7 @@ Behavior >> compiler [
 	"Answer a compiler appropriate for source methods of this class."
 
 	^self compilerClass new
-		environment: self environment;
-		class: self
+		semanticScope: (OCMethodSemanticScope targetingClass: self)
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -68,6 +66,14 @@ Behavior >> compilerClass [
 { #category : #'*OpalCompiler-Core' }
 Behavior >> evaluate: aString [
 	^self compiler evaluate: aString
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> lookupLocalVar: aName [
+	^ self classLayout 
+		resolveSlot: aName asSymbol 
+		ifFound: [:var | var] 
+		ifNone: [ self innerBindingOf: aName ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -112,11 +118,10 @@ Behavior >> recompile: selector from: oldClass [
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
 	newMethod := oldClass compiler
-				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				failBlock: [^ self];
 				compiledMethodTrailer: method trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
+				compile: (oldClass sourceCodeAt: selector).   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	self addSelector: selector withRecompiledMethod: newMethod.
 ]

@@ -21,7 +21,6 @@ Class {
 		'logged',
 		'compiledMethod',
 		'options',
-		'environment',
 		'productionEnvironment',
 		'parserClass',
 		'semanticAnalyzerClass',
@@ -118,6 +117,16 @@ CompilationContext class >> optionCleanBlockClosure [
 { #category : #'options - settings API' }
 CompilationContext class >> optionCleanBlockClosure: aBoolean [
 	^ self writeDefaultOption: #optionCleanBlockClosure value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionEmbeddAST [
+	^ self readDefaultOption: #optionEmbeddAST
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionEmbeddAST: aBoolean [
+	^ self writeDefaultOption: #optionEmbeddAST value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -289,6 +298,7 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
+	(- optionEmbeddAST         'Embedd AST into CompiledMethod instead of storing in external ASTCache instance. This way the AST will be strongly bound to the method instread of weakly stored in the cache')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
@@ -417,12 +427,12 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := semanticScope targetEnvironment ]
+	^ semanticScope targetEnvironment
 ]
 
 { #category : #accessing }
 CompilationContext >> environment: anObject [
-	environment := anObject
+	semanticScope targetEnvironment: anObject
 ]
 
 { #category : #accessing }
@@ -488,13 +498,18 @@ CompilationContext >> noPattern: anObject [
 	anObject ifTrue: [
 		semanticScope := semanticScope asDoItScope.
 		"when we compile an expression, embedd sources, as the resulting method will never be installed"
-		self parseOptions: #(+ #optionEmbeddSources).
+		self parseOptions: #(+ #optionEmbeddSources + #optionEmbeddAST).
 	 ]
 ]
 
 { #category : #options }
 CompilationContext >> optionCleanBlockClosure [
 	^ options includes: #optionCleanBlockClosure
+]
+
+{ #category : #options }
+CompilationContext >> optionEmbeddAST [
+	^ options includes: #optionEmbeddAST
 ]
 
 { #category : #options }

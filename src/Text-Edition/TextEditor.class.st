@@ -1514,12 +1514,11 @@ TextEditor >> evaluateSelectionAndDo: aBlock [
 				ctxt := model doItContext]
 		ifFalse: [rcvr := ctxt := nil].
 	result := rcvr class compiler
-			source: self selectionAsStream;
 			context: ctxt;
 			receiver: rcvr;
 			requestor: self;
 			failBlock:  [morph flash. ^ nil];
-			evaluate.		
+			evaluate: self selection asString.		
 	^aBlock value: result
 ]
 

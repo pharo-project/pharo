@@ -173,10 +173,9 @@ SystemDictionary >> classOrTraitNamed: aString [
 SystemDictionary >> defineClass: aDefinition withController: aController [
 
 	^ self class compiler
-		source: aDefinition;
 		requestor: aController;
 		logged: true;
-		evaluate
+		evaluate: aDefinition
 ]
 
 { #category : #accessing }

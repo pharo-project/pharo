@@ -85,11 +85,14 @@ RBMethodNode >> generateIR [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateMethod [
-	| methodTrailer |
+	| methodTrailer newMethod |
 	methodTrailer := self compilationContext optionEmbeddSources
 			ifTrue: [ CompiledMethodTrailer new sourceCode: source ]
 			ifFalse: [self compilationContext compiledMethodTrailer ].
-	^self generate: methodTrailer
+	newMethod := self generate: methodTrailer.
+	self compilationContext optionEmbeddAST ifTrue: [ 
+		 newMethod propertyAt: #ast put: self ].
+	^newMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }

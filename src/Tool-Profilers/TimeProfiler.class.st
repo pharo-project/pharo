@@ -172,12 +172,11 @@ TimeProfiler >> blockCode: aString notifying: aRequestor [
 	aString ifNil: [^ self].
 	blockSource := aString.
 	compiledMethod := Smalltalk compiler
-		source: ('self runBlock: [', aString, ']');
 		context: self doItContext;
 		requestor: self;
 		noPattern: true;
 		failBlock: [^self];
-		compile.
+		compile: ('self runBlock: [', aString, ']').
 	self showResult: ( compiledMethod valueWithReceiver: self arguments: #()).
 	self changed: #blockCode.
 	self changed: #summaryText.

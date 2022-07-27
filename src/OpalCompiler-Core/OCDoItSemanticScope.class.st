@@ -25,11 +25,6 @@ OCDoItSemanticScope >> asDoItScope [
 	^self
 ]
 
-{ #category : #'code compilation' }
-OCDoItSemanticScope >> compileMethodFromASTBy: aCompiler [
-	^aCompiler compileDoItFromAST
-]
-
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 

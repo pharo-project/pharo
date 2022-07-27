@@ -416,10 +416,9 @@ ClassDescription >> compile: text classified: category withStamp: changeStamp no
 	| method selector |
 
 	method := self compiler
-		source: text;
 		requestor: requestor;
 		failBlock:  [ ^nil ];
-		compile.
+		compile: text.
 	
 	selector := method selector.
 	logSource ifTrue: [
