@@ -22,7 +22,7 @@ NewCommandLineRunnerTest >> ignoredSelectors [
 NewCommandLineRunnerTest >> setUp [
 
 	super setUp.
-	runner := NewCommandLineRunner new
+	runner := NewCommandLineRunner with: VoidReporter  
 ]
 
 { #category : #tests }
