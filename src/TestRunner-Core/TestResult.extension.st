@@ -3,10 +3,7 @@ Extension { #name : #TestResult }
 { #category : #'*TestRunner-Core' }
 TestResult >> + aTestResult [
 
-	aTestResult passed do: [ :each | self addPassIfAbsent: each ].
-	aTestResult failures do: [ :each | self addFailureIfAbsent: each ].
-	aTestResult errors do: [ :each | self addErrorIfAbsent: each ].
-	aTestResult skipped do: [ :each | self addSkipIfAbsent: each ]
+	self cleanMergeWith: aTestResult
 ]
 
 { #category : #'*TestRunner-Core' }
@@ -31,6 +28,15 @@ TestResult >> addPassIfAbsent: aPassed [
 TestResult >> addSkipIfAbsent: aSkip [
 
 	(skipped includes: aSkip) ifFalse: [ self addSkip: aSkip ]
+]
+
+{ #category : #'*TestRunner-Core' }
+TestResult >> cleanMergeWith: aTestResult [
+	timeStamp := aTestResult timeStamp.
+	aTestResult actualPassed do: [ :each | self addPassIfAbsent: each ].
+	aTestResult actualFailures do: [ :each | self addFailureIfAbsent: each ].
+	aTestResult actualErrors do: [ :each | self addErrorIfAbsent: each ].
+	aTestResult skipped do: [ :each | self addSkipIfAbsent: each ]
 ]
 
 { #category : #'*TestRunner-Core' }
