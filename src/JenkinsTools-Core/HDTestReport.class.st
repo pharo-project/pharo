@@ -3,7 +3,7 @@ Hudson report for test results
 "
 Class {
 	#name : #HDTestReport,
-	#superclass : #HDReport,
+	#superclass : #Object,
 	#instVars : [
 		'suite',
 		'stream',

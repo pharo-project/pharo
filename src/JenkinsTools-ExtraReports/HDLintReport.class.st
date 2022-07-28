@@ -3,7 +3,7 @@ Hudson report for lint results
 "
 Class {
 	#name : #HDLintReport,
-	#superclass : #HDReport,
+	#superclass : #Object,
 	#instVars : [
 		'environment',
 		'rules'

@@ -112,17 +112,6 @@ TestCommandLineHandler >> informResults: results [
 		flush
 ]
 
-{ #category : #private }
-TestCommandLineHandler >> newTestRunner [
-
-	^ self class environment
-		  at: #NewCommandLineRunner
-		  ifPresent: [ :runner | runner with: self reporter ]
-		  ifAbsent: [ 
-			  self error:
-				  'no tests output available, try to use the option --junit-xml-output' ]
-]
-
 { #category : #accessing }
 TestCommandLineHandler >> packages [
 	| packages |
@@ -150,7 +139,7 @@ TestCommandLineHandler >> runPackages [
 	packages := self packages.
 	self inform:
 		'Running tests in ' , packages size asString , ' Packages'.
-	results := self newTestRunner
+	results := self testRunner
 		           runPackages: self buildRPackages;
 		           result.
 
@@ -169,18 +158,10 @@ TestCommandLineHandler >> runPackages [
 { #category : #private }
 TestCommandLineHandler >> testRunner [
 
-	(self hasOption: 'junit-xml-output') ifTrue: [ 
-		HDTestReport currentStageName: ((self hasOption: 'stage-name')
-				 ifTrue: [ self optionAt: 'stage-name' ]
-				 ifFalse: [ '' ]).
-		^ HDTestReport ].
-
-	self class environment
-		at: #CommandLineTestRunner
-		ifPresent: [ :commandLineTestRunner | 
-			(self hasOption: 'no-xterm') ifTrue: [ ^ commandLineTestRunner ].
-			^ self class environment at: #VTermTestRunner ]
-		ifAbsent: [ 
-			self error:
-				'no tests output available, try to use the option --junit-xml-output' ]
+	^ self class environment
+		  at: #NewCommandLineRunner
+		  ifPresent: [ :runner | runner with: self reporter ]
+		  ifAbsent: [ 
+			  self error:
+				  'no tests output available, try to use the option --junit-xml-output' ]
 ]
