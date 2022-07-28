@@ -36,6 +36,11 @@ TestCommandLineHandler class >> description [
 	^ 'A command line test runner'
 ]
 
+{ #category : #private }
+TestCommandLineHandler >> NewTestRunner [
+	^ NewCommandLineRunner with: self reporter.
+]
+
 { #category : #activation }
 TestCommandLineHandler >> activate [
 	self activateHelp
@@ -75,6 +80,18 @@ TestCommandLineHandler >> addPackagesMatchingRegex: aRegex to: aSet [
 			ifTrue: [ aSet add: packageName ]]
 ]
 
+{ #category : #accessing }
+TestCommandLineHandler >> buildRPackages [
+
+	^ self packages collect: [ :package | package asPackage ]
+]
+
+{ #category : #private }
+TestCommandLineHandler >> defaultReporter [
+
+	^ StdReporter
+]
+
 { #category : #private }
 TestCommandLineHandler >> inform: aString [
 	self stdout 
@@ -84,15 +101,26 @@ TestCommandLineHandler >> inform: aString [
 
 { #category : #private }
 TestCommandLineHandler >> informResults: results [
-	self stdout 
-		<< ('{1} run, {2} passes, {3} failures, {4} errors.'
-			format: {
-				results sum: #suiteTotal.
-				results sum: #suitePassing.
-				results sum: #suiteFailures.
-				results sum: #suiteErrors })
+
+	(self stdout
+	 << ('{1} run, {2} passes, {3} failures, {4} errors.' format: { 
+					  results runCount.
+					  results passedCount.
+					  results failureCount.
+					  results errorCount }))
 		<< OSPlatform current lineEnding;
 		flush
+]
+
+{ #category : #private }
+TestCommandLineHandler >> newTestRunner [
+
+	^ self class environment
+		  at: #NewCommandLineRunner
+		  ifPresent: [ :runner | runner with: self reporter ]
+		  ifAbsent: [ 
+			  self error:
+				  'no tests output available, try to use the option --junit-xml-output' ]
 ]
 
 { #category : #accessing }
@@ -106,34 +134,53 @@ TestCommandLineHandler >> packages [
 ]
 
 { #category : #private }
+TestCommandLineHandler >> reporter [
+
+	(self hasOption: 'junit-xml-output')
+		ifTrue: [ ^ XmlReporter ].
+
+	(self hasOption: 'no-xterm') ifTrue: [ ^ XTermReporter ].
+	^ self defaultReporter
+]
+
+{ #category : #private }
 TestCommandLineHandler >> runPackages [
+
 	| packages results |
-	
 	packages := self packages.
-	self inform: 'Running tests in ', packages size asString, ' Packages'.
-	results := (self testRunner runPackages: self packages) select: #notNil.
-				
+	self inform:
+		'Running tests in ' , packages size asString , ' Packages'.
+	results := self newTestRunner
+		           runPackages: self buildRPackages;
+		           result.
+
 	self informResults: results.
 	(self hasOption: 'save') ifTrue: [ Smalltalk saveSession ].
-	((self hasOption: 'fail-on-failure') 
-		and: [ results anySatisfy: #hasFailuresOrErrors ])
-		ifTrue: [^ self exitFailure: 'Tests do not pass!' ].
-	((self hasOption: 'fail-on-error') 
-		and: [ results anySatisfy: #hasErrors ])
-		ifTrue: [^ self exitFailure: 'Tests do not pass!' ].
-	
-	Smalltalk snapshot: false andQuit: true.
+	((self hasOption: 'fail-on-failure') and: [ 
+		 results anySatisfy: #hasFailuresOrErrors ]) ifTrue: [ 
+		^ self exitFailure: 'Tests do not pass!' ].
+	((self hasOption: 'fail-on-error') and: [ 
+		 results anySatisfy: #hasErrors ]) ifTrue: [ 
+		^ self exitFailure: 'Tests do not pass!' ].
+
+	Smalltalk snapshot: false andQuit: true
 ]
 
 { #category : #private }
 TestCommandLineHandler >> testRunner [
-	
+
 	(self hasOption: 'junit-xml-output') ifTrue: [ 
-		HDTestReport currentStageName: ((self hasOption: 'stage-name') ifTrue: [ self optionAt: 'stage-name' ] ifFalse: [ '' ]). 	
+		HDTestReport currentStageName: ((self hasOption: 'stage-name')
+				 ifTrue: [ self optionAt: 'stage-name' ]
+				 ifFalse: [ '' ]).
 		^ HDTestReport ].
-	
-	self class environment at: #CommandLineTestRunner ifPresent: [ :commandLineTestRunner |
-		(self hasOption: 'no-xterm') ifTrue: [ ^ commandLineTestRunner ].
-		^ self class environment at: #VTermTestRunner
-	] ifAbsent: [ self error: 'no tests output available, try to use the option --junit-xml-output' ]
+
+	self class environment
+		at: #CommandLineTestRunner
+		ifPresent: [ :commandLineTestRunner | 
+			(self hasOption: 'no-xterm') ifTrue: [ ^ commandLineTestRunner ].
+			^ self class environment at: #VTermTestRunner ]
+		ifAbsent: [ 
+			self error:
+				'no tests output available, try to use the option --junit-xml-output' ]
 ]
