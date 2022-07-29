@@ -186,7 +186,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		icon: self theme windowCloseForm
 		subMenu: submenu.
 	submenu
-		addToggle: 'close all windows' translated
+		addToggle: 'all windows' translated
 		target: self
 		selector: #taskbarCloseAllWindows
 		getStateSelector: nil
