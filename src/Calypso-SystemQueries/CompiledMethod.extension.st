@@ -16,5 +16,5 @@ CompiledMethod >> isBigLiteralMethod [
 { #category : #'*Calypso-SystemQueries' }
 CompiledMethod >> isLiteralMethod [
 
-	^ self bytecode = self encoderClass literalMethodBytecodes
+	^ self bytecodes = self encoderClass literalMethodBytecodes
 ]

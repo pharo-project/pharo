@@ -144,7 +144,7 @@ CompiledCode >> author [
 ]
 
 { #category : #accessing }
-CompiledCode >> bytecode [
+CompiledCode >> bytecodes [
 	"Answer an ByteArray of the btyecode of the method."
 
 	| start stop bytecode |
