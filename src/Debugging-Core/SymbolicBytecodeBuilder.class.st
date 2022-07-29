@@ -330,8 +330,15 @@ SymbolicBytecodeBuilder >> storeIntoLiteralVariable: anAssociation [
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> storeIntoReceiverVariable: offset [ 
 	"Print the Store Top Of Stack Into Instance Variable Of Method bytecode."
-
-	self addBytecode: 'storeIntoRcvr: ', offset printString
+	| bytecode |
+	
+	bytecode := (String streamContents: [ :s |
+			s << 'storeIntoRcvr: ' 
+				<< offset printString 
+				<< ' (' 
+				<< (method methodClass instVarNames at: offset + 1) 
+				<< ')' ]).
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
@@ -351,8 +358,15 @@ SymbolicBytecodeBuilder >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: temp
 SymbolicBytecodeBuilder >> storeIntoTemporaryVariable: offset [ 
 	"Print the Store Top Of Stack Into Temporary Variable Of Method 
 	bytecode."
-
-	self addBytecode: 'storeIntoTemp: ', offset printString
+	
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'pushTemp: ' 
+				<< offset printString 
+				<< ' (' 
+				<< (method tempNames at: offset + 1)  
+				<< ')' ]).
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
