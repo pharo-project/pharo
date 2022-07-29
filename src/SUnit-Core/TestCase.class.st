@@ -652,11 +652,15 @@ TestCase >> cleanUpInstanceVariables [
 
 { #category : #running }
 TestCase >> debug [
+	"During the execution, if the receiver fails 
+	due to an error or an assertion failure,
+	I open the debuger so user can see the context of failure"
+
 	| result |
 	result := self classForTestResult new.
-	[ result runCaseForDebug: self ]
-		ensure: [ self classForTestResource resetResources: self resources.
-			result updateResultsInHistory  ].
+	[ result runCaseForDebug: self ] ensure: [ 
+		self classForTestResource resetResources: self resources.
+		result updateResultsInHistory ].
 	^ result
 ]
 
@@ -672,14 +676,19 @@ TestCase >> debugAsFailure [
 
 { #category : #accessing }
 TestCase >> defaultTimeLimit [
+	"I define the limit that any testcase should not exceed."
+	
 	^self class defaultTimeLimit
 ]
 
 { #category : #private }
 TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
-	^[aBlock value.
- 	false] on: anExceptionalEvent
-		do: [:ex | ex return: (ex description includesSubstring: aString) ]
+
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anExceptionalEvent
+		  do: [ :ex | ex return: (ex description includesSubstring: aString) ]
 ]
 
 { #category : #accessing }
@@ -694,6 +703,9 @@ TestCase >> executionProcessMonitor [
 
 { #category : #testing }
 TestCase >> expectedFailures [
+	"I return the collection of tests which are expected to fail.
+	A Test which is expected to fail includes <expectedFailure> pragma in its body"
+	
 	| pragmas |
 	^ expectedFails ifNil: [
 		
@@ -714,6 +726,9 @@ TestCase >> instanceVariablesToKeep [
 
 { #category : #testing }
 TestCase >> isExpectedFailure [
+	"I tell if my receiver is expected to fail.
+	It is the case if it has the pragma <expectedFailure>"
+	
 	^self expectedFailures includes: testSelector
 ]
 
@@ -822,6 +837,8 @@ TestCase >> run [
 
 { #category : #running }
 TestCase >> run: aResult [
+	"run the testcase (receiver) by using the given object to store the result"
+	
 	aResult runCase: self
 ]
 
@@ -869,6 +886,8 @@ TestCase >> shouldAnnounce [
 
 { #category : #testing }
 TestCase >> shouldPass [
+	"I check if the test is not expected to fail. See (<expectedFailure> pragma)"
+	
 	^self isExpectedFailure not
 ]
 
