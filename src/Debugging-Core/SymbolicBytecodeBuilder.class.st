@@ -157,22 +157,42 @@ SymbolicBytecodeBuilder >> popIntoLiteralVariable: anAssociation [
 SymbolicBytecodeBuilder >> popIntoReceiverVariable: offset [ 
 	"Print the Remove Top Of Stack And Store Into Instance Variable 
 	bytecode."
-
-	self addBytecode: 'popIntoRcvr: ', offset printString
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'popIntoRcvr: ' 
+				<< offset printString 
+				<< ' (' 
+				<< (method methodClass instVarNames at: offset + 1) 
+				<< ')' ]).
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
-
-	self addBytecode: 'popIntoTemp: ', remoteTempIndex printString, ' inVectorAt: ', tempVectorIndex printString
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'popIntoTemp: ' 
+				<< remoteTempIndex printString 
+				<< ' inVectorAt: '
+				<< tempVectorIndex printString
+				<< ')' ]).
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> popIntoTemporaryVariable: offset [ 
 	"Print the Remove Top Of Stack And Store Into Temporary Variable 
 	bytecode."
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'popIntoTemp: ' 
+				<< offset printString 
+				<< ' (' 
+				<< (method tempNames at: offset + 1)  
+				<< ')' ]).
+		
+	self addBytecode: bytecode
 
-	self addBytecode: 'popIntoTemp: ', offset printString
 ]
 
 { #category : #'instruction decoding' }
@@ -248,13 +268,28 @@ SymbolicBytecodeBuilder >> pushReceiverVariable: offset [
 	"Print the Push Contents Of the Receiver's Instance Variable Whose Index 
 	is the argument, offset, On Top Of Stack bytecode."
 
-	self addBytecode: 'pushRcvr: ' , offset printString
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'pushRcvr: ' 
+				<< offset printString 
+				<< ' (' 
+				<< (method methodClass instVarNames at: offset + 1) 
+				<< ')' ]).
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 
-	self addBytecode: 'pushTemp: ', remoteTempIndex printString, ' inVectorAt: ', tempVectorIndex printString
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'pushTemp: ' 
+				<< remoteTempIndex printString
+				<< ' inVectorAt: '
+				<< tempVectorIndex printString
+			]).
+		
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
@@ -262,7 +297,16 @@ SymbolicBytecodeBuilder >> pushTemporaryVariable: offset [
 	"Print the Push Contents Of Temporary Variable Whose Index Is the 
 	argument, offset, On Top Of Stack bytecode."
 
-	self addBytecode: 'pushTemp: ', offset printString
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'pushTemp: ' 
+				<< offset printString 
+				<< ' (' 
+				<< (method tempNames at: offset + 1)  
+				<< ')' ]).
+	self addBytecode: bytecode
+
+		
 ]
 
 { #category : #'instruction decoding' }
@@ -293,7 +337,14 @@ SymbolicBytecodeBuilder >> storeIntoReceiverVariable: offset [
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 
-	self addBytecode: 'storeIntoTemp: ', remoteTempIndex printString, ' inVectorAt: ', tempVectorIndex printString
+	| bytecode |
+	bytecode := (String streamContents: [ :s |
+			s << 'storeIntoTemp: ' 
+				<< remoteTempIndex printString 
+				<< ' inVectorAt: '
+				<< tempVectorIndex printString
+				<< ')' ]).
+	self addBytecode: bytecode
 ]
 
 { #category : #'instruction decoding' }
