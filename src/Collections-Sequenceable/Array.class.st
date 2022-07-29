@@ -306,9 +306,16 @@ Array >> printAsSelfEvaluatingFormOn: aStream [
 
 { #category : #printing }
 Array >> printOn: aStream [
-	self shouldBePrintedAsLiteral ifTrue: [self printAsLiteralFormOn: aStream. ^ self].
-	self isSelfEvaluating ifTrue: [self printAsSelfEvaluatingFormOn: aStream. ^ self].
-
+	
+	self shouldBeAnArrayWithSelfInIt ifTrue:[
+		^ super printOn: aStream. 
+		].
+	self shouldBePrintedAsLiteral ifTrue: [ 
+		self printAsLiteralFormOn: aStream.
+		^ self ].
+	self isSelfEvaluating ifTrue: [ 
+		self printAsSelfEvaluatingFormOn: aStream.
+		^ self ].
 	super printOn: aStream
 ]
 
@@ -333,6 +340,13 @@ Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
+]
+
+{ #category : #'literal testing' }
+Array >> shouldBeAnArrayWithSelfInIt [
+	^ self class == Array and: [ 
+		  self anySatisfy:  [ :each | 
+			  each == self ] ]
 ]
 
 { #category : #'literal testing' }
