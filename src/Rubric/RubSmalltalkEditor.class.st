@@ -450,13 +450,14 @@ RubSmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext 
 
 	| process suspendedContext |
 	process := [ 
-	           aCompiledMethod
-		           valueWithReceiver: anObject
-		           arguments:
-		           (evalContext
-			            ifNil: [ #(  ) ]
-			            ifNotNil: [ { evalContext } ]) ] newProcess.
+		aCompiledMethod
+			valueWithReceiver: anObject
+			arguments: (aCompiledMethod numArgs = 0 
+				ifTrue: [ #() ] 
+				ifFalse: [ { evalContext } ] ) ]
+			newProcess.
 	suspendedContext := process suspendedContext.
+
 	(OupsDebugRequest newForContext: suspendedContext)
 		process: process;
 		compiledMethod: aCompiledMethod;
