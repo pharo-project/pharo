@@ -232,6 +232,8 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
+	(self confirm: 'Do you really want to close all unchanged windows ?') ifFalse: [ 
+		^ self ].
 	(self  windowsSatisfying: [:w | w model canDiscardEdits])
 		do: [:w | w delete]
 ]
