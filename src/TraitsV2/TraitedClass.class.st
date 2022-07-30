@@ -285,6 +285,7 @@ TraitedClass >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
 	| method newMethod |
+	self halt.
 	method := oldClass compiledMethodAt: selector.
 	newMethod := self compiler
 				source: (oldClass sourceCodeAt: selector);
