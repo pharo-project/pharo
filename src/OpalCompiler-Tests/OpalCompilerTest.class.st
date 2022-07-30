@@ -68,6 +68,17 @@ OpalCompilerTest >> testBindingsWriteGlobals [
 ]
 
 { #category : #tests }
+OpalCompilerTest >> testCompileEmbeddsAST [
+	| result |
+	result := Smalltalk compiler
+		class: UndefinedObject;
+		options: #( + #optionEmbeddSources + #optionEmbeddAST);
+		compile: 'tt ^3+4'.
+	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: (result propertyAt: #ast) identicalTo: result ast
+]
+
+{ #category : #tests }
 OpalCompilerTest >> testCompileEmbeddsSource [
 	| result |
 	result := Smalltalk compiler

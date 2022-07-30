@@ -10,11 +10,10 @@ RBAddMethodChange >> accept: aText notifying: aController [
 		ifNotNil: [:changeClass | changeClass compiler ].
 		
 	compiler
-		source: aText asString;
 		class:  self changeClass;
 		requestor: aController;
 		failBlock: [ ^ false ];
-		compile.	
+		compile: aText asString.	
 		
 	self 
 		class: self changeClass

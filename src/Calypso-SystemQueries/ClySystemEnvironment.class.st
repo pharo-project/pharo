@@ -191,11 +191,10 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 	| newClass |
 	[ 
 	newClass := (self classCompilerFor: oldClass)
-		            source: newClassDefinitionString;
 		            requestor: aController;
 		            failBlock: [ ^ nil ];
 		            logged: true;
-		            evaluate ]
+		            evaluate: newClassDefinitionString ]
 		on: OCUndeclaredVariableWarning
 		do: [ :ex | "we are only interested in class definitions"
 			ex compilationContext noPattern ifFalse: [ ex pass ].
@@ -216,10 +215,10 @@ ClySystemEnvironment >> defineNewFluidClassOrTraitFrom: newClassDefinitionString
 	| newClass |
 	[ 
 	newClass := (self classCompilerFor: oldClass)
-		            source: '(' , newClassDefinitionString , ') install';
 		            requestor: aController;
 		            logged: true;
-		            "for now a super ugly patch"evaluate ]
+		            "for now a super ugly patch"
+						evaluate: '(' , newClassDefinitionString , ') install' ]
 		on: OCUndeclaredVariableWarning
 		do: [ :ex | "we are only interested in class definitions"
 			ex compilationContext noPattern ifFalse: [ ex pass ].

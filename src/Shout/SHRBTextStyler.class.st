@@ -1019,11 +1019,10 @@ SHRBTextStyler >> privateStyle: aText [
 	| ast |
 	aText ifEmpty: [ ^ self ].
 	ast := classOrMetaClass compiler
-		source: aText asString;
 		noPattern: self isForWorkspace ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
 		requestor: workspace;
-		parse.				
+		parse: aText asString.				
 	^ self style: aText ast: ast
 ]
 

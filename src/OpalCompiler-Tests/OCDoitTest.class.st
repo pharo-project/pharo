@@ -30,9 +30,8 @@ OCDoitTest >> testDoItContextReadGlobal [
 
 	|  value |	
 	value := OpalCompiler new
-		source: 'Object';
 		context: thisContext;
-		evaluate.
+		evaluate: 'Object'.
 		
 	self assert: value equals: Object
 ]
@@ -45,10 +44,9 @@ OCDoitTest >> testDoItContextReadIvar [
 	ivarForTesting := #someValue.
 
 	method := OpalCompiler new
-		          source: 'ivarForTesting';
 		          noPattern: true;
 		          context: thisContext;
-		          compile.
+		          compile: 'ivarForTesting'.
 
 	value := method valueWithReceiver: self arguments: #().
 	self assert: value equals: #someValue
@@ -61,9 +59,8 @@ OCDoitTest >> testDoItContextReadTemp [
 	tempForTesting := #someValue.
 	
 	value := OpalCompiler new
-		source: 'tempForTesting';
 		context: thisContext;
-		evaluate.
+		evaluate: 'tempForTesting'.
 		
 	self assert: value equals: #someValue
 ]
@@ -84,10 +81,9 @@ OCDoitTest >> testDoItRequestorReadRequestorVar [
 	| value  |
 	"we can read a variable from a requestor"
 	value := OpalCompiler new
-		          source: 'requestorVarForTesting';
 		          noPattern: true;
 		          requestor: self;
-		          evaluate.
+		          evaluate: 'requestorVarForTesting'.
 		
 	self assert: value equals: 5
 ]
@@ -98,10 +94,9 @@ OCDoitTest >> testDoItRequestorShadow [
 	| value  |
 	"we can shadow a var defined in the requestor without error"
 	value := OpalCompiler new
-		          source: '|requestorVarForTesting| requestorVarForTesting';
 		          noPattern: true;
 		          requestor: self;
-		          evaluate.
+		          evaluate: '|requestorVarForTesting| requestorVarForTesting'.
 		
 	self assert: value equals: nil
 ]
@@ -112,10 +107,9 @@ OCDoitTest >> testDoitContextCheckClass [
 	
 	| ast method |
 	method := OpalCompiler new
-		source: 'tempForTesting';
 		noPattern: true;
 		context: thisContext;
-		compile.
+		compile: 'tempForTesting'.
 	ast := method ast.
 	"we expect that the class is set to the class of the context, which is self class"		
 	self assert: ast methodClass equals: self class

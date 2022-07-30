@@ -16,11 +16,10 @@ Class {
 PharoDocCommentExpression >> evaluate [
 
 	^ self methodClass compiler
-		  source: self expression;
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  evaluate
+		  evaluate: self expression
 ]
 
 { #category : #accessing }
@@ -32,10 +31,9 @@ PharoDocCommentExpression >> expression [
 PharoDocCommentExpression >> expressionCode [
 
 	^ self methodClass compiler
-		  source: self expression;
 		  noPattern: true;
 		  options: #( + optionParseErrors );
-		  parse
+		  parse: self expression
 ]
 
 { #category : #accessing }

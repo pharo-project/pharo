@@ -21,11 +21,10 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	| result | 
 	"parse [:] in parse error mode, this results in arg vars with an empty string as a name"
 	result := UndefinedObject compiler
-    source: '^[ :]';
     noPattern: true;
     options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
     requestor: self;
-    parse. 
+    parse: '^[ :]'. 
 	self assert: result isDoIt.
 	self assert: result statements first isReturn
 ]
@@ -34,9 +33,8 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	| ast cm |
 	ast := OpalCompiler new
-				source: 'method 3+';
 				options: #(+ optionParseErrors);
-				parse.
+				parse: 'method 3+'.
 	
 	self assert: ast isMethod.
 	self assert: ast isFaulty.

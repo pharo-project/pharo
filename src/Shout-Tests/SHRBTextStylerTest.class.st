@@ -22,10 +22,9 @@ SHRBTextStylerTest >> style: aText [
 	| ast |
 	
 	ast := self class compiler
-		source: aText asString;
 		noPattern: false ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse.				
+		parse: aText asString.				
 	styler style: aText ast: ast.
 	
 	^ ast
@@ -37,10 +36,9 @@ SHRBTextStylerTest >> styleExpression: aText [
 	| ast |
 	
 	ast := self class compiler
-		source: aText asString;
 		noPattern: true ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse.				
+		parse: aText asString.				
 	styler style: aText ast: ast.
 	
 	^ ast

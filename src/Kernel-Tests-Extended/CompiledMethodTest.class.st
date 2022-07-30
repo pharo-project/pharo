@@ -462,9 +462,8 @@ CompiledMethodTest >> testIsDeprecated [
 CompiledMethodTest >> testIsFaulty [
 	|  cm |
 	cm := OpalCompiler new
-				source: 'method 3+';
 				options: #(+ optionParseErrors +optionEmbeddSources);
-				compile.
+				compile: 'method 3+'.
 	self assert: cm isFaulty.
 	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
 ]
