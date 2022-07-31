@@ -41,7 +41,8 @@ Class {
 	#name : #OpalCompiler,
 	#superclass : #Object,
 	#instVars : [
-		'compilationContext'
+		'compilationContext',
+		'deprecatedSource'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -230,6 +231,11 @@ OpalCompiler >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
+{ #category : #deprecated }
+OpalCompiler >> compile [
+	^self compile: deprecatedSource contents
+]
+
 { #category : #'public access' }
 OpalCompiler >> compile: aString [
 	^[ | ast |
@@ -308,6 +314,11 @@ OpalCompiler >> encoderClass: aClass [
 OpalCompiler >> environment: anEnvironment [
 	"Set the environment (dictionary of class, traits and globals) used during the compilation"
 	compilationContext environment: anEnvironment
+]
+
+{ #category : #deprecated }
+OpalCompiler >> evaluate [
+	^self evaluate: deprecatedSource contents
 ]
 
 { #category : #'public access' }
@@ -433,4 +444,9 @@ OpalCompiler >> semanticScope [
 { #category : #accessing }
 OpalCompiler >> semanticScope: anObject [
 	compilationContext semanticScope: anObject
+]
+
+{ #category : #deprecated }
+OpalCompiler >> source: aString [
+	deprecatedSource := aString readStream
 ]
