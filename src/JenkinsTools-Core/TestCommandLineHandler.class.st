@@ -36,11 +36,6 @@ TestCommandLineHandler class >> description [
 	^ 'A command line test runner'
 ]
 
-{ #category : #private }
-TestCommandLineHandler >> NewTestRunner [
-	^ NewCommandLineRunner with: self reporter.
-]
-
 { #category : #activation }
 TestCommandLineHandler >> activate [
 	self activateHelp
