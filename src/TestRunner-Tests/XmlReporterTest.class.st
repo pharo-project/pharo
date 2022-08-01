@@ -44,3 +44,11 @@ XmlReporterTest >> testBuildingAttributesForTestCaseTag [
 		assert: (aDictionnary at: 'name') equals: 'testPass';
 		assert: (aDictionnary at: 'time') equals: nil
 ]
+
+{ #category : #tests }
+XmlReporterTest >> testOutputDriver [
+
+	self
+		assert: reporter defaultOutputDriver
+		equals: ZnCharacterWriteStream
+]
