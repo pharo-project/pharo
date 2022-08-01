@@ -42,6 +42,11 @@ DTTestResultType >> isError [
 	^ false
 ]
 
+{ #category : #accessing }
+DTTestResultType >> isExpectedFailure [
+	^ false
+]
+
 { #category : #testing }
 DTTestResultType >> isFail [
 	^ false
@@ -54,6 +59,11 @@ DTTestResultType >> isPass [
 
 { #category : #testing }
 DTTestResultType >> isSkipped [
+	^ false
+]
+
+{ #category : #accessing }
+DTTestResultType >> isUnexpectedPass [
 	^ false
 ]
 
