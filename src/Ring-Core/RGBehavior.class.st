@@ -650,6 +650,14 @@ RGBehavior >> localSelectors [
 ]
 
 { #category : #lookup }
+RGBehavior >> lookupLocalVar: aName [
+
+	^ self allSlots
+		  detect: [ :slot | slot name == aName ]
+		  ifNone: [ self innerBindingOf: aName ]
+]
+
+{ #category : #lookup }
 RGBehavior >> lookupVar: aName [
 
 	^ self allSlots
