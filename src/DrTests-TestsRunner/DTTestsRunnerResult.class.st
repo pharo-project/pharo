@@ -114,6 +114,34 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 ]
 
 { #category : #accessing }
+DTTestsRunnerResult >> errors [
+
+	^ self testResults errors asOrderedCollection
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> expectedFailures [
+	^ self testResults expectedDefects
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> failures [
+	^ self testResults failures asOrderedCollection 
+	   select: [ :t | t shouldPass ]
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> passed [
+	^ self testResults passed asOrderedCollection 
+		select: [ :t | t shouldPass]
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> skipped [
+	^ self testResults skipped
+]
+
+{ #category : #accessing }
 DTTestsRunnerResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
@@ -148,4 +176,9 @@ DTTestsRunnerResult >> textColor [
 	testsResult errors ifNotEmpty: [ ^ DTErrorResultType textColor ].
 	testsResult failures ifNotEmpty: [ ^ DTFailResultType textColor  ].
 	^ DTPassResultType textColor
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> unexpectedPassed [
+	^ self testResults unexpectedPasses asOrderedCollection
 ]
