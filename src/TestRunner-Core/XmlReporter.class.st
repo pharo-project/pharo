@@ -87,6 +87,12 @@ XmlReporter >> datasAreReseted [
 	^ super datasAreReseted and: (stream isNil and: suitePosition isNil)
 ]
 
+{ #category : #accessing }
+XmlReporter >> defaultOutputDriver [
+
+	^ ZnCharacterWriteStream
+]
+
 { #category : #reporting }
 XmlReporter >> encode: aString [
 
@@ -211,9 +217,9 @@ XmlReporter >> reportSuite: aTestSuite runBlock: aBlock [
 XmlReporter >> startReporting: aTestSuite [
 
 	| aFile |
-	aFile := File named: aTestSuite name, '.xml'.
+	aFile := File named: aTestSuite name , '.xml'.
 	aFile delete.
-	stream := ZnCharacterWriteStream
+	stream := self defaultOutputDriver
 		          on: (aFile writeStream
 				           setToEnd;
 				           yourself)
