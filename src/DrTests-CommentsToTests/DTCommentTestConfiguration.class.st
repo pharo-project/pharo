@@ -12,7 +12,7 @@ DTCommentTestConfiguration >> asTestSuite [
 
 	| suite classes methods |
 	suite := TestSuite named: 'Test Generated From Comments'.
-	classes := self items addAll: (self items collect: [ :each | each class ]).
+	classes := self items addAll: (self items collect: [ :each | each class ]); yourself.
 	methods := classes flatCollect: [ :each | each methods ].
 	methods do: [ :method | 
 		method pharoDocCommentNodes do: [ :docComment | 
