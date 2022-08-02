@@ -137,6 +137,11 @@ DTDefaultPluginPresenter >> connectPresenters [
 						roots: (resultTreeViewOrNil resultTreeFor: drTests pluginResult) subResults ] ].
 ]
 
+{ #category : #accessing }
+DTDefaultPluginPresenter >> drTests [
+	^ drTests
+]
+
 { #category : #'private - initialization' }
 DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
