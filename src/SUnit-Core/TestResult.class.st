@@ -182,11 +182,15 @@ TestResult >> addSkip: aTestCase [
 
 { #category : #accessing }
 TestResult >> classesTested [
+	"I return the set of Classes under test"
+	
 	^ (self tests collect: [ :testCase | testCase class ]) asSet
 ]
 
 { #category : #accessing }
 TestResult >> defects [
+	"I return the collection of tests which failed due to an assertion failure or an error"
+
 	^OrderedCollection new
 		addAll: self errors;
 		addAll: self failures; yourself
@@ -195,6 +199,7 @@ TestResult >> defects [
 { #category : #diff }
 TestResult >> diff: aTestResult [
 	"Return a collection that contains differences"
+	
 	| passed1Selectors failed1Selectors errors1Selectors passed2Selectors failed2Selectors errors2Selectors |
 	passed1Selectors := self passed collect: [:testCase | testCase selector].
 	failed1Selectors := self failures collect: [:testCase | testCase selector].
@@ -221,7 +226,8 @@ TestResult >> dispatchResultsIntoHistory [
 
 { #category : #accessing }
 TestResult >> errorCount [
-
+	"I return the numbers of tests which raise error"
+	
 	^self errors size
 ]
 
@@ -242,7 +248,9 @@ TestResult >> expectedDefectCount [
 
 { #category : #accessing }
 TestResult >> expectedDefects [
-	^ (errors, failures asOrderedCollection) select: [:each | each shouldPass not]
+	"I return the collection of tests which was expected to not pass. See (<expectedFailure> pragma)"
+
+	^ errors , failures asOrderedCollection reject: [ :each | each shouldPass ]
 ]
 
 { #category : #accessing }
@@ -252,7 +260,10 @@ TestResult >> expectedPassCount [
 
 { #category : #accessing }
 TestResult >> expectedPasses [
-	^ passed select: [:each | each shouldPass]
+	"I return the collection of tests which are expected to pass. 
+	A test which does not include the pragma (<expectedFailure>) is expected to pass"
+
+	^ passed select: [ :each | each shouldPass ]
 ]
 
 { #category : #accessing }
@@ -263,6 +274,12 @@ TestResult >> failureCount [
 
 { #category : #compatibility }
 TestResult >> failures [
+	"I return failures tests.
+	I don't considere the following cases as failure: 
+	1) A failure test which was supposed to fail
+	2) A passed test which was supposed to pass"
+	
+	
 	^ self unexpectedFailures, self unexpectedPasses
 ]
 
@@ -294,13 +311,13 @@ TestResult >> fileOutOn: aFileStream [
 { #category : #testing }
 TestResult >> hasErrors [
 
-	^self errors size > 0
+	^self errors isNotEmpty
 ]
 
 { #category : #testing }
 TestResult >> hasFailures [
 
-	^self failures size > 0
+	^self failures isNotEmpty
 ]
 
 { #category : #testing }
@@ -353,7 +370,8 @@ TestResult >> isPassedFor: class selector: selector [
 
 { #category : #combining }
 TestResult >> mergeWith: aTestResult [
-
+	"merge the given test result with the receiver"
+	
 	timeStamp := DateAndTime now.
 	failures addAll: aTestResult failures.
 	errors addAll: aTestResult errors.
@@ -379,6 +397,7 @@ TestResult >> passedCount [
 
 { #category : #printing }
 TestResult >> printOn: aStream [
+
 	self runCount isZero ifTrue: [ ^ aStream nextPutAll: 'No tests ran' ].
 	aStream
 		print: self runCount;
@@ -506,7 +525,9 @@ TestResult >> unexpectedPassCount [
 
 { #category : #accessing }
 TestResult >> unexpectedPasses [
-	^ passed select: [:each | each shouldPass not]
+	"I return passed tests which were supposed to fail"
+	
+	^ passed reject: [ :each | each shouldPass ]
 ]
 
 { #category : #history }

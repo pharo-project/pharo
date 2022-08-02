@@ -137,6 +137,11 @@ RubScrolledTextModel >> interactionModel: anObject [
 	interactionModel := anObject
 ]
 
+{ #category : #testing }
+RubScrolledTextModel >> isScripting [
+	^interactionModel isScripting
+]
+
 { #category : #menu }
 RubScrolledTextModel >> menu [
 	^ nil

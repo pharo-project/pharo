@@ -63,7 +63,8 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCode [
 	"Test a big string"
 	self testEmbeddingSourceCode: (String loremIpsum: 30000).
 	
-	""
+	"Test an empty DoIt"
+	self testEmbeddingSourceCode: ''
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
