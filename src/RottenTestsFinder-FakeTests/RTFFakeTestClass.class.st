@@ -20,6 +20,11 @@ RTFFakeTestClass >> rottenHelper [
 ]
 
 { #category : #tests }
+RTFFakeTestClass >> testCallingSuperHelper [
+	self superAssertHelper
+]
+
+{ #category : #tests }
 RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
 
 	self assert: false.

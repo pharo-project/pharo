@@ -11,6 +11,46 @@ Class {
 	#category : #'RottenTestsFinder-Tests'
 }
 
+{ #category : #running }
+RTFSelfCallTreeCleanerTest >> setUp [
+	tree1 := RTFSelfCallRootNode new
+				compiledMethod: 'Fake CM';
+				subCalls: { 
+					RTFSelfCallRootNode new
+						compiledMethod: 'Fake CM 2';
+						subCalls: { 
+							RTFSelfCallRootNode new
+								compiledMethod: 'Fake CM 3';
+								subCalls: { 
+									RTFSelfCallRootNode new
+										compiledMethod: (TestAsserter lookupSelector: #assert:);
+										subCalls: #()
+									};
+								yourself.
+							RTFSelfCallRootNode new
+								compiledMethod: 'Fake CM 4';
+								subCalls: { 
+									RTFSelfCallRootNode new
+										compiledMethod: 'Fake CM 5';
+										subCalls: { };
+										yourself
+									};
+								yourself
+							};
+						yourself
+					};
+				yourself.
+	tree2 := RTFSelfCallRootNode new
+				compiledMethod: 'Fake CM';
+				subCalls: { 
+					RTFSelfCallRootNode new
+						compiledMethod: 'Fake CM 2';
+						subCalls: #();
+						yourself
+					};
+				yourself
+]
+
 { #category : #'tests-visiting' }
 RTFSelfCallTreeCleanerTest >> testVisitRTFSelfCallNode [
 	| cleanedTree1 cleanedTree2 |
