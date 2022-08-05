@@ -870,7 +870,7 @@ CompiledCode >> symbolic [
 
 { #category : #'source code management' }
 CompiledCode >> tempNames [
-	"on the level of the compiled method, tempNames includes argument names"
+	"on the level of the compiled code, tempNames includes argument names"
 	^self ast argumentNames, self ast temporaryNames
 ]
 
