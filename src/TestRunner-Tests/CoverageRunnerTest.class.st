@@ -19,9 +19,9 @@ CoverageRunnerTest >> testAddingClassToCoverageRunner [
 	| expectedMethodsCount |
 	coverageRunner addClass: Integer.
 	expectedMethodsCount := Integer methods size.
-	coverageRunner addClass: TestRunnerTest.
+	coverageRunner addClass: NewTestRunnerTest.
 	expectedMethodsCount := expectedMethodsCount
-	                        + TestRunnerTest methods size.
+	                        + NewTestRunnerTest methods size.
 
 	self assert: coverageRunner methods size equals: expectedMethodsCount
 ]

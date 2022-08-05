@@ -4,7 +4,7 @@ After building a TestSuite and before executing its tests, we would like to appl
 Class {
 	#name : #AbstractSuitePreparator,
 	#superclass : #Object,
-	#category : #'TestRunner-Core-Preparators'
+	#category : #'TestRunner-Core-SuitePreparators'
 }
 
 { #category : #applying }
