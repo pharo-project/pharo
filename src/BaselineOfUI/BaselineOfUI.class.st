@@ -48,8 +48,6 @@ BaselineOfUI >> baseline: spec [
 		spec baseline: 'DrTests' with: [ spec repository: repository ].
 
 		spec package: 'StartupPreferences'.		
-		
-		spec package: 'Debugger-Actions'.
 
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
