@@ -103,6 +103,12 @@ DrTests >> connectPresenters [
 	self currentPlugin: self pluginsDropList selectedItem new
 ]
 
+{ #category : #'accessing - subwidgets' }
+DrTests >> contentForReRun [
+
+	^ self pluginPresenter resultSelected contentForReRun
+]
+
 { #category : #accessing }
 DrTests >> currentPlugin: aPlugin [
 
