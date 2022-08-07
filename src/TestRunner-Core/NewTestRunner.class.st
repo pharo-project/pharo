@@ -102,7 +102,7 @@ NewTestRunner class >> runSuite: aTestSuite [
 		  result
 ]
 
-{ #category : #processing }
+{ #category : #API }
 NewTestRunner >> accumulateResult [
 
 	"activate the results accumulation behavior"
@@ -110,7 +110,7 @@ NewTestRunner >> accumulateResult [
 	self shouldAccumulate: true
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> addError: aTestError [
 
 	"store the giving testCase as Error in result"
@@ -118,7 +118,7 @@ NewTestRunner >> addError: aTestError [
 	self result addError: aTestError
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> addFailure: aTestFailure [
 
 	"store the giving testCase as Failure in result"
@@ -126,7 +126,7 @@ NewTestRunner >> addFailure: aTestFailure [
 	self result addFailure: aTestFailure
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> addPass: aPassedTest [
 
 	"store the giving testCase as passed test in result"
@@ -134,7 +134,7 @@ NewTestRunner >> addPass: aPassedTest [
 	self result addPass: aPassedTest
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> addToSuite: aTestSuite [
 
 	"add the giving testsuite to the current suite. Notice that only the tests are added"
@@ -151,32 +151,32 @@ NewTestRunner >> debugFailure: failure [
 	self executionMode debugFailure: failure
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 NewTestRunner >> defaultExecutionEnvironmentClass [
 
 		
 	^ self defaultExecutionEnvironmentClass
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 NewTestRunner >> defaultExecutionModeClass [
 
 	^ RunExecutionMode
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 NewTestRunner >> defaultSuitePreparator [
 
 	^ AnyEffectSuitePreparator
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 NewTestRunner >> defaultTestResultClass [
 
 	^ TestResult
 ]
 
-{ #category : #processing }
+{ #category : #API }
 NewTestRunner >> doNotAccumulateResult [
 
 
@@ -243,7 +243,7 @@ NewTestRunner >> passedCount [
 	^ self result passedCount
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> resetResult [
 
 	"reset the runner result"
@@ -251,7 +251,7 @@ NewTestRunner >> resetResult [
 	result := self defaultTestResultClass new
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> resetSuite [
 
 	suite := nil
@@ -271,7 +271,7 @@ NewTestRunner >> resultDescription [
 	^ result asString
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 NewTestRunner >> run: aRunnable [
 
 	aRunnable runBy: self.
@@ -428,7 +428,7 @@ NewTestRunner >> setUp [
 	self suitePreparator applyOn: self suite
 ]
 
-{ #category : #tests }
+{ #category : #testing }
 NewTestRunner >> shouldAccumulate [
 
 	^ shouldAccumulate
@@ -466,7 +466,7 @@ NewTestRunner >> suite: aTestSuite [
 	suite := aTestSuite
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 NewTestRunner >> suitePreparator [
 
 	^ suitePreparator ifNil: [ 
@@ -479,13 +479,13 @@ NewTestRunner >> suitePreparator: aSuitePreparator [
 	suitePreparator := aSuitePreparator
 ]
 
-{ #category : #processing }
+{ #category : #API }
 NewTestRunner >> switchToDebugMode [
 
 	self executionMode: DebugExecutionMode
 ]
 
-{ #category : #processing }
+{ #category : #API }
 NewTestRunner >> switchToRunMode [
 
 	self executionMode: RunExecutionMode
@@ -499,7 +499,7 @@ NewTestRunner >> tearDown [
 	self resetSuite
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> testSuiteFromClass: aClass [
 
 	"build a suite from the giving class then add it to the internal collections of suites. 
@@ -510,7 +510,7 @@ NewTestRunner >> testSuiteFromClass: aClass [
 		self addToSuite: aClass suite ]
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> testSuiteFromPackage: aRPackage [
 
 	"Build testsuite from the giving Package"
@@ -520,7 +520,7 @@ NewTestRunner >> testSuiteFromPackage: aRPackage [
 	self suite name: aRPackage name
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> testSuitesFromClasses: aCollectionOfClass [
 
 	"Build testsuite from the giving collection of class"
@@ -539,7 +539,7 @@ NewTestRunner >> testsCount [
 	^ self result tests size
 ]
 
-{ #category : #internal }
+{ #category : #private }
 NewTestRunner >> updateResultWith: testResult [
 
 	"Merge the current result with the giving one then return it"
