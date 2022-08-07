@@ -488,19 +488,25 @@ FT2Face >> maxAdvanceWidth [
 
 { #category : #initialization }
 FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
-	| memSize holder returnCode |
 
+	| memSize holder returnCode |
 	aFreeTypeExternalMemory validate.
 	memSize := aFreeTypeExternalMemory bytes size.
 	holder := PointerHolder new.
-	
+
 	FT2Library current checkLibrary.
-	returnCode := FT2Library current ffiNewFace: holder fromMemory: aFreeTypeExternalMemory handle size: memSize  index: anInteger.
-	returnCode ~= 0
-		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading new face from memory'].
-		
+	returnCode := FT2Library current
+		              ffiNewFace: holder
+		              fromMemory: aFreeTypeExternalMemory getHandle
+		              size: memSize
+		              index: anInteger.
+	returnCode ~= 0 ifTrue: [ 
+		FT2Error
+			errorCode: returnCode
+			signal: 'Error reading new face from memory' ].
+
 	handle := holder value.
-	self autoRelease.
+	self autoRelease
 ]
 
 { #category : #initialization }
