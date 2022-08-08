@@ -32,9 +32,3 @@ NewCommandLineRunnerTest >> testReporterDatasShouldBeResetBeetwenTwoExecution [
 	runner run: GreenTest.
 	self assert: runner reporter datasAreReseted
 ]
-
-{ #category : #tests }
-NewCommandLineRunnerTest >> testRunnerHasDefaultReporter [
-
-	runner hasDefaultReporter
-]
