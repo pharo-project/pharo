@@ -41,6 +41,11 @@ DTRFTPlugin >> analyseTestFrom: aDTpluginConfiguration [
 ]
 
 { #category : #accessing }
+DTRFTPlugin >> firstListLabel [
+	^ 'Packages'
+]
+
+{ #category : #accessing }
 DTRFTPlugin >> pragmaForResultTrees [
 	"Returns the selector of the pragma to gather result trees."
 	^ 'dtTestRTFResultTreeNamed:order:'
@@ -55,6 +60,11 @@ DTRFTPlugin >> resultButtonHelp [
 DTRFTPlugin >> runForConfiguration: aDTpluginConfiguration [
 
 	^ self analyseTestFrom: aDTpluginConfiguration
+]
+
+{ #category : #accessing }
+DTRFTPlugin >> secondListLabel [
+	^ 'Tests Cases'
 ]
 
 { #category : #api }
