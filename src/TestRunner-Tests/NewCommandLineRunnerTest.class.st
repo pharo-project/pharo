@@ -9,15 +9,6 @@ NewCommandLineRunnerTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #tests }
-NewCommandLineRunnerTest >> ignoredSelectors [
-
-	^ #( #testFailedTestFaildWhileRerunningDoesNotChangeTheResult
-	     NewCommandLineRunnerTest #( #NewTestRunnerTest ) >> #testRerunningFailedTest
-	     NewCommandLineRunnerTest #( #NewTestRunnerTest ) >> #testRerunningFailedTest2
-	     NewCommandLineRunnerTest #( #NewTestRunnerTest ) >> #testTryingToRunFailuresAfterRunningMultipleTestCaseClass )
-]
-
 { #category : #running }
 NewCommandLineRunnerTest >> setUp [
 
