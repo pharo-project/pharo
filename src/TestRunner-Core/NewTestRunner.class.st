@@ -142,38 +142,29 @@ NewTestRunner >> addToSuite: aTestSuite [
 	suite := self suite , aTestSuite
 ]
 
-{ #category : #running }
-NewTestRunner >> debugFailure: failure [
+{ #category : #private }
+NewTestRunner >> classForExecutionMode [
 
-	"debug the giving failure"
-
-
-	self executionMode debugFailure: failure
+	^ AbstractExecutionMode
 ]
 
 { #category : #private }
-NewTestRunner >> defaultExecutionEnvironmentClass [
+NewTestRunner >> classForSuitePreparator [
 
-		
-	^ self defaultExecutionEnvironmentClass
+	^ AbstractSuitePreparator
 ]
 
 { #category : #private }
-NewTestRunner >> defaultExecutionModeClass [
-
-	^ RunExecutionMode
-]
-
-{ #category : #private }
-NewTestRunner >> defaultSuitePreparator [
-
-	^ AnyEffectSuitePreparator
-]
-
-{ #category : #private }
-NewTestRunner >> defaultTestResultClass [
+NewTestRunner >> classForTestResult [
 
 	^ TestResult
+]
+
+{ #category : #running }
+NewTestRunner >> debugFailure: failure [
+	"debug the giving failure"
+
+	self executionMode debugFailure: failure
 ]
 
 { #category : #API }
@@ -198,7 +189,7 @@ NewTestRunner >> errorCount [
 { #category : #accessing }
 NewTestRunner >> executionMode [
 
-	^ executionMode ifNil: [ self defaultExecutionModeClass ]
+	^ executionMode
 ]
 
 { #category : #setter }
@@ -231,7 +222,9 @@ NewTestRunner >> hasTestsToRun [
 NewTestRunner >> initialize [
 
 	super initialize.
-	self doNotAccumulateResult
+	self doNotAccumulateResult.
+	self suitePreparator: self classForSuitePreparator anySuitePreparatorClass.
+	self executionMode: self classForExecutionMode runExecutionModeClass
 ]
 
 { #category : #accessing }
@@ -248,7 +241,7 @@ NewTestRunner >> resetResult [
 
 	"reset the runner result"
 
-	result := self defaultTestResultClass new
+	result := self classForTestResult new
 ]
 
 { #category : #private }
@@ -260,7 +253,7 @@ NewTestRunner >> resetSuite [
 { #category : #accessing }
 NewTestRunner >> result [
 
-	^ result ifNil: [ result := self defaultTestResultClass new]
+	^ result ifNil: [ result := self classForTestResult new]
 ]
 
 { #category : #accessing }
@@ -469,8 +462,7 @@ NewTestRunner >> suite: aTestSuite [
 { #category : #private }
 NewTestRunner >> suitePreparator [
 
-	^ suitePreparator ifNil: [ 
-		  suitePreparator := self defaultSuitePreparator ]
+	^ suitePreparator
 ]
 
 { #category : #setter }
@@ -482,13 +474,13 @@ NewTestRunner >> suitePreparator: aSuitePreparator [
 { #category : #API }
 NewTestRunner >> switchToDebugMode [
 
-	self executionMode: DebugExecutionMode
+	self executionMode: self classForExecutionMode debugExecutionModeClass
 ]
 
 { #category : #API }
 NewTestRunner >> switchToRunMode [
 
-	self executionMode: RunExecutionMode
+	self executionMode: self classForExecutionMode runExecutionModeClass
 ]
 
 { #category : #processing }
