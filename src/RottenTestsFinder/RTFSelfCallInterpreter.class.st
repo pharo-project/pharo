@@ -102,6 +102,12 @@ RTFSelfCallInterpreter >> visitCascadeNode: aRBCascadeNode [
 ]
 
 { #category : #visiting }
+RTFSelfCallInterpreter >> visitClassVariableNode: aRBVariableNode [
+	self visitVariableNode: aRBVariableNode.
+	^ self
+]
+
+{ #category : #visiting }
 RTFSelfCallInterpreter >> visitGlobalVariableNode: aRBGlobalNode [ 
 	
 	self visitVariableNode: aRBGlobalNode
