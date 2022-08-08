@@ -2,11 +2,8 @@
 I allow to run tests from commandLine and export it according to the giving Reporter: 
 - XmlReporter 
 - StdReporter
-- TranscriptReporter 
-I extend NewTestRunner so i share it public API. In addition:
-
-## Public API
-- reporter:
+I extend NewTestRunner so i share it public API. 
+Read it for more details
 "
 Class {
 	#name : #NewCommandLineRunner,

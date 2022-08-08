@@ -1,29 +1,28 @@
 "
-I am a TestRunner. I run tests and export the result from:
-	- TestClass (TestRunner)
+I am a TestRunner. I run tests and return the result from:
+	- TestClass
 	- TestCase
 	- TestSuite
 	- aRPackage.
+	- Collection of Tests
 
 You can simply use my method (NewTestRunner class run: aRunnable) to run all the previous elements.
+```smalltalk
+NewTestRunner run: GreenTest
+```
 
 # Public API
-- suitePreparator:
-- runClass:
-- runCase:
-- runSuite:
-- runPackage:
+## Running
+- run:
 - runFailures
 - runErrors
 - result
 
+## Change behaviour
 - switchToDebugMode
 - switchToRunMode
 - accumulateResult
 - doNotAccumulateResult
-
-- ...
-
 "
 Class {
 	#name : #NewTestRunner,
