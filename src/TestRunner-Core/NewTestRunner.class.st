@@ -92,6 +92,13 @@ NewTestRunner class >> runPackage: aRPackage [
 ]
 
 { #category : #running }
+NewTestRunner class >> runSequenceableCollection: aCollection [
+	^ self new
+		  runSequenceableCollection: aCollection;
+		  result
+]
+
+{ #category : #running }
 NewTestRunner class >> runSuite: aTestSuite [
 
 	"return the result of the execution of the giving testSuite"
@@ -351,6 +358,14 @@ NewTestRunner >> runPackages: aCollection [
 
 	self accumulateResult.
 	aCollection do: [ :package | self runPackage: package ]
+]
+
+{ #category : #running }
+NewTestRunner >> runSequenceableCollection: aCollection [
+	
+	self accumulateResult.
+	aCollection do: [ :test | self run: test ].
+	^ self result
 ]
 
 { #category : #running }
