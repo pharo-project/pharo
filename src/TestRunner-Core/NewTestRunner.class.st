@@ -104,7 +104,6 @@ NewTestRunner class >> runSuite: aTestSuite [
 
 { #category : #API }
 NewTestRunner >> accumulateResult [
-
 	"activate the results accumulation behavior"
 
 	self shouldAccumulate: true
@@ -112,7 +111,6 @@ NewTestRunner >> accumulateResult [
 
 { #category : #private }
 NewTestRunner >> addError: aTestError [
-
 	"store the giving testCase as Error in result"
 
 	self result addError: aTestError
@@ -120,7 +118,6 @@ NewTestRunner >> addError: aTestError [
 
 { #category : #private }
 NewTestRunner >> addFailure: aTestFailure [
-
 	"store the giving testCase as Failure in result"
 
 	self result addFailure: aTestFailure
@@ -128,7 +125,6 @@ NewTestRunner >> addFailure: aTestFailure [
 
 { #category : #private }
 NewTestRunner >> addPass: aPassedTest [
-
 	"store the giving testCase as passed test in result"
 
 	self result addPass: aPassedTest
@@ -136,7 +132,6 @@ NewTestRunner >> addPass: aPassedTest [
 
 { #category : #private }
 NewTestRunner >> addToSuite: aTestSuite [
-
 	"add the giving testsuite to the current suite. Notice that only the tests are added"
 
 	suite := self suite , aTestSuite
@@ -169,18 +164,13 @@ NewTestRunner >> debugFailure: failure [
 
 { #category : #API }
 NewTestRunner >> doNotAccumulateResult [
-
-
 	"disable the results accumulation behavior"
-
 
 	self shouldAccumulate: false
 ]
 
 { #category : #accessing }
 NewTestRunner >> errorCount [
-
-
 	"returns the number of testcase which failed du to error during the execution"
 
 	^ result errorCount
@@ -200,20 +190,15 @@ NewTestRunner >> executionMode: anExecutionMode [
 
 { #category : #accessing }
 NewTestRunner >> failureCount [
-
 	"returns the number of testcase which failed du to assertion error during the execution"
-
 
 	^ self result failureCount
 ]
 
 { #category : #testing }
 NewTestRunner >> hasTestsToRun [
-
 	"check either the runner has test to run or not.
-
 	If any test has not been collected, there nothing to run"
-
 
 	^ self suite tests isNotEmpty
 ]
@@ -229,8 +214,6 @@ NewTestRunner >> initialize [
 
 { #category : #accessing }
 NewTestRunner >> passedCount [
-
-
 	"return the number of passed testcase"
 
 	^ self result passedCount
@@ -238,7 +221,6 @@ NewTestRunner >> passedCount [
 
 { #category : #private }
 NewTestRunner >> resetResult [
-
 	"reset the runner result"
 
 	result := self classForTestResult new
@@ -258,7 +240,6 @@ NewTestRunner >> result [
 
 { #category : #accessing }
 NewTestRunner >> resultDescription [
-
 	"return the description of test case"
 
 	^ result asString
@@ -273,10 +254,7 @@ NewTestRunner >> run: aRunnable [
 
 { #category : #running }
 NewTestRunner >> runAll [
-
-
 	"run the current collected suite"
-
 
 	[ 
 	self setUp.
@@ -285,9 +263,7 @@ NewTestRunner >> runAll [
 
 { #category : #running }
 NewTestRunner >> runCase: aTestCase [
-
 	"run and return the result of the fiving testCase"
-
 
 	| executionResult |
 	executionResult := self executionMode executeCase: aTestCase.
@@ -297,8 +273,6 @@ NewTestRunner >> runCase: aTestCase [
 
 { #category : #running }
 NewTestRunner >> runClass: aClass [
-
-
 	"run and return the result of the giving class"
 
 	self shouldAccumulate ifFalse: [ self resetResult ].
@@ -312,7 +286,6 @@ NewTestRunner >> runClass: aClass [
 
 { #category : #running }
 NewTestRunner >> runClasses: aCollectionOfTestCases [
-
 	"run and return the result of the giving collection of classes"
 
 	self accumulateResult.
@@ -323,16 +296,13 @@ NewTestRunner >> runClasses: aCollectionOfTestCases [
 
 { #category : #accessing }
 NewTestRunner >> runCount [
-
 	"returns the number of executed testcase"
-
 
 	^ self result runCount
 ]
 
 { #category : #running }
 NewTestRunner >> runError: aTestCase [
-
 	"run the giving testCase and update the result. 
 	Usefull if we want only to rerun the failure after some execution. See self >> runErrors"
 
@@ -340,22 +310,17 @@ NewTestRunner >> runError: aTestCase [
 	rerunningResult := aTestCase run.
 	rerunningResult hasPassed ifTrue: [ result removeError: aTestCase ].
 	self updateResultWith: rerunningResult
-
 ]
 
 { #category : #running }
 NewTestRunner >> runErrors [
-
-
 	"rerun the failed testcases du to error"
-
 
 	self result errors do: [ :testCase | self runError: testCase ]
 ]
 
 { #category : #running }
 NewTestRunner >> runFailure: aTestCase [
-
 	"rerun the giving failure then update the result"
 
 	| rerunningResult |
@@ -367,8 +332,6 @@ NewTestRunner >> runFailure: aTestCase [
 
 { #category : #running }
 NewTestRunner >> runFailures [
-
-
 	"rerun the failed testcases du to assertion failure"
 
 	self result failures do: [ :testCase | self runFailure: testCase ]
@@ -376,9 +339,7 @@ NewTestRunner >> runFailures [
 
 { #category : #running }
 NewTestRunner >> runPackage: aRPackage [
-
 	"run the tests from the giving package"
-
 
 	self shouldAccumulate ifFalse: [ self resetResult ].
 	self testSuiteFromPackage: aRPackage.
@@ -387,7 +348,6 @@ NewTestRunner >> runPackage: aRPackage [
 
 { #category : #running }
 NewTestRunner >> runPackages: aCollection [
-
 	"run tests from the giving collections of package"
 
 	self accumulateResult.
@@ -396,7 +356,6 @@ NewTestRunner >> runPackages: aCollection [
 
 { #category : #running }
 NewTestRunner >> runSuite [
-
 	"run the tests from the current collected suite"
 
 	self suite tests do: [ :aTestCase | self runCase: aTestCase ]
@@ -404,7 +363,6 @@ NewTestRunner >> runSuite [
 
 { #category : #running }
 NewTestRunner >> runSuite: aTestSuite [
-
 	"run tests from the giving testsuite"
 
 	self suite: aTestSuite.
@@ -413,10 +371,8 @@ NewTestRunner >> runSuite: aTestSuite [
 
 { #category : #processing }
 NewTestRunner >> setUp [
-
 	"we would like to process suites before execution (e.g shufling the tests for exemple).
 	see AbstractSuitePreparator"
-
 
 	self suitePreparator applyOn: self suite
 ]
@@ -441,7 +397,6 @@ NewTestRunner >> someTestCausesError [
 
 { #category : #testing }
 NewTestRunner >> someTestFailed [
-
 	"Tell if some test failed during execution"
 
 	^ self result hasFailures
@@ -485,7 +440,6 @@ NewTestRunner >> switchToRunMode [
 
 { #category : #processing }
 NewTestRunner >> tearDown [
-
 	"after the execution of the collected suite. We put here the instruction to execute"
 
 	self resetSuite
@@ -493,10 +447,8 @@ NewTestRunner >> tearDown [
 
 { #category : #private }
 NewTestRunner >> testSuiteFromClass: aClass [
-
 	"build a suite from the giving class then add it to the internal collections of suites. 
 	If it doesn't respect some criteria, nothing won't be collected. (See self class >> isValidClass)"
-
 
 	(self class isValidClass: aClass) ifTrue: [ 
 		self addToSuite: aClass suite ]
@@ -504,9 +456,7 @@ NewTestRunner >> testSuiteFromClass: aClass [
 
 { #category : #private }
 NewTestRunner >> testSuiteFromPackage: aRPackage [
-
 	"Build testsuite from the giving Package"
-
 
 	aRPackage definedClasses do: [ :c | self testSuiteFromClass: c ].
 	self suite name: aRPackage name
@@ -514,9 +464,7 @@ NewTestRunner >> testSuiteFromPackage: aRPackage [
 
 { #category : #private }
 NewTestRunner >> testSuitesFromClasses: aCollectionOfClass [
-
 	"Build testsuite from the giving collection of class"
-
 
 	aCollectionOfClass do: [ :class | 
 		self suite addTests: class suite tests ]
@@ -524,18 +472,14 @@ NewTestRunner >> testSuitesFromClasses: aCollectionOfClass [
 
 { #category : #accessing }
 NewTestRunner >> testsCount [
-
 	"return the number of collected testCase"
-
 
 	^ self result tests size
 ]
 
 { #category : #private }
 NewTestRunner >> updateResultWith: testResult [
-
 	"Merge the current result with the giving one then return it"
-
 
 	self result + testResult.
 	^ result
