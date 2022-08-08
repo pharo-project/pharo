@@ -68,7 +68,6 @@ NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 
 { #category : #private }
 NewCommandLineRunner >> recordPassOf: aTestCase [
-
 	"store the test case then report it as passed test"
 
 	self result addPass: aTestCase.
@@ -138,7 +137,6 @@ NewCommandLineRunner >> runCase: aTestCase [
 
 { #category : #running }
 NewCommandLineRunner >> runCaseManaged: aTestCase [
-
 	"saving the failure context"
 
 	[ 
