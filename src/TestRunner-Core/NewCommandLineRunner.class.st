@@ -54,7 +54,7 @@ NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
 	self reportError: aTestFailure of: aTestCase
 ]
 
-{ #category : #running }
+{ #category : #recording }
 NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	"store the test case then report it as failure"
 
