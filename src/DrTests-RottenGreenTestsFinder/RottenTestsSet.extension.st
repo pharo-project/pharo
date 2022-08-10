@@ -26,3 +26,9 @@ RottenTestsSet >> testsRunCount [
 
 	^ testsRunCount ifNil: [ testsRunCount := 0 ]
 ]
+
+{ #category : #'*DrTests-RottenGreenTestsFinder' }
+RottenTestsSet >> testsVisitedCount [
+
+	^ testsVisitedCount ifNil: [ testsVisitedCount := 0 ]
+]
