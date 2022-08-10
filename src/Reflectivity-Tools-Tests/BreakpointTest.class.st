@@ -54,14 +54,14 @@ BreakpointTest >> testAddRemoveBreakpoint [
 	bp	node: (cls >> #dummy) ast.
 	bp install.
 	"after the breakpoint is installed, the method is different"
-	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	self deny: (cls >> #dummy) bytecodes equals: method bytecodes.
 	
 	self assertCollection: Breakpoint all includesAll: {bp}.
 	bp remove.
 	self assertEmpty: Breakpoint all.
 	
 	"Check that the method is correcty reverted"
-	self assert: (cls >> #dummy) bytecode equals: method bytecode
+	self assert: (cls >> #dummy) bytecodes equals: method bytecodes
 ]
 
 { #category : #tests }
@@ -365,7 +365,7 @@ BreakpointTest >> testUpdateMethod [
 	"no edit the method"
 	cls compile: 'dummy ^nil'.
 	"after the new method is installed, the method is different"
-	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	self deny: (cls >> #dummy) bytecodes equals: method bytecodes.
 	"and the breakpoint is not registered anymore"
 	self assertEmpty: Breakpoint all
 ]

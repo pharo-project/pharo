@@ -1,3 +1,6 @@
+"
+Don't edit these classes. They are used else where for tests. Changing anything can make some tests fail
+"
 Class {
 	#name : #UtilityTest,
 	#superclass : #TestCase,

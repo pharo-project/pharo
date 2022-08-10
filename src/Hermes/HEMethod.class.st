@@ -36,13 +36,13 @@ Class {
 }
 
 { #category : #accessing }
-HEMethod >> bytecode [
-	^ bytecode
+HEMethod >> bytecode: anObject [
+	bytecode := anObject
 ]
 
 { #category : #accessing }
-HEMethod >> bytecode: anObject [
-	bytecode := anObject
+HEMethod >> bytecodes [
+	^ bytecode
 ]
 
 { #category : #accessing }
