@@ -46,6 +46,6 @@ DTRTFResult >> result [
 { #category : #accessing }
 DTRTFResult >> rottenTests [
 
-	^ (result rottenTests ifNil: [ result := RottenTestsSet ])
+	^ (self result rottenTests ifNil: [ result := RottenTestsSet ])
 		  asOrderedCollection
 ]

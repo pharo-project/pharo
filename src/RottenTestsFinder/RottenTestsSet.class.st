@@ -86,7 +86,8 @@ RottenTestsSet >> testsRunCount: anObject [
 
 { #category : #accessing }
 RottenTestsSet >> testsVisitedCount [
-	^ testsVisitedCount
+
+	^ testsVisitedCount ifNil: [ testsVisitedCount := 0 ]
 ]
 
 { #category : #accessing }
