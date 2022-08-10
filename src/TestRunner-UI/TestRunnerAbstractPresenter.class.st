@@ -116,7 +116,7 @@ TestRunnerAbstractPresenter >> defaultLayout [
 { #category : #'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> defaultRunnerClass [
 
-	^ TestRunner2
+	^ NewTestRunner
 ]
 
 { #category : #'presenters-connection' }
@@ -158,7 +158,7 @@ TestRunnerAbstractPresenter >> executeSelectedClasses [
 	self initializeRunner.
 	self selectedClasses
 		do: [ :testCase | 
-			runner run: testCase.
+			runner runClass: testCase.
 			self updateResultPresenter ]
 		displayingProgress: 'Running Tests'
 ]

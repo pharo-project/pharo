@@ -160,7 +160,7 @@ TaskbarMorphTest >> testEmptyTaskBarList [
 { #category : #tests }
 TaskbarMorphTest >> testIfTheTestedMethodIstheSameThatTheOneUsedInProd [
 
-	self assert: self theMethodInProdThatShouldBeTested bytecode equals: (self class >> #updateOrderedTasksFrom:) bytecode
+	self assert: self theMethodInProdThatShouldBeTested bytecodes equals: (self class >> #updateOrderedTasksFrom:) bytecodes
 ]
 
 { #category : #tests }

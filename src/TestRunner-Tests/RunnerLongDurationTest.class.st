@@ -7,11 +7,11 @@ Class {
 	#category : #'TestRunner-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RunnerLongDurationTest >> setUp [
 
 	super setUp.
-	runner := TestRunner2 new suitePreparator:
+	runner := NewTestRunner new suitePreparator:
 		          ShuffleSuitePreparator
 ]
 

@@ -19,7 +19,7 @@ Class {
 		'suites',
 		'runner'
 	],
-	#category : #'TestRunner-Core-Core'
+	#category : #'TestRunner-Core-Extensions'
 }
 
 { #category : #adding }
@@ -66,7 +66,7 @@ CoverageRunner >> coverage [
 { #category : #adding }
 CoverageRunner >> defaultRunner [
 
-	^ TestRunner2 new
+	^ NewTestRunner new
 ]
 
 { #category : #testing }

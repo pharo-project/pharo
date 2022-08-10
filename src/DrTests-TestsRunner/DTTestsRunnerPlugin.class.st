@@ -122,15 +122,14 @@ DTTestsRunnerPlugin >> runForConfiguration: aDTpluginConfiguration [
 
 { #category : #private }
 DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
-	aTestSuite
-		when: TestAnnouncement
-		do: [ :testAnnouncement | 
-			self flag: #TODO. "Dirty"
-			testAnnouncement test class = TestSuite
-				ifTrue: [ 
-					self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test name}) ] ].
-	[ aTestSuite run: aResult ]
-		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
+
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
+		self flag: #TODO. "Dirty"
+		testAnnouncement test class = TestSuite ifTrue: [ 
+			self announceStatusChanged:
+				('Running test {1}.' format: { testAnnouncement test name }) ] ].
+	[ aResult mergeWith: (aTestSuite run) ] ensure: [ 
+		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
 { #category : #private }
