@@ -1,6 +1,6 @@
 Class {
 	#name : #GreenTest,
-	#superclass : #TestCase,
+	#superclass : #MockTest,
 	#category : #'TestRunner-Tests-Utilities-Test'
 }
 
