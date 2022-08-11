@@ -2,8 +2,11 @@
 I allow to run tests from commandLine and export it according to the giving Reporter: 
 - XmlReporter 
 - StdReporter
-I extend NewTestRunner so i share it public API. 
-Read it for more details
+- TranscriptReporter 
+I extend NewTestRunner so i share it public API. In addition:
+
+## Public API
+- reporter:
 "
 Class {
 	#name : #NewCommandLineRunner,
@@ -134,7 +137,7 @@ NewCommandLineRunner >> runCase: aTestCase [
 
 { #category : #running }
 NewCommandLineRunner >> runCaseManaged: aTestCase [
-	"saving the failure context"
+	"run then report the test according to its state (passed, error, failure) during the execution"
 
 	[ 
 	self timeToRun: aTestCase.
