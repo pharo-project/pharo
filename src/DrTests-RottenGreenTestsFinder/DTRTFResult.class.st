@@ -1,10 +1,3 @@
-"
-I model the result for Rotten Green Tests plugin in DrTests.
-
-I build the UI to present the found rotten green tests.
-- Rotten tests
-
-"
 Class {
 	#name : #DTRTFResult,
 	#superclass : #DTPluginResult,
@@ -28,7 +21,7 @@ DTRTFResult >> addRottenTest: aRottenTest [
 
 { #category : #accessing }
 DTRTFResult >> buildTreeForUI [
-
+	"build the UI for presenting result"
 	<dtTestRTFResultTreeNamed: 'List of rotten green tests' order: 1>
 	^ DTTreeNode new subResults: { (DTTreeNode new
 			   name: 'Rotten green tests';
