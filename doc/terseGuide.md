@@ -96,25 +96,21 @@ self doThat
 x := 5.                                                     "assignment"
 x := y := z := 6.                                           "compound assignment"
 x := (y := 6) + 1.
-x := 'A1'. y := 'B2'. x become: y.                          "switch two objects"
-x := Object new.                                            "bind to allocated instance of a class"
-x := 123 class.                                             "discover the object class"
-x := Integer superclass.                                    "discover the superclass of a class"
-x := Object allInstances.                                   "get an array of all instances of a class"
-x := Integer allSuperclasses.                               "get all superclasses of a class"
-x := 1.2 hash.                                              "hash value for object"
+x := Set new.                                               "assign the newly created instance"
+x := 123 class.                                             "assign the object class"
+x := Integer superclass.                                    "assign the superclass of a class"
+x := Object allInstances.                                   "assign an array of all instances of a class"
+x := Integer allSuperclasses.                               "assign all superclasses of a class"
 ```
 
 ## Copy
 
 ```
 y := x copy.                                                "copy object"
-y := x shallowCopy.                                         "copy object (not overridden)"
 y := x deepCopy.                                            "copy object and instance vars"
-y := x veryDeepCopy.                                        "complete tree copy using a dictionary"
 ```
 
-## Constants
+## Literals
 
 ```
 | b |
@@ -279,10 +275,10 @@ x := 15 printStringBase: 2.                                 "string in given bas
 
 ## Blocks
 - blocks are objects and may be assigned to a variable
-- value is last expression evaluated unless explicit return
+- a block value is last expression evaluated unless explicit return
 - blocks may be nested
-- specification [ arguments | | localvars | expressions ]
-- ^expression terminates block & method (exits all nested blocks)
+- syntax is [ :arguments | | localvars | expression . expression ]
+- ^ expression terminates block & method (exits all nested blocks)
 - blocks intended for long term storage should not contain ^
 
 
@@ -303,8 +299,8 @@ Method calls (in order of priority):
 
 Method lookup:
 - follows the inheritance chain
-- self send triggers a dynamic lookup starting with receiver
-- super send triggers a static lookup starting with the receiver's superclass
+- self send triggers a dynamic lookup starting from the receiver
+- super send triggers a static lookup starting from the superclass of the class containing the super
 
 Standard protocols:
 - initialize          (methods called for new instance)
