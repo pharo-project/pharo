@@ -1,36 +1,35 @@
 # Syntax
 
 ### Allowable characters:                                                 
-- a-z, 
-- A-Z, 
-- 0-9
-- . +/\*% <>~=& { } [|] ; : # ? , _ ' $ " @
+- `a-z`, 
+- `A-Z`, 
+- `0-9`
+- `. +/\*% <>~=& { } [|] ; : # ? , _ ' $ " @`
 
 ### First explanation                                                           
-- . *(separator)*
-- +/\*% *(arithmetic)*
-- <>~=& *(Booleans)
-- { } *(dynamic array)*
-- [|] *(block closures)*
-- ; *(cascade)*
-- : *(assignment, keywords)*
-- `#` *(symbol and array)*
-- ? , _ 
-- ' *(string)*
-- $ *(character)*
-- " *(comment)*
-- @ *(point creation)*
+- `.` *(separator)*
+- `+/\*%` *(arithmetic)*
+- `<>~=&` *(Booleans)
+- `{ }` *(dynamic array)*
+- `[ | ]` *(block closures)*
+- ` ;` *(cascade)*
+- ` :` *(assignment, keywords)*
+- `#` *(symbol and array)* 
+- `'` *(string)*
+- `$` *(character)*
+- `"` *(comment)*
+- `@` *(point creation)*
 - blank (`Character space`), tab (`Character tab`), cr (`Character space`), lf (`Character lf`)                                            
 
 ### Variables:                                                             
-- variables must be declared before use surrounded by | e.g., `| a b|`                            
+- variables must be declared before use surrounded by `|` e.g., `| a b |`                            
 - shared vars must begin with uppercase                             
 - local vars must begin with lowercase                              
-- reserved names: nil, true, false, self, super, and thisContext    
+- reserved names: `nil`, `true`, `false`, `self`, `super`, and `thisContext`    
                                                                         
 #### Variable scope:                                                       
 - Global: defined in a global namespace Smalltalk and accessible by all objects in system                                              *
-- Special: (reserved) thisContext, super, self, true, false, nil
+- Special: (reserved) `thisContext`, `super`, `self`, `true`, `false`, `nil`
 - Method Temporary: local to a method
 
 ```
@@ -81,7 +80,7 @@ Comments are enclosed in quotes
 "Comments are enclosed in quotes"
 ```
 ### Instruction separator 
-Period (.) is the statement seperator
+Period (`.`) is the statement separator
 
 ```
 self doThis.
@@ -292,25 +291,10 @@ x := [ | t | t := 1.].                                      "local var in block"
 
 ## Messages
 
-Method calls (in order of priority):
+#### Method calls (in order of priority):
 - unary methods are messages with no arguments
 - binary methods
 - keyword methods are messages with selectors including colons
-
-Method lookup:
-- follows the inheritance chain
-- self send triggers a dynamic lookup starting from the receiver
-- super send triggers a static lookup starting from the superclass of the class containing the super
-
-Standard protocols:
-- initialize          (methods called for new instance)
-- accessing             (get/set methods)
-- testing               (boolean tests - is)
-- comparing             (boolean tests with parameter)
-- displaying            (gui related methods)
-- printing              (methods for printing)
-- updating              (receive notification of changes)
-- private               (methods private to class)
 
 
 ```
@@ -327,7 +311,26 @@ Transcript                                                  "Cascading - send mu
 x := 3 + 2; * 100.                                          "result=300. Sends message to same receiver (3)"
 ```
 
-## Conditional Statements
+
+#### Method lookup:
+- follows the inheritance chain
+- self send triggers a method lookup starting from the class of receiver
+- super send triggers a method lookup starting from the superclass of the class containing the super expression!
+
+Standard protocols:
+- initialize          (methods called for new instance)
+- accessing             (get/set methods)
+- testing               (boolean tests - is)
+- comparing             (boolean tests with parameter)
+- displaying            (gui related methods)
+- printing              (methods for printing)
+- updating              (receive notification of changes)
+- private               (methods private to class)
+
+
+
+
+## Conditional statements
 
 ```
 | x switch result |
@@ -379,12 +382,6 @@ y := x size.                                                "string size"
 y := x at: 2.                                               "char at location"
 y := x copyFrom: 2 to: 4.                                   "substring"
 y := x indexOf: $a ifAbsent: [0].                           "first position of character within string"
-x := String new: 4.                                         "allocate string object"
-x                                                           "set string elements"
-   at: 1 put: $a;
-   at: 2 put: $b;
-   at: 3 put: $c;
-   at: 4 put: $e.
 x := String with: $a with: $b with: $c with: $d.            "set up to 4 elements at a time"
 x do: [:a | Transcript show: a printString; cr].            "iterate over the string"
 y := x select: [:a | a > $a].                               "return all elements that meet condition"
@@ -452,7 +449,7 @@ y := x asSet.                                               "convert symbol to s
 x := #[255 255 255].                                        "constant byte array"
 x := #(4 3 2 1).                                            "literal array"
 x := #((1 + 2) . 3).                                        "literal array whose first element is an array of size 3"
-x := { 5. 4. 3. 2 }.                                        "dynamic array"
+x := { 5. 2 * 2 + 1 . 3+2 . 8 - 3 }.                        "dynamic array"
 x := Array with: 5 with: 4 with: 3 with: 2.                 "create array with up to 4 elements"
 x := Array new: 4.                                          "allocate an array with specified size"
 x                                                           "set array elements"
@@ -668,7 +665,7 @@ y := x asBag.                                               "convert to bag coll
 y := x asSet.                                               "convert to set collection"
 ```
 
-## Associations
+## Associations (Pairs)
 
 ```
 | x y |
