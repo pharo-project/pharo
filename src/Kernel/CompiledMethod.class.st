@@ -1116,6 +1116,12 @@ CompiledMethod >> tags [
 	^{protocol}
 ]
 
+{ #category : #'source code management' }
+CompiledMethod >> tempNames [
+	"on the level of the compiled method, tempNames includes argument names"
+	^self ast argumentNames, self ast temporaryNames
+]
+
 { #category : #accessing }
 CompiledMethod >> trailer [
 	"Answer the receiver's trailer"
