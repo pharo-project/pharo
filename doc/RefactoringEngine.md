@@ -2796,6 +2796,15 @@ Foo >> foo
 I am a RBRefactoring intended for prepagating another refactoring. We call to propagate a refactoring to redo just the secondary effects of such refactoring. 
 
 For example, the propagation of a 'message rename' is to change the senders of the old selector to use the new selector. 
+
+
+## Environments
+
+The infrastructure of the refactoring engine defines some environments and operations (and, or,...) over such environments. 
+An environment is basically a slice over the system: it can contain for example all the classes of a set of packages. 
+The key class is `RBBrowserEnvironment`. 
+The following shows the class comments of the environments available in Pharo.
+
 ### RBBrowserEnvironment
 I am the base class for environments of the refactoring framework.
 
@@ -2804,165 +2813,124 @@ And I act as a factory for various specialized environments. See my 'environment
 
 I am used by different tools to create a 'views' of subsets of the whole system environment to browse or act on (searching/validations/refactoring)
 
-create instances:
+#### create instances:
+```
 RBBrowserEnvironment new forClasses:  Number withAllSubclasses.
 RBBrowserEnvironment new forPackageNames: { #Kernel }.
+```
+#### query:
 
-query:
+```
 |env|
 env := RBBrowserEnvironment new forPackageNames: { #Kernel }.
 env referencesTo:#asArray.
 -> RBSelectorEnvironment.
+```
 
-browse:
+#### browse:
+
+```
 |env|
 env := RBBrowserEnvironment new forPackageNames: { #Kernel }.
 (Smalltalk tools browser browsedEnvironment: env) open.
+```
 
-#### RBBrowserEnvironmentWrapper
+### RBBrowserEnvironmentWrapper
 I am a wrapper around special browser environment subclasses and
 the base RBBrowserEnvironment class. I define common methods
 for my subclasses to act as a full environment.
 no public use.
-##### RBCategoryEnvironment
+
+
+### RBCategoryEnvironment
 I am a RBBrowserEnvironment on a set of category names.
 I containt all entities using this category name.
 I am more restricted to the exact category name compared
 to a package environment.
 
 Example, all Morph subclasses in category Morphic-Base-Menus
-
+```
 (RBBrowserEnvironment new forClasses: Morph withAllSubclasses) forCategories: {#'Morphic-Base-Menus'}
-##### RBClassEnvironment
+```
+
+### RBClassEnvironment
 I am a RBBrowserEnvironment on a set of classes.
 I containt all entities of this set.
 
 Example:
+```
 (RBBrowserEnvironment new) forClasses: Number withAllSubclasses.
-##### RBClassHierarchyEnvironment
+```
+### RBClassHierarchyEnvironment
 I am a RBBrowserEnvironment on a set of classes of a class hierarchy.
 
 Example:
 
+```
 (RBBrowserEnvironment new) forClass:Morph protocols:{'printing'}.
-##### RBCompositeEnvironment
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+```
 
-For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
+### RBAndEnvironment
 
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	otherEnvironment:		<Object>
-
-
-    Implementation Points
-###### RBAndEnvironment
 I am the combination of two RBEnvironments, a logical AND. That is: 
 entity A is in this environment if it is in BOTH environment I am constructed from.
 
 Do not construct instances of me directly, use method #& for two existing environments:
 env1 & env2 -> a RBAndEnvironment.
-###### RBOrEnvironment
+
+### RBOrEnvironment
 I am the combination of two RBEnvironments, a logical OR. That is: 
 entity A is in this environment if it is in at least ONE environment I am constructed from.
 
 Do not construct instances of me directly, use method #| for two existing environments:
 env1 | env2 -> a RBOrEnvironment.
-##### RBNotEnvironment
+
+### RBNotEnvironment
 I am the complement of RBEnvironments, a logical NOT. That is: 
 entity A is in this environment if it is in NOT in the environment I am constructed from.
 
 Do not construct instances of me directly, use method #not for an existing environment:
 env1 not -> a RBNotEnvironment.
-##### RBPackageEnvironment
+
+### RBPackageEnvironment
 I am a RBBrowserEnvironment on a set of packages or package names.
 I containt all entities are defined in this packages.
 (classes and class that have extensions from this packages)
 
 Example:
-(RBBrowserEnvironment new) forPackageNames:{ 'Morphic-Base'}.
-##### RBPragmaEnvironment
+```
+RBBrowserEnvironment new forPackageNames:{ 'Morphic-Base'}.
+```
+
+### RBPragmaEnvironment
 I am a RBBrowserEnvironment on a set of Pragmas.
 I containt all entities that define methods using this pragmas.
 Example:
-(RBBrowserEnvironment new) forPragmas:{ #primitive:}.
-##### RBProtocolEnvironment
+```
+RBBrowserEnvironment new forPragmas:{ #primitive:}.
+```
+### RBProtocolEnvironment
 I am a RBBrowserEnvironment on a set of protocols of a class.
 
 Example:
-(RBBrowserEnvironment new) forClass:Morph protocols:{'printing'}.
-##### RBSelectorEnvironment
+```
+RBBrowserEnvironment new forClass:Morph protocols:{'printing'}.
+```
+### RBSelectorEnvironment
 I am a RBBrowserEnvironment for a set of selectors. 
 Usually I am constructed as a result of a query on another environment:
+
+```
 env referencesTo:#aselector -> a RBSelectorEnvironments.
-###### RBParseTreeEnvironment
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+```
 
-For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
-
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	matcher:		<Object>
-
-
-    Implementation Points
-##### RBVariableEnvironment
+### RBVariableEnvironment
 I am a RBBrowserEnvironment for items referring class or instvars.
 Constructed by quering extisting environments with 
 refering, reading or writing to the variables of a class.
 
 Example:
-(RBBrowserEnvironment new) instVarWritersTo:#color in: Morph.
+```
+RBBrowserEnvironment new instVarWritersTo:#color in: Morph.
 -> a RBVariableEnvironment
-##### RBMultiEnvironment
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
-
-For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
-
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	environmentDictionaries:		<Object>
-
-
-    Implementation Points
-
-
+```
