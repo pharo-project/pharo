@@ -164,7 +164,7 @@ RBParseTreeSearcher new
 
 This template defines two match rules, one for the code search 'matches:' and one for the named method search 'matchesMethod', the former looks for expression in any method while the latter one matches whole methods.
 
-You can replace the example pattern `'`@object'` or `'`@method: `@args | `@temps | `@.statements'` by the search pattern you want to use. 
+You can replace the example pattern ``@object` or `'`@method: ``@args | `@temps | `@.statements'` by the search pattern you want to use. 
 And most of the time you only want to use one, the code expression search or the method search.
 
 A first example, replace the code pane content by:
