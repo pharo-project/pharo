@@ -1,6 +1,7 @@
 # The Pharo Refactoring Engine 
 
-## About
+## Introduction 
+
 The Refactoring Engine was originally developed by Don Roberts and John Brant for VisualWorks. It was ported to Squeak and Pharo and saw multiple evolution by multiple contributors.
 
 One goal of this engine was to easily include the code refactoring into the standard development workflow. The refactoring operations help to transform and restructure source code, without to much manual intervention. And without the need to retest every single change.
@@ -9,19 +10,19 @@ In addition, some basic primitive refactoring are provided, in a way that more c
 The Tool, or a browser with refactoring support or the whole framework is often just known as the 'Refactoring Browser'. 
 That's why all of the classes of this framework start with the prefix 'RB'.
 
-## Overview
+### Overview
 The following sections give an overview of the refactoring engine, the collaborating classes and components.
 We will present an explanation with some examples, how to manually construct and execute refactoring operations, usable for those operation that aren't supported as actions in the default code browser.
 
 A more in-deep description of the components will show that the refactoring engines is not only useful for code refactoring, but it also provides a powerful general purpose search and rewrite engine. This search capability - search for code "patterns" - is used to detect common program errors or just bad code style by the Pharo code critics. 
 
-## Engine architecture
+### Engine architecture
 
 The architecture of the engine is the following: It builds a representation of the program to be refactored (instances of RBClass, RBMethod...), some refactorings complement it with Abstract Syntax Trees.
 The refactorings checks their preconditions (for applicability validation or behavior preservation) against such program representation.
 When the preconditions expressed as RBConditions are true, the refactoring is executed. It does not directly modify Pharo code, but produces a list changes - Such changes can be presented to the developer for validation or modification. On approval the changes actually performs the program changes.
 
-## Core Components
+### Core Components
 
 Here is a brief overview of the core components.
 
@@ -51,7 +52,9 @@ Example:
 
 will open a system browser with only the classes from package 'Kernel'. And all refactoring operations will only find and change classes in this selection.
 
-## Class Refactorings
+Here is a list generated from the Refactoring class comments describing the refactorings available. 
+
+### Class Refactorings
 This is the chapter of the refactoring help book about the class refactoring available in the System Browser.
 #### Rename
 I am a refactoring for renaming a class.
@@ -145,34 +148,33 @@ Object subclass: #TextKlass
 	
 and every reference to the old vars color / font / style will be replaced by textAttributes color / textAttributes style / textAttributesFont
 
-#### Class and Instance Variable Refactorings
+### Class and Instance Variable Refactorings
 
-##### Add Variable
+#### Add Variable
 I am a refactoring for adding new instance variables.
 
 My precondition verifies that the variable name is valid, not yet used in the whole hierarchy and not a global name.
 
-##### Rename
+#### Rename
 
 Shows a list of variables from the class or instance side. The selected variable is renamed in the class definition and in all methods referring to this var. The name of the accessor methods are unchanged.
 
-##### Remove
+#### Remove
 
 Shows a list of variables from the class or instance side. The selected variable is removed. If the variable is referred by a method, it asks for opening a browser window, showing only those classes and its methods accessing this variable (a scoped browser view).
 
-##### Abstract
+#### Abstract
 
 Shows a list of variables from the class or instance side, creates an accessors for the variable and replaces all direct access to this variable by this accessors method.
 (For this class and all of its subclasses.)
 There is no special handling for already existing accessors methods, their direct access is replaced too. And if an accessors method with the name of this variable already exists, the newly created method will get the same name with a counter suffix.
 
-##### Accessor
+#### Accessor
 
-Accessor
 Choose one instance / class variable to create accessors for. 
 A getter and setter methods is generated, with the name of the chosen instance variable. If a method with this name already exists, it will create a new method with the same name and a counter suffix.
 
-##### Accessor with lazy initialization
+#### Accessor with lazy initialization
 I am a refactoring for creating accessors with lazy initialization for variables.
 
 I am used by a couple of other refactorings creating new variables and accessors.
@@ -197,22 +199,22 @@ RBLintRuleTestData >> foo1
 RBLintRuleTestData >> foo1: anObject
 	foo1 := anObject
 ```
-##### Move to class
+#### Move to class
 
 Only for instance variables. A class search dialog lets you choose the target class to move the instance variable to.
 Another dialog for choosing the instance variable to move. If there are any methods referring to this variable, a message list opens, showing all broken methods.
 
-##### Pull up
+#### Pull up
 
 Moves an instance/class variable up to the superclass. The variable is added to the superclass and removed from this and all other sibling classes, defining this variable. A warning message appears if not all direct subclasses defined this variable.
 
-##### Push down
+#### Push down
 
 Moves an instance/class variable down to the subclasses. The variable is added to every direct subclass.
 A warning dialog appears if there are methods referring to this class (accessors methods for example), and offers a choice to open a (scoped) browser for this messages.
 No accessors method will be changed or generated.
 
-##### Merge variable
+#### Merge variable
 I am a refactoring for merge an instance variable into another.
 
 I replace an instance variable by other, in all methods refering to this variable and rename the old accessors, then if the instance variable renamed is directly defined in class it is removed.
@@ -246,7 +248,7 @@ Foo >> foo
 	^ y + y
 ```
 
-## Method Refactorings
+### Method Refactorings
 
 #### Add parameter
 I am a refactoring operations for adding method arguments.
@@ -397,11 +399,11 @@ Color >> isBlack
 ```
 
 #### Move to class side / instance side
-Move a method from the class to the instance side, or vice versa. Normally this is not considered to be a refactoring.
+Move a method from the class to the instance side, or vice versa. Pay attention this is not a refactoring because there is no update to the method moved.
 
 Only instance methods with no instance variable access or class methods with no class instance variable access can be moved.
 
-#### Move to class side
+##### Move to class side
 I'm a refactoring to move a method to class side.
 
 My preconditions verify that the method exists and belongs to instance side.
@@ -673,8 +675,8 @@ MyClassA subclass: #MyClassB
 	classVariableNames: ''
 	package: 'example'
 ```
-## Package Refactorings
 
+### Package Refactorings
 
 #### Rename
 
@@ -692,7 +694,7 @@ Example
 
 
 ## Refactoring Examples
-This section we show how to manually use the refactoring operations.
+This chapter we show how to manually use the refactoring operations.
 
 ### Overview
 
@@ -716,6 +718,7 @@ We want to add a new class with the RBAddClassRefactoring. (This is just a simpl
 First we need a namespace, a RBNamespace, it collects the changes generated by this operation and provides an environment for finding other classes / methods affected by the operation.
 We create a 'default' RBNamespace that represents an environment of all system classes. The RBAddClassRefactoring needs all the information needed for the class hierarchy (name/superclass/subclasses/category) and our namespace as the 'model'. The ChangesBrowser lists all the refactoring changes in a check box list. The reason for calling 'changes changes' not the model is, because the first 'changes' does not give a list of all changes but a RBCompositeRefactoryChange that actually holds the list of all changes.
 
+```
   | model addClassRB browser |
     model := RBNamespace new.
     addClassRB := RBAddClassRefactoring
@@ -727,43 +730,52 @@ We create a 'default' RBNamespace that represents an environment of all system c
     addClassRB primitiveExecute.
     browser := ChangesBrowser changes: (model changes changes ).
     browser open
+```
 
-In the ChangesBrowser list of changes you can select which one to apply. Keep in mind that some compound refactorings may not show all intermediate changes.
+Keep in mind that some compound refactorings may not show all intermediate changes.
 
-The primitiveExecute method will check all preconditions for this Refactoring and either shows a warning or a refactoring error, if this operation can not be performed.
+The `primitiveExecute` method will check all preconditions for this Refactoring and either shows a warning or a refactoring error, if this operation can not be performed.
 We can execute the above refactoring 'twice' and will see the second time it shows an error about SomeClass already exists.
 
-There is a global change manager - RBRefactoryChangeManager, we can use it to undo the last operation.
+There is a global change manager - `RBRefactoryChangeManager`, we can use it to undo the last operation.
 
+```
 RBRefactoryChangeManager instance undoOperation.
+```
 and again redo
+
+```
 RBRefactoryChangeManager instance redoOperation.
+```
 and undo, and .... :)
 
 
 ### Combining operations - Add class with instance variables
 
-As we saw, the RBAddClassRefactoring does not allow us to define any instance variables. Instead we can add a new class and then apply another refactoring, RBAddInstanceVariableRefactoring.
-We just need to call them in the appropriate order and make sure that both operations operate on the same model - otherwise the instance variable refactoring would not know about the class it
-should operate on.
+As we saw, the `RBAddClassRefactoring` does not allow us to define any instance variables. Instead we can add a new class and then apply another refactoring, `RBAddInstanceVariableRefactoring`.
+We just need to call them in the appropriate order and make sure that both operations operate on the same model - otherwise the instance variable refactoring would not know about the class it should operate on.
 
-  | model addClassRB addInstVarsRB browser |
-    model := RBNamespace new.
-    addClassRB := RBAddClassRefactoring
-        model: model
-        addClass: #SomeClass
-        superclass: #Object
-        subclasses: {}
-        category: #Category.
-    addClassRB primitiveExecute.
-    addInstVarsRB := RBAddInstanceVariableRefactoring
-        model: model
-        variable: 'x'
-        class: #SomeClass.
-    addInstVarsRB primitiveExecute.
+```
+| model addClassRB addInstVarsRB browser |
+model := RBNamespace new.
+addClassRB := RBAddClassRefactoring
+      model: model
+      addClass: #SomeClass
+      superclass: #Object
+      subclasses: {}
+      category: #Category.
+addClassRB primitiveExecute.
+addInstVarsRB := RBAddInstanceVariableRefactoring
+    model: model
+    variable: 'x'
+    class: #SomeClass.
+addInstVarsRB primitiveExecute.
+```
+```
     browser := ChangesBrowser new.
     browser := ChangesBrowser changes: (model changes changes ).
     browser open
+```
 
 It is important to actually execute the first operation before creating the second one. The instantiation of the RBAddInstanceVariableRefactoring will query the environment the class #SomeClass and
 init the reference to nil if it doesn't yet exists.
@@ -782,6 +794,7 @@ We can restrict the search space by creating our namespace from a restricted bro
 
 In this example we will apply the RBPrettyPrintCodeRefactoring to all classes in the Package 'Tests', by first creating a RBBrowserEnvironment for packages and then create the RBNamespace with this environment:
 
+```
  | env model prettyPrintRB browser |
     env := RBBrowserEnvironment new forPackageNames:{'Tests'}.
     model := RBNamespace onEnvironment: env.
@@ -790,6 +803,7 @@ In this example we will apply the RBPrettyPrintCodeRefactoring to all classes in
     browser := ChangesBrowser new.
     browser := ChangesBrowser changes: (model changes changes ).
     browser open
+```
 
 After applying this refactoring, all methods in all classes of the package 'Tests' will be reformatted (pretty print).
 
@@ -803,32 +817,27 @@ For this, the engine contains a set of 'options' that can be set by the tool usi
 
 The options that can be used are:
 
- #implementorToInline - select one of a list of method names
-
- #methodName - ask for a method name
-
- #selfArgumentName - argument name to use for replacing self sends
-
- #selectVariableToMoveTo - select one of a list of variable names
-
- #variableTypes - select or provide a class
-
- #extractAssignment - should the code extraction include the variable assignment
-
- #inlineExpression - I don't know
-
- #alreadyDefined - Should it override  methods defined in the hierarchy.
-
- #useExistingMethod - Should it use existing (equivalent) method
-
- #openBrowser - call to open system browser
+- #implementorToInline - select one of a list of method names
+- #methodName - ask for a method name
+- #selfArgumentName - argument name to use for replacing self sends
+- #selectVariableToMoveTo - select one of a list of variable names
+- #variableTypes - select or provide a class
+- #extractAssignment - should the code extraction include the variable assignment
+- #inlineExpression - I don't know
+- #alreadyDefined - Should it override  methods defined in the hierarchy.
+- #useExistingMethod - Should it use existing (equivalent) method
+- #openBrowser - call to open system browser
 
 A tool now can register a callback like
 
+```
 refactoring setOption:#name_of_an_option toUse:[:a :b: ... a block with needed arguments]
+```
 
-for example, Calypso sets the option
- #implementorToInline to a method showing a dialog with a list to choose one of the provided selector names.
+for example, Calypso sets the option `#implementorToInline` to a method showing a dialog with a list to choose one of the provided selector names.
+
+
+### Example
 
 In the following example we show how to set the needed options manually. The RBMoveMethodRefactoring will ask us three questions
 - selfArgumentName
@@ -837,8 +846,9 @@ In the following example we show how to set the needed options manually. The RBM
 
 for all of this options we set a simple block that just returns the information needed for this example task. In a real world tool, we
 would need some interactive tool to let the user make a choice.
-This RBMoveMethodRefactoring will move the implementation from TestResult class>>#historyFor: to its argument of type TestCase
+This `RBMoveMethodRefactoring` will move the implementation from `TestResult class>>#historyFor:` to its argument of type `TestCase`.
 
+```
     | model rbMoveMethod browser |
     model := RBNamespace onEnvironment: RBBrowserEnvironment new.
     rbMoveMethod := RBMoveMethodRefactoring
@@ -856,23 +866,27 @@ This RBMoveMethodRefactoring will move the implementation from TestResult class>
     rbMoveMethod primitiveExecute.
     browser := ChangesBrowser changes: model changes changes.
     browser open
+```
 
 The result of this operation is, the method #historyFor: is moved to the class TestCase and the former implementation is replaced by
-  aTestCase asHistoryFor: self
-as the former implementation had a call to self (self newTestDictionary) we need to add self as an argument for the new method.
-The refactoring operation queries this argument name by calling the registered block for the option 'selfArgumentName', as the refactoring can not guess the type
-of the class we want to move the method, it will ask us by calling 'variableTypes' and finally the new method name and arguments are provided by calling the block for option
-'methodName'.
+```
+aTestCase asHistoryFor: self
+```
 
-## RB Refactoring Engine
+as the former implementation had a call to self (self newTestDictionary) we need to add self as an argument for the new method.
+The refactoring operation queries this argument name by calling the registered block for the option 'selfArgumentName', as the refactoring can not guess the type of the class we want to move the method, it will ask us by calling 'variableTypes' and finally the new method name and arguments are provided by calling the block for option 'methodName'.
+
+## Refactoring Engine Infrastructure
+
 A chapter with a more in-depth description of the core components of the refactoring engine.
+
 ### Overview
 
 This book contains some chapter about the core components
-the Abstract Syntax Tree (AST)
-the parser (RBParser)
-the extended pattern parser (RBPatternParser)
-the tree searcher / rewriter (RBParseTreeSearcher/RBParseTreeRewriter)
+- the Abstract Syntax Tree (AST)
+- the parser (`RBParser`)
+- the extended pattern parser (`RBPatternParser`)
+- the tree searcher / rewriter (`RBParseTreeSearcher`/`RBParseTreeRewriter`)
 
 ### AST Nodes
 
@@ -904,26 +918,14 @@ AST node visitors are subclasses of a ProgramNodeVisitor, or a just any other cl
 
 Some examples of ProgramNodeVisitors operating on the RBParsers AST:
 
-Opal Compiler
-Opals translator visits the AST tree to create a intermediate representation that is finally used to generated method byte code. Another step in the compiler work flow, the ClosureAnalyzer, is implemented as
+- Opal Compiler. Opals translator visits the AST tree to create a intermediate representation that is finally used to generated method byte code. Another step in the compiler work flow, the ClosureAnalyzer, is implemented as
 a ProgramNodeVisitor too.
-
-Reflectivity Compiler
-For reflectivity support, can add MetaLinks to the nodes of the compiled method and generate new methods with code injections augmenting or modifying the executed code.
-
-Code formatter (BIConfigurableFormatter/BISimpleFormatter)
-A code formatter walks over the AST tree and reformats the code (node positions) based on a simple format rule or a configurable formatting style.
-
-TextStyler
-SHRBTextStyler builds a attributed text representation of the source code, augmented with text font, color or emphasis attributes based on the current style settings. 
-
-And of course
-RBParseTreeSearcher and RBParseTreeRewriter
-The original users of this AST structure for searching and rewriting code, more on this in its own chapter.
+- Reflectivity Compiler. For reflectivity support, can add MetaLinks to the nodes of the compiled method and generate new methods with code injections augmenting or modifying the executed code.
+- Code formatter. (BIConfigurableFormatter/BISimpleFormatter) A code formatter walks over the AST tree and reformats the code (node positions) based on a simple format rule or a configurable formatting style.
+- TextStyler. SHRBTextStyler builds a attributed text representation of the source code, augmented with text font, color or emphasis attributes based on the current style settings. 
+- `RBParseTreeSearcher` and `RBParseTreeRewriter`. The original users of this AST structure for searching and rewriting code, more on this in its own chapter.
 
 ### RBParser
-
-The Refactoring Framework contains its own parser.
 
 Defining or implementing refactoring operations on the raw source code level is difficult. For example, we would have to distinguish whether a word is an instance variable name, an argument or a reserved word.
 Therefor a parser first translates the source code into an abstract syntax tree (AST).
@@ -934,11 +936,14 @@ For example, the AST for the source code of a method has a RBMethodNode with chi
 defined temporaries and the actual code, RBAssignmentNode for variable assignments, RBMessageNode for message sends.
 
 This is how the structure  for Numbers #sgn method AST looks:
+
+```
 RBParser parseMethod:'sign
 	self > 0 ifTrue: [^1].
 	self < 0 ifTrue: [^-1].
 	^0'
-
+```
+```
 |->RBMethodNode sign
   |->RBSequenceNode self > 0 ifTrue: [ ^ 1 ]. self < 0 ifTrue: [ ^ -1 ]. ^ 0
     |->RBMessageNode ifTrue:
@@ -959,105 +964,137 @@ RBParser parseMethod:'sign
             |->RBLiteralValueNode -1
     |->RBReturnNode ^ 0
       |->RBLiteralValueNode 0
+```
 
-Although many Smalltalk implementations already include a parser as a part of its compiler tool chain, they don't fulfill the requirements needed for the code transformations with the refactoring framework.
 The AST for the compiler, is often only needed to create the byte code and therefore can ignore any code comments or the code formatting. If we use the AST in the refactoring for search and replace code, for example renaming a variable, we don't want to reformat the whole code or remove any code comments. 
 
 The RBParser therefore stores the original code locations and code comments, and only replaces those elements defined by the refactoring transformation and preserves the method comments.
 
-In recent pharo versions, the RBParser actual replaces the original parser used to compile code. It is as powerful as the prior parser, maybe a little bit slower, but easier to maintain. And in the mean time other tools, despite the compiler and the refactoring framework are using this tools as well. 
-(For instance, the syntax highlighting and the code formatter are based on the RBParsers AST nodes).
+In recent pharo versions, the RBParser actual replaces the original parser used to compile code. It is as powerful as the prior parser, maybe a little bit slower, but easier to maintain. And in the mean time other tools, despite the compiler and the refactoring framework are using this tools as well. (For instance, the syntax highlighting and the code formatter are based on the RBParsers AST nodes).
 
 But the real strength of the refactoring framework comes from another (RBParser sub-) class, the 
-RBPatternParser, described in its own chapter.
+`RBPatternParser`, described in its own chapter.
 
-### RBPatternParser and metavariables
+
+
+## RBPatternParser and metavariables
 
 Generating an AST of Smalltalk source code and implementing a program node visitor gives already great and powerful capabilities. The refactoring framework extends this expressiveness by including so called "metavariables".
 
-As this expressions are using an extended syntax - metavariables aren't known to the RBParser - a special parser is needed to parse this expression, the RBPatternParser.
-The following pages describe the added syntax elements. Examples on how to use or tests these expressions
-can be found in the chapter "RBPatternParser examples".
+As this expressions are using an extended syntax - metavariables aren't known to the RBParser - a special parser is needed to parse this expression, the `RBPatternParser`. The following pages describe the added syntax elements. Examples on how to use or tests these expressions
+can be found in the chapter RBPatternParser example.
 
 metavariables are a part of a parser expression, just like any other Smalltalk code, but instead of representing an expression with the exact name, they form a variable that can be unify with any real code expression with the same *structure*.
 
-An example:
+### An example:
 Parsing an expression like:
+`
 a := a + 1 
+`
 creates a parse tree with an assignment node assigning to 'a', the value of sending the message '+' with argument 1 to the object 'a'.
 
 We could implement a refactoring operation (or directly use the RBParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
 
 We can define the expression with the meaning of 'increment a variable by one' by using a metavariable. All metavariables start with a ´ (backquote).
+```
 `a := `a + 1
-
+```
 This is the simplest metavariable, a name with a backquote. It will match a single variable. And for matching the whole expression, all variables with the same name must match the same variables. 
+
 The above expression only matches 
-'x:=x+1' 
+
+```
+'x:=x+1'
+```
+
 but not 
+```
 'x:=y+1'.
+```
 
 If we want to match more than a single variable, we can prefix the name with a '@':
 
-`a matches a single variable
-`@a matches multiple items in this position
+- ``` `a``` matches a single variable
+-``` `@a ``` matches multiple items in this position
 
 For example, 
+```
 `@a add: `@b
+```
 will match any expression with the message send #add: regardless whether the receiver or arguments are single variables
+```
 'coll add: item'
+```
 or the return of another expression
+```
 'self data add: self'
+```
 
 Furthermore we can restrict the expression to be matched to be a literal instead of variable by using the prefix '#':
 
+```
 `@exp add: `#item
+```
 
 This will match any code calling #add: on an object or expression with a literal as argument:
+
+```
 'coll add: 3'
 'self foo add: 'text' '
 'coll add: #symbol'
+```
 
 But again, #lit is a named variable and matches only the same literal in every part of the expression:
 
+```
 `self add: `#lit; add: `#lit
-
+```
 will match
+```
 'self add: #a; add: #a'
+```
 but not 
+```
 'self add: #a; add: #b'
+```
 
 Similar to a statement ending with a dot, the metavariable prefix '.' defines a variable matching a statement, resp. '.@' a (possible empty) list of statements.
 
 Example, match ifTrue:ifFalse: with first statement in true and false block being the same
 
+```
 `@exp ifTrue:[`.stm. 
 				  `.@trueCase]
       ifFalse:[`.stm. 
 				  `.@falseCase]
+```
 
 This will match
 
+```
 someValue ifTrue:[ self doA.
 	                self doFoo]
           ifFalse:[ self doA.
 	                self doBaz]
 
+```
 
 Important especially for the rewriter, we may not only want to know the first node matching an expression but every other and for example any possible subexpression matching the metavariable. For this, we can
 use a double backquote to indicate that the search should recurse into the found node expression to search for more matches.
 
 This expression will find all senders of add:
+```
 `@exp add:`@value
+```
 but if we would use this expression to rewrite add: by addItem:
 an expression like
-
+```
 var add: (self add: aValue).
-
+```
 would be replaced by
-
+```
 var addItem: (self add: aValue).
-
+```
 If we want to find the same call in the argument, we need to recurse into it by using a double backquote
 
 `@exp add:``@value
