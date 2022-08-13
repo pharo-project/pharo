@@ -228,6 +228,7 @@ Example
 ```
 
 Before refactoring:
+
 ```
 Class Foo -> inst vars: x, y 
 
@@ -237,7 +238,9 @@ Foo >> foobar
 Foo >> foo
 	^ x + y 
 ```
+
 After refactoring merging X into Y
+
 ```
 Class Foo -> inst vars: y 
 
@@ -256,7 +259,7 @@ I am a refactoring operations for adding method arguments.
 You can modify the method name and add an additional keyword argument and the default value used by senders of the original method. Only one new argument can be added. But you can change the whole method name, as long as the number of argument matches.
 
 For example, for `r:g:b:`  add another parameter "a" the new method is `r:g:b:a:`
-or change the whole method to `setRed:green:blue:alpha:`
+or change the whole method to `setRed:green:blue:alpha:`.
 
 This refactoring will 
 - add a new method with the new argument, 
@@ -266,11 +269,11 @@ This refactoring will
 #### Deprecate
 I am a refactoring for deprecate a method.
 
-My preconditions verify, that the old selector exists (in  the current namespace) and that the new selector is a valid selector
+My preconditions verify, that the old selector exists (in  the current namespace) and that the new selector is a valid selector.
 
 The refactoring transformation will add the call to the #deprecated:on:in: method 
 
-Example
+##### Example
 
 ```
 (RBDeprecateMethodRefactoring 
@@ -280,6 +283,7 @@ Example
 ```
 
 Before refactoring:
+
 ```
 RBRefactoryTestDataApp >> called: anObject on: aBlock 
 	Transcript
@@ -289,6 +293,7 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock
 ```
 
 After refactoring:
+
 ```
 RBRefactoryTestDataApp >> called: anObject on: aBlock 
 	self
@@ -300,6 +305,7 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock
 		cr.
 	aBlock value
 ```
+
 #### Inline parameter
 I am a refactoring for removing and inlining method arguments.
 
@@ -307,7 +313,7 @@ If all callers of a method with arguments, call that method with the same litera
 
 My precondition verifies that the method name without that argument isn't already used and that all callers supplied the same literal expression.
 
-For example, a method foo: anArg
+For example, a method `foo: anArg`
 
 ```
 foo: anArg
@@ -338,6 +344,7 @@ and the callers just call the method without any arguments:
 method1
 	anObject foo.
 ```
+
 #### Inline target sends
 I am a refactoring for inlining code of this method.
 
@@ -461,7 +468,8 @@ If the method contains more than one argument, I request the user to choose one 
 #### Remove all senders
 I am a refactoring to remove all possible senders from a method (you cannot remove those calls where the result of the method call is used or when the method name symbol is referenced).
 
-Example
+#### Example
+
 ```
 | refactoring options |
 refactoring := RBRemoveSenderRefactoring 
@@ -475,6 +483,7 @@ refactoring execute.
 ```
 
 Before refactoring:
+
 ```
 RBRefactoryTestDataApp >> caller1
 	| anObject |
@@ -487,6 +496,7 @@ RBRefactoryTestDataApp >> caller1
 ```
 
 After refactoring (notice that the call to printstring was removed):
+
 ```
 RBRefactoryTestDataApp >> caller1
 	| anObject |
@@ -496,6 +506,7 @@ RBRefactoryTestDataApp >> caller1
 			[:each | 
 			^anObject]
 ```
+
 #### Rename method (all)
 I am a refactoring operation for renaming methods.
 
@@ -505,9 +516,10 @@ My preconditions verify that the number of arguments is the same and that the ne
 
 All references in senders of the old method are changed, either the method name only or the order of the supplied arguments.
 
-Example
+##### Example
 
 There are two ways to rename a method, one of them is rename all senders of method:
+
 ```
 (RBRenameMethodRefactoring 
 		renameMethod: ('check', 'Class:') asSymbol
@@ -516,6 +528,7 @@ There are two ways to rename a method, one of them is rename all senders of meth
 		permutation: (1 to: 1)) execute.
 ```
 And the other is rename the method only in specific packages:
+
 ```
 |refactoring|
 refactoring :=RBRenameMethodRefactoring 
@@ -526,6 +539,7 @@ refactoring :=RBRenameMethodRefactoring
 refactoring searchInPackages:  #(#'Refactoring-Tests-Core').
 refactoring execute
 ```
+
 #### Replace by another
 I'm a refactoring operation for replace one method call by another one.
 
@@ -533,7 +547,7 @@ The new method's name can have a different number of arguments than the original
 
 All senders of this method are changed by the other.
 
-Example
+#### Example
 
 ```
 (RBReplaceMethodRefactoring  
@@ -586,15 +600,18 @@ I am a refactoring for replacing method calls by the method implementation.
 Just like `RBInlineMethodRefactoring`,  I replace a message send by the implementation of that  message , but you can provide the component
 where this implementation is taken from or choose one if there are move than one implementors.
 If the method implementation has some direct variable references, accessor for this variable are created (just as by the generate accessor refactoring).
+
 #### Inline temporary
 I am a refactoring to replace a temporary variable by code.
 
 All references to the temporary variable in this method are replaced by the value used to initialize the temporary variable. 
 The initialization and declaration of this variable will be removed. You need to select the variable and its initial assignment code to apply this refactoring.
+
 #### Move variable definition
 I am a refactoring for moving the definition of a variable to the block/scope where it is used.
 
 For a method temporary variable declared but not initialized in the method scope and only used within a block, the definition can be moved to the block using this variable.
+
 #### Rename temporary/parameter
 I am a refactoring for renaming temporary variables.
 This can be applied to method arguments as well.
@@ -602,6 +619,7 @@ This can be applied to method arguments as well.
 The variable declaration and all references in this method are renamed.
 
 My precondition verifies that the new name is a valid variable name and not an existing instance or a class variable name
+
 #### Split cascade
 I am a refactoring splitting a cascade message send to multiple messages.
 
@@ -610,6 +628,7 @@ You can select an interval containing a cascade expression. The refactoring will
 My preconditions verify that the selector containing the cascaded message send is defined in this class, and a cascade message can be found.
 
 If the receiver of the cascade expression is a literal or the return value of another message send, I will add another temporary variable for the interim result.
+
 #### Move temporary to instvar
 I am a refactoring for changing a temporary variable to an instance variable.
 
@@ -621,17 +640,19 @@ If this instance variable is already used in a subclass it will be removed from 
 
 The temporary variables with the same name in hierarchy will be removed, and replaced with the new instance variable.
 
-Example
---------------------
+##### Example
 
 Script refactoring:
+
 ```
 (RBTemporaryToInstanceVariableRefactoring 
     class: MyClassA
     selector: #someMethod
     variable: 'log') execute
 ```
+
 Before refactoring:
+
 ```
 Object subclass: #MyClassA
 	instanceVariableNames: ''
@@ -653,7 +674,9 @@ MyClassA subclass: #MyClassB
 	classVariableNames: ''
 	package: 'example'
 ```
+
 After refactoring:
+
 ```
 Object subclass: #MyClassA
 	instanceVariableNames: 'log'
@@ -831,7 +854,9 @@ The options that can be used are:
 A tool now can register a callback like
 
 ```
-refactoring setOption:#name_of_an_option toUse:[:a :b: ... a block with needed arguments]
+refactoring 
+	setOption:#name_of_an_option 
+	toUse:[:a :b: ... a block with needed arguments]
 ```
 
 for example, Calypso sets the option `#implementorToInline` to a method showing a dialog with a list to choose one of the provided selector names.
@@ -874,7 +899,8 @@ aTestCase asHistoryFor: self
 ```
 
 as the former implementation had a call to self (self newTestDictionary) we need to add self as an argument for the new method.
-The refactoring operation queries this argument name by calling the registered block for the option 'selfArgumentName', as the refactoring can not guess the type of the class we want to move the method, it will ask us by calling 'variableTypes' and finally the new method name and arguments are provided by calling the block for option 'methodName'.
+The refactoring operation queries this argument name by calling the registered block for the option `'selfArgumentName'`, as the refactoring can not guess the type of the class we want to move the method, it will ask us by calling 'variableTypes' and finally the new method name and arguments are provided by calling the block for option `'methodName'`.
+
 
 ## Refactoring Engine Infrastructure
 
@@ -2802,14 +2828,15 @@ I replace an instance variable by other, in all methods refering to this variabl
 
 My precondition verifies that the new variable is a defined instance variable in class.
 
-Example
-----------------------------
+##### Example
+
 Script
 ```
 (RBMergeInstanceVariableIntoAnother rename: 'x' to: 'y' in: Foo) execute.
 ```
 
 Before refactoring:
+
 ```
 Class Foo -> inst vars: x, y 
 
@@ -2819,7 +2846,9 @@ Foo >> foobar
 Foo >> foo
 	^ x + y 
 ```
+
 After refactoring merging X into Y
+
 ```
 Class Foo -> inst vars: y 
 
@@ -2834,140 +2863,3 @@ I am a RBRefactoring intended for prepagating another refactoring. We call to pr
 
 For example, the propagation of a 'message rename' is to change the senders of the old selector to use the new selector. 
 
-
-## Environments
-
-The infrastructure of the refactoring engine defines some environments and operations (and, or,...) over such environments. 
-An environment is basically a slice over the system: it can contain for example all the classes of a set of packages. 
-The key class is `RBBrowserEnvironment`. 
-The following shows the class comments of the environments available in Pharo.
-
-### RBBrowserEnvironment
-I am the base class for environments of the refactoring framework.
-
-I define the common interface for all environments.
-And I act as a factory for various specialized environments. See my 'environment' protocol.
-
-I am used by different tools to create a 'views' of subsets of the whole system environment to browse or act on (searching/validations/refactoring)
-
-#### create instances:
-```
-RBBrowserEnvironment new forClasses:  Number withAllSubclasses.
-RBBrowserEnvironment new forPackageNames: { #Kernel }.
-```
-#### query:
-
-```
-|env|
-env := RBBrowserEnvironment new forPackageNames: { #Kernel }.
-env referencesTo:#asArray.
--> RBSelectorEnvironment.
-```
-
-#### browse:
-
-```
-|env|
-env := RBBrowserEnvironment new forPackageNames: { #Kernel }.
-(Smalltalk tools browser browsedEnvironment: env) open.
-```
-
-### RBBrowserEnvironmentWrapper
-I am a wrapper around special browser environment subclasses and
-the base RBBrowserEnvironment class. I define common methods
-for my subclasses to act as a full environment.
-no public use.
-
-
-### RBCategoryEnvironment
-I am a RBBrowserEnvironment on a set of category names.
-I containt all entities using this category name.
-I am more restricted to the exact category name compared
-to a package environment.
-
-Example, all Morph subclasses in category Morphic-Base-Menus
-```
-(RBBrowserEnvironment new forClasses: Morph withAllSubclasses) forCategories: {#'Morphic-Base-Menus'}
-```
-
-### RBClassEnvironment
-I am a RBBrowserEnvironment on a set of classes.
-I containt all entities of this set.
-
-Example:
-```
-(RBBrowserEnvironment new) forClasses: Number withAllSubclasses.
-```
-### RBClassHierarchyEnvironment
-I am a RBBrowserEnvironment on a set of classes of a class hierarchy.
-
-Example:
-
-```
-(RBBrowserEnvironment new) forClass:Morph protocols:{'printing'}.
-```
-
-### RBAndEnvironment
-
-I am the combination of two RBEnvironments, a logical AND. That is: 
-entity A is in this environment if it is in BOTH environment I am constructed from.
-
-Do not construct instances of me directly, use method #& for two existing environments:
-env1 & env2 -> a RBAndEnvironment.
-
-### RBOrEnvironment
-I am the combination of two RBEnvironments, a logical OR. That is: 
-entity A is in this environment if it is in at least ONE environment I am constructed from.
-
-Do not construct instances of me directly, use method #| for two existing environments:
-env1 | env2 -> a RBOrEnvironment.
-
-### RBNotEnvironment
-I am the complement of RBEnvironments, a logical NOT. That is: 
-entity A is in this environment if it is in NOT in the environment I am constructed from.
-
-Do not construct instances of me directly, use method #not for an existing environment:
-env1 not -> a RBNotEnvironment.
-
-### RBPackageEnvironment
-I am a RBBrowserEnvironment on a set of packages or package names.
-I containt all entities are defined in this packages.
-(classes and class that have extensions from this packages)
-
-Example:
-```
-RBBrowserEnvironment new forPackageNames:{ 'Morphic-Base'}.
-```
-
-### RBPragmaEnvironment
-I am a RBBrowserEnvironment on a set of Pragmas.
-I containt all entities that define methods using this pragmas.
-Example:
-```
-RBBrowserEnvironment new forPragmas:{ #primitive:}.
-```
-### RBProtocolEnvironment
-I am a RBBrowserEnvironment on a set of protocols of a class.
-
-Example:
-```
-RBBrowserEnvironment new forClass:Morph protocols:{'printing'}.
-```
-### RBSelectorEnvironment
-I am a RBBrowserEnvironment for a set of selectors. 
-Usually I am constructed as a result of a query on another environment:
-
-```
-env referencesTo:#aselector -> a RBSelectorEnvironments.
-```
-
-### RBVariableEnvironment
-I am a RBBrowserEnvironment for items referring class or instvars.
-Constructed by quering extisting environments with 
-refering, reading or writing to the variables of a class.
-
-Example:
-```
-RBBrowserEnvironment new instVarWritersTo:#color in: Morph.
--> a RBVariableEnvironment
-```
