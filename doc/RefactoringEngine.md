@@ -25,15 +25,15 @@ When the preconditions expressed as RBConditions are true, the refactoring is ex
 
 Here is a brief overview of the core components.
 
-- RBScanner and RBParser. The RBScanner and RBParser are used by Pharo to create an abstract syntax tree (AST) from the methods source code.
-- RBProgramNode and subclasses. These are the base and concrete subclasses for all RB-Nodes representing a syntax node class, like RBMethodNode, RBAssignmentNode, et cetera.
-- RBParseTreeSearcher and RBParseTreeRewriter. Some refactoring operations use the tree searcher and rewriter for applying a transformation on the abstract syntax tree. They implement a program node visitor.
-- RBClass, RBMetaclass, RBMethod. Class and Method meta-models representing a class or method created, removed or modified during a refactoring
+- `RBScanner` and `RBParser`. The `RBScanner` and `RBParser` are used by Pharo to create an abstract syntax tree (AST) from the methods source code.
+- `RBProgramNode` and subclasses. These are the base and concrete subclasses for all RB-Nodes representing a syntax node class, like `RBMethodNode`, `RBAssignmentNode`, et cetera.
+- `RBParseTreeSearcher` and `RBParseTreeRewriter`. Some refactoring operations use the tree searcher and rewriter for applying a transformation on the abstract syntax tree. They implement a program node visitor.
+- `RBClass`, `RBMetaclass`, `RBMethod`. Class and Method meta-models representing a class or method created, removed or modified during a refactoring
 operation.
-- RBNamespace. A namespace is an environment for resolving class and method entities by name and collects all changes resp. changed entities.
-- RBRefactoring and subclasses. Abstract base classes and its concrete subclasses for refactoring operations. Every basic refactoring operation is implemented as a subclass of the RBRefactoring class. A refactoring operation checks the precondition that must be fulfilled and implements the actual code transform method.
-- RBCondition. Instead of implementing conditions and condition checking code into every single refactoring operation, the RBCondition class implements a set of common tests and can be created and combined to realize a composition of conditions.
-- RBRefactoryChange. Applying a refactoring within a namespace collects changes without applying the actual change to the system. These changes are represented by RBRefactoryChange subinstances and a composition of refactory changes. 
+- `RBNamespace`. A namespace is an environment for resolving class and method entities by name and collects all changes resp. changed entities.
+- `RBRefactoring` and subclasses. Abstract base classes and its concrete subclasses for refactoring operations. Every basic refactoring operation is implemented as a subclass of the `RBRefactoring` class. A refactoring operation checks the precondition that must be fulfilled and implements the actual code transform method.
+- `RBCondition`. Instead of implementing conditions and condition checking code into every single refactoring operation, the RBCondition class implements a set of common tests and can be created and combined to realize a composition of conditions.
+- `RBRefactoryChange`. Applying a refactoring within a namespace collects changes without applying the actual change to the system. These changes are represented by `RBRefactoryChange` subinstances and a composition of refactory changes. 
 
 
 ## Default refactorings exposed to the user
@@ -63,7 +63,9 @@ The refactoring transformation will replace the current class and its definition
 Example
 
 ```
-	(RBRenameClassRefactoring rename: 'RBRenameClassRefactoring' to: 'RBRenameClassRefactoring2') execute
+(RBRenameClassRefactoring 
+	rename: 'RBRenameClassRefactoring' 
+	to: 'RBRenameClassRefactoring2') execute
 ```
 
 #### Remove
@@ -269,10 +271,10 @@ The refactoring transformation will add the call to the #deprecated:on:in: metho
 Example
 
 ```
-	(RBDeprecateMethodRefactoring 
-		deprecateMethod: #called:on: 
-		in: RBRefactoryTestDataApp 
-		using: #callFoo) execute
+(RBDeprecateMethodRefactoring 
+	deprecateMethod: #called:on: 
+	in: RBRefactoryTestDataApp 
+	using: #callFoo) execute
 ```
 
 Before refactoring:
@@ -378,26 +380,27 @@ For example, moving the method #isBlack from class Color to its instvar #rgb for
 
 ```
 Integer >> isBlack
- ^ self = 0
+	 ^ self = 0
 ```
 and changes Colors implementation from: 
 
 ```
 Color >> isBlack
-   ^ rgb = 0
+	^ rgb = 0
 ```
 
 to:
 
 ``` 
 Color >> isBlack
-   ^ rgb isBlack
+	^ rgb isBlack
 ```
 
 #### Move to class side / instance side
 Move a method from the class to the instance side, or vice versa. Normally this is not considered to be a refactoring.
 
 Only instance methods with no instance variable access or class methods with no class instance variable access can be moved.
+
 #### Move to class side
 I'm a refactoring to move a method to class side.
 
@@ -408,9 +411,9 @@ I catch broken references (method senders and direct access to instVar) and fix 
 Example
 
 ```
-	(RBMoveMethodToClassSideRefactoring 
-		method: (RBTransformationRuleTestData >> #rewriteUsing:) 
-		class: RBTransformationRuleTestData) execute.
+(RBMoveMethodToClassSideRefactoring 
+	method: (RBTransformationRuleTestData >> #rewriteUsing:) 
+	class: RBTransformationRuleTestData) execute.
 ```
 Before refactoring:
 ```
@@ -436,15 +439,12 @@ I am a refactoring for moving a method up to the superclass.
 My precondition verify that this method does not refere to instance variables not accessible in the superclass. And this method does not sends a super message that is defined in the superclass.
 If the method already exists and the superclass is abstract or not referenced anywhere, replace that implementation and push down the old method to all other existing subclasses.
 
-
-
 #### Push down
 I am a refactoring for moving a method down to all direct subclasses.
 
 My preconditions verify that this method isn't refered  as a super send in the subclass. And the class defining this method is abstract or not referenced anywhere.
 
-
-#### Remove
+#### Remove Method
 I am a refactoring for removing a method.
 
 My preconditions verify that this method is not referenced anywhere.
@@ -568,6 +568,7 @@ Add a new temporary variable for the value of the selected code. Every place in 
 As the code is now only evaluated once for initializing the variable value, this refactoring may modify the behavior if the code statements didn't evaluate to the same value on every call.
 
 My preconditions verify that the new temporary name is a valid name and isn't already used (neither a temporary, an instance variable or a class variable).
+
 #### Inline method
 I am a refactoring for replacing method calls by the method implementation.
 
