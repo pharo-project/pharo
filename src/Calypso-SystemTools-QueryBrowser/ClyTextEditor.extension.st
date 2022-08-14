@@ -24,8 +24,10 @@ ClyTextEditor >> classNamesContainingIt [
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOf: selectedSelector [
-	
-	self browser browseImplementorsOf: selectedSelector
+
+	self browser
+		browseImplementorsOf: selectedSelector
+		inNameResolver: self browserTool editingMethod methodClass
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -34,7 +36,7 @@ ClyTextEditor >> implementorsOfIt [
 	| selector |
 	(selector := self selectedSelector) ifNil: [ ^ textArea flash ].
 	selector isCharacter ifTrue: [ ^ textArea flash ].
-	self browser browseImplementorsOf: selector
+	self implementorsOf: selector
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -60,7 +62,7 @@ ClyTextEditor >> referencesTo: aVariableName [
 			var := ClyInstanceVariable on: slot visibleFrom: class.
 			^self browser spawnQueryBrowserOn: (ClyVariableReferencesQuery of: var)]].
 	
-	self browser browseReferencesTo: aVariableName asSymbol from: class
+	self browser browseReferencesTo: aVariableName asSymbol inNameResolver: class
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -75,7 +77,9 @@ ClyTextEditor >> referencesToIt [
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
 
-	self browser browseReferencesTo: selectedSelector
+	self browser
+		browseReferencesTo: selectedSelector
+		inNameResolver: self browserTool editingMethod methodClass
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
