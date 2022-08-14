@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMethodProtocolChange,
 	#superclass : #RBAddMethodChange,
-	#category : #'Refactoring2-Core-Changes'
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }

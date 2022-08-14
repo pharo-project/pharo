@@ -4,7 +4,7 @@ RBRefactoryProtocolChange is responsible for removing a protocol in classes in a
 Class {
 	#name : #RBRemoveProtocolChange,
 	#superclass : #RBRefactoryProtocolChange,
-	#category : #'Refactoring2-Core-Changes'
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }
