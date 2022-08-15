@@ -68,8 +68,11 @@ ClyOldMessageBrowserAdapter class >> browseClasses: classes [
 ]
 
 { #category : #opening }
-ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol [ 
-	^ClyQueryBrowserMorph browseImplementorsOf: aSymbol
+ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol inNameResolver: methodContext [
+
+	^ ClyQueryBrowserMorph
+		  browseImplementorsOf: aSymbol
+		  inNameResolver: methodContext
 ]
 
 { #category : #opening }

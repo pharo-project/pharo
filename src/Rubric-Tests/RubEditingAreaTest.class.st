@@ -3,7 +3,7 @@ A RubEditingAreaTest is a test class for testing the behavior of RubEditingArea
 "
 Class {
 	#name : #RubEditingAreaTest,
-	#superclass : #RubAbstractTextAreaTest,
+	#superclass : #TestCase,
 	#instVars : [
 		'area',
 		'position',

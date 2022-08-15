@@ -34,8 +34,17 @@ TestResult >> addSkipIfAbsent: aSkip [
 ]
 
 { #category : #'*TestRunner-Core' }
+TestResult >> removeError: aTestCase [
+
+	"remove the giving error from the errors set"
+
+	^ errors remove: aTestCase
+]
+
+{ #category : #'*TestRunner-Core' }
 TestResult >> removeFailure: aTestCase [
+
 	"remove the giving failure from the failures set"
 
-	^failures remove: aTestCase
+	^ failures remove: aTestCase
 ]

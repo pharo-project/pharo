@@ -18,6 +18,11 @@ DTTestResultType class >> error [
 ]
 
 { #category : #factory }
+DTTestResultType class >> expectedFailure [
+	^ DTExpectedFailureResultType new
+]
+
+{ #category : #factory }
 DTTestResultType class >> fail [
 	^ DTFailResultType new
 ]
@@ -37,8 +42,18 @@ DTTestResultType class >> textColor [
 	^ TestResult defaultColorText
 ]
 
+{ #category : #factory }
+DTTestResultType class >> unexpectedPass [
+	^ DTUnexpectedPassResultType new
+]
+
 { #category : #testing }
 DTTestResultType >> isError [
+	^ false
+]
+
+{ #category : #accessing }
+DTTestResultType >> isExpectedFailure [
 	^ false
 ]
 
@@ -54,6 +69,11 @@ DTTestResultType >> isPass [
 
 { #category : #testing }
 DTTestResultType >> isSkipped [
+	^ false
+]
+
+{ #category : #accessing }
+DTTestResultType >> isUnexpectedPass [
 	^ false
 ]
 

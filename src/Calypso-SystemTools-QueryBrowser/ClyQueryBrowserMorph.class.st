@@ -52,7 +52,7 @@ ClyQueryBrowserMorph class >> browseClasses: classes [
 ]
 
 { #category : #opening }
-ClyQueryBrowserMorph class >> browseImplementorsOf: aSymbol [
+ClyQueryBrowserMorph class >> browseImplementorsOf: aSymbol inNameResolver: methodContext [
 	^self openOn: (ClyMessageImplementorsQuery of: aSymbol)
 ]
 

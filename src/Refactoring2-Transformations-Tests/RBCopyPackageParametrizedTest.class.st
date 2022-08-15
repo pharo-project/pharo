@@ -43,20 +43,23 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
 	self timeLimit: 2 minutes.
 	refactoring := (self createRefactoringWithArguments: 
-		{ #'Refactoring-Help' . #'Refactoring-Help1'}).
+		{ #'Refactoring2-Core' . #'Refactoring2-Core2'}).
 	aModel := refactoring model.
 	
 	self executeRefactoring: refactoring.
 	
-	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) category 
-		equals: #'Refactoring-Help1'.
-	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) superclass name 
-		equals: #RBClassesHelpCopy.
-	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) superclass name 
-		equals: #RBClassesHelpCopy.
-	self assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages) 
+	self assert: (aModel classNamed: #RBClassCategoryChangeCopy) category 
+		equals: #'Refactoring2-Core2'.
+	self assert: (aModel classNamed: #RBAddProtocolChangeCopy) superclass name 
+		equals: #RBRefactoryProtocolChangeCopy.
+
+	"We should create a little package and this package should have a class pointing to another class of this package.
+	and we should check that the refactored version points to the class copied version.
+	This is what this version is doing: 
+	
+	self  assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages) 
 		equals: (self parseMethod: 'pages
-	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')
+	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')"
 ]
 
 { #category : #'failure tests' }

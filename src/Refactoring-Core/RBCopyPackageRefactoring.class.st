@@ -1,16 +1,19 @@
 "
-I am a refactoring for copy a package.
+I am copy a package (giving it a new name) and the classes it contains.
 
-My preconditions verify, that the copied package exists (in  the current environment) and that the new copy package name is valid and not yet used as a global variable name 
+My preconditions verify that
+- the copied package exists in  the current environment and 
+- the new copy package name is valid and not yet used as a global variable name.
 
-The refactoring transformation create a new package and copy defined classes of origin package (exclude all class' extensions)
+The refactoring transformation creates a new package and copy the classes of the origina package with 
+a new name prefixed with Copy. Pay attention the class extensions are not copied.
 
-Example
----------------
+#### Example
+
 ```
-	(RBCopyPackageRefactoring 
-		copyPackage: #'Refactoring-Help' 
-		in: #'Refactoring-Help1') execute. 
+(RBCopyPackageRefactoring 
+	copyPackage: #'Beacon-Core' 
+	in: #'Beacon-Core1') execute. 
 ```
 "
 Class {
