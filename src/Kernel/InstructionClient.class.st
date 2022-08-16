@@ -90,9 +90,11 @@ InstructionClient >> jump: offset withInterpreter: anInterpreter [
 { #category : #'instruction decoding' }
 InstructionClient >> mappedInlinePrimitive: extensionBytecodeNumber [
 
-	(mappedInlinePrimitiveHandlers
+	| extensionHandler |
+	extensionHandler := (mappedInlinePrimitiveHandlers
 		 at: extensionBytecodeNumber
-		 ifAbsent: [ self unusedBytecode ]) value
+		 ifAbsent: [ ^ self unusedBytecode ]).
+	self perform: extensionHandler.
 ]
 
 { #category : #'instruction decoding' }
