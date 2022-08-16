@@ -85,18 +85,18 @@ TallyModel >> leavesInto: aCollection fromSender: anObject [
 
 { #category : #menu }
 TallyModel >> menu: menu shifted: b [ 
-	menu
+	(menu
 		add: 'Browse (b)'
 		target: self
-		selector: #browseItem.
-	menu
+		selector: #browseItem) icon: (self iconNamed: #glamorousBrowse).
+	(menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
+		selector: #inspectItem) icon: (self iconNamed: #glamorousInspect).
+	(menu
 		add: 'Explore (I)'
 		target: self
-		selector: #exploreItem.
+		selector: #exploreItem) icon: (self iconNamed: #smallFind).
 
 ]
 

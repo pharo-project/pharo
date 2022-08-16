@@ -103,17 +103,18 @@ ProfilerModel >> menu: menu shifted: b [
 		ifNotNil: [ :current | 
 			current menu: menu shifted: b.
 			menu addLine.
-			menu
+			(menu
 				add: 'Expand all from here'
 				target: self
 				selector: #expandAllFromNode:
-				argument: current .
+				argument: current) icon: (self iconNamed: #windowMenuInactive).
 			menu addLine.
-			menu 
-				add: 'See as root'
+			(menu 
+				add: 'Show as root'
 				target: self
 				selector: #setTallyRoot:
-				argument: current ].
+				argument: current) 
+				icon: (self iconNamed: #glamorousRedo) ].
 	^ menu
 ]
 
