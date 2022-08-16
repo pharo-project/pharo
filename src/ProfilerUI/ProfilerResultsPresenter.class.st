@@ -151,7 +151,6 @@ ProfilerResultsPresenter >> initializePresenters [
 					  addLast: (browseButton := self newBrowseButton))
 			 height: h;
 			 yourself).
-	"add: (summaryText := self newLabel label: 'Reporting ') height: h;"
 	self initializeActions
 ]
 

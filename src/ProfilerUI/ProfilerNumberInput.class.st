@@ -21,11 +21,11 @@ ProfilerNumberInput >> initialize [
 
 { #category : #initialization }
 ProfilerNumberInput >> initializePresenters [
+
 	self eventHandler
 		whenFocusLostDo: [
 			"if text is not a number, set to zero"
 			self text asInteger ifNil: [ self number: 0 ] ];
 		whenFocusReceivedDo: [ self selectAll ];
-		whenMouseDownDo: [ :evt | self selectAll ].
-
+		whenMouseDownDo: [ :evt | self selectAll ]
 ]

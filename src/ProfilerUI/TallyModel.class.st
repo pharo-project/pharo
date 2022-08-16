@@ -145,12 +145,13 @@ TallyModel >> time [
 ]
 
 { #category : #accessing }
-TallyModel >> weight [ 
+TallyModel >> weight [
+	self tally isZero ifTrue: [ ^ 0 ]. 
 	^ self tally asFloat / model totalTally * 100.0
 ]
 
 { #category : #accessing }
 TallyModel >> weightToRoot [  
-
+	self tally isZero ifTrue: [ ^ 0 ].
 	^ self tally asFloat / model tallyRoot tally * 100.0
 ]
