@@ -15,7 +15,8 @@ Class {
 		'thresholdFilterInput',
 		'thresholdExpandInput',
 		'navigationToolbar',
-		'reportButton'
+		'reportButton',
+		'showAsRootButton'
 	],
 	#category : #'ProfilerUI-View'
 }
@@ -88,9 +89,11 @@ ProfilerResultsPresenter >> handleSelectionChange: item [
 	item
 		ifNil: [ 
 			browseButton disable.
+			showAsRootButton disable.
 			codePresenter methodOrBlock: nil ]
 		ifNotNil: [ 
 			browseButton enable.
+			showAsRootButton enable.
 			codePresenter methodOrBlock: item methodOrBlock.
 			navigationToolbar selectedItem ifNotNil: [ :btn | 
 				btn selectedPath: item path ] ]
@@ -102,8 +105,7 @@ ProfilerResultsPresenter >> initializeActions [
 	treeTable
 		whenSelectedItemChangedSend: #handleSelectionChange
 		to: self.
-	"Code section actions"
-	browseButton action: [ treeTable selectedItem browseItem ].
+
 	"Report"
 	reportButton action: [ 
 		UIManager default edit: viewModel report label: 'Profiling Report' ].
@@ -148,6 +150,7 @@ ProfilerResultsPresenter >> initializePresenters [
 							   bePlacedAtStart;
 							   fill: true;
 							   expand: false ];
+					  addLast: (showAsRootButton := self newShowAsRootButton);
 					  addLast: (browseButton := self newBrowseButton))
 			 height: h;
 			 yourself).
@@ -161,29 +164,38 @@ ProfilerResultsPresenter >> newBrowseButton [
 		  icon: (self iconNamed: #glamorousBrowse);
 		  label: 'Browse';
 		  disable;
+		  action: [ treeTable selectedItem browseItem ];
 		  yourself
 ]
 
 { #category : #'private - factory' }
 ProfilerResultsPresenter >> newConfigurationSectionLayout [
 
-	^ (SpBoxLayout newTopToBottom
-			 add: (SpBoxLayout newLeftToRight
-					  add: (treeDropList := self newTreeVisualizationDropList);
-					  add: (expandAllButton := self newButton label: 'Expand All') width: 100;
-					  add: (collapseAllButton := self newButton label: 'Collapse All') width: 100;
-					  yourself);
-			 add: (SpBoxLayout newLeftToRight
-					  add: (self newLabel label: 'Hide nodes under: ') width: 125;
-					  add: (thresholdFilterInput := self newThresholdFilterInput) width: 55;
-					  add: (self newLabel label: '%') width: 25;
-					  yourself);
-			 add: (SpBoxLayout newLeftToRight
-					  add: (self newLabel label: 'Expand nodes over: ') width: 125;
-					  add: (thresholdExpandInput := self newThresholdExpandInput) width: 55;
-					  add: (self newLabel label: '%') width: 25; 
-					  yourself);
-			  yourself)
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newLeftToRight
+				   add: (treeDropList := self newTreeVisualizationDropList);
+				   add: (expandAllButton := self newButton
+						                       label: 'Expand All';
+						                       icon: (self iconNamed: #windowMenu))
+				   width: 100;
+				   add: (collapseAllButton := self newButton
+						                         label: 'Collapse All';
+						                         icon: (self iconNamed: #windowMinimize))
+				   width: 100;
+				   yourself);
+		  add: (SpBoxLayout newLeftToRight
+				   add: (self newLabel label: 'Hide nodes under: ') width: 125;
+				   add: (thresholdFilterInput := self newThresholdFilterInput)
+				   width: 55;
+				   add: (self newLabel label: '%') width: 25;
+				   yourself);
+		  add: (SpBoxLayout newLeftToRight
+				   add: (self newLabel label: 'Expand nodes over: ') width: 125;
+				   add: (thresholdExpandInput := self newThresholdExpandInput)
+				   width: 55;
+				   add: (self newLabel label: '%') width: 25;
+				   yourself);
+		  yourself
 ]
 
 { #category : #'private - factory' }
@@ -217,6 +229,17 @@ ProfilerResultsPresenter >> newReportButton [
 		label: 'Full Report';
 		disable;
 		yourself
+]
+
+{ #category : #'private - factory' }
+ProfilerResultsPresenter >> newShowAsRootButton [
+
+	^ self newButton
+		  icon: (self iconNamed: #glamorousRedo);
+		  label: 'Show node as root';
+		  action: [ viewModel setTallyRoot: treeTable selectedItem ];
+		  disable;
+		  yourself
 ]
 
 { #category : #'private - factory' }

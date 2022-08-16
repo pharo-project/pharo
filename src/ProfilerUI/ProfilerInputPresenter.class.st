@@ -41,16 +41,15 @@ ProfilerInputPresenter >> initializePresenters [
 		                   icon: (self iconNamed: #glamorousGo);
 		                   label: 'Profile it'.
 
-	self layout: (SpBoxLayout newTopToBottom
-			 add: (SpBoxLayout newLeftToRight
-					  add: profileItButton height: self class toolbarHeight;
-					  add: profilerDropList height: self class buttonHeight;
+	self layout: (SpBoxLayout newLeftToRight 
+			add: codeInput;
+			 add: (SpBoxLayout newTopToBottom
+					  addLast: profilerDropList" height: self class toolbarHeight";
+					  addLast: profileItButton 
 					  yourself)
 			 expand: false
 			 fill: false
 			 padding: 5;
-			
-			 add: codeInput height: self class toolbarHeight*10;
 			 yourself).
 
 	self focusOrder
