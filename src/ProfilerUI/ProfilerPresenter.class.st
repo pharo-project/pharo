@@ -19,7 +19,7 @@ ProfilerPresenter class >> menuCommandOn: aBuilder [
 		parent: #Profiling;  
 		order: 1;
 		icon: (self iconNamed: #smallProfile);
-		help: 'Profile the execution of a piece of code and navigate into the result.';
+		help: 'Profile the execution of a piece of code using different profilers, and navigate into the result.';
 		action: [self new open]
 ]
 

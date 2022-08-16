@@ -262,7 +262,7 @@ ProfilerModel >> stopProfiling [
 
 { #category : #'accessing nodes' }
 ProfilerModel >> tallyRoot [
-
+	profiler ifNil: [ ^ nil ].
 	^ tallyRoot ifNil: [ 
 		  tallyRoot := profiler tallyRoot 
 								ifNil: [ nil ] 
