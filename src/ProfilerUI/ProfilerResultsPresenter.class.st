@@ -73,7 +73,6 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 ProfilerResultsPresenter >> handleProfilingStarted [
 	
 	viewModel reset.
-	treeTable resetContents.
 	self enabled: false
 ]
 
