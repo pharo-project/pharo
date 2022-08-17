@@ -12,6 +12,15 @@ Class {
 	#category : #'ProfilerUI-View'
 }
 
+{ #category : #layout }
+ProfilerPresenter class >> defaultLayout [
+	^ SpPanedLayout newTopToBottom 
+		  positionOfSlider: 20 percent;
+		  add: #inputPresenter;
+		  add: #resultsPresenter;
+		  yourself
+]
+
 { #category : #examples }
 ProfilerPresenter class >> menuCommandOn: aBuilder [ 
 	<worldMenu>
@@ -38,13 +47,10 @@ ProfilerPresenter >> initExtent [
 { #category : #initialization }
 ProfilerPresenter >> initializePresenters [
 
-	self layout: (SpBoxLayout newTopToBottom
-			 add: (inputPresenter := self newInputPresenter) height: 100;
-			 add: (resultsPresenter := self newResultsPresenter
-					                      enabled: false;
-					                      yourself)
-			 expand: true;
-			 yourself)
+	inputPresenter := self newInputPresenter.
+	resultsPresenter := self newResultsPresenter
+		                    enabled: false;
+		                    yourself
 ]
 
 { #category : #initialization }

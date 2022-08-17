@@ -138,22 +138,28 @@ ProfilerResultsPresenter >> initializePresenters [
 	| h |
 	h := self class toolbarHeight.
 
-	self layout: (SpBoxLayout newTopToBottom
-			 add: (navigationToolbar := self newProfilerToolbar) height: h;
-			 add: (treeTable := self newProfilerTreeTable);
-			 add: self newConfigurationSectionLayout height: h * 2.5;
-			 add: (codePresenter := self newProfilerCode);
-			 add: (SpBoxLayout newLeftToRight
-					  add: (reportButton := self newReportButton)
-					  withConstraints: [ :constraints | 
-						  constraints
-							   bePlacedAtStart;
-							   fill: true;
-							   expand: false ];
-					  addLast: (showAsRootButton := self newShowAsRootButton);
-					  addLast: (browseButton := self newBrowseButton))
-			 height: h;
+	self layout: (SpPanedLayout newTopToBottom
+			 positionOfSlider: 50 percent;
+			 add: (SpBoxLayout newTopToBottom
+					  add: (navigationToolbar := self newProfilerToolbar) height: h;
+					  add: (treeTable := self newProfilerTreeTable);
+					  yourself);
+			 add: (SpBoxLayout newTopToBottom
+					  add: self newConfigurationSectionLayout height: h * 2.5;
+					  add: (codePresenter := self newProfilerCode);
+					  add: (SpBoxLayout newLeftToRight
+							   add: (reportButton := self newReportButton)
+							   withConstraints: [ :constraints | 
+								   constraints
+									   bePlacedAtStart;
+									   fill: true;
+									   expand: false ];
+							   addLast: (showAsRootButton := self newShowAsRootButton);
+							   addLast: (browseButton := self newBrowseButton))
+					  height: h;
+					  yourself);
 			 yourself).
+
 	self initializeActions
 ]
 
