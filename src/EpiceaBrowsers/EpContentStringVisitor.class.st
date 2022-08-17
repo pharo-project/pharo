@@ -22,7 +22,7 @@ EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 	^ String streamContents: [ :stream |
 		stream
 			nextPutAll: '"protocol: '; 
-			nextPutAll: protocol printString;
+			print: protocol;
 			nextPut: $"; cr; cr;
 			nextPutAll: sourceCode ]
 ]
