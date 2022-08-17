@@ -39,6 +39,8 @@ TallyModel >> browseItem [
 TallyModel >> childrenItems [
 	| perCent threshold |
 	
+	model tallyRoot ifNil: [ ^#() ].
+	
 	perCent := model showNodeThreshold.
 	threshold := (perCent asFloat / 100 * model tallyRoot tally) rounded.
 	
@@ -110,6 +112,7 @@ TallyModel >> methodName [
 
 { #category : #accessing }
 TallyModel >> methodOrBlock [
+	item ifNil: [ ^ nil ].
 	^ item method
 ]
 
