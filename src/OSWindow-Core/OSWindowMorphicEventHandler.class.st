@@ -317,6 +317,12 @@ OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 ]
 
 { #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
+
+	morphicWorld worldState doFullRepaint
+]
+
+{ #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
