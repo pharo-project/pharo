@@ -22,6 +22,21 @@ Class {
 }
 
 { #category : #private }
+ProfilerResultsPresenter >> doItNode [
+
+	| selectorsPath doItNode |
+	selectorsPath := viewModel doItSelectorsPath.
+	doItNode := nil.
+	treeTable expandAllSuchThat: [ :item | 
+		| bool selector |
+		selector := item methodName.
+		bool := (selectorsPath indexOf: selector) > 0.
+		bool ifTrue: [ doItNode := item ].
+		bool ].
+	^ doItNode 
+]
+
+{ #category : #private }
 ProfilerResultsPresenter >> goInto: aNode [
 
 	| toolbarButtons clickedButton |
@@ -56,23 +71,35 @@ ProfilerResultsPresenter >> goInto: aNode [
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleProfilingFinished [
 
-	| toolbarButton |
-	self updateResults. 
-	treeTable expandAllSuchThat: [ :item | item weightToRoot asFloat closeTo: 100.0 ].
-	viewModel showLeavesOnly ifFalse: [ self selectDoItNode ].
+	| toolbarButton doItNode |
+	self updateResults.
+	
+	doItNode := self doItNode.
+	doItNode ifNil: [ 
+		self inform:
+			'No measurements were taken because excecution time was too short.'.
+		^ self ].
+	
+	treeTable expandAllSuchThat: [ :item | 
+		item weightToRoot asFloat closeTo: 100.0 ].
+	
+	viewModel showLeavesOnly ifFalse: [ 
+		treeTable selectNodePath: doItNode path ].
 	navigationToolbar removeAllItems.
 	toolbarButton := self newToolbarButtonFrom: viewModel tallyRoot.
 	navigationToolbar addItem: toolbarButton.
 	self selectToolbarItem: toolbarButton.
-	
+
 	treeTable takeKeyboardFocus.
-	self enabled: true
+	self enabled: true.
+	viewModel setTallyRoot: treeTable selectedItem
 ]
 
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleProfilingStarted [
 	
 	viewModel reset.
+	treeTable reset.
 	self enabled: false
 ]
 
@@ -312,25 +339,6 @@ ProfilerResultsPresenter >> removeToolbarItemsAfter: anItem [
 	item isNotNil and: [ item = anItem ] ] whileFalse.
 	navigationToolbar removeAllItems.
 	toKeep do: [ :itm | navigationToolbar addItem: itm ]
-]
-
-{ #category : #private }
-ProfilerResultsPresenter >> selectDoItNode [
-
-	| selectorsPath doItNode |
-	selectorsPath := viewModel doItSelectorsPath.
-
-	treeTable expandAllSuchThat: [ :item | 
-		| bool selector |
-		selector := item methodName.
-		bool := (selectorsPath indexOf: selector) > 0.
-		bool ifTrue: [ doItNode := item ].
-		bool ].
-	doItNode ifNil: [ 
-		self inform:
-			'No measurements were taken because excecution time was too short.'.
-		^ self ].
-	treeTable selectNodePath: doItNode path
 ]
 
 { #category : #private }

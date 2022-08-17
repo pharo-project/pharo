@@ -87,6 +87,12 @@ ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 			widget scrollSelectionIntoView ] ]
 ]
 
+{ #category : #updating }
+ProfilerTreeTablePresenter >> reset [
+	self withAdapterPerformOrDefer: [ :anAdapter |
+		anAdapter widget buildContents ]
+]
+
 { #category : #scrolling }
 ProfilerTreeTablePresenter >> scrollSelectionIntoView [
 	self withAdapterPerformOrDefer: [ :anAdapter |
