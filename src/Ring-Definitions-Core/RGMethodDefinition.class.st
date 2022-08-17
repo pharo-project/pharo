@@ -325,6 +325,11 @@ RGMethodDefinition >> isDefined [
 	^rClass notNil and: [ rClass includesSelector: self selector ]
 ]
 
+{ #category : #testing }
+RGMethodDefinition >> isDoIt [
+	^self selector isDoIt
+]
+
 { #category : #'testing - SUnit-support' }
 RGMethodDefinition >> isErrorTest [
 	"Is the receiver a test method that raised an error?"
