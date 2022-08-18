@@ -27,7 +27,7 @@ ClyTextEditor >> implementorsOf: selectedSelector [
 
 	self browser
 		browseImplementorsOf: selectedSelector
-		inNameResolver: self browserTool editingMethod methodClass
+		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -79,7 +79,7 @@ ClyTextEditor >> sendersOf: selectedSelector [
 
 	self browser
 		browseReferencesTo: selectedSelector
-		inNameResolver: self browserTool editingMethod methodClass
+		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
