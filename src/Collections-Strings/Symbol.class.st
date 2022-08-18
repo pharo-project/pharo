@@ -488,7 +488,11 @@ Symbol >> isSymbol [
 { #category : #testing }
 Symbol >> isUnary [
 	"Answer whether the receiver is an unary message selector."
-
+	
+	"#new isUnary >>> true"
+	"#>> isUnary >>> false"
+	"#between:and: isUnary >>> false"
+	
 	^ self precedence = 1
 ]
 
