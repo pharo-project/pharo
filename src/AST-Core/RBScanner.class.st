@@ -128,12 +128,12 @@ RBScanner class >> on: aStream [
 	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens. Reader may consider scanTokens: as a better way to use the class."
 	"((RBScanner on: 'Pharo (, { exist ]' readStream) next;  next) value >>> $("
 
-	| str |
-	str := self new on: aStream.
-	str
+	| scanner |
+	scanner := self new on: aStream.
+	scanner
 		step;
 		stripSeparators.
-	^str
+	^scanner
 ]
 
 { #category : #'instance creation' }
