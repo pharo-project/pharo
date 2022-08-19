@@ -650,8 +650,7 @@ RBScanner >> step [
 			[characterType := #eof.
 			^currentCharacter := nil].
 	currentCharacter := stream next.
-	characterType := self classify: currentCharacter.
-	^currentCharacter
+	characterType := self classify: currentCharacter
 ]
 
 { #category : #'private - scanning' }
