@@ -1,3 +1,6 @@
+"
+First class representation of a scanned comment
+"
 Class {
 	#name : #RBCommentToken,
 	#superclass : #RBValueToken,
