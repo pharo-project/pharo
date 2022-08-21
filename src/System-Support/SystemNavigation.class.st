@@ -46,6 +46,14 @@ SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 ]
 
 { #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
+	self allClassesDo: [ :e |
+		(e name beginsWith: aString caseSensitive: cs)
+			ifTrue: [ aBlock value: e name ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 
