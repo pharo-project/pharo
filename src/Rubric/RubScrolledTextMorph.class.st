@@ -330,6 +330,7 @@ RubScrolledTextMorph >> defaultGhostTextMorph [
 RubScrolledTextMorph >> defaultScrollTarget [
 	| textArea |
 	textArea := self textAreaClass new.
+	textArea grow: true. "Ensure morph width tracks line width"
 	textArea backgroundColor: Color lightGray veryMuchLighter.
 	^ textArea
 ]
