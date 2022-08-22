@@ -994,7 +994,7 @@ RubAbstractTextArea >> handleEdit: editBlock [
 	editBlock value.
 	"Fit to width on edit"
 	(self grow isNotNil & self grow) ifTrue: [
-		self width: (1 max: self maxLineWidth)
+		self width: (1 max: self maxLineWidth + self margins left + self margins right)
 	].
 	self selectionChanged	"Note new selection"
 ]
@@ -1328,7 +1328,7 @@ RubAbstractTextArea >> maxLineWidth [
 	w := 0.
 	self string linesDo: [ :line | w := w max: (self font widthOfString: line) ].
 	"check this later, not really sure about this calculation"
-	^ w * 6 // 5 + self margins left + self margins right
+	^ w * 6 // 5
 ]
 
 { #category : #accessing }
