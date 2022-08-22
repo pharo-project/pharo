@@ -96,6 +96,7 @@ Class {
 		'mouseDownPoint',
 		'completionEngine',
 		'maxLength',
+		'grow',
 		'findReplaceService',
 		'editing'
 	],
@@ -991,6 +992,10 @@ RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
 
 	editBlock value.
+	"Fit to width on edit"
+	(self grow isNotNil & self grow) ifTrue: [
+		self width: (1 max: self maxLineWidth)
+	].
 	self selectionChanged	"Note new selection"
 ]
 
@@ -1300,6 +1305,30 @@ RubAbstractTextArea >> maxLength: anInteger [
 	"Set the maximum number of characters that may be typed."
 
 	maxLength := anInteger max: 0
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> grow [
+	"Answer whether the area should grow horizontally."
+
+	^ grow
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> grow: aBool [
+	"Set whether the area should grow horizontally."
+
+	grow := aBool
+]
+
+{ #category : #measuring }
+RubAbstractTextArea >> maxLineWidth [
+	"Answers with the maximum approximate pixel width across all lines"
+	| w |
+	w := 0.
+	self string linesDo: [ :line | w := w max: (self font widthOfString: line) ].
+	"check this later, not really sure about this calculation"
+	^ w * 6 // 5 + self margins left + self margins right
 ]
 
 { #category : #accessing }
