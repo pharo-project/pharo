@@ -4,7 +4,7 @@ RBRefactoryProtocolChange is responsible for adding a protocol in classes in a R
 Class {
 	#name : #RBAddProtocolChange,
 	#superclass : #RBRefactoryProtocolChange,
-	#category : #'Refactoring2-Core-Changes'
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }

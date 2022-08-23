@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Core-Changes'
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #printing }

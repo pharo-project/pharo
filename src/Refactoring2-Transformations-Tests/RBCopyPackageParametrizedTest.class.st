@@ -41,15 +41,20 @@ RBCopyPackageParametrizedTest >> testCopyPackage [
 { #category : #tests }
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
+	self skip.
+	"We should use a small package for this tests and it should have references to its classes
+	so that we can check it. 
+	
+	See https://github.com/pharo-project/pharo/issues/11524"
 	self timeLimit: 2 minutes.
 	refactoring := (self createRefactoringWithArguments: 
-		{ #'Refactoring2-Core' . #'Refactoring2-Core2'}).
+		{ #'Refactoring-Changes' . #'RRefactoring-Changes2'}).
 	aModel := refactoring model.
 	
 	self executeRefactoring: refactoring.
 	
 	self assert: (aModel classNamed: #RBClassCategoryChangeCopy) category 
-		equals: #'Refactoring2-Core2'.
+		equals: #'RRefactoring-Changes2'.
 	self assert: (aModel classNamed: #RBAddProtocolChangeCopy) superclass name 
 		equals: #RBRefactoryProtocolChangeCopy.
 

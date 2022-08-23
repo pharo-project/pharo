@@ -228,6 +228,12 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
 ]
 
+{ #category : #accessing }
+RBNamespace >> category: aString for: aClass [
+
+	^ changes addChange: (RBClassCategoryChange category: aString for: aClass)
+]
+
 { #category : #'private - changes' }
 RBNamespace >> changeClass: aRBClass [ 
 	changedClasses 
