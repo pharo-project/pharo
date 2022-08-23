@@ -8,7 +8,8 @@ Class {
 	#category : #'AST-Core-Tokens'
 }
 
-{ #category : #private }
+{ #category : #accessing }
 RBShortAssignmentToken >> length [
+
 	^ 1
 ]
