@@ -33,7 +33,7 @@ BaselineOfPharo class >> newToolsRepository [
 { #category : #versions }
 BaselineOfPharo class >> newToolsVersion [
 
-	^ 'v0.6.10'
+	^ 'v0.6.11'
 ]
 
 { #category : #versions }
