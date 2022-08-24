@@ -28,6 +28,16 @@ ManifestKernel class >> packageName [
 ]
 
 { #category : #'code-critics' }
+ManifestKernel class >> ruleCollectSelectNotUsedRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#'ChainProxy class' #example #true)) #'2022-08-24T22:04:57.77045+01:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestKernel class >> ruleLiteralArrayContainsSuspiciousTrueFalseOrNilRuleV1FalsePositive [
+	^ #(#(#(#RGMetaclassDefinition #(#'ManifestKernel class' #ManifestKernel)) #'2022-08-24T22:31:42.796674+01:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestKernel class >> ruleRBBadMessageRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'Delay class' #delaySchedulerClass: #true)) #'2016-12-07T10:58:09.403079+08:00') #(#(#RGMethodDefinition #(#'Character class' #constantNameFor: #true)) #'2019-01-28T20:56:52.112604+01:00') )
 ]

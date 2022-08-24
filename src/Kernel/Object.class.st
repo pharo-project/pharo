@@ -569,6 +569,13 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 "#b caseOf: {[#a]->[1+1]. ['d' asSymbol]->[2+2]. [#c]->[3+3]} otherwise: [0]"
 ]
 
+{ #category : #finalization }
+Object >> chain [
+	"Return a new chaining proxy for the receiver: an object that responds to any message send with the result of this message as a new receiver for the next message sent in the chain."
+	
+	^ ChainProxy new setTarget: self
+]
+
 { #category : #updating }
 Object >> changed [
 	"Receiver changed in a general way; inform all the dependents by 

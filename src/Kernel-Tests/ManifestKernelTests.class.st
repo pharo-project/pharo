@@ -18,6 +18,11 @@ ManifestKernelTests class >> packageName [
 ]
 
 { #category : #'code-critics' }
+ManifestKernelTests class >> ruleCollectSelectNotUsedRuleV1FalsePositive [
+	^ #(#(#(#RGClassDefinition #(#ChainProxyTest)) #'2022-08-24T22:30:10.41402+01:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestKernelTests class >> ruleRBModifiesCollectionRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#ClassHierarchyTest #testSubclassInstVar #false)) #'2019-06-26T12:47:46.581134+02:00') )
 ]
