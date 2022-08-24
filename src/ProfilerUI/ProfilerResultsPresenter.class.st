@@ -33,7 +33,9 @@ ProfilerResultsPresenter >> doItNode [
 		bool := (selectorsPath indexOf: selector) > 0.
 		bool ifTrue: [ doItNode := item ].
 		bool ].
-	^ doItNode 
+	(doItNode isNil or: [ doItNode methodName ~= selectorsPath last ]) 
+		ifTrue: [ ^ nil ].
+	^ doItNode
 ]
 
 { #category : #private }
@@ -71,36 +73,32 @@ ProfilerResultsPresenter >> goInto: aNode [
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleProfilingFinished [
 
-	| toolbarButton doItNode |
+	| doItNode |
 	self updateResults.
+	self enabled: true.
+	viewModel announcer announce:
+		ProfilingResultsDisplayedAnnouncement new.
+
+	"rebuild navigation toolbar"
+	self rebuildToolbar.
+	self selectToolbarItem: navigationToolbar items first.
 	
+	viewModel showLeavesOnly ifTrue: [ ^ self ].
+
+	"select do it node and expand tree"
 	doItNode := self doItNode.
 	doItNode ifNil: [ 
 		self inform:
 			'No measurements were taken because excecution time was too short.'.
 		^ self ].
-	
+
 	treeTable expandAllSuchThat: [ :item | 
 		item weightToRoot asFloat closeTo: 100.0 ].
-	
-	viewModel showLeavesOnly ifFalse: [ 
-		treeTable selectNodePath: doItNode path ].
-	navigationToolbar removeAllItems.
-	toolbarButton := self newToolbarButtonFrom: viewModel tallyRoot.
-	navigationToolbar addItem: toolbarButton.
-	self selectToolbarItem: toolbarButton.
 
-	treeTable takeKeyboardFocus.
-	self enabled: true.
-	viewModel setTallyRoot: treeTable selectedItem
-]
+	treeTable selectNodePath: doItNode path
 
-{ #category : #'event handling' }
-ProfilerResultsPresenter >> handleProfilingStarted [
-	
-	viewModel reset.
-	treeTable reset.
-	self enabled: false
+
+	"viewModel setTallyRoot: treeTable selectedItem"
 ]
 
 { #category : #'event handling' }
@@ -328,6 +326,14 @@ ProfilerResultsPresenter >> newTreeVisualizationDropList [
 ]
 
 { #category : #private }
+ProfilerResultsPresenter >> rebuildToolbar [
+	| toolbarButton |
+	navigationToolbar removeAllItems.
+	toolbarButton := self newToolbarButtonFrom: viewModel tallyRoot.
+	navigationToolbar addItem: toolbarButton
+]
+
+{ #category : #private }
 ProfilerResultsPresenter >> removeToolbarItemsAfter: anItem [
 	| toKeep item i |
 	toKeep := #() asOrderedCollection.
@@ -343,15 +349,9 @@ ProfilerResultsPresenter >> removeToolbarItemsAfter: anItem [
 
 { #category : #private }
 ProfilerResultsPresenter >> selectToolbarItem: anItem [
-	| items | 
+	
 	navigationToolbar items do: [:itm | itm icon: nil ].
 	anItem icon: (self iconNamed: 'windowMenu').
-	
-	items := navigationToolbar items.
-	
-	"ugly hack to force the ui refresh"
-	navigationToolbar removeAllItems.
-	items do: [ :itm | navigationToolbar addItem: itm ].
 	navigationToolbar selectedItem: anItem.
 	
 ]
@@ -367,7 +367,7 @@ ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 
 	viewModel announcer
 		when: ProfilingStartedAnnouncement 
-		do: [ self handleProfilingStarted ];
+		do: [ self enabled: false ];
 		when: ProfilingFinishedAnnouncement
 		do: [ self handleProfilingFinished ];
 		when: ProfilerResultsTreeRootChangedAnnouncement 
@@ -382,10 +382,12 @@ ProfilerResultsPresenter >> unsubscribeFromProfilingAnnouncements [
 
 { #category : #update }
 ProfilerResultsPresenter >> updateResults [
-
-	treeTable updateResults.
-	codePresenter methodOrBlock:
-		(treeTable selectedItem ifNotNil: [ :item | item methodOrBlock ])
+	'The following sender called updateResults ' traceCr.
+	thisContext sender asString traceCr.
+	
+	treeTable roots: viewModel rootItems.
+	"codePresenter methodOrBlock:
+		(treeTable selectedItem ifNotNil: [ :item | item methodOrBlock ])"
 ]
 
 { #category : #accessing }

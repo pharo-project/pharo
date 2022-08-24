@@ -22,7 +22,10 @@ TallyModel >> = aTallyModel [
 
 { #category : #converting }
 TallyModel >> asString [
-	^ self reportString
+
+	^ [ self reportString ]
+		  on: Error
+		  do: [ 'error printing' ]
 ]
 
 { #category : #transforming }

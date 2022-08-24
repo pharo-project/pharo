@@ -29,7 +29,7 @@ ProfilerInputPresenter >> initializeActions [
 { #category : #initialization }
 ProfilerInputPresenter >> initializePresenters [
 
-	codeInput := self newCode beForScripting.
+	codeInput := self newCode beForScripting; text: '10000 factorial'.
 
 	profilerDropList := self newDropList
 		                    help: 'Select the desired profiler.';
@@ -44,7 +44,7 @@ ProfilerInputPresenter >> initializePresenters [
 	self layout: (SpBoxLayout newLeftToRight 
 			add: codeInput;
 			 add: (SpBoxLayout newTopToBottom
-					  addLast: profilerDropList" height: self class toolbarHeight";
+					  addLast: profilerDropList;
 					  addLast: profileItButton 
 					  yourself)
 			 expand: false
@@ -79,7 +79,7 @@ ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
 		when: ProfilingStartedAnnouncement 
 		do: [ self enabled: false ];
 		
-		when: ProfilingFinishedAnnouncement 
+		when: ProfilingResultsDisplayedAnnouncement 
 		do: [ self enabled: true ].
 	
 ]
