@@ -13,7 +13,7 @@ BaselineOfPharo class >> icebergRepository [
 { #category : #versions }
 BaselineOfPharo class >> icebergVersion [
 
-	^ 'v2.0.8'
+	^ 'v2.0.7'
 ]
 
 { #category : #versions }
@@ -33,7 +33,7 @@ BaselineOfPharo class >> newToolsRepository [
 { #category : #versions }
 BaselineOfPharo class >> newToolsVersion [
 
-	^ 'v0.6.11'
+	^ 'v0.6.10'
 ]
 
 { #category : #versions }
