@@ -1,6 +1,6 @@
 Class {
 	#name : #MCBitbucketRepository,
-	#superclass : #MCGitBasedNetworkRepository,
+	#superclass : #MCPrivateHostableRepository,
 	#category : #'Metacello-Bitbucket'
 }
 
@@ -21,15 +21,14 @@ MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPl
 	^ aPlatform createBitbucketRepository: aRepositorySpec
 ]
 
-{ #category : #testing }
-MCBitbucketRepository class >> isAvailableFor: type [
-	^ type = 'bitbucket'
+{ #category : #private }
+MCBitbucketRepository class >> defaultHostname [
+	^ 'bitbucket.org'
 ]
 
 { #category : #testing }
-MCBitbucketRepository class >> isEnabled [
-
-	^true
+MCBitbucketRepository class >> isAvailableFor: type [
+	^ type = 'bitbucket'
 ]
 
 { #category : #private }
