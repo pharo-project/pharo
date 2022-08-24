@@ -32,6 +32,13 @@ ProfilerModel >> announceProfilingStarted [
 	self announcer announce: ProfilingStartedAnnouncement new
 ]
 
+{ #category : #'accessing nodes' }
+ProfilerModel >> announceRootChanged: aTallyModel [
+
+	self announcer announce:
+		(ProfilerResultsTreeRootChangedAnnouncement new item: aTallyModel)
+]
+
 { #category : #'event handling' }
 ProfilerModel >> browseItem [
 	self selectedNode ifNotNil: [:current | current browseItem ].
@@ -59,8 +66,7 @@ ProfilerModel >> hideNodesUnder: aNumber [
 ProfilerModel >> initialize [ 
 	super initialize.
 	showLeavesOnly := false.
-	showNodeThreshold := 0.
-	self reset
+	showNodeThreshold := 0
 ]
 
 { #category : #accessing }
@@ -90,7 +96,7 @@ ProfilerModel >> leaveItems [
 ProfilerModel >> leaveItemsOver: perCent [
 
 	| leaveThreshold |
-	self tallyRoot ifNil: [ ^ nil ].
+	self tallyRoot ifNil: [ ^ #() ].
 	leaveThreshold := (perCent asFloat / 100 * self tallyRoot tally) rounded.
 	^ self leaveItems select: [ :item | item tally > leaveThreshold ]
 ]
@@ -165,11 +171,6 @@ ProfilerModel >> report [
 	^ profiler report
 ]
 
-{ #category : #initialization }
-ProfilerModel >> reset [
-	tallyRoot := nil
-]
-
 { #category : #accessing }
 ProfilerModel >> rootItem [
 	^ self tallyRoot
@@ -177,7 +178,7 @@ ProfilerModel >> rootItem [
 
 { #category : #accessing }
 ProfilerModel >> rootItems [
-	self tallyRoot ifNil: [ ^nil ].
+	self tallyRoot ifNil: [ ^#() ].
 	
 	^ showLeavesOnly
 		  ifTrue: [ self leaveItemsOver: showNodeThreshold ]
@@ -209,7 +210,7 @@ ProfilerModel >> rootTallyItems [
 { #category : #'accessing nodes' }
 ProfilerModel >> rootTallyItemsOver: perCent [
 	| minTally |
-	self tallyRoot ifNil: [ ^ nil ].
+	self tallyRoot ifNil: [ ^ #() ].
 	minTally := (perCent asFloat / 100 * self tallyRoot tally) rounded.
 	
 	^ (self tallyRoot sonsOver: minTally) 
@@ -224,10 +225,10 @@ ProfilerModel >> runBlock: aBlock [
 ]
 
 { #category : #'accessing nodes' }
-ProfilerModel >> setTallyRoot: anItem [
+ProfilerModel >> setTallyRoot: aTallyModel [
 
-	self tallyRoot: anItem item.
-	self announcer announce: (ProfilerResultsTreeRootChangedAnnouncement new item: anItem)
+	self tallyRoot: aTallyModel.
+	self announceRootChanged: aTallyModel
 ]
 
 { #category : #accessing }
@@ -251,6 +252,7 @@ ProfilerModel >> showNodeThreshold [
 ProfilerModel >> startProfiling [
 	
 	isProfiling := true.
+	tallyRoot := nil.
 	profiler startProfiling
 ]
 
@@ -258,27 +260,21 @@ ProfilerModel >> startProfiling [
 ProfilerModel >> stopProfiling [
 
 	profiler stopProfiling.
+	tallyRoot := profiler tallyRoot asTallyModel
+		             model: self;
+		             yourself.
 	isProfiling := false
 ]
 
 { #category : #'accessing nodes' }
 ProfilerModel >> tallyRoot [
-	profiler ifNil: [ ^ nil ].
-	^ tallyRoot ifNil: [ 
-		  tallyRoot := profiler tallyRoot 
-								ifNil: [ nil ] 
-								ifNotNil: [ :r | 
-			     			          r asTallyModel
-				       			        model: self;
-				          			     yourself ] ]
+	^ tallyRoot
 ]
 
 { #category : #'accessing nodes' }
-ProfilerModel >> tallyRoot: aTallyObject [
+ProfilerModel >> tallyRoot: aTallyModel [
 
-	tallyRoot := aTallyObject asTallyModel
-			               model: self;
-			               yourself
+	tallyRoot := aTallyModel
 ]
 
 { #category : #accessing }
@@ -288,7 +284,7 @@ ProfilerModel >> total [
 
 { #category : #accessing }
 ProfilerModel >> totalTally [
-	^ profiler tallyRoot tally
+	^ self tallyRoot tally
 ]
 
 { #category : #accessing }

@@ -93,6 +93,13 @@ ProfilerTreeTablePresenter >> reset [
 		anAdapter widget buildContents ]
 ]
 
+{ #category : #accessing }
+ProfilerTreeTablePresenter >> roots: aCollection [
+	
+	roots := aCollection.
+	self adapter widget buildContents.
+]
+
 { #category : #scrolling }
 ProfilerTreeTablePresenter >> scrollSelectionIntoView [
 	self withAdapterPerformOrDefer: [ :anAdapter |
@@ -126,12 +133,6 @@ ProfilerTreeTablePresenter >> selectedItem [
 ProfilerTreeTablePresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
-]
-
-{ #category : #'expanding-collapsing' }
-ProfilerTreeTablePresenter >> updateResults [
-
-	self roots: {viewModel rootItems}
 ]
 
 { #category : #accessing }
