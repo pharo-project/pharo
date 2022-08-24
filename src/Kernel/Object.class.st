@@ -571,7 +571,7 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 
 { #category : #finalization }
 Object >> chain [
-	"Return a new chaining proxy for the receiver: an object that responds to any message send with the result of this message as a new receiver for the next message sent in the chain."
+	"Return a new chaining proxy for the receiver: an object that responds to any message send with the result of this message as a new receiver for the next message sent in the chain. This allows for functional style of programming and can avoid too many nested parentheses - resulting in more cleaner written code."
 	
 	^ ChainProxy new setTarget: self
 ]
