@@ -17,6 +17,7 @@ Object >> asAlphaImageMorph [
 
 { #category : #'*Morphic-Base' }
 Object >> asDraggableMorph [
+
 	^ self asStringMorph
 ]
 
@@ -69,12 +70,14 @@ Object >> dragPassengersFor: item inMorph: dragSource [
 
 { #category : #'*Morphic-Base' }
 Object >> hasModelYellowButtonMenuItems [
-	^Morph cmdGesturesEnabled
+
+	^ Morph cmdGesturesEnabled
 ]
 
 { #category : #'*Morphic-Base' }
 Object >> iconOrThumbnailOfSize: aNumberOrPoint [ 
 	"Answer an appropiate form to represent the receiver"
+	
 	^ nil
 ]
 

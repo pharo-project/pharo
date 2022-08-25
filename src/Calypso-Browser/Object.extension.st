@@ -7,5 +7,6 @@ Object class >> asCalypsoItemContext [
 
 { #category : #'*Calypso-Browser' }
 Object >> asScriptResultStringInCalypso [
+
 	^self printString
 ]

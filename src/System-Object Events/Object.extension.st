@@ -28,16 +28,15 @@ ifAbsent: anExceptionBlock [
 { #category : #'*System-Object Events' }
 Object >> actionMap [
 
-	^EventManager actionMapFor: self
+	^ EventManager actionMapFor: self
 ]
 
 { #category : #'*System-Object Events' }
 Object >> actionSequenceForEvent: anEventSelector [
 
-    ^(self actionMap
-        at: anEventSelector asSymbol
-        ifAbsent: [^WeakActionSequence new])
-            asActionSequence
+	^ (self actionMap
+		   at: anEventSelector asSymbol
+		   ifAbsent: [ ^ WeakActionSequence new ]) asActionSequence
 ]
 
 { #category : #'*System-Object Events' }
