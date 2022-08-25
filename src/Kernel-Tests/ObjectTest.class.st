@@ -27,6 +27,22 @@ ObjectTest >> testAs [
 	self assert: coll1 identicalTo: coll2
 ]
 
+{ #category : #'tests - accessing' }
+ObjectTest >> testBasicSize [
+	"Numbers are not indexable"
+	self assert: 1 basicSize equals: 0.
+	
+	"Collections are indexable"
+	self assert: #(a b c) basicSize equals: 3
+]
+
+{ #category : #'tests - accessing' }
+ObjectTest >> testBasicSizeNotOverwritten [
+	"#basicSize should not be overwritten by subclasses of Object, except in Context"
+	
+	self assert: #basicSize implementors asArray equals: {Context>>#basicSize. Object>>#basicSize}
+]
+
 { #category : #'tests - write barrier' }
 ObjectTest >> testBeReadOnlyLiteral [
 	self assert: String new beReadOnlyLiteral isReadOnlyObject.
