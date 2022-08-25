@@ -70,6 +70,12 @@ EncodedCharSet class >> initialize [
 	self allSubclassesDo: [:each | each initialize]
 ]
 
+{ #category : #testing }
+EncodedCharSet class >> isAbstract [
+
+	^ self == EncodedCharSet
+]
+
 { #category : #'accessing - displaying' }
 EncodedCharSet class >> isBreakableAt: index in: text [
 
