@@ -12,6 +12,12 @@ Class {
 	#category : #'Collections-Streams-Base'
 }
 
+{ #category : #testing }
+PositionableStream class >> isAbstract [
+		
+	^ self == PositionableStream
+]
+
 { #category : #'instance creation' }
 PositionableStream class >> on: aCollection [ 
 	"Answer an instance of me, streaming over the elements of aCollection."
