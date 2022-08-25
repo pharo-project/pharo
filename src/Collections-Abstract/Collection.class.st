@@ -1265,9 +1265,9 @@ Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
 	| sum sample |
 	^self ifNotEmpty: 
 			[sample := aBlock value: self anyOne.
-			sum := self inject: sample
+			sum := self inject: sample - sample
 						into: [:previousValue :each | previousValue + (aBlock value: each)].
-			sum - sample]
+			sum]
 		ifEmpty: anEmptySumBlock
 ]
 
