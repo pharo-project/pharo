@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'dialog',
 		'dialogWindow',
-		'textAreaHolder'
+		'textAreaHolder',
+		'findReplaceRequiredSubscription'
 	],
 	#category : #'Rubric-SpecFindReplaceDialog'
 }
@@ -140,9 +141,21 @@ SpRubFindReplaceService >> textArea [
 
 { #category : #services }
 SpRubFindReplaceService >> textArea: aTextArea [
+	| oldTextArea |
+	oldTextArea := textAreaHolder at: 1 ifAbsent: nil.
 	textAreaHolder at: 1 put: aTextArea.
-	aTextArea announcer 
+	oldTextArea == aTextArea ifTrue: [ ^ self ].
+	self unsubscribeFindReplaceWindowRequired.
+	findReplaceRequiredSubscription := aTextArea announcer
 		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self.
+]
+
+{ #category : #private }
+SpRubFindReplaceService >> unsubscribeFindReplaceWindowRequired [
+
+	findReplaceRequiredSubscription ifNil: [ ^ self ].
+	findReplaceRequiredSubscription announcer removeSubscription: findReplaceRequiredSubscription.
+	findReplaceRequiredSubscription := nil
 ]
 
 { #category : #updating }
