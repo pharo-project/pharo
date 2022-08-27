@@ -37,7 +37,7 @@ OSSDL2FormRenderer >> createRenderer [
 { #category : #private }
 OSSDL2FormRenderer >> createTexture [
 	"Existing texture released explicitly to avoid memory leak on resize (issue#11183)"
-	texture ifNotNil: [ texture destroy. texture := nil ].
+	texture destroy.
 	texture := renderer createTextureFormat: SDL_PIXELFORMAT_XRGB8888
 						access: SDL_TEXTUREACCESS_STREAMING width: form width height: form height.
 	extent := form extent
