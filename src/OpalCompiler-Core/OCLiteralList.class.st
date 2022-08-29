@@ -1,46 +1,63 @@
 "
-Holds a unique ordered collection of literals
+Holds a unique ordered collection of literals.
+I uses an special dictionary inside that compares literals using #literalEquals message.
+I am optimised to guarantee that literals all unique and have an unique index.
 "
 Class {
 	#name : #OCLiteralList,
-	#superclass : #OrderedCollection,
+	#superclass : #Object,
 	#instVars : [
-		'equalitySet'
+		'literalsDict',
+		'lastIndex',
+		'first'
 	],
 	#category : #'OpalCompiler-Core-Extras'
 }
 
 { #category : #adding }
-OCLiteralList >> addLast: object [
-	"Only add if not already in list"
+OCLiteralList >> addLiteral: anObject [
 
-	(equalitySet includes: object) ifTrue: [^ object].
-	equalitySet add: object.
-	super addLast: object.
-	^ object
+	"I keep the first element, so it can be easily returned"
+	lastIndex = 0 
+		ifTrue: [ first := anObject ].
+	
+	^ literalsDict at: anObject ifAbsentPut: [ lastIndex := lastIndex + 1 ]
 ]
 
-{ #category : #accessing }
-OCLiteralList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
+{ #category : #converting }
+OCLiteralList >> asArray [
 
-	start to: self size do:
-		[:index | ((self at: index) literalEqual: anElement) ifTrue: [^ index]].
-	^ exceptionBlock value
+	| result |
+	
+	result := Array new: lastIndex.
+	
+	literalsDict associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
+	
+	^ result.
+]
+
+{ #category : #adding }
+OCLiteralList >> first [
+	
+	^ first 
+]
+
+{ #category : #initialization }
+OCLiteralList >> initialize [
+
+	super initialize.
+	lastIndex := 0.
+	literalsDict := OCLiteralDictionary new
+]
+
+{ #category : #testing }
+OCLiteralList >> isEmpty [
+
+	^ lastIndex = 0
 ]
 
 { #category : #accessing }
 OCLiteralList >> literalIndexOf: anElement ifAbsent: exceptionBlock [
-	"Answer the index of anElement within the receiver. If the receiver does 
-	not contain anElement, answer the result of evaluating the argument, 
-	exceptionBlock."
-	1 to: self size do:
-		[:i | ((self at: i) literalEqual: anElement) ifTrue: [^ i]].
-	^ exceptionBlock value
-]
 
-{ #category : #private }
-OCLiteralList >> setCollection: anArray [
-
-	super setCollection: anArray.
-	equalitySet := OCLiteralSet new: anArray size.
+	^ literalsDict at: anElement ifAbsent: exceptionBlock
 ]
