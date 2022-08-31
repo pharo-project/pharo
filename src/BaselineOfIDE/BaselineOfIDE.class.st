@@ -94,7 +94,7 @@ BaselineOfIDE >> additionalInitialization [
 	self makeCalypsoDefaultBrowser.
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> baseline: spec [
 	<baseline>
 	| repository |
@@ -197,12 +197,9 @@ BaselineOfIDE >> baseline: spec [
 		self beautifulComments: spec.
 		self roassal3: spec.
 	
-		spec 
-  			baseline: 'ThreadedFFI' 
-  			with: [ spec 
-				repository: repository ].
-
-		
+		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
+		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
+						
 		spec package: 'Pharo-WelcomeHelp'.
 		spec package: 'Kernel-ExtraUtils' 
 		
