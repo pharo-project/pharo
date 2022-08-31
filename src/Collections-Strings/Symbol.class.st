@@ -496,6 +496,12 @@ Symbol >> isUnary [
 	^ self precedence = 1
 ]
 
+{ #category : #comparing }
+Symbol >> literalEqual: other [
+
+	^ self == other
+]
+
 { #category : #'system primitives' }
 Symbol >> numArgs: n [
 	"Answer a string that can be used as a selector with n arguments.

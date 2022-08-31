@@ -100,8 +100,8 @@ IRBytecodeGenerator >> addLastLiteral: object [
 
 { #category : #private }
 IRBytecodeGenerator >> addLiteral: object [
-	literals add: object.
-	^ literals identityIndexOf: object
+	^ literals addLiteral: object.
+
 ]
 
 { #category : #private }
@@ -348,7 +348,7 @@ IRBytecodeGenerator >> initialize [
 { #category : #initialization }
 IRBytecodeGenerator >> irPrimitive: anIrPrimitive [
 	literals isEmpty ifFalse: [self error: 'init prim before adding instructions'].
-	anIrPrimitive spec ifNotNil: [literals add: anIrPrimitive spec].
+	anIrPrimitive spec ifNotNil: [literals addLiteral: anIrPrimitive spec].
 	primNumber := anIrPrimitive num.
 	primNumber = 0 ifTrue: [ ^ self ].
 	self encoderClass callPrimitiveCode ifNil: [ ^ self ].
@@ -403,8 +403,7 @@ IRBytecodeGenerator >> literalIndexOf: object [
 
 	| index |
 	
-	(index := literals literalIndexOf: object ifAbsent: 0) > 0 ifFalse: [
-		index := self addLiteral: object].
+	index := literals literalIndexOf: object ifAbsent: [self addLiteral: object].
 	
 	"conversion from 1 based to 0 based"
 	^ index - 1
