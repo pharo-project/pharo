@@ -17,7 +17,7 @@ RBMoveClassTransformationTest >> testBadCategoryName [
 RBMoveClassTransformationTest >> testRefactoring [
 
 	| transformation class |
-	self assert: self class category equals: #'Refactoring2-Transformations-Tests'.
+	self assert: self class category equals: #'Refactoring2-Transformations-Tests-Test'.
 	
 	transformation := (RBMoveClassTransformation 
 							move: self class name
