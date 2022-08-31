@@ -1,3 +1,6 @@
+"
+This class contains tests for `FluidTraitBuilder`
+"
 Class {
 	#name : #FluidTraitBuilderTest,
 	#superclass : #TestCase,
@@ -29,7 +32,7 @@ FluidTraitBuilderTest >> tearDown [
 	self class environment 
 		at: #TTestTrait 
 		ifPresent: [ :cl | cl removeFromSystem  ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -69,7 +72,7 @@ FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	self assert: newTrait traitComposition equals: {} asTraitComposition.
 	self assert: newTrait class traitComposition equals: {} asTraitComposition.
 	self assert: newTrait classVarNames equals: #().
-	self assert: newTrait category equals: 'Mock'.
+	self assert: newTrait category equals: 'Mock'
 ]
 
 { #category : #'tests - class creation' }
@@ -92,7 +95,7 @@ FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 	self assert: newTrait traitComposition equals: {TViewModelMock} asTraitComposition.
 	self assert: newTrait class traitComposition equals: {TViewModelMock classSide} asTraitComposition.
 	self assert: newTrait classVarNames equals: #().
-	self assert: newTrait category equals: 'Mock-lala'.
+	self assert: newTrait category equals: 'Mock-lala'
 ]
 
 { #category : #'tests - class creation' }
@@ -204,7 +207,8 @@ FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 	| trait |
 	builder := Trait << #TPoint3
-		package: 'Fake'.
+						package: 'Fake'.
+						
 	trait := builder build.
 	
 	self assert: trait name equals: #TPoint3.
