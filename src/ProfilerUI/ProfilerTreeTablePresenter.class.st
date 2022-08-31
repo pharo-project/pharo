@@ -41,7 +41,7 @@ ProfilerTreeTablePresenter >> hideNodesUnder: aNumber [
 
 	self rememberingExpandedAndSelectedNodesDo: [ 
 		viewModel hideNodesUnder: aNumber asFloat.
-		self updateResults ]
+		self reset ]
 ]
 
 { #category : #initialization }
@@ -91,13 +91,6 @@ ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 ProfilerTreeTablePresenter >> reset [
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget buildContents ]
-]
-
-{ #category : #accessing }
-ProfilerTreeTablePresenter >> roots: aCollection [
-	
-	roots := aCollection.
-	self adapter widget buildContents.
 ]
 
 { #category : #scrolling }

@@ -11,6 +11,14 @@ Class {
 }
 
 { #category : #accessing }
+ProfilerToolbarPresenter >> getItemWith: anObject [
+
+	^ (self items select: [ :item | item object == anObject ])
+		  ifEmpty: [ nil ]
+		  ifNotEmpty: [ :result | result anyOne ]
+]
+
+{ #category : #accessing }
 ProfilerToolbarPresenter >> selectedItem [
 
 	^ selectedItem
@@ -20,4 +28,13 @@ ProfilerToolbarPresenter >> selectedItem [
 ProfilerToolbarPresenter >> selectedItem: anObject [
 
 	selectedItem := anObject
+]
+
+{ #category : #accessing }
+ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [ 
+	
+	self items do: [:itm | itm icon: nil ].
+	aToolbarButtonPresenter icon: (self iconNamed: 'windowMenu').
+	self selectedItem: aToolbarButtonPresenter
+	
 ]

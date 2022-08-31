@@ -119,6 +119,17 @@ TallyModel >> methodOrBlock [
 	^ item method
 ]
 
+{ #category : #accessing }
+TallyModel >> pathStartingFrom: aPath [
+	| myPath |
+	myPath := self path.
+	aPath allButFirst doWithIndex: [ :each :index |
+		each == (myPath at: index)
+			ifFalse: [ self error: 'impossible to calculate relative path' ].
+	 ].
+	^ myPath copyFrom: aPath size to: myPath size
+]
+
 { #category : #querying }
 TallyModel >> reportString [
 
@@ -159,5 +170,6 @@ TallyModel >> weight [
 { #category : #accessing }
 TallyModel >> weightToRoot [  
 	self tally isZero ifTrue: [ ^ 0 ].
+	model tallyRoot tally isZero ifTrue: [ self error: 'this shouldnt happen' ].
 	^ self tally asFloat / model tallyRoot tally * 100.0
 ]
