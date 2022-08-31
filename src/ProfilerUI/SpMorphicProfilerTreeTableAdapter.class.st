@@ -12,53 +12,17 @@ Class {
 { #category : #factory }
 SpMorphicProfilerTreeTableAdapter >> addModelTo: tableMorph [
 
-	"self addColumnsFromPresenterTo: tableMorph."
 	self ensureAtLeastOneColumnIn: tableMorph.
 
-	self presenter selection isMultipleSelection ifTrue: [  
+	self presenter selection isMultipleSelection ifTrue: [ 
 		tableMorph beMultipleSelection ].
 
-	"self isShowingColumnHeaders 
-		ifTrue: [ tableMorph showColumnHeaders ] 
-		ifFalse: [ tableMorph hideColumnHeaders ]."
-
-	"self isResizable 
-		ifTrue: [ tableMorph beResizable ] 
-		ifFalse: [ tableMorph beNotResizable ]."
-		
-	"self isSearchEnabled
-		ifTrue: [ tableMorph enableSearch ]
-		ifFalse: [ tableMorph disableFunction ].
-"
 	tableMorph setBalloonText: self model help.
-	
-	"tableMorph dataSource: self newDataSource."
-	
-	self presenter selection isEmpty 
-		ifFalse: [ self updateSelectionOf: tableMorph ].
-	
-	"self presenter whenSelectionChangedDo: [ 
-		self updateSelectionOf: tableMorph ]."
-	
-	self presenter whenRootsChangedDo: [ 
-		"tableMorph selectIndexes: #()."
-		tableMorph buildContents
-		"tableMorph dataSource: self newDataSource" ].
-	
-	"self presenter whenShowColumnHeadersChangedDo: [ 	
-		self isShowingColumnHeaders 
-			ifTrue: [ tableMorph showColumnHeaders ] 
-			ifFalse: [ tableMorph hideColumnHeaders ] ].
-	"	
-	"self registerColumnsChangedEventTo: tableMorph.
-	"
-	"tableMorph
-		onAnnouncement: FTSelectionChanged
-			send: #selectionChanged:
-			to: self;
-		onAnnouncement: FTStrongSelectionChanged
-			send: #strongSelectionChanged:
-			to: self"
+
+	self presenter selection isEmpty ifFalse: [ 
+		self updateSelectionOf: tableMorph ].
+
+	self presenter whenRootsChangedDo: [ tableMorph buildContents ]
 ]
 
 { #category : #factory }

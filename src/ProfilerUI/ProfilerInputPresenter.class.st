@@ -13,6 +13,21 @@ Class {
 	#category : #'ProfilerUI-View'
 }
 
+{ #category : #layout }
+ProfilerInputPresenter class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: #codeInput;
+		  add: (SpBoxLayout newLeftToRight
+				   addLast: #profilerDropList expand: false fill: true;
+				   addLast: #profileItButton expand: false fill: true;
+				   yourself)
+		  expand: false
+		  fill: false
+		  padding: 5;
+		  yourself
+]
+
 { #category : #initialization }
 ProfilerInputPresenter >> initializeActions [
 
@@ -41,19 +56,9 @@ ProfilerInputPresenter >> initializePresenters [
 		                   icon: (self iconNamed: #glamorousGo);
 		                   label: 'Profile it'.
 
-	self layout: (SpBoxLayout newLeftToRight 
-			add: codeInput;
-			 add: (SpBoxLayout newTopToBottom
-					  addLast: profilerDropList;
-					  addLast: profileItButton 
-					  yourself)
-			 expand: false
-			 fill: false
-			 padding: 5;
-			 yourself).
-
 	self focusOrder
 		add: codeInput;
+		add: profilerDropList;
 		add: profileItButton.
 
 	self initializeActions
