@@ -37,6 +37,7 @@ ProfilerResultsPresenter >> doItNode [
 		bool ].
 	(doItNode isNil or: [ 
 		 doItNode methodName ~= viewModel doItSelectorsPath last ]) ifTrue: [ 
+		
 		^ nil ].
 	^ doItNode
 ]
@@ -53,7 +54,8 @@ ProfilerResultsPresenter >> goInto: aTallyModel [
 			(ie, the toolbar button was clicked)"
 	maybeClickedButton
 		ifNil: [ 
-			self removeToolbarItemsAfter: navigationToolbar selectedItem.
+			navigationToolbar selectedItem ifNotNil: [ 
+				self removeToolbarItemsAfter: navigationToolbar selectedItem ].
 			clickedButton := self newToolbarButtonFrom: aTallyModel.
 			navigationToolbar addItem: clickedButton ]
 		ifNotNil: [ 
@@ -68,28 +70,32 @@ ProfilerResultsPresenter >> goInto: aTallyModel [
 ProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
-	self enabled: true.
+	UIManager default defer: [ 
+		self enabled: true.
 
-	navigationToolbar selectedItem: nil.
-	navigationToolbar removeAllItems.
+		navigationToolbar selectedItem: nil.
+		navigationToolbar removeAllItems.
 
-	self goInto: viewModel tallyRoot.
+		self goInto: viewModel tallyRoot.
 
-	viewModel showLeavesOnly ifTrue: [ ^ self ].
+		viewModel showLeavesOnly ifTrue: [ ^ self ].
 
-	"select do it node and expand tree"
-	doItNode := self doItNode.
+		"select do it node and expand tree"
+		doItNode := self doItNode.
 
-	doItNode ifNil: [ 
-		self inform:
-			'The excecution time was too short! No measurements taken'.
-		^ self ].
+		doItNode ifNil: [ 
+			self inform:
+				'The excecution time was too short! No measurements taken'.
+			^ self ].
 
-	treeTable emptySelection.
-	treeTable selectNodePath: doItNode path.
-	"self goInto: doItNode.
+		treeTable emptySelection.
+		treeTable selectNodePath: doItNode path.
+		self goInto: doItNode.
 	treeTable selectNodePath:
-		(doItNode pathStartingFrom: viewModel tallyRoot path)"
+		(doItNode pathStartingFrom: viewModel tallyRoot path).
+
+		viewModel announcer announce:
+			ProfilingResultsDisplayedAnnouncement new ]
 ]
 
 { #category : #'event handling' }
@@ -111,7 +117,18 @@ ProfilerResultsPresenter >> handleSelectionChange: item [
 			showAsRootButton enable.
 			codePresenter methodOrBlock: item methodOrBlock.
 			navigationToolbar selectedItem ifNotNil: [ :btn | 
-				btn selectedPath: (item pathStartingFrom: viewModel tallyRoot path) ] ]
+				btn selectedPath: (item path pathStartingFrom: btn object path) ] ]
+]
+
+{ #category : #'event handling' }
+ProfilerResultsPresenter >> handleTreeRootChanged: event [
+
+	treeTable roots: viewModel rootItems.
+	treeTable expandAllSuchThat: [ :tallyModel | 
+		tallyModel weightToRoot asFloat closeTo: 100.0 ].
+	treeTable expandPath: event item path.
+	treeTable selectNodePath: event item path.
+	treeTable scrollSelectionIntoView
 ]
 
 { #category : #initialization }
@@ -344,17 +361,8 @@ ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 
 	viewModel announcer
 		when: ProfilingStartedAnnouncement do: [ self enabled: false ];
-		when: ProfilingFinishedAnnouncement do: [ 
-			self handleProfilingFinished.
-			viewModel announcer announce:
-					ProfilingResultsDisplayedAnnouncement new ];
-		when: ProfilerResultsTreeRootChangedAnnouncement do: [ :evt | 
-			treeTable roots: viewModel rootItems.
-			treeTable expandAllSuchThat: [ :tallyModel | 
-					tallyModel weightToRoot asFloat closeTo: 100.0 ].
-			treeTable expandPath: evt item path.
-			treeTable selectNodePath: evt item path.
-			treeTable scrollSelectionIntoView ]
+		when: ProfilingFinishedAnnouncement send: #handleProfilingFinished to: self;
+		when: ProfilerResultsTreeRootChangedAnnouncement send: #handleTreeRootChanged: to: self
 ]
 
 { #category : #subscription }
