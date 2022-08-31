@@ -119,7 +119,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 		title: self title;
 		initialExtent: 430 @ 220.
 		
-	aDialogWindowPresenter whenClosedDo: [ service discardDialog ]
+	aDialogWindowPresenter whenClosedDo: [ service findText: ''. service discardDialog ]
 ]
 
 { #category : #initialization }
