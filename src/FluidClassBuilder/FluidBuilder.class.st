@@ -46,6 +46,12 @@ Class {
 	#category : #'FluidClassBuilder-Base'
 }
 
+{ #category : #testing }
+FluidBuilder class >> isAbstract [
+		
+	^ self == FluidBuilder
+]
+
 { #category : #building }
 FluidBuilder >> build [
 	"Return a class that is not installed in the system."
