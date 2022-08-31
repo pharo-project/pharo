@@ -284,15 +284,18 @@ MCMethodDefinition >> overridenMethodOrNil [
 
 { #category : #installing }
 MCMethodDefinition >> postloadOver: aDefinition [
+
 	super postloadOver: aDefinition.
-	self class initializersEnabled ifTrue: [
-		(self isInitializer
-			and: [ self actualClass isTrait not 
-					and: [ aDefinition isNil or: [ self source ~= aDefinition source ]]]) ifTrue: [
-				self actualClass instanceSide initialize ] ].
+	self class initializersEnabled ifTrue: [ 
+		(self isInitializer and: [ 
+			 self actualClass isTrait not and: [ 
+				 aDefinition isNil or: [ self source ~= aDefinition source ] ] ]) 
+			ifTrue: [ 
+				self actualClass instanceSide withAllSubclassesDo: [ :e | 
+					e initialize ] ] ].
 	"Postloading of FFI fields. This code will be called when loading FFI structures that are not by default in the image. This is NOT dead code."
-	self isExternalStructureFieldDefinition
-		ifTrue: [self actualClass instanceSide compileFields].
+	self isExternalStructureFieldDefinition ifTrue: [ 
+		self actualClass instanceSide compileFields ]
 ]
 
 { #category : #annotations }
