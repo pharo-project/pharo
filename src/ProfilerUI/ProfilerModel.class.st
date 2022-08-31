@@ -53,7 +53,7 @@ ProfilerModel >> doItSelectorsPath [
 
 { #category : #constants }
 ProfilerModel >> doItSourceCodeFrom: someCode [
-	^ 'self profileBlock: [self startProfiling. ',(profiler blockCodeFrom: someCode),' ]'
+	^ 'self profileBlock: [',(profiler blockCodeFrom: someCode),' ]'
 ]
 
 { #category : #api }
@@ -118,7 +118,7 @@ ProfilerModel >> menu: menu shifted: b [
 			(menu 
 				add: 'Show as root'
 				target: self
-				selector: #setTallyRoot:
+				selector: #goInto:
 				argument: current) 
 				icon: (self iconNamed: #glamorousRedo) ].
 	^ menu
@@ -132,10 +132,12 @@ ProfilerModel >> newProfiler [
 { #category : #private }
 ProfilerModel >> profileBlock: aBlock [
 
-	[ self announceProfilingStarted.
+	"Fork is used to get a more clean execution results tree"
+	[self announceProfilingStarted.
+	self startProfiling.
 	aBlock ensure: [ 
 		self stopProfiling.
-		self announceProfilingFinished ] ] fork
+		self announceProfilingFinished ]] fork
 ]
 
 { #category : #api }
