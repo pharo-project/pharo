@@ -8,7 +8,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'literalsDict',
-		'lastIndex',
 		'first'
 	],
 	#category : #'OpalCompiler-Core-Extras'
@@ -18,10 +17,11 @@ Class {
 OCLiteralList >> addLiteral: anObject [
 
 	"I keep the first element, so it can be easily returned"
-	lastIndex = 0 
-		ifTrue: [ first := anObject ].
+	literalsDict ifEmpty: [ first := anObject ].
 	
-	^ literalsDict at: anObject ifAbsentPut: [ lastIndex := lastIndex + 1 ]
+	"The index of the last inserted element is the the size of the literalsDict,
+	as the elements are always added and never removed"
+	^ literalsDict at: anObject ifAbsentPut: [ literalsDict size + 1 ]
 ]
 
 { #category : #converting }
@@ -29,7 +29,7 @@ OCLiteralList >> asArray [
 
 	| result |
 	
-	result := Array new: lastIndex.
+	result := Array new: literalsDict size.
 	
 	literalsDict associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
 	
@@ -46,14 +46,13 @@ OCLiteralList >> first [
 OCLiteralList >> initialize [
 
 	super initialize.
-	lastIndex := 0.
 	literalsDict := OCLiteralDictionary new
 ]
 
 { #category : #testing }
 OCLiteralList >> isEmpty [
 
-	^ lastIndex = 0
+	^ literalsDict isEmpty
 ]
 
 { #category : #accessing }
