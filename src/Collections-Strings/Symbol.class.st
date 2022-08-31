@@ -499,7 +499,7 @@ Symbol >> isUnary [
 { #category : #comparing }
 Symbol >> literalEqual: other [
 
-	^ self class == other class and: [self == other]
+	^ self == other
 ]
 
 { #category : #'system primitives' }
