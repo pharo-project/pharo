@@ -52,7 +52,7 @@ FreeTypeGlyphRenderer >> convert8To32: aGlyphForm [
 			a := v > 0 ifTrue:[16rFF] ifFalse:[0].
 			colorVal := v + (v bitShift: 8) +  (v bitShift: 16) + (a bitShift: 24).
 			answer bits integerAt: (y*w)+(x+1) put: colorVal]].
-	^answer
+	^ answer
 ]
 
 { #category : #private }
@@ -90,7 +90,7 @@ FreeTypeGlyphRenderer >> convert8to32: aGlyphForm colorValue: foreColorValue [
 			b := v > 0 ifTrue:[a * foreColorB // 16rFF] ifFalse:[0].
 			colorVal := (a bitShift: 24) + (r bitShift: 16) + (g bitShift: 8) + b.
 			answer bits integerAt: (y*w)+(x+1) put: colorVal]].
-	^answer
+	^ answer
 ]
 
 { #category : #private }
@@ -98,6 +98,7 @@ FreeTypeGlyphRenderer >> fixBytesForMono: aGlyphForm [
 	"On Windows, the bits in each byte are in reverse order, and inverted.
 	i.e. 2r10100000 should be 2r11111010  to display correctly.
 	This needs further investigation"
+	
 	| b newB bits |
 	bits := aGlyphForm bits.
 	1 to: bits byteSize do:[:i |
@@ -111,7 +112,7 @@ FreeTypeGlyphRenderer >> fixBytesForMono: aGlyphForm [
 			bitOr: ((b bitAnd: 2r10) bitShift: 5))
 			bitOr: ((b bitAnd: 2r1) bitShift: 7).
 		bits byteAt: i put: (newB bitXor: 2r11111111)].
-	^aGlyphForm
+	^ aGlyphForm
 ]
 
 { #category : #public }
@@ -128,7 +129,7 @@ FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoB
 			form := self fixBytesForMono: form.
 			form := form asFormOfDepth: 8 ].
 	form := self convert8to32: form colorValue: aColorValue.
-	^form
+	^ form
 ]
 
 { #category : #public }
@@ -146,7 +147,7 @@ FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono:
 			form := form asFormOfDepth: 32]
 		ifFalse:[
 			form := self convert8To32: form ].
-	^form
+	^ form
 ]
 
 { #category : #private }
@@ -208,7 +209,7 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 		ifTrue:[ form advance: glyph roundedPixelLinearAdvance]
 		ifFalse:[ form advance: glyph advance].
 	form linearAdvance: glyph linearAdvance.
-	^form
+	^ form
 ]
 
 { #category : #public }

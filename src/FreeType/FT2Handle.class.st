@@ -33,34 +33,45 @@ FT2Handle >> beNull [
 
 { #category : #'error handling' }
 FT2Handle >> errorCode [
+
 	^ FT2Library current errorCode
 ]
 
 { #category : #'error handling' }
 FT2Handle >> errorString [
+
 	^ FT2Library current errorString
 ]
 
 { #category : #'library path' }
 FT2Handle >> ffiLibraryName [
+
 	^ FT2FFILibrary
 ]
 
 { #category : #initialization }
 FT2Handle >> initialize [
-	self shouldNotImplement.
+
+	self shouldNotImplement
 ]
 
 { #category : #testing }
 FT2Handle >> isValid [
+
 	^ self isNull not
 ]
 
 { #category : #printing }
 FT2Handle >> printOn: aStream [
+
 	| handleHex |
 	super printOn: aStream.
-	handle ifNil: [ ^aStream nextPutAll: '<nil>' ].
-	handleHex := (handle unsignedLongAt: 1 bigEndian: EndianDetector isBigEndian) printStringHex.
-	aStream nextPutAll: '<0x'; nextPutAll: handleHex; nextPut: $>.
+	handle ifNil: [ ^ aStream nextPutAll: '<nil>' ].
+	handleHex := (handle
+		              unsignedLongAt: 1
+		              bigEndian: EndianDetector isBigEndian) printStringHex.
+	aStream
+		nextPutAll: '<0x';
+		nextPutAll: handleHex;
+		nextPut: $>
 ]
