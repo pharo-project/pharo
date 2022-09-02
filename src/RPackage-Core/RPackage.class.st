@@ -1489,7 +1489,7 @@ RPackage >> tagsForClasses [
 
 { #category : #private }
 RPackage >> toTagName: aSymbol [
-	^ (aSymbol beginsWith: self name, '-')
+	^ (aSymbol beginsWith: self name asString, '-')
 		ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
 		ifFalse: [ aSymbol ]
 ]
