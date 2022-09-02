@@ -353,6 +353,8 @@ BlockClosure >> isClean [
 	 being created at compile-time."
 	self numCopiedValues > 0 ifTrue:
 		[^false].
+			
+	CleanBlockChecker ifNil: [ ^ false ].
 
 	^ CleanBlockChecker check: self method
 ]
