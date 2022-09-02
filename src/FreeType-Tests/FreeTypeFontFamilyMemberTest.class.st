@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 FreeTypeFontFamilyMemberTest >> testBeSimulatedStyle [
 
-	|member|
+	| member |
 	member := FreeTypeFontFamilyMember new.
 	self deny: member isSimulatedStyle.
 	member beSimulatedStyle.

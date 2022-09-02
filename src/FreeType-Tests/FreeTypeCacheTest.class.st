@@ -47,16 +47,6 @@ FreeTypeCacheTest >> setUp [
 ]
 
 { #category : #tests }
-FreeTypeCacheTest >> testBeSimulatedStyle [
-
-	| member |
-	member := FreeTypeFontFamilyMember new.
-	self deny: member isSimulatedStyle.
-	member beSimulatedStyle.
-	self assert: member isSimulatedStyle
-]
-
-{ #category : #tests }
 FreeTypeCacheTest >> testConstants [
 
 	| constants |
