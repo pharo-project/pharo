@@ -27,6 +27,13 @@ Class {
 	#category : #'Morphic-Widgets-FastTable-Announcement'
 }
 
+{ #category : #'instance creation' }
+FTSelectionRejected class >> withDirection: aDirection [
+	^ self new
+		direction: aDirection;
+		yourself
+]
+
 { #category : #accessing }
 FTSelectionRejected >> direction [
 
