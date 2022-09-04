@@ -3,10 +3,69 @@ I represent a set of objects without duplicates.  I can hold anything that respo
 `#hash` and `#=`, except for nil.  My instances will automatically grow, if necessary,
 Note that I rely on `#=`, not `#==`.  If you want a set using `#==`, use `IdentitySet`.
 
+## Public API and Key Messages
 
-The core operation is `HashedCollection>>#findElementOrNil:`, which either finds the position where an
-object is stored in array, if it is present, or finds a suitable position holding nil, if
-its argument is not present in array.
+### Initializing and Adding
+
+A `Set` can be created with values using the `Set class>>#newFrom:` class selector which will add the 
+values of a collection as the values of the `Set`, with any duplicates removed. See `Bag` for a collection
+that will retain the count of duplicate elements.
+
+```
+s := Set newFrom: #(1 2 3 4 5).  ""a Set(2 4 3 5 1)""
+
+s2 := Set newFrom: #(1 1 1 2 2 ).  ""a Set(1 2)""
+```
+
+Alternatively, an empty set can be created and elements added to it progressively using `Set>>#add:`
+
+```
+s := Set new.
+s add: 13.
+s add: 1.
+```
+
+### Testing
+
+Check if a value is present in a `Set` using the `Set>>#includes:` selector.
+
+```
+""Look if 12 is the value of any key in the Set""
+s := Set newFrom: #(1 2 3 4 5).
+s includes: 12.  ""false""
+```
+		
+### Removing
+
+Use the `Collection>>#remove:` selector to remove a value from the `Set`, which will cause
+an error if the value is not found. Use the `Set>>#remove:ifAbsent:` selector to control this behavior.
+
+```
+s := Set newFrom: #(1 2 3 4 5).
+s remove: 5.  ""a Set(1 3 2 4)""
+s remove: 1200.  ""Error""
+s remove: 1200 ifAbsent: [ ""do something"" ].
+```
+
+### Set operations
+The usual set theoretic operations are also available.
+```
+s1 := Set newFrom: #(1 2 3).
+s2 := Set newFrom: #(2 3 4).
+```
+#### Union
+```
+s3 := s1 union: s2. ""a Set(1 2 3 4)""
+```
+#### Difference
+```
+s1 difference: s2. ""a Set(1)""
+s2 difference: s1. ""a Set(4)""
+```
+#### Intersection
+```
+s1 intersection: s2. ""a Set(2 3)""
+```
 
 ### Instance structure:
 
@@ -16,6 +75,9 @@ its argument is not present in array.
 
 -  tally	The number of elements in the set.  The array size is always greater than this.
 
+- The core operation is `HashedCollection>>#findElementOrNil:`, which either finds the position where an
+  object is stored in array, if it is present, or finds a suitable position holding nil, if
+  its argument is not present in array.
 
 "
 Class {
