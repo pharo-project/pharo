@@ -1,5 +1,5 @@
 "
-I announce a rejected selection change (e.g. an attempt to a row/column or cell outside the bounds of the table)
+I announce a rejected selection change (e.g. an attempt to select a row/column or cell outside the bounds of the table)
 
 Description
 -------------------
