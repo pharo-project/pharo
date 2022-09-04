@@ -25,6 +25,11 @@ Class {
 }
 
 { #category : #accessing }
+OCExtraBindingScope >> allTemps [
+	^#()
+]
+
+{ #category : #accessing }
 OCExtraBindingScope >> bindings [
 	^ bindings
 ]
