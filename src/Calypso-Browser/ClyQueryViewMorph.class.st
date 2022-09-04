@@ -522,6 +522,7 @@ ClyQueryViewMorph >> initializeTable [
 	table dragEnabled: true.
 	table dropEnabled: true.
 	table onAnnouncement: FTSelectionChanged send: #selectionChanged to: self.
+	table onAnnouncement: FTSelectionRejected send: #selectionRejected: to: self.
 	table addColumn: ClyMainTableColumn default.
 	table vResizing: #spaceFill.
 	table hResizing: #spaceFill.
@@ -729,6 +730,23 @@ ClyQueryViewMorph >> selectionChanged [
 				withEnoughArguments: {self selection}].
 	].
 	self triggerClickCommands
+]
+
+{ #category : #'event handling' }
+ClyQueryViewMorph >> selectionRejected: announcement [
+	"Called when a selection is performed outside the table bounds"
+	announcement direction = #left ifTrue: [
+		self selection items do: [ :item | item isExpanded ifTrue: [ item collapse ] ].
+		self update.
+		^ self
+	].
+	announcement direction = #right ifTrue: [
+		self selection items do: [ :item |
+			item isExpanded ifFalse: [
+				(item isRoot or: item hasChildren) ifTrue: [ item expand ]
+			] 
+		]
+	]
 ]
 
 { #category : #initialization }
