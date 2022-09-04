@@ -4,7 +4,7 @@ I represent a set of objects without duplicates.  I can hold anything that respo
 Note that I rely on `#=`, not `#==`.  If you want a set using `#==`, use `IdentitySet`.
 
 
-The core operation is #find`ElementOrNil:`, which either finds the position where an
+The core operation is `HashedCollection>>#findElementOrNil:`, which either finds the position where an
 object is stored in array, if it is present, or finds a suitable position holding nil, if
 its argument is not present in array.
 
