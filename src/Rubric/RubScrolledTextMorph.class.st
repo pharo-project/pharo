@@ -816,8 +816,21 @@ RubScrolledTextMorph >> mouseWheel: event [
 ]
 
 { #category : #'accessing - selection' }
-RubScrolledTextMorph >> moveCursorToIndex: anIndex [ 
-	self selectFrom: anIndex to: anIndex - 1
+RubScrolledTextMorph >> moveCursorBy: amount [
+	"Moves the cursor by the given amount. Amount may be negative"
+	| index |
+	index := self selectionInterval first.
+	index := index + amount.
+	index := 0 max: index.
+	index := (self text size + 1) min: index.
+	self moveCursorToIndex: index
+]
+
+{ #category : #'accessing - selection' }
+RubScrolledTextMorph >> moveCursorToIndex: anIndex [
+	| index |
+	index := #last = anIndex ifTrue: [ self text size + 1 ] ifFalse: [ anIndex ].
+	self selectFrom: index to: index - 1
 ]
 
 { #category : #initialization }
