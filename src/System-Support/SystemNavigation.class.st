@@ -40,7 +40,7 @@ SystemNavigation >> allCallsOn: aSymbol [
 { #category : #query }
 SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
-	self allClassNamesStartingWith: aString do: aBlock caseSensitive: false
+	self allClassNamesStartingWith: aString do: aBlock caseSensitive: true
 ]
 
 { #category : #query }
