@@ -51,12 +51,3 @@ ClyTextEditor >> printIt [
 				do: [ '<error in printString: try ''Inspect it'' to debug>' ].
 			self afterSelectionInsertAndSelect: printString ]
 ]
-
-{ #category : #operations }
-ClyTextEditor >> undo [
-
-	super undo.
-
-	self editingState undoManager hasPrevious ifFalse: [ 
-		self browserTool changesCancelled]
-]
