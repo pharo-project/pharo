@@ -229,7 +229,7 @@ ClyCollapsedDataSource >> retrieveChildrenOf: aDataSourceItem [
 	| childQuery childDataSource |
 	childQuery := queryView 
 		queryToExpand: aDataSourceItem 
-		ifAbsent: [self error: 'cant retrieve children from ', aDataSourceItem printString].
+		ifAbsent: [ClyNoChildren signalFor: aDataSourceItem].
 	
 	childDataSource := ClyCollapsedDataSource on: childQuery.
 	childDataSource openOn: queryView.
