@@ -52,6 +52,34 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 ]
 
 { #category : #tests }
+OCBytecodeToASTCacheTest >> testFirstBcOffsetForNodeWhenMappedPcsAreEmpty [
+
+	| aimedNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #helperMethod13.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	aimedNode := compiledMethod ast statements second receiver.
+	pcsForAimedNode := cache pcsForNode: aimedNode.
+
+	self assertEmpty: pcsForAimedNode.
+	self assert: (cache firstBcOffsetForNode: aimedNode) equals: nil
+]
+
+{ #category : #tests }
+OCBytecodeToASTCacheTest >> testFirstBcOffsetForNodeWhenMappedPcsAreNotEmpty [
+
+	| aimedNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #helperMethod13.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	aimedNode := compiledMethod ast statements second.
+	pcsForAimedNode := cache pcsForNode: aimedNode.
+
+	self deny: pcsForAimedNode isEmpty.
+	self
+		assert: (cache firstBcOffsetForNode: aimedNode)
+		equals: pcsForAimedNode first
+]
+
+{ #category : #tests }
 OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 	| pc |
 	pc := cache lastBcOffset + 5.
@@ -68,6 +96,34 @@ OCBytecodeToASTCacheTest >> testLastBCOffsetTest [
 		equals:
 			compiledMethod ast ir startSequence withAllSuccessors last last
 				bytecodeOffset
+]
+
+{ #category : #tests }
+OCBytecodeToASTCacheTest >> testLastBcOffsetForNodeWhenMappedPcsAreEmpty [
+
+	| aimedNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #helperMethod13.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	aimedNode := compiledMethod ast statements second receiver.
+	pcsForAimedNode := cache pcsForNode: aimedNode.
+
+	self assertEmpty: pcsForAimedNode.
+	self assert: (cache lastBcOffsetForNode: aimedNode) equals: nil
+]
+
+{ #category : #tests }
+OCBytecodeToASTCacheTest >> testLastBcOffsetForNodeWhenMappedPcsAreNotEmpty [
+
+	| aimedNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #helperMethod13.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	aimedNode := compiledMethod ast statements second.
+	pcsForAimedNode := cache pcsForNode: aimedNode.
+
+	self deny: pcsForAimedNode isEmpty.
+	self
+		assert: (cache lastBcOffsetForNode: aimedNode)
+		equals: pcsForAimedNode last
 ]
 
 { #category : #tests }
@@ -106,4 +162,21 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
 	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
 	self assert: mappedNode start equals: expectedNode start.
 	self assert: mappedNode stop equals: expectedNode stop
+]
+
+{ #category : #tests }
+OCBytecodeToASTCacheTest >> testPcsForNode [
+
+	| aimedNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #helperMethod13.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	aimedNode := compiledMethod ast statements second.
+	pcsForAimedNode := cache pcsForNode: aimedNode.
+
+	pcsForAimedNode do: [ :pc | 
+		self assert: (cache nodeForPC: pc) identicalTo: aimedNode ].
+
+	(cache bcToASTMap keys reject: [ :value | 
+		 pcsForAimedNode includes: value ]) do: [ :pc | 
+		self deny: (cache nodeForPC: pc) identicalTo: aimedNode ]
 ]

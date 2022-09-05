@@ -48,6 +48,12 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> firstPcForNode: aNode [
+
+	^ self bcToASTCache firstBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate [
 	"The receiver is the root of a parse tree. Answer a CompiledMethod. The
 	argument, trailer, is the references to the source code that is stored with 
@@ -116,6 +122,12 @@ RBMethodNode >> irInstruction [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> lastPcForNode: aNode [
+
+	^ self bcToASTCache lastBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> methodProperties [
 	^self propertyAt: #methodProperties ifAbsent: nil
 ]
@@ -151,6 +163,12 @@ RBMethodNode >> methodPropertyAt: aKey put: anObject [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> owningScope [
 	^ self scope
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> pcsForNode: aNode [
+
+	^ self bcToASTCache pcsForNode: aNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
