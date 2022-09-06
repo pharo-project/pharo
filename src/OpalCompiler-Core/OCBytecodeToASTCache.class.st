@@ -62,6 +62,12 @@ OCBytecodeToASTCache >> firstBcOffset [
 	^ firstBcOffset
 ]
 
+{ #category : #astAndAstMapping }
+OCBytecodeToASTCache >> firstBcOffsetForNode: aNode [
+
+	^ (self pcsForNode: aNode) at: 1 ifAbsent: nil
+]
+
 { #category : #initialization }
 OCBytecodeToASTCache >> generateForNode: aNode [
 	| methodOrBlockIr currentBcOffset |
@@ -92,6 +98,14 @@ OCBytecodeToASTCache >> lastBcOffset [
 	^ lastBcOffset
 ]
 
+{ #category : #astAndAstMapping }
+OCBytecodeToASTCache >> lastBcOffsetForNode: aNode [
+
+	| pcsForNode |
+	pcsForNode := self pcsForNode: aNode.
+	^ pcsForNode at: pcsForNode size ifAbsent: nil
+]
+
 { #category : #accessing }
 OCBytecodeToASTCache >> methodNode [
 	^ methodOrBlockNode
@@ -107,4 +121,10 @@ OCBytecodeToASTCache >> nodeForPC: pc [
 	pc < firstBcOffset ifTrue: [ ^ methodOrBlockNode ].
 	pc > lastBcOffset ifTrue: [ ^ bcToASTMap at: lastBcOffset ].
 	^ bcToASTMap at: pc
+]
+
+{ #category : #astAndAstMapping }
+OCBytecodeToASTCache >> pcsForNode: aNode [
+
+	^ (bcToASTMap keys select: [ :key | (bcToASTMap at: key) == aNode ]) asOrderedCollection
 ]
