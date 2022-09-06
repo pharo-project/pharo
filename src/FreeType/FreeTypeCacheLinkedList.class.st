@@ -17,7 +17,7 @@ FreeTypeCacheLinkedList >> add: link after: otherLink [
 	link nextLink: savedLink.
 	savedLink ifNotNil: [ savedLink previousLink: link ].
 	link previousLink: otherLink.
-	^link
+	^ link
 ]
 
 { #category : #adding }
@@ -45,7 +45,7 @@ FreeTypeCacheLinkedList >> addFirst: aLink [
 	aLink previousLink: nil.
 	firstLink ifNotNil: [ firstLink previousLink: aLink ].
 	firstLink := aLink.
-	^aLink
+	^ aLink
 ]
 
 { #category : #adding }
@@ -58,7 +58,7 @@ FreeTypeCacheLinkedList >> addLast: aLink [
 	aLink nextLink: nil.
 	lastLink ifNotNil: [ lastLink nextLink: aLink ].
 	lastLink := aLink.
-	^aLink
+	^ aLink
 ]
 
 { #category : #reordering }
@@ -70,18 +70,18 @@ FreeTypeCacheLinkedList >> moveDown: aLink [
 	e4 := e3 nextLink.
 	e1 := e2 previousLink.
 	"swap e2 & e3"
-	e1 ifNotNil:[e1 nextLink: e2].
+	e1 ifNotNil: [e1 nextLink: e2].
 	e2 nextLink: e3.
 	e3 nextLink: e4.
-	e4 ifNotNil:[e4 previousLink: e3].
+	e4 ifNotNil: [e4 previousLink: e3].
 	e3 previousLink: e2.
 	e2 previousLink: e1
 ]
 
 { #category : #removing }
 FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [  
-	| prev next  |
 
+	| prev next |
 	prev := aLink previousLink.
 	next := aLink nextLink.
 	prev ifNotNil: [prev nextLink: next].
@@ -90,7 +90,7 @@ FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [
 	aLink == lastLink ifTrue:[lastLink := prev].
 	aLink nextLink: nil.
 	aLink previousLink: nil.		
-	^aLink
+	^ aLink
 ]
 
 { #category : #removing }
@@ -102,17 +102,16 @@ FreeTypeCacheLinkedList >> removeFirst [
 	self emptyCheck.
 	oldLink := firstLink.
 	oldLink previousLink: nil.
-	lastLink == firstLink 
-		ifTrue:[
-			lastLink := firstLink := nil.
-			oldLink nextLink: nil.
-			^oldLink].
+	lastLink == firstLink ifTrue: [ 
+		lastLink := firstLink := nil.
+		oldLink nextLink: nil.
+		^ oldLink ].
 	firstLink := oldLink nextLink.
-	firstLink 
-		ifNil: [firstLink := lastLink := nil]
-		ifNotNil: [firstLink previousLink: nil].
+	firstLink
+		ifNil: [ firstLink := lastLink := nil ]
+		ifNotNil: [ firstLink previousLink: nil ].
 	oldLink nextLink: nil.
-	^oldLink
+	^ oldLink
 ]
 
 { #category : #removing }
@@ -124,15 +123,14 @@ FreeTypeCacheLinkedList >> removeLast [
 	self emptyCheck.
 	oldLink := lastLink.
 	oldLink nextLink: nil.
-	lastLink == firstLink 
-		ifTrue:[
-			lastLink := firstLink := nil.
-			oldLink previousLink: nil.
-			^oldLink].
+	lastLink == firstLink ifTrue: [ 
+		lastLink := firstLink := nil.
+		oldLink previousLink: nil.
+		^ oldLink ].
 	lastLink := oldLink previousLink.
-	lastLink 
-		ifNil: [firstLink := lastLink := nil]
-		ifNotNil:[lastLink nextLink: nil].
+	lastLink
+		ifNil: [ firstLink := lastLink := nil ]
+		ifNotNil: [ lastLink nextLink: nil ].
 	oldLink previousLink: nil.
-	^oldLink
+	^ oldLink
 ]

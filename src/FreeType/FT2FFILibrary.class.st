@@ -136,20 +136,23 @@ FT2FFILibrary class >> translateErrorCode: aCode [
 ]
 
 { #category : #'accessing - platform' }
-FT2FFILibrary >> macLibraryName [ 
+FT2FFILibrary >> macLibraryName [
+
 	^ 'libfreetype.dylib'
 ]
 
 { #category : #'accessing - platform' }
 FT2FFILibrary >> unixLibraryName [
+
 	^ 'libfreetype.so.6'
 ]
 
 { #category : #'accessing - platform' }
 FT2FFILibrary >> win32LibraryName [
-	#('freetype.dll' 'libfreetype.dll' 'libfreetype-6.dll') 
+
+	#( 'freetype.dll' 'libfreetype.dll' 'libfreetype-6.dll' )
 		detect: [ :each | (FileLocator vmDirectory / each) exists ]
 		ifFound: [ :each | ^ each ].
-	
-	self error: 'freetyle library not found!'
+
+	self error: 'freetype/libfreetype DLL not found!'
 ]

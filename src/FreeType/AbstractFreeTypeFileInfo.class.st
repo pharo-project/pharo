@@ -2,7 +2,7 @@
 Abstract superclass for file infos for a FreeType font
 "
 Class {
-	#name : #FreeTypeFileInfoAbstract,
+	#name : #AbstractFreeTypeFileInfo,
 	#superclass : #Object,
 	#instVars : [
 		'index',
@@ -26,22 +26,28 @@ Class {
 	#category : #'FreeType-FontManager'
 }
 
+{ #category : #testing }
+AbstractFreeTypeFileInfo class >> isAbstract [
+		
+	^ self == AbstractFreeTypeFileInfo
+]
+
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> bold [
+AbstractFreeTypeFileInfo >> bold [
 	"Answer the value of bold"
 
 	^ bold
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> bold: anObject [
+AbstractFreeTypeFileInfo >> bold: anObject [
 	"Set the value of bold"
 
 	bold := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> extractAttributesFromNames [
+AbstractFreeTypeFileInfo >> extractAttributesFromNames [
 	"derive values for the receiver's style(italic), weight, and stretch inst vars.
 	Also set the familyGroupName and styleNameExtracted"
 
@@ -75,172 +81,172 @@ FreeTypeFileInfoAbstract >> extractAttributesFromNames [
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> familyGroupName [
+AbstractFreeTypeFileInfo >> familyGroupName [
 	"Answer the value of familyGroupName"
 
 	^ familyGroupName
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> familyName [
+AbstractFreeTypeFileInfo >> familyName [
 	"Answer the value of familyName"
 
 	^ familyName
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> familyName: anObject [
+AbstractFreeTypeFileInfo >> familyName: anObject [
 	"Set the value of familyName"
 
 	familyName := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> fixedWidth [
+AbstractFreeTypeFileInfo >> fixedWidth [
 	"Answer the value of fixedWidth"
 
 	^ fixedWidth
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> fixedWidth: anObject [
+AbstractFreeTypeFileInfo >> fixedWidth: anObject [
 	"Set the value of fixedWidth"
 
 	fixedWidth := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> index [
+AbstractFreeTypeFileInfo >> index [
 	"Answer the value of index"
 
 	^ index
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> index: anObject [
+AbstractFreeTypeFileInfo >> index: anObject [
 	"Set the value of index"
 
 	index := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> isBolderThan: val [
+AbstractFreeTypeFileInfo >> isBolderThan: val [
 	^self weightValue >= val
 ]
 
 { #category : #testing }
-FreeTypeFileInfoAbstract >> isEmbedded [
+AbstractFreeTypeFileInfo >> isEmbedded [
 	^false
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> isItalicOrOblique [
+AbstractFreeTypeFileInfo >> isItalicOrOblique [
 	^self slantValue > 0
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> italic [
+AbstractFreeTypeFileInfo >> italic [
 	"Answer the value of italic"
 
 	^ italic
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> italic: anObject [
+AbstractFreeTypeFileInfo >> italic: anObject [
 	"Set the value of italic"
 
 	italic := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> numFaces [
+AbstractFreeTypeFileInfo >> numFaces [
 	"Answer the value of numFaces"
 
 	^ numFaces
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> numFaces: anObject [
+AbstractFreeTypeFileInfo >> numFaces: anObject [
 	"Set the value of numFaces"
 
 	numFaces := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> postscriptName [
+AbstractFreeTypeFileInfo >> postscriptName [
 	"Answer the value of postscriptName"
 
 	^ postscriptName
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> postscriptName: anObject [
+AbstractFreeTypeFileInfo >> postscriptName: anObject [
 	"Set the value of postscriptName"
 
 	postscriptName := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> slant [
+AbstractFreeTypeFileInfo >> slant [
 	"Answer the value of slant"
 
 	^ slant
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> slantValue [
+AbstractFreeTypeFileInfo >> slantValue [
 	^slantValue
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> stretch [
+AbstractFreeTypeFileInfo >> stretch [
 	"Answer the value of stretch"
 
 	^ stretch
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> stretchValue [
+AbstractFreeTypeFileInfo >> stretchValue [
 	"Answer the value of stretchValue"
 
 	^ stretchValue
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> stretchValue: anObject [
+AbstractFreeTypeFileInfo >> stretchValue: anObject [
 	"Set the value of stretchValue"
 
 	stretchValue := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> style [
+AbstractFreeTypeFileInfo >> style [
 	"Answer the value of slant"
 
 	^ slant
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> styleName [
+AbstractFreeTypeFileInfo >> styleName [
 	"Answer the value of styleName"
 
 	^ styleName
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> styleName: anObject [
+AbstractFreeTypeFileInfo >> styleName: anObject [
 	"Set the value of styleName"
 
 	styleName := anObject
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> styleNameExtracted [
+AbstractFreeTypeFileInfo >> styleNameExtracted [
 	^styleNameExtracted
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> styleNameWithItalicForcedToBe: aString [
+AbstractFreeTypeFileInfo >> styleNameWithItalicForcedToBe: aString [
 	| answer |
 	answer := ''.
 	stretch ifNotNil:[
@@ -254,7 +260,7 @@ FreeTypeFileInfoAbstract >> styleNameWithItalicForcedToBe: aString [
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> styleNameWithWeightForcedToBe: aString [
+AbstractFreeTypeFileInfo >> styleNameWithWeightForcedToBe: aString [
 	| answer |
 	answer := ''.
 	stretch ifNotNil:[
@@ -267,7 +273,7 @@ FreeTypeFileInfoAbstract >> styleNameWithWeightForcedToBe: aString [
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> styleNameWithWeightForcedToBe: aString italicForcedToBe: aString2 [
+AbstractFreeTypeFileInfo >> styleNameWithWeightForcedToBe: aString italicForcedToBe: aString2 [
 	| answer |
 	answer := ''.
 	stretch ifNotNil:[
@@ -279,7 +285,7 @@ FreeTypeFileInfoAbstract >> styleNameWithWeightForcedToBe: aString italicForcedT
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> validFamilyName [
+AbstractFreeTypeFileInfo >> validFamilyName [
 	"answer the receiver's familyName, or an alternative 
 	name to use if the familyName is invalid for some reason"
 	
@@ -302,7 +308,7 @@ FreeTypeFileInfoAbstract >> validFamilyName [
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> validStyleName [
+AbstractFreeTypeFileInfo >> validStyleName [
 	"answer the receiver's styleName, or an alternative 
 	name to use if the styleName is invalid for some reason"
 	
@@ -321,21 +327,21 @@ FreeTypeFileInfoAbstract >> validStyleName [
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> weight [
+AbstractFreeTypeFileInfo >> weight [
 	"Answer the value of weight"
 
 	^ weight
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> weightValue [
+AbstractFreeTypeFileInfo >> weightValue [
 	"Answer the value of weightValue"
 
 	^ weightValue
 ]
 
 { #category : #accessing }
-FreeTypeFileInfoAbstract >> weightValue: anObject [
+AbstractFreeTypeFileInfo >> weightValue: anObject [
 	"Set the value of weightValue"
 
 	weightValue := anObject

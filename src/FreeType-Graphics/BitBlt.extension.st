@@ -4,7 +4,7 @@ Extension { #name : #BitBlt }
 BitBlt >> combinationRule [
 	"Answer the receiver's combinationRule"
 	
-	^combinationRule
+	^ combinationRule
 ]
 
 { #category : #'*FreeType-Graphics' }
@@ -50,10 +50,11 @@ BitBlt >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor ba
 					self combinationRule: 34]].
 	halftoneForm := nil.
 	sourceX := sourceY := 0.
-	height := aFreeTypeFont height.
+	height := aFreeTypeFont height
 ]
 
 { #category : #'*FreeType-Graphics' }
 BitBlt >> lastFontForegroundColor [
+
 	^ nil
 ]

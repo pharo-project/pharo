@@ -3,7 +3,7 @@ File infos for a FreeType font
 "
 Class {
 	#name : #FreeTypeFileInfo,
-	#superclass : #FreeTypeFileInfoAbstract,
+	#superclass : #AbstractFreeTypeFileInfo,
 	#instVars : [
 		'absoluteOrRelativePath',
 		'absolutePath',
