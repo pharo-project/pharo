@@ -1964,6 +1964,19 @@ SequenceableCollection >> reverse [
 	^ self reversed
 ]
 
+{ #category : #converting }
+SequenceableCollection >> reversed [
+	"Answer a copy of the receiver with element order reversed."
+	"Example: 'frog' reversed"
+
+	| n result src |
+	n := self size.
+	result := self species new: n.
+	src := n + 1.
+	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
+	^ result
+]
+
 { #category : #enumerating }
 SequenceableCollection >> reverseDo: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument, 
@@ -2001,19 +2014,6 @@ SequenceableCollection >> reverseWithIndexDo: elementAndIndexBlock [
 		elementAndIndexBlock
 			value: (self at: index)
 			value: index]
-]
-
-{ #category : #converting }
-SequenceableCollection >> reversed [
-	"Answer a copy of the receiver with element order reversed."
-	"Example: 'frog' reversed"
-
-	| n result src |
-	n := self size.
-	result := self species new: n.
-	src := n + 1.
-	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
-	^ result
 ]
 
 { #category : #accessing }

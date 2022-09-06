@@ -127,3 +127,12 @@ CollectionArithmeticTest >> testRunningMin [
 
 	self assert: result equals: {1 . 1 . 2 . 2}.
 ]
+
+{ #category : #tests }
+CollectionArithmeticTest >> testSumWithDoubles [
+	| collection sum |
+	collection := #(33.33d0 33.33d0 33.34d0).
+	sum := collection sum: [:e | e yourself].
+	self assert: sum equals: 33.33d0 + 33.33d0 + 33.34d0.
+	self assert: sum equals: 100d0
+]

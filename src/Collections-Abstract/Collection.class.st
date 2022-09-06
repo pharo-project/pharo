@@ -115,14 +115,6 @@ Collection >> , aCollection [
 	^self copy addAll: aCollection; yourself
 ]
 
-{ #category : #enumerating }
-Collection >> \ aCollection [
-	"Return all the elements in self that are not in aCollection"
-	"'abc' \ 'cbe' >>> 'a'."
-	
-	^ self difference: aCollection
-]
-
 { #category : #adapting }
 Collection >> adaptToCollection: rcvr andSend: selector [
 	"If I am involved in arithmetic with another Collection, return a Collection of
@@ -320,6 +312,15 @@ Collection >> asSet [
 	^ Set withAll: self
 ]
 
+{ #category : #enumerating }
+Collection >> associationsDo: aBlock [
+	"Evaluate aBlock for each of the receiver's elements (key/value 
+	associations).  If any non-association is within, the error is not caught now,
+	but later, when a key or value message is sent to it."
+
+	self do: aBlock
+]
+
 { #category : #converting }
 Collection >> asSortedCollection [
 	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is the default less than or equal. Note that you should use #sorted: if you don't really need a SortedCollection, but a sorted collection."
@@ -365,15 +366,6 @@ Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 		aStream nextPutAll: elem asString]
 	separatedBy: [
 		aStream nextPutAll: (n = sz ifTrue: [lastDelimString] ifFalse: [delimString])]
-]
-
-{ #category : #enumerating }
-Collection >> associationsDo: aBlock [
-	"Evaluate aBlock for each of the receiver's elements (key/value 
-	associations).  If any non-association is within, the error is not caught now,
-	but later, when a key or value message is sent to it."
-
-	self do: aBlock
 ]
 
 { #category : #accessing }
@@ -761,18 +753,18 @@ Collection >> flatCollectAsSet: aBlock [
 ]
 
 { #category : #enumerating }
-Collection >> flattenOn: aStream [
-
-	self do: [ :each | each flattenOn: aStream ]
-]
-
-{ #category : #enumerating }
 Collection >> flattened [
 	"Flattens a collection of collections (no matter how many levels of collections exist). Strings are considered atoms and, as such, won't be flattened"
 	"( #(1 #(2 3) #(4 #(5))) flattened ) >>> #(1 2 3 4 5)" 
 	"( #('string1' #('string2' 'string3')) flattened ) >>> #('string1' 'string2' 'string3')"
 	
 	^ Array streamContents: [ :stream | self flattenOn: stream].
+]
+
+{ #category : #enumerating }
+Collection >> flattenOn: aStream [
+
+	self do: [ :each | each flattenOn: aStream ]
 ]
 
 { #category : #enumerating }
@@ -1271,14 +1263,12 @@ Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
 	Consider a collection of measurement objects, 0 would be the unitless 
 	value and would not be appropriate to add with the unit-ed objects."
 	| sum sample |
-	
-	^ self
-		ifNotEmpty: [ 
-			sample := aBlock value: self anyOne.
-			sum := self inject: sample into: [ :previousValue :each |
-				previousValue + (aBlock value: each) ].
-			sum - sample ]
-		ifEmpty: anEmptySumBlock.
+	^self ifNotEmpty: 
+			[sample := aBlock value: self anyOne.
+			sum := self inject: sample - sample
+						into: [:previousValue :each | previousValue + (aBlock value: each)].
+			sum]
+		ifEmpty: anEmptySumBlock
 ]
 
 { #category : #'math functions' }
@@ -1327,6 +1317,14 @@ Collection >> withIndexDo: elementAndIndexBlock [
 	| index |
 	index := 0.
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
+]
+
+{ #category : #enumerating }
+Collection >> \ aCollection [
+	"Return all the elements in self that are not in aCollection"
+	"'abc' \ 'cbe' >>> 'a'."
+	
+	^ self difference: aCollection
 ]
 
 { #category : #enumerating }
