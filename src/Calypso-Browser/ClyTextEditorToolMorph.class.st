@@ -151,6 +151,7 @@ ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [
 { #category : #'events handling' }
 ClyTextEditorToolMorph >> changesCancelled [
 
+	"Avoid clearing the dirty flag if the pending text differs from the current text (issue#11649)"
 	self pendingText = self editingText ifFalse: [ ^self ].
 	textMorph hasUnacceptedEdits: false.
 	self textUpdated
