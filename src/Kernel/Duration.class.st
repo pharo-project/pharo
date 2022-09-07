@@ -55,6 +55,13 @@ Duration class >> hours: aNumber [
 ]
 
 { #category : #'instance creation simple' }
+Duration class >> microSeconds: microCount [
+	^ self
+		seconds: (microCount quo: 1000000)
+		nanoSeconds: (microCount rem: 1000000) * NanosInMicroSecond 
+]
+
+{ #category : #'instance creation simple' }
 Duration class >> milliSeconds: milliCount [
      
 	^ self

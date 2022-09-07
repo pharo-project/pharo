@@ -280,6 +280,17 @@ DurationTest >> testLessThan [
 ]
 
 { #category : #tests }
+DurationTest >> testMicroSeconds [
+	#(#(5 0 5000) #(1000005 1 5000) #(-5 0 -5000) #(-1000005 -1 -5000) #(1234000567 1234 567000) #(-1234000567 -1234 -567000))
+		do: [ :each | 
+			| duration | 
+			duration := Duration microSeconds: each first.
+			self assert: duration asSeconds equals: each second.
+			self assert: duration nanoSeconds equals: each third ]
+	"argument (milliseconds)        seconds nanoseconds"
+]
+
+{ #category : #tests }
 DurationTest >> testMilliSeconds [
 	#(#(5 0 5000000) #(1005 1 5000000) #(-5 0 -5000000) #(-1005 -1 -5000000) #(1234567 1234 567000000) #(-1234567 -1234 -567000000))
 		do: [ :each | 
