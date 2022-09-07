@@ -151,6 +151,7 @@ ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [
 { #category : #'events handling' }
 ClyTextEditorToolMorph >> changesCancelled [
 
+	self pendingText = self editingText ifFalse: [ ^self ].
 	textMorph hasUnacceptedEdits: false.
 	self textUpdated
 ]
