@@ -674,14 +674,20 @@ FTTableMorph >> keyStrokeArrowDown: event [
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowLeft: event [
-	(self selectionModeStrategy is: self selectedIndex afterColumn: 1) ifFalse: [ ^ self ].
+	(self selectionModeStrategy is: self selectedIndex afterColumn: 1) ifFalse: [ 
+		self announcer announce: (FTSelectionRejected withDirection: #left).
+		^ self 
+	].
 	self resetFunction.
 	self selectIndex: (self selectionModeStrategy selectableIndexBefore: self selectedIndex) event: event
 ]
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowRight: event [
-	(self selectionModeStrategy is: self selectedIndex beforeColumn: self numberOfColumns) ifFalse: [ ^ self ].
+	(self selectionModeStrategy is: self selectedIndex beforeColumn: self numberOfColumns) ifFalse: [ 
+		self announcer announce: (FTSelectionRejected withDirection: #right).
+		^ self 
+	].
 	self resetFunction.
 	self selectIndex: (self selectionModeStrategy selectableIndexAfter: self selectedIndex) event: event
 ]
