@@ -1097,6 +1097,12 @@ KeyboardKey class >> metaRight [
 	^ self named: #META_R
 ]
 
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> menu [
+
+	^ self named: 'MENU'
+]
+
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> minus [
 	^ self named: #MINUS

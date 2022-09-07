@@ -778,7 +778,8 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey keypadDown -> #cursorDown:).
 	(KeyboardKey keypadEnter -> #crWithIndent:).
 	(KeyboardKey tab -> #tab:).
-	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
+	(KeyboardKey delete -> #forwardDelete:).
+	(KeyboardKey menu -> #menu:)} do: [ :assoc | 
 		cmdMap at: assoc key  put: assoc value ].
 	^ cmdMap
 ]
@@ -1522,6 +1523,13 @@ RubTextEditor >> markIndex [
 { #category : #'accessing - selection' }
 RubTextEditor >> markIndex: markIndex pointIndex: pointIndex [
 	textArea markIndex: markIndex pointIndex: pointIndex
+]
+
+{ #category : #'menu messages' }
+RubTextEditor >> menu: aKeyboardEvent [
+	"Displays the menu"
+	self textArea yellowButtonActivity: false.
+	^ false
 ]
 
 { #category : #accessing }
