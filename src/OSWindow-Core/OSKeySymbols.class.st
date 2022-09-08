@@ -278,7 +278,7 @@ OSKeySymbols class >> data [
 		(16r40000061 OSK_KP_9 kp_9)
 		(16r40000062 OSK_KP_0 kp_0)
 		(16r40000063 OSK_KP_PERIOD KP_Decimal)
-		(16r40000065 OSK_MENU menu) "win32 menu key / pharo issue#11659"
+		(16r40000065 OSK_APPLICATION menu) "win32 menu key / pharo issue#11659"
 		"(16r40000066 OSK_POWER power)"
 		(16r40000067 OSK_KP_EQUALS kp_equal)
 		(16r40000068 OSK_F13 f13)
