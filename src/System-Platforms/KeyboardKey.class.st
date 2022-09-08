@@ -1100,7 +1100,7 @@ KeyboardKey class >> metaRight [
 { #category : #'accessing - keys - special' }
 KeyboardKey class >> menu [
 
-	^ self named: 'MENU'
+	^ self named: #MENU
 ]
 
 { #category : #'accessing - keys - symbols' }
