@@ -1528,7 +1528,7 @@ RubTextEditor >> markIndex: markIndex pointIndex: pointIndex [
 { #category : #'menu messages' }
 RubTextEditor >> menu: aKeyboardEvent [
 	"Displays the menu"
-	self textArea yellowButtonActivity: false.
+	self textArea openMenu.
 	^ false
 ]
 

@@ -1521,6 +1521,18 @@ RubAbstractTextArea >> openFindDialog [
 		ifFalse: [self flash]
 ]
 
+{ #category : #menu }
+RubAbstractTextArea >> openMenu [
+	"Opens the menu at the cursor position"
+	(self getMenu: false)
+		ifNotNil: [ :menu |
+			menu privateOwner: self.
+			menu setInvokingView: self editor.
+			menu invokeAt: self cursor positionInWorld in: self currentWorld.
+			self changed.
+		].
+]
+
 { #category : #'accessing - editor' }
 RubAbstractTextArea >> openingDelimiters [
 	^ self editor openingDelimiters
