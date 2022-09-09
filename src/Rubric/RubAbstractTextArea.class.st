@@ -1524,13 +1524,21 @@ RubAbstractTextArea >> openFindDialog [
 { #category : #menu }
 RubAbstractTextArea >> openMenu [
 	"Opens the menu at the cursor position"
-	(self getMenu: false)
+	self openMenu: false and: [ :menu |
+		menu invokeAt: self cursor positionInWorld in: self currentWorld
+	]
+]
+
+{ #category : #menu }
+RubAbstractTextArea >> openMenu: shiftKeyState and: aBlock [
+	"Opens the menu at the cursor position, executing the given block afterwards"
+	(self getMenu: shiftKeyState)
 		ifNotNil: [ :menu |
 			menu privateOwner: self.
 			menu setInvokingView: self editor.
-			menu invokeAt: self cursor positionInWorld in: self currentWorld.
-			self changed.
-		].
+			aBlock value: menu.
+			self changed
+		]
 ]
 
 { #category : #'accessing - editor' }
@@ -2240,13 +2248,6 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	Check if required first!"
 	self wantsYellowButtonMenu
 		ifFalse: [ ^ false ].	
-	(self getMenu: shiftKeyState)
-		ifNotNil: [ :menu|
-			menu privateOwner: self.
-			menu setInvokingView: self editor.
-			menu invokeModal. 
-			self changed.
-			^ true].
-		
+	self openMenu: shiftKeyState and: #invokeModal.
 	^ true
 ]
