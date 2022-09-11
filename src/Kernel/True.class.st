@@ -12,6 +12,8 @@ Class {
 { #category : #'logical operations' }
 True >> & aBoolean [ 
 	"Evaluating conjunction -- answer aBoolean since receiver is true."
+	"true & true >>> true"
+	"true & false >>> false"
 
 	^aBoolean
 ]
@@ -28,6 +30,8 @@ True >> and: alternativeBlock [
 
 { #category : #converting }
 True >> asBit [
+	"Answer 1 since receiver is true."
+	"true asBit >>> 1" 
 
 	^ 1
 ]
@@ -37,6 +41,7 @@ True >> ifFalse: alternativeBlock [
 	"Since the condition is true, the value is the true alternative, which is nil. 
 	Execution does not actually reach here because the expression is compiled 
 	in-line."
+	"(true ifFalse: [ true ]) >>> nil"
 
 	^nil
 ]
@@ -45,6 +50,7 @@ True >> ifFalse: alternativeBlock [
 True >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [ 
 	"Answer the value of trueAlternativeBlock. Execution does not 
 	actually reach here because the expression is compiled in-line."
+	"(true ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ])  >>> 'That is true!'"
 
 	^trueAlternativeBlock value
 ]
@@ -53,6 +59,7 @@ True >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [
 True >> ifTrue: alternativeBlock [ 
 	"Answer the value of alternativeBlock. Execution does not actually 
 	reach here because the expression is compiled in-line."
+	"(true ifTrue: [ 'This statement is true!' ]) >>> 'This statement is true!'"
 
 	^alternativeBlock value
 ]
@@ -61,6 +68,7 @@ True >> ifTrue: alternativeBlock [
 True >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [ 
 	"Answer with the value of trueAlternativeBlock. Execution does not 
 	actually reach here because the expression is compiled in-line."
+	"(true ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]) >>> 'That is true!'"
 
 	^trueAlternativeBlock value
 ]
@@ -68,6 +76,7 @@ True >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 { #category : #'logical operations' }
 True >> not [
 	"Negation--answer false since the receiver is true."
+	"true not >>> false"
 
 	^false
 ]
@@ -75,7 +84,8 @@ True >> not [
 { #category : #controlling }
 True >> or: alternativeBlock [ 
 	"Nonevaluating disjunction -- answer true since the receiver is true."
-	"(true or: [ 1 error ])>>> true"
+	"(true or: [Error signal]) >>> true"
+	"(true or: [false]) >>> true"
 	
 	^ self
 ]
@@ -88,9 +98,10 @@ True >> printOn: aStream [
 
 { #category : #'logical operations' }
 True >> xor: alternativeBlock [
-	"Nonevaluating conjunction. If the receiver is true, answer the opposite of the 
-	the argument, alternativeBlock; otherwise answer the value of the alternativeBlock."
-	"(true xor: [ true ]) >>> false"
+	"Nonevaluating conjunction. Answer the opposite of the 
+	the argument, alternativeBlock; since the receiver is true."
+	"(true xor: [true]) >>> false"
+	"(true xor: [false]) >>> true"
 	
 	^ alternativeBlock value not
 ]
@@ -98,6 +109,8 @@ True >> xor: alternativeBlock [
 { #category : #'logical operations' }
 True >> | aBoolean [ 
 	"Evaluating disjunction (OR) -- answer true since the receiver is true."
+	"true | true >>> true"
+	"true | false >>> true"
 
 	^self
 ]
