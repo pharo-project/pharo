@@ -245,5 +245,5 @@ ExternalAddress >> utf8StringFromCString [
 	WARNING: the referenced data MUST ends with a NULL character (byte 0).
 	"
 
-	^ self bytesFromCString utf8Decoded
+	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
 ]

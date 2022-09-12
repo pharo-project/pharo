@@ -72,6 +72,10 @@ ExternalData >> fromCStrings [
 	"Assume that the receiver represents a set of C strings and is terminated by a empty string and convert it to a Smalltalk ordered collection of strings"
 
 	| stream index char strings str |
+
+	self 
+		deprecated:  'This method returns strings that are not decoded. Please use #bytesFromCString with the rifght decoder instead'.
+
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
 	strings := OrderedCollection new.
 	index := 1.
@@ -110,5 +114,5 @@ ExternalData >> utf8StringFromCString [
 	"Assume that the receiver represents a C string containing UTF8 characters and convert 
 	 it to a Smalltalk string."
 	
-	^ self bytesFromCString utf8Decoded
+	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
 ]
