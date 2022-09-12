@@ -135,12 +135,14 @@ ByteArray >> platformUnsignedLongAt: byteOffset put: value [
 
 { #category : #'*UnifiedFFI' }
 ByteArray >> readString [
-	^ (ExternalData fromHandle: self type: ExternalType string) readString
+	^ (ExternalData fromHandle: self type: ExternalType string) bytesFromCString
 ]
 
 { #category : #'*UnifiedFFI' }
 ByteArray >> readStringUTF8 [
-	^ (ExternalData fromHandle: self type: ExternalType string) readStringUTF8.
+
+	^ (ExternalData fromHandle: self type: ExternalType string)
+		  utf8StringFromCString
 ]
 
 { #category : #'*UnifiedFFI' }

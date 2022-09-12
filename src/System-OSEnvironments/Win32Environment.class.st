@@ -108,7 +108,7 @@ Win32Environment >> keysAndValuesDo: aBlock [
 
 	environmentStrings := self environmentStrings.
 	[ 
-	nextString := environmentStrings fromCString.
+	nextString := environmentStrings utf8StringFromCString.
 	nextString ifEmpty: [ ^ self ].
 	nextString first = $=
 		ifFalse: [ self keysAndValuesDo: aBlock withAssociationString: nextString ].
