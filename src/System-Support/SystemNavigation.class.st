@@ -40,8 +40,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 { #category : #query }
 SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
+	self allClassNamesStartingWith: aString do: aBlock caseSensitive: true
+]
+
+{ #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
 	self allClassesDo: [ :e |
-		(e name beginsWith: aString)
+		(e name beginsWith: aString caseSensitive: cs)
 			ifTrue: [ aBlock value: e name ] ]
 ]
 
