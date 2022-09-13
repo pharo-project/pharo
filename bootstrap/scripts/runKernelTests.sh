@@ -22,11 +22,12 @@ TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2
 #TEST_VM_VERSION=$(echo "${TEST_NAME_PREFIX}" | cut -d'-' -f 1| cut -c 6- | cut -d'.' -f 1-2 | sed 's/\.//')
 TEST_VM_VERSION="90"
 
-if [ "${1}" -eq "32" ]
+#Odd PR builds use the the latest VM, else use the stable VM
+if [ $(is_development_build) == 1 && $((BUILD_NUMBER % 2)) -eq 1 ]]
 then
- TEST_VM_KIND="vm"
+ TEST_VM_KIND="vmLatest"
 else
- TEST_VM_KIND="vmLatest"	
+ TEST_VM_KIND="vm"	
 fi
 
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${TEST_VM_KIND} ${1}
