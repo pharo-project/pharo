@@ -34,11 +34,11 @@ ExternalData >> readString [
 	self 
 		deprecated:  'Please use #bytesFromCString instead' 
 		transformWith:  '`@receiver readString' 
-						-> '`@receiver bytesFromCString'.
+						-> '`@receiver bytesFromCString asString'.
 
 	self isNull ifTrue: [ ^ nil ].
 	
-	^ self bytesFromCString
+	^ self bytesFromCString asString
 ]
 
 { #category : #'*UnifiedFFI' }
