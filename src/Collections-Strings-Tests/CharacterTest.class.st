@@ -118,8 +118,9 @@ CharacterTest >> testPrintString [
 
 { #category : #tests }
 CharacterTest >> testPrintStringAll [
-	Character allCharacters
-		do: [ :each | self assert: (self class compiler evaluate: each printString) equals: each ]
+
+	Character allByteCharacters do: [ :each | 
+		self assert: (self class compiler evaluate: each printString) equals: each ]
 ]
 
 { #category : #tests }
@@ -144,6 +145,7 @@ CharacterTest >> testStoreString [
 
 { #category : #tests }
 CharacterTest >> testStoreStringAll [
-	Character allCharacters
-		do: [ :each | self assert: (self class compiler evaluate: each storeString) equals: each ]
+
+	Character allByteCharacters do: [ :each | 
+		self assert: (self class compiler evaluate: each storeString) equals: each ]
 ]
