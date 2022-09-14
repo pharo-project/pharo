@@ -288,7 +288,7 @@ RBParser >> methodNodeClass [
 
 { #category : #private }
 RBParser >> nextToken [
-	^nextToken ifNil: [nextToken := self scannerNext] ifNotNil: [nextToken]
+	^nextToken ifNil: [nextToken := self scannerNext]
 ]
 
 { #category : #'private - parsing' }
