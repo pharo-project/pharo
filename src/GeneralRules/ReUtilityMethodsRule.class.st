@@ -26,6 +26,7 @@ ReUtilityMethodsRule >> basicCheck: aMethod [
 	aMethod selector isUnary ifTrue: [ ^ false ].
 	(self utilityProtocols includes: aMethod protocol) ifTrue: [ ^ false ].
 	aMethod isOverridden ifTrue: [ ^ false ].
+	aMethod isOverriding ifTrue: [ ^ false ].
 	aMethod sendsToSuper ifTrue: [ ^ false ].
 	aMethod selfMessages isEmpty ifFalse: [ ^ false ].
 	^ aMethod methodClass definedVariables noneSatisfy: [ :variable |
