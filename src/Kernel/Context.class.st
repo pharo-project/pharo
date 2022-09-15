@@ -407,7 +407,7 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -415,7 +415,7 @@ Context >> canHandleSignal: exception [
 		or: [ self nextHandlerContext canHandleSignal: exception ].
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
