@@ -495,6 +495,14 @@ Dictionary >> collect: aBlock [
 	^newCollection
 ]
 
+{ #category : #evaluating }
+Dictionary >> cull: anOject [
+
+	"DO NOT USE. Method only here to simutate BlockClosure. See value: for details."
+	
+	^self at: anOject 
+]
+
 { #category : #adding }
 Dictionary >> declare: key from: aDictionary [ 
 	"Add key to the receiver. If key already exists, do nothing. If aDictionary 
@@ -929,6 +937,24 @@ Dictionary >> unreferencedKeys [
 
 	^self keys select: [ :key | 
 			(self systemNavigation allReferencesTo: (self associationAt: key)) isEmpty ]
+]
+
+{ #category : #evaluating }
+Dictionary >> value: anObject [
+
+	"Alias of `at:`. Do not use it yourself, use `at:`! 
+
+	This method (and others from the evaluating protocol) is used to simulate BlockClosures.
+	As a Dictonnary associates objects to other objects, it fulfills the basic needs of many *enumerating* methods on Collections (and other classes and protocols).
+	"
+
+	"A dictionary used to transform elements of a collection:
+	|d| d := {-1->'negative'. 0->'zero'. 1->'positive'} asDictionary. ((-10 to: 10 by: 5) sign collect: d) >>> { 'negative'. 'negative'. 'zero'. 'positive'. 'positive' }"
+
+	"A dictionnary used to filter elements of a collection:
+	|d| d := {$A->false. $T->true. $G->true. $C->false} asDictionary. ('AGTCTGCACTC' count: d) >>> 5"
+
+	^ self at: anObject
 ]
 
 { #category : #private }
