@@ -16,8 +16,11 @@ ReCollectionMessagesToExternalObjectRule class >> uniqueIdentifierName [
 
 { #category : #hooks }
 ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingDict [
-	| collectionOwner |
-	((mappingDict at: '`@collectionGetter:') beginsWith: 'as') ifTrue: [ ^ false ].
+	| collectionGetter collectionOwner |
+	collectionGetter := mappingDict at: '`@collectionGetter:'.
+	"Check selectors that assumes unowned result"
+	collectionGetter = 'copy' ifTrue: [ ^ false ].
+	(collectionGetter beginsWith: 'as') ifTrue: [ ^ false ].
 	collectionOwner := mappingDict at: (RBPatternVariableNode named: '`@collectionOwner').
 	 collectionOwner isVariable ifFalse: [ ^ true ].
 	^ self isNotSpecialVariable: collectionOwner.
