@@ -416,6 +416,16 @@ Symbol >> cull: anObject [
 	^anObject perform: self.
 ]
 
+{ #category : #evaluating }
+Symbol >> cull: anObject cull: anObject2 [
+
+	"A Symbol can be mostly used as a BlockClosure. See value: for details"
+
+	"(#at: cull: 'hello' cull: 2) >>> $e"
+
+	^ anObject perform: self with: anObject2
+]
+
 { #category : #private }
 Symbol >> errorNoModification [
 
@@ -621,6 +631,25 @@ Symbol >> value: anObject [
 	"Keep advised that Symbols are not real Blocks and only a subset of operations are simulated."
 
 	^ anObject perform: self
+]
+
+{ #category : #evaluating }
+Symbol >> value: anObject value: anObject2 [
+
+	"A Symbol can be mostly used as a BlockClosure. See value: for details"
+
+	"(#+ value: 2 value: 3) >>> 5"
+	"(#at: value: #(10 20 30) value: 2) >>> 20"
+
+	"This method can be useful with some methods of Collection.
+	(#(1 9 0 6 6) sorted: #>=) >>> #(9 6 6 1 0)
+	(#(2r101 2r011 2r100) inject: 0 into: #bitXor:) >>> 2r010 
+	behave the same as
+	(#(1 9 0 6 6) sorted: [:a : b| a >= b]) >>> #(9 6 6 1 0)
+	(#(2r101 2r011 2r100) inject: 0 into: [:a :b| a bitXor: b]) >>> 2r010
+	"
+
+	^ anObject perform: self with: anObject2
 ]
 
 { #category : #copying }
