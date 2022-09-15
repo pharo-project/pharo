@@ -408,6 +408,11 @@ Symbol >> createSymbol [
 
 { #category : #evaluating }
 Symbol >> cull: anObject [ 
+
+	"A Symbol can be mostly used as a BlockClosure. See value: for details"
+	
+	"#asUppercase cull: 'hello' >>> 'HELLO'"
+
 	^anObject perform: self.
 ]
 
@@ -596,8 +601,26 @@ Symbol >> uncapitalized [
 ]
 
 { #category : #evaluating }
-Symbol >> value: anObject [ 
-	^anObject perform: self.
+Symbol >> value: anObject [
+
+	"A Symbol can be mostly used as a BlockClosure.
+	The behavior is to send self a a message on anObject. See perform."
+
+	"#asUppercase value: 'hello' >>> 'HELLO'"
+
+	"For instance, this feature can be usefull on many methods of Collections."
+
+	"
+	(#(0 10 20 -30) collect: #negated) >>> #(0 -10 -20 30)
+	('Hello, World!' select: #isLetter) >>> 'HelloWorld'
+	behave the same as
+	(#(0 10 20 -30) collect: [ :each | each negated ]) >>> #(0 -10 -20 30)
+	('Hello, World!' select: [ :each | each isLetter ]) >>> 'HelloWorld'
+	"
+
+	"Keep advised that Symbols are not real Blocks and only a subset of operations are simulated."
+
+	^ anObject perform: self
 ]
 
 { #category : #copying }
