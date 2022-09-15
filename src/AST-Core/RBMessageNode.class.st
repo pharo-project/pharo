@@ -97,7 +97,7 @@ RBMessageNode >> bestNodeFor: anInterval [
 			[:each | 
 			| node |
 			(each intersectsInterval: anInterval) ifTrue: [node := each bestNodeFor: anInterval.
-			node notNil ifTrue: [^node]]].
+			node ifNotNil: [^node]]].
 	comments := self methodNode getCommentsFor: anInterval.
 	^comments size ~= 1 ifTrue: [ self ] ifFalse: [ comments first ]
 ]

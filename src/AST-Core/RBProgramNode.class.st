@@ -947,7 +947,7 @@ RBProgramNode >> replaceMethodSource: aNode [
 
 	| method |
 	method := self methodNode.
-	method notNil ifTrue: [method map: self to: aNode].
+	method ifNotNil: [ method map: self to: aNode ].
 	aNode parent: self parent.
 	[self replaceSourceWith: aNode] on: Error
 		do: 
@@ -1126,10 +1126,11 @@ RBProgramNode >> whichNodeIsContainedBy: anInterval [
 ]
 
 { #category : #querying }
-RBProgramNode >> whoDefines: aName [ 
-	^(self defines: aName) 
-		ifTrue: [self]
-		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]
+RBProgramNode >> whoDefines: aName [
+
+	^ (self defines: aName)
+		  ifTrue: [ self ]
+		  ifFalse: [ parent ifNotNil: [ parent whoDefines: aName ] ]
 ]
 
 { #category : #accessing }

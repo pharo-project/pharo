@@ -328,7 +328,7 @@ RBParseTreeSearcher >> matchesTree: aBRProgramNode do: aBlock [
 
 { #category : #accessing }
 RBParseTreeSearcher >> messages [
-	messages notNil ifTrue: [^messages].
+	messages ifNotNil: [^messages].
 	argumentSearches notEmpty ifTrue: [^messages := #()].
 	messages := Set new.
 	searches do: 
@@ -347,8 +347,7 @@ RBParseTreeSearcher >> performSearches: aSearchCollection on: aNode [
 	| value |
 	aSearchCollection do: [ :aSearchRule|
 		value := aSearchRule performOn: aNode.
-		value notNil 
-			ifTrue: 
+		value ifNotNil:
 				[self foundMatch.
 				^value]].
 	^nil
