@@ -553,6 +553,11 @@ RPackage >> definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName [
 ]
 
 { #category : #accessing }
+RPackage >> definedOrExtendedClasses [
+	^ self definedClasses | self extendedClasses
+]
+
+{ #category : #accessing }
 RPackage >> definedSelectorsForClass: aClass [
 
 	^ aClass isMeta
