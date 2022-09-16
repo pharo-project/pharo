@@ -61,6 +61,12 @@ DTFilterableListPresenter >> displayBlock: aBlock [
 	^ self listPresenter display: aBlock
 ]
 
+{ #category : #accessing }
+DTFilterableListPresenter >> displayIcon: aFullBlockClosure [ 
+
+	self listPresenter displayIcon: aFullBlockClosure 
+]
+
 { #category : #private }
 DTFilterableListPresenter >> filterList [
 	"Filters the list according to the filterTextInput."

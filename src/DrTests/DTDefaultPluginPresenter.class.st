@@ -147,6 +147,7 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
 	itemsList := self newFilterableListPresenter.
 	itemsList
+		displayIcon: [ :aClass | self iconNamed: aClass systemIconName  ];
 		help: 'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
 		sortingBlock: #name ascending;
 		displayBlock: [ :item | item name ];
