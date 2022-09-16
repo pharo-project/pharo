@@ -405,6 +405,37 @@ ContextTest >> testSteppingReturnSelfMethod [
 	self assert: newContext identicalTo: aMethodContext
 ]
 
+{ #category : #'as yet unclassified' }
+ContextTest >> testvariableNamesOf [
+
+	| a b c |
+	a := 'hello'.
+	b := 'hel' , 'lo'.
+
+	self assert: (thisContext variableNamesOf: a) equals: #( #a ).
+
+	c := a.
+
+	self assert: (thisContext variableNamesOf: a) equals: #( #a #c ).
+]
+
+{ #category : #'as yet unclassified' }
+ContextTest >> testvariableNamesOf: x and: y [
+
+	| a b c |
+	a := x.
+	b := y.
+	c := a.
+
+	self assert: (thisContext variableNamesOf: a) equals: #( #x #a #c )
+]
+
+{ #category : #'as yet unclassified' }
+ContextTest >> testvariableNamesOfWithArgs [
+
+	self testvariableNamesOf: 'hello' and: 'world'
+]
+
 { #category : #tests }
 ContextTest >> verifyJumpWithSelector: selector [
 	| guineaPig normalStackp readOnlyStackp |

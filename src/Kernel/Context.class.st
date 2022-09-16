@@ -1784,7 +1784,7 @@ Context >> searchPlayground [
 	"Search down into the call stack and look for the playgroud context (UndefinedObject>>DoIt).
 	Return `nil` if not found."
 	
-	self receiver ifNil: [self selector == #DoIt ifTrue: [ ^self ] ].
+	self belongsToDoIt ifTrue: [ ^ self home ].
 	sender ifNil: [ ^nil ].
 	^ sender searchPlayground.
 ]
@@ -2260,6 +2260,16 @@ Context >> unwindTo: aContext [
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
 			unwindBlock value ]].
+]
+
+{ #category : #'debugger access' }
+Context >> variableNamesOf: anObject [
+
+	"Retrieve the names of the arguments and temporary variables, if any, that refer to the given object."
+
+	^ (1 to: self size)
+		  select: [ :i | (self at: i) == anObject ]
+		  thenCollect: [ :i | self home method tempNames at: i ]
 ]
 
 { #category : #private }
