@@ -1779,6 +1779,17 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 ]
 
 { #category : #'debugger access' }
+Context >> searchPlayground [
+
+	"Search down into the call stack and look for the playgroud context (UndefinedObject>>DoIt).
+	Return `nil` if not found."
+	
+	self receiver ifNil: [self selector == #DoIt ifTrue: [ ^self ] ].
+	sender ifNil: [ ^nil ].
+	^ sender searchPlayground.
+]
+
+{ #category : #'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
 

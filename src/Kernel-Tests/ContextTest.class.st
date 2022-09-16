@@ -48,6 +48,12 @@ ContextTest class >> returnNonActiveContextOfBlock [
 	^ Block value
 ]
 
+{ #category : #'as yet unclassified' }
+ContextTest >> DoIt [
+
+	"Mock DoIt method that does not do things"
+]
+
 { #category : #private }
 ContextTest >> privRestartArgBlockTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
@@ -222,6 +228,38 @@ ContextTest >> testReturn [
 		method: aCompiledMethod
 		arguments: #().
 	self assert: (aMethodContext return: 5) equals: 5
+]
+
+{ #category : #tests }
+ContextTest >> testSearchPlayground [
+
+	|doit|
+	
+	doit := Context
+		sender: thisContext
+		receiver: nil
+		method: self class >> #DoIt
+		arguments: #().
+
+	aMethodContext := Context
+		sender: doit
+		receiver: aReceiver
+		method: aCompiledMethod
+		arguments: #().
+		
+	self assert: (aMethodContext searchPlayground) equals: doit
+]
+
+{ #category : #tests }
+ContextTest >> testSearchPlaygroundNil [
+
+	aMethodContext := Context
+		sender: thisContext
+		receiver: aReceiver
+		method: aCompiledMethod
+		arguments: #().
+		
+	self assert: (aMethodContext searchPlayground) equals: nil
 ]
 
 { #category : #tests }
