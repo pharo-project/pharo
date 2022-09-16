@@ -1779,14 +1779,14 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 ]
 
 { #category : #'debugger access' }
-Context >> searchPlayground [
+Context >> searchDoIt [
 
-	"Search down into the call stack and look for the playgroud context (UndefinedObject>>DoIt).
+	"Search down into the call stack and look for a DoIt context.
 	Return `nil` if not found."
 	
 	self belongsToDoIt ifTrue: [ ^ self home ].
 	sender ifNil: [ ^nil ].
-	^ sender searchPlayground.
+	^ sender searchDoIt.
 ]
 
 { #category : #'debugger access' }

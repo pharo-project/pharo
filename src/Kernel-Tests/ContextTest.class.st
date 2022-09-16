@@ -48,7 +48,7 @@ ContextTest class >> returnNonActiveContextOfBlock [
 	^ Block value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 ContextTest >> DoIt [
 
 	"Mock DoIt method that does not do things"
@@ -231,7 +231,7 @@ ContextTest >> testReturn [
 ]
 
 { #category : #tests }
-ContextTest >> testSearchPlayground [
+ContextTest >> testSearchDoIt [
 
 	|doit|
 	
@@ -247,11 +247,11 @@ ContextTest >> testSearchPlayground [
 		method: aCompiledMethod
 		arguments: #().
 		
-	self assert: (aMethodContext searchPlayground) equals: doit
+	self assert: (aMethodContext searchDoIt) equals: doit
 ]
 
 { #category : #tests }
-ContextTest >> testSearchPlaygroundNil [
+ContextTest >> testSearchDoItNil [
 
 	aMethodContext := Context
 		sender: thisContext
@@ -259,7 +259,7 @@ ContextTest >> testSearchPlaygroundNil [
 		method: aCompiledMethod
 		arguments: #().
 		
-	self assert: (aMethodContext searchPlayground) equals: nil
+	self assert: (aMethodContext searchDoIt) equals: nil
 ]
 
 { #category : #tests }
