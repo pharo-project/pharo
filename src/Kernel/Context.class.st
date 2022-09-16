@@ -2267,9 +2267,9 @@ Context >> variableNamesOf: anObject [
 
 	"Retrieve the names of the arguments and temporary variables, if any, that refer to the given object."
 
-	^ (1 to: self size)
-		  select: [ :i | (self at: i) == anObject ]
-		  thenCollect: [ :i | self home method tempNames at: i ]
+	^self astScope allTemps
+		select: [ :v | (v readInContext: self) == anObject ]
+		thenCollect: [ :v | v name ]
 ]
 
 { #category : #private }

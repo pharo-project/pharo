@@ -405,10 +405,10 @@ ContextTest >> testSteppingReturnSelfMethod [
 	self assert: newContext identicalTo: aMethodContext
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContextTest >> testvariableNamesOf [
 
-	| a b c |
+	| a b c d |
 	a := 'hello'.
 	b := 'hel' , 'lo'.
 
@@ -416,21 +416,44 @@ ContextTest >> testvariableNamesOf [
 
 	c := a.
 
-	self assert: (thisContext variableNamesOf: a) equals: #( #a #c ).
+	self assert: (thisContext variableNamesOf: a) sorted 	equals: #( #a #c ).
+
+	d := a.
+
+	{ a } do: [ :z | 
+		| t |
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #c #d #z ).
+		t := z.
+		c := nil.
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #d #t #z ) ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContextTest >> testvariableNamesOf: x and: y [
 
-	| a b c |
+	| a b c d e |
+		
 	a := x.
 	b := y.
 	c := a.
 
-	self assert: (thisContext variableNamesOf: a) equals: #( #x #a #c )
+	self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #c #x ).
+
+	d := a.
+
+	{ a } do: [ :z | 
+		| t |
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #c #d #x #z ).
+		t := a.
+		c := nil.
+		e := a.
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #d #e #t #x #z ).
+		].
+	
+	a := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContextTest >> testvariableNamesOfWithArgs [
 
 	self testvariableNamesOf: 'hello' and: 'world'
