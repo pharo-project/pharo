@@ -327,42 +327,24 @@ DiffMorph >> buttons [
 { #category : #actions }
 DiffMorph >> calculateAllDifferences [
 
-	| diff si di |
-	si := 1.
-	di := 1.
-	diff := OrderedCollection new.
+	| differences srcDiffStart dstDiffStart |
+	srcDiffStart := 1.
+	dstDiffStart := 1.
+	differences := OrderedCollection new.
 	self joinMappings do: [ :join | 
 		join type = #match ifFalse: [ 
 			join type = #modification
 				ifTrue: [ 
-					| inlineDiff sj dj |
-					sj := si.
-					dj := di.
-					inlineDiff := (InlineTextDiffBuilder
-						               from: join src text
-						               to: join dst text) buildPatchSequence 
-						              groupByRuns: [ :e | e key = #match ].
-					inlineDiff do: [ :c | 
-						c first key = #match
-							ifTrue: [ 
-								c do: [ :s | 
-									sj := sj + s value size.
-									dj := dj + s value size ] ]
-							ifFalse: [ 
-								| sk dk |
-								sk := sj.
-								dk := dj.
-								c do: [ :s | 
-									s key = #remove
-										ifTrue: [ sj := sj + s value size ]
-										ifFalse: [ dj := dj + s value size ] ].
-								diff add: (sk to: sj - 1) -> (dk to: dj - 1) ] ] ]
+					differences addAll: (self
+							 differencesStartingOnSrcAt: srcDiffStart
+							 onDstAt: dstDiffStart
+							 patchSequence: (self patchSequenceFromJoinMapping: join)) ]
 				ifFalse: [ 
-					diff add: (si to: si + join src text size - 1)
-						-> (di to: di + join dst text size - 1) ] ].
-		si := si + join src text size.
-		di := di + join dst text size ].
-	^ diff
+					differences add: (srcDiffStart to: srcDiffStart + join src text size - 1)
+						-> (dstDiffStart to: dstDiffStart + join dst text size - 1) ] ].
+		srcDiffStart := srcDiffStart + join src text size.
+		dstDiffStart := dstDiffStart + join dst text size ].
+	^ differences
 ]
 
 { #category : #actions }
@@ -562,6 +544,37 @@ DiffMorph >> difference: anObject [
 	"Set the value of difference"
 
 	difference := anObject
+]
+
+{ #category : #actions }
+DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitialDiffStart patchSequence: patchSequence [
+
+	| patchSequenceGroupedByMatch srcDiffStart dstDiffStart differences |
+	srcDiffStart := srcInitialDiffStart.
+	dstDiffStart := dstInitialDiffStart.
+	differences := OrderedCollection new.
+	patchSequenceGroupedByMatch := patchSequence groupByRuns: [ :e | 
+		                               e key = #match ].
+	patchSequenceGroupedByMatch do: [ :patches | 
+		patches first key = #match
+			ifTrue: [ 
+				| increment |
+				increment := patches sum: [ :eachAssociation | 
+					             eachAssociation value size ].
+				srcDiffStart := srcDiffStart + increment.
+				dstDiffStart := dstDiffStart + increment ]
+			ifFalse: [ 
+				| srck dstk |
+				srck := srcDiffStart.
+				dstk := dstDiffStart.
+				patches do: [ :association | 
+					| string |
+					string := association value.
+					association key = #remove
+						ifTrue: [ srcDiffStart := srcDiffStart + string size ]
+						ifFalse: [ dstDiffStart := dstDiffStart + string size ] ].
+				differences add: (srck to: srcDiffStart - 1) -> (dstk to: dstDiffStart - 1) ] ].
+	^ differences
 ]
 
 { #category : #accessing }
@@ -986,6 +999,14 @@ DiffMorph >> newSrcMorph [
 DiffMorph >> on: aModel [
 
 	aModel addDependent: self
+]
+
+{ #category : #actions }
+DiffMorph >> patchSequenceFromJoinMapping: joinMapping [
+
+	^ (InlineTextDiffBuilder
+		   from: joinMapping src text
+		   to: joinMapping dst text) buildPatchSequence
 ]
 
 { #category : #accessing }
