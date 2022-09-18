@@ -31,13 +31,14 @@ Class {
 { #category : #'world menu' }
 MCWorkingCopyBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #'Monticello Browser (Legacy)')
 		parent: #Versioning;
 		action: [ Smalltalk tools openMonticelloBrowser ];
 		order: 2;
 		keyText: 'o, p';
 		help: '(Deprecated) Source code versioning system to manage Smalltalk code.';
-		icon: Smalltalk tools monticelloBrowser taskbarIcon
+		icon: (aBuilder iconNamed:Smalltalk tools monticelloBrowser taskbarIconName)
 ]
 
 { #category : #'instance creation' }

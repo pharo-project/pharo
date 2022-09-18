@@ -1862,11 +1862,14 @@ SystemWindow >> stepTime [
 ]
 
 { #category : #icons }
-SystemWindow >> taskbarIcon [
+SystemWindow >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	self model ifNotNil: [self model taskbarIcon ifNotNil: [:ico | ^ico]].
-	^super taskbarIcon
+	self model ifNotNil: [
+		self model taskbarIconName 
+			ifNotNil: [ :aName | ^aName ] ].
+	
+	^ super taskbarIconName
 ]
 
 { #category : #move }

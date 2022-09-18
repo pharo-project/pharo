@@ -63,7 +63,7 @@ DrTests class >> menuCommandOn: aBuilder [
 		order: 2;
 		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
 		help: '(Preview) Let you run and debug SUnit tests.';
-		icon: self taskbarIcon;
+		icon: (aBuilder iconNamed: self taskbarIconName);
 		withSeparatorAfter
 ]
 
