@@ -125,6 +125,15 @@ DAPackageRelationGraphTest >> testAllSeen [
 ]
 
 { #category : #tests }
+DAPackageRelationGraphTest >> testCanGetDaPackageFromAGivenClass [
+	aPackageRelationGraph addPackage: packageCollectionAbstract.
+	
+	self 
+		assert: (aPackageRelationGraph packageForClass: Collection)
+		equals: packageCollectionAbstract
+]
+
+{ #category : #tests }
 DAPackageRelationGraphTest >> testClearAllDependencies [
 	| aRelationGraph packagesFromGraph |
 	aRelationGraph := DAPackageRelationGraph
@@ -207,12 +216,6 @@ DAPackageRelationGraphTest >> testPackages [
 	aCollection add: packageKernel.
 	aCollection do: [ :each | aPackageRelationGraph addPackage: each ].
 	self assert: aPackageRelationGraph packages size equals: 2
-]
-
-{ #category : #tests }
-DAPackageRelationGraphTest >> testPdPackageFrom [
-	aPackageRelationGraph addPackage: packageCollectionAbstract.
-	self assert: (aPackageRelationGraph pdPackageFrom: Collection) equals: packageCollectionAbstract
 ]
 
 { #category : #tests }
