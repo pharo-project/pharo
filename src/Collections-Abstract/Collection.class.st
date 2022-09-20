@@ -162,27 +162,47 @@ Collection >> adaptToPoint: rcvr andSend: selector [
 ]
 
 { #category : #adding }
-Collection >> add: newObject [ 
-	"Include newObject as one of the receiver's elements. Answer newObject. 
+Collection >> add: newObject [
+
+	"Include newObject as one of the receiver's elements. Answer newObject.
 	ArrayedCollections cannot respond to this message."
+
+	"({10. 20} asOrderedCollection add: 30) >>> 30"
+	"({10. 20} asOrderedCollection add: 30; yourself) >>> {10. 20. 30} asOrderedCollection"
+	"({10. 20} asOrderedCollection add: 20; yourself) >>> {10. 20. 20} asOrderedCollection"
+
+	"({10. 20} asSet add: 30; yourself) >>> {10. 20. 30} asSet"
+	"({10. 20} asSet add: 20; yourself) >>> {10. 20} asSet"
 
 	self subclassResponsibility
 ]
 
 { #category : #adding }
 Collection >> add: newObject withOccurrences: anInteger [
+
 	"Add newObject anInteger times to the receiver. Answer newObject."
 
-	anInteger timesRepeat: [self add: newObject].
+	"({10. 20} asOrderedCollection add: 30 withOccurrences: 2) >>> 30"
+
+	"({10. 20} asOrderedCollection add: 30 withOccurrences: 2; yourself) >>> {10. 20. 30. 30} asOrderedCollection"
+
+	anInteger timesRepeat: [ self add: newObject ].
 	^ newObject
 ]
 
 { #category : #adding }
-Collection >> addAll: aCollection [ 
-	"Include all the elements of aCollection as the receiver's elements. Answer 
+Collection >> addAll: aCollection [
+
+	"Include all the elements of aCollection as the receiver's elements. Answer
 	aCollection. Actually, any object responding to #do: can be used as argument."
 
-	aCollection do: [:each | self add: each].
+	"({10. 20} asOrderedCollection addAll: {20. 30. 30. 40.}) >>> {20. 30. 30. 40.}"
+
+	"({10. 20} asOrderedCollection addAll: {20. 30. 30. 40.}; yourself) >>> {10. 20. 20. 30. 30. 40.} asOrderedCollection"
+
+	"({10. 20} asSet addAll: {20. 30. 30. 40.}; yourself) >>> {10. 20. 30. 40.} asSet"
+
+	aCollection do: [ :each | self add: each ].
 	^ aCollection
 ]
 
@@ -194,10 +214,17 @@ Collection >> addAssignToFloatArray: aFloatArray [
 
 { #category : #adding }
 Collection >> addIfNotPresent: anObject [
+
 	"Include anObject as one of the receiver's elements, but only if there
 	is no such element already. Anwser anObject."
 
-	(self includes: anObject) ifFalse: [self add: anObject].
+	"({10. 20} asOrderedCollection addIfNotPresent: 30) >>> 30"
+
+	"({10. 20} asOrderedCollection addIfNotPresent: 30; yourself) >>> ({10. 20. 30} asOrderedCollection)"
+
+	"({10. 20} asOrderedCollection addIfNotPresent: 20; yourself) >>> ({10. 20.} asOrderedCollection)"
+
+	(self includes: anObject) ifFalse: [ self add: anObject ].
 	^ anObject
 ]
 
@@ -1246,10 +1273,12 @@ Collection >> reject: rejectBlock thenDo: doBlock [
 ]
 
 { #category : #removing }
-Collection >> remove: oldObject [ 
-	"Remove oldObject from the receiver's elements. Answer oldObject 
+Collection >> remove: oldObject [
+	"Remove oldObject from the receiver's elements. Answer oldObject
 	unless no element is equal to oldObject, in which case, raise an error.
 	ArrayedCollections cannot respond to this message."
+
+	"(#(10 20 10) asOrderedCollection remove: 10; yourself) >>> #(20 10) asOrderedCollection"
 
 	^ self remove: oldObject ifAbsent: [self errorNotFound: oldObject]
 ]
@@ -1273,6 +1302,8 @@ Collection >> removeAll [
 	1) the subclass does not support being modified while being iterated
 	2) the subclass provides a much faster way than iterating through each element"
 
+	"#(10 20 10) asOrderedCollection removeAll >>> OrderedCollection new"
+
 	self do: [:each | self remove: each].
 ]
 
@@ -1281,6 +1312,8 @@ Collection >> removeAll: aCollection [
 	"Remove each element of aCollection from the receiver. If successful for 
 	each, answer aCollection. Otherwise create an error notification.
 	ArrayedCollections cannot respond to this message."
+
+	"(#(10 20 10 30 10) asOrderedCollection removeAll: #(10 10 20); yourself) >>> #(30 10) asOrderedCollection"
 
 	aCollection == self ifTrue: [^self removeAll].
 	aCollection do: [:each | self remove: each].
@@ -1293,6 +1326,8 @@ Collection >> removeAllFoundIn: aCollection [
 	from the receiver. Answer aCollection. No error is raised if an element
 	isn't found. ArrayedCollections cannot respond to this message."
 
+	"(#(10 20 10 10) asOrderedCollection removeAllFoundIn: #(10 20 30); yourself) >>> #(10 10) asOrderedCollection"
+
 	aCollection do: [:each | self remove: each ifAbsent: []].
 	^ aCollection
 ]
@@ -1302,6 +1337,8 @@ Collection >> removeAllSuchThat: aBlock [
 	"Evaluate aBlock for each element and remove all that elements from
 	the receiver for that aBlock evaluates to true.  Use a copy to enumerate 
 	collections whose order changes when an element is removed (i.e. Sets)."
+
+	"(#(5 6 7 8) asOrderedCollection removeAllSuchThat: #even) >>> #(5 7) asOrderedCollection"
 
 	self copy do: [:each | (aBlock value: each) ifTrue: [self remove: each]]
 ]
