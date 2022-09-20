@@ -1075,8 +1075,8 @@ Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 		aStream print: elem]
 	separatedBy: [
 		n = sz
-			ifTrue: [aStream print: lastDelimString]
-			ifFalse: [aStream print: delimString]]
+			ifTrue: [aStream nextPutAll: lastDelimString]
+			ifFalse: [aStream nextPutAll: delimString]]
 ]
 
 { #category : #enumerating }
