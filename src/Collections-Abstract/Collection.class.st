@@ -1550,7 +1550,11 @@ Collection >> size [
 Collection >> sorted [
 	"Return a new sequenceable collection which contains the same elements as self but its 
 elements are sorted"
-	
+
+	"#(3 1 4 2) sorted >>> #(1 2 3 4)"
+	"'hello' sorted >>> 'ehllo'"
+	"(10 to: 1 by: -2) sorted >>> (2 to: 10 by: 2)"
+
 	^self asArray sorted
 ]
 
@@ -1560,7 +1564,11 @@ Collection >> sorted: aSortBlockOrNil [
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if 
 the first element should preceed the second one. If aSortBlock is nil then <= is used for 
 comparison."
-	
+
+	"(#(3 1 4 2) sorted: [:a :b| a>=b]) >>> #(4 3 2 1)"
+	"('hello' sorted: [:a :b| a>=b]) >>> 'ollhe'"
+	"(1 to: 10 by: 2) sorted: [:a :b| a>=b] >>> #(9 7 5 3 1)"
+
 	^self asArray sort: aSortBlockOrNil
 ]
 
