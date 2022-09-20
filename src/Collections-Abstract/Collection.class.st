@@ -860,6 +860,11 @@ Collection >> doWithIndex: elementAndIndexBlock [
 { #category : #private }
 Collection >> emptyCheck [
 
+	"Signal CollectionIsEmpty if the collection is empty"
+
+	"#(10 20) emptyCheck >>> #(10 20)"
+	"[#() emptyCheck] on: CollectionIsEmpty do: [ 'oops' ] >>> 'oops'"
+
 	self isEmpty ifTrue: [self errorEmptyCollection]
 ]
 
@@ -1029,6 +1034,10 @@ Collection >> hash [
 Collection >> identityIncludes: anObject [ 
 	"Answer whether anObject is one of the receiver's elements."
 
+	"({#hello. #world} identityIncludes: #hello) >>> true"
+	"({'hel','lo'. 'world'} identityIncludes: 'hello') >>> false"
+	"({'hel','lo'. 'world'} includes: 'hello') >>> true"
+
 	self do: [:each | anObject == each ifTrue: [^true]].
 	^false
 ]
@@ -1036,6 +1045,10 @@ Collection >> identityIncludes: anObject [
 { #category : #testing }
 Collection >> ifEmpty: aBlock [
 	"Evaluate the given block, answering its value if the receiver is empty, otherwise answer the receiver."
+
+	"(#(1 2) ifEmpty: [0]) >>> #(1 2)"
+	"(#() ifEmpty: [0]) >>> 0"
+	"('' ifEmpty: ['(nil)']) >>> '(nil)'"
 
 	"Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: ['As yet unclassified'])"
 
@@ -1057,7 +1070,10 @@ Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
 { #category : #testing }
 Collection >> ifNotEmpty: aBlock [
 	"Evaluate the given block with the receiver as argument, answering its value
-    unless the receiver is empty, in which case answer the receiver."
+	unless the receiver is empty, in which case answer the receiver."
+
+	"(#(10 20) ifNotEmpty: [:x| x average]) >>> 15"
+	"(#() ifNotEmpty: [:x| x average]) >>> #()"
 
 	^ self isEmpty
 		ifTrue: [ self ]
@@ -1078,12 +1094,30 @@ Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 Collection >> includes: anObject [ 
 	"Answer whether anObject is one of the receiver's elements."
 
+	"#(10 20 30) includes: 20) >>> true"
+	"#(10 20 30) includes: 21) >>> false"
+
+	"((1 to:9 by:2) includes: 3) >>> true"
+	"((1 to:9 by:2) includes: 4) >>> false"
+
+	"('Hello' includes: $l) >>> true"
+	"('Hello' includes: $h) >>> false"
+
+	"({'hello'. 'world'} includes: 'hello') >>> true"
+	"({'hel','lo'. 'world'} includes: 'hello') >>> true"
 	^ self anySatisfy: [:each | each = anObject]
 ]
 
 { #category : #testing }
 Collection >> includesAll: aCollection [ 
 	"Answer whether all the elements of aCollection are in the receiver."
+
+	"(#(10 20 30) includesAll: #(30 20)) >>> true"
+	"(#(10 20 30) includesAll: #(30 40)) >>> false"
+	"(#(10 20 30) includesAll: #()) >>> true"
+	"('hello' includesAll: 'ho') >>> true"
+	"('hello' includesAll: 'hop') >>> false"
+
 	aCollection do: [:elem | (self includes: elem) ifFalse: [^ false]].
 	^ true
 ]
@@ -1091,6 +1125,13 @@ Collection >> includesAll: aCollection [
 { #category : #testing }
 Collection >> includesAny: aCollection [ 
 	"Answer whether any element of aCollection is one of the receiver's elements."
+
+	"(#(10 20 30) includesAny: #(30 40)) >>> true"
+	"(#(10 20 30) includesAny: #(50 40)) >>> false"
+	"(#(10 20 30) includesAny: #()) >>> false"
+	"('hello' includesAny: 'hop') >>> true"
+	"('hello' includesAny: 'pwn') >>> false"
+
 	aCollection do: [:elem | (self includes: elem) ifTrue: [^ true]].
 	^ false
 ]
@@ -1106,6 +1147,9 @@ Collection >> includesAnyOf: aCollection [
 { #category : #testing }
 Collection >> includesSubstringAnywhere: testString [
 	"Answer whether the receiver includes, anywhere in its nested structure, a string that has testString as a substring"
+
+	"#(first (second third) ((allSentMessages ('Elvis' includes:)))) includesSubstringAnywhere:  'lvi' >>> true"
+
 	self do:
 		[:element |
 			(element isString)
@@ -1115,8 +1159,6 @@ Collection >> includesSubstringAnywhere: testString [
 				ifTrue:
 					[(element includesSubstringAnywhere: testString) ifTrue: [^ true]]].
 	^ false
-
-"#(first (second third) ((allSentMessages ('Elvis' includes:)))) includesSubstringAnywhere:  'lvi'"
 ]
 
 { #category : #enumerating }
@@ -1167,6 +1209,13 @@ Collection >> isCollection [
 Collection >> isEmpty [
 	"Answer whether the receiver contains any elements."
 
+	"{} isEmpty >>> true"
+	"{{}} isEmpty >>> false"
+	"'' isEmpty >>> true"
+	"' ' isEmpty >>> false"
+	"(1 to: 10) isEmpty >>> false"
+	"(10 to: 1) isEmpty >>> true"
+
 	^self size = 0
 ]
 
@@ -1174,17 +1223,23 @@ Collection >> isEmpty [
 Collection >> isEmptyOrNil [
 	"Answer whether the receiver contains any elements, or is nil.  Useful in numerous situations where one wishes the same reaction to an empty collection or to nil"
 
+	"#() isEmptyOrNil >>> true"
+	"nil isEmptyOrNil >>> true"
+	"[0 isEmptyOrNil] on: MessageNotUnderstood do: ['oops'] >>> 'oops'"
+
 	^ self isEmpty
 ]
 
 { #category : #testing }
 Collection >> isNotEmpty [
 	"Answer whether the receiver contains any elements.
-	
+
 	Example of use:
-	
+
 	#() isNotEmpty >>> false
-	#(1 2 3) isNotEmpty >>> true
+	#(()) isNotEmpty >>> true
+	'' isNotEmpty >>> false
+	' ' isNotEmpty >>> true
 	"
 
 	^ self isEmpty not
@@ -1192,6 +1247,9 @@ Collection >> isNotEmpty [
 
 { #category : #testing }
 Collection >> isSequenceable [
+
+	"See SequenceableCollection"
+
 	^ false
 ]
 
@@ -1458,6 +1516,17 @@ Collection >> select: selectBlock thenDo: doBlock [
 { #category : #accessing }
 Collection >> size [
 	"Answer how many elements the receiver contains."
+
+	"#(10 20) size >>> 2"
+	"#() size >>> 0"
+	"#((())) size >>> 1"
+
+	"'' size >>> 0"
+	"'  ' size >>> 2"
+
+	"(1 to:10) size >>> 10 "
+	"(1 to:10 by:2) size >>> 5"
+	"(10 to:1) size >>> 0"
 
 	| tally |
 	tally := 0.
