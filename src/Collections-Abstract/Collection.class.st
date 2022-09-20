@@ -860,11 +860,8 @@ Collection >> do: aBlock without: anItem [
 
 { #category : #enumerating }
 Collection >> doWithIndex: elementAndIndexBlock [
-	"Use the new version with consistent naming
-	
-	Example of use:
-	(#('hello' 'world' 'bonjour') doWithIndex: [ :element :index |  ])
-	"
+
+	"Use the new version with consistent naming"
 
 	^ self withIndexDo: elementAndIndexBlock
 ]
@@ -906,6 +903,10 @@ Collection >> fillFrom: aCollection with: aBlock [
 	"Evaluate aBlock with each of aCollections's elements as the argument.  
 	Collect the resulting values into self. Answer self."
 
+	"(#(10 20) asOrderedCollection fillFrom: 'ABC' with: [:x|x asciiValue]) >>> #(10 20 65 66 67) asOrderedCollection"
+	"(#(10 20) asSet fillFrom: 'ABC' with: [:x|x asciiValue]) >>> #(10 20 65 66 67) asSet"
+	"({64->$@} asDictionary fillFrom: 'AB' with: [:x|x asciiValue -> x]) >>> {64->$@. 65->$A. 66->$B} asDictionary"
+
 	aCollection do: [ :each |
 		self add: (aBlock value: each) ]
 ]
@@ -914,7 +915,14 @@ Collection >> fillFrom: aCollection with: aBlock [
 Collection >> findFirstInByteString: aByteString startingAt: start [
 	"Find the index of first character starting at start in aByteString that is included in the receiver.
 	Default is to use a naive algorithm.
-	Subclasses might want to implement a more efficient scheme"
+	Subclasses might want to implement a more efficient scheme.
+
+	Return 0 if not found.
+
+	('aeiou' findFirstInByteString: 'hello world' startingAt: 1) >>> 2.
+	('aeiou' findFirstInByteString: 'hello world' startingAt: 3) >>> 5.
+	('aeiou' findFirstInByteString: 'hello world' startingAt: 9) >>> 0.
+	"
 
 	start to: aByteString size do:
 		[:index |
