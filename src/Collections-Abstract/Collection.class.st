@@ -291,21 +291,36 @@ Collection >> anySatisfy: aBlock [
 
 { #category : #converting }
 Collection >> asArray [
+
 	"Answer an Array whose elements are the elements of the receiver.
 	Implementation note: Cannot use ''Array withAll: self'' as that only
-	works for SequenceableCollections which support the replacement 
+	works for SequenceableCollections which support the replacement
 	primitive."
+
+	"'ab' asArray >>> {$a. $b}"
+	"(1 to: 5 by: 3) asArray >>> {1. 4}"
+
+	"#(1 2) asArray == #(1 2) >>> true"
+
+	"'' asArray >>> #()"
+	"(10 to: 5) asArray >>> #()"
 
 	| newArray index |
 	newArray := Array new: self size.
 	index := 0.
-	self do: [:each | newArray at: (index := index + 1) put: each].
+	self do: [ :each | newArray at: (index := index + 1) put: each ].
 	^ newArray
 ]
 
 { #category : #converting }
 Collection >> asBag [
+
 	"Answer a Bag whose elements are the elements of the receiver."
+
+	"{1. 2} asBag =    {2. 1} asBag >>> true"
+	"{1. 2} asBag = {1. 2. 2} asBag >>> false"
+	"{1. 2} asBag = {1. 2. 3} asBag >>> false"
+	"#() asBag = Bag new >>> true"
 
 	^ Bag withAll: self
 ]
@@ -314,8 +329,13 @@ Collection >> asBag [
 Collection >> asByteArray [
 	"Answer a ByteArray whose elements are the elements of the receiver.
 	Implementation note: Cannot use ''ByteArray withAll: self'' as that only
-	works for SequenceableCollections which support the replacement 
+	works for SequenceableCollections which support the replacement
 	primitive."
+
+	"{1. 2} asByteArray >>> #[1 2]"
+	"#[1 2] asByteArray == #[1 2] >>> true"
+	"'foo' asByteArray >>> #[102 111 111]"
+	"#() asByteArray >>> #[]"
 
 	| array index |
 	array := ByteArray new: self size.
@@ -351,27 +371,49 @@ Collection >> asCommaStringAnd [
 { #category : #converting }
 Collection >> asDictionary [
 
+	"Answers a Dictionary based on collection of Associations."
+
+	"{'one' -> 1. 'two' ->2} asDictionary >>> (Dictionary with: 'one' -> 1 with: 'two' ->2)"
+	"{'two' ->2. 'one' -> 1} asDictionary >>> (Dictionary with: 'one' -> 1 with: 'two' ->2)"
+	"#() asDictionary >>> Dictionary new"
+
 	^ self as: Dictionary
 ]
 
 { #category : #converting }
 Collection >> asIdentitySet [
+
+	"Return a new IdentitySet based on self."
+
+	"{ 2. 1+1 } asIdentitySet size >>> 1"
+	"{ 'foo'. ('fo','o') } asIdentitySet size >>> 2"
+
 	^(IdentitySet new: self size) addAll: self; yourself
 ]
 
 { #category : #converting }
 Collection >> asOrderedCollection [
+
 	"Answer an OrderedCollection whose elements are the elements of the
 	receiver. The order in which elements are added depends on the order
 	in which the receiver enumerates its elements. In the case of unordered
-	collections, the ordering is not necessarily the same for multiple 
+	collections, the ordering is not necessarily the same for multiple
 	requests for the conversion."
+
+	"(10 to: 25 by: 5) asOrderedCollection >>> #(10 15 20 25) asOrderedCollection"
+
+	"'foo' asOrderedCollection = #($f $o $o) asOrderedCollection >>> true"
+	"'foo' asOrderedCollection = #($o $o $f) asOrderedCollection >>> false"
 
 	^ self as: OrderedCollection
 ]
 
 { #category : #converting }
 Collection >> asOrderedDictionary [
+
+	"Answers a Dictionary based on collection of Associations."
+
+	"{'one' -> 1. 'two' ->2} asOrderedDictionary keys first >>> 'one'"
 
 	^ self as: OrderedDictionary
 ]
@@ -380,19 +422,32 @@ Collection >> asOrderedDictionary [
 Collection >> asSet [
 	"Answer a Set whose elements are the unique elements of the receiver."
 
+	"{1. 2} asSet =    {2. 1} asSet >>> true"
+	"{1. 2} asSet = {1. 2. 2} asSet >>> true"
+	"{1. 2} asSet = {1. 2. 3} asSet >>> false"
+	"{} asSet = Set new >>> true"
+
 	^ Set withAll: self
 ]
 
 { #category : #converting }
 Collection >> asSortedCollection [
-	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is the default less than or equal. Note that you should use #sorted: if you don't really need a SortedCollection, but a sorted collection."
+
+	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is the default less than or equal. Note that you should use #sorted if you don't really need a SortedCollection, but a sorted collection."
+
+	"'bar' asSortedCollection asArray >>> {$a. $b. $r}."
+
+	"('bar' asSortedCollection add: $c; yourself) asArray >>> {$a. $b. $c. $r}."
 
 	^ self as: SortedCollection
 ]
 
 { #category : #converting }
-Collection >> asSortedCollection: aSortBlock [ 
-	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is defined by the argument, aSortBlock. Note that it is better to use #sorted: if you don't really need a SortedCollection, but a sorted collection!!"
+Collection >> asSortedCollection: aSortBlock [
+
+	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is defined by the argument, aSortBlock. Note that it is better to use #sorted if you don't really need a SortedCollection, but a sorted collection!!"
+
+	"('bar' asSortedCollection: [:x :y| x>y ]) asArray >>> {$r. $b. $a}."
 
 	| aSortedCollection |
 	aSortedCollection := SortedCollection new: self size.
@@ -533,6 +588,13 @@ Collection >> contents [
 
 { #category : #copying }
 Collection >> copyEmpty [
+
+	"Return a new empty collection based on the species"
+
+	"{1@2} copyEmpty >>> #()"
+	"'hello' copyEmpty >>> ''"
+	"(1 to: 10) copyEmpty >>> #()"
+
 	^ self species new
 ]
 
@@ -540,6 +602,9 @@ Collection >> copyEmpty [
 Collection >> copyWith: newElement [
 	"Answer a new collection with newElement added (as last
 	element if sequenceable)."
+
+	"(#(10 20) asSet copyWith: 30) >>> #(10 20 30) asSet"
+	"(#(10 20) asSet copyWith: 20) >>> #(10 20) asSet"
 
 	^ self copy
 		add: newElement;
@@ -559,15 +624,19 @@ Collection >> copyWithout: oldElement [
 	elements equal to oldElement."
 	"('fred the bear' copyWithout: $e) >>> 'frd th bar'"
 	"(#(2 3 4 5 5 6) copyWithout: 5) >>> #(2 3 4 6)"
-	
-	
+	"((10 to: 13) copyWithout: 11) >>> #(10 12 13)"
+
+
 	^ self reject: [:each | each = oldElement]
 ]
 
 { #category : #copying }
 Collection >> copyWithoutAll: aCollection [
-	"Answer a copy of the receiver that does not contain any elements 
+	"Answer a copy of the receiver that does not contain any elements
 	equal to those in aCollection."
+
+	"('fred the bear' copyWithoutAll: 'aeiou ') >>> 'frdthbr'"
+	"(#(2 3 4 5 5 6 2) copyWithoutAll: (4 to: 10)) >>> #(2 3 2)"
 
 	^ self reject: [:each | aCollection includes: each]
 ]
