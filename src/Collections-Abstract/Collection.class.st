@@ -340,22 +340,29 @@ Collection >> asSortedCollection: aSortBlock [
 
 { #category : #printing }
 Collection >> asStringOn: aStream delimiter: delimString [
+
 	"Print elements on a stream separated
 	with a delimiter String like: 'a, b, c'
 	Uses #asString instead of #print:."
 
-	self do: [:elem | aStream nextPutAll: elem asString]
-		separatedBy: [aStream nextPutAll: delimString]
+	"String streamContents: [:s| 'abcd' asStringOn: s delimiter: '->'] >>> 'a->b->c->d'"
+
+	self
+		do: [ :elem | aStream nextPutAll: elem asString ]
+		separatedBy: [ aStream nextPutAll: delimString ]
 ]
 
 { #category : #printing }
 Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
+
 	"Print elements on a stream separated
 	with a delimiter between all the elements and with
 	a special one before the last like: 'a, b and c'.
 	Uses #asString instead of #print:
 
 	Note: Feel free to improve the code to detect the last element."
+
+	"String streamContents: [:s| 'abcd' asStringOn: s delimiter: ', ' last: ' and '] >>> 'a, b, c and d'"
 
 	| n sz |
 	n := 1.
@@ -369,9 +376,17 @@ Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 
 { #category : #enumerating }
 Collection >> associationsDo: aBlock [
-	"Evaluate aBlock for each of the receiver's elements (key/value 
+
+	"Evaluate aBlock for each of the receiver's elements (key/value
 	associations).  If any non-association is within, the error is not caught now,
-	but later, when a key or value message is sent to it."
+	but later, when a key or value message is sent to it.
+
+	The point of this method it to do the *right thing* on Dictionaries and related classes.
+	"
+
+	"String streamContents: [:s| {'one'->1. 'two'->2} associationsDo: [:a| s << a key << ':' << a value asString << ';']] >>> 'one:1;two:2;'"
+
+	"String streamContents: [:s| {'one'->1. 'two'->2} asOrderedDictionary associationsDo: [:a| s << a key << ':' << a value asString << ';']] >>> 'one:1;two:2;'"
 
 	self do: aBlock
 ]
@@ -414,7 +429,7 @@ Collection >> collect: aBlock into: aCollection [
 { #category : #enumerating }
 Collection >> collect: collectBlock thenDo: doBlock [ 
 	"Utility method to improve readability."
-	
+
 	^ self do: [ :each|
 		doBlock value: (collectBlock value: each)]
 ]
@@ -638,16 +653,31 @@ Collection >> displayStringOn: stream [
 ]
 
 { #category : #enumerating }
-Collection >> do: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument."
+Collection >> do: aBlock [
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+
+	This is the general foreach method, but for most standard needs there is often a more specific and simpler method."
+
+	"
+	|s| s:=0. #(10 20 30) do: [:each | s := s + each]. s >>> 60
+	but use sum or inject:into: instead
+	(#(10 20 30) inject: 0 into: [:s :each| s + each ]) >>> 60
+	#(10 20 30) sum >>> 60
+	"
+
+	"
+	(String streamContents: [:s | #('hello' 'the' 'world') do: [:each | s << each]]) >>> 'hellotheworld'
+	"
 
 	self subclassResponsibility
 ]
 
 { #category : #enumerating }
 Collection >> do: elementBlock separatedBy: separatorBlock [
+
 	"Evaluate the elementBlock for all elements in the receiver,
 	and evaluate the separatorBlock between."
+
 	"(String streamContents: [:s | #(1 2 3) do: [:each | s << each asString] separatedBy: [s << ', ']]) >>> '1, 2, 3'"
 
 	| beforeFirst | 
@@ -661,11 +691,14 @@ Collection >> do: elementBlock separatedBy: separatorBlock [
 ]
 
 { #category : #enumerating }
-Collection >> do: aBlock without: anItem [ 
-	"Enumerate all elements in the receiver. 
+Collection >> do: aBlock without: anItem [
+
+	"Enumerate all elements in the receiver.
 	Execute aBlock for those elements that are not equal to the given item"
 
-	^ self do: [:each | anItem = each ifFalse: [aBlock value: each]]
+	"(String streamContents: [:s | #(10 20 30) do: [:each | s << each asString] without: 20]) >>> '1030'"
+
+	^ self do: [ :each | anItem = each ifFalse: [ aBlock value: each ] ]
 ]
 
 { #category : #enumerating }
@@ -1030,7 +1063,13 @@ Collection >> occurrencesOf: anObject [
 
 { #category : #printing }
 Collection >> printElementsOn: aStream [
-	"The original code used #skip:, but some streams do not support that,
+	"List elements betwen () and separated by spaces.
+	Is used by printOn: and other related printing methods.
+
+	String streamContents: [:s| {10. 'hello'} printElementsOn: s] >>> '(10 ''hello'')'
+	String streamContents: [:s| #() printElementsOn: s] >>> '()'
+
+	Note: The original code used #skip:, but some streams do not support that,
 	 and we don't really need it."
 
 	aStream nextPut: $(.
@@ -1054,7 +1093,10 @@ Collection >> printOn: aStream [
 { #category : #printing }
 Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
-	with a delimiter String like: 'a, b, c' "
+	with a delimiter String like: 'a, b, c'
+
+	String streamContents: [:s| { 10. 'hello'. $x } printOn: s delimiter: ', '] >>> '10, ''hello'', $x'
+	"
 
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 ]
@@ -1064,6 +1106,8 @@ Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 	"Print elements on a stream separated
 	with a delimiter between all the elements and with
 	a special one before the last like: 'a, b and c'
+
+	(String streamContents: [:s| { 10. 'hello'. $x } printOn: s delimiter: ', ' last: ' & ']) >>> '10, ''hello'' & $x'
 
 	Note: Feel free to improve the code to detect the last element."
 
@@ -1196,13 +1240,15 @@ Collection >> select: selectBlock thenCollect: collectBlock [
 
 { #category : #enumerating }
 Collection >> select: selectBlock thenDo: doBlock [
-    "Utility method to improve readability.
+	"Utility method to improve readability.
 	Do not create the intermediate collection."
 
-    self do: [: each |
-        ( selectBlock value: each ) 
+	"|s| s:=0. #(11 22 33) select: #odd thenDo: [:x|s:=s+x]. s >>> 44"
+
+	self do: [: each |
+		( selectBlock value: each )
 			ifTrue: [ doBlock value: each ]
-    ].
+	].
 ]
 
 { #category : #accessing }
@@ -1324,6 +1370,11 @@ Collection >> union: aCollection [
 Collection >> withIndexDo: elementAndIndexBlock [
 	"Just like do: except that the iteration index supplies the second argument to the block"
 	"Support collection enumeration with a counter, even though not ordered"
+
+	"|s|s:=0. #(4 2 1) withIndexDo: [:e :i| s:=s + (e * (10 ** (i-1)))]. s >>> 124"
+
+	"|a|a:= Array new: 3. #(10 20 30) withIndexDo: [:e :i| a at: 4-i put: e+1]. a >>> #(31 21 11)"
+
 	| index |
 	index := 0.
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
