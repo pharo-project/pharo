@@ -106,6 +106,6 @@ TShowInTaskbar >> taskbarTask [
 	^ TaskbarTask
 		morph: self
 		state: self taskbarState
-		icon: self taskbarIcon
+		icon: (self iconNamed: self taskbarIconName)
 		label: self taskbarLabel
 ]

@@ -53,7 +53,7 @@ FTBasicTreeListDataSource class >> exampleInspect: anObject [
 		children: [ :item | item value gtInspectorVariableValuePairs ];
 		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
 		display: [ :item :cell | cell 
-			addMorphBack: item value class systemIcon asMorph;
+			addMorphBack: (self iconNamed: item value systemIconName) asMorph;
 			addMorphBack: (item key asStringMorph emphasis: 1; yourself);
 			addMorphBack: (Morph new color: Color transparent; height: 1; width: 10; yourself);
 			addMorphBack: item value asStringMorph ];
@@ -119,7 +119,7 @@ FTBasicTreeListDataSource class >> exampleStateTree [
 		children: [ :item | item value gtInspectorVariableValuePairs ];
 		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
 		display: [ :item :cell | cell 
-			addMorphBack: item value systemIcon asMorph;
+			addMorphBack: (self iconNamed: item value systemIconName) asMorph;
 			addMorphBack: (item key printString asMorph emphasis: 1; yourself);
 			addMorphBack: (Morph new color: Color transparent; height: 1; width: 10; yourself);
 			addMorphBack: (item value printString) asMorph ];

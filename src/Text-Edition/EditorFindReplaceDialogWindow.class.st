@@ -64,6 +64,12 @@ EditorFindReplaceDialogWindow class >> singleton [
 
 ]
 
+{ #category : #icons }
+EditorFindReplaceDialogWindow class >> taskbarIconName [
+
+	^ #smallFind
+]
+
 { #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> buildWindowMenu [
 	"Build and answer the window menu."
@@ -455,8 +461,9 @@ EditorFindReplaceDialogWindow >> taskbarButtonFor: aTaskBar [
 ]
 
 { #category : #icons }
-EditorFindReplaceDialogWindow >> taskbarIcon [
-	^ self iconNamed: #smallFind
+EditorFindReplaceDialogWindow >> taskbarIconName [
+
+	^ #smallFind
 ]
 
 { #category : #'user-interface' }
