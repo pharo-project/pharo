@@ -102,8 +102,11 @@ Collection class >> withAll: aCollection [
 
 { #category : #enumerating }
 Collection >> & aCollection [
+
+	"Alias for intersection:"
+
 	"#(1 2 3 4) & #(1 2 4 6 7) >>> #(1 2 4)"
-	
+
 	^ self intersection: aCollection
 ]
 
@@ -117,9 +120,13 @@ Collection >> , aCollection [
 
 { #category : #enumerating }
 Collection >> \ aCollection [
-	"Return all the elements in self that are not in aCollection"
+
+	"Return all the elements in self that are not in aCollection.
+	Alias of difference:"
+
+	"#(10 20 30) \ (0 to: 15) >>> #(20 30)"
 	"'abc' \ 'cbe' >>> 'a'."
-	
+
 	^ self difference: aCollection
 ]
 
@@ -196,37 +203,62 @@ Collection >> addIfNotPresent: anObject [
 
 { #category : #enumerating }
 Collection >> allSatisfy: aBlock [
+
 	"Evaluate aBlock with the elements of the receiver.
 	If aBlock returns false for any element return false.
 	Otherwise return true."
+
 	"#(1 2) allSatisfy: [ :each | each even ] >>> false"
 	"#(2 4) allSatisfy: [ :each | each even ] >>> true"
 
-	self do: [:each | (aBlock value: each) ifFalse: [^ false]].
+	"'hello' allSatisfy: #isLetter >>> true"
+	"'hello!' allSatisfy: #isLetter >>> false"
+
+	"(3 to: 8 by: 2) allSatisfy: #isPrime >>> true"
+	"(3 to: 9 by: 2) allSatisfy: #isPrime >>> false"
+
+	"#() allSatisfy: [false] >>> true"
+
+	self do: [ :each | (aBlock value: each) ifFalse: [ ^ false ] ].
 	^ true
 ]
 
 { #category : #accessing }
 Collection >> anyOne [
+
 	"Answer a representative sample of the receiver. It raises an error when the collection is empty. This method can be helpful when needing to preinfer the nature of the contents of semi-homogeneous collections."
-	"#(1 2 3) anyOne >>> 1"
+
+	"#(10 20 30) anyOne >>> 10"
+	"'hello' anyOne >>> $h"
+	"(50 to: 10 by: -5) anyOne >>> 50"
+
 	"
 	([#() anyOne] on: SubscriptOutOfBounds do: [ :ex | 'whatever' ]) >>> 'whatever'
 	"
-	
+
 	self emptyCheck.
-	self do: [:each | ^ each]
+	self do: [ :each | ^ each ]
 ]
 
 { #category : #enumerating }
 Collection >> anySatisfy: aBlock [
+
 	"Evaluate aBlock with the elements of the receiver.
 	If aBlock returns true for any element return true.
 	Otherwise return false."
+
 	"#(1 3) anySatisfy: [ :each | each even ] >>> false"
 	"#(1 2) anySatisfy: [ :each | each even ] >>> true"
 
-	self do: [:each | (aBlock value: each) ifTrue: [^ true]].
+	"'hello world!' anySatisfy: [ :each | each isLetter ] >>> true"
+	"'hello world!' anySatisfy: [ :each | each isDigit ] >>> false"
+
+	"(4 to: 9) anySatisfy: #isPrime >>> true"
+	"(4 to: 50 by: 2) anySatisfy: #isPrime >>> false"
+
+	"#() anySatisfy: [ true ] >>> false"
+
+	self do: [ :each | (aBlock value: each) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
@@ -388,10 +420,19 @@ Collection >> capacity [
 ]
 
 { #category : #enumerating }
-Collection >> collect: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Collect the resulting values into a collection like the receiver. Answer  
-	the new collection."
+Collection >> collect: aBlock [
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Collect the resulting values into a collection like the receiver. Answer
+	the new collection.
+
+	Note: the returned collection is of the same species. If this species
+	does not accomdate the values of aBlock, look at collect:as:"
+
+	"(#(10 20 30) collect: [:e | e+1]) >>> #(11 21 31)"
+	"({10@20. 30@0} collect: [:e | e x]) >>> #(10 30)"
+	"('Hello, world!' collect: [:e | e isLetter ifTrue: e ifFalse: $-]) >>> 'Hello--world-'"
+	"(1 to: 10) collect: [:i| i gcd: 6] >>> #(1 2 3 2 1 6 1 2 3 2)"
+	"(#() collect: [:x | x+1]) >>> #()"
 
 	| newCollection |
 	newCollection := self species new.
@@ -401,16 +442,23 @@ Collection >> collect: aBlock [
 
 { #category : #enumerating }
 Collection >> collect: aBlock as: aClass [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
+	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Collect the resulting values into an instance of aClass. Answer the resulting collection."
+
+	"(#(10 15 22 789) collect: [:x | x//10] as: Set) >>> #(1 2 78) asSet"
+	"('hello' collect: #asciiValue as: Array) >>> #(104 101 108 108 111)"
 
 	^(aClass new: self size) fillFrom: self with: aBlock
 ]
 
 { #category : #enumerating }
 Collection >> collect: aBlock into: aCollection [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
+
+	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Collect the resulting values into aCollection. Answer aCollection."
+
+	"({10. 20} collect: [:x|x+1] into: {'a'. 'b'. 'c'}) >>> {11. 21. 'c'.}"
+	"('hello' collect: #asciiValue into: Set new) >>> #(104 101 108 111) asSet"
 
 	^aCollection fillFrom: self with: aBlock
 ]
@@ -444,8 +492,11 @@ Collection >> collectionSizeThreshold [
 
 { #category : #testing }
 Collection >> contains: aBlock [
-	"For compatibility, please use #anySatisfy: instead!"
-	^self anySatisfy: aBlock
+
+	"For compatibility, please use #anySatisfy: instead!
+	And maybe you are looking for includes:"
+
+	^ self anySatisfy: aBlock
 ]
 
 { #category : #'filter streaming' }
@@ -504,53 +555,66 @@ Collection >> copyWithoutDuplicates [
 ]
 
 { #category : #enumerating }
-Collection >> count: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
+Collection >> count: aBlock [
+
+	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the number of elements that answered true."
+
 	"(#(1 2 3 4) count: [ :each | each even ]) >>> 2"
+	"('Hello, World!' count: #isLowercase) >>> 8"
 
 	| sum |
 	sum := 0.
-	self do: [:each | (aBlock value: each) ifTrue: [sum := sum + 1]].
+	self do: [ :each | (aBlock value: each) ifTrue: [ sum := sum + 1 ] ].
 	^ sum
 ]
 
 { #category : #enumerating }
-Collection >> detect: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
-	Answer the first element for which aBlock evaluates to true."
-	"(#(1 2 3 4) detect: [ :each | each even ]) >>> 2"
+Collection >> detect: aBlock [
 
-	^ self detect: aBlock ifNone: [self errorNotFound: aBlock]
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Answer the first element for which aBlock evaluates to true."
+
+	"({1@3. 2@1. 3@6. 4@8} detect: [ :each | each x even ]) >>> (2@1)"
+	"(104 to: 120) detect: #isPrime >>> 107"
+	"'Hello!' detect: #isLowercase) >>> $e"
+
+	^ self detect: aBlock ifNone: [ self errorNotFound: aBlock ]
 ]
 
 { #category : #enumerating }
 Collection >> detect: aBlock ifFound: foundBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	If some element evaluates aBlock to true, then cull this element into 
-	foundBlock. 
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	If some element evaluates aBlock to true, then cull this element into
+	foundBlock.
 	If no element matches the criteria then do nothing.
 	Always returns self to avoid misuse and a potential isNil check on the sender."
-	"(#(1 2) detect: [ :each | each even ] ifFound: [ ^'yay!' ]) >>> 'yay!'"
-	"(#(1 3) detect: [ :each | each even ] ifFound: [ ^'yay!' ]) >>> #(1 3)"
+
+	"|s| (#(1 2) detect: [ :each | each even ] ifFound: [ :e | s:=e*10 ]). s >>> 20"
+	"|s| (#(1 3) detect: [ :each | each even ] ifFound: [ :e | s:=e*10 ]). s >>> nil"
 
 	self
 		detect: aBlock
 		ifFound: foundBlock
-		ifNone: [ 
+		ifNone: [
 			"Do nothing on purpose"
 			 ]
 ]
 
 { #category : #enumerating }
 Collection >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	If some element evaluates aBlock to true, then cull this element into 
-	foundBlock and answer the result of this evaluation. 
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	If some element evaluates aBlock to true, then cull this element into
+	foundBlock and answer the result of this evaluation.
 	If none evaluate to true, then evaluate exceptionBlock."
 
+	"(#(1 2) detect: #even ifFound: #negated ifNone: [0]) >>> -2"
+	"(#(1 3) detect: #even ifFound: #negated ifNone: [0]) >>> 0"
+	"('Hello' detect: #isLowercase ifFound: #uppercase ifNone: [$X]) >>> $E"
+	"('LOL' detect: #isLowercase ifFound: #uppercase ifNone: [$X]) >>> $X"
+
 	self
-		do: [ :each | 
+		do: [ :each |
 			(aBlock value: each)
 				ifTrue: [ ^ foundBlock cull: each ] ].
 	^ exceptionBlock value
@@ -558,21 +622,32 @@ Collection >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
 
 { #category : #enumerating }
 Collection >> detect: aBlock ifNone: exceptionBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Answer the first element for which aBlock evaluates to true. If none  
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Answer the first element for which aBlock evaluates to true. If none
 	evaluate to true, then evaluate the argument, exceptionBlock."
+
+	"(#(1 2) detect: #even ifNone: [0]) >>> 2"
+	"(#(1 3) detect: #even ifNone: [0]) >>> 0"
+	"('Hello' detect: #isLowercase ifNone: [$X]) >>> $e"
+	"('LOL' detect: #isLowercase ifNone: [$X]) >>> $X"
 
 	^ self detect: aBlock ifFound: [ :element | element ] ifNone: exceptionBlock
 ]
 
 { #category : #enumerating }
 Collection >> detectMax: aBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
+	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the highest magnitude.
-	If collection empty, return nil.  This method might also be called elect:."
+	If collection empty, return nil.  This method might also be called elect:.
+
+	({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p x ]) >>> (10@ -3)
+	({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p y ]) >>> (2@6)
+	((10 to: 20) detectMax: [ :p | p gcd: 6 ]) >>> 12
+	'Hello' detectMax: #asciiValue >>> $o
+	"
 
 	| maxElement maxValue |
-	self do: [:each | | val | 
+	self do: [:each | | val |
 		maxValue == nil
 			ifFalse: [
 				(val := aBlock value: each) > maxValue ifTrue: [
@@ -588,17 +663,18 @@ Collection >> detectMax: aBlock [
 
 { #category : #enumerating }
 Collection >> detectMin: aBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
+	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the lowest number.
 	If collection empty, return nil.
-	
+
 	Example of use:
-	({ 2@3 . -4@6 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@6)
-	({ 2@3 . -4@6 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)
+	({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@3)
+	({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)
+	'Hello!' detectMin: #asciiValue >>> $!
 	"
 
 	| minElement minValue |
-	self do: [:each | | val | 
+	self do: [:each | | val |
 		minValue == nil
 			ifFalse: [
 				(val := aBlock value: each) < minValue ifTrue: [
@@ -619,6 +695,8 @@ Collection >> difference: aCollection [
 	"(#(a b c d e f) difference:  #(a b z k))>>> #(#c #d #e #f)"
 
 	"(#(a b z k) difference: #(a b c d e f)) >>> #(#z #k)"
+
+	"('hello' difference: 'aeiou') >>> 'hll'"
 
 	| set |
 	set := self asSet
@@ -736,10 +814,10 @@ Collection >> flatCollect: aBlock [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
-	
-	"( #((3 4) (1 2)) flatCollect: [:each | each ] )>>> #(3 4 1 2)"
-	"( #(3 4 1 2) flatCollect: [:each | { each } ] ) >>> #(3 4 1 2)"
-	
+
+	"( #((3 4) (1 2)) flatCollect: [:each | each ] ) >>> #(3 4 1 2)"
+	"( #(3 4 1 2) flatCollect: [:each | { each. each*10 } ] ) >>> #(3 30 4 40 1 10 2 20)"
+
 	^ self flatCollect: aBlock as: self species
 ]
 
@@ -748,6 +826,9 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
+
+	"(#(1 2 3) flatCollect: [:each | { each. each+1 } ] as: Set) >>> #(1 2 3 4) asSet"
+	"(#(65 66 67) flatCollect: [:each | { each asCharacter. each asCharacter asLowercase } ] as: String) >>> 'AaBbCc'"
 
 	| col |
 	col := OrderedCollection new: self size.
@@ -760,28 +841,36 @@ Collection >> flatCollectAsSet: aBlock [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
-	
+
+	"( #(1 2 3) flatCollectAsSet: [:each | { each. each+1 } ] ) >>> #(1 2 3 4) asSet"
+
 	^ self flatCollect: aBlock as: Set
 ]
 
 { #category : #enumerating }
 Collection >> flattenOn: aStream [
 
+	"See Collection>>flattened that uses this method"
+
 	self do: [ :each | each flattenOn: aStream ]
 ]
 
 { #category : #enumerating }
 Collection >> flattened [
+
 	"Flattens a collection of collections (no matter how many levels of collections exist). Strings are considered atoms and, as such, won't be flattened"
-	"( #(1 #(2 3) #(4 #(5))) flattened ) >>> #(1 2 3 4 5)" 
+
+	"( #(1 #(2 3) #(4 #(5))) flattened ) >>> #(1 2 3 4 5)"
+
 	"( #('string1' #('string2' 'string3')) flattened ) >>> #('string1' 'string2' 'string3')"
-	
-	^ Array streamContents: [ :stream | self flattenOn: stream].
+
+	^ Array streamContents: [ :stream | self flattenOn: stream ]
 ]
 
 { #category : #enumerating }
 Collection >> fold: binaryBlock [
-	"Evaluate the block with the first two elements of the receiver, then with the result of the first evaluation and the next element, and so on.  Answer the result of the final evaluation. If the receiver is empty, raise an error. If the receiver has a single element, answer that element."
+	"Alias of Collection>>reduce"
+	"Evaluate the block with the first two (or more) elements of the receiver, then with the result of the first evaluation and the next element, and so on.  Answer the result of the final evaluation. If the receiver is empty, raise an error. If the receiver has a single element, answer that element."
 	"( #('if' 'it' 'is' 'to' 'be' 'it' 'is' 'up' 'to' 'me') fold: [:a :b | a, ' ', b] ) >>> 'if it is to be it is up to me'"
 
 	^self reduce: binaryBlock
@@ -790,20 +879,20 @@ Collection >> fold: binaryBlock [
 { #category : #enumerating }
 Collection >> gather: aBlock [
 	"This method is kept for compatibility reasons, use flatCollect: instead."
-	
+
 	^ self flatCollect: aBlock.
 ]
 
 { #category : #enumerating }
 Collection >> groupedBy: aBlock [
 	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species.
-	
+
 	Example of use:
 	(#(1 2 3 4 5) groupedBy: [ :v | v odd ]) asString >>> 'an OrderedDictionary(true->#(1 3 5) false->#(2 4))'
 	"
-	
-	
-	
+
+
+
 	| groups |
 	groups := OrderedDictionary new.
 	self do: [ :each |
@@ -816,9 +905,13 @@ Collection >> groupedBy: aBlock [
 
 { #category : #enumerating }
 Collection >> groupedBy: aBlock having: aSelectionBlock [
-	"Like in SQL operation - Split the recievers contents into collections of 
-	elements for which keyBlock returns the same results, and return those 
+	"Like in SQL operation - Split the recievers contents into collections of
+	elements for which keyBlock returns the same results, and return those
 	collections allowed by selectBlock."
+
+	"In the following example, the group `3->#(34)` is filtered out because there is not 2 elements.
+	(#(1 5 21 28 34) groupedBy: [:x| x // 10] having: [:v| v size = 2]) >>> {0->#(1 5). 2->#(21 28)} asOrderedDictionary"
+
 	^ (self groupedBy: aBlock) select: aSelectionBlock
 ]
 
@@ -933,8 +1026,19 @@ Collection >> includesSubstringAnywhere: testString [
 { #category : #enumerating }
 Collection >> inject: thisValue into: binaryBlock [ 
 	"Accumulate a running value associated with evaluating the argument, binaryBlock, with the current value of the argument, thisValue, and the receiver as block arguments."
-	
-	"( #(1 2 3) inject: 0 into: [ :sum :each | sum + each ] ) >>> 6"
+	"Look at Collection>>reduce: for a related method."
+
+	"(#(2r101 2r11 2r1000) inject: 0 into: [ :acc :each | acc bitXor: each ]) >>> 2r1110"
+
+	"(#(10 20 30) inject: 0 into: [ :sum :each | sum + each ]) >>> 60
+	But use sum or sum: instead!
+	#(10 20 30) sum >>> 60
+	"
+
+	"(#(10 20 30) inject: OrderedCollection new into: [ :a :e | a add: (e + 1). a ]) >>> #(11 21 31) asOrderedCollection
+	But use collect: or collect:as: instead!
+	(#(10 20 30) collect: [:e| e+1]) >>> #(11 21 31)
+	"
 
 	| nextValue |
 	nextValue := thisValue.
@@ -951,6 +1055,8 @@ Collection >> intersection: aCollection [
 	"(#(1 2 3 4) intersection: #()) >>> #()"
 
 	"(#() intersection: #(1 2 3 4)) >>> #()"
+
+	"('hello' intersection: 'world') >>> 'ol'"
 
 	^ self species withAll: (self asSet intersection: aCollection) asArray
 ]
@@ -1014,6 +1120,12 @@ Collection >> median [
 Collection >> noneSatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver. If aBlock returns false for all elements return true. Otherwise return false"
 
+	"#(2 4 6) noneSatisfy: [:x|x odd] >>> true"
+	"#(1 2 3) noneSatisfy: [:x|x odd] >>> false"
+	"'hello!' noneSatisfy: #isUppercase >>> true"
+	"'hello!' noneSatisfy: #isLetter >>> false"
+	"#() noneSatisfy: ['oops'] >>> true"
+
 	self do: [:item | (aBlock value: item) ifTrue: [^ false]].
 	^ true
 ]
@@ -1029,6 +1141,10 @@ Collection >> notEmpty [
 { #category : #enumerating }
 Collection >> occurrencesOf: anObject [ 
 	"Answer how many of the receiver's elements are equal to anObject."
+
+	"(#(10 20 10 30) occurrencesOf: 10) >>> 2"
+	"('hello world' occurrencesOf: $l) >>> 3"
+	"('hello world' occurrencesOf: 10) >>> 0"
 
 	| tally |
 	tally := 0.
@@ -1092,14 +1208,20 @@ Collection >> reduce: aBlock [
 	"Fold the result of the receiver into aBlock. The argument aBlock must take two or more arguments. It applies the argument, binaryBlock cumulatively to the elements of the receiver. For sequenceable collections the elements will be used in order, for unordered collections the order is unspecified."
 	"( #(1 2 3) asSet reduce: [ :a :b | a + b ] ) >>> 1 + 2 + 3"
 	"( #(1 2 3 4 5) asSet reduce: [ :a :b :c | a + b + c ] ) >>> 1 + 2 + 3 + 4 + 5"
-		
+
+	"Maybe look at the related method Collection>>inject:into:"
+
 	^self asOrderedCollection reduce: aBlock
 ]
 
 { #category : #enumerating }
 Collection >> reject: aBlock [ 
+
 	"Evaluate aBlock with each of the receiver's elements as the argument. Collect into a new collection like the receiver only those elements for which aBlock evaluates to false. Answer the new collection."
-	"#(1 2 3 4 5) reject: #even >>>  #(1 3 5)"
+
+	"(#(1 2 3 4 5) reject: #even) >>>  #(1 3 5)"
+	"('Hello, World!' reject: #isLetter) >>> ', !'"
+	"((1 to: 8) reject: #isPrime) >>> #(1 4 6 8)"
 
 	^ self select: [ :element | (aBlock value: element) == false ]
 ]
@@ -1107,6 +1229,8 @@ Collection >> reject: aBlock [
 { #category : #enumerating }
 Collection >> reject: rejectBlock thenCollect: collectBlock [
 	"Utility method to improve readability."
+
+	"(#(1 2 3 4 5) reject: #even thenCollect: [:x|x*10]) >>> #(10 30 50)"
 
 	^ (self reject: rejectBlock) collect: collectBlock
 ]
@@ -1184,20 +1308,32 @@ Collection >> removeAllSuchThat: aBlock [
 
 { #category : #enumerating }
 Collection >> select: aBlock [ 
+
 	"Evaluate aBlock with each of the receiver's elements as the argument. Collect into a new collection like the receiver, only those elements for which aBlock evaluates to true. Answer the new collection."
+
 	"(#(1 2 3 4 5) select: #even) >>> #(2 4)"
-	
+
+	"({1@2. 6@3. 2@ -1.} select: [:e| e x > e y]) >>> {(6@3). (2@ -1)}"
+
+	"'heLlo wOrLd' select: #isUppercase >>> 'LOL'"
+
+	"((1 to: 10) select: #isPrime) >>> #(2 3 5 7)"
+
+	"#() select: [true] >>> #()"
+
 	| newCollection |
 	newCollection := self copyEmpty.
-	self do: [ :each | 
-		(aBlock value: each) 
-			ifTrue: [ newCollection add: each ]].
-	^newCollection
+	self do: [ :each |
+		(aBlock value: each) ifTrue: [ newCollection add: each ] ].
+	^ newCollection
 ]
 
 { #category : #enumerating }
 Collection >> select: selectBlock thenCollect: collectBlock [
 	"Utility method to improve readability."
+
+	"(#(1 2 3 4 5) select: #even thenCollect: #negated) >>> #(-2 -4)"
+	"('Hello, World!' select: #isLetter thenCollect: #uppercase) >>> 'HELLOWORLD'"
 
 	^ (self select: selectBlock) collect: collectBlock
 ]
@@ -1335,9 +1471,12 @@ Collection >> sumNumbers: aBlock [
 
 { #category : #enumerating }
 Collection >> union: aCollection [
+
 	"Answer the set theoretic union of two collections."
+
 	"(#(1 2 3) union: #(4 5 6 2)) asSet >>> #(1 2 3 4 5 6) asSet"
-	
+	"('hello' union: 'world') >>> 'whlorde' "
+
 	| set |
 	set := self asSet addAll: aCollection; yourself.
 	^ self species withAll: set asArray
@@ -1354,8 +1493,12 @@ Collection >> withIndexDo: elementAndIndexBlock [
 
 { #category : #enumerating }
 Collection >> | aCollection [
-	"Return all the elements that appear in self or in aCollection"
+
+	"Return all the elements that appear in self or in aCollection.
+	Alias of union:"
+
+	"#(10 20 30) | (0 to: 15 by: 5) >>> #(0 15 5 30 20 10)"
 	"'abc' | 'cbe' >>> 'bcea'"
-	
+
 	^ self union: aCollection
 ]
