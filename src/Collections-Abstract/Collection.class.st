@@ -126,7 +126,11 @@ Collection >> \ aCollection [
 { #category : #adapting }
 Collection >> adaptToCollection: rcvr andSend: selector [
 	"If I am involved in arithmetic with another Collection, return a Collection of
-	the results of each element combined with the scalar in that expression."
+	the results of each element combined with the scalar in that expression.
+
+	Is used to implement Collection>>+, Collection>>-, etc."
+
+	"#(10 20 30) adaptToCollection: #(0 1 2) andSend: #@ >>> {(0@10). (1@20). (2@30)}"
 
 	(rcvr isSequenceable and: [ self isSequenceable ]) ifFalse:
 		[self error: 'Only sequenceable collections may be combined arithmetically'].
@@ -992,13 +996,17 @@ Collection >> isSequenceable [
 { #category : #'math functions' }
 Collection >> median [
 	"Return the middle element, or as close as we can get.
-	
+	The collection must not be empty.
+
 	Example of use:
 	{1 . 2 . 3 . 4 . 5} median >>> 3
 	{1 . 2 . 4 . 5} median >>> 3
 	{1 . 2 . 5 . 5} median >>> (7/2)
+	{3} median >>> 3
+	([{} median] on: CollectionIsEmpty do: [ 'oops' ]) >>> 'oops'
 	"
-	
+
+	self emptyCheck.
 	^ self asSortedCollection median
 ]
 
@@ -1255,25 +1263,32 @@ Collection >> storeOn: aStream [
 
 { #category : #'math functions' }
 Collection >> sum: aBlock [
-	"This is implemented using a variant of the normal inject:into: pattern. 
-	The reason for this is that it is not known whether we're in the normal 
-	number line, i.e. whether 0 is a good initial value for the sum. 
-	Consider a collection of measurement objects, 0 would be the unitless 
+	"This is implemented using a variant of the normal inject:into: pattern.
+	The reason for this is that it is not known whether we're in the normal
+	number line, i.e. whether 0 is a good initial value for the sum.
+	Consider a collection of measurement objects, 0 would be the unitless
 	value and would not be appropriate to add with the unit-ed objects."
+
+	"(#(1 -4 -10 1) sum: #abs) >>> 16"
+
+	"({1@ -4. -10@1} sum: #abs) >>> 11@5"
+
+	"(#() sum: #abs) >>> 0"
+
 	^ self sum: aBlock ifEmpty: [ 0 ]
 ]
 
 { #category : #'math functions' }
 Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
-	"This is implemented using a variant of the normal inject:into: pattern. 
-	The reason for this is that it is not known whether we're in the normal 
-	number line, i.e. whether 0 is a good initial value for the sum. 
-	Consider a collection of measurement objects, 0 would be the unitless 
+	"This is implemented using a variant of the normal inject:into: pattern.
+	The reason for this is that it is not known whether we're in the normal
+	number line, i.e. whether 0 is a good initial value for the sum.
+	Consider a collection of measurement objects, 0 would be the unitless
 	value and would not be appropriate to add with the unit-ed objects."
 	| sum sample |
-	
+
 	^ self
-		ifNotEmpty: [ 
+		ifNotEmpty: [
 			sample := aBlock value: self anyOne.
 			sum := self inject: sample into: [ :previousValue :each |
 				previousValue + (aBlock value: each) ].
@@ -1285,13 +1300,17 @@ Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
 Collection >> sumNumbers [
 	"This is implemented using a variant of the normal inject:into: pattern
 	that is specific to handling numbers. The receiver should include only numbers.
-	
-	Different from the sum implementation, the default value is zero. While sum is 
+
+	Different from the sum implementation, the default value is zero. While sum is
 	more general, sumNumbers is meant to support the most often encountered use case of
 	dealing with numbers."
 
-	^ self 
-		inject: 0 
+	"#(1 2 4) sumNumbers >>> 7"
+
+	"#() sumNumbers >>> 0"
+
+	^ self
+		inject: 0
 		into: [ :sum :each |  sum + each ]
 ]
 
@@ -1300,13 +1319,17 @@ Collection >> sumNumbers: aBlock [
 	"This is implemented using a variant of the normal inject:into: pattern
 	that is specific to handling numbers. aBlock is expected to return a number
 	for every element in the collection.
-	
-	Different from the sum: implementation, the default value is zero. While sum: is 
+
+	Different from the sum: implementation, the default value is zero. While sum: is
 	more general, sumNumbers: is meant to support the most often encountered use case of
 	dealing with numbers."
 
-	^ self 
-		inject: 0 
+	"#(1 -2 4) sumNumbers: #abs >>> 7"
+
+	"#() sumNumbers: #abs >>> 0"
+
+	^ self
+		inject: 0
 		into: [ :sum :each |  sum + (aBlock value: each) ]
 ]
 
