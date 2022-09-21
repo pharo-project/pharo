@@ -454,27 +454,28 @@ FT2Face >> loadCharacterOutline: index flags: flags [
 
 { #category : #private }
 FT2Face >> loadFields [
+
 	| faceRect |
-	self isValid 
-		ifFalse: [ ^ self error: 'I cannot load face fields because face is not valid.' ].
+	self isValid ifFalse: [ 
+		^ self error: 'I cannot load face fields because face is not valid.' ].
 
 	faceRect := FTFaceRec fromHandle: handle.
-	
-	numFaces := faceRect num_faces.	
+
+	numFaces := faceRect num_faces.
 	faceIndex := faceRect face_index.
 	faceFlags := faceRect face_flags.
 	styleFlags := faceRect style_flags.
 	numGlyphs := faceRect num_glyphs.
-	familyName := faceRect family_name readString.
-	styleName := faceRect style_name readString. 
-	
+	familyName := faceRect family_name utf8StringFromCString.
+	styleName := faceRect style_name utf8StringFromCString.
+
 	numFixedSizes := faceRect num_fixed_sizes.
 	numCharmaps := faceRect num_charmaps.
 	charmaps := nil.
 	encoding := nil.
-	
+
 	"FT_FACE_FLAG_SCALABLE = 1 "
-	(faceRect face_flags bitAnd: 1) ~= 0 ifTrue: [  
+	(faceRect face_flags bitAnd: 1) ~= 0 ifTrue: [ 
 		unitsPerEm := faceRect units_per_EM.
 		ascender := faceRect ascender.
 		descender := faceRect descender.
@@ -482,12 +483,11 @@ FT2Face >> loadFields [
 		maxAdvanceWidth := faceRect max_advance_width.
 		maxAdvanceHeight := faceRect max_advance_height.
 		underlinePosition := faceRect underline_position.
-		underlineThickness := faceRect underline_thickness.
-	].
-	
-	bbox := Rectangle 
-		origin: ( Point x: faceRect bbox xMin y: faceRect bbox yMin )
-		corner: ( Point x: faceRect bbox xMax y: faceRect bbox yMax )
+		underlineThickness := faceRect underline_thickness ].
+
+	bbox := Rectangle
+		        origin: (Point x: faceRect bbox xMin y: faceRect bbox yMin)
+		        corner: (Point x: faceRect bbox xMax y: faceRect bbox yMax)
 ]
 
 { #category : #glyphs }

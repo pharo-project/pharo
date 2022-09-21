@@ -137,6 +137,23 @@ ExternalAddress >> byteAt: byteOffset put: value [
 	^self unsignedByteAt: byteOffset put: value
 ]
 
+{ #category : #accessing }
+ExternalAddress >> bytesFromCString [
+	" Assume that the receiver represents a C string and convert it to a byte array.
+	WARNING: the referenced data MUST ends with a NULL character (byte 0).
+	To obtain a Smalltalk String, the byte array has to be decoded with the right decoder.
+	ex: extAdr asByteArray decodeWith: 'ISO-8859-2'
+	"
+	| index aByte |
+
+	^ ByteArray streamContents: [ :aStream |
+			index := 1.
+			[(aByte := self unsignedByteAt: index) = 0] 
+				whileFalse: [
+					aStream nextPut: aByte.
+					index := index + 1]]
+]
+
 { #category : #copying }
 ExternalAddress >> clone [
 
@@ -161,6 +178,11 @@ ExternalAddress >> free [
 { #category : #converting }
 ExternalAddress >> fromCString [
 	| index aByte |
+
+	self 
+		deprecated:  'Please use #bytesFromCString instead' 
+		transformWith:  '`@receiver fromCString' 
+						-> '`@receiver bytesFromCString utf8Decoded'.
 
 	^ (ByteArray streamContents: [ :aStream |
 			index := 1.
@@ -215,4 +237,13 @@ ExternalAddress >> shallowCopy [
 	"Re-implemented to avoid superclass call to #new:"
 	"But superclass's shallowCopy sends basicNew: and basicNew: is ok. eem 2/21/2016 15:31"
 	^self clone
+]
+
+{ #category : #accessing }
+ExternalAddress >> utf8StringFromCString [
+	" Assume that the receiver represents a C string and convert it to a byte array.
+	WARNING: the referenced data MUST ends with a NULL character (byte 0).
+	"
+
+	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
 ]
