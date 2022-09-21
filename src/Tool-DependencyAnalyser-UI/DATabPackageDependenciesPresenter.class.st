@@ -3,11 +3,12 @@ I present dependency information on a system package.
 "
 Class {
 	#name : #DATabPackageDependenciesPresenter,
-	#superclass : #SpPresenter,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'packageList',
-		'analyzedPackage',
-		'dependencyList'
+		'dependencyList',
+		'browser',
+		'openButton'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Tab'
 }
@@ -20,10 +21,39 @@ DATabPackageDependenciesPresenter class >> example [
 	(self on: analyzedPackage) open
 ]
 
+{ #category : #accessing }
+DATabPackageDependenciesPresenter >> analyzedPackage [
+
+	^ self model
+]
+
+{ #category : #initialization }
+DATabPackageDependenciesPresenter >> analyzedPackage: aDAPackage [
+
+	self model: aDAPackage
+]
+
+{ #category : #initialization }
+DATabPackageDependenciesPresenter >> browse: aDependency [
+
+	browser ifNil: [ ^ self ].
+	aDependency ifNil: [ ^ self ].
+	
+	aDependency browseIn: browser.
+]
+
+{ #category : #accessing }
+DATabPackageDependenciesPresenter >> browser: aSystemBrowser [
+
+	browser := aSystemBrowser 
+]
+
 { #category : #initialization }
 DATabPackageDependenciesPresenter >> connectPresenters [ 
 
-	packageList transmitTo: dependencyList transform: [ :package | package dependencies ]
+	packageList 
+		transmitTo: dependencyList 
+		transform: [ :package | package ifNil: [ #() ] ifNotNil: [ package dependencies ] ]
 ]
 
 { #category : #layout }
@@ -31,7 +61,9 @@ DATabPackageDependenciesPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 		spacing: 5;
-		add: ('Dependencies of {1}:' format: { analyzedPackage packageName}) expand: false;
+		add: (SpBoxLayout newLeftToRight
+			add: ('Dependencies of {1}:' format: { self analyzedPackage packageName}) expand: false;
+			addLast: openButton) expand: false;
 		add: (SpBoxLayout newLeftToRight
 			spacing: 10;
 			add: packageList;
@@ -51,6 +83,13 @@ DATabPackageDependenciesPresenter >> initializePresenters [
 		
 	dependencyList := self newList
 		displayIcon: [ :item | item nodeClass new icon ];
+		whenSelectionChangedDo: [ :selection | self browse: selection selectedItem ];
+		yourself.
+		
+	openButton := self newButton
+		label: 'Open Dependency Analyzer';
+		icon: (self iconNamed: #objects);
+		action: [ self openDependencyAnalyzer ];
 		yourself.
 ]
 
@@ -60,15 +99,22 @@ DATabPackageDependenciesPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter initialExtent: 800 @ 400
 ]
 
+{ #category : #initialization }
+DATabPackageDependenciesPresenter >> modelChanged [
+	
+	packageList items: self packageDependencies
+]
+
+{ #category : #actions }
+DATabPackageDependenciesPresenter >> openDependencyAnalyzer [
+
+	(DAPackageDependenciesPresenter
+			onPackagesNamed: {self analyzedPackage packageName}) open
+]
+
 { #category : #accessing }
 DATabPackageDependenciesPresenter >> packageDependencies [
 	
-	^ ((analyzedPackage dependencies) 
+	^ ((self analyzedPackage dependencies) 
 		sorted: [ :a :b | a target packageName < b target packageName ])
-]
-
-{ #category : #initialization }
-DATabPackageDependenciesPresenter >> setModelBeforeInitialization: aDAPackage [
-
-	analyzedPackage := aDAPackage
 ]
