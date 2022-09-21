@@ -638,13 +638,6 @@ EpApplyPreviewerTest >> testTraitAdditionWithTraitRemoved [
 ]
 
 { #category : #tests }
-EpApplyPreviewerTest >> testTraitModification [
-	<expectedFailure>
-	
-	self fail. "Missing test/feature"
-]
-
-{ #category : #tests }
 EpApplyPreviewerTest >> testTraitRemovalWithTraitAdded [
 
 	| aTrait traitName traitDefinition |
