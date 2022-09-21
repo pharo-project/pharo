@@ -48,7 +48,7 @@ ContextTest class >> returnNonActiveContextOfBlock [
 	^ Block value
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 ContextTest >> DoIt [
 
 	"Mock DoIt method that does not do things"
