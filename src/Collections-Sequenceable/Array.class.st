@@ -137,6 +137,16 @@ Array class >> new: sizeRequested [
 ]
 
 { #category : #converting }
+Array >> as: otherClass [
+
+	"Specific classes can redefine newFromArray: by a faster implementation if they want.
+
+	Note: see Collection class>>newFromArray: for the rationale."
+
+	^ otherClass newFromArray: self
+]
+
+{ #category : #converting }
 Array >> asArray [
 	"Answer with the receiver itself."
 
@@ -144,9 +154,27 @@ Array >> asArray [
 ]
 
 { #category : #converting }
+Array >> asDictionary [
+
+	^ Dictionary newFromArray: self
+]
+
+{ #category : #converting }
 Array >> asNewArray [
 
 	^ self clone.
+]
+
+{ #category : #converting }
+Array >> asOrderedCollection [
+
+	^ OrderedCollection newFromArray: self
+]
+
+{ #category : #converting }
+Array >> asSet [
+
+	^ Set newFromArray: self
 ]
 
 { #category : #accessing }
