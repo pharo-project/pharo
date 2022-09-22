@@ -140,6 +140,17 @@ Object class >> newFrom: aSimilarObject [
 		ifFalse: [self basicNew]) copySameFrom: aSimilarObject
 ]
 
+{ #category : #'instance creation' }
+Object class >> newFromArray: anArray [
+
+	"Fast initialization from an Array.
+	This is mainly used by collections but have to be defined on Object class because it is a double dispatch call from Array>>as: and must be functionnal with non Collection arguments.
+
+	See Collection class>>newFromArray: for the rationale."
+
+	^ self newFrom: anArray
+]
+
 { #category : #'class initialization' }
 Object class >> reInitializeDependentsFields [
 	<script>

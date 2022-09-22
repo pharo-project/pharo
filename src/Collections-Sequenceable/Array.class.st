@@ -143,6 +143,12 @@ Array >> asArray [
 	^ self
 ]
 
+{ #category : #converting }
+Array >> asNewArray [
+
+	^ self clone.
+]
+
 { #category : #accessing }
 Array >> atWrap: index [ 
 

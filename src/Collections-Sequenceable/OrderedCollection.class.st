@@ -134,6 +134,15 @@ OrderedCollection class >> newFrom: aCollection [
 ]
 
 { #category : #'instance creation' }
+OrderedCollection class >> newFromArray: anArray [
+
+	"Fast implementation. Just use a copy of the argument as a storage.
+	No need to copy the elements one by one."
+
+	^ self basicNew setContents: anArray asNewArray
+]
+
+{ #category : #'instance creation' }
 OrderedCollection class >> ofSize: n [
 	"Create a new collection of size n with nil as its elements.
 	This method exists because OrderedCollection new: n creates an

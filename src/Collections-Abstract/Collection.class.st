@@ -23,6 +23,37 @@ Collection class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
+Collection class >> newFromArray: anArray [
+
+	"Fast initialization with the items of a given array.
+	This initializes elements faster that the generic withAll: or newFrom: methods.
+
+	The main selling point is that dyamic arrays like {1. 2. 3} are really fast in Pharo.
+	So other collections can be easily and efficiently initialized with `{1. 2. 3} asFoo` syntax.
+
+	Examples:
+	{ 1. 2. 3 } asSet >>> Set new add: 1; add:2; add:3; yourself
+	{ 1. 2. 3 } asOrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself
+	{ 1->2. 3->4 } asDictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself
+
+	{ 1. 2. 3 } as: Set >>> Set new add: 1; add:2; add:3; yourself
+	{ 1. 2. 3 } as: OrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself
+	{ 1->2. 3->4 } as: Dictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself
+	"
+
+	| newCollection size |
+	size := anArray size.
+	newCollection := self new: size.
+	" This should be fast:
+	1. Integer>>to:do: is inlined in the bytecode (no block).
+	2. The Array>>at: callsite should be monomorph to a primitive method.
+	"
+
+	1 to: size do: [ :i | newCollection add: (anArray at: i) ].
+	^ newCollection
+]
+
+{ #category : #'instance creation' }
 Collection class >> with: anObject [ 
 	"Answer an instance of me containing anObject."
 

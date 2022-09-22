@@ -71,6 +71,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+SortedCollection class >> newFromArray: anArray [
+
+	^ (super newFromArray: anArray) reSort; yourself
+]
+
+{ #category : #'instance creation' }
 SortedCollection class >> sortBlock: aBlock [ 
 	"Answer an instance of me such that its elements are sorted according to the criterion specified in aBlock."
 

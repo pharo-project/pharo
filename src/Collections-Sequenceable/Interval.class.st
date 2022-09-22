@@ -129,6 +129,15 @@ Interval class >> newFrom: aCollection [
 "
 ]
 
+{ #category : #'instance creation' }
+Interval class >> newFromArray: anArray [
+
+	"Interval does not store the elements.
+	There is no `new:`, no `add:`, etc. So fallback to the default behavior."
+
+	^ self newFrom: anArray
+]
+
 { #category : #accessing }
 Interval class >> streamSpecies [
 	^ Array
