@@ -241,9 +241,11 @@ ExternalAddress >> shallowCopy [
 
 { #category : #accessing }
 ExternalAddress >> utf8StringFromCString [
-	" Assume that the receiver represents a C string and convert it to a byte array.
+
+	"Assume that the receiver represents a C string and convert it to a byte array.
 	WARNING: the referenced data MUST ends with a NULL character (byte 0).
 	"
 
+	self isNull ifTrue: [ ^ '' ].
 	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
 ]
