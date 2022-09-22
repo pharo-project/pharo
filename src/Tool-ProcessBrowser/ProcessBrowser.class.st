@@ -383,7 +383,7 @@ ProcessBrowser >> browsedEnvironment [
 ProcessBrowser >> build [
 	| window  scrolledText |
 	window := (SystemWindow labelled: 'later') model: self.
-	self deferredMessageRecipient: WorldState.
+	self deferredMessageRecipient: window currentWorld.
 	window
 		addMorph: ((PluggableListMorph
 				on: self

@@ -7,7 +7,7 @@ Class {
 { #category : #'deferred message' }
 MorphicRenderLoop >> defer: aValuable [
 
-	WorldState addDeferredUIMessage: aValuable
+	self currentWorld defer: aValuable
 ]
 
 { #category : #'initialize-release' }
