@@ -52,14 +52,15 @@ RBBrowserEnvironmentWrapper >> description [
 { #category : #description }
 RBBrowserEnvironmentWrapper >> descriptionBasis [
 
-	^ String streamContents: [ :s | | basis |
-		basis := self basisObjects.
-		basis ifEmpty: [ ^ self ]
-			ifNotEmpty: [ s nextPutAll: ': ' ].
-		basis do: [ :each |
-			self printBasisObject: each on: s.
-			s nextPutAll: ', '].
-	s skip: -2]
+	| basis |
+ 	basis := self basisObjects.
+ 	basis ifEmpty: [ ^ '' ].
+ 	^ String streamContents: [ :s | 
+ 		  s nextPutAll: ': '.
+ 		  basis do: [ :each | 
+ 			  self printBasisObject: each on: s.
+ 			  s nextPutAll: ', ' ].
+ 		  s skip: -2 ]
 ]
 
 { #category : #private }
