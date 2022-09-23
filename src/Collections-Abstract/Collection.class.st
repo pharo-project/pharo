@@ -328,6 +328,18 @@ Collection >> asIdentitySet [
 ]
 
 { #category : #converting }
+Collection >> asNewArray [
+
+	"Like asArray: but return a copy is self is already an Array.
+	This ensures that the result is always a new Array"
+
+	"'foo' asNewArray >>> 'foo' asArray"
+	"|a| a := #(1 2 3). a asNewArray == a >>> false"
+
+	^ self asArray
+]
+
+{ #category : #converting }
 Collection >> asOrderedCollection [
 	"Answer an OrderedCollection whose elements are the elements of the
 	receiver. The order in which elements are added depends on the order
