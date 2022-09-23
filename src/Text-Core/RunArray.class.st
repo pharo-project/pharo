@@ -49,7 +49,7 @@ RunArray class >> newFrom: aCollection [
 
 	"Answer an instance of me containing the same elements as aCollection."
 
-	"(RunArray newFrom: {1. 2. 2. 3}) >>> ({1. $a. $a. 3} as: RunArray)"
+	"(RunArray newFrom: {1. $a. $a. 3}) >>> ({1. $a. $a. 3} as: RunArray)"
 	"({1. $a. $a. 3} as: RunArray) values >>> #(1 $a 3)"
 	"({1. $a. $a. 3} as: RunArray) runs >>> #(1 2 1)"
 
