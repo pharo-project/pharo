@@ -30,6 +30,9 @@ Collection class >> newFromArray: anArray [
 
 	The main selling point is that dynamic arrays, like {1. 2. 3}, are really fast in Pharo.
 	So other collections can be easily and efficiently initialized with `{1. 2. 3} asFoo` syntax.
+	
+	Important: Subclasses of Collection that redefine withAll: or newFrom: should also redefine this method
+	either by having a proper implementation (specific to Arrays) or by calling the redefined versions of withAll:/newFrom:.
 
 	Examples:
 	{ 1. 2. 3 } asSet >>> Set new add: 1; add:2; add:3; yourself
