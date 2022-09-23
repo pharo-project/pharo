@@ -137,13 +137,14 @@ Array class >> new: sizeRequested [
 ]
 
 { #category : #converting }
-Array >> as: otherClass [
+Array >> as: aSimilarClass [
 
 	"Specific classes can redefine newFromArray: by a faster implementation if they want.
 
 	Note: see Collection class>>newFromArray: for the rationale."
 
-	^ otherClass newFromArray: self
+	aSimilarClass == self class ifTrue: [ ^ self ].
+	^ aSimilarClass newFromArray: self
 ]
 
 { #category : #converting }
