@@ -382,6 +382,9 @@ CDFluidClassParserTest >> testWithRB10 [
 		Trait << TViewModelMock3 classTrait
 	') .
 	self assert: kind equals: #traitClass.
+	
+	"reference to TViewModelMock3 is just in the string, add it here so we can find it"
+	TViewModelMock3. 
 ]
 
 { #category : #'tests - rb xp' }
@@ -389,6 +392,7 @@ CDFluidClassParserTest >> testWithRB10WithError [
 
 	| searcher kind |
 	searcher := RBParseTreeSearcher new.
+	
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
@@ -398,6 +402,9 @@ CDFluidClassParserTest >> testWithRB10WithError [
 		Trait << TViewModelMock3 class
 	') .
 	self assert: kind isNil.
+	
+	"reference to TViewModelMock3 is just in the string, add it here so we can find it"
+	TViewModelMock3. 
 ]
 
 { #category : #'tests - rb xp' }

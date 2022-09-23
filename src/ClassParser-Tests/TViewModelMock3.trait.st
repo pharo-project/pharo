@@ -7,7 +7,7 @@ Trait {
 		'a',
 		'b'
 	],
-	#category : #'FluidClassBuilder-Tests-Mocks'
+	#category : #'ClassParser-Tests'
 }
 
 { #category : #accessing }
