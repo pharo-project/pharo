@@ -28,7 +28,7 @@ Collection class >> newFromArray: anArray [
 	"Fast initialization with the items of a given array.
 	This initializes elements faster that the generic withAll: or newFrom: methods.
 
-	The main selling point is that dyamic arrays like {1. 2. 3} are really fast in Pharo.
+	The main selling point is that dynamic arrays, like {1. 2. 3}, are really fast in Pharo.
 	So other collections can be easily and efficiently initialized with `{1. 2. 3} asFoo` syntax.
 
 	Examples:
