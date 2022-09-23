@@ -212,6 +212,12 @@ RBMessageNode >> isUnary [
 	^arguments isEmpty
 ]
 
+{ #category : #testing }
+RBMessageNode >> isValueAtCompileTime [
+
+	^ self selector = #valueAtCompileTime and: [ receiver isBlock ]
+]
+
 { #category : #accessing }
 RBMessageNode >> keywords [
 	^ self selector keywords.

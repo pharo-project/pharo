@@ -730,6 +730,29 @@ BlockClosure >> valueAfterWaiting: aDelay [
 					print: self ] )
 ]
 
+{ #category : #'evaluating-special' }
+BlockClosure >> valueAtCompileTime [
+
+	"This is a *magic* method that forces the evaluation of a block at compile time by the Opal compiler.
+	The constraints are the following:
+
+	* self should be a literal block (not a variable or the result of a computation).
+	* self should not have any parameter.
+	* sejlf should not capture a context (variable decared outside the block). Temporary variable declared in the block are OK.
+	
+	The value (any object) of such an early evaluation will be used *as is* at runtime in lieu of
+	this method evaluation.
+
+	The object will be not mutable, so any alteration of its state will be preserved.
+	(Note: as a analogy, this can be compared to a `static` variable in C).
+	Object>>#clone or related method can be called on the result to reduce unexpected mutation.
+
+	If, for some, this method is called at runtime it will raise an error.
+	"
+	
+	Error new signal: 'Bad usage of valueAtCompileTime'
+]
+
 { #category : #evaluating }
 BlockClosure >> valueNoContextSwitch [
 	"An exact copy of BlockClosure>>value except that this version will not preempt

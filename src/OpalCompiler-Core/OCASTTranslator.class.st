@@ -373,6 +373,29 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	methodBuilder jumpAheadTarget: #done.
 ]
 
+{ #category : #'special magic' }
+OCASTTranslator >> emitValueAtCompileTime: aMessageNode [
+
+	| blockNode compiledBlock fullBlock |
+	methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
+
+	"Create the associated compiled node.
+		We wont keed it, it is just for an immediate execution at compile time.
+	Note: the compiledBlock is incomplete as there is no associated method. But it seems to be good enough."
+	blockNode := aMessageNode receiver.
+	compiledBlock := self compilationContext astTranslatorClass new 
+		                 translateFullBlock: blockNode.
+
+	"Create the associated fullblock"
+	fullBlock := (FullBlockClosure new: 0)
+		             numArgs: 0;
+		             compiledBlock: compiledBlock;
+		             yourself.
+
+	"Execute the block *as is* then push the value stored in a literal"
+	methodBuilder pushLiteral: fullBlock value
+]
+
 { #category : #'inline messages factored' }
 OCASTTranslator >> emitWhile: aMessageNode boolean: aBoolean [
 
@@ -579,6 +602,9 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 		^self 
 			perform: (OptimizedMessages at: aMessageNode selector)
 			with: aMessageNode].
+	aMessageNode isValueAtCompileTime ifTrue: [
+		^ self emitValueAtCompileTime: aMessageNode 
+	 ].
 	^ self emitMessageNode: aMessageNode
 ]
 
