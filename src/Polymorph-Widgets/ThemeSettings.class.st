@@ -35,7 +35,8 @@ Class {
 		'menuSelectionTextColor',
 		'selectionTextColor',
 		'secondarySelectionTextColor',
-		'findReplaceSelectionTextColor'
+		'findReplaceSelectionTextColor',
+		'labelAreaLayout'
 	],
 	#category : #'Polymorph-Widgets-Themes'
 }
@@ -53,6 +54,15 @@ ThemeSettings >> applySettingsFrom: aThemeSettings [
 		windowColor: aThemeSettings windowColor;
 		selectionColor: aThemeSettings selectionColor;
 		autoSelectionColor: aThemeSettings autoSelectionColor
+]
+
+{ #category : #updating }
+ThemeSettings >> applyToDisplayedWindows [
+			
+	(SystemWindow withAllSubclasses
+		flatCollect: [ :sysWinClass | sysWinClass allInstances ])
+			select: [ :sysWin | sysWin isDisplayed ]
+				thenDo: [ :dispSysWin | dispSysWin themeChanged ]
 ]
 
 { #category : #menu }
@@ -450,7 +460,8 @@ ThemeSettings >> preferRoundCorner [
 ThemeSettings >> preferRoundCorner: aBoolean [
 	"Set the value of preferRoundCorner"
 
-	preferRoundCorner := aBoolean
+	preferRoundCorner := aBoolean.
+	self applyToDisplayedWindows
 ]
 
 { #category : #accessing }
