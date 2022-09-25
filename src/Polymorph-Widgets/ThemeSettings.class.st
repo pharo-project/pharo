@@ -312,6 +312,21 @@ ThemeSettings >> initialize [
 ]
 
 { #category : #accessing }
+ThemeSettings >> labelAreaLayout [
+	"Answer the value of labelAreaLayout"
+
+	^labelAreaLayout  ifNil: [labelAreaLayout  := #platformDependent]
+]
+
+{ #category : #accessing }
+ThemeSettings >> labelAreaLayout: aSelector [
+	"Set the value of labelAreaLayout"
+
+	labelAreaLayout  := aSelector.
+	self applyToDisplayedWindows
+]
+
+{ #category : #accessing }
 ThemeSettings >> manualSelectionColor [
 	"Answer the inverse of autoSelectionColor."
 
