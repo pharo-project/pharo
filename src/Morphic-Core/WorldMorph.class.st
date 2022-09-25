@@ -216,7 +216,8 @@ WorldMorph >> becomeActiveDuring: aBlock [
 		on: Error
 		do: [ :ex | 
 			ActiveWorld := priorWorld.
-			ex pass ]
+			ex pass ].
+	ActiveWorld := priorWorld.
 ]
 
 { #category : #'meta-actions' }

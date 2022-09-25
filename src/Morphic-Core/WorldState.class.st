@@ -18,12 +18,12 @@ Class {
 		'activeHand',
 		'currentCursor',
 		'worldRenderer',
-		'realWindowExtent'
+		'realWindowExtent',
+		'deferredUIMessages'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
 		'DebugShowDamage',
-		'DeferredUIMessages',
 		'DesktopMenuPragmaKeyword',
 		'DesktopMenuTitle',
 		'EasySelectingWorld',
@@ -41,12 +41,6 @@ WorldState class >> MinCycleLapse: milliseconds [
 	MinCycleLapse := milliseconds ifNotNil: [ milliseconds rounded ].
 ]
 
-{ #category : #'deferred message' }
-WorldState class >> addDeferredUIMessage: aValuable [
-	"aValuable will be executed in the next UI rendering cycle"
-	self deferredUIMessages nextPut: aValuable
-]
-
 { #category : #'testing os' }
 WorldState class >> canSurrenderToOS: aBoolean [
 
@@ -61,18 +55,6 @@ WorldState class >> debugShowDamage [
 { #category : #accessing }
 WorldState class >> debugShowDamage: aBoolean [
 	DebugShowDamage := aBoolean
-]
-
-{ #category : #'deferred message' }
-WorldState class >> defer: aValuable [
-	"aValuable will be executed in the next UI rendering cycle"
-	self addDeferredUIMessage: aValuable.
-]
-
-{ #category : #'deferred message' }
-WorldState class >> deferredUIMessages [
-
-	^DeferredUIMessages ifNil: [DeferredUIMessages := WaitfreeQueue  new].
 ]
 
 { #category : #settings }
@@ -162,7 +144,7 @@ WorldState class >> initialize [
 	"WorldState initialize"
 
 	MinCycleLapse := 16.		"allows 60 frames per second..."
-	DeferredUIMessages := nil.
+
 ]
 
 { #category : #'drawing cycle' }
@@ -457,8 +439,16 @@ WorldState >> damageRecorder [
 
 { #category : #'deferred message' }
 WorldState >> defer: aValuable [
+	
 	"aValuable will be executed in the next UI rendering cycle"
-	self class defer: aValuable
+	self deferredUIMessages nextPut: aValuable
+]
+
+{ #category : #'private - accessing' }
+WorldState >> deferredUIMessages [
+
+	deferredUIMessages ifNil: [ deferredUIMessages := WaitfreeQueue new ].
+	^ deferredUIMessages
 ]
 
 { #category : #'worldmenu building' }
@@ -780,7 +770,7 @@ WorldState >> runStepMethodsIn: aWorld [
 	
 	| queue nextInQueue|
 	"If available dispatch some deferred UI Message"
-	queue := self class deferredUIMessages.
+	queue := self deferredUIMessages.
 	[(nextInQueue := queue nextOrNil) isNil]
 		whileFalse: [ nextInQueue value].
 	self runLocalStepMethodsIn: aWorld.
