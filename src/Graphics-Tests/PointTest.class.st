@@ -252,15 +252,15 @@ PointTest >> testIsFloatPoint [
 { #category : #'tests - geometry' }
 PointTest >> testIsInRectangle [
 
-	self assert: ((50@50) isInRectangle: (0@0 corner: 100@100)).
+	self assert: ((50@50) isInsideRectangle: (0@0 corner: 100@100)).
 ]
 
 { #category : #'tests - geometry' }
 PointTest >> testIsInRectangleFollowContainsPointSemantics [
 
-	self deny: ((100@100) isInRectangle: (0@0 corner: 100@100)).
-	self deny: ((99@100) isInRectangle: (0@0 corner: 100@100)).
-	self assert:  ((0@0) isInRectangle: (0@0 corner: 100@100)).
+	self deny: ((100@100) isInsideRectangle: (0@0 corner: 100@100)).
+	self deny: ((99@100) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert:  ((0@0) isInsideRectangle: (0@0 corner: 100@100)).
 
 
 ]
@@ -268,18 +268,18 @@ PointTest >> testIsInRectangleFollowContainsPointSemantics [
 { #category : #'tests - geometry' }
 PointTest >> testIsInRectangleIsInside [
 
-	self assert: ((50@50) isInRectangle: (0@0 corner: 100@100)).
-	self assert: ((0@0) isInRectangle: (0@0 corner: 100@100)).
-	self assert: ((10@0) isInRectangle: (0@0 corner: 100@100)).
-	self assert: ((0@10) isInRectangle: (0@0 corner: 100@100)).
+	self assert: ((50@50) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert: ((0@0) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert: ((10@0) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert: ((0@10) isInsideRectangle: (0@0 corner: 100@100)).
 ]
 
 { #category : #'tests - geometry' }
 PointTest >> testIsInRectangleIsOutside [
 
-	self deny: ((150@150) isInRectangle: (0@0 corner: 100@100)).
-	self deny: ((99@100) isInRectangle: (0@0 corner: 100@100)).
-	self assert: ((0@0) isInRectangle: (0@0 corner: 100@100)).
+	self deny: ((150@150) isInsideRectangle: (0@0 corner: 100@100)).
+	self deny: ((99@100) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert: ((0@0) isInsideRectangle: (0@0 corner: 100@100)).
 	
 ]
 

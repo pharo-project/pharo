@@ -398,19 +398,6 @@ Point >> isFloatPoint [
 ]
 
 { #category : #testing }
-Point >> isInRectangle: aRectangle [ 
-	"Answer true whether the receiver is inside the argument (following Rectangle>>#containsPoint: semantics"
-	
-	"(50@50 isInRectangle: (0@0 corner: 100@100)) >>> true"
-	"(0@0 isInRectangle: (0@0 corner: 100@100)) >>> true"
-	"(0@10 isInRectangle: (0@0 corner: 100@100)) >>> true"
-	"(100@100 isInRectangle: (0@0 corner: 100@100))>>> false"
-	"(100@90 isInRectangle: (0@0 corner: 100@100))>>> false"
-	
-	^ aRectangle containsPoint: self
-]
-
-{ #category : #testing }
 Point >> isInsideCircle: a with: b with: c [ 
 	"Returns true if self is inside the circle defined by the points a, b, c. See Guibas and Stolfi (1985) p.107"
 	^ (a dotProduct: a)
@@ -418,6 +405,19 @@ Point >> isInsideCircle: a with: b with: c [
 			* (a triangleArea: c with: self)) + ((c dotProduct: c)
 			* (a triangleArea: b with: self)) - ((self dotProduct: self)
 			* (a triangleArea: b with: c)) > 0.0
+]
+
+{ #category : #testing }
+Point >> isInsideRectangle: aRectangle [ 
+	"Answer true whether the receiver is inside the argument (following Rectangle>>#containsPoint: semantics"
+	
+	"(50@50 isInsideRectangle: (0@0 corner: 100@100)) >>> true"
+	"(0@0 isInsideRectangle: (0@0 corner: 100@100)) >>> true"
+	"(0@10 isInsideRectangle: (0@0 corner: 100@100)) >>> true"
+	"(100@100 isInsideRectangle: (0@0 corner: 100@100))>>> false"
+	"(100@90 isInsideRectangle: (0@0 corner: 100@100))>>> false"
+	
+	^ aRectangle containsPoint: self
 ]
 
 { #category : #testing }
