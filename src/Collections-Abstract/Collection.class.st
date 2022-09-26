@@ -333,7 +333,7 @@ Collection >> asIdentitySet [
 { #category : #converting }
 Collection >> asNewArray [
 
-	"Like asArray: but return a copy is self is already an Array.
+	"Like asArray: but return a copy if self is already an Array.
 	This ensures that the result is always a new Array"
 
 	"'foo' asNewArray >>> 'foo' asArray"
