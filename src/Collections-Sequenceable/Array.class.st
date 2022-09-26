@@ -155,12 +155,6 @@ Array >> asArray [
 ]
 
 { #category : #converting }
-Array >> asDictionary [
-
-	^ Dictionary newFromArray: self
-]
-
-{ #category : #converting }
 Array >> asNewArray [
 
 	^ self clone.
