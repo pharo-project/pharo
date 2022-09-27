@@ -86,7 +86,7 @@ EpSettings class >> storeNameStrategySettingsOn: aBuilder [
 		description: 'Choose how will be the Epicea logs named.';
 		parent: #epicea;
 		target: self;
-		default: OmRandomSuffixStrategy;
+		default: OmTimeStampSuffixStrategy;
 		domainValues: OmSessionStoreNamingStrategy availableStrategies.
 ]
 
