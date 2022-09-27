@@ -89,12 +89,15 @@ GlobalIdentifier class >> uniqueInstance [
 GlobalIdentifier >> computerUUID [
 	"This value identifies a user logged into the computer.
 	Before calling #computerUUID method, you should call #ensure."
-	^ persistedInformation at: #computerUUID
+	
+	^ persistedInformation at: #computerUUID ifAbsentPut: [UUID new asString].
 ]
 
 { #category : #'load and saving' }
 GlobalIdentifier >> ensure [
-	self persistenceStrategy ensure: self persistedInformation
+	self persistenceStrategy ensure: self persistedInformation.
+
+
 ]
 
 { #category : #initialization }
@@ -102,8 +105,6 @@ GlobalIdentifier >> initialize [
 	super initialize.
 	"Dictionary contains all the values that we want to persist on disk."
 	persistedInformation := Dictionary new.
-	persistedInformation at: #computerUUID put: UUID new asString.
-	persistedInformation at: #secretUUID put: UUID new asString.
 	persistenceStrategy := GlobalIdentifierPersistence ston.
 	persistenceStrategy previous: GlobalIdentifierPersistence fuel.
 ]
@@ -135,5 +136,6 @@ GlobalIdentifier >> secretUUID [
 	"This value can be used for obfuscating an information before sending it.
 	See #obfuscate: method.
 	Before calling #secretUUID method, you should call #ensure."
-	^ persistedInformation at: #secretUUID
+	^ persistedInformation at: #secretUUID ifAbsentPut: [UUID new asString].
+
 ]
