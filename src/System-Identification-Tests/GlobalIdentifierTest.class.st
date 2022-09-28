@@ -136,7 +136,7 @@ GlobalIdentifierTest >> testBackwardCompatibility4 [
 	We use STON. The STON preference file is broken, we cannot read it.
 	Let's check that we keep FUEL file untouched and creates STON file."
 
-	| fuelPersistence fuelPrefereces data dictionary |
+	| fuelPersistence fuelPrefereces data dictionary newIdentifier |
 	fuelPersistence := GlobalIdentifierPersistence fuel.
 	fuelPersistence
 		checker:
@@ -161,9 +161,10 @@ GlobalIdentifierTest >> testBackwardCompatibility4 [
 	self assert: fuelPrefereces contents equals: data.
 	self assert: identifier persistenceStrategy preferences exists.
 	self deny: identifier persistenceStrategy preferencesContents equals: data.
-	dictionary := Dictionary new.
-	identifier persistenceStrategy load: dictionary.
-	self assert: dictionary equals: identifier persistedInformation
+
+	newIdentifier := GlobalIdentifier basicNew initialize.
+	identifier persistenceStrategy load: newIdentifier.
+	self assert: newIdentifier persistedInformation equals: identifier persistedInformation
 ]
 
 { #category : #tests }

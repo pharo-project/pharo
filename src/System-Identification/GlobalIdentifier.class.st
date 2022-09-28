@@ -95,9 +95,18 @@ GlobalIdentifier >> computerUUID [
 
 { #category : #'load and saving' }
 GlobalIdentifier >> ensure [
-	self persistenceStrategy ensure: self persistedInformation.
+	self persistenceStrategy ensure: self.
 
 
+]
+
+{ #category : #'load and saving' }
+GlobalIdentifier >> ensureComputerAndSecretValues [
+
+	"To be used before saving the dictionary with new values. So, we can ensure it is properly generated. Accessing the values force its generation"
+	
+	self computerUUID.
+	self secretUUID.
 ]
 
 { #category : #initialization }
