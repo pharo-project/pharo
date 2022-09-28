@@ -136,7 +136,7 @@ GlobalIdentifierTest >> testBackwardCompatibility4 [
 	We use STON. The STON preference file is broken, we cannot read it.
 	Let's check that we keep FUEL file untouched and creates STON file."
 
-	| fuelPersistence fuelPrefereces data dictionary newIdentifier |
+	| fuelPersistence fuelPrefereces data newIdentifier |
 	fuelPersistence := GlobalIdentifierPersistence fuel.
 	fuelPersistence
 		checker:
