@@ -18,7 +18,7 @@ ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 
 	methodOrBlock ifNil: [ 
 		self text: ''.
-		self beForMethod: nil.
+		self clearInteractionModel.
 		^ self ].
 
 	self text: methodOrBlock sourceCode.

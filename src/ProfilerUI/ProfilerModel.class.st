@@ -39,6 +39,14 @@ ProfilerModel >> announceRootChanged: aTallyModel [
 		(ProfilerResultsTreeRootChangedAnnouncement new item: aTallyModel)
 ]
 
+{ #category : #announce }
+ProfilerModel >> announceSelectionChanged: aTallyModel [
+
+	self announcer announce:
+		(ProfilerResultsTreeSelectionChangedAnnouncement new item:
+			 aTallyModel)
+]
+
 { #category : #'event handling' }
 ProfilerModel >> browseItem [
 	self selectedNode ifNotNil: [:current | current browseItem ].
@@ -118,7 +126,7 @@ ProfilerModel >> menu: menu shifted: b [
 			(menu 
 				add: 'Show as root'
 				target: self
-				selector: #goInto:
+				selector: #setTallyRoot:
 				argument: current) 
 				icon: (self iconNamed: #glamorousRedo) ].
 	^ menu
@@ -231,6 +239,11 @@ ProfilerModel >> setTallyRoot: aTallyModel [
 
 	self tallyRoot: aTallyModel.
 	self announceRootChanged: aTallyModel
+]
+
+{ #category : #'accessing nodes' }
+ProfilerModel >> setTallySelected: aTallyModel [ 
+	self announceSelectionChanged: aTallyModel
 ]
 
 { #category : #accessing }

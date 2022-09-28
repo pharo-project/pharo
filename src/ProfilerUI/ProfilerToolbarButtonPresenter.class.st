@@ -6,7 +6,7 @@ Class {
 	#superclass : #SpToolbarButtonPresenter,
 	#instVars : [
 		'object',
-		'selectedPath'
+		'selectedObject'
 	],
 	#category : #'ProfilerUI-View'
 }
@@ -30,12 +30,13 @@ ProfilerToolbarButtonPresenter >> printOn: aStream [
 ]
 
 { #category : #accessing }
-ProfilerToolbarButtonPresenter >> selectedPath [
-	^ selectedPath
+ProfilerToolbarButtonPresenter >> selectedObject [
+
+	^ selectedObject
 ]
 
 { #category : #accessing }
-ProfilerToolbarButtonPresenter >> selectedPath: aCollection [ 
+ProfilerToolbarButtonPresenter >> selectedObject: aTallyModel [ 
 
-	selectedPath := aCollection
+	selectedObject := aTallyModel
 ]
