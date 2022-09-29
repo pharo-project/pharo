@@ -14,6 +14,14 @@ BlockClosureTest >> testBenchFor [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
+BlockClosureTest >> testBenchForException [
+
+	"benchFor: expects a duration. Check that the bencher does not go in an infinite loop if the wakeup thread fails."
+
+	self should: [ [ 100 factorial ] benchFor: 1 ] raise: Error
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testCannotReturn [
 
 	| block p |

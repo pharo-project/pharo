@@ -15,20 +15,28 @@ BlockClosure >> bench [
 
 { #category : #'*Kernel-Chronology-Extras' }
 BlockClosure >> benchFor: duration [
+
 	"Run me for duration and return a BenchmarkResult"
-	
+
 	"[ 100 factorial ] benchFor: 2 seconds"
-	
-	| count run started |
+
+	| count run exception started |
 	count := 0.
 	run := true.
-	[ duration wait. run := false ] forkAt: Processor timingPriority - 1.
+	exception := nil. "Used to catch possible exception in the wakeup thread"
+	[ [ duration wait. ]
+			on: Exception
+			do: [ :e | exception := e ].
+		run := false ] forkAt: Processor timingPriority - 1.
 	started := Time millisecondClockValue.
-	[ run ] whileTrue: [ self value. count := count + 1 ].
-	^ BenchmarkResult new 
-		iterations: count; 
-		elapsedTime: (Time millisecondsSince: started) milliSeconds; 
-		yourself
+	[ run ] whileTrue: [ 
+		self value.
+		count := count + 1 ].
+	exception ifNotNil: [ exception signal ].
+	^ BenchmarkResult new
+		  iterations: count;
+		  elapsedTime: (Time millisecondsSince: started) milliSeconds;
+		  yourself
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
