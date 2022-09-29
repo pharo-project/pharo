@@ -56,7 +56,7 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 		self enabled: true.
 
 		navigationToolbar reset.
-		self goInto: viewModel tallyRoot.
+		(navigationToolbar ensureItemWith: viewModel tallyRoot) click.
 
 		viewModel showLeavesOnly ifTrue: [ ^ self ].
 
@@ -67,9 +67,7 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 			self inform:
 				'The excecution time was too short! No measurements taken'.
 			^ self ].
-
-		self goInto: doItNode.
-		viewModel setTallySelected: doItNode.
+		(navigationToolbar ensureItemWith: doItNode) click.
 
 		viewModel announcer announce:
 			ProfilingResultsDisplayedAnnouncement new ]
@@ -99,16 +97,22 @@ ProfilerResultsPresenter >> handleSelectionChanged: item [
 
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleTreeRootChanged: event [
+	"maybe the following line is enough"
 
+	self assert: event item == viewModel tallyRoot.
+	
+	"clean the tree table selected items"
 	treeTable roots: viewModel rootItems.
-	treeTable expandAllSuchThat: [ :tallyModel | 
-		tallyModel weightToRoot asFloat closeTo: 100.0 ].
-	treeTable expandPath: event item path.
-	treeTable selectNodePath: event item path.
-	treeTable scrollSelectionIntoView.
+	self assert: treeTable selectedItem isNil.
 	
-	(navigationToolbar ensureItemWith: event item) click.
-	
+	viewModel showLeavesOnly ifFalse: [ 
+			treeTable expandAllSuchThat: [ :node | 
+				node weightToRoot asFloat closeTo: 100.0 ].
+			treeTable expandPath: event item path.
+			treeTable selectNodePath: event item path ]
+		ifTrue: [
+			treeTable selectNodePath: treeTable items first ].			
+	treeTable scrollSelectionIntoView
 ]
 
 { #category : #initialization }
@@ -137,11 +141,7 @@ ProfilerResultsPresenter >> initializeActions [
 		text asInteger ifNotNil: [ treeTable hideNodesUnder: text asNumber ] ].
 
 	treeDropList whenSelectedItemChangedDo: [ :item | 
-		viewModel showLeavesOnly: item value.
-		treeTable roots: viewModel rootItems.
-		viewModel showLeavesOnly ifFalse: [ 
-			treeTable expandAllSuchThat: [ :node | 
-				node weightToRoot asFloat closeTo: 100.0 ] ] ]
+		viewModel showLeavesOnly: item value ]
 ]
 
 { #category : #initialization }

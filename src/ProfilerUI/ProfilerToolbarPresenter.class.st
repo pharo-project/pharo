@@ -44,20 +44,13 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 
 	| button |
 	button := ProfilerToolbarButtonPresenter new.
-	
+
 	button
 		object: aTallyModel;
 		label: aTallyModel methodName;
 		selectedObject: aTallyModel;
 		help: 'Display ' , aTallyModel methodName , ' as root';
-		action: [ 
-			button == self selectedItem ifFalse: [ 
-				('click toolbar button: ', button asString) traceCr.
-				('selectedObject: ', button selectedObject asString) traceCr.
-				' ' traceCr.
-					self setSelectedItem: button.
-					aTallyModel model setTallyRoot: aTallyModel.
-					aTallyModel model setTallySelected: (button selectedObject ifNil: [ aTallyModel ]) ] ].
+		action: [ aTallyModel model setTallyRoot: aTallyModel ].
 
 	^ button
 ]

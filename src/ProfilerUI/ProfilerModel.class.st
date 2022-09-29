@@ -194,8 +194,7 @@ ProfilerModel >> rootItems [
 		  ifTrue: [ self leaveItemsOver: showNodeThreshold ]
 		  ifFalse: [ {self tallyRoot asTallyModel
 			  							model: self;
-			  							yourself} 
-						"self rootTallyItemsOver: showNodeThreshold" ]
+			  							yourself} ]
 ]
 
 { #category : #accessing }
@@ -237,13 +236,9 @@ ProfilerModel >> runBlock: aBlock [
 { #category : #'accessing nodes' }
 ProfilerModel >> setTallyRoot: aTallyModel [
 
-	self tallyRoot: aTallyModel.
-	self announceRootChanged: aTallyModel
-]
-
-{ #category : #'accessing nodes' }
-ProfilerModel >> setTallySelected: aTallyModel [ 
-	self announceSelectionChanged: aTallyModel
+	tallyRoot = aTallyModel ifTrue: [ ^ self ].
+	tallyRoot := aTallyModel.
+	self announceRootChanged: tallyRoot
 ]
 
 { #category : #accessing }
@@ -255,7 +250,8 @@ ProfilerModel >> showLeavesOnly [
 { #category : #accessing }
 ProfilerModel >> showLeavesOnly: anObject [
 
-	showLeavesOnly := anObject
+	showLeavesOnly := anObject.
+	self announceRootChanged: tallyRoot
 ]
 
 { #category : #accessing }
@@ -275,21 +271,15 @@ ProfilerModel >> startProfiling [
 ProfilerModel >> stopProfiling [
 
 	profiler stopProfiling.
-	tallyRoot := profiler tallyRoot asTallyModel
+	self setTallyRoot: (profiler tallyRoot asTallyModel
 		             model: self;
-		             yourself.
+		             yourself).
 	isProfiling := false
 ]
 
 { #category : #'accessing nodes' }
 ProfilerModel >> tallyRoot [
 	^ tallyRoot
-]
-
-{ #category : #'accessing nodes' }
-ProfilerModel >> tallyRoot: aTallyModel [
-
-	tallyRoot := aTallyModel
 ]
 
 { #category : #accessing }

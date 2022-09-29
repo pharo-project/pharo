@@ -93,6 +93,12 @@ ProfilerTreeTablePresenter >> reset [
 		anAdapter widget buildContents ]
 ]
 
+{ #category : #api }
+ProfilerTreeTablePresenter >> roots: aCollection [
+	super roots: aCollection.
+	self emptySelection
+]
+
 { #category : #scrolling }
 ProfilerTreeTablePresenter >> scrollSelectionIntoView [
 	self withAdapterPerformOrDefer: [ :anAdapter |
