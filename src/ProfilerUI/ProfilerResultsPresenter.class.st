@@ -66,37 +66,51 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleSelectionChanged [
 	| navButton node |
+	node := treeTable selectedItem.
+	
+	node
+		ifNil: [ 
+			browseButton disable.
+			showAsRootButton disable.
+			codePresenter methodOrBlock: nil ]
+		ifNotNil: [ 
+			browseButton enable.
+			showAsRootButton enable.
+			codePresenter methodOrBlock: node methodOrBlock.
+			 ].
+	
 	navButton := navigationToolbar selectedItem.
 	navButton ifNil: [ ^ self ].
-	node := treeTable selectedItem.
 	navButton selectedObject: node
 ]
 
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleTreeRootChanged: event [
 
-	| nodeToSelect |
+	| nodeToSelect pathToSelect |
 	self assert: event item == viewModel tallyRoot.
 
 	treeTable roots: viewModel rootItems.
 	self assert: treeTable selectedItem isNil.
-
+	
+	navigationToolbar setSelectedItem:
+		(navigationToolbar ensureItemWith: viewModel tallyRoot).
+		
 	nodeToSelect := navigationToolbar selectedItem
 		                ifNil: [ event item ]
 		                ifNotNil: [ :btn | btn selectedObject ].
+	pathToSelect := nodeToSelect
+		                ifNil: [ event item relativePath ]
+		                ifNotNil: [ nodeToSelect relativePath ].
 
 	viewModel showLeavesOnly ifFalse: [ 
 		treeTable expandAllSuchThat: [ :node | 
 			node weightToRoot asFloat closeTo: 100.0 ].
-		treeTable expandPath: nodeToSelect relativePath ].
+		treeTable expandPath: pathToSelect ].
 
-	treeTable
-		selectPath: nodeToSelect relativePath
-		scrollToSelection: true.
+	treeTable selectPath: pathToSelect scrollToSelection: true.
 
-	navigationToolbar setSelectedItem:
-		(navigationToolbar ensureItemWith: viewModel tallyRoot)
-
+	
 ]
 
 { #category : #initialization }

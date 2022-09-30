@@ -45,8 +45,9 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 		selectedObject: aTallyModel;
 		help: 'Display ' , aTallyModel methodName , ' as root';
 		action: [ 
-			self setSelectedItem: button.
-			aTallyModel model setTallyRoot: aTallyModel].
+			aTallyModel model setTallyRoot: aTallyModel.
+			self setSelectedItem: button
+			].
 
 	^ button
 ]
