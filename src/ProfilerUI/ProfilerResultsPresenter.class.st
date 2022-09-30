@@ -43,31 +43,21 @@ ProfilerResultsPresenter >> doItNode [
 ]
 
 { #category : #'event handling' }
-ProfilerResultsPresenter >> goInto: aTallyModel [
-
-	(navigationToolbar ensureItemWith: aTallyModel) click
-]
-
-{ #category : #'event handling' }
 ProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
 	UIManager default defer: [ 
 		self enabled: true.
 
-		navigationToolbar reset.
-		(navigationToolbar ensureItemWith: viewModel tallyRoot) click.
-
 		viewModel showLeavesOnly ifTrue: [ ^ self ].
 
 		"select do it node and expand tree"
 		doItNode := self doItNode.
-
-		doItNode ifNil: [ 
-			self inform:
-				'The excecution time was too short! No measurements taken'.
-			^ self ].
-		(navigationToolbar ensureItemWith: doItNode) click.
+		doItNode ifNil: [ 	
+				self inform: 'The excecution time was too short! No measurements taken'.
+				^ self ].
+		treeTable selectPath: doItNode path scrollToSelection: true.		
+		viewModel setTallyRoot: doItNode.
 
 		viewModel announcer announce:
 			ProfilingResultsDisplayedAnnouncement new ]
@@ -75,44 +65,38 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleSelectionChanged [
-	
-	self handleSelectionChanged: treeTable selectedItem
-]
-
-{ #category : #'event handling' }
-ProfilerResultsPresenter >> handleSelectionChanged: item [
-
-	item
-		ifNil: [ 
-			browseButton disable.
-			showAsRootButton disable.
-			codePresenter methodOrBlock: nil ]
-		ifNotNil: [ 
-			browseButton enable.
-			showAsRootButton enable.
-			codePresenter methodOrBlock: item methodOrBlock.
-			"viewModel setTallySelected: item" ].
-	
+	| navButton node |
+	navButton := navigationToolbar selectedItem.
+	navButton ifNil: [ ^ self ].
+	node := treeTable selectedItem.
+	navButton selectedObject: node
 ]
 
 { #category : #'event handling' }
 ProfilerResultsPresenter >> handleTreeRootChanged: event [
-	"maybe the following line is enough"
 
+	| nodeToSelect |
 	self assert: event item == viewModel tallyRoot.
-	
-	"clean the tree table selected items"
+
 	treeTable roots: viewModel rootItems.
 	self assert: treeTable selectedItem isNil.
-	
+
+	nodeToSelect := navigationToolbar selectedItem
+		                ifNil: [ event item ]
+		                ifNotNil: [ :btn | btn selectedObject ].
+
 	viewModel showLeavesOnly ifFalse: [ 
-			treeTable expandAllSuchThat: [ :node | 
-				node weightToRoot asFloat closeTo: 100.0 ].
-			treeTable expandPath: event item path.
-			treeTable selectNodePath: event item path ]
-		ifTrue: [
-			treeTable selectNodePath: treeTable items first ].			
-	treeTable scrollSelectionIntoView
+		treeTable expandAllSuchThat: [ :node | 
+			node weightToRoot asFloat closeTo: 100.0 ].
+		treeTable expandPath: nodeToSelect relativePath ].
+
+	treeTable
+		selectPath: nodeToSelect relativePath
+		scrollToSelection: true.
+
+	navigationToolbar setSelectedItem:
+		(navigationToolbar ensureItemWith: viewModel tallyRoot)
+
 ]
 
 { #category : #initialization }
@@ -307,14 +291,7 @@ ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 	viewModel announcer
 		when: ProfilingStartedAnnouncement do: [ self enabled: false ];
 		when: ProfilingFinishedAnnouncement send: #handleProfilingFinished to: self;
-		when: ProfilerResultsTreeRootChangedAnnouncement send: #handleTreeRootChanged: to: self;
-		when: ProfilerResultsTreeSelectionChangedAnnouncement 
-		do: [ :evt | "navigationToolbar handleSelectionChanged: evt item."
-			treeTable emptySelection.
-			('treeTable selectNodePath: ', evt item path asString) traceCr.
-			' ' traceCr.
-			treeTable selectNodePath: (evt item pathStartingFrom: viewModel tallyRoot path) ].
-		
+		when: ProfilerResultsTreeRootChangedAnnouncement send: #handleTreeRootChanged: to: self
 ]
 
 { #category : #subscription }

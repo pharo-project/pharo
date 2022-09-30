@@ -33,12 +33,6 @@ ProfilerToolbarPresenter >> getItemWith: anObject [
 		  ifNotEmpty: [ :result | result anyOne ]
 ]
 
-{ #category : #'event handling' }
-ProfilerToolbarPresenter >> handleSelectionChanged: aTallyModel [
-
-	self selectedItem ifNotNil: [ :btn | btn selectedObject: aTallyModel ]
-]
-
 { #category : #factory }
 ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 
@@ -50,7 +44,9 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 		label: aTallyModel methodName;
 		selectedObject: aTallyModel;
 		help: 'Display ' , aTallyModel methodName , ' as root';
-		action: [ aTallyModel model setTallyRoot: aTallyModel ].
+		action: [ 
+			self setSelectedItem: button.
+			aTallyModel model setTallyRoot: aTallyModel].
 
 	^ button
 ]
@@ -58,6 +54,7 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 { #category : #'adding-removing items' }
 ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 	| toKeep item i |
+
 	toKeep := #() asOrderedCollection.
 	i := 1.
 	[ 
