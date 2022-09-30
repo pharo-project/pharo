@@ -63,10 +63,10 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #printing }
-FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
+FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
 
 		^ String streamContents: [ :s |
-						s nextPutAll: 'Object << #MyClass'; crtab.
+						s nextPutAll: 'Object << '. aClassName asSymbol printOn: s. s crtab.
 						s nextPutAll: 'layout: FixedLayout;'; crtab.
 						s nextPutAll: 'traits: {};'; crtab.
 						s nextPutAll: 'slots: {};'; crtab. 

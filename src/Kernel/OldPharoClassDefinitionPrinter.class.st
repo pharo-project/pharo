@@ -84,10 +84,10 @@ OldPharoClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #template }
-OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
+OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Object subclass: #MyClass' ; crtab.
+			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
 			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
 			s nextPutAll: 'classVariableNames: '''''; crtab.
 			s nextPutAll: 'package: ''', aString, '''' ]
