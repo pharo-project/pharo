@@ -25,7 +25,7 @@ BaselineOfDrTests >> baseline: spec [
 			spec package: 'DrTests-RottenGreenTestsFinder' with: [ spec requires: #('rotten-tests-finder') ]. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #baselines }
 BaselineOfDrTests >> rottenTestsFinder: spec [
 	
 	spec 
