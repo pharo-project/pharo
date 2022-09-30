@@ -79,6 +79,12 @@ RBBlockNode >> pcsForNode: aNode [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBBlockNode >> resetBcToASTCache [
+
+	bcToASTCache := nil
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
 ]
