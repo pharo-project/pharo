@@ -16,10 +16,11 @@ ProfilerTreeTablePresenter class >> adapterName [
 	^ #ProfilerTreeTableAdapter
 ]
 
-{ #category : #selection }
+{ #category : #'api - selection' }
 ProfilerTreeTablePresenter >> emptySelection [
 	self withAdapterPerformOrDefer: [ :anAdapter |
-		 anAdapter widget emptySelection ]
+		 anAdapter widget emptySelection ].
+	
 ]
 
 { #category : #'expanding-collapsing' }
@@ -69,10 +70,10 @@ ProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
 	self withAdapterPerformOrDefer: [ :anAdapter | 
 		expanded := anAdapter widget currentlyExpanded.
 		aBlock value.
-		expanded do: [ :n | anAdapter widget expandNodePath: n path ] ]
+		expanded do: [ :n | anAdapter widget expandNodePath: n relativePath ] ]
 ]
 
-{ #category : #selection }
+{ #category : #'api - selection' }
 ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 
 	| selected widget |
@@ -81,10 +82,9 @@ ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 		selected := widget selectedMorph complexContents.
 		aBlock value.
 
-		widget emptySelection.
+		self emptySelection.
 		selected ifNotNil: [ 
-			widget selectNodePath: selected path. 
-			widget scrollSelectionIntoView ] ]
+			self selectPath: selected relativePath scrollToSelection: true ] ]
 ]
 
 { #category : #updating }
@@ -93,13 +93,19 @@ ProfilerTreeTablePresenter >> reset [
 		anAdapter widget buildContents ]
 ]
 
+{ #category : #api }
+ProfilerTreeTablePresenter >> roots: aCollection [
+	super roots: aCollection.
+	self emptySelection
+]
+
 { #category : #scrolling }
 ProfilerTreeTablePresenter >> scrollSelectionIntoView [
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget scrollSelectionIntoView ]
 ]
 
-{ #category : #selection }
+{ #category : #'api - selection' }
 ProfilerTreeTablePresenter >> selectNodePath: aCollection [ 
 
 	self withAdapterPerformOrDefer: [ :anAdapter |
@@ -108,11 +114,10 @@ ProfilerTreeTablePresenter >> selectNodePath: aCollection [
 
 { #category : #'api - selection' }
 ProfilerTreeTablePresenter >> selectPath: aPath scrollToSelection: shouldScrollToSelection [
+
 	self selectNodePath: aPath.
-	self withAdapterPerformOrDefer: [ :anAdapter |
-		
-		shouldScrollToSelection ifTrue: [ 
-			adapter scrollToSelection ] ]
+	self withAdapterPerformOrDefer: [ :anAdapter | 
+		shouldScrollToSelection ifTrue: [ adapter scrollToSelection ] ]
 ]
 
 { #category : #'api - selection' }

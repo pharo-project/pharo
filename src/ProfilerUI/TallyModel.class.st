@@ -119,16 +119,15 @@ TallyModel >> methodOrBlock [
 	^ item method
 ]
 
-{ #category : #accessing }
-TallyModel >> pathStartingFrom: aPath [
-	| myPath |
-	myPath := self path allButFirst.
-	
-	aPath allButFirst doWithIndex: [ :each :index |
-		each == (myPath at: index)
-			ifFalse: [ self error: 'impossible to calculate relative path' ].
-	 ].
-	^ self path copyFrom: aPath size + 1 to: self path size
+{ #category : #path }
+TallyModel >> relativePath [
+
+	| rootPath |
+	rootPath := model tallyRoot path.
+
+	rootPath doWithIndex: [ :each :index | 
+		self assert: each = (self path at: index) ].
+	^ self path copyFrom: rootPath size to: self path size
 ]
 
 { #category : #querying }

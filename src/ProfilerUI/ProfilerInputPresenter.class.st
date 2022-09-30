@@ -44,7 +44,7 @@ ProfilerInputPresenter >> initializeActions [
 { #category : #initialization }
 ProfilerInputPresenter >> initializePresenters [
 
-	codeInput := self newCode beForScripting; text: '10000 factorial'.
+	codeInput := self newCode beForScripting; yourself.
 
 	profilerDropList := self newDropList
 		                    help: 'Select the desired profiler.';
