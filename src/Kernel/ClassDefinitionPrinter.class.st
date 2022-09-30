@@ -183,6 +183,11 @@ ClassDefinitionPrinter >> classDefinitionString [
 
 { #category : #accessing }
 ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [ 
+	^ self classDefinitionTemplateInPackage: aPackageName forClass: #MyClass
+]
+
+{ #category : #printing }
+ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
 	^ self subclassResponsibility
 ]
 
