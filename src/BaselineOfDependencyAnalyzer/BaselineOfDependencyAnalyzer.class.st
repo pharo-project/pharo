@@ -15,8 +15,12 @@ BaselineOfDependencyAnalyzer >> baseline: spec [
 		spec 
 			package: 'Tool-DependencyAnalyser'
 				 with: [ spec requires: #('AIGraphAlgorithms') ];
-			package: 'Tool-DependencyAnalyser-UI';
-			package: 'Tool-DependencyAnalyser-Tests';
+			package: 'Tool-DependencyAnalyser-UI'
+				 with: [ spec requires: #('Tool-DependencyAnalyser') ];
+			package: 'Tool-DependencyAnalyser-UI-Tab'
+				 with: [ spec requires: #('Tool-DependencyAnalyser') ];
+			package: 'Tool-DependencyAnalyser-Tests'
+				 with: [ spec requires: #('Tool-DependencyAnalyser') ];
 			package: 'Tool-DependencyAnalyser-Tests-Data'.
 			
 		spec 
