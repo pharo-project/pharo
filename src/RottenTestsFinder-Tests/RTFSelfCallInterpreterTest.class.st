@@ -7,6 +7,20 @@ Class {
 	#category : #'RottenTestsFinder-Tests'
 }
 
+{ #category : #running }
+RTFSelfCallInterpreterTest >> setUp [
+	"See RTFFakeTestSuperClass comment for more information."
+	super setUp.
+	RTFFakeTestSuperClass superclass: TestCase.
+]
+
+{ #category : #running }
+RTFSelfCallInterpreterTest >> tearDown [
+	RTFFakeTestSuperClass superclass: Object.
+	super tearDown.
+
+]
+
 { #category : #tests }
 RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 	| interpreter |
