@@ -64,6 +64,12 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 ]
 
 { #category : #'event handling' }
+ProfilerResultsPresenter >> handleProfilingStarted [
+	self enabled: false.
+	navigationToolbar reset
+]
+
+{ #category : #'event handling' }
 ProfilerResultsPresenter >> handleSelectionChanged [
 	| navButton node |
 	node := treeTable selectedItem.
@@ -303,7 +309,7 @@ ProfilerResultsPresenter >> setModelBeforeInitialization: aDomainObject [
 ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 
 	viewModel announcer
-		when: ProfilingStartedAnnouncement do: [ self enabled: false ];
+		when: ProfilingStartedAnnouncement send: #handleProfilingStarted to: self;
 		when: ProfilingFinishedAnnouncement send: #handleProfilingFinished to: self;
 		when: ProfilerResultsTreeRootChangedAnnouncement send: #handleTreeRootChanged: to: self
 ]
