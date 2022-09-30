@@ -13,6 +13,7 @@ Class {
 
 { #category : #running }
 RTFSelfCallTreeCleanerTest >> setUp [
+	super setUp.
 	tree1 := RTFSelfCallRootNode new
 				compiledMethod: 'Fake CM';
 				subCalls: { 
