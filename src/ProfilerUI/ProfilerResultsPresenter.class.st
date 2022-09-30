@@ -49,16 +49,15 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 	UIManager default defer: [ 
 		self enabled: true.
 
-		viewModel showLeavesOnly ifTrue: [ ^ self ].
-
-		"select do it node and expand tree"
-		doItNode := self doItNode.
-		doItNode ifNil: [ 	
-				self inform: 'The excecution time was too short! No measurements taken'.
-				^ self ].
-		treeTable selectPath: doItNode path scrollToSelection: true.		
-		viewModel setTallyRoot: doItNode.
-
+		viewModel showLeavesOnly ifFalse: [ 
+			"select do it node and expand tree"
+			doItNode := self doItNode.
+			doItNode
+				ifNil: [ 	self inform: 'The excecution time was too short! No measurements taken' ]
+				ifNotNil: [ 
+					treeTable selectPath: doItNode path scrollToSelection: true.
+					viewModel setTallyRoot: doItNode ]
+		].
 		viewModel announcer announce:
 			ProfilingResultsDisplayedAnnouncement new ]
 ]
@@ -98,25 +97,25 @@ ProfilerResultsPresenter >> handleTreeRootChanged: event [
 
 	treeTable roots: viewModel rootItems.
 	self assert: treeTable selectedItem isNil.
-	
+
 	navigationToolbar setSelectedItem:
 		(navigationToolbar ensureItemWith: viewModel tallyRoot).
-		
+
 	nodeToSelect := navigationToolbar selectedItem
 		                ifNil: [ event item ]
-		                ifNotNil: [ :btn | btn selectedObject ].
-	pathToSelect := nodeToSelect
-		                ifNil: [ event item relativePath ]
-		                ifNotNil: [ nodeToSelect relativePath ].
+		                ifNotNil: [ :btn | 
+		                btn selectedObject ifNil: [ event item ] ].
+
+	pathToSelect := viewModel showLeavesOnly
+		                ifTrue: [ nodeToSelect path ]
+		                ifFalse: [ nodeToSelect relativePath ].
 
 	viewModel showLeavesOnly ifFalse: [ 
 		treeTable expandAllSuchThat: [ :node | 
 			node weightToRoot asFloat closeTo: 100.0 ].
 		treeTable expandPath: pathToSelect ].
 
-	treeTable selectPath: pathToSelect scrollToSelection: true.
-
-	
+	treeTable selectPath: pathToSelect scrollToSelection: true
 ]
 
 { #category : #initialization }
