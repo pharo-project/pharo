@@ -70,7 +70,7 @@ ProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
 	self withAdapterPerformOrDefer: [ :anAdapter | 
 		expanded := anAdapter widget currentlyExpanded.
 		aBlock value.
-		expanded do: [ :n | anAdapter widget expandNodePath: n path ] ]
+		expanded do: [ :n | anAdapter widget expandNodePath: n relativePath ] ]
 ]
 
 { #category : #'api - selection' }
