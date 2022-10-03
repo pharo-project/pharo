@@ -13,6 +13,7 @@ Class {
 
 { #category : #running }
 RTFLeadsToAssertPrimitiveCallCheckerTest >> setUp [
+	super setUp.
 	tree1 := RTFSelfCallRootNode new
 				compiledMethod: (RTFFakeTestClass lookupSelector: #testWithHelperHelper);
 				subCalls: { 

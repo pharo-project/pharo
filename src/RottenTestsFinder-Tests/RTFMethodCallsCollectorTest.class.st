@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RTFMethodCallsCollectorTest >> setUp [
+	super setUp.
 	tree := RTFSelfCallRootNode new
 				compiledMethod: 'Fake CM';
 				subCalls: { 
