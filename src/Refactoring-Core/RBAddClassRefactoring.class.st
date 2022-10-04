@@ -84,7 +84,7 @@ RBAddClassRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBAddClassRefactoring >> transform [
-	(self model)
+	self model
 		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
 					expandMacrosWith: superclass
 					with: className
