@@ -24,28 +24,6 @@ RBAddClassParametrizedTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #tests }
-RBAddClassParametrizedTest >> testAddClass [
-	| refactoring newClass superClass classTest |
-	
-	refactoring := self createRefactoringWithArguments: 
-		{ #FooTest . #RBAbstractRefactoringTest . (Array with: self class) . #'Refactory-Testing' }.
-		
-	self executeRefactoring: refactoring.
-	
-	newClass := refactoring model classNamed: #FooTest.
-	superClass := refactoring model classNamed: #RBAbstractRefactoringTest.
-	classTest := refactoring model classNamed: self class name.
-	self assert: newClass superclass equals: superClass.
-	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass classSide superclass equals: superClass classSide.
-	self assert: (superClass classSide subclasses includes: newClass classSide).
-	self assert: classTest superclass equals: newClass.
-	self assert: (newClass subclasses includes: classTest).
-	self assert: classTest classSide superclass equals: newClass classSide.
-	self assert: (newClass classSide subclasses includes: classTest classSide)
-]
-
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testEmptyCategory [
 	self shouldFail: (self createRefactoringWithArguments:
@@ -59,24 +37,58 @@ RBAddClassParametrizedTest >> testExistingClassName [
 ]
 
 { #category : #tests }
+RBAddClassParametrizedTest >> testInsertClassWithinExistingHiearchy [
+	| refactoring insertedClass parentOfInsertedClass childOfInsertedClass |
+	
+	refactoring := self createRefactoringWithArguments: 
+		{ #InsertedClass . #RBAbstractRefactoringTest . (Array with: self class) . #'Refactory-Testing' }.
+		"addClass: superclass: subclasses: category:"
+	self executeRefactoring: refactoring.
+	
+	insertedClass := refactoring model classNamed: #InsertedClass.
+	parentOfInsertedClass := refactoring model classNamed: #RBAbstractRefactoringTest.
+	childOfInsertedClass := refactoring model classNamed: self class name.
+	
+	"The inserted class is correctly inserted between the currrent class and its superclass.
+	The checks only check the inserted-superclass link."
+	self assert: insertedClass superclass equals: parentOfInsertedClass.
+	self assert: (parentOfInsertedClass subclasses includes: insertedClass).
+	
+	"Metaclasses are correctly linked"
+	self assert: insertedClass classSide superclass equals: parentOfInsertedClass classSide.
+	self assert: (parentOfInsertedClass classSide subclasses includes: insertedClass classSide).
+	
+	"The inserted class is correctly inserted between the currrent class and its superclass.
+	The checks only check the insertedclass and its subclasses."
+	self assert: childOfInsertedClass superclass equals: insertedClass.
+	self assert: (insertedClass subclasses includes: childOfInsertedClass).
+	self assert: childOfInsertedClass classSide superclass equals: insertedClass classSide.
+	self assert: (insertedClass classSide subclasses includes: childOfInsertedClass classSide)
+]
+
+{ #category : #tests }
 RBAddClassParametrizedTest >> testModelAddClass [
-	| refactoring newClass superClass subclass |
-	subclass := model classNamed: #Bar.
-	superClass := model classNamed: #Foo.
+	| refactoring insertedClass superClass subclass |
+	superClass := model classNamed: #NewSuperClass.
+	subclass := model classNamed: #NewSubclass.
+
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ #FooTest . superClass name . (Array with: subclass) . #'Refactory-Testing' }.
+		{ #InsertedClass . superClass name . (Array with: subclass) . #'Refactory-Testing' }.
+		"addClass: superclass: subclasses: category:"
 		
 	self executeRefactoring: refactoring.
 	
-	newClass := model classNamed: #FooTest.
-	self assert: newClass superclass equals: superClass.
-	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass classSide superclass equals: superClass classSide.
-	self assert: (superClass classSide subclasses includes: newClass classSide).
-	self assert: subclass superclass equals: newClass.
-	self assert: (newClass subclasses includes: subclass).
-	self assert: subclass classSide superclass equals: newClass classSide.
-	self assert: (newClass classSide subclasses includes: subclass classSide)
+	insertedClass := model classNamed: #InsertedClass.
+	self assert: insertedClass superclass equals: superClass.
+	self assert: (superClass subclasses includes: insertedClass).
+	
+	self assert: insertedClass classSide superclass equals: superClass classSide.
+	self assert: (superClass classSide subclasses includes: insertedClass classSide).
+	
+	self assert: subclass superclass equals: insertedClass.
+	self assert: (insertedClass subclasses includes: subclass).
+	self assert: subclass classSide superclass equals: insertedClass classSide.
+	self assert: (insertedClass classSide subclasses includes: subclass classSide)
 ]
 
 { #category : #'failure tests' }
