@@ -491,6 +491,12 @@ RGMethodDefinition >> name [
 	^self printString
 ]
 
+{ #category : #displaying }
+RGMethodDefinition >> nameToDisplay [
+
+	^ self printString
+]
+
 { #category : #accessing }
 RGMethodDefinition >> numArgs [
 	^ self selector asString numArgs
