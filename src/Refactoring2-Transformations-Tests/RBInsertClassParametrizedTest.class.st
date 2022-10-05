@@ -76,8 +76,8 @@ RBInsertClassParametrizedTest >> testModelExistingClassName [
 { #category : #tests }
 RBInsertClassParametrizedTest >> testModelInsertClass [
 	| refactoring insertedClass superClass subclass |
-	superClass := model classNamed: #NewSuperClass.
-	subclass := model classNamed: #NewSubclass.
+	superClass := model classNamed: #Foo.
+	subclass := model classNamed: #Bar.
 
 	refactoring := self createRefactoringWithModel: model andArguments:
 		{ #InsertedClass . superClass name . (Array with: subclass) . #'Refactory-Testing' }.
