@@ -54,6 +54,12 @@ BreakpointGroup class >> initialize [
 	UngroupedBreakpointsGroup := self new name: 'No Group'.
 ]
 
+{ #category : #'instance creation' }
+BreakpointGroup class >> newBreakpoint: aBreakpoint [
+	AllBreakpointsGroup addBreakpoint: aBreakpoint.
+	UngroupedBreakpointsGroup addBreakpoint: aBreakpoint.
+]
+
 { #category : #accessing }
 BreakpointGroup class >> ungroupedBreakpointsGroup [
 	^ UngroupedBreakpointsGroup
@@ -69,6 +75,12 @@ BreakpointGroup >> breakpoints [
 	^breakpoints ifNil: [ breakpoints := OrderedCollection new]
 ]
 
+{ #category : #initialization }
+BreakpointGroup >> initialize [ 
+	AllGroups add: self.
+	^self.
+]
+
 { #category : #accessing }
 BreakpointGroup >> name [
 	^name ifNil: [ name := 'unnamed group' ]
@@ -77,6 +89,12 @@ BreakpointGroup >> name [
 { #category : #API }
 BreakpointGroup >> name: aString [
 	name := aString
+]
+
+{ #category : #API }
+BreakpointGroup >> remove [
+	AllGroups remove: self.
+	breakpoints copy do: [ :bp | bp group: self class ungroupedBreakpointsGroup  ]
 ]
 
 { #category : #API }
