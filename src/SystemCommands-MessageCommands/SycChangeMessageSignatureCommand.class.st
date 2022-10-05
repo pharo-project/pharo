@@ -102,19 +102,25 @@ SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext 
 
 { #category : #requesting }
 SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
+
 	| methodName dialog invalidArgNames |
 	invalidArgNames := self computeInvalidArgNamesForSelector: originalMessage selector.
-	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames.
-	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
-		canRenameArgs: self canRenameArgs
-		canRemoveArgs: self canRemoveArgs
-		canAddArgs: self canAddArgs
-		canEditName: self canEditName .
-	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
-	
-	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
-		ifTrue: [ CmdCommandAborted signal].	
-	^methodName
+	methodName := RBMethodName
+		              selector: originalMessage selector
+		              arguments: originalMessage argumentNames.
+	dialog := SycMethodNameEditorPresenter
+		          openOn: methodName
+		          withInvalidArgs: invalidArgNames
+		          canRenameArgs: self canRenameArgs
+		          canRemoveArgs: self canRemoveArgs
+		          canAddArgs: self canAddArgs
+		          canEditName: self canEditName.
+	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+
+	originalMessage selector = methodName selector
+	& (originalMessage argumentNames = methodName arguments) ifTrue: [ 
+		CmdCommandAborted signal ].
+	^ methodName
 ]
 
 { #category : #execution }
