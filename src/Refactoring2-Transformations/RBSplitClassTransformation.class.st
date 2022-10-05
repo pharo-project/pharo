@@ -82,7 +82,7 @@ RBSplitClassTransformation >> abstractVariableReferences [
 RBSplitClassTransformation >> addClass [
 
 	transformations add: 
-		(RBAddClassTransformation 
+		(RBInsertClassTransformation 
 			model: self model 
 			addClass: newClassName 
 			superclass: #Object

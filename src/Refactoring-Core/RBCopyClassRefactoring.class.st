@@ -63,7 +63,7 @@ RBCopyClassRefactoring >> category: aSymbol [
 
 { #category : #transforming }
 RBCopyClassRefactoring >> copyClass [
-	self performCompositeRefactoring: (RBAddClassRefactoring
+	self performCompositeRefactoring: (RBInsertClassRefactoring
 		model: self model
 		addClass: className
 		superclass: aClass superclass
