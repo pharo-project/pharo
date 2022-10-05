@@ -3,10 +3,10 @@ Adds a class in the image, optionally inside an hierarchy (with superclass or su
 
 Usage:
 | transformation |
-transformation := (RBAddClassTransformation
-	addClass: #FooTest
+transformation := (RBInsertClassTransformation
+	addClass: #InsertedClass
 	superclass: #RBTransformationTest
-	subclasses: (Array with: RBAddClassTransformationTest)
+	subclasses: (Array with: RBInsertClassTransformationTest)
 	category: #'Refactoring2-Transformations-Tests')
 	transform.
 (ChangesBrowser changes: transformation model changes changes) open
