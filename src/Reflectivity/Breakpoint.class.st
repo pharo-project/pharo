@@ -23,8 +23,12 @@ Class {
 		'#level',
 		'#options',
 		'#targetInstance => WeakSlot',
-		'#oneShot',
-		'#enabled'
+		'#once',
+		'#enabled',
+		'#group',
+		'#onCount',
+		'#count',
+		'#breakOnCount'
 	],
 	#classVars : [
 		'#AllBreakpoints'
@@ -236,18 +240,13 @@ Breakpoint class >> unregisterObserver: anObject [
 ]
 
 { #category : #api }
-Breakpoint >> always [
-
-	self link: self breakLink
-]
-
-{ #category : #api }
 Breakpoint >> breakInContext: aContext node: aNode [
 	 <debuggerCompleteToSender>
 	
 	 self class notifyBreakpointHit: self inContext: aContext node: aNode.
 	 self isEnabled ifFalse: [ ^ self ].
-	 self oneShot ifTrue: [ self disable ].
+	 self onCount ifTrue: [ (self increaseCount = self breakOnCount) ifFalse: [^ self]].
+	 self once ifTrue: [ self disable ].
 	 Break break
 ]
 
@@ -269,27 +268,84 @@ Breakpoint >> breakLinkConditional [
 ]
 
 { #category : #api }
+Breakpoint >> breakOnCount [
+
+	^breakOnCount ifNil:[ breakOnCount := 0].
+]
+
+{ #category : #api }
+Breakpoint >> breakOnCount: anInterger [
+
+	breakOnCount := anInterger.
+]
+
+{ #category : #TODO }
+Breakpoint >> condition [
+	"this method doesnt really work well yet because the condition is not just the condition text but a collection"
+	^ condition .
+]
+
+{ #category : #api }
 Breakpoint >> condition: aCondition [
 
 	condition := aCondition.
 	self link: self breakLinkConditional
 ]
 
+{ #category : #accessing }
+Breakpoint >> count [
+	^count ifNil: [ count := 0 ].
+]
+
+{ #category : #accessing }
+Breakpoint >> count: anInteger [
+	
+	^count := anInteger.
+]
+
 { #category : #api }
 Breakpoint >> disable [
-	enabled := false
+	self enabled: false
 ]
 
 { #category : #api }
 Breakpoint >> enable [
-	enabled := true
+	self enabled: true
+]
+
+{ #category : #api }
+Breakpoint >> enabled: aBoolean [
+	enabled := aBoolean
+]
+
+{ #category : #accessing }
+Breakpoint >> group [
+	"returns the group of the breakpoint"
+	^ group.
+]
+
+{ #category : #api }
+Breakpoint >> group: aBreakpointGroup [
+	"puts the breakpoint in a new group and sets the group variable to that group"
+	group removeBreakpoint: self.
+	aBreakpointGroup addBreakpoint: self.
+	^ group := aBreakpointGroup.
+]
+
+{ #category : #private }
+Breakpoint >> increaseCount [
+
+	^self count: (self count + 1).
 ]
 
 { #category : #initialization }
 Breakpoint >> initialize [
 	
 	self class initializeSlots: self.
-	options := #(+ optionCompileOnLinkInstallation)
+	options := #(+ optionCompileOnLinkInstallation).
+	BreakpointGroup newBreakpoint: self.
+	group := BreakpointGroup ungroupedBreakpointsGroup.
+
 ]
 
 { #category : #install }
@@ -359,15 +415,27 @@ Breakpoint >> node: aNode [
 ]
 
 { #category : #api }
-Breakpoint >> once [
+Breakpoint >> onCount [
 
-	oneShot := true
+	^ onCount ifNil: [ onCount := false ]
 ]
 
-{ #category : #accessing }
-Breakpoint >> oneShot [
+{ #category : #api }
+Breakpoint >> onCount: aBoolean [
 
-	^ oneShot ifNil: [ oneShot := false ]
+	^ onCount := aBoolean
+]
+
+{ #category : #api }
+Breakpoint >> once [
+
+	^ once ifNil: [ once := false ].
+]
+
+{ #category : #api }
+Breakpoint >> once: aBoolean [
+
+	once := aBoolean
 ]
 
 { #category : #accessing }
@@ -386,8 +454,17 @@ Breakpoint >> options: anArray [
 Breakpoint >> remove [
 
 	self removeFromNodeProperty.
+	self removeFromBreakpointGroups.
 	self class removeBreakpoint: self.
 	link uninstall
+]
+
+{ #category : #removing }
+Breakpoint >> removeFromBreakpointGroups [
+
+	self group removeBreakpoint: self.
+	BreakpointGroup allBreakpointsGroup removeBreakpoint: self.
+
 ]
 
 { #category : #removing }
