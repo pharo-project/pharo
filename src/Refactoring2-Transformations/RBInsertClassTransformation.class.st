@@ -3,10 +3,10 @@ Adds a class in the image, optionally inside an hierarchy (with superclass or su
 
 Usage:
 | transformation |
-transformation := (RBAddClassTransformation
-	addClass: #FooTest
+transformation := (RBInsertClassTransformation
+	addClass: #InsertedClass
 	superclass: #RBTransformationTest
-	subclasses: (Array with: RBAddClassTransformationTest)
+	subclasses: (Array with: RBInsertClassTransformationTest)
 	category: #'Refactoring2-Transformations-Tests')
 	transform.
 (ChangesBrowser changes: transformation model changes changes) open
@@ -18,7 +18,7 @@ Preconditions:
 - name of the category must be a valid one
 "
 Class {
-	#name : #RBAddClassTransformation,
+	#name : #RBInsertClassTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
 		'superclass',
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAddClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
 	^ self new
 		addClass: aName
@@ -40,7 +40,7 @@ RBAddClassTransformation class >> addClass: aName superclass: aClass subclasses:
 ]
 
 { #category : #'instance creation' }
-RBAddClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
 	^ self new
 		model: aRBSmalltalk;
@@ -52,7 +52,7 @@ RBAddClassTransformation class >> model: aRBSmalltalk addClass: aName superclass
 ]
 
 { #category : #api }
-RBAddClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
+RBInsertClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
 
 	self
 		addClass: aName
@@ -62,7 +62,7 @@ RBAddClassTransformation >> addClass: aName superclass: aClass category: aSymbol
 ]
 
 { #category : #api }
-RBAddClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
+RBInsertClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
 
 	self className: aName.
 	superclass := superclassName asSymbol.
@@ -71,7 +71,7 @@ RBAddClassTransformation >> addClass: aName superclass: superclassName subclasse
 ]
 
 { #category : #preconditions }
-RBAddClassTransformation >> preconditions [
+RBInsertClassTransformation >> preconditions [
 
 	| cond |
 	cond := ((RBCondition isMetaclass: (self model classObjectFor: superclass)) 
@@ -90,7 +90,7 @@ RBAddClassTransformation >> preconditions [
 ]
 
 { #category : #executing }
-RBAddClassTransformation >> privateTransform [
+RBInsertClassTransformation >> privateTransform [
 
 	self model
 		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
@@ -102,7 +102,7 @@ RBAddClassTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddClassTransformation >> storeOn: aStream [ 
+RBInsertClassTransformation >> storeOn: aStream [ 
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
