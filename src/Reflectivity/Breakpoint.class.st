@@ -277,12 +277,18 @@ Breakpoint >> condition: aCondition [
 
 { #category : #api }
 Breakpoint >> disable [
-	enabled := false
+	self enabled: false
 ]
 
 { #category : #api }
 Breakpoint >> enable [
-	enabled := true
+	self enabled: true
+]
+
+{ #category : #api }
+Breakpoint >> enabled: aBoolean [
+	enabled := aBoolean
+	
 ]
 
 { #category : #initialization }
