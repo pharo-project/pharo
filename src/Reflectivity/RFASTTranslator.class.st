@@ -244,9 +244,14 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 			withVars: aMethodNode scope tempVectorVarNames.
 	].
 	effectTranslator visitNode: aMethodNode body.
-	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
-	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFReifyValueVar; returnTop].
-	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
+	(aMethodNode hasProperty: #wrapperMethod)
+	 ifTrue: [
+		"after links are only active in the wrapper method" 
+		self emitMetaLinkAfterNoEnsure: aMethodNode.
+		"the wrapper has to return the value of the wrapped method"
+		methodBuilder pushTemp: #RFReifyValueVar; returnTop]
+	ifFalse: [
+		aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]].
 ]
 
 { #category : #'visitor - double dispatching' }
