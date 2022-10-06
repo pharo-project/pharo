@@ -388,7 +388,7 @@ OCASTTranslator >> emitValueAtCompileTime: aMessageNode [
 
 	"Create the associated fullblock"
 	fullBlock := (FullBlockClosure new: 0)
-		             numArgs: 0;
+		             numArgs: compiledBlock numArgs; "Should be 0, but inconsistency here may cause runtime issues, so better save than sorry"
 		             compiledBlock: compiledBlock;
 		             yourself.
 
