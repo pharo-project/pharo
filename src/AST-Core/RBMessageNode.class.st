@@ -215,7 +215,7 @@ RBMessageNode >> isUnary [
 { #category : #testing }
 RBMessageNode >> isValueAtCompileTime [
 
-	^ self selector = #valueAtCompileTime and: [ receiver isBlock ]
+	^ self selector = #valueAtCompileTime and: [ receiver isBlock and: [ receiver hasArguments not ]]
 ]
 
 { #category : #accessing }

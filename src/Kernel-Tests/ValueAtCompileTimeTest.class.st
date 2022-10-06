@@ -40,16 +40,12 @@ ValueAtCompileTimeTest >> testValueAtCompileTimeNoLiteralBlock [
 
 { #category : #tests }
 ValueAtCompileTimeTest >> testValueAtCompileTimeNoParameters [
-
-	|v|
 	
 	"Parameters are not accepted"
 	
-	self flag: 'FIXME: add compiler errors or warnings'.
-	
-	v := [ :x | {x} ] valueAtCompileTime.
-	
-	self assert: v equals: { nil }
+	self flag: 'FIXME: add compiler errors or warnings instead of raising runtime error'.
+		
+	self should: [ [ :x | {x} ] valueAtCompileTime ] raise: Error
 ]
 
 { #category : #tests }
