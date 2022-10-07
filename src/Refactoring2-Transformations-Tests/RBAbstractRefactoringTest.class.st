@@ -99,7 +99,6 @@ RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [
 RBAbstractRefactoringTest >> testConditions [
 	| condition newCondition |
 	condition := RBCondition new 
-				type: #false
 				block: [false]
 				errorString: 'false'.
 	condition errorMacro: '<1?true:false>'.
