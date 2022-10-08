@@ -18,7 +18,6 @@ Class {
 	#superclass : #RBAbstractCondition,
 	#instVars : [
 		'block',
-		'type',
 		'errorBlock'
 	],
 	#category : #'Refactoring-Core-Conditions'
@@ -462,13 +461,7 @@ RBCondition >> errorBlockFor: aBoolean [
 	^errorBlock
 ]
 
-{ #category : #printing }
-RBCondition >> printOn: aStream [ 
-	aStream nextPutAll: type asString
-]
-
 { #category : #initialization }
 RBCondition >> withBlock: aBlock [ 
-	block := aBlock.
-	type := #(#generic)
+	block := aBlock
 ]

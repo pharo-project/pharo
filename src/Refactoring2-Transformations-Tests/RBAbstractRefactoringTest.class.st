@@ -105,11 +105,7 @@ RBAbstractRefactoringTest >> testConditions [
 	self deny: condition check.
 	self assert: condition errorString equals: 'false'.
 	self assert: condition not check.
-	self assert: condition printString equals: 'false'.
-	self assert: condition not printString equals: 'NOT false'.
 	self deny: (condition not & condition) check.
-	self 
-		assert: (condition not & condition) printString equals: 'NOT false & false'.
 	self assert: (condition & condition) not check.
 	self assert: (condition | condition not) check.
 	self deny: (newCondition := condition | condition) check.
