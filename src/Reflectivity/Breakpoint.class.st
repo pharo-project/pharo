@@ -461,9 +461,12 @@ Breakpoint >> remove [
 
 { #category : #removing }
 Breakpoint >> removeFromBreakpointGroups [
-
-	self group removeBreakpoint: self.
-	BreakpointGroup allBreakpointsGroup removeBreakpoint: self.
+	
+ 	group := nil.
+	
+	"old code needed when groups are not using weak sets"
+	"self group removeBreakpoint: self.
+	BreakpointGroup allBreakpointsGroup removeBreakpoint: self."
 
 ]
 

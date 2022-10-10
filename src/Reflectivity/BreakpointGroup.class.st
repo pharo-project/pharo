@@ -72,7 +72,7 @@ BreakpointGroup >> addBreakpoint: aBreakpoint [
 
 { #category : #accessing }
 BreakpointGroup >> breakpoints [ 
-	^breakpoints ifNil: [ breakpoints := OrderedCollection new]
+	^breakpoints ifNil: [ breakpoints := WeakSet new]
 ]
 
 { #category : #initialization }
@@ -93,8 +93,9 @@ BreakpointGroup >> name: aString [
 
 { #category : #API }
 BreakpointGroup >> remove [
+	breakpoints copy do: [ :bp | bp group: self class ungroupedBreakpointsGroup ].
 	AllGroups remove: self.
-	breakpoints copy do: [ :bp | bp group: self class ungroupedBreakpointsGroup  ]
+	
 ]
 
 { #category : #API }
