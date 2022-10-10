@@ -108,10 +108,10 @@ Collection >> averageIfEmpty: aBlock [
 	"This method return the average of the collection if it is not empty. In the other case,
 	it return the value of the block. It means the user the user of this method decide of the return value."
 
-	"#(10) averageIfEmpty: [ 0 ] >>> 10"
-	"#() averageIfEmpty: [ 0 ] >>> 0"
-	"{3@5. 7@ -4} averageIfEmpty: [0@0] >>> (5@(1/2))"
-	"{} averageIfEmpty: [0@0] >>> (0@0)"
+	"(#(10) averageIfEmpty: [ 0 ]) >>> 10"
+	"(#() averageIfEmpty: [ 0 ]) >>> 0"
+	"({3@5. 7@ -4} averageIfEmpty: [0@0]) >>> (5@(1/2))"
+	"({} averageIfEmpty: [0@0]) >>> (0@0)"
 
 	self ifEmpty: [ ^ aBlock value ].
 	^ self average
@@ -163,7 +163,7 @@ Collection >> max [
 	"Return the maximum value of the collection"
 
 	"#(1 5 10 -4) max >>> 10"
-	"{1@5. 10@ -4} max >>> 10@5"
+	"{1@5. 10@ -4} max >>> (10@5)"
 
 	^ self inject: self anyOne into: [ :max :each | max max: each ]
 ]
@@ -173,7 +173,7 @@ Collection >> min [
 	"Return the minimum value of the collection"
 
 	"#(1 5 10 -4) min >>> -4"
-	"{1@5. 10@ -4} min >>> 1@ -4"
+	"{1@5. 10@ -4} min >>> (1@ -4)"
 
 	^ self inject: self anyOne into: [:min :each | min min: each]
 ]
@@ -201,7 +201,7 @@ Collection >> range [
 	"returns the difference between the max and min element, their positions notwithstanding"
 
 	"#( 1 51 10 ) range >>> 50"
-	"{1@50. 10@ -10. 5@5} range >>> 9@60"
+	"{1@50. 10@ -10. 5@5} range >>> (9@60)"
 
 	^ self max - self min
 ]
@@ -281,7 +281,7 @@ Collection >> sum [
 
 	"sum works with objects that understands + and - messages, like Points"
 
-	"{1@5. 2@3. 4@7} sum >>> 7@15"
+	"{1@5. 2@3. 4@7} sum >>> (7@15)"
 
 	"or even Collections"
 

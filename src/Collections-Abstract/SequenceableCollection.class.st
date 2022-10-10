@@ -453,10 +453,10 @@ SequenceableCollection >> before: target ifAbsent: exceptionBlock [
 SequenceableCollection >> beginsWith: aSequenceableCollection [
 	"Answer true if the receiver starts with the argument collection"
 	
-	"#(1 2 3 4 5) beginsWith: #() >>> true"
-	"#(1 2 3) beginsWith: #(1 2 3 4 5) >>> false"
-	"#(1 2 3 4 5) beginsWith: #(0 1 2) >>> false"
-	"#(1 2 3 4 5) beginsWith: #(1 2 3) >>> true"
+	"(#(1 2 3 4 5) beginsWith: #()) >>> true"
+	"(#(1 2 3) beginsWith: #(1 2 3 4 5)) >>> false"
+	"(#(1 2 3 4 5) beginsWith: #(0 1 2)) >>> false"
+	"(#(1 2 3 4 5) beginsWith: #(1 2 3)) >>> true"
 	
 	aSequenceableCollection ifEmpty: [ ^true ].
 	self size < aSequenceableCollection size ifTrue: [^false].
@@ -487,7 +487,7 @@ SequenceableCollection >> collect: aBlock [
 	Collect the resulting values into a collection like the receiver. Answer  
 	the new collection."
 	
-	"#(1 2 3) collect: [:each | each  + 10] >>> #(11 12 13) "
+	"(#(1 2 3) collect: [:each | each  + 10]) >>> #(11 12 13) "
 
 	| newCollection |
 	newCollection := self species new: self size.
@@ -1793,7 +1793,7 @@ SequenceableCollection >> readStream [
 SequenceableCollection >> readStreamDo: aBlock [
 	"Evaluates the argument with the read stream of the collection. Answers the result."
 	
-	"#(3 4 5) readStreamDo: [ :stream | stream contents ] >>> #(3 4 5)"
+	"(#(3 4 5) readStreamDo: [ :stream | stream contents ]) >>> #(3 4 5)"
 
 	^ aBlock value: self readStream
 ]
@@ -1859,7 +1859,7 @@ SequenceableCollection >> reduceRight: aBlock [
 SequenceableCollection >> reject: rejectBlock [ 
 	"Optimized version of Collection>>#reject:"
 	
-	"#(1 2 3 4) reject: [:each | each = 3 ] >>> #(1 2 4)"
+	"(#(1 2 3 4) reject: [:each | each = 3 ]) >>> #(1 2 4)"
 	
 	| each |
 	
@@ -2085,7 +2085,7 @@ SequenceableCollection >> shuffle [
 { #category : #shuffling }
 SequenceableCollection >> shuffleBy: aRandom [
 	"Durstenfeld's version of the Fisher-Yates shuffle"
-	"{1. 2. 3. 4. 5} shuffleBy: (Random seed: 42) >>> #(2 5 4 3 1)"
+	"({1. 2. 3. 4. 5} shuffleBy: (Random seed: 42)) >>> #(2 5 4 3 1)"
 
 	self size to: 2 by: -1 do: [ :i | 
 		self swap: i with: (aRandom nextInteger: i) ]

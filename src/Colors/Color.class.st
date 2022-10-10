@@ -107,8 +107,8 @@ Color class >> brown [
 { #category : #'instance creation' }
 Color class >> colorFrom: parm [
 	"Return an instantiated color from parm.  If parm is already a color, return it, else return the result of my performing it if it's a symbol or, if it is a list, it can either be an array of three numbers, which will be interpreted as RGB values, or a list of symbols, the first of which is sent to me and then the others of which are in turn sent to the prior result, thus allowing entries of the form #(blue darker).  Else just return the thing"
-	"Color colorFrom: #(blue darker) >>>  (Color r: 0.0 g: 0.0 b: 0.9198435972629521 alpha: 1.0) "
-	"(Color colorFrom: Color blue darker)>>>( (Color r: 0.0 g: 0.0 b: 0.9198435972629521 alpha: 1.0))"
+	"(Color colorFrom: #(blue darker)) >>> (Color r: 0.0 g: 0.0 b: 0.9198435972629521 alpha: 1.0) "
+	"(Color colorFrom: Color blue darker)>>> ((Color r: 0.0 g: 0.0 b: 0.9198435972629521 alpha: 1.0))"
 	"(Color colorFrom: #blue)>>> (Color blue)"
 	"(Color colorFrom: #(0.0 0.0 1.0)) >>> (Color blue)"
 
@@ -400,7 +400,7 @@ Color class >> hex: aFloat [
 	"Return an hexadecimal two-digits string between 00 and FF
 	for a float between 0.0 and 1.0"
 
-	" Color hex: 0.2 >>> '33' "
+	"(Color hex: 0.2) >>> '33'"
 
 	| str |
 	str := (aFloat * 255) asInteger printStringHex asLowercase.
