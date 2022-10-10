@@ -59,8 +59,6 @@ PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
 	| espression |
 	espression := thisContext method ast pharoDocCommentNodes first expression.
 	self assert: espression evaluate equals: 7.
-	espression := thisContext method ast pharoDocCommentNodes second expression.
-	self assert: espression evaluate equals: 3.
 ]
 
 { #category : #tests }

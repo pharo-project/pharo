@@ -32,17 +32,15 @@ Collection class >> newFromArray: anArray [
 	So other collections can be easily and efficiently initialized with `{1. 2. 3} asFoo` syntax.
 	
 	Important: Subclasses of Collection that redefine withAll: or newFrom: should also redefine this method
-	either by having a proper implementation (specific to Arrays) or by calling the redefined versions of withAll:/newFrom:.
+	either by having a proper implementation (specific to Arrays) or by calling the redefined versions of withAll:/newFrom:."
 
-	Examples:
-	{ 1. 2. 3 } asSet >>> Set new add: 1; add:2; add:3; yourself
-	{ 1. 2. 3 } asOrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself
-	{ 1->2. 3->4 } asDictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself
+	"{ 1. 2. 3 } asSet >>> Set new add: 1; add:2; add:3; yourself"
+	"{ 1. 2. 3 } asOrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself"
+	"{ 1->2. 3->4 } asDictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself"
 
-	{ 1. 2. 3 } as: Set >>> Set new add: 1; add:2; add:3; yourself
-	{ 1. 2. 3 } as: OrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself
-	{ 1->2. 3->4 } as: Dictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself
-	"
+	"{ 1. 2. 3 } as: Set >>> Set new add: 1; add:2; add:3; yourself"
+	"{ 1. 2. 3 } as: OrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself"
+	"{ 1->2. 3->4 } as: Dictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself"
 
 	| newCollection size |
 	size := anArray size.
@@ -807,13 +805,12 @@ Collection >> detect: aBlock ifNone: exceptionBlock [
 Collection >> detectMax: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the highest magnitude.
-	If collection empty, return nil.  This method might also be called elect:.
+	If collection empty, return nil.  This method might also be called elect:."
 
-	({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p x ]) >>> (10@ -3)
-	({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p y ]) >>> (2@6)
-	((10 to: 20) detectMax: [ :p | p gcd: 6 ]) >>> 12
-	'Hello' detectMax: #asciiValue >>> $o
-	"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p x ]) >>> (10@ -3)"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p y ]) >>> (2@6)"
+	"((10 to: 20) detectMax: [ :p | p gcd: 6 ]) >>> 12"
+	"'Hello' detectMax: #asciiValue >>> $o"
 
 	| maxElement maxValue |
 	self do: [:each | | val |
@@ -834,13 +831,11 @@ Collection >> detectMax: aBlock [
 Collection >> detectMin: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the lowest number.
-	If collection empty, return nil.
+	If collection empty, return nil."
 
-	Example of use:
-	({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@3)
-	({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)
-	'Hello!' detectMin: #asciiValue >>> $!
-	"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@3)"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)"
+	"'Hello!' detectMin: #asciiValue >>> $!"
 
 	| minElement minValue |
 	self do: [:each | | val |
@@ -996,12 +991,11 @@ Collection >> findFirstInByteString: aByteString startingAt: start [
 	Default is to use a naive algorithm.
 	Subclasses might want to implement a more efficient scheme.
 
-	Return 0 if not found.
+	Return 0 if not found."
 
-	('aeiou' findFirstInByteString: 'hello world' startingAt: 1) >>> 2.
-	('aeiou' findFirstInByteString: 'hello world' startingAt: 3) >>> 5.
-	('aeiou' findFirstInByteString: 'hello world' startingAt: 9) >>> 0.
-	"
+	"('aeiou' findFirstInByteString: 'hello world' startingAt: 1) >>> 2."
+	"('aeiou' findFirstInByteString: 'hello world' startingAt: 3) >>> 5."
+	"('aeiou' findFirstInByteString: 'hello world' startingAt: 9) >>> 0."
 
 	start to: aByteString size do:
 		[:index |
@@ -1085,13 +1079,10 @@ Collection >> gather: aBlock [
 
 { #category : #enumerating }
 Collection >> groupedBy: aBlock [
-	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species.
+	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
 
-	Example of use:
-	(#(1 2 3 4 5) groupedBy: [ :v | v odd ]) asString >>> 'an OrderedDictionary(true->#(1 3 5) false->#(2 4))'
-	"
-
-
+	"(#(1 2 3 4 5) groupedBy: [ :v | v odd ]) asString
+		>>> 'an OrderedDictionary(true->#(1 3 5) false->#(2 4))'"
 
 	| groups |
 	groups := OrderedDictionary new.
@@ -1109,8 +1100,12 @@ Collection >> groupedBy: aBlock having: aSelectionBlock [
 	elements for which keyBlock returns the same results, and return those
 	collections allowed by selectBlock."
 
-	"In the following example, the group `3->#(34)` is filtered out because there is not 2 elements.
-	(#(1 5 21 28 34) groupedBy: [:x| x // 10] having: [:v| v size = 2]) >>> {0->#(1 5). 2->#(21 28)} asOrderedDictionary"
+	"In the following example, the group `3->#(34)` is filtered out because there is not 2 elements."
+	
+	"(#(1 5 21 28 34)
+		groupedBy: [:x| x // 10]
+		having: [:v| v size = 2])
+	>>> {0->#(1 5). 2->#(21 28)} asOrderedDictionary"
 
 	^ (self groupedBy: aBlock) select: aSelectionBlock
 ]
@@ -1267,15 +1262,14 @@ Collection >> inject: thisValue into: binaryBlock [
 
 	"(#(2r101 2r11 2r1000) inject: 0 into: [ :acc :each | acc bitXor: each ]) >>> 2r1110"
 
-	"(#(10 20 30) inject: 0 into: [ :sum :each | sum + each ]) >>> 60
-	But use sum or sum: instead!
-	#(10 20 30) sum >>> 60
-	"
+	"(#(10 20 30) inject: 0 into: [ :sum :each | sum + each ]) >>> 60"
+	"But use sum or sum: instead!"
+	"#(10 20 30) sum >>> 60"
 
-	"(#(10 20 30) inject: OrderedCollection new into: [ :a :e | a add: (e + 1). a ]) >>> #(11 21 31) asOrderedCollection
-	But use collect: or collect:as: instead!
-	(#(10 20 30) collect: [:e| e+1]) >>> #(11 21 31)
-	"
+	"(#(10 20 30) inject: OrderedCollection new into: [ :a :e | a add: (e + 1). a ])
+		>>> #(11 21 31) asOrderedCollection"
+	"But use collect: or collect:as: instead!"
+	"(#(10 20 30) collect: [:e| e+1]) >>> #(11 21 31)"
 
 	| nextValue |
 	nextValue := thisValue.
@@ -1331,15 +1325,12 @@ Collection >> isEmptyOrNil [
 
 { #category : #testing }
 Collection >> isNotEmpty [
-	"Answer whether the receiver contains any elements.
+	"Answer whether the receiver contains any elements."
 
-	Example of use:
-
-	#() isNotEmpty >>> false
-	#(()) isNotEmpty >>> true
-	'' isNotEmpty >>> false
-	' ' isNotEmpty >>> true
-	"
+	"#() isNotEmpty >>> false"
+	"#(()) isNotEmpty >>> true"
+	"'' isNotEmpty >>> false"
+	"' ' isNotEmpty >>> true"
 
 	^ self isEmpty not
 ]
@@ -1355,15 +1346,13 @@ Collection >> isSequenceable [
 { #category : #'math functions' }
 Collection >> median [
 	"Return the middle element, or as close as we can get.
-	The collection must not be empty.
+	The collection must not be empty."
 
-	Example of use:
-	{1 . 2 . 3 . 4 . 5} median >>> 3
-	{1 . 2 . 4 . 5} median >>> 3
-	{1 . 2 . 5 . 5} median >>> (7/2)
-	{3} median >>> 3
-	([{} median] on: CollectionIsEmpty do: [ 'oops' ]) >>> 'oops'
-	"
+	"{1 . 2 . 3 . 4 . 5} median >>> 3"
+	"{1 . 2 . 4 . 5} median >>> 3"
+	"{1 . 2 . 5 . 5} median >>> (7/2)"
+	"{3} median >>> 3"
+	"([{} median] on: CollectionIsEmpty do: [ 'oops' ]) >>> 'oops'"
 
 	self emptyCheck.
 	^ self asSortedCollection median
@@ -1408,12 +1397,16 @@ Collection >> occurrencesOf: anObject [
 { #category : #printing }
 Collection >> printElementsOn: aStream [
 	"List elements betwen () and separated by spaces.
-	Is used by printOn: and other related printing methods.
+	Is used by printOn: and other related printing methods."
 
-	String streamContents: [:s| {10. 'hello'} printElementsOn: s] >>> '(10 ''hello'')'
-	String streamContents: [:s| #() printElementsOn: s] >>> '()'
+	"(String streamContents: [:s|
+		{10. 'hello'} printElementsOn: s])
+		>>> '(10 ''hello'')'"
+	"(String streamContents: [:s|
+		#() printElementsOn: s])
+		>>> '()'"
 
-	Note: The original code used #skip:, but some streams do not support that,
+	"Note: The original code used #skip:, but some streams do not support that,
 	 and we don't really need it."
 
 	aStream nextPut: $(.
@@ -1437,10 +1430,11 @@ Collection >> printOn: aStream [
 { #category : #printing }
 Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
-	with a delimiter String like: 'a, b, c'
+	with a delimiter String like: 'a, b, c'"
 
-	String streamContents: [:s| { 10. 'hello'. $x } printOn: s delimiter: ', '] >>> '10, ''hello'', $x'
-	"
+	"(String streamContents: [:s|
+		{ 10. 'hello'. $x } printOn: s delimiter: ', '])
+		>>> '10, ''hello'', $x'"
 
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 ]
@@ -1449,11 +1443,13 @@ Collection >> printOn: aStream delimiter: delimString [
 Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 	"Print elements on a stream separated
 	with a delimiter between all the elements and with
-	a special one before the last like: 'a, b and c'
+	a special one before the last like: 'a, b and c'"
 
-	(String streamContents: [:s| { 10. 'hello'. $x } printOn: s delimiter: ', ' last: ' & ']) >>> '10, ''hello'' & $x'
+	"(String streamContents: [:s|
+		{ 10. 'hello'. $x } printOn: s delimiter: ', ' last: ' & '])
+		>>> '10, ''hello'' & $x'"
 
-	Note: Feel free to improve the code to detect the last element."
+	"Note: Feel free to improve the code to detect the last element."
 
 	| n sz |
 	n := 1.

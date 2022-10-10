@@ -277,13 +277,15 @@ Collection >> sum [
 
 	"#(1 2 4) sum >>> 7"
 
-	"[#() sum] on: CollectionIsEmpty do: ['oops'] >>> 'oops'"
+	"([#() sum] on: CollectionIsEmpty do: ['oops']) >>> 'oops'"
 
-	"sum works with objects that understands + and - messages, like Points
-	{1@5. 2@3. 4@7} sum >>> 7@15
+	"sum works with objects that understands + and - messages, like Points"
 
-	or even Collections
-	#((1 5 1) (2 3 3) (4 7 2)) sum >>> #(7 15 6)"
+	"{1@5. 2@3. 4@7} sum >>> 7@15"
+
+	"or even Collections"
+
+	"#((1 5 1) (2 3 3) (4 7 2)) sum >>> #(7 15 6)"
 
 	| sum sample |
 	self emptyCheck.
