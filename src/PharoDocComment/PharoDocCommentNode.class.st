@@ -36,7 +36,7 @@ PharoDocCommentNode class >> docCommentEnabled: aBoolean [
 
 { #category : #parsing }
 PharoDocCommentNode class >> docCommentRangesIn: aText [
-	^ '(([^[:cntrl:]]*)>>>\3?([^[:cntrl:]]*))' asRegex matchingRangesIn: aText
+	^ '((.*)>>>(.*))' asRegex matchingRangesIn: aText
 ]
 
 { #category : #'instance creation' }
