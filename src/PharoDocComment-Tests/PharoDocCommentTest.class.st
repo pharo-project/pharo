@@ -30,7 +30,7 @@ PharoDocCommentTest >> testExpressionReferencingSelf [
 	"self >>> PharoDocCommentTest"
 	| espression |
 	espression := thisContext method ast pharoDocCommentNodes first expression.
-	self assert: espression evaluate equals: self class.
+	self assert: espression evaluate equals: self class -> self class.
 ]
 
 { #category : #tests }
@@ -38,7 +38,7 @@ PharoDocCommentTest >> testExpressionResult [
 	"3 + 4 >>> 7"
 	| expression |
 	expression := thisContext method ast pharoDocCommentNodes first expression.
-	self assert: expression evaluate equals: 7
+	self assert: expression evaluate equals: 7->7
 ]
 
 { #category : #tests }
@@ -47,9 +47,9 @@ PharoDocCommentTest >> testMultipleDocComments [
 	"1 + 2 >>> 3."
 	| espression |
 	espression := thisContext method ast pharoDocCommentNodes first expression.
-	self assert: espression evaluate equals: 7.
+	self assert: espression evaluate equals: 7->7.
 	espression := thisContext method ast pharoDocCommentNodes second expression.
-	self assert: espression evaluate equals: 3.
+	self assert: espression evaluate equals: 3->3.
 ]
 
 { #category : #tests }
@@ -58,7 +58,7 @@ PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
 	1 + 2 >>> 3."
 	| espression |
 	espression := thisContext method ast pharoDocCommentNodes first expression.
-	self assert: espression evaluate equals: 7.
+	self assert: espression evaluate equals: 3->3.
 ]
 
 { #category : #tests }
@@ -68,5 +68,5 @@ PharoDocCommentTest >> testNodeResultSource [
 	
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
-	self assert: node result source equals: '3 + 4 >>> 7'
+	self assert: node expression source equals: '3 + 4 >>> 7'
 ]

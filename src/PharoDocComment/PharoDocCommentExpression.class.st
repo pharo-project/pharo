@@ -5,7 +5,6 @@ Class {
 	#name : #PharoDocCommentExpression,
 	#superclass : #Object,
 	#instVars : [
-		'expressionInterval',
 		'source',
 		'node'
 	],
@@ -25,7 +24,7 @@ PharoDocCommentExpression >> evaluate [
 
 { #category : #accessing }
 PharoDocCommentExpression >> expression [
-	^ self source copyFrom: expressionInterval first to: expressionInterval last
+	^ self source.
 ]
 
 { #category : #accessing }
@@ -36,16 +35,6 @@ PharoDocCommentExpression >> expressionCode [
 		  noPattern: true;
 		  options: #( + optionParseErrors );
 		  parse
-]
-
-{ #category : #accessing }
-PharoDocCommentExpression >> expressionInterval [
-	^ expressionInterval
-]
-
-{ #category : #accessing }
-PharoDocCommentExpression >> expressionInterval: anObject [
-	expressionInterval := anObject
 ]
 
 { #category : #operation }
