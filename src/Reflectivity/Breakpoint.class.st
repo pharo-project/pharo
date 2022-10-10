@@ -461,7 +461,7 @@ Breakpoint >> remove [
 
 { #category : #removing }
 Breakpoint >> removeFromBreakpointGroups [
-	
+	"just in case the breakpoint is not removed correctly this will remove the reference to the group"
  	group := nil.
 	
 	"old code needed when groups are not using weak sets"
