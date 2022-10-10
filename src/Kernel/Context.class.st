@@ -292,11 +292,7 @@ Context >> activeOuterContext [
 Context >> arguments [
 	"returns the arguments of a message invocation"
 	
-	| arguments numargs |
-	numargs :=  self compiledCode numArgs.
-	arguments := Array new: numargs.
-	1 to: numargs do: [ :i | arguments at: i put: (self tempAt: i) ].
-	^ arguments
+	^(1 to: self numArgs) collect: [:i | self tempAt: i]
 ]
 
 { #category : #'closure support' }
