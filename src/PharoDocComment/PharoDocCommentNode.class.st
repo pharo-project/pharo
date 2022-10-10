@@ -79,15 +79,6 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #converting }
-PharoDocCommentNode >> asTriplet [
-	"Return the expression, its returned value and its expected result."
-	
-	^ { self expression expressionCode formattedCode. 
-		 self expression evaluate. 
-		 self result expressionCode formattedCode }
-]
-
 { #category : #private }
 PharoDocCommentNode >> browse [
 	| methodNode |
