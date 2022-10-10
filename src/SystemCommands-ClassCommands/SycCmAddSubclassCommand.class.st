@@ -11,7 +11,7 @@ Class {
 SycCmAddSubclassCommand >> executeRefactoring [
 	
 	| refactoring |
-	refactoring := RBAddClassTransformation
+	refactoring := RBInsertClassTransformation
 		addClass: newClassName 
 		superclass: targetClass asString
 		subclasses:  #()

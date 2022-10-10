@@ -9,7 +9,7 @@ My preconditions verify that I use a valid class name, that does not yet exists 
 and the subclasses (if any) were direct subclasses of the superclass.
 "
 Class {
-	#name : #RBAddClassRefactoring,
+	#name : #RBInsertClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'category',
@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	^ self new
 		addClass: aName
 		superclass: aClass
@@ -29,7 +29,7 @@ RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aC
 ]
 
 { #category : #'instance creation' }
-RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
+RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
 	^ self new
 		model: aRBSmalltalk;
 		addClass: aName
@@ -40,7 +40,7 @@ RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: a
 ]
 
 { #category : #initialization }
-RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
+RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
 	self className: aName.
 	superclass := self classObjectFor: aClass.
 	subclasses := aCollection collect: [:each | self classObjectFor: each].
@@ -48,7 +48,7 @@ RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollect
 ]
 
 { #category : #preconditions }
-RBAddClassRefactoring >> preconditions [
+RBInsertClassRefactoring >> preconditions [
 	| cond |
 	cond := ((RBCondition isMetaclass: superclass) 
 				errorMacro: 'Superclass must not be a metaclass') not.
@@ -67,7 +67,7 @@ RBAddClassRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBAddClassRefactoring >> storeOn: aStream [ 
+RBInsertClassRefactoring >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -83,8 +83,8 @@ RBAddClassRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBAddClassRefactoring >> transform [
-	(self model)
+RBInsertClassRefactoring >> transform [
+	self model
 		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
 					expandMacrosWith: superclass
 					with: className

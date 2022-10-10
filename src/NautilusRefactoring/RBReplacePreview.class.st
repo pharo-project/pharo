@@ -1,8 +1,7 @@
 "
-I am a preview to accept or denegate a replacement an ocurrence of method (Find and replace refactoring).
-
-Instance Variables
-------------------------------------------
+I am a preview tool to accept or denegate a replacement an occurrence of method (Find and replace refactoring).
+I was packaged in Refactoring-Core and it was not an ideal place.
+I'm not used for now. I was in general open in modal mode.
 
 diffPresenter:    <SpDiffPresenter> A diff presenter to show the users the consequences of the refactorings.
 change:           <Change> A  refactoring change
@@ -19,7 +18,7 @@ Class {
 		'replaceAllAction',
 		'cancelAction'
 	],
-	#category : #'Refactoring-Core-Base'
+	#category : #NautilusRefactoring
 }
 
 { #category : #initialization }
@@ -75,8 +74,8 @@ RBReplacePreview >> cancelAction: aBlock [
 { #category : #initialization }
 RBReplacePreview >> change: anObject [
 	|aCompositeChange |
-	aCompositeChange := RBRefactoryChangeManager changeFactory compositeRefactoryChange .
-	aCompositeChange addChange: anObject .
+	aCompositeChange := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
+	aCompositeChange addChange: anObject.
 	
 	change := aCompositeChange whatToDisplayIn: self
 ]
@@ -96,11 +95,6 @@ RBReplacePreview >> initializeDialogWindow: aModalPresenter [
 RBReplacePreview >> initializeWidgets [
 	diffPresenter := self newDiff showOptions: false; contextClass: True.
 	self whenBuiltDo: [ self buildDiffFor: change first ]
-]
-
-{ #category : #'instance creation' }
-RBReplacePreview >> open [
-	^ self "openDialogWithSpec"openModal
 ]
 
 { #category : #initialization }
