@@ -10,7 +10,7 @@ SHRBTextStyler >> styleDocComment: aRBComment [
 { #category : #'*PharoDocComment' }
 SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
 	| expressionText expressionNode |
-	expressionNode := aPharoDocExpression expressionCode.
+	expressionNode := aPharoDocExpression expressionNode.
 	expressionText := expressionNode source asText.
 	self class new style: expressionText ast: expressionNode.
 	expressionText

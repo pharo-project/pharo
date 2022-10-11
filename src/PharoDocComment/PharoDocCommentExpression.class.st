@@ -24,7 +24,7 @@ PharoDocCommentExpression >> evaluate [
 ]
 
 { #category : #accessing }
-PharoDocCommentExpression >> expressionCode [
+PharoDocCommentExpression >> expressionNode [
 
 	^ self methodClass compiler
 		  source: self source;

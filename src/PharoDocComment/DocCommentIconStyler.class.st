@@ -11,7 +11,7 @@ Class {
 DocCommentIconStyler >> exampleIsFaulty: aNode [
 	^ aNode comments
 		anySatisfy: [ :commentNode | commentNode pharoDocCommentNodes anySatisfy: [ :node |
-				node expression expressionCode isFaulty ]]
+				node expression expressionNode isFaulty ]]
 ]
 
 { #category : #defaults }
@@ -46,7 +46,7 @@ DocCommentIconStyler >> notifySourceError: aNode [
 	
 	^ [ | examples faultyExample |
 		examples := aNode pharoDocCommentNodes.
-		faultyExample := examples detect: [ :example | example expression expressionCode isFaulty ].
+		faultyExample := examples detect: [ :example | example expression expressionNode isFaulty ].
 		RBParser parseExpression: faultyExample expression expression ]
 ]
 
@@ -56,7 +56,7 @@ DocCommentIconStyler >> runExampleBlock: aNode [
 		examples := aNode pharoDocCommentNodes.
 		(examples
 			collect: [ :example | 
-			{ example expression expressionCode formattedCode . example expression evaluate}]) inspect]
+			{ example expression expressionNode formattedCode . example expression evaluate}]) inspect]
 ]
 
 { #category : #testing }
