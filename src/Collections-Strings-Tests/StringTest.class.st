@@ -1289,7 +1289,7 @@ StringTest >> testIncludesSubstring [
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 StringTest >> testIncludesSubstringAt [
 
 	"Test empty strings"
@@ -1799,7 +1799,7 @@ StringTest >> testRomanNumber [
 	self assert: '-MDCCCXCV' romanNumber equals: -1895.
 ]
 
-{ #category : #test }
+{ #category : #tests }
 StringTest >> testSkipAnySubstringStartingAt [
 	
 	"Simple skip"
