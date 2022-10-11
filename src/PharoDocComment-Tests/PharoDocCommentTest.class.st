@@ -26,11 +26,21 @@ PharoDocCommentTest >> testExpression [
 ]
 
 { #category : #tests }
+PharoDocCommentTest >> testExpressionNoAssociation [
+	"(3 + 4 >>> 7) value"
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression evaluate equals: 7.
+	self should: [ (CommentTestCase for: node) testIt ] raise: TestFailure
+]
+
+{ #category : #tests }
 PharoDocCommentTest >> testExpressionReferencingSelf [
 	"self >>> PharoDocCommentTest"
-	| espression |
-	espression := thisContext method ast pharoDocCommentNodes first expression.
-	self assert: espression evaluate equals: self class -> self class.
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression evaluate equals: self class -> self class.
+	(CommentTestCase for: node) testIt.
 ]
 
 { #category : #tests }
@@ -39,6 +49,24 @@ PharoDocCommentTest >> testExpressionResult [
 	| expression |
 	expression := thisContext method ast pharoDocCommentNodes first expression.
 	self assert: expression evaluate equals: 7->7
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testExpressionRuntimeError [
+	"nil + nil >>> nil"
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self should: [ node expression evaluate ] raise: Error.
+	self should: [ (CommentTestCase for: node) testIt ] raise: Error
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testExpressionSyntaxError [
+	"3 + 4) >>> 7"
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
+	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
 ]
 
 { #category : #tests }
