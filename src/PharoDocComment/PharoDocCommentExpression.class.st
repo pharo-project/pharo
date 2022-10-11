@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
-		'node'
+		'node',
+		'cachedExpressionNode'
 	],
 	#category : #'PharoDocComment-Base'
 }
@@ -15,7 +16,7 @@ Class {
 PharoDocCommentExpression >> evaluate [
 
 	^ self methodClass compiler
-		  source: self expression;
+		  source: self source;
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
@@ -23,15 +24,10 @@ PharoDocCommentExpression >> evaluate [
 ]
 
 { #category : #accessing }
-PharoDocCommentExpression >> expression [
-	^ self source.
-]
-
-{ #category : #accessing }
 PharoDocCommentExpression >> expressionCode [
 
 	^ self methodClass compiler
-		  source: self expression;
+		  source: self source;
 		  noPattern: true;
 		  options: #( + optionParseErrors );
 		  parse
@@ -56,7 +52,7 @@ PharoDocCommentExpression >> node: anObject [
 PharoDocCommentExpression >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: '('.
-	aStream nextPutAll: self expression. 
+	aStream nextPutAll: self source. 
 	aStream nextPutAll: ')'
 ]
 
