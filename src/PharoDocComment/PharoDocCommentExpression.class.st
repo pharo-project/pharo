@@ -15,6 +15,8 @@ Class {
 { #category : #operation }
 PharoDocCommentExpression >> evaluate [
 
+	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
+
 	^ self methodClass compiler
 		  source: self source;
 		  noPattern: true;
@@ -26,11 +28,23 @@ PharoDocCommentExpression >> evaluate [
 { #category : #accessing }
 PharoDocCommentExpression >> expressionNode [
 
+	cachedExpressionNode ifNil: [
+		cachedExpressionNode := self expressionNodeReal
+	].
+	^ cachedExpressionNode.
+]
+
+{ #category : #accessing }
+PharoDocCommentExpression >> expressionNodeReal [
+
+	"Force the parsing of the expression node"
+
 	^ self methodClass compiler
 		  source: self source;
 		  noPattern: true;
+		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  parse
+		  parse.
 ]
 
 { #category : #operation }
