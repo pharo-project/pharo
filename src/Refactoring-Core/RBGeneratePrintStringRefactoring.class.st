@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'variables'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Transformation'
 }
 
 { #category : #'instance creation' }
