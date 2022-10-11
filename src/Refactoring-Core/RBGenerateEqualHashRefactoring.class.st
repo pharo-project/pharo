@@ -50,6 +50,11 @@ RBGenerateEqualHashRefactoring class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
+{ #category : #accessing }
+RBGenerateEqualHashRefactoring class >> kind [ 
+	^ 'Transformation'
+]
+
 { #category : #'instance creation' }
 RBGenerateEqualHashRefactoring class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray

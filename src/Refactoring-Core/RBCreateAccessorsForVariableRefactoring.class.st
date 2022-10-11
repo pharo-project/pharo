@@ -28,6 +28,11 @@ RBCreateAccessorsForVariableRefactoring class >> instanceVariable: aVarName clas
 	^ self variable: aVarName class: aClass classVariable: false
 ]
 
+{ #category : #accessing }
+RBCreateAccessorsForVariableRefactoring class >> kind [
+	^ 'Transformation'
+]
+
 { #category : #'instance creation' }
 RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk classVariable: aVarName class: aClass [ 
 
