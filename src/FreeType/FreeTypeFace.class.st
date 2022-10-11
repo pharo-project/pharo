@@ -18,6 +18,7 @@ FreeTypeFace class >> fontPathFor: aFilename [
 	"aFilename is local. Try hard to return a valid path to be handed to freetype library"
 	
 	"temporary solution ;-)"
+	
 	^ (FileSystem disk workingDirectory / 'Fonts' / aFilename) fullName
 ]
 
@@ -40,6 +41,7 @@ FreeTypeFace class >> fromBytes: aByteArray index: anInteger [
 { #category : #'instance creation' }
 FreeTypeFace class >> fromFile: aFileName index: anInteger [
 	"share alike instances"
+	
 	| file |
 	file := aFileName asFileReference.
 	self rememberFontDir: file parent fullName .

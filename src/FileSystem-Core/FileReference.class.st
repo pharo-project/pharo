@@ -61,7 +61,7 @@ FileReference >> = other [
 	"Perform the path comparison last as conversion to absolute paths is relatively expensive"
 	^ self species = other species
 		and: [self fileSystem = other fileSystem
-			and: [self absolutePath = other absolutePath]]
+			and: [self absolutePath canonicalize = other absolutePath canonicalize]]
 ]
 
 { #category : #accessing }

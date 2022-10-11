@@ -291,11 +291,7 @@ Context >> activeOuterContext [
 Context >> arguments [
 	"returns the arguments of a message invocation"
 	
-	| arguments numargs |
-	numargs :=  self compiledCode numArgs.
-	arguments := Array new: numargs.
-	1 to: numargs do: [ :i | arguments at: i put: (self tempAt: i) ].
-	^ arguments
+	^(1 to: self numArgs) collect: [:i | self tempAt: i]
 ]
 
 { #category : #'closure support' }
@@ -376,6 +372,11 @@ Context >> basicSize [
 	^self primitiveFail
 ]
 
+{ #category : #testing }
+Context >> belongsToDoIt [
+	^self home method isDoIt
+]
+
 { #category : #'instruction decoding' }
 Context >> blockReturnConstant: value [ 
 	"Simulate the interpreter's action when a ReturnConstantToCaller
@@ -401,7 +402,7 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -409,7 +410,7 @@ Context >> canHandleSignal: exception [
 		or: [ self nextHandlerContext canHandleSignal: exception ].
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 

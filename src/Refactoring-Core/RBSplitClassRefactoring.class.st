@@ -94,7 +94,7 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 
 { #category : #'private - transforming' }
 RBSplitClassRefactoring >> addClass [
-	self performCompositeRefactoring: (RBAddClassRefactoring 
+	self performCompositeRefactoring: (RBInsertClassRefactoring 
 				model: self model
 				addClass: newClassName
 				superclass: Object

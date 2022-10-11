@@ -61,6 +61,18 @@ DTFilterableListPresenter >> displayBlock: aBlock [
 	^ self listPresenter display: aBlock
 ]
 
+{ #category : #api }
+DTFilterableListPresenter >> displayColor: aBlock [
+
+	self listPresenter displayColor: aBlock.
+]
+
+{ #category : #accessing }
+DTFilterableListPresenter >> displayIcon: aFullBlockClosure [ 
+
+	self listPresenter displayIcon: aFullBlockClosure 
+]
+
 { #category : #private }
 DTFilterableListPresenter >> filterList [
 	"Filters the list according to the filterTextInput."

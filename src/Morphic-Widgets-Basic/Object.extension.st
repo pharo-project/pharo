@@ -3,22 +3,25 @@ Extension { #name : #Object }
 { #category : #'*Morphic-Widgets-Basic' }
 Object >> acceptDroppingMorph: transferMorph event: evt inMorph: dstListMorph [ 
 	
-	^false.
+	^false
 ]
 
 { #category : #'*Morphic-Widgets-Basic' }
-Object >> dragPassengerFor: item inMorph: dragSource [ 
-	^item
+Object >> dragPassengerFor: item inMorph: dragSource [
+
+	^ item
 ]
 
 { #category : #'*Morphic-Widgets-Basic' }
 Object >> dragTransferType [
-	^nil
+
+	^ nil
 ]
 
 { #category : #'*Morphic-Widgets-Basic' }
-Object >> dragTransferTypeForMorph: dragSource [ 
-	^nil
+Object >> dragTransferTypeForMorph: dragSource [
+
+	^ nil
 ]
 
 { #category : #'*Morphic-Widgets-Basic' }

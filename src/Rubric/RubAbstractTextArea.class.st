@@ -96,6 +96,7 @@ Class {
 		'mouseDownPoint',
 		'completionEngine',
 		'maxLength',
+		'grow',
 		'findReplaceService',
 		'editing'
 	],
@@ -973,6 +974,20 @@ RubAbstractTextArea >> grabbedAllowed [
 	^ scrollPane isNil
 ]
 
+{ #category : #accessing }
+RubAbstractTextArea >> grow [
+	"Answer whether the area should grow horizontally."
+
+	^ grow
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> grow: aBool [
+	"Set whether the area should grow horizontally."
+
+	grow := aBool
+]
+
 { #category : #geometry }
 RubAbstractTextArea >> handleBoundsChange: aBlock [
 	| oldBounds |
@@ -991,6 +1006,10 @@ RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
 
 	editBlock value.
+	"Fit to width on edit"
+	grow ifTrue: [
+		self width: (1 max: self maxLineWidth + self margins left + self margins right)
+	].
 	self selectionChanged	"Note new selection"
 ]
 
@@ -1139,6 +1158,7 @@ RubAbstractTextArea >> highlightMessageSend [
 { #category : #initialization }
 RubAbstractTextArea >> initialize [
 	super initialize.
+	grow := false.
 	self compose.
 	self addCursor.
 	self plugFindReplace.
@@ -1198,9 +1218,9 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 		ifTrue: [ 
 			self hasFocus: true.
 			editing := false.
-			self requestTextEditingAt:
-				((self cursor positionInWorld corner: self cursor positionInWorld) 
-					 translateBy: 0 @ (self font height + 4)) truncated.
+			self requestTextEditingAt: (self cursor positionInWorld corner:
+					 (self cursor positionInWorld translateBy:
+						  0 @ (self font height + 4))) truncated.
 			self showOverEditableTextCursor ]
 		ifFalse: [ 
 			self hasFocus: false.
@@ -1300,6 +1320,16 @@ RubAbstractTextArea >> maxLength: anInteger [
 	"Set the maximum number of characters that may be typed."
 
 	maxLength := anInteger max: 0
+]
+
+{ #category : #measuring }
+RubAbstractTextArea >> maxLineWidth [
+	"Answers with the maximum approximate pixel width across all lines"
+	| w |
+	w := 0.
+	self string linesDo: [ :line | w := w max: (self font widthOfString: line) ].
+	"check this later, not really sure about this calculation"
+	^ w * 6 // 5
 ]
 
 { #category : #accessing }

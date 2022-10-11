@@ -15,11 +15,6 @@ ClyMethodSourceCodeContext >> lastSelectedMethod [
 	^self selectedMethod
 ]
 
-{ #category : #accessing }
-ClyMethodSourceCodeContext >> methodEditor [
-	^tool
-]
-
 { #category : #selection }
 ClyMethodSourceCodeContext >> selectedMethod [
 	^tool editingMethod

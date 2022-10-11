@@ -299,7 +299,7 @@ CompiledMethodTest >> testBytecode [
 	expectedResult := (method encoderClass name endsWith: 'SistaV1')
 		ifTrue: [#[16 129 216 88]]
 		ifFalse: [#[64 209 135 120]].
-	self assertCollection: (Object>>#halt) bytecode equals: expectedResult
+	self assertCollection: (Object>>#halt) bytecodes equals: expectedResult
 ]
 
 { #category : #'tests - accessing' }

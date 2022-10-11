@@ -91,11 +91,16 @@ GlobalIdentifierPersistenceTest >> testIsEnabled2 [
 { #category : #tests }
 GlobalIdentifierPersistenceTest >> testLoad [
 	"Load when nothing is stored."
-	| values |
-	values := Dictionary new.
+	| values identifier |
+
+	identifier := GlobalIdentifier basicNew initialize.
+	values := identifier persistedInformation.
 	values at: #a put: 42.
-	persistence load: values.
-	self assert: values size equals: 1.
+	
+	persistence load: identifier.
+	
+	"It has the saved value, the computerUUID and the secretUUID"
+	self assert: values size equals: 3.
 	self assert: (values at: #a) equals: 42.
 	self assert: preferences exists.
 ]
@@ -103,13 +108,18 @@ GlobalIdentifierPersistenceTest >> testLoad [
 { #category : #tests }
 GlobalIdentifierPersistenceTest >> testLoad2 [
 	"Load stored values."
-	| values loaded |
-	values := Dictionary new.
-	values at: #a put: 42.
-	persistence save: values.
-	loaded := Dictionary new.
-	persistence load: loaded.
-	self assert: loaded equals: values.
+	| identifier otherIdentifier |
+	identifier := GlobalIdentifier basicNew initialize.
+	otherIdentifier := GlobalIdentifier basicNew initialize.
+	
+	identifier persistedInformation at: #a put: 42.
+	persistence save: identifier persistedInformation.
+	
+	persistence load: otherIdentifier.
+	self assert: (otherIdentifier persistedInformation at: #a) equals: 42.
+	self assert: (otherIdentifier persistedInformation includesKey: #computerUUID).
+	self assert: (otherIdentifier persistedInformation includesKey: #secretUUID).
+
 ]
 
 { #category : #tests }

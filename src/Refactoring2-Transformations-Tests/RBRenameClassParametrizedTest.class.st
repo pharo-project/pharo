@@ -146,7 +146,7 @@ rename class B to A
 	classA := ('RBClass' , 'ToRename') asSymbol.
 	classB := 'TestUnmarkClassRenameSource' asSymbol.
 	classC := 'TestUnmarkClassRenameTarget' asSymbol.
-	addClass := RBAddClassTransformation
+	addClass := RBInsertClassTransformation
 		model: model
 		addClass: classB
 		superclass: #Object

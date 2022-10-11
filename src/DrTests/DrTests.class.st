@@ -63,7 +63,7 @@ DrTests class >> menuCommandOn: aBuilder [
 		order: 2;
 		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
 		help: '(Preview) Let you run and debug SUnit tests.';
-		icon: self taskbarIcon;
+		icon: (aBuilder iconNamed: self taskbarIconName);
 		withSeparatorAfter
 ]
 
@@ -101,6 +101,12 @@ DrTests >> connectPresenters [
 	"Take the first element in list"
 	self pluginsDropList selectIndex: 1.
 	self currentPlugin: self pluginsDropList selectedItem new
+]
+
+{ #category : #'accessing - subwidgets' }
+DrTests >> contentForReRun [
+
+	^ self pluginPresenter resultSelected contentForReRun
 ]
 
 { #category : #accessing }

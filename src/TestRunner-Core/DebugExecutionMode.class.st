@@ -5,21 +5,13 @@ I always returns an empty result (TestResult).
 Class {
 	#name : #DebugExecutionMode,
 	#superclass : #AbstractExecutionMode,
-	#category : #'TestRunner-Core-Configuration'
+	#category : #'TestRunner-Core-ExecutionModes'
 }
 
 { #category : #execution }
 DebugExecutionMode class >> executeCase: aTestCase [
 
+	"executes the giving test case. Notice that if the test failed, the result is not returned"
+
 	^ aTestCase debug
-]
-
-{ #category : #execution }
-DebugExecutionMode class >> executeSuite: aTestSuite [
-
-	| result |
-	result := self defaultTestResultClass new.
-	[ aTestSuite debug ] ensure: [ 
-		aTestSuite unsubscribe: TestAnnouncement ].
-	^ result
 ]

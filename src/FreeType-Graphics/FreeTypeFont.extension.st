@@ -47,5 +47,5 @@ FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoin
 	aDisplayContext 
 		colorMap: originalColorMap;
 		combinationRule: oldCombinationRule;
-		halftoneForm: oldHalftoneForm.
+		halftoneForm: oldHalftoneForm
 ]

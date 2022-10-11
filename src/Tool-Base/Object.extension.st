@@ -19,22 +19,24 @@ Object >> browseHierarchy [
 { #category : #'*Tool-Base' }
 Object >> inspect [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables."
+
 	^ Smalltalk tools inspector inspect: self
 ]
 
 { #category : #'*Tool-Base' }
 Object >> inspectOnce [
 	"Inspect unless we have already done it once."
-	
+
 	| node |
 	node := thisContext sender sourceNodeExecuted.
-	(node hasProperty: #Once) ifTrue: [^self]. 
+	(node hasProperty: #Once) ifTrue: [ ^ self ].
 	node propertyAt: #Once put: true.
-	^self inspect
+	^ self inspect
 ]
 
 { #category : #'*Tool-Base' }
 Object >> inspectWithLabel: aLabel [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables."
-	^Smalltalk tools inspector inspect: self label: aLabel
+
+	^ Smalltalk tools inspector inspect: self label: aLabel
 ]

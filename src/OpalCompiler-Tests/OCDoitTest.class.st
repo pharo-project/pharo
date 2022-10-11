@@ -66,6 +66,33 @@ OCDoitTest >> testDoItContextReadTemp [
 ]
 
 { #category : #tests }
+OCDoitTest >> testDoItExtraBindings [
+	"We can use extra bindings in a DoIt"
+	
+	| result |
+	result := OpalCompiler new
+		bindings: {  #binding -> 1};
+		evaluate: 'binding'.
+	self assert: result equals: 1
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItHalt [
+	
+	self should: [OpalCompiler new 
+			evaluate: 'self halt'] raise: Halt
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItHaltBinding [
+	"We can evaluate with a halt and extra bindings"
+	
+	self should: [OpalCompiler new 
+			bindings: {#binding -> 1 };
+			evaluate: 'self halt'] raise: Halt
+]
+
+{ #category : #tests }
 OCDoitTest >> testDoItRequestorEvalError [
 	| value |
 	value  := OpalCompiler new 

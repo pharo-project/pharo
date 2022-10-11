@@ -1288,14 +1288,24 @@ UITheme >> configureWindowDropShadowFor: aWindow [
 UITheme >> configureWindowLabelAreaFor: aWindow [
 	"Configure the label area for the given window."
 
-	|padding|
+	| macOSLayout addCloseBox addCollapseExpandBoxes addMenuBox padding paddingStep |
+	macOSLayout := self labelAreaLayout = #macOS
+		or: [ self labelAreaLayout = #platformDependent and: Smalltalk os isMacOS ].
+	addCloseBox := [ aWindow hasCloseBox ifTrue: [aWindow addCloseBox ] ].
+	addCollapseExpandBoxes := [
+		aWindow hasCollapseBox ifTrue: [aWindow addCollapseBox ].
+		aWindow hasExpandBox ifTrue: [aWindow addExpandBox ] ].
+	addMenuBox := [ aWindow hasMenuBox ifTrue: [aWindow addMenuControl ] ].
 	padding := 0.
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0).
-	aWindow hasCloseBox ifTrue: [aWindow addCloseBox. padding := padding + 1].
-	aWindow hasCollapseBox ifTrue: [aWindow addCollapseBox. padding := padding + 1].
-	aWindow hasExpandBox ifTrue: [aWindow addExpandBox. padding := padding + 1].
-	aWindow hasMenuBox ifTrue: [padding := padding - 1].
+	macOSLayout
+		ifTrue: [ addCloseBox value. addCollapseExpandBoxes value. paddingStep := 1 ]
+		ifFalse: [ addMenuBox value. paddingStep := -1 ].
+	aWindow hasCloseBox ifTrue: [padding := padding + paddingStep].
+	aWindow hasCollapseBox ifTrue: [padding := padding + paddingStep].
+	aWindow hasExpandBox ifTrue: [padding := padding + paddingStep].
+	aWindow hasMenuBox ifTrue: [padding := padding - paddingStep].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
 	aWindow basicLabel ifNotNil: [:label | 
@@ -1308,7 +1318,9 @@ UITheme >> configureWindowLabelAreaFor: aWindow [
 	padding > 0 ifTrue: [
 		aWindow labelArea
 			addMorphBack: (Morph new extent: (aWindow boxExtent x * padding) @ 0)].
-	aWindow hasMenuBox ifTrue: [aWindow addMenuControl].
+	macOSLayout
+		ifTrue: [ addMenuBox value ]
+		ifFalse: [ addCollapseExpandBoxes value. addCloseBox value ].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0)
 ]
@@ -2367,6 +2379,11 @@ UITheme >> initializeForms [
 		at: #windowMaximizePassive put: self newWindowInactiveControlForm;
 		at: #windowMenuPassive put: self newWindowMenuPassiveForm;
 		at: #windowMenuOver put: self newWindowMenuOverForm
+]
+
+{ #category : #accessing }
+UITheme >> labelAreaLayout [
+	^ self settings labelAreaLayout
 ]
 
 { #category : #'label-styles' }

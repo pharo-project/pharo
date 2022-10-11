@@ -4,7 +4,7 @@ I am a suite preparator who randomise the order of tests in the giving testSuite
 Class {
 	#name : #ShuffleSuitePreparator,
 	#superclass : #AbstractSuitePreparator,
-	#category : #'TestRunner-Core-Preparators'
+	#category : #'TestRunner-Core-SuitePreparators'
 }
 
 { #category : #applying }

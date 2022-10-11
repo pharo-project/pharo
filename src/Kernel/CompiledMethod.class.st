@@ -570,7 +570,7 @@ CompiledMethod >> isDisabled: marker [
 
 { #category : #testing }
 CompiledMethod >> isDoIt [
-	^self selector isDoIt.
+	^self selector isDoIt
 ]
 
 { #category : #testing }

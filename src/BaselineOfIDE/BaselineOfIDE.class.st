@@ -94,7 +94,7 @@ BaselineOfIDE >> additionalInitialization [
 	self makeCalypsoDefaultBrowser.
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> baseline: spec [
 	<baseline>
 	| repository |
@@ -191,18 +191,16 @@ BaselineOfIDE >> baseline: spec [
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository; loads: #('Tool-DependencyAnalyser-UI-Tab') ].
 		self specCode: spec.
 		self newTools: spec.
 		self microdown: spec.
 		self beautifulComments: spec.
 		self roassal3: spec.
 	
-		spec 
-  			baseline: 'ThreadedFFI' 
-  			with: [ spec 
-				repository: repository ].
-
-		
+		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
+		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
+						
 		spec package: 'Pharo-WelcomeHelp'.
 		spec package: 'Kernel-ExtraUtils' 
 		

@@ -38,8 +38,11 @@ DTCommentToTestPlugin >> firstListLabel [
 { #category : #api }
 DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
-	^ packagesSelected flatCollect: [ :package | 
-		  package definedClasses select: [ :class | class hasDocComment ] ]
+	"note `asSet` is used to avoid duplication if a class is defined/extended in more than one package"
+
+	^ packagesSelected asSet flatCollect: [ :package | 
+		  package definedOrExtendedClasses select: [ :class | 
+			  class hasDocComment or: [ class class hasDocComment ] ] ]
 ]
 
 { #category : #api }

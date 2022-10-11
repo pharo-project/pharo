@@ -113,7 +113,7 @@ FLBasicSerializationTest >> testCharacter [
 		ifFalse: [
 			self assertSerializationEqualityOf: (Character value: 12345). "Japanese Hiragana 'A' " ].
 		
-	self assertSerializationEqualityOf: Character allCharacters.
+	self assertSerializationEqualityOf: Character allByteCharacters.
 	self assertSerializationEqualityOf: (Array with: $a with: (Character value: 12345)).
 ]
 

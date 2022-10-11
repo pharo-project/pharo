@@ -1136,6 +1136,24 @@ ReflectivityReificationTest >> testReifyMethodValue [
 	self assert: tag equals: 5
 ]
 
+{ #category : #'tests - method' }
+ReflectivityReificationTest >> testReifyMethodValueNoReturn [
+	| methodNode instance |
+	methodNode := (ReflectivityExamples >> #exampleMethod2) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(value).
+	methodNode link: link.
+	self assert: methodNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleMethod2) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod2 equals: instance.
+	self assert: tag equals: instance
+]
+
 { #category : #'tests - assignment' }
 ReflectivityReificationTest >> testReifyNewValueAssignmentAfter [
 	| varNode instance |

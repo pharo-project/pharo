@@ -244,6 +244,24 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 				]]
 ]
 
+{ #category : #morphic }
+PolymorphSystemSettings class >> labelAreaLayoutSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder pickOne: #labelAreaLayout)
+		label: 'Label area layout' translated;
+		parent: #windows;
+		target: UITheme;
+		targetSelector: #currentSettings;
+		default: #platformDependent;
+		domainValues: {
+			'Platform Dependent' translated -> #platformDependent.
+			'macOS' -> #macOS.
+			'Windows/Linux' -> #WindowsOrLinux };
+		description: 'If Platform Dependent, label area elements are placed as they are in the windows of the current OS.
+If macOS, close/collapse/expand boxes are placed on the left, and menu control on the right.
+If Windows/Linux, elements are placed in order: menu control, label, collapse/expand/close boxes.'.
+]
+
 { #category : #settings }
 PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [ 
 	(aBuilder group: #halo)

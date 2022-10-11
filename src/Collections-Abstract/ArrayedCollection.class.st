@@ -45,6 +45,16 @@ ArrayedCollection class >> newFrom: aCollection [
 ]
 
 { #category : #'instance creation' }
+ArrayedCollection class >> newFromArray: anArray [
+
+	| newCollection size |
+	size := anArray size.
+	newCollection := self new: size.
+	1 to: size do: [ :i | newCollection at: i put: (anArray at: i) ].
+	^ newCollection
+]
+
+{ #category : #'instance creation' }
 ArrayedCollection class >> with: anObject [ 
 	"Answer a new instance of me, containing only anObject."
 

@@ -48,7 +48,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 		order: 1;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: self taskbarIcon
+		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
 { #category : #'instance creation' }

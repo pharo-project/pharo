@@ -1,12 +1,12 @@
 Extension { #name : #ClyBrowserMorph }
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
-ClyBrowserMorph >> browseImplementorsOf: aSymbol [
+ClyBrowserMorph >> browseImplementorsOf: aSymbol inNameResolver: aNameResolver [
 	| classBinding classToBrowse |
 	aSymbol first isUppercase ifTrue: [ 
-		classBinding := self system bindingOf: aSymbol.
+		classBinding := aNameResolver bindingOf: aSymbol.
 		classBinding ifNotNil: [ 
-			classToBrowse := classBinding value.
+			classToBrowse := classBinding definingClass ifNil: [ classBinding value ].
 			classToBrowse isClassOrTrait ifFalse: [ classToBrowse := classToBrowse class ].
 			^self spawnBrowser: ClyFullBrowserMorph withState: [ :browser | 
 				browser selectClass: classToBrowse]]].
@@ -17,11 +17,11 @@ ClyBrowserMorph >> browseImplementorsOf: aSymbol [
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseReferencesTo: aSymbol [
 	
-	self browseReferencesTo: aSymbol from: self system
+	self browseReferencesTo: aSymbol inNameResolver: self system
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
-ClyBrowserMorph >> browseReferencesTo: aSymbol from: anEnvironment [
+ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 	
 	| classBinding |
 	aSymbol isSymbol and: [ aSymbol first isUppercase ifTrue: [ 

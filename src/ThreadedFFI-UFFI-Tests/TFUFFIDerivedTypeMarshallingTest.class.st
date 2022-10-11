@@ -81,7 +81,7 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingByteArrayAsStringArgument [
 	[	stringToMarshall := 'áèïô å∫'.
 		byteArray := stringToMarshall utf8Encoded.
 		cString := self stringToPointer: byteArray.
-		self assert: cString readStringUTF8 equals: stringToMarshall.
+		self assert: cString utf8StringFromCString equals: stringToMarshall.
 	] ensure: [ cString free ]
 ]
 
@@ -160,7 +160,7 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingStringArgument [
 	[
 	stringToMarshall := 'áèïô å∫'.
 	cString := self stringToPointer: stringToMarshall.
-	self assert: cString readStringUTF8 equals: stringToMarshall.
+	self assert: cString utf8StringFromCString equals: stringToMarshall.
 	] ensure: [ cString free ]
 ]
 

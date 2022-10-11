@@ -6,6 +6,12 @@ RBBlockNode >> bcToASTCache [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBBlockNode >> firstPcForNode: aNode [
+
+	^ self bcToASTCache firstBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir [
 	"if the ir is not yet set, generate the IR for the whole method, it fills the property here"
 	self propertyAt: #ir ifAbsent: [ self methodNode generateIR  ].
@@ -55,9 +61,27 @@ RBBlockNode >> isInlinedLoop [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBBlockNode >> lastPcForNode: aNode [
+
+	^ self bcToASTCache lastBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> owningScope [
 
 	^ self scope ifNil: ["inlined" ^ parent owningScope]
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> pcsForNode: aNode [
+
+	^ self bcToASTCache pcsForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> resetBcToASTCache [
+
+	bcToASTCache := nil
 ]
 
 { #category : #'*OpalCompiler-Core' }

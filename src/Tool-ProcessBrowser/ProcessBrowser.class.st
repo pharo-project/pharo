@@ -158,7 +158,7 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 		order: 3;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: self taskbarIcon
+		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
 { #category : #'process control' }
@@ -383,7 +383,7 @@ ProcessBrowser >> browsedEnvironment [
 ProcessBrowser >> build [
 	| window  scrolledText |
 	window := (SystemWindow labelled: 'later') model: self.
-	self deferredMessageRecipient: WorldState.
+	self deferredMessageRecipient: window currentWorld.
 	window
 		addMorph: ((PluggableListMorph
 				on: self
@@ -407,7 +407,7 @@ ProcessBrowser >> build [
 		
 	textModel setText: self methodText.
 	textModel clearUserEdits.
-	scrolledText := textModel newScrolledText beForSmalltalkCode; yourself.
+	scrolledText := textModel newScrolledText beForSmalltalkScripting; yourself.
 	window
 		addMorph:  scrolledText
 		frame: (0 @ 0.5 corner: 1 @ 1).
@@ -578,6 +578,11 @@ ProcessBrowser >> isAutoUpdating [
 { #category : #updating }
 ProcessBrowser >> isAutoUpdatingPaused [
 	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended ]
+]
+
+{ #category : #testing }
+ProcessBrowser >> isScripting [ 
+	^self doItContext belongsToDoIt
 ]
 
 { #category : #'process list' }

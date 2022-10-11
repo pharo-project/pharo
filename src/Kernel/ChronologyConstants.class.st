@@ -11,6 +11,7 @@ Class {
 		'MicrosecondsInDay',
 		'MinutesInHour',
 		'MonthNames',
+		'NanosInMicroSecond',
 		'NanosInMillisecond',
 		'NanosInSecond',
 		'SecondsInDay',
@@ -33,6 +34,7 @@ ChronologyConstants class >> initialize [
 	HoursInDay := 24.
 	NanosInSecond := 10 raisedTo: 9.
 	NanosInMillisecond := 10 raisedTo: 6.
+	NanosInMicroSecond := 10 raisedTo: 3.
 	DayNames := #(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).
 		
 	MonthNames := #(January February March April May June July

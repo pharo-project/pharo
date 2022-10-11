@@ -220,7 +220,7 @@ RBParser >> errorBlock [
 { #category : #accessing }
 RBParser >> errorBlock: aBlock [ 
 	errorBlock := aBlock.
-	scanner notNil ifTrue: [scanner errorBlock: aBlock]
+	scanner ifNotNil: [scanner errorBlock: aBlock]
 ]
 
 { #category : #'error handling' }
@@ -288,7 +288,7 @@ RBParser >> methodNodeClass [
 
 { #category : #private }
 RBParser >> nextToken [
-	^nextToken ifNil: [nextToken := self scannerNext] ifNotNil: [nextToken]
+	^nextToken ifNil: [nextToken := self scannerNext]
 ]
 
 { #category : #'private - parsing' }
@@ -1399,11 +1399,10 @@ RBParser >> sequenceNodeClass [
 RBParser >> step [
 	(currentToken notNil and: [currentToken comments notNil]) 
 		ifTrue: [self extractCommentsFrom: currentToken].
-	nextToken notNil 
-		ifTrue: 
+	nextToken ifNotNil:
 			[currentToken := nextToken.
 			nextToken := nil]
-		ifFalse: [currentToken := self scannerNext].
+		ifNil: [currentToken := self scannerNext].
 ]
 
 { #category : #'private - classes' }

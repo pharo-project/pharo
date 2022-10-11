@@ -88,13 +88,25 @@ Breakpoint class >> cleanUp [
 
 { #category : #'world menu' }
 Breakpoint class >> debugWorldMenuOn: aBuilder [
+
 	<worldMenu>
-	
 	(aBuilder item: #'Remove all Breakpoints')
 		parent: #Breakpoints;
 		order: 2;
 		help: 'Remove all the breakpoints of the image.';
-		action: [ self removeAll ]
+		action: [ self removeAll ].
+
+	(aBuilder item: #'Enable all Breakpoints')
+		parent: #Breakpoints;
+		order: 2;
+		help: 'Enable all the breakpoints of the image.';
+		action: [ self all do: #enable ].
+
+	(aBuilder item: #'Disable all Breakpoints')
+		parent: #Breakpoints;
+		order: 2;
+		help: 'Disable all the breakpoints of the image.';
+		action: [ self all do: #disable ]
 ]
 
 { #category : #'system announcements' }
@@ -265,12 +277,18 @@ Breakpoint >> condition: aCondition [
 
 { #category : #api }
 Breakpoint >> disable [
-	enabled := false
+	self enabled: false
 ]
 
 { #category : #api }
 Breakpoint >> enable [
-	enabled := true
+	self enabled: true
+]
+
+{ #category : #api }
+Breakpoint >> enabled: aBoolean [
+	enabled := aBoolean
+	
 ]
 
 { #category : #initialization }

@@ -471,6 +471,7 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
 	aBlockNode ir: self ir.
+	aBlockNode resetBcToASTCache.
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBTransformationsTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #running }
@@ -125,7 +125,7 @@ RBTransformationsTest >> testCompositeTransform [
 	newClassName := (self changeMock name, 'Temporary') asSymbol.
 	transformation := RBCompositeTransformation new
 		transformations: (OrderedCollection new
-			add: (RBAddClassTransformation
+			add: (RBInsertClassTransformation
 					addClass: newClassName
 					superclass: #Object
 					subclasses: #() 

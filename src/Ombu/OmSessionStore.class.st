@@ -72,7 +72,7 @@ OmSessionStore class >> startUp [
 OmSessionStore class >> storeNameStrategy [
 
 	^ storeNameStrategy ifNil: [ 
-		storeNameStrategy := OmRandomSuffixStrategy new ]
+		storeNameStrategy := OmTimeStampSuffixStrategy new ]
 ]
 
 { #category : #accessing }

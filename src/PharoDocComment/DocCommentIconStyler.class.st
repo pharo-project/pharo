@@ -56,7 +56,7 @@ DocCommentIconStyler >> runExampleBlock: aNode [
 		examples := aNode pharoDocCommentNodes.
 		(examples
 			collect: [ :example | 
-			{ example expression expressionCode formattedCode . example expression evaluate . example result expressionCode formattedCode}]) inspect]
+			{ example expression expressionCode formattedCode . example expression evaluate}]) inspect]
 ]
 
 { #category : #testing }

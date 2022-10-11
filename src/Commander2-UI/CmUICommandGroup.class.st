@@ -11,7 +11,8 @@ Class {
 	#instVars : [
 		'displayStrategy',
 		'isRoot',
-		'icon'
+		'icon',
+		'iconName'
 	],
 	#category : #'Commander2-UI-Core'
 }
@@ -68,7 +69,7 @@ CmUICommandGroup >> icon: anIcon [
 CmUICommandGroup >> iconName: aSymbol [
 
 
-	self icon: (self iconNamed: aSymbol)
+	iconName := aSymbol
 ]
 
 { #category : #initialization }

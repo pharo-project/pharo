@@ -22,7 +22,9 @@ RBLiteralNode class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBLiteralNode class >> value: aValue [ 
+RBLiteralNode class >> value: aValue [
+	"we check here for Array and ByteArray explicitly, as subclasses should use RBLiteralNode.
+	using #isByteArray would be inherited by subclasses"
 	^((aValue class == Array or: [aValue class == ByteArray]) 
 		ifTrue: [RBLiteralArrayNode]
 		ifFalse: [RBLiteralValueNode]) value: aValue

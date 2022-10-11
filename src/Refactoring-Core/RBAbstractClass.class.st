@@ -65,10 +65,11 @@ RBAbstractClass >> addInstanceVariable: aString [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> addMethod: aRBMethod [ 
+RBAbstractClass >> addMethod: aRBMethod [
+
 	self newMethods at: aRBMethod selector put: aRBMethod.
-	removedMethods notNil 
-		ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: []]
+	removedMethods ifNotNil: [ 
+		removedMethods remove: aRBMethod selector ifAbsent: [  ] ]
 ]
 
 { #category : #private }
