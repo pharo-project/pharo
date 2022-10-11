@@ -32,17 +32,15 @@ Collection class >> newFromArray: anArray [
 	So other collections can be easily and efficiently initialized with `{1. 2. 3} asFoo` syntax.
 	
 	Important: Subclasses of Collection that redefine withAll: or newFrom: should also redefine this method
-	either by having a proper implementation (specific to Arrays) or by calling the redefined versions of withAll:/newFrom:.
+	either by having a proper implementation (specific to Arrays) or by calling the redefined versions of withAll:/newFrom:."
 
-	Examples:
-	{ 1. 2. 3 } asSet >>> Set new add: 1; add:2; add:3; yourself
-	{ 1. 2. 3 } asOrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself
-	{ 1->2. 3->4 } asDictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself
+	"{ 1. 2. 3 } asSet >>> (Set new add: 1; add:2; add:3; yourself)"
+	"{ 1. 2. 3 } asOrderedCollection >>> (OrderedCollection new add: 1; add:2; add:3; yourself)"
+	"{ 1->2. 3->4 } asDictionary >>> (Dictionary new at: 1 put: 2; at: 3 put:4; yourself)"
 
-	{ 1. 2. 3 } as: Set >>> Set new add: 1; add:2; add:3; yourself
-	{ 1. 2. 3 } as: OrderedCollection >>> OrderedCollection new add: 1; add:2; add:3; yourself
-	{ 1->2. 3->4 } as: Dictionary >>> Dictionary new at: 1 put: 2; at: 3 put:4; yourself
-	"
+	"({ 1. 2. 3 } as: Set) >>> (Set new add: 1; add:2; add:3; yourself)"
+	"({ 1. 2. 3 } as: OrderedCollection) >>> (OrderedCollection new add: 1; add:2; add:3; yourself)"
+	"({ 1->2. 3->4 } as: Dictionary) >>> (Dictionary new at: 1 put: 2; at: 3 put:4; yourself)"
 
 	| newCollection size |
 	size := anArray size.
@@ -171,7 +169,7 @@ Collection >> adaptToCollection: rcvr andSend: selector [
 
 	Is used to implement Collection>>+, Collection>>-, etc."
 
-	"#(10 20 30) adaptToCollection: #(0 1 2) andSend: #@ >>> {(0@10). (1@20). (2@30)}"
+	"(#(10 20 30) adaptToCollection: #(0 1 2) andSend: #@) >>> {(0@10). (1@20). (2@30)}"
 
 	(rcvr isSequenceable and: [ self isSequenceable ]) ifFalse:
 		[self error: 'Only sequenceable collections may be combined arithmetically'].
@@ -269,16 +267,16 @@ Collection >> allSatisfy: aBlock [
 	If aBlock returns false for any element return false.
 	Otherwise return true."
 
-	"#(1 2) allSatisfy: [ :each | each even ] >>> false"
-	"#(2 4) allSatisfy: [ :each | each even ] >>> true"
+	"(#(1 2) allSatisfy: [ :each | each even ]) >>> false"
+	"(#(2 4) allSatisfy: [ :each | each even ]) >>> true"
 
-	"'hello' allSatisfy: #isLetter >>> true"
-	"'hello!' allSatisfy: #isLetter >>> false"
+	"('hello' allSatisfy: #isLetter) >>> true"
+	"('hello!' allSatisfy: #isLetter) >>> false"
 
-	"(3 to: 8 by: 2) allSatisfy: #isPrime >>> true"
-	"(3 to: 9 by: 2) allSatisfy: #isPrime >>> false"
+	"((3 to: 8 by: 2) allSatisfy: #isPrime) >>> true"
+	"((3 to: 9 by: 2) allSatisfy: #isPrime) >>> false"
 
-	"#() allSatisfy: [false] >>> true"
+	"(#() allSatisfy: [false]) >>> true"
 
 	self do: [ :each | (aBlock value: each) ifFalse: [ ^ false ] ].
 	^ true
@@ -308,16 +306,16 @@ Collection >> anySatisfy: aBlock [
 	If aBlock returns true for any element return true.
 	Otherwise return false."
 
-	"#(1 3) anySatisfy: [ :each | each even ] >>> false"
-	"#(1 2) anySatisfy: [ :each | each even ] >>> true"
+	"(#(1 3) anySatisfy: [ :each | each even ]) >>> false"
+	"(#(1 2) anySatisfy: [ :each | each even ]) >>> true"
 
-	"'hello world!' anySatisfy: [ :each | each isLetter ] >>> true"
-	"'hello world!' anySatisfy: [ :each | each isDigit ] >>> false"
+	"('hello world!' anySatisfy: [ :each | each isLetter ]) >>> true"
+	"('hello world!' anySatisfy: [ :each | each isDigit ]) >>> false"
 
-	"(4 to: 9) anySatisfy: #isPrime >>> true"
-	"(4 to: 50 by: 2) anySatisfy: #isPrime >>> false"
+	"((4 to: 9) anySatisfy: #isPrime) >>> true"
+	"((4 to: 50 by: 2) anySatisfy: #isPrime) >>> false"
 
-	"#() anySatisfy: [ true ] >>> false"
+	"(#() anySatisfy: [ true ]) >>> false"
 
 	self do: [ :each | (aBlock value: each) ifTrue: [ ^ true ] ].
 	^ false
@@ -521,7 +519,9 @@ Collection >> asStringOn: aStream delimiter: delimString [
 	with a delimiter String like: 'a, b, c'
 	Uses #asString instead of #print:."
 
-	"String streamContents: [:s| 'abcd' asStringOn: s delimiter: '->'] >>> 'a->b->c->d'"
+	"(String streamContents: [:s|
+		'abcd' asStringOn: s delimiter: '->'])
+	>>> 'a->b->c->d'"
 
 	self
 		do: [ :elem | aStream nextPutAll: elem asString ]
@@ -538,7 +538,9 @@ Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 
 	Note: Feel free to improve the code to detect the last element."
 
-	"String streamContents: [:s| 'abcd' asStringOn: s delimiter: ', ' last: ' and '] >>> 'a, b, c and d'"
+	"(String streamContents: [:s|
+		'abcd' asStringOn: s delimiter: ', ' last: ' and '])
+	>>> 'a, b, c and d'"
 
 	| n sz |
 	n := 1.
@@ -560,9 +562,15 @@ Collection >> associationsDo: aBlock [
 	The point of this method it to do the *right thing* on Dictionaries and related classes.
 	"
 
-	"String streamContents: [:s| {'one'->1. 'two'->2} associationsDo: [:a| s << a key << ':' << a value asString << ';']] >>> 'one:1;two:2;'"
+	"(String streamContents: [:s|
+		{'one'->1. 'two'->2} associationsDo: [:a|
+			s << a key << ':' << a value asString << ';']])
+	>>> 'one:1;two:2;'"
 
-	"String streamContents: [:s| {'one'->1. 'two'->2} asOrderedDictionary associationsDo: [:a| s << a key << ':' << a value asString << ';']] >>> 'one:1;two:2;'"
+	"(String streamContents: [:s|
+		{'one'->1. 'two'->2} asOrderedDictionary associationsDo: [:a|
+			s << a key << ':' << a value asString << ';']])
+	>>> 'one:1;two:2;'"
 
 	self do: aBlock
 ]
@@ -586,7 +594,7 @@ Collection >> collect: aBlock [
 	"(#(10 20 30) collect: [:e | e+1]) >>> #(11 21 31)"
 	"({10@20. 30@0} collect: [:e | e x]) >>> #(10 30)"
 	"('Hello, world!' collect: [:e | e isLetter ifTrue: e ifFalse: $-]) >>> 'Hello--world-'"
-	"(1 to: 10) collect: [:i| i gcd: 6] >>> #(1 2 3 2 1 6 1 2 3 2)"
+	"((1 to: 10) collect: [:i| i gcd: 6]) >>> #(1 2 3 2 1 6 1 2 3 2)"
 	"(#() collect: [:x | x+1]) >>> #()"
 
 	| newCollection |
@@ -745,8 +753,8 @@ Collection >> detect: aBlock [
 	Answer the first element for which aBlock evaluates to true."
 
 	"({1@3. 2@1. 3@6. 4@8} detect: [ :each | each x even ]) >>> (2@1)"
-	"(104 to: 120) detect: #isPrime >>> 107"
-	"'Hello!' detect: #isLowercase) >>> $e"
+	"((104 to: 120) detect: #isPrime) >>> 107"
+	"('Hello!' detect: #isLowercase) >>> $e"
 
 	^ self detect: aBlock ifNone: [ self errorNotFound: aBlock ]
 ]
@@ -807,13 +815,12 @@ Collection >> detect: aBlock ifNone: exceptionBlock [
 Collection >> detectMax: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the highest magnitude.
-	If collection empty, return nil.  This method might also be called elect:.
+	If collection empty, return nil.  This method might also be called elect:."
 
-	({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p x ]) >>> (10@ -3)
-	({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p y ]) >>> (2@6)
-	((10 to: 20) detectMax: [ :p | p gcd: 6 ]) >>> 12
-	'Hello' detectMax: #asciiValue >>> $o
-	"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p x ]) >>> (10@ -3)"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMax: [ :p | p y ]) >>> (2@6)"
+	"((10 to: 20) detectMax: [ :p | p gcd: 6 ]) >>> 12"
+	"('Hello' detectMax: #asciiValue) >>> $o"
 
 	| maxElement maxValue |
 	self do: [:each | | val |
@@ -834,13 +841,11 @@ Collection >> detectMax: aBlock [
 Collection >> detectMin: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the lowest number.
-	If collection empty, return nil.
+	If collection empty, return nil."
 
-	Example of use:
-	({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@3)
-	({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)
-	'Hello!' detectMin: #asciiValue >>> $!
-	"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@3)"
+	"({ 2@6 . -4@3 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)"
+	"('Hello!' detectMin: #asciiValue) >>> $!"
 
 	| minElement minValue |
 	self do: [:each | | val |
@@ -894,16 +899,20 @@ Collection >> do: aBlock [
 
 	This is the general foreach method, but for most standard needs there is often a more specific and simpler method."
 
-	"
-	|s| s:=0. #(10 20 30) do: [:each | s := s + each]. s >>> 60
-	but use sum or inject:into: instead
-	(#(10 20 30) inject: 0 into: [:s :each| s + each ]) >>> 60
-	#(10 20 30) sum >>> 60
-	"
+	"|s|
+	s:=0.
+	#(10 20 30) do: [:each | s := s + each].
+	s >>> 60"
+	
+	"but use sum or inject:into: instead"
+	
+	"(#(10 20 30) inject: 0 into: [:s :each| s + each ]) >>> 60"
+	"#(10 20 30) sum >>> 60"
 
 	"
-	(String streamContents: [:s | #('hello' 'the' 'world') do: [:each | s << each]]) >>> 'hellotheworld'
-	"
+	(String streamContents: [:s |
+		#('hello' 'the' 'world') do: [:each | s << each]])
+	>>> 'hellotheworld'"
 
 	self subclassResponsibility
 ]
@@ -951,7 +960,7 @@ Collection >> emptyCheck [
 	"Signal CollectionIsEmpty if the collection is empty"
 
 	"#(10 20) emptyCheck >>> #(10 20)"
-	"[#() emptyCheck] on: CollectionIsEmpty do: [ 'oops' ] >>> 'oops'"
+	"([#() emptyCheck] on: CollectionIsEmpty do: [ 'oops' ]) >>> 'oops'"
 
 	self isEmpty ifTrue: [self errorEmptyCollection]
 ]
@@ -996,12 +1005,11 @@ Collection >> findFirstInByteString: aByteString startingAt: start [
 	Default is to use a naive algorithm.
 	Subclasses might want to implement a more efficient scheme.
 
-	Return 0 if not found.
+	Return 0 if not found."
 
-	('aeiou' findFirstInByteString: 'hello world' startingAt: 1) >>> 2.
-	('aeiou' findFirstInByteString: 'hello world' startingAt: 3) >>> 5.
-	('aeiou' findFirstInByteString: 'hello world' startingAt: 9) >>> 0.
-	"
+	"('aeiou' findFirstInByteString: 'hello world' startingAt: 1) >>> 2."
+	"('aeiou' findFirstInByteString: 'hello world' startingAt: 3) >>> 5."
+	"('aeiou' findFirstInByteString: 'hello world' startingAt: 9) >>> 0."
 
 	start to: aByteString size do:
 		[:index |
@@ -1085,13 +1093,10 @@ Collection >> gather: aBlock [
 
 { #category : #enumerating }
 Collection >> groupedBy: aBlock [
-	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species.
+	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
 
-	Example of use:
-	(#(1 2 3 4 5) groupedBy: [ :v | v odd ]) asString >>> 'an OrderedDictionary(true->#(1 3 5) false->#(2 4))'
-	"
-
-
+	"(#(1 2 3 4 5) groupedBy: [ :v | v odd ]) asString
+		>>> 'an OrderedDictionary(true->#(1 3 5) false->#(2 4))'"
 
 	| groups |
 	groups := OrderedDictionary new.
@@ -1109,8 +1114,12 @@ Collection >> groupedBy: aBlock having: aSelectionBlock [
 	elements for which keyBlock returns the same results, and return those
 	collections allowed by selectBlock."
 
-	"In the following example, the group `3->#(34)` is filtered out because there is not 2 elements.
-	(#(1 5 21 28 34) groupedBy: [:x| x // 10] having: [:v| v size = 2]) >>> {0->#(1 5). 2->#(21 28)} asOrderedDictionary"
+	"In the following example, the group `3->#(34)` is filtered out because there is not 2 elements."
+	
+	"(#(1 5 21 28 34)
+		groupedBy: [:x| x // 10]
+		having: [:v| v size = 2])
+	>>> {0->#(1 5). 2->#(21 28)} asOrderedDictionary"
 
 	^ (self groupedBy: aBlock) select: aSelectionBlock
 ]
@@ -1193,8 +1202,8 @@ Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 Collection >> includes: anObject [ 
 	"Answer whether anObject is one of the receiver's elements."
 
-	"#(10 20 30) includes: 20) >>> true"
-	"#(10 20 30) includes: 21) >>> false"
+	"(#(10 20 30) includes: 20) >>> true"
+	"(#(10 20 30) includes: 21) >>> false"
 
 	"((1 to:9 by:2) includes: 3) >>> true"
 	"((1 to:9 by:2) includes: 4) >>> false"
@@ -1247,7 +1256,8 @@ Collection >> includesAnyOf: aCollection [
 Collection >> includesSubstringAnywhere: testString [
 	"Answer whether the receiver includes, anywhere in its nested structure, a string that has testString as a substring"
 
-	"#(first (second third) ((allSentMessages ('Elvis' includes:)))) includesSubstringAnywhere:  'lvi' >>> true"
+	"(#(first (second third) ((allSentMessages ('Elvis' includes:))))
+		includesSubstringAnywhere:  'lvi') >>> true"
 
 	self do:
 		[:element |
@@ -1267,15 +1277,14 @@ Collection >> inject: thisValue into: binaryBlock [
 
 	"(#(2r101 2r11 2r1000) inject: 0 into: [ :acc :each | acc bitXor: each ]) >>> 2r1110"
 
-	"(#(10 20 30) inject: 0 into: [ :sum :each | sum + each ]) >>> 60
-	But use sum or sum: instead!
-	#(10 20 30) sum >>> 60
-	"
+	"(#(10 20 30) inject: 0 into: [ :sum :each | sum + each ]) >>> 60"
+	"But use sum or sum: instead!"
+	"#(10 20 30) sum >>> 60"
 
-	"(#(10 20 30) inject: OrderedCollection new into: [ :a :e | a add: (e + 1). a ]) >>> #(11 21 31) asOrderedCollection
-	But use collect: or collect:as: instead!
-	(#(10 20 30) collect: [:e| e+1]) >>> #(11 21 31)
-	"
+	"(#(10 20 30) inject: OrderedCollection new into: [ :a :e | a add: (e + 1). a ])
+		>>> #(11 21 31) asOrderedCollection"
+	"But use collect: or collect:as: instead!"
+	"(#(10 20 30) collect: [:e| e+1]) >>> #(11 21 31)"
 
 	| nextValue |
 	nextValue := thisValue.
@@ -1324,22 +1333,19 @@ Collection >> isEmptyOrNil [
 
 	"#() isEmptyOrNil >>> true"
 	"nil isEmptyOrNil >>> true"
-	"[0 isEmptyOrNil] on: MessageNotUnderstood do: ['oops'] >>> 'oops'"
+	"([0 isEmptyOrNil] on: MessageNotUnderstood do: ['oops']) >>> 'oops'"
 
 	^ self isEmpty
 ]
 
 { #category : #testing }
 Collection >> isNotEmpty [
-	"Answer whether the receiver contains any elements.
+	"Answer whether the receiver contains any elements."
 
-	Example of use:
-
-	#() isNotEmpty >>> false
-	#(()) isNotEmpty >>> true
-	'' isNotEmpty >>> false
-	' ' isNotEmpty >>> true
-	"
+	"#() isNotEmpty >>> false"
+	"#(()) isNotEmpty >>> true"
+	"'' isNotEmpty >>> false"
+	"' ' isNotEmpty >>> true"
 
 	^ self isEmpty not
 ]
@@ -1355,15 +1361,13 @@ Collection >> isSequenceable [
 { #category : #'math functions' }
 Collection >> median [
 	"Return the middle element, or as close as we can get.
-	The collection must not be empty.
+	The collection must not be empty."
 
-	Example of use:
-	{1 . 2 . 3 . 4 . 5} median >>> 3
-	{1 . 2 . 4 . 5} median >>> 3
-	{1 . 2 . 5 . 5} median >>> (7/2)
-	{3} median >>> 3
-	([{} median] on: CollectionIsEmpty do: [ 'oops' ]) >>> 'oops'
-	"
+	"{1 . 2 . 3 . 4 . 5} median >>> 3"
+	"{1 . 2 . 4 . 5} median >>> 3"
+	"{1 . 2 . 5 . 5} median >>> (7/2)"
+	"{3} median >>> 3"
+	"([{} median] on: CollectionIsEmpty do: [ 'oops' ]) >>> 'oops'"
 
 	self emptyCheck.
 	^ self asSortedCollection median
@@ -1373,11 +1377,11 @@ Collection >> median [
 Collection >> noneSatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver. If aBlock returns false for all elements return true. Otherwise return false"
 
-	"#(2 4 6) noneSatisfy: [:x|x odd] >>> true"
-	"#(1 2 3) noneSatisfy: [:x|x odd] >>> false"
-	"'hello!' noneSatisfy: #isUppercase >>> true"
-	"'hello!' noneSatisfy: #isLetter >>> false"
-	"#() noneSatisfy: ['oops'] >>> true"
+	"(#(2 4 6) noneSatisfy: [:x|x odd]) >>> true"
+	"(#(1 2 3) noneSatisfy: [:x|x odd]) >>> false"
+	"('hello!' noneSatisfy: #isUppercase) >>> true"
+	"('hello!' noneSatisfy: #isLetter) >>> false"
+	"(#() noneSatisfy: ['oops']) >>> true"
 
 	self do: [:item | (aBlock value: item) ifTrue: [^ false]].
 	^ true
@@ -1408,12 +1412,16 @@ Collection >> occurrencesOf: anObject [
 { #category : #printing }
 Collection >> printElementsOn: aStream [
 	"List elements betwen () and separated by spaces.
-	Is used by printOn: and other related printing methods.
+	Is used by printOn: and other related printing methods."
 
-	String streamContents: [:s| {10. 'hello'} printElementsOn: s] >>> '(10 ''hello'')'
-	String streamContents: [:s| #() printElementsOn: s] >>> '()'
+	"(String streamContents: [:s|
+		{10. 'hello'} printElementsOn: s])
+		>>> '(10 ''hello'')'"
+	"(String streamContents: [:s|
+		#() printElementsOn: s])
+		>>> '()'"
 
-	Note: The original code used #skip:, but some streams do not support that,
+	"Note: The original code used #skip:, but some streams do not support that,
 	 and we don't really need it."
 
 	aStream nextPut: $(.
@@ -1437,10 +1445,11 @@ Collection >> printOn: aStream [
 { #category : #printing }
 Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
-	with a delimiter String like: 'a, b, c'
+	with a delimiter String like: 'a, b, c'"
 
-	String streamContents: [:s| { 10. 'hello'. $x } printOn: s delimiter: ', '] >>> '10, ''hello'', $x'
-	"
+	"(String streamContents: [:s|
+		{ 10. 'hello'. $x } printOn: s delimiter: ', '])
+		>>> '10, ''hello'', $x'"
 
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 ]
@@ -1449,11 +1458,13 @@ Collection >> printOn: aStream delimiter: delimString [
 Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 	"Print elements on a stream separated
 	with a delimiter between all the elements and with
-	a special one before the last like: 'a, b and c'
+	a special one before the last like: 'a, b and c'"
 
-	(String streamContents: [:s| { 10. 'hello'. $x } printOn: s delimiter: ', ' last: ' & ']) >>> '10, ''hello'' & $x'
+	"(String streamContents: [:s|
+		{ 10. 'hello'. $x } printOn: s delimiter: ', ' last: ' & '])
+		>>> '10, ''hello'' & $x'"
 
-	Note: Feel free to improve the code to detect the last element."
+	"Note: Feel free to improve the code to detect the last element."
 
 	| n sz |
 	n := 1.
@@ -1470,8 +1481,9 @@ Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 { #category : #enumerating }
 Collection >> reduce: aBlock [
 	"Fold the result of the receiver into aBlock. The argument aBlock must take two or more arguments. It applies the argument, binaryBlock cumulatively to the elements of the receiver. For sequenceable collections the elements will be used in order, for unordered collections the order is unspecified."
-	"( #(1 2 3) asSet reduce: [ :a :b | a + b ] ) >>> 1 + 2 + 3"
-	"( #(1 2 3 4 5) asSet reduce: [ :a :b :c | a + b + c ] ) >>> 1 + 2 + 3 + 4 + 5"
+	
+	"( #(1 2 3) asSet reduce: [ :a :b | a + b ] ) >>> (1 + 2 + 3)"
+	"( #(1 2 3 4 5) asSet reduce: [ :a :b :c | a + b + c ] ) >>> (1 + 2 + 3 + 4 + 5)"
 
 	"Maybe look at the related method Collection>>inject:into:"
 
@@ -1589,11 +1601,11 @@ Collection >> select: aBlock [
 
 	"({1@2. 6@3. 2@ -1.} select: [:e| e x > e y]) >>> {(6@3). (2@ -1)}"
 
-	"'heLlo wOrLd' select: #isUppercase >>> 'LOL'"
+	"('heLlo wOrLd' select: #isUppercase) >>> 'LOL'"
 
 	"((1 to: 10) select: #isPrime) >>> #(2 3 5 7)"
 
-	"#() select: [true] >>> #()"
+	"(#() select: [true]) >>> #()"
 
 	| newCollection |
 	newCollection := self copyEmpty.
@@ -1667,7 +1679,7 @@ comparison."
 
 	"(#(3 1 4 2) sorted: [:a :b| a>=b]) >>> #(4 3 2 1)"
 	"('hello' sorted: [:a :b| a>=b]) >>> 'ollhe'"
-	"(1 to: 10 by: 2) sorted: [:a :b| a>=b] >>> #(9 7 5 3 1)"
+	"((1 to: 10 by: 2) sorted: [:a :b| a>=b]) >>> #(9 7 5 3 1)"
 
 	^self asArray sort: aSortBlockOrNil
 ]
@@ -1702,7 +1714,7 @@ Collection >> sum: aBlock [
 
 	"(#(1 -4 -10 1) sum: #abs) >>> 16"
 
-	"({1@ -4. -10@1} sum: #abs) >>> 11@5"
+	"({1@ -4. -10@1} sum: #abs) >>> (11@5)"
 
 	"(#() sum: #abs) >>> 0"
 
@@ -1755,9 +1767,9 @@ Collection >> sumNumbers: aBlock [
 	more general, sumNumbers: is meant to support the most often encountered use case of
 	dealing with numbers."
 
-	"#(1 -2 4) sumNumbers: #abs >>> 7"
+	"(#(1 -2 4) sumNumbers: #abs) >>> 7"
 
-	"#() sumNumbers: #abs >>> 0"
+	"(#() sumNumbers: #abs) >>> 0"
 
 	^ self
 		inject: 0

@@ -42,7 +42,7 @@ DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 	^ packagesSelected asSet flatCollect: [ :package | 
 		  package definedOrExtendedClasses select: [ :class | 
-			  class hasDocComment ] ]
+			  class hasDocComment or: [ class class hasDocComment ] ] ]
 ]
 
 { #category : #api }
