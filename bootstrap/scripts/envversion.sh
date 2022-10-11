@@ -70,10 +70,11 @@ function set_version_snapshot_variables() {
 function set_version_pull_request_variables() {
 	# I'm not development build, I should be a PR
 	# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
+	# Note: do not use `--first-parent` here, since Jenkins is crazy and use the PR as the first parent wheras useful version information in the targeted branch.
 	# This will answer "Pharo7.0-PR"
-	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
+	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
 	# This will answer "70"
-	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
 # sets all variables:
