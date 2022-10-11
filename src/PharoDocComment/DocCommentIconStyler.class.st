@@ -11,7 +11,7 @@ Class {
 DocCommentIconStyler >> exampleIsFaulty: aNode [
 	^ aNode comments
 		anySatisfy: [ :commentNode | commentNode pharoDocCommentNodes anySatisfy: [ :node |
-				node expression expressionNode isFaulty ]]
+				node expression isFaulty ]]
 ]
 
 { #category : #defaults }
@@ -46,8 +46,9 @@ DocCommentIconStyler >> notifySourceError: aNode [
 	
 	^ [ | examples faultyExample |
 		examples := aNode pharoDocCommentNodes.
-		faultyExample := examples detect: [ :example | example expression expressionNode isFaulty ].
-		RBParser parseExpression: faultyExample expression expression ]
+		faultyExample := examples detect: [ :example | example expression isFaulty ].
+		"FIXME: The parser do not show errors related to specific doccomments rules."
+		RBParser parseExpression: faultyExample expression source ]
 ]
 
 { #category : #private }
