@@ -30,12 +30,6 @@ CDSharedVariableNode >> isClassVariable [
 ]
 
 { #category : #testing }
-CDSharedVariableNode >> isGlobalClassNameBinding [
-	"To be polymorphic to RB method nodes"
-	^false
-]
-
-{ #category : #testing }
 CDSharedVariableNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^false

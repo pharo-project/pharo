@@ -82,8 +82,7 @@ CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 	self assert: classDefinition sharedSlots first name equals: self firstClassVariableName.
 	self assert: classDefinition sharedSlots second name equals: self secondClassVariableName.
 	
-	self assert: classDefinition sharedSlots second isLiteralVariable.
-	self deny: classDefinition sharedSlots second isGlobalClassNameBinding.
+	self assert: classDefinition sharedSlots second isLiteralVariable
 ]
 
 { #category : #tests }
