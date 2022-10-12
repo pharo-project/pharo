@@ -19,12 +19,17 @@ Class {
 	#instVars : [
 		'variables'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Transformation'
 }
 
 { #category : #'instance creation' }
 RBGeneratePrintStringRefactoring class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
+]
+
+{ #category : #accessing }
+RBGeneratePrintStringRefactoring class >> kind [ 
+	^ 'Transformation'
 ]
 
 { #category : #'instance creation' }

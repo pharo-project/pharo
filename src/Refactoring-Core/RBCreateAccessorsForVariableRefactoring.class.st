@@ -15,7 +15,7 @@ Class {
 		'needsReturn',
 		'selector'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Transformation'
 }
 
 { #category : #'instance creation' }
@@ -26,6 +26,11 @@ RBCreateAccessorsForVariableRefactoring class >> classVariable: aVarName class: 
 { #category : #'instance creation' }
 RBCreateAccessorsForVariableRefactoring class >> instanceVariable: aVarName class: aClass [
 	^ self variable: aVarName class: aClass classVariable: false
+]
+
+{ #category : #accessing }
+RBCreateAccessorsForVariableRefactoring class >> kind [
+	^ 'Transformation'
 ]
 
 { #category : #'instance creation' }
