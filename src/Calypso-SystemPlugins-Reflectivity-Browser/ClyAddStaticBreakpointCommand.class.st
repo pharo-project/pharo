@@ -16,7 +16,7 @@ ClyAddStaticBreakpointCommand class >> methodEditorLeftBarClickActivation [
 
 { #category : #execution }
 ClyAddStaticBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
-	aBreakpoint always
+	aBreakpoint
 ]
 
 { #category : #accessing }

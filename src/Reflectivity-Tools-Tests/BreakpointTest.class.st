@@ -115,9 +115,9 @@ BreakpointTest >> testBreakLink [
 BreakpointTest >> testBreakLinkOnce [
 	|breakpoint|
 	breakpoint := Breakpoint new.
-	self deny: breakpoint oneShot.
-	breakpoint once.
-	self assert: breakpoint oneShot
+	self deny: (breakpoint once).
+	breakpoint once: true.
+	self assert: (breakpoint once)
 ]
 
 { #category : #tests }
@@ -126,7 +126,7 @@ BreakpointTest >> testBreakOnceInContext [
 	|observer breakpoint|
 	observer := DummyBreakpointObserver new.
 	Breakpoint registerObserver: observer.
-	breakpoint := Breakpoint new once.	
+	breakpoint := Breakpoint new once: true.	
 	self assert: breakpoint isEnabled.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
 	self deny: breakpoint isEnabled.
@@ -158,7 +158,7 @@ BreakpointTest >> testBreakpointNodeProperty [
 	cls compile: 'dummy ^42'.
 	breakpoint := Breakpoint new
 		node: (cls >> #dummy) ast;
-		once.
+		once: true.
 	breakpoint install.
 	self assert: (cls >> #dummy) ast hasBreakpoint.
 	self assertCollection: (cls >> #dummy) ast breakpoints equals: {breakpoint} asSet.
@@ -183,7 +183,7 @@ BreakpointTest >> testModifyMethodWithBreakpoint [
 	self assertEmpty: Breakpoint all.
 	Breakpoint new
 		node: (cls >> #dummy) ast;
-		once;
+		once: true;
 		install.
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls compile: 'dummy ^43'.
@@ -265,7 +265,7 @@ BreakpointTest >> testRemoveClassWithBreakpoint [
 	self assertEmpty: Breakpoint all.
 	Breakpoint new
 		node: (cls >> #dummy) ast;
-		once;
+		once: true;
 		install.
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls removeFromSystem.
@@ -278,7 +278,7 @@ BreakpointTest >> testRemoveMethodWithBreakpoint [
 	self assertEmpty: Breakpoint all.
 	Breakpoint new
 		node: (cls >> #dummy) ast;
-		once;
+		once: true;
 		install.
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls removeSelector: #dummy.
