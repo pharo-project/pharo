@@ -11,6 +11,9 @@ set -o xtrace
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+. ${SCRIPTS}/envvars.sh
+
 find ${CACHE}
 
 # I will use the name of the image to determine the vm version (because file name is in the format Pharo7.0.0-rc1)
