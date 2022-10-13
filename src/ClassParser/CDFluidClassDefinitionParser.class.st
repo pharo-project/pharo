@@ -105,10 +105,10 @@ CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [
 			CDSharedVariableNode
 				node: aNode
 				name: literalName
-				slotClassName: 'ClassVariableSlot'
+				slotClassName: #ClassVariable
 				start: start
 				stop: start + literalNode size ].
-	classDefinition sharedSlots: slotNodes
+	classDefinition sharedVariables: slotNodes
 ]
 
 { #category : #parsing }

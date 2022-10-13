@@ -129,10 +129,10 @@ CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
 			CDSharedVariableNode
 				node: aNode
 				name: slotName
-				slotClassName: 'ClassVariableSlot'
+				slotClassName: #ClassVariable
 				start: start
 				stop: start + slotName size ].
-	classDefinition sharedSlots: slotNodes
+	classDefinition sharedVariables: slotNodes
 ]
 
 { #category : #parsing }
