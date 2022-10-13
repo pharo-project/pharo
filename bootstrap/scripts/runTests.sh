@@ -23,7 +23,7 @@ TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2
 TEST_VM_VERSION="90"
 
 #Odd PR builds use the the latest VM, else use the stable VM
-if [ $(is_development_build) == 1 && $((BUILD_NUMBER % 2)) -eq 1 ]]
+if [ ${is_development_build} == 1 && $(${BUILD_NUMBER} % 2) -eq 1 ]]
 then
  TEST_VM_KIND="vmLatest"
 else
