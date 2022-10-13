@@ -370,6 +370,16 @@ RBNamespace >> defineClass: aString [
 	^ change
 ]
 
+{ #category : #changes }
+RBNamespace >> defineClass: aString withComment: aCommentString [
+
+	| change newClass |
+	change := self defineClass: aString.
+	newClass := self classNamed: change changeClassName.
+	newClass comment: aCommentString.
+	^ change
+]
+
 { #category : #accessing }
 RBNamespace >> description [
 	^ self changes name
