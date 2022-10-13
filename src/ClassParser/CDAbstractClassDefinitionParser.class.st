@@ -137,47 +137,76 @@ CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
 
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> handleSlotNode: slotDefNode [
-	"what ugly method! Pay attention start and stop should be tested and probably adjusted!"
 	 | slot |
 	"when a slot is just #inst"
-	slotDefNode isLiteralNode
-		ifTrue: [
-			slot := CDSlotNode new
-				node: slotDefNode;
-				name: slotDefNode value;
-				variableClassName: #InstanceVariableSlot;
-				start: slotDefNode start;
-				stop: slotDefNode stop.
-			classDefinition addSlot: slot.
-			^self		
-		].
+	slotDefNode isLiteralNode ifTrue: [ slot := self handleSlotNodeSimple: slotDefNode].
+	"#inst => InstanceVariableSlot default: 5; default2: 4"
+	slotDefNode isCascade ifTrue: [ slot := self handleSlotNodeCascade: slotDefNode].
+	"when a slot is just #inst => InstanceVariableSlot."
+	(slotDefNode isMessage and: [ slotDefNode selector = '=>'  ])ifTrue: [  slot := self handleSlotNodeSimpleClass: slotDefNode].
+	"when a slot is #inst => InstanceVariableSlot default: 5."
+	(slotDefNode isMessage and: [ slotDefNode selector ~= '=>'  ]) ifTrue:  [ slot := self handleSlotNodeSimpleClassArgument: slotDefNode].
 	
-	"when a slot is just 'inst' => InstanceVariableSlot."
-	slot :=  slotDefNode selector = '=>' 
-		ifTrue: [  
-					CDSlotNode new
-						node: slotDefNode;
-						name: slotDefNode receiver value;
-						variableClassName: slotDefNode arguments first name ;
-						start: slotDefNode start;
-						stop: slotDefNode stop]
-		ifFalse: [  
-				"when a slot is #inst => InstanceVariableSlot default: 5."
-				CDSlotNode new
-					node: slotDefNode;
-					name: slotDefNode receiver receiver value;
-					variableClassName: slotDefNode receiver arguments first name ;
-					start: slotDefNode start;
-					stop: slotDefNode stop.
-				].
-	
-		classDefinition addSlot: slot
+	slot ifNil: [ ^self error: 'Slot definion can not be parsed' ].
+	classDefinition addSlot: slot
 			
 			
 	
 		
 	
 
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSlotNodeCascade: slotDefNode [
+
+	"#inst => InstanceVariableSlot default: 5; default2: 4"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver receiver value;
+		  variableClassName: slotDefNode receiver arguments first value name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSlotNodeSimple: slotDefNode [
+
+	"when a slot is just #inst"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode value;
+		  variableClassName: #InstanceVariableSlot;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSlotNodeSimpleClass: slotDefNode [
+
+	"when a slot is just #inst => InstanceVariableSlot"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver value;
+		  variableClassName: slotDefNode arguments first name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSlotNodeSimpleClassArgument: slotDefNode [
+
+	"When a slot is #inst => InstanceVariableSlot default: 5"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver receiver value;
+		  variableClassName: slotDefNode receiver arguments first name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
 ]
 
 { #category : #parsing }

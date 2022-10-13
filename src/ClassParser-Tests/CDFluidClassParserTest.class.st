@@ -80,6 +80,21 @@ CDFluidClassParserTest >> testComplexSlots [
 ]
 
 { #category : #'tests - (r) slots' }
+CDFluidClassParserTest >> testComplexSlotsCascade [
+ 
+	| parser defString def slot |
+	parser := self classDefinitionParserClass new.
+	
+	defString := 'Object << #MyObject
+		slots: { #inst => InstanceVariableSlot default: 5; default2: 4};
+		package: #MyPackage'.
+	def := parser parse: defString.
+	slot := def slots first.
+	self assert: slot name equals: #inst. 
+	self assert: slot node messages first selector equals: #default:.
+]
+
+{ #category : #'tests - (r) slots' }
 CDFluidClassParserTest >> testEmptySlots [
 
 	| parser defString def |
