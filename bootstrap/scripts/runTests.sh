@@ -13,6 +13,7 @@ CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
+set_version_variables
 
 find ${CACHE}
 
@@ -22,8 +23,7 @@ find ${CACHE}
 # WARNING: If you change this, you will need to change "runKernelTests.sh" too
 #
 TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
-#TEST_VM_VERSION=$(echo "${TEST_NAME_PREFIX}" | cut -d'-' -f 1| cut -c 6- | cut -d'.' -f 1-2 | sed 's/\.//')
-TEST_VM_VERSION="90"
+TEST_VM_VERSION=${PHARO_VM_VERSION}
 
 #Odd PR builds use the the latest VM, else use the stable VM
 if [[ $(is_development_build) == "1" && $((${BUILD_NUMBER} % 2)) -eq 1 ]]
