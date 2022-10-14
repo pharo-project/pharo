@@ -50,6 +50,36 @@ CDFluidClassParserTest >> testClassSideWithTraits [
 	self assert: def slots first name equals: #x
 ]
 
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testComplexClassVariables [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+	
+	defString := 'Object << #MyObject
+		sharedVariables: { #A => ClassVar default: 5 };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
+	self assert: def sharedVariables first name equals: #A. 
+	self assert: def sharedVariables first variableClassName equals: #ClassVar.
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testComplexClassVariablesCascae [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+	
+	defString := 'Object << #MyObject
+		sharedVariables: { #A => ClassVar default: 5; default2: 4 };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
+	self assert: def sharedVariables first name equals: #A. 
+	self assert: def sharedVariables first variableClassName equals: #ClassVar.
+]
+
 { #category : #'tests - (r) slots' }
 CDFluidClassParserTest >> testComplexSlots [
 
@@ -95,6 +125,19 @@ CDFluidClassParserTest >> testComplexSlotsClass [
 	slot := def slots first.
 	self assert: slot name equals: #inst.
 	self assert: slot variableClassName equals: #Slot
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testEmptyClassVariable [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+	
+	defString := 'Object << #MyObject
+		sharedVariables: {  };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables isEmpty
 ]
 
 { #category : #'tests - (r) slots' }
@@ -158,6 +201,21 @@ CDFluidClassParserTest >> testSharedPools [
 	
 	def := parser parse: defString.
 	self assert: def sharedPools first name equals: 'TextConstants'
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testSimpleClassVariableClass [ 
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+	
+	defString := 'Object << #MyObject
+		sharedVariables: { #A => ClassVar };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first name equals: #A. 
+	self assert: def sharedVariables first variableClassName equals: #ClassVar.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
 ]
 
 { #category : #'tests - (r) class variables' }

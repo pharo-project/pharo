@@ -12,6 +12,13 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
+{ #category : #adding }
+CDClassDefinitionNode >> addSharedVariable: aCDSharedVariableNode [
+
+	self sharedVariables add: aCDSharedVariableNode.
+	self addChild: aCDSharedVariableNode
+]
+
 { #category : #accessing }
 CDClassDefinitionNode >> binding [ 
 	self trace: '.'.
@@ -79,7 +86,7 @@ CDClassDefinitionNode >> sharedVariableNodes [
 
 { #category : #accessing }
 CDClassDefinitionNode >> sharedVariables [
-	^ sharedVariableNodes ifNil:[ sharedVariableNodes := Array new ]
+	^ sharedVariableNodes ifNil:[ sharedVariableNodes := OrderedCollection new ]
 ]
 
 { #category : #accessing }
