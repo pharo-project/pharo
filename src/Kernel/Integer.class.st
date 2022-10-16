@@ -330,6 +330,21 @@ Integer >> asCharacterDigit [
 	^Character digitValue: self
 ]
 
+{ #category : #comparing }
+Integer >> asFileSizeString [
+	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
+	
+	"(1000 * 1000 * 1000) asFileSizeString >>> '953 MB'"
+	"(1024 * 1024 * 1024) asFileSizeString >>> '1 TB'"
+	
+	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
+		inject: self
+		into: [ :value :each |
+			value < 1024
+				ifFalse: [ value // 1024 ]
+				ifTrue: [ ^ value asString , ' ' , each ] ]
+]
+
 { #category : #converting }
 Integer >> asFraction [
 	"Answer a Fraction that represents the value of the receiver.
