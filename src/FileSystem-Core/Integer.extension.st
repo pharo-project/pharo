@@ -2,20 +2,26 @@ Extension { #name : #Integer }
 
 { #category : #'*FileSystem-Core' }
 Integer >> humanReadableSIByteSize [
+	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'"
+	
+	"(1000 * 1000 * 1000) humanReadableSIByteSize >>> '953 MB'"
+	"(1024 * 1024 * 1024) humanReadableSIByteSize >>> '1 TB'"
+	
 	^ String streamContents: [ :s|
 		self humanReadableSIByteSizeOn: s ]
 ]
 
 { #category : #'*FileSystem-Core' }
-Integer >> humanReadableSIByteSizeOn: s [
+Integer >> humanReadableSIByteSizeOn: aStream [
+	"Print a SI representation of myself on the argument. See humanReadableSIByteSize for better comment."
+	
 	| exponent base |
-	"Print a string with an SI binary unit represation of myself."
 	base := 1000.
 	self < base
-		ifTrue: [ ^ s print: self; space; nextPut: $B ].
+		ifTrue: [ ^ aStream print: self; space; nextPut: $B ].
 	exponent := (self log / base log) asInteger.
-	(self / (base ** exponent)) printOn: s showingDecimalPlaces: 2.
-	s 
+	(self / (base ** exponent)) printOn: aStream showingDecimalPlaces: 2.
+	aStream
 		space;
 		nextPut: ('kMGTPE' at: exponent);
 		nextPut: $B.

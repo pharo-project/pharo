@@ -335,7 +335,7 @@ Integer >> asFileSizeString [
 	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
 	
 	"(1000 * 1000 * 1000) asFileSizeString >>> '953 MB'"
-	"(1024 * 1024 * 1024) asFileSizeString >>> '1 TB'"
+	"(1024 * 1024 * 1024) asFileSizeString >>> '1 GB'"
 	
 	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
 		inject: self
