@@ -18,9 +18,19 @@ Object >> browseHierarchy [
 
 { #category : #'*Tool-Base' }
 Object >> inspect [
-	"Create and schedule an Inspector in which the user can examine the receiver's variables."
+	"Create and schedule an Inspector in which the user can examine the receiver's variables.
+	Return the receiver."
 
-	^ Smalltalk tools inspector inspect: self
+	Smalltalk tools inspector inspect: self.
+	^ self
+]
+
+{ #category : #'*Tool-Base' }
+Object >> inspector [
+	"Create and schedule an Inspector in which the user can examine the receiver's variables.
+	Return the inspector window."
+
+	^ Smalltalk tools inspector inspect: self.
 ]
 
 { #category : #'*Tool-Base' }
