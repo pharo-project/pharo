@@ -419,7 +419,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
-	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache FT2Handle) 
+	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache) 
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]

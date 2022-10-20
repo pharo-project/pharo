@@ -10,6 +10,20 @@ Class {
 	#category : #'FreeType-Base'
 }
 
+{ #category : #compiling }
+FT2Handle class >> compileAllFieldsInOrder [
+	"Force the correct order of generation of FFI Bindings"	
+	"This used to be done in #startUp:, we keep it in case FTBindings are changed and have to be regenerated"
+ 	FTBitmap compileFields.
+ 	FTBitmapSize compileFields.
+ 	FTGeneric compileFields.
+ 	FTBBox compileFields.
+
+ 	FTCharMapRec compileFields.
+ 	FTGlyphSlotRec compileFields.
+ 	FTFaceRec compileFields.
+]
+
 { #category : #initialization }
 FT2Handle >> beNull [
 	
