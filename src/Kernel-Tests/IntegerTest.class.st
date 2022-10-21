@@ -391,21 +391,6 @@ IntegerTest >> testFactorial [
 	self assert: 6 factorial equals: 720
 ]
 
-{ #category : #'tests - other' }
-IntegerTest >> testFileSizeString [
-	self assert: 1000 asFileSizeString equals: '1000 B'.
-	self assert: 1024 asFileSizeString equals: '1 KB'.
-
-	self assert: (1000 * 1000) asFileSizeString equals: '976 KB'.
-	self assert: (1024 * 1024) asFileSizeString equals: '1 MB'.
-
-	self assert: (1000 * 1000 * 1000) asFileSizeString equals: '953 MB'.
-	self assert: (1024 * 1024 * 1024) asFileSizeString equals: '1 GB'.
-
-	self assert: (1000 * 1000 * 1000 * 1000) asFileSizeString equals: '931 GB'.
-	self assert: (1024 * 1024 * 1024 * 1024) asFileSizeString equals: '1 TB'.
-]
-
 { #category : #'tests - printing' }
 IntegerTest >> testHex [
 	self assert: 0 hex equals: '16r0'.
@@ -450,6 +435,21 @@ IntegerTest >> testHighBitOfMagnitude [
 					shifted := shifted bitShift: 1 ].
 			self assert: anInteger highBitOfMagnitude equals: highBit.
 			self assert: anInteger negated highBitOfMagnitude equals: highBit ]
+]
+
+{ #category : #'tests - other' }
+IntegerTest >> testHumanReadableByteSize [
+	self assert: 1000 humanReadableByteSize equals: '1000 B'.
+	self assert: 1024 humanReadableByteSize equals: '1 KB'.
+
+	self assert: (1000 * 1000) humanReadableByteSize equals: '976 KB'.
+	self assert: (1024 * 1024) humanReadableByteSize equals: '1 MB'.
+
+	self assert: (1000 * 1000 * 1000) humanReadableByteSize equals: '953 MB'.
+	self assert: (1024 * 1024 * 1024) humanReadableByteSize equals: '1 GB'.
+
+	self assert: (1000 * 1000 * 1000 * 1000) humanReadableByteSize equals: '931 GB'.
+	self assert: (1024 * 1024 * 1024 * 1024) humanReadableByteSize equals: '1 TB'.
 ]
 
 { #category : #'tests - other' }

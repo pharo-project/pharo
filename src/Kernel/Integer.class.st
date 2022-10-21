@@ -330,21 +330,6 @@ Integer >> asCharacterDigit [
 	^Character digitValue: self
 ]
 
-{ #category : #comparing }
-Integer >> asFileSizeString [
-	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
-	
-	"(1000 * 1000 * 1000) asFileSizeString >>> '953 MB'"
-	"(1024 * 1024 * 1024) asFileSizeString >>> '1 GB'"
-	
-	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
-		inject: self
-		into: [ :value :each |
-			value < 1024
-				ifFalse: [ value // 1024 ]
-				ifTrue: [ ^ value asString , ' ' , each ] ]
-]
-
 { #category : #converting }
 Integer >> asFraction [
 	"Answer a Fraction that represents the value of the receiver.
@@ -1085,6 +1070,21 @@ Integer >> highBitOfMagnitude [
 	"Answer the index of the high order bit of the magnitude of the  
 	receiver, or zero if the receiver is zero."
 	^ self subclassResponsibility
+]
+
+{ #category : #comparing }
+Integer >> humanReadableByteSize [
+	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
+	
+	"(1000 * 1000 * 1000) asFileSizeString >>> '953 MB'"
+	"(1024 * 1024 * 1024) asFileSizeString >>> '1 GB'"
+	
+	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
+		inject: self
+		into: [ :value :each |
+			value < 1024
+				ifFalse: [ value // 1024 ]
+				ifTrue: [ ^ value asString , ' ' , each ] ]
 ]
 
 { #category : #testing }
