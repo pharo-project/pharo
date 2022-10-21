@@ -718,6 +718,16 @@ RubAbstractTextArea >> doubleClick: anEvent [
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> dragDoubleClick: evt [
+	#dragDoubleClick: traceCr
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> dragStart: event [
+	#dragStart traceCr.
+]
+
 { #category : #composing }
 RubAbstractTextArea >> drawEmbeddedMorphs [
 	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
@@ -1398,20 +1408,14 @@ RubAbstractTextArea >> mouseDown: evt [
 	evt shiftPressed
 		ifTrue: [ ^ self mouseMove: evt ].
 	mouseDownPoint := evt cursorPoint.
-	(self hasFocus or: [ self editor hasSelection not ])
-		ifTrue:
-			[ | selectors |
-			self scrollPivot: evt hand position.
-			selectors := Array
-				with: #click:
-				with: #doubleClick:
-				with: nil
-				with: nil.
-			evt hand
-				waitForClicksOrDrag: self
-				event: evt
-				selectors: selectors
-				threshold: 5 ].
+	(self hasFocus or: [ self editor hasSelection not ]) ifTrue: [ 
+		self scrollPivot: evt hand position.
+		(evt hand mouseClickStateFor: self event: evt)
+			threshold: 5;
+			clickSelector: #click:;
+			doubleClickSelector: #doubleClick:;
+			dragSelector: #dragStart:;
+			dragDoubleClickSelector: #dragDoubleClick: ].
 	self hasKeyboardFocus
 		ifFalse: [ self takeKeyboardFocus ]
 ]
