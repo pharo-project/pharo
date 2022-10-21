@@ -89,6 +89,11 @@ LessonView >> isOpenInWindow [
 	^ self currentWorld systemWindows includes: window
 ]
 
+{ #category : #testing }
+LessonView >> isScripting [
+ ^ true
+]
+
 { #category : #gui }
 LessonView >> menu [
 	^ (PragmaMenuBuilder pragmaKeyword: #LessonViewContextMenu model: self) menu.

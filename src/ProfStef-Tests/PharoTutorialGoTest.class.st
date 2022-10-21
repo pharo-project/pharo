@@ -51,3 +51,11 @@ PharoTutorialGoTest >> testGoTwiceUseSameLessonView [
 	ProfStef goOn: PharoSyntaxTutorial.
 	self assert: firstLessonView identicalTo: ProfStef default lessonView
 ]
+
+{ #category : #tests }
+PharoTutorialGoTest >> testLessonViewIsScripting [
+
+	| firstLessonView |
+	firstLessonView := ProfStef default lessonView.
+	self assert: firstLessonView isScripting
+]
