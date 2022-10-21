@@ -1072,19 +1072,31 @@ Integer >> highBitOfMagnitude [
 	^ self subclassResponsibility
 ]
 
-{ #category : #comparing }
-Integer >> humanReadableByteSize [
-	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
+{ #category : #converting }
+Integer >> humanReadableSISizeOn: aStream [
+	"Print a SI representation of myself on the argument. See humanReadableSIByteSize for better comment."
 	
-	"(1000 * 1000 * 1000) asFileSizeString >>> '953 MB'"
-	"(1024 * 1024 * 1024) asFileSizeString >>> '1 GB'"
+	| exponent base |
+	base := 1000.
+	self < base
+		ifTrue: [ ^ aStream print: self; space; nextPut: $B ].
+	exponent := (self log / base log) asInteger.
+	(self / (base ** exponent)) printOn: aStream showingDecimalPlaces: 2.
+	aStream
+		space;
+		nextPut: ('kMGTPE' at: exponent);
+		nextPut: $B.
+]
+
+{ #category : #converting }
+Integer >> humanReadableSISizeString [
+	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'"
 	
-	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
-		inject: self
-		into: [ :value :each |
-			value < 1024
-				ifFalse: [ value // 1024 ]
-				ifTrue: [ ^ value asString , ' ' , each ] ]
+	"(1000 * 1000 * 1000) humanReadableSISizeString >>> '953 MB'"
+	"(1024 * 1024 * 1024) humanReadableSISizeString >>> '1 TB'"
+	
+	^ String streamContents: [ :s|
+		self humanReadableSISizeOn: s ]
 ]
 
 { #category : #testing }

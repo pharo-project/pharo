@@ -1,28 +1,27 @@
 Extension { #name : #Integer }
 
 { #category : #'*FileSystem-Core' }
-Integer >> humanReadableSIByteSize [
-	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'"
+Integer >> humanReadableByteSizeString [
+	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
 	
-	"(1000 * 1000 * 1000) humanReadableSIByteSize >>> '953 MB'"
-	"(1024 * 1024 * 1024) humanReadableSIByteSize >>> '1 TB'"
+	"(1000 * 1000 * 1000) humanReadableByteSizeString >>> '953 MB'"
+	"(1024 * 1024 * 1024) humanReadableByteSizeString >>> '1 GB'"
 	
-	^ String streamContents: [ :s|
-		self humanReadableSIByteSizeOn: s ]
+	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
+		inject: self
+		into: [ :value :each |
+			value < 1024
+				ifFalse: [ value // 1024 ]
+				ifTrue: [ ^ value asString , ' ' , each ] ]
 ]
 
 { #category : #'*FileSystem-Core' }
-Integer >> humanReadableSIByteSizeOn: aStream [
-	"Print a SI representation of myself on the argument. See humanReadableSIByteSize for better comment."
+Integer >> humanReadableSIByteSize [
+	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'"
 	
-	| exponent base |
-	base := 1000.
-	self < base
-		ifTrue: [ ^ aStream print: self; space; nextPut: $B ].
-	exponent := (self log / base log) asInteger.
-	(self / (base ** exponent)) printOn: aStream showingDecimalPlaces: 2.
-	aStream
-		space;
-		nextPut: ('kMGTPE' at: exponent);
-		nextPut: $B.
+	self 
+		deprecated: 'use humanReadableSISizeString' 
+		transformWith:  '`@rec humanReadableSIByteSize' ->  '`@rec humanReadableSISizeString'.
+		
+	^ self humanReadableSISizeString
 ]
