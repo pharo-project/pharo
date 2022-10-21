@@ -19,6 +19,13 @@ SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 		  aSourceCodeContext isMethodSelected not ]
 ]
 
+{ #category : #testing }
+SycExtractMethodCommand class >> methodEditorShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation by: $g meta shift for: ClySourceCodeContext
+]
+
 { #category : #converting }
 SycExtractMethodCommand >> asRefactorings [
 
