@@ -98,7 +98,8 @@ Class {
 		'maxLength',
 		'grow',
 		'findReplaceService',
-		'editing'
+		'editing',
+		'hasDragDoubleClick'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -719,13 +720,13 @@ RubAbstractTextArea >> doubleClick: anEvent [
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> dragDoubleClick: evt [
-	#dragDoubleClick: traceCr
+RubAbstractTextArea >> dragDoubleClick: event [
+	hasDragDoubleClick := true
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> dragStart: event [
-	#dragStart traceCr.
+
 ]
 
 { #category : #composing }
@@ -1173,7 +1174,8 @@ RubAbstractTextArea >> initialize [
 	self addCursor.
 	self plugFindReplace.
 	DefaultTextColor := self theme textColor.
-	editing := false
+	editing := false.
+	hasDragDoubleClick := false
 ]
 
 { #category : #keymapping }
@@ -1436,12 +1438,15 @@ RubAbstractTextArea >> mouseLeave: evt [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseMove: evt [
+	
    self paragraph move: evt for: model controller: self editor.
 	evt redButtonPressed
 		ifFalse: [ ^ self ].
+	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
+	hasDragDoubleClick ifTrue: [ ^ self ].
 	evt shiftPressed
 		ifTrue: [ self modifySelection: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
-		ifFalse: [ mouseDownPoint
+		ifFalse: [mouseDownPoint
 				ifNotNil: [ self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
 				ifNil: [ self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
 	self editor storeSelectionInText.
@@ -1449,10 +1454,12 @@ RubAbstractTextArea >> mouseMove: evt [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseUp: evt [
+	
 	self scrollPivot: nil.
 	(self boundsInWorld containsPoint: self currentHand position)
 		ifFalse: [ self hideOverEditableTextCursor ].
-	mouseDownPoint := nil
+	mouseDownPoint := nil.
+	hasDragDoubleClick := false
 ]
 
 { #category : #'accessing - cursor' }
