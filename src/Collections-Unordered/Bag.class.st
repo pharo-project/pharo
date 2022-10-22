@@ -171,6 +171,12 @@ Bag >> includes: anObject [
 ]
 
 { #category : #enumerating }
+Bag >> keys [
+
+	^ contents keys
+]
+
+{ #category : #enumerating }
 Bag >> keysAndValuesDo: aTwoArgBlock [ 
     "Iterate over the receiver and apply a two argument block on the element and its occurrences."
      
