@@ -172,7 +172,10 @@ Bag >> includes: anObject [
 
 { #category : #enumerating }
 Bag >> keys [
-
+	"Returns the keys of the receiver."
+	
+	"Bag new add: #a; add: #a; add: #b; keys >>> #(#a #b)"
+	
 	^ contents keys
 ]
 
