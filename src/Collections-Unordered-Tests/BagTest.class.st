@@ -541,6 +541,21 @@ BagTest >> testRemoveElementThatExistsTwice [
 	self assert: size - 1 equals: self nonEmpty size
 ]
 
+{ #category : #'tests - remove' }
+BagTest >> testRemoveKey [
+	
+	| aBag aSet |
+	aBag := Bag new.
+	aBag addAll: 'aaaabbcccdddda'.
+	self assert: (aBag occurrencesOf: $a) equals: 5.
+	aBag removeKey: $a ifAbsent: [nil].
+	self assert: (aBag occurrencesOf: $a) equals: 0.
+	aSet := Set new.
+	self 
+		assertCollection: (aBag keysAndValuesDo: [ :k :v | aSet add: k ]) 
+		hasSameElements: #( $b $c $d) asSet.
+]
+
 { #category : #tests }
 BagTest >> testSortedCounts [
 	
