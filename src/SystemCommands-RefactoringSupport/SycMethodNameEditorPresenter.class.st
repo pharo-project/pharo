@@ -47,40 +47,6 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #layout }
-SycMethodNameEditorPresenter class >> defaultLayout [
-	<spec>
-	^ SpBoxLayout newTopToBottom
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Selector'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #selectorInput;
-				yourself);
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Arguments'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #argumentsList;
-				add:
-					(SpBoxLayout newTopToBottom
-						add: #upButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						add: #downButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						add: #addButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						yourself)
-					withConstraints: [ :aConstraints | aConstraints width: 30 ];
-				yourself);
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Preview'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #previewResult yourself);
-		yourself
-]
-
 { #category : #examples }
 SycMethodNameEditorPresenter class >> example2 [
 	<script>
@@ -276,6 +242,31 @@ SycMethodNameEditorPresenter >> connectPresenters [
 			toAction: [ self owner triggerCancelAction; close ]
 ]
 
+{ #category : #layout }
+SycMethodNameEditorPresenter >> defaultLayout [
+	| argumentsEditor |
+	
+	argumentsEditor := SpBoxLayout newLeftToRight
+		add: argumentsList;
+		add: (SpBoxLayout newTopToBottom
+				add: upButton expand: false;
+				add: downButton expand: false;
+				add: addButton expand: false;
+				yourself)
+			expand: false;
+		yourself.
+
+	^ SpGridLayout new 
+		borderWidth: 5;
+		beColumnNotHomogeneous;
+		column: 2 expand: true;
+		build: [ :builder | builder
+			add: 'Selector'; add: selectorInput; nextRow;
+			add: 'Arguments'; add: argumentsEditor; nextRow; 
+			add: 'Preview'; add: previewResult; nextRow ];
+		yourself
+]
+
 { #category : #'accessing - ui' }
 SycMethodNameEditorPresenter >> downButton [
 	^ downButton
@@ -314,45 +305,43 @@ SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 ]
 
 { #category : #initialization }
-SycMethodNameEditorPresenter >> initializePresenter [
+SycMethodNameEditorPresenter >> initializePresenters [
+
+	selectorInput := self newTextInput.
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	selectorInput editable: self canEditName.
-	upButton action: [ self pushUpSelectedArgument ].
-	downButton action: [ self pushDownSelectedArgument ].
-	addButton action: [ argumentsList items 
-		ifEmpty: [ self addArgument ] 
-		ifNotEmpty: [ self addArgumentAfter: argumentsList items last ] ].
+	selectorInput editable: self canEditName.
 
-	argumentsList
-		whenModelChangedDo: [ :model | 
-			model
-				ifEmpty: [ upButton disable.
-					downButton disable ] ].
+	previewResult := self newLabel.	
 
+	upButton := self newButton.
+	upButton 
+		addStyle: 'small';
+		label: 'Up';
+		action: [ self pushUpSelectedArgument ].
+	downButton := self newButton.
+	downButton 
+		addStyle: 'small';
+		label: 'Dn';
+		action: [ self pushDownSelectedArgument ].
+	addButton := self newButton.
+	addButton 
+		addStyle: 'small';
+		label: '+';
+		action: [ 
+			argumentsList items 
+				ifEmpty: [ self addArgument ] 
+				ifNotEmpty: [ self addArgumentAfter: argumentsList items last ] ].
+
+	argumentsList := self newList.
+	argumentsList addStyle: 'rows8'.
+	argumentsList whenModelChangedDo: [ :model | 
+		model ifEmpty: [ 
+			upButton disable.
+			downButton disable ] ].
 	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
 		contextMenu: self argumentsListMenu.
-	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
-]
-
-{ #category : #initialization }
-SycMethodNameEditorPresenter >> initializeWidgets [
-	selectorInput := self newTextInput.
-	selectorInput editable: self canEditName.
-	argumentsList := self newList.
-	previewResult := self newLabel.
-	upButton := self newButton.
-	downButton := self newButton.
-	addButton := self newButton.
-	
-	selectorInput autoAccept: true.
-	upButton label: 'Up'.
-	downButton label: 'Dn'.
-	addButton label: '+'.
-	selectorInput text: methodName selector.
-	previewResult label: methodName methodName.
-	"selectorInput beNotEditable."
-	
-	self setFocus
+	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]	
 ]
 
 { #category : #accessing }
@@ -465,16 +454,6 @@ SycMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
 
-{ #category : #action }
-SycMethodNameEditorPresenter >> setFocus [
-	self focusOrder
-		add: selectorInput;
-		add: argumentsList;
-		add: upButton;
-		add: downButton;
-		add: addButton
-]
-
 { #category : #'accessing - model' }
 SycMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName.
@@ -495,4 +474,11 @@ SycMethodNameEditorPresenter >> updateLabel [
 			(RBMethodName
 				selector: (self selectorInput text ifNil: [''])
 				arguments: (argumentsList items collect: #newName) ) methodName
+]
+
+{ #category : #initialization }
+SycMethodNameEditorPresenter >> updatePresenter [
+
+	selectorInput text: methodName selector.
+	previewResult label: methodName methodName.
 ]
