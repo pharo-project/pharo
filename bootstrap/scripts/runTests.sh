@@ -13,7 +13,6 @@ CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
-set_version_variables
 
 find ${CACHE}
 
@@ -23,7 +22,16 @@ find ${CACHE}
 # WARNING: If you change this, you will need to change "runKernelTests.sh" too
 #
 TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
-TEST_VM_VERSION=${PHARO_VM_VERSION}
+
+# Extract the VM version from the image file version, avoiding going to git to extract the tags
+# This is handy in later stages of the build process when no repository is available, e.g., to run the tests
+# Input: Pharo11.0-PR-64bit-7264e14.zip
+# Output: 110
+# Works by 
+#  - taking the entire name,
+#  - removing the suffix after the first dot
+#  - removing the prefix "Pharo"
+TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -c6-`0
 
 #Odd PR builds use the the latest VM, else use the stable VM
 if [[ $(is_development_build) == "1" && $((${BUILD_NUMBER} % 2)) -eq 1 ]]
