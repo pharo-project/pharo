@@ -119,10 +119,8 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
-	^(RBCondition 
-		definesSelector: method selector 
-		in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
+
+	^ (RBCondition isMetaclass: class) not
 ]
 
 { #category : #transforming }
