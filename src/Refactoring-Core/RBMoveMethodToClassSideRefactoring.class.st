@@ -57,6 +57,13 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 	aClass compile: rbMethod source classified: {protocol}.
 ]
 
+{ #category : #preconditions }
+RBMoveMethodToClassSideRefactoring >> breakingChanges [
+
+	^ (RBCondition definesSelector: method selector in: class classSide)
+		  not
+]
+
 { #category : #checking }
 RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	(class whoDefinesInstanceVariable: aString) ifNotNil: 
