@@ -83,7 +83,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |
 	sender := ''.
-	(method argumentNames size > 0) ifTrue: [ 
+	method argumentNames isNotEmpty ifTrue: [ 
 		(method selector keywords) with: (method argumentNames )do: [:a :b |
 		sender := sender, a, ' ', b, ' ']]
 	ifFalse: [ sender := method selector ].
