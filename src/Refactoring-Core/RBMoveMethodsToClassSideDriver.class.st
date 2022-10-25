@@ -26,21 +26,21 @@ Class {
 }
 
 { #category : #preconditions }
+RBMoveMethodsToClassSideDriver >> checkApplicability [
+
+	| checks |
+	checks := self refactorings collect: [ :each | 
+		          each applicability check ].
+	^ checks reduce: [ :a :b | a & b ]
+]
+
+{ #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
 
 	| checks |
 	checks := self refactorings collect: [ :each | 
 		          each breakingChanges check ].
 	
-	^ checks reduce: [ :a :b | a & b ]
-]
-
-{ #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> checkPreconditions [
-
-	| checks |
-	checks := self refactorings collect: [ :each | 
-		          each preconditions check ].
 	^ checks reduce: [ :a :b | a & b ]
 ]
 
@@ -103,9 +103,9 @@ RBMoveMethodsToClassSideDriver >> refactoringError [
 
 	| errorStrings |
 	errorStrings := self refactorings
-		                reject: [ :each | each preconditions check ]
+		                reject: [ :each | each applicability check ]
 		                thenCollect: [ :each | 
-		                each preconditions errorString ].
+		                each applicability errorString ].
 	errorStrings := String streamContents: [ :stream | 
 		                errorStrings
 			                do: [ :str | stream << str ]

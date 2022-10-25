@@ -38,13 +38,13 @@ RBDriver class >> withContext: context [
 ]
 
 { #category : #preconditions }
-RBDriver >> checkBreakingChanges [
+RBDriver >> checkApplicability [
 
 	^ self subclassResponsibility
 ]
 
 { #category : #preconditions }
-RBDriver >> checkPreconditions [
+RBDriver >> checkBreakingChanges [
 
 	^ self subclassResponsibility
 ]
@@ -71,7 +71,7 @@ RBDriver >> context: anObject [
 RBDriver >> execute [
 
 	self prepareFullExecution.
-	self checkPreconditions ifFalse: [ 
+	self checkApplicability ifFalse: [ 
 		^ self refactoringError ].
 	self checkBreakingChanges ifFalse: [
 		"Open warning dialog. It throws an error if user answers No."
