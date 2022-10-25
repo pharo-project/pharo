@@ -40,7 +40,7 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'SUnit-Visitor' with: [ spec requires: #('SUnit-Core') ];
 				package: 'SUnit-Visitor-Tests' with: [ spec requires: #('SUnit-Visitor') ];
 				package: 'SUnit-MockObjects' with: [ spec requires: #('SUnit-Core') ];
-				package: 'SUnit-UI';
+				package: 'SUnit-UI' with: [ spec requires: #('Coverage') ];
 				package: 'SUnit-Support-UITesting-Tests';
 				package: 'SUnit-Support-UITesting';
 				package: 'SUnit-Help';
