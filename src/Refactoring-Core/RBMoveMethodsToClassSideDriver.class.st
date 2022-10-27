@@ -28,20 +28,20 @@ Class {
 { #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkApplicability [
 
-	| checks |
-	checks := self refactorings collect: [ :each | 
+	| allChecks |
+	allChecks := self refactorings collect: [ :each |
 		          each applicabilityPreconditions check ].
-	^ checks reduce: [ :a :b | a & b ]
+	^ allChecks reduce: [ :a :b | a & b ]
 ]
 
 { #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
 
-	| checks |
-	checks := self refactorings collect: [ :each | 
+	| allChecks |
+	allChecks := self refactorings collect: [ :each |
 		          each breakingChangeConditions check ].
 	
-	^ checks reduce: [ :a :b | a & b ]
+	^ allChecks reduce: [ :a :b | a & b ]
 ]
 
 { #category : #preconditions }
