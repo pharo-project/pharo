@@ -64,7 +64,9 @@ RBMoveMethodsToClassSideDriver >> confirmBreakingChanges [
 { #category : #execution }
 RBMoveMethodsToClassSideDriver >> executeRefactoring [
 
-	refactorings do: [ :each | each execute ]
+	refactorings do: [ :each | 
+		each transform.
+		each performChanges ]
 ]
 
 { #category : #accessing }

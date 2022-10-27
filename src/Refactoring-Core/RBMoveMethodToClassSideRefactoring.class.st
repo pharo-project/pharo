@@ -136,11 +136,6 @@ RBMoveMethodToClassSideRefactoring >> preconditions [
 	^ self applicabilityPreconditions & self breakingChangeConditions 
 ]
 
-{ #category : #private }
-RBMoveMethodToClassSideRefactoring >> primitiveExecute [ 
-	self transform
-]
-
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 	| rbMethod references |

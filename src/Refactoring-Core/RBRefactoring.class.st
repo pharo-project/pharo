@@ -254,10 +254,9 @@ RBRefactoring >> defaultEnvironment [
 
 { #category : #transforming }
 RBRefactoring >> execute [
+
 	self primitiveExecute.
-	RBRefactoryChangeManager instance 
-		performChange: self changes; 
-		addUndoPointer: (RBRefactoryChangeManager nextCounter)
+	self performChanges
 ]
 
 { #category : #transforming }
@@ -299,6 +298,14 @@ RBRefactoring >> options [
 { #category : #accessing }
 RBRefactoring >> options: aDictionary [ 
 	options := aDictionary
+]
+
+{ #category : #transforming }
+RBRefactoring >> performChanges [
+
+	RBRefactoryChangeManager instance
+		performChange: self changes;
+		addUndoPointer: RBRefactoryChangeManager nextCounter
 ]
 
 { #category : #transforming }
