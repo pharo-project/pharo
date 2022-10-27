@@ -1,14 +1,20 @@
 "
 I represent a code coverage session.
 
-Here is a quick usage
+My instances can track the execution of methods and nodes and collects which are covered by execution and which are not.
+
+Currently, compiled methods and sequences of statements (bodies of methods and block) can be tracked.
+This is a compromise between efficency and precision that is good enough precition to track covered paths.
+
+Here is a quick usage:
 
 ```
-| coverage result |
-coverage := CoverageCollector new. ""Instantiate""
-coverage methods: collectionOfCompiledMethods. ""Configure with the methods to watch.""
-result := coverage runOn: [ some. code ]. ""Setup, execute and teardown.""
-result percentage. ""Inspect the results""
+| collector coverage |
+collector := CoverageCollector new. ""Instantiate""
+collector methods: Point methods, Rectangle methods.  ""Configure with the methods to watch.""
+coverage := collector runOn: [ (1@1 corner: 2@2) center ].  ""Setup, execute and teardown.""
+(coverage methods includes: Point>>#x) >>> true.  ""Inspect the results""
+(coverage nodes size > 10) >>> true. ""Covered paths are also available""
 ```
 
 The `CoverageCollector>>#runOn:` methods is a high level method.
@@ -24,8 +30,7 @@ It calls the following fine grained methods in order:
 Note: if `uninstall` is not called, some instrumentation may leaks.
 You can use the global `CoverageCollector class>>#uninstallAll` to remove all instrumentation if needed.
 
-
-
+Warning: because of the instrumentation, new instances of `CompiledMethod` can be created to replace existing one during the coverage computation. This means that the identity of method objects returned by expression like `Point>>#x` could be not reliable and that `=` and related methods may not behave as you expect if you use lower level methods.
 "
 Class {
 	#name : #CoverageCollector,
@@ -52,13 +57,13 @@ CoverageCollector class >> uninstalAll [
 { #category : #basic }
 CoverageCollector >> basicCollectResult [
 
-	"Collect the results nut does not reset the annotations."
+	"Collect the results but does not reset the annotations."
 
 	| res |
 	res := CoverageResult new.
 	res collector: self.
 	res methods: (methods select: [ :m | m ast hasBeenExecuted ]).
-	res nodes: Set new.
+	res nodes: IdentitySet new.
 	nodes do: [ :node | 
 			node hasBeenExecuted ifTrue: [ res nodes add: node ] ].
 
@@ -68,7 +73,7 @@ CoverageCollector >> basicCollectResult [
 { #category : #basic }
 CoverageCollector >> basicRun: aBlock [
 
-"just run the block. We consider that the correct setup is done and that a teardown will be performed."
+	"Just run the block. We consider that the correct setup is done and that a teardown will be performed."
 
 	^ aBlock value
 ]
@@ -76,9 +81,11 @@ CoverageCollector >> basicRun: aBlock [
 { #category : #basic }
 CoverageCollector >> collectResult [
 
-	"Collect the results. This also resets the annotations."
+	"Collect the results.
+	This also remaps the methods and resets the annotations."
 
 	| res |
+	self remapMethods.
 	res := self basicCollectResult.
 	self reset.
 	^ res
@@ -90,8 +97,9 @@ CoverageCollector >> initialize [
 	metalink := MetaLink new
 		            selector: #tagExecuted;
 		            metaObject: #node.
-	methods := Set new.
-	nodes := Set new.
+	methods := IdentitySet new.
+	"Need IdentitySet here because we want to distinguish equivalent nodes."
+	nodes := IdentitySet new.
 ]
 
 { #category : #basic }
@@ -101,13 +109,13 @@ CoverageCollector >> install [
 	
 	Sequence nodes are also prepared. This enable a basic path coverage."
 
-	[ 
 	methods do: [ :meth | 
-		meth ast link: metalink.
 		meth ast nodesDo: [ :node | 
 			node isSequence ifTrue: [ 
 				node link: metalink.
-				nodes add: node ] ] ] ] valueUnpreemptively
+				nodes add: node ] ].
+		meth ast link: metalink.
+	 ]
 ]
 
 { #category : #running }
@@ -139,6 +147,7 @@ CoverageCollector >> methods: anObject [
 
 { #category : #accessing }
 CoverageCollector >> nodes [
+
 	^ nodes
 ]
 
@@ -151,6 +160,13 @@ CoverageCollector >> printOn: aStream [
 		print: methods size;
 		nextPutAll: ' nodes: ';
 		print: nodes size
+]
+
+{ #category : #private }
+CoverageCollector >> remapMethods [
+
+	"Because of metalinks, CompiledMethods can by recompiled, so this method is called to updates the list of methods with the 'current' list of methods."
+	^ methods := methods collect: [ :m | m classBinding value >> m selector ]
 ]
 
 { #category : #initialization }
@@ -181,7 +197,7 @@ CoverageCollector >> uninstall [
 
 	"Remove the instrumentation.
 	
-	Use `runOn:` or `installOn:` that automatically call `uninstall`"
+	Use `runOn:` or `installOn:` that automatically ensures that `uninstall` is called."
 
 	metalink uninstall
 ]
