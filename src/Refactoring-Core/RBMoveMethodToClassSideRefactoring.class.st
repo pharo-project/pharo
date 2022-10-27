@@ -64,7 +64,7 @@ RBMoveMethodToClassSideRefactoring >> applicability [
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> breakingChanges [
+RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
 
 	^ (RBCondition definesSelector: method selector in: class classSide)
 		  not
@@ -133,7 +133,7 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
 
-	^ self applicability & self breakingChanges 
+	^ self applicability & self breakingChangeConditions 
 ]
 
 { #category : #private }

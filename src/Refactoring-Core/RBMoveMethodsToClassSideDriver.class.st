@@ -39,7 +39,7 @@ RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
 
 	| checks |
 	checks := self refactorings collect: [ :each | 
-		          each breakingChanges check ].
+		          each breakingChangeConditions check ].
 	
 	^ checks reduce: [ :a :b | a & b ]
 ]
@@ -49,9 +49,9 @@ RBMoveMethodsToClassSideDriver >> confirmBreakingChanges [
 
 	| errorStrings |
 	errorStrings := self refactorings
-		                reject: [ :each | each breakingChanges check ]
+		                reject: [ :each | each breakingChangeConditions check ]
 		                thenCollect: [ :each | 
-		                each breakingChanges errorString ].
+		                each breakingChangeConditions errorString ].
 	errorStrings := String streamContents: [ :stream | 
 		                errorStrings
 			                do: [ :str | stream << str ]
