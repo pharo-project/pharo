@@ -27,14 +27,7 @@ Class {
 
 { #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkApplicability [
-
-	^ self checkApplicability2
-]
-
-{ #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> checkApplicability2 [
-
-    | allChecks |
+| allChecks |
     allChecks := self refactorings collect: [ :each | each applicabilityPreconditions check ].
     ^ allChecks reduce: [ :a :b | a & b ]
 ]
