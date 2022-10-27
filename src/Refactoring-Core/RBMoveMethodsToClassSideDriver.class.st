@@ -26,20 +26,20 @@ Class {
 }
 
 { #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
+RBMoveMethodsToClassSideDriver >> checkApplicability [
+| allchecks |
+allchecks := self refactorings collect: [ :each | each applicabilityPreconditions check ].
+^ allchecks reduce: [ :a :b | a & b ]
+]
+
+{ #category : #preconditions }
+RBMoveMethodsToClassSideDriver >> checkIfChangesBreak [
 
 	| allChecks |
 	allChecks := self refactorings collect: [ :each |
 		          each breakingChangeConditions check ].
 	
 	^ allChecks reduce: [ :a :b | a & b ]
-]
-
-{ #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> checkIfItIsApplicable [
-| allchecks |
-allchecks := self refactorings collect: [ :each | each applicabilityPreconditions check ].
-^ allchecks reduce: [ :a :b | a & b ]
 ]
 
 { #category : #preconditions }
