@@ -27,12 +27,9 @@ Class {
 
 { #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkIfChangesBreak [
-
-	| allChecks |
-	allChecks := self refactorings collect: [ :each |
-		          each breakingChangeConditions check ].
-	
-	^ allChecks reduce: [ :a :b | a & b ]
+| allChecks |
+allChecks := self refactorings collect: [ :each | each breakingChangeConditions check ].
+^ allChecks reduce: [ :a :b | a & b ]
 ]
 
 { #category : #preconditions }
