@@ -19,9 +19,6 @@ then you can send the `execute` message that will execute the refactoring.
 Class {
 	#name : #RBDriver,
 	#superclass : #Object,
-	#instVars : [
-		'context'
-	],
 	#category : #'Refactoring-Core-UI'
 }
 
@@ -29,12 +26,6 @@ Class {
 RBDriver class >> isAbstract [
 		
 	^ self == RBDriver
-]
-
-{ #category : #'instance creation' }
-RBDriver class >> withContext: context [
-
-	^ self new context: context
 ]
 
 { #category : #preconditions }
@@ -55,22 +46,9 @@ RBDriver >> confirmBreakingChanges [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-RBDriver >> context [
-
-	^ context
-]
-
-{ #category : #accessing }
-RBDriver >> context: anObject [
-
-	context := anObject
-]
-
 { #category : #execution }
 RBDriver >> execute [
 
-	self prepareFullExecution.
 	self checkApplicability ifFalse: [ 
 		^ self refactoringError ].
 	self checkBreakingChanges ifFalse: [
@@ -82,10 +60,6 @@ RBDriver >> execute [
 { #category : #execution }
 RBDriver >> executeRefactoring [
 	self subclassResponsibility
-]
-
-{ #category : #execution }
-RBDriver >> prepareFullExecution [
 ]
 
 { #category : #error }

@@ -12,8 +12,7 @@ Class {
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
-		'methods',
-		'context'
+		'methods'
 	],
 	#category : #'SystemCommands-MethodCommands'
 }
@@ -61,7 +60,6 @@ SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 SycMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	methods := aToolContext selectedMethods.
-	context := aToolContext.
 ]
 
 { #category : #categories }

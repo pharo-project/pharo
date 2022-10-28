@@ -16,14 +16,19 @@ You can create my instance and execute the refactoring by running:
 Class {
 	#name : #RBMoveMethodsToClassSideDriver,
 	#superclass : #RBDriver,
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'refactorings',
-		'methods'
+		'methods',
+		'model'
 	],
 	#category : #'Refactoring-Core-UI'
 }
+
+{ #category : #'instance creation' }
+RBMoveMethodsToClassSideDriver class >> model: aNamespace methods: aCollectionOfMethods [
+
+	^ self new model: aNamespace methods: aCollectionOfMethods 
+]
 
 { #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkApplicability [
@@ -80,24 +85,10 @@ RBMoveMethodsToClassSideDriver >> generateRefactorings [
 	^ refactorings
 ]
 
-{ #category : #accessing }
-RBMoveMethodsToClassSideDriver >> methods [
-
-	^ methods
-]
-
-{ #category : #accessing }
-RBMoveMethodsToClassSideDriver >> methods: anObject [
-
-	methods := anObject
-]
-
-{ #category : #execution }
-RBMoveMethodsToClassSideDriver >> prepareFullExecution [
-
-	super prepareFullExecution.
-	self setUpModelFromContext: self context.
-	methods := self context selectedMethods
+{ #category : #initialization }
+RBMoveMethodsToClassSideDriver >> model: aNamespace methods: aCollection [ 
+	model := aNamespace.
+	methods := aCollection 
 ]
 
 { #category : #error }

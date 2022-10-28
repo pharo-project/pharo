@@ -26,6 +26,6 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 { #category : #execution }
 SycMoveMethodsToClassSideCommand >> execute [
 
-	(RBMoveMethodsToClassSideDriver withContext: context) execute
+	(RBMoveMethodsToClassSideDriver model: model methods: methods) execute
 
 ]
