@@ -721,7 +721,8 @@ RubAbstractTextArea >> doubleClick: anEvent [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> dragDoubleClick: event [
-	hasDragDoubleClick := true
+	hasDragDoubleClick := true.
+	mouseDownPoint := event cursorPoint.
 ]
 
 { #category : #'event handling' }
@@ -1443,12 +1444,18 @@ RubAbstractTextArea >> mouseMove: evt [
 	evt redButtonPressed
 		ifFalse: [ ^ self ].
 	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
-	hasDragDoubleClick ifTrue: [ ^ self ].
+	hasDragDoubleClick ifTrue: [
+		^ editor 
+			selectWordMark: (self paragraph characterBlockAtPoint: mouseDownPoint) stringIndex
+			point: (self paragraph characterBlockAtPoint: evt cursorPoint) stringIndex ].
+	
 	evt shiftPressed
 		ifTrue: [ self modifySelection: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
 		ifFalse: [mouseDownPoint
-				ifNotNil: [ self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
-				ifNil: [ self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
+				ifNotNil: [ 
+					self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
+				ifNil: [  self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
+			
 	self editor storeSelectionInText.
 ]
 
