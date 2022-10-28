@@ -137,7 +137,7 @@ RubEditingState >> selectionStart [
 
 { #category : #accessing }
 RubEditingState >> selectionStop [
-	^ self pointBlock ifNotNil: [:pb | pb max: self markBlock]
+	^ self pointBlock
 ]
 
 { #category : #accessing }
