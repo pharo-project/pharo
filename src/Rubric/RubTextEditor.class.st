@@ -2113,7 +2113,8 @@ RubTextEditor >> selectWord: aKeyboardEvent [
 { #category : #'new selection' }
 RubTextEditor >> selectWordMark: mark point: point [
 	| mark2 point2 |
-	"this method is   used my mouse double click drag"
+	"this method is used my mouse double click and drag.
+	It selects the correct words between the original point and the selection cursor point"
 	mark < point ifTrue: [ 
 		mark2 := self previousWord: mark.
 		point2 := (self nextWord: point) - 1 ]
