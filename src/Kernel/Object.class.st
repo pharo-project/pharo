@@ -1353,6 +1353,14 @@ Object >> isSelfEvaluating [
 	^ self isLiteral
 ]
 
+{ #category : #'self evaluating' }
+Object >> isSelfEvaluating: alreadyVisited [
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal" 
+		^ false ].
+	^ self class == Array or: [ self isLiteral ]
+]
+
 { #category : #testing }
 Object >> isStream [
 	"Return true if the receiver responds to the stream protocol"
@@ -1903,6 +1911,14 @@ Object >> shouldBeImplemented [
 Object >> shouldBePrintedAsLiteral [
 
 	^self isLiteral
+]
+
+{ #category : #'literal testing' }
+Object >> shouldBePrintedAsLiteral: alreadyVisited [
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal" 
+		^ false ].
+	^ self class == Array or: [ self isLiteral ]
 ]
 
 { #category : #'error handling' }

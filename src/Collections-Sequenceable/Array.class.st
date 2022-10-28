@@ -306,7 +306,17 @@ Array >> isLiteral [
 
 { #category : #'self evaluating' }
 Array >> isSelfEvaluating [
-	^ (self allSatisfy: [:each | each isSelfEvaluating]) and: [self class == Array]
+
+	^ self class == Array and: [ self allSatisfy: [ :each | each isSelfEvaluating: { self } ] ]
+]
+
+{ #category : #'self evaluating' }
+Array >> isSelfEvaluating: alreadyVisited [
+
+	(super isSelfEvaluating: alreadyVisited) ifTrue: [ 
+		^ self isSelfEvaluating: alreadyVisited , { self } ].
+
+	^ false
 ]
 
 { #category : #comparing }
@@ -367,7 +377,16 @@ Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 { #category : #'literal testing' }
 Array >> shouldBePrintedAsLiteral [
 
-	^self class == Array and: [ self allSatisfy: [ :each | each shouldBePrintedAsLiteral ] ]
+	^ self class == Array and: [ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: { self } ] ]
+]
+
+{ #category : #'literal testing' }
+Array >> shouldBePrintedAsLiteral: alreadyVisited [
+
+	(super shouldBePrintedAsLiteral: alreadyVisited) ifTrue: [ 
+		^ self shouldBePrintedAsLiteral: alreadyVisited , { self } ].
+
+	^ false
 ]
 
 { #category : #printing }
