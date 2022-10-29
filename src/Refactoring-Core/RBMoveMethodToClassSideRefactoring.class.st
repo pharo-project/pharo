@@ -57,6 +57,19 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 	aClass compile: rbMethod source classified: {protocol}.
 ]
 
+{ #category : #preconditions }
+RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition isMetaclass: class) not
+]
+
+{ #category : #preconditions }
+RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
+
+	^ (RBCondition definesSelector: method selector in: class classSide)
+		  not
+]
+
 { #category : #checking }
 RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	(class whoDefinesInstanceVariable: aString) ifNotNil: 
@@ -70,7 +83,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |
 	sender := ''.
-	(method argumentNames size > 0) ifTrue: [ 
+	method argumentNames isNotEmpty ifTrue: [ 
 		(method selector keywords) with: (method argumentNames )do: [:a :b |
 		sender := sender, a, ' ', b, ' ']]
 	ifFalse: [ sender := method selector ].
@@ -119,10 +132,8 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
-	^(RBCondition 
-		definesSelector: method selector 
-		in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
+
+	^ self applicabilityPreconditions & self breakingChangeConditions 
 ]
 
 { #category : #transforming }
