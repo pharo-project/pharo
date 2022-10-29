@@ -2,15 +2,22 @@ Class {
 	#name : #CDClassDefinitionNode,
 	#superclass : #CDBehaviorDefinitionNode,
 	#instVars : [
-		'sharedSlotNodes',
 		'superclassNameNode',
 		'packageNameNode',
 		'sharedPools',
 		'superclassName',
-		'tag'
+		'tag',
+		'sharedVariableNodes'
 	],
 	#category : #'ClassParser-Model'
 }
+
+{ #category : #adding }
+CDClassDefinitionNode >> addSharedVariable: aCDSharedVariableNode [
+
+	self sharedVariables add: aCDSharedVariableNode.
+	self addChild: aCDSharedVariableNode
+]
 
 { #category : #accessing }
 CDClassDefinitionNode >> binding [ 
@@ -72,19 +79,19 @@ CDClassDefinitionNode >> sharedPools: aCollection [
 ]
 
 { #category : #accessing }
-CDClassDefinitionNode >> sharedSlotNodes [
+CDClassDefinitionNode >> sharedVariableNodes [
 	
-	^ sharedSlotNodes
+	^ sharedVariableNodes
 ]
 
 { #category : #accessing }
-CDClassDefinitionNode >> sharedSlots [
-	^ sharedSlotNodes ifNil:[ sharedSlotNodes := Array new ]
+CDClassDefinitionNode >> sharedVariables [
+	^ sharedVariableNodes ifNil:[ sharedVariableNodes := OrderedCollection new ]
 ]
 
 { #category : #accessing }
-CDClassDefinitionNode >> sharedSlots: aCollection [ 
-	sharedSlotNodes := aCollection.
+CDClassDefinitionNode >> sharedVariables: aCollection [ 
+	sharedVariableNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 ]
 

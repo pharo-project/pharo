@@ -45,7 +45,7 @@ CDClassDefinitionParserTest >> testBestNodeForClassVariableSelectionShouldBeClas
 	selection := self selectionOf: self firstClassVariableName.
 	
 	selectedNode := classDefinition bestNodeFor: selection.
-	self assert: selectedNode equals: classDefinition sharedSlots first
+	self assert: selectedNode equals: classDefinition sharedVariables first
 ]
 
 { #category : #tests }
@@ -79,11 +79,10 @@ CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasPackageNameNode [
 { #category : #tests }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 
-	self assert: classDefinition sharedSlots first name equals: self firstClassVariableName.
-	self assert: classDefinition sharedSlots second name equals: self secondClassVariableName.
+	self assert: classDefinition sharedVariables first name equals: self firstClassVariableName.
+	self assert: classDefinition sharedVariables second name equals: self secondClassVariableName.
 	
-	self assert: classDefinition sharedSlots second isLiteralVariable.
-	self deny: classDefinition sharedSlots second isGlobalClassNameBinding.
+	self assert: classDefinition sharedVariables second isLiteralVariable
 ]
 
 { #category : #tests }

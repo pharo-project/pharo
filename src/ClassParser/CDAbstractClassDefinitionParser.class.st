@@ -80,11 +80,11 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 			| start |
 			start := aNode start
 				+ (instanceVariablesString findString: slotName).
-			self slotNodeClass
-				node: aNode
-				name: slotName
-				slotClassName: #InstanceVariableSlot
-				start: start
+			CDSlotNode new
+				node: aNode;
+				name: slotName;
+				variableClassName: #InstanceVariableSlot;
+				start: start;
 				stop: start + slotName size ].
 	classDefinition slots: slotNodes
 ]
@@ -129,74 +129,10 @@ CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
 			CDSharedVariableNode
 				node: aNode
 				name: slotName
-				slotClassName: 'ClassVariableSlot'
+				slotClassName: #ClassVariable
 				start: start
 				stop: start + slotName size ].
-	classDefinition sharedSlots: slotNodes
-]
-
-{ #category : #parsing }
-CDAbstractClassDefinitionParser >> handleSlotNode: aRBMessageNode [
-	"what ugly method! Pay attention start and stop should be tested and probably adjusted!"
-
-	"when a slot is just 'inst'"
-	aRBMessageNode isLiteralNode
-		ifTrue: [ | slot |
-			slot := self slotNodeClass
-				node: aRBMessageNode
-				name: aRBMessageNode value
-				slotClassName: #InstanceVariableSlot
-				initializationMessage: self slotInitializationNodeClass new
-				start: aRBMessageNode start
-				stop: aRBMessageNode stop.
-			classDefinition addSlot: slot.
-			^ self ].
-	
-	aRBMessageNode selector = '=>' 
-		ifTrue: [  
-		aRBMessageNode arguments first isMessage
-		
-		ifFalse: [  
-			"when a slot is just 'inst' => InstanceVariableSlot."
-			aRBMessageNode arguments first isGlobalVariable
-				ifTrue: [ | slot |
-					slot := self slotNodeClass
-						node: aRBMessageNode
-						name: aRBMessageNode receiver value
-						slotClassName: aRBMessageNode arguments first name
-						initializationMessage: self slotInitializationNodeClass new
-						start: aRBMessageNode start
-						stop: aRBMessageNode stop.
-						classDefinition addSlot: slot.
-				^ self ].
-				"we will have to do something for example if we have 
-				#x => 2"
-				]
-			ifTrue: [  
-				
-				"when a slot is 'inst' => (InstanceVariableSlot default: 5)."
-				| slot slotDefNode |
-				slotDefNode := aRBMessageNode.
-				slot := self slotNodeClass
-					node: aRBMessageNode
-					name: slotDefNode receiver value
-					slotClassName: slotDefNode arguments first receiver name
-					initializationMessage:
-						(self slotInitializationNodeClass
-							selectorParts: aRBMessageNode arguments first selectorParts
-							argumentParts: aRBMessageNode arguments first arguments)
-					start: aRBMessageNode start
-					stop: aRBMessageNode stop.
-				classDefinition addSlot: slot.
-				^ self ]
-		]
-]
-
-{ #category : #parsing }
-CDAbstractClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
-	
-	aRBArrayNode statements do: [ :slotStatement |
-		self handleSlotNode: slotStatement ]
+	classDefinition sharedVariables: slotNodes
 ]
 
 { #category : #parsing }
@@ -241,12 +177,6 @@ CDAbstractClassDefinitionParser >> parserClass [
 { #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> sharedPoolNodeClass [
 	^ CDSharedPoolNode
-]
-
-{ #category : #'private - class factory' }
-CDAbstractClassDefinitionParser >> slotInitializationNodeClass [
-
-	^ RBSlotInitializationNode
 ]
 
 { #category : #'private - class factory' }
