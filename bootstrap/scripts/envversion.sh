@@ -98,7 +98,7 @@ function set_version_variables() {
 		set_version_pull_request_variables
 	fi
 	
-	PHARO_VM_VERSION="90"
+	PHARO_VM_VERSION=${PHARO_SHORT_VERSION}
 	
 	# Prefix the commit hash with a g, to be compatible with git-describe commit hashes
 	# https://git-scm.com/docs/git-describe
