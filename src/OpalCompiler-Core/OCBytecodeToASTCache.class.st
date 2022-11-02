@@ -126,5 +126,5 @@ OCBytecodeToASTCache >> nodeForPC: pc [
 { #category : #astAndAstMapping }
 OCBytecodeToASTCache >> pcsForNode: aNode [
 
-	^ (bcToASTMap keys select: [ :key | (bcToASTMap at: key) == aNode ]) asOrderedCollection
+	^ (bcToASTMap keys select: [ :key | (bcToASTMap at: key) == aNode ]) asOrderedCollection sorted
 ]
