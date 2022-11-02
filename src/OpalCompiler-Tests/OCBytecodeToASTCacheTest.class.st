@@ -175,6 +175,8 @@ OCBytecodeToASTCacheTest >> testPcsForNode [
 
 	pcsForAimedNode do: [ :pc | 
 		self assert: (cache nodeForPC: pc) identicalTo: aimedNode ].
+	
+	self assert: pcsForAimedNode isSorted.
 
 	(cache bcToASTMap keys reject: [ :value | 
 		 pcsForAimedNode includes: value ]) do: [ :pc | 
