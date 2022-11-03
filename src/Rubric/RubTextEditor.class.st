@@ -794,6 +794,12 @@ RubTextEditor >> deselect [
 	" ***** screw this logic ***** selectionShowing ifTrue: [self reverseSelection] "
 ]
 
+{ #category : #'accessing - selection' }
+RubTextEditor >> deselectInvisibly [
+
+	self selectInvisiblyFrom: 1 to: 0
+]
+
 { #category : #'typing support' }
 RubTextEditor >> dispatch: aKeyboardEvent [
 	"Carry out the action associated with this character, if any.
@@ -2003,8 +2009,8 @@ RubTextEditor >> selectInvisiblyAt: characterIndex [
 { #category : #'new selection' }
 RubTextEditor >> selectInvisiblyFrom: start to: stop [
 	"Select the designated characters, inclusive.  Make no visual changes."
-
 	self markIndex: start pointIndex: stop + 1
+	
 ]
 
 { #category : #'new selection' }
@@ -2026,7 +2032,7 @@ RubTextEditor >> selectMark: mark point: point [
 
 	(mark = self markIndex and: [ point + 1 = self pointIndex ]) 
 		ifTrue: [ ^ self ].
-	self deselect.
+	self deselectInvisibly.
 	self selectInvisiblyMark: mark point: point
 ]
 
@@ -2119,8 +2125,9 @@ RubTextEditor >> selectWordMark: mark point: point [
 		mark2 := self previousWord: mark.
 		point2 := (self nextWord: point) - 1 ]
 	ifFalse: [ 
-		mark2 := self nextWord: mark.
-		point2 := (self previousWord: point) - 1 ].
+		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
+		mark2 := self nextWord: (mark>0 ifTrue:[mark] ifFalse:[1]).
+		point2 := (self previousWord: point)- 1  ].
 	self selectMark: mark2 point: point2.
 ]
 
