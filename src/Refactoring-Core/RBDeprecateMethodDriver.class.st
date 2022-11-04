@@ -27,7 +27,7 @@ RBDeprecateMethodDriver class >> model: aRBNamespace deprecateMethod: aString in
 	^ self new model: aRBNamespace deprecateMethod: aString in: aClass
 ]
 
-{ #category : #accessing }
+{ #category : #'ui - requests' }
 RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 
 	| newSelector |

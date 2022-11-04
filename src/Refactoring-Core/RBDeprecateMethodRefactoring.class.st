@@ -67,6 +67,18 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 		yourself
 ]
 
+{ #category : #preconditions }
+RBDeprecateMethodRefactoring >> applicabilityConditions [
+
+	^ RBCondition definesSelector: oldSelector in: class
+]
+
+{ #category : #preconditions }
+RBDeprecateMethodRefactoring >> breakingChangeConditions [
+
+	^ RBCondition canUnderstand: newSelector in: class
+]
+
 { #category : #transforming }
 RBDeprecateMethodRefactoring >> callDeprecationMethod [
 
@@ -76,7 +88,7 @@ RBDeprecateMethodRefactoring >> callDeprecationMethod [
 		in: ''' , SystemVersion current imageVersionString , ''''
 ]
 
-{ #category : #preconditions }
+{ #category : #initialization }
 RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
@@ -86,11 +98,7 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: new
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 
-	^ (RBCondition definesSelector: oldSelector in: class) 
-		& (RBCondition canUnderstand: newSelector in: class)
-		& (RBCondition 
-							withBlock: [oldSelector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
-							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all').
+	^ self applicabilityConditions & self breakingChangeConditions
 ]
 
 { #category : #printing }
