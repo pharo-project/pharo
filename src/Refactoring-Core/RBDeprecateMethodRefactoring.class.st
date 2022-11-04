@@ -95,6 +95,20 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: new
 	class := self classObjectFor: aClass.
 ]
 
+{ #category : #execution }
+RBDeprecateMethodRefactoring >> generateChanges [
+
+	self applicabilityConditions check ifFalse: [ 
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityConditions errorString ].
+	self breakingChangeConditions check ifFalse: [ 
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangeConditions errorString ].
+
+	self transform.
+	^ self changes
+]
+
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 

@@ -27,6 +27,24 @@ RBDeprecateMethodDriver class >> model: aRBNamespace deprecateMethod: aString in
 	^ self new model: aRBNamespace deprecateMethod: aString in: aClass
 ]
 
+{ #category : #execution }
+RBDeprecateMethodDriver >> execute [
+
+	| changes |
+	changes := [ 
+	           [ refactoring generateChanges ]
+		           on: RBApplicabilityChecksFailedError
+		           do: [ :err | 
+		           ^ RBRefactoringFailure signal: err messageText ] ]
+		           on: RBBreakingChangeChecksFailedWarning
+		           do: [ :err | 
+			           RBRefactoringWarning signal: err messageText.
+			           "If user answers no, error is being propagated."
+			           err resume ].
+	self flag: #TODO. "preview changes and confirm before executing"
+	refactoring performChanges
+]
+
 { #category : #'ui - requests' }
 RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 
