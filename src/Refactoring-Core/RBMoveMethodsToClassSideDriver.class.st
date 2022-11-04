@@ -35,7 +35,7 @@ RBMoveMethodsToClassSideDriver >> checkApplicability [
 
 	| checks |
 	checks := self refactorings collect: [ :each | 
-		          each applicabilityPreconditions check ].
+		          each applicabilityConditions check ].
 	^ checks reduce: [ :a :b | a & b ]
 ]
 
@@ -96,9 +96,9 @@ RBMoveMethodsToClassSideDriver >> refactoringError [
 
 	| errorStrings |
 	errorStrings := self refactorings
-		                reject: [ :each | each applicabilityPreconditions check ]
+		                reject: [ :each | each applicabilityConditions check ]
 		                thenCollect: [ :each | 
-		                each applicabilityPreconditions errorString ].
+		                each applicabilityConditions errorString ].
 	errorStrings := String streamContents: [ :stream | 
 		                errorStrings
 			                do: [ :str | stream << str ]
