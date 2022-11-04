@@ -132,7 +132,8 @@ RubEditingState >> scrollPivot: aPoint [
 
 { #category : #accessing }
 RubEditingState >> selectionStart [
-	^ self pointBlock ifNotNil: [:pb | pb min: self markBlock]
+
+	^ self pointBlock ifNotNil: [ :pb | pb min: self markBlock ]
 ]
 
 { #category : #accessing }
