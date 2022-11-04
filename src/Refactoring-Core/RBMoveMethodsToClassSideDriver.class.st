@@ -2,15 +2,14 @@
 I represent a driver that invokes `MoveToClassSide` refactoring.
 
 I implement methods from parent class and define some helper methods that are needed to execute `MoveToClassSide` refactoring:
-- `prepareFullExecution` - retrieve all selected methods from context
-- `generateRefactorings` - creating `MoveToClassSide` refactorings for each of the methods
+- `generateRefactorings` - creating `MoveToClassSide` refactorings for each of the selected methods
 - checking preconditions and breaking changes
 - executing the refactoring
 
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBMoveMethodsToClassSideDriver withContext: context) execute
+(RBMoveMethodsToClassSideDriver model: aRBNamespace methods: aCollectionOfMethods) execute
 ```
 "
 Class {
@@ -67,7 +66,16 @@ RBMoveMethodsToClassSideDriver >> confirmBreakingChanges [
 ]
 
 { #category : #execution }
-RBMoveMethodsToClassSideDriver >> executeRefactoring [
+RBMoveMethodsToClassSideDriver >> execute [
+
+	self checkApplicability ifFalse: [ self refactoringError ].
+	self checkBreakingChanges ifFalse: [ "Open warning dialog. It throws an error if user answers No." 
+		self confirmBreakingChanges ].
+	self executeRefactorings
+]
+
+{ #category : #execution }
+RBMoveMethodsToClassSideDriver >> executeRefactorings [
 
 	refactorings do: [ :each | 
 		each transform.
