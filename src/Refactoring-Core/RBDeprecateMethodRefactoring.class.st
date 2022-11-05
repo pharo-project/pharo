@@ -76,7 +76,12 @@ RBDeprecateMethodRefactoring >> applicabilityConditions [
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> breakingChangeConditions [
 
-	^ RBCondition canUnderstand: newSelector in: class
+	^ (RBCondition canUnderstand: newSelector in: class) & (RBCondition
+		   withBlock: [ 
+			   oldSelector numArgs = newSelector numArgs or: [ 
+				   newSelector numArgs = 0 ] ]
+		   errorString:
+		   'The new selectors should have the same number of arguments as the old one, or not have them at all')
 ]
 
 { #category : #transforming }
