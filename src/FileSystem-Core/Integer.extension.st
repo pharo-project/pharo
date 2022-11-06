@@ -2,9 +2,10 @@ Extension { #name : #Integer }
 
 { #category : #'*FileSystem-Core' }
 Integer >> humanReadableByteSizeString [
-	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'"
+	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'. The difference with humanReadableByteSISizeString is that the current one counts by 1024 and not 1000."
 	
 	"(1000 * 1000 * 1000) humanReadableByteSizeString >>> '953 MB'"
+	"(1000 * 1000 * 1000) humanReadableSISizeString >>> '1.00 GB'"
 	"(1024 * 1024 * 1024) humanReadableByteSizeString >>> '1 GB'"
 	
 	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
