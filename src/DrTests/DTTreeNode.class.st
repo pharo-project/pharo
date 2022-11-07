@@ -98,6 +98,7 @@ DTTreeNode >> drTestsBuildContextMenu: menu [
 
 { #category : #accessing }
 DTTreeNode >> drTestsName [
+
 	^ String streamContents: [ :s |
 		s
 			<< self name;

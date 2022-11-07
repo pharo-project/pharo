@@ -90,13 +90,13 @@ DTDefaultPluginPresenter >> browseSelectedResult [
 
 { #category : #private }
 DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected: aInt [
-	^ String
-		streamContents: [ :s | 
-			s
-				<< nameOfItems;
-				nextPut: $(;
-				<< aInt asString;
-				<< ' selected):' ]
+
+	^ String streamContents: [ :stream | 
+		stream
+			<< nameOfItems;
+			<< ' (';
+			<< aInt asString;
+			<< ' selected):' ]
 ]
 
 { #category : #initialization }
@@ -307,12 +307,13 @@ DTDefaultPluginPresenter >> subwidgetsToLock [
 DTDefaultPluginPresenter >> updateItemsListLabel [
 
 	itemsList label: (self
-			 buildLabelString: plugin secondListLabel
-			 numberOfItemsSelected: self selectedItems size)
+		 buildLabelString: plugin secondListLabel
+		 numberOfItemsSelected: self selectedItems size)
 ]
 
 { #category : #'private - updating' }
 DTDefaultPluginPresenter >> updatePackagesList [
+
 	packagesList unselectAll.
 	itemsList beEmpty.
 	packagesList items: plugin packagesAvailableForAnalysis.
@@ -324,11 +325,10 @@ DTDefaultPluginPresenter >> updatePackagesList [
 
 { #category : #'private - updating' }
 DTDefaultPluginPresenter >> updatePackagesListLabel [
-	self packagesList
-		label:
-			(self
-				buildLabelString: plugin firstListLabel
-				numberOfItemsSelected: self packagesSelected size)
+	
+	self packagesList label: (self
+		buildLabelString: plugin firstListLabel
+		numberOfItemsSelected: self packagesSelected size)
 ]
 
 { #category : #initialization }
