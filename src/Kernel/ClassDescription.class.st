@@ -1127,7 +1127,7 @@ ClassDescription >> slotNamed: aName ifFound: foundBlock [
 
 { #category : #slots }
 ClassDescription >> slotNamed: aName ifFound: foundBlock ifNone: exceptionBlock [
-	^self classLayout resolveSlot: aName asSymbol ifFound: foundBlock ifNone: exceptionBlock
+	^self classLayout resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock
 ]
 
 { #category : #slots }
