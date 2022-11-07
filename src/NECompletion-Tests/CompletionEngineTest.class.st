@@ -48,7 +48,10 @@ CompletionEngineTest >> keyboardEventFor: char useCommand: command [
 		charCode: char asciiValue
 		hand: nil 
 		stamp: Time now.
-	event key: (KeyboardKey fromCharacter: char).
+	event key: (KeyboardKey fromCharacter: char 
+		ifNone: [ char = $_ 
+			ifTrue: [ KeyboardKey named: #UNDERSCORE ] 
+			ifFalse:[ Error signal: 'unsuported' ] ]).
 	^event
 ]
 
@@ -117,6 +120,25 @@ CompletionEngineTest >> tearDown [
 	controller closeMenu.
 	editor textArea delete.
 	super tearDown
+]
+
+{ #category : #'tests - keyboard' }
+CompletionEngineTest >> testCompletionOpenOnUnderscore [
+
+	"If the caret is at the end of a word, replace the entire word"
+
+	| text |
+	text := 'self underscore_'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self underscore_' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	editor keyDown: (self keyboardEventFor: $_).
+
+	self assert: controller isMenuOpen
 ]
 
 { #category : #'tests - interaction' }
