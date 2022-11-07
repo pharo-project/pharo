@@ -1312,12 +1312,6 @@ TextEditor >> deselect [
 	self selectFrom: 1 to: 0
 ]
 
-{ #category : #'new selection' }
-TextEditor >> deselectInvisibly [ 
-
-	self selectInvisiblyFrom: 1 to: 0
-]
-
 { #category : #'typing support' }
 TextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
 	|asciiValue honorCommandKeys|
@@ -2717,7 +2711,7 @@ TextEditor >> selectMark: mark point: point [
 	 Be sure the selection is in view."
 
 	(mark =  self markIndex and: [point + 1 = self pointIndex]) ifFalse:
-		[self deselectInvisibly.
+		[self deselect.
 		self selectInvisiblyMark: mark point: point]
 ]
 

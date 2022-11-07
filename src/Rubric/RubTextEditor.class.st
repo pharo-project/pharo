@@ -794,12 +794,6 @@ RubTextEditor >> deselect [
 	" ***** screw this logic ***** selectionShowing ifTrue: [self reverseSelection] "
 ]
 
-{ #category : #'accessing - selection' }
-RubTextEditor >> deselectInvisibly [
-
-	self selectInvisiblyFrom: 1 to: 0
-]
-
 { #category : #'typing support' }
 RubTextEditor >> dispatch: aKeyboardEvent [
 	"Carry out the action associated with this character, if any.
@@ -2032,7 +2026,7 @@ RubTextEditor >> selectMark: mark point: point [
 
 	(mark = self markIndex and: [ point + 1 = self pointIndex ]) 
 		ifTrue: [ ^ self ].
-	self deselectInvisibly.
+	self deselect.
 	self selectInvisiblyMark: mark point: point
 ]
 
