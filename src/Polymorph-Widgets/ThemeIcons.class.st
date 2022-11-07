@@ -164,7 +164,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 2;
 		label: 'Icon Set';
-		default: (ThemeIcons named: 'idea11');
+		default: (ThemeIcons named: 'svgPack');
 		target: self;
 		dialog: [ self createSettingRow ]
 ]
