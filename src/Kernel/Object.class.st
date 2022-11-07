@@ -1082,14 +1082,14 @@ Object >> instVarAt: index put: anObject [
 ]
 
 { #category : #introspection }
-Object >> instVarNamed: aString [
+Object >> instVarNamed: aStringOrSymbol [
 	"Return the value of the instance variable in me with that name.  Slow, but very useful.
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aString
+		slotNamed: aStringOrSymbol
 		ifFound: [ :slot | slot read: self ]
-		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
+		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asString ]
 ]
 
 { #category : #introspection }
