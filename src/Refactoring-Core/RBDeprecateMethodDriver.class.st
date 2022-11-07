@@ -54,7 +54,7 @@ RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 		               initialAnswer: methodToDeprecate
 		               title: 'New selector'.
 	newSelector isEmptyOrNil | (newSelector = methodToDeprecate) ifTrue: [ 
-		CmdCommandAborted signal ].
+		RBRefactoringFailure signal: 'New selector should not be empty OR same as current selector.' ].
 	^ newSelector
 ]
 
