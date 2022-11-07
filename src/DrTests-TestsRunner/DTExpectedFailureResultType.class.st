@@ -12,6 +12,12 @@ DTExpectedFailureResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForExpectedFailureTest
 ]
 
+{ #category : #factory }
+DTExpectedFailureResultType class >> backgroundColorStyle [
+
+	^ 'testExpectedFailure'
+]
+
 { #category : #accessing }
 DTExpectedFailureResultType >> isExpectedFailure [
 	^ true

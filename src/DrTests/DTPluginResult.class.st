@@ -13,6 +13,12 @@ DTPluginResult >> backgroundColor [
 ]
 
 { #category : #accessing }
+DTPluginResult >> backgroundColorStyle [
+	
+	^ 'testResult'
+]
+
+{ #category : #accessing }
 DTPluginResult >> buildTreeForUI [
 	^ self subclassResponsibility
 ]

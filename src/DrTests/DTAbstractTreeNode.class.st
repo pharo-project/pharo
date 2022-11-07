@@ -35,6 +35,12 @@ DTAbstractTreeNode >> isLeaf [
 	^ false
 ]
 
+{ #category : #testing }
+DTAbstractTreeNode >> shouldStartExpanded [
+
+	^ false
+]
+
 { #category : #accessing }
 DTAbstractTreeNode >> subResults [
 	^ #()

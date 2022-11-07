@@ -13,6 +13,11 @@ DTTestResultType class >> backgroundColor [
 ]
 
 { #category : #factory }
+DTTestResultType class >> backgroundColorStyle [
+	^ self subclassResponsibility
+]
+
+{ #category : #factory }
 DTTestResultType class >> error [
 	^ DTErrorResultType new
 ]

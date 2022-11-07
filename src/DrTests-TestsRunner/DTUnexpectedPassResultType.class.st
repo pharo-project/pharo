@@ -12,6 +12,12 @@ DTUnexpectedPassResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForUnexpectedPassTest
 ]
 
+{ #category : #factory }
+DTUnexpectedPassResultType class >> backgroundColorStyle [
+
+	^ 'testUnexpectedPass'
+]
+
 { #category : #accessing }
 DTUnexpectedPassResultType >> isUnexpectedPass [
 

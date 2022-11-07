@@ -25,6 +25,7 @@ DTTreeLeafNode >> acceptVisitor: aDTResultsTreeVisitor [
 
 { #category : #testing }
 DTTreeLeafNode >> canBeBrowsed [
+
 	^ true
 ]
 
@@ -60,5 +61,6 @@ DTTreeLeafNode >> drTestsName [
 
 { #category : #testing }
 DTTreeLeafNode >> isLeaf [
+
 	^ true
 ]

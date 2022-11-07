@@ -12,6 +12,12 @@ DTPassResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForPassingTest
 ]
 
+{ #category : #factory }
+DTPassResultType class >> backgroundColorStyle [
+
+	^ 'testPass'
+]
+
 { #category : #testing }
 DTPassResultType >> isPass [
 	^ true

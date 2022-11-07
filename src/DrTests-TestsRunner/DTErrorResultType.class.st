@@ -12,6 +12,12 @@ DTErrorResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForErrorTest
 ]
 
+{ #category : #factory }
+DTErrorResultType class >> backgroundColorStyle [
+
+	^ 'testError'
+]
+
 { #category : #testing }
 DTErrorResultType >> isError [
 	^ true

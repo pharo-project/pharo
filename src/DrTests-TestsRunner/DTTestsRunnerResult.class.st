@@ -22,6 +22,14 @@ DTTestsRunnerResult >> backgroundColor [
 	^ DTPassResultType backgroundColor
 ]
 
+{ #category : #accessing }
+DTTestsRunnerResult >> backgroundColorStyle [
+
+	testsResult errors ifNotEmpty: [ ^ 'testError' ].
+	testsResult failures ifNotEmpty: [ ^ 'testFail'  ].
+	^ 'testPass'
+]
+
 { #category : #'tree building' }
 DTTestsRunnerResult >> buildLeavesFrom: aCollection type: testResultType [
 	^ aCollection collect: [ :t | DTTestLeafNode content: t type: testResultType ]
@@ -59,14 +67,16 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 DTTestsRunnerResult >> buildTreeForUI [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
-		subResults:
-			{DTTreeNode new
+		subResults: { 
+			DTTreeNode new
 				name: DTTestResultType error pluralName;
 				subResults: (self buildLeavesFrom: self errors type: DTTestResultType error);
+				startExpanded;
 				yourself.
 			DTTreeNode new
 				name: DTTestResultType fail pluralName;
-				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail).
+				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail);
+				startExpanded.
 			DTTreeNode new
 				name: DTTestResultType skipped pluralName;
 				subResults: (self buildLeavesFrom: self skipped type: DTTestResultType skipped).
@@ -78,8 +88,7 @@ DTTestsRunnerResult >> buildTreeForUI [
 				subResults: (self buildLeavesFrom: self expectedFailures type: DTTestResultType expectedFailure).
 			DTTreeNode new
 				name: DTTestResultType unexpectedPass pluralName;
-				subResults: (self buildLeavesFrom: self unexpectedPassed type: DTTestResultType unexpectedPass).
-		};
+				subResults: (self buildLeavesFrom: self unexpectedPassed type: DTTestResultType unexpectedPass) };
 		yourself
 ]
 

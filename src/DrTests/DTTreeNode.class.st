@@ -10,7 +10,8 @@ Class {
 		'subResults',
 		'contextMenuBlock',
 		'subResultsAggregator',
-		'browseBlock'
+		'browseBlock',
+		'shouldStartExpanded'
 	],
 	#category : #'DrTests-Model'
 }
@@ -39,6 +40,7 @@ DTTreeNode >> browseBlock: anObject [
 
 { #category : #testing }
 DTTreeNode >> canBeBrowsed [
+
 	^ self browseBlock isNotNil
 ]
 
@@ -84,10 +86,11 @@ DTTreeNode >> drTestsName [
 
 { #category : #initialization }
 DTTreeNode >> initialize [
+
 	super initialize.
-	self
-		contextMenuBlock: [ :menu | ]. "Does nothing by default."
+	self contextMenuBlock: [ :menu | ]. "Does nothing by default."
 	self subResultsAggregator: [ :subRes | (DTLeavesCollector collectLeavesOf: self) size ].
+	shouldStartExpanded := false
 ]
 
 { #category : #accessing }
@@ -98,6 +101,24 @@ DTTreeNode >> name [
 { #category : #accessing }
 DTTreeNode >> name: anObject [
 	name := anObject
+]
+
+{ #category : #testing }
+DTTreeNode >> shouldStartExpanded [
+
+	^ shouldStartExpanded
+]
+
+{ #category : #accessing }
+DTTreeNode >> startContracted [
+
+	shouldStartExpanded := false
+]
+
+{ #category : #accessing }
+DTTreeNode >> startExpanded [
+
+	shouldStartExpanded := true
 ]
 
 { #category : #accessing }

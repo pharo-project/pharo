@@ -73,32 +73,6 @@ DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
 		yourself
 ]
 
-{ #category : #layout }
-DTDefaultPluginPresenter class >> defaultLayout [
-
-	^ SpBoxLayout newTopToBottom 
-		add: (SpPanedLayout newLeftToRight
-		  add: (SpPanedLayout newLeftToRight
-				   add: (SpBoxLayout newTopToBottom
-						    add: #packagesList;
-						    yourself);
-				   add: (SpBoxLayout newTopToBottom
-						    add: #itemsList;
-						    yourself);
-				   yourself);
-		  add: (SpBoxLayout newTopToBottom
-				   add: #resultViewsDropList
-				   withConstraints: [ :constraints | constraints expand: false ];
-				   add: #resultLabel
-				   withConstraints: [ :constraints | 
-					   constraints height: self labelHeight ];
-				   add: #resultsList;
-				   yourself);
-		  yourself);
-		add: #startButton
-			withConstraints: [ :constraints | constraints width: self buttonWidth ]
-]
-
 { #category : #actions }
 DTDefaultPluginPresenter >> browseSelectedItem [
 	"Because of DTBrowseSelectedItem>>#canBeExecuted, we know there is a single item in the selection.
@@ -114,7 +88,7 @@ DTDefaultPluginPresenter >> browseSelectedResult [
 	self resultSelected drTestsBrowse
 ]
 
-{ #category : #utilities }
+{ #category : #private }
 DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected: aInt [
 	^ String
 		streamContents: [ :s | 
@@ -137,12 +111,32 @@ DTDefaultPluginPresenter >> connectPresenters [
 						roots: (resultTreeViewOrNil resultTreeFor: drTests pluginResult) subResults ] ].
 ]
 
+{ #category : #layout }
+DTDefaultPluginPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom 
+		add: (SpPanedLayout newLeftToRight
+			add: (SpPanedLayout newLeftToRight
+		  		add: packagesList;
+				add: itemsList;
+				yourself);
+			add: (SpBoxLayout newTopToBottom
+				spacing: 5;
+				add: resultViewsDropList expand: false;
+				add: resultLabel expand: false;
+				add: resultsList;
+				yourself);
+		  yourself);
+		add: startButton expand: false;
+		yourself
+]
+
 { #category : #accessing }
 DTDefaultPluginPresenter >> drTests [
 	^ drTests
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
 	itemsList := self newFilterableListPresenter.
@@ -161,7 +155,7 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 
 	packagesList := self newFilterableListPresenter.
@@ -188,7 +182,7 @@ DTDefaultPluginPresenter >> initializePresenters [
 	startButton action: [ drTests runPlugin ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializeResultViewsDropList [
 
 	resultViewsDropList := self newDropList.
@@ -197,7 +191,7 @@ DTDefaultPluginPresenter >> initializeResultViewsDropList [
 		display: [ :resultTreeView | resultTreeView name ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 
 	resultLabel := self newLabel label: 'Results:'.
@@ -245,9 +239,15 @@ DTDefaultPluginPresenter >> resultSelected [
 
 { #category : #api }
 DTDefaultPluginPresenter >> resultTree: aResultGroup [
+	| roots |
 
-	aResultGroup
-		ifNotNil: [ resultsList roots: aResultGroup subResults ]
+	aResultGroup ifNil: [ ^ self ].
+	roots := aResultGroup subResults.
+	resultsList roots: roots.
+	roots withIndexDo: [ :each :index | 
+		each shouldStartExpanded 
+			ifTrue: [ resultsList expandPath: { index } ] ]
+	
 ]
 
 { #category : #accessing }
@@ -338,9 +338,12 @@ DTDefaultPluginPresenter >> updatePresenter [
 
 { #category : #updating }
 DTDefaultPluginPresenter >> updateResultLabel [
+
+	resultLabel styles copy 
+		do: [ :each | resultLabel removeStyle: each ]. 
 	resultLabel
 		label: 'Results: ■';
-		color: lastResults backgroundColor
+		addStyle: lastResults backgroundColorStyle
 ]
 
 { #category : #updating }
@@ -364,13 +367,15 @@ DTDefaultPluginPresenter >> updateResultViewsDropList [
 
 { #category : #updating }
 DTDefaultPluginPresenter >> updateWithResults: someResults [
+	
 	lastResults := someResults.
 
 	self resultTree: lastResults buildTreeForUI.
+	
 	self updateResultViewsDropList.
 	self updateResultLabel.
-	resultsList
-		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+	resultsList contextMenu: [ 
+		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
 ]
 
 { #category : #private }

@@ -12,6 +12,12 @@ DTFailResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForFailureTest
 ]
 
+{ #category : #factory }
+DTFailResultType class >> backgroundColorStyle [
+
+	^ 'testFail'
+]
+
 { #category : #testing }
 DTFailResultType >> isFail [
 	^ true

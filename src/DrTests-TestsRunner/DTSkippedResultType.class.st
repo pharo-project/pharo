@@ -12,6 +12,12 @@ DTSkippedResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForPassingTest
 ]
 
+{ #category : #factory }
+DTSkippedResultType class >> backgroundColorStyle [
+
+	^ 'testSkipped'
+]
+
 { #category : #testing }
 DTSkippedResultType >> isSkipped [
 	^ true
