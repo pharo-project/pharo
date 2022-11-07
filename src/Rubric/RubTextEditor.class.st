@@ -2003,8 +2003,8 @@ RubTextEditor >> selectInvisiblyAt: characterIndex [
 { #category : #'new selection' }
 RubTextEditor >> selectInvisiblyFrom: start to: stop [
 	"Select the designated characters, inclusive.  Make no visual changes."
-
 	self markIndex: start pointIndex: stop + 1
+	
 ]
 
 { #category : #'new selection' }
@@ -2119,8 +2119,9 @@ RubTextEditor >> selectWordMark: mark point: point [
 		mark2 := self previousWord: mark.
 		point2 := (self nextWord: point) - 1 ]
 	ifFalse: [ 
-		mark2 := self nextWord: mark.
-		point2 := (self previousWord: point) - 1 ].
+		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
+		mark2 := self nextWord: (mark>0 ifTrue:[mark] ifFalse:[1]).
+		point2 := (self previousWord: point)- 1  ].
 	self selectMark: mark2 point: point2.
 ]
 
