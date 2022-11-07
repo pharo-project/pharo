@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #factory }
-DTExpectedFailureResultType class >> backgroundColor [
-	^ TestResult defaultColorBackGroundForExpectedFailureTest
-]
-
-{ #category : #factory }
 DTExpectedFailureResultType class >> backgroundColorStyle [
 
 	^ 'testExpectedFailure'

@@ -11,7 +11,8 @@ Class {
 		'contextMenuBlock',
 		'subResultsAggregator',
 		'browseBlock',
-		'shouldStartExpanded'
+		'shouldStartExpanded',
+		'displayColor'
 	],
 	#category : #'DrTests-Model'
 }
@@ -59,6 +60,27 @@ DTTreeNode >> contextMenuBlock: anObject [
 	contextMenuBlock := anObject
 ]
 
+{ #category : #accessing }
+DTTreeNode >> displayColor [
+
+	^ displayColor value
+]
+
+{ #category : #accessing }
+DTTreeNode >> displayColor: aValuableOrColor [
+
+	displayColor := aValuableOrColor
+]
+
+{ #category : #accessing }
+DTTreeNode >> displayColorIfNotEmpty: aColor [
+
+	self displayColor: [ 
+		self subResults
+			ifNotEmpty: [ aColor ]
+			ifEmpty: [ nil ] ]
+]
+
 { #category : #actions }
 DTTreeNode >> drTestsBrowse [
 	"Browse the tree node according to what is specified by my #browseBlock.
@@ -79,9 +101,9 @@ DTTreeNode >> drTestsName [
 	^ String streamContents: [ :s |
 		s
 			<< self name;
-			<< $(;
+			<< ' (';
 			<< (self subResultsAggregator value: self subResults) asString;
-			<< $) ]
+			<< ')' ]
 ]
 
 { #category : #initialization }

@@ -126,15 +126,14 @@ DTFilterableListPresenter >> initialize [
 ]
 
 { #category : #initialization }
-DTFilterableListPresenter >> initializeWidgets [
+DTFilterableListPresenter >> initializePresenters [
 
 	labelPresenter := self newLabel.
 	listPresenter := self newList.
 	filterTextInput := self newTextInput
-								placeholder: 'Filter...';
-								whenTextChangedDo: [ self filterList ];
-								autoAccept: true;
-								yourself
+		placeholder: 'Filter...';
+		whenTextChangedDo: [ self filterList ];
+		yourself
 ]
 
 { #category : #accessing }

@@ -51,8 +51,8 @@ DrTests class >> menuCommandOn: aBuilder [
 
 { #category : #api }
 DrTests class >> open [
-
 	<script>
+	
 	^ self new
 		  open;
 		  yourself

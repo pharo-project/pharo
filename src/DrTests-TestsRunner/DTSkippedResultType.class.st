@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #factory }
-DTSkippedResultType class >> backgroundColor [
-	^ TestResult defaultColorBackGroundForPassingTest
-]
-
-{ #category : #factory }
 DTSkippedResultType class >> backgroundColorStyle [
 
 	^ 'testSkipped'

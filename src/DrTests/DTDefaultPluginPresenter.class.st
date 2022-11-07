@@ -57,17 +57,17 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 
 { #category : #'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-
 	| commandGroup pluginCommands |
+	
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
 		description: 'Commands related to result.';
-		register:
-			(DTResultBrowseCommand forSpec context: presenterInstance)
-				beHiddenWhenCantBeRun;
+		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
 		yourself.
+	
 	pluginCommands := presenterInstance plugin
 		buildContextualMenuGroupWith: presenterInstance.
 	pluginCommands entries ifEmpty: [ ^ commandGroup ].
+
 	^ commandGroup
 		register: pluginCommands beDisplayedAsGroup;
 		yourself
@@ -142,7 +142,8 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 	itemsList := self newFilterableListPresenter.
 	itemsList
 		displayIcon: [ :aClass | self iconNamed: aClass systemIconName  ];
-		displayColor: [ :aClass | (self packagesSelected includes: aClass package)
+		displayColor: [ :aClass | 
+			(self packagesSelected includes: aClass package)
 				ifTrue: [ self theme textColor ]
 				ifFalse: [ self theme classExtensionColor ] ];
 		help: 'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
@@ -151,6 +152,7 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
 		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
+	
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
 ]
@@ -195,13 +197,17 @@ DTDefaultPluginPresenter >> initializeResultViewsDropList [
 DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 
 	resultLabel := self newLabel label: 'Results:'.
-	resultsList := self newTreeTable.
+	resultsList := self newTree.
 	resultsList
-		addColumn: (SpStringTableColumn evaluated: #drTestsName);
+		display: [ :node | node drTestsName ];
+		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
-
-	self resultTree: DTTreeNode empty.
+		contextMenu: [ 
+			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		
+	resultsList outputActivationPort 
+		transmitDo: [ 
+			(DTResultBrowseCommand forSpecContext: self) execute ]
 ]
 
 { #category : #accessing }
@@ -245,8 +251,9 @@ DTDefaultPluginPresenter >> resultTree: aResultGroup [
 	roots := aResultGroup subResults.
 	resultsList roots: roots.
 	roots withIndexDo: [ :each :index | 
-		each shouldStartExpanded 
-			ifTrue: [ resultsList expandPath: { index } ] ]
+		each shouldStartExpanded ifTrue: [ 
+			each name crTrace.
+			resultsList expandPath: { index } ] ]
 	
 ]
 
@@ -342,15 +349,15 @@ DTDefaultPluginPresenter >> updateResultLabel [
 	resultLabel styles copy 
 		do: [ :each | resultLabel removeStyle: each ]. 
 	resultLabel
-		label: 'Results: ■';
+		label: 'Results:';
 		addStyle: lastResults backgroundColorStyle
 ]
 
 { #category : #updating }
 DTDefaultPluginPresenter >> updateResultViewsDropList [
 	| newPragmas |
+
 	newPragmas := plugin resultTreeViews.
-	
 	(resultViewsDropList listItems = newPragmas
 		and: [ newPragmas isNotEmpty ])
 		ifTrue: [ 
@@ -370,10 +377,9 @@ DTDefaultPluginPresenter >> updateWithResults: someResults [
 	
 	lastResults := someResults.
 
-	self resultTree: lastResults buildTreeForUI.
-	
 	self updateResultViewsDropList.
 	self updateResultLabel.
+	self resultTree: lastResults buildTreeForUI.
 	resultsList contextMenu: [ 
 		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
 ]

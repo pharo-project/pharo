@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #factory }
-DTTestResultType class >> backgroundColor [
-	^ self subclassResponsibility
-]
-
-{ #category : #factory }
 DTTestResultType class >> backgroundColorStyle [
 	^ self subclassResponsibility
 ]
