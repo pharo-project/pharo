@@ -9,13 +9,6 @@ MCBitbucketRepository class >> basicDescription [
   ^ 'bitbucket'
 ]
 
-{ #category : #accessing }
-MCBitbucketRepository class >> cacheDirectoryPath [
-  <preference: 'BitBucket Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
-]
-
 { #category : #'instance creation' }
 MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createBitbucketRepository: aRepositorySpec

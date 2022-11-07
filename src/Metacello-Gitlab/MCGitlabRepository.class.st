@@ -37,13 +37,6 @@ MCGitlabRepository class >> basicDescription [
   ^ 'gitlab'
 ]
 
-{ #category : #accessing }
-MCGitlabRepository class >> cacheDirectoryPath [
-  <preference: 'Gitlab Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
-]
-
 { #category : #private }
 MCGitlabRepository class >> defaultHostname [
 	^ 'gitlab.com'
