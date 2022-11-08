@@ -38,7 +38,8 @@ Class {
 	#instVars : [
 		'metalink',
 		'methods',
-		'nodes'
+		'nodes',
+		'edges'
 	],
 	#category : #'Coverage-Base'
 }
@@ -98,8 +99,20 @@ CoverageCollector >> initialize [
 		            selector: #tagExecuted;
 		            metaObject: #node.
 	methods := IdentitySet new.
-	"Need IdentitySet here because we want to distinguish equivalent nodes."
+
+]
+
+{ #category : #initialization }
+CoverageCollector >> initializeNodes [
+
+	"Visit methods and collect their sequence nodes"
+
 	nodes := IdentitySet new.
+	methods do: [ :meth | 
+		meth ast nodesDo: [ :node | 
+			node isSequence ifTrue: [ 
+				nodes add: node ] ] ].
+	^ nodes.
 ]
 
 { #category : #basic }
@@ -110,12 +123,14 @@ CoverageCollector >> install [
 	Sequence nodes are also prepared. This enable a basic path coverage."
 
 	methods do: [ :meth | 
-		meth ast nodesDo: [ :node | 
-			node isSequence ifTrue: [ 
-				node link: metalink.
-				nodes add: node ] ].
 		meth ast link: metalink.
-	 ]
+	].
+
+	nodes ifNil: [ self initializeNodes ].
+	nodes do: [ :node | 
+		self assert: node isSequence.
+		node link: metalink.
+	].
 ]
 
 { #category : #running }
