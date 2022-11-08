@@ -45,8 +45,6 @@ BaselineOfUI >> baseline: spec [
 		"Spec 2 (base), using external configuration"
 		self specBase: spec.		
 		
-		spec baseline: 'DrTests' with: [ spec repository: repository ].
-
 		spec package: 'StartupPreferences'.		
 		
 		spec package: 'Debugger-Actions'.
