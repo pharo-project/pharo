@@ -70,7 +70,7 @@ CoverageCollectorTest >> testBasicCoverage [
 ]
 
 { #category : #tests }
-CoverageCollectorTest >> testExaple [
+CoverageCollectorTest >> testExample [
 
 	| collector coverage |
 	collector := CoverageCollector new. "Instantiate"
