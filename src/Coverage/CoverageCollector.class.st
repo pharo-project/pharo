@@ -79,6 +79,31 @@ CoverageCollector >> basicRun: aBlock [
 	^ aBlock value
 ]
 
+{ #category : #callgraph }
+CoverageCollector >> callgraph [
+
+	"Compute and return directed `edges` that connect nodes together.
+	
+	 The vertices of this static call graph are the sequence nodes (the main sequence of each methods + nested syntactic blocks) and the edges are direct block nesting and message sends:
+	 * a sequence is connected to each of its (directly) nested sequences;
+	 * a sequence with a message send is connected to the main sequence of all methods with the same selector.
+
+	 Note that only the `nodes` from the `methods`	are considered, so the resulting graph may not be connected.
+
+	 The result is a collection of pairs (arrays of 2 elements). The first element is the *source* node, the second element is the *destination* node.
+	 This representation is therefore usable with algorithms of `AI-Algorithms-Graph` for instance."
+
+	| visitor |
+	visitor := SequenceGraphVisitor new.
+	visitor collector: self.
+	
+	nodes ifNil: [ self initializeNodes ].
+
+	nodes do: [ :node | node acceptVisitor: visitor ].
+
+	^ edges := visitor edges.
+]
+
 { #category : #basic }
 CoverageCollector >> collectResult [
 
@@ -90,6 +115,11 @@ CoverageCollector >> collectResult [
 	res := self basicCollectResult.
 	self reset.
 	^ res
+]
+
+{ #category : #accessing }
+CoverageCollector >> edges [
+	^ edges
 ]
 
 { #category : #initialization }
