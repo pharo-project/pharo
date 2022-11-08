@@ -98,6 +98,7 @@ BaselineOfIDE >> additionalInitialization [
 BaselineOfIDE >> baseline: spec [
 	<baseline>
 	| repository |
+	
 	repository := self packageRepositoryURL.
 	spec for: #common do: [ 
 		spec postLoadDoIt: #postload:package:.
@@ -194,6 +195,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository; loads: #('Tool-DependencyAnalyser-UI-Tab') ].
 		self specCode: spec.
 		self newTools: spec.
+		self drTests: spec.	
 		self microdown: spec.
 		self beautifulComments: spec.
 		self roassal3: spec.
@@ -207,11 +209,19 @@ BaselineOfIDE >> baseline: spec [
 	]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> beautifulComments: spec [ 
 
 	spec baseline: 'BeautifulComments' with: [ 
 		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
+]
+
+{ #category : #baselines }
+BaselineOfIDE >> drTests: spec [
+
+	spec 
+		baseline: 'DrTests' 
+		with: [ spec repository: self packageRepositoryURL ]
 ]
 
 { #category : #actions }
@@ -249,7 +259,7 @@ BaselineOfIDE >> makeCalypsoDefaultBrowser [
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> microdown: spec [ 
 
 	spec baseline: 'Microdown' with: [ 
@@ -258,7 +268,7 @@ BaselineOfIDE >> microdown: spec [
 			loads: #('RichText' 'Tests') ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> newTools: spec [ 
 
 	spec baseline: 'NewTools' with: [
@@ -394,7 +404,7 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 		Metacello new baseline: each; register ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> roassal3: spec [
 
 	spec 
@@ -405,7 +415,7 @@ BaselineOfIDE >> roassal3: spec [
     			loads: #( 'Core' 'Tests') ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 

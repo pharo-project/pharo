@@ -15,16 +15,6 @@ Class {
 	#category : #'DrTests-Spec'
 }
 
-{ #category : #layout }
-DTFilterableListPresenter class >> defaultLayout [
-
-	^ SpBoxLayout newTopToBottom
-		add: #labelPresenter withConstraints: [ :constraints | constraints height: self labelHeight ];
-		add: #listPresenter;
-		add: #filterTextInput withConstraints: [ :constraints | constraints height: self inputTextHeight ];
-		yourself
-]
-
 { #category : #accessing }
 DTFilterableListPresenter >> allItems [
 
@@ -53,6 +43,17 @@ DTFilterableListPresenter >> beSingleSelection [
 DTFilterableListPresenter >> contextMenu: aBlock [
 
 	^ self listPresenter contextMenu: aBlock
+]
+
+{ #category : #layout }
+DTFilterableListPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		spacing: 5;
+		add: labelPresenter expand: false;
+		add: listPresenter;
+		add: filterTextInput expand: false;
+		yourself
 ]
 
 { #category : #accessing }
@@ -125,15 +126,14 @@ DTFilterableListPresenter >> initialize [
 ]
 
 { #category : #initialization }
-DTFilterableListPresenter >> initializeWidgets [
+DTFilterableListPresenter >> initializePresenters [
 
 	labelPresenter := self newLabel.
 	listPresenter := self newList.
 	filterTextInput := self newTextInput
-								placeholder: 'Filter...';
-								whenTextChangedDo: [ self filterList ];
-								autoAccept: true;
-								yourself
+		placeholder: 'Filter...';
+		whenTextChangedDo: [ self filterList ];
+		yourself
 ]
 
 { #category : #accessing }

@@ -3,7 +3,7 @@ Abstract superclass for UI's of Dr Test
 "
 Class {
 	#name : #AbstractDrTestsPresenter,
-	#superclass : #SpPresenter,
+	#superclass : #StPresenter,
 	#instVars : [
 		'pluginResult',
 		'testsConfiguration',
@@ -17,6 +17,13 @@ Class {
 AbstractDrTestsPresenter class >> isAbstract [
 
 	^ self name = #AbstractDrTestsPresenter
+]
+
+{ #category : #icons }
+AbstractDrTestsPresenter class >> taskbarIconName [
+	"Answer the icon for the receiver in a task bar."
+
+	^ #testRunner
 ]
 
 { #category : #accessing }
@@ -55,18 +62,13 @@ AbstractDrTestsPresenter >> handlePluginStatusUpdate: aDTStatusUpdate [
 	self updateStatus: aDTStatusUpdate message
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 AbstractDrTestsPresenter >> initializeButtons [
 
 	switchButton := self newButton.
 	switchButton
+		action: [ self switchUI ];
 		icon: (self iconNamed: #smallRemoteOpen)
-]
-
-{ #category : #initialization }
-AbstractDrTestsPresenter >> initializePresenter [
-
-	self switchButton action: [ self switchUI ]
 ]
 
 { #category : #initialization }
@@ -181,7 +183,8 @@ AbstractDrTestsPresenter >> updateUI [
 { #category : #updating }
 AbstractDrTestsPresenter >> updateWithPluginResult: aPluginResult [
 
-	aPluginResult ifNotNil: [ self updateWithResults: aPluginResult ]
+	aPluginResult ifNil: [ ^ self ].
+	self updateWithResults: aPluginResult
 ]
 
 { #category : #updating }

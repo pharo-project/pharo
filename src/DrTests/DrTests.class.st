@@ -35,24 +35,6 @@ DrTests class >> beDefaultTestRunner [
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #layout }
-DrTests class >> defaultLayout [
-
-	^ SpBoxLayout newTopToBottom
-		add:
-			(SpBoxLayout newLeftToRight
-				add: #pluginsDropList;
-				add: #switchButton
-					withConstraints: [ :constraints | constraints width: self buttonWidth * 2 ];
-				yourself)
-			withConstraints: [ :constraints | 
-				constraints
-					expand: false;
-					height: self toolbarHeight ];
-		add: #pluginPresenter;
-		yourself
-]
-
 { #category : #'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
 	<worldMenu>
@@ -69,8 +51,8 @@ DrTests class >> menuCommandOn: aBuilder [
 
 { #category : #api }
 DrTests class >> open [
-
 	<script>
+	
 	^ self new
 		  open;
 		  yourself
@@ -84,20 +66,9 @@ DrTests class >> registerToolsOn: registry [
 	"registry register: self as: #testRunner"
 ]
 
-{ #category : #'instance creation' }
-DrTests class >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPluginResult andPlugin: aDTPlugin [
-
-	self open
-		updateStatus: 'Tests finished.';
-		currentPlugin: aDTPlugin;
-		testsConfiguration: aDTPluginConfiguration;
-		updateWithPluginResult: aDTPluginResult
-]
-
 { #category : #initialization }
 DrTests >> connectPresenters [
 
-	super connectPresenters.
 	"Take the first element in list"
 	self pluginsDropList selectIndex: 1.
 	self currentPlugin: self pluginsDropList selectedItem new
@@ -111,11 +82,21 @@ DrTests >> contentForReRun [
 
 { #category : #accessing }
 DrTests >> currentPlugin: aPlugin [
+	| newPluginPresenter |
+
+	self currentPlugin = aPlugin ifTrue: [ ^ self ].  
 
 	super currentPlugin: aPlugin.
-	pluginPresenter := self instantiate: aPlugin pluginPresenterClass on: {aPlugin. self}.
-	
-	self rebuildLayout.
+
+	aPlugin pluginPresenterClass = pluginPresenter class 
+		ifFalse: [ 
+			newPluginPresenter := self 
+				instantiate: aPlugin pluginPresenterClass 
+				on: { aPlugin. self }.
+			self layout 
+				replace: pluginPresenter 
+				with: newPluginPresenter.
+			pluginPresenter := newPluginPresenter ].
 	
 	self updateStatus: aPlugin pluginName , ' plugin is ready to work!' translated
 ]
@@ -126,23 +107,38 @@ DrTests >> dateAndTimeString [
 	^ DateAndTime now asStringYMDHM
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #layout }
+DrTests >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		spacing: 5;
+		add: (SpBoxLayout newLeftToRight
+				spacing: 5;
+				add: pluginsDropList;
+				add: switchButton expand: false;
+				yourself)
+			expand: false;
+		add: pluginPresenter;
+		add: statusLabel expand: false;
+		yourself
+]
+
+{ #category : #initialization }
 DrTests >> initializeButtons [
 
 	super initializeButtons.
-
 	switchButton
 		label: 'Minimize';
 		disable.
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DrTests >> initializePluginPresenter [
 
 	pluginPresenter := self instantiate: DTNullPluginPresenter
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DrTests >> initializePluginsDropList [
 
 	pluginsDropList := self newDropList.
@@ -159,14 +155,13 @@ DrTests >> initializePluginsDropList [
 DrTests >> initializePresenters [
 
 	super initializePresenters.
-		
 	self
 		initializeStatusLabel;
 		initializePluginsDropList;
 		initializePluginPresenter
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DrTests >> initializeStatusLabel [
 
 	statusLabel := self newLabel
@@ -176,9 +171,9 @@ DrTests >> initializeStatusLabel [
 DrTests >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
-		title:  self title;
-		initialExtent: 700 @ 500;
-		statusBar: statusLabel
+		title: self title;
+		initialExtent: 800@600;
+		windowIcon: (self iconNamed: self class systemIconName)
 ]
 
 { #category : #private }
@@ -211,6 +206,16 @@ DrTests >> pluginsDropList [
 	^ pluginsDropList
 ]
 
+{ #category : #initialization }
+DrTests >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPluginResult andPlugin: aDTPlugin [
+
+	self
+		updateStatus: 'Tests finished.';
+		currentPlugin: aDTPlugin;
+		testsConfiguration: aDTPluginConfiguration;
+		updateWithPluginResult: aDTPluginResult
+]
+
 { #category : #accessing }
 DrTests >> selectedItems [
 	
@@ -238,11 +243,12 @@ DrTests >> subwidgetsToLock [
 { #category : #'private - actions' }
 DrTests >> switchToMiniDrTest [
 
-	(MiniDrTests new
-		 testsConfiguration: self testsConfiguration;
-		 currentPlugin: self currentPlugin;
-		 updateWithPluginResult: self pluginResult;
-		 yourself) open
+	((MiniDrTests newApplication: self application)
+		testsConfiguration: self testsConfiguration;
+		currentPlugin: self currentPlugin;
+		updateWithPluginResult: self pluginResult;
+		yourself) 
+		open
 ]
 
 { #category : #actions }

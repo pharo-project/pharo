@@ -14,6 +14,7 @@ DTRerunCommand >> execute [
 
 { #category : #hooks }
 DTRerunCommand >> initialize [
+
 	super initialize.
-	self name: 'Re-run tests'
+	self name: 'Re-run all tests'
 ]

@@ -16,10 +16,11 @@ Class {
 }
 
 { #category : #accessing }
-DTTestsRunnerResult >> backgroundColor [
-	testsResult errors ifNotEmpty: [ ^ DTErrorResultType backgroundColor ].
-	testsResult failures ifNotEmpty: [ ^ DTFailResultType backgroundColor  ].
-	^ DTPassResultType backgroundColor
+DTTestsRunnerResult >> backgroundColorStyle [
+
+	testsResult errors ifNotEmpty: [ ^ 'testError' ].
+	testsResult failures ifNotEmpty: [ ^ 'testFail'  ].
+	^ 'testPass'
 ]
 
 { #category : #'tree building' }
@@ -59,27 +60,31 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 DTTestsRunnerResult >> buildTreeForUI [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
-		subResults:
-			{DTTreeNode new
+		subResults: { 
+			DTTreeNode new
 				name: DTTestResultType error pluralName;
 				subResults: (self buildLeavesFrom: self errors type: DTTestResultType error);
+				startExpanded;
+				displayColorIfNotEmpty: self theme testColorError;
 				yourself.
 			DTTreeNode new
 				name: DTTestResultType fail pluralName;
-				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail).
+				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail);
+				startExpanded;
+				displayColorIfNotEmpty:  self theme testColorFailure.
 			DTTreeNode new
 				name: DTTestResultType skipped pluralName;
 				subResults: (self buildLeavesFrom: self skipped type: DTTestResultType skipped).
 			DTTreeNode new
 				name: DTTestResultType pass pluralName;
-				subResults: (self buildLeavesFrom: self passed type: DTTestResultType pass).
+				subResults: (self buildLeavesFrom: self passed type: DTTestResultType pass);
+				displayColorIfNotEmpty: self theme testColorPassing.
 			DTTreeNode new
 				name: DTTestResultType expectedFailure pluralName;
 				subResults: (self buildLeavesFrom: self expectedFailures type: DTTestResultType expectedFailure).
 			DTTreeNode new
 				name: DTTestResultType unexpectedPass pluralName;
-				subResults: (self buildLeavesFrom: self unexpectedPassed type: DTTestResultType unexpectedPass).
-		};
+				subResults: (self buildLeavesFrom: self unexpectedPassed type: DTTestResultType unexpectedPass) };
 		yourself
 ]
 
