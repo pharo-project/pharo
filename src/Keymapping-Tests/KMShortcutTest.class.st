@@ -18,7 +18,8 @@ KMShortcutTest >> testAsString [
 	self assert: $b command asString equals: 'Cmd + B'.
 	self assert: $c shift asString equals: 'Shift + C'.
 	self assert: $d alt asString equals: 'Alt + D'.
-	self assert: $e ctrl command asString equals: (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + E')
+	self assert: $e ctrl command asString equals: (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + E').
+	self assert: ($o command, $i command) asString equals: 'Cmd + (O , I)'.
 ]
 
 { #category : #tests }

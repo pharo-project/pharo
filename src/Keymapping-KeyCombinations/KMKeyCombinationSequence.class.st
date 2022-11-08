@@ -5,7 +5,9 @@ In order to have a match between me and a user's key presses, all user events mu
 
 To create a sequence of key combinations use the #, message. Like for example:
 
+```
 $a command , $b shift
+```
 "
 Class {
 	#name : #KMKeyCombinationSequence,
@@ -69,6 +71,12 @@ KMKeyCombinationSequence >> hash [
 	^ shortcuts hash
 ]
 
+{ #category : #private }
+KMKeyCombinationSequence >> haveShortcutsSameModifier [
+
+	^ (shortcuts collect: [ :s | s modifier ] as: Set) size = 1
+]
+
 { #category : #matching }
 KMKeyCombinationSequence >> matches: anEventBuffer [
 	|maxIndex|
@@ -102,9 +110,25 @@ KMKeyCombinationSequence >> prettyPrintOn: aStream [
 
 { #category : #printing }
 KMKeyCombinationSequence >> printOn: aStream [
-	shortcuts 
-		do: [ :shortcut| shortcut printOn: aStream]
-		separatedBy: [ aStream nextPutAll: ' , '].
+
+	self haveShortcutsSameModifier
+		ifTrue: [ self printSequenceWithSameModifierOn: aStream ]
+		ifFalse: [ 
+			shortcuts
+				do: [ :shortcut | shortcut printOn: aStream ]
+				separatedBy: [ aStream nextPutAll: ' + ' ] ]
+]
+
+{ #category : #private }
+KMKeyCombinationSequence >> printSequenceWithSameModifierOn: aStream [
+
+	aStream
+		nextPutAll: shortcuts first modifier name;
+		nextPutAll: ' + ('.
+	shortcuts
+		do: [ :s | aStream nextPutAll: s key name ]
+		separatedBy: [ aStream nextPutAll: ' , ' ].
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
