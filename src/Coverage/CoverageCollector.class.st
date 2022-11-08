@@ -190,6 +190,73 @@ CoverageCollector >> methods: anObject [
 	methods := anObject
 ]
 
+{ #category : #callgraph }
+CoverageCollector >> nodeDistances: aNodeOrMethod isBackward: isBackward [
+
+	"Simple BFS to discover the distance of reachble nodes from a staring node.
+	 Edges can be followed forward or backward."
+
+	| aNode todo result todoLater depth |
+	
+	aNode := (aNodeOrMethod isCompiledMethod or: [aNodeOrMethod class = ReflectiveMethod])
+		ifTrue: [ aNodeOrMethod ast body ]
+		ifFalse: [ aNodeOrMethod ].
+	
+	self assert: (nodes includes: aNode).
+	result := IdentityDictionary new.
+	todo := OrderedCollection new.
+	todoLater := OrderedCollection new.
+	todo add: aNode.
+	result at: aNode put: 0.
+	depth := 1.
+	[ todo isNotEmpty ] whileTrue: [
+		| tmp |
+		todo do: [ :n |
+			edges do:  [ :e |
+				| n1 n2 |
+				isBackward
+					ifTrue: [
+						n1 := e second.
+						n2 := e first. ]
+					ifFalse: [ 
+						n1 := e first.
+						n2 := e second. ].
+					
+				((n1 ~~ n) or: [result includesKey: n2]) ifFalse: [ 
+					todoLater add: n2.
+					result at: n2 put: depth.
+				 ]
+			 ]
+		 ].
+		depth := depth + 1.
+		tmp := todo.
+		todo := todoLater.
+		todoLater := tmp.
+		todoLater removeAll.
+	].
+	^ result.
+]
+
+{ #category : #callgraph }
+CoverageCollector >> nodeDistancesFrom: aNodeOrMethod [
+
+	"Compute the distance of each node that is reached by `aNodeOrMethod` (according to `callgraph`).
+	 Returns a dictionary Node->integer.
+	 Only nodes with a finite distance from `aNodeOrMethod` are present in the dictionary (including `aNode` itself with a distance of 0)."
+
+	^ self nodeDistances: aNodeOrMethod isBackward: false
+]
+
+{ #category : #callgraph }
+CoverageCollector >> nodeDistancesTo: aNodeOrMethod [
+
+	"Compute the distance of each node that can reach `aNodeOrMethod` (according to `callgraph`).
+	 Returns a dictionary Node->integer.
+	 Only nodes with a finite distance to `aNodeOrMethod` are present in the dictionary (including `aNode` itself with a distance of 0)."
+
+	^ self nodeDistances: aNodeOrMethod isBackward: true
+]
+
 { #category : #accessing }
 CoverageCollector >> nodes [
 
