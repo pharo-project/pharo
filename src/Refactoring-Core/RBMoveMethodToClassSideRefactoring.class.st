@@ -58,7 +58,7 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
+RBMoveMethodToClassSideRefactoring >> applicabilityConditions [
 
 	^ (RBCondition isMetaclass: class) not
 ]
@@ -133,7 +133,7 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions 
+	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
 { #category : #transforming }
