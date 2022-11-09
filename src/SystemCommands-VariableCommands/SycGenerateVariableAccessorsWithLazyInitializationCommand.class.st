@@ -26,7 +26,7 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMe
 { #category : #converting }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 
-	^ { (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+	^ { (RBCreateLazyAccessorsForVariableTransformation 
 		variable: variable name
 		class: variable definingClass 
 		classVariable: variable isClassVariable
@@ -40,7 +40,9 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName
 
 { #category : #accessing }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuItemName [
-	^'Generate accessors (lazy)'
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^'(T) Generate accessors (lazy)'
 ]
 
 { #category : #testing }

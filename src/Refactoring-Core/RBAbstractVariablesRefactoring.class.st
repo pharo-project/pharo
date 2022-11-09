@@ -42,29 +42,31 @@ RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn:
 ]
 
 { #category : #transforming }
-RBAbstractVariablesRefactoring >> abstractClassVariable: aString [ 
+RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
+
 	| refactoring rewriter nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
-	refactoring := RBCreateAccessorsForVariableRefactoring 
-		model: self model
-		variable: aString
-		class: nonMetaClass
-		classVariable: true.
+	refactoring := RBCreateAccessorsForVariableTransformation
+		               model: self model
+		               variable: aString
+		               class: nonMetaClass
+		               classVariable: true.
 	self performCompositeRefactoring: refactoring.
 	rewriter := self parseTreeRewriter.
-	fromClass isMeta 
-		ifTrue: 
-			[ rewriter
+	fromClass isMeta
+		ifTrue: [ 
+			rewriter
 				replace: aString , ' := ``@object'
-					with: ('self <1s> ``@object' expandMacrosWith: refactoring setterMethod);
-				replace: aString
-					with: 'self ' , refactoring getterMethod ]
-		ifFalse: 
-			[ rewriter
+				with:
+					('self <1s> ``@object' expandMacrosWith: refactoring setterMethod);
+				replace: aString with: 'self ' , refactoring getterMethod ]
+		ifFalse: [ 
+			rewriter
 				replace: aString , ' := ``@object'
-					with: ('self class <1s> ``@object' expandMacrosWith: refactoring setterMethod);
+				with: ('self class <1s> ``@object' expandMacrosWith:
+							 refactoring setterMethodName);
 				replace: aString
-					with: 'self class ' , refactoring getterMethod ].
+				with: 'self class ' , refactoring getterMethodName ].
 	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
@@ -81,20 +83,23 @@ RBAbstractVariablesRefactoring >> abstractClassVariables [
 ]
 
 { #category : #transforming }
-RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [ 
+RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
+
 	| refactoring rewriter |
-	refactoring := RBCreateAccessorsForVariableRefactoring 
-				model: self model
-				variable: aString
-				class: fromClass
-				classVariable: false.
+	refactoring := RBCreateAccessorsForVariableTransformation
+		               model: self model
+		               variable: aString
+		               class: fromClass
+		               classVariable: false.
 	self performCompositeRefactoring: refactoring.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
-			with: ('self <1s> ``@object' expandMacrosWith: refactoring setterMethod);
-		replace: aString with: 'self ' , refactoring getterMethod.
-	(rewriter executeTree: tree) ifTrue: [tree := rewriter tree]
+		with:
+			('self <1s> ``@object' expandMacrosWith:
+					 refactoring setterMethodName);
+		replace: aString with: 'self ' , refactoring getterMethodName.
+	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
 { #category : #transforming }

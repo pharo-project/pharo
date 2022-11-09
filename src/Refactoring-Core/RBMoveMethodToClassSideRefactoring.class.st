@@ -44,7 +44,7 @@ Class {
 { #category : #refactoring }
 RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 
-	^ RBCreateAccessorsForVariableRefactoring
+	^ RBCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName
 				class: class
@@ -138,17 +138,20 @@ RBMoveMethodToClassSideRefactoring >> preconditions [
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
+
 	| rbMethod references |
-	rbMethod := (class methodFor: method selector).
-	references := class instanceVariableNames select: [:e | rbMethod refersToVariable: e].
-	references do: [ :e | |replacer accessorsRefactoring|
+	rbMethod := class methodFor: method selector.
+	references := class instanceVariableNames select: [ :e | 
+		              rbMethod refersToVariable: e ].
+	references do: [ :e | 
+		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
 		self performCompositeRefactoring: accessorsRefactoring.
-		replacer := self parseTreeRewriterClass 
-				variable: e
-				getter: accessorsRefactoring getterMethod
-				setter: accessorsRefactoring setterMethod.
-	   self convertMethod: method selector for: class using: replacer ].
+		replacer := self parseTreeRewriterClass
+			            variable: e
+			            getter: accessorsRefactoring getterMethodName
+			            setter: accessorsRefactoring setterMethodName.
+		self convertMethod: method selector for: class using: replacer ]
 ]
 
 { #category : #printing }

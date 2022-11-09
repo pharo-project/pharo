@@ -63,7 +63,7 @@ RBGenerateEqualHashRefactoring class >> model: aNamespace className: aClass vari
 { #category : #transforming }
 RBGenerateEqualHashRefactoring >> accessorForVariable: aString [
 	| refactoring |
-	refactoring := RBCreateAccessorsForVariableRefactoring
+	refactoring := RBCreateAccessorsForVariableTransformation
 		model: self model
 		variable: aString
 		class: self theClass

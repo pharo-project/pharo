@@ -376,7 +376,7 @@ RBRefactoring >> requestSelfArgumentName [
 ]
 
 { #category : #utilities }
-RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [ 
+RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |
@@ -384,14 +384,15 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	baseString at: 1 put: baseString first asLowercase.
 	newString := baseString.
 	hasParam := newString last = $:.
-	hasParam 
-		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
+	hasParam ifTrue: [ 
+		baseString := newString copyFrom: 1 to: newString size - 1 ].
 	i := 0.
-	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue: 
-			[i := i + 1.
-			newString := baseString , i printString 
-						, (hasParam ifTrue: [':'] ifFalse: [''])].
-	^newString asSymbol
+	[ aClass hierarchyDefinesMethod: newString asSymbol ] whileTrue: [ 
+		i := i + 1.
+		newString := baseString , i printString , (hasParam
+			              ifTrue: [ ':' ]
+			              ifFalse: [ '' ]) ].
+	^ newString asSymbol
 ]
 
 { #category : #private }

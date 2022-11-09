@@ -18,18 +18,18 @@ If the class already contains that accessor, I will create another one with a nu
 
 "
 Class {
-	#name : #RBAccessorClassRefactoring,
+	#name : #RBAccessorClassTransformation,
 	#superclass : #RBClassRefactoring,
 	#category : #'Refactoring-Core-Transformation'
 }
 
 { #category : #accessing }
-RBAccessorClassRefactoring class >> kind [
+RBAccessorClassTransformation class >> kind [
 	^ 'Transformation'
 ]
 
 { #category : #preconditions }
-RBAccessorClassRefactoring >> preconditions [
+RBAccessorClassTransformation >> preconditions [
 
 	^ self refactorings
 		  inject: self emptyCondition
@@ -37,15 +37,15 @@ RBAccessorClassRefactoring >> preconditions [
 ]
 
 { #category : #accessing }
-RBAccessorClassRefactoring >> refactorings [
+RBAccessorClassTransformation >> refactorings [
 	| class |
 	class := self classObjectFor: className asSymbol.
 	^  class instanceVariableNames collect: [ :each | 
-		RBCreateAccessorsForVariableRefactoring
+		RBCreateAccessorsForVariableTransformation
 			variable: each class: class classVariable: false ]
 ]
 
 { #category : #transforming }
-RBAccessorClassRefactoring >> transform [
+RBAccessorClassTransformation >> transform [
 	self refactorings do: [ :each | self performCompositeRefactoring: each ]
 ]
