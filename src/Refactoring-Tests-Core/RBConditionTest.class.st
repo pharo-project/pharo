@@ -70,24 +70,6 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported [
 ]
 
 { #category : #tests }
-RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported2 [
-
-	| falseCase trueCase composition |
-	falseCase := RBCondition
-		             withBlock: [ false ]
-		             errorString: 'The false case'.
-	trueCase := RBCondition
-		            withBlock: [ false ]
-		            errorString: 'The second false case'.
-	composition := falseCase & trueCase.
-	self deny: composition check.
-	self halt.
-	self
-		assert: composition errorString
-		equals: 'The false case AND The second false case'
-]
-
-{ #category : #tests }
 RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst [
 
 	| falseCase trueCase composition |
