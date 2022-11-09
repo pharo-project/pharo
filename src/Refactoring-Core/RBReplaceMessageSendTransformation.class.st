@@ -1,15 +1,16 @@
 "
-I'm a refactoring operation for replace one method call by another one.
+I'm a transformation replaces one message send by another one.
+As such I cannot garantee anything about behavior preservation.
 
-The new method's name can have a different number of arguments than the original method, if it has more arguments a list of initializers will be needed for them.
+The new method's name can have a different number of arguments than the original method, 
+if it has more arguments a list of initializers will be needed for them.
 
 All senders of this method are changed by the other.
 
-Example
--------
-Script:
+### Example
+
 ```
-(RBReplaceMethodRefactoring  
+(RBReplaceMessageSendTransformation
 	model: model
 	replaceMethod: #anInstVar:
 	in: RBBasicLintRuleTestData
@@ -19,7 +20,7 @@ Script:
 ```
 "
 Class {
-	#name : #RBReplaceMethodRefactoring,
+	#name : #RBReplaceMessageSendTransformation,
 	#superclass : #RBChangeMethodNameRefactoring,
 	#instVars : [
 		'replaceInAllClasses',
@@ -28,8 +29,14 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #accessing }
+RBReplaceMessageSendTransformation class >> kind [
+
+	^ 'Transformation'
+]
+
 { #category : #'instance creation' }
-RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
 	^ self new
 		model: aRBSmalltalk;
 		replaceCallMethod: aSelector
@@ -40,7 +47,7 @@ RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector
 ]
 
 { #category : #'instance creation' }
-RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
+RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
 	^ self new
 		model: aRBSmalltalk;
 		replaceCallMethod: aSelector
@@ -52,7 +59,7 @@ RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector
 ]
 
 { #category : #'instance creation' }
-RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
 	^self new 
 		replaceCallMethod: aSelector
 		in: aClass
@@ -61,7 +68,7 @@ RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: 
 ]
 
 { #category : #'instance creation' }
-RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
+RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
 	^self new 
 		replaceCallMethod: aSelector
 		in: aClass
@@ -71,19 +78,20 @@ RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: 
 ]
 
 { #category : #accessing }
-RBReplaceMethodRefactoring >> initializers [
+RBReplaceMessageSendTransformation >> initializers [
 
 	^ initializers ifNil: [ initializers := {  } ]
 ]
 
 { #category : #accessing }
-RBReplaceMethodRefactoring >> initializers: anObject [
+RBReplaceMessageSendTransformation >> initializers: anObject [
 
 	initializers := anObject
 ]
 
 { #category : #private }
-RBReplaceMethodRefactoring >> newSelectorString [
+RBReplaceMessageSendTransformation >> newSelectorString [
+
 	| stream keywords |
 	stream := WriteStream on: String new.
 	permutation ifEmpty: [ stream nextPutAll: newSelector ].
@@ -107,40 +115,39 @@ RBReplaceMethodRefactoring >> newSelectorString [
 ]
 
 { #category : #transforming }
-RBReplaceMethodRefactoring >> parseTreeRewriter [
+RBReplaceMessageSendTransformation >> parseTreeRewriter [
+
 	| rewriteRule oldString newString |
 	rewriteRule := self parseTreeRewriterClass new.
 	oldString := self buildSelectorString: oldSelector.
 	newString := self newSelectorString.
-	rewriteRule replace: '``@object ' , oldString
+	rewriteRule
+		replace: '``@object ' , oldString
 		with: '``@object ' , newString.
-	^rewriteRule
+	^ rewriteRule
 ]
 
 { #category : #preconditions }
-RBReplaceMethodRefactoring >> preconditions [ 
-	|conditions|
-	
-	conditions := (RBCondition withBlock: [ oldSelector numArgs < newSelector numArgs ifTrue: [ 
-				(oldSelector numArgs + self initializers size) = newSelector numArgs 
-					ifFalse: [ self refactoringFailure: 'You don''t have the necessary initializers to replace senders.' ] ]. true ])
-						&(RBCondition definesSelector: oldSelector in: class )
-						& (RBCondition definesSelector: newSelector in: class ).
-	
-	^ conditions & (RBCondition withBlock: 
-		[ |senders|
-		senders := self replaceInAllClasses 
-			ifTrue: [ self model allReferencesTo: oldSelector ]
-			ifFalse: [ self model allReferencesTo: oldSelector in: {class} ].
-		senders size > 1 
-			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> senders.<n>Proceed anyway?' 
-							expandMacrosWith: senders size)].
-		true])
+RBReplaceMessageSendTransformation >> preconditions [
+
+	| conditions |
+	conditions := (RBCondition withBlock: [ 
+		               oldSelector numArgs < newSelector numArgs ifTrue: [ 
+			               oldSelector numArgs + self initializers size
+			               = newSelector numArgs ifFalse: [ 
+				               self refactoringFailure:
+					               'You don''t have the necessary initializers to replace senders.' ] ].
+		               true ])
+	              & (RBCondition definesSelector: oldSelector in: class)
+	              & (RBCondition definesSelector: newSelector in: class).
+	"This is unclear that the targeting method should already be defined."
+
+	^ conditions 
 ]
 
 { #category : #initialization }
-RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
+RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
+
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
@@ -148,21 +155,19 @@ RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel
 ]
 
 { #category : #initialization }
-RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean [
-	oldSelector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
-	class := self classObjectFor: aClass.
-	permutation := aMap.
+RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean [
+
+	self replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap.
 	replaceInAllClasses := aBoolean.
 ]
 
 { #category : #accessing }
-RBReplaceMethodRefactoring >> replaceInAllClasses [
+RBReplaceMessageSendTransformation >> replaceInAllClasses [
 	^ replaceInAllClasses ifNil: [ replaceInAllClasses := false ]
 ]
 
 { #category : #transforming }
-RBReplaceMethodRefactoring >> transform [
+RBReplaceMessageSendTransformation >> transform [
 	self replaceInAllClasses 
 		ifTrue: [ self renameMessageSends ]
 		ifFalse: [ self renameMessageSendsIn: {class} ]
