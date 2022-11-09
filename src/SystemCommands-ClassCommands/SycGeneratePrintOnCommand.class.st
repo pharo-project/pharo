@@ -1,5 +1,5 @@
 Class {
-	#name : #SycGeneratePrintStringCommand,
+	#name : #SycGeneratePrintOnCommand,
 	#superclass : #SycSingleClassCommand,
 	#instVars : [
 		'variables'
@@ -8,27 +8,28 @@ Class {
 }
 
 { #category : #execution }
-SycGeneratePrintStringCommand >> asRefactorings [
+SycGeneratePrintOnCommand >> asRefactorings [
 
 	^{
-		RBGeneratePrintStringRefactoring 
+		RBGeneratePrintOnTransformation 
 			className: targetClass name
 			variables: (variables collect: [:each | each name])
 	}
 ]
 
 { #category : #accessing }
-SycGeneratePrintStringCommand >> defaultMenuItemName [
-	^'Generate print string'
+SycGeneratePrintOnCommand >> defaultMenuItemName [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+	^'(T) Generate printOn:'
 ]
 
 { #category : #execution }
-SycGeneratePrintStringCommand >> execute [
+SycGeneratePrintOnCommand >> execute [
 	self executeRefactorings
 ]
 
 { #category : #execution }
-SycGeneratePrintStringCommand >> prepareFullExecutionInContext: aToolContext [
+SycGeneratePrintOnCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
 	variables := aToolContext 

@@ -1,20 +1,33 @@
 "
-I am a refactoring for generating a printString (printOn: aStream) method. 
+I am a transformation that generates a printOn: method. 
 
-You can specify which of my instance variables should be used for generating the printString.
+You can specify which of my instance variables should be used for generating the printOn: method.
 
 For example: 
 
 ```
-RBGeneratePrintStringRefactoring 
+RBGeneratePrintOnTransformation 
 	model: RBNamespace new 
 	className: ClassS 
 	variables: { #inst1 . #inst2 . #inst3 }
 ```
 
+will generate
+
+```
+
+printOn: aStream
+		""Generate a string representation of the receiver based on its instance variables.""
+		
+		super printOn: aStream
+		aStream nextPutAll: 'inst1'; print: inst1.
+		aStream nextPutAll: 'inst2'; print: inst2.
+		aStream nextPutAll: 'inst3'; print: inst3
+				
+```
 "
 Class {
-	#name : #RBGeneratePrintStringRefactoring,
+	#name : #RBGeneratePrintOnTransformation,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'variables'
@@ -23,23 +36,24 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBGeneratePrintStringRefactoring class >> className: aClass variables: anArray [
+RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
 { #category : #accessing }
-RBGeneratePrintStringRefactoring class >> kind [ 
+RBGeneratePrintOnTransformation class >> kind [ 
 	^ 'Transformation'
 ]
 
 { #category : #'instance creation' }
-RBGeneratePrintStringRefactoring class >> model: aNamespace className: aClass variables: anArray [
+RBGeneratePrintOnTransformation class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]
 
 { #category : #preconditions }
-RBGeneratePrintStringRefactoring >> preconditions [
-
+RBGeneratePrintOnTransformation >> preconditions [
+	"Checks that the class actually defines all the variables that will be part of the printOn:."
+	
 	^ variables
 		  inject: self emptyCondition
 		  into: [ :condition :variable | 
@@ -49,17 +63,17 @@ RBGeneratePrintStringRefactoring >> preconditions [
 ]
 
 { #category : #accessing }
-RBGeneratePrintStringRefactoring >> theClass [
+RBGeneratePrintOnTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }
-RBGeneratePrintStringRefactoring >> transform [
+RBGeneratePrintOnTransformation >> transform [
 	| method |
 	method := self parserClass
 		parseMethod:
 			'printOn: aStream
-		"Append a sequence of characters to aStream that identify the receiver."
+		"Generate a string representation of the receiver based on its instance variables."
 		
 		super printOn: aStream'.
 	variables
@@ -73,6 +87,6 @@ RBGeneratePrintStringRefactoring >> transform [
 ]
 
 { #category : #accessing }
-RBGeneratePrintStringRefactoring >> variables: anArray [
+RBGeneratePrintOnTransformation >> variables: anArray [
 	variables := anArray
 ]
