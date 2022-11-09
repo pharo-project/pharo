@@ -14,6 +14,10 @@ CoverageCollectorTest >> methodCallMethods [
 ]
 
 { #category : #example }
+CoverageCollectorTest >> methodCallee [
+]
+
+{ #category : #example }
 CoverageCollectorTest >> methodEmpty [
 ]
 
@@ -28,19 +32,22 @@ CoverageCollectorTest >> methodManyBlocks [
 		| block |
 		{ 0. 1 } do: [ :x | 6. x ].
 		{ } do: [ :x | "not called" 7. x ].
-		block := [ 8. ].
+		block := [ 8. self methodCallee ].
 		block value.
 		block := [ ].
 		block value.
 		block := [ "not called" 9. ].
 		block := [ ] "not called".
+		self methodCallee.
 		j ]
 ]
 
 { #category : #example }
 CoverageCollectorTest >> methodNotCalled [
-	
-	^ 'Not expected to be called'
+
+	"Not expected to be called"
+
+	self methodCallee.
 ]
 
 { #category : #example }
@@ -69,8 +76,18 @@ CoverageCollectorTest >> testBasicCoverage [
 	self assert: res uncoveredMethods asArray equals: { Rectangle>>#intersect: }
 ]
 
+{ #category : #test }
+CoverageCollectorTest >> testCallgraph [
+
+	| cov graph |
+	cov := CoverageCollector new.
+	cov methods: (self class methods select: [ :m | 'method*' match: m selector ]).
+	graph := cov callgraph.
+	self assert: graph size equals: 21
+]
+
 { #category : #tests }
-CoverageCollectorTest >> testExaple [
+CoverageCollectorTest >> testExample [
 
 	| collector coverage |
 	collector := CoverageCollector new. "Instantiate"
@@ -134,13 +151,39 @@ CoverageCollectorTest >> testNodeCoverage2 [
 
 	res := cov runOn: [ self methodCallMethods ].
 	self assert: cov metalink hasNodes not. "metaliks where removed"
-	self assert: cov methods size equals: 6.
-	self assert: cov nodes size equals: 20.
+	self assert: cov methods size equals: 7.
+	self assert: cov nodes size equals: 21.
 
-	self assert: res methods size equals: 5.
-	self assert: res nodes size equals: 14.
+	self assert: res methods size equals: 6.
+	self assert: res nodes size equals: 15.
 	self assert: (cov nodes includesAll: res nodes).
 	self assert: res uncoveredNodes size equals: 6.
+]
+
+{ #category : #test }
+CoverageCollectorTest >> testNodeDistancesFrom [
+
+	| cov graph target distances |
+	cov := CoverageCollector new.
+	cov methods: (self class methods select: [ :m | 'method*' match: m selector ]).
+	graph := cov callgraph.
+		
+	target := (self class >> #methodManyBlocks) ast body.
+	distances := cov nodeDistancesFrom: target.
+	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 1. 1. 2. 2. 2. 2. 2. 2. 2}.
+]
+
+{ #category : #test }
+CoverageCollectorTest >> testNodeDistancesTo [
+
+	| cov graph target distances |
+	cov := CoverageCollector new.
+	cov methods: (self class methods select: [ :m | 'method*' match: m selector ]).
+	graph := cov callgraph.
+		
+	target := (self class >> #methodCallee) ast body.
+	distances := cov nodeDistancesTo: target.
+	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 2. 3}.
 ]
 
 { #category : #tests }
