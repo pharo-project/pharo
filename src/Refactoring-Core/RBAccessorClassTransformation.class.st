@@ -5,13 +5,13 @@ Example:
 Create accessors for all instance variables:
 
 ```
-RBAccessorClassRefactoring 
+RBAccessorClassTransformation 
 	model: RBNamespace new className: 'Morph' .
 ```
 Create accessors for all class instance variables:
 
 ```
-RBAccessorClassRefactoring 
+RBAccessorClassTransformation
 	model: RBNamespace new className: 'Morph class' .
 ```
 If the class already contains that accessor, I will create another one with a numbered suffix.
@@ -20,7 +20,7 @@ If the class already contains that accessor, I will create another one with a nu
 Class {
 	#name : #RBAccessorClassTransformation,
 	#superclass : #RBClassRefactoring,
-	#category : #'Refactoring-Core-Transformation'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
-Extension { #name : #SycGeneratePrintStringCommand }
+Extension { #name : #SycGeneratePrintOnCommand }
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
-SycGeneratePrintStringCommand class >> fullBrowserMenuActivation [
+SycGeneratePrintOnCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyFullBrowserClassContext

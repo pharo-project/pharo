@@ -28,42 +28,8 @@ RBDriver class >> isAbstract [
 	^ self == RBDriver
 ]
 
-{ #category : #preconditions }
-RBDriver >> checkApplicability [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #preconditions }
-RBDriver >> checkBreakingChanges [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #preconditions }
-RBDriver >> confirmBreakingChanges [
-
-	self subclassResponsibility
-]
-
 { #category : #execution }
 RBDriver >> execute [
-
-	self checkApplicability ifFalse: [ 
-		^ self refactoringError ].
-	self checkBreakingChanges ifFalse: [
-		"Open warning dialog. It throws an error if user answers No."
-		self confirmBreakingChanges ].
-	self executeRefactoring
-]
-
-{ #category : #execution }
-RBDriver >> executeRefactoring [
-	self subclassResponsibility
-]
-
-{ #category : #error }
-RBDriver >> refactoringError [
-
-	self subclassResponsibility
+	
+	self subclassResponsibility 
 ]
