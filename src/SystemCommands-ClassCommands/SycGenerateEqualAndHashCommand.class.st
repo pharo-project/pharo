@@ -11,7 +11,7 @@ Class {
 SycGenerateEqualAndHashCommand >> asRefactorings [
 
 	^{
-		RBGenerateEqualHashRefactoring 
+		RBGenerateEqualHashTransformation 
 			className: targetClass name
 			variables: (variables collect: [:each | each name])
 	}
@@ -19,7 +19,9 @@ SycGenerateEqualAndHashCommand >> asRefactorings [
 
 { #category : #accessing }
 SycGenerateEqualAndHashCommand >> defaultMenuItemName [
-	^'Generate equal and hash'
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+	
+	^'(T) Generate equal and hash'
 ]
 
 { #category : #execution }

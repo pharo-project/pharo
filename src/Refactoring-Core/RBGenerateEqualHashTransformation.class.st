@@ -1,5 +1,7 @@
 "
-I am a refactoring for generating `#hash` and `#=` comparing methods.
+I am a transformation for generating `#hash` and `#=` comparing methods.
+Note that this transformation does not check whether an `hash` or `=`  method already exists.
+
 
 For example, a Class with three instance methods inst1-inst3
 
@@ -20,8 +22,8 @@ hash
 ```
 	
 and a `#=` method
-```
 
+```
 = anObject
 	""Answer whether the receiver and anObject represent the same object.""
 
@@ -37,7 +39,7 @@ and any instvar accessor for the  instance variables used by method `#=`.
 
 "
 Class {
-	#name : #RBGenerateEqualHashRefactoring,
+	#name : #RBGenerateEqualHashTransformation,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'variables'
@@ -46,22 +48,22 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBGenerateEqualHashRefactoring class >> className: aClass variables: anArray [
+RBGenerateEqualHashTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
 { #category : #accessing }
-RBGenerateEqualHashRefactoring class >> kind [ 
+RBGenerateEqualHashTransformation class >> kind [ 
 	^ 'Transformation'
 ]
 
 { #category : #'instance creation' }
-RBGenerateEqualHashRefactoring class >> model: aNamespace className: aClass variables: anArray [
+RBGenerateEqualHashTransformation class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]
 
 { #category : #transforming }
-RBGenerateEqualHashRefactoring >> accessorForVariable: aString [
+RBGenerateEqualHashTransformation >> accessorForVariable: aString [
 	| refactoring |
 	refactoring := RBCreateAccessorsForVariableRefactoring
 		model: self model
@@ -73,7 +75,7 @@ RBGenerateEqualHashRefactoring >> accessorForVariable: aString [
 ]
 
 { #category : #transforming }
-RBGenerateEqualHashRefactoring >> compileEqual [
+RBGenerateEqualHashTransformation >> compileEqual [
 	| method statement comparison |
 	method := self parserClass
 		parseMethod:
@@ -113,7 +115,7 @@ RBGenerateEqualHashRefactoring >> compileEqual [
 ]
 
 { #category : #transforming }
-RBGenerateEqualHashRefactoring >> compileHash [
+RBGenerateEqualHashTransformation >> compileHash [
 	| method statement hash |
 	method := self parserClass
 		parseMethod:
@@ -138,7 +140,8 @@ RBGenerateEqualHashRefactoring >> compileHash [
 ]
 
 { #category : #preconditions }
-RBGenerateEqualHashRefactoring >> preconditions [
+RBGenerateEqualHashTransformation >> preconditions [
+	"Checks that the class actually defines all the variables that will be part of the hash."
 
 	^ variables
 		  inject: self emptyCondition
@@ -149,17 +152,17 @@ RBGenerateEqualHashRefactoring >> preconditions [
 ]
 
 { #category : #accessing }
-RBGenerateEqualHashRefactoring >> theClass [
+RBGenerateEqualHashTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }
-RBGenerateEqualHashRefactoring >> transform [
+RBGenerateEqualHashTransformation >> transform [
 	self compileHash.
 	self compileEqual
 ]
 
 { #category : #accessing }
-RBGenerateEqualHashRefactoring >> variables: anArray [
+RBGenerateEqualHashTransformation >> variables: anArray [
 	variables := anArray
 ]
