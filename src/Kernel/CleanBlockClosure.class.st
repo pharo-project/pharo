@@ -85,17 +85,20 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 ]
 
 { #category : #scanning }
-CleanBlockClosure >> readsField: varIndex [ 
-	^self compiledBlock readsField: varIndex
+CleanBlockClosure >> readsField: varIndex [
+	"Clean blocks by definition do not read fields"
+	^false
 ]
 
 { #category : #scanning }
 CleanBlockClosure >> readsSelf [
-	^self compiledBlock readsSelf
+	"Clean blocks by definition do not access self"
+	^false
 ]
 
 { #category : #scanning }
 CleanBlockClosure >> readsThisContext [
+	"Clean blocks can access thisContext, we have to forward to the compiled block to check"
 	^self compiledBlock readsThisContext
 ]
 
@@ -122,10 +125,12 @@ CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 
 { #category : #scanning }
 CleanBlockClosure >> sendsToSuper [
-	^self compiledBlock sendsToSuper
+	"Clean blocks by definition do not access super"
+	^false
 ]
 
 { #category : #scanning }
-CleanBlockClosure >> writesField: varIndex [ 
-	^self compiledBlock writesField: varIndex
+CleanBlockClosure >> writesField: varIndex [
+	"Clean blocks by definition do not read fields"
+	^false
 ]
