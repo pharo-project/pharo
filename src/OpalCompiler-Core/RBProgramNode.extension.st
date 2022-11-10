@@ -38,11 +38,6 @@ RBProgramNode >> doSemanticAnalysisIn: aClass [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> hasReturn [
-	^ self children anySatisfy: [ :child | child hasReturn ]
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> irInstruction [
 	^ self methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
 ]

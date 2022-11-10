@@ -188,12 +188,6 @@ RBBlockNode >> hasBlockReturn [
 ]
 
 { #category : #testing }
-RBBlockNode >> hasReturn [
-	self hasBlockReturn ifTrue: [ ^ true ].
-	^ super hasReturn
-]
-
-{ #category : #testing }
 RBBlockNode >> hasTemporaries [
 
 	^ self temporaries isNotEmpty

@@ -455,6 +455,12 @@ RBProgramNode >> hasProperty: aKey [
 	^ properties notNil and: [ properties includesKey: aKey ]
 ]
 
+{ #category : #testing }
+RBProgramNode >> hasReturn [
+	"check if there is a return anywhere"
+	^ self children anySatisfy: [ :child | child hasReturn ]
+]
+
 { #category : #comparing }
 RBProgramNode >> hashForCollection: aCollection [
 	^ aCollection isEmpty ifTrue: [ 0 ] ifFalse: [ aCollection first hash ]

@@ -285,6 +285,14 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : #testing }
+RBSequenceNode >> hasReturn [
+
+	^ self lastIsReturn
+		  ifTrue: [ true ]
+		  ifFalse: [ super hasReturn ]
+]
+
+{ #category : #testing }
 RBSequenceNode >> hasTemporaries [
 
 	^ temporaries isNotEmpty
