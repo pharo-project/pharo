@@ -76,7 +76,7 @@ CoverageCollectorTest >> testBasicCoverage [
 	self assert: res uncoveredMethods asArray equals: { Rectangle>>#intersect: }
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CoverageCollectorTest >> testCallgraph [
 
 	| cov graph |
@@ -160,7 +160,7 @@ CoverageCollectorTest >> testNodeCoverage2 [
 	self assert: res uncoveredNodes size equals: 6.
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CoverageCollectorTest >> testNodeDistancesFrom [
 
 	| cov graph target distances |
@@ -173,7 +173,7 @@ CoverageCollectorTest >> testNodeDistancesFrom [
 	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 1. 1. 2. 2. 2. 2. 2. 2. 2}.
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CoverageCollectorTest >> testNodeDistancesTo [
 
 	| cov graph target distances |
