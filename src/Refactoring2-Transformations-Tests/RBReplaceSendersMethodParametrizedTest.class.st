@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBReplaceSendersMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBReplaceMethodRefactoring };
+		addCase: { #rbClass -> RBReplaceMessageSendTransformation };
 		yourself
 ]
 
