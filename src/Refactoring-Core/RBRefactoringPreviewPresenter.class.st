@@ -9,9 +9,14 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'changes',
+		'changesInScope',
+		'selectedChanges',
+		'scopes',
+		'activeScope',
 		'table',
 		'diffPresenter',
-		'selectedChanges',
+		'scopeLabel',
+		'scopeDropList',
 		'buttonOk',
 		'buttonCancel'
 	],
@@ -19,10 +24,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scope: scope [
+RBRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes [
 
 	^ self new
-		  changesFrom: aCompositeRefactoring forEnvironment: scope;
+		  changesFrom: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes;
 		  yourself
 ]
 
@@ -55,12 +60,13 @@ RBRefactoringPreviewPresenter >> buildDiffFor: aChange [
 		  rightText: aChange textToDisplay
 ]
 
-{ #category : #utilities }
-RBRefactoringPreviewPresenter >> changesFrom: aCompositeChange forEnvironment: anEnvironment [
+{ #category : #initialization }
+RBRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: anEnvironment scopes: aCollection [
 
-	changes := (aCompositeChange whatToDisplayIn: self) select: [ :change | 
-		           anEnvironment includesClass: change changeClass ].
-	selectedChanges := OrderedCollection withAll: changes.
+	changes := aCompositeChange whatToDisplayIn: self.
+	scopes := aCollection.
+	self updateScopeList.
+	self updateChanges.
 	self updateTablePresenter
 ]
 
@@ -90,6 +96,8 @@ RBRefactoringPreviewPresenter >> connectPresenters [
 	table whenSelectionChangedDo: [ :selection | 
 		selection selectedItem ifNotNil: [ 
 			self buildDiffFor: selection selectedItem ] ].
+	
+	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges ].
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ]
@@ -98,16 +106,33 @@ RBRefactoringPreviewPresenter >> connectPresenters [
 { #category : #initialization }
 RBRefactoringPreviewPresenter >> initializeLayout [
 
+	| scopesLayout actionsLayout |
+	scopesLayout := SpBoxLayout newLeftToRight
+		                add: scopeLabel
+		                withConstraints:
+			                [ :constraints | constraints width: 60 ] yourself;
+		                add: scopeDropList;
+		                yourself.
+	actionsLayout := SpBoxLayout newLeftToRight
+		                 addLast: buttonOk
+		                 expand: false
+		                 fill: true
+		                 padding: 5;
+		                 addLast: buttonCancel
+		                 expand: false
+		                 fill: true
+		                 padding: 5;
+		                 yourself.
+
 	self layout: (SpBoxLayout newTopToBottom
 			 add: (SpBoxLayout newTopToBottom
+					  add: scopesLayout
+					  withConstraints:
+						  [ :constraints | constraints height: 30 ] yourself;
 					  add: table;
 					  add: diffPresenter;
 					  yourself);
-			 add: (SpBoxLayout newLeftToRight
-					  addLast: buttonOk expand: false fill: true padding: 5;
-					  addLast: buttonCancel expand: false fill: true padding: 5;
-					  yourself)
-			 expand: false;
+			 add: actionsLayout expand: false;
 			 yourself)
 ]
 
@@ -122,6 +147,9 @@ RBRefactoringPreviewPresenter >> initializePresenters [
 		columns: self columns;
 		hideColumnHeaders.
 
+	scopeLabel := self newLabel label: 'Scope '.
+	scopeDropList := self newDropList.
+	scopeDropList display: [ :scope | scope description capitalized ].
 
 	buttonOk := self newButton
 		            label: 'Ok';
@@ -145,8 +173,28 @@ RBRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #update }
+RBRefactoringPreviewPresenter >> updateActiveScope [
+
+	activeScope := scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : #update }
+RBRefactoringPreviewPresenter >> updateChanges [
+
+	changesInScope := changes select: [ :change | 
+		                  activeScope includesClass: change changeClass ].
+	selectedChanges := OrderedCollection withAll: changesInScope
+]
+
+{ #category : #update }
+RBRefactoringPreviewPresenter >> updateScopeList [
+
+	scopeDropList items: scopes
+]
+
+{ #category : #update }
 RBRefactoringPreviewPresenter >> updateTablePresenter [
 
-	table items: changes.
+	table items: changesInScope.
 	table items ifNotEmpty: [ table selectIndex: 1 ]
 ]
