@@ -16,10 +16,18 @@ Class {
 	#instVars : [
 		'methodToDeprecate',
 		'methodToReplaceDeprecatedMethod',
-		'refactoring'
+		'refactoring',
+		'scopes',
+		'model'
 	],
 	#category : #'Refactoring-Core-UI'
 }
+
+{ #category : #'instance creation' }
+RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCollection [
+
+	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
+]
 
 { #category : #'instance creation' }
 RBDeprecateMethodDriver class >> model: aRBNamespace deprecateMethod: aString in: aClass [
@@ -27,11 +35,26 @@ RBDeprecateMethodDriver class >> model: aRBNamespace deprecateMethod: aString in
 	^ self new model: aRBNamespace deprecateMethod: aString in: aClass
 ]
 
+{ #category : #initialization }
+RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
+
+	methodToDeprecate := aSelector.
+	methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
+	scopes := aCollection.
+	model := self refactoringScopeOn: scopes first.
+
+	refactoring := RBDeprecateMethodRefactoring
+		               model: model
+		               deprecateMethod: aSelector
+		               in: aClass
+		               using: methodToReplaceDeprecatedMethod
+]
+
 { #category : #execution }
 RBDeprecateMethodDriver >> execute [
 
-	| changes |
-	changes := [ 
+	| compositeChange |
+	compositeChange := [ 
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err | 
@@ -41,8 +64,11 @@ RBDeprecateMethodDriver >> execute [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	self flag: #TODO. "preview changes and confirm before executing"
-	refactoring performChanges
+
+	(RBRefactoringPreviewPresenter
+		 changes: compositeChange
+		 inEnvironment: model
+		 scopes: scopes) open
 ]
 
 { #category : #'ui - requests' }
@@ -69,4 +95,10 @@ RBDeprecateMethodDriver >> model: aRBNamespace deprecateMethod: aSelector in: aC
 		               deprecateMethod: aSelector
 		               in: aClass
 		               using: methodToReplaceDeprecatedMethod
+]
+
+{ #category : #utilities }
+RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
+
+	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment 
 ]
