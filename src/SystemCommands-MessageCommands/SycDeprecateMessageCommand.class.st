@@ -37,9 +37,9 @@ SycDeprecateMessageCommand >> defaultMenuItemName [
 SycDeprecateMessageCommand >> execute [
 
 	(RBDeprecateMethodDriver
-		 model: model
 		 deprecateMethod: originalMessage selector
-		 in: originalMessage contextUser origin) execute
+		 in: originalMessage methodClass
+		 scopes: refactoringScopes) execute
 ]
 
 { #category : #testing }

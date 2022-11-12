@@ -29,12 +29,6 @@ RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCo
 	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
 ]
 
-{ #category : #'instance creation' }
-RBDeprecateMethodDriver class >> model: aRBNamespace deprecateMethod: aString in: aClass [
-
-	^ self new model: aRBNamespace deprecateMethod: aString in: aClass
-]
-
 { #category : #initialization }
 RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
 
@@ -82,19 +76,6 @@ RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 	newSelector isEmptyOrNil | (newSelector = methodToDeprecate) ifTrue: [ 
 		RBRefactoringFailure signal: 'New selector should not be empty OR same as current selector.' ].
 	^ newSelector
-]
-
-{ #category : #initialization }
-RBDeprecateMethodDriver >> model: aRBNamespace deprecateMethod: aSelector in: aClass [
-
-	methodToDeprecate := aSelector.
-	methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
-
-	refactoring := RBDeprecateMethodRefactoring
-		               model: aRBNamespace
-		               deprecateMethod: aSelector
-		               in: aClass
-		               using: methodToReplaceDeprecatedMethod
 ]
 
 { #category : #utilities }
