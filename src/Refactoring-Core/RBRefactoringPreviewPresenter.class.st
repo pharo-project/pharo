@@ -36,7 +36,7 @@ RBRefactoringPreviewPresenter class >> title [
 	^ 'Refactoring changes'
 ]
 
-{ #category : #controlling }
+{ #category : #action }
 RBRefactoringPreviewPresenter >> accept [
 
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [ 
@@ -70,7 +70,7 @@ RBRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: an
 	self updateTablePresenter
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #action }
 RBRefactoringPreviewPresenter >> closeWindow [
 
 	self window close
