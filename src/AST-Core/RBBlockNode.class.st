@@ -140,6 +140,14 @@ RBBlockNode >> colons: anArray [
 	colons := anArray
 ]
 
+{ #category : #accessing }
+RBBlockNode >> constantValue [
+	self isConstant ifFalse: [ self error: 'block is not constant' ].
+	^ body statements 
+		ifEmpty: [ nil ] 
+		ifNotEmpty: [:statements | statements first value ]
+]
+
 { #category : #matching }
 RBBlockNode >> copyInContext: aDictionary [ 
 	^ self class new
@@ -224,6 +232,14 @@ RBBlockNode >> initialize [
 RBBlockNode >> isBlock [
 
 	^ true
+]
+
+{ #category : #testing }
+RBBlockNode >> isConstant [
+	"is the block just returning a literal?"	
+	^ body statements 
+		ifEmpty: [ true "empty block returns nil" ] 
+		ifNotEmpty: [:statements | statements first isLiteralNode ]
 ]
 
 { #category : #testing }
