@@ -5,12 +5,14 @@ Class {
 }
 
 { #category : #tests }
-RBBlockNodeTest >> testHasReturn [
+RBBlockNodeTest >> testHasNonLocalReturn [
 
-	self deny: [  ] sourceNode hasReturn.
-	self deny: [ [  ] ] sourceNode hasReturn.
-	self assert: [ ^ 1 ] sourceNode hasReturn.
-	self assert: [ [ ^ 1 ] ] sourceNode hasReturn.
-	self assert: (self class>>#testHasReturn) ast hasReturn.
-	self deny: (Object>>#halt) ast hasReturn
+	self deny: [  ] sourceNode hasNonLocalReturn.
+	self deny: [ [  ] ] sourceNode hasNonLocalReturn.
+	self assert: [ ^ 1 ] sourceNode hasNonLocalReturn.
+	self assert: [ [ ^ 1 ] ] sourceNode hasNonLocalReturn.
+	self assert: (self class>>#testHasNonLocalReturn) ast hasNonLocalReturn.
+	"return on the level of the method is a local return"
+	self deny: (Object>>#yourself) ast hasNonLocalReturn.
+	self deny: (Object>>#halt) ast hasNonLocalReturn
 ]

@@ -448,17 +448,18 @@ RBProgramNode >> hasMultipleReturns [
 	^count > 1
 ]
 
+{ #category : #testing }
+RBProgramNode >> hasNonLocalReturn [
+	"check if there is a non-local return anywhere
+	Note: returns in a method itself are local returns"
+	^ self children anySatisfy: [ :child | child hasNonLocalReturn ]
+]
+
 { #category : #properties }
 RBProgramNode >> hasProperty: aKey [
 	"Test if the property aKey is present."
 	
 	^ properties notNil and: [ properties includesKey: aKey ]
-]
-
-{ #category : #testing }
-RBProgramNode >> hasReturn [
-	"check if there is a return anywhere"
-	^ self children anySatisfy: [ :child | child hasReturn ]
 ]
 
 { #category : #comparing }
