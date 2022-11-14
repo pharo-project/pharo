@@ -47,7 +47,7 @@ ThemeIcons class >> availablePacks [
 
 { #category : #accessing }
 ThemeIcons class >> baseUrl [
-	^ 'https://github.com/carolahp/pharo-icons/archive' asUrl
+	^ 'https://github.com/pharo-project/pharo-icon-packs/archive' asUrl
 ]
 
 { #category : #settings }
