@@ -200,7 +200,7 @@ Time >> addSeconds: nSeconds [
 Time >> addTime: timeAmount [
  	"Answer a Time that is timeInterval after the receiver. timeInterval is an 
  	instance of Date or Time."
- 
+ 	self flag: 'I should most likely be renamed to addDuration:. One cannot add wallclock times'.
  	^ self class seconds: self asSeconds + timeAmount asSeconds
 ]
 
