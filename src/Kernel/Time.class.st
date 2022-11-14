@@ -144,14 +144,14 @@ Time class >> primUTCSecondsClock [
 { #category : #'instance creation' }
 Time class >> seconds: seconds [
 	"Answer a Time from midnight."
-
+	TimeError validateSeconds: seconds andNanos: 0.
 	^ self basicNew ticks: (Duration seconds: seconds) ticks
 ]
 
 { #category : #'instance creation' }
 Time class >> seconds: seconds nanoSeconds: nanoCount [
 	"Answer a Time from midnight."
-
+	TimeError validateSeconds: seconds andNanos: nanoCount.
 	^ self basicNew
 		ticks: (Duration seconds: seconds nanoSeconds: nanoCount) ticks
 ]
@@ -452,7 +452,7 @@ Time >> seconds [
 { #category : #private }
 Time >> seconds: secondCount [
 	"Private - only used by Time class."
-
+	TimeError validateSeconds: secondCount andNanos: 0.
 	seconds := secondCount.
 	nanos := 0
 ]
@@ -460,7 +460,7 @@ Time >> seconds: secondCount [
 { #category : #private }
 Time >> seconds: secondCount nanoSeconds: nanoCount [ 
 	"Private - only used by Time class."
-
+	TimeError validateSeconds: secondCount andNanos: nanoCount.
 	seconds := secondCount.
 	nanos := nanoCount
 ]
@@ -489,7 +489,8 @@ Time >> ticks [
 { #category : #private }
 Time >> ticks: anArray [
 	"ticks is an Array: { days. seconds. nanoSeconds }"
-
+	TimeError validateSeconds: (anArray at: 2) andNanos: (anArray at: 3).
 	seconds := anArray at: 2.
-	nanos := anArray at: 3
+	nanos := anArray at: 3.
+	
 ]

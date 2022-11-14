@@ -347,6 +347,40 @@ TimeTest >> testTicks [
 	self assert: aTime equals: (Time new ticks: #(0 45296 0))
 ]
 
+{ #category : #tests }
+TimeTest >> testValidationSeconds [
+	| day |
+	day := 24*60*60.
+	self should: [ Time seconds: day] raise: TimeError.
+	self should: [ Time seconds: -1] raise: TimeError.
+	self should: [ Time seconds: day nanoSeconds: 0] raise: TimeError.
+	self should: [ Time seconds: -1 nanoSeconds: 0] raise: TimeError.
+	self should: [ Time new seconds: day nanoSeconds: 0] raise: TimeError.
+	self should: [ Time new seconds: -1 nanoSeconds: 0] raise: TimeError
+]
+
+{ #category : #tests }
+TimeTest >> testValidationTicks [
+	| day |
+	day := 24*60*60.
+	self should: [ Time new ticks: {0. day. 0}] raise: TimeError.
+	self should: [ Time new ticks: {0. -1. 0}] raise: TimeError.
+	self should: [ Time new ticks: {0. 0. 1000000000}] raise: TimeError.
+	self should: [ Time new ticks: {0. 0. -1}] raise: TimeError.
+	
+]
+
+{ #category : #tests }
+TimeTest >> testValidationWallClock [
+	self should: [ Time hour: 24 minute: 0 second: 0] raise: TimeError.
+	self should: [ Time hour: -1 minute: 0 second: 0] raise: TimeError.
+	self should: [ Time hour: 0 minute: 60 second: 0] raise: TimeError.
+	self should: [ Time hour: 0 minute: -1 second: 0] raise: TimeError.
+	self should: [ Time hour: 0 minute: 0 second: 60] raise: TimeError.
+	self should: [ Time hour: 0 minute: 0 second: -1] raise: TimeError.
+	
+]
+
 { #category : #setup }
 TimeTest >> timeClass [
 
