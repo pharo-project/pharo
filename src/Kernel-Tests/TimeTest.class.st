@@ -64,12 +64,12 @@ TimeTest >> testAddSeconds [
 	self assert: (aTime addSeconds: 1) equals: (Time readFrom: '12:34:57' readStream).
 	self assert: (aTime addSeconds: 60) equals: (Time readFrom: '12:35:56' readStream).
 	self assert: (aTime addSeconds: 3600) equals: (Time readFrom: '13:34:56' readStream).
-	self assert: (aTime addSeconds: 24 * 60 * 60) equals: (Time readFrom: '12:34:56' readStream)
+	self should: [aTime addSeconds: 24 * 60 * 60]  raise:  TimeError
 ]
 
 { #category : #tests }
 TimeTest >> testAddTime [
-	self assert: (aTime addTime: aTime) equals: (Time readFrom: '01:09:52' readStream)
+	self assert: (aTime addTime: '2:30:17' asTime) equals: ('15:05:13' asTime)
 ]
 
 { #category : #tests }
