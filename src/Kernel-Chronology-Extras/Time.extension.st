@@ -151,10 +151,6 @@ Time class >> hour: hour minute: minute second: second  nano: nano [
 Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 	"Answer a Time - only second precision for now"
 	
-	hour >= HoursInDay ifTrue: [ Error new signal: ('An hour must be {1} or less' format: {HoursInDay})].
-	minute >= MinutesInHour ifTrue: [ Error new signal: ('A minute must be {1} or less' format: {MinutesInHour}) ].
-	second > SecondsInMinute ifTrue: [ Error new signal: ('A second must be {1} or less' format: {SecondsInMinute}) ].
-	
  	^ self 
 		seconds: (hour * SecondsInHour) + (minute * SecondsInMinute) + second 
 		nanoSeconds: nanoCount
