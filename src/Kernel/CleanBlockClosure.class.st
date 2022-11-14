@@ -23,18 +23,10 @@ Class {
 	#superclass : #BlockClosure,
 	#type : #variable,
 	#instVars : [
-		'ivarNeededByVMToBeChecked'
+		'literal'
 	],
 	#category : #'Kernel-Methods'
 }
-
-{ #category : #accessing }
-CleanBlockClosure >> IvarNeededByVMToBeChecked [
-	"Clean blocks do not store a receiver, but it seems that the VM expects closures to have 4 ivars
-	We should check if we can fix that.
-	To see the problem: remove the var from CleanBlockClosure, enable the clean block option and recompile. Vm will crash"
-	^ivarNeededByVMToBeChecked
-]
 
 { #category : #printing }
 CleanBlockClosure >> doPrintOn: aStream [
@@ -70,6 +62,14 @@ CleanBlockClosure >> isClean [
 { #category : #testing }
 CleanBlockClosure >> isEmbeddedBlock [
 	^ true
+]
+
+{ #category : #accessing }
+CleanBlockClosure >> literal [
+	"The variable and accessor should be in the subclass ConstantBlockClosure.
+	It seems that the VM expects closures to have 4 ivars
+	We should check if we can fix that."
+	^literal
 ]
 
 { #category : #accessing }
