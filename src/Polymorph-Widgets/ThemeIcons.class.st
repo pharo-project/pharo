@@ -137,8 +137,9 @@ ThemeIcons class >> fetchPacks [
 
 { #category : #private }
 ThemeIcons class >> loadDefault [
+
 	^ self new 
-	name: 'idea11';
+	name: 'svgPack';
 	loadIconsFromUrl;
 	yourself.
 ]
@@ -163,7 +164,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 2;
 		label: 'Icon Set';
-		default: (ThemeIcons named: 'idea11');
+		default: (ThemeIcons named: 'svgPack');
 		target: self;
 		dialog: [ self createSettingRow ]
 ]
@@ -335,14 +336,16 @@ ThemeIcons >> loadIconsFromUrl [
 	
 	newIcons := IdentityDictionary new.
 	zipArchive := self downloadFromUrl.
-	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*.png')
+
+	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale1.0' ) anyOne
+	allChildrenMatching: '*.png')
 		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each | 
+		thenDo: [ :each |
 			[ newIcons 	
 				at: each base asSymbol
 				put: (self readPNGFrom: each) ]
 			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
-	icons := newIcons.
+	icons := newIcons
 ]
 
 { #category : #accessing }
@@ -360,6 +363,14 @@ ThemeIcons >> notFoundIcon [
 	^ self icons
 		at: #notFoundIcon
 		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
+]
+
+{ #category : #private }
+ThemeIcons >> pngFolder [
+	| s n |
+	s := WorldMorph scaleFactor.
+	n := (s - (s % 0.5)) min: 2.0.
+	^ 'scale', n asString 
 ]
 
 { #category : #printing }
