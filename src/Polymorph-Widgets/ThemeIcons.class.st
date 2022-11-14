@@ -139,7 +139,7 @@ ThemeIcons class >> fetchPacks [
 ThemeIcons class >> loadDefault [
 
 	^ self new 
-	name: 'svgPack';
+	name: 'idea11';
 	loadIconsFromUrl;
 	yourself.
 ]
@@ -164,7 +164,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 2;
 		label: 'Icon Set';
-		default: (ThemeIcons named: 'svgPack');
+		default: (ThemeIcons named: 'idea11');
 		target: self;
 		dialog: [ self createSettingRow ]
 ]
