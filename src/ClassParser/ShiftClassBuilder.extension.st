@@ -19,7 +19,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 		
 	self slots: (aCDClassDefinitionNode slots collect: [ :e | e asSlot]).
 	
-	self sharedVariables: (aCDClassDefinitionNode sharedVariables collect: [ :e | e ]).
+	self sharedVariables: (aCDClassDefinitionNode sharedVariables collect: [ :e | e asClassVariable]).
 	
 	aCDClassDefinitionNode packageName
 		ifNotNil: [ :cat | package := cat ]
