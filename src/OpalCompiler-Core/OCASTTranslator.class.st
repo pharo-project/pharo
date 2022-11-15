@@ -451,6 +451,21 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 ]
 
 { #category : #'visitor - double dispatching' }
+OCASTTranslator >> translateConstantBlock: aBlockNode [
+	| ir |
+
+	ir := IRBuilder new 
+				mapToNode: aBlockNode;
+				numArgs: aBlockNode arguments size;
+				pushLiteral: aBlockNode constantValue; 
+				blockReturnTop; 
+				ir.
+	aBlockNode ir: ir.
+	aBlockNode resetBcToASTCache.
+	^ ir compiledBlock: aBlockNode scope
+]
+
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
@@ -520,14 +535,12 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 
-	| constantBlock ir |
+	| constantBlock compiledBlock |
 	constantBlock := ConstantBlockClosure new
 		                 returnValue: anBlockNode constantValue;
 		                 numArgs: anBlockNode arguments size.
-	ir := constantBlock blockIR.
-	constantBlock compiledBlock: ir compiledBlock. 
-	"we have to set the IR on the RBBlockNode for pc->AST mapping"
-	anBlockNode ir: ir.
+	compiledBlock := self translateConstantBlock: anBlockNode.
+	constantBlock compiledBlock: compiledBlock.
 	methodBuilder pushLiteral: constantBlock
 ]
 
