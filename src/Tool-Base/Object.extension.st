@@ -2,18 +2,15 @@ Extension { #name : #Object }
 
 { #category : #'*Tool-Base' }
 Object >> basicInspect [
-	"change to >>basicInspector"
-	"https://github.com/pharo-project/pharo/issues/11803"
-
-	self deprecated: 'use basicInspector instead'.
-	^ Smalltalk tools basicInspector inspect: self
+	"Create and schedule an Inspector in which the user can examine the receiver's variables.
+	Return the receiver. For getting the inspector, use #basicInspector"
+	Smalltalk tools basicInspector inspect: self
 ]
 
 { #category : #'*Tool-Base' }
 Object >> basicInspector [
-	">>basicTnsoect is deprecated, use basicInspector now"
-	"https://github.com/pharo-project/pharo/issues/11803"
-
+	"Create and schedule a basic Inspector in which the user can examine the receiver's variables.
+	Return the inspector. For getting the object itself, use #basicInspect"
 	^ Smalltalk tools basicInspector inspect: self
 ]
 
@@ -31,11 +28,10 @@ Object >> browseHierarchy [
 { #category : #'*Tool-Base' }
 Object >> inspect [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables.
-	Return the receiver. For getting the inspector, use >>inspector"
+	Return the receiver. For getting the inspector, use #inspector"
 	"https://github.com/pharo-project/pharo/issues/11803"
 
-	Smalltalk tools inspector inspect: self.
-	^ self
+	Smalltalk tools inspector inspect: self
 ]
 
 { #category : #'*Tool-Base' }
