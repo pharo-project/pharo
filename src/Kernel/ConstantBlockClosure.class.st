@@ -7,7 +7,12 @@ Some blocks just return a literal, without sending messages or accessing the arg
 
 it is clear that these blocks are clean. But they are even more interesting: we can implement a special kind of Clean Block that can be evaluated faster. 
 
+We create a dummy compiledBlock which and use it to find the pcInOuter / do pc-ast mapping.
+
 the RBBlockNode has two methods: #isConstant returns true, #constantValue returns the literal for constant blocks.
+
+
+	
 "
 Class {
 	#name : #ConstantBlockClosure,
@@ -16,15 +21,17 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #compilation }
+ConstantBlockClosure >> blockIR [
+	^IRBuilder new 
+			pushLiteral: literal; 
+			blockReturnTop; 
+			ir
+]
+
 { #category : #accessing }
 ConstantBlockClosure >> returnValue: anObject [
-	 literal := anObject.
-	"dummy compiledBlock, we use it to find the pcInOuter 
-	and for queries that are done in the bytecode level."
-	compiledBlock := 
-		(IRBuilder new 
-			pushLiteral: literal; 
-			blockReturnTop; ir) compiledBlock
+	 literal := anObject
 ]
 
 { #category : #evaluating }

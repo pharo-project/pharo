@@ -499,11 +499,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
-	aBlockNode isConstant ifTrue: [ 
-			methodBuilder pushLiteral:	(ConstantBlockClosure new 
-					returnValue: aBlockNode constantValue;
-					numArgs: aBlockNode arguments size ).
-			 ^	self].
+	aBlockNode isConstant ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
 		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
@@ -519,6 +515,20 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 		effectTranslator visitNode: node.
 	].
 	self visitNode: aCascadeNode messages last.
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitConstantBlockNode: anBlockNode [
+
+	| constantBlock ir |
+	constantBlock := ConstantBlockClosure new
+		                 returnValue: anBlockNode constantValue;
+		                 numArgs: anBlockNode arguments size.
+	ir := constantBlock blockIR.
+	constantBlock compiledBlock: ir compiledBlock. 
+	"we have to set the IR on the RBBlockNode for pc->AST mapping"
+	anBlockNode ir: ir.
+	methodBuilder pushLiteral: constantBlock
 ]
 
 { #category : #'visitor - double dispatching' }
