@@ -313,13 +313,14 @@ ProcessTest >> testIsNotTerminatedWhenItIsInsideLastTerminationMethod [
 ProcessTest >> testIsNotTerminatedWhenItIsJustStartedByEnteringMainBlock [
 	
 	| process processBody |
-	processBody := [ #test ].
+	"this test works only on fullblocks with home context (due to isBottomContext)"
+	processBody := [ #test yourself].
 	process := processBody newProcess.
 	
 	[process step.
 	self deny: process isTerminated] 
 		doWhileTrue: [ process suspendedContext isBottomContext ].
-		
+
 	self assert: process suspendedContext closure identicalTo: processBody.
 	self deny: process isTerminated
 ]

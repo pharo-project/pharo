@@ -18,7 +18,7 @@ CompiledBlock >> pcInOuter [
 			literalOffset ifNotNil: [
 				| literal |
 				literal := (self outerCode literalAt: literalOffset + 1).
-				((literal isKindOf: CleanBlockClosure) and: [literal compiledBlock = self  ])ifTrue: [ ^ instructionStream pc ].  ].
+				((literal isKindOf: CleanBlockClosure) and: [literal compiledBlock == self  ])ifTrue: [ ^ instructionStream pc ].  ].
 			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].	
 		
 	self error: 'block not installed in outer code'.
