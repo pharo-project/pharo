@@ -115,14 +115,6 @@ IRMethod >> compilationContext: aCompilationContext [
 ]
 
 { #category : #translating }
-IRMethod >> compiledBlock [
-
-	^compiledMethod 
-		ifNil: [self generateBlock: CompiledMethodTrailer empty withScope: nil ]
-		ifNotNil: [compiledMethod]
-]
-
-{ #category : #translating }
 IRMethod >> compiledBlock: scope [
 
 	^compiledMethod 

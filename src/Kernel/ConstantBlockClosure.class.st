@@ -21,16 +21,8 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #compilation }
-ConstantBlockClosure >> blockIR [
-	^IRBuilder new 
-			pushLiteral: literal; 
-			blockReturnTop; 
-			ir
-]
-
 { #category : #accessing }
-ConstantBlockClosure >> returnValue: anObject [
+ConstantBlockClosure >> literal: anObject [
 	 literal := anObject
 ]
 

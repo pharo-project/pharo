@@ -537,7 +537,7 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 
 	| constantBlock compiledBlock |
 	constantBlock := ConstantBlockClosure new
-		                 returnValue: anBlockNode constantValue;
+		                 literal: anBlockNode constantValue;
 		                 numArgs: anBlockNode arguments size.
 	compiledBlock := self translateConstantBlock: anBlockNode.
 	constantBlock compiledBlock: compiledBlock.

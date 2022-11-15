@@ -28,6 +28,11 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #fuel }
+CleanBlockClosure >> cleanCopy [
+	"nothing to do"
+]
+
 { #category : #printing }
 CleanBlockClosure >> doPrintOn: aStream [
 
