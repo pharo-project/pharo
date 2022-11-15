@@ -178,9 +178,8 @@ IRMethod >> generate: trailer [
 IRMethod >> generateBlock: trailer withScope: scope [
 	| irTranslator |
       irTranslator := IRTranslator context: compilationContext trailer: trailer.
-	scope ifNotNil: [
-		irTranslator pushOuterVectors: scope].
 	irTranslator 
+		pushOuterVectors: scope;
 		visitNode: self;
 		pragmas: pragmas.
 	compiledMethod := irTranslator compiledBlock.

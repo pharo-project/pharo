@@ -514,7 +514,8 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
-	aBlockNode isConstant ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
+	(self compilationContext optionCleanBlockClosure and: [aBlockNode isConstant]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
+	
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
 		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
