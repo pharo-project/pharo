@@ -292,6 +292,11 @@ RBBlockNode >> needsParenthesis [
 	^false
 ]
 
+{ #category : #accessing }
+RBBlockNode >> numArgs [
+	^ self arguments size
+]
+
 { #category : #copying }
 RBBlockNode >> postCopy [
 	super postCopy.

@@ -61,3 +61,10 @@ RBBlockNodeTest >> testIsConstant [
 	self deny: [ ^1 ] sourceNode isConstant.
 	self deny: [ 1 sin. 1 ] sourceNode isConstant
 ]
+
+{ #category : #tests }
+RBBlockNodeTest >> testNumArgs [
+	self assert: [  ] sourceNode numArgs equals: 0.
+	self assert: [:a  |  ] sourceNode numArgs equals: 1.
+	self assert: [:a :b  |  ] sourceNode numArgs equals:  [:a :b  |  ] numArgs.
+]
