@@ -507,7 +507,7 @@ IRBytecodeGenerator >> pushFullBlockClosure: fullBlock [
 		genPushFullClosure: (self literalIndexOf: fullBlock compiledBlock) 
 		numCopied: fullBlock copiedValues size
 		receiverOnStack: false
-		outerContextNeeded: true
+		outerContextNeeded: fullBlock outerContextNeeded
 ]
 
 { #category : #instructions }
