@@ -135,11 +135,6 @@ CompiledBlock >> pragmas [
 	^ #()
 ]
 
-{ #category : #accessing }
-CompiledBlock >> primitive [
-	^ 0
-]
-
 { #category : #printing }
 CompiledBlock >> printOn: anStream [
 	
