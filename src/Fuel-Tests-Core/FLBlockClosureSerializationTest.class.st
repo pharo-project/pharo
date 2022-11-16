@@ -106,6 +106,8 @@ FLBlockClosureSerializationTest >> testBlockClosureRemovedClean [
 	"Raise no error when materializing a clean closure whose method was removed."
 
 	| aClass aClosure |
+	"to be removed when we compile constant closure by default"
+	[  ] class == ConstantBlockClosure ifFalse: [ self skip ].
 	aClass := self classFactory silentlyNewClass.
 	self classFactory
 		silentlyCompile:  'methodWithClosure  ^ [ 42 ]'

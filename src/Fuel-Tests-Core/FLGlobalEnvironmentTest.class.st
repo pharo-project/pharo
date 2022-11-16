@@ -83,6 +83,8 @@ FLGlobalEnvironmentTest >> testCompiledMethodChangedClean [
 	"A compiled methods should be serialized as global by default. On materialization, it must be found in the global environment, and the bytecodes hash must be the same. Else, raise a proper error."
 	
 	| classA classB |
+	"to be removed when we compile constant closure by default"
+	[  ] class == ConstantBlockClosure ifFalse: [ self skip ].
 	classA := self classFactory silentlyNewClass.
 	self classFactory
 		silentlyCompile:  'm  ^ 42'
