@@ -64,7 +64,7 @@ FLGlobalEnvironmentTest >> testCompiledMethodChanged [
 		in: classA.
 	classB := self classFactory silentlyNewClass.
 	self classFactory
-		silentlyCompile: 'm  ^ [ 42 ]'
+		silentlyCompile: 'm  ^ [ 42 yourself ]'
 		in: classB.
 
 	self materializer environment: (Dictionary new
@@ -74,6 +74,33 @@ FLGlobalEnvironmentTest >> testCompiledMethodChanged [
 	self serialize: classA >> #m.
 
 	self should: [ self materialized ]
+		raise: FLMethodChanged 
+		description: 'Serialized and materialized methods should have the same bytecodes.'
+]
+
+{ #category : #tests }
+FLGlobalEnvironmentTest >> testCompiledMethodChangedClean [
+	"A compiled methods should be serialized as global by default. On materialization, it must be found in the global environment, and the bytecodes hash must be the same. Else, raise a proper error."
+	
+	| classA classB |
+	"to be removed when we compile constant closure by default"
+	[  ] class == ConstantBlockClosure ifFalse: [ self skip ].
+	classA := self classFactory silentlyNewClass.
+	self classFactory
+		silentlyCompile:  'm  ^ 42'
+		in: classA.
+	classB := self classFactory silentlyNewClass.
+	self classFactory
+		silentlyCompile: 'm  ^ [ 42 ]'
+		in: classB.
+
+	self materializer environment: (Dictionary new
+		at: classA name put: classB;
+		yourself).
+
+	self serialize: classA >> #m.
+
+	self shouldnt: [ self materialized ]
 		raise: FLMethodChanged 
 		description: 'Serialized and materialized methods should have the same bytecodes.'
 ]

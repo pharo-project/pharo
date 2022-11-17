@@ -451,6 +451,21 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 ]
 
 { #category : #'visitor - double dispatching' }
+OCASTTranslator >> translateConstantBlock: aBlockNode [
+	| ir |
+
+	ir := IRBuilder new 
+				mapToNode: aBlockNode;
+				numArgs: aBlockNode arguments size;
+				pushLiteral: aBlockNode constantValue; 
+				blockReturnTop; 
+				ir.
+	aBlockNode ir: ir.
+	aBlockNode resetBcToASTCache.
+	^ ir compiledBlock: aBlockNode scope
+]
+
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
@@ -499,6 +514,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
+	(self compilationContext optionCleanBlockClosure and: [aBlockNode isConstant]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
 	
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
@@ -515,6 +531,18 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 		effectTranslator visitNode: node.
 	].
 	self visitNode: aCascadeNode messages last.
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitConstantBlockNode: anBlockNode [
+
+	| constantBlock compiledBlock |
+	constantBlock := ConstantBlockClosure new
+		                 literal: anBlockNode constantValue;
+		                 numArgs: anBlockNode arguments size.
+	compiledBlock := self translateConstantBlock: anBlockNode.
+	constantBlock compiledBlock: compiledBlock.
+	methodBuilder pushLiteral: constantBlock
 ]
 
 { #category : #'visitor - double dispatching' }
