@@ -157,8 +157,16 @@ IRBytecodeGenerator >> compilationContext: aCompilationContext [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledBlockWith: trailer [
-	| lits header cb |
+	| lits quickPrimitive header cb |
 	lits := self literals allButLast "1 free only for compiledBlock".
+	quickPrimitive := self quickMethodPrim.
+	(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
+		"if we are a quick method we need to add a bytecode at the beginning. #bytecodes
+		takes primitiveBytes into account" 
+		primitiveBytes := (ByteArray new: 4) writeStream.
+		encoder stream: primitiveBytes.
+		encoder genCallPrimitive: quickPrimitive.
+	].
 	header := self spurVMHeader: lits size.
 	cb := CompiledBlock newMethod: self bytecodes size header: header.
 	(WriteStream with: cb)
