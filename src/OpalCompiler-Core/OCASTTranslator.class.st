@@ -513,13 +513,17 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	(self compilationContext optionCleanBlockClosure and: [aBlockNode isConstant]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
+	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ]) ifTrue: [ ^ self visitCleanBlockNode: aBlockNode].
 	
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
-		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
-		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
+	
+	self compilationContext optionBlockClosureOptionalOuter 
+		ifTrue: [ methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames outerContextNeeded: aBlockNode hasNonLocalReturn  ]
+		ifFalse: [ methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames ]
+	
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -531,6 +535,19 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 		effectTranslator visitNode: node.
 	].
 	self visitNode: aCascadeNode messages last.
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitCleanBlockNode: aBlockNode [
+
+	| compiledBlock cleanBlock |
+	compiledBlock := self compilationContext astTranslatorClass new 
+		                 translateFullBlock: aBlockNode.
+	cleanBlock := (CleanBlockClosure new: 0)
+			 numArgs: compiledBlock numArgs;
+			 compiledBlock: compiledBlock.
+
+	methodBuilder pushLiteral: cleanBlock
 ]
 
 { #category : #'visitor - double dispatching' }
