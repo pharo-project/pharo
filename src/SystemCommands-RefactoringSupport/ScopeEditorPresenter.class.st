@@ -10,12 +10,21 @@ Class {
 
 { #category : #'instance creation' }
 ScopeEditorPresenter class >> defaultLayout [
-	^ SpBoxLayout newTopToBottom
-		  add: #packagesTree
-		  expand: true
-		  fill: true
-		  padding: 0;
-		  yourself
+
+	^ SpBoxLayout newLeftToRight 
+		add: (SpBoxLayout newTopToBottom
+			   add: #packagesTree
+			   expand: true
+			   fill: true
+			   padding: 0;
+			   yourself);
+		add: (SpBoxLayout newTopToBottom
+			   add: #packagesTree
+			   expand: true
+			   fill: true
+			   padding: 0;
+			   yourself);
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -33,18 +42,25 @@ ScopeEditorPresenter class >> title [
 ScopeEditorPresenter >> initializePresenters [
 	packagesTree := self newTreeTable.
 	
-	packagesTree
+	
+]
+
+{ #category : #initialization }
+ScopeEditorPresenter >> newTreeTable [
+self halt.
+	^ super newTreeTable
+		beMultipleSelection;
 		addColumn: (SpCompositeTableColumn new
 			title: 'Packages / Classes / Protocols';
 			addColumn: ((SpImageTableColumn 
 				evaluated: [ :anElement | self iconNamed: anElement class scopesIconName ])
-				width: 200;
+				width: 300;
 				yourself);
 			addColumn: (SpStringTableColumn evaluated: #name);
 			yourself);
-		addColumn: (SpStringTableColumn 
-			title: 'Number of subelements' 
-			evaluated: [ :element | element subelements size asString ]);
+		"addColumn: (SpStringTableColumn 
+			title: 'n' 
+			evaluated: [ :element | element subelements size asString ]);"
 		"addColumn: (SpStringTableColumn 
 			title: 'Number of methods' 
 			evaluated: [ :class | class methods size asString ]);"
@@ -53,5 +69,6 @@ ScopeEditorPresenter >> initializePresenters [
 		beResizable;
 		"contextMenu: self menu;"
 		activateOnDoubleClick;
-		whenActivatedDo: [ :selection | selection selectedItem browse ]
+		whenActivatedDo: [ :selection | packagesTree expandSelectedItems ].
+		
 ]
