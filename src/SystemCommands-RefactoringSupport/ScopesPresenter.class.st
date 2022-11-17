@@ -50,6 +50,11 @@ ScopesPresenter >> initializePresenters [
 	self toolbarButtons do: [ :button | toolbar addItem: button ]
 ]
 
+{ #category : #actions }
+ScopesPresenter >> showScopeEditor [
+	ScopeEditorPresenter new open
+]
+
 { #category : #initialization }
 ScopesPresenter >> toolbarButtons [
 
@@ -58,7 +63,7 @@ ScopesPresenter >> toolbarButtons [
 	buttons add: (self newToolbarButton
 			 icon: (self iconNamed: #add);
 			 help: 'Add a new scope';
-			 action: [ self addNewScope ];
+			 action: [ self showScopeEditor ];
 			 yourself).
 	buttons add: (self newToolbarButton
 			 icon: (self iconNamed: #glamorousTrash);

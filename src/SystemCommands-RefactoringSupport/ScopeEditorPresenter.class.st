@@ -1,14 +1,15 @@
 Class {
-	#name : #ClassesSelectorPresenter,
+	#name : #ScopeEditorPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'packagesTree'
+		'packagesTree',
+		'scope'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 
 { #category : #'instance creation' }
-ClassesSelectorPresenter class >> defaultLayout [
+ScopeEditorPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		  add: #packagesTree
 		  expand: true
@@ -18,20 +19,25 @@ ClassesSelectorPresenter class >> defaultLayout [
 ]
 
 { #category : #'instance creation' }
-ClassesSelectorPresenter class >> open [ 
+ScopeEditorPresenter class >> open [ 
 	<script>
 	self new open
 ]
 
+{ #category : #'instance creation' }
+ScopeEditorPresenter class >> title [
+	^ 'Create/Edit a Scope'
+]
+
 { #category : #initialization }
-ClassesSelectorPresenter >> initializePresenters [
+ScopeEditorPresenter >> initializePresenters [
 	packagesTree := self newTreeTable.
 	
 	packagesTree
 		addColumn: (SpCompositeTableColumn new
 			title: 'Packages / Classes / Protocols';
 			addColumn: ((SpImageTableColumn 
-				evaluated: [ :aClass | self iconNamed: aClass systemIconName ])
+				evaluated: [ :anElement | self iconNamed: anElement class scopesIconName ])
 				width: 200;
 				yourself);
 			addColumn: (SpStringTableColumn evaluated: #name);
