@@ -17,3 +17,9 @@ ConstantBlockClosure3Arg >> value [
 ConstantBlockClosure3Arg >> value: firstArg value: secondArg value: thirdArg [
 	^literal
 ]
+
+{ #category : #evaluating }
+ConstantBlockClosure3Arg >> valueWithArguments: anArray [
+	(anArray size ~= 3) ifTrue: [self numArgsError: anArray size].
+	^literal
+]

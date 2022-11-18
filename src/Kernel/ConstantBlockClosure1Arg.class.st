@@ -8,12 +8,18 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #accessing }
+{ #category : #evaluating }
 ConstantBlockClosure1Arg >> value [
 	self numArgsError: 0
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 ConstantBlockClosure1Arg >> value: anObject [
+	^literal
+]
+
+{ #category : #evaluating }
+ConstantBlockClosure1Arg >> valueWithArguments: anArray [
+	(anArray size ~= 1) ifTrue: [self numArgsError: anArray size].
 	^literal
 ]

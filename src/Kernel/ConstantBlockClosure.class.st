@@ -70,5 +70,6 @@ ConstantBlockClosure >> value: firstArg value: secondArg value: thirdArg value: 
 
 { #category : #evaluating }
 ConstantBlockClosure >> valueWithArguments: anArray [
-	self numArgsError: anArray size
+	(anArray size ~= 0) ifTrue: [self numArgsError: anArray size].
+	^literal
 ]
