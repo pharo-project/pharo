@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #evaluating }
+ConstantBlockClosure2Arg >> value [
+	self numArgsError: 0
+]
+
+{ #category : #evaluating }
 ConstantBlockClosure2Arg >> value: firstArg value: secondArg [
 	^literal
 ]

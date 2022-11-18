@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #accessing }
+ConstantBlockClosure1Arg >> value [
+	self numArgsError: 0
+]
+
+{ #category : #accessing }
 ConstantBlockClosure1Arg >> value: anObject [
 	^literal
 ]
