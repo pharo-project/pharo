@@ -1,0 +1,14 @@
+"
+3-arg block
+"
+Class {
+	#name : #ConstantBlockClosure3Arg,
+	#superclass : #ConstantBlockClosure,
+	#type : #variable,
+	#category : #'Kernel-Methods'
+}
+
+{ #category : #evaluating }
+ConstantBlockClosure3Arg >> value: firstArg value: secondArg value: thirdArg [
+	^literal
+]
