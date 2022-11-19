@@ -179,7 +179,7 @@ DateParser >> parseIfError: aBlock [
 	
 	[ self isDoneParsing ] whileFalse: [ self parseNextPattern ].
 
-	self isInvalidPattern ifTrue: aBlock.
+	self isInvalidPattern ifTrue: [ aBlock value ].
 	self convertTwoDigitsYear.
 	
 	(inputStream atEnd and: [ patternStream atEnd ]) ifFalse: [ DateError signal: 'Input doesn''t match given pattern.' ].

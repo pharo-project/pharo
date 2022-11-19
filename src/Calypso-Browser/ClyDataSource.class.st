@@ -195,8 +195,8 @@ ClyDataSource >> findCachedElementWith: anEnvironmentItem ifAbsent: absentBlock 
 { #category : #accessing }
 ClyDataSource >> findDataSourceSameAs: aDataSource ifNone: noneBlock [
 	^(self isSameAs: aDataSource) 
-		ifTrue: [ ^self ]
-		ifFalse: noneBlock
+		ifTrue: [ self ]
+		ifFalse: [ noneBlock value ]
 ]
 
 { #category : #queries }
