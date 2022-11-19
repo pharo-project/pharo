@@ -596,7 +596,7 @@ Socket >> errorSending: data startingAt: startIndex count: aCount toHost: hostAd
 "Only applicable to UDP sockets, TCP does not have broadcast"
 	(self broadcastMisconfiguredForSendingTo: hostAddress)
 		ifTrue: [ ^ self broadcastError: hostAddress ].	
-	^ self primitiveFailed: thisContext sender selector
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #finalization }
@@ -833,7 +833,7 @@ Socket >> primAcceptFrom: aHandle receiveBufferSize: rcvBufSize sendBufSize: snd
 
 	<primitive: 'primitiveSocketAccept' module: 'SocketPlugin'>
 
-	^ self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -842,14 +842,14 @@ Socket >> primAcceptFrom: aHandle receiveBufferSize: rcvBufSize sendBufSize: snd
 	
 	<primitive: 'primitiveSocketAccept3Semaphores' module: 'SocketPlugin'>
 	
-	^ self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #'primitives - ipv6' }
 Socket >> primSocket: socketID bindTo: socketAddress [
 
 	<primitive: 'primitiveSocketBindTo' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -863,7 +863,7 @@ Socket >> primSocket: socketID bindTo: anAddress port: aPort [
 Socket >> primSocket: socketID connectTo: socketAddress [
 
 	<primitive: 'primitiveSocketConnectTo' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -872,7 +872,7 @@ Socket >> primSocket: socketID connectTo: hostAddress port: port [
 
 	<primitive: 'primitiveSocketConnectToPort' module: 'SocketPlugin'>
 	
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -884,7 +884,7 @@ Socket >> primSocket: socketID getOption: aString [
 	returns an array containing the error code and the option value"
 
 	<primitive: 'primitiveSocketGetOptions' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -892,7 +892,7 @@ Socket >> primSocket: socketID listenOn: port [
 	"Listen for a connection on the given port. This is an asynchronous call; query the socket status to discover if and when the connection is actually completed."
 
 	<primitive: 'primitiveSocketListenWithOrWithoutBacklog' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -915,14 +915,14 @@ Socket >> primSocket: aHandle listenOn: portNumber backlogSize: backlog interfac
 Socket >> primSocket: socketID listenWithBacklog: backlogSize [
 
 	<primitive: 'primitiveSocketListenWithBacklog' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #'primitives - ipv6' }
 Socket >> primSocket: socketID localAddressResult: socketAddress [
 
 	<primitive: 'primitiveSocketLocalAddressResult' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -930,7 +930,7 @@ Socket >> primSocket: socketID receiveDataInto: aStringOrByteArray startingAt: s
 	"Receive data from the given socket into the given array starting at the given index. Return the number of bytes read or zero if no data is available."
 
 	<primitive: 'primitiveSocketReceiveDataBufCount' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -939,14 +939,14 @@ Socket >> primSocket: socketID receiveUDPDataInto: aStringOrByteArray startingAt
 	Return an Array containing the amount read, the host address byte array, the host port, and the more flag"
 
 	<primitive: 'primitiveSocketReceiveUDPDataBufCount' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #'primitives - ipv6' }
 Socket >> primSocket: socketID remoteAddressResult: socketAddress [
 
 	<primitive: 'primitiveSocketRemoteAddressResult' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -999,7 +999,7 @@ Socket >> primSocket: socketID setPort: port [
 	two subclasses, TCPSocket and UDPSocket."
 
 	<primitive: 'primitiveSocketListenWithOrWithoutBacklog' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1007,7 +1007,7 @@ Socket >> primSocketAbortConnection: socketID [
 	"Terminate the connection on the given port immediately without going through the normal close sequence. This is an asynchronous call; query the socket status to discover if and when the connection is actually terminated."
 
 	<primitive: 'primitiveSocketAbortConnection' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1015,7 +1015,7 @@ Socket >> primSocketCloseConnection: socketID [
 	"Close the connection on the given port. The remote end is informed that this end has closed and will do no further sends. This is an asynchronous call; query the socket status to discover if and when the connection is actually closed."
 
 	<primitive: 'primitiveSocketCloseConnection' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1047,7 +1047,7 @@ Socket >> primSocketCreateNetwork: netType type: socketType receiveBufferSize: r
 	reading and writing"
 
 	<primitive: 'primitiveSocketCreate3Semaphores' module: 'SocketPlugin'>
-	^ self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1055,7 +1055,7 @@ Socket >> primSocketDestroy: socketID [
 	"Release the resources associated with this socket. If a connection is open, it is aborted."
 
 	<primitive: 'primitiveSocketDestroy' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1071,7 +1071,7 @@ Socket >> primSocketError: socketID [
 	"Return an integer encoding the most recent error on this socket. Zero means no error."
 
 	<primitive: 'primitiveSocketError' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1079,14 +1079,14 @@ Socket >> primSocketLocalAddress: socketID [
 	"Return the local host address for this socket."
 
 	<primitive: 'primitiveSocketLocalAddress' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #'primitives - ipv6' }
 Socket >> primSocketLocalAddressSize: handle [
 
 	<primitive: 'primitiveSocketLocalAddressSize' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1094,7 +1094,7 @@ Socket >> primSocketLocalPort: socketID [
 	"Return the local port for this socket, or zero if no port has yet been assigned."
 
 	<primitive: 'primitiveSocketLocalPort' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1109,7 +1109,7 @@ Socket >> primSocketReceiveDataAvailable: socketID [
 	or something like that."
 
 	<primitive: 'primitiveSocketReceiveDataAvailable' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1117,14 +1117,14 @@ Socket >> primSocketRemoteAddress: socketID [
 	"Return the remote host address for this socket, or zero if no connection has been made."
 
 	<primitive: 'primitiveSocketRemoteAddress' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #'primitives - ipv6' }
 Socket >> primSocketRemoteAddressSize: handle [
 
 	<primitive: 'primitiveSocketRemoteAddressSize' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1132,7 +1132,7 @@ Socket >> primSocketRemotePort: socketID [
 	"Return the remote port for this socket, or zero if no connection has been made."
 
 	<primitive: 'primitiveSocketRemotePort' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #primitives }
@@ -1140,7 +1140,7 @@ Socket >> primSocketSendDone: socketID [
 	"Return true if there is no send in progress on the current socket."
 
 	<primitive: 'primitiveSocketSendDone' module: 'SocketPlugin'>
-	self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #printing }
