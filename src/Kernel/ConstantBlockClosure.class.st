@@ -11,6 +11,8 @@ We create a dummy compiledBlock which and use it to find the pcInOuter / do pc-a
 
 the RBBlockNode has two methods: #isConstant returns true, #constantValue returns the literal for constant blocks.
 
+This class implements 0-arg blocks, with correct error handling for args >0. Subclasses for 1-3 args are implemented.
+
 
 	
 "
@@ -20,6 +22,21 @@ Class {
 	#type : #variable,
 	#category : #'Kernel-Methods'
 }
+
+{ #category : #'instance creation' }
+ConstantBlockClosure class >> numArgs: numArgs literal: aLiteral [
+	| classToUse |
+	classToUse := numArgs caseOf:
+	{
+		[0]->[ self ].
+		[1]->[ ConstantBlockClosure1Arg ].
+		[2]->[ ConstantBlockClosure2Arg ].
+		[3]->[ ConstantBlockClosure3Arg ]
+	} otherwise: [self error: 'shoud not be called with more than 3 args'].
+	^ classToUse new 
+		numArgs: numArgs;
+		literal: aLiteral
+]
 
 { #category : #accessing }
 ConstantBlockClosure >> literal: anObject [
@@ -33,25 +50,26 @@ ConstantBlockClosure >> value [
 
 { #category : #evaluating }
 ConstantBlockClosure >> value: anObject [
-	^literal
+	self numArgsError: 1
 ]
 
 { #category : #evaluating }
 ConstantBlockClosure >> value: firstArg value: secondArg [
-	^literal
+	self numArgsError: 2
 ]
 
 { #category : #evaluating }
 ConstantBlockClosure >> value: firstArg value: secondArg value: thirdArg [
-	^literal
+	self numArgsError: 3
 ]
 
 { #category : #evaluating }
 ConstantBlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthArg [
-	^literal
+	self numArgsError: 4
 ]
 
 { #category : #evaluating }
 ConstantBlockClosure >> valueWithArguments: anArray [
+	(anArray size ~= 0) ifTrue: [self numArgsError: anArray size].
 	^literal
 ]
