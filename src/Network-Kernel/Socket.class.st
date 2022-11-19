@@ -856,7 +856,7 @@ Socket >> primSocket: socketID bindTo: socketAddress [
 Socket >> primSocket: socketID bindTo: anAddress port: aPort [ 
 	"Bind socket to provided IPv4 address and port"
 	<primitive: 'primitiveSocketBindToPort' module: 'SocketPlugin'>
-	^self primitiveFailed
+	^ SocketError signal: self socketErrorMessage
 ]
 
 { #category : #'primitives - ipv6' }
