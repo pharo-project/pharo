@@ -8,7 +8,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 
-{ #category : #'instance creation' }
+{ #category : #layout }
 ScopeEditorPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight 
@@ -18,12 +18,12 @@ ScopeEditorPresenter class >> defaultLayout [
 			   fill: true
 			   padding: 0;
 			   yourself);
-		add: (SpBoxLayout newTopToBottom
+		"add: (SpBoxLayout newTopToBottom
 			   add: #packagesTree
 			   expand: true
 			   fill: true
 			   padding: 0;
-			   yourself);
+			   yourself);"
 		yourself
 ]
 
@@ -45,9 +45,9 @@ ScopeEditorPresenter >> initializePresenters [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #'scripting - widgets' }
 ScopeEditorPresenter >> newTreeTable [
-self halt.
+
 	^ super newTreeTable
 		beMultipleSelection;
 		addColumn: (SpCompositeTableColumn new
@@ -69,6 +69,6 @@ self halt.
 		beResizable;
 		"contextMenu: self menu;"
 		activateOnDoubleClick;
-		whenActivatedDo: [ :selection | packagesTree expandSelectedItems ].
+		whenActivatedDo: [ :selection | packagesTree toggleSelectedItems ].
 		
 ]
