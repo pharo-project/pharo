@@ -234,7 +234,7 @@ ExternalBrowser >> refreshProtocols: selection [
 	^ selection selectedItem
 		  ifNil: [ protocols items: #(  ) ]
 		  ifNotNil: [ 
-			  protocols items: (self protocolsOfClass: selection selectedItem).
+			  protocols items: (self protocolsOfClass: selection selectedItem) asSortedCollection.
 			  self showClassDefinition ]
 ]
 
@@ -256,7 +256,7 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 		ifFalse: [ self classes selectedItem ]
 		ifTrue: [ self classes selectedItem classSide ].
 	^ (theSelectedClass 
-		methodsInProtocol: self protocols selectedItem) collect: [:each | each selector]
+		methodsInProtocol: self protocols selectedItem) asArray collect: [:each | each selector] 
 ]
 
 { #category : #'structure accessing' }
