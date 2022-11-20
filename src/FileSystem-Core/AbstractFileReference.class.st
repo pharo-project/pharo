@@ -157,14 +157,14 @@ AbstractFileReference >> binaryReadStreamDo: aBlock [
 AbstractFileReference >> binaryReadStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self binaryReadStreamDo: doBlock ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #streams }
 AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self binaryReadStream ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #streams }
@@ -188,7 +188,7 @@ AbstractFileReference >> binaryWriteStreamDo: aBlock [
 { #category : #streams }
 AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
-		ifTrue: presentBlock
+		ifTrue: [ presentBlock value ]
 		ifFalse: [ self binaryWriteStreamDo: doBlock ]
 ]
 
@@ -552,11 +552,11 @@ AbstractFileReference >> ifExists: aBlock ifAbsent: anotherBlock [
 { #category : #testing }
 AbstractFileReference >> ifFile: fBlock ifDirectory: dBlock ifAbsent: aBlock [
 	^ self isFile
-		ifTrue: fBlock
+		ifTrue: [ fBlock value ]
 		ifFalse: [
 			self isDirectory
-				ifTrue: dBlock
-				ifFalse: aBlock ]
+				ifTrue: [dBlock value ]
+				ifFalse: [ aBlock value ] ]
 ]
 
 { #category : #printing }
@@ -750,7 +750,7 @@ AbstractFileReference >> readStreamDo: aBlock [
 AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self readStreamDo: doBlock ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #streams }
@@ -773,7 +773,7 @@ AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self readStream ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #navigating }
@@ -898,7 +898,7 @@ AbstractFileReference >> writeStreamDo: aBlock [
 { #category : #streams }
 AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
-		ifTrue: presentBlock
+		ifTrue: [ presentBlock value ]
 		ifFalse: [ self writeStreamDo: doBlock ]
 ]
 

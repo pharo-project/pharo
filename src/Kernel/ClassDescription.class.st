@@ -689,7 +689,7 @@ ClassDescription >> instVarIndexFor: instVarName ifAbsent: aBlock [
 
 	^self
 		slotNamed: instVarName
-		ifFound: [ :slot | slot isVirtual ifTrue: aBlock ifFalse: [slot index]]
+		ifFound: [ :slot | slot isVirtual ifTrue: [aBlock value] ifFalse: [slot index]]
 		ifNone: aBlock
 ]
 
