@@ -263,7 +263,7 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 ExternalBrowser >> showClassDefinition [
 
 	method text:
-		(self classes selectedItem definitionString ifNil: [ '' ])
+		(self classes selectedItem definition ifNil: [ '' ])
 ]
 
 { #category : #accessing }
