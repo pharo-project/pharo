@@ -162,7 +162,7 @@ ExternalBrowser >> initializePresenter [
 	classes := self newList.
 	protocols := self newList.
 	selectors := self newList.
-	method := self newCode.
+	method := self newCode withoutSyntaxHighlight.
 
 	showClassSide := self newCheckBox.
 	showClassSide label: 'Class side'.
