@@ -155,7 +155,7 @@ CoCompletionContext >> isScripting [
 { #category : #narrowing }
 CoCompletionContext >> narrowWith: aString [ 
 
-	self completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: aString)
+	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
 ]
 
 { #category : #accessing }

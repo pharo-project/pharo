@@ -140,6 +140,17 @@ Object class >> newFrom: aSimilarObject [
 		ifFalse: [self basicNew]) copySameFrom: aSimilarObject
 ]
 
+{ #category : #'instance creation' }
+Object class >> newFromArray: anArray [
+
+	"Fast initialization from an Array.
+	This is mainly used by collections but have to be defined on Object class because it is a double dispatch call from Array>>as: and must be functionnal with non Collection arguments.
+
+	See Collection class>>newFromArray: for the rationale."
+
+	^ self newFrom: anArray
+]
+
 { #category : #'class initialization' }
 Object class >> reInitializeDependentsFields [
 	<script>
@@ -240,7 +251,7 @@ Object >> -> anObject [
 	
 	"Note that key and value can be ANY object."
 	
-	^Association key: self value: anObject
+	^ Association key: self value: anObject
 ]
 
 { #category : #comparing }
@@ -249,19 +260,21 @@ Object >> = anObject [
 	object. If = is redefined in any subclass, consider also redefining the 
 	message hash."
 
-	^self == anObject
+	^ self == anObject
 ]
 
 { #category : #finalization }
 Object >> actAsExecutor [
 	"Prepare the receiver to act as executor for any resources associated with it"
+	
 	self breakDependents
 ]
 
 { #category : #converting }
-Object >> adaptToFloat: rcvr andCompare: selector [ 
+Object >> adaptToFloat: rcvr andCompare: selector [
 	"If I am involved in comparison with a Float.
 	Default behaviour is to process comparison as any other selectors."
+
 	^ self adaptToFloat: rcvr andSend: selector
 ]
 
@@ -269,6 +282,7 @@ Object >> adaptToFloat: rcvr andCompare: selector [
 Object >> adaptToFloat: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Float,
 	then it may be adequate to simply adapt it to a number."
+
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
@@ -276,6 +290,7 @@ Object >> adaptToFloat: rcvr andSend: selector [
 Object >> adaptToFraction: rcvr andCompare: selector [ 
 	"If I am involved in comparison with a Fraction.
 	Default behaviour is to process comparison as any other selectors."
+	
 	^ self adaptToFraction: rcvr andSend: selector
 ]
 
@@ -283,6 +298,7 @@ Object >> adaptToFraction: rcvr andCompare: selector [
 Object >> adaptToFraction: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Fraction,
 	then it may be adequate to simply adapt it to a number."
+	
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
@@ -290,6 +306,7 @@ Object >> adaptToFraction: rcvr andSend: selector [
 Object >> adaptToInteger: rcvr andCompare: selector [ 
 	"If I am involved in comparison with an Integer.
 	Default behaviour is to process comparison as any other selectors."
+	
 	^ self adaptToInteger: rcvr andSend: selector
 ]
 
@@ -297,6 +314,7 @@ Object >> adaptToInteger: rcvr andCompare: selector [
 Object >> adaptToInteger: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Integer,
 	then it may be adequate to simply adapt it to a number."
+	
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
@@ -358,16 +376,18 @@ Object >> asString [
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
 	We check for true explicitly to make the assertion fail for non booleans"
+
 	<debuggerCompleteToSender>
-	self assert: aBlock description: 'Assertion failed'.
+	self assert: aBlock description: 'Assertion failed'
 ]
 
 { #category : #asserting }
 Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
+
 	<debuggerCompleteToSender>
-	aBlock value 
-		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
+	aBlock value ifFalse: [ 
+		AssertionFailure signal: aStringOrBlock value ]
 ]
 
 { #category : #accessing }
@@ -456,7 +476,7 @@ Object >> basicAt: index put: value [
 Object >> basicSize [
 	"Primitive. Answer the number of indexable variables in the receiver. 
 	This value is the same as the largest legal subscript. Essential. Do not 
-	override in any subclass. See Object documentation whatIsAPrimitive."
+	override in any subclass (except Context). See Object documentation whatIsAPrimitive."
 
 	<primitive: 62>
 	"The number of indexable fields of fixed-length objects is 0"
@@ -488,7 +508,8 @@ Object >> beRecursivelyReadOnlyObject [
 
 { #category : #'write barrier' }
 Object >> beRecursivelyWritableObject [
-	^self recursivelySetIsReadOnlyObject: false
+
+	^ self recursivelySetIsReadOnlyObject: false
 ]
 
 { #category : #'write barrier' }
@@ -499,12 +520,14 @@ Object >> beWritableObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code.
 	 Set the read-only flag of the receiver to false and answer the previous vaue of the flag."
-	^self setIsReadOnlyObject: false
+
+	^ self setIsReadOnlyObject: false
 ]
 
 { #category : #binding }
 Object >> bindingOf: aString [
-	^nil
+
+	^ nil
 ]
 
 { #category : #dependencies }
@@ -627,7 +650,7 @@ Object >> clone [
 Object >> copy [
 	"Answer another instance just like the receiver. Subclasses typically override postCopy; they typically do not override shallowCopy. Copy is a template method in the sense of Design Patterns. So do not override it. Override postCopy instead. Pay attention that normally you should call postCopy of your superclass too."
 
-	^self shallowCopy postCopy
+	^ self shallowCopy postCopy
 ]
 
 { #category : #copying }
@@ -727,7 +750,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		date: date;
 		version: version;
 		rule: aRule;
-		transform.
+		transform
 ]
 
 { #category : #deprecation }
@@ -741,7 +764,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		version: version;
 		rule: aRule;
 		condition: conditionBlock;
-		transform.
+		transform
 ]
 
 { #category : #deprecation }
@@ -752,7 +775,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		context: thisContext sender;
 		explanation: anExplanationString;
 		rule: aRule;
-		transform.
+		transform
 ]
 
 { #category : #deprecation }
@@ -764,7 +787,7 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		explanation: anExplanationString;
 		rule: aRule;
 		condition: conditionBlock;
-		transform.
+		transform
 ]
 
 { #category : #displaying }
@@ -778,7 +801,8 @@ Object >> displayString [
 Object >> displayStringLimitedTo: limit [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullDisplayString."
-	^self printStringLimitedTo: limit using: [:s | self displayStringOn: s]
+	
+	^ self printStringLimitedTo: limit using: [:s | self displayStringOn: s]
 ]
 
 { #category : #displaying }
@@ -859,7 +883,8 @@ Object >> errorSubscriptBounds: index [
 { #category : #finalization }
 Object >> executor [
 	"Return an object which can act as executor for finalization of the receiver"
-	^self shallowCopy actAsExecutor
+	
+	^ self shallowCopy actAsExecutor
 ]
 
 { #category : #'error handling' }
@@ -892,7 +917,8 @@ Object >> explicitRequirement [
 { #category : #finalization }
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
-	^WeakRegistry default
+	
+	^ WeakRegistry default
 ]
 
 { #category : #finalization }
@@ -902,7 +928,8 @@ Object >> finalize [
 
 { #category : #enumerating }
 Object >> flattenOn: aStream [
-		aStream nextPut: self
+
+	aStream nextPut: self
 ]
 
 { #category : #displaying }
@@ -922,12 +949,13 @@ Object >> fullPrintString [
 { #category : #halting }
 Object >> halt [
 	"This is the typical message to use for inserting breakpoints during debugging."
+
 	<debuggerCompleteToSender>
 	Halt now
 ]
 
 { #category : #halting }
-Object >> halt: aString [ 
+Object >> halt: aString [
 	<debuggerCompleteToSender>
 	Halt now: aString
 ]
@@ -943,7 +971,8 @@ Object >> haltFromCount: anInteger [
 { #category : #halting }
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
-	Halt if: condition.
+	
+	Halt if: condition
 ]
 
 { #category : #testing }
@@ -980,7 +1009,8 @@ Object >> haltOnce [
 
 { #category : #'process termination handling' }
 Object >> handleProcessTerminationOfWaitingContext: suspendedContext [
-	^suspendedContext
+
+	^ suspendedContext
 ]
 
 { #category : #'error handling' }
@@ -992,12 +1022,13 @@ Object >> handles: exception [
 
 { #category : #binding }
 Object >> hasBindingOf: aString [
-	^false
+
+	^ false
 ]
 
 { #category : #'literal testing' }
 Object >> hasLiteralSuchThat: testBlock [
-	"This is the end of the imbedded structure path so return false."
+	"This is the end of the embedded structure path so return false."
 
 	^ false
 ]
@@ -1005,6 +1036,7 @@ Object >> hasLiteralSuchThat: testBlock [
 { #category : #finalization }
 Object >> hasMultipleExecutors [
 	"All objects, except ObjectFinalizerCollection instances should answer false to this message"
+	
 	^ false
 ]
 
@@ -1050,14 +1082,14 @@ Object >> instVarAt: index put: anObject [
 ]
 
 { #category : #introspection }
-Object >> instVarNamed: aString [
+Object >> instVarNamed: aStringOrSymbol [
 	"Return the value of the instance variable in me with that name.  Slow, but very useful.
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aString
+		slotNamed: aStringOrSymbol
 		ifFound: [ :slot | slot read: self ]
-		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
+		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asString ]
 ]
 
 { #category : #introspection }
@@ -1073,11 +1105,13 @@ Object >> instVarNamed: aString put: aValue [
 
 { #category : #testing }
 Object >> isArray [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isAssociation [
+
 	^ false
 ]
 
@@ -1085,7 +1119,8 @@ Object >> isAssociation [
 Object >> isBehavior [
 	"Return true if the receiver is a behavior.
 	Note: Do not override in any class except behavior."
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
@@ -1107,18 +1142,21 @@ Object >> isClass [
 
 { #category : #testing }
 Object >> isClassOrTrait [
+
 	^ self isClass or: [ self isTrait ]
 ]
 
 { #category : #testing }
 Object >> isClosure [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isCollection [
 	"Return true if the receiver is some sort of Collection and responds to basic collection messages such as #size and #do:"
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
@@ -1130,7 +1168,8 @@ Object >> isColor [
 
 { #category : #testing }
 Object >> isColorForm [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
@@ -1147,29 +1186,35 @@ Object >> isCompiledMethod [
 
 { #category : #testing }
 Object >> isContext [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isDictionary [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isEmbeddedBlock [
-	"returns true for CleanBlockBlockClosure and CompiledBlock"
+	"Returns true for CleanBlockBlockClosure and CompiledBlock"
+
 	^ false
 ]
 
 { #category : #testing }
 Object >> isFloat [
 	"Overridden to return true in Float, natch"
+	
+
 	^ false
 ]
 
 { #category : #testing }
 Object >> isForm [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
@@ -1211,24 +1256,26 @@ Object >> isLiteral [
 	"Answer whether the receiver has a literal text form recognized by the 
 	compiler."
 
-	^false
+	^ false
 ]
 
 { #category : #'class membership' }
-Object >> isMemberOf: aClass [ 
+Object >> isMemberOf: aClass [
 	"Answer whether the receiver is an instance of the class, aClass."
 
-	^self class == aClass
+	^ self class == aClass
 ]
 
 { #category : #testing }
 Object >> isMessageSend [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isMethodProperties [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
@@ -1239,14 +1286,15 @@ Object >> isMorph [
 
 { #category : #testing }
 Object >> isMorphicEvent [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isNotNil [
 	"Coerces nil to false and everything else to true."
 
-	^true
+	^ true
 ]
 
 { #category : #testing }
@@ -1295,44 +1343,52 @@ Object >> isReadOnlyObject [
 
 { #category : #testing }
 Object >> isRectangle [
-	^false
+
+	^ false
 ]
 
 { #category : #'self evaluating' }
 Object >> isSelfEvaluating [
+
 	^ self isLiteral
 ]
 
 { #category : #testing }
 Object >> isStream [
 	"Return true if the receiver responds to the stream protocol"
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 Object >> isString [
 	"Overridden to return true in String, natch"
+	
 	^ false
 ]
 
 { #category : #testing }
 Object >> isSymbol [
+
 	^ false
 ]
 
 { #category : #testing }
 Object >> isSystemWindow [
-"answer whatever the receiver is a SystemWindow"
+	"Answer whether the receiver is a SystemWindow"
+
 	^ false
 ]
 
 { #category : #testing }
 Object >> isText [
+
 	^ false
 ]
 
 { #category : #flagging }
 Object >> isThisEverCalled [
+
 	^ self isThisEverCalled: thisContext sender printString
 ]
 
@@ -1340,7 +1396,7 @@ Object >> isThisEverCalled [
 Object >> isThisEverCalled: msg [
 	"Send this message, with some useful printable argument, from methods or branches of methods which you believe are never reached."
 
-	self error: 'This is indeed called: ', msg printString
+	self error: 'This is indeed called: ' , msg printString
 ]
 
 { #category : #testing }
@@ -2174,7 +2230,7 @@ Object >> ~= anObject [
 	"Answer whether the receiver and the argument do not represent the 
 	same object."
 
-	^self = anObject == false
+	^ self = anObject == false
 ]
 
 { #category : #associating }

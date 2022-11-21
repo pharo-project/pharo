@@ -19,17 +19,17 @@ Class {
 
 { #category : #'instance creation' }
 FreeTypeFontFamilyMember class >> fromFileInfo: aFreeTypeFileInfo [
-	
-	^self new
-		fileInfo: aFreeTypeFileInfo;	 
-		styleName: aFreeTypeFileInfo styleNameExtracted;
-		stretchName: aFreeTypeFileInfo stretch;
-		stretchValue: aFreeTypeFileInfo stretchValue;
-		weightName: aFreeTypeFileInfo weight;
-		weightValue: aFreeTypeFileInfo weightValue;
-		slantName: aFreeTypeFileInfo slant;
-		slantValue: aFreeTypeFileInfo slantValue;
-		yourself
+
+	^ self new
+		  fileInfo: aFreeTypeFileInfo;
+		  styleName: aFreeTypeFileInfo styleNameExtracted;
+		  stretchName: aFreeTypeFileInfo stretch;
+		  stretchValue: aFreeTypeFileInfo stretchValue;
+		  weightName: aFreeTypeFileInfo weight;
+		  weightValue: aFreeTypeFileInfo weightValue;
+		  slantName: aFreeTypeFileInfo slant;
+		  slantValue: aFreeTypeFileInfo slantValue;
+		  yourself
 ]
 
 { #category : #comparing }

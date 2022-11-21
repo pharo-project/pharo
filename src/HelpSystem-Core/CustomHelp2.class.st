@@ -177,9 +177,9 @@ CustomHelp2 class >> subheading: aString [
 ]
 
 { #category : #accessing }
-CustomHelp2 class >> systemIcon [ 
+CustomHelp2 class >> systemIconName [
 
-	^self icon
+	^ #book
 ]
 
 { #category : #formatting }

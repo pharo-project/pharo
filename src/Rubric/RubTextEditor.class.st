@@ -2003,8 +2003,8 @@ RubTextEditor >> selectInvisiblyAt: characterIndex [
 { #category : #'new selection' }
 RubTextEditor >> selectInvisiblyFrom: start to: stop [
 	"Select the designated characters, inclusive.  Make no visual changes."
-
 	self markIndex: start pointIndex: stop + 1
+	
 ]
 
 { #category : #'new selection' }
@@ -2023,12 +2023,11 @@ RubTextEditor >> selectLine [
 
 { #category : #'new selection' }
 RubTextEditor >> selectMark: mark point: point [
-	"Select the specified characters inclusive.
-	 Be sure the selection is in view."
 
-	(mark =  self markIndex and: [point + 1 = self pointIndex]) ifFalse:
-		[self deselect.
-		self selectInvisiblyMark: mark point: point]
+	(mark = self markIndex and: [ point + 1 = self pointIndex ]) 
+		ifTrue: [ ^ self ].
+	self deselect.
+	self selectInvisiblyMark: mark point: point
 ]
 
 { #category : #'new selection' }
@@ -2106,10 +2105,24 @@ RubTextEditor >> selectWord [
 
 { #category : #'nonediting/nontyping keys' }
 RubTextEditor >> selectWord: aKeyboardEvent [
-
 	self closeTypeIn.
 	self selectWord.
 	^ true
+]
+
+{ #category : #'new selection' }
+RubTextEditor >> selectWordMark: mark point: point [
+	| mark2 point2 |
+	"this method is used my mouse double click and drag.
+	It selects the correct words between the original point and the selection cursor point"
+	mark < point ifTrue: [ 
+		mark2 := self previousWord: mark.
+		point2 := (self nextWord: point) - 1 ]
+	ifFalse: [ 
+		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
+		mark2 := self nextWord: (mark>0 ifTrue:[mark] ifFalse:[1]).
+		point2 := (self previousWord: point)- 1  ].
+	self selectMark: mark2 point: point2.
 ]
 
 { #category : #'accessing - selection' }

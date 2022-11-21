@@ -28,7 +28,7 @@ CommentsToTestsTest >> testCommentWithSyntaxError [
 	docComment := thisContext method ast pharoDocCommentNodes first.
 	commentTestCase := CommentTestCase for: docComment.
 	
-	self should: [commentTestCase testIt] raise: SyntaxErrorNotification
+	self should: [commentTestCase testIt] raise: RuntimeSyntaxError
 ]
 
 { #category : #tests }
@@ -47,12 +47,13 @@ CommentsToTestsTest >> testErrorComment [
 CommentsToTestsTest >> testSimpleComment [
 	"(1+3)>>>4"
 	
-	| docComment commentTestCase |
+	| docComment commentTestCase value |
 
 	docComment := thisContext method ast pharoDocCommentNodes first.
 	commentTestCase := CommentTestCase for: docComment.
+	value := commentTestCase evaluate.
 		
 	self
-		assert: commentTestCase currentValue
-		equals: commentTestCase expectedValue
+		assert: value key
+		equals: value value
 ]

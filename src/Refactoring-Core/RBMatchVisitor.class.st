@@ -17,7 +17,7 @@ RBMatchVisitor >> difference [
 	^ difference
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RBMatchVisitor >> initialize [ 	
 	super initialize .
 	arguments := 0 .
@@ -32,7 +32,7 @@ RBMatchVisitor >> replace: temp with: aString [
 	(RBParseTreeRewriter rename: temp name to: aString) executeTree: definingNode.
 ]
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBMatchVisitor >> visitBlockNode: aBlockNode [
 	aBlockNode arguments do: [ :arg | 
 		self replace: arg with: ('tempMatch', temporaries  asString).
@@ -40,7 +40,7 @@ RBMatchVisitor >> visitBlockNode: aBlockNode [
 	super visitBlockNode: aBlockNode
 ]
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBMatchVisitor >> visitMethodNode: aMethodNode [
 	aMethodNode arguments do: [ :arg | 
 		difference := difference + (('argMatch', arguments  asString )size- (arg name asString )size + 2 ).
@@ -49,7 +49,7 @@ RBMatchVisitor >> visitMethodNode: aMethodNode [
 	super visitMethodNode: aMethodNode.
 ]
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBMatchVisitor >> visitSequenceNode: aSequenceNode [
 	|isMethod|
 	isMethod := aSequenceNode parent isMethod.

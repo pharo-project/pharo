@@ -565,6 +565,11 @@ Integer >> byteAt: index [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+Integer >> byteAt: index put: value [ 
+	^ self subclassResponsibility
+]
+
 { #category : #private }
 Integer >> bytesCompare: arg [ 
 	"Compare the magnitude of self with that of arg.   
@@ -1024,6 +1029,11 @@ Integer >> growto: n [
 	^self copyto: (self species new: n)
 ]
 
+{ #category : #accessing }
+Integer >> hashMultiply [
+	^ self subclassResponsibility
+]
+
 { #category : #converting }
 Integer >> hex [
 	"Returns a string representation of the receiver as hex, prefixed with 16r.  
@@ -1075,6 +1085,11 @@ Integer >> isInteger [
 	"True for all subclasses of Integer."
 
 	^ true
+]
+
+{ #category : #accessing }
+Integer >> isLarge [
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }

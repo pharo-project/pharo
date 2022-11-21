@@ -253,7 +253,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+	newMethod := CompiledMethod newMethod: aMethod bytecodes size header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
@@ -264,7 +264,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	newMethod classBinding: aClass binding.
 	literalSpace := (aMethod literals size + 1) * Smalltalk wordSize.
 
-	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
+	aMethod bytecodes doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
 	aClass
 		addAndClassifySelector: aMethod name

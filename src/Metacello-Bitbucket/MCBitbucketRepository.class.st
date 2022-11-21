@@ -1,6 +1,6 @@
 Class {
 	#name : #MCBitbucketRepository,
-	#superclass : #MCGitBasedNetworkRepository,
+	#superclass : #MCPrivateHostableRepository,
 	#category : #'Metacello-Bitbucket'
 }
 
@@ -9,27 +9,19 @@ MCBitbucketRepository class >> basicDescription [
   ^ 'bitbucket'
 ]
 
-{ #category : #accessing }
-MCBitbucketRepository class >> cacheDirectoryPath [
-  <preference: 'BitBucket Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
-]
-
 { #category : #'instance creation' }
 MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createBitbucketRepository: aRepositorySpec
 ]
 
-{ #category : #testing }
-MCBitbucketRepository class >> isAvailableFor: type [
-	^ type = 'bitbucket'
+{ #category : #private }
+MCBitbucketRepository class >> defaultHostname [
+	^ 'bitbucket.org'
 ]
 
 { #category : #testing }
-MCBitbucketRepository class >> isEnabled [
-
-	^true
+MCBitbucketRepository class >> isAvailableFor: type [
+	^ type = 'bitbucket'
 ]
 
 { #category : #private }

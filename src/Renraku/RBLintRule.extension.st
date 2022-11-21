@@ -30,7 +30,7 @@ RBLintRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternativeBl
 		encounteredCritique := true.
 		aCriticBlock cull: crit ].
 	
-	encounteredCritique ifFalse: alternativeBlock
+	encounteredCritique ifFalse: [ alternativeBlock value ]
 ]
 
 { #category : #'*Renraku' }

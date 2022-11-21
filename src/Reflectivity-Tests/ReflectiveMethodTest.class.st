@@ -14,6 +14,20 @@ ReflectiveMethodTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : #tests }
+ReflectiveMethodTest >> testASTCacheIsCleanedAfterMetaLinkRemoval [
+	| method bcToASTCache |
+	selector := #exampleBlock.
+	method := ReflectivityExamples >> selector. 
+	method createTwin.
+	bcToASTCache :=  method ast blockNodes first bcToASTCache.
+	
+	(ReflectivityExamples >> selector) invalidate.
+	ReflectivityExamples new perform: selector.
+	
+	self deny: method ast blockNodes first bcToASTCache identicalTo: bcToASTCache.
+]
+
 { #category : #'tests - creation' }
 ReflectiveMethodTest >> testCreateReflectiveMethod [
 	| compiledMethod reflectiveMethod |

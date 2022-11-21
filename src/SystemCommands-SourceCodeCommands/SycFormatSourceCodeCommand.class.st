@@ -35,7 +35,7 @@ SycFormatSourceCodeCommand >> execute [
 SycFormatSourceCodeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
-	sourceCodeEditor := aToolContext methodEditor
+	sourceCodeEditor := aToolContext editor
 ]
 
 { #category : #accessing }

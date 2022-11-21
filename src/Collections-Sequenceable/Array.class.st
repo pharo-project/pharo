@@ -137,10 +137,39 @@ Array class >> new: sizeRequested [
 ]
 
 { #category : #converting }
+Array >> as: aSimilarClass [
+
+	"Specific classes can redefine newFromArray: by a faster implementation if they want.
+
+	Note: see Collection class>>newFromArray: for the rationale."
+
+	aSimilarClass == self class ifTrue: [ ^ self ].
+	^ aSimilarClass newFromArray: self
+]
+
+{ #category : #converting }
 Array >> asArray [
 	"Answer with the receiver itself."
 
 	^ self
+]
+
+{ #category : #converting }
+Array >> asNewArray [
+
+	^ self clone.
+]
+
+{ #category : #converting }
+Array >> asOrderedCollection [
+
+	^ OrderedCollection newFromArray: self
+]
+
+{ #category : #converting }
+Array >> asSet [
+
+	^ Set newFromArray: self
 ]
 
 { #category : #accessing }

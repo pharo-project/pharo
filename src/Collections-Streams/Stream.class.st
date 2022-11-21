@@ -7,6 +7,12 @@ Class {
 	#category : #'Collections-Streams-Base'
 }
 
+{ #category : #testing }
+Stream class >> isAbstract [
+		
+	^ self == Stream
+]
+
 { #category : #'instance creation' }
 Stream class >> new [
 

@@ -158,6 +158,8 @@ BlockClosureTest >> testIsClean [
 	local := #testIsClean.
 	self assert: [] isClean. "closes over nothing at all"
 	self assert: [thisContext] isClean. "we can access the context"
+	self assert: [ 
+		| local2 | true ifTrue: [local2 := 1 ] ] isClean. "optimized blocks are clean"
 	self assert: [:a :b| a < b] isClean. "accesses only arguments"
 	self assert: [:a :b| | s | s := a + b. s even] isClean. "accesses only local variables"
 	self deny: [^nil] isClean. "closes over home (^-return)"

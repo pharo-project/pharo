@@ -326,13 +326,9 @@ BlockClosure >> isBlock [
 
 { #category : #testing }
 BlockClosure >> isClean [
-	"Answer if the receiver does not close-over any variables other than globals, and does
-	 not ^-return (does not close over the home context).  Clean blocks are amenable to
-	 being created at compile-time."
-	self numCopiedValues > 0 ifTrue:
-		[^false].
-
-	^ CleanBlockChecker check: self method
+	"for now we forward to the AST. When clean blocks are enabled, we can just return false
+	as CleanBlockClosure returns true"
+	^self sourceNode isClean
 ]
 
 { #category : #testing }

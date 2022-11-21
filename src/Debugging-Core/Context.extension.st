@@ -338,14 +338,12 @@ Context >> stepToSendOrReturn [
 
 { #category : #'*Debugging-Core' }
 Context class >> tallyInstructions: aBlock [
-	"
-	Count the occurrences of each bytecode during the execution of aBlock.
+	"Count the occurrences of each bytecode during the execution of aBlock.
 	Return a Array of associations using the byte as key and the occurrences as values sorted by the instruction opcode numeric values.
 	
-	This method uses the in-image bytecode interpreter to evaluate and count the instructions.
+	This method uses the in-image bytecode interpreter to evaluate and count the instructions."
 	
-	(Context tallyInstructions: [3.14159 printString]) size >>> 122
-	"
+	"(Context tallyInstructions: [3.14159 printString]) size >>> 122"
 	
 	| tallies |
 	tallies := Bag new.

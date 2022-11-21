@@ -36,7 +36,7 @@ EpSettings class >> lostEventsDetectorEnabledSettingOn: aBuilder [
 	(aBuilder setting: #lostEventsDetectorEnabled)
 		label: 'Detect lost events on start-up';
 		default: true;
-		description: 'Check if current Epicea log has events that were not applied in this image (useful for recovegin changes when the image crashed)';
+		description: 'Check if current Epicea log has events that were not applied in this image (useful for recovering changes when the image crashed)';
 		parent: #epicea;
 		target: self.
 ]
@@ -86,7 +86,7 @@ EpSettings class >> storeNameStrategySettingsOn: aBuilder [
 		description: 'Choose how will be the Epicea logs named.';
 		parent: #epicea;
 		target: self;
-		default: OmRandomSuffixStrategy;
+		default: OmTimeStampSuffixStrategy;
 		domainValues: OmSessionStoreNamingStrategy availableStrategies.
 ]
 

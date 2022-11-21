@@ -7,7 +7,7 @@ Class {
 	#category : #'FluidClassBuilder-Base'
 }
 
-{ #category : #accessing }
+{ #category : #building }
 FluidTraitBuilder >> fillShiftClassBuilder [
 	
 	super fillShiftClassBuilder.

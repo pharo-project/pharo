@@ -309,6 +309,12 @@ IRBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedVal
 ]
 
 { #category : #instructions }
+IRBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean [
+
+	^ self add: (IRInstruction pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean)
+]
+
+{ #category : #instructions }
 IRBuilder >> pushInstVar: index [
 
 	self add: (IRInstruction pushInstVar: index).

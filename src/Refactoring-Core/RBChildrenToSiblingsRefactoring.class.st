@@ -56,7 +56,7 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : #transforming }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self performCompositeRefactoring: (RBAddClassRefactoring 
+	self performCompositeRefactoring: (RBInsertClassRefactoring 
 				model: self model
 				addClass: className
 				superclass: parent superclass

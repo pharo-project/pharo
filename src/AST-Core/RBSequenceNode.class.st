@@ -165,7 +165,7 @@ RBSequenceNode >> addReturn [
 		ifTrue: [ ^ nil ].
 	statements last isReturn
 		ifTrue: [ ^ statements last ].
-	node := RBReturnNode value: statements last.
+	node := RBReturnNode start: statements last start value: statements last.
 	statements at: statements size put: node.
 	node parent: self.
 	^ node
@@ -282,6 +282,15 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self temporaries
 		do: [:each | aDictionary removeKey: each name ifAbsent: []].
 	^true
+]
+
+{ #category : #testing }
+RBSequenceNode >> hasNonLocalReturn [
+	"check if there is a non-local return anywhere
+	Note: returns in a method itself are local returns"
+	^ self lastIsReturn
+		  ifTrue: [ parent isMethod not ]
+		  ifFalse: [ super hasNonLocalReturn ]
 ]
 
 { #category : #testing }

@@ -1,5 +1,5 @@
 "
-An AllProtocol is a special protocol to hanlde the ""all"" case
+An AllProtocol is a special protocol to handle the ""all"" case
 "
 Class {
 	#name : #AllProtocol,

@@ -9,7 +9,6 @@ Class {
 		'start',
 		'stop',
 		'name',
-		'initializationMessage',
 		'variableClassName'
 	],
 	#category : #'ClassParser-Model'
@@ -19,19 +18,6 @@ Class {
 CDVariableNode class >> isAbstract [
 		
 	^ self == CDVariableNode
-]
-
-{ #category : #'instance creation' }
-CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol initializationMessage: aMessageNode start: start stop: stop [
-	
-	^ self new
-		node: aNode;
-		name: aName;
-		variableClassName: aSymbol;
-		initializationMessage: aMessageNode;
-		start: start;
-		stop: stop;
-		yourself
 ]
 
 { #category : #'instance creation' }
@@ -47,22 +33,14 @@ CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: st
 ]
 
 { #category : #accessing }
+CDVariableNode >> asCalypsoVariableOf: aClass [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 CDVariableNode >> binding [
 	"To be polymorphic to RB method nodes"
 	^self
-]
-
-{ #category : #accessing }
-CDVariableNode >> initializationMessage [
-	"Return the message node representing the initialization part of a slot."
-	
-	^ initializationMessage
-]
-
-{ #category : #accessing }
-CDVariableNode >> initializationMessage: aMessageNode [ 
-	
-	initializationMessage := aMessageNode
 ]
 
 { #category : #testing }
@@ -131,6 +109,11 @@ CDVariableNode >> name: aString [
 ]
 
 { #category : #accessing }
+CDVariableNode >> node [
+	^node
+]
+
+{ #category : #accessing }
 CDVariableNode >> node: aNode [ 
 	node := aNode
 ]
@@ -149,7 +132,7 @@ CDVariableNode >> printOn: aStream [
 
 { #category : #accessing }
 CDVariableNode >> sourceInterval [
-	^start to: stop
+	^self start to: self stop
 ]
 
 { #category : #selection }

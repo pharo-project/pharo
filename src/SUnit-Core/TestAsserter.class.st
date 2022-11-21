@@ -1,14 +1,28 @@
 "
-I understand methods beginning with `assert:...` and `deny:...` (and my class-side understands `TestAsserter class >>#assert:description:`).  I am the superclass of `TestCase` and `TestResource` and can also be the superclass of any test helper classes you create to factor out test behaviour.  I exist so that test code can be refactored between my subclasses without difficulty.
+I understand methods beginning with `assert:...` and `deny:...` (and my class-side understands `TestAsserter class >>#assert:description:`).
+I am the superclass of `TestCase` and `TestResource` and can also be the superclass of any test helper classes you create to factor out test behaviour.
+I exist so that test code can be refactored between my subclasses without difficulty.
 
-Send `#assert:description:` when you want to check for an expected value. For example, you might say
+Send `#assert:description:` when you want to check for an expected value. 
+For example, you might say
 	`self assert: socket isOpen description: 'We requested a socket but now it is not open'.`
 to test whether or not a socket is open at a point in a test.  
 
 Use description strings both to give more information about where a test failed in debugger notifiers and logs, and to document the intent of a test.  
-Other methods include `TestAsserter>>#assert:`, `TestAsserter>>#assert:description:resumable:`, `TestAsserter>>#deny:`, `TestAsserter>>#deny:description:`, `TestAsserter>>#deny:description:resumable:`, `TestAsserter>>#should:raise:`, `TestAsserter>>#should:raise:description:`, `TestAsserter>>#shouldnt:raise:`, `TestAsserter>>#shouldnt:raise:description:`.  (Any convenience assertion methods you create for general use should also be defined in my 'convenience' protocol.)
+Other methods include:
+- `TestAsserter>>#assert:`, 
+- `TestAsserter>>#assert:description:resumable:`, 
+- `TestAsserter>>#deny:`, 
+- `TestAsserter>>#deny:description:`, 
+- `TestAsserter>>#deny:description:resumable:`, 
+- `TestAsserter>>#should:raise:`, 
+- `TestAsserter>>#should:raise:description:`, 
+- `TestAsserter>>#shouldnt:raise:`, 
+- `TestAsserter>>#shouldnt:raise:description:`.  
+(Any convenience assertion methods you create for general use should also be defined in my 'convenience' protocol.)
 
-Override my class-side `TestAsserter class>>#isLogging` in subclasses to have failed assertion descriptions shown on the Transcript.  To have them appear elsewhere, also override my class-side `TestAsserter class>>#failureLog`.
+Override my class-side `TestAsserter class>>#isLogging` in subclasses to have failed assertion descriptions shown on the Transcript. 
+To have them appear elsewhere, also override my class-side `TestAsserter class>>#failureLog`.
 
 "
 Class {
@@ -77,7 +91,11 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of
 	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
 	"
-	self assert: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
+
+	self
+		assert: actualNumber
+		closeTo: expectedNumber
+		precision: self class defaultPrecisionsForCloseToComparison
 ]
 
 { #category : #asserting }
@@ -200,7 +218,11 @@ TestAsserter >> assertCollection: actualCollection includesAny: subcollection [
 
 { #category : #asserting }
 TestAsserter >> assertEmpty: aCollection [
-	^ self assert: aCollection isEmpty description: aCollection asString , ' should have been empty'
+	"I Raise an AssertionFailure if the given collection is not empty. I also provide a specialized message in case I failed"
+
+	^ self
+		  assert: aCollection isEmpty
+		  description: aCollection asString , ' should have been empty'
 ]
 
 { #category : #factory }
@@ -411,49 +433,78 @@ TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
 
 { #category : #asserting }
 TestAsserter >> denyEmpty: aCollection [
-	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
+	"I raise an AssertionFailure if the giving collection is empty. I also provide a specialized message in case I failed"
+
+	^ self
+		  assert: aCollection isNotEmpty
+		  description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : #asserting }
-TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [ 
-	^[aBlock value.
- 	false] on: anExceptionalEvent
-		do: [:ex | ex return: true]
+TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
+	"I check if the given block evaluation raises the given exception"
+
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anExceptionalEvent
+		  do: [ :ex | ex return: true ]
 ]
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: aString [
-	^[aBlock value.
- 	false] on: anExceptionalEvent
-		do: [:ex | ex return: (ex description includesSubstring: aString) not ]
+	"I check if the giving block (aBlock) evaluation raises the giving exception (anExceptionalEvent)"
+
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anExceptionalEvent
+		  do: [ :ex | 
+		  ex return: (ex description includesSubstring: aString) not ]
 ]
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock [
+	"I check if the first given block (aBlock) evaluation raises the given exception 
+	(anExceptionalEvent) in which case I evaluate the second block (anotherBlock) 
+	with the exception as argument"
 
-	^[aBlock value.
- 	false] 
-		on: anException
-		do: [:exception | 
-			anotherBlock value: exception.
-			exception return: true]
+	^ [ 
+	  aBlock value.
+	  false ]
+		  on: anException
+		  do: [ :exception | 
+			  anotherBlock value: exception.
+			  exception return: true ]
 ]
 
 { #category : #asserting }
 TestAsserter >> fail [
+	"I make my receiver fail with TestFailure"
 
-	^self assert: false
+	^ self assert: false
 ]
 
 { #category : #asserting }
 TestAsserter >> fail: aDescriptionString [
+	"I make my receiver fail with the given description for TestFailure"
 
-	^self assert: false description: aDescriptionString
+	^ self assert: false description: aDescriptionString
 ]
 
 { #category : #logging }
 TestAsserter >> logFailure: aString [
 	self class logFailure: aString.
+]
+
+{ #category : #accessing }
+TestAsserter >> resources [
+	^ self subclassResponsibility
+]
+
+{ #category : #running }
+TestAsserter >> setUp [
+	^ self subclassResponsibility
 ]
 
 { #category : #asserting }
@@ -465,6 +516,8 @@ TestAsserter >> should: aBlock [
 
 { #category : #asserting }
 TestAsserter >> should: aBlock description: aString [
+	"evaluate the block first then checks for the assertion with the giving description"
+
 	self assert: aBlock value description: aString
 ]
 
@@ -495,21 +548,34 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent [
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent description: aString [ 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
-		description: aString
+TestAsserter >> should: aBlock raise: anExceptionalEvent description: aString [
+	"Check first if the block raise the giving exception then check with assert for the result with description in case of failure"
+
+	^ self
+		  assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
+		  description: aString
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring)
-		description: aString
+TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
+
+	^ self
+		  assert: (self
+				   executeShould: aBlock
+				   inScopeOf: anExceptionalEvent
+				   withDescriptionNotContaining: substring)
+		  description: aString
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [ 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring)
-		description: aString
+TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
+
+	^ self
+		  assert: (self
+				   executeShould: aBlock
+				   inScopeOf: anExceptionalEvent
+				   withDescriptionContaining: substring)
+		  description: aString
 ]
 
 { #category : #asserting }
@@ -527,22 +593,29 @@ TestAsserter >> shouldFix: aBlock [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock [
+	"Test that block is evaluated to false"
 	self deny: aBlock value
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock description: aString [
+	"I test that block is evaluated to false. 
+	Otherwise I raise an AssertionFailure with the given description"
+	
 	self deny: aBlock value description: aString
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [  
+	"To test that a particular exception is not raised during the execution of a Block"
 	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString [  
+TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
+	"To test that a particular exception is not raised during the execution of a Block. 
+	Otherwise raise an AssertionFailure with the given description"
  
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
@@ -550,11 +623,14 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString 
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
-	 
-	^self
-		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring) not
-		description: aString
+TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
+
+	^ self
+		  assert: (self
+				   executeShould: aBlock
+				   inScopeOf: anExceptionalEvent
+				   withDescriptionNotContaining: substring) not
+		  description: aString
 ]
 
 { #category : #asserting }
@@ -567,6 +643,8 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionInclu
 
 { #category : #asserting }
 TestAsserter >> signalFailure: aString [
+	"Raise a TestFailure with the given string as description"
+
 	self classForTestResult failure signal: aString
 ]
 
@@ -580,6 +658,11 @@ TestAsserter >> skip [
 TestAsserter >> skip: aComment [
 	"Don't run this test, and don't mark it as failure"
 	TestSkipped signal: aComment
+]
+
+{ #category : #running }
+TestAsserter >> tearDown [
+	^ self subclassResponsibility
 ]
 
 { #category : #private }

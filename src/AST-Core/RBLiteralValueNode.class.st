@@ -69,19 +69,14 @@ RBLiteralValueNode >> evaluateForReceiver: aReceicer [
 
 { #category : #accessing }
 RBLiteralValueNode >> sourceText [
-	^ sourceText ifNil: [
-		String streamContents: [:aStream|			
-			value isSymbol
-				ifTrue: [
-					aStream nextPut: $#.
-					((value isValidSelector) and: [value ~~ #'||']) 
-						ifTrue: [aStream nextPutAll: value]
-						ifFalse: [value asString printOn: aStream]]
-				ifFalse: [ 
-					value class == Character 
-						ifTrue: 
-							[aStream nextPut: $$;	nextPut: value]
-						ifFalse: [ value storeOn: aStream ]]] ]
+
+	sourceText ifNotNil: [ ^ sourceText ].
+	^ String streamContents: [ :aStream |
+		  value class == Character
+			  ifTrue: [ "Character>>storeOn might return `Character space` (or something else) that is not a literal. So, force the `$x` syntax."
+				  aStream nextPut: $$; nextPut: value ]
+			  ifFalse: [ "For other literals, we assume that storeOn returns a valid literal syntactic representation."
+				  value storeOn: aStream ] ]
 ]
 
 { #category : #accessing }

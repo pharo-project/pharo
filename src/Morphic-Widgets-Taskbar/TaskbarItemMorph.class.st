@@ -64,7 +64,7 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 	lm := self theme
 		newRowIn: aTaskbar
 		for:
-			{(self model taskbarIcon ifNil: [ ^ nil ]) asMorph.
+			{((self iconNamed: self model taskbarIconName) ifNil: [ ^ nil ]) asMorph.
 			lab}.
 	lm cellInset: 2.
 	self

@@ -429,7 +429,7 @@ Integer >> numberOfCombinationsTaken: k [
 	It is calculated as C(n,k) = n! / (k! (n-k)!) 
 	For 6 numberOfCombinationsTaken: 3, this is 6*5*4 / (1*2*3)"
 	
-	"6 numberOfCombinationsTaken: 3 >>> 20"
+	"(6 numberOfCombinationsTaken: 3) >>> 20"
 
 	| numerator denominator |
 	k < 0 ifTrue: [^ 0].

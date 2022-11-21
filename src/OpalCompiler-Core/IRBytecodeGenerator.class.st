@@ -100,8 +100,8 @@ IRBytecodeGenerator >> addLastLiteral: object [
 
 { #category : #private }
 IRBytecodeGenerator >> addLiteral: object [
-	literals add: object.
-	^ literals identityIndexOf: object
+	^ literals addLiteral: object.
+
 ]
 
 { #category : #private }
@@ -157,8 +157,16 @@ IRBytecodeGenerator >> compilationContext: aCompilationContext [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledBlockWith: trailer [
-	| lits header cb |
+	| lits quickPrimitive header cb |
 	lits := self literals allButLast "1 free only for compiledBlock".
+	quickPrimitive := self quickMethodPrim.
+	(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
+		"if we are a quick method we need to add a bytecode at the beginning. #bytecodes
+		takes primitiveBytes into account" 
+		primitiveBytes := (ByteArray new: 4) writeStream.
+		encoder stream: primitiveBytes.
+		encoder genCallPrimitive: quickPrimitive.
+	].
 	header := self spurVMHeader: lits size.
 	cb := CompiledBlock newMethod: self bytecodes size header: header.
 	(WriteStream with: cb)
@@ -348,7 +356,7 @@ IRBytecodeGenerator >> initialize [
 { #category : #initialization }
 IRBytecodeGenerator >> irPrimitive: anIrPrimitive [
 	literals isEmpty ifFalse: [self error: 'init prim before adding instructions'].
-	anIrPrimitive spec ifNotNil: [literals add: anIrPrimitive spec].
+	anIrPrimitive spec ifNotNil: [literals addLiteral: anIrPrimitive spec].
 	primNumber := anIrPrimitive num.
 	primNumber = 0 ifTrue: [ ^ self ].
 	self encoderClass callPrimitiveCode ifNil: [ ^ self ].
@@ -403,8 +411,7 @@ IRBytecodeGenerator >> literalIndexOf: object [
 
 	| index |
 	
-	(index := literals literalIndexOf: object ifAbsent: 0) > 0 ifFalse: [
-		index := self addLiteral: object].
+	index := literals literalIndexOf: object ifAbsent: [self addLiteral: object].
 	
 	"conversion from 1 based to 0 based"
 	^ index - 1
@@ -508,7 +515,7 @@ IRBytecodeGenerator >> pushFullBlockClosure: fullBlock [
 		genPushFullClosure: (self literalIndexOf: fullBlock compiledBlock) 
 		numCopied: fullBlock copiedValues size
 		receiverOnStack: false
-		outerContextNeeded: true
+		outerContextNeeded: fullBlock outerContextNeeded
 ]
 
 { #category : #instructions }

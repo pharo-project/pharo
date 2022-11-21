@@ -56,7 +56,8 @@ FreeTypeCacheEntry >> font: anObject [
 
 { #category : #comparing }
 FreeTypeCacheEntry >> hash [
-	^charCode hash
+
+	^ charCode hash
 ]
 
 { #category : #accessing }

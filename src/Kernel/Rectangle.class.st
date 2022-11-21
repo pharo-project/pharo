@@ -351,7 +351,12 @@ Rectangle >> compressed [
 
 { #category : #testing }
 Rectangle >> containsPoint: aPoint [ 
-	"Answer whether aPoint is within the receiver."
+	"Answer whether aPoint is within the receiver. Pay attention the self origin is considered less than but the corner is strict"
+	
+	"((0@0 corner: 100@100) containsPoint: 50@50) >>> true"
+	"((0@0 corner: 100@100) containsPoint: 0@0) >>> true"
+	"((0@0 corner: 100@100) containsPoint: 100@50) >>> false"
+	"((0@0 corner: 100@100) containsPoint: 100@100) >>> false"
 
 	^origin <= aPoint and: [aPoint < corner]
 ]

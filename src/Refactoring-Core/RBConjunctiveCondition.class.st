@@ -3,7 +3,23 @@ I am a refactoring condition combining two other conditions by a boolean AND.
 
 I am created by sending the binary message #& to another condition (left) with another condition (right) as its argument.
 
-Checking this conditions holds true, if my left and my right condition is true. 
+Checking this condition holds true, if my left and my right condition is true.
+Note that the first failing condition stops the condition evaluation. See testCheckFailEarlyAndDoesNotCoverEveryConditions
+
+### Implementation
+
+The following method is key as it shows that as soon as a check fails the second one is not checked.
+```
+check
+
+	left check ifFalse: [ 
+		failed := #leftFailed.
+		^ false ].
+	right check ifFalse: [ 
+		failed := #rightFailed.
+		^ false ].
+	^ true
+```
 "
 Class {
 	#name : #RBConjunctiveCondition,
@@ -44,10 +60,10 @@ RBConjunctiveCondition >> errorMacro [
 ]
 
 { #category : #private }
-RBConjunctiveCondition >> errorStringFor: aBoolean [ 
-	^aBoolean
-		ifTrue: [self neitherFailed]
-		ifFalse: [self perform: failed]
+RBConjunctiveCondition >> errorStringFor: aBoolean [
+	^ aBoolean
+		  ifTrue: [ self neitherFailed ]
+		  ifFalse: [ self perform: failed ]
 ]
 
 { #category : #initialization }

@@ -111,6 +111,16 @@ CompilationContext class >> initialize [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter [
+	^ self readDefaultOption: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
+	^ self writeDefaultOption: #optionBlockClosureOptionalOuter value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionCleanBlockClosure [
 	^ self readDefaultOption: #optionCleanBlockClosure
 ]
@@ -118,6 +128,16 @@ CompilationContext class >> optionCleanBlockClosure [
 { #category : #'options - settings API' }
 CompilationContext class >> optionCleanBlockClosure: aBoolean [
 	^ self writeDefaultOption: #optionCleanBlockClosure value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionConstantBlockClosure [
+	^ self readDefaultOption: #optionConstantBlockClosure
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionConstantBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -289,6 +309,8 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
+	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
+	(- optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
@@ -493,8 +515,18 @@ CompilationContext >> noPattern: anObject [
 ]
 
 { #category : #options }
+CompilationContext >> optionBlockClosureOptionalOuter [
+	^ options includes: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #options }
 CompilationContext >> optionCleanBlockClosure [
 	^ options includes: #optionCleanBlockClosure
+]
+
+{ #category : #options }
+CompilationContext >> optionConstantBlockClosure [
+	^ options includes: #optionConstantBlockClosure
 ]
 
 { #category : #options }

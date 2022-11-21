@@ -32,7 +32,8 @@ Class {
 
 { #category : #'known names' }
 FreeTypeNameParser class >> italicAndObliqueNames [
-	^self italicNames, self obliqueNames
+
+	^ self italicNames , self obliqueNames
 ]
 
 { #category : #'known names' }
@@ -43,8 +44,9 @@ FreeTypeNameParser class >> italicNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #italicNames put: nil.
 	"
+	
 	italicNames ifNotNil:[^italicNames].
-	^italicNames := #(
+	^ italicNames := #(
 		'ita'
 		'ital'
 		'italic'
@@ -60,8 +62,9 @@ FreeTypeNameParser class >> normalNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #normalNames put: nil.
 	"
+	
 	normalNames ifNotNil:[^normalNames].
-	^normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright').
+	^ normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright').
 ]
 
 { #category : #'known names' }
@@ -72,8 +75,9 @@ FreeTypeNameParser class >> obliqueNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #obliqueNames put: nil.
 	"
+	
 	obliqueNames ifNotNil:[^obliqueNames].
-	^obliqueNames := #(
+	^ obliqueNames := #(
 		'inclined'
 		'oblique'
 		'backslanted'
@@ -91,8 +95,9 @@ FreeTypeNameParser class >> stretchNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #stretchNames put: nil.
 	"
+	
 	stretchNames ifNotNil:[^stretchNames].
-	^stretchNames := {
+	^ stretchNames := {
 		{LogicalFont stretchExtraCompressed. 'extra'. 'compressed'}.
 		{LogicalFont stretchExtraCompressed. 'extracompressed'}.
 		{LogicalFont stretchExtraCompressed. 'ext'. 'compressed'}.
@@ -153,7 +158,7 @@ FreeTypeNameParser class >> weightNames [
 	self instVarNamed: #weightNames put: nil.
 	"
 	weightNames ifNotNil:[^weightNames].
-	^weightNames := {
+	^ weightNames := {
 		{LogicalFont weightExtraThin. 'extra'. 'thin'}.
 		{LogicalFont weightExtraThin.'extrathin'}.
 		{LogicalFont weightExtraThin. 'ext'. 'thin'}.

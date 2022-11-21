@@ -15,7 +15,7 @@ ClyActiveBreakpointsQueryTest >> createQuery [
 { #category : #running }
 ClyActiveBreakpointsQueryTest >> installBreakpointInto: aMethod [
 	| breakpoint |
-	breakpoint := Breakpoint new node: aMethod ast; always.
+	breakpoint := Breakpoint new node: aMethod ast.
 	installedBreakpoints add: breakpoint.
 	breakpoint install
 ]

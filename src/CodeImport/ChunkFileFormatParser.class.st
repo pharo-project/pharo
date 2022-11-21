@@ -165,7 +165,6 @@ ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 	"
 
 	| behaviorName isMeta stamp |
-	self asCollectionElement.
 	behaviorName := commentPreamble first asSymbol.
 	isMeta := commentPreamble second ~= self commentStampSelector.
 	stamp := isMeta

@@ -1,3 +1,6 @@
+"
+This class contains tests for `FluidClassBuilder`
+"
 Class {
 	#name : #FluidClassBuilderTest,
 	#superclass : #TestCase,
@@ -10,15 +13,16 @@ Class {
 { #category : #accessing }
 FluidClassBuilderTest >> builder [ 	
 
-	^  builder
+	^ builder
 ]
 
 { #category : #'private - cleanup' }
 FluidClassBuilderTest >> removeTestArtifactsFromSystem [
 
-	self class environment at: #MyClass 
-		ifPresent: [:p | p removeFromSystem: false ]
-		ifAbsent: [ ].
+	self class environment
+		at: #MyClass
+		ifPresent: [ :p | p removeFromSystem: false ]
+		ifAbsent: [  ]
 ]
 
 { #category : #running }
@@ -41,7 +45,7 @@ FluidClassBuilderTest >> tearDown [
 	(RPackageOrganizer default packageNamed: #'Mock' ifAbsent: [ nil ])
 		ifNotNil: [:x | x removeFromSystem ].
 
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests - hidden protocols' }
@@ -59,7 +63,7 @@ FluidClassBuilderTest >> testBuildClassSlotsAPI [
 	self assert: clas superclass equals: Object.
 	self assert: clas name equals: #Point2.
 	self assert: clas slots size equals: 1.
-	self assert: clas class slots size equals: 2.
+	self assert: clas class slots size equals: 2
 ]
 
 { #category : #'tests - hidden protocols' }
@@ -84,6 +88,7 @@ FluidClassBuilderTest >> testBuildLayout [
 	builder 
 		layout: VariableLayout;
 		package: 'Collections-Sequenceable'.
+		
 	self assert: builder layoutToBuild equals: VariableLayout
 ]
 
@@ -109,7 +114,8 @@ FluidClassBuilderTest >> testBuilderSharedPools [
 	builder slots: {#string . #runs};
 		tag: 'Base';
 		sharedPools: 'TextConstants';
-		package: 'Text-Core'.  
+		package: 'Text-Core'.
+		
 	self assert: builder sharedPoolsToBuild equals: 'TextConstants'
 ]
 
@@ -119,7 +125,8 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 	builder 
 		layout: ByteLayout;
 		sharedVariables: { #NonAsciiMap };
-		package: 'Collections-Strings'.  
+		package: 'Collections-Strings'.
+		
 	self assert: builder sharedVariablesToBuild equals: { #NonAsciiMap }.
 	self assert: builder layoutToBuild equals: ByteLayout
 ]
@@ -163,13 +170,14 @@ FluidClassBuilderTest >> testBuilderWithPackage [
 FluidClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #x . #y }.
-	self assert: builder slotsToBuild equals: {#x => InstanceVariableSlot. #y => InstanceVariableSlot}
+	self assert: builder slotsToBuild equals: { #x => InstanceVariableSlot. #y => InstanceVariableSlot }
 ]
 
 { #category : #'tests - gathering' }
 FluidClassBuilderTest >> testBuilderWithTag [
 
 	builder tag: 'Foo'.
+	
 	self assert: builder tagToBuild equals: 'Foo'
 ]
 
@@ -209,7 +217,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 	
 	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
-	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild.
+	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild
 ]
 
 { #category : #'tests - class creation' }
@@ -238,14 +246,14 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 	
 	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
-	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild.
+	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild
 ]
 
 { #category : #'tests - class creation' }
 FluidClassBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
-	self assert: builder classSlotsToBuild  equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
+	self assert: builder classSlotsToBuild equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
 { #category : #'tests - class creation' }
@@ -259,6 +267,7 @@ FluidClassBuilderTest >> testClassTraits [
 FluidClassBuilderTest >> testCreateBuilder [
 
 	builder := Object << #Point.
+	
 	self assert: builder superclassToBuild equals: Object.
 	self assert: builder nameToBuild equals: #Point.
 ]
@@ -267,6 +276,7 @@ FluidClassBuilderTest >> testCreateBuilder [
 FluidClassBuilderTest >> testCreateBuilderWithNil [
 
 	builder := nil << #NewProtoObject.
+	
 	self assert: builder superclassToBuild equals: nil.
 	self assert: builder nameToBuild equals: #NewProtoObject.
 ]
@@ -325,7 +335,7 @@ FluidClassBuilderTest >> testCreatedClassHasAllElements [
 	self assert: newClass class traitComposition equals: {TViewModelMock classSide} asTraitComposition.
 	self assert: newClass classVarNames equals: #(AAA).
 	self assertCollection: newClass sharedPools hasSameElements: {TextConstants}.
-	self assert: newClass category equals: 'Mock-boring'.
+	self assert: newClass category equals: 'Mock-boring'
 ]
 
 { #category : #'tests - class creation' }
@@ -347,7 +357,7 @@ FluidClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 	self assert: newClass class traitComposition equals: {} asTraitComposition.	
 	self assert: newClass classVarNames equals: #().
 	self assertCollection: newClass sharedPools hasSameElements: {}.
-	self assert: newClass category equals: 'Mock'.
+	self assert: newClass category equals: 'Mock'
 ]
 
 { #category : #'tests - class creation' }

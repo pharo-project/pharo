@@ -131,7 +131,7 @@ FileList class >> menuCommandOn: aBuilder [
 		order: 2;
 		action: [ self open ];
 		help: 'Browse the files present on your system.';
-		icon: self taskbarIcon
+		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
 { #category : #'morphic ui' }

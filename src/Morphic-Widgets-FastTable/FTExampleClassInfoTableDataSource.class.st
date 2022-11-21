@@ -53,7 +53,7 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 			^ self iconNamed: #testNotRun ].
 	class organization classComment
 		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
-	^ class systemIcon
+	^ self iconNamed: class systemIconName
 ]
 
 { #category : #initialization }

@@ -228,6 +228,12 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
 ]
 
+{ #category : #accessing }
+RBNamespace >> category: aString for: aClass [
+
+	^ changes addChange: (RBClassCategoryChange category: aString for: aClass)
+]
+
 { #category : #'private - changes' }
 RBNamespace >> changeClass: aRBClass [ 
 	changedClasses 
@@ -361,6 +367,16 @@ RBNamespace >> defineClass: aString [
 	newClass classVariableNames: change classVariableNames.
 	newClass poolDictionaryNames: change sharedPoolNames.
 	newClass category: change category.
+	^ change
+]
+
+{ #category : #changes }
+RBNamespace >> defineClass: aString withComment: aCommentString [
+
+	| change newClass |
+	change := self defineClass: aString.
+	newClass := self classNamed: change changeClassName.
+	newClass comment: aCommentString.
 	^ change
 ]
 

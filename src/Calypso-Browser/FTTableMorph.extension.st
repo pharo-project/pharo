@@ -22,6 +22,13 @@ FTTableMorph >> filterField [
 ]
 
 { #category : #'*Calypso-Browser' }
+FTTableMorph >> filterFieldHasKeyboardFocus [
+	| field |
+	field := self filterField.
+	^ field isNotNil and: [ field hasKeyboardFocus ]
+]
+
+{ #category : #'*Calypso-Browser' }
 FTTableMorph >> filterString [
 	(function isKindOf: FTFilterFunction) ifFalse: [ ^'' ]. 
 	^function pattern ifNil: [ '' ]

@@ -451,6 +451,21 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 ]
 
 { #category : #'visitor - double dispatching' }
+OCASTTranslator >> translateConstantBlock: aBlockNode [
+	| ir |
+
+	ir := IRBuilder new 
+				mapToNode: aBlockNode;
+				numArgs: aBlockNode arguments size;
+				pushLiteral: aBlockNode constantValue; 
+				blockReturnTop; 
+				ir.
+	aBlockNode ir: ir.
+	aBlockNode resetBcToASTCache.
+	^ ir compiledBlock: aBlockNode scope
+]
+
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
@@ -471,6 +486,7 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
 	aBlockNode ir: self ir.
+	aBlockNode resetBcToASTCache.
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 
@@ -497,12 +513,17 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
+	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
+	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ]) ifTrue: [ ^ self visitCleanBlockNode: aBlockNode].
 	
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
-		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
-		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
+	
+	self compilationContext optionBlockClosureOptionalOuter 
+		ifTrue: [ methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames outerContextNeeded: aBlockNode hasNonLocalReturn  ]
+		ifFalse: [ methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames ]
+	
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -514,6 +535,35 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 		effectTranslator visitNode: node.
 	].
 	self visitNode: aCascadeNode messages last.
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitCleanBlockNode: aBlockNode [
+	"create and push a clean blockclosure. As we create the clean block at compile time,
+	block creation at runtime is much faster than that of a full block"
+
+	| compiledBlock cleanBlock |
+	
+	compiledBlock := self compilationContext astTranslatorClass new 
+		                 translateFullBlock: aBlockNode.
+	cleanBlock := (CleanBlockClosure new: 0)
+			 numArgs: compiledBlock numArgs;
+			 compiledBlock: compiledBlock.
+
+	methodBuilder pushLiteral: cleanBlock
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitConstantBlockNode: anBlockNode [
+	"create statically a constant blockclosure (we support 0-3 arguments). 
+	Constant blockclosures are specialized clean blocks: same creation speed, but faster execution"
+	| constantBlock compiledBlock |
+	constantBlock := ConstantBlockClosure 
+							  numArgs: anBlockNode numArgs
+		                 literal: anBlockNode constantValue.              
+	compiledBlock := self translateConstantBlock: anBlockNode.
+	constantBlock compiledBlock: compiledBlock.
+	methodBuilder pushLiteral: constantBlock
 ]
 
 { #category : #'visitor - double dispatching' }

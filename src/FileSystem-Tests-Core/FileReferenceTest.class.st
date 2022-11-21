@@ -489,6 +489,15 @@ FileReferenceTest >> testEqual [
 	self assert: a equals: b
 ]
 
+{ #category : #running }
+FileReferenceTest >> testEqualAbsoluteRelativePath [
+	| a b |
+	
+	a := filesystem / 'a/b/c'.
+	b := filesystem / 'a/b/c/../c'.
+	self assert: a  equals: b.
+]
+
 { #category : #tests }
 FileReferenceTest >> testEqualityRelativeVsAbsolute [
 

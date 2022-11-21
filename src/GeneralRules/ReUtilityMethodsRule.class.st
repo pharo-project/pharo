@@ -21,13 +21,17 @@ ReUtilityMethodsRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReUtilityMethodsRule >> basicCheck: aMethod [
-	aMethod methodClass isMeta ifTrue: [ ^false ].
-	aMethod selector isUnary ifTrue: [ ^false ].
-	(self utilityProtocols includes: aMethod protocol) ifTrue: [ ^false ].
+
+	aMethod methodClass isMeta ifTrue: [ ^ false ].
+	aMethod selector isUnary ifTrue: [ ^ false ].
+	(self utilityProtocols includes: aMethod protocol) ifTrue: [ ^ false ].
 	aMethod isOverridden ifTrue: [ ^ false ].
-   aMethod sendsToSuper ifTrue: [ ^ false ].
-	aMethod selfMessages isEmpty ifFalse: [ ^ false ].
-	^aMethod methodClass definedVariables noneSatisfy: [ :variable | variable isAccessedIn: aMethod ]
+	aMethod isOverriding ifTrue: [ ^ false ].
+	aMethod readsSelf ifTrue: [ ^ false ].
+	aMethod sendsToSuper ifTrue: [ ^ false ].
+	
+	^ aMethod methodClass definedVariables noneSatisfy: [ :variable |
+		  variable isAccessedIn: aMethod ]
 ]
 
 { #category : #accessing }

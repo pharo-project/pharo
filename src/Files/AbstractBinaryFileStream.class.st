@@ -54,6 +54,12 @@ AbstractBinaryFileStream class >> handle: aCollection file: aFile forWrite: aTru
 ]
 
 { #category : #testing }
+AbstractBinaryFileStream class >> isAbstract [
+		
+	^ self == AbstractBinaryFileStream
+]
+
+{ #category : #testing }
 AbstractBinaryFileStream >> atEnd [
 
 	^ File atEnd: handle

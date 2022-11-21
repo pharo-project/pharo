@@ -74,7 +74,7 @@ RBScanner class >> initializeClassificationTable [
 	CascadePatternCharacter := $;.
 	classificationTable := Array new: 255.
 	self 
-		initializeChars: (Character allCharacters
+		initializeChars: (Character allByteCharacters
 			select: [ :each | each isLetter ])
 		to: #alphabetic.
 	self initializeUnderscore.
@@ -82,7 +82,7 @@ RBScanner class >> initializeClassificationTable [
 	self initializeChars: Character specialCharacters to: #binary.
 	self initializeChars: '().:;[]{}^' to: #special.
 	self
-		initializeChars: (Character allCharacters
+		initializeChars: (Character allByteCharacters
 			select: [ :each | each isSeparator ])
 		to: #separator
 ]
@@ -128,12 +128,12 @@ RBScanner class >> on: aStream [
 	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens. Reader may consider scanTokens: as a better way to use the class."
 	"((RBScanner on: 'Pharo (, { exist ]' readStream) next;  next) value >>> $("
 
-	| str |
-	str := self new on: aStream.
-	str
+	| scanner |
+	scanner := self new on: aStream.
+	scanner
 		step;
 		stripSeparators.
-	^str
+	^scanner
 ]
 
 { #category : #'instance creation' }
@@ -238,9 +238,7 @@ RBScanner >> isSelector [
 
 { #category : #testing }
 RBScanner >> isSelectorNonBinary [
-	"inspect the next line and view as morph"
-
-	"ZnEasy getPng: 'http://www.plantuml.com/plantuml/png/RO-n2i8m48RtUugRXRn0XzBg98wEuX2R4mlNHE8LwTkRL4Xxa2cNx_z2_ki-OgFC4mF8A4nu9QP1GeJRuOx6j7WSlOqBDlXOXy9xVhzipy5Joco-m0vfeoQuP9n2cjFp8PygRJ7_qo259m2ide8REliBBTyGNQa16p9LGUUw1C1_uThk9TBrEl9kdlW7'"
+	<script: '(ZnEasy getPng: ''http://www.plantuml.com/plantuml/png/RO-n2i8m48RtUugRXRn0XzBg98wEuX2R4mlNHE8LwTkRL4Xxa2cNx_z2_ki-OgFC4mF8A4nu9QP1GeJRuOx6j7WSlOqBDlXOXy9xVhzipy5Joco-m0vfeoQuP9n2cjFp8PygRJ7_qo259m2ide8REliBBTyGNQa16p9LGUUw1C1_uThk9TBrEl9kdlW7'') inspect'>
 
 	| state |
 	state := #alphaAlone.

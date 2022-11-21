@@ -20,13 +20,25 @@ Class {
 }
 
 { #category : #'instance creation' }
-CharacterSet class >> allCharacters [
-	"return a set containing all characters"
+CharacterSet class >> allByteCharacters [
 
 	| set |
 	set := self empty.
 	0 to: 255 do: [ :ascii | set add: (Character value: ascii) ].
-	^set
+	^ set
+]
+
+{ #category : #'instance creation' }
+CharacterSet class >> allCharacters [
+
+	"This name is obsolete since only the characters that will fit in a byte can be queried"
+
+	self
+		deprecated:
+			'This name is obsolete since only the characters that will fit in a byte can be queried'
+		transformWith: '`@rec allCharacters' -> '`@rec allByteCharacters'.
+
+	^ self allByteCharacters
 ]
 
 { #category : #accessing }
@@ -102,7 +114,7 @@ CharacterSet >> byteComplement [
 	"return a character set containing precisely the single byte characters the receiver does not"
 	
 	| set |
-	set := self class allCharacters.
+	set := self class allByteCharacters.
 	self do: [ :c | set remove: c ].
 	^set
 ]

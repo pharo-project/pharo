@@ -165,7 +165,6 @@ FTPClient >> getDataInto: dataStream [
 			self checkForPendingError.
 			bytesRead := self dataSocket receiveDataWithTimeoutInto: buf.
 			1 to: bytesRead do: [:ii | dataStream nextPut: (buf at: ii)]].
-	dataStream reset.	"position: 0."
 	^ dataStream
 ]
 

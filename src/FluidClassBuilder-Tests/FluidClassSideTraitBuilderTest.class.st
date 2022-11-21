@@ -1,3 +1,6 @@
+"
+This class contains tests for `FluidClassSideTraitBuilder`
+"
 Class {
 	#name : #FluidClassSideTraitBuilderTest,
 	#superclass : #TestCase,

@@ -1,7 +1,7 @@
 "
-This class defines the attributes of the ASCII character set.  It's here to be used while boostrapping the image; eventually, it will be replaced by the Unicode character set.
+This class defines the attributes of the ASCII character set. It's here to be used while bootstrapping the image.
 
-Character objects delegate behaviour to one of the  character sets AsciiCharSet, Latin1, or Unicode. 
+Character objects delegate behaviour to one of the  character sets AsciiCharSet or Unicode. 
 "
 Class {
 	#name : #AsciiCharset,
@@ -181,9 +181,9 @@ AsciiCharset class >> maxValue [
 
 { #category : #casing }
 AsciiCharset class >> toLowercase: aCharacter [
-	"(AsciiCharset toLowercase: $A) >>> $a.
-	 (AsciiCharset  toLowercase: $a) >>> $a.
-	 (AsciiCharset  toLowercase: $!) >>> $!"
+	"(AsciiCharset toLowercase: $A) >>> $a."
+	"(AsciiCharset  toLowercase: $a) >>> $a."
+	"(AsciiCharset  toLowercase: $!) >>> $!"
 
 	(aCharacter between: $A and: $Z)
 		ifFalse: [ ^ aCharacter ].
@@ -193,9 +193,9 @@ AsciiCharset class >> toLowercase: aCharacter [
 
 { #category : #casing }
 AsciiCharset class >> toUppercase: aCharacter [
-	"(AsciiCharset toUppercase: $a) >>> $A.
-	(AsciiCharset toUppercase: $A) >>> $A.
-	(AsciiCharset toUppercase: $!) >>> $!"
+	"(AsciiCharset toUppercase: $a) >>> $A."
+	"(AsciiCharset toUppercase: $A) >>> $A."
+	"(AsciiCharset toUppercase: $!) >>> $!"
 
 	(aCharacter between: $a and: $z)
 		ifFalse: [ ^ aCharacter ].
