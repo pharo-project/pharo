@@ -215,7 +215,7 @@ RingChunkImporter >> visitDoItChunk: aChunk [
 
 	| contents |
 	contents := aChunk contents.
-	('*ubclass:*instanceVariableNames:*classVariableNames:*poolDictionaries:*category:*'
+	('*ubclass:*instanceVariableNames:*'
 		match: contents) ifTrue:[^self classDefinition: contents with: aChunk].
 	('* class*instanceVariableNames:*'
 		match: contents) ifTrue:[^self metaClassDefinition: contents with: aChunk].		
