@@ -1381,7 +1381,7 @@ Context >> printDetails: stream [
 
 { #category : #printing }
 Context >> printOn: aStream [
-	(closureOrNil isNotNil and: [closureOrNil isClean]) ifTrue: 
+	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue: 
 		[ | selector |
 			selector := self selector ifNil: [ self compiledCode defaultSelector ].
 			aStream 
