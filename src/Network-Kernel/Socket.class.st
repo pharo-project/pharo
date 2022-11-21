@@ -1620,7 +1620,9 @@ Socket >> socketError [
 { #category : #queries }
 Socket >> socketErrorMessage [
 
-	^ OSPlatform current getErrorMessage: self socketError
+	^ [ OSPlatform current getErrorMessage: self socketError ]
+		  on: Error
+		  do: [ 'Error code: ' , self socketError printString ]
 ]
 
 { #category : #accessing }
