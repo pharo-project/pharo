@@ -1617,6 +1617,12 @@ Socket >> socketError [
 	^self primSocketError: socketHandle
 ]
 
+{ #category : #queries }
+Socket >> socketErrorMessage [
+
+	^ OSPlatform current getErrorMessage: self socketError
+]
+
 { #category : #accessing }
 Socket >> socketHandle [
 	^socketHandle
