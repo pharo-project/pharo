@@ -9,15 +9,6 @@ NewCommandLineRunnerTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #tests }
-NewCommandLineRunnerTest >> ignoredSelectors [
-
-	^ #( #testFailedTestFaildWhileRerunningDoesNotChangeTheResult
-	     NewCommandLineRunnerTest #( #NewTestRunnerTest ) >> #testRerunningFailedTest
-	     NewCommandLineRunnerTest #( #NewTestRunnerTest ) >> #testRerunningFailedTest2
-	     NewCommandLineRunnerTest #( #NewTestRunnerTest ) >> #testTryingToRunFailuresAfterRunningMultipleTestCaseClass )
-]
-
 { #category : #running }
 NewCommandLineRunnerTest >> setUp [
 
@@ -31,10 +22,4 @@ NewCommandLineRunnerTest >> testReporterDatasShouldBeResetBeetwenTwoExecution [
 	runner reporter: XmlReporter new.
 	runner run: GreenTest.
 	self assert: runner reporter datasAreReseted
-]
-
-{ #category : #tests }
-NewCommandLineRunnerTest >> testRunnerHasDefaultReporter [
-
-	runner hasDefaultReporter
 ]

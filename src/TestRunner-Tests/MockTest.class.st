@@ -2,7 +2,7 @@
 Don't edit these classes. They are used else where for tests. Changing anything can make some tests fail
 "
 Class {
-	#name : #UtilityTest,
+	#name : #MockTest,
 	#superclass : #TestCase,
 	#classInstVars : [
 		'ignore'
@@ -11,43 +11,43 @@ Class {
 }
 
 { #category : #accessing }
-UtilityTest class >> doNotIgnoreTest [
+MockTest class >> doNotIgnoreTest [
 
 	ignore := false
 ]
 
 { #category : #accessing }
-UtilityTest class >> ignoreTest [
+MockTest class >> ignoreTest [
 
 	ignore := true
 ]
 
-{ #category : #accessing }
-UtilityTest class >> initialize [
+{ #category : #'class initialization' }
+MockTest class >> initialize [
 
 	self ignoreTest
 ]
 
 { #category : #accessing }
-UtilityTest class >> shouldBeIgnored [
+MockTest class >> shouldBeIgnored [
 
-	^ ignore ifNil: [ self ignoreTest ]
+	^ ignore ifNil: [ ignore := true ]
 ]
 
 { #category : #asserting }
-UtilityTest >> doNotIgnoreTest [
+MockTest >> doNotIgnoreTest [
 
 	self class doNotIgnoreTest
 ]
 
 { #category : #asserting }
-UtilityTest >> ignoreTest [
+MockTest >> ignoreTest [
 
 	self class ignoreTest
 ]
 
 { #category : #asserting }
-UtilityTest >> shouldBeIgnored [
+MockTest >> shouldBeIgnored [
 
 	^ self class shouldBeIgnored
 ]
