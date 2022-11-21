@@ -32,7 +32,7 @@ MacOSXPlatform >> family [
 { #category : #'error handling' }
 MacOSXPlatform >> getErrorMessage: errnum [ 
 	
-	^ self ffiCall: #(char *strerror(int errnum)) module: LibC
+	^ self ffiCall: #(char *strerror(int errnum)) module: #LibC
 ]
 
 { #category : #testing }
