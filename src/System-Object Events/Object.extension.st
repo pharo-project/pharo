@@ -143,18 +143,12 @@ forEvent: anEventSelector [
 ]
 
 { #category : #'*System-Object Events' }
-Object >> setActionSequence: actionSequence
-forEvent: anEventSelector [
+Object >> setActionSequence: actionSequence forEvent: anEventSelector [
 
-    | action |
-    action := actionSequence asMinimalRepresentation.
-    action 
-	  ifNil:
-            [self removeActionsForEvent: anEventSelector]
-        ifNotNil:
-            [self updateableActionMap
-                at: anEventSelector asSymbol
-                put: action]
+	actionSequence asMinimalRepresentation
+		ifNil: [ self removeActionsForEvent: anEventSelector ]
+		ifNotNil: [ :action | 
+			self updateableActionMap at: anEventSelector asSymbol put: action ]
 ]
 
 { #category : #'*System-Object Events' }
