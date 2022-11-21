@@ -97,7 +97,7 @@ AbstractCache >> computeWeight: valuable [
 { #category : #private }
 AbstractCache >> critical: block [
 	^ access
-		ifNil: block
+		ifNil: [ block value ]
 		ifNotNil: [ access critical: block ]
 ]
 

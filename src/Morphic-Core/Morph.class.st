@@ -4008,9 +4008,9 @@ Morph >> listSpacing [
 		#equal - all rows have the same height
 		#none - all rows may have different heights
 	"
-	| props |
-	props := self layoutProperties.
-	^props ifNil:[#none] ifNotNil:[props listSpacing].
+	^ self layoutProperties
+		  ifNil: [ #none ]
+		  ifNotNil: [ :props | props listSpacing ]
 ]
 
 { #category : #'layout - properties' }
