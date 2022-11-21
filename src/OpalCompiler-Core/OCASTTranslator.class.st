@@ -515,7 +515,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
-	(self compilationContext optionCleanBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
+	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ]) ifTrue: [ ^ self visitCleanBlockNode: aBlockNode].
 	
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
@@ -539,8 +539,11 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitCleanBlockNode: aBlockNode [
+	"create and push a clean blockclosure. As we create the clean block at compile time,
+	block creation at runtime is much faster than that of a full block"
 
 	| compiledBlock cleanBlock |
+	
 	compiledBlock := self compilationContext astTranslatorClass new 
 		                 translateFullBlock: aBlockNode.
 	cleanBlock := (CleanBlockClosure new: 0)
@@ -552,7 +555,8 @@ OCASTTranslator >> visitCleanBlockNode: aBlockNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitConstantBlockNode: anBlockNode [
-
+	"create statically a constant blockclosure (we support 0-3 arguments). 
+	Constant blockclosures are specialized clean blocks: same creation speed, but faster execution"
 	| constantBlock compiledBlock |
 	constantBlock := ConstantBlockClosure 
 							  numArgs: anBlockNode numArgs
