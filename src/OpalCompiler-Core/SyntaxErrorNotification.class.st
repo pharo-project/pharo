@@ -1,3 +1,10 @@
+"
+The role of SyntaxErrorNotification is to interface witht the compiler error handling of the system, see #syntaxErrorNotificationDefaultAction:
+
+This is not a subclass of Error as the exception can lead to the user editing the code and continue compilation
+
+TODO: unify with the OCSemanticWarning hierarchy
+"
 Class {
 	#name : #SyntaxErrorNotification,
 	#superclass : #Notification,
