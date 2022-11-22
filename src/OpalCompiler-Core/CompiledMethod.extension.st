@@ -16,12 +16,6 @@ CompiledMethod >> decompileIR [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-CompiledMethod >> ir [
-	"We as the AST for the IR... for decompiling ir from bytecode, look at IRBytecodeDecompiler"
-	^ self ast ir
-]
-
-{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> irPrimitive [
 
 	| primNode n |

@@ -19,6 +19,7 @@ RBBlockNodeTest >> testHasNonLocalReturn [
 	self deny: [ [  ] ] sourceNode hasNonLocalReturn.
 	self assert: [ ^ 1 ] sourceNode hasNonLocalReturn.
 	self assert: [ [ ^ 1 ] ] sourceNode hasNonLocalReturn.
+	self assert: [ { 1 . ^2 }  ] sourceNode hasNonLocalReturn.
 	self assert: (self class>>#testHasNonLocalReturn) ast hasNonLocalReturn.
 	"return on the level of the method is a local return"
 	self deny: (Object>>#yourself) ast hasNonLocalReturn.
@@ -31,6 +32,7 @@ RBBlockNodeTest >> testIsClean [
 	escpRead := escpWrite := 1.
 	self deny: [ self yourself ] sourceNode isClean.
 	self deny: [ ^ 1 ] sourceNode isClean.
+	self deny: [ { 1 . ^2 }  ] sourceNode isClean.
 	self deny: [ testSelector foo ] sourceNode isClean.
 	self deny: [ escpRead foo ] sourceNode isClean.
 	self deny: [ escpWrite := 2 ] sourceNode isClean.
@@ -46,6 +48,7 @@ RBBlockNodeTest >> testIsClean [
 	self assert: [ :a | a + 2 ] sourceNode isClean.
 	self assert: [ :a :b | a + b + 3 ] sourceNode isClean.
 	self assert: [ | a | a := 1. a + 3 ] sourceNode isClean.
+		
 	self assert: [ true ifTrue: [  ] ]  sourceNode isClean.
 	"optimized blocks"
 	self assert: [ 

@@ -93,6 +93,14 @@ CompiledCode >> accessesSlot: aSlot [
 ]
 
 { #category : #accessing }
+CompiledCode >> allBlocks [
+	| all |
+	all := IdentitySet new.
+	self allBlocksDo: [ :each | all add: each ].
+	^all
+]
+
+{ #category : #accessing }
 CompiledCode >> allBlocksDo: aBlock [
 
 	self literals 
