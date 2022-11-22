@@ -1,3 +1,6 @@
+"
+I model push thisThisProcess bytecode
+"
 Class {
 	#name : #IRPushThisProcess,
 	#superclass : #IRAccess,
