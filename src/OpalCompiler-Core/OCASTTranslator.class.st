@@ -567,6 +567,12 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 ]
 
 { #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitEnglobingErrorNode: anErrorNode [
+	"raise error at runtime"
+	self visitParseErrorNode: anErrorNode
+]
+
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 	"We are visiting a scope that is not a block, but inlined in the outer context.
