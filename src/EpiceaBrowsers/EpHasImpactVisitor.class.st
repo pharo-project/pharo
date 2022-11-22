@@ -155,12 +155,20 @@ EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
+	"Protocol removal has an impact if:
+	- the protocl exists, and
+	- there are methods in the protocol that are not trait methods"
 
 	self 
 		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior | 
-			^ behavior organization protocolOrganizer hasProtocolNamed: aProtocolRemoved protocol ].
-		
+		ifPresent: [ :behavior | | selectors |
+			selectors := (behavior organization protocolOrganizer 
+				getProtocolNamed: aProtocolRemoved protocol
+				ifNone: [ ^ false ]) methodSelectors.
+			(selectors allSatisfy: [ :each |
+					(behavior compiledMethodAt: each) isFromTrait ]) ifTrue:
+						[ ^ false ] ].
+
 	^ true
 ]
 
