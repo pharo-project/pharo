@@ -16,5 +16,5 @@ BaselineOfQualityAssistant >> baseline: spec [
 		spec 
 			group: 'Core' with: #('Renraku');
 			group: 'Tests' with: #('Renraku-Tests');
-			group: 'default' with: #('Core' 'Help' 'Tests') ]
+			group: 'default' with: #('Core' 'Tests') ]
 ]
