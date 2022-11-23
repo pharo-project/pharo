@@ -101,6 +101,22 @@ ClyClassCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 		and: [ classTag = anotherBrowserTool classTag ]
 ]
 
+{ #category : #testing }
+ClyClassCreationToolMorph >> isValidInContext: aClyFullBrowserContext [
+	| isValid |
+	
+	self context class = aClyFullBrowserContext class 
+		ifFalse: [ ^ false ].
+		
+	isValid := true.
+	aClyFullBrowserContext isPackageSelected
+		ifTrue: [ isValid := package = aClyFullBrowserContext lastSelectedPackage ].
+
+	^ isValid and: [ aClyFullBrowserContext isClassTagSelected
+		ifTrue: [ classTag = aClyFullBrowserContext lastSelectedClassTag ]
+		ifFalse: [ classTag isNil ] ]
+]
+
 { #category : #accessing }
 ClyClassCreationToolMorph >> package [
 	^ package

@@ -79,6 +79,14 @@ ClyTestSetUpEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 		and: [ testClass == anotherBrowserTool testClass ]
 ]
 
+{ #category : #testing }
+ClyTestSetUpEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
+	self context class = aClyFullBrowserContext class 
+		ifFalse: [ ^ false ].
+		
+	^ aClyFullBrowserContext selectedClasses includes: self testClass
+]
+
 { #category : #initialization }
 ClyTestSetUpEditorToolMorph >> setUpDefaultTemplate [
 

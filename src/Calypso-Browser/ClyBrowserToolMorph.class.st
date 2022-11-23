@@ -479,6 +479,15 @@ ClyBrowserToolMorph >> isTabSelected [
 	^ selectedTab = containerTab
 ]
 
+{ #category : #testing }
+ClyBrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
+	" Tell if the current tool is still valid for the given context. If so, the tool will be reused instead of being rebuilt or discarded.
+	Every subclass should redefine this method to tell when the tool is still valid or not.
+	This method is there to replace #isSimilarTo: that needs tool instantiation to do the comparison."
+	
+	^ false
+]
+
 { #category : #controlling }
 ClyBrowserToolMorph >> okToClose [
 	self hasUnacceptedEdits ifFalse: [ ^true ].

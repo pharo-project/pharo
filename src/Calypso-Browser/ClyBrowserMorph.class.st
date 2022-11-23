@@ -443,6 +443,12 @@ ClyBrowserMorph >> navigateForward [
 ]
 
 { #category : #accessing }
+ClyBrowserMorph >> navigationContexts [
+
+	^ navigationViews collect: [ :each | each createSelectionContext ]
+]
+
+{ #category : #accessing }
 ClyBrowserMorph >> navigationContextsDo: aBlock [
 
 	navigationViews do: [ :each | aBlock value: each createSelectionContext ]

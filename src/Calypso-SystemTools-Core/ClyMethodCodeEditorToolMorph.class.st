@@ -234,6 +234,16 @@ ClyMethodCodeEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 			and: [ editingMethod origin == anotherBrowserTool editingMethod origin ] ]
 ]
 
+{ #category : #testing }
+ClyMethodCodeEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
+	self context class = aClyFullBrowserContext class 
+		ifFalse: [ ^ false ].
+		
+	^ editingMethod = aClyFullBrowserContext lastSelectedMethod or: 
+		[ editingMethod selector == aClyFullBrowserContext lastSelectedMethod selector
+			and: [ editingMethod origin == aClyFullBrowserContext lastSelectedMethod origin ] ]
+]
+
 { #category : #accessing }
 ClyMethodCodeEditorToolMorph >> methodClass [
 
