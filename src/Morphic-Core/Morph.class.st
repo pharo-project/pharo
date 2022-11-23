@@ -2808,18 +2808,22 @@ Morph >> handleFocusEvent: anEvent [
 
 { #category : #'events - processing' }
 Morph >> handleKeyDown: anEvent [
+
 	"System level event handling."
-	
-	anEvent wasHandled ifTrue:[ ^ self ].
-	
-	self shortcutsHandler ifNotNil: [:handler | 
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+
+	self shortcutsHandler ifNotNil: [ :handler | 
 		handler handleKeystroke: anEvent inMorph: self.
-		anEvent wasHandled ifTrue: [^ self]].
-	
-	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
+		anEvent wasHandled ifTrue: [ 
+			anEvent supressNextKeyPress: true.
+			^ self ] ].
+
+	(self handlesKeyDown: anEvent) ifFalse: [ ^ self ].
 	anEvent wasHandled: true.
 	self keyDown: anEvent.
-	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
+	^ self eventHandler ifNotNil: [ :handler | 
+		  handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events - processing' }
