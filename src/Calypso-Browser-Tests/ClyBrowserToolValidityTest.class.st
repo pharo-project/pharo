@@ -1,156 +1,18 @@
 Class {
 	#name : #ClyBrowserToolValidityTest,
-	#superclass : #TestCase,
+	#superclass : #ClyBrowserContextAbstractTest,
 	#instVars : [
-		'browser',
 		'tool',
 		'context'
 	],
 	#category : #'Calypso-Browser-Tests'
 }
 
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> allClyContextBut: contexts [
-
-	^ {  ClyFullBrowserPackageContext.
-		  ClyFullBrowserClassGroupContext.
-		  ClyFullBrowserMethodContext.
-		  ClyFullBrowserMethodGroupContext.
-		  ClyFullBrowserVariableContext } 
-		reject: [ :ctx | contexts includes: ctx ]
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> classContext [
-
-	^ ClyFullBrowserClassContext new
-		tool: browser;
-		selectedItems: browser classSelection items;
-		yourself.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> classGroupContext [
-
-	^ ClyFullBrowserClassGroupContext new
-		tool: browser;
-		selectedItems: browser classGroupSelection items;
-		yourself.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> datasourceItemsWith: anObject named: aName [
-
-	^ { ClyDataSourceItem of: nil value: (ClyBrowserItem named: aName with: anObject) }
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> deleteBrowser [
-
-	browser ifNotNil: [ 
-		browser window ifNotNil: [ :window | 
-			window delete ] ]
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> differentClassGroupContext [
-	| items |
-	
-	self deleteBrowser.
-	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (RPackageOrganizer default packageNamed: #Kernel) atClassTag: 'Chronology'.
-	items := browser classGroupSelection items.
-
-	^ ClyFullBrowserClassGroupContext new
-		tool: browser;
-		selectedItems: items;
-		yourself.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> differentMethodContext [
-
-	^ self methodContext
-		selectedItems: (self datasourceItemsWith: Object>>#= named: #new );
-		yourself
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> differentPackageContext [
-
-	^ self packageContext
-		selectedItems: (self datasourceItemsWith: Object package named: #Kernel );
-		yourself
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> findBrowserTool: aClyToolMorphClass [
-	
-	^ browser tabManager tools 
-		detect: [ :aTool | aTool class = aClyToolMorphClass ]
-]
-
 { #category : #testing }
 ClyBrowserToolValidityTest >> isValidInContextOtherThan: someContexts [
 
 	^ (self allClyContextBut: someContexts) 
 		anySatisfy: [ :ctx | tool isValidInContext: ctx ]
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> methodContext [
-
-	^ ClyFullBrowserMethodContext new
-		selectedItems: browser methodSelection items;
-		yourself.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> methodGroupContext [
-
-	^ ClyFullBrowserMethodGroupContext new
-		selectedItems: browser methodGroupSelection items;
-		yourself.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> openBrowserWithPackageAndClassGroupOnlySelected [
-
-	self deleteBrowser.
-	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (RPackageOrganizer default packageNamed: #Kernel) atClassTag: 'BasicObjects'.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> openBrowserWithPackageOnlySelected [
-
-	self deleteBrowser.
-	browser := ClyFullBrowserMorph open.
-	browser selectPackage: self class package.
-]
-
-{ #category : #helpers }
-ClyBrowserToolValidityTest >> packageContext [
-
-	^ ClyFullBrowserPackageContext new
-		tool: browser;
-		selectedItems: browser packageSelection items;
-		yourself.
-]
-
-{ #category : #running }
-ClyBrowserToolValidityTest >> setUp [
-	super setUp.
-	
-	browser := ClyFullBrowserMorph 
-		openOnClass: self class 
-		selector: self class selectors anyOne.
-]
-
-{ #category : #running }
-ClyBrowserToolValidityTest >> tearDown [ 
-
-	self deleteBrowser
 ]
 
 { #category : #tests }
