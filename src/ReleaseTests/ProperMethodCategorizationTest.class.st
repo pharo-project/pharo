@@ -54,6 +54,22 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
 ]
 
+{ #category : #'tests - instance creation' }
+ProperMethodCategorizationTest >> testClassSideInitialzeMethodNeedsToBeInClassInitializationProtocol [
+
+	"The #basicNew methods should be in method protocol 'instance creation'"
+
+	| violating instanceSideInitializeMethods |
+	violating := OrderedCollection new.
+	instanceSideInitializeMethods := OrderedCollection new.
+	
+	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
+	
+	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
+	
+	self assert: violating size <= 57 description: 'Class side #initialize methods should be in "class initialization" method category'
+]
+
 { #category : #'tests - object' }
 ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 	"The #clone methods should be in method protocol 'copying'"
@@ -101,6 +117,22 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	"The #hash method should be in method protocol 'comparing'"
 	
 	self assureAll: #hash areCategorizedIn: #comparing whenSubclassOf: Object
+]
+
+{ #category : #'tests - instance creation' }
+ProperMethodCategorizationTest >> testInstanceSideInitialzeMethodNeedsToBeIninitializationProtocol [
+
+	"The #basicNew methods should be in method protocol 'instance creation'"
+
+	| violating instanceSideInitializeMethods |
+	violating := OrderedCollection new.
+	instanceSideInitializeMethods := OrderedCollection new.
+	
+	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide not  ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
+	
+	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
+	
+	self assert: violating size <= 100 description: 'Instance side #initialize methods should be in "initialization" method category'
 ]
 
 { #category : #tests }
