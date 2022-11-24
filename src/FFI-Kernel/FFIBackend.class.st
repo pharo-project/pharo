@@ -25,7 +25,7 @@ FFIBackend class >> detectFFIBackend [
 		ifNone: [ ^ NullFFIBackend ]) new
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFIBackend class >> initialize [
 
 	SessionManager default
