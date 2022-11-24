@@ -418,6 +418,11 @@ CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
 
+{ #category : #accessing }
+CompiledCode >> isInstalled [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 CompiledCode >> isNamedPrimitive [
 	^self primitive = 117
