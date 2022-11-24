@@ -125,7 +125,7 @@ MemoryLogger >> announcer [
 	^ announcer
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MemoryLogger >> initialize [
 	super initialize.
 	mutex := Mutex new.
