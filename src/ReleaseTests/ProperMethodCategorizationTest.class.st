@@ -120,7 +120,7 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 ]
 
 { #category : #'tests - instance creation' }
-ProperMethodCategorizationTest >> testInstanceSideInitialzeMethodNeedsToBeIninitializationProtocol [
+ProperMethodCategorizationTest >> testInstanceSideInitialzeMethodNeedsToBeInInitializationProtocol [
 
 	"The #basicNew methods should be in method protocol 'instance creation'"
 
