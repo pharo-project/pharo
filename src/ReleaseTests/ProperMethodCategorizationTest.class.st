@@ -57,7 +57,7 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 { #category : #'tests - instance creation' }
 ProperMethodCategorizationTest >> testClassSideInitialzeMethodNeedsToBeInClassInitializationProtocol [
 
-	"The #basicNew methods should be in method protocol 'instance creation'"
+	"The class side #initialize methods should be in method protocol 'class initialization'"
 
 	| violating instanceSideInitializeMethods |
 	violating := OrderedCollection new.
@@ -122,7 +122,7 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 { #category : #'tests - instance creation' }
 ProperMethodCategorizationTest >> testInstanceSideInitialzeMethodNeedsToBeInInitializationProtocol [
 
-	"The #basicNew methods should be in method protocol 'instance creation'"
+	"The instance side #initialize methods should be in method protocol 'initialization'"
 
 	| violating instanceSideInitializeMethods |
 	violating := OrderedCollection new.
