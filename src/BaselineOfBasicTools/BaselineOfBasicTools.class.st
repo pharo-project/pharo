@@ -65,7 +65,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'NECompletion'.
 		spec package: 'NECompletion-Morphic'.
 		spec package: 'NECompletion-Preferences'.
-		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
 		spec package: 'Metacello-Reference'.
