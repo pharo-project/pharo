@@ -1,6 +1,9 @@
 Class {
 	#name : #CompiledCodeTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'var'
+	],
 	#category : #'Kernel-Tests-Classes'
 }
 
@@ -39,7 +42,17 @@ CompiledCodeTest >> testAccessesRef [
 { #category : #'tests - testing' }
 CompiledCodeTest >> testBlockReturnSpecial [
 
-	self deny: [ ^ 1 ] compiledBlock isReturnSpecial
+	self assert: [ ^ self ] compiledBlock isReturnSpecial.
+	self assert: [ ^ nil ] compiledBlock isReturnSpecial.
+	self assert: [ ^ true ] compiledBlock isReturnSpecial.
+	self assert: [ ^ false ] compiledBlock isReturnSpecial.
+	self assert: [ ^ -1 ] compiledBlock isReturnSpecial.
+	self assert: [ ^ 0 ] compiledBlock isReturnSpecial.
+	self assert: [ ^ 1 ] compiledBlock isReturnSpecial.
+	self assert: [ ^ 2 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 3 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ var ] compiledBlock isReturnSpecial.
+	self deny: [ ^ Object ] compiledBlock isReturnSpecial
 ]
 
 { #category : #'tests - literals' }
