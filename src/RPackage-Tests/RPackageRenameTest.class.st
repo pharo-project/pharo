@@ -5,16 +5,24 @@ Class {
 	#name : #RPackageRenameTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'oldSystemAnnouncer'
+		'oldSystemAnnouncer',
+		'packageNamesToClean'
 	],
 	#category : #'RPackage-Tests'
 }
+
+{ #category : #utilities }
+RPackageRenameTest >> cleanWorkingCopiesInTearDown: aCollection [ 
+	
+	packageNamesToClean addAll: aCollection
+]
 
 { #category : #running }
 RPackageRenameTest >> setUp [ 
 	super setUp.
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer restoreAllNotifications
+	SystemAnnouncer restoreAllNotifications.
+	packageNamesToClean := OrderedCollection new.
 ]
 
 { #category : #running }
@@ -25,6 +33,11 @@ RPackageRenameTest >> tearDown [
 	self class environment at: #TestClass1 ifPresent: [ :class | class removeFromSystem ].
 	self class environment at: #TestClass2 ifPresent: [ :class | class removeFromSystem ].
 	self class environment at: #TestClass3 ifPresent: [ :class | class removeFromSystem ].
+
+	packageNamesToClean do: [ :aPackageName | | workingCopy |
+		workingCopy := MCWorkingCopy forPackage: (MCPackage new name: aPackageName).
+		workingCopy unload].
+
 	super tearDown
 ]
 
@@ -146,6 +159,102 @@ self deny: (RPackageOrganizer default includesPackageNamed: #TEST1).
 self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
 self deny: (RPackageOrganizer default includesPackageNamed: #Test1).
 self deny: (MCWorkingCopy hasPackageNamed: #Test1).]
+]
+
+{ #category : #tests }
+RPackageRenameTest >> testRenamePackageWithExtensions [
+	"Test that we do rename the package as expected."
+
+	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
+	
+	package := RPackageOrganizer default registerPackageNamed: 'OriginalPackage'.
+	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'OriginalPackage').
+	
+	class := Object
+		subclass: #TestClass
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: 'OriginalPackage-TAG'.
+		
+	extendedPackage := RPackageOrganizer default registerPackageNamed: 'ExtendedPackage'.
+	extendedPackageWorkingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'ExtendedPackage').
+
+	self cleanWorkingCopiesInTearDown: #(ExtendedPackage RenamedPackage OriginalPackage).
+
+	class := Object
+		subclass: #TestExtendedClass
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: 'ExtendedPackage'.
+
+	class compile: 'm ^ 42' classified: '*OriginalPackage'.
+	extension := class >> #m.
+	
+	self assert: extension isExtension.
+	self assert: extension package equals: package.
+	self assert: extension origin equals: class.
+	self assert: class package equals: extendedPackage.
+	
+	package renameTo: 'RenamedPackage'.
+
+	extension := class >> #m.
+
+	self assert: extension isExtension.
+	self assert: extension package equals: package.
+	self assert: extension origin equals: class.
+	self assert: class package equals: extendedPackage.
+
+]
+
+{ #category : #tests }
+RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
+	"Test that we do rename the package as expected."
+
+	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
+	
+	package := RPackageOrganizer default registerPackageNamed: 'OriginalPackage'.
+	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'OriginalPackage').
+	
+	class := Object
+		subclass: #TestClass
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: 'OriginalPackage-TAG'.
+		
+	extendedPackage := RPackageOrganizer default registerPackageNamed: 'ExtendedPackage'.
+	extendedPackageWorkingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'ExtendedPackage').
+
+	self cleanWorkingCopiesInTearDown: #(ExtendedPackage RenamedPackage OriginalPackage).
+
+	class := Object
+		subclass: #TestExtendedClass
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: 'ExtendedPackage'.
+		
+	class := class class.
+
+	class compile: 'm ^ 42' classified: '*OriginalPackage'.
+	extension := class >> #m.
+	
+	self assert: extension isExtension.
+	self assert: extension package equals: package.
+	self assert: extension origin equals: class.
+	self assert: class package equals: extendedPackage.
+	
+	package renameTo: 'RenamedPackage'.
+
+	extension := class >> #m.
+
+	self assert: extension isExtension.
+	self assert: extension package equals: package.
+	self assert: extension origin equals: class.
+	self assert: class package equals: extendedPackage.
+
 ]
 
 { #category : #tests }
