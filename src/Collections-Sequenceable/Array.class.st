@@ -301,7 +301,19 @@ Array >> isArray [
 
 { #category : #testing }
 Array >> isLiteral [
-	^self class == Array and: [self allSatisfy: [:each | each isLiteral]]
+
+	^ self class == Array and: [ self isLiteral: {  } ]
+]
+
+{ #category : #testing }
+Array >> isLiteral: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be literals" 
+		^ false ].
+
+	^ self allSatisfy: [ :each | each isLiteral: alreadyVisited , { self } ]
 ]
 
 { #category : #'self evaluating' }

@@ -1262,6 +1262,12 @@ Object >> isLiteral [
 	^ false
 ]
 
+{ #category : #testing }
+Object >> isLiteral: alreadyVisited [
+
+	^ self isLiteral
+]
+
 { #category : #'class membership' }
 Object >> isMemberOf: aClass [
 	"Answer whether the receiver is an instance of the class, aClass."
