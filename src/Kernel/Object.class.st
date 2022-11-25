@@ -1356,9 +1356,7 @@ Object >> isSelfEvaluating [
 { #category : #'self evaluating' }
 Object >> isSelfEvaluating: alreadyVisited [
 
-	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal" 
-		^ false ].
-	^ self class == Array or: [ self isSelfEvaluating ]
+	^ self isSelfEvaluating
 ]
 
 { #category : #testing }
@@ -1916,9 +1914,7 @@ Object >> shouldBePrintedAsLiteral [
 { #category : #'literal testing' }
 Object >> shouldBePrintedAsLiteral: alreadyVisited [
 
-	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal" 
-		^ false ].
-	^ self class == Array or: [ self shouldBePrintedAsLiteral ]
+	^ self shouldBePrintedAsLiteral
 ]
 
 { #category : #'error handling' }

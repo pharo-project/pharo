@@ -313,10 +313,12 @@ Array >> isSelfEvaluating [
 { #category : #'self evaluating' }
 Array >> isSelfEvaluating: alreadyVisited [
 
-	(super isSelfEvaluating: alreadyVisited) ifTrue: [ 
-		^ self allSatisfy: [ :each | each isSelfEvaluating: alreadyVisited , { self } ] ].
+	"Do not call super! This logic ends with an infinite recursion"
 
-	^ false
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a self evaluated" 
+		^ false ].
+
+	^ self allSatisfy: [ :each | each isSelfEvaluating: alreadyVisited , { self } ]
 ]
 
 { #category : #comparing }
@@ -383,10 +385,12 @@ Array >> shouldBePrintedAsLiteral [
 { #category : #'literal testing' }
 Array >> shouldBePrintedAsLiteral: alreadyVisited [
 
-	(super shouldBePrintedAsLiteral: alreadyVisited) ifTrue: [ 
-		^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ] ].
+	"Do not call super! This logic ends with an infinite recursion"
 
-	^ false
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal" 
+		^ false ].
+
+	^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ]
 ]
 
 { #category : #printing }
