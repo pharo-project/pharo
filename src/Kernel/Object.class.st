@@ -1253,8 +1253,11 @@ Object >> isKindOf: aClass [
 
 { #category : #testing }
 Object >> isLiteral [
-	"Answer whether the receiver has a literal text form recognized by the 
-	compiler."
+
+	"Answer whether the receiver has a literal text form recognized by the compiler.
+	For ex:
+	#(1 true #three #(4) )
+	"
 
 	^ false
 ]
@@ -1349,6 +1352,8 @@ Object >> isRectangle [
 
 { #category : #'self evaluating' }
 Object >> isSelfEvaluating [
+
+	"A self evaluating object means that the string representation can be evaluated and give an identical object"
 
 	^ self isLiteral
 ]
@@ -1908,7 +1913,9 @@ Object >> shouldBeImplemented [
 { #category : #'literal testing' }
 Object >> shouldBePrintedAsLiteral [
 
-	^self isLiteral
+	"Only literals should be printed as literals"
+
+	^ self isLiteral
 ]
 
 { #category : #'literal testing' }
