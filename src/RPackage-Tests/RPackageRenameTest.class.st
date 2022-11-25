@@ -46,6 +46,9 @@ RPackageRenameTest >> testRenamePackage [
 	"Test that we do rename the package as expected."
 
 	| package workingCopy class |
+
+	self cleanWorkingCopiesInTearDown: #('TestRename').
+
 	package := RPackageOrganizer default registerPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1').
 	class := Object
@@ -54,11 +57,14 @@ RPackageRenameTest >> testRenamePackage [
 		classVariableNames: ''
 		poolDictionaries: ''
 		category: 'Test1-TAG'.
+
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: workingCopy modified.
+
 	package renameTo: 'TestRename'.
+
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
@@ -66,18 +72,17 @@ RPackageRenameTest >> testRenamePackage [
 	self deny: (Smalltalk organization includesCategory: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1).
 
-	"cleaning"
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'TestRename').
 	self assert: workingCopy modified.
-	workingCopy unload.
-	self deny: (RPackageOrganizer default includesPackageNamed: #TestRename).
-	self deny: (MCWorkingCopy hasPackageNamed: #TestRename)
+
 ]
 
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageToOwnTagName [
 	"If we rename a package to the (full)category name of one of its tags"
 	| package workingCopy class1 class2 |
+
+	self cleanWorkingCopiesInTearDown: #('Test1-Core').
 
 	package := RPackageOrganizer default registerPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1').
@@ -93,18 +98,18 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	self assert: (package classTagNamed: #'Util' ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #'Core' ifAbsent: [ nil ]) includesClass: class1).
 	self assert: ((package classTagNamed: #'Util' ifAbsent: [ nil ]) includesClass: class2).	
-	"cleaning"
+
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1-Core').
 	self assert: workingCopy modified.
-	workingCopy unload.	
-	self deny: (RPackageOrganizer default includesPackageNamed: #'Test1-Core').
-	self deny: (MCWorkingCopy hasPackageNamed: #'Test1-Core').
+
 ]
 
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	"If we rename a package to the (full)category name of one of its tags and the (non-tag)package is not empty"
 	| package workingCopy class1 class2 class3|
+
+	self cleanWorkingCopiesInTearDown: #('Test1-Core').
 
 	package := RPackageOrganizer default registerPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1').
@@ -121,49 +126,49 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	self assert: (package classTagForClass: class1) name equals: #Core.
 	self assert: (package classTagForClass: class2) name equals: #Util.
 	self assert: (package classTagForClass: class3) name equals: #'Test1-Core'.
-	"cleaning"
+
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1-Core').
 	self assert: workingCopy modified.
-	workingCopy unload.	
-	self deny: (RPackageOrganizer default includesPackageNamed: #'Test1-Core').
-	self deny: (MCWorkingCopy hasPackageNamed: #'Test1-Core').
+
 ]
 
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageUppercase [
-"Test that we do rename the package as expected."
-| package pkg oldWorkingCopy |
 
-"preparation: creation of a pkg and its associated mcworkingcopy"
-[package := RPackageOrganizer default registerPackageNamed: 'Test1'.
-oldWorkingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1').
-self assert: (RPackageOrganizer default includesPackageNamed: #Test1).
-self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
+	"Test that we do rename the package as expected."
 
-"renaming"
-package renameTo: 'TEST1'.
+	| package pkg oldWorkingCopy |
+	"preparation: creation of a pkg and its associated mcworkingcopy"
+	[ 
+		package := RPackageOrganizer default registerPackageNamed: 'Test1'.
+		oldWorkingCopy := MCWorkingCopy forPackage:
+			                  (MCPackage new name: 'Test1').
+		self assert: (RPackageOrganizer default includesPackageNamed: #Test1).
+		self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
+
+		"renaming"
+		package renameTo: 'TEST1'.
 
 
-pkg := RPackageOrganizer default packageNamed: 'Test1'  ifAbsent: [ nil ].
-self assert: pkg isNil.
-self assert: 'TEST1' asPackage isNotNil.
-self deny: 'TEST1' asPackage mcWorkingCopy equals: oldWorkingCopy.
-self assert: 'TEST1' asPackage mcWorkingCopy isNotNil.
-self assert: (RPackageOrganizer default includesPackageNamed: #TEST1).
-self assert: (MCWorkingCopy hasPackageNamed: #TEST1) isNotNil.
-
-] ensure: 
-["cleaning"
-'TEST1' asPackage removeFromSystem.
-self deny: (RPackageOrganizer default includesPackageNamed: #TEST1).
-self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
-self deny: (RPackageOrganizer default includesPackageNamed: #Test1).
-self deny: (MCWorkingCopy hasPackageNamed: #Test1).]
+		pkg := RPackageOrganizer default
+			       packageNamed: 'Test1'
+			       ifAbsent: [ nil ].
+		self assert: pkg isNil.
+		self assert: 'TEST1' asPackage isNotNil.
+		self deny: 'TEST1' asPackage mcWorkingCopy equals: oldWorkingCopy.
+		self assert: 'TEST1' asPackage mcWorkingCopy isNotNil.
+		self assert: (RPackageOrganizer default includesPackageNamed: #TEST1).
+		self assert: (MCWorkingCopy hasPackageNamed: #TEST1) isNotNil ] 
+	ensure: [ "cleaning"
+			'TEST1' asPackage removeFromSystem.
+			self deny: (RPackageOrganizer default includesPackageNamed: #TEST1).
+			self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
+			self deny: (RPackageOrganizer default includesPackageNamed: #Test1).
+			self deny: (MCWorkingCopy hasPackageNamed: #Test1) ]
 ]
 
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageWithExtensions [
-	"Test that we do rename the package as expected."
 
 	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
 	
@@ -210,7 +215,6 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
-	"Test that we do rename the package as expected."
 
 	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
 	
@@ -259,7 +263,7 @@ RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 { #category : #tests }
 RPackageRenameTest >> testUnregisterPackage [
-	"Test that we do rename the package as expected."
+	"Test that we do unregister the package as expected."
 	| package workingCopy class |
 
 	package := RPackageOrganizer default registerPackageNamed: 'Test1'.
