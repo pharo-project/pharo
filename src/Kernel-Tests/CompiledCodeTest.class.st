@@ -19,6 +19,12 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
+{ #category : #examples }
+CompiledCodeTest >> methodReturnOne [
+
+	^ 1
+]
+
 { #category : #'tests - scanning' }
 CompiledCodeTest >> testAccessesRef [
 	| readMethod writeMethod classVar |
@@ -28,6 +34,12 @@ CompiledCodeTest >> testAccessesRef [
 	
 	self assert: (readMethod accessesRef: classVar).
 	self assert: (writeMethod accessesRef: classVar).
+]
+
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testBlockReturnSpecial [
+
+	self deny: [ ^ 1 ] compiledBlock isReturnSpecial
 ]
 
 { #category : #'tests - literals' }
@@ -269,6 +281,17 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
+]
+
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testMethodReturnSpecial [
+
+	| returnSpecialMethod normalMethod |
+	returnSpecialMethod := self class >> #methodReturnOne.
+	self assert: returnSpecialMethod isReturnSpecial.
+
+	normalMethod := self class >> #method1.
+	self deny: normalMethod isReturnSpecial
 ]
 
 { #category : #'tests - scanning' }
