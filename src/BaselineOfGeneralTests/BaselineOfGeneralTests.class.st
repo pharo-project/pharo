@@ -38,7 +38,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Fonts-Infrastructure-Tests';
 			
 			package: 'Graphics-Tests';
-			package: 'HelpSystem-Tests';
 
 			package: 'Morphic-Tests';
 			

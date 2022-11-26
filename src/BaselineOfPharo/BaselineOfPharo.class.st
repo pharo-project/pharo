@@ -92,5 +92,5 @@ BaselineOfPharo >> baseline: spec [
 { #category : #baseline }
 BaselineOfPharo >> postload: loader package: packageSpec [
 
-	WelcomeHelp openForRelease
+	"Here we will do something for the release announce"
 ]

@@ -203,7 +203,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
 						
-		spec package: 'Pharo-WelcomeHelp'.
 		spec package: 'Kernel-ExtraUtils' 
 		
 	]
