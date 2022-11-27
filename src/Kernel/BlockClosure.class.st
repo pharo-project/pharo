@@ -299,10 +299,10 @@ BlockClosure >> home [
 
 { #category : #accessing }
 BlockClosure >> homeMethod [
-	"return the home method. Use the static outerCode if the closure has not outerContext"
-	^ self home
-		ifNotNil: [:homeContext | homeContext method ]
-		ifNil: [self compiledBlock outerCode method ]
+	"return the home method. If no #home is available due to no outerContext, use the compiledBlock"
+	^ (self home
+		   ifNotNil: [ :homeContext | homeContext ]
+		   ifNil: [ self compiledBlock ]) method
 ]
 
 { #category : #exceptions }
