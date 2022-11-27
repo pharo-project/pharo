@@ -1339,6 +1339,15 @@ Context >> printDebugOn: aStream [
 ]
 
 { #category : #printing }
+Context >> printDebugStackOn: aStream [
+
+	"Print the debug stack from the context on my sender chain. 
+	To avoid defining an arbitrary amount of elements in the stack, I use the SmallInteger >> maxVal 	constant."
+
+	^ self debugStack: SmallInteger maxVal on: aStream
+]
+
+{ #category : #printing }
 Context >> printDetails: stream [
 
 	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
