@@ -87,7 +87,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		
-		self specHelp: spec.
 		self specRefactoring: spec.
 		
 		spec package: 'Tools-CodeNavigation'.
@@ -127,16 +126,6 @@ BaselineOfBasicTools >> project [
 	aProject := super project.
 	aProject loadType: #atomic.
 	^ aProject.
-]
-
-{ #category : #baseline }
-BaselineOfBasicTools >> specHelp: spec [
-	
-	spec baseline: 'SpecHelp' with: [
-		spec 
-			repository: (self class environment at: #BaselineOfPharo) specRepository;
-			className: 'BaselineOfSpec2';
-			loads: #('Spec2-Help') ]
 ]
 
 { #category : #baseline }
