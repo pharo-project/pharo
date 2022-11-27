@@ -248,15 +248,6 @@ ProfStef >> goOn: aTutorialClass [
 	^ self open
 ]
 
-{ #category : #'private - accessing' }
-ProfStef >> helpBrowserWindow [
-	"Yes this is a hack"
-	
-	^ self currentWorld systemWindows 
-		detect: [ :each | each model class = HelpBrowser ] 
-		ifNone: [ nil ]
-]
-
 { #category : #navigating }
 ProfStef >> last [
 
@@ -280,8 +271,6 @@ ProfStef >> lessonView: aLessonView [
 { #category : #navigating }
 ProfStef >> next [
 
-	self helpBrowserWindow 
-		ifNotNil: [:window | window model next ].
 	self lessonView isOpenInWindow 
 		ifTrue: [ 
 			self player next.
@@ -310,8 +299,6 @@ ProfStef >> player: aTutorialPlayer [
 { #category : #navigating }
 ProfStef >> previous [
 
-	self helpBrowserWindow 
-		ifNotNil: [:window | window model previous ].
 	self lessonView isOpenInWindow 
 		ifTrue: [ 
 			self player previous.

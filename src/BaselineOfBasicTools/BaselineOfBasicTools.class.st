@@ -76,13 +76,10 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloGUI-Tests'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Pharo-Help'.
 		spec package: 'ProfStef-Core'.
-		spec package: 'ProfStef-Help'.
 		spec package: 'Refactoring-Changes'.
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
-		spec package: 'Regex-Help'.
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		
@@ -127,7 +124,6 @@ BaselineOfBasicTools >> project [
 	^ aProject.
 ]
 
-{ #category : #baseline }
 BaselineOfBasicTools >> specRefactoring: spec [
 	
 	"Package used to rename #defaultSpec methods to #defaultLayout.
