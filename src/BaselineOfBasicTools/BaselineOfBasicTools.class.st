@@ -76,7 +76,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloGUI-Tests'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Pharo-Help'.
 		spec package: 'ProfStef-Core'.
 		spec package: 'Refactoring-Changes'.
 		spec package: 'Refactoring-Core'.
@@ -84,7 +83,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		
-		self specHelp: spec.
 		self specRefactoring: spec.
 		
 		spec package: 'Tools-CodeNavigation'.
@@ -126,84 +124,6 @@ BaselineOfBasicTools >> project [
 	^ aProject.
 ]
 
-{ #category : #baseline }
-BaselineOfBasicTools >> sbaseline: spec [
-	<baseline>
-	| repository |
-	repository := self packageRepositoryURL.
-	spec for: #common do: [ 
-		spec postLoadDoIt: #postload:package:.
-
-		"Load first SUnit core"
-		spec baseline: 'SUnitCore' with: [ 
-			spec
-				loads: 'Core';
-				className: 'BaselineOfSUnit';
-				repository: repository ].
-		spec
-			baseline: 'UI' with: [ spec repository: repository ];
-			baseline: 'Reflectivity' with: [ spec repository: repository ];
-			baseline: 'Athens' with: [ 
-				spec
-					loads: 'Cairo-core';
-					repository: repository ];
-			baseline: 'SUnit' with: [ 
-			spec
-				loads: #( 'UI' 'Help' 'JenkinsSupport' );
-				repository: repository ].
-		spec package: 'Tool-ExternalBrowser'.
-		spec 
-			baseline: 'EnlumineurFormatter' with: [ 
-				spec
-					loads: 'Core';
-					repository: repository ].
-		
-		spec package: 'Tool-ProcessBrowser'.
-		spec package: 'Tool-Profilers'.
-		spec package: 'NECompletion'.
-		spec package: 'NECompletion-Morphic'.
-		spec package: 'NECompletion-Preferences'.
-		spec package: 'Metacello-FileTree'.
-		spec package: 'Metacello-Cypress'.
-		spec package: 'Metacello-Reference'.
-		spec package: 'Metacello-Tutorial'.
-		spec package: 'MonticelloGUI'.
-		spec package: 'Tests'.
-		spec package: 'RPackage-Tests'.
-		spec package: 'Monticello-Tests'.
-		spec package: 'MonticelloGUI-Tests'.
-		spec package: 'Network-Mail'.
-		spec package: 'Network-Mail-Tests'.
-		spec package: 'Pharo-Help'.
-		spec package: 'ProfStef-Core'.
-		spec package: 'Refactoring-Changes'.
-		spec package: 'Refactoring-Core'.
-		spec package: 'Refactoring-Environment'.
-		spec package: 'Monticello-OldDataStreamCompatibility'.
-		spec package: 'MonticelloFileServices'.
-		
-		self specHelp: spec.
-		self specRefactoring: spec.
-		
-		spec package: 'Tools-CodeNavigation'.
-		spec package: 'Tool-Diff'.
-		spec package: 'Tool-FileList'.
-		spec package: 'Tool-Finder'.
-		spec package: 'Tool-ImageCleaner'.
-		spec package: 'Tools' ]
-]
-
-{ #category : #baseline }
-BaselineOfBasicTools >> specHelp: spec [
-	
-	spec baseline: 'SpecHelp' with: [
-		spec 
-			repository: (self class environment at: #BaselineOfPharo) specRepository;
-			className: 'BaselineOfSpec2';
-			loads: #('Spec2-Help') ]
-]
-
-{ #category : #baseline }
 BaselineOfBasicTools >> specRefactoring: spec [
 	
 	"Package used to rename #defaultSpec methods to #defaultLayout.
