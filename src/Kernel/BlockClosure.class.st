@@ -297,6 +297,14 @@ BlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
 ]
 
+{ #category : #accessing }
+BlockClosure >> homeMethod [
+	"return the home method. Use the static outerCode if the closure has not outerContext"
+	^ self home
+		ifNotNil: [:homeContext | homeContext method ]
+		ifNil: [self compiledBlock outerCode method ]
+]
+
 { #category : #exceptions }
 BlockClosure >> ifCurtailed: aBlock [
 	"Evaluate the receiver with an abnormal termination action.

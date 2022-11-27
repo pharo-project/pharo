@@ -152,6 +152,23 @@ BlockClosureTest >> testHasMethodReturn [
 	self assert: [ #(1) do: [ ^self ] ] hasMethodReturn
 ]
 
+{ #category : #tests }
+BlockClosureTest >> testHomeMethod [
+	<compilerOptions: #(+ #optionConstantBlockClosure) >
+	| block |
+	"block with non-local return, will go via #home"
+	block := [ ^self ].
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block home method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method.
+	"constant block does not know the outerContext, but can discover home method
+	statically"
+	block := [ ].
+	self assert: block home isNil.
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method
+]
+
 { #category : #'tests - testing' }
 BlockClosureTest >> testIsClean [
 	| local |
