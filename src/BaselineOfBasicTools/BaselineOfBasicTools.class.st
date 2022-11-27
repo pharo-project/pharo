@@ -51,7 +51,7 @@ BaselineOfBasicTools >> baseline: spec [
 					repository: repository ];
 			baseline: 'SUnit' with: [ 
 			spec
-				loads: #( 'UI' 'Help' 'JenkinsSupport' );
+				loads: #( 'UI' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
 		spec 
@@ -124,6 +124,7 @@ BaselineOfBasicTools >> project [
 	^ aProject.
 ]
 
+{ #category : #'as yet unclassified' }
 BaselineOfBasicTools >> specRefactoring: spec [
 	
 	"Package used to rename #defaultSpec methods to #defaultLayout.

@@ -306,7 +306,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfFuzzyMatcher.
 	BaselineOfZodiac.
 	BaselineOfReflectionMirrors.
-	BaselineOfGeneralHelp.
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.

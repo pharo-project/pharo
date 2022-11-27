@@ -154,7 +154,7 @@ BaselineOfIDE >> baseline: spec [
 		"
 		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
+
 		spec
 			baseline: 'ReflectionMirrors'
 			with: [ spec repository: repository ].
