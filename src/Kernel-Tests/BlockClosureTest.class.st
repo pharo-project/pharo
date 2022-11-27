@@ -166,7 +166,13 @@ BlockClosureTest >> testHomeMethod [
 	block := [ ].
 	self assert: block home isNil.
 	self assert: block homeMethod equals: thisContext method.
-	self assert: block homeMethod equals: block compiledBlock outerCode method
+	self assert: block homeMethod equals: block compiledBlock outerCode method.
+	"nested block"
+	block := [[]] value.
+	self assert: block home isNil.
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method	
+
 ]
 
 { #category : #'tests - testing' }
