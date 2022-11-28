@@ -894,6 +894,14 @@ Context >> home [
 	^ closureOrNil outerContext home
 ]
 
+{ #category : #accessing }
+Context >> homeMethod [
+	"Answer the method in which the receiver was defined, i.e. the context from which an ^-return ] should return from. Note: implemented to not need #home"
+
+	^ closureOrNil ifNil: [ self method ] ifNotNil: [ :closure | closure homeMethod ]
+	
+]
+
 { #category : #private }
 Context >> insertSender: aContext [
 	"Insert aContext and its sender chain between me and my sender.  Return new callee of my original sender."
