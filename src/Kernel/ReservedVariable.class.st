@@ -88,7 +88,7 @@ ReservedVariable >> scope [
 { #category : #queries }
 ReservedVariable >> usingMethods [
 	"first call is very slow as it creates all ASTs"
-	^environment allMethods select: [ : method |
+	^environment methods select: [ : method |
 		method ast variableNodes anySatisfy: [ :varNode | varNode variable == self]]
 ]
 

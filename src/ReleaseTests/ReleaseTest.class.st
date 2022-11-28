@@ -214,7 +214,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 ReleaseTest >> testMethodsContainNoHalt [
 
 	| methods |
-	methods := SystemNavigation new allMethods select: [ :method | method containsHalt ].
+	methods := SystemNavigation new methods select: [ :method | method containsHalt ].
 	"these methods are using halt for testing something"
 	methods := methods reject: [ :method | 
 		           method hasPragmaNamed: #haltOrBreakpointForTesting ].
@@ -260,10 +260,7 @@ ReleaseTest >> testNoEmptyPackages [
 ReleaseTest >> testNoEquivalentSuperclassMethods [
 
 	| methods |
-	"we do not care about methods that are installed from traits"
-	methods := SystemNavigation new allMethods reject: [:method | method isFromTrait].
-	
-	methods := methods select: [:method |
+	methods := SystemNavigation new methods select: [:method |
 	method methodClass superclass
 		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
 			ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
@@ -285,7 +282,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 ReleaseTest >> testNoLiteralIsPinnedInMemory [
 	| methodsWithPinnedLiterals |
 	
-	methodsWithPinnedLiterals := SystemNavigation default allMethods flatCollect: [ :each | 
+	methodsWithPinnedLiterals := SystemNavigation default methods flatCollect: [ :each | 
 	(each allLiterals select: [ :eachLiteral | eachLiteral isPinnedInMemory ])
 		ifNotEmpty: [ { each } ]
 		ifEmpty: [ #() ] ].
@@ -305,14 +302,14 @@ ReleaseTest >> testNoNullCharacter [
 	"Check that we do not have NULL in sources - see https://github.com/pharo-project/pharo/issues/9631"
 	
 	| violations |
-	violations := SystemNavigation default allMethods select: [ :m | m sourceCode includes: Character null ].
+	violations := SystemNavigation default methods select: [ :m | m sourceCode includes: Character null ].
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
 { #category : #'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
-	methods := SystemNavigation new allMethods select: [ :method | 
+	methods := SystemNavigation new methods select: [ :method | 
  		method sourceCode lines first trimRight last == $..].
 	
 	self assert: methods isEmpty description: [ 

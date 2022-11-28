@@ -39,7 +39,7 @@ SelfVariable >> usingMethods [
 	"Super sends are doing a pushSelf, too, we need to still check the AST level sometimes.
 	FFI methods after a first call do not have a self send in the bytecode, but one in the code"
 
-	^ environment allMethods select: [ :method | 
+	^ environment methods select: [ :method | 
 		method isFFIMethod or: [  
 		  method readsSelf and: [ 
 			  method sendsToSuper not or: [ 

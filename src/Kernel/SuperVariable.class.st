@@ -37,6 +37,6 @@ SuperVariable >> readInContext: aContext [
 SuperVariable >> usingMethods [
 	"as super is just a push Self, this detects real super sends, not accesses to super which 
 	should never happen"
-	^ environment allMethods select: [ :method | 
+	^ environment methods select: [ :method | 
 		  method sendsToSuper ]
 ]

@@ -157,7 +157,7 @@ SystemNavigation >> allObjectsOrNil [
 SystemNavigation >> allPrimitiveMethods [
 	"Answer all the methods that are implemented by primitives."
 
-	^self allMethods
+	^self methods
 		select: [ :method | method isPrimitive ]
 		thenCollect: [ :method | method methodClass name , ' ' , 
 			     method selector , ' ', method primitive printString ]
@@ -239,7 +239,7 @@ SystemNavigation >> allUnimplementedCalls [
 
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
-	^ self allMethods select: [ :meth | 
+	^ self methods select: [ :meth | 
 		  | ignored |
 		  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
 			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
@@ -311,6 +311,12 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 SystemNavigation >> isUnsentMessage: selector [
 	^ self allBehaviors
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
+]
+
+{ #category : #query }
+SystemNavigation >> methods [
+	"Return all methods, not including methods installed from Traits"
+	^ self environment methods
 ]
 
 { #category : #'identifying obsoletes' }

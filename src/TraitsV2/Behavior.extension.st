@@ -48,7 +48,7 @@ Behavior >> localMethodNamed: selector ifAbsent: aBlock [
 Behavior >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses" 
 	 
-	^ self methods
+	^ self methodDict values
 ]
 
 { #category : #'*TraitsV2' }

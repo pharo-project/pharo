@@ -292,6 +292,12 @@ SystemDictionary >> maxIdentityHash [
 	^self primitiveFailed
 ]
 
+{ #category : #'accessing - classes and traits' }
+SystemDictionary >> methods [
+	"Return all methods, not including methods installed from Traits"
+	^ self allBehaviors flatCollect: [ :behavior | behavior localMethods ]
+]
+
 { #category : #'accessing - class and trait names' }
 SystemDictionary >> nonClassNames [
 	"Answer a sorted collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."

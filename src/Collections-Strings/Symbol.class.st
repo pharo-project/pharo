@@ -199,7 +199,7 @@ Symbol class >> readFrom: strm [
 { #category : #'selector table' }
 Symbol class >> rebuildSelectorTable [
 
-	^ SystemNavigation new allMethods
+	^ SystemNavigation new methods
 		  collect: [ :method | method selector ]
 		  as: WeakIdentitySet
 ]
