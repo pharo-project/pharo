@@ -452,6 +452,13 @@ CompiledCode >> isReturnSelf [
 	^ self primitive = 256
 ]
 
+{ #category : #testing }
+CompiledCode >> isReturnSpecial [
+	"Answer whether the receiver is a quick return of self or constant."
+
+	^ self primitive between: 256 and: 263
+]
+
 { #category : #accessing }
 CompiledCode >> isTestMethod [
 	^ self subclassResponsibility
