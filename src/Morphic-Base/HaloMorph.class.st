@@ -694,7 +694,7 @@ HaloMorph >> containsPoint: aPoint event: anEvent [
 	"Blue buttons are handled by the halo"
 
 	(anEvent isMouse and: [ 
-		 anEvent isMouseDown and: [ anEvent blueButtonPressed ] ]) ifFalse: [ 
+		 anEvent isMouseDown and: [ anEvent isSpecialGesture ] ]) ifFalse: [ 
 		^ super containsPoint: aPoint event: anEvent ].
 	^ bounds containsPoint: anEvent position
 ]
@@ -977,6 +977,8 @@ HaloMorph >> handleSize [
 HaloMorph >> handleSpecialGesture: event [
 	"Transfer the halo to the next likely recipient"
 
+	#haloHandleSpecialGesture traceCr. 
+
 	target ifNil: [ ^ self delete ].
 	event hand obtainHalo: self.
 	positionOffset := event position
@@ -990,9 +992,8 @@ HaloMorph >> handleSpecialGesture: event [
 ]
 
 { #category : #'meta-actions' }
-HaloMorph >> handlerForBlueButtonDown: anEvent [
-	"Blue button was clicked within the receiver"
-
+HaloMorph >> handlerForSpecialGestureDown:  anEvent [
+	"The special gesture for halo has been done"
 	^ self
 ]
 
