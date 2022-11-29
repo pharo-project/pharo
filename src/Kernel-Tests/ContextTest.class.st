@@ -149,6 +149,22 @@ ContextTest >> testActiveHomeMethodContext [
 ]
 
 { #category : #tests }
+ContextTest >> testAstScope [
+
+	| scope |
+	"test that we get a scope for optimized blocks"
+	aMethodContext pc: 88 + 1.
+	scope := aMethodContext astScope.
+	self assert: scope isOptimized.
+	
+	"test that we do not get a block scope when pushing a block on the stack"
+	aMethodContext pc: 92 + 1.
+	scope := aMethodContext astScope.
+	self assert: aMethodContext sourceNodeExecuted isBlock.
+	self deny: scope isBlockScope
+]
+
+{ #category : #tests }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext)
