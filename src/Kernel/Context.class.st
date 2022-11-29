@@ -789,6 +789,19 @@ Context >> findContextSuchThat: testBlock [
 	^ nil
 ]
 
+{ #category : #query }
+Context >> findMethodContextSuchThat: testBlock [
+	"Search self and my sender chain for first one that satisfies testBlock. Ignore block contexts. Return nil if none satisfy"
+
+	| context |
+	context := self.
+	[ context isNil ] whileFalse: [
+		(context isBlockContext not and: [testBlock value: context])
+			ifTrue: [ ^ context ].
+		context := context sender ].
+	^ nil
+]
+
 { #category : #'private - exceptions' }
 Context >> findNextHandlerContext [
 	"Return the next handler marked context, returning nil if there is none.  
