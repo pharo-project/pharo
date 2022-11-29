@@ -375,7 +375,7 @@ Context >> basicSize [
 
 { #category : #testing }
 Context >> belongsToDoIt [
-	^self home method isDoIt
+	^self homeMethod isDoIt
 ]
 
 { #category : #'instruction decoding' }

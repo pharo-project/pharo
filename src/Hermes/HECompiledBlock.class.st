@@ -87,6 +87,6 @@ HECompiledBlock >> value: aCompiledBlock [
 	1 to: bytecode size do: [ :i | bytecode at: i put: (aCompiledBlock at: i + literalSpace) ].
 
 	literals := aCompiledBlock allLiterals allButLast collect: [ :e | e asExportedLiteral ].
-	"The last literal is the home method or block of this compiledBlock"
+	"The last literal is the outer method or block of this compiledBlock"
 	literals := literals copyWith: nil asExportedLiteral.
 ]
