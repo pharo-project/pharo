@@ -981,6 +981,17 @@ StringTest >> testFindTokens [
 	self assert: ('test this' findTokens: 't') equals: s
 ]
 
+{ #category : #'tests - tokenizing' }
+StringTest >> testFindTokensCharacterSetComplement [
+
+	| tokens delims |
+	string := 'one, two, three, and four, one, five, one '.
+	delims := (CharacterSet newFrom: (Character alphabet, Character alphabet asUppercase)) complement.
+	tokens := string findTokens: delims.
+	self assert: tokens size equals: 8.
+	self assert: tokens third equals: 'three'
+]
+
 { #category : #tests }
 StringTest >> testFindTokensEscapedBy [
 
