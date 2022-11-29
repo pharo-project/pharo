@@ -116,6 +116,12 @@ BlockClosureTest >> testConstantBlockClosure [
 	"but we do not compile is special for now"
 	self assert: block class equals: FullBlockClosure.
 	
+ 	self should: [block value] raise: ArgumentsCountMismatch.
+ 	self should: [block value: nil] raise: ArgumentsCountMismatch.
+ 	self should: [block value: nil value: nil] raise: ArgumentsCountMismatch.
+ 	self should: [block value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
+ 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
+	
 ]
 
 { #category : #'tests - evaluating' }
