@@ -1022,7 +1022,7 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 	"predicate that tells if the keyword should be forced to be on the same line."
 
 	^ aMessageNode isKeyword
-		and: [ aMessageNode arguments size <= 1
+		and: [ aMessageNode numArgs <= 1
 				or: [ self newLineBeforeFirstKeyword not ] ]
 ]
 
@@ -1505,7 +1505,7 @@ EFFormatter >> isMultiLineMessage: aMessageNode [
 		ifTrue: [ ^ true ].
 	(self oneLineMessages includes: aMessageNode selector)
 		ifTrue: [ ^ false ].
-	self numberOfArgumentsForMultiLine <= aMessageNode arguments size
+	self numberOfArgumentsForMultiLine <= aMessageNode numArgs
 		ifTrue: [ ^ true ].
 	aMessageNode isUnary
 		ifTrue: [ ^ self isLineTooLongWithString: aMessageNode selector ].
@@ -1583,7 +1583,7 @@ EFFormatter >> maxLineLength: anInteger [
 
 { #category : #private }
 EFFormatter >> messageHasMultilineArgumentBeforeAnotherArgument: aMessageNode [
-  aMessageNode arguments doWithIndex: [:each :i |  (self willBeMultiline: each) ifTrue: [ ^i < aMessageNode arguments size ] ].
+  aMessageNode arguments doWithIndex: [:each :i |  (self willBeMultiline: each) ifTrue: [ ^i < aMessageNode numArgs ] ].
   ^false
 ]
 

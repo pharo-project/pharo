@@ -49,14 +49,14 @@ RBPatternBlockNode >> copyInContext: aDictionary [
 { #category : #matching }
 RBPatternBlockNode >> createMatchingBlock [
 	| newBlock |
-	self arguments size > 2 
+	self numArgs > 2 
 		ifTrue: 
 			[self 
 				error: 'Search blocks can only contain arguments for the node and matching dictionary'].
 	newBlock := RBBlockNode arguments: arguments body: body.
 	newBlock arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
-	newBlock arguments size = 1 
+	newBlock numArgs = 1 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	self replacePatternNodesIn: newBlock.
 	^newBlock evaluateForReceiver: self.
@@ -65,7 +65,7 @@ RBPatternBlockNode >> createMatchingBlock [
 { #category : #matching }
 RBPatternBlockNode >> createReplacingBlock [
 	| newBlock |
-	self arguments size > 1 
+	self numArgs > 1 
 		ifTrue: 
 			[self 
 				error: 'Replace blocks can only contain an argument for the matching dictionary'].

@@ -48,7 +48,7 @@ RBBlockNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	self body = anObject body ifFalse: [^false].
-	self arguments size = anObject arguments size ifFalse: [^false].
+	self numArgs = anObject numArgs ifFalse: [^false].
 	self arguments with: anObject arguments do: [:first :second | first = second ifFalse: [^false]].
 	^true
 ]
@@ -169,7 +169,7 @@ RBBlockNode >> directlyUses: aNode [
 { #category : #comparing }
 RBBlockNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].
-	self arguments size = anObject arguments size ifFalse: [^false].
+	self numArgs = anObject numArgs ifFalse: [^false].
 	self arguments
 		with: anObject arguments
 		do: [:first :second |	(first equalTo: second withMapping: aDictionary) ifFalse: [^false]].

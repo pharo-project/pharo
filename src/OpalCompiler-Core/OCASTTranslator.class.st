@@ -456,7 +456,7 @@ OCASTTranslator >> translateConstantBlock: aBlockNode [
 
 	ir := IRBuilder new 
 				mapToNode: aBlockNode;
-				numArgs: aBlockNode arguments size;
+				numArgs: aBlockNode numArgs;
 				pushLiteral: aBlockNode constantValue; 
 				blockReturnTop; 
 				ir.
@@ -475,7 +475,7 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	methodBuilder addTemps: aBlockNode argumentNames.
 	methodBuilder addTemps: aBlockNode scope inComingCopiedVarNames.
 	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
-	methodBuilder numArgs: aBlockNode arguments size.
+	methodBuilder numArgs: aBlockNode numArgs.
 	
 	aBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
@@ -512,7 +512,7 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
-	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	aBlockNode numArgs >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
@@ -641,7 +641,7 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 	
-	aMethodNode arguments size > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
+	aMethodNode numArgs > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
 
 	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.

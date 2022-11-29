@@ -15,7 +15,7 @@ RBMessageNode >> isInlineCase [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineCase ifFalse: [ ^false ]]. 
 	self isCascaded ifTrue: [^ false].
 	(#(caseOf: caseOf:otherwise:) includes: self selector) ifFalse: [^ false].
-	self arguments size = 2 ifTrue: [  "otherwise block"
+	self numArgs = 2 ifTrue: [  "otherwise block"
 		self arguments last isBlock ifFalse: [^ false]].
 	self arguments first isDynamicArray ifFalse: [^ false].
 	self arguments first statements ifEmpty: [^ false].
@@ -53,7 +53,7 @@ RBMessageNode >> isInlineIfNil [
 		block arguments isEmpty ifFalse: [^ false]
 	].
 	assertOneOrNone := [:block | 
-		block arguments size > 1 ifTrue: [^ false]
+		block numArgs > 1 ifTrue: [^ false]
 	].
 	self selector == #ifNil: 	
 		ifTrue: [assertNone value: self arguments first].
@@ -106,13 +106,13 @@ RBMessageNode >> isInlineToDo [
 	(#(to:do: to:by:do:) includes: self selector) ifFalse: [^ false].
 	block := self arguments last.
 	block isBlock ifFalse: [^ false].
-	block arguments size = 1 ifFalse: [^ false].
+	block numArgs = 1 ifFalse: [^ false].
 	self arguments first isVariable ifTrue: [ 
 		(RBParseTreeSearcher new
 			matches: self arguments first name , ' := `@object' do: [:n :a | true];
 			executeTree: block initialAnswer: false) ifTrue: [^ false].
 	].
-	self arguments size = 3 "to:by:do:" ifTrue: [
+	self numArgs = 3 "to:by:do:" ifTrue: [
 		step := self arguments second.
 		step isLiteralNode ifFalse: [^ false].
 		step value = 0 ifTrue: [^ false].

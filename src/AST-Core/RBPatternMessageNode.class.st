@@ -77,7 +77,7 @@ RBPatternMessageNode >> match: aNode inContext: aDictionary [
 
 { #category : #matching }
 RBPatternMessageNode >> matchArgumentsAgainst: aNode inContext: aDictionary [ 
-	self arguments size = aNode arguments size
+	self numArgs = aNode numArgs
 		ifFalse: [ ^ false ].
 	(self matchSelectorAgainst: aNode inContext: aDictionary) 
 		ifFalse: [ ^ false ].

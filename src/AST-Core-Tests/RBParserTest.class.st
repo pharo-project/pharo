@@ -1314,7 +1314,7 @@ RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtThe
 
 	message := statement value.
 	self assert: message isFaulty.
-	self assert: message arguments size equals: 1.
+	self assert: message numArgs equals: 1.
 
 	errorNode := message arguments at: 1.
 	self assert: errorNode isFaulty.
@@ -1349,7 +1349,7 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 
 	message := statement value.
 	self assert: message isFaulty.
-	self assert: message arguments size equals: 1.
+	self assert: message numArgs equals: 1.
 
 	errorNode := message arguments at: 1.
 	self assert: errorNode isFaulty.
@@ -1511,7 +1511,7 @@ RBParserTest >> testParsingPragmaRecogniseArguments [
 		tree := self parserClass parseMethod: each first.
 		self assert: tree pragmas size equals: 1.
 		node := tree pragmas first.
-		1 to: node arguments size do: [ :i |
+		1 to: node numArgs do: [ :i |
 			self assert: (node arguments at: i) value equals: (each last at: i) ].]
 ]
 
