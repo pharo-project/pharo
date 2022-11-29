@@ -59,13 +59,13 @@ ProperMethodCategorizationTest >> testClassSideInitialzeMethodNeedsToBeInClassIn
 
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
-	| violating instanceSideInitializeMethods |
+	| violating classSideInitializeMethods |
 	violating := OrderedCollection new.
-	instanceSideInitializeMethods := OrderedCollection new.
+	classSideInitializeMethods := OrderedCollection new.
 	
-	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
+	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide ]) ifTrue: [ classSideInitializeMethods add: m ]]].
 	
-	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
+	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
 	
 	self assert: violating size <= 57 description: 'Class side #initialize methods should be in "class initialization" method category'
 ]
