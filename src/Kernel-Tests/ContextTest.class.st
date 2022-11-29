@@ -113,7 +113,7 @@ ContextTest >> privRestartBlockTest [
 ContextTest >> setUp [
 
 	super setUp.
-	aCompiledMethod := Rectangle methodDict at: #areasOutside:.
+	aCompiledMethod := Rectangle compiledMethodAt: #areasOutside:.
 	aReceiver := 100 @ 100 corner: 200 @ 200.
 	aSender := thisContext.
 	anArgument := 420 @ 420 corner: 200 @ 200.
@@ -152,6 +152,20 @@ ContextTest >> testActiveHomeMethodContext [
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext)
+]
+
+{ #category : #tests }
+ContextTest >> testHome [
+
+	self assert: aMethodContext home identicalTo: aMethodContext.
+	[ self assert: thisContext home identicalTo:  thisContext sender] value
+]
+
+{ #category : #tests }
+ContextTest >> testHomeMethod [
+
+	self assert: aMethodContext homeMethod identicalTo: aMethodContext home method.
+	[ self assert: thisContext homeMethod identicalTo:  thisContext home method] value
 ]
 
 { #category : #tests }
