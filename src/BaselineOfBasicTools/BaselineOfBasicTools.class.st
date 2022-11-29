@@ -124,7 +124,7 @@ BaselineOfBasicTools >> project [
 	^ aProject.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #baseline }
 BaselineOfBasicTools >> specRefactoring: spec [
 	
 	"Package used to rename #defaultSpec methods to #defaultLayout.
