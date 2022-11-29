@@ -20,7 +20,7 @@ MouseButtonEvent >> blueButtonChanged [
 { #category : #accessing }
 MouseButtonEvent >> isSpecialGesture [
 	"This is the gesture to open the Halos"
-	^ self redButtonPressed & self altKeyPressed & self shiftPressed
+	^ self blueButtonPressed or: [self redButtonPressed & self altKeyPressed & self shiftPressed]
 ]
 
 { #category : #accessing }

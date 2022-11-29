@@ -977,8 +977,6 @@ HaloMorph >> handleSize [
 HaloMorph >> handleSpecialGesture: event [
 	"Transfer the halo to the next likely recipient"
 
-	#haloHandleSpecialGesture traceCr. 
-
 	target ifNil: [ ^ self delete ].
 	event hand obtainHalo: self.
 	positionOffset := event position
