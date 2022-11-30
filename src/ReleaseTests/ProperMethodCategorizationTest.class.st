@@ -16,7 +16,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 			(m selector = selector and: [ m protocol ~= protocol ])
 				ifTrue: [ violating add: m -> m protocol ] ] ].
 	self 
-		assert: violating isEmpty 
+		assert: violating isEmpty
 		description: ('Violations: {1}.
 		Reason: {1} subclasses should have #{2} in protocol {3}' 
 			format: { self explanationFrom: violating . aClass asString. selector. protocol })
