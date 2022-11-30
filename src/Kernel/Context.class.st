@@ -868,9 +868,10 @@ Context >> hasMethodReturn [
 
 { #category : #testing }
 Context >> hasNonLocalReturn [
+	"check if this context does a non-local return, do not recurse into nested blocks as they will have anohter context"
 	^ closureOrNil
 		  ifNil: [ false ]
-		  ifNotNil: [ :closure | closure hasNonLocalReturn ]
+		  ifNotNil: [ :closure | closure compiledBlock hasMethodReturn ]
 ]
 
 { #category : #testing }
