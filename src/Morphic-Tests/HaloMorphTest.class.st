@@ -8,7 +8,7 @@ Class {
 	#category : #'Morphic-Tests-Widgets'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 HaloMorphTest >> setUp [ 
 
 	super setUp.
@@ -55,13 +55,14 @@ HaloMorphTest >> simulateSpecialGesture: aPoint [
 	hand handleEvent: evt.
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 HaloMorphTest >> tearDown [ 
-	
-	super tearDown.
 	
 	self currentWorld hands first halo ifNotNil: [:halo | halo delete].
 	outerMorph ifNotNil: [ outerMorph delete ].
+	
+	super tearDown.
+
 ]
 
 { #category : #tests }
