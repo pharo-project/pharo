@@ -57,9 +57,11 @@ HaloMorphTest >> simulateSpecialGesture: aPoint [
 
 { #category : #running }
 HaloMorphTest >> tearDown [ 
-	
-	self currentWorld hands first halo ifNotNil: [:halo | halo delete].
-	outerMorph ifNotNil: [ outerMorph delete ].
+
+	innerMorph ifNotNil: [ innerMorph removeHalo; delete ].	
+	outerMorph ifNotNil: [ outerMorph removeHalo; delete ].
+
+	self currentHand initForEvents.
 	
 	super tearDown.
 
