@@ -468,6 +468,13 @@ CompiledMethod >> hasComment [
 ]
 
 { #category : #testing }
+CompiledMethod >> hasNonLocalReturn [
+	"Answer whether any block has a method-return ('^') in its code."
+	self allBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
+	^false
+]
+
+{ #category : #testing }
 CompiledMethod >> hasPragma [
 	^ self hasProperties and: [self pragmas isNotEmpty]
 ]

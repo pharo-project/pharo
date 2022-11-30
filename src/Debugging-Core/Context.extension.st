@@ -175,7 +175,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	prior to each instruction executed. Answer the simulated value of aBlock."
 	| current returnContext exception |
 	
-	aBlock hasMethodReturn
+	aBlock hasNonLocalReturn
 		ifTrue: [ self error: 'simulation of blocks with ^ can run loose' ].
 		
 	current := [ aBlock

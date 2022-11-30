@@ -155,6 +155,14 @@ ContextTest >> testFindContextSuchThat [
 ]
 
 { #category : #tests }
+ContextTest >> testHasNonLocalReturn [
+	self assert: thisContext method hasNonLocalReturn.
+	self deny: thisContext hasNonLocalReturn.
+	[ self deny: thisContext hasNonLocalReturn] value.
+	[ self assert: thisContext hasNonLocalReturn. ^self] value.
+]
+
+{ #category : #tests }
 ContextTest >> testHome [
 
 	self assert: aMethodContext home identicalTo: aMethodContext.

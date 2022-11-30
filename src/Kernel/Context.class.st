@@ -860,7 +860,17 @@ Context >> hasInstVarRef [
 
 { #category : #testing }
 Context >> hasMethodReturn [
-	^closureOrNil hasMethodReturn
+	self 
+		deprecated: 'use #hasNonLocalReturn' 
+		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
+	^self hasNonLocalReturn
+]
+
+{ #category : #testing }
+Context >> hasNonLocalReturn [
+	^ closureOrNil
+		  ifNil: [ false ]
+		  ifNotNil: [ :closure | closure hasNonLocalReturn ]
 ]
 
 { #category : #testing }
