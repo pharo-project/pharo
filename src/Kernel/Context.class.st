@@ -1075,7 +1075,7 @@ Context >> methodClass [
 
 { #category : #accessing }
 Context >> methodNode [
-	^ self compiledCode methodNode.
+	^ self homeMethod methodNode
 ]
 
 { #category : #accessing }
@@ -1102,7 +1102,7 @@ Context >> methodReturnTop [
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self compiledCode selector
+	^ self homeMethod selector
 ]
 
 { #category : #'private - exceptions' }
@@ -1400,7 +1400,7 @@ Context >> printDetails: stream [
 Context >> printOn: aStream [
 	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue: 
 		[ | selector |
-			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			selector := self selector.
 			aStream 
 			 print: closureOrNil;
 			 nextPutAll: ' in ';
@@ -1416,7 +1416,7 @@ Context >> printOn: aStream [
 				ifNil: [ ^ super printOn: aStream ].
 			class := self receiver class.
 			mclass := self methodClass.
-			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			selector := self selector.
 			aStream nextPutAll: class name.
 			mclass == class
 				ifFalse:

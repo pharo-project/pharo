@@ -894,9 +894,9 @@ Object >> explicitRequirement [
 	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
 	errorBlock := [ ^ self error: 'Explicitly required method' ].
 	callingContext := thisContext sender.
-	originalMethod := callingContext compiledCode method.
+	originalMethod := callingContext homeMethod.
 	originalMethod isFromTrait
-		ifFalse: errorBlock.
+		ifFalse: [ errorBlock value].
 	originalReceiver := callingContext receiver.
 	originalSelector := originalMethod selector.
 	originalArguments := callingContext arguments.
