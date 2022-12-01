@@ -3408,12 +3408,9 @@ Morph >> highlight [
 
 { #category : #accessing }
 Morph >> highlightColor [
-	
-	^ (self valueOfProperty: #highlightColor)
-		ifNotNil:
-			[:val | val ifNil: [self error: 'nil highlightColor']]
-		ifNil:
-			[owner ifNil: [self color] ifNotNil: [owner highlightColor]]
+
+	^ (self valueOfProperty: #highlightColor) ifNil: [ 
+		  owner ifNil: [ self color ] ifNotNil: [ owner highlightColor ] ]
 ]
 
 { #category : #accessing }
@@ -3550,8 +3547,8 @@ Morph >> innerBounds [
 
 { #category : #accessing }
 Morph >> insetColor [
-	owner ifNil:[^self color].
-	^ self colorForInsets
+
+	^ owner ifNil: [ self color ] ifNotNil: [ self colorForInsets ]
 ]
 
 { #category : #'meta-actions' }
@@ -3690,8 +3687,8 @@ Morph >> isLineMorph [
 { #category : #accessing }
 Morph >> isLocked [
 	"answer whether the receiver is Locked"
-	extension ifNil: [^ false].
-	^ extension locked
+
+	^ extension ifNil: [ false ] ifNotNil: [ :ext | ext locked ]
 ]
 
 { #category : #testing }
