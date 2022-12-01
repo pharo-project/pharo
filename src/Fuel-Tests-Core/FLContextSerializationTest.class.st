@@ -186,7 +186,7 @@ FLContextSerializationTest >> testDoIt [
 	Note: we run the evaluation in a separate process to minimize the number of
 			contexts that will be serialized (potentially pulling in a large number
 			of additional objects)"
-
+	<compilerOptions: #(+ optionBlockClosureOptionalOuter)>
 	[ [ Smalltalk compiler evaluate: 'self error' ]
 		on: Error
 		do: [ :error |
