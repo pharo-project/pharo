@@ -92,8 +92,8 @@ FFICalloutAPI >> findUffiEnterContext [
 	pragmaName := #ffiCalloutTranslator.
 	
 	uffiEnterContext := (uFFIEntryPointContext ifNil: [ thisContext ]) findContextSuchThat: [ :ctx |
-		(ctx compiledCode method hasPragmaNamed: pragmaName)
-			and: [ (ctx sender compiledCode method hasPragmaNamed: pragmaName) not] ].
+		(ctx homeMethod hasPragmaNamed: pragmaName)
+			and: [ (ctx sender homeMethod hasPragmaNamed: pragmaName) not] ].
 	^ uffiEnterContext
 ]
 
@@ -206,5 +206,5 @@ FFICalloutAPI >> uFFIEnterMethodSelector [
 	That is, the selector that was called by client code to invoke uffi.
 	If we got here from a context not controlled by uffi, return nil, as we have found no method"
 	
-	^ self findUffiEnterContext ifNotNil: [ :ctx | ctx compiledCode method selector ]
+	^ self findUffiEnterContext ifNotNil: [ :ctx | ctx homeMethod selector ]
 ]

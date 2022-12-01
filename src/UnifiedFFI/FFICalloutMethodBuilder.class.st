@@ -187,7 +187,7 @@ FFICalloutMethodBuilder >> libraryName [
 
 { #category : #accessing }
 FFICalloutMethodBuilder >> method [
-	^ self sender compiledCode method
+	^ self sender homeMethod
 ]
 
 { #category : #accessing }
