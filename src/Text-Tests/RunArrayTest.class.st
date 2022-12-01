@@ -4,8 +4,26 @@ SUnit tests for class RunArray
 Class {
 	#name : #RunArrayTest,
 	#superclass : #TestCase,
+	#traits : 'TSequenceableTruncatedToSize',
+	#classTraits : 'TSequenceableTruncatedToSize classTrait',
+	#instVars : [
+		'collectionWith5Elements'
+	],
 	#category : #'Text-Tests-Base'
 }
+
+{ #category : #requirements }
+RunArrayTest >> collectionWith5Elements [
+	
+	^ collectionWith5Elements
+]
+
+{ #category : #initialization }
+RunArrayTest >> setUp [ 
+
+	super setUp.
+	collectionWith5Elements := RunArray newFrom: #(10 20 30 40 50).
+]
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testANewRunArrayIsEmpty [

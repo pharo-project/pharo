@@ -4,8 +4,26 @@ SUnit tests for ByteArray
 Class {
 	#name : #ByteArrayTest,
 	#superclass : #TestCase,
+	#traits : 'TSequenceableTruncatedToSize',
+	#classTraits : 'TSequenceableTruncatedToSize classTrait',
+	#instVars : [
+		'collectionWith5Elements'
+	],
 	#category : #'Collections-Tests-Arrayed'
 }
+
+{ #category : #requirements }
+ByteArrayTest >> collectionWith5Elements [
+	
+	^ collectionWith5Elements
+]
+
+{ #category : #requirements }
+ByteArrayTest >> setUp [ 
+
+	super setUp.
+	collectionWith5Elements := #[1 2 3 5 4]
+]
 
 { #category : #tests }
 ByteArrayTest >> testBooleanAt [
