@@ -21,7 +21,7 @@ PharoLightTheme class >> colorConfiguratorClass [
 	^ LightThemeColorConfigurator
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 PharoLightTheme class >> isAbstract [
 	"Answer whether the receiver is considered to be abstract."
 

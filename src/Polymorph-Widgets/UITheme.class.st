@@ -4052,6 +4052,11 @@ UITheme >> newRadioButtonSelectedForm [
 	offset: 0@0)
 ]
 
+{ #category : #accessing }
+UITheme >> newRadioMarkerForm [
+	^ self subclassResponsibility
+]
+
 { #category : #'morph creation' }
 UITheme >> newRowIn: aThemedMorph for: controls [
 	"Answer a morph laid out with a row of controls."
