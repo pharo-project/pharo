@@ -184,7 +184,7 @@ RGReadOnlyImageBackendTest >> testLayouts [
 	self assert: layout isLayout.
 	self assert: layout isImmediateLayout.				
 		
-	layout := (Ephemeron asRingMinimalDefinitionIn: env) layout.
+	layout := (FinalizationRegistryEntry asRingMinimalDefinitionIn: env) layout.
 	self assert: layout isLayout.
 	self assert: layout isEphemeronLayout.				
 

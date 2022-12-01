@@ -1,22 +1,19 @@
 "
-I represent ephemeric key-value objects. Ephemerons are key-value objects (subclasses of Association) with special semantics during garbage collection.  My special behavior can resumed as follows:
+I represent ephemeric key-value objects to use inside a FinalizationReigstry.
+Ephemerons are key-value objects (subclasses of Association) with special semantics during garbage collection.  My special behavior can resumed as follows:
 
 - The garbage collection will iterate my instances only if the key is not referenced strongly by another object.
 - Then, if no strong references to the key are found, then the values of this ephemeron are hold weakly.
 - Otherwise, the values are hold strongly.
 
-In this implementation, an Ephemeron can hold more than one value, which are all treated in the same manner. This ephemeron instance knows its container, which allows the ephemeron to remove itself from a container (such as a Dictionary) upon finalization.
+This ephemeron instance knows its container, which allows the ephemeron to remove itself from a container (such as a Dictionary) upon finalization.
 
-!! Example usages
+# Example usages
 
-In general terms, do not use myself directly. Use instead an Ephemeric container like EphemeronRegistry. An Ephemeron registry will guarantee the collection of keys and values of the object inside the Ephemeron.
+Do not use myself directly, I am internal to the `FinalizationRegistry`.
+The `FinalizationRegistry` will guarantee the collection of keys and values of the object inside myself.
 
-Otherwise, if you want to use it, you can create an Ephemeron as any association:
-
-ephemeron := Ephemeron key: aKey value: aValue.
-ephemeron container: aContainer.
-
-!! Ephemeron Finalization
+# Ephemeron Finalization
 
 When an ephemeron's key is hold strongly just by the ephemeron itself, the Ephemeron will be mourned (finalized). That means that the VM will:
 - put the Ephemeron in the mourning queue waiting for the image to take care of mourning
@@ -31,17 +28,17 @@ You can read the associated paper to understand better the semantics of ephemero
 Ephemerons: A New Finalization Mechanism. Barry Hayes. OOPSLA '97
 "
 Class {
-	#name : #Ephemeron,
+	#name : #FinalizationRegistryEntry,
 	#superclass : #Association,
 	#type : #ephemeron,
 	#instVars : [
 		'container'
 	],
-	#category : #'System-Finalization-Ephemerons'
+	#category : #'System-Finalization-Registry'
 }
 
 { #category : #'instance creation' }
-Ephemeron class >> key: key value: value container: aContainer [
+FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 
 	^ self new
 		key: key;
@@ -51,18 +48,16 @@ Ephemeron class >> key: key value: value container: aContainer [
 ]
 
 { #category : #accessing }
-Ephemeron >> container: anEphemeronContainer [
+FinalizationRegistryEntry >> container: anEphemeronContainer [
 
 	container := anEphemeronContainer
 ]
 
 { #category : #mourning }
-Ephemeron >> mourn [
+FinalizationRegistryEntry >> mourn [
 	"The key is only referenced by myself.
-	Finalize the key and remove myself from my container.
+	This Ephemeron instance is not ephemeric anymore: it cannot be reused.
 	
-	This Ephemeron instance is not ephemeric anymore: it cannot be reused."
-
-	key finalize.
-	container ifNotNil: [ container removeEphemeron: self ].
+	Ask the container to finalize myself"
+	container finalizeEphemeron: self
 ]

@@ -159,8 +159,8 @@ WeakAnnouncementSubscription >> printOn: stream [
 
 { #category : #finalization }
 WeakAnnouncementSubscription >> register [
-	self weakRegistry 
-		add: self subscriber executor: self
+
+	self weakRegistry add: self subscriber finalizer: self
 ]
 
 { #category : #accessing }

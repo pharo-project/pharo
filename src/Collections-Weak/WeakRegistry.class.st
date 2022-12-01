@@ -20,7 +20,8 @@ Class {
 
 { #category : #accessing }
 WeakRegistry class >> default [
-	^Default ifNil: [ Default := self new ]
+
+	^ FinalizationRegistry default
 ]
 
 { #category : #'instance creation' }
