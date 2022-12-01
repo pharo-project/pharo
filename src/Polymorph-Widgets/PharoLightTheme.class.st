@@ -15,24 +15,10 @@ Class {
 	#category : #'Polymorph-Widgets-Themes'
 }
 
-{ #category : #accessing }
-PharoLightTheme class >> baseColor [
-	^ Color r: 210 g: 210 b: 210 range: 255
-]
+{ #category : #configuration }
+PharoLightTheme class >> colorConfiguratorClass [
 
-{ #category : #accessing }
-PharoLightTheme class >> basePassiveBackgroundColor [
-	^ Color r: 245 g: 245 b: 245 range: 255
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> baseSelectionColor [
-	^ Color r: 97 g: 163 b: 225 range: 255
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> darkBaseColor [
-	^ Color r: 200 g: 200 b: 200 range: 255
+	^ LightThemeColorConfigurator
 ]
 
 { #category : #accessing }
@@ -40,23 +26,6 @@ PharoLightTheme class >> isAbstract [
 	"Answer whether the receiver is considered to be abstract."
 
 	^false
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> lightBaseColor [
-	^ Color r: 230 g: 230 b: 230 range: 255
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> lightSelectionColor [
-	^ Color r: 175 g: 213 b: 250 range: 255
-]
-
-{ #category : #settings }
-PharoLightTheme class >> setPreferredPreferences [
-	"NECPreferences 
-		expandPrefixes: true;
-		popupShowWithShortcut: Character tab asShortcut."
 ]
 
 { #category : #settings }
@@ -180,17 +149,6 @@ PharoLightTheme class >> themeName [
 	^ 'Pharo Light'
 ]
 
-{ #category : #accessing }
-PharoLightTheme class >> veryLightSelectionColor [
-	^ self lightSelectionColor muchLighter
-]
-
-{ #category : #'accessing - colors' }
-PharoLightTheme >> balloonBackgroundColor [
-
-	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
-]
-
 { #category : #'fill-styles - buttons' }
 PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
 	"Return the disabled button fillStyle for the given color."
@@ -230,12 +188,6 @@ PharoLightTheme >> configureWindowBorderFor: aWindow [
 					color: (Color lightGray);
 					width: 1.
 	aWindow borderStyle: aStyle
-]
-
-{ #category : #'accessing - colors' }
-PharoLightTheme >> ghostTextColor [
-
-	^ Color darkGray
 ]
 
 { #category : #initialization }
