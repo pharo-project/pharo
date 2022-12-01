@@ -171,6 +171,14 @@ ContextTest >> testFindContextSuchThat [
 ]
 
 { #category : #tests }
+ContextTest >> testFindMethodContextSuchThat [
+
+	self
+		assert: (aMethodContext findMethodContextSuchThat: [ :each | true ]) 
+		identicalTo: aMethodContext
+]
+
+{ #category : #tests }
 ContextTest >> testHome [
 
 	self assert: aMethodContext home identicalTo: aMethodContext.
