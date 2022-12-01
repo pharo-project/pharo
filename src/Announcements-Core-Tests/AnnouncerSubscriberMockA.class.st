@@ -22,5 +22,6 @@ AnnouncerSubscriberMockA >> announcer: anAnnouncer [
 
 { #category : #events }
 AnnouncerSubscriberMockA >> registerEvents [
-	self announcer when: AnnouncementMockA do: [ :evt | " something" ].
+	"we do not use constant blocks here"
+	self announcer when: AnnouncementMockA do: [ :evt | nil yourself " something" ].
 ]

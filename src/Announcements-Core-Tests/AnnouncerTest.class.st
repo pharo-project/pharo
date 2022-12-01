@@ -39,8 +39,9 @@ AnnouncerTest >> testAccessingSubscribers [
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
 	
-	announcer when: AnnouncementMockA do: [  ]."1"
-	announcer when: AnnouncementMockB do: [  ]."2"
+	"we do not use constant blocks here"
+	announcer when: AnnouncementMockA do: [ nil yourself ]."1"
+	announcer when: AnnouncementMockB do: [ nil yourself ]."2"
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 2.
 	
@@ -96,7 +97,8 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 { #category : #'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
-	announcer when: AnnouncementMockA do: [  ].
+	"we do not use constant blocks here"
+	announcer when: AnnouncementMockA do: [ nil yourself ].
 	self assert: (announcer handleSubscriberClass: self class).
 	self deny: (announcer handleSubscriberClass: AnnouncementMockA).
 ]
