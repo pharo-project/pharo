@@ -32,13 +32,12 @@ PharoDarkTheme class >> themeName [
 	^ 'Pharo Dark'
 ]
 
-{ #category : #'fill-styles - buttons' }
+{ #category : #'border-styles - buttons' }
 PharoDarkTheme >> buttonDisabledBorderStyleFor: aButton [
+
 	"Return the disabled button fillStyle for the given color."
 
-	^ BorderStyle
-		width: 0
-		color: Color transparent
+	^ BorderStyle width: 0 color: Color transparent
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -119,9 +118,9 @@ PharoDarkTheme >> configureTextMorph: textMorph [
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorderStyle new 
-					color: self borderColor;
-					width: 1.
+	aStyle := SimpleBorderStyle new
+		          color: self borderColor;
+		          width: 1.
 	aWindow borderStyle: aStyle
 ]
 
@@ -162,26 +161,29 @@ PharoDarkTheme >> labelDisabledColorFor: aLabel [
 			  ifFalse: [ aLabel owner color muchLighter ] ]
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : #accessing }
 PharoDarkTheme >> menuBorderWidth [
+
 	^ self borderWidth * self displayScaleFactor
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 PharoDarkTheme >> newRadioMarkerForm [
+
 	"Answer a new checkbox marker form."
 
-	^Form extent: 12@12 depth: 32
+	^ Form extent: 12 @ 12 depth: 32
 ]
 
-{ #category : #'border-styles - scrollbars' }
+{ #category : #'fill-styles - scrollbars' }
 PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
+
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
-	
+
 	^ self buttonSelectedFillStyleFor: aScrollbar
 ]
 
-{ #category : #defaults }
+{ #category : #accessing }
 PharoDarkTheme >> shStyleTableName [
 
 	^ #darkStyleTable
@@ -199,8 +201,9 @@ PharoDarkTheme >> taskbarItemDisabledBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles - taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarItemDisabledFillStyleFor: aButton [
+
 	"Return the disabled taskbar item fillStyle for the given color."
 
 	^ self taskbarItemNormalFillStyleFor: aButton
