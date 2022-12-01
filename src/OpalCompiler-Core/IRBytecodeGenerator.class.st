@@ -509,11 +509,13 @@ IRBytecodeGenerator >> pushDup [
 
 { #category : #instructions }
 IRBytecodeGenerator >> pushFullBlockClosure: fullBlock [
-	fullBlock copiedValues size timesRepeat: [ stack pop ].
+	| numCopied |
+	numCopied := fullBlock copiedValues size.
+	numCopied timesRepeat: [ stack pop ].
 	stack push.
 	encoder 
 		genPushFullClosure: (self literalIndexOf: fullBlock compiledBlock) 
-		numCopied: fullBlock copiedValues size
+		numCopied: numCopied
 		receiverOnStack: false
 		outerContextNeeded: fullBlock outerContextNeeded
 ]
