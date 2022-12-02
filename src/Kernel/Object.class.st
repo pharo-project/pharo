@@ -918,7 +918,7 @@ Object >> explicitRequirement [
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
 	
-	^ WeakRegistry default
+	^ FinalizationRegistry default
 ]
 
 { #category : #finalization }

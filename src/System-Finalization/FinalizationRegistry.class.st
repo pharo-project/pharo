@@ -150,6 +150,12 @@ FinalizationRegistry >> protected: aBlock [
 ]
 
 { #category : #adding }
+FinalizationRegistry >> remove: anEphemeron ifAbsent: aBlock [
+
+	^ self protected: [ ephemeronCollection remove: anEphemeron ifAbsent: aBlock ]
+]
+
+{ #category : #adding }
 FinalizationRegistry >> removeEphemeron: anEphemeron [
 
 	self protected: [ ephemeronCollection remove: anEphemeron ]

@@ -212,11 +212,6 @@ ToolRegistry >> resetAnnouncer [
 
 	"unregister all current weak subscriptions because it can cause a memory leak"
 	announcer ifNil: [ ^self ].
-	announcer subscriptions subscriptions
- 		select: [:each | each isKindOf: WeakAnnouncementSubscription] 
-		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 
-	Smalltalk garbageCollect.
-		
 	announcer := nil.
 ]
 

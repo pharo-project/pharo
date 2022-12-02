@@ -118,5 +118,5 @@ FFIExternalResourceManager >> addResource: anObject executor: anExecutor [
 
 { #category : #initialization }
 FFIExternalResourceManager >> initialize [ 
-	registry := WeakRegistry new
+	registry := FinalizationRegistry new
 ]

@@ -23,7 +23,8 @@ FileHandle class >> register: aFileHandle [
 
 { #category : #registry }
 FileHandle class >> registry [
-	^Registry ifNil: [Registry := WeakRegistry new]
+
+	^ Registry ifNil: [ Registry := FinalizationRegistry new ]
 ]
 
 { #category : #'system startup' }

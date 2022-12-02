@@ -104,6 +104,11 @@ WeakAnnouncementSubscription >> deliver: anAnnouncement [
 ]
 
 { #category : #finalization }
+WeakAnnouncementSubscription >> finalizationRegistry [
+	^ FinalizationRegistry default
+]
+
+{ #category : #finalization }
 WeakAnnouncementSubscription >> finalize [
 
 	announcer removeSubscription: self.
@@ -160,7 +165,7 @@ WeakAnnouncementSubscription >> printOn: stream [
 { #category : #finalization }
 WeakAnnouncementSubscription >> register [
 
-	self weakRegistry add: self subscriber finalizer: self
+	self finalizationRegistry add: self subscriber finalizer: self
 ]
 
 { #category : #accessing }
@@ -180,7 +185,7 @@ WeakAnnouncementSubscription >> subscriber: anObject [
 { #category : #finalization }
 WeakAnnouncementSubscription >> unregister [
 
-	self subscriber ifNotNil: [:sub |  self weakRegistry remove: sub ]
+	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
 ]
 
 { #category : #accessing }
@@ -188,9 +193,4 @@ WeakAnnouncementSubscription >> valuable: aValuable [
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable receiver.
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription >> weakRegistry [
-	^ WeakRegistry default
 ]
