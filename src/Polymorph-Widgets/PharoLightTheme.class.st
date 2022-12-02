@@ -196,7 +196,7 @@ PharoLightTheme >> initialize [
 
 	super initialize.
 	self windowActiveDropShadowStyle: #diffuse.
-	self settings preferGradientFill: false.
+	settings preferGradientFill: false.
 ]
 
 { #category : #forms }

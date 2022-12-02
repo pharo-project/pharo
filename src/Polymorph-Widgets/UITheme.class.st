@@ -98,6 +98,14 @@ UITheme class >> current: aUITheme [
 	SystemAnnouncer uniqueInstance announce: UIThemeChanged
 ]
 
+{ #category : #accessing }
+UITheme class >> currentSettings [
+
+	"Answer the current ui theme settings."
+
+	^ self current settings
+]
+
 { #category : #'class initialization' }
 UITheme class >> initialize [
 
