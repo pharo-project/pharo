@@ -25,14 +25,6 @@ WeakRegistry class >> default [
 ]
 
 { #category : #'instance creation' }
-WeakRegistry class >> new [
-	| registry |
-	registry := super new.
-	WeakArray addWeakDependent: registry.
-	^registry
-]
-
-{ #category : #'instance creation' }
 WeakRegistry class >> new: n [
 	^ self new
 ]

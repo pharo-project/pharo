@@ -44,16 +44,6 @@ WeakAnnouncementSubscription class >> finalizeValues [
 	].
 ]
 
-{ #category : #'class initialization' }
-WeakAnnouncementSubscription class >> initialize [
-	
-	WeakArray 
-		removeWeakDependent: self;
-		addWeakDependent: self
-		
-	"Make sure that it is not added twice."
-]
-
 { #category : #'instance creation' }
 WeakAnnouncementSubscription class >> new [
 	^ (self basicNew: 1) initialize
