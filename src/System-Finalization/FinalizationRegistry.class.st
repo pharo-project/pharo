@@ -120,7 +120,7 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 FinalizationRegistry >> initialize [
 
 	super initialize.
-	ephemeronCollection := OrderedCollection new.
+	ephemeronCollection := IdentitySet new.
 	semaphore := Semaphore forMutualExclusion.
 	errorHandler := self.
 ]
