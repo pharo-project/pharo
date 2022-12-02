@@ -121,6 +121,16 @@ CompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionBlockQuickReturn [
+	^ self readDefaultOption: #optionBlockQuickReturn
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockQuickReturn: aBoolean [
+	^ self writeDefaultOption: #optionBlockQuickReturn value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionCleanBlockClosure [
 	^ self readDefaultOption: #optionCleanBlockClosure
 ]
@@ -309,6 +319,7 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
+	(- optionBlockQuickReturn 			'Compiler compiles closure with Quick Return if possible,  Experimental')
 	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
 	(- optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
@@ -517,6 +528,11 @@ CompilationContext >> noPattern: anObject [
 { #category : #options }
 CompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #options }
+CompilationContext >> optionBlockQuickReturn [
+	^ options includes: #optionBlockQuickReturn
 ]
 
 { #category : #options }

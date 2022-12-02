@@ -164,6 +164,14 @@ CompiledBlock >> pragmas [
 	^ #()
 ]
 
+{ #category : #accessing }
+CompiledBlock >> primitive [
+	"see IRBytecodeGenerator>>#compiledBlockWith:"
+	^self class compiler compilationContext optionBlockQuickReturn 
+		ifTrue: [ super primitive ]
+		ifFalse: [ 0 ]
+]
+
 { #category : #printing }
 CompiledBlock >> printOn: anStream [
 	
