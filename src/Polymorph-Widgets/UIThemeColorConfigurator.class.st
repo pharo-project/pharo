@@ -599,6 +599,12 @@ UIThemeColorConfigurator >> themeSettings: anObject [
 	themeSettings := anObject
 ]
 
+{ #category : #'basic-colors' }
+UIThemeColorConfigurator >> treeLineColorsFrom: aColor [
+
+	^ { aColor. Color transparent }
+]
+
 { #category : #colors }
 UIThemeColorConfigurator >> unfocusedSelectionColor [
 
