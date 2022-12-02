@@ -27,7 +27,6 @@ WeakArray class >> finalizationProcess [
 	 "Support the old scheme until things have changed over..."
 	 self doOldFinalization.
 	 [firstMourner := self primitiveFetchMourner.
-		('mourner: ', firstMourner asString) traceCr.
 	  firstMourner notNil] whileTrue:
 		[[throttle signal.
 		  self mournLoopWith: firstMourner] forkAt: Processor activePriority + 1.
@@ -44,7 +43,6 @@ WeakArray class >> mournLoopWith: firstMourner [
 	| mourner |
 	mourner := firstMourner.
 	[
-	mourner asString traceCr.
 	mourner mourn.
 	 (mourner := self primitiveFetchMourner) notNil] whileTrue
 ]
