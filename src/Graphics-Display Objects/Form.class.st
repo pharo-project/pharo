@@ -371,9 +371,7 @@ Form >> asSourceForm [
 Form >> balancedPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
-	^ self hasNonStandardPalette
-		ifTrue: [ self bitPatternFor: aColor ]
-		ifFalse: [ self balancedPatternFor: aColor depth: self depth ]
+	^  self balancedPatternFor: aColor depth: self depth
 ]
 
 { #category : #'color mapping' }
@@ -453,9 +451,7 @@ Form >> bitPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
 	aColor isColor ifFalse: [ ^ aColor bitPatternForDepth: self depth ].
-	^ self hasNonStandardPalette
-		ifTrue: [ Bitmap with: (self pixelWordFor: aColor) ]
-		ifFalse: [ aColor bitPatternForDepth: self depth ]
+	^ aColor bitPatternForDepth: self depth
 ]
 
 { #category : #filling }
@@ -628,8 +624,6 @@ Form >> colormapFromARGB [
 	Note: This version is optimized for image forms."
 	
 	| map nBits |
-	self hasNonStandardPalette 
-		ifTrue:[^ColorMap mappingFromARGB: self rgbaBitMasks].
 	self depth <= 8 ifTrue:[
 		map := Color colorMapIfNeededFrom: 32 to: self depth.
 		map size = 512 ifTrue:[nBits := 3].
@@ -662,9 +656,7 @@ Form >> colormapFromARGB [
 Form >> colormapIfNeededFor: destForm [
 	"Return a ColorMap mapping from the receiver to destForm."
 
-	^ (self hasNonStandardPalette or: [ destForm hasNonStandardPalette ])
-		ifTrue: [ self colormapFromARGB mappingTo: destForm colormapFromARGB ]
-		ifFalse: [ self colormapIfNeededForDepth: destForm depth ]
+	^ self colormapIfNeededForDepth: destForm depth
 ]
 
 { #category : #'color mapping' }
@@ -673,27 +665,6 @@ Form >> colormapIfNeededForDepth: destDepth [
 
 	self depth = destDepth ifTrue: [^ nil].  "not needed if depths are the same"
 	^ Color colorMapIfNeededFrom: self depth to: destDepth
-]
-
-{ #category : #'color mapping' }
-Form >> colormapToARGB [
-	"Return a ColorMap mapping from the receiver into canonical ARGB space."
-	self hasNonStandardPalette 
-		ifTrue:[^self colormapFromARGB inverseMap].
-	self depth <= 8 ifTrue:[
-		^ColorMap
-			shifts: #(0 0 0 0)
-			masks: #(16rFF0000 16rFF00 16rFF 16rFF000000)
-			colors: (Color colorMapIfNeededFrom: self depth to: 32)].
-	self depth = 16 ifTrue:[
-		^ColorMap 
-			shifts: #( 9 6 3 0) 
-			masks: #(16r7C00 16r3E0 16r1F 0)].
-	self depth = 32 ifTrue:[
-		^ColorMap
-			shifts: #(0 0 0 0) 
-			masks: #(16rFF0000 16rFF00 16rFF 16rFF000000)].
-	self error:'Bad depth'
 ]
 
 { #category : #analyzing }
@@ -1353,15 +1324,6 @@ Form >> hasBeenModified: aBool [
 		ifFalse:[bits := nil]
 ]
 
-{ #category : #testing }
-Form >> hasNonStandardPalette [
-	"Return true if the receiver has a non-standard palette.
-	Non-standard means that RGBA components may be located
-	at positions differing from the standard Pharo RGBA layout
-	at the receiver's depth."
-	^false
-]
-
 { #category : #accessing }
 Form >> height [
 	^ height
@@ -1774,21 +1736,15 @@ Form >> pixelValueAt: aPoint put: pixelValue [
 Form >> pixelValueFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
-	^ self hasNonStandardPalette
-		ifTrue: [ self colormapFromARGB mapPixel: (aColor pixelValueForDepth: 32) ]
-		ifFalse: [ aColor pixelValueForDepth: self depth ]
+	^ aColor pixelValueForDepth: self depth
 ]
 
 { #category : #'color mapping' }
 Form >> pixelWordFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
-	| basicPattern |
-	self hasNonStandardPalette ifFalse: [ ^ aColor pixelWordForDepth: self depth ].
-	basicPattern := self pixelValueFor: aColor.
-	^ self depth = 32
-		ifTrue: [ basicPattern ]
-		ifFalse: [ aColor pixelWordFor: self depth filledWith: basicPattern ]
+	^ aColor pixelWordForDepth: self depth
+	
 ]
 
 { #category : #other }
