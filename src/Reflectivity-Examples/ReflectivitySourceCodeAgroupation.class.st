@@ -10,7 +10,7 @@ Class {
 { #category : #'accessing - defaults' }
 ReflectivitySourceCodeAgroupation >> defaultColor [
 
-	^ Smalltalk ui theme baseColor
+	^ UITheme current baseColor
 ]
 
 { #category : #initialization }
