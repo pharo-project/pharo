@@ -669,9 +669,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 
 { #category : #private }
 Context >> endPC [
-	^closureOrNil
-		ifNil:	[self compiledCode endPC]
-		ifNotNil: [closureOrNil endPC]
+	^ self compiledCode endPC
 ]
 
 { #category : #'debugger access' }

@@ -3,10 +3,11 @@ Extension { #name : #Context }
 { #category : #'*OpalCompiler-Core' }
 Context >> astScope [
 	"Return the scope of the method or the block of this context. 
-	Note: we can not just use #sourceNode as this ignores optimized blocks.
+	Note: if the compiler would not model scopes for optimized blocks, this would just just be the  
+	scope of the compiledCode ast.
 	We instead use sourceNodeExecuted and then get the the block or methodnode on the AST level.
 	For the topmost context, sourceNodeExecuted is off by one but that is not a problem as 
-	we still end up getting the scope  we want"
+	we still end up getting the scope we want"
 
 	| node |
 	node :=  self sourceNodeExecuted.
