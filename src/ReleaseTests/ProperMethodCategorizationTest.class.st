@@ -156,7 +156,7 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	| violations |
 	violations := OrderedCollection new.
 
-	Object allSubclasses do: [ :each | 
+	Object allSubclasses do: [ :each |
 		each organization allCategories do: [ :cat | 
 			((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ 
 				violations add: each -> cat ] ] ].
