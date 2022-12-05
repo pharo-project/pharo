@@ -18,7 +18,7 @@ ByteArrayTest >> collectionWith5Elements [
 	^ collectionWith5Elements
 ]
 
-{ #category : #requirements }
+{ #category : #running }
 ByteArrayTest >> setUp [ 
 
 	super setUp.
