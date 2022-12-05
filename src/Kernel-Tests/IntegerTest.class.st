@@ -403,7 +403,7 @@ IntegerTest >> testHexString [
 	self assert: 0 hexString equals: '16r0'.
 	self assert: 12 hexString equals: '16rC'.
 	self assert: 1234 hexString equals: '16r4D2'.
-	self assert: 11234 hexString equals: '-16r4D2'
+	self assert: -1234 hexString equals: '-16r4D2'
 ]
 
 { #category : #'tests - bitLogic' }
