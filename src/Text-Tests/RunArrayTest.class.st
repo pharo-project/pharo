@@ -18,7 +18,7 @@ RunArrayTest >> collectionWith5Elements [
 	^ collectionWith5Elements
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 RunArrayTest >> setUp [ 
 
 	super setUp.
