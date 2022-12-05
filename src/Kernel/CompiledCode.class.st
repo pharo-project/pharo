@@ -159,6 +159,11 @@ CompiledCode >> bytecode [
 ]
 
 { #category : #accessing }
+CompiledCode >> bytecodes [
+	^self bytecode
+]
+
+{ #category : #accessing }
 CompiledCode >> clearFlag [
 	"Clear the user-level flag bit"
 
