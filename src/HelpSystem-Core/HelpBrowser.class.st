@@ -49,18 +49,6 @@ HelpBrowser class >> defaultHelpBrowser: aClass [
 	DefaultHelpBrowser := aClass
 ]
 
-{ #category : #'world menu' }
-HelpBrowser class >> menuCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #'Help Browser')
-		parent: #HelpBrowser;
-		order: 1;
-		action: [ self open ];
-		iconName: #smallHelp;
-		help: 'Explore a list of help topics to learn to use Pharo tools.';
-		withSeparatorAfter
-]
-
 { #category : #ui }
 HelpBrowser class >> menuOn: aBuilder [
 	

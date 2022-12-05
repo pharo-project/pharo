@@ -7,9 +7,10 @@ Class {
 	#category : #'Reflectivity-Examples'
 }
 
-{ #category : #initialize }
+{ #category : #'accessing - defaults' }
 ReflectivitySourceCodeAgroupation >> defaultColor [
-	^UITheme current class baseColor
+
+	^ UITheme current baseColor
 ]
 
 { #category : #initialization }

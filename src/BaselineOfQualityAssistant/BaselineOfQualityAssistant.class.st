@@ -12,11 +12,9 @@ BaselineOfQualityAssistant >> baseline: spec [
 			
 		spec 
 			package: 'Renraku';
-			package: 'Renraku-Tests';
-			package: 'Renraku-Help'.
+			package: 'Renraku-Tests'.
 		spec 
 			group: 'Core' with: #('Renraku');
 			group: 'Tests' with: #('Renraku-Tests');
-			group: 'Help' with: #('Renraku-Help');
-			group: 'default' with: #('Core' 'Help' 'Tests') ]
+			group: 'default' with: #('Core' 'Tests') ]
 ]

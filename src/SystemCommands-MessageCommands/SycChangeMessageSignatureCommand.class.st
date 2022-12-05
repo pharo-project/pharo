@@ -20,7 +20,8 @@ Class {
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
-		'originalMessage'
+		'originalMessage',
+		'refactoringScopes'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -97,6 +98,7 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes.
 	originalMessage := aToolContext lastSelectedMessage
 ]
 

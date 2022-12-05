@@ -28,6 +28,13 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #accessing }
+CleanBlockClosure class >> compiledBlock: aCompiledBlock [
+	^self new 
+		numArgs: aCompiledBlock numArgs;
+		compiledBlock: aCompiledBlock
+]
+
 { #category : #fuel }
 CleanBlockClosure >> cleanCopy [
 	"nothing to do"

@@ -226,7 +226,7 @@ StepOverTest >> testStepOverReturnInUnwindBlock [
 	self 
 		assert: session interruptedContext closure 
 		identicalTo: session interruptedContext sender unwindBlock.
-	[session interruptedContext home selector == #methodWithUnwindReturn] 
+	[session interruptedContext homeMethod selector == #methodWithUnwindReturn] 
 		whileTrue: [ session stepOver ].
 	self assert: session interruptedContext closure identicalTo: rootBlock
 ]

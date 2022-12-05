@@ -113,7 +113,7 @@ ContextTest >> privRestartBlockTest [
 ContextTest >> setUp [
 
 	super setUp.
-	aCompiledMethod := Rectangle methodDict at: #areasOutside:.
+	aCompiledMethod := Rectangle compiledMethodAt: #areasOutside:.
 	aReceiver := 100 @ 100 corner: 200 @ 200.
 	aSender := thisContext.
 	anArgument := 420 @ 420 corner: 200 @ 200.
@@ -149,9 +149,47 @@ ContextTest >> testActiveHomeMethodContext [
 ]
 
 { #category : #tests }
+ContextTest >> testAstScope [
+
+	| scope |
+	"test that we get a scope for optimized blocks"
+	aMethodContext pc: 88 + 1.
+	scope := aMethodContext astScope.
+	self assert: scope isOptimized.
+	
+	"test that we do not get a block scope when pushing a block on the stack"
+	aMethodContext pc: 92 + 1.
+	scope := aMethodContext astScope.
+	self assert: aMethodContext sourceNodeExecuted isBlock.
+	self deny: scope isBlockScope
+]
+
+{ #category : #tests }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext)
+]
+
+{ #category : #tests }
+ContextTest >> testFindMethodContextSuchThat [
+
+	self
+		assert: (aMethodContext findMethodContextSuchThat: [ :each | true ]) 
+		identicalTo: aMethodContext
+]
+
+{ #category : #tests }
+ContextTest >> testHome [
+
+	self assert: aMethodContext home identicalTo: aMethodContext.
+	[ self assert: thisContext home identicalTo:  thisContext sender] value
+]
+
+{ #category : #tests }
+ContextTest >> testHomeMethod [
+
+	self assert: aMethodContext homeMethod identicalTo: aMethodContext home method.
+	[ self assert: thisContext homeMethod identicalTo:  thisContext home method] value
 ]
 
 { #category : #tests }

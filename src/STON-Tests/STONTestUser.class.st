@@ -66,7 +66,7 @@ STONTestUser >> hash [
 	^ username hash bitXor: (password hash bitXor: enabled hash)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONTestUser >> initialize [ 
 	super initialize.
 	enabled := true

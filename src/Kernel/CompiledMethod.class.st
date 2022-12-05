@@ -655,13 +655,6 @@ CompiledMethod >> isReturnField [
 	^ self primitive between: 264 and: 519
 ]
 
-{ #category : #testing }
-CompiledMethod >> isReturnSpecial [
-	"Answer whether the receiver is a quick return of self or constant."
-
-	^ self primitive between: 256 and: 263
-]
-
 { #category : #printing }
 CompiledMethod >> isSelfEvaluating [
 

@@ -418,6 +418,11 @@ CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
 
+{ #category : #accessing }
+CompiledCode >> isInstalled [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 CompiledCode >> isNamedPrimitive [
 	^self primitive = 117
@@ -445,6 +450,13 @@ CompiledCode >> isReturnSelf [
 	"Answer whether the receiver is a quick return of self."
 
 	^ self primitive = 256
+]
+
+{ #category : #testing }
+CompiledCode >> isReturnSpecial [
+	"Answer whether the receiver is a quick return of self or constant."
+
+	^ self primitive between: 256 and: 263
 ]
 
 { #category : #accessing }
