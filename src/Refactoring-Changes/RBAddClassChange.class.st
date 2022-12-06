@@ -42,6 +42,19 @@ RBAddClassChange class >> definitionPatterns [
 		
 		'`@superclass subclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames package: `#category'
 		
+		'`@superclass << `#className 
+			slots: `@instanceVariableNames ; 
+			sharedVariables: `@classVariableNames; 
+			package: `#category'
+		'`@superclass << `#className 
+			sharedVariables: `@classVariableNames ; 
+			package: `#category'
+		'`@superclass << `#className 
+			slots: `@instanceVariableNames;  
+			package: `#category'
+		'`@superclass << `#className 
+			package: `#category'
+		
 		)
 		flatCollect: [ :each | Array with: each with: (each copyReplaceAll: '`@superclass' with: 'ProtoObject') , '. `className superclass: `@superclass' ]
 ]
