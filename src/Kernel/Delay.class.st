@@ -79,15 +79,15 @@ Delay class >> forSeconds: aNumber [
 	^ self forMilliseconds: aNumber * 1000
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Delay class >> initialize [
-	"Delay initialize"
+
 	self scheduler ifNotNil: [ self scheduler stopTimerEventLoop ].
 	self scheduler: DelaySemaphoreScheduler new.
 	self scheduler startTimerEventLoop. 
 	SessionManager default 
 		registerSystemClassNamed: self name 
-		atPriority: 20.
+		atPriority: 20
 ]
 
 { #category : #testing }

@@ -130,7 +130,7 @@ Context class >> contextOn: exceptionClass do: block [
 	^ chain
 ]
 
-{ #category : #simulation }
+{ #category : #'class initialization' }
 Context class >> initialize [
 
 	"A unique object to be returned when a primitive fails during simulation"
