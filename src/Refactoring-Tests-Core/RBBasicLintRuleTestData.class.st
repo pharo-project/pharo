@@ -56,6 +56,12 @@ RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings name: aName [
 		name: aName
 ]
 
+{ #category : #testing }
+RBBasicLintRuleTestData class >> isAbstract [
+		
+	^ self == RBBasicLintRuleTestData
+]
+
 { #category : #'unnecessary code' }
 RBBasicLintRuleTestData class >> justSendsSuper [
 	| detector matcher |

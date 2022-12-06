@@ -10,13 +10,7 @@ Class {
 { #category : #executing }
 SycCMakeAbstractCommand >> executeRefactoring [
 
-	| transformation |
-	transformation := (RBAddMethodTransformation
-		                   sourceCode: 'isAbstract
-		
-	^ self == ' , targetClass asString
-		                   in: targetClass classSide
-		                   withProtocols: #( #testing )) execute
+	(RBMakeClassAbstractTransformation class: targetClass) execute
 ]
 
 { #category : #accessing }
@@ -33,7 +27,7 @@ SycCMakeAbstractCommand >> isApplicable [
 
 { #category : #testing }
 SycCMakeAbstractCommand >> name [
-	^ 'Make Abstract'
+	^ '(T) Make Abstract'
 ]
 
 { #category : #testing }
