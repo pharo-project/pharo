@@ -41,15 +41,16 @@ CompiledCodeTest >> testAccessesRef [
 
 { #category : #'tests - testing' }
 CompiledCodeTest >> testBlockReturnSpecial [
-
-	self assert: [ ^ self ] compiledBlock isReturnSpecial.
-	self assert: [ ^ nil ] compiledBlock isReturnSpecial.
-	self assert: [ ^ true ] compiledBlock isReturnSpecial.
-	self assert: [ ^ false ] compiledBlock isReturnSpecial.
-	self assert: [ ^ -1 ] compiledBlock isReturnSpecial.
-	self assert: [ ^ 0 ] compiledBlock isReturnSpecial.
-	self assert: [ ^ 1 ] compiledBlock isReturnSpecial.
-	self assert: [ ^ 2 ] compiledBlock isReturnSpecial.
+	"we do not compile blocks with quick returns for now"
+	self deny: [ ^ self ] compiledBlock isReturnSpecial.
+	self deny: [ ^ nil ] compiledBlock isReturnSpecial.
+	self deny: [ ^ true ] compiledBlock isReturnSpecial.
+	self deny: [ ^ false ] compiledBlock isReturnSpecial.
+	self deny: [ ^ -1 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 0 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 1 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 2 ] compiledBlock isReturnSpecial.
+	
 	self deny: [ ^ 3 ] compiledBlock isReturnSpecial.
 	self deny: [ ^ var ] compiledBlock isReturnSpecial.
 	self deny: [ ^ Object ] compiledBlock isReturnSpecial
