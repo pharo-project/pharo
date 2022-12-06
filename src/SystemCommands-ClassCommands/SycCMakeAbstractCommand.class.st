@@ -10,7 +10,7 @@ Class {
 { #category : #executing }
 SycCMakeAbstractCommand >> executeRefactoring [
 
-	(RBMakeClassAbstractTransformation class: targetClass) execute
+	(self refactoringClass class: targetClass) execute
 ]
 
 { #category : #accessing }
@@ -27,10 +27,16 @@ SycCMakeAbstractCommand >> isApplicable [
 
 { #category : #testing }
 SycCMakeAbstractCommand >> name [
-	^ '(T) Make Abstract'
+	^ self refactoringClass menuItemString
 ]
 
 { #category : #testing }
 SycCMakeAbstractCommand >> order [
 	^ 40
+]
+
+{ #category : #'factory method' }
+SycCMakeAbstractCommand >> refactoringClass [
+
+	^ RBMakeClassAbstractTransformation 
 ]

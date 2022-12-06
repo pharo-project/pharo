@@ -35,6 +35,12 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBGeneratePrintOnTransformation class >> basicMenuItemString [
+
+	^ 'Generate printOn:'
+]
+
 { #category : #'instance creation' }
 RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray

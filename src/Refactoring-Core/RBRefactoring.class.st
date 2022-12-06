@@ -39,6 +39,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #displaying }
+RBRefactoring class >> basicMenuItemString [
+
+	^ self subclassResponsibility
+]
+
 { #category : #cleaning }
 RBRefactoring class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them so the block references the current method"
@@ -101,12 +107,12 @@ RBRefactoring class >> isTransformation [
 	^ false
 ]
 
-{ #category : #accessing }
-RBRefactoring class >> kind [
-	"Tells if this refactoring is a refactoring or a transformation.
-	Returns either 'Refactoring' or 'Transformation'"
+{ #category : #displaying }
+RBRefactoring class >> menuItemString [
 
-	^ 'Refactoring'
+	^ (self isTransformation
+		   ifTrue: [ '(T) ' ]
+		   ifFalse: [ '' ]) , self basicMenuItemString
 ]
 
 { #category : #'accessing signal' }

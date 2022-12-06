@@ -7,6 +7,12 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBMakeClassAbstractTransformation class >> basicMenuItemString [
+
+	^ 'Make abstract'
+]
+
 { #category : #'instance creation' }
 RBMakeClassAbstractTransformation class >> class: targetClass [
 

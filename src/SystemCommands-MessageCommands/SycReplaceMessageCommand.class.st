@@ -17,7 +17,7 @@ SycReplaceMessageCommand >> createRefactoring [
 	
 	^ newSelector newArgs
 		ifNotEmpty:[ 
-		(RBReplaceMessageSendTransformation
+		(self refactoringClass 
 		model: model
 		replaceMethod: originalMessage selector 
 		in: selectedClass
@@ -26,7 +26,7 @@ SycReplaceMessageCommand >> createRefactoring [
 		inAllClasses: self replaceInAllClasses)
 		initializers: newSelector newArgs values ]
 	ifEmpty:[ 
-	 (RBReplaceMessageSendTransformation
+	 (self refactoringClass 
 		model: model
 		replaceMethod: originalMessage selector 
 		in: selectedClass 
@@ -45,7 +45,7 @@ SycReplaceMessageCommand >> defaultMenuIconName [
 SycReplaceMessageCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 	
-	^ '(T) Replace senders'
+	^ self refactoringClass menuItemString
 ]
 
 { #category : #execution }
@@ -70,6 +70,12 @@ SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	originalMessage selector = methodName selector ifTrue: [ 
 		CmdCommandAborted signal ].
 	newSelector := methodName
+]
+
+{ #category : #'factory method' }
+SycReplaceMessageCommand >> refactoringClass [ 
+
+	^ RBReplaceMessageSendTransformation
 ]
 
 { #category : #execution }
