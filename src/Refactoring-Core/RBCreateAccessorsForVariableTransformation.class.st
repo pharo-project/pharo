@@ -52,8 +52,9 @@ RBCreateAccessorsForVariableTransformation class >> instanceVariable: aVarName c
 ]
 
 { #category : #accessing }
-RBCreateAccessorsForVariableTransformation class >> kind [
-	^ 'Transformation'
+RBCreateAccessorsForVariableTransformation class >> isTransformation [ 
+
+	^ true
 ]
 
 { #category : #'instance creation' }

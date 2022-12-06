@@ -52,9 +52,10 @@ RBGenerateEqualHashTransformation class >> className: aClass variables: anArray 
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #accessing }
-RBGenerateEqualHashTransformation class >> kind [ 
-	^ 'Transformation'
+{ #category : #testing }
+RBGenerateEqualHashTransformation class >> isTransformation [ 
+
+	^ true
 ]
 
 { #category : #'instance creation' }

@@ -13,10 +13,10 @@ RBMakeClassAbstractTransformation class >> class: targetClass [
 	^ self new class: targetClass 
 ]
 
-{ #category : #accessing }
-RBMakeClassAbstractTransformation class >> kind [
+{ #category : #testing }
+RBMakeClassAbstractTransformation class >> isTransformation [ 
 
-	^ 'Transformation'
+	^ true
 ]
 
 { #category : #'instance creation' }

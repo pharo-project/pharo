@@ -40,9 +40,10 @@ RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #accessing }
-RBGeneratePrintOnTransformation class >> kind [ 
-	^ 'Transformation'
+{ #category : #testing }
+RBGeneratePrintOnTransformation class >> isTransformation [ 
+
+	^ true
 ]
 
 { #category : #'instance creation' }

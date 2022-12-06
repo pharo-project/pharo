@@ -95,6 +95,13 @@ RBRefactoring class >> isAbstract [
 ]
 
 { #category : #accessing }
+RBRefactoring class >> isTransformation [
+	"Tells if this refactoring is a refactoring or a transformation."
+
+	^ false
+]
+
+{ #category : #accessing }
 RBRefactoring class >> kind [
 	"Tells if this refactoring is a refactoring or a transformation.
 	Returns either 'Refactoring' or 'Transformation'"
