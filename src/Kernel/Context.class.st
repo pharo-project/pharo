@@ -271,9 +271,8 @@ Context >> activeHome [
 
 	| homeMethod |
 	self isBlockContext ifFalse: [^self].
-	self sender ifNil: [^nil].
 	homeMethod := self homeMethod.
-	^self sender findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
+	^self findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
 ]
 
 { #category : #accessing }

@@ -140,13 +140,20 @@ ContextTest >> testActivateReturnValue [
 ContextTest >> testActiveHome [
 	| block |
 	"Active BlockContext Home And ActiveHome"
-	block := [ thisContext home == thisContext activeHome].
+	block := [ self. "to make it non-clean" thisContext home == thisContext activeHome].
+	self assert: block class equals: FullBlockClosure.
 	self assert: block value.
 	
 	"for Method Context"
 	self
 		assert: aMethodContext activeHome identicalTo: aMethodContext;
-		assert: aMethodContext activeHome identicalTo: aMethodContext home
+		assert: aMethodContext activeHome identicalTo: aMethodContext home.
+	
+	"non-active block context"
+	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
+	self assert: (nonActiveBlockContext activeHome) isNil.
+		
+	
 ]
 
 { #category : #private }
@@ -251,12 +258,6 @@ ContextTest >> testNoStepIntoQuickMethod [
 	has not been set."
 	newContext := aMethodContext step.
 	self assert: newContext identicalTo: aMethodContext
-]
-
-{ #category : #tests }
-ContextTest >> testNonActiveBlockContextActiveHome [
-	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
-	self assert: (nonActiveBlockContext activeHome) isNil.
 ]
 
 { #category : #tests }
