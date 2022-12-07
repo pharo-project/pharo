@@ -137,15 +137,30 @@ ContextTest >> testActivateReturnValue [
 ]
 
 { #category : #tests }
-ContextTest >> testActiveBlockContextHomeAndActiveHome [
-	[ self assert: thisContext home identicalTo:  thisContext activeHome.] value
-]
-
-{ #category : #private }
-ContextTest >> testActiveHomeMethodContext [
+ContextTest >> testActiveHome [
+	| block |
+	"Active BlockContext Home And ActiveHome"
+	block := [ thisContext home == thisContext activeHome].
+	self assert: block value.
+	
+	"for Method Context"
 	self
 		assert: aMethodContext activeHome identicalTo: aMethodContext;
 		assert: aMethodContext activeHome identicalTo: aMethodContext home
+]
+
+{ #category : #private }
+ContextTest >> testActiveHomeClean [
+	<compilerOptions: #(+ optionCleanBlockClosure)>
+	| block |
+	block := [thisContext activeHome method].
+	self assert: block class equals: CleanBlockClosure.
+	
+	self assert: block value equals: block homeMethod.
+	
+	block := [thisContext activeHome].
+	self assert: block class equals: CleanBlockClosure.
+	self assert: block value equals: thisContext
 ]
 
 { #category : #tests }

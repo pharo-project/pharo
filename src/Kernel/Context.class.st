@@ -266,13 +266,14 @@ Context >> activateReturn: aContext value: value [
 Context >> activeHome [
 	"If executing closure, search senders for the activation of the original
 	 (outermost) method that (indirectly) created my closure (the closureHome).
-	 If the closureHome is not found on the sender chain answer nil."
+	 If the closureHome is not found on the sender chain answer nil.
+	This method does not use #home and thus works for any block without and outerContext"
 
-	| methodReturnContext |
+	| homeMethod |
 	self isBlockContext ifFalse: [^self].
 	self sender ifNil: [^nil].
-	methodReturnContext := self methodReturnContext.
-	^self sender findContextSuchThat: [:ctxt | ctxt = methodReturnContext]
+	homeMethod := self homeMethod.
+	^self sender findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
 ]
 
 { #category : #accessing }
