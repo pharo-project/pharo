@@ -156,20 +156,6 @@ ContextTest >> testActiveHome [
 	
 ]
 
-{ #category : #private }
-ContextTest >> testActiveHomeClean [
-	<compilerOptions: #(+ optionCleanBlockClosure)>
-	| block |
-	block := [thisContext activeHome method].
-	self assert: block class equals: CleanBlockClosure.
-	
-	self assert: block value equals: block homeMethod.
-	
-	block := [thisContext activeHome].
-	self assert: block class equals: CleanBlockClosure.
-	self assert: block value equals: thisContext
-]
-
 { #category : #tests }
 ContextTest >> testAstScope [
 
