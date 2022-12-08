@@ -3,7 +3,7 @@ This smell arises when a statement such as x := x is found. This statement has n
 "
 Class {
 	#name : #ReAssignmentWithoutEffectRule,
-	#superclass : #ReNodeMatchRule,
+	#superclass : #ReNodeRewriteRule,
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -22,7 +22,7 @@ ReAssignmentWithoutEffectRule >> group [
 { #category : #initialization }
 ReAssignmentWithoutEffectRule >> initialize [
 	super initialize.
-	self  matches: '`var := `var'
+	self  replace: 	'`var := `var' with: ''
 ]
 
 { #category : #accessing }
