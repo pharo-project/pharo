@@ -50,6 +50,12 @@ HEExportedLiteral >> asExportedLiteral [
 ]
 
 { #category : #reading }
+HEExportedLiteral >> asLiteralIn: anEnvironment [
+
+	self subclassResponsibility
+]
+
+{ #category : #reading }
 HEExportedLiteral >> doReadFrom: aReader [
 	"Main template method to read the instance from the reader stream"
 	self subclassResponsibility.
@@ -58,9 +64,4 @@ HEExportedLiteral >> doReadFrom: aReader [
 { #category : #accessing }
 HEExportedLiteral >> value [
 	^ value
-]
-
-{ #category : #accessing }
-HEExportedLiteral >> value: anObject [
-	value := anObject
 ]

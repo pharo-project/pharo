@@ -95,6 +95,12 @@ HEClass >> layoutClass: anObject [
 	layoutClass := anObject
 ]
 
+{ #category : #accessing }
+HEClass >> name [
+	
+	^ self className
+]
+
 { #category : #printing }
 HEClass >> printOn: aStream [
 

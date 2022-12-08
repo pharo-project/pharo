@@ -23,6 +23,12 @@ HETrait >> isTrait [
 ]
 
 { #category : #accessing }
+HETrait >> name [
+
+	^ self traitName
+]
+
+{ #category : #accessing }
 HETrait >> traitName [
 	^ traitName
 ]
