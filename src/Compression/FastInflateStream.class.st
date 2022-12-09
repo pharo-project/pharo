@@ -22,9 +22,9 @@ Class {
 	#category : #'Compression-Streams'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FastInflateStream class >> initialize [
-	"FastInflateStream initialize"
+	 
 	| low high |
 
 	"Init literal/length map"
@@ -47,7 +47,7 @@ FastInflateStream class >> initialize [
 				mappedBy: LiteralLengthMap.
 	FixedDistTable := self basicNew
 				huffmanTableFrom: FixedDistCodes
-				mappedBy: DistanceMap.
+				mappedBy: DistanceMap
 ]
 
 { #category : #inflating }

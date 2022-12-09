@@ -65,7 +65,7 @@ ColorForm >> asCursorForm [
 	^ (self asFormOfDepth: 32) offset: offset
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> asGrayScale [
 	"Return a grayscale ColorForm computed by mapping each color into its grayscale equivalent"
 	^ self copy colors:
@@ -104,29 +104,6 @@ ColorForm >> colorAt: aPoint put: aColor [
 ]
 
 { #category : #'color mapping' }
-ColorForm >> colormapIfNeededFor: destForm [
-	| newMap color pv |
-	(self hasNonStandardPalette or:[destForm hasNonStandardPalette]) ifFalse:[
-		^self colormapIfNeededForDepth: destForm depth.
-	].
-	colors == nil ifTrue: [
-		"use the standard colormap"
-		^ super colormapIfNeededFor: destForm].
-
-	(destForm depth = cachedDepth and:[cachedColormap isColormap]) 
-		ifTrue: [^ cachedColormap].
-	newMap := WordArray new: (1 bitShift: self depth).
-	1 to: colors size do: [:i |
-		color := colors at: i.
-		pv := destForm pixelValueFor: color.
-		(pv = 0 and:[color isTransparent not]) ifTrue:[pv := 1].
-		newMap at: i put: pv].
-
-	cachedDepth := destForm depth.
-	^cachedColormap := ColorMap shifts: nil masks: nil colors: newMap.
-]
-
-{ #category : #'color manipulation' }
 ColorForm >> colormapIfNeededForDepth: destDepth [
 	"Return a colormap for displaying the receiver at the given depth, or nil if no colormap is needed."
 
@@ -185,7 +162,7 @@ ColorForm >> colorsFromArray: colorArray [
 	self colors: colorList
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> colorsUsed [
 	"Return a list of the colors actually used by this ColorForm."
 
@@ -268,7 +245,7 @@ ColorForm >> hibernate [
 	colors ifNotNil:[colors := colors asColorArray].
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> indexOfColor: aColor [
 	"Return the index of aColor in my color array"
 
@@ -295,7 +272,7 @@ ColorForm >> isTransparentAt: aPoint [
 	^ (self colorAt: aPoint) isTransparent
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> mapColor: oldColor to: newColor [
 	"Replace all occurances of the given color with the given new color in my color map."
 
@@ -340,7 +317,7 @@ ColorForm >> readAttributesFrom: aBinaryStream [
 	].
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> replaceColor: oldColor with: newColor [
 	"Replace all occurances of the given color with the given new color in my color map."
 
@@ -350,7 +327,7 @@ ColorForm >> replaceColor: oldColor with: newColor [
 	self clearColormapCache.
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> replaceColorAt: aPoint with: newColor [
 	"Replace a color map entry with newColor.  The entry replaced is the one used by aPoint.  If there are are two entries in the colorMap for the oldColor, just replace ONE!!  There are often two whites or two blacks, and this is what you want, when replacing one."
 
@@ -361,7 +338,7 @@ ColorForm >> replaceColorAt: aPoint with: newColor [
 	self clearColormapCache.
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> replaceColorAtIndex: index with: newColor [
 	"Replace a color map entry with newColor."
 
@@ -400,14 +377,14 @@ ColorForm >> storeOn: aStream [
 	aStream nextPutAll: ' ))'.
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> transparentAllPixelsLike: aPoint [
 	"Make all occurances of the given pixel value transparent.  Very useful when two entries in the colorMap have the same value.  This only changes ONE."
 
 	self replaceColorAt: aPoint with: Color transparent.
 ]
 
-{ #category : #'color manipulation' }
+{ #category : #'color mapping' }
 ColorForm >> transparentColor: aColor [
 	"Make all occurances of the given color transparent.  Note: for colors like black and white, which have two entries in the colorMap, this changes BOTH of them.  Not always what you want."
 

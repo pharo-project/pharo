@@ -145,7 +145,7 @@ Semaphore >> criticalReleasingOnError: mutuallyExcludedBlock [
 { #category : #'process termination handling' }
 Semaphore >> handleProcessTerminationOfWaitingContext: suspendedContext [
 
-	^suspendedContext compiledCode method == (Semaphore compiledMethodAt: #critical:) 
+	^suspendedContext homeMethod == (Semaphore compiledMethodAt: #critical:) 
 		ifTrue: [ suspendedContext home]
 		ifFalse: [ suspendedContext]
 ]

@@ -22,7 +22,7 @@ Class {
 	#category : #'Graphics-Files'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 JPEGReadStream class >> initialize [
 	"JPEGReadStream initialize"
 	MaxBits := 16

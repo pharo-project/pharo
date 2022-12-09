@@ -51,7 +51,7 @@ Class {
 	#category : #'Compression-Streams'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 InflateStream class >> initialize [
 	"InflateStream initialize"
 	MaxBits := 16.
