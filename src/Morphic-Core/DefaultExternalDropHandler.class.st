@@ -8,13 +8,13 @@ Class {
 	#category : #'Morphic-Core-Worlds'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 DefaultExternalDropHandler class >> initialize [
-	"initialize the receiver"
+	
 	ExternalDropHandler defaultHandler: self new
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 DefaultExternalDropHandler class >> unload [
 	"initialize the receiver"
 	ExternalDropHandler defaultHandler: nil

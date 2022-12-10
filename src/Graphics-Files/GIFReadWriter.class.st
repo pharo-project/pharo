@@ -55,30 +55,32 @@ Class {
 
 { #category : #examples }
 GIFReadWriter class >> exampleAnim [
-	"This example writes out an animated gif of
-	 a red circle"
-
+	"This example writes out an animated gif of a red circle"
+	
 	| writer extent center frameDelay |
 	writer := GIFReadWriter on: (File openForWriteFileNamed: 'anim.gif').
-	writer loopCount: 20.		"Repeat 20 times"
-	frameDelay := 10.		"Wait 10/100 seconds"
-	extent := 42@42.
+	writer loopCount: 20. "Repeat 20 times"
+	frameDelay := 10. "Wait 10/100 seconds"
+	extent := 42 @ 42.
 	center := extent / 2.
-	Cursor write showWhile: [
-		[2 to: center x - 1 by: 2 do: [:r |
-			"Make a fancy anim without using Canvas - inefficient as hell"
+	Cursor write showWhile: [ 
+		[ 
+		2 to: center x - 1 by: 2 do: [ :r | "Make a fancy anim without using Canvas - inefficient as hell"
 			| frame |
 			frame := AnimatedImageFrame new
-				delay: frameDelay;
-				form: (ColorForm extent: extent depth: 8).
-			0.0 to: 359.0 do: [:theta | frame form colorAt: (center + (Point r: r degrees: theta)) rounded put: Color red].
-			writer nextPutFrame: frame]
-		]	ensure: [writer close]].
+				         delay: frameDelay;
+				         form: (ColorForm extent: extent depth: 8).
+			0.0 to: 359.0 do: [ :theta | 
+				frame form
+					colorAt: (center + (Point r: r degrees: theta)) rounded
+					put: Color red ].
+			writer nextPutFrame: frame ] ] ensure: [ writer close ] ]
 ]
 
 { #category : #examples }
 GIFReadWriter class >> grabScreenAndSaveOnDisk [
-	"GIFReadWriter grabScreenAndSaveOnDisk"
+	<example>
+	
 	| form fileName |
 	
 	form := Form fromUser.
@@ -94,9 +96,9 @@ GIFReadWriter class >> grabScreenAndSaveOnDisk [
 				onFileNamed: fileName ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 GIFReadWriter class >> initialize [
-	"GIFReadWriter initialize"
+
 	ImageSeparator := $, asInteger.
 	Extension := $! asInteger.
 	Terminator := $; asInteger

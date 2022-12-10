@@ -54,9 +54,8 @@ ImageMorph class >> fromString: aString font: aFont [
 	^ self new form: (StringMorph contents: aString font: aFont) imageForm
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ImageMorph class >> initialize [
-	"ImageMorph initialize"
 
 	| h p d |
 	DefaultForm := (Form extent: 80@40 depth: 16).
@@ -66,7 +65,7 @@ ImageMorph class >> initialize [
 		d := i asFloat / h asFloat.
 		DefaultForm fill:
 			(p corner: DefaultForm extent - p)
-			fillColor: (Color r: d g: 0.5 b: 1.0 - d)].
+			fillColor: (Color r: d g: 0.5 b: 1.0 - d)]
 ]
 
 { #category : #'instance creation' }

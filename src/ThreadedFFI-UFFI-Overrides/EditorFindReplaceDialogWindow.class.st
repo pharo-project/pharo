@@ -16,10 +16,10 @@ Class {
 	#classInstVars : [
 		'defaultFindReplaceServiceClass'
 	],
-	#category : #'Text-Edition-UI'
+	#category : #'ThreadedFFI-UFFI-Overrides'
 }
 
-{ #category : #initializing }
+{ #category : #icons }
 EditorFindReplaceDialogWindow class >> cleanUp [
 	Singleton ifNotNil: [ 
 			Singleton close.
@@ -37,10 +37,10 @@ EditorFindReplaceDialogWindow class >> finds [
 	^ Finds ifNil: [Finds := OrderedCollection new]
 ]
 
-{ #category : #initializing }
+{ #category : #'class initialization' }
 EditorFindReplaceDialogWindow class >> initialize [
-	"EditorFindReplaceDialogWindow initialize"
-	Singleton := nil.
+
+	Singleton := nil
 ]
 
 { #category : #accessing }

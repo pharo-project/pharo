@@ -20,25 +20,25 @@ Class {
 	#category : #'Morphic-Core-Events'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 UserInputEvent class >> altKeyMask [
 
 	^ ALT_KEY_MASK
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 UserInputEvent class >> cmdKeyMask [
 
 	^ 	CMD_KEY_MASK
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 UserInputEvent class >> ctrlKeyMask [
 
 	^ CTRL_KEY_MASK
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 UserInputEvent class >> initialize [
 
 	SHIFT_KEY_MASK := 8.
@@ -47,7 +47,7 @@ UserInputEvent class >> initialize [
 	ALT_KEY_MASK := 2r00100000.
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 UserInputEvent class >> shiftKeyMask [
 
 	^ SHIFT_KEY_MASK 

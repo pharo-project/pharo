@@ -99,7 +99,7 @@ Locale class >> initKnownLocales [
 	^locales
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Locale class >> initialize [
 	SessionManager default 
 		registerSystemClassNamed: self name

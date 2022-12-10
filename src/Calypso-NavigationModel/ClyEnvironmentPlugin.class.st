@@ -85,7 +85,7 @@ ClyEnvironmentPlugin class >> enable [
 	isAutoActivated := true
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClyEnvironmentPlugin class >> initialize [
 	self isAbstract ifTrue: [ ^self ].
 	

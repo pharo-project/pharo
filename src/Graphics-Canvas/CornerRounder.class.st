@@ -26,8 +26,8 @@ Class {
 	#category : #'Graphics-Canvas-Canvases'
 }
 
-{ #category : #all }
-CornerRounder class >> initialize [  "CornerRounder initialize"
+{ #category : #'class initialization' }
+CornerRounder class >> initialize [
 
 	CR0 := CR1 := self new
 		masterMask:
@@ -46,7 +46,7 @@ CornerRounder class >> initialize [  "CornerRounder initialize"
 		masterOverlay:
 			(Form extent: 6@6
 				fromArray: #(2r1e26 2r111e26 2r1111e26 2r11100e26 2r11000e26 2r111000e26)
-				offset: 0@0).
+				offset: 0@0)
 ]
 
 { #category : #all }

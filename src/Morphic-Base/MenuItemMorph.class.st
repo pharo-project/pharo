@@ -36,9 +36,8 @@ Class {
 	#category : #'Morphic-Base-Menus'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MenuItemMorph class >> initialize [
-	"MenuItemMorph initialize"
 
 	| f |
 	f := Form
@@ -49,7 +48,7 @@ MenuItemMorph class >> initialize [
 	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
 	BottomArrow := SubMenuMarker rotateBy: 90.
 	LeftArrow := SubMenuMarker rotateBy: 180.
-	UpArrow := SubMenuMarker rotateBy: 270.
+	UpArrow := SubMenuMarker rotateBy: 270
 ]
 
 { #category : #grabbing }

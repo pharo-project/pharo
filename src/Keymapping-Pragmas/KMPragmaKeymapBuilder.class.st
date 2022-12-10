@@ -15,7 +15,7 @@ Class {
 	#category : #'Keymapping-Pragmas'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 KMPragmaKeymapBuilder class >> initialize [
 	<script>
 	self uniqueInstance reset

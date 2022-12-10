@@ -69,7 +69,7 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 		default: false.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 DisplayScreen class >> initialize [
 	| display |
 	display := self new.
