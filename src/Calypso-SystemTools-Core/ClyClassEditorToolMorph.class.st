@@ -86,7 +86,10 @@ ClyClassEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 ClyClassEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
 	self context class = aClyFullBrowserContext class 
 		ifFalse: [ ^ false ].
-		
+
+	self context metaLevelScope = aClyFullBrowserContext metaLevelScope
+		ifFalse: [ ^ false ].
+
 	^ editingClass = aClyFullBrowserContext lastSelectedClass
 		or: [  editingClass = aClyFullBrowserContext lastSelectedClass instanceSide ]
 ]
