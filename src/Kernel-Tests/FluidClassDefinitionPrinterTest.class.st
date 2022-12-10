@@ -53,6 +53,14 @@ FluidClassDefinitionPrinterTest >> testByteString [
 ]
 
 { #category : #'tests - classes' }
+FluidClassDefinitionPrinterTest >> testByteStringClass [
+
+	self
+		assert: (self forClass: ByteString class)
+		equals: 'String class << ByteString class'
+]
+
+{ #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testChronologyConstants [
 
 	self
@@ -164,6 +172,16 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 	sharedPools: {};
 	tag: ''BasicObjects'';
 	package: ''Kernel'''
+]
+
+{ #category : #'tests - expanded' }
+FluidClassDefinitionPrinterTest >> testExpandedPointClass [
+
+	self
+		assert: (self expandedForClass: Point class)
+		equals: 'Object class << Point class
+	traits: {};
+	slots: {}'
 ]
 
 { #category : #'tests - expanded' }
