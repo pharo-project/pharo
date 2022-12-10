@@ -137,9 +137,9 @@ FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
-	self 
-		assert: (self expandedForClass: EmptyLayout class)  
-		equals: 'AbstractLayout class << #EmptyLayout class
+	self
+		assert: (self expandedForClass: EmptyLayout class)
+		equals: 'AbstractLayout class << EmptyLayout class
 	traits: {};
 	slots: { #instance }'
 ]
