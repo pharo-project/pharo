@@ -75,7 +75,7 @@ MCMethodDefinition class >> flushMethodCache [
 	Definitions := nil.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCMethodDefinition class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
