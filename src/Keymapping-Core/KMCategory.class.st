@@ -165,3 +165,9 @@ KMCategory >> removeKeymapEntry: aKeymapEntry [
 	on: Error
 	do: [ self platformEntries remove: aKeymapEntry ]
 ]
+
+{ #category : #keymaps }
+KMCategory >> tools [
+
+	^ Smalltalk tools
+]

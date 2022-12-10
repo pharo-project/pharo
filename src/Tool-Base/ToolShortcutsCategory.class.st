@@ -15,8 +15,11 @@ ToolShortcutsCategory class >> isGlobalCategory [
 
 { #category : #keymaps }
 ToolShortcutsCategory >> openMonticelloPackageBrowser [
+
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openMonticielloShortcut action: [ Smalltalk tools openMonticelloBrowser ]
+	^ KMKeymap
+		  shortcut: PharoShortcuts current openMonticielloShortcut
+		  action: [ self tools openMonticelloBrowser ]
 ]
 
 { #category : #keymaps }
@@ -27,26 +30,38 @@ ToolShortcutsCategory >> openSettings [
 
 { #category : #keymaps }
 ToolShortcutsCategory >> openSystemBrowser [
+
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openSystemBrowserShortcut action: [ Smalltalk tools openClassBrowser ]
+	^ KMKeymap
+		  shortcut: PharoShortcuts current openSystemBrowserShortcut
+		  action: [ self tools openClassBrowser ]
 ]
 
 { #category : #keymaps }
 ToolShortcutsCategory >> openTranscript [
+
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openTranscriptShortcut action: [ Smalltalk tools openTranscript ]
+	^ KMKeymap
+		  shortcut: PharoShortcuts current openTranscriptShortcut
+		  action: [ self tools openTranscript ]
 ]
 
 { #category : #keymaps }
 ToolShortcutsCategory >> openUnitTestRunner [
+
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openTestRunnerShortcut action: [ Smalltalk tools openTestRunner ]
+	^ KMKeymap
+		  shortcut: PharoShortcuts current openTestRunnerShortcut
+		  action: [ self tools openTestRunner ]
 ]
 
 { #category : #keymaps }
 ToolShortcutsCategory >> openWorkspace [
+
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openPlaygroundShortcut action: [ Smalltalk tools workspace open ]
+	^ KMKeymap
+		  shortcut: PharoShortcuts current openPlaygroundShortcut
+		  action: [ self tools workspace open ]
 ]
 
 { #category : #keymaps }
