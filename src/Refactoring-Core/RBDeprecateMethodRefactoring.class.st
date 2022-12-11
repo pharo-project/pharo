@@ -103,6 +103,9 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: new
 { #category : #execution }
 RBDeprecateMethodRefactoring >> generateChanges [
 
+	[ self inputValidation check ] whileFalse: [ 
+		RBInputValidationFailedError signal:
+			self inputValidation errorString ].
 	self applicabilityConditions check ifFalse: [ 
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityConditions errorString ].
@@ -112,6 +115,23 @@ RBDeprecateMethodRefactoring >> generateChanges [
 
 	self transform.
 	^ self changes
+]
+
+{ #category : #preconditions }
+RBDeprecateMethodRefactoring >> inputValidation [
+
+	^ (RBCondition
+		   withBlock: [ 
+			   newSelector isEmptyOrNil  or: [ 
+				   newSelector = oldSelector ]]
+		   errorString:
+		   'The new selectors cannot be an empty string or same as the old selector.') not
+]
+
+{ #category : #accessing }
+RBDeprecateMethodRefactoring >> newSelector: aString [
+
+	newSelector := aString asSymbol
 ]
 
 { #category : #preconditions }
