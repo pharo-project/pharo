@@ -255,7 +255,7 @@ RubTextEditor >> backWord: aKeyboardEvent [
 RubTextEditor >> backspace: aKeyboardEvent [
 	| result startIndex |
 	self closeTypeIn.
-	result := aKeyboardEvent shiftPressed
+	result := aKeyboardEvent controlKeyPressed
 		ifTrue: [ self backWord: aKeyboardEvent keyCharacter ]
 		ifFalse: [ 
 			self hasSelection
