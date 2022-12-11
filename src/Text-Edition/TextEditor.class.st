@@ -713,7 +713,7 @@ TextEditor >> backspace: aKeyboardEvent [
 	"Backspace over the last character."
 	| result startIndex |
 	self closeTypeIn.
-	result := aKeyboardEvent shiftPressed 
+	result := aKeyboardEvent controlKeyPressed 
 		ifTrue: [self backWord: aKeyboardEvent keyCharacter]
 		ifFalse: [self hasSelection
 			ifTrue: [self replaceSelectionWith: self nullText]
