@@ -55,7 +55,7 @@ PharoShortcuts >> backwardLineShortcut [
 { #category : #'keymaps - editor edit' }
 PharoShortcuts >> backwardWordDeleteShortcut [
 
-	^ Character backspace shift
+	^ Character backspace ctrl
 ]
 
 { #category : #'keymaps - editor navigation' }
@@ -174,7 +174,7 @@ PharoShortcuts >> delShortcut [
 { #category : #'keymaps - editor edit' }
 PharoShortcuts >> delWordShortcut [
 
-	^ Character delete shift asShortcut
+	^ Character delete ctrl asShortcut
 ]
 
 { #category : #'keymaps - code' }
@@ -249,7 +249,7 @@ PharoShortcuts >> forwardLineShortcut [
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> forwardWordShortcut [
-	^ Character arrowRight meta
+	^ Character arrowRight ctrl
 ]
 
 { #category : #'keymaps - editor style' }
@@ -462,7 +462,7 @@ PharoShortcuts >> selectBackwardLineShortcut [
 
 { #category : #'keymaps - editor selection' }
 PharoShortcuts >> selectBackwardWordShortcut [
-	^ Character arrowLeft meta shift
+	^ Character arrowLeft shift ctrl
 ]
 
 { #category : #'keymaps - editor selection' }
@@ -479,7 +479,7 @@ PharoShortcuts >> selectForwardLineShortcut [
 
 { #category : #'keymaps - editor selection' }
 PharoShortcuts >> selectForwardWordShortcut [
-	^ Character arrowRight shift meta
+	^ Character arrowRight shift ctrl
 ]
 
 { #category : #'keymaps - editor selection' }
