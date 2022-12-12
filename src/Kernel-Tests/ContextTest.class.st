@@ -137,15 +137,39 @@ ContextTest >> testActivateReturnValue [
 ]
 
 { #category : #tests }
-ContextTest >> testActiveBlockContextHomeAndActiveHome [
-	[ self assert: thisContext home identicalTo:  thisContext activeHome.] value
-]
-
-{ #category : #private }
-ContextTest >> testActiveHomeMethodContext [
+ContextTest >> testActiveHome [
+	| block |
+	"Active BlockContext Home And ActiveHome"
+	block := [ self. "to make it non-clean" thisContext home == thisContext activeHome].
+	self assert: block class equals: FullBlockClosure.
+	self assert: block value.
+	
+	"for Method Context"
 	self
 		assert: aMethodContext activeHome identicalTo: aMethodContext;
-		assert: aMethodContext activeHome identicalTo: aMethodContext home
+		assert: aMethodContext activeHome identicalTo: aMethodContext home.
+	
+	"non-active block context"
+	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
+	self assert: (nonActiveBlockContext activeHome) isNil.
+		
+	
+]
+
+{ #category : #tests }
+ContextTest >> testAstScope [
+
+	| scope |
+	"test that we get a scope for optimized blocks"
+	aMethodContext pc: 88 + 1.
+	scope := aMethodContext astScope.
+	self assert: scope isOptimized.
+	
+	"test that we do not get a block scope when pushing a block on the stack"
+	aMethodContext pc: 92 + 1.
+	scope := aMethodContext astScope.
+	self assert: aMethodContext sourceNodeExecuted isBlock.
+	self deny: scope isBlockScope
 ]
 
 { #category : #tests }
@@ -227,12 +251,6 @@ ContextTest >> testNoStepIntoQuickMethod [
 	has not been set."
 	newContext := aMethodContext step.
 	self assert: newContext identicalTo: aMethodContext
-]
-
-{ #category : #tests }
-ContextTest >> testNonActiveBlockContextActiveHome [
-	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
-	self assert: (nonActiveBlockContext activeHome) isNil.
 ]
 
 { #category : #tests }

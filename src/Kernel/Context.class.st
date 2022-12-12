@@ -130,7 +130,7 @@ Context class >> contextOn: exceptionClass do: block [
 	^ chain
 ]
 
-{ #category : #simulation }
+{ #category : #'class initialization' }
 Context class >> initialize [
 
 	"A unique object to be returned when a primitive fails during simulation"
@@ -266,13 +266,13 @@ Context >> activateReturn: aContext value: value [
 Context >> activeHome [
 	"If executing closure, search senders for the activation of the original
 	 (outermost) method that (indirectly) created my closure (the closureHome).
-	 If the closureHome is not found on the sender chain answer nil."
+	 If the closureHome is not found on the sender chain answer nil.
+	This method does not use #home and thus works for any block without and outerContext"
 
-	| methodReturnContext |
+	| homeMethod |
 	self isBlockContext ifFalse: [^self].
-	self sender ifNil: [^nil].
-	methodReturnContext := self methodReturnContext.
-	^self sender findContextSuchThat: [:ctxt | ctxt = methodReturnContext]
+	homeMethod := self homeMethod.
+	^self findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
 ]
 
 { #category : #accessing }
@@ -375,7 +375,7 @@ Context >> basicSize [
 
 { #category : #testing }
 Context >> belongsToDoIt [
-	^self home method isDoIt
+	^self homeMethod isDoIt
 ]
 
 { #category : #'instruction decoding' }
@@ -669,9 +669,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 
 { #category : #private }
 Context >> endPC [
-	^closureOrNil
-		ifNil:	[self compiledCode endPC]
-		ifNotNil: [closureOrNil endPC]
+	^ self compiledCode endPC
 ]
 
 { #category : #'debugger access' }
@@ -784,6 +782,19 @@ Context >> findContextSuchThat: testBlock [
 	context := self.
 	[ context isNil ] whileFalse: [
 		(testBlock value: context) 
+			ifTrue: [ ^ context ].
+		context := context sender ].
+	^ nil
+]
+
+{ #category : #query }
+Context >> findMethodContextSuchThat: testBlock [
+	"Search self and my sender chain for first one that satisfies testBlock. Ignore block contexts. Return nil if none satisfy"
+
+	| context |
+	context := self.
+	[ context isNil ] whileFalse: [
+		(context isBlockContext not and: [testBlock value: context])
 			ifTrue: [ ^ context ].
 		context := context sender ].
 	^ nil
@@ -1086,7 +1097,7 @@ Context >> methodClass [
 
 { #category : #accessing }
 Context >> methodNode [
-	^ self compiledCode methodNode.
+	^ self homeMethod methodNode
 ]
 
 { #category : #accessing }
@@ -1113,7 +1124,7 @@ Context >> methodReturnTop [
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self compiledCode selector
+	^ self homeMethod selector
 ]
 
 { #category : #'private - exceptions' }
@@ -1411,7 +1422,7 @@ Context >> printDetails: stream [
 Context >> printOn: aStream [
 	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue: 
 		[ | selector |
-			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			selector := self selector.
 			aStream 
 			 print: closureOrNil;
 			 nextPutAll: ' in ';
@@ -1427,7 +1438,7 @@ Context >> printOn: aStream [
 				ifNil: [ ^ super printOn: aStream ].
 			class := self receiver class.
 			mclass := self methodClass.
-			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			selector := self selector.
 			aStream nextPutAll: class name.
 			mclass == class
 				ifFalse:

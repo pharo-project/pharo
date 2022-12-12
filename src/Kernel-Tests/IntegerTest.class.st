@@ -437,6 +437,21 @@ IntegerTest >> testHighBitOfMagnitude [
 			self assert: anInteger negated highBitOfMagnitude equals: highBit ]
 ]
 
+{ #category : #'tests - other' }
+IntegerTest >> testHumanReadableSISizeString [
+	self assert: 1000 humanReadableSISizeString equals: '1.00 kB'.
+	self assert: 1024 humanReadableSISizeString equals: '1.02 kB'.
+
+	self assert: (1000 * 1000) humanReadableSISizeString equals: '1.00 MB'.
+	self assert: (1024 * 1024) humanReadableSISizeString equals: '1.05 MB'.
+
+	self assert: (1000 * 1000 * 1000) humanReadableSISizeString equals: '1.00 GB'.
+	self assert: (1024 * 1024 * 1024) humanReadableSISizeString equals: '1.07 GB'.
+
+	self assert: (1000 * 1000 * 1000 * 1000) humanReadableSISizeString equals: '1.00 TB'.
+	self assert: (1024 * 1024 * 1024 * 1024) humanReadableSISizeString equals: '1.10 TB'.
+]
+
 { #category : #'tests - printing' }
 IntegerTest >> testIntegerHex [
 	| result |

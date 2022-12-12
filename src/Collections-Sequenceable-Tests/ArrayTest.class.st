@@ -7,8 +7,8 @@ This is the unit test for the class Array. Unit tests are a good way to exercise
 Class {
 	#name : #ArrayTest,
 	#superclass : #CollectionRootTest,
-	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + TConvertTest + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest',
-	#classTraits : 'TEmptySequenceableTest classTrait + TSequencedElementAccessTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCopyTest classTrait + TCreationWithTest classTrait + TPutBasicTest classTrait + TConvertTest classTrait + TOccurrencesForMultiplinessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TReplacementSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TBeginsEndsWith classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSubCollectionAccess classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TSortTest classTrait + TSetArithmetic classTrait + TEnumeratingTest classTrait',
+	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + TConvertTest + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest + TSequenceableTruncatedToSize',
+	#classTraits : 'TEmptySequenceableTest classTrait + TSequencedElementAccessTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCopyTest classTrait + TCreationWithTest classTrait + TPutBasicTest classTrait + TConvertTest classTrait + TOccurrencesForMultiplinessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TReplacementSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TBeginsEndsWith classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSubCollectionAccess classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TSortTest classTrait + TSetArithmetic classTrait + TEnumeratingTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'example1',
 		'literalArray',
@@ -47,7 +47,8 @@ Class {
 		'collectionOfCollectionsOfInts',
 		'simpleCollection',
 		'stringCollectionWithSameBeginingAnEnd',
-		'collectionOfFloat'
+		'collectionOfFloat',
+		'recursiveArray'
 	],
 	#category : #'Collections-Sequenceable-Tests-Base'
 }
@@ -167,6 +168,12 @@ ArrayTest >> collectionWith1TimeSubcollection [
 { #category : #requirements }
 ArrayTest >> collectionWith2TimeSubcollection [
 	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst),self oldSubCollection .
+]
+
+{ #category : #requirements }
+ArrayTest >> collectionWith5Elements [
+	
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -486,6 +493,9 @@ ArrayTest >> setUp [
 	collectionOfFloatWithEqualElements:={1.5. 5.5. 6.5. 1.5}.
 	stringCollectionWithSameBeginingAnEnd := {'c'. 's'. 'c' copy}.
 	collection5Elements := { 1. 2. 5. 3. 4.}.
+
+	recursiveArray := example1 copy.
+	recursiveArray at: 5 put: recursiveArray.
 ]
 
 { #category : #requirements }
@@ -625,17 +635,6 @@ ArrayTest >> testCombinationsTaken [
 		hasSameElements: #( #( 1 2 3 ) #( 1 2 4 ) #( 1 3 4 ) #( 2 3 4 ) )
 ]
 
-{ #category : #tests }
-ArrayTest >> testComplexIsSelfEvaluating [
-	| complexArray restoredArray |
-	complexArray := {1 . true . false . nil . #a . 'a' . $a . Float pi . Float halfPi . (4 / 5) . Float infinity negated . (1 @ 2) . (0 @ 0 extent: 1 @ 1).
-	('hola' -> 0) . Object . Object class}.
-	complexArray := complexArray copyWith: complexArray.
-	self assert: complexArray isSelfEvaluating.
-	restoredArray := self class evaluate: complexArray printString.
-	self assert: restoredArray equals: complexArray
-]
-
 { #category : #'tests - copy' }
 ArrayTest >> testCopyNonEmptyWithoutAllNotIncluded [
 ]
@@ -718,15 +717,19 @@ ArrayTest >> testIsLiteral [
 	aLiteralArray at: 1 put: self class.
 	self deny: aLiteralArray isLiteral.
 	self deny: (literalArray as: WeakArray) isLiteral description: 'instances of Array subclasses are not literal'.
+	self deny: recursiveArray isLiteral.
+
 ]
 
 { #category : #tests }
 ArrayTest >> testIsSelfEvaluating [
 
-	self assert: example1 isSelfEvaluating.
-	example1 at: 1 put: Bag new.
-	self deny: example1 isSelfEvaluating.
-	example1 at: 1 put: 1.
+	self assert: selfEvaluatingArray isSelfEvaluating.
+
+	selfEvaluatingArray at: 1 put: Bag new.
+	self deny: selfEvaluatingArray isSelfEvaluating.
+
+	self deny: recursiveArray isSelfEvaluating
 ]
 
 { #category : #tests }
@@ -774,11 +777,60 @@ ArrayTest >> testPremultiply [
 
 { #category : #tests }
 ArrayTest >> testPrinting [
+
 	self assert: literalArray printString equals: '#(1 true 3 #four)'.
+	self assert: collectionOfCollectionsOfInts printString equals: '#(1 #(2 3) #(4 #(5 6)))'.
+	self assert: nonSEarray2 printString equals: '{#Array->Array}'.
+	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'
+]
+
+{ #category : #tests }
+ArrayTest >> testPrintingRecursive [
+
+	| printStringLimit |
+	printStringLimit := 50000. "Max limit"
+
+	self assert: recursiveArray printString size equals: printStringLimit.
+
+	"Indirect recursion"
+	recursiveArray at: 1 put: example2.
+	example2 at: 1 put: recursiveArray.
+	self assert: recursiveArray printString size equals: printStringLimit
+]
+
+{ #category : #tests }
+ArrayTest >> testSelfEvaluating [
+
+	self assert: selfEvaluatingArray isSelfEvaluating.
 	self assert: literalArray equals: (self class compiler evaluate: literalArray printString).
 	self assert: selfEvaluatingArray equals: (self class compiler evaluate: selfEvaluatingArray printString).
-	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'.
-	self assert: nonSEarray2 printString equals: '{#Array->Array}'
+
+	self deny: recursiveArray isSelfEvaluating.
+	self deny: nonSEArray1 isSelfEvaluating.
+
+
+]
+
+{ #category : #tests }
+ArrayTest >> testSelfEvaluatingComplexCase [
+	| complexArray restoredArray |
+	complexArray := {1 . true . false . nil . #a . 'a' . $a . Float pi . Float halfPi . (4 / 5) . Float infinity negated . (1 @ 2) . (0 @ 0 extent: 1 @ 1).
+	('hola' -> 0) . Object . Object class}.
+	complexArray := complexArray copyWith: complexArray.
+	self assert: complexArray isSelfEvaluating.
+
+	restoredArray := self class evaluate: complexArray printString.
+	self assert: restoredArray equals: complexArray
+]
+
+{ #category : #tests }
+ArrayTest >> testShouldBePrintedAsLiteral [
+
+	self assert: empty shouldBePrintedAsLiteral.
+	self assert: literalArray shouldBePrintedAsLiteral.
+	
+	self deny: (literalArray copyWith: 3/4) shouldBePrintedAsLiteral.
+	self deny: recursiveArray shouldBePrintedAsLiteral.
 ]
 
 { #category : #'tests - shuffling' }

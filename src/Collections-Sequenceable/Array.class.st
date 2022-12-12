@@ -301,12 +301,36 @@ Array >> isArray [
 
 { #category : #testing }
 Array >> isLiteral [
-	^self class == Array and: [self allSatisfy: [:each | each isLiteral]]
+
+	^ self class == Array and: [ self isLiteral: {  } ]
+]
+
+{ #category : #testing }
+Array >> isLiteral: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be literals" 
+		^ false ].
+
+	^ self allSatisfy: [ :each | each isLiteral: alreadyVisited , { self } ]
 ]
 
 { #category : #'self evaluating' }
 Array >> isSelfEvaluating [
-	^ (self allSatisfy: [:each | each isSelfEvaluating]) and: [self class == Array]
+
+	^ self class == Array and: [ self isSelfEvaluating: { } ]
+]
+
+{ #category : #'self evaluating' }
+Array >> isSelfEvaluating: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a self evaluated" 
+		^ false ].
+
+	^ self allSatisfy: [ :each | each isSelfEvaluating: alreadyVisited , { self } ]
 ]
 
 { #category : #comparing }
@@ -367,7 +391,18 @@ Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 { #category : #'literal testing' }
 Array >> shouldBePrintedAsLiteral [
 
-	^self class == Array and: [ self allSatisfy: [ :each | each shouldBePrintedAsLiteral ] ]
+	^ self class == Array and: [ self shouldBePrintedAsLiteral: {  } ]
+]
+
+{ #category : #'literal testing' }
+Array >> shouldBePrintedAsLiteral: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal" 
+		^ false ].
+
+	^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ]
 ]
 
 { #category : #printing }

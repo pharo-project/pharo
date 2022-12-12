@@ -282,7 +282,7 @@ HDTestReport >> serializeError: error of: aTestCase [
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
 			context := error signalerContext.
-			testCaseMethodContext := context findContextSuchThat: [ :ctx | 
+			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
 					                         ctx methodSelector == #performTest ] ].
 			context := context copyTo: testCaseMethodContext.

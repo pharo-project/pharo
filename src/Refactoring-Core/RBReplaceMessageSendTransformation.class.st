@@ -29,6 +29,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #displaying }
+RBReplaceMessageSendTransformation class >> basicMenuItemString [
+
+	^ 'Replace senders'
+]
+
 { #category : #accessing }
 RBReplaceMessageSendTransformation class >> kind [
 

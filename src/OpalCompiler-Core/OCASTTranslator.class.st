@@ -453,7 +453,7 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateConstantBlock: aBlockNode [
 	| ir |
-
+	"even though we never execute the compiledBlock, we create it so that the BlockClosure can use e.g. to query on the bytecode level"
 	ir := IRBuilder new 
 				mapToNode: aBlockNode;
 				numArgs: aBlockNode arguments size;
@@ -546,9 +546,7 @@ OCASTTranslator >> visitCleanBlockNode: aBlockNode [
 	
 	compiledBlock := self compilationContext astTranslatorClass new 
 		                 translateFullBlock: aBlockNode.
-	cleanBlock := (CleanBlockClosure new: 0)
-			 numArgs: compiledBlock numArgs;
-			 compiledBlock: compiledBlock.
+	cleanBlock := CleanBlockClosure compiledBlock: compiledBlock.
 
 	methodBuilder pushLiteral: cleanBlock
 ]

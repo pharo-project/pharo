@@ -2228,6 +2228,15 @@ SequenceableCollection >> third [
 	^ self at: 3
 ]
 
+{ #category : #copying }
+SequenceableCollection >> truncatedToSize: smallSize [ 
+	"return myself or a copy shortened to smallSize."
+
+	^ self size <= smallSize
+		ifTrue: [ self ]
+		ifFalse: [ self copyFrom: 1 to: smallSize ]
+]
+
 { #category : #enumerating }
 SequenceableCollection >> with: otherCollection collect: twoArgBlock [ 
 	"Collect and return the result of evaluating twoArgBlock with corresponding elements from this collection and otherCollection."

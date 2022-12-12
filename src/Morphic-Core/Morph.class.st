@@ -2808,18 +2808,22 @@ Morph >> handleFocusEvent: anEvent [
 
 { #category : #'events - processing' }
 Morph >> handleKeyDown: anEvent [
+
 	"System level event handling."
-	
-	anEvent wasHandled ifTrue:[ ^ self ].
-	
-	self shortcutsHandler ifNotNil: [:handler | 
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+
+	self shortcutsHandler ifNotNil: [ :handler | 
 		handler handleKeystroke: anEvent inMorph: self.
-		anEvent wasHandled ifTrue: [^ self]].
-	
-	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
+		anEvent wasHandled ifTrue: [ 
+			anEvent supressNextKeyPress: true.
+			^ self ] ].
+
+	(self handlesKeyDown: anEvent) ifFalse: [ ^ self ].
 	anEvent wasHandled: true.
 	self keyDown: anEvent.
-	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
+	^ self eventHandler ifNotNil: [ :handler | 
+		  handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events - processing' }
@@ -2872,9 +2876,9 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand newMouseFocus: self event: anEvent.
 	
 	"Check to open halo"
-	(anEvent blueButtonChanged or: [ "HACK"
-		 anEvent redButtonChanged & anEvent altKeyPressed
-		 & anEvent shiftPressed ]) ifTrue: [ ^ self handleSpecialGesture: anEvent ].
+	anEvent isSpecialGesture  
+		ifTrue: [ 
+			^ self handleSpecialGesture: anEvent ].
 
 	self mouseDown: anEvent.
 
@@ -3060,18 +3064,10 @@ Morph >> handleWindowEvent: anEvent [
 
 { #category : #'meta-actions' }
 Morph >> handlerForBlueButtonDown: anEvent [
-	"Return the (prospective) handler for a mouse down event. The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event.
-	Note: Halos handle blue button events themselves so we will only be asked if there is currently no halo on top of us.
-	Check whtehr halods are enabled (for deployment)."
+	"Return the (prospective) handler for a mouse down event.
+	In this case all blue buttons are disabled unless the subclass whant to handle it"
 
-	self wantsHaloFromClick ifFalse: [ ^ nil ].
-
-	self class cycleHalosBothDirections
-		ifTrue: [ anEvent handler ifNil: [ ^ self ].
-			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
-	^ anEvent shiftPressed
-		ifFalse: [ "let outer guy have it" nil ]
-		ifTrue: [ "let me have it" self ]
+	^ nil
 ]
 
 { #category : #'event handling' }
@@ -3079,6 +3075,9 @@ Morph >> handlerForMouseDown: anEvent [
 	"Return the (prospective) handler for a mouse down event. The handler is temporarily 
 	installed and can be used for morphs further down the hierarchy to negotiate whether 
 	the inner or the outer morph should finally handle the event."
+
+	anEvent isSpecialGesture 
+		ifTrue: [ ^ self handlerForSpecialGestureDown: anEvent ].
 
 	anEvent blueButtonPressed
 		ifTrue: [^ self handlerForBlueButtonDown: anEvent].
@@ -3094,6 +3093,20 @@ Morph >> handlerForMouseDown: anEvent [
 	^self mouseDownPriority >= anEvent handler mouseDownPriority
 		ifTrue: [ self]
 		ifFalse: [ nil]
+]
+
+{ #category : #'meta-actions' }
+Morph >> handlerForSpecialGestureDown: anEvent [
+	"Return the (prospective) handler for a special gesture event (Halos). 
+	The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event."
+
+	self wantsHaloFromClick ifFalse: [ ^ nil ].
+
+	self class cycleHalosBothDirections
+		ifTrue: [ anEvent handler ifNil: [ ^ self ].
+			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
+		
+	^ self
 ]
 
 { #category : #'event handling' }
@@ -3399,12 +3412,9 @@ Morph >> highlight [
 
 { #category : #accessing }
 Morph >> highlightColor [
-	
-	^ (self valueOfProperty: #highlightColor)
-		ifNotNil:
-			[:val | val ifNil: [self error: 'nil highlightColor']]
-		ifNil:
-			[owner ifNil: [self color] ifNotNil: [owner highlightColor]]
+
+	^ (self valueOfProperty: #highlightColor) ifNil: [ 
+		  owner ifNil: [ self color ] ifNotNil: [ owner highlightColor ] ]
 ]
 
 { #category : #accessing }
@@ -3541,8 +3551,8 @@ Morph >> innerBounds [
 
 { #category : #accessing }
 Morph >> insetColor [
-	owner ifNil:[^self color].
-	^ self colorForInsets
+
+	^ owner ifNil: [ self color ] ifNotNil: [ self colorForInsets ]
 ]
 
 { #category : #'meta-actions' }
@@ -3681,8 +3691,8 @@ Morph >> isLineMorph [
 { #category : #accessing }
 Morph >> isLocked [
 	"answer whether the receiver is Locked"
-	extension ifNil: [^ false].
-	^ extension locked
+
+	^ extension ifNil: [ false ] ifNotNil: [ :ext | ext locked ]
 ]
 
 { #category : #testing }

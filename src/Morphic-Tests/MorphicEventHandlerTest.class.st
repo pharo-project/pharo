@@ -107,7 +107,7 @@ MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
 		setType: #mouseDown
 		position: 0@0
 		which: MouseButtonEvent blueButton
-		buttons: 0
+		buttons: MouseButtonEvent blueButton
 		hand: morph world activeHand
 		stamp: Time millisecondClockValue).
 	
