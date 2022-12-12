@@ -141,15 +141,15 @@ BlockClosureTest >> testCullCullCullCull [
 ]
 
 { #category : #'tests - evaluating' }
-BlockClosureTest >> testHasMethodReturn [
+BlockClosureTest >> testHasNonLocalReturn [
 
-	self assert: [ ^self  ] hasMethodReturn.
-	self deny: [ 1 + 2 ] hasMethodReturn.
-	self deny: [ self printString ] hasMethodReturn.
+	self assert: [ ^self  ] hasNonLocalReturn.
+	self deny: [ 1 + 2 ] hasNonLocalReturn.
+	self deny: [ self printString ] hasNonLocalReturn.
 	
 	"nested blocks"
-	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasMethodReturn.
-	self assert: [ #(1) do: [ ^self ] ] hasMethodReturn
+	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasNonLocalReturn.
+	self assert: [ #(1) do: [ ^self ] ] hasNonLocalReturn
 ]
 
 { #category : #tests }

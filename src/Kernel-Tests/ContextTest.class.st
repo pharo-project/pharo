@@ -179,11 +179,18 @@ ContextTest >> testFindContextSuchThat [
 ]
 
 { #category : #tests }
-ContextTest >> testFindMethodContextSuchThat [
-
-	self
-		assert: (aMethodContext findMethodContextSuchThat: [ :each | true ]) 
-		identicalTo: aMethodContext
+ContextTest >> testHasNonLocalReturn [
+	"the method has a non-local return, in some block inside"
+	self assert: thisContext method hasNonLocalReturn.
+	"but the context that executes not (as it is later another block context"
+	self deny: thisContext hasNonLocalReturn.
+	"this block context has no non-local return"
+	[ self deny: thisContext hasNonLocalReturn] value.
+	"but this"
+	[ self assert: thisContext hasNonLocalReturn. ^self] value.
+	"again, this is about the context locally, nested blocks to not count"
+	[ self deny: thisContext hasNonLocalReturn. [^self]] value.
+	[ self deny: thisContext hasNonLocalReturn. [self assert: thisContext hasNonLocalReturn. ^self]] value
 ]
 
 { #category : #tests }
