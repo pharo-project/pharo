@@ -61,7 +61,7 @@ MCCacheRepository class >> disableCacheDuring: aBlock [
 	self uniqueInstance disableCacheDuring: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MCCacheRepository class >> initialize [
 	self resetIfInvalid
 ]

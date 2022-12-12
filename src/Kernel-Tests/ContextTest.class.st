@@ -137,15 +137,23 @@ ContextTest >> testActivateReturnValue [
 ]
 
 { #category : #tests }
-ContextTest >> testActiveBlockContextHomeAndActiveHome [
-	[ self assert: thisContext home identicalTo:  thisContext activeHome.] value
-]
-
-{ #category : #private }
-ContextTest >> testActiveHomeMethodContext [
+ContextTest >> testActiveHome [
+	| block |
+	"Active BlockContext Home And ActiveHome"
+	block := [ self. "to make it non-clean" thisContext home == thisContext activeHome].
+	self assert: block class equals: FullBlockClosure.
+	self assert: block value.
+	
+	"for Method Context"
 	self
 		assert: aMethodContext activeHome identicalTo: aMethodContext;
-		assert: aMethodContext activeHome identicalTo: aMethodContext home
+		assert: aMethodContext activeHome identicalTo: aMethodContext home.
+	
+	"non-active block context"
+	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
+	self assert: (nonActiveBlockContext activeHome) isNil.
+		
+	
 ]
 
 { #category : #tests }
@@ -171,11 +179,18 @@ ContextTest >> testFindContextSuchThat [
 ]
 
 { #category : #tests }
-ContextTest >> testFindMethodContextSuchThat [
-
-	self
-		assert: (aMethodContext findMethodContextSuchThat: [ :each | true ]) 
-		identicalTo: aMethodContext
+ContextTest >> testHasNonLocalReturn [
+	"the method has a non-local return, in some block inside"
+	self assert: thisContext method hasNonLocalReturn.
+	"but the context that executes not (as it is later another block context"
+	self deny: thisContext hasNonLocalReturn.
+	"this block context has no non-local return"
+	[ self deny: thisContext hasNonLocalReturn] value.
+	"but this"
+	[ self assert: thisContext hasNonLocalReturn. ^self] value.
+	"again, this is about the context locally, nested blocks to not count"
+	[ self deny: thisContext hasNonLocalReturn. [^self]] value.
+	[ self deny: thisContext hasNonLocalReturn. [self assert: thisContext hasNonLocalReturn. ^self]] value
 ]
 
 { #category : #tests }
@@ -236,12 +251,6 @@ ContextTest >> testNoStepIntoQuickMethod [
 	has not been set."
 	newContext := aMethodContext step.
 	self assert: newContext identicalTo: aMethodContext
-]
-
-{ #category : #tests }
-ContextTest >> testNonActiveBlockContextActiveHome [
-	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
-	self assert: (nonActiveBlockContext activeHome) isNil.
 ]
 
 { #category : #tests }
