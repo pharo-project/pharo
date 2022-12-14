@@ -481,7 +481,8 @@ PharoShortcuts >> selectForwardLineShortcut [
 
 { #category : #'keymaps - editor selection' }
 PharoShortcuts >> selectForwardWordShortcut [
-	^ Character arrowRight shift ctrl
+	"Equivalent to: ctrl+shift+right on Windows/Linux, option/alt+shift+right on OSX"
+	^ Character arrowRight shift meta
 ]
 
 { #category : #'keymaps - editor selection' }
