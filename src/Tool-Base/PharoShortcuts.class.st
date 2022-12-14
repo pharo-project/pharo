@@ -54,8 +54,8 @@ PharoShortcuts >> backwardLineShortcut [
 
 { #category : #'keymaps - editor edit' }
 PharoShortcuts >> backwardWordDeleteShortcut [
-
-	^ Character backspace ctrl
+	"Equivalent to: ctrl+backspace on Windows/Linux, option/alt+backspace on OSX"
+	^ Character backspace meta
 ]
 
 { #category : #'keymaps - editor navigation' }
