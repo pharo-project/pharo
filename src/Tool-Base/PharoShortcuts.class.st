@@ -174,7 +174,9 @@ PharoShortcuts >> delShortcut [
 { #category : #'keymaps - editor edit' }
 PharoShortcuts >> delWordShortcut [
 
-	^ Character delete ctrl asShortcut
+	^ OSPlatform current isMacOS
+		ifTrue: [ Character $d ctrl asShortcut ]
+		ifFalse: [ Character delete ctrl asShortcut ]
 ]
 
 { #category : #'keymaps - code' }
