@@ -1128,7 +1128,10 @@ Context >> methodReturnTop [
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self homeMethod selector
+	self 
+		deprecated: 'use #selector' 
+		transformWith: '`@receiver methodSelector' -> '`@receiver selector'.
+	^ self selector
 ]
 
 { #category : #'private - exceptions' }
