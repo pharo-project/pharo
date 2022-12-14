@@ -463,7 +463,8 @@ PharoShortcuts >> selectBackwardLineShortcut [
 
 { #category : #'keymaps - editor selection' }
 PharoShortcuts >> selectBackwardWordShortcut [
-	^ Character arrowLeft shift ctrl
+	"Equivalent to: ctrl+shift+left on Windows/Linux, option/alt+shift+left on OSX"
+	^ Character arrowLeft shift meta
 ]
 
 { #category : #'keymaps - editor selection' }
