@@ -249,7 +249,8 @@ PharoShortcuts >> forwardLineShortcut [
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> forwardWordShortcut [
-	^ Character arrowRight ctrl
+	"Equivalent to: ctrl+right on Windows/Linux, option/alt+right on OSX"
+	^ Character arrowRight meta
 ]
 
 { #category : #'keymaps - editor style' }
