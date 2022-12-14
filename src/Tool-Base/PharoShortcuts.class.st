@@ -175,7 +175,7 @@ PharoShortcuts >> delShortcut [
 PharoShortcuts >> delWordShortcut [
 
 	^ (OSPlatform current isMacOS)
-		ifTrue: [ Character $d ctrl asShortcut ]
+		ifTrue: [ $d ctrl asShortcut ]
 		ifFalse: [ Character delete ctrl asShortcut ]
 ]
 
