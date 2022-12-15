@@ -378,6 +378,27 @@ CDFluidClassParserTest >> testTraitSequence [
 	self assert: def traitDefinition sequence first name equals: #MyTrait.
 ]
 
+{ #category : #'tests - (r) slots' }
+CDFluidClassParserTest >> testUnrestrictedSlots [
+
+	| parser defString def slot |
+	parser := self classDefinitionParserClass new.
+	
+	"check that we can experiment with if we enable the setting"
+	self classDefinitionParserClass  unrestrictedVariableDefinitions: true.
+	
+	defString := 'Object << #MyObject
+		slots: { Slot named: #slotName  };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	slot := def slots first.
+	self assert: slot name equals: #slotName. 
+	self assert: slot variableClassName equals: #Slot.
+	self classDefinitionParserClass  unrestrictedVariableDefinitions: false.
+	"if it is the default false, we do no allow it"
+	self should: [ 	def := parser parse: defString ] raise: Error
+]
+
 { #category : #'tests - (r) kinds' }
 CDFluidClassParserTest >> testVariableByteSubclass [
 
