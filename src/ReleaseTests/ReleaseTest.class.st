@@ -346,6 +346,14 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
 ]
 
+{ #category : #'tests - methods' }
+ReleaseTest >> testNoUnimplementedCalls [
+	"There is a long term cleanup to fix 'selectors send but not implemented'.
+	 This test makes sure that we do not introduce new cases until we are down to zero"
+
+	self assert: SystemNavigation default allUnimplementedCalls size < 455
+]
+
 { #category : #tests }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
