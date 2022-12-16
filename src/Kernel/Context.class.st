@@ -233,11 +233,12 @@ Context class >> tryNamedPrimitiveTemplateMethod [
 ]
 
 { #category : #private }
-Context >> aboutToReturn: result through: firstUnwindContext [ 
+Context >> aboutToReturn: result through: firstUnwindContext [
+
 	"Called from VM when an unwindBlock is found between self and its home.
 	 Return to home's sender, executing unwind blocks on the way."
 
-	self methodReturnContext return: result through: firstUnwindContext
+	self home return: result through: firstUnwindContext
 ]
 
 { #category : #controlling }
@@ -266,13 +267,13 @@ Context >> activateReturn: aContext value: value [
 Context >> activeHome [
 	"If executing closure, search senders for the activation of the original
 	 (outermost) method that (indirectly) created my closure (the closureHome).
-	 If the closureHome is not found on the sender chain answer nil."
+	 If the closureHome is not found on the sender chain answer nil.
+	This method does not use #home and thus works for any block without and outerContext"
 
-	| methodReturnContext |
+	| homeMethod |
 	self isBlockContext ifFalse: [^self].
-	self sender ifNil: [^nil].
-	methodReturnContext := self methodReturnContext.
-	^self sender findContextSuchThat: [:ctxt | ctxt = methodReturnContext]
+	homeMethod := self homeMethod.
+	^self findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
 ]
 
 { #category : #accessing }
@@ -871,7 +872,18 @@ Context >> hasInstVarRef [
 
 { #category : #testing }
 Context >> hasMethodReturn [
-	^closureOrNil hasMethodReturn
+	self 
+		deprecated: 'use #hasNonLocalReturn' 
+		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
+	^self hasNonLocalReturn
+]
+
+{ #category : #testing }
+Context >> hasNonLocalReturn [
+	"check if this context does a non-local return, do not recurse into nested blocks as they will have anohter context"
+	^ closureOrNil
+		  ifNil: [ false ]
+		  ifNotNil: [ :closure | closure compiledBlock hasMethodReturn ]
 ]
 
 { #category : #testing }
@@ -1091,7 +1103,9 @@ Context >> methodNode [
 
 { #category : #accessing }
 Context >> methodReturnContext [
-
+	self 
+		deprecated: 'Use #home instead' 
+		transformWith: '`@receiver methodReturnContext' -> '`@receiver home'.
 	^ self home.
 ]
 
@@ -1100,20 +1114,24 @@ Context >> methodReturnReceiver [
 	"Simulate the action of a 'return receiver' bytecode. This corresponds to
 	 the source expression '^self'."
 
-	^self return: self receiver from: self methodReturnContext
+	^self return: self receiver from: self home
 ]
 
 { #category : #'instruction decoding' }
 Context >> methodReturnTop [
+
 	"Simulate the action of a 'return top of stack' bytecode. This corresponds
 	 to source expressions like '^something'."
 
-	^self return: self pop from: self methodReturnContext
+	^ self return: self pop from: self home
 ]
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self homeMethod selector
+	self 
+		deprecated: 'use #selector' 
+		transformWith: '`@receiver methodSelector' -> '`@receiver selector'.
+	^ self selector
 ]
 
 { #category : #'private - exceptions' }

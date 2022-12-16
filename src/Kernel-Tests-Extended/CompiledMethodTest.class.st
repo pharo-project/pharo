@@ -424,6 +424,19 @@ CompiledMethodTest >> testHasLiteralSuchThat [
 ]
 
 { #category : #'tests - testing' }
+CompiledMethodTest >> testHasNonLocalReturn [
+	| method |
+	method := self class compiler compile: 'm ^1'.
+	self deny: [method hasNonLocalReturn ].
+	method := self class compiler compile: 'm self doSomething'.
+	self deny: [method hasNonLocalReturn ].
+	method := self class compiler compile: 'm []'.
+	self deny: [method hasNonLocalReturn ].
+	method := self class compiler compile: 'm [^self]'.
+	self assert: [method hasNonLocalReturn ].
+]
+
+{ #category : #'tests - testing' }
 CompiledMethodTest >> testHasPragma [
 
 	| methodWithPragma methodWithOutPragma |

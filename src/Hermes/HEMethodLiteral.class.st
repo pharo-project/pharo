@@ -39,6 +39,8 @@ HEMethodLiteral >> className: anObject [
 HEMethodLiteral >> doReadFrom: aReader [
 	className := aReader readByteSymbol.
 	selector := aReader readByteSymbol.
+
+
 ]
 
 { #category : #accessing }

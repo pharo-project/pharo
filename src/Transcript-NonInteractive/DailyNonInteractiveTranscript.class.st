@@ -42,7 +42,7 @@ DailyNonInteractiveTranscript >> initializeStream [
 	"Open the file stream that I write to or connect to #stdout/#stderr.
 	I will use the platform line end convention.
 	I will append to regular files.
-	Overwrtitten to use #fileNameWithDate"
+	Overwritten to use #fileNameWithDate"
 	
 	^ stream := self isStdout 
 		ifTrue: [ Stdio stdout ]

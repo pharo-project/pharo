@@ -1054,6 +1054,25 @@ Integer >> hex [
 	^ self storeStringBase: 16
 ]
 
+{ #category : #converting }
+Integer >> hexString [
+	"Returns a string representation of the receiver as hexadecimal, prefixed with 16r."
+	
+	"Consider using any of
+		printStringHex
+		printStringBase: 16
+		printStringBase: 16 length: 8 padded: true
+		storeStringHex
+		storeStringBase: 16
+		storeStringBase: 16 length: 11 padded: true"
+		
+	"12 hexString >>> '16rC'"	
+	"10 hexString >>> '16rA'"	
+	"-10 hexString >>> '-16rA'"	
+		
+	^ self storeStringBase: 16
+]
+
 { #category : #'bit manipulation' }
 Integer >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the  
