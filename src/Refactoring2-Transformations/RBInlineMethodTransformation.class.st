@@ -7,8 +7,8 @@ Class {
 		'sourceParseTree',
 		'sourceSelector',
 		'sourceMessage',
-		'inlineClass',
-		'checkOverridden'
+		'checkOverridden',
+		'classOfTheMethodToInline'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
@@ -71,12 +71,12 @@ RBInlineMethodTransformation >> checkSuperMessages [
 { #category : #adding }
 RBInlineMethodTransformation >> classOfTheMethodToInline [
 
-	^ inlineClass
-		ifNil: [ inlineClass := ( sourceMessage receiver name = 'super'
+	^ classOfTheMethodToInline
+		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = 'super'
 				ifTrue: [ class superclass ]
 				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
 			]
-		ifNotNil: [ inlineClass ]
+		ifNotNil: [ classOfTheMethodToInline ]
 ]
 
 { #category : #adding }

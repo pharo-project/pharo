@@ -68,14 +68,14 @@ RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 
 	| imps |
 
-	inlineClass ifNotNil: [ ^ inlineClass ].
+	classOfTheMethodToInline ifNotNil: [ ^ classOfTheMethodToInline ].
 	imps := ( self model allImplementorsOf: self inlineSelector ) asOrderedCollection.
 	imps size = 1
-		ifTrue: [ ^ inlineClass := imps first ].
+		ifTrue: [ ^ classOfTheMethodToInline := imps first ].
 	imps ifEmpty: [ self refactoringFailure: 'Nobody defines a method named ' , self inlineSelector ].
-	inlineClass := self requestImplementorToInline: imps.
-	inlineClass ifNil: [ self refactoringFailure: 'No implementor selected' ].
-	^ inlineClass
+	classOfTheMethodToInline := self requestImplementorToInline: imps.
+	classOfTheMethodToInline ifNil: [ self refactoringFailure: 'No implementor selected' ].
+	^ classOfTheMethodToInline
 ]
 
 { #category : #transforming }
@@ -92,12 +92,6 @@ RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ]
 ]
 
-{ #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> inlineClassName [
-
-	^ self classOfTheMethodToInline instanceSide name
-]
-
 { #category : #testing }
 RBInlineMethodFromComponentRefactoring >> isOverridden [
 	| selector| 
@@ -109,10 +103,16 @@ RBInlineMethodFromComponentRefactoring >> isOverridden [
 ]
 
 { #category : #transforming }
+RBInlineMethodFromComponentRefactoring >> nameOfTheClassOfTheMethodToInline [
+
+	^ self classOfTheMethodToInline instanceSide name
+]
+
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 
 	| variableName index originalName nonMetaClass |
-	nonMetaClass := self inlineClassName.
+	nonMetaClass := self nameOfTheClassOfTheMethodToInline.
 	variableName := originalName := (nonMetaClass first isVowel
 		                                 ifTrue: [ 'an' ]
 		                                 ifFalse: [ 'a' ])
