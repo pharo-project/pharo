@@ -17,7 +17,7 @@ RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 	refactoring := RBAbstractVariablesRefactoring 
 				model: self model
 				abstractVariablesIn: inlineParseTree
-				from: self inlineClass
+				from: self classOfTheMethodToInline
 				toAll: (Array with: class).
 	self performCompositeRefactoring: refactoring.
 	inlineParseTree := refactoring parseTree
@@ -64,21 +64,7 @@ RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 ]
 
 { #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
-
-	sourceParseTree := class parseTreeFor: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage
-		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
-	sourceMessage isCascade
-		ifTrue: [ sourceMessage := sourceMessage messages last ].
-	sourceMessage isMessage
-		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ]
-]
-
-{ #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> inlineClass [
+RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 
 	| imps |
 
@@ -93,16 +79,30 @@ RBInlineMethodFromComponentRefactoring >> inlineClass [
 ]
 
 { #category : #transforming }
+RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
+
+	sourceParseTree := class parseTreeFor: sourceSelector.
+	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
+	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
+	sourceMessage
+		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade
+		ifTrue: [ sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage
+		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ]
+]
+
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> inlineClassName [
 
-	^ self inlineClass instanceSide name
+	^ self classOfTheMethodToInline instanceSide name
 ]
 
 { #category : #testing }
 RBInlineMethodFromComponentRefactoring >> isOverridden [
 	| selector| 
 	selector := self inlineSelector.
-	self inlineClass allSubclassesDo: [:each | 
+	self classOfTheMethodToInline allSubclassesDo: [:each | 
 		(each directlyDefinesMethod: selector)
 			ifTrue: [ ^ true ]].
 	^ false
