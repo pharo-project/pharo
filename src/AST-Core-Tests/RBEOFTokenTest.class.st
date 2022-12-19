@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 RBEOFTokenTest >> setUp [ 
-
+	super setUp.
 	token := RBEOFToken start: (1 to: 10).
 ]
 
