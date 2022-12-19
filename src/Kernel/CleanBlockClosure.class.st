@@ -35,11 +35,6 @@ CleanBlockClosure class >> compiledBlock: aCompiledBlock [
 		compiledBlock: aCompiledBlock
 ]
 
-{ #category : #fuel }
-CleanBlockClosure >> cleanCopy [
-	"nothing to do"
-]
-
 { #category : #printing }
 CleanBlockClosure >> doPrintOn: aStream [
 
