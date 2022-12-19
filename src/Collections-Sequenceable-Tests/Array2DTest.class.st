@@ -251,6 +251,38 @@ Array2DTest >> testRowVector [
 	self assert: m2 numberOfRows equals: 1.
 ]
 
+{ #category : #tests }
+Array2DTest >> testRowsColumnsDo [
+
+	| m col |
+	m := Array2D rows: 3 columns: 2.
+	m rowsColumnsPut: [ :row :column | column * 10 + row ].
+	
+	col := OrderedCollection new.
+	m rowsColumnsDo: [ :i :j | col add: (m at: i at: j) ].
+	
+	self assert: m size equals: col size.
+	self assert: (m at: 1 at: 1) equals: (col at: 1).
+	self assert: (m at: 1 at: 2) equals: (col at: 2).
+	self assert: (m at: 2 at: 1) equals: (col at: 3).
+	self assert: (m at: 2 at: 2) equals: (col at: 4).
+	self assert: (m at: 3 at: 1) equals: (col at: 5).
+	self assert: (m at: 3 at: 2) equals: (col at: 6)
+]
+
+{ #category : #tests }
+Array2DTest >> testRowsColumnsPut [
+	| m |
+	m := Array2D rows: 3 columns: 2.
+	m rowsColumnsPut: [ :row :column | column * 10 + row ].
+	self assert: (m at: 1 at: 1) equals: 11.
+	self assert: (m at: 1 at: 2) equals: 21.
+	self assert: (m at: 2 at: 1) equals: 12.
+	self assert: (m at: 2 at: 2) equals: 22.
+	self assert: (m at: 3 at: 1) equals: 13.
+	self assert: (m at: 3 at: 2) equals: 23.
+]
+
 { #category : #'tests - accessing' }
 Array2DTest >> testSquaredWithAllElement [
 

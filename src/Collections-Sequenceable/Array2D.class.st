@@ -107,15 +107,14 @@ Array2D class >> rows: rowNumber columns: columnNumber element: element [
 
 { #category : #'instance creation' }
 Array2D class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock [
+
 	"Answer a new Matrix of the given dimensions where
 	 result at: i at: j is aTwoArgumentBlock value: i value: j"
-	|a i|
-	a := Array new: rowNumber*columnNumber.
-	i := 0.
-	1 to: rowNumber do: [:row |
-		1 to: columnNumber do: [:column |
-			a at: (i := i + 1) put: (aTwoArgumentBlock value: row value: column)]].
-	^ self rows: rowNumber columns: columnNumber contents: a
+
+	| newArray |
+	newArray := self rows: rowNumber columns: columnNumber.
+	newArray rowsColumnsPut: aTwoArgumentBlock.
+	^ newArray
 ]
 
 { #category : #'special instance creation' }
@@ -650,6 +649,28 @@ Array2D >> rows: rows columns: columns contents: anArray [
 	numberOfColumns := columns.
 	contents := anArray.
 	^self
+]
+
+{ #category : #enumerating }
+Array2D >> rowsColumnsDo: aTwoArgumentBlock [
+
+	"Perform aTwoArgumentBlock with row and column as inputs"
+
+	1 to: numberOfRows do: [ :row | 
+		1 to: numberOfColumns do: [ :column | 
+			aTwoArgumentBlock value: row value: column ] ]
+]
+
+{ #category : #accessing }
+Array2D >> rowsColumnsPut: aTwoArgumentBlock [
+
+	"Set the value at row,colum as the value of aTwoArgumentBlock with row and column as inputs."
+
+	| i |
+	i := 0.
+	1 to: numberOfRows do: [:row |
+		1 to: numberOfColumns do: [:column |
+			contents at: (i := i + 1) put: (aTwoArgumentBlock value: row value: column)]].
 ]
 
 { #category : #enumerating }
