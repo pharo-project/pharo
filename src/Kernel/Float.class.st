@@ -318,7 +318,7 @@ Float >> absPrintExactlyOn: aStream base: base [
 	exp >= 0
 		ifTrue:
 			[be := 1 << exp.
-			significand ~= 16r10000000000000
+			significand != 16r10000000000000
 				ifTrue:
 					[r := significand * be * 2.
 					s := 2.
@@ -330,7 +330,7 @@ Float >> absPrintExactlyOn: aStream base: base [
 					mPlus := be1].
 				mMinus := be]
 		ifFalse:
-			[(exp = MinValLogBase2) | (significand ~= 16r10000000000000)
+			[(exp = MinValLogBase2) | (significand != 16r10000000000000)
 				ifTrue:
 					[r := significand * 2.
 					s := (1 << (exp negated)) * 2.
@@ -404,13 +404,13 @@ Float >> absPrintInexactlyOn: aStream base: base [
 			[r := self.
 			s := 1.0.
 			mPlus := 1.0 timesTwoPower: exp - significantBits.
-			mMinus := self significand ~= 1.0 ifTrue: [mPlus] ifFalse: [mPlus / 2.0]]
+			mMinus := self significand != 1.0 ifTrue: [mPlus] ifFalse: [mPlus / 2.0]]
 		ifFalse:
 			[r := self timesTwoPower: significantBits.
 			s := 1.0 timesTwoPower:  significantBits.
 			mMinus := 1.0 timesTwoPower: (exp max: -1024).
 			mPlus :=
-				(exp = MinValLogBase2) | (self significand ~= 1.0)
+				(exp = MinValLogBase2) | (self significand != 1.0)
 					ifTrue: [mMinus]
 					ifFalse: [mMinus * 2.0]].
 	baseExpEstimate >= 0
@@ -514,7 +514,7 @@ at: i)]]]
 			[aStream nextPut: $0.
 			exp := exp - 1.
 			exp = -1 ifTrue: [aStream nextPut: $.]].
-	q ~= 0
+	q != 0
 		ifTrue: 
 			[aStream nextPut: $e.
 			q printOn: aStream]
@@ -528,7 +528,7 @@ Float >> adaptToFraction: rcvr andCompare: selector [
 	self isFinite
 		ifFalse: [
 			selector == #= ifTrue: [^false].
-			selector == #~= ifTrue: [^true].
+			selector == #'!=' ifTrue: [^true].
 			self isNaN ifTrue: [^ false].
 			(selector = #< or: [selector = #'<='])
 				ifTrue: [^ self positive].
@@ -539,7 +539,7 @@ Float >> adaptToFraction: rcvr andCompare: selector [
 	"Try to avoid asTrueFraction because it can cost"
 	selector == #= ifTrue: [
 		rcvr denominator isPowerOfTwo ifFalse: [^false]].
-	selector == #~= ifTrue: [
+	selector == #'!=' ifTrue: [
 		rcvr denominator isPowerOfTwo ifFalse: [^true]].
 
 	^ rcvr perform: selector with: self asTrueFraction
@@ -559,7 +559,7 @@ Float >> adaptToInteger: rcvr andCompare: selector [
 	self isFinite
 		ifFalse: [
 			selector == #= ifTrue: [^false].
-			selector == #~= ifTrue: [^true].
+			selector == #'!=' ifTrue: [^true].
 			self isNaN ifTrue: [^ false].
 			(selector = #< or: [selector = #'<='])
 				ifTrue: [^ self positive].
@@ -570,7 +570,7 @@ Float >> adaptToInteger: rcvr andCompare: selector [
 	"Try to avoid asTrueFraction because it can cost"
 	selector == #= ifTrue: [
 		self fractionPart = 0.0 ifFalse: [^false]].
-	selector == #~= ifTrue: [
+	selector == #'!=' ifTrue: [
 		self fractionPart = 0.0 ifFalse: [^true]].
 	
 	^ rcvr perform: selector with: self asTrueFraction
@@ -663,7 +663,7 @@ Float >> asMinimalDecimalFraction [
 	baseExpEstimate := (self exponent * 10 asFloat reciprocalLogBase2 - 1.0e-10) ceiling.
 	exp >= 0
 		ifTrue:
-			[significand ~= 16r10000000000000
+			[significand != 16r10000000000000
 				ifTrue:
 					[r := significand bitShift: 1 + exp.
 					s := 2.
@@ -673,7 +673,7 @@ Float >> asMinimalDecimalFraction [
 					s := 4.
 					mPlus := 2 * (mMinus := 1 bitShift: exp)]]
 		ifFalse:
-			[(exp = MinValLogBase2 or: [significand ~= 16r10000000000000])
+			[(exp = MinValLogBase2 or: [significand != 16r10000000000000])
 				ifTrue:
 					[r := significand bitShift: 1.
 					s := 1 bitShift: 1 - exp.
@@ -931,7 +931,7 @@ Float >> isLiteral [
 Float >> isNaN [
 	"simple, byte-order independent test for Not-a-Number"
 
-	^ self ~= self
+	^ self != self
 ]
 
 { #category : #testing }

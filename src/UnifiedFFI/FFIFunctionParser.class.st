@@ -104,7 +104,7 @@ FFIFunctionParser >> parseArgument [
 "
 	"constant conditions"
 	(stream contents size = 1 and: [ 
-		stream contents first ~= #void ]) ifTrue: [ 
+		stream contents first != #void ]) ifTrue: [ 
 		^ self integerConstantArgument: stream next ].
 	stream peek isArray ifTrue: [ 
 		^ self parseArgumentCastedType ].

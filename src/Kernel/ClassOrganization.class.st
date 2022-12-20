@@ -113,7 +113,7 @@ ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: 
 	| oldCategory forceNotify oldProtocols |
 	forceNotify := (self protocolOrganizer includesSelector: selector) not.
 	oldCategory := self categoryOfElement: selector.
-	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ])
+	(forceNotify or: [ oldCategory != aProtocolName or: [ aBoolean not or: [ aProtocolName != Protocol unclassified ] ] ])
 		ifFalse: [ ^ self ].
 	oldProtocols := self protocolOrganizer protocolsOfSelector: selector.
 	self protocolOrganizer
@@ -220,13 +220,13 @@ ClassOrganization >> notifyOfAddedCategory: protocolName [
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedCategoriesFrom: oldCollectionOrNil to: newCollectionOrNil [
-	(self hasSubject and: [ oldCollectionOrNil ~= newCollectionOrNil ]) 
+	(self hasSubject and: [ oldCollectionOrNil != newCollectionOrNil ]) 
 		ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self subject ].
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedCategoryFrom: oldNameOrNil to: newNameOrNil [
-	(self hasSubject and: [oldNameOrNil ~= newNameOrNil]) 
+	(self hasSubject and: [oldNameOrNil != newNameOrNil]) 
 		ifTrue: [
 			SystemAnnouncer uniqueInstance 
 				protocolRenamedFrom: oldNameOrNil 
@@ -237,7 +237,7 @@ ClassOrganization >> notifyOfChangedCategoryFrom: oldNameOrNil to: newNameOrNil 
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedSelector: element from: oldCategory to: newCategory [
-	(self hasSubject and: [(oldCategory ~= newCategory)]) 
+	(self hasSubject and: [(oldCategory != newCategory)]) 
 		ifTrue: [
 			self subject 
 				notifyOfRecategorizedSelector: element 

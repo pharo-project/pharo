@@ -28,7 +28,7 @@ ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReSendsDifferentSuperRule >> basicCheck: aMethod [
-	^ aMethod superMessages anySatisfy: [ :message | message ~= aMethod selector ]
+	^ aMethod superMessages anySatisfy: [ :message | message != aMethod selector ]
 ]
 
 { #category : #accessing }

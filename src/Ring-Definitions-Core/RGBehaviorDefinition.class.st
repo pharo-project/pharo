@@ -291,7 +291,7 @@ RGBehaviorDefinition >> hasSuperclass [
 { #category : #testing }
 RGBehaviorDefinition >> hasTraitComposition [
 
-	^self traitCompositionSource ~= '{}'
+	^self traitCompositionSource != '{}'
 ]
 
 { #category : #'testing - class hierarchy' }

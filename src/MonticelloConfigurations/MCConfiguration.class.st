@@ -500,7 +500,7 @@ MCConfiguration >> versionNamed: verName for: aDependency from: repo [
 		ver := repo versionFromFileNamed: fileName].
 	ver ifNil: [
 		baseName := self diffBaseFor: aDependency.
-		(baseName notNil and: [baseName ~= verName and: [repo includesVersionNamed: baseName]]) ifTrue: [
+		(baseName notNil and: [baseName != verName and: [repo includesVersionNamed: baseName]]) ifTrue: [
 			fileName := (MCDiffyVersion nameForVer: verName base: baseName), '.mcd'.
 			ProgressNotification signal: '' extra: 'Downloading ', fileName.
 			ver := repo versionFromFileNamed: fileName]].

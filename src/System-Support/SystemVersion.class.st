@@ -176,7 +176,7 @@ SystemVersion >> hasMetadataIdentifiers [
 SystemVersion >> hasValidBuildNumber [
 	"Return true if we have a valid build number"
 	
-	 ^self build ~= self class invalidBuildNumber
+	 ^self build != self class invalidBuildNumber
 ]
 
 { #category : #compatibility }

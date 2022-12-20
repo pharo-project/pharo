@@ -740,7 +740,7 @@ Socket >> isValid [
 	| status |
 	socketHandle == nil ifTrue: [^ false].
 	status := self primSocketConnectionStatus: socketHandle.
-	^ status ~= InvalidSocket
+	^ status != InvalidSocket
 ]
 
 { #category : #queries }
@@ -1573,7 +1573,7 @@ Socket >> sendUDPData: aStringOrByteArray toHost: hostAddress port: portNumber [
 			but some platforms simply return count=0"
 			(self broadcastMisconfiguredForSendingTo: hostAddress)
 				ifTrue: [ ^ self broadcastError: hostAddress ].
-			bytesToSend ~= count 
+			bytesToSend != count 
 				ifTrue: [ ^NetworkError signal: 'failed to send data']].
 		bytesSent := bytesSent + count.
 		bytesSent < bytesToSend] whileTrue.
@@ -1761,7 +1761,7 @@ Socket >> waitForDisconnectionFor: timeout [
 		self readSemaphore waitTimeoutMSecs: 
 			(msecsDelta - (Time millisecondsSince: startTime) max: 0).
 		status := self primSocketConnectionStatus: socketHandle].
-	^ status ~= Connected
+	^ status != Connected
 ]
 
 { #category : #waiting }

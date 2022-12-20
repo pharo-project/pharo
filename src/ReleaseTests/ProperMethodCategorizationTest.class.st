@@ -13,7 +13,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 	| violating |
 	violating := OrderedCollection new.
 	aClass allSubclassesDo: [:cls | cls methods do: [:m |
-			(m selector = selector and: [ m protocol ~= protocol ])
+			(m selector = selector and: [ m protocol != protocol ])
 				ifTrue: [ violating add: m -> m protocol ] ] ].
 	self 
 		assert: violating isEmpty 

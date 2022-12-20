@@ -305,7 +305,7 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 		allMethodsSelect: [ :each | 
 			(((each literalAt: each numLiterals) key isNil 
 					and: [ (each literalAt: each numLiterals) value isMeta not ])
-						and: [ each methodClass ~= UndefinedObject ]) and: [ each isInstalled ] ]
+						and: [ each methodClass != UndefinedObject ]) and: [ each isInstalled ] ]
 ]
 
 { #category : #'message sends' }

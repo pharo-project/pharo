@@ -19,7 +19,7 @@ RealEstateAgent class >> assignCollapseFrameFor: aSSView [
 	| grid otherFrames topLeft viewBox collapsedFrame extent newFrame verticalBorderDistance top |
 	grid := 8.
 	verticalBorderDistance := 8.
-	otherFrames := ( aSSView world windowsSatisfying: [:w | w ~= aSSView])
+	otherFrames := ( aSSView world windowsSatisfying: [:w | w != aSSView])
 				collect: [:w | w collapsedFrame]
 				thenSelect: [:rect | rect notNil].
 	viewBox := aSSView world viewBox.
@@ -61,7 +61,7 @@ RealEstateAgent class >> assignCollapsePointFor: aSSView [
 		whileTrue: [topLeft := viewBox left @ y.
 			free := true.
 			otherFrames
-				do: [:w | free := free & (topLeft ~= w topLeft)].
+				do: [:w | free := free & (topLeft != w topLeft)].
 			free
 				ifTrue: [^ topLeft]].
 	"If all else fails..."
@@ -271,7 +271,7 @@ RealEstateAgent class >> strictlyStaggeredInitialFrameFor: aStandardSystemView i
 			free := true.
 			otherFrames do:
 				[:w |
-				free := free & ((w perform: cornerSel) ~= putativeCorner)].
+				free := free & ((w perform: cornerSel) != putativeCorner)].
 			free ifTrue:
 				[^ (initialFrame align: (initialFrame perform: cornerSel)
 								with: putativeCorner)

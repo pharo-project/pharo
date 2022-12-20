@@ -50,7 +50,7 @@ MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: 
       "unconditional fail test at this point for Issue #388"
       "https://github.com/dalehenrich/metacello-work/issues/388"
       ^ false ].
-  (self hasOverride not or: [ targetVersionStatus ~= #(#'allLoadedToSpec') ])
+  (self hasOverride not or: [ targetVersionStatus != #(#'allLoadedToSpec') ])
     ifTrue: [ ^ false ].
   (self overrideProjectSpec allPackagesLoaded: anMCLoader)
     ifFalse: [ 

@@ -69,7 +69,7 @@ FTTableContainerMorph >> adjustToHorizontalScrollBarValue: aNumber [
 	newStartColumnIndex := (self table numberOfColumns * aNumber) rounded 
 		min: self table numberOfColumns 
 		max: 1 .
-	newStartColumnIndex ~= self startColumnIndex 
+	newStartColumnIndex != self startColumnIndex 
 		ifTrue: [ 
 			self startColumnIndex: newStartColumnIndex.
 			self changed  ]

@@ -194,7 +194,7 @@ CompiledBlock >> sameLiteralsAs: method [
 	"Compare my literals to those of method. This is needed to compare compiled methods."
 
 	| numLits literal1 literal2 |
-	(numLits := self numLiterals) ~= method numLiterals
+	(numLits := self numLiterals) != method numLiterals
 		ifTrue: [ ^ false ].
 	"The last literal requires special checking instead of using #literalEqual:"
 	1 to: numLits - 1 do: [ :index | 

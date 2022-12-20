@@ -67,7 +67,7 @@ RectangleTest >> testAreasOutside1 [
       visibleArea := remnants.
   ].
   visibleArea := visibleArea asArray.
-  self assert: (visibleArea allSatisfy: [:r | r area ~= 0]).
+  self assert: (visibleArea allSatisfy: [:r | r area != 0]).
    1 to: visibleArea size do: [:index |
      index + 1 to: visibleArea size do: [:index2 |
         self deny: ((visibleArea at: index) intersects: (visibleArea at: index2)).
@@ -94,7 +94,7 @@ RectangleTest >> testAreasOutside2 [
       visibleArea := remnants.
   ].
   visibleArea := visibleArea asArray.
-  self assert: (visibleArea allSatisfy: [:r | r area ~= 0]).
+  self assert: (visibleArea allSatisfy: [:r | r area != 0]).
 
    1 to: visibleArea size do: [:idx |
      idx + 1 to: visibleArea size do: [:idx2 |

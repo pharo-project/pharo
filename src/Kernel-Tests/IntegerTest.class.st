@@ -637,8 +637,8 @@ IntegerTest >> testLowBit [
 		do: [ :anInteger | 
 			| lowBit |
 			lowBit := (anInteger respondsTo: #bitAt:)
-				ifTrue: [ (1 to: anInteger highBit) detect: [ :bitIndex | (anInteger bitAt: bitIndex) ~= 0 ] ifNone: [ 0 ] ]
-				ifFalse: [ (1 to: anInteger highBit) detect: [ :bitIndex | (anInteger bitAnd: (1 bitShift: bitIndex - 1)) ~= 0 ] ifNone: [ 0 ] ].
+				ifTrue: [ (1 to: anInteger highBit) detect: [ :bitIndex | (anInteger bitAt: bitIndex) != 0 ] ifNone: [ 0 ] ]
+				ifFalse: [ (1 to: anInteger highBit) detect: [ :bitIndex | (anInteger bitAnd: (1 bitShift: bitIndex - 1)) != 0 ] ifNone: [ 0 ] ].
 			self assert: anInteger lowBit equals: lowBit.
 			self assert: anInteger negated lowBit equals: lowBit ]
 ]
@@ -1191,7 +1191,7 @@ IntegerTest >> testTwoComplementRightShift [
 	| large small |
 	small := 2 << 16.
 	large := 2 << 32.
-	self assert: (small negated bitShift: -1) ~= ((small + 1) negated bitShift: -1) identicalTo: (large negated bitShift: -1) ~= ((large + 1) negated bitShift: -1).
+	self assert: (small negated bitShift: -1) != ((small + 1) negated bitShift: -1) identicalTo: (large negated bitShift: -1) != ((large + 1) negated bitShift: -1).
 
-	self assert: (small bitShift: -1) ~= (small + 1 bitShift: -1) identicalTo: (large bitShift: -1) ~= (large + 1 bitShift: -1)
+	self assert: (small bitShift: -1) != (small + 1 bitShift: -1) identicalTo: (large bitShift: -1) != (large + 1 bitShift: -1)
 ]

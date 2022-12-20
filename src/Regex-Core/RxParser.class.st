@@ -264,7 +264,7 @@ RxParser >> inputUpTo: aCharacter errorMessage: aString [
 
 	| accumulator |
 	accumulator := WriteStream on: (String new: 20).
-	[lookahead ~= aCharacter and: [lookahead ~= #epsilon]]
+	[lookahead != aCharacter and: [lookahead != #epsilon]]
 		whileTrue: [
 			accumulator nextPut: lookahead.
 			self next].
@@ -283,7 +283,7 @@ RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aStri
 	| accumulator nestLevel |
 	accumulator := WriteStream on: (String new: 20).
 	nestLevel := 0.
-	[lookahead ~= aCharacter or: [nestLevel > 0]] whileTrue: 
+	[lookahead != aCharacter or: [nestLevel > 0]] whileTrue: 
 			[#epsilon = lookahead ifTrue: [self signalParseError: aString].
 			accumulator nextPut: lookahead.
 			lookahead = anotherCharacter ifTrue: [nestLevel := nestLevel + 1].
@@ -301,7 +301,7 @@ RxParser >> inputUpToAny: aDelimiterString errorMessage: aString [
 
 	| accumulator |
 	accumulator := WriteStream on: (String new: 20).
-	[(aDelimiterString includes: lookahead) not and: [lookahead ~= #epsilon]]
+	[(aDelimiterString includes: lookahead) not and: [lookahead != #epsilon]]
 		whileTrue: [
 			accumulator nextPut: lookahead.
 			self next ].
@@ -330,7 +330,7 @@ RxParser >> match: aCharacter [
 	"<aCharacter> MUST match the current lookeahead.
 	If this is the case, advance the input. Otherwise, blow up."
 
-	aCharacter ~= lookahead 
+	aCharacter != lookahead 
 		ifTrue: [^self signalParseError].	"does not return"
 	self next
 ]

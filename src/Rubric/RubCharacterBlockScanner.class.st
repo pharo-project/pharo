@@ -142,8 +142,8 @@ RubCharacterBlockScanner >> crossedX [
 	"See tabForDisplay for illumination on the following awfulness."
 	leadingTab := true.
 	line first to: lastIndex - 1 do:
-		[:index | (text at: index) ~= Tab ifTrue: [leadingTab := false]].
-	(alignment ~= Justified or: [leadingTab])
+		[:index | (text at: index) != Tab ifTrue: [leadingTab := false]].
+	(alignment != Justified or: [leadingTab])
 		ifTrue:	[self lastCharacterExtentSetX: (self nextTabXFrom: currentX) -
 						currentX]
 		ifFalse:	[self lastCharacterExtentSetX:  (((currentX + (self tabWidth -

@@ -231,7 +231,7 @@ RBScanner >> isSelector [
 	characterType = #binary
 		ifTrue: [ [ characterType = #binary ] whileTrue: [ self step ].
 			^ characterType = #eof ].
-	characterType ~= #alphabetic
+	characterType != #alphabetic
 		ifTrue: [ ^ false ].
 	^ self isSelectorNonBinary
 ]
@@ -357,7 +357,7 @@ RBScanner >> scanComment [
 	self step.
 	self atEnd
 		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
-	[ currentCharacter = $" and: [ buffer nextPut: currentCharacter. self step ~= $" ] ]
+	[ currentCharacter = $" and: [ buffer nextPut: currentCharacter. self step != $" ] ]
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 			buffer nextPut: currentCharacter.
@@ -395,7 +395,7 @@ RBScanner >> scanIdentifierOrKeyword [
 	"To ensure the pertinence of this scanner, it must be called only if the current character is 	, 	 	 alphabetic."
 	| name |
 	self scanName.
-	(currentCharacter = $: and: [stream peek ~= $=]) 
+	(currentCharacter = $: and: [stream peek != $=]) 
 		ifTrue: [^self scanKeyword].
 	name := buffer contents.
 	name = 'true' 

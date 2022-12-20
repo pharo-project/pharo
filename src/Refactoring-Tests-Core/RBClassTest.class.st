@@ -66,8 +66,8 @@ RBClassTest >> testDefinesTraitMethod [
 	self assert: (user definesMethod: #c3).
 	self assert: (user definesMethod: #c).
 	self assert: (user definesMethod: #c2).
-	self assert: (user methodFor: #c2) modelClass ~= user.
-	self assert: (user methodFor: #c) modelClass ~= user.
+	self assert: (user methodFor: #c2) modelClass != user.
+	self assert: (user methodFor: #c) modelClass != user.
 	self assert: (user methodFor: #c3) isNil. "we use nil to represent alias"
 	trait := rbNamespace classNamed: #Trait2.
 	self assert: (user methodFor: #c2) modelClass equals: trait.

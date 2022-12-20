@@ -77,7 +77,7 @@ OCBytecodeToASTCache >> generateForNode: aNode [
 	firstBcOffset := methodOrBlockIr compiledMethod initialPC.
 
 	"if there is a primitive, we need to record the offset"
-	(methodOrBlockIr irPrimitive num ~= 0
+	(methodOrBlockIr irPrimitive num != 0
 		or: [ methodOrBlockIr compiledMethod isQuick ])
 		ifTrue: [ bcToASTMap at: firstBcOffset put: methodOrBlockNode ]. 
 

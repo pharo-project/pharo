@@ -875,7 +875,7 @@ PluggableListMorph >> mouseDownOnMultiple: event forRow: row [
 	(event shiftPressed not and: [event yellowButtonPressed not and: [ self autoDeselect ]])
 		ifTrue: [ self resetListSelection ].
 	oldIndex := self getCurrentSelectionIndex.
-	oldIndex ~= 0 ifTrue: [oldVal := self listSelectionAt: oldIndex].
+	oldIndex != 0 ifTrue: [oldVal := self listSelectionAt: oldIndex].
 
 	"Set or clear new primary selection (listIndex)"
 	anInteger := valueKeeper
@@ -886,7 +886,7 @@ PluggableListMorph >> mouseDownOnMultiple: event forRow: row [
 		[ model perform: setIndexSelector with: anInteger ].
 	
 	"Need to restore the old one, due to how model works, and set new one."
-	oldIndex ~= 0 ifTrue: [self listSelectionAt: oldIndex put: oldVal].
+	oldIndex != 0 ifTrue: [self listSelectionAt: oldIndex put: oldVal].
 	
 	event shiftPressed
 		ifTrue: [((oldIndex max: 1) min: row) to: (oldIndex max: row) do: [:i |
@@ -995,10 +995,10 @@ PluggableListMorph >> mouseMoveOnMultiple: event [
 
 	"Set meaning for subsequent dragging of selection"
 	oldIndex := self getCurrentSelectionIndex.
-	oldIndex ~= 0 ifTrue: [ oldVal := self listSelectionAt: oldIndex ].
+	oldIndex != 0 ifTrue: [ oldVal := self listSelectionAt: oldIndex ].
 
 	"Need to restore the old one, due to how model works, and set new one."
-	oldIndex ~= 0 ifTrue: [ self listSelectionAt: oldIndex put: oldVal ].
+	oldIndex != 0 ifTrue: [ self listSelectionAt: oldIndex put: oldVal ].
 	self listSelectionAt: row put: dragOnOrOff.
 	row changed
 ]
@@ -1012,7 +1012,7 @@ PluggableListMorph >> mouseMoveOnSingle: evt [
 	self enabled ifFalse: [^self].
 	row := self rowAtLocation: evt position.
 	evt hand hasSubmorphs ifFalse: [
-		((self containsPoint: evt position) and: [ row ~= 0 ]) 
+		((self containsPoint: evt position) and: [ row != 0 ]) 
 			ifTrue: [self mouseDownRow: row]
 			ifFalse: [self mouseDownRow: nil]].
 	(self dropEnabled and:[evt hand hasSubmorphs]) 
@@ -1197,7 +1197,7 @@ PluggableListMorph >> resetListSelector: aSelector [
 { #category : #'drag and drop' }
 PluggableListMorph >> resetPotentialDropRow [
 	potentialDropRow ifNotNil: [
-	potentialDropRow ~= 0 ifTrue: [
+	potentialDropRow != 0 ifTrue: [
 		potentialDropRow := 0.
 		self changed. ] ]
 ]

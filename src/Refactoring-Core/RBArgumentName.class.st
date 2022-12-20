@@ -50,7 +50,7 @@ RBArgumentName >> canBeRenamed: anObject [
 
 { #category : #testing }
 RBArgumentName >> hasNewName [ 
-	^ self name ~= self newName
+	^ self name != self newName
 ]
 
 { #category : #accessing }

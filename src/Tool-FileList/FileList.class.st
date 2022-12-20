@@ -286,7 +286,7 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
    oldEntry renameTo: newEntry.
 	self updateFileList; fileListIndex: 0.
 
-	aTransferMorph source model ~= self
+	aTransferMorph source model != self
 		ifTrue: [ aTransferMorph source model updateFileList; fileListIndex: 0 ].
 	"Transcript nextPutAll: 'copied'; cr."
 	^true

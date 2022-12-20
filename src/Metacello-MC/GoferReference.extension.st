@@ -17,12 +17,12 @@ GoferReference >> matchesMetacelloGoferPackage: aMetacelloGoferPackage [
     ifTrue: [ 
       (refFilename beginsWith: pFilename)
         ifFalse: [ ^ false ].
-      (char := pFilename at: pFilename size) ~= $-
+      (char := pFilename at: pFilename size) != $-
         ifTrue: [ char := refFilename at: pFilename size + 1 ] ]
     ifFalse: [ 
       (pFilename beginsWith: refFilename)
         ifFalse: [ ^ false ].
-      (char := refFilename at: refFilename size) ~= $-
+      (char := refFilename at: refFilename size) != $-
         ifTrue: [ char := pFilename at: refFilename size + 1 ] ].
   ^ char = $. or: [ char = $- ]
 ]

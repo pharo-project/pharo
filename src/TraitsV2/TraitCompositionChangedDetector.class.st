@@ -12,13 +12,13 @@ Class {
 TraitCompositionChangedDetector >> compareClass [
 
 	(self enhancer traitCompositionOf: builder)
-		~= (self enhancer traitCompositionOfClass: builder oldClass)
+		!= (self enhancer traitCompositionOfClass: builder oldClass)
 		ifTrue: [ ^ {(ShClassChanged new
 				builder: builder;
 				yourself)} ].
 
 	(self enhancer classTraitCompositionOf: builder)
-		~= (self enhancer classTraitCompositionOfClass: builder oldClass)
+		!= (self enhancer classTraitCompositionOfClass: builder oldClass)
 		ifTrue: [ ^ {(ShMetaclassChanged new
 				builder: builder;
 				yourself)} ].

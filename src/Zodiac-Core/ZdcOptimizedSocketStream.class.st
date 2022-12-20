@@ -72,7 +72,7 @@ ZdcOptimizedSocketStream >> upTo: value [
 					writeStream next: count putAll: readBuffer buffer startingAt: readBuffer contentsStart.
 					readBuffer advanceReadPointer: count.
 					position = 0 ifFalse: [ readBuffer advanceReadPointer: 1 ] ].   
-				position ~= 0 or: [ self atEnd ] ] whileFalse: [ 
+				position != 0 or: [ self atEnd ] ] whileFalse: [ 
 					readBuffer isEmpty ifTrue: [ self fillReadBuffer ] ] ]
 ]
 

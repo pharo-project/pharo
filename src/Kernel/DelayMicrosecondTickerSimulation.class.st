@@ -64,7 +64,7 @@ StackInterpreterPrimitives >> primitiveSignalAtUTCMicroseconds
 { #category : #'api-system' }
 DelayMicrosecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [ 
 	
-	vmSimNextWakeupTick ~= 0 ifTrue: [ 
+	vmSimNextWakeupTick != 0 ifTrue: [ 
 		vmSimNow := milliseconds * 1000.
 		vmSimNow >= vmSimNextWakeupTick ifTrue: [ 
 			vmSimNextWakeupTick := 0. 

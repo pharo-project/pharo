@@ -101,7 +101,7 @@ CalendarDayMorph >> drawOn: aCanvas offset: origin [
 				ifTrue: [Color veryVeryLightGray]
 				ifFalse: [Color veryLightGray].
 			aCanvas fillOval: box color: fillColor borderWidth: 1 borderColor: lineColor].
-	today & (date ~= owner date) & self highlighted not
+	today & (date != owner date) & self highlighted not
 		ifTrue: [aCanvas fillOval: box color: Color white borderWidth: 1 borderColor: Color red].
 	aCanvas
 		drawString: dayString

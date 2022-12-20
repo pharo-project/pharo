@@ -26,7 +26,7 @@ Polygon >> containsPoint: aPoint [
 								ifTrue: [^true]].
 					(p2 y < aPoint y and: [(aPoint directionToLineFrom: p1 to: p2) < 0])
 							ifTrue: [wind := wind - 1]]].
-	^wind ~= 0
+	^wind != 0
 ]
 
 { #category : #enumerating }

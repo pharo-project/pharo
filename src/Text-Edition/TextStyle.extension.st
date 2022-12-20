@@ -4,7 +4,7 @@ Extension { #name : #TextStyle }
 TextStyle >> addNewFontSize: pointSize [
 	"Add a font in specified size to the array of fonts."
 	| f d newArray t  |
-	fontArray first emphasis ~= 0 ifTrue: [
+	fontArray first emphasis != 0 ifTrue: [
 		t := TextSharedInformation at: self fontArray first familyName asSymbol.
 		t fonts first emphasis = 0 ifTrue: [
 			^ t addNewFontSize: pointSize.

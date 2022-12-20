@@ -96,12 +96,12 @@ HDTestReport >> generateTestName: aTestCase [
 
 { #category : #testing }
 HDTestReport >> hasErrors [ 
-	^ suiteErrors ~= 0
+	^ suiteErrors != 0
 ]
 
 { #category : #testing }
 HDTestReport >> hasFailures [ 
-	^ suiteFailures ~= 0
+	^ suiteFailures != 0
 ]
 
 { #category : #testing }

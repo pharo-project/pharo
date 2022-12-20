@@ -350,7 +350,7 @@ OCSourceCode2BytecodeTest >> testPrimNotEqual [
 		timesRepeat: [scanner decodeNextInstruction].
 	self
 		assert: ((did := scanner peekInstruction) selector == #send:super:numArgs:
-				and: [did arguments = {#~=. false. 1}])
+				and: [did arguments = {#'!='. false. 1}])
 		description: 'Failed ' , selector
 ]
 

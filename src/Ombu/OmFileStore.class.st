@@ -167,7 +167,7 @@ OmFileStore >> entryByLocalName [
 { #category : #accessing }
 OmFileStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
-	(aReference isNull or: [ aReference globalName ~= self globalName])
+	(aReference isNull or: [ aReference globalName != self globalName])
 		ifTrue: [ ^ absentBlockClosure value ].
 
 	^ self entryByLocalName
@@ -295,7 +295,7 @@ OmFileStore >> initializeWithGlobalName: aName fileReference: aFileReference [
 OmFileStore >> isOutdated [
 	"Answer if #refresh is needed. A store is outdated if the file exists and has greater size than last time I wrote."
 
-	^ self fileReference exists and: [ self fileReference size ~= lastStreamPosition ]
+	^ self fileReference exists and: [ self fileReference size != lastStreamPosition ]
 ]
 
 { #category : #accessing }

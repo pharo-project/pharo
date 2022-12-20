@@ -32,6 +32,17 @@ BoxedFloat64 class >> basicNew: sizeRequested [
 	self primitiveFailed
 ]
 
+{ #category : #comparing }
+BoxedFloat64 >> != aNumber [ 
+	"Primitive. Compare the receiver with the argument and return true
+	if the receiver is not equal to the argument. Otherwise return false.
+	Fail if the argument is not a Float. Optional. See Object documentation
+	whatIsAPrimitive."
+
+	<primitive: 48>
+	^super != aNumber
+]
+
 { #category : #arithmetic }
 BoxedFloat64 >> * aNumber [ 
 	"Primitive. Answer the result of multiplying the receiver by aNumber.
@@ -279,5 +290,5 @@ BoxedFloat64 >> ~= aNumber [
 	whatIsAPrimitive."
 
 	<primitive: 48>
-	^super ~= aNumber
+	^super != aNumber
 ]

@@ -38,24 +38,24 @@ EpClassModification >> behaviorAffectedName [
 
 { #category : #testing }
 EpClassModification >> hasChanges [
-	^ oldClass definitionSource ~= newClass definitionSource or: [ 
-		oldClass classSide definitionSource ~= newClass classSide definitionSource ]
+	^ oldClass definitionSource != newClass definitionSource or: [ 
+		oldClass classSide definitionSource != newClass classSide definitionSource ]
 ]
 
 { #category : #testing }
 EpClassModification >> hasMetaclassChanges [
 	"FIX should compare metaclasses as a whole"
 
-	^ oldClass classSide instVarNames ~= newClass classSide instVarNames
+	^ oldClass classSide instVarNames != newClass classSide instVarNames
 ]
 
 { #category : #testing }
 EpClassModification >> hasNonMetaclassChanges [
 
-	^ oldClass classVarNames ~= newClass classVarNames
-		or: [ oldClass instVarNames ~= newClass instVarNames
-				or: [ oldClass sharedPoolNames ~= newClass sharedPoolNames
-						or: [ oldClass superclassName ~= newClass superclassName ] ] ]
+	^ oldClass classVarNames != newClass classVarNames
+		or: [ oldClass instVarNames != newClass instVarNames
+				or: [ oldClass sharedPoolNames != newClass sharedPoolNames
+						or: [ oldClass superclassName != newClass superclassName ] ] ]
 ]
 
 { #category : #initialization }

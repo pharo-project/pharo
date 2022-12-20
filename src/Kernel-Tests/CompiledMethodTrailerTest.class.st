@@ -58,7 +58,7 @@ CompiledMethodTrailerTest >> testEncodingSourcePointer [
 			trailer method: method.
 			self assert: (ptr := method sourcePointer) identicalTo: trailer sourcePointer.
 			"the last bytecode index must be at 0"
-			ptr ~= 0 ifTrue: [ self assert: method endPC equals: trailer endPC ] ]
+			ptr != 0 ifTrue: [ self assert: method endPC equals: trailer endPC ] ]
 ]
 
 { #category : #tests }

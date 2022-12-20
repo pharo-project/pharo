@@ -241,6 +241,14 @@ Object class >> whatIsAPrimitive [
 	self error: 'comment only'
 ]
 
+{ #category : #comparing }
+Object >> != anObject [ 
+	"Answer whether the receiver and the argument do not represent the 
+	same object."
+
+	^ self = anObject == false
+]
+
 { #category : #associating }
 Object >> -> anObject [
 	"Answer an Association between self and anObject"

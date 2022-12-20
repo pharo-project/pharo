@@ -689,7 +689,7 @@ PolygonMorph >> computeBounds [
 	handles ifNotNil: [self updateHandles].
 
 	"since we are directly updating bounds, see if any ordinary submorphs exist and move them accordingly"
-	(oldBounds notNil and: [(delta := bounds origin - oldBounds origin) ~= (0@0)]) ifTrue: [
+	(oldBounds notNil and: [(delta := bounds origin - oldBounds origin) != (0@0)]) ifTrue: [
 		excludeHandles := IdentitySet new.
 		handles ifNotNil: [excludeHandles addAll: handles].
 		self submorphsDo: [ :each |

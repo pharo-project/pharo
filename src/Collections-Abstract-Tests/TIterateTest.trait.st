@@ -291,7 +291,7 @@ TIterateTest >> testRejectThenCollect [
 			index := index + 1.
 			pivot ].
 			
-	self assert: result ~= self collectionWithoutNilElements.
+	self assert: result != self collectionWithoutNilElements.
 	self assert: selectIndex equals: self collectionWithoutNilElements size.
 	self assert: index equals: self collectionWithoutNilElements size - 1.
 	
@@ -387,7 +387,7 @@ TIterateTest >> testSelectThenCollect [
 			index := index + 1.
 			pivot ].
 			
-	self assert: result ~= self collectionWithoutNilElements.
+	self assert: result != self collectionWithoutNilElements.
 	self assert: selectIndex equals: self collectionWithoutNilElements size.
 	self assert: index equals: self collectionWithoutNilElements size - 1.
 	

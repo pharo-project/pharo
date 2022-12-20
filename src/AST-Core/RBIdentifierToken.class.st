@@ -16,7 +16,7 @@ RBIdentifierToken >> isIdentifier [
 { #category : #testing }
 RBIdentifierToken >> isKeywordPattern [
 	^ self isPatternVariable	and: [ value second = RBScanner keywordPatternCharacter
-				and: [ value third ~= RBScanner cascadePatternCharacter ] ]
+				and: [ value third != RBScanner cascadePatternCharacter ] ]
 ]
 
 { #category : #testing }

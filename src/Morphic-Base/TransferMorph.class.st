@@ -193,7 +193,7 @@ TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 	formerPosition := self formerPosition.
 	super justDroppedInto: targetMorph event: anEvent.
 	self formerPosition: formerPosition.
-	accepted := targetMorph ~= self world.
+	accepted := targetMorph != self world.
 	self animationForMoveSuccess: accepted.
 	accepted ifTrue: [
 		self dropNotifyRecipient ifNotNil: [
@@ -204,7 +204,7 @@ TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 { #category : #'event handling' }
 TransferMorph >> keyDown: evt [
 	"Abort the drag on an escape"
-	evt keyCharacter ~= Character escape ifTrue: [ ^self ].
+	evt keyCharacter != Character escape ifTrue: [ ^self ].
 	self delete.
 ]
 

@@ -417,7 +417,7 @@ MetacelloMCProjectSpec >> loadVersion: aVersionOrNil [
 						ifTrue:
 							[ "no need to refetch list ... recursion stoppper (Issue 95)" ^ self ]
 						ifFalse: [ projectCache at: vrsn put: list ] ].
-			vrsn versionString ~= self versionString
+			vrsn versionString != self versionString
 				ifTrue: [ MetacelloNotification signal: (' [' , vrsn versionString , ']') ].
 			mcLoader preLoad: self.
 			vrsn fetchRequiredFromArray: list.	"do the load"

@@ -488,7 +488,7 @@ MetaLink >> printString [
 		ws nextPutAll: selector asString.
 		^ ws contents ].
 	keywords := selector separateKeywords splitOn: '  '.
-	(arguments isEmpty or: [ keywords size ~= arguments size ]) ifTrue: [ 
+	(arguments isEmpty or: [ keywords size != arguments size ]) ifTrue: [ 
 		ws nextPutAll: 'Error: wrong number of arguments'.
 		^ ws contents ].
 	keywords with: arguments do: [ :keyword :argument | 

@@ -523,7 +523,7 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 	For now, if it is a closer return an empty error node.
 	If it is not a closer, consume it"
 	errorNode := self parserError: 'Cascade message expected'.
-	(currentToken value ~= $.
+	(currentToken value != $.
 		and: [ ('])};' includes: currentToken value) not
 			and: [ currentToken isEOF not ] ] )
 				ifTrue: [ self step ].
@@ -936,7 +936,7 @@ RBParser >> parseStatementInto: statementList periodList: periods [
 	  - a scope closer e.g., )]} or
 	  -  or the end of the stream.
 	If it is neither, we should mark our statement as unfinished statement."
-	(currentToken value ~= $. 
+	(currentToken value != $. 
 		and: [ ('])}' includes: currentToken value) not
 			and: [ currentToken isEOF not ] ] ) ifTrue: [
 		self parserError: 'End of statement expected'.
@@ -1023,7 +1023,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	  - an accepted scope closer e.g., )]} or
 	  - or the end of the stream.
 	If it is neither, we should mark our statement as unfinished statement."
-	(currentToken value ~= $. 
+	(currentToken value != $. 
 		and: [ (aCollectionOfClosers includes: currentToken value) not
 			and: [ currentToken isEOF not ] ] ) ifTrue: [
 		self parserError: 'End of statement expected'.

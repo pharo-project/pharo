@@ -157,7 +157,7 @@ StandardFonts class >> menuFont [
 
 { #category : #'font accessing' }
 StandardFonts class >> menuFont: aFont [
-	aFont ~= MenuFont 
+	aFont != MenuFont 
 		ifTrue: [ MenuFont := aFont ].
 ]
 

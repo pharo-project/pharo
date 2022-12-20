@@ -235,7 +235,7 @@ MCClassDefinition >> hasClassInstanceVariables [
 
 { #category : #testing }
 MCClassDefinition >> hasClassTraitComposition [
-	^self classTraitCompositionString ~= '{}'
+	^self classTraitCompositionString != '{}'
 ]
 
 { #category : #testing }
@@ -245,7 +245,7 @@ MCClassDefinition >> hasComment [
 
 { #category : #testing }
 MCClassDefinition >> hasTraitComposition [
-	^self traitCompositionString ~= '{}'
+	^self traitCompositionString != '{}'
 ]
 
 { #category : #comparing }

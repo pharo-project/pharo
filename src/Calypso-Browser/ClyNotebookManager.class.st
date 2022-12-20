@@ -100,7 +100,7 @@ ClyNotebookManager >> basicUpdateTools [
 		currentTools := tools copy.
 
 		self updateTabs.
-		(needsNewSelection or: [ tools ~= currentTools ]) 
+		(needsNewSelection or: [ tools != currentTools ]) 
 			ifTrue: [ self restoreSelectedTools: selectedTools].
 ]
 

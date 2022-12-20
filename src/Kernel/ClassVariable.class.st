@@ -79,7 +79,7 @@ ClassVariable >> isReferenced [
 ClassVariable >> needsFullDefinition [
 	"only ClassVariable can use a simplified definition"
 
-	^ self class ~= ClassVariable
+	^ self class != ClassVariable
 ]
 
 { #category : #accessing }

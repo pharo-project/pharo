@@ -114,7 +114,7 @@ Interval class >> newFrom: aCollection [
 		^self from: aCollection first to: aCollection last].
     	newInterval := self from: aCollection first to: aCollection last
 	by: (aCollection last - aCollection first) // (n - 1).
-	aCollection ~= newInterval
+	aCollection != newInterval
 		ifTrue: [
 			"Give a second chance, because progression might be arithmetic, but = answer false"
 			(newInterval hasEqualElements: aCollection) ifFalse: [
@@ -331,7 +331,7 @@ Interval >> printOn: aStream [
 	 print: start;
 	 nextPutAll: ' to: ';
 	 print: stop.
-	step ~= 1 ifTrue: [aStream nextPutAll: ' by: '; print: step].
+	step != 1 ifTrue: [aStream nextPutAll: ' by: '; print: step].
 	aStream nextPut: $)
 ]
 
@@ -439,7 +439,7 @@ Interval >> storeOn: aStream [
 	 	store: start;
 	 	nextPutAll: ' to: ';
 	 	store: stop.
-	step ~= 1 ifTrue: [aStream nextPutAll: ' by: '; store: step].
+	step != 1 ifTrue: [aStream nextPutAll: ' by: '; store: step].
 	aStream nextPut: $)
 ]
 

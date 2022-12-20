@@ -567,12 +567,12 @@ LogicalFont >> emphasized: code [
 		ifFalse: [ slantValue ].
 	(weightValue = newWeight and: [ slantValue = newSlant ])
 		ifTrue: [ ^ self ].
-	(weightValue ~= newWeight and: [ slantValue ~= newSlant ])
+	(weightValue != newWeight and: [ slantValue != newSlant ])
 		ifTrue: [ boldItalicDerivative ifNotNil: [ ^ boldItalicDerivative ] ]
 		ifFalse: [ 
-			weightValue ~= newWeight
+			weightValue != newWeight
 				ifTrue: [ boldDerivative ifNotNil: [ ^ boldDerivative ] ].
-			slantValue ~= newSlant
+			slantValue != newSlant
 				ifTrue: [ italicDerivative ifNotNil: [ ^ italicDerivative ] ] ].
 	answer := self class
 		familyName: familyName
@@ -581,11 +581,11 @@ LogicalFont >> emphasized: code [
 		stretchValue: stretchValue
 		weightValue: newWeight
 		slantValue: newSlant.
-	(weightValue ~= newWeight and: [ slantValue ~= newSlant ])
+	(weightValue != newWeight and: [ slantValue != newSlant ])
 		ifTrue: [ ^ boldItalicDerivative := answer ].
-	weightValue ~= newWeight
+	weightValue != newWeight
 		ifTrue: [ ^ boldDerivative := answer ].
-	slantValue ~= newSlant
+	slantValue != newSlant
 		ifTrue: [ ^ italicDerivative := answer ].
 	^ answer
 ]

@@ -55,6 +55,6 @@ ExtendedDatePrinter >> printDate: aDate format: formatArray on: aStream [
 					ifFalse: [ (year \\ 100) printOn: aStream base: 10 length: 2 padded: true ] ].
 		i < 3
 			ifTrue: [
-				(formatArray at: 4) ~= 0
+				(formatArray at: 4) != 0
 					ifTrue: [ aStream nextPut: (formatArray at: 4) asCharacter ] ] ]
 ]

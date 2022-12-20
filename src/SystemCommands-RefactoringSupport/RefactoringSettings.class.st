@@ -67,7 +67,7 @@ RefactoringSettings class >> removeScopeNamed: key [
 
 	self scopeList removeAllSuchThat: 
 		[ :e | e description = key and: 
-			[ e description ~= 'Current image'] ]
+			[ e description != 'Current image'] ]
 ]
 
 { #category : #accessing }

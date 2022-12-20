@@ -120,7 +120,7 @@ TextEmphasis >> remove: anotherCodeOrEmphasis [
 
 { #category : #accessing }
 TextEmphasis >> set [
-	^ setMode and: [emphasisCode ~= 0]
+	^ setMode and: [emphasisCode != 0]
 ]
 
 { #category : #accessing }

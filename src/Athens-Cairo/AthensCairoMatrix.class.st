@@ -45,7 +45,7 @@ AthensCairoMatrix >> copy [
 
 { #category : #private }
 AthensCairoMatrix >> copyFromMatrix: m [
-	self assert: [ m getHandle ~= self getHandle ].
+	self assert: [ m getHandle != self getHandle ].
 	LibC memCopy: m getHandle to: self getHandle size: self class byteSize
 ]
 

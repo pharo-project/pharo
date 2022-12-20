@@ -63,9 +63,9 @@ FloatTest >> testComparisonWhenPrimitiveFails [
 	self assert: 0.5 equals: (1/2).
 	self deny: 0.5 equals: (3/4).
 	
-	self assert: 0.5 ~= (1/4).
-	self deny: 0.5 ~= (1/2).
-	self assert: 0.5 ~= (3/4)
+	self assert: 0.5 != (1/4).
+	self deny: 0.5 != (1/2).
+	self assert: 0.5 != (3/4)
 ]
 
 { #category : #'tests - arithmetic' }
@@ -338,8 +338,8 @@ FloatTest >> testNaNCompare [
 		compareSelectors do: [:op |
 			(theNaN perform: op with: comp) ifTrue: [brokenMethods add: (theNaN class lookupSelector: op)].
 			(comp perform: op with: theNaN) ifTrue: [brokenMethods add: (comp class lookupSelector: op)]].
-		(theNaN ~= comp) ifFalse: [brokenMethods add: (theNaN class lookupSelector: #~=)].
-		(comp ~= theNaN) ifFalse: [brokenMethods add: (comp class lookupSelector: #~=)]].
+		(theNaN != comp) ifFalse: [brokenMethods add: (theNaN class lookupSelector: #'!=')].
+		(comp != theNaN) ifFalse: [brokenMethods add: (comp class lookupSelector: #'!=')]].
 	
 "build a warning message to tell about all broken methods at once"
 	warningMessage := String streamContents: [:s |
@@ -353,8 +353,8 @@ FloatTest >> testNaNCompare [
 		compareSelectors do: [:op2 |
 			self deny: (theNaN perform: op2 with: comp2) description: warningMessage.
 			self deny: (comp2 perform: op2 with: theNaN) description: warningMessage].
-		self assert: (theNaN ~= comp2) description: warningMessage.
-		self assert: (comp2 ~= theNaN) description: warningMessage].
+		self assert: (theNaN != comp2) description: warningMessage.
+		self assert: (comp2 != theNaN) description: warningMessage].
 ]
 
 { #category : #'tests - NaN behavior' }
@@ -560,7 +560,7 @@ FloatTest >> testTruncated [
 FloatTest >> testZero1 [
 
 	self assert: Float negativeZero equals: 0 asFloat.
-	self assert: (Float negativeZero at: 1) ~= (0 asFloat at: 1)
+	self assert: (Float negativeZero at: 1) != (0 asFloat at: 1)
 
 	"The negative zero has a bit representation that is different from the bit representation of the positive zero. Nevertheless, both values are defined to be equal."
 ]

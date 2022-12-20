@@ -1094,9 +1094,9 @@ TextEditor >> crWithIndent: aKeyboardEvent [
 	s := self string.
 	i := self stopIndex.
 	tabCount := 0.
-	[(i := i-1) > 0 and: [(char := s at: i) ~= Character cr]]
+	[(i := i-1) > 0 and: [(char := s at: i) != Character cr]]
 		whileTrue:  "Count tabs and brackets (but not a leading bracket)"
-		[(char = Character tab and: [i < s size and: [(s at: i+1) ~= $[ ]]) ifTrue: [tabCount := tabCount + 1].
+		[(char = Character tab and: [i < s size and: [(s at: i+1) != $[ ]]) ifTrue: [tabCount := tabCount + 1].
 		char = $[ ifTrue: [tabCount := tabCount + 1].
 		char = $] ifTrue: [tabCount := tabCount - 1]].
 	 "Now inject CR with tabCount tabs"
@@ -2231,7 +2231,7 @@ TextEditor >> nextNonBlank: position [
 	
 	(string at: index) isSeparator ifFalse: [ ^ index + 1 ].
 	index := index + 1.
-	[ index <= string size and: [(string at: index) isSeparator and: [(string at:index) ~= Character cr]]]
+	[ index <= string size and: [(string at: index) isSeparator and: [(string at:index) != Character cr]]]
 		whileTrue: [index := index + 1].
 	^ index
 ]
@@ -2406,7 +2406,7 @@ TextEditor >> previousNonBlank: position [
 	index := index -1.
 	(string at: index) isSeparator ifFalse: [ ^ index ]. 
 
-	[ index > 1 and: [(string at: index-1) isSeparator and: [(string at:index-1) ~= Character cr]]]
+	[ index > 1 and: [(string at: index-1) isSeparator and: [(string at:index-1) != Character cr]]]
 		whileTrue: [index := index - 1].
 	^ index
 ]

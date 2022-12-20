@@ -206,7 +206,7 @@ TextDiffBuilder >> lcsFor: xFilteredLines and: yFilteredLines [
 		d negated to: d by: 2 do: [ :k |
 			| index lcs x y |
 			index := max + k.
-			(k + d = 0 or: [ k ~= d and: [ (v at: index) < (v at: index + 2) ] ])
+			(k + d = 0 or: [ k != d and: [ (v at: index) < (v at: index + 2) ] ])
 				ifTrue: [ x := v at: (index := index + 2) ]
 				ifFalse: [ x := (v at: index) + 1 ].
 			y := x - k.

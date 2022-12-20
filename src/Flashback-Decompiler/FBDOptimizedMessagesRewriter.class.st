@@ -28,7 +28,7 @@ FBDOptimizedMessagesRewriter >> analyseSeq: seq [
 	currentCascade := OrderedCollection new.
 	seq statements
 		do: [ :each | 
-			(each isMessage and: [ each selector ~= #ifTrue:ifFalse: ])
+			(each isMessage and: [ each selector != #ifTrue:ifFalse: ])
 				ifFalse: [ self rewriteSeq: seq with: currentCascade ]
 				ifTrue: [ 
 					currentCascade

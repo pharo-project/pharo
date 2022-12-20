@@ -1042,7 +1042,7 @@ SimpleHierarchicalListMorph >> startDrag: anEvent [
 			or: [anEvent hand hasSubmorphs])
 		ifTrue: [^ self].
 	itemMorph highlightForMouseDown: false.
-	itemMorph ~= self selectedMorph
+	itemMorph != self selectedMorph
 		ifTrue: [self setSelectedMorph: itemMorph].
 	passenger := self model dragPassengerFor: itemMorph inMorph: self.
 	passenger

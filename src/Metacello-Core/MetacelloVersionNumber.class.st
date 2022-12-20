@@ -363,7 +363,7 @@ MetacelloVersionNumber >> match: aVersionPattern [
 	mySize = patternSize 
 		ifFalse: [ 
 			mySize < patternSize ifTrue: [ ^false ].
-			(patternVersion at: patternSize) ~= '?' ifTrue: [ ^false ].
+			(patternVersion at: patternSize) != '?' ifTrue: [ ^false ].
 			mySize := patternSize ].
 	1 to: mySize do: [:i | | pattern |
 		pattern := (patternVersion at: i) asString.

@@ -18,7 +18,7 @@ CmUICommandTest >> banana [
 
 { #category : #helpers }
 CmUICommandTest >> iconNamed: aSymbol [
-	aSymbol ~= #banana
+	aSymbol != #banana
 		ifTrue: [ self error: 'Only #banana icon is needed for tests.' ].
 		
 	^ self banana

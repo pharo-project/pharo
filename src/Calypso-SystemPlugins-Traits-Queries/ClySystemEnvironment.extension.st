@@ -9,7 +9,7 @@ ClySystemEnvironment >> defineTrait: defString notifying: aController startingFr
 	keywdIx := defTokens findFirst: [:x | x = 'category'].
 	keywdIx := defTokens findFirst: [:x | x = 'named:'].
 	newTraitName := (defTokens at: keywdIx+1) copyWithoutAll: '#()'.
-	((oldTrait isNil or: [oldTrait instanceSide name asString ~= newTraitName])
+	((oldTrait isNil or: [oldTrait instanceSide name asString != newTraitName])
 		and: [self includesClassNamed: newTraitName asSymbol]) ifTrue:
 			["Attempting to define new class/trait over existing one when
 				not looking at the original one in this browser..."

@@ -33,7 +33,7 @@ MockMessageSend >> matchesArguments: anArray [
 	arguments ifNil: [ ^ true ].
 	arguments size = anArray size ifFalse: [ ^ false ].
 	anArray with: arguments do: [ :actual :expected | 
-		(expected ~= MockObject any and: [ actual ~= expected ]) ifTrue: [ 
+		(expected != MockObject any and: [ actual != expected ]) ifTrue: [ 
 			^ false ] ].
 	^ true
 ]

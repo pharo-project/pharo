@@ -38,8 +38,8 @@ EpTraitModification >> behaviorAffectedName [
 
 { #category : #testing }
 EpTraitModification >> hasChanges [
-	^ oldTrait definitionSource ~= newTrait definitionSource or: [ 
-		oldTrait classSide definitionSource ~= newTrait classSide definitionSource ]
+	^ oldTrait definitionSource != newTrait definitionSource or: [ 
+		oldTrait classSide definitionSource != newTrait classSide definitionSource ]
 ]
 
 { #category : #initialize }

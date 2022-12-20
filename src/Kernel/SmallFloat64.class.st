@@ -18,6 +18,17 @@ SmallFloat64 class >> basicNew: anInteger [
 	^self basicNew
 ]
 
+{ #category : #comparing }
+SmallFloat64 >> != aNumber [ 
+	"Primitive. Compare the receiver with the argument and return true
+	if the receiver is not equal to the argument. Otherwise return false.
+	Fail if the argument is not a Float. Optional. See Object documentation
+	whatIsAPrimitive."
+
+	<primitive: 548>
+	^super != aNumber
+]
+
 { #category : #arithmetic }
 SmallFloat64 >> * aNumber [ 
 	"Primitive. Answer the result of multiplying the receiver by aNumber.
@@ -337,5 +348,5 @@ SmallFloat64 >> ~= aNumber [
 	whatIsAPrimitive."
 
 	<primitive: 548>
-	^super ~= aNumber
+	^super != aNumber
 ]

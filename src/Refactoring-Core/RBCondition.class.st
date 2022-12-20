@@ -128,7 +128,7 @@ RBCondition class >> definesSelector: aSelector in: aClass [
 RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMethod [
 	^self new
 		block: [(aClass directlyDefinesMethod: aSelector)
-			ifTrue: [ (aClass parseTreeFor: aSelector) ~= rbMethod parseTree ]
+			ifTrue: [ (aClass parseTreeFor: aSelector) != rbMethod parseTree ]
 			ifFalse: [ false ]
 			]
 		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString

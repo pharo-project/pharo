@@ -47,5 +47,5 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsNeverInLocalProcess [
 	futures do: [ :each | each waitForCompletion: 2 seconds ].
 	
 	[ hashes isEmpty ] whileFalse: [ 
-		self assert: hashes next ~= Processor activeProcess identityHash ].
+		self assert: hashes next != Processor activeProcess identityHash ].
 ]

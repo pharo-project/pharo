@@ -242,7 +242,7 @@ Bitmap >> compress: bm toByteArray: ba [
 						k := k + 1 ]
 					ifFalse: 
 						[ "Finally, check for junk"
-						[ j < size and: [ (bm at: j) ~= (bm at: j + 1) ]	"scan for ~= words..." ] whileTrue: [ j := j + 1 ].
+						[ j < size and: [ (bm at: j) != (bm at: j + 1) ]	"scan for ~= words..." ] whileTrue: [ j := j + 1 ].
 						j = size ifTrue: [ j := j + 1 ].
 						"We have one or more unmatching words, ending at j-1"
 						i := self 

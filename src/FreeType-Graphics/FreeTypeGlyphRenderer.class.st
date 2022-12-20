@@ -197,7 +197,7 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 	s := s sign * (s abs ceiling). 
 	offsetX := glyph hBearingX negated + s + (boldExtra // 2) .
 	offsetY := glyph height - glyph hBearingY + (boldExtra//2).
-	synthBoldStrength ~= 0
+	synthBoldStrength != 0
 		ifTrue:[face emboldenOutline: synthBoldStrength].
 	face transformOutlineAngle: 0 scalePoint: 1@1  slant: slant.
 	face translateOutlineBy: (offsetX+(sub/64))@offsetY.

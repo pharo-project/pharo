@@ -276,7 +276,7 @@ LinkInstallerTest >> testMetaLinkWithAnonymousClasses [
 	self removeClassAccessControlForTests: obj1.
 	
 	"One of the 2 objects must have migrated to another class"
-	self assert: obj1 class ~= obj2 class.
+	self assert: obj1 class != obj2 class.
 	self assert: obj1 class superclass identicalTo: ReflectivityExamples.
 	self assert: obj2 class identicalTo: ReflectivityExamples.
 

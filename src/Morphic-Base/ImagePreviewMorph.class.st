@@ -24,7 +24,7 @@ ImagePreviewMorph >> cornerStyle: aSymbol [
 ImagePreviewMorph >> defaultImageFormOfSize: aPoint [
 	"Answer a default preview image form."
 
-	^(defaultImageForm isNil or: [defaultImageForm extent ~= aPoint])
+	^(defaultImageForm isNil or: [defaultImageForm extent != aPoint])
 		ifTrue: [defaultImageForm := Form extent: aPoint]
 		ifFalse: [defaultImageForm]
 ]

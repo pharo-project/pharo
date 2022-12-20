@@ -50,7 +50,7 @@ OupsDebuggerFailure >> isDebuggerFailure [
 
 { #category : #testing }
 OupsDebuggerFailure >> isHandleableBy: aDebugger [
-	^ aDebugger ~= failedDebugger
+	^ aDebugger != failedDebugger
 ]
 
 { #category : #accessing }

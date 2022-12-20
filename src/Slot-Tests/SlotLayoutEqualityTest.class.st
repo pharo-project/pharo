@@ -35,8 +35,8 @@ SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isNotEqualToC
 			name: self anotherClassName;
 			in: blockToBuildAnotherClass ].
 	
-	self assert: aClass classLayout ~= anotherClass classLayout.
-	self assert: aClass classLayout hash ~= anotherClass classLayout hash
+	self assert: aClass classLayout != anotherClass classLayout.
+	self assert: aClass classLayout hash != anotherClass classLayout hash
 ]
 
 { #category : #tests }

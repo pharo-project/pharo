@@ -90,7 +90,7 @@ OSSDL2AthensRenderer >> pixelExtent [
 { #category : #drawing }
 OSSDL2AthensRenderer >> prepareForDrawing [
 	mutex critical: [
-		textureExtent ~= renderer outputExtent ifTrue: [ self resized ].
+		textureExtent != renderer outputExtent ifTrue: [ self resized ].
 	].
 ]
 
@@ -193,6 +193,6 @@ OSSDL2AthensRenderer >> validate [
 	athensSurface ifNil: [ ^ false ].
 	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].
 	(renderer isNil or: [ renderer isNull ]) ifTrue: [ ^ false ].
-	renderer outputExtent ~= textureExtent ifTrue: [ ^ false ].
+	renderer outputExtent != textureExtent ifTrue: [ ^ false ].
 	^ true
 ]

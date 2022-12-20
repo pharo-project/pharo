@@ -57,7 +57,7 @@ TaskbarMorph class >> showTaskbar [
 
 { #category : #setting }
 TaskbarMorph class >> showTaskbar: aBoolean [
-	ShowTaskbar ~= aBoolean
+	ShowTaskbar != aBoolean
 		ifTrue: [ShowTaskbar := aBoolean.
 			self showTaskbarPreferenceChanged]
 ]
@@ -115,13 +115,13 @@ TaskbarMorph >> buttonForMorph: aMorph [
 { #category : #taskbar }
 TaskbarMorph >> canMoveLeft: task [
 
- ^ ((self orderedTasks first morph) ~= task).
+ ^ ((self orderedTasks first morph) != task).
 ]
 
 { #category : #taskbar }
 TaskbarMorph >> canMoveRight: task [
 
- ^ ((self orderedTasks last morph) ~= task).
+ ^ ((self orderedTasks last morph) != task).
 ]
 
 { #category : #drawing }

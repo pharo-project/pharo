@@ -17,7 +17,7 @@ MetacelloRepositoriesSpec >> canUpgradeTo: aMetacelloRepositoriesSpec [
     sort: [ :a :b | a description <= b description ].
   anotherRepositorySpecs := aMetacelloRepositoriesSpec map values
     sort: [ :a :b | a description <= b description ].
-  repositorySpecs size ~= anotherRepositorySpecs size
+  repositorySpecs size != anotherRepositorySpecs size
     ifTrue: [ ^ false ].
   1 to: repositorySpecs size do: [ :index | 
     | repoSpec anotherRepoSpec |
@@ -70,7 +70,7 @@ MetacelloRepositoriesSpec >> hasNoLoadConflicts: aMetacelloRepositoriesSpec [
     sort: [ :a :b | a description <= b description ].
   anotherRepositorySpecs := aMetacelloRepositoriesSpec map values
     sort: [ :a :b | a description <= b description ].
-  repositorySpecs size ~= anotherRepositorySpecs size
+  repositorySpecs size != anotherRepositorySpecs size
     ifTrue: [ ^ false ].
   1 to: repositorySpecs size do: [ :index | 
     | repoSpec anotherRepoSpec |

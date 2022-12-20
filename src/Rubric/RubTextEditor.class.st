@@ -581,7 +581,7 @@ RubTextEditor >> crWithIndent: aKeyboardEvent [
 	crChars := Array with: Character cr with: Character lf.
 	[(i := i-1) > 0 and: [(crChars includes: (char := s at: i)) not]]
 		whileTrue:  "Count tabs and brackets (but not a leading bracket)"
-		[(char = Character tab and: [i < s size and: [(s at: i+1) ~= $[ ]]) ifTrue: [tabCount := tabCount + 1].
+		[(char = Character tab and: [i < s size and: [(s at: i+1) != $[ ]]) ifTrue: [tabCount := tabCount + 1].
 		char = $[ ifTrue: [tabCount := tabCount + 1].
 		char = $] ifTrue: [tabCount := tabCount - 1]].
 	 "Now inject CR with tabCount tabs"
@@ -1214,7 +1214,7 @@ RubTextEditor >> hasError [
 
 { #category : #'accessing - selection' }
 RubTextEditor >> hasSelection [
-	^ self pointIndex ~= self markIndex
+	^ self pointIndex != self markIndex
 ]
 
 { #category : #'menu messages' }

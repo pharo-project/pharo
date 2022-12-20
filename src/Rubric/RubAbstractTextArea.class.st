@@ -1005,9 +1005,9 @@ RubAbstractTextArea >> handleBoundsChange: aBlock [
 	| oldBounds |
 	oldBounds := self bounds copy.
 	aBlock value.
-	oldBounds topLeft ~= self bounds topLeft
+	oldBounds topLeft != self bounds topLeft
 		ifTrue: [ self announce: ((RubPositionChanged morph: self) previousBounds: oldBounds)].
-	oldBounds extent ~= self bounds extent
+	oldBounds extent != self bounds extent
 		ifTrue: [ 
 			self scrollPane ifNotNil: [ :sp | sp textAreaExtentChanged ].
 			self announce: ((RubExtentChanged morph: self) previousBounds: oldBounds) ].
@@ -1085,7 +1085,7 @@ RubAbstractTextArea >> handleSelectionChange: aBlock [
 	prevPointBlock := self pointBlock.
 	aBlock value.
 
-	(prevMarkBlock ~= self markBlock or: [ prevPointBlock ~= self pointBlock ]) ifFalse: [ ^ self ].
+	(prevMarkBlock != self markBlock or: [ prevPointBlock != self pointBlock ]) ifFalse: [ ^ self ].
 	
 	"have to invalidate the full surface because of the selection"
 	self invalidRect: (self expandFullBoundsForDropShadow: self drawingBounds).
@@ -2214,7 +2214,7 @@ RubAbstractTextArea >> withoutDecorator: aDecorator [
 	(self hasDecorator: aDecorator)
 		ifFalse: [ ^ self ].
 	n := paragraph.
-	[ n notNil and: [ n ~= aDecorator ] ]
+	[ n notNil and: [ n != aDecorator ] ]
 		whileTrue: [ 
 			p := n.
 			n := p next ].

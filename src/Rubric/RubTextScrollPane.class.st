@@ -168,7 +168,7 @@ RubTextScrollPane >> handleScrollerOffsetChange: aBlock [
 	| prevOffset ret |
 	prevOffset := self offset.
 	ret := aBlock value.
-	(self offset ~= prevOffset and: [ self owner notNil ])
+	(self offset != prevOffset and: [ self owner notNil ])
 		ifTrue: [ self owner scrollerOffsetChanged ].
 	^ ret
 ]
@@ -342,7 +342,7 @@ RubTextScrollPane >> scrollSelectionIntoView: event [
 				ifTrue: [ self scrollBy: 0 @ (bnds top - selRect top) ]
 				ifFalse: [ self scrollBy: 0 @ (bnds bottom - selRect bottom) ].
 			^ true ].
-	(delta := selRect amountToTranslateWithin: bnds) ~= (0 @ 0)
+	(delta := selRect amountToTranslateWithin: bnds) != (0 @ 0)
 		ifTrue: [ 
 			delta x > 0
 				ifTrue: [ 

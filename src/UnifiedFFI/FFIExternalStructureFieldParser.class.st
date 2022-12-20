@@ -33,7 +33,7 @@ FFIExternalStructureFieldParser >> parseFields: fields structure: structClass [
 					ifTrue: [ arity := arity + 1 ]
 					ifFalse: [ self error: 'I cannot parse structure.' ] ] ].
 		type pointerArity: arity.
-		stream peek ~= #';' ifTrue: [
+		stream peek != #';' ifTrue: [
 			fieldName := stream next.
 			fieldName isSymbol ifFalse: [ self error: 'invalid field name'].
 			(fieldSpec fieldNames includes: fieldName) ifTrue: [ self error: 'duplicate field name' ].

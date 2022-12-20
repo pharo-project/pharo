@@ -154,7 +154,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 
-	(selector ~= method selector or: [self changesSourceCode: selector]) 
+	(selector != method selector or: [self changesSourceCode: selector]) 
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 		
@@ -203,7 +203,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
 	
 	"If the selectors are not the same I have to save the new source code"
-	sourceHasChanged := aSelector ~= aCompiledMethod selector.
+	sourceHasChanged := aSelector != aCompiledMethod selector.
 	
 	"Check if the method should be replaced. It is replaced if:
 	 - replacing is true.

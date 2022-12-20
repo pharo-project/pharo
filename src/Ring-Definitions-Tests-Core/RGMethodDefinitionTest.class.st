@@ -110,7 +110,7 @@ RGMethodDefinitionTest >> testAsActive [
 	self assert: newMethod isPassive.
 	self assert: newMethod sourceCode equals: (Class >> #asRingDefinition) sourceCode.
 	newMethod sourceCode: 'asRingDefinition   ^true'.
-	self assert: newMethod sourceCode ~= (Class >> #asRingDefinition) sourceCode.
+	self assert: newMethod sourceCode != (Class >> #asRingDefinition) sourceCode.
 
 	newMethod := (Class >> #asRingDefinition) asActiveRingDefinition.
 	newMethod fromActiveToHistorical.

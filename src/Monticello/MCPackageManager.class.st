@@ -152,7 +152,7 @@ MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 
 { #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass category: methodCategory do: aBlock [
-	(methodCategory isEmptyOrNil or:[methodCategory first ~= $*]) ifTrue:[
+	(methodCategory isEmptyOrNil or:[methodCategory first != $*]) ifTrue:[
 		"Not an extension method"
 		^self managersForClass: aClass do: aBlock.
 	].

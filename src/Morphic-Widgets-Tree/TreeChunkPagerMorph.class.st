@@ -20,7 +20,7 @@ TreeChunkPagerMorph >> atBottom [
 
 { #category : #accessing }
 TreeChunkPagerMorph >> atBottom: aBoolean [
-	atBottom ~= aBoolean 
+	atBottom != aBoolean 
 		ifTrue: [atBottom := aBoolean]
 ]
 
@@ -190,7 +190,7 @@ TreeChunkPagerMorph >> vScrollBarValue: scrollValue [
 	| old |
 	old := atBottom.
 	self atBottom: scrollValue >= self verticalScrollbarFrontier.
-	old ~= atBottom
+	old != atBottom
 		ifTrue: [ self buildPanel ]
 ]
 

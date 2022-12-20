@@ -502,7 +502,7 @@ RGContainer >> setPackageOfMethod: rgMethod ofClass: rgClass using: packageKeys 
 				rgMethod isExtension: false ] ]
 		ifNotNil:[ :pck| 
 			pck addMethod: rgMethod.
-			rgMethod isExtension: (rgMethod package ~= rgClass package) ]
+			rgMethod isExtension: (rgMethod package != rgClass package) ]
 ]
 
 { #category : #utilities }

@@ -10,7 +10,7 @@ Process >> isActive: n [
 Process >> isMeta [
 	<metaLinkOptions: #( + optionDisabledLink)>
 	level ifNil: [ level := 0 ].
-	^level ~= 0
+	^level != 0
 ]
 
 { #category : #'*Reflectivity' }

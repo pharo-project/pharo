@@ -147,7 +147,7 @@ IconicButtonMorph >> mouseDown: evt [
 	Remove the border on mouse down if mouse focus has changed."
 
 	super mouseDown: evt.
-	(actWhen == #buttonDown and: [ evt hand mouseFocus ~= self ])
+	(actWhen == #buttonDown and: [ evt hand mouseFocus != self ])
 		ifTrue: [ self mouseLeave: evt ]
 ]
 

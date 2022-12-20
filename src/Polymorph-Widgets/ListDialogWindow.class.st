@@ -164,7 +164,7 @@ ListDialogWindow >> displayItem: anItem [
 
 { #category : #actions }
 ListDialogWindow >> doubleClickOk [
-	self listIndex ~= 0
+	self listIndex != 0
 		ifTrue: [ self ok ]
 ]
 

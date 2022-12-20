@@ -9,5 +9,5 @@ RGInstanceVariableSlot >> needsFullDefinition [
 	"I am just a backward compatible ivar slot and can use simple definitions.
 	 Note: my subclasses need full definitions"
 
-	^ self class ~= RGInstanceVariableSlot
+	^ self class != RGInstanceVariableSlot
 ]

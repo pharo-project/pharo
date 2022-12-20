@@ -363,7 +363,7 @@ EditorFindReplaceDialogWindow >> newReplacement [
 
 { #category : #updating }
 EditorFindReplaceDialogWindow >> on: aTextView [
-	(model isNil or: [model  ~= aTextView])
+	(model isNil or: [model  != aTextView])
 		ifTrue: [self findText: self findText.
 			self model: aTextView.
 			self changed: #findText.

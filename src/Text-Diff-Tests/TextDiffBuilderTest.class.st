@@ -142,7 +142,7 @@ TextDiffBuilderTest >> testIfSequence5 [
 	self assert: (#('ab' 'cd') includes: matches).
 	self assert: (patch count: [ :each | each key = #insert ]) equals: 2.
 	self assert: (patch count: [ :each | each key = #remove ]) equals: 2.
-	nonMatches := #('ab' 'cd') detect: [ :each | each ~= matches ].
+	nonMatches := #('ab' 'cd') detect: [ :each | each != matches ].
 	patch do: [ :each | 
 		each key = #match 
 			ifTrue: [ self assert: (matches includes: each value first) ]

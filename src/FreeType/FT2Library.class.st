@@ -28,7 +28,7 @@ FT2Library >> checkLibrary [
 	"I try to get a valid address if I do not have one"
 	holder := PointerHolder new.
 	errorCode := self ffiInitFreeType: holder.
-	errorCode ~= 0
+	errorCode != 0
 		ifTrue: [ FT2Error errorCode: errorCode errorString: (FT2FFILibrary translateErrorCode: errorCode) signal: 'Error initializing FreeType Library: ' ].
 	self setHandle: holder value
 ]
@@ -87,7 +87,7 @@ FT2Library >> getBitmap: ftBitmap fromOutline: outline [
 	|returnCode|
 	self checkLibrary.
 	returnCode := self ffiGetBitmap: ftBitmap fromOutline: outline.
-	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading bitmap from outline' ].
+	returnCode != 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading bitmap from outline' ].
 ]
 
 { #category : #testing }

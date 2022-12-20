@@ -43,7 +43,7 @@ RBTransformationRule class >> initializeRecursiveSelfRule [
 
 { #category : #testing }
 RBTransformationRule class >> isVisible [
-	^ self name ~= #RBTransformationRule
+	^ self name != #RBTransformationRule
 ]
 
 { #category : #accessing }

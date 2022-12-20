@@ -378,14 +378,14 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 		readFrom: zipFile;
 		extractAllTo: subdir overwrite: true;
 		close.
-	self assert: fileModificationTime ~= fileModificationTimeBlock value.
+	self assert: fileModificationTime != fileModificationTimeBlock value.
 	fileModificationTime := fileModificationTimeBlock value.
 	1 second wait.
 	ZipArchive new
 		readFrom: zipFile;
 		extractAllTo: subdir overwrite: false;
 		close.
-	self deny: fileModificationTime ~= fileModificationTimeBlock value
+	self deny: fileModificationTime != fileModificationTimeBlock value
 ]
 
 { #category : #tests }

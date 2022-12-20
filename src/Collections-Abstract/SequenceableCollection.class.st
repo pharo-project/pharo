@@ -460,7 +460,7 @@ SequenceableCollection >> beginsWith: aSequenceableCollection [
 	
 	aSequenceableCollection ifEmpty: [ ^true ].
 	self size < aSequenceableCollection size ifTrue: [^false].
-	aSequenceableCollection withIndexDo: [:each :index | (self at: index) ~= each ifTrue: [^false]].
+	aSequenceableCollection withIndexDo: [:each :index | (self at: index) != each ifTrue: [^false]].
 	^true
 ]
 
@@ -845,7 +845,7 @@ SequenceableCollection >> endsWith: aSequenceableCollection [
 	aSequenceableCollection ifEmpty: [ ^true ].
 	(self size < aSequenceableCollection size) ifTrue: [^false].
 	start := self size - aSequenceableCollection size.
-	aSequenceableCollection withIndexDo: [:each :index | (self at: start + index) ~= each ifTrue: [^false]].
+	aSequenceableCollection withIndexDo: [:each :index | (self at: start + index) != each ifTrue: [^false]].
 	^true
 ]
 
@@ -1253,7 +1253,7 @@ SequenceableCollection >> identityIndexOf: anElement ifAbsent: exceptionBlock [
 SequenceableCollection >> includes: anObject [
 	"Answer whether anObject is one of the receiver's elements."
 
-	^ (self indexOf: anObject) ~= 0
+	^ (self indexOf: anObject) != 0
 ]
 
 { #category : #accessing }
@@ -1986,7 +1986,7 @@ SequenceableCollection >> reverseWith: aSequenceableCollection do: aBlock [
 	
 	"(Array streamContents: [:stream | #(1 2 3) reverseWith: #(4 5 6) do: [:a :b | stream nextPut: (a + b)]]) >>> #(9 7 5)"
 
-	self size ~= aSequenceableCollection size ifTrue: [^ self errorSizeMismatch].
+	self size != aSequenceableCollection size ifTrue: [^ self errorSizeMismatch].
 	self size to: 1 by: -1 do: [:index | 
 			aBlock 
 				value: (self at: index)

@@ -42,7 +42,7 @@ AbstractFontFamilyMember >> closenessVectorForStretch: stretch slant: slant weig
 
 	| normalizedSlant |
 	normalizedSlant := slant.
-	normalizedSlant ~= 0 ifTrue: [ "treat italic and oblique as though they were they same" 
+	normalizedSlant != 0 ifTrue: [ "treat italic and oblique as though they were they same" 
 		normalizedSlant := LogicalFont slantItalic ].
 	^ { 
 		  (stretch - LogicalFont stretchRegular * 11).

@@ -233,7 +233,7 @@ MCFileTreeRepository >> packageDescriptionFromPackageDirectory: packageDirectory
     | filename info extension |
     filename := self fileUtils current directoryName: packageDirectory.
     extension := filename copyFrom: (filename lastIndexOf: $.) to: filename size.
-    ^ ((self packageExtension ~= '.package'
+    ^ ((self packageExtension != '.package'
         and: [ 
             (self fileUtils filePathExists: 'version' relativeTo: packageDirectory)
                 and: [ self fileUtils filePathExists: 'package' relativeTo: packageDirectory ] ])

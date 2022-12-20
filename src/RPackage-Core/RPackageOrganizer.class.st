@@ -145,7 +145,7 @@ RPackageOrganizer class >> methodAdded: anEvent [
 	
 	| methodCategory |
 	methodCategory := anEvent protocol.
-	(methodCategory isEmptyOrNil or:[ methodCategory first ~= $* ]) 
+	(methodCategory isEmptyOrNil or:[ methodCategory first != $* ]) 
 		ifFalse: [
 			(self isPackageDefinedForClass: anEvent methodClass)
 					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfElement: anEvent methodClass instanceSide asSymbol) ].
@@ -413,7 +413,7 @@ RPackageOrganizer >> globalPackageOf: aClass [
 	| classPackage |
 	classPackage := self packageOf: aClass.
 	^ self packages
-		detect: [ :aRPackage | aRPackage ~= classPackage and: [ aRPackage systemCategories includes: classPackage name ] ]
+		detect: [ :aRPackage | aRPackage != classPackage and: [ aRPackage systemCategories includes: classPackage name ] ]
 		ifNone: [ classPackage ]
 ]
 

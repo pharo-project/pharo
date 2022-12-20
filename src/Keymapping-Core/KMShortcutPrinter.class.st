@@ -66,7 +66,7 @@ KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	
 	"Ensure shift is first"
 	((modifiers includes: 'Shift') 
-		and: [ modifiers first ~= 'Shift' ])
+		and: [ modifiers first != 'Shift' ])
 		ifTrue: [ modifiers := (modifiers copyWithout: 'Shift') copyWithFirst: 'Shift' ].
 	
 	^ modifiers

@@ -986,7 +986,7 @@ PolymorphSystemSettings class >> soundThemeClass [
 { #category : #sound }
 PolymorphSystemSettings class >> soundThemeClass: aSoundThemeClass [
 	aSoundThemeClass ifNil: [^ self].
-	self soundThemeClass ~= aSoundThemeClass
+	self soundThemeClass != aSoundThemeClass
 		ifTrue: [aSoundThemeClass beCurrent]
 ]
 

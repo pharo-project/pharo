@@ -47,7 +47,7 @@ String >> indentationIfBlank: aBlock [
 	leadingTabs := 0.
 	[ reader atEnd not and: [ (ch := reader next) = tab ] ] whileTrue: [ leadingTabs := leadingTabs + 1 ].
 	lastSeparator := leadingTabs + 1.
-	[ reader atEnd not and: [ ch isSeparator and: [ ch ~= cr ] ] ] whileTrue: 
+	[ reader atEnd not and: [ ch isSeparator and: [ ch != cr ] ] ] whileTrue: 
 		[ lastSeparator := lastSeparator + 1.
 		ch := reader next ].
 	(lastSeparator = self size or: [ ch = cr ]) ifTrue: [ ^ aBlock value: leadingTabs ].

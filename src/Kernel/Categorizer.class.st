@@ -124,7 +124,7 @@ Categorizer >> addCategory: catString before: nextCategory [
 				ifTrue: [0]
 				ifFalse: [categoryStops at: index-1])).
 	"remove empty default category"
-	(newCategory ~= Default
+	(newCategory != Default
 			and: [(self listAtCategoryNamed: Default) isEmpty])
 		ifTrue: [self removeCategory: Default]
 ]

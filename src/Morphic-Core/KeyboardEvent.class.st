@@ -39,7 +39,7 @@ KeyboardEvent >> hasSpecialCTRLKeyValue [
 	1 - Character home
 "
 
-	^ self controlKeyPressed and: [ keyValue <= 26 & (keyValue ~= 4) & (keyValue ~= 1) ]
+	^ self controlKeyPressed and: [ keyValue <= 26 & (keyValue != 4) & (keyValue != 1) ]
 ]
 
 { #category : #comparing }

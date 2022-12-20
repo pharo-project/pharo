@@ -1535,7 +1535,7 @@ Context >> pushArgs: arguments from: senderContext [
 		ifNil: [self error: 'context needs a closure!']
 		ifNotNil: [
 			"See BlockClosure>>asContextWithSender:"
-			 stackp ~= (closureOrNil numArgs + closureOrNil numCopiedValues) 
+			 stackp != (closureOrNil numArgs + closureOrNil numCopiedValues) 
 				ifTrue: [ self error: 'stack pointer is incorrect!' ]].
 
 	1 to: closureOrNil numArgs do: [:i |

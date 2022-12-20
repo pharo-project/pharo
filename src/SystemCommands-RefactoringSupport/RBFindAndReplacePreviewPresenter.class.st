@@ -94,7 +94,7 @@ RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
 RBFindAndReplacePreviewPresenter >> initializeDropList [
 	dropList addItemLabeled: 'Current class'
 			do: [ method ifNotNil: [|items|
-				items := method origin methods select: [:each | each ~= method].
+				items := method origin methods select: [:each | each != method].
 				selectedRefactorings := OrderedCollection newFrom: items.
 				changeList columns last evaluated: #selector.
 				changeList items: items ]];
@@ -126,7 +126,7 @@ RBFindAndReplacePreviewPresenter >> method: aMethod [
 	method := aMethod.
 	
 	selectedRefactorings := OrderedCollection newFrom: 
-		(method origin methods select: [:each | each ~= method]).
+		(method origin methods select: [:each | each != method]).
 	changeList items: selectedRefactorings.
 ]
 

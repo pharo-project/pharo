@@ -66,7 +66,7 @@ ProportionalSplitterMorph >> bottomBoundary [
 	
 	|morphs|
 	morphs := rightOrBottom reject: [:m |
-		m layoutFrame bottomFraction ~= 1 and: [
+		m layoutFrame bottomFraction != 1 and: [
 			m layoutFrame topFraction = m layoutFrame bottomFraction]].
 	morphs ifEmpty: [
 		^(self splitterBelow
@@ -144,7 +144,7 @@ ProportionalSplitterMorph >> leftBoundary [
 	
 	|morphs|
 	morphs := leftOrTop reject: [:m |
-		m layoutFrame leftFraction ~= 0 and: [
+		m layoutFrame leftFraction != 0 and: [
 			m layoutFrame leftFraction = m layoutFrame rightFraction]].
 	morphs ifEmpty: [
 		^(self splitterLeft
@@ -214,7 +214,7 @@ ProportionalSplitterMorph >> rightBoundary [
 	
 	|morphs|
 	morphs := rightOrBottom reject: [:m |
-		m layoutFrame rightFraction ~= 1 and: [
+		m layoutFrame rightFraction != 1 and: [
 			m layoutFrame leftFraction = m layoutFrame rightFraction]].
 	morphs ifEmpty: [
 		^(self splitterRight
@@ -231,7 +231,7 @@ ProportionalSplitterMorph >> siblingSplitters [
 
 	^ self owner 
 		submorphsSatisfying: [:each | (each isKindOf: self class) 
-									and: [self splitsTopAndBottom = each splitsTopAndBottom and: [each ~= self]]]
+									and: [self splitsTopAndBottom = each splitsTopAndBottom and: [each != self]]]
 ]
 
 { #category : #accessing }
@@ -298,7 +298,7 @@ ProportionalSplitterMorph >> topBoundary [
 	
 	|morphs|
 	morphs := leftOrTop reject: [:m |
-		m layoutFrame topFraction ~= 0 and: [
+		m layoutFrame topFraction != 0 and: [
 			m layoutFrame topFraction = m layoutFrame bottomFraction]].
 	morphs ifEmpty: [
 		^(self splitterAbove
@@ -332,10 +332,10 @@ ProportionalSplitterMorph >> updateFromEvent: anEvent [
 		each layoutFrame rightOffset: firstRight + delta x.
 		each layoutFrame bottomOffset: firstBottom + delta y.
 		(each layoutFrame leftFraction = each layoutFrame rightFraction and: [
-				each layoutFrame leftFraction ~= 0]) "manual splitter"
+				each layoutFrame leftFraction != 0]) "manual splitter"
 			ifTrue: [each layoutFrame leftOffset: (each layoutFrame leftOffset ifNil: [0]) + delta x].
 		(each layoutFrame topFraction = each layoutFrame bottomFraction and: [
-				each layoutFrame topFraction ~= 0]) "manual splitter"
+				each layoutFrame topFraction != 0]) "manual splitter"
 			ifTrue: [each layoutFrame topOffset: (each layoutFrame topOffset ifNil: [0]) + delta y]].
 	rightOrBottom do: [:each | | secondLeft secondTop | 
 		secondLeft := each layoutFrame leftOffset
@@ -345,10 +345,10 @@ ProportionalSplitterMorph >> updateFromEvent: anEvent [
 		each layoutFrame leftOffset: secondLeft + delta x.
 		each layoutFrame topOffset: secondTop + delta y.
 		(each layoutFrame leftFraction = each layoutFrame rightFraction and: [
-				each layoutFrame rightFraction ~= 1]) "manual splitter"
+				each layoutFrame rightFraction != 1]) "manual splitter"
 			ifTrue: [each layoutFrame rightOffset: (each layoutFrame rightOffset ifNil: [0]) + delta x].
 		(each layoutFrame topFraction = each layoutFrame bottomFraction and: [
-				each layoutFrame bottomFraction ~= 1]) "manual splitter"
+				each layoutFrame bottomFraction != 1]) "manual splitter"
 			ifTrue: [each layoutFrame bottomOffset: (each layoutFrame bottomOffset ifNil: [0]) + delta y]].
 	selfTop := self layoutFrame topOffset ifNil: [0].
 	selfBottom := self layoutFrame bottomOffset ifNil: [0].

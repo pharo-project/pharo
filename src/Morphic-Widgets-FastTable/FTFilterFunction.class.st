@@ -24,7 +24,7 @@ Class {
 
 { #category : #updating }
 FTFilterFunction >> colorText: aText [
-	table dataSource numberOfRows ~= 0
+	table dataSource numberOfRows != 0
 		ifTrue: [ aText makeAllColor: self table theme textColor ]
 		ifFalse: [ aText addAttribute: (TextColor new color: Color red) ].
 	^ aText
@@ -140,7 +140,7 @@ FTFilterFunction >> spawnFilterUpdateThread [
 	[ isEditingSemaphore wait.
 	"If pattern has changed, see if we need to filter.
 	If not, it's probably an extraneous signal received while we were waiting for 0.2 seconds, and we discard then till we end up waiting for filterChangeSemaphore again"
-	oldPattern ~= pattern
+	oldPattern != pattern
 		ifTrue: [ oldPattern := pattern.
 			0.2 seconds wait.
 			"Pattern still the same? If not, just loop again and end up waiting for another 0.2 secs"

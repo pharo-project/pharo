@@ -26,7 +26,7 @@ FLCompiledBlockCluster >> afterMaterializationStepWith: aDecoder [
 			| method |
 			method := block method.
 			(method methodClass includesSelector: method selector) not or: [
-				(method methodClass compiledMethodAt: method selector) bytecodesHash ~= method bytecodesHash ] ]
+				(method methodClass compiledMethodAt: method selector) bytecodesHash != method bytecodesHash ] ]
 		thenDo: [ :block |
 			FLMethodChanged
 				signalWith: block methodClass name

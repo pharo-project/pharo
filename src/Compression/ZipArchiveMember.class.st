@@ -483,7 +483,7 @@ ZipArchiveMember >> fileComment: aString [
 
 { #category : #testing }
 ZipArchiveMember >> hasDataDescriptor [
-	^ (self bitFlag bitAnd: 8)	~= 0 "GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK"
+	^ (self bitFlag bitAnd: 8)	!= 0 "GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK"
 ]
 
 { #category : #initialization }
@@ -517,7 +517,7 @@ ZipArchiveMember >> isDirectory [
 { #category : #testing }
 ZipArchiveMember >> isEncrypted [
 	"Return true if this member is encrypted (this is unsupported)"
-	^ (self bitFlag bitAnd: 1) ~= 0
+	^ (self bitFlag bitAnd: 1) != 0
 ]
 
 { #category : #testing }
@@ -527,7 +527,7 @@ ZipArchiveMember >> isTextFile [
 	upon extraction or storage.
 	That is, bytes are stored in native format whether or not they came
 	from a text file."
-	^ (internalFileAttributes bitAnd: 1) ~= 0
+	^ (internalFileAttributes bitAnd: 1) != 0
 ]
 
 { #category : #testing }

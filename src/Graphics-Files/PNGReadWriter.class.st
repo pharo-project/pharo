@@ -484,7 +484,7 @@ PNGReadWriter >> copyPixelsRGB: y [
 			[i := 1.
 			1 to: width do:
 				[ :x |
-				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) ~= (thisScanline at: i + 6 - k)]])
+				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) != (thisScanline at: i + 6 - k)]])
 					ifTrue:
 						[pixel
 							at: 3 put: (thisScanline at: i);
@@ -531,7 +531,7 @@ PNGReadWriter >> copyPixelsRGB: y at: startX by: incX [
 			xx := startX+1.
 			1 to: loopsToDo do:
 				[ :j |
-				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) ~= (thisScanline at: i + 6 - k)]])
+				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) != (thisScanline at: i + 6 - k)]])
 					ifTrue:
 						[pixel
 							at: 3 put: (thisScanline at: i);
@@ -993,7 +993,7 @@ PNGReadWriter >> processNextChunk [
 	| length chunkType crc chunkCrc |
 	length := self nextLong.
 	chunkType := (self next: 4) asString.
- 	(chunk isNil or: [ chunk size ~= length ])
+ 	(chunk isNil or: [ chunk size != length ])
  		ifTrue: [ chunk := self next: length ]
  		ifFalse: [ stream next: length into: chunk startingAt: 1 ].
 	chunkCrc := self nextLong bitXor: 4294967295.

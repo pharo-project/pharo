@@ -738,7 +738,7 @@ IRBytecodeGenerator >> updateJump: seqId [
 	s1 := bytes size.
 	bytes removeLast: (bytes size - pair first).
 	pair last sendTo: self.
-	^ s1 ~= bytes size.
+	^ s1 != bytes size.
 ]
 
 { #category : #private }

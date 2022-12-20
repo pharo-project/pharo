@@ -25,7 +25,7 @@ AthensWrapMorph >> checkSurface [
 		self initializeForNewSession
 		 ].
 	
-	bounds extent ~= surface extent ifTrue: [ 
+	bounds extent != surface extent ifTrue: [ 
 		"recreate a surface if dimensions are changed"	
 		self createSurface
 	 ]

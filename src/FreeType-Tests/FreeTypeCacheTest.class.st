@@ -110,7 +110,7 @@ FreeTypeCacheTest >> testFreeTypeCacheEntry [
 		type: FreeTypeCacheGlyphLCD;
 		object: font1XGlyph.
 	f nextLink: f2.
-	self assert: f ~= f2.
+	self assert: f != f2.
 	self assert: f nextLink equals: f2.
 
 	f3 := f copy.

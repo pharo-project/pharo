@@ -85,7 +85,7 @@ MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader [
 
 { #category : #printing }
 MetacelloMCBaselineOfProjectSpec >> hasClassName [
-    ^ className ~~ nil and: [ className ~= self constructClassName ]
+    ^ className ~~ nil and: [ className != self constructClassName ]
 ]
 
 { #category : #testing }
@@ -163,7 +163,7 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
         ifNotNil: [ :vs | 
             | prj |
             prj := self project asBaselineProject.
-            vs ~= prj singletonVersionName
+            vs != prj singletonVersionName
                 ifTrue: [ 
                     issues
                         add:

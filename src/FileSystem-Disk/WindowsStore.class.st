@@ -102,7 +102,7 @@ WindowsStore >> directoryAt: aPath nodesDo: aBlock [
 
 	mask := File primLogicalDrives.
 	0 to: 25 do: [ :i |
-		(mask bitAnd: (1 bitShift: i)) ~= 0 ifTrue: [ 
+		(mask bitAnd: (1 bitShift: i)) != 0 ifTrue: [ 
 			drive := String with: (Character value: ($A asciiValue + i)) with: $:.
 			node := Array
 				with: drive

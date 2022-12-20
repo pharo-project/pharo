@@ -386,8 +386,8 @@ GIFReadWriter >> readBitDataOnFrame: aFrame [
 	Size of Local Color Table     3 Bits
 	----"
 	packedBits := self next.
-	interlace := (packedBits bitAnd: 64) ~= 0.
-	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
+	interlace := (packedBits bitAnd: 64) != 0.
+	hasLocalColor := (packedBits bitAnd: 128) != 0.
 	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
 	hasLocalColor ifTrue: [ 
 		localColorTable := self readColorTable: localColorSize ].
@@ -566,10 +566,10 @@ GIFReadWriter >> readHeader [
 	canvasWidth := self readWord.
 	canvasHeight := self readWord.
 	byte := self next.
-	hasColorMap := (byte bitAnd: 128) ~= 0.
+	hasColorMap := (byte bitAnd: 128) != 0.
 	bitsPerPixel := (byte bitAnd: 7) + 1.
 	backgroundColorIndex := self next.
-	self next ~= 0 ifTrue: 
+	self next != 0 ifTrue: 
 		[ is89 ifFalse: [ ^ self error: 'corrupt GIF file (screen descriptor)' ] ].
 	hasColorMap 
 		ifTrue: [ colorPalette := self readColorTable: (1 bitShift: bitsPerPixel) ]

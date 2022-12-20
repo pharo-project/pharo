@@ -613,7 +613,7 @@ Behavior >> dependentClasses [
 					(l isVariableBinding 
 					and: [ l isGlobalClassNameBinding
 					and: [ m category notEmpty 
-					and: [ m category first ~= $* ]]])  ifTrue: [ cll add: l value ] ] ] .
+					and: [ m category first != $* ]]])  ifTrue: [ cll add: l value ] ] ] .
 	^ cll asArray
 ]
 
@@ -1466,7 +1466,7 @@ Behavior >> shouldNotBeRedefined [
 
 	^(Smalltalk specialObjectsArray
 		identityIndexOf: self
-		ifAbsent: [(self isKindOf: self) ifTrue: [1] ifFalse: [0]]) ~= 0
+		ifAbsent: [(self isKindOf: self) ifTrue: [1] ifFalse: [0]]) != 0
 ]
 
 { #category : #'system startup' }

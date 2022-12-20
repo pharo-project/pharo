@@ -181,7 +181,7 @@ CairoScaledFont >> initWithFace: cairo_face [
 { #category : #initialization }
 CairoScaledFont >> initialize [ 
 	super initialize.
-	self status ~= CAIRO_STATUS_SUCCESS 
+	self status != CAIRO_STATUS_SUCCESS 
 		ifTrue: [ self error: 'Something is wrong!' ].
 	self autoRelease
 ]

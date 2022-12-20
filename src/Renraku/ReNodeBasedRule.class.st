@@ -22,7 +22,7 @@ ReNodeBasedRule class >> isAbstract [
 { #category : #testing }
 ReNodeBasedRule class >> isVisible [
 
-	^ self name ~=  #ReNodeBasedRule
+	^ self name !=  #ReNodeBasedRule
 ]
 
 { #category : #helpers }

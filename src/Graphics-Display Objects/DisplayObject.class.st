@@ -157,7 +157,7 @@ DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialB
 
    [durationBlock value] whileTrue: [
 		newLoc := locationBlock value.
-		newLoc ~= location ifTrue: [
+		newLoc != location ifTrue: [
 			rect2 := newLoc extent: self extent.
 			bothRects := rect1 merge: rect2.
 			(rect1 intersects: rect2)

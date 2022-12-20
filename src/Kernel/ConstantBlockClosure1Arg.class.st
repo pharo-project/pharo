@@ -20,6 +20,6 @@ ConstantBlockClosure1Arg >> value: anObject [
 
 { #category : #evaluating }
 ConstantBlockClosure1Arg >> valueWithArguments: anArray [
-	(anArray size ~= 1) ifTrue: [self numArgsError: anArray size].
+	(anArray size != 1) ifTrue: [self numArgsError: anArray size].
 	^literal
 ]

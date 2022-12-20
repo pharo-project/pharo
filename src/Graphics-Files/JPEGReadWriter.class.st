@@ -372,7 +372,7 @@ JPEGReadWriter >> dctFloatRangeLimit: value [
 JPEGReadWriter >> decodeBlockInto: anArray component: aColorComponent dcTable: huffmanDC acTable: huffmanAC [ 
 	| byte i zeroCount |
 	byte := stream decodeValueFrom: huffmanDC.
-	byte ~= 0 ifTrue: 
+	byte != 0 ifTrue: 
 		[ byte := self 
 			scaleAndSignExtend: (self getBits: byte)
 			inFieldWidth: byte ].
@@ -386,7 +386,7 @@ JPEGReadWriter >> decodeBlockInto: anArray component: aColorComponent dcTable: h
 		[ byte := stream decodeValueFrom: huffmanAC.
 		zeroCount := byte >> 4.
 		byte := byte bitAnd: 15.
-		byte ~= 0 
+		byte != 0 
 			ifTrue: 
 				[ i := i + zeroCount.
 				byte := self 
@@ -405,7 +405,7 @@ JPEGReadWriter >> decodeBlockInto: anArray component: aColorComponent dcTable: h
 { #category : #'huffman encoding' }
 JPEGReadWriter >> decodeMCU [
 	| comp ci |
-	(restartInterval ~= 0 and: [ restartsToGo = 0 ]) ifTrue: [ self processRestart ].
+	(restartInterval != 0 and: [ restartsToGo = 0 ]) ifTrue: [ self processRestart ].
 	1 
 		to: mcuMembership size
 		do: 
@@ -870,7 +870,7 @@ JPEGReadWriter >> parseHuffmanTable [
 	length := self nextWord.
 	[ self position - markerStart >= length ] whileFalse: 
 		[ index := self next.
-		isACTable := (index bitAnd: 16) ~= 0.
+		isACTable := (index bitAnd: 16) != 0.
 		index := (index bitAnd: 15) + 1.
 		index > HuffmanTableSize ifTrue: 
 			[ self error: 'image has more than ' , HuffmanTableSize printString , ' quantization tables' ].
@@ -958,7 +958,7 @@ JPEGReadWriter >> parseStartOfFile [
 	width := self nextWord.
 	n := self next.
 	height = 0 | (width = 0) | (n = 0) ifTrue: [ self error: 'empty image' ].
-	length - (self position - markerStart) ~= (n * 3) ifTrue: [ self error: 'component length is incorrect' ].
+	length - (self position - markerStart) != (n * 3) ifTrue: [ self error: 'component length is incorrect' ].
 	components := Array new: n.
 	1 
 		to: components size
@@ -988,7 +988,7 @@ JPEGReadWriter >> parseStartOfScan [
 	| length n id value dcNum acNum comp |
 	length := self nextWord.
 	n := self next.
-	length ~= (n * 2 + 6) | (n < 1) ifTrue: [ self error: 'SOS length is incorrect' ].
+	length != (n * 2 + 6) | (n < 1) ifTrue: [ self error: 'SOS length is incorrect' ].
 	currentComponents := Array new: n.
 	1 
 		to: n

@@ -99,7 +99,7 @@ RBMessageNode >> bestNodeFor: anInterval [
 			(each intersectsInterval: anInterval) ifTrue: [node := each bestNodeFor: anInterval.
 			node ifNotNil: [^node]]].
 	comments := self methodNode getCommentsFor: anInterval.
-	^comments size ~= 1 ifTrue: [ self ] ifFalse: [ comments first ]
+	^comments size != 1 ifTrue: [ self ] ifFalse: [ comments first ]
 ]
 
 { #category : #accessing }
@@ -189,7 +189,7 @@ RBMessageNode >> isHaltNode [
 
 { #category : #testing }
 RBMessageNode >> isKeyword [
-	^(self selector indexOf: $:) ~= 0.
+	^(self selector indexOf: $:) != 0.
 ]
 
 { #category : #testing }
@@ -405,7 +405,7 @@ RBMessageNode >> replaceSourceWithMessageNode: aNode [
 	oldkeywordsIntervals := self keywordsIntervals.
 	
 	self selectorParts keysAndValuesDo: [:index :oldPart| 
-			(newSelectorParts at: index) ~= oldPart
+			(newSelectorParts at: index) != oldPart
 				ifTrue: 
 					[self addReplacement: (RBStringReplacement 
 								replaceFrom: (oldkeywordsIntervals at: index) first

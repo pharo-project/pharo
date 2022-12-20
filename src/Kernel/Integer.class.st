@@ -133,8 +133,8 @@ Integer >> // aNumber [
 	q := self quo: aNumber.
 	"Refer to the comment in Number|//."
 	(q negative
-		ifTrue: [q * aNumber ~= self]
-		ifFalse: [q = 0 and: [self negative ~= aNumber negative]])
+		ifTrue: [q * aNumber != self]
+		ifFalse: [q = 0 and: [self negative != aNumber negative]])
 		ifTrue: [^ q - 1"Truncate towards minus infinity."]
 		ifFalse: [^ q]
 ]
@@ -263,20 +263,20 @@ Integer >> anyBitOfMagnitudeFrom: start to: stopArg [
 						bitAnd: (255 bitShift: leftShift negated).
 			digit := magnitude byteAt: firstDigitIx.
 			^ (digit bitAnd: mask)
-				~= 0].
+				!= 0].
 	((magnitude byteAt: firstDigitIx)
 			bitShift: rightShift)
-			~= 0
+			!= 0
 		ifTrue: [^ true].
 	firstDigitIx + 1
 		to: lastDigitIx - 1
 		do: [:ix | (magnitude byteAt: ix)
-					~= 0
+					!= 0
 				ifTrue: [^ true]].
 	(((magnitude byteAt: lastDigitIx)
 			bitShift: leftShift)
 			bitAnd: 255)
-			~= 0
+			!= 0
 		ifTrue: [^ true].
 	^ false
 ]
@@ -286,7 +286,7 @@ Integer >> anyMask: mask [
 	"Treat the argument as a bit mask. Answer whether any of the bits that 
 	are 1 in the argument are 1 in the receiver."
 
-	^0 ~= (self bitAnd: mask)
+	^0 != (self bitAnd: mask)
 ]
 
 { #category : #'converting - arrays' }
@@ -577,13 +577,13 @@ Integer >> bytesCompare: arg [
 	| len arglen argDigit selfDigit |
 	<primitive: 'primDigitCompare' module:'LargeIntegers'>
 	len := self bytesCount.
-	(arglen := arg bytesCount) ~= len
+	(arglen := arg bytesCount) != len
 		ifTrue: [arglen > len
 				ifTrue: [^ -1]
 				ifFalse: [^ 1]].
 	[len > 0]
 		whileTrue: 
-			[(argDigit := arg byteAt: len) ~= (selfDigit := self byteAt: len)
+			[(argDigit := arg byteAt: len) != (selfDigit := self byteAt: len)
 				ifTrue: [argDigit < selfDigit
 						ifTrue: [^ 1]
 						ifFalse: [^ -1]].
@@ -881,7 +881,7 @@ Integer >> digitMultiply: arg neg: ng [
 	prodLen := self bytesCount + arg bytesCount.
 	prod := Integer new: prodLen neg: ng.
 	"prod starts out all zero"
-	1 to: self bytesCount do: [:i | (digit := self byteAt: i) ~= 0
+	1 to: self bytesCount do: [:i | (digit := self byteAt: i) != 0
 			ifTrue: 
 				[k := i.
 				carry := 0.
@@ -908,7 +908,7 @@ Integer >> digitRshift: anInteger bytes: b lookfirst: a [
 	i := a.
 	m := 255 bitShift: 0 - f.
 	digit := self byteAt: i.
-	[((digit bitShift: n) bitOr: x) = 0 and: [i ~= 1]] whileTrue:
+	[((digit bitShift: n) bitOr: x) = 0 and: [i != 1]] whileTrue:
 		[x := digit bitShift: f "Can't exceed 8 bits".
 		i := i - 1.
 		digit := self byteAt: i].
@@ -999,8 +999,8 @@ Integer >> gcd: anInteger [
 			c := 0.
 			d := 1.
 			"Test quotient"
-			[(vPrime := vHat + d) ~= 0
-				and: [(vPrimePrime := vHat + c) ~= 0 and: [(q := uHat + a // vPrimePrime) = (uHat + b // vPrime)]]]
+			[(vPrime := vHat + d) != 0
+				and: [(vPrimePrime := vHat + c) != 0 and: [(q := uHat + a // vPrimePrime) = (uHat + b // vPrime)]]]
 				whileTrue: 
 					["Emulate Euclid"
 					c := a - (q * (a := c)).
@@ -1149,7 +1149,7 @@ Integer >> isLiteral [
 { #category : #testing }
 Integer >> isPowerOfTwo [
 	"Return true if the receiver is an integral power of two."
-	^ self ~= 0 and: [(self bitAnd: self-1) = 0]
+	^ self != 0 and: [(self bitAnd: self-1) = 0]
 ]
 
 { #category : #'system primitives' }

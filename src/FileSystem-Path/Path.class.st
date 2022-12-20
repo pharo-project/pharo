@@ -130,7 +130,7 @@ Path class >> isAbsoluteWindowsPath: aString [
 
 	aString ifEmpty: [ ^ false ].
 	(aString first = $\ and: [ 
-		 aString size = 1 or: [ aString second ~= $\ ] ]) ifTrue: [ ^ true ]. "e.g. \file"
+		 aString size = 1 or: [ aString second != $\ ] ]) ifTrue: [ ^ true ]. "e.g. \file"
 
 	^ (aString size > 2 and: [ aString first isLetter ])
 		  ifTrue: [ "e.g. C:\..." 
@@ -160,7 +160,7 @@ Path class >> removeRedundantSegments: segments [
 	"Remove redundant elements ('.' and '') from the supplied segments"
 
 	^segments select:
-		[ :segment | segment notEmpty and: [ segment ~= '.' ] ]
+		[ :segment | segment notEmpty and: [ segment != '.' ] ]
 ]
 
 { #category : #'instance creation' }

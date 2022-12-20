@@ -816,7 +816,7 @@ Character >> nextObject [
 { #category : #printing }
 Character >> printOn: aStream [
 	| name |
-	(self asInteger > 32 and: [ self asInteger ~= 127])
+	(self asInteger > 32 and: [ self asInteger != 127])
 		ifTrue: [ aStream nextPut: $$; nextPut: self ]
 		ifFalse: [
 			name := self class constantNameFor: self.

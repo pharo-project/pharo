@@ -35,7 +35,7 @@ Year class >> isLeapYear: aYearInteger [
 		ifFalse: [(aYearInteger + 1) negated].
 
 	"There was no year 0"
-	^ ((adjustedYear \\ 4 ~= 0) or: [(adjustedYear \\ 100 = 0) and: [adjustedYear \\ 400 ~= 0]]) not.
+	^ ((adjustedYear \\ 4 != 0) or: [(adjustedYear \\ 100 = 0) and: [adjustedYear \\ 400 != 0]]) not.
 ]
 
 { #category : #'instance creation' }

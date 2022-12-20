@@ -221,7 +221,7 @@ FT2Face >> emboldenOutline: strength [
 	outline := FTOutline fromHandle: faceRec glyph outline getHandle asExternalAddress.
 	returnCode := self ffiOutline: outline embolden:  (strength * 64) rounded.
 
-	returnCode ~= 0
+	returnCode != 0
 		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error embolding glyph' ]
 ]
 
@@ -475,7 +475,7 @@ FT2Face >> loadFields [
 	encoding := nil.
 
 	"FT_FACE_FLAG_SCALABLE = 1 "
-	(faceRect face_flags bitAnd: 1) ~= 0 ifTrue: [ 
+	(faceRect face_flags bitAnd: 1) != 0 ifTrue: [ 
 		unitsPerEm := faceRect units_per_EM.
 		ascender := faceRect ascender.
 		descender := faceRect descender.
@@ -495,7 +495,7 @@ FT2Face >> loadGlyph: index flags: flags [
 	| returnCode |
 	
 	returnCode := self ffiLoadGlyph: index flags: flags.
-	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Loading glyph'  ].
+	returnCode != 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Loading glyph'  ].
 	
 	glyph
 		ifNil: [ glyph := FT2GlyphSlot fromFace: self ]
@@ -526,7 +526,7 @@ FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 		              fromMemory: aFreeTypeExternalMemory getHandle
 		              size: memSize
 		              index: anInteger.
-	returnCode ~= 0 ifTrue: [ 
+	returnCode != 0 ifTrue: [ 
 		FT2Error
 			errorCode: returnCode
 			signal: 'Error reading new face from memory' ].
@@ -545,7 +545,7 @@ FT2Face >> newFaceFromFile: file index: anInteger [
 	
 	FT2Library current checkLibrary.
 	returnCode := FT2Library current ffiNewFace: holder fromFilename: fileName index: anInteger.
-	returnCode ~= 0
+	returnCode != 0
 		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading new face from file'].
 		
 	handle := holder value.
@@ -595,7 +595,7 @@ FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
 		right: rightGlyphIndex
 		result: result.
 
-	returnCode ~= 0
+	returnCode != 0
 		ifTrue: [ ^ 0 @ 0 ].
 	
 	^ result x @ result y
@@ -606,7 +606,7 @@ FT2Face >> primLoadCharacter: index flags: flags [
 	| returnCode |
 	self validate.
 	returnCode := self ffiLoadChar: index flags: flags.
-	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error loading character' ].
+	returnCode != 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error loading character' ].
 ]
 
 { #category : #'private - primitives' }
@@ -706,7 +706,7 @@ FT2Face >> setCharMap: encodingString [
 	self validate.
 	
 	returnCode := self ffiSelectCharmap: encodingString asByteArray asInteger.
-	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error selecting charmap' ].	
+	returnCode != 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error selecting charmap' ].	
 
 	self getCharMap.
 ]
@@ -718,7 +718,7 @@ FT2Face >> setPixelWidth: x height: y [
 	self isValid ifFalse: [ self error: 'The Face is not valid' ].
 	returnCode := self ffiSetPixelWidth: x height: y.
 	
-	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error setting the pixel width and height.' ]
+	returnCode != 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error setting the pixel width and height.' ]
 ]
 
 { #category : #accessing }

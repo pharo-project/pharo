@@ -856,7 +856,7 @@ ProcessBrowser >> nextContext [
 				ifFalse: [self processListIndex: pi.
 					self stackNameList
 						withIndexDo: [:name :si | (found not
-									and: [pi ~= initialProcessIndex
+									and: [pi != initialProcessIndex
 											or: [si > initialStackIndex]])
 								ifTrue: [(name includesSubstring: searchString)
 										ifTrue: [self stackListIndex: si.

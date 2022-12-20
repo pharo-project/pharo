@@ -97,7 +97,7 @@ FTTreeItem >> expandAllTo: aDepth [
 
 { #category : #testing }
 FTTreeItem >> hasChildren [
-	^ self children size ~= 0
+	^ self children size != 0
 ]
 
 { #category : #updating }

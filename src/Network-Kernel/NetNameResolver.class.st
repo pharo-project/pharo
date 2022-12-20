@@ -681,5 +681,5 @@ NetNameResolver class >> waitForResolverReadyUntil: deadline [
 	status := self resolverStatus.
 	status = ResolverUninitialized ifTrue: [^ false].
 	status := self waitForResolverNonBusyUntil: deadline.
-	^ status ~= ResolverBusy
+	^ status != ResolverBusy
 ]

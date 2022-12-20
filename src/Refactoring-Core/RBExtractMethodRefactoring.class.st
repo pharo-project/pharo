@@ -280,7 +280,7 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 			[(tree superMessages anySatisfy: 
 					[:each | 
 					(class superclass whichClassIncludesSelector: aSelector) 
-						~= (definingClass superclass whichClassIncludesSelector: each)]) not]) 
+						!= (definingClass superclass whichClassIncludesSelector: each)]) not]) 
 		ifFalse: [^false].
 	^self shouldUseExistingMethod: aSelector
 ]

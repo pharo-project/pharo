@@ -118,7 +118,7 @@ RBMethodNameEditor >> initializeOn: aMethodName [
 
 { #category : #testing }
 RBMethodNameEditor >> isDownEnabled [
-	^ self argumentIndex ~= 0 and: [ self argumentIndex + 1 between: 1 and: self argumentList size ]
+	^ self argumentIndex != 0 and: [ self argumentIndex + 1 between: 1 and: self argumentList size ]
 ]
 
 { #category : #testing }
@@ -130,7 +130,7 @@ RBMethodNameEditor >> isOkEnabled [
 
 { #category : #testing }
 RBMethodNameEditor >> isUpEnabled [
-	^ self argumentIndex ~= 0 and: [ self argumentIndex - 1 between: 1 and: self argumentList size ]
+	^ self argumentIndex != 0 and: [ self argumentIndex - 1 between: 1 and: self argumentList size ]
 ]
 
 { #category : #accessing }

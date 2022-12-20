@@ -21,6 +21,6 @@ ConstantBlockClosure2Arg >> value: firstArg value: secondArg [
 
 { #category : #evaluating }
 ConstantBlockClosure2Arg >> valueWithArguments: anArray [
-	(anArray size ~= 2) ifTrue: [self numArgsError: anArray size].
+	(anArray size != 2) ifTrue: [self numArgsError: anArray size].
 	^literal
 ]

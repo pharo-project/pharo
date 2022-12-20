@@ -39,7 +39,7 @@ DelayMillisecondTickerSimulation >> primSignal: sempahore atMilliseconds: nextTi
 { #category : #'api-system' }
 DelayMillisecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [ 
 	
-	vmSimNextWakeupTick ~= 0 ifTrue: [ 
+	vmSimNextWakeupTick != 0 ifTrue: [ 
 		vmSimNow := milliseconds.
 		vmSimNow >= vmSimNextWakeupTick ifTrue: [ 
 			vmSimNextWakeupTick := 0. 

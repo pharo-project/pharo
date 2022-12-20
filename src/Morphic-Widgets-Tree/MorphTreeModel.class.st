@@ -206,7 +206,7 @@ MorphTreeModel >> enabled [
 
 { #category : #accessing }
 MorphTreeModel >> enabled: aBoolean [
-	aBoolean ~= enabled
+	aBoolean != enabled
 		ifTrue: [ 
 			enabled := aBoolean.
 			self  requestView: MorphTreeChangeRequest enabled]

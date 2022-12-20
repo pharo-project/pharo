@@ -152,7 +152,7 @@ OSSDL2GenericRenderer >> fullClippingExtent [
 OSSDL2GenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withExtent: anExtent [
 	| result |
 	result := self renderTargetTextureCache at: anObject ifAbsentPut: [ self createRenderTargetTextureWithExtent: anExtent ].
-	result extent ~= anExtent ifTrue: [
+	result extent != anExtent ifTrue: [
 		result := self createRenderTargetTextureWithExtent: anExtent.
 		self renderTargetTextureCache at: anObject put: result
 	].
@@ -168,7 +168,7 @@ OSSDL2GenericRenderer >> getOrCreateStaticTextureFromForm: form [
 OSSDL2GenericRenderer >> getOrCreateTextureFor: anObject withExtent: anExtent [
 	| result |
 	result := self textureForObjectCache at: anObject ifAbsentPut: [ self createTextureForObjectWithExtent: anExtent ].
-	result extent ~= anExtent ifTrue: [
+	result extent != anExtent ifTrue: [
 		result := self createTextureForObjectWithExtent: anExtent.
 		self textureForObjectCache at: anObject put: result
 	].

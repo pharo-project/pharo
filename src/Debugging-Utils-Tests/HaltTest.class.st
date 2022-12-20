@@ -121,7 +121,7 @@ HaltTest >> testHaltIf [
 	self shouldntHaltWhen: [self a1].
 
 	self shouldHaltWhen: [self haltIf: [:receiver | receiver class = self class]].
-	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
+	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class != self class]].
 ]
 
 { #category : #tests }

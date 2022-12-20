@@ -648,7 +648,7 @@ Do you wish to extend it permanently to handle values up to ' , ascii printStrin
 	leftX := xTable at: ascii + 1.
 	rightX := xTable at: ascii + 2.
 	widthDif := characterForm width - (rightX - leftX).
-	widthDif ~= 0 ifTrue: 
+	widthDif != 0 ifTrue: 
 		[ "Make new glyphs with more or less space for this char"
 		newGlyphs := Form 
 			extent: (glyphs width + widthDif) @ glyphs height
@@ -1605,7 +1605,7 @@ StrikeFont >> newFromStrike: fileName [
 	"strip off direcory name if any"
 	startName := name size.
 	
-	[ startName > 0 and: [ (name at: startName) ~= $> & ((name at: startName) ~= $]) ] ] whileTrue: [ startName := startName - 1 ].
+	[ startName > 0 and: [ (name at: startName) != $> & ((name at: startName) != $]) ] ] whileTrue: [ startName := startName - 1 ].
 	name := name 
 		copyFrom: startName + 1
 		to: name size.
@@ -1942,7 +1942,7 @@ StrikeFont >> restOfLine: leadString from: file [
 	| line |
 	
 	[ line := file nextLine.
-	line size < leadString size or: [ leadString ~= (line 
+	line size < leadString size or: [ leadString != (line 
 			copyFrom: 1
 			to: leadString size) ] ] whileTrue: [ file atEnd ifTrue: [ ^ nil ] ].
 	^ line 

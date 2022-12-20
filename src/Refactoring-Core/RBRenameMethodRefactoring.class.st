@@ -105,7 +105,7 @@ RBRenameMethodRefactoring >> preconditions [
 							withBlock: [ newSelector = oldSelector ]
 							errorString: 'The selector name has <1?not:> changed <1?:to #', newSelector, '>') 
 						& (RBCondition 
-							withBlock: [permutation asArray ~= (1 to: oldSelector numArgs) asArray]
+							withBlock: [permutation asArray != (1 to: oldSelector numArgs) asArray]
 							errorString: 'The arguments are <1?:not >permuted').
 	^newCondition | super preconditions
 ]

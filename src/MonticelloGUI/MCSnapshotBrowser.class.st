@@ -240,7 +240,7 @@ MCSnapshotBrowser >> methodsForSelectedProtocol [
 	protocolSelection ifNil: [^ Array new].
 	methods := self methodsForSelectedClass asOrderedCollection.
 	(protocolSelection = '-- all --') 
-		ifFalse: [methods removeAllSuchThat: [:ea | ea category ~= protocolSelection]].
+		ifFalse: [methods removeAllSuchThat: [:ea | ea category != protocolSelection]].
 	^ methods 
 	
 								

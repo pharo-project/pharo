@@ -245,7 +245,7 @@ ColorSelectorDialogWindow >> pickColor [
 										depth: 32 ]
 								ifFalse: [ Display colorAt: p ] ].
 					h position: p.
-					self selectedColor ~= c
+					self selectedColor != c
 						ifTrue: [ self selectedColor: c ] ].
 			"			self world displayWorldSafely. "
 			h anyButtonPressed ].

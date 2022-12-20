@@ -16,14 +16,14 @@ TFBooleanType >> basicType [
 { #category : #'reading-writing' }
 TFBooleanType >> callbackReadValue: anExternalAddress [
 
-	^ (self readValue: anExternalAddress) ~= 0
+	^ (self readValue: anExternalAddress) != 0
 ]
 
 { #category : #marshalling }
 TFBooleanType >> emitMarshallFromPrimitive: anIRBuilder [ 
 	
 	anIRBuilder pushLiteral: 0.
-	anIRBuilder send: #~=.
+	anIRBuilder send: #'!='.
 ]
 
 { #category : #marshalling }

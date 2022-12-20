@@ -231,7 +231,7 @@ DiskFileAttributesTest >> testPermissions [
 		oldPermissions := self tempFileEntry permissions.
 		newPermissions := FileSystemPermission posixPermissions: 8r007.
 		"Check that the existing permissions don't happen to match the test permissions"
-		self assert: oldPermissions ~= newPermissions.
+		self assert: oldPermissions != newPermissions.
 
 		"Setting permissions aren't supported on Windows"
 		OSPlatform current isWindows ifTrue: [ 

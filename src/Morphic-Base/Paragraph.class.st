@@ -413,7 +413,7 @@ Paragraph >> displaySelectionBarOn: aCanvas [
 Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [ 
 	"Display a SelectionBlock if it does not overlap vith the regular selection"
 	
-	(selectionStart notNil and: [selectionStop notNil and: [selectionStart ~= selectionStop]])
+	(selectionStart notNil and: [selectionStop notNil and: [selectionStart != selectionStop]])
 		ifTrue: [	| startIdx stopIdx selSartIdx selStopIdx selBlockRange selRange |
 			startIdx := aSelBlock first stringIndex.
 			stopIdx := aSelBlock last stringIndex.
@@ -436,22 +436,22 @@ Paragraph >> displaySelectionInLine: line on: aCanvas [
 		ifTrue: 
 			["Only show caret on line where clicked"
 
-			selectionStart textLine ~= line ifTrue: [^self]]
+			selectionStart textLine != line ifTrue: [^self]]
 		ifFalse: 
 			["Test entire selection before or after here"
 
 			(selectionStop stringIndex < line first 
 				or: [selectionStart stringIndex > (line last + 1)]) ifTrue: [^self].	"No selection on this line"
 			(selectionStop stringIndex = line first 
-				and: [selectionStop textLine ~= line]) ifTrue: [^self].	"Selection ends on line above"
+				and: [selectionStop textLine != line]) ifTrue: [^self].	"Selection ends on line above"
 			(selectionStart stringIndex = (line last + 1) 
-				and: [selectionStop textLine ~= line]) ifTrue: [^self]].	"Selection begins on line below"
+				and: [selectionStop textLine != line]) ifTrue: [^self]].	"Selection begins on line below"
 	leftX := (selectionStart stringIndex < line first 
 				ifTrue: [line ]
 				ifFalse: [selectionStart ])left.
 	rightX := (selectionStop stringIndex > (line last + 1) or: 
 					[selectionStop stringIndex = (line last + 1) 
-						and: [selectionStop textLine ~= line]]) 
+						and: [selectionStop textLine != line]]) 
 				ifTrue: [line right]
 				ifFalse: [selectionStop left].
 	selectionStart = selectionStop 

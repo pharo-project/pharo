@@ -279,7 +279,7 @@ MCFileRepositoryInspector >> refresh [
 					workingCopy ancestors
 						do: [ :ancestor |
 							(ancestor versionNumber < aVersionArray third
-								or: [ ancestor versionNumber = aVersionArray third and: [ ancestor author ~= aVersionArray second ] ])
+								or: [ ancestor versionNumber = aVersionArray third and: [ ancestor author != aVersionArray second ] ])
 								ifTrue: [ newer add: ancestor name ] ] ] ].
 					
 	self

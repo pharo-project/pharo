@@ -91,7 +91,7 @@ PositionableStream >> backUpTo: subCollection [
 PositionableStream >> boolean [
 	"Answer the next boolean value from this (binary) stream."
 
-	^ self next ~= 0
+	^ self next != 0
 ]
 
 { #category : #'accessing - data' }

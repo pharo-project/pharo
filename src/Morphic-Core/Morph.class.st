@@ -4572,7 +4572,7 @@ Morph >> overlapsShadowForm: itsShadow bounds: itsBounds [
 	overlapExtent > (0 @ 0)
 		ifFalse: [^ false].
 	andForm := self shadowForm.
-	overlapExtent ~= self fullBounds extent
+	overlapExtent != self fullBounds extent
 		ifTrue: [andForm := andForm
 						contentsOfArea: (0 @ 0 extent: overlapExtent)].
 	andForm := andForm
@@ -4583,7 +4583,7 @@ Morph >> overlapsShadowForm: itsShadow bounds: itsBounds [
 				rule: Form and
 				fillColor: nil.
 	^ andForm bits
-		anySatisfy: [:w | w ~= 0]
+		anySatisfy: [:w | w != 0]
 ]
 
 { #category : #structure }
@@ -4744,7 +4744,7 @@ Morph >> preOpenInWorld: aWorld [
 	By default, I choose the visible area of the world.
 	Subclasses may choose different strategies or even calculate their bounds.
 	"
-	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
+	(aWorld visibleClearArea origin != (0@0) and: [self position = (0@0)]) ifTrue:
 		[self position: aWorld visibleClearArea origin].
 ]
 
@@ -5894,7 +5894,7 @@ Morph >> snapToEdgeIfAppropriate [
 	(edgeSymbol := self valueOfProperty: #edgeToAdhereTo) ifNotNil:
 		[oldBounds := bounds.
 		self adhereToEdge: edgeSymbol.
-		bounds ~= oldBounds ifTrue: [(aWorld := self world) ifNotNil: [aWorld viewBox ifNotNil:
+		bounds != oldBounds ifTrue: [(aWorld := self world) ifNotNil: [aWorld viewBox ifNotNil:
 			[aWorld displayWorld]]]]
 ]
 
@@ -6788,7 +6788,7 @@ Morph >> wantsSteps [
 	| c |
 	c := self class.
 	[c includesSelector: #step] whileFalse: [c := c superclass].
-	^ c ~= Morph
+	^ c != Morph
 ]
 
 { #category : #accessing }

@@ -70,15 +70,15 @@ MCDataStream >> readRectangle [
 	| acc left top right bottom |
 	acc := byteStream nextNumber: 3.
 	left := acc bitShift: -12.
-	(left bitAnd: 16r800) ~= 0 ifTrue: [left := left - 16r1000].	"sign"
+	(left bitAnd: 16r800) != 0 ifTrue: [left := left - 16r1000].	"sign"
 	top := acc bitAnd: 16rFFF.
-	(top bitAnd: 16r800) ~= 0 ifTrue: [top := top - 16r1000].	"sign"
+	(top bitAnd: 16r800) != 0 ifTrue: [top := top - 16r1000].	"sign"
 
 	acc := byteStream nextNumber: 3.
 	right := acc bitShift: -12.
-	(right bitAnd: 16r800) ~= 0 ifTrue: [right := right - 16r1000].	"sign"
+	(right bitAnd: 16r800) != 0 ifTrue: [right := right - 16r1000].	"sign"
 	bottom := acc bitAnd: 16rFFF.
-	(bottom bitAnd: 16r800) ~= 0 ifTrue: [bottom := bottom - 16r1000].	"sign"
+	(bottom bitAnd: 16r800) != 0 ifTrue: [bottom := bottom - 16r1000].	"sign"
 	
     ^ Rectangle left: left right: right top: top bottom: bottom
 

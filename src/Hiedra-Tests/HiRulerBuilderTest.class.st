@@ -51,7 +51,7 @@ HiRulerBuilderTest >> assertRulerHasNodes: expectedNodesAndRulerPointsAsAssociat
 		expectedValue := each key.
 		expectedRulerPoint := each value.
 		actualNode := actualNodes detect: [:aNode | aNode theValue = expectedValue ].
-		actualNode rulerPoint ~= expectedRulerPoint.
+		actualNode rulerPoint != expectedRulerPoint.
 		].
 
 	self

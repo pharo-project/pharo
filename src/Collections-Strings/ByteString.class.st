@@ -44,7 +44,7 @@ ByteString class >> findFirstInString: aString  inSet: inclusionMap  startingAt:
 	<var: #aString declareC: 'unsigned char *aString'>
 	<var: #inclusionMap  declareC: 'char *inclusionMap'>
 
-	inclusionMap size ~= 256 ifTrue: [ ^0 ].
+	inclusionMap size != 256 ifTrue: [ ^0 ].
 
 	i := start.
 	stringSize := aString size.

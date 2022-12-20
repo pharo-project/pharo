@@ -27,7 +27,7 @@ SparseLargeArray >> analyzeSpaceSaving [
                        [nonNilTables := nonNilTables + 1.
                         1 to: (page == lastPage ifTrue: [lastChunkSize] ifFalse: [chunkSize]) do:
                                [:j|
-                               (page at: j) ~= defaultValue ifTrue:
+                               (page at: j) != defaultValue ifTrue:
                                        [elems := elems + 1]]]].
 
        ^String streamContents:

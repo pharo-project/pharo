@@ -83,7 +83,7 @@ MetacelloVersionMethodSpec >> methodSection: methodSection pre: preBlock last: l
 			self
 				methodSection: ms
 				pre: preBlock
-				last: index ~= list size
+				last: index != list size
 				post: postBlock
 				indent: indent + 1 ].
 	methodSection ~~ self

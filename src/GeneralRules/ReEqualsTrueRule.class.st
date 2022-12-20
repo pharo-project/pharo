@@ -21,7 +21,7 @@ ReEqualsTrueRule >> basicCheck: aNode [
 	(#(true false) includes: aNode value) ifFalse: [ ^ false ].
 	(parent := aNode parent) ifNil: [ ^ false ].
 	parent isMessage ifFalse: [ ^ false ].
-	^ #(#= #== #~= #~~) includes: parent selector
+	^ #(#= #== #'!=' #~~) includes: parent selector
 ]
 
 { #category : #accessing }

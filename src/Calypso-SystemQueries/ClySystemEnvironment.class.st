@@ -298,7 +298,7 @@ ClySystemEnvironment >> isFluidClassDefinition: classDefinitionString [
 	| splitted |
 	splitted := classDefinitionString splitOn: '<<'.
 	^ splitted size = 2 and: [ 
-		  splitted first trim ~= 'Trait' and: [ 
+		  splitted first trim != 'Trait' and: [ 
 			  '#*' match:
 				  (splitted second findTokens: Character separators) first ] ]
 ]
@@ -338,7 +338,7 @@ ClySystemEnvironment >> isOverridingExistingClassWhenDefiningClassNamed: newClas
 	"Attempting to define new class over existing one when not looking at the original one in this browser..."
 
 	^ (oldClass isNil or: [ 
-		   oldClass instanceSide name asString ~= newClassName ]) and: [ 
+		   oldClass instanceSide name asString != newClassName ]) and: [ 
 		  self includesClassNamed: newClassName asSymbol ]
 ]
 

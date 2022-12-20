@@ -388,7 +388,7 @@ RubSmalltalkEditor >> computeSelectionIntervalForCurrentLine [
 	quoteCounter := 0.
 	[ left <= right and: [ ((s at: right) = $"
 			"we need to stop if quote is defined as character"
-			and: [ right - 1 < 1 or: [ (s at: right - 1) ~= $$ ] ])
+			and: [ right - 1 < 1 or: [ (s at: right - 1) != $$ ] ])
 				or: [ quoteCounter % 2 = 1 or: [(s at: right) isSeparator] ] ] ]
 		whileTrue: [
 			(s at: right) = $" ifTrue: [ quoteCounter := quoteCounter + 1 ].
@@ -823,7 +823,7 @@ RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
 		(character = $_) or: [ 
 			(character = $:) and: [ 
 				aString size > index
-					and: [  (aString at: index + 1) ~= $= ] ] ] ]
+					and: [  (aString at: index + 1) != $= ] ] ] ]
 ]
 
 { #category : #'menu messages' }

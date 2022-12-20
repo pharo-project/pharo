@@ -619,7 +619,7 @@ RxMatcher >> syntaxAny [
 	Create a matcher for any non-null character."
 
 	^RxmPredicate new
-		predicate: [:char | char asInteger ~= 0]
+		predicate: [:char | char asInteger != 0]
 ]
 
 { #category : #'double dispatch' }
@@ -809,7 +809,7 @@ RxMatcher >> tryMatch [
 		ifNil: [ matcher matchAgainst: self ]
 		ifNotNil: [ ( startOptimizer canStartMatch: stream peek in: self ) and: [ matcher matchAgainst: self ] ].	"check for duplicates"
 	( lastResult not
-		or: [ oldMarkerPositions isNil or: [ oldMarkerPositions size ~= markerPositions size ] ] )
+		or: [ oldMarkerPositions isNil or: [ oldMarkerPositions size != markerPositions size ] ] )
 		ifTrue: [ ^ lastResult ].
 	oldMarkerPositions
 		with: markerPositions

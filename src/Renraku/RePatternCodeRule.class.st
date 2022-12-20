@@ -16,7 +16,7 @@ RePatternCodeRule class >> isAbstract [
 { #category : #testing }
 RePatternCodeRule class >> isVisible [
 	
-	^ self name ~=  #RePatternCodeRule
+	^ self name !=  #RePatternCodeRule
 ]
 
 { #category : #testing }

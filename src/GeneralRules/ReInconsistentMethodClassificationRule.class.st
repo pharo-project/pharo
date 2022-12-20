@@ -36,7 +36,7 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 				(superProtocol isNil or: [ 
 			 	 superProtocol == #'as yet unclassified' or: [ 
 			 	 superProtocol first = $*	 ] ]) ifFalse: [ 
-					ownerProtocol ~= superProtocol ifTrue: [
+					ownerProtocol != superProtocol ifTrue: [
         aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ]] ] ].
 ]
 

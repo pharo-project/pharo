@@ -67,7 +67,7 @@ JPEGHuffmanTable >> makeDerivedTables [
 	huffCode := Array new: huffSize size.
 	si := huffSize at: 1.
 	index := 1.
-	[ (huffSize at: index) ~= 0 ] whileTrue: 
+	[ (huffSize at: index) != 0 ] whileTrue: 
 		[ [ (huffSize at: index) = si ] whileTrue: 
 			[ huffCode 
 				at: index
@@ -81,7 +81,7 @@ JPEGHuffmanTable >> makeDerivedTables [
 		to: 16
 		do: 
 			[ :l | 
-			(bits at: l) ~= 0 
+			(bits at: l) != 0 
 				ifTrue: 
 					[ valptr 
 						at: l

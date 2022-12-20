@@ -155,7 +155,7 @@ RBAssignmentNode >> replaceNode: aNode withNode: anotherNode [
 RBAssignmentNode >> replaceSourceWith: aNode [ 
 	"Check if we need to convert the assignment. Also check if we are being replaced with a setter message send. If so, create the replacements to edit the original source."
 
-	(aNode isAssignment and: [ aNode assignmentOperator ~= self assignmentOperator ]) ifTrue: [
+	(aNode isAssignment and: [ aNode assignmentOperator != self assignmentOperator ]) ifTrue: [
 		self addReplacement: (RBStringReplacement 
 			replaceFrom: self assignmentPosition
 			to: self assignmentPosition + self assignmentOperator size - 1

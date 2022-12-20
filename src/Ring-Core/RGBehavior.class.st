@@ -451,7 +451,7 @@ RGBehavior >> ensureUnresolvedLocalMethod [
 { #category : #documentation }
 RGBehavior >> extensions [
 
-	^ self localMethods select: [ :each | each package ~= self package ]
+	^ self localMethods select: [ :each | each package != self package ]
 ]
 
 { #category : #testing }

@@ -93,7 +93,7 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strik
 	
 	"We need to do a second pass. The colormap set is for use in the second pass."
 	secondPassMap := colorMap.
-	colorMap := sourceForm depth ~= destForm depth
+	colorMap := sourceForm depth != destForm depth
 		ifTrue: [ self cachedFontColormapFrom: sourceForm depth to: destForm depth ].
 	answer := self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta.
 	colorMap := secondPassMap.

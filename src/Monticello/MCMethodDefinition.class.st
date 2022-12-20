@@ -279,7 +279,7 @@ MCMethodDefinition >> overridenMethodOrNil [
 		
 	^ SourceFiles
 		changeRecordsFor: realMethod asRingDefinition
-		detect: [ :protocol | protocol ~= category ]
+		detect: [ :protocol | protocol != category ]
 ]
 
 { #category : #installing }
@@ -288,7 +288,7 @@ MCMethodDefinition >> postloadOver: aDefinition [
 	self class initializersEnabled ifTrue: [
 		(self isInitializer
 			and: [ self actualClass isTrait not 
-					and: [ aDefinition isNil or: [ self source ~= aDefinition source ]]]) ifTrue: [
+					and: [ aDefinition isNil or: [ self source != aDefinition source ]]]) ifTrue: [
 				self actualClass instanceSide initialize ] ].
 	"Postloading of FFI fields. This code will be called when loading FFI structures that are not by default in the image. This is NOT dead code."
 	self isExternalStructureFieldDefinition
@@ -327,7 +327,7 @@ MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 			"If moved to and fro extension, ignore removal"
 			(category beginsWith: '*') = (newProtocol beginsWith: '*')
 				ifFalse: [ ^ self ].	"Check if moved between different extension categories"
-			((category beginsWith: '*') and: [ category ~= newProtocol ])
+			((category beginsWith: '*') and: [ category != newProtocol ])
 				ifTrue: [ ^ self ] ].
 	aClass removeSelector: aSelector.
 	aClass organization removeProtocolIfEmpty: category

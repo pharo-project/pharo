@@ -43,7 +43,7 @@ BasicDatePrinter >> printDateAndTime: aDateTime withLeadingSpace: printLeadingSp
 
 	self printHMS: aDateTime separatedBy: $: on: aStream.
 
-	aDateTime nanoSecond ~= 0
+	aDateTime nanoSecond != 0
 		ifTrue: [ | n len |
 			n := aDateTime nanoSecond.
 			len := 9.

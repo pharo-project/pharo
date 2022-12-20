@@ -18,7 +18,7 @@ OSButtonState >> anyPressed [
 
 { #category : #accessing }
 OSButtonState >> button1 [
-	^ (buttons & 1) ~=0
+	^ (buttons & 1) !=0
 ]
 
 { #category : #accessing }
@@ -28,7 +28,7 @@ OSButtonState >> button1: aBoolean [
 
 { #category : #accessing }
 OSButtonState >> button2 [
-	^ (buttons & 2) ~=0
+	^ (buttons & 2) !=0
 ]
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ OSButtonState >> button2: aBoolean [
 
 { #category : #accessing }
 OSButtonState >> button3 [
-	^ (buttons & 4) ~=0
+	^ (buttons & 4) !=0
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ OSButtonState >> button3: aBoolean [
 
 { #category : #accessing }
 OSButtonState >> button4 [
-	^ (buttons & 8) ~=0
+	^ (buttons & 8) !=0
 ]
 
 { #category : #accessing }
@@ -58,7 +58,7 @@ OSButtonState >> button4: aBoolean [
 
 { #category : #accessing }
 OSButtonState >> button5 [
-	^ (buttons & 16) ~=0
+	^ (buttons & 16) !=0
 ]
 
 { #category : #accessing }

@@ -162,7 +162,7 @@ RunArray >> , aRunArray [
 			^new].
 	runs size = 0 ifTrue: [^aRunArray copy].
 	aRunArray runs size = 0 ifTrue: [^self copy].
-	(values at: values size) ~= (aRunArray values at: 1)
+	(values at: values size) != (aRunArray values at: 1)
 		ifTrue: [^RunArray
 					runs: runs , aRunArray runs
 					values: values , aRunArray values].
@@ -206,7 +206,7 @@ RunArray >> add: newObject withOccurrences: anInteger [
 	"Add value as the last element of the receiver, the given number of times"
 	anInteger <= 0 ifTrue: [ ^self ].
 	lastIndex := nil. "flush access cache"
-	(runs size=0 or: [values last ~= newObject])
+	(runs size=0 or: [values last != newObject])
 		ifTrue:
 			[runs := runs copyWith: anInteger.
 			values := values copyWith: newObject]
@@ -218,7 +218,7 @@ RunArray >> add: newObject withOccurrences: anInteger [
 RunArray >> addFirst: value [
 	"Add value as the first element of the receiver."
 	lastIndex := nil. "flush access cache"
-	(runs size=0 or: [values first ~= value])
+	(runs size=0 or: [values first != value])
 		ifTrue:
 			[runs := {1}, runs.
 			values := {value}, values]
@@ -230,7 +230,7 @@ RunArray >> addFirst: value [
 RunArray >> addLast: value [
 	"Add value as the last element of the receiver."
 	lastIndex := nil. "flush access cache"
-	(runs size=0 or: [values last ~= value])
+	(runs size=0 or: [values last != value])
 		ifTrue:
 			[runs := runs copyWith: 1.
 			values := values copyWith: value]

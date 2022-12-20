@@ -155,7 +155,7 @@ RBAbstractClass >> allSuperclassesUntil: aClass [
 	| supers sprClass |
 	supers := OrderedCollection new.
 	sprClass := self superclass.
-	[sprClass notNil and: [sprClass name ~= aClass name]] whileTrue: 
+	[sprClass notNil and: [sprClass name != aClass name]] whileTrue: 
 			[supers add: sprClass.
 			sprClass := sprClass superclass].
 	^supers
@@ -438,7 +438,7 @@ RBAbstractClass >> hierarchyDefinesVariable: aString [
 RBAbstractClass >> includesClass: aRBClass [ 
 	| currentClass |
 	currentClass := self.
-	[currentClass notNil and: [currentClass ~= aRBClass]] 
+	[currentClass notNil and: [currentClass != aRBClass]] 
 		whileTrue: [currentClass := currentClass superclass].
 	^currentClass = aRBClass
 ]

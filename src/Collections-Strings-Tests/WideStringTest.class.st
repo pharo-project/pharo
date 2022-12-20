@@ -159,8 +159,8 @@ WideStringTest >> testEqual [
 	self assert: ('abc' = 'ABC' asWideString) not.
 	self assert: ('abc' asWideString = 'ABC') not.
 	self assert: 'abc' asWideString equals: 'abc' asWideString.
-	self assert: #[97 0 0 0] asString ~= 'a000' asWideString.
-	self assert: 'a000' asWideString ~= #[97 0 0 0] asString
+	self assert: #[97 0 0 0] asString != 'a000' asWideString.
+	self assert: 'a000' asWideString != #[97 0 0 0] asString
 ]
 
 { #category : #'tests - substrings' }

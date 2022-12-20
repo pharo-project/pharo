@@ -15,7 +15,7 @@ ReClassSideResetMethodProtocolRule >> basicCheck: aMethod [
 
 	^ aMethod isClassSide and: [ 
 		  aMethod selector = #reset and: [ 
-			  aMethod protocol ~= #'class initialization' ] ]
+			  aMethod protocol != #'class initialization' ] ]
 ]
 
 { #category : #helpers }

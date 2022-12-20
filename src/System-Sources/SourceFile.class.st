@@ -100,7 +100,7 @@ SourceFile >> getPreambleAt: startingPosition [
 	[ position >= 0 
 		and: [ 
 			binaryStream position: position. 
-			binaryStream next ~= 33 "$!" ] ] 
+			binaryStream next != 33 "$!" ] ] 
 		whileTrue: [ position := position - 1 ].
 	"Now that we found the byte range, extract and decode it"
 	^ encoder decodeBytes: (binaryStream next: startingPosition - position)

@@ -129,7 +129,7 @@ Number >> adaptToFloat: rcvr andCompare: selector [
 	rcvr isFinite
 		ifFalse: [
 			selector == #= ifTrue: [^false].
-			selector == #~= ifTrue: [^true].
+			selector == #'!=' ifTrue: [^true].
 			rcvr isNaN ifTrue: [^ false].
 			(selector = #< or: [selector = #'<='])
 				ifTrue: [^ rcvr positive not].

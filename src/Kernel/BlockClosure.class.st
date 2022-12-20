@@ -613,7 +613,7 @@ BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 						closure: self
 						startpc: self compiledBlock initialPC.
 	((newContext objectClass: anArray) ~~ Array
-	 or: [numArgs ~= anArray size]) ifTrue:
+	 or: [numArgs != anArray size]) ifTrue:
 		[^Context primitiveFailTokenFor: nil].
 	newContext stackp: self compiledBlock numTemps.
 	1 to: numArgs do:
@@ -645,7 +645,7 @@ BlockClosure >> value [
 	 message. Supply the copied values to the activation as its copied
 	 temps. Primitive. Essential."
 	<primitive: 207>
-	numArgs ~= 0 ifTrue:
+	numArgs != 0 ifTrue:
 		[self numArgsError: 0].
 	^self primitiveFailed
 ]
@@ -658,7 +658,7 @@ BlockClosure >> value: firstArg [
 	 as its argument and copied temps. Primitive. Essential."
 	<primitive: 207>
 	| newContext |
-	numArgs ~= 1 ifTrue:
+	numArgs != 1 ifTrue:
 		[self numArgsError: 1].
 	false
 		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
@@ -676,7 +676,7 @@ BlockClosure >> value: firstArg value: secondArg [
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
 	| newContext |
-	numArgs ~= 2 ifTrue:
+	numArgs != 2 ifTrue:
 		[self numArgsError: 2].
 	false
 		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
@@ -695,7 +695,7 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
 	| newContext |
-	numArgs ~= 3 ifTrue:
+	numArgs != 3 ifTrue:
 		[self numArgsError: 3].
 	false
 		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
@@ -715,7 +715,7 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthAr
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
 	| newContext |
-	numArgs ~= 4 ifTrue:
+	numArgs != 4 ifTrue:
 		[self numArgsError: 4].
 	false
 		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
@@ -748,7 +748,7 @@ BlockClosure >> valueNoContextSwitch [
 	 the current process on block activation if a higher-priority process is runnable.
 	 Primitive. Essential."
 	<primitive: 209>
-	numArgs ~= 0 ifTrue:
+	numArgs != 0 ifTrue:
 		[self numArgsError: 0].
 	self primitiveFailed
 ]
@@ -759,7 +759,7 @@ BlockClosure >> valueNoContextSwitch: anArg [
 	 the current process on block activation if a higher-priority process is runnable.
 	 Primitive. Essential."
 	<primitive: 209>
-	numArgs ~= 1 ifTrue:
+	numArgs != 1 ifTrue:
 		[self numArgsError: 1].
 	self primitiveFailed
 ]
@@ -853,7 +853,7 @@ BlockClosure >> valueWithArguments: anArray [
 	 message. Supply the arguments in an anArray and copied values to
 	 the activation as its arguments and copied temps. Primitive. Essential."
 	<primitive: 208>
-	numArgs ~= anArray size ifTrue:
+	numArgs != anArray size ifTrue:
 		[self numArgsError: anArray size].
 
 	anArray isArray 

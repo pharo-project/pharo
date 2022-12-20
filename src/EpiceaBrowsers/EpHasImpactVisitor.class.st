@@ -41,7 +41,7 @@ EpHasImpactVisitor >> visitBehaviorCategoryChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior |
-			^ behavior category ~= aChange behaviorAffected category ].
+			^ behavior category != aChange behaviorAffected category ].
 			
 	^ true
 ]
@@ -49,8 +49,8 @@ EpHasImpactVisitor >> visitBehaviorCategoryChange: aChange [
 { #category : #visitor }
 EpHasImpactVisitor >> visitBehaviorChange: aChange [
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior | 
-		^ behavior definitionString ~= aChange behaviorAffected definitionSource or: [
-			behavior classSide definitionString ~= aChange behaviorAffected classSide definitionSource ] ].
+		^ behavior definitionString != aChange behaviorAffected definitionSource or: [
+			behavior classSide definitionString != aChange behaviorAffected classSide definitionSource ] ].
 
 	^ true
 ]
@@ -61,8 +61,8 @@ EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass | 
-			^ aClass comment ~= aChange newComment or: [
-			aClass organization commentStamp ~= aChange newStamp ] ].
+			^ aClass comment != aChange newComment or: [
+			aClass organization commentStamp != aChange newStamp ] ].
 
 	^ true
 ]
@@ -120,8 +120,8 @@ EpHasImpactVisitor >> visitMethodChange: aChange [
 			^ behavior 
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					method protocol ~= aChange methodAffectedProtocol or: [
-					method sourceCode ~= aChange methodAffectedSourceCode ] ]
+					method protocol != aChange methodAffectedProtocol or: [
+					method sourceCode != aChange methodAffectedSourceCode ] ]
 				ifAbsent: [ true ] ].
 			
 	^ true "If class is not present"

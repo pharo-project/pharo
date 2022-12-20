@@ -62,7 +62,7 @@ RBRealizeClassTransformation >> transform: targetClass [
 	| aClass method parseTree  |
 	targetClass allSelectors do: [ :selector | 
 		aClass := targetClass whoDefinesMethod: selector.
-		(aClass notNil and: [ aClass ~= targetClass ]) ifTrue: [ 
+		(aClass notNil and: [ aClass != targetClass ]) ifTrue: [ 
 			method := aClass methodFor: selector.
 			(method notNil and: [ method refersToSymbol: #subclassResponsibility ]) ifTrue: [
 				parseTree := method parseTree.

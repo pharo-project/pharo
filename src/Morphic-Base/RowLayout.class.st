@@ -58,7 +58,7 @@ RowLayout >> layout: aMorph in: layoutBounds [
 						ifFalse: [extra])]
 			ifFalse: [ext x].
 		cell := x@newBounds top extent: width@height.
-		((vr := m vResizing) == #shrinkWrap or: [m bounds ~= cell])
+		((vr := m vResizing) == #shrinkWrap or: [m bounds != cell])
 			ifTrue: [((vr == #shrinkWrap) not and: [m extent = cell extent])
 						ifTrue: [m position: cell origin]
 						ifFalse: [box := m bounds.

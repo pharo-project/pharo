@@ -1042,7 +1042,7 @@ HandMorph >> savePatchFrom: aCanvas [
 	damageRect := myBnds := self fullBounds.
 	savedPatch ifNotNil: 
 			[damageRect := myBnds merge: (savedPatch offset extent: savedPatch extent)].
-	(savedPatch isNil or: [savedPatch extent ~= myBnds extent]) 
+	(savedPatch isNil or: [savedPatch extent != myBnds extent]) 
 		ifTrue: 
 			["allocate new patch form if needed"
 
@@ -1245,7 +1245,7 @@ HandMorph >> updateCacheCanvas: aCanvas [
 					[cacheCanvas := nil.
 					cachedCanvasHasHoles := true.
 					^self]].
-	(cacheCanvas isNil or: [cacheCanvas extent ~= subBnds extent]) 
+	(cacheCanvas isNil or: [cacheCanvas extent != subBnds extent]) 
 		ifTrue: 
 			[cacheCanvas := (aCanvas allocateForm: subBnds extent) getCanvas.
 			cacheCanvas translateBy: subBnds origin negated

@@ -681,7 +681,7 @@ MetacelloPackageSpec >> updatePackageSpec: updatedSpecs force: force using: anMC
 		ifTrue: [ ^ self ].	"no file explicitly specified in this spec"
 	(viName := self workingCopyNameFor: anMCLoader) == nil
 		ifTrue: [ ^ self ].	"no working copy"
-	viName ~= self file
+	viName != self file
 		ifTrue: [ 
 			| spec |
 			spec := self copy.

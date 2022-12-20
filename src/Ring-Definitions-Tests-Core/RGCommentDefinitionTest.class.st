@@ -17,7 +17,7 @@ RGCommentDefinitionTest >> testActiveComment [
 	self assert: rgComment stamp notNil.
 	rgComment content: ''.
 	"it always reads from the organization and the previous changes was not commited"
-	self assert: rgComment content ~= ''.
+	self assert: rgComment content != ''.
 
 	rgComment fromActiveToPassive.
 	self assert: rgComment isPassive.
@@ -35,7 +35,7 @@ RGCommentDefinitionTest >> testActiveComment [
 	self assert: rgComment stamp notNil.
 	rgComment content: ''.
 	"it always reads from the source file and the previous changes was not commited"
-	self assert: rgComment content ~= ''
+	self assert: rgComment content != ''
 ]
 
 { #category : #testing }

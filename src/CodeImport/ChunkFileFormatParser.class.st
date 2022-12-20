@@ -143,7 +143,7 @@ ChunkFileFormatParser >> parseClassOrganization: classOrganizationPreamble [
 
 	| behaviorName isMeta |
 	behaviorName := classOrganizationPreamble first.
-	isMeta := classOrganizationPreamble second ~= self reorganizeSelector.
+	isMeta := classOrganizationPreamble second != self reorganizeSelector.
 	self
 		addDeclaration:
 			(self classOrganisationChunkClass
@@ -166,7 +166,7 @@ ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 
 	| behaviorName isMeta stamp |
 	behaviorName := commentPreamble first asSymbol.
-	isMeta := commentPreamble second ~= self commentStampSelector.
+	isMeta := commentPreamble second != self commentStampSelector.
 	stamp := isMeta
 		ifTrue: [ commentPreamble at: 4 ]
 		ifFalse: [ commentPreamble at: 3 ].

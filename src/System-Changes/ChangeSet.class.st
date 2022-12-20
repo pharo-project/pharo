@@ -253,7 +253,7 @@ ChangeSet class >> hasNoDependenciesFor: aTrait in: traits [
 
 	^ traits allSatisfy: [ :another |
 		aTrait == another or: [ "are the same"
-			aTrait ~= another classSide and: [ "is not the classTrait of another"
+			aTrait != another classSide and: [ "is not the classTrait of another"
 				(aTrait traitComposition allTraits includes: another) not ] ] ]
 ]
 
@@ -967,7 +967,7 @@ ChangeSet >> fileOutPSFor: class on: stream [
 							stream
 								nextChunkPut: class soleInstance name , ' initialize';
 								cr ] ] ].
-	((classRecord includesChangeType: #change) and: [ (currentDef := class definitionString) ~= class definitionString ])
+	((classRecord includesChangeType: #change) and: [ (currentDef := class definitionString) != class definitionString ])
 		ifTrue: [ 
 			stream
 				nextChunkPut: currentDef;

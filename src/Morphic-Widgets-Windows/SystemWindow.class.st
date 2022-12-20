@@ -1571,7 +1571,7 @@ SystemWindow >> position: newPos [
 		ifTrue: [collapsedFrame := self bounds]
 		ifFalse: [fullFrame := self bounds].
 
-	(oldPos ~= newPos)
+	(oldPos != newPos)
 		ifTrue: [ self announce: 
 					(WindowMoved new 
 						oldPosition: oldPos;

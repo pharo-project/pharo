@@ -136,7 +136,7 @@ MailAddressParser >> grabBasicAddress [
 			(#(Atom QuotedString ) includes: tokens last type)
 				ifFalse: [self error: 'bad token in address: ' , tokens last text].
 			self addToAddress].
-	(tokens isEmpty or: [tokens last type ~= $@])
+	(tokens isEmpty or: [tokens last type != $@])
 		ifTrue: ["no domain specified"
 			self finishAddress]
 		ifFalse: 

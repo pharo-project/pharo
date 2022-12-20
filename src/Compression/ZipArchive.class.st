@@ -95,7 +95,7 @@ ZipArchive class >> isZipArchive: file [
 	stream size < 22 ifTrue: [ ^ false ].
 	
 	eocdPosition := self findEndOfCentralDirectoryFrom: stream.
-	stream ~= file ifTrue: [ stream close ].
+	stream != file ifTrue: [ stream close ].
 	
 	^ eocdPosition > 0
 ]

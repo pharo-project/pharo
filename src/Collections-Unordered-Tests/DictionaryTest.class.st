@@ -379,7 +379,7 @@ DictionaryTest >> testAsSet [
 	
 	"Check if the two associations were added (that should happen if they are different)"
 	self
-		assert: (assoc0 copy ~= assoc1) ==> (aSet size > 1)
+		assert: (assoc0 copy != assoc1) ==> (aSet size > 1)
 		description:
   			'When adding two different elements, the set size should be greater than one'
 ]

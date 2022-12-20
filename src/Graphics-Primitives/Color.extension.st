@@ -276,7 +276,7 @@ Color class >> maskingMap: depth [
 	depth <= 8 
 		ifTrue: [ sizeNeeded := 1 bitShift: depth ]
 		ifFalse: [ sizeNeeded := 4096 ].
-	(MaskingMap == nil or: [ MaskingMap size ~= sizeNeeded ]) ifTrue: 
+	(MaskingMap == nil or: [ MaskingMap size != sizeNeeded ]) ifTrue: 
 		[ MaskingMap := Bitmap 
 			new: sizeNeeded
 			withAll: 4294967295.

@@ -31,7 +31,7 @@ StackLayout >> layout: aMorph in: layoutBounds [
 	newBounds := layoutBounds origin extent: (layoutBounds extent max: minExt).
 	cell := newBounds.
 	aMorph submorphs with: cachedMinExtents do: [:m :ext |
-		((vr := m vResizing) == #shrinkWrap or: [m bounds ~= cell])
+		((vr := m vResizing) == #shrinkWrap or: [m bounds != cell])
 			ifTrue: [((vr == #shrinkWrap) not and: [m extent = cell extent])
 						ifTrue: [m position: cell origin]
 						ifFalse: [box := m bounds.

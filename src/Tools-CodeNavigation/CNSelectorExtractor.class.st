@@ -77,7 +77,7 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 		However, in the first case we want cascade1 and in the latter we want cascade2.
 		
 		"
-		(node ~= originalNode and: [ 
+		(node != originalNode and: [ 
 			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [ 
 			node := node parent messages first ] ].
 	

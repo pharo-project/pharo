@@ -427,7 +427,7 @@ TimeProfiler >> reportOtherProcesses [
 
 { #category : #'ui specific' }
 TimeProfiler >> reportOtherProcesses: aBoolean [
-	self reportOtherProcesses ~= aBoolean
+	self reportOtherProcesses != aBoolean
 		ifFalse: [ ^ self ].
 	reportOtherProcesses := aBoolean.
 	self changed: #reportOtherProcesses.
@@ -602,7 +602,7 @@ TimeProfiler >> showLeavesOnly [
 
 { #category : #'ui specific' }
 TimeProfiler >> showLeavesOnly: aBoolean [
-	self showLeavesOnly ~= aBoolean
+	self showLeavesOnly != aBoolean
 		ifFalse: [ ^ self ].
 	treeMorph
 		treeLineWidth:
@@ -681,7 +681,7 @@ TimeProfiler >> threshold [
 
 { #category : #accessing }
 TimeProfiler >> threshold: aTreshold [
-	(aTreshold ~= threshold and: [ aTreshold between: 0 and: 1000 ])
+	(aTreshold != threshold and: [ aTreshold between: 0 and: 1000 ])
 		ifFalse: [ ^ self ].
 	threshold := aTreshold.
 	self updateList.

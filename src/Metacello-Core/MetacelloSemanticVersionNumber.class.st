@@ -157,7 +157,7 @@ MetacelloSemanticVersionNumber class >> fromString: aString forPattern: forPatte
                     , subString printString ] ].
       normalComponents add: integer.
       identifierCount := identifierCount + 1 ].
-  (forPattern not and: [ identifierCount ~= 3 ])
+  (forPattern not and: [ identifierCount != 3 ])
     ifTrue: [ self error: 'invalid version number: normal version must have only 3 components' ].
   preReleaseEnd := build = 0
     ifTrue: [ aString size ]
@@ -484,7 +484,7 @@ MetacelloSemanticVersionNumber >> match: aVersionPattern [
         ifFalse: [ 
             mySize < patternSize
                 ifTrue: [ ^ false ].
-            (patternVersion at: patternSize) ~= '?'
+            (patternVersion at: patternSize) != '?'
                 ifTrue: [ ^ false ].
             mySize := patternSize ].
     1 to: mySize do: [ :i | 

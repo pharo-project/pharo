@@ -585,7 +585,7 @@ SUnitTest >> testRan [
 { #category : #testing }
 SUnitTest >> testRanOnlyOnce [
 
-	self assert: hasRanOnce ~= true.
+	self assert: hasRanOnce != true.
 	hasRanOnce := true
 ]
 

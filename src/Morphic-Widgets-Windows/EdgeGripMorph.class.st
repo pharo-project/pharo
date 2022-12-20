@@ -73,9 +73,9 @@ EdgeGripMorph >> extent: aPoint [
 	ext := self extent.
 	super extent: aPoint.
 	self isHorizontal
-		ifTrue: [self extent y ~= ext y ifTrue: [
+		ifTrue: [self extent y != ext y ifTrue: [
 					self adoptPaneColor: self paneColor]]
-		ifFalse: [self extent x ~= ext x ifTrue: [
+		ifFalse: [self extent x != ext x ifTrue: [
 					self adoptPaneColor: self paneColor]]
 ]
 

@@ -181,7 +181,7 @@ RBBasicDummyLintRuleTest class >> collectionMessagesToExternalObject [
 						[:aNode :answer | 
 						answer or: 
 								[(aNode receiver selector copyFrom: 1 to: (aNode receiver selector size min: 2))
-									~= 'as' and: 
+									!= 'as' and: 
 											[| receiver |
 											receiver := aNode receiver receiver.
 											receiver isVariable not or: 
@@ -351,7 +351,7 @@ RBBasicDummyLintRuleTest class >> equalsTrue [
 								[:aNode :answer | 
 								answer or: 
 										[aNode parent isMessage
-											and: [#(#= #== #~= #~~) includes: aNode parent selector]]];
+											and: [#(#= #== #'!=' #~~) includes: aNode parent selector]]];
 				yourself.
 	detector methodBlock: 
 			[:context :result | 
@@ -759,7 +759,7 @@ RBBasicDummyLintRuleTest class >> sendsDifferentSuper [
 	detector methodBlock: 
 			[:context :result | 
 			| message |
-			(message := context superMessages detect: [:each | each ~= context selector]
+			(message := context superMessages detect: [:each | each != context selector]
 						ifNone: [nil]) notNil ifTrue: 
 					[result addSearchString: message.
 					result addClass: context selectedClass selector: context selector]].

@@ -174,7 +174,7 @@ OmSessionStore >> lowLevelFileStoreIfNone: aBlock [
 OmSessionStore >> needsReset [
 
 	^ currentSession ~~ Smalltalk session
-		or: [ currentImagePathString ~= self imagePathString ]
+		or: [ currentImagePathString != self imagePathString ]
 ]
 
 { #category : #writing }

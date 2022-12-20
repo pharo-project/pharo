@@ -64,18 +64,18 @@ RBEnvironmentsPresenter >> argumentsListMenu [
 					anItem
 						name: 'Inspect';
 						visibleIf: [ (scopeList selectedItem isCompositeEnvironment not
-							and: [ scopeList selectedItem label ~= 'current image' ])];
+							and: [ scopeList selectedItem label != 'current image' ])];
 						action: [ self inspect: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Edit';
 						visibleIf: [ (scopeList selectedItem isCompositeEnvironment not
-							and: [ scopeList selectedItem label ~= 'current image' ])];
+							and: [ scopeList selectedItem label != 'current image' ])];
 						action: [ self edit: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Remove';
-						visibleIf: [ scopeList selectedItem label ~= 'current image' ];
+						visibleIf: [ scopeList selectedItem label != 'current image' ];
 						action: [ self remove: scopeList selectedItem ] ]
 				 ]
 ]

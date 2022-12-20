@@ -607,7 +607,7 @@ CompiledMethod >> isFaulty [
 { #category : #testing }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
-	^ self origin isTrait and: [ self origin ~= self methodClass ]
+	^ self origin isTrait and: [ self origin != self methodClass ]
 ]
 
 { #category : #testing }

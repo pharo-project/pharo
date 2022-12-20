@@ -9,7 +9,7 @@ ByteArray >> asExternalPointer [
 { #category : #'*FFI-Kernel' }
 ByteArray >> boolean8AtOffset: zeroBasedOffset [
 	<primitive: 600>
-	^ (self integerAt: zeroBasedOffset + 1 size: 1 signed: false) ~= 0
+	^ (self integerAt: zeroBasedOffset + 1 size: 1 signed: false) != 0
 ]
 
 { #category : #'*FFI-Kernel' }

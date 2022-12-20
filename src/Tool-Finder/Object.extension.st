@@ -5,7 +5,7 @@ Object class >> approvedSelectorsForMethodFinder [
 
 	^ #(at: basicAt: basicSize yourself size
 	    ->
-	    = == ~= hash literalEqual
+	    = == #'!=' hash literalEqual
 	   )
 ]
 

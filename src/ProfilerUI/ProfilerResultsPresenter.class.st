@@ -36,7 +36,7 @@ ProfilerResultsPresenter >> doItNode [
 			selectorsPath := selectorsPath allButFirst ].
 		bool ].
 	(doItNode isNil or: [ 
-		 doItNode methodName ~= viewModel doItSelectorsPath last ]) ifTrue: [ 
+		 doItNode methodName != viewModel doItSelectorsPath last ]) ifTrue: [ 
 		^ nil ].
 	
 	^ doItNode

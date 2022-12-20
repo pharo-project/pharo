@@ -458,7 +458,7 @@ STONWriter >> writeObject: anObject [
 
 { #category : #writing }
 STONWriter >> writeObject: anObject do: block [
-	(jsonMode and: [ anObject class ~= STON listClass and: [ anObject class ~= STON mapClass ] ])
+	(jsonMode and: [ anObject class != STON listClass and: [ anObject class != STON mapClass ] ])
 		ifTrue: [ self error: 'wrong object class for JSON mode' ].
 	self with: anObject do: [
 		"although there is no check here, class names are expected to conform
@@ -481,7 +481,7 @@ STONWriter >> writeObject: object listSingleton: element [
 
 { #category : #writing }
 STONWriter >> writeObject: anObject named: stonName do: block [
-	(jsonMode and: [ anObject class ~= STON listClass and: [ anObject class ~= STON mapClass ] ])
+	(jsonMode and: [ anObject class != STON listClass and: [ anObject class != STON mapClass ] ])
 		ifTrue: [ self error: 'wrong object class for JSON mode' ].
 	self with: anObject do: [
 		writeStream nextPutAll: stonName.

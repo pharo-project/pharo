@@ -85,9 +85,9 @@ MCModification >> summarySuffix [
 { #category : #printing }
 MCModification >> summarySuffixOver: previousDefinition [
 	| sourceChanged categoryChanged timeStampChanged |
-	sourceChanged := self source ~= previousDefinition source.
-	timeStampChanged := self timeStamp ~= previousDefinition timeStamp.
-	categoryChanged := self category ~= previousDefinition category.
+	sourceChanged := self source != previousDefinition source.
+	timeStampChanged := self timeStamp != previousDefinition timeStamp.
+	categoryChanged := self category != previousDefinition category.
 	sourceChanged | timeStampChanged | categoryChanged
 		ifFalse: [ ^super summarySuffixOver: previousDefinition ].
 	sourceChanged ifTrue: [

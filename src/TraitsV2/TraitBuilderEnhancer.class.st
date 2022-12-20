@@ -240,7 +240,7 @@ TraitBuilderEnhancer >> traitCompositionOfClass: aClass [
 
 { #category : #migrating }
 TraitBuilderEnhancer >> validateRedefinition: anOldClass [
-	(anOldClass isNotNil and: [ anOldClass isTrait ~= builder isTrait ])
+	(anOldClass isNotNil and: [ anOldClass isTrait != builder isTrait ])
 		ifTrue: [ self error: 'A class should not be redefined as a trait. First remove it from the system.' ]
 ]
 

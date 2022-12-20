@@ -37,7 +37,7 @@ SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasis
 						ifTrue: [{anEmphasisSymbolOrArrayorNil}]
 						ifFalse: [anEmphasisSymbolOrArrayorNil].
 			emphArray do: [:each | 
-				each ~= #normal
+				each != #normal
 					ifTrue: [answer := answer , {TextEmphasis perform: each}]]].
 	
 	aTextStyleOrFontOrNil

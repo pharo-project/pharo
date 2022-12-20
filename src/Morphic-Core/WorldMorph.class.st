@@ -573,7 +573,7 @@ WorldMorph >> viewBox [
 WorldMorph >> viewBox: newViewBox [
 	"I am now displayed within newViewBox; react."
 
-	(self viewBox isNil or: [ self viewBox extent ~= newViewBox extent ])
+	(self viewBox isNil or: [ self viewBox extent != newViewBox extent ])
 		ifTrue: [ worldState invalidate ].
 
 	super viewBox: newViewBox.

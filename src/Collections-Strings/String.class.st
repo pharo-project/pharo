@@ -193,7 +193,7 @@ String class >> findFirstInString: aString inSet: inclusionMap startingAt: start
 	"Trivial, non-primitive version"
 	
 	| i stringSize ascii more |
-	inclusionMap size ~= 256 ifTrue: [^ 0].
+	inclusionMap size != 256 ifTrue: [^ 0].
 	stringSize := aString size.
 	more := true.
 	i := start - 1.
@@ -726,7 +726,7 @@ String >> asSignedInteger [
 	start := self findFirst: [:char | char isDigit].
 	start isZero ifTrue: [^ nil].
 	stream := self readStream position: start - 1.
-	((stream position ~= 0) and: [stream peekBack = $-])
+	((stream position != 0) and: [stream peekBack = $-])
 		ifTrue: [stream back].
 	^ Integer readFrom: stream
 ]
@@ -1710,7 +1710,7 @@ String >> hasWideCharacterFrom: start to: stop [
 	"Return true if one of my character in the range does not fit in a single byte"
 	
 	"Implementation note: inline #anySatisfy: here for efficiency reasons"
-	^(self indexOfWideCharacterFrom: start to: stop) ~= 0
+	^(self indexOfWideCharacterFrom: start to: stop) != 0
 ]
 
 { #category : #comparing }

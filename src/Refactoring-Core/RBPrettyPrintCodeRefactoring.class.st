@@ -28,7 +28,7 @@ RBPrettyPrintCodeRefactoring >> transform [
 								ifNotNil: [ tree := class parseTreeFor: selector.
 									tree
 										ifNotNil: [ formatted := tree formattedCode.
-											(source ~= formatted
+											(source != formatted
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
 													[ class compile: formatted classified: (class protocolsFor: selector) ] ] ] ] ] ]

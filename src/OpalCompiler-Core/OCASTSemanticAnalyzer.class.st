@@ -23,7 +23,7 @@ OCASTSemanticAnalyzer >> analyze: aNode [
 { #category : #visiting }
 OCASTSemanticAnalyzer >> analyzeLocalVariableRead: aLocalVariable [
 	aLocalVariable markRead.
-	(aLocalVariable scope outerNotOptimizedScope ~= scope outerNotOptimizedScope ) ifFalse: [ ^self ].
+	(aLocalVariable scope outerNotOptimizedScope != scope outerNotOptimizedScope ) ifFalse: [ ^self ].
 	"only escaping when they will end up in different closures"
 	aLocalVariable markEscapingRead.
 	"if we read a variable in a loop that is a repeated write, it need to be marked as escaping write"	
@@ -33,7 +33,7 @@ OCASTSemanticAnalyzer >> analyzeLocalVariableRead: aLocalVariable [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> analyzeLocalVariableWrite: aLocalVariable [
-	(aLocalVariable scope outerNotOptimizedScope ~= scope outerNotOptimizedScope) 
+	(aLocalVariable scope outerNotOptimizedScope != scope outerNotOptimizedScope) 
 	"only escaping when they will end up in different closures"
 			ifTrue: [ aLocalVariable markEscapingWrite].
 	"if we write a variable in a loop, mark it as a repeated Write"	

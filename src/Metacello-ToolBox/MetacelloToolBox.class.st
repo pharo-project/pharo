@@ -2163,7 +2163,7 @@ MetacelloToolBox >> updateVersionSpec: versionSpec fullVersionSpec: fullVersionS
                             cv := fullProjectSpec projectClassProject currentVersion.
                             cv ~~ nil
                                 ifTrue: [ 
-                                    cv versionString ~= fullProjectSpec versionString
+                                    cv versionString != fullProjectSpec versionString
                                         ifTrue: [ 
                                             spec projectReference versionString: cv versionString.
                                             updatedSpecs add: spec name ] ]
@@ -2181,7 +2181,7 @@ MetacelloToolBox >> updateVersionSpec: versionSpec fullVersionSpec: fullVersionS
                                 ifTrue: [ spec file: spec name ].
                             (viName := spec workingCopyNameFor: spec loader) ~~ nil
                                 ifTrue: [ 
-                                    viName ~= spec file
+                                    viName != spec file
                                         ifTrue: [ 
                                             spec file: viName.
                                             updatedSpecs add: spec name ].

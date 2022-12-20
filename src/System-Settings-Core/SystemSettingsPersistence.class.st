@@ -73,7 +73,7 @@ SystemSettingsPersistence class >> resumeSystemSettings [
 	| thisComputerID |
 	
 	thisComputerID := GlobalIdentifier uniqueInstance computerUUID.
-	lastSettingsComputerID ~= thisComputerID ifTrue: [ 
+	lastSettingsComputerID != thisComputerID ifTrue: [ 
 		lastSettingsComputerID := thisComputerID.
 		self updateSettingNodes ]
 ]

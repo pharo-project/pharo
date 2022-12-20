@@ -409,7 +409,7 @@ ContinuationTest >> testMethodTemps [
 	| i continuation |
 	i := 0.
 	i := i + (self callcc: [:cc | continuation := cc. 1]).
-	self assert: i ~= 3.
+	self assert: i != 3.
 	i = 2 ifFalse: [ continuation value: 2 ]
 ]
 
@@ -418,7 +418,7 @@ ContinuationTest >> testReentrant [
 	| assoc |
 	assoc := self callcc: [ :cc | cc -> 0 ].
 	assoc value: assoc value + 1.
-	self assert: assoc value ~= 5.
+	self assert: assoc value != 5.
 	assoc value = 4
 		ifFalse: [ assoc key value: assoc ]
 ]

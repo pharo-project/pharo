@@ -227,7 +227,7 @@ TreePagerMorph >> showCurrentPage [
 
 { #category : #'user interface' }
 TreePagerMorph >> updateForNewPageSize: newPageSize [
-	pageSize ~= newPageSize
+	pageSize != newPageSize
 		ifTrue: [ |  oldLast |
 			oldLast := self currentPageLastIndex.
 			pageSize := newPageSize max: 1.

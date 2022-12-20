@@ -116,7 +116,7 @@ TraitMethodDescription >> isAliasSelector [
 	| locatedMethod |
 	^self size = 1 and: [
 		locatedMethod := self locatedMethods anyOne.
-		(locatedMethod selector ~= self selector) or: [
+		(locatedMethod selector != self selector) or: [
 			locatedMethod methodClass isAliasSelector: self selector]]
 ]
 
@@ -157,7 +157,7 @@ TraitMethodDescription >> isLocalAliasSelector [
 	have a conflict."
 	
 	^self size = 1 and: [
-		(self locatedMethods anyOne selector ~= self selector)]
+		(self locatedMethods anyOne selector != self selector)]
 ]
 
 { #category : #testing }

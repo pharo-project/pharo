@@ -813,8 +813,8 @@ StringTest >> testEquality [
 	
 	self assert: 'abc' equals: 'abc' asWideString.
 	self assert: 'abc' asWideString equals: 'abc'.
-	self assert: ( #[97 0 0 0] asString ~= 'a000' asWideString).
-	self assert: ('a000' asWideString ~=  #[97 0 0 0] asString).
+	self assert: ( #[97 0 0 0] asString != 'a000' asWideString).
+	self assert: ('a000' asWideString !=  #[97 0 0 0] asString).
 
 	self assert: ('abc' sameAs: 'aBc' asWideString).
 	self assert: ('aBc' asWideString sameAs: 'abc').

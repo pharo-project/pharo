@@ -187,8 +187,8 @@ SystemWindow >> addPaneHSplitterBetween: topMorphs and: bottomMorphs [
 	topGroup := OrderedCollection new.
 	rightFraction := sorted contents first layoutFrame leftFraction.
 	[sorted atEnd or: [morph := sorted next.
-			(morph layoutFrame leftFraction ~= rightFraction and: [
-				morph layoutFrame rightFraction ~= rightFraction])]] whileFalse: [
+			(morph layoutFrame leftFraction != rightFraction and: [
+				morph layoutFrame rightFraction != rightFraction])]] whileFalse: [
 		topGroup add: morph.
 		rightFraction := morph layoutFrame rightFraction].
 	leftFrame := topGroup first layoutFrame.
@@ -263,8 +263,8 @@ SystemWindow >> addPaneVSplitterBetween: leftMorphs and: rightMorphs [
 	leftGroup := OrderedCollection new.
 	bottomFraction := sorted contents first layoutFrame topFraction.
 	[sorted atEnd or: [morph := sorted next.
-			morph layoutFrame topFraction ~= bottomFraction and: [
-				morph layoutFrame bottomFraction ~= bottomFraction]]] whileFalse: [
+			morph layoutFrame topFraction != bottomFraction and: [
+				morph layoutFrame bottomFraction != bottomFraction]]] whileFalse: [
 		leftGroup add: morph.
 		bottomFraction := morph layoutFrame bottomFraction].
 	topFrame := leftGroup first layoutFrame.
@@ -303,7 +303,7 @@ SystemWindow >> addPaneVSplitters [
 			each layoutFrame rightFraction = targetRight].
 		sameLeft := paneMorphs select: [:each |
 			each layoutFrame leftFraction = targetRight and: [
-				each layoutFrame rightFraction ~= targetRight]].
+				each layoutFrame rightFraction != targetRight]].
 		remaining := remaining
 			copyWithoutAll: (self addPaneVSplitterBetween: sameRight and: sameLeft)]
 ]
@@ -743,7 +743,7 @@ SystemWindow >> isEmbedded [
 	"Answer whether the receiver is embedded, i.e.
 	has an owner that is not the world or the hand."
 
-	^self owner isNotNil and: [self owner ~= self world and: [self owner ~= self activeHand]]
+	^self owner isNotNil and: [self owner != self world and: [self owner != self activeHand]]
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -858,13 +858,13 @@ SystemWindow >> linkSplittersToSplitters [
 	self splitters do: [:each |
 		each splitsTopAndBottom
 			ifTrue: [self splitters do: [:eachMorph |
-					eachMorph splitsTopAndBottom ~= each splitsTopAndBottom ifTrue: [
+					eachMorph splitsTopAndBottom != each splitsTopAndBottom ifTrue: [
 						eachMorph layoutFrame bottomFraction = each layoutFrame topFraction
 							ifTrue: [each addLeftOrTop: eachMorph].
 						eachMorph layoutFrame topFraction = each layoutFrame bottomFraction
 							ifTrue: [each addRightOrBottom: eachMorph]]]]
 			ifFalse: [self splitters do: [:eachMorph |
-					eachMorph splitsTopAndBottom ~= each splitsTopAndBottom ifTrue: [
+					eachMorph splitsTopAndBottom != each splitsTopAndBottom ifTrue: [
 						eachMorph layoutFrame rightFraction = each layoutFrame leftFraction
 							ifTrue: [each addLeftOrTop: eachMorph].
 						eachMorph layoutFrame leftFraction = each layoutFrame rightFraction

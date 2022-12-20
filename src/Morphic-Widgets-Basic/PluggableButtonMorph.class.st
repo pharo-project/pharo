@@ -1252,7 +1252,7 @@ PluggableButtonMorph >> update: aParameter [
 		self label: (getLabelSelector ifNotNil: [ model perform: getLabelSelector])].
 	aParameter == getFontSelector ifTrue: [ self font: (model perform: getFontSelector) ].
 	state := self getModelState.
-	(state ~= (self lastState) 
+	(state != (self lastState) 
 		or: [ getStateSelector isNil and: [aParameter == #onOffColor]])
 		ifTrue: [
 			self color: self colorToUse.

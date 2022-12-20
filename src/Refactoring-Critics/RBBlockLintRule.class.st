@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 RBBlockLintRule class >> isVisible [
-	^ self name ~= #RBBlockLintRule
+	^ self name != #RBBlockLintRule
 ]
 
 { #category : #accessing }

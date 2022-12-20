@@ -132,7 +132,7 @@ RBPragmaNode >> isFaulty [
 
 { #category : #testing }
 RBPragmaNode >> isKeyword [
-	^(selector indexOf: $:) ~= 0.
+	^(selector indexOf: $:) != 0.
 ]
 
 { #category : #testing }

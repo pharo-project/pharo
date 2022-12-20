@@ -134,7 +134,7 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 	glyph := face glyph.
 	slant := aFreeTypeFont simulatedItalicSlant.
 	synthBoldStrength := aFreeTypeFont simulatedBoldStrength.
-	synthBoldStrength ~= 0
+	synthBoldStrength != 0
 		ifTrue:[face emboldenOutline: synthBoldStrength].
 	boldExtra := 4 * synthBoldStrength abs ceiling.
 	face transformOutlineAngle: 0 scalePoint: scaleX@1  slant: slant.

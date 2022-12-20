@@ -33,7 +33,7 @@ ReNodeMatchRule class >> isAbstract [
 { #category : #testing }
 ReNodeMatchRule class >> isVisible [
 
-	^ self name ~= #ReNodeMatchRule
+	^ self name != #ReNodeMatchRule
 ]
 
 { #category : #adding }

@@ -82,7 +82,7 @@ UnixResolver >> xdgUserDir: userDirName [
 	configFile readStreamDo: [ :stream | 
 		[ stream atEnd ]
 			whileFalse: [ 
-				((stream peek ~= $#) and: [ (stream upTo: $=) = ('XDG_', userDirName, '_DIR') ])
+				((stream peek != $#) and: [ (stream upTo: $=) = ('XDG_', userDirName, '_DIR') ])
 							ifTrue: [ ^ self xdgParseUserDirLine: stream ]
 							ifFalse: [ stream nextLine ] ] ].
 	^ nil

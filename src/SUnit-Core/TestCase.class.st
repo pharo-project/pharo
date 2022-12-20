@@ -806,7 +806,7 @@ TestCase >> printTestSelectorOn: aStream [
 		ifNotNil: [ 
 			| class |
 			class := self class whichClassIncludesTestSelector: testSelector.
-			class ~= self class
+			class != self class
 				ifTrue: [ self printTestSelectorDefiningClass: class on: aStream ].
 			aStream
 				nextPutAll: '>>#';

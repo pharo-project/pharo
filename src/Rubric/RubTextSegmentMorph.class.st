@@ -82,7 +82,7 @@ RubTextSegmentMorph >> computeSmoothVertices [
 			firstCB := self textArea paragraph firstNonBlankCharacterBlockInLine: firstLine.
 			verts add: firstCB bottomLeft.
 			verts add: firstCB topLeft.
-			firstIndex ~= lastIndex
+			firstIndex != lastIndex
 				ifTrue: [ 
 					lastCB := self textArea paragraph lastNonBlankCharacterBlockInLine: firstLine.
 					verts add: lastCB topLeft.
@@ -127,7 +127,7 @@ RubTextSegmentMorph >> computeStraightVertices [
 		ifTrue: [ 
 			verts add: firstCB bottomLeft.
 			verts add: firstCB topLeft.
-			firstIndex ~= lastIndex
+			firstIndex != lastIndex
 				ifTrue: [ 
 					verts add: lastCB topLeft.
 					verts add: lastCB bottomLeft.

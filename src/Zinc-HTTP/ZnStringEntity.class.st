@@ -111,7 +111,7 @@ ZnStringEntity >> encoder [
 
 { #category : #accessing }
 ZnStringEntity >> encoder: anEncoding [
-	(encoder notNil and: [ anEncoding ~= encoder ]) ifTrue: [ self invalidateContentLength ].
+	(encoder notNil and: [ anEncoding != encoder ]) ifTrue: [ self invalidateContentLength ].
 	encoder := anEncoding
 ]
 
@@ -208,7 +208,7 @@ ZnStringEntity >> string [
 
 { #category : #accessing }
 ZnStringEntity >> string: aString [
-	(string notNil and: [ aString ~= string ]) ifTrue: [ self invalidateContentLength ].
+	(string notNil and: [ aString != string ]) ifTrue: [ self invalidateContentLength ].
 	string := aString
 ]
 

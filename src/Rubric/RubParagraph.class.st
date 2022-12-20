@@ -691,7 +691,7 @@ RubParagraph >> verticesFrom: firstIndex to: lastIndex [
 		ifTrue: [ 
 			vertices add: firstCB bottomLeft.
 			vertices add: firstCB topLeft.
-			firstIndex ~= lastIndex
+			firstIndex != lastIndex
 				ifTrue: [ 
 					vertices add: lastCB topLeft.
 					vertices add: lastCB bottomLeft.

@@ -19,6 +19,7 @@ Class {
 		'OSK_9',
 		'OSK_AGAIN',
 		'OSK_AMPERSAND',
+		'OSK_APPLICATION',
 		'OSK_ASTERISK',
 		'OSK_AT',
 		'OSK_BACKQUOTE',

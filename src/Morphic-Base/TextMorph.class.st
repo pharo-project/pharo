@@ -743,7 +743,7 @@ TextMorph >> fit [
 			[newExtent := (self paragraph extent max: 9 @ textStyle lineGrid) + (0 @ 2).
 			newExtent := newExtent + (2 * borderWidth).
 			newExtent := ((0 @ 0 extent: newExtent) expandBy: margins) extent.
-			newExtent ~= bounds extent 
+			newExtent != bounds extent 
 				ifTrue: 
 					[(container isNil and: [successor isNil]) 
 						ifTrue: 
@@ -1347,7 +1347,7 @@ TextMorph >> predecessorChanged [
 	( self hasProperty: #CreatingParagraph )
 		ifTrue: [ ^ self ].
 	newStart := predecessor ifNil: [ 1 ] ifNotNil: [ predecessor lastCharacterIndex + 1 ].
-	( self paragraph adjustedFirstCharacterIndex ~= newStart or: [ newStart >= text size ] )
+	( self paragraph adjustedFirstCharacterIndex != newStart or: [ newStart >= text size ] )
 		ifTrue: [ paragraph composeAllStartingAt: newStart.
 			self fit
 			]

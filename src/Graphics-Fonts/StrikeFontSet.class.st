@@ -196,7 +196,7 @@ StrikeFontSet >> characterFormAt: character put: characterForm [
 	rightX := xTable at: ascii + 2.
 	glyphs := (fontArray at: encoding) glyphs.
 	widthDif := characterForm width - (rightX - leftX).
-	widthDif ~= 0 ifTrue: [
+	widthDif != 0 ifTrue: [
 		newGlyphs := Form extent: glyphs width + widthDif @ glyphs height.
 		newGlyphs copy: (0 @ 0 corner: leftX @ glyphs height) from: 0 @ 0
 			in: glyphs rule: Form over.
@@ -313,7 +313,7 @@ StrikeFontSet >> displayMultiString: aString on: aBitBlt from: startIndex to: st
 		g := glyphInfo at:1.
 		leftX := glyphInfo at:2.
 		rightX := glyphInfo at:3.
-		((glyphInfo at:5) ~= aBitBlt lastFont) ifTrue: [
+		((glyphInfo at:5) != aBitBlt lastFont) ifTrue: [
 			(glyphInfo at:5) installOn: aBitBlt.
 		].
 		aBitBlt sourceForm: g.
@@ -369,7 +369,7 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 		g := glyphInfo at: 1.
 		leftX := glyphInfo at: 2.
 		rightX := glyphInfo at: 3.
-		(glyphInfo fifth ~= aBitBlt lastFont) ifTrue: [
+		(glyphInfo fifth != aBitBlt lastFont) ifTrue: [
 			glyphInfo fifth installOn: aBitBlt.
 		].
 		aBitBlt sourceForm: g.

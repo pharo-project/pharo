@@ -36,7 +36,7 @@ See [ 1 ] for details, copyrights etc.
 		pi := polygon at: i.
 		pj := polygon at: j. 
 	
-		(((pi y > testY) ~= (pj y > testY)) and: [ 
+		(((pi y > testY) != (pj y > testY)) and: [ 
 			testX < 
 			(
 				pj x - pi x

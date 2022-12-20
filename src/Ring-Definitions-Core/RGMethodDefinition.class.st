@@ -348,7 +348,7 @@ RGMethodDefinition >> isExtension [
 		ifAbsent: [  
 			(self parent notNil and:[ self package notNil ])
 				ifTrue: [ | value |
-					       value :=  self parent package ~= self package.
+					       value :=  self parent package != self package.
 						 self annotationNamed: self class isExtensionKey put: value.
 						 value ]
 				ifFalse: [ self protocol ifNil:[ false ] ifNotNil:[ :prot|  prot beginsWith: '*' ] ] ]
@@ -373,7 +373,7 @@ RGMethodDefinition >> isFailedTest [
 RGMethodDefinition >> isFromTrait [
 
 	"Return true for methods that have been included from Traits"
-	^ self origin isTrait and: [ self origin ~= self methodClass ]
+	^ self origin isTrait and: [ self origin != self methodClass ]
 ]
 
 { #category : #'type of methods' }

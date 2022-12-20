@@ -222,7 +222,7 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut:
     ifTrue: [ 
       | hasName hasRepo |
       hasRepo := self hasRepository.
-      hasName := self file ~= self className.
+      hasName := self file != self className.
       hasName
         ifTrue: [ 
           hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt
@@ -279,7 +279,7 @@ MetacelloProjectSpec >> configShortCutMethodOn: aStream member: aMember indent: 
   hasVersionString := self configHasVersionString.
   hasOperator := operator ~~ nil.
   hasProjectPackage := self hasRepository
-    or: [ hasClassName & (self getFile ~~ nil or: [ className ~= self name ]) ].
+    or: [ hasClassName & (self getFile ~~ nil or: [ className != self name ]) ].
   hasLoads := self loads ~~ nil.
   hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
   hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
@@ -394,7 +394,7 @@ MetacelloProjectSpec >> hasNonVersionStringField [
     hasClassName := self hasClassName.
     hasVersionString := self versionString ~~ nil.
     hasOperator := operator ~~ nil.
-    hasProjectPackage := (self file ~~ nil and: [ hasClassName and: [ self className ~= self name ] ])
+    hasProjectPackage := (self file ~~ nil and: [ hasClassName and: [ self className != self name ] ])
         or: [ self hasRepository ].
     hasLoads := self loads ~~ nil.
     hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.

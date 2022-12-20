@@ -68,7 +68,7 @@ SparseLargeTable >> allDefaultValueSubtableAt: index [
 	t := self basicAt: index.
 	t ifNil: [^ true].
 	t do: [:e |
-		e ~= defaultValue ifTrue: [^ false].
+		e != defaultValue ifTrue: [^ false].
 	].
 	^ true.
 ]
@@ -79,7 +79,7 @@ SparseLargeTable >> analyzeSpaceSaving [
 	| total elems tablesTotal nonNilTables |
 	total := size - base + 1.
 	elems := 0.
-	base to: size do: [:i | (self at: i) ~= defaultValue ifTrue: [elems := elems + 1]].
+	base to: size do: [:i | (self at: i) != defaultValue ifTrue: [elems := elems + 1]].
 	tablesTotal := self basicSize.
 	nonNilTables := 0.
 	1 to: self basicSize do: [:i | (self basicAt: i) ifNotNil: [nonNilTables := nonNilTables + 1]].

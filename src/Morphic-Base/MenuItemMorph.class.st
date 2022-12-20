@@ -184,7 +184,7 @@ MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 	(#('<on>' '<off>' '<yes>' '<no>') includes: marker) 
 		ifFalse: [^super contents: aString].
 	self contentString: aString.	"remember actual string"
-	marker := (marker = '<on>' or: [marker = '<yes>']) ~= inverse 
+	marker := (marker = '<on>' or: [marker = '<yes>']) != inverse 
 				ifTrue: [self onImage]
 				ifFalse: [self offImage].
 	super contents:  (aString copyFrom: markerIndex + 1 to: aString size)].

@@ -373,7 +373,7 @@ ZnUrl >> hasHost [
 { #category : #testing }
 ZnUrl >> hasNonDefaultPort [
 	^ self hasPort 
-		and: [ self port ~= (self class defaultPortForScheme: self schemeOrDefault) ]
+		and: [ self port != (self class defaultPortForScheme: self schemeOrDefault) ]
 ]
 
 { #category : #testing }
@@ -605,7 +605,7 @@ ZnUrl >> parsePath: stream [
 	stream peekFor: $/.
 	[ stream atEnd ] whileFalse: [ | segment |
 		segment := String streamContents: [ :stringStream |
-			[ stream atEnd not and: [ stream peek ~= $/ ] ] whileTrue: [
+			[ stream atEnd not and: [ stream peek != $/ ] ] whileTrue: [
 				stringStream nextPut: stream next ] ].
 		segment = '.'
 			ifFalse: [

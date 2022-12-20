@@ -45,7 +45,7 @@ ZnDefaultServerDelegate >> bytes: request [
 	
 	| count |
 	count := Integer readFrom: request uri lastPathSegment ifFail: [ 64 ].
-	(byteArray isNil or: [ byteArray size ~= count ]) 
+	(byteArray isNil or: [ byteArray size != count ]) 
 		ifTrue: [
 			byteArray := ByteArray new: count.
 			1 to: count - 1 do: [ :each | 
