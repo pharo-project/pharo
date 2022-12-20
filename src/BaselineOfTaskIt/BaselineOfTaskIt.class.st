@@ -96,6 +96,7 @@ BaselineOfTaskIt >> baseline: spec [
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
 	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
+	spec for: #'pharo11.x' do: [ self baselineForPharo11: spec ].
 	spec for: #'pharo6.1.x' do: [ self baselineForPharo6: spec ]
 ]
 
@@ -136,6 +137,13 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 
 { #category : #baselines }
 BaselineOfTaskIt >> baselineForPharo10: spec [
+
+	spec package: #TaskIt.
+	self baselineForCommon: spec
+]
+
+{ #category : #baselines }
+BaselineOfTaskIt >> baselineForPharo11: spec [
 
 	spec package: #TaskIt.
 	self baselineForCommon: spec
