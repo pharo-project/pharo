@@ -157,7 +157,7 @@ MCWorkingCopyBrowser >> addRepositoryToPackage [
 
 	self repository
 		ifNotNil: [ :repos | 
-			((SearchFacade mcPackageSearchRejectAll: [ :aPackage | aPackage repositoryGroup includes: repos ] withInitialFilter: nil)
+			((MCSearchFacade mcPackageSearchRejectAll: [ :aPackage | aPackage repositoryGroup includes: repos ] withInitialFilter: nil)
 				chooseFromOwner: self window)
 				ifNotNil: [ :wc | 
 					workingCopy := wc.
@@ -201,7 +201,7 @@ MCWorkingCopyBrowser >> addRequiredPackage [
 	| chosen |
 	workingCopy
 		ifNotNil: [ :wc | 
-			chosen := (SearchFacade mcPackageSearchRejectAll: [ :ea | ea = wc or: [ wc requiredPackages includes: ea package ] ])
+			chosen := (MCSearchFacade mcPackageSearchRejectAll: [ :ea | ea = wc or: [ wc requiredPackages includes: ea package ] ])
 				chooseFromOwner: self window.
 			chosen
 				ifNotNil: [ 
