@@ -67,6 +67,19 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')"
 ]
 
+{ #category : #tests }
+RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
+	| refactoring aModel |
+
+	refactoring := (self createRefactoringWithArguments: { #'Refactoring-Changes' . #'RRefactoring-Changes2'}).
+	self executeRefactoring: (refactoring classPattern: '^RB(.*)$' -> 'Bar$1').
+
+	aModel := refactoring model.
+	self 
+		assert: (aModel classNamed: #BarLintRule) name 
+		equals: #BarLintRule.
+]
+
 { #category : #'failure tests' }
 RBCopyPackageParametrizedTest >> testExistingPackage [
 	self shouldFail: (self createRefactoringWithArguments: 

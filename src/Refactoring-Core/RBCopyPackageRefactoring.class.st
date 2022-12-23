@@ -49,6 +49,23 @@ RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
 ]
 
 { #category : #preconditions }
+RBCopyPackageRefactoring >> classPattern: anAssociation [
+	"Set the receiver's class pattern for copying from anAssociation from <String> to <String>.
+	anAssociation could contain <String>s with a regular expression(s)"
+	
+	| srcClassPattern dstClassPattern |
+	srcClassPattern := anAssociation key.
+	dstClassPattern := anAssociation value.
+	
+	^ RBClassRegexRefactoring new
+		model: model;
+		copyClasses;
+		replace: srcClassPattern with: dstClassPattern.
+
+	
+]
+
+{ #category : #preconditions }
 RBCopyPackageRefactoring >> copyAllClasses: classes [
 	^ classes collect: [ :symbol | | copyClassName |
 		copyClassName := self copyNameFor: symbol.
