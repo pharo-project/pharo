@@ -292,9 +292,9 @@ Float class >> zero [
 { #category : #arithmetic }
 Float >> abs [
 	"This is faster than using Number abs and works for negativeZero."
-	self <= 0.0
-		ifTrue: [^ 0.0 - self]
-		ifFalse: [^ self]
+	^ self <= 0.0
+		ifTrue: [0.0 - self]
+		ifFalse: [self]
 ]
 
 { #category : #printing }
