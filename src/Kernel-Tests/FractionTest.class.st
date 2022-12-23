@@ -19,6 +19,15 @@ FractionTest >> classToBeTested [
 	^ Fraction
 ]
 
+{ #category : #'tests - arithmetic' }
+FractionTest >> testAbs [
+
+	self assert: (3 / 4) abs equals: 3 / 4.
+	self assert: (1 / 3) abs equals: 1 / 3.
+	self assert: (-1 / 3) abs equals: 1 / 3.
+	self assert: (-3 / 4) abs equals: 3 / 4
+]
+
 { #category : #'tests - conversions' }
 FractionTest >> testAsLargerPowerOfTwo [
 

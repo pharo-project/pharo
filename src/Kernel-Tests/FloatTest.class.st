@@ -13,6 +13,17 @@ FloatTest >> classToBeTested [
 	^ Float
 ]
 
+{ #category : #'tests - arithmetic' }
+FloatTest >> testAbs [
+
+	self assert: Float infinity abs equals: Float infinity.
+	self assert: 1.0 abs equals: 1.0.
+	self assert: Float zero abs equals: Float zero.
+	self assert: Float negativeZero abs equals: Float zero.
+	self assert: -1.0 abs equals: 1.0.
+	self assert: Float negativeInfinity abs equals: Float infinity
+]
+
 { #category : #tests }
 FloatTest >> testAsScaledDecimal [
 

@@ -13,6 +13,14 @@ LargeNegativeIntegerTest >> classToBeTested [
 	^ LargeNegativeInteger
 ]
 
+{ #category : #'tests - arithmetic' }
+LargeNegativeIntegerTest >> testAbs [
+
+	self
+		assert: (SmallInteger minVal - 2) abs
+		equals: (SmallInteger minVal - 2) negated
+]
+
 { #category : #tests }
 LargeNegativeIntegerTest >> testByteAt [
 
