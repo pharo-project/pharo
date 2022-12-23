@@ -668,15 +668,6 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 ]
 
 { #category : #'private - changes' }
-RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBlock [ 
-	^self performChange: (changeFactory  
-				renameClassVariable: oldName
-				to: newName
-				in: aRBClass)
-		around: aBlock
-]
-
-{ #category : #'private - changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (changeFactory 
 				renameInstanceVariable: oldName
