@@ -60,6 +60,7 @@ PharoShortcuts >> backwardWordDeleteShortcut [
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> backwardWordShortcut [
+	"Equivalent to: ctrl+left on Windows/Linux, option/alt+left on OSX"
 	^ Character arrowLeft meta
 ]
 
