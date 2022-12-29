@@ -54,7 +54,7 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #'tests - initialization' }
 ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
