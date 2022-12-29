@@ -15,6 +15,14 @@ Class {
 	#category : #'Collections-DoubleLinkedList-Base'
 }
 
+{ #category : #'instance creation' }
+DoubleLinkedList class >> newFrom: aCollection [
+
+	^ self new
+			addAll: aCollection;
+			yourself
+]
+
 { #category : #adding }
 DoubleLinkedList >> add: anObjectOrLink [
 	"Add anObjectOrLink at the end of me.
