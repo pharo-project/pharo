@@ -42,12 +42,11 @@ RGTraitAlias >> defaultAliases [
 	^ OrderedCollection new
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGTraitAlias >> initialize [
 
-	super initialize.
-	
-	aliases := self unresolvedValue: self defaultAliases.
+	super initialize.	
+	aliases := self unresolvedValue: self defaultAliases
 ]
 
 { #category : #initialize }

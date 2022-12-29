@@ -16,12 +16,11 @@ RGTraitDescriptionStrategy >> bindingOf: varName [
 	^ self environment bindingOf: varName
 ]
 
-{ #category : #variables }
+{ #category : #initialization }
 RGTraitDescriptionStrategy >> initialize [
 
 	super initialize.
-	
-	self owner environment backend createUnresolvedTraitGroupFor: self owner.
+	self owner environment backend createUnresolvedTraitGroupFor: self owner
 ]
 
 { #category : #variables }

@@ -29,14 +29,14 @@ CoNarrowHistoryFetcher >> entriesDo: aBlock [
 	currentFinished := true.
 ]
 
-{ #category : #enumerating }
+{ #category : #initialization }
 CoNarrowHistoryFetcher >> initialize [
 
 	super initialize.
 	currentResults := OrderedCollection new.
 	currentKey := ''.
 	currentFinished := false.
-	history := Dictionary new.
+	history := Dictionary new
 ]
 
 { #category : #composing }

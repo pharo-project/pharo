@@ -124,14 +124,14 @@ RGTraitStrategy >> hasComment [
 	^ self comment isEmptyOrNil not
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 RGTraitStrategy >> initialize [
 
 	super initialize.
 	
 	"classTrait is set in the superclass"
 	comment := self unresolvedValue: self defaultComment.
-	package := self unresolvedValue: self defaultPackage.
+	package := self unresolvedValue: self defaultPackage
 ]
 
 { #category : #testing }

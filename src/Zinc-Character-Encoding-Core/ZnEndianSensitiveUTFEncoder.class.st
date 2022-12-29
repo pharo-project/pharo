@@ -57,8 +57,9 @@ ZnEndianSensitiveUTFEncoder >> hash [
 	^ super hash bitXor: self endianness hash
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnEndianSensitiveUTFEncoder >> initialize [
+	super initialize.
 	endianness := #big
 ]
 

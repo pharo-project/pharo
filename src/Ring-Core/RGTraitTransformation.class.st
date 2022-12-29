@@ -26,12 +26,11 @@ RGTraitTransformation >> defaultSubject [
 	^ RGUnresolvedValue recursive
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGTraitTransformation >> initialize [
 
-	super initialize.
-	
-	subject := self unresolvedValue: self defaultSubject.
+	super initialize.	
+	subject := self unresolvedValue: self defaultSubject
 ]
 
 { #category : #initialize }

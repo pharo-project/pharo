@@ -22,12 +22,12 @@ ZnCrPortableWriteStream class >> on: aStream [
 		yourself
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnCrPortableWriteStream >> initialize [
 
 	super initialize.
 	cr := Character cr.
-	lf := Character lf.
+	lf := Character lf
 ]
 
 { #category : #accessing }

@@ -36,11 +36,11 @@ DTMockPlugin >> hasBeenRun [
 	^ hasBeenRun
 ]
 
-{ #category : #api }
+{ #category : #initialization }
 DTMockPlugin >> initialize [
 
 	super initialize.
-	hasBeenRun := false.
+	hasBeenRun := false
 ]
 
 { #category : #api }
