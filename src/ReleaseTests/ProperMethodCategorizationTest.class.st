@@ -55,8 +55,7 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 ]
 
 { #category : #'tests - instance creation' }
-ProperMethodCategorizationTest >> testClassSideInitialzeMethodNeedsToBeInClassInitializationProtocol [
-
+ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
 	| violating classSideInitializeMethods |
@@ -67,7 +66,7 @@ ProperMethodCategorizationTest >> testClassSideInitialzeMethodNeedsToBeInClassIn
 	
 	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
 	
-	self assert: violating size <= 40 description: 'Class side #initialize methods should be in "class initialization" method category'
+	self assert: violating size <= 7 description: 'Class side #initialize methods should be in "class initialization" method category'
 ]
 
 { #category : #'tests - object' }
