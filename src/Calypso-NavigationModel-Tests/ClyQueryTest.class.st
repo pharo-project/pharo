@@ -29,7 +29,7 @@ ClyQueryTest >> executeQuery [
 { #category : #running }
 ClyQueryTest >> setUp [
 	super setUp.
-	
+
 	query := self createQuery
 ]
 
@@ -44,8 +44,8 @@ ClyQueryTest >> testComparisonOfSameQueries [
 
 	| query2 |
 	self assert: query equals: query.
-	
-	query2 := self createQuery.		
+
+	query2 := self createQuery.
 	self assert: query equals: query2.
 	self assert: query hash equals: query2 hash
 ]
@@ -99,7 +99,7 @@ ClyQueryTest >> testConvertingWithNewRequiredResult [
 ClyQueryTest >> testFixingStateBeforeExecution [
 
 	query fixStateBeforeExecution.
-	
+
 	self assert: query isReadOnlyObject.
 	self assert: query scope isReadOnlyObject
 ]

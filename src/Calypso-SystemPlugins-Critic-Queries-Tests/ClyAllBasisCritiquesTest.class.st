@@ -6,7 +6,8 @@ Class {
 
 { #category : #running }
 ClyAllBasisCritiquesTest >> createQuery [
-	^ClyAllBasisCritiqueQuery from: self scopeWithCritiques
+
+	^ ClyAllBasisCritiqueQuery from: self scopeWithCritiques
 ]
 
 { #category : #tests }
@@ -21,8 +22,8 @@ ClyAllBasisCritiquesTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyAllBasisCritiquesTest >> testExecution [
-	
+
 	self executeQuery.
-	
+
 	self assert: resultItems size equals: 1
 ]
