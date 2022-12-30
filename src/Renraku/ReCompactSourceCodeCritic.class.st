@@ -1,5 +1,5 @@
 "
-A code critique to take care of unnecessary seperators at end of source code lines and unnecessary dot at end of method
+A code critique to take care of unnecessary separators at end of source code lines and unnecessary dot at end of method
 "
 Class {
 	#name : #ReCompactSourceCodeCritic,
