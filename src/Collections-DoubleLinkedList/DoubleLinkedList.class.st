@@ -169,6 +169,13 @@ DoubleLinkedList >> isEmpty [
 	^ head isNil and: [ tail isNil ]
 ]
 
+{ #category : #testing }
+DoubleLinkedList >> isNotEmpty [
+	"Answer whether the receiver contains any elements."
+
+	^ self isEmpty not
+]
+
 { #category : #accessing }
 DoubleLinkedList >> last [
 	"Return the last element that I hold, also known as my tail value.
