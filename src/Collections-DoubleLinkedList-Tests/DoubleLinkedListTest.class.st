@@ -42,7 +42,7 @@ DoubleLinkedListTest >> testAddFirst [
 DoubleLinkedListTest >> testAddLast [
 	| list |
 	list := DoubleLinkedList new.
-	1 to: 3 do: [ :each | list add: each ].
+	1 to: 3 do: [:each | list add: each ].
 	list addLast: 0.
 	self deny: list isEmpty.
 	self assert: list first equals: 1.
