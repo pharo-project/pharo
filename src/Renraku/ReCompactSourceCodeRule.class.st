@@ -45,7 +45,7 @@ ReCompactSourceCodeRule >> group [
 { #category : #accessing }
 ReCompactSourceCodeRule >> name [
 
-	^ 'Unnecessary separators or dots found'
+	^ 'Unnecessary separators or final dots found in method body'
 ]
 
 { #category : #testing }
