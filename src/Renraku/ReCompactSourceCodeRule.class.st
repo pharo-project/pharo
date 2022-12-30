@@ -1,5 +1,5 @@
 "
-A lint rule to check for unnecessary seperators at end of source code lines and unnecessary dot at end of method
+A lint rule to check for unnecessary separators at end of source code lines and unnecessary dot at end of method
 "
 Class {
 	#name : #ReCompactSourceCodeRule,
