@@ -11,12 +11,12 @@ ClyAllBasisCritiquesTest >> createQuery [
 
 { #category : #tests }
 ClyAllBasisCritiquesTest >> testCheckIfEmpty [
-		
+
 	query scope: self scopeWithCritiques.
 	self deny: query checkEmptyResult.
-	
+
 	query scope: self scopeWithoutCritiques.
-	self assert: query checkEmptyResult.
+	self assert: query checkEmptyResult
 ]
 
 { #category : #tests }
