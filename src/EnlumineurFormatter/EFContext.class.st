@@ -42,7 +42,8 @@ Class {
 		'numberOfNewLinesAfterMethodComment',
 		'newLinesAfterMethodSignature',
 		'periodAtEndOfMethod',
-		'periodAtEndOfBlock'
+		'periodAtEndOfBlock',
+		'newLinesAfterMethodSignatureWithMethodComment'
 	],
 	#category : #'EnlumineurFormatter-Core'
 }
@@ -285,6 +286,17 @@ EFContext >> numberOfNewLinesAfterMethodSignature [
 { #category : #accessing }
 EFContext >> numberOfNewLinesAfterMethodSignature: aBoolean [
 	newLinesAfterMethodSignature := aBoolean
+]
+
+{ #category : #accessing }
+EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
+
+	^ newLinesAfterMethodSignatureWithMethodComment
+]
+
+{ #category : #accessing }
+EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment: aBoolean [
+	newLinesAfterMethodSignatureWithMethodComment := aBoolean
 ]
 
 { #category : #accessing }
