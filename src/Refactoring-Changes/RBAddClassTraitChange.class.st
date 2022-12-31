@@ -18,6 +18,8 @@ RBAddClassTraitChange class >> definitionPatterns [
 		'`traitName classTrait uses: `@traitComposition slots: `@instVars' 
 		'`traitName classTrait slots: `@instVars'	
 	)
+	
+"I do not think that this correct because slots: expects an array an not a string as in instanceVariableNames: so I doubt that corresponding patterns are correct."
 ]
 
 { #category : #converting }

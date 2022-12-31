@@ -363,9 +363,9 @@ RBNamespace >> defineClass: aString [
 			newClass classSide superclass: ( self classFor: Object class superclass )
 			]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
-	newClass instanceVariableNames: change instanceVariableNames.
-	newClass classVariableNames: change classVariableNames.
-	newClass poolDictionaryNames: change sharedPoolNames.
+	newClass instanceVariableNames: (change instanceVariableNames ifNil: ['']).
+	newClass classVariableNames: (change classVariableNames ifNil: ['']).
+	newClass poolDictionaryNames: (change sharedPoolNames ifNil: ['']).
 	newClass category: change category.
 	^ change
 ]
