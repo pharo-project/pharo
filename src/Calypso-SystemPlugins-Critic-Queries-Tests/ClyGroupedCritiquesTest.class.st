@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 ClyGroupedCritiquesTest >> createQuery [
 
-	^ClyAllProblemMethodQuery from: (ClyClassScope emptyIn: environment).
+	^ClyAllProblemMethodQuery from: (ClyClassScope emptyIn: environment)
 ]
 
 { #category : #running }
@@ -19,7 +19,7 @@ ClyGroupedCritiquesTest >> createQueryResult [
 ClyGroupedCritiquesTest >> testFillingWithEmptyList [
 
 	queryResult fillWith: { }.
-	
+
 	self assert: queryResult isEmpty
 ]
 
@@ -28,9 +28,9 @@ ClyGroupedCritiquesTest >> testFillingWithOneCritique [
 	| method critique group |
 	method := ClyClassWithProblemMethods >> #methodWithHalt.
 	critique := method critiques anyOne.
-	
+
 	queryResult fillWith: { critique }.
-	
+
 	self assert: queryResult size equals: 1.
 	group := queryResult items first.
 	self assert: group class equals: ClyConcreteCritiqueMethodGroup.
@@ -44,9 +44,9 @@ ClyGroupedCritiquesTest >> testFillingWithTwoSimilarCritiques [
 	method := ClyClassWithProblemMethods >> #methodWithHalt.
 	method2 := ClyClassWithProblemMethods >> #methodWithHalt2.
 	critique := method critiques anyOne.
-	
+
 	queryResult fillWith: method critiques, method2  critiques.
-	
+
 	self assert: queryResult size equals: 1.
 	group := queryResult items first.
 	self assert: group class equals: ClyConcreteCritiqueMethodGroup.
