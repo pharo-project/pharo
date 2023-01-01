@@ -21,16 +21,15 @@ RBRefactoringChangeTest >> changeMock [
 
 { #category : #mocking }
 RBRefactoringChangeTest >> createMockClass [
-	self class compiler 
-		evaluate: 'Object subclass: #RBRefactoringChangeMock
-	instanceVariableNames: ''instVar''
-	classVariableNames: ''ClassVar''
-	poolDictionaries: ''''
-	category: ''Refactoring-Tests-Changes'''.
+	(self class compiler 
+		evaluate: 'Object << #RBRefactoringChangeMock
+	slots: { #instVar};
+	sharedVariables: {#ClassVar};
+	package: ''Refactoring-Tests-Changes''') fluidInstall.
 	
 	self class compiler 
 		evaluate:  'RBRefactoringChangeMock class
-	instanceVariableNames: ''classInstVar'''.
+	slots: {#classInstVar}'.
 	
 	self changeMock compile: 'one ^ 1' classified: 'accessing'.
 ]
@@ -120,10 +119,10 @@ RBRefactoringChangeTest >> testAddClassInstanceVariable [
 { #category : #tests }
 RBRefactoringChangeTest >> testAddClassInteractively [
 	| change |
-	change := changeFactory addClassDefinition: 'AbstractEnvironmentTestCase subclass: #' , self class name , '
-	instanceVariableNames: ''instVar''
-	classVariableNames: ''ClassVar''
-	poolDictionaries: ''PoolDict''
+	change := changeFactory addClassDefinition: 'AbstractEnvironmentTestCase << #' , self class name , '
+	slots: { #instVar};
+	sharedVariables: { #ClassVar};
+	sharedPools: {PoolDict};
 	package: ''' , self class category , '''' for: self.
 	self assert: change controller equals: self.
 	self assert: change superclassName equals: self class superclass name.

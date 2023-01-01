@@ -95,18 +95,12 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToMultipleCl
 
 { #category : #tests }
 RBPushDownClassVariableParametrizedTest >> testModelRemoveUnusedVariable [
-	model defineClass: 'Object subclass: #SomeClass 
-		instanceVariableNames: '''' 
-		classVariableNames: ''Foo'' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #SomeClass 
+		sharedVariables: { #Foo };  
+		package: #''Refactory-Test data'''.
 	self 
 		assert: ((model classNamed: #SomeClass) directlyDefinesVariable: #Foo).
-	model defineClass: 'SomeClass subclass: #Subclass 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #Foo . #SomeClass }).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: #Foo).
