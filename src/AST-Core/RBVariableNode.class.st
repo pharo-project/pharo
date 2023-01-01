@@ -23,14 +23,14 @@ Class {
 
 { #category : #'instance creation' }
 RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
-	
+
 	anIdentifierName = #self
 		ifTrue: [ ^ self selfNode start: aPosition ].
 	anIdentifierName = #thisContext
 		ifTrue: [ ^ self thisContextNode start: aPosition ].
 	anIdentifierName = #super
 		ifTrue: [ ^ self superNode start: aPosition ].
-	^ self named: anIdentifierName start: aPosition.
+	^ self named: anIdentifierName start: aPosition
 ]
 
 { #category : #'instance creation' }
@@ -40,9 +40,9 @@ RBVariableNode class >> named: aName [
 
 { #category : #'instance creation' }
 RBVariableNode class >> named: aName start: aPosition [
-	^self new 
-		named: aName start: aPosition; 
-		yourself.
+	^self new
+		named: aName start: aPosition;
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -61,9 +61,9 @@ RBVariableNode class >> thisContextNode [
 ]
 
 { #category : #comparing }
-RBVariableNode >> = anObject [ 
+RBVariableNode >> = anObject [
 	self == anObject ifTrue: [^true].
-	((anObject isKindOf: self class) or: [self isKindOf: anObject class]) 
+	((anObject isKindOf: self class) or: [self isKindOf: anObject class])
 		ifFalse: [^false].
 	^self name = anObject name
 ]
@@ -74,13 +74,13 @@ RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #matching }
-RBVariableNode >> copyInContext: aDictionary [ 
-	^ self class named: name.
+RBVariableNode >> copyInContext: aDictionary [
+	^ self class named: name
 ]
 
 { #category : #comparing }
-RBVariableNode >> equalTo: anObject withMapping: aDictionary [ 
-	^self class = anObject class and: 
+RBVariableNode >> equalTo: anObject withMapping: aDictionary [
+	^self class = anObject class and:
 			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]
 ]
 
@@ -218,14 +218,14 @@ RBVariableNode >> name [
 
 { #category : #accessing }
 RBVariableNode >> name: aName [
-	name := aName asSymbol.
+	name := aName asSymbol
 ]
 
 { #category : #initialization }
 RBVariableNode >> named: aName start: aPosition [
 
 	self name: aName.
-	self start: aPosition.
+	self start: aPosition
 ]
 
 { #category : #testing }
@@ -239,13 +239,13 @@ RBVariableNode >> precedence [
 ]
 
 { #category : #testing }
-RBVariableNode >> references: aVariableName [ 
+RBVariableNode >> references: aVariableName [
 	^self name = aVariableName
 ]
 
 { #category : #replacing }
-RBVariableNode >> replaceSourceFrom: aNode [ 
-	self addReplacement: (RBStringReplacement 
+RBVariableNode >> replaceSourceFrom: aNode [
+	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self name)
@@ -253,7 +253,7 @@ RBVariableNode >> replaceSourceFrom: aNode [
 
 { #category : #replacing }
 RBVariableNode >> replaceSourceWith: aNode [
-	self addReplacement: (RBStringReplacement 
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)
@@ -287,5 +287,5 @@ RBVariableNode >> startWithoutParentheses [
 
 { #category : #accessing }
 RBVariableNode >> stopWithoutParentheses [
-	^ start + name size - 1.
+	^ start + name size - 1
 ]
