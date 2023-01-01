@@ -58,11 +58,8 @@ RBNamespaceTest >> testDefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
 	st 
-		defineClass: 'RefactoringBrowserTest subclass: #SmalltalkTestXXX
-				instanceVariableNames: ''''
-				classVariableNames: ''''
-				poolDictionaries: ''''
-				category: #''Refactory-Testing'''.
+		defineClass: 'RefactoringBrowserTest << #SmalltalkTestXXX
+				package: #''Refactory-Testing'''.
 	self assert: (st includesClassNamed: #SmalltalkTestXXX).
 	self assert: (st classNamed: #SmalltalkTestXXX) notNil
 ]

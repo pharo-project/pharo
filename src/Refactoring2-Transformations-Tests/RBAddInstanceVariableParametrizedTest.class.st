@@ -103,14 +103,10 @@ RBAddInstanceVariableParametrizedTest >> testNewHierarchyExistingName [
 		slots: { #asdf }; 	
 		package: #''Refactory-Test data'''.	
 		
-	model defineClass: 'FOOBAR subclass: #BARFOO 
-		instanceVariableNames: '''' 	
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Refactory-Test data'''.
+	model defineClass: 'FOOBAR << #BARFOO package: ''Refactory-Test data'''.
 		
 	refactoring := self createRefactoringWithModel: model 
-		andArguments: { 'asdf' .#BARFOO }.
+		andArguments: { 'asdf' . #BARFOO }.
 	
 	self shouldFail: refactoring
 ]

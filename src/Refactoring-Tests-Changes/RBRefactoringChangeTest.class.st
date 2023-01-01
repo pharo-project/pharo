@@ -438,8 +438,7 @@ RBRefactoringChangeTest >> testPerformChangeMetaclass [
 		defineClass:
 			self changeMock name
 				,
-					' class 
-	instanceVariableNames: '''''.
+					' class '.
 	self perform: change do: [ self assertEmpty: change changeClass class instVarNames ].
 	self denyEmpty: change changeClass class instVarNames.
 	self assert: change definedClass equals: self changeMock class
