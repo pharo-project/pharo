@@ -457,7 +457,7 @@ RBMessageNode >> selectorInterval [
 
 { #category : #accessing }
 RBMessageNode >> selectorNode [
-	^selector.
+	^selector
 ]
 
 { #category : #accessing }

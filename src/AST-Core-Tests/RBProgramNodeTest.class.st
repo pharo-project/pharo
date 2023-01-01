@@ -478,10 +478,10 @@ RBProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
 	sourceCode := 'toto
 	var m1.
 	var m2'.
-	
+
 	ast := RBParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 13.
-	
+
 	self assert: bestNode isMessage.
 	self assert: bestNode selector equals: #m1
 ]

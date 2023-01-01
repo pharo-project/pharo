@@ -113,7 +113,7 @@ RBReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [
 	self executeTree: aNode arguments last body.
 	falseScope := self removeScope.
 	self currentScope
-		keysAndValuesDo: [ :key :value | 
+		keysAndValuesDo: [ :key :value |
 			value
 				ifNil: [ ( trueScope at: key ) == ( falseScope at: key )
 						ifTrue: [ self currentScope at: key put: ( trueScope at: key ) ]

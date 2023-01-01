@@ -328,7 +328,7 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	"
 	| ast |
 	ast := (File class >> #primClosedir:) ast.
-	self assert: ast isPrimitive.
+	self assert: ast isPrimitive
 ]
 
 { #category : #'tests - primitives' }

@@ -524,11 +524,11 @@ RBParserTest >> testErrorNodeForBadParenthesesStartAtLiteralArrayToken [
 	| tree expr |
 	expr := '#( faulty parentheses litteral array node'.
 	tree := self parseFaultyExpression: expr.
-	
+
 	self assert: tree isParseError.
 	self assert: tree errorMessage equals: ''')'' expected'.
 	self assert: tree start equals: 1.
-	self assert: tree stop equals: expr size.
+	self assert: tree stop equals: expr size
 ]
 
 { #category : #'error testing' }
@@ -620,7 +620,7 @@ RBParserTest >> testGeneralBlockIntervalsArray [
 	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
 	str := '{array node}'.
 	self assert: ((tree body statements at: 4) start) equals: (tree source findString: str).
-	self assert: ((tree body statements at: 4) stop) equals: ((tree source findString: str) + (str size - 1)).
+	self assert: ((tree body statements at: 4) stop) equals: ((tree source findString: str) + (str size - 1))
 ]
 
 { #category : #'tests - Intervals' }
@@ -1059,7 +1059,7 @@ RBParserTest >> testNodeWithMissingArgumentHasSameSourceAsOriginal [
 	source := '1+'.
 	tree := self parseFaultyExpression: source.
 	errorNode := tree arguments first.
-	
+
 	self assert: errorNode value isEmpty.
 	self assert: errorNode sourceInterval isEmpty
 ]

@@ -149,8 +149,8 @@ RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTre
 ]
 
 { #category : #'instance creation' }
-RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMethod [ 
-	^self 
+RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMethod [
+	^self
 		variable: aVarName
 		getter: getMethod
 		setter: setMethod

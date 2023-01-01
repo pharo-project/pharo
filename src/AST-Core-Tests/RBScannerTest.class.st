@@ -1200,7 +1200,7 @@ RBScannerTest >> testNextSpecialCharactereCanBeAssignement [
 	| scanner token |
 	scanner := self buildScannerForText: ':='.
 	token := scanner next.
-	self assert: token start equals: 1.
+	self assert: token start equals: 1
 ]
 
 { #category : #'tests - SpecialCharacters' }

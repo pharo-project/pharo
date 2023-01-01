@@ -462,7 +462,7 @@ RBMethodNode >> match: aNode inContext: aDictionary [
 
 { #category : #matching }
 RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictionary [
-	matchNodes isEmpty ifTrue: [ 
+	matchNodes isEmpty ifTrue: [
 		aDictionary at: '-pragmas-' put: pragmaNodes.
 		^ true ].
 	^ matchNodes allSatisfy: [ :matchNode |

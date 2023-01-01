@@ -52,7 +52,7 @@ RBParseErrorNode >> arguments [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> binding: anOCTempVariable [ 
+RBParseErrorNode >> binding: anOCTempVariable [
 	"only for compatibility"
 ]
 

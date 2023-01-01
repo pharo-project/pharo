@@ -769,35 +769,35 @@ RBProgramNode >> matchList: matchNodes against: programNodes inContext: aDiction
 ]
 
 { #category : #matching }
-RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary [ 
+RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary [
 	| node currentIndex currentDictionary nodes |
 	matchNodes size < matchIndex ifTrue: [^programNodes size < programIndex].
 	node := matchNodes at: matchIndex.
-	node isList 
-		ifTrue: 
+	node isList
+		ifTrue:
 			[currentIndex := programIndex - 1.
-			
+
 			[currentDictionary := aDictionary copy.
-			programNodes size < currentIndex or: 
+			programNodes size < currentIndex or:
 					[nodes := programNodes copyFrom: programIndex to: currentIndex.
-					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and: 
-							[(self 
+					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and:
+							[(self
 								matchList: matchNodes
 								index: matchIndex + 1
 								against: programNodes
 								index: currentIndex + 1
-								inContext: currentDictionary) 
-									ifTrue: 
-										[currentDictionary 
+								inContext: currentDictionary)
+									ifTrue:
+										[currentDictionary
 											keysAndValuesDo: [:key :value | aDictionary at: key put: value].
 										^true].
-							false]]] 
+							false]]]
 					whileFalse: [currentIndex := currentIndex + 1].
 			^false].
 	programNodes size < programIndex ifTrue: [^false].
-	(node match: (programNodes at: programIndex) inContext: aDictionary) 
+	(node match: (programNodes at: programIndex) inContext: aDictionary)
 		ifFalse: [^false].
-	^self 
+	^self
 		matchList: matchNodes
 		index: matchIndex + 1
 		against: programNodes
@@ -882,8 +882,8 @@ RBProgramNode >> propertyAt: aKey [
 { #category : #properties }
 RBProgramNode >> propertyAt: aKey ifAbsent: aBlock [
 	"Answer the property value associated with aKey or, if aKey isn't found, answer the result of evaluating aBlock."
-	
-	^ properties 
+
+	^ properties
 		ifNil: aBlock
 		ifNotNil: [ properties at: aKey ifAbsent: aBlock ]
 ]

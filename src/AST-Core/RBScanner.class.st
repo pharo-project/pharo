@@ -302,7 +302,7 @@ RBScanner >> nextPut: anObject [
 ]
 
 { #category : #initialization }
-RBScanner >> on: aStream [ 
+RBScanner >> on: aStream [
 	buffer := (String new: 60) writeStream.
 	stream := aStream.
 	classificationTable := self class classificationTable.
