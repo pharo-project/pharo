@@ -20,20 +20,20 @@ Class {
 { #category : #copying }
 AthensBalloonEngine >> copyBits [
 
-	(bitBlt notNil and: [ bitBlt destForm notNil ]) ifTrue: [ 
+	(bitBlt notNil and: [ bitBlt destForm notNil ]) ifTrue: [
 		bitBlt destForm unhibernate ].
 	self copyLoopFastest
 ]
 
 { #category : #drawing }
-AthensBalloonEngine >> drawImage: aForm transform: m [ 
+AthensBalloonEngine >> drawImage: aForm transform: m [
 	| orig dir normal tr rect |
 
 	rect := aForm boundingBox.
-	orig := 0@0. 
+	orig := 0@0.
 	dir := aForm width @ 0.
 	normal := 0 @ aForm height.
-	
+
 	tr := edgeTransform.
 	edgeTransform := m.
 
@@ -44,7 +44,7 @@ AthensBalloonEngine >> drawImage: aForm transform: m [
 		normal: normal.
 	self fillRectangle: rect.
 
-	edgeTransform := tr.
+	edgeTransform := tr
 ]
 
 { #category : #private }
@@ -52,7 +52,7 @@ AthensBalloonEngine >> fastReset [
 
 	workBuffer ifNil: [ ^ self reset ].
 
-	workBuffer 
+	workBuffer
 		at: (1+GWState) put: GEStateUnlocked;
 		at: (1+GWObjUsed) put: 4;
 		at: (1+GWNeedsFlush) put: 0;
@@ -62,22 +62,22 @@ AthensBalloonEngine >> fastReset [
 		at: (1+GWGETUsed) put: 0;
 		at: (1+GWAETStart) put: 0;
 		at: (1+GWAETUsed) put: 0".
-	
+
 	self primSetEdgeTransform: edgeTransform.
 	self primSetClipRect: clipRect.
 	self primSetColorTransform: colorTransform.
-	self primSetDepth: self primGetDepth + 1. 
+	self primSetDepth: self primGetDepth + 1.
 
 	postFlushNeeded := false.
 	forms := #()
 
-"	
+"
 -	self magicNumberPut: GWMagicNumber.
 - 	self wbSizePut: size.
 +	self wbTopPut: size.
 +	self statePut: GEStateUnlocked.
 -	self objStartPut: GWHeaderSize.
-+	self objUsedPut: 4.	
++	self objUsedPut: 4.
 -	self objectTypeOf: 0 put: GEPrimitiveFill.
 -	self objectLengthOf: 0 put: 4.
 -	self objectIndexOf: 0 put: 0.
@@ -109,7 +109,7 @@ AthensBalloonEngine >> fillBezierShape: contours [
 			fill: currentFill
 			lineWidth: 0
 			lineFill: 0.
-			
+
 		"Note: To avoid premature flushing of the pipeline we need to reset the flush bit within the engine."
 		self primFlushNeeded: false.
 	].
@@ -118,10 +118,10 @@ AthensBalloonEngine >> fillBezierShape: contours [
 ]
 
 { #category : #drawing }
-AthensBalloonEngine >> fillRectangle: rect [ 
+AthensBalloonEngine >> fillRectangle: rect [
 
 	currentFill = 0 ifTrue: [ ^ self ]. "no fill "
-	self primAddRectFrom: rect origin 
+	self primAddRectFrom: rect origin
 			to: rect corner
 			fillIndex: currentFill
 			borderWidth: 0
@@ -137,7 +137,7 @@ AthensBalloonEngine >> prepareForRendering [
 ]
 
 { #category : #'registering fills' }
-AthensBalloonEngine >> registerColorFill: aColor [ 
+AthensBalloonEngine >> registerColorFill: aColor [
 
 	currentFill := aColor scaledPixelValue32
 ]
@@ -216,14 +216,14 @@ AthensBalloonEngine >> reset [
 
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
 
-	self 
+	self
 		primInitializeBuffer: workBuffer;
 		primSetAALevel: 4;
 		primSetOffset: 0@0;
 		primSetClipRect: clipRect;
 		primSetEdgeTransform: edgeTransform;
 		primSetColorTransform: colorTransform.
-		
+
 	forms := #()
 ]
 
@@ -242,7 +242,7 @@ AthensBalloonEngine >> strokeBezierShape: contours width: aWidth [
 			fill: 0
 			lineWidth: aWidth
 			lineFill: currentFill.
-			
+
 		"Note: To avoid premature flushing of the pipeline we need to reset the flush bit within the engine."
 		self primFlushNeeded: false.
 	].
@@ -254,7 +254,7 @@ AthensBalloonEngine >> strokeBezierShape: contours width: aWidth [
 AthensBalloonEngine >> strokeRectangle: rect borderWidth: width [
 
 	currentFill = 0 ifTrue: [ ^ self ]. "no fill "
-	self primAddRectFrom: rect origin 
+	self primAddRectFrom: rect origin
 			to: rect corner
 			fillIndex: 0
 			borderWidth: width
@@ -267,7 +267,7 @@ AthensBalloonEngine >> strokeRectangle: rect borderWidth: width [
 AthensBalloonEngine >> strokeRectangle: rect width: aWidth [
 
 	currentFill = 0 ifTrue: [ ^ self ]. "no fill "
-	self primAddRectFrom: rect origin 
+	self primAddRectFrom: rect origin
 			to: rect corner
 			fillIndex: 0
 			borderWidth: aWidth asInteger

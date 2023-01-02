@@ -9,14 +9,14 @@ PolygonMorph >> adjustSegmentPointsForArrows [
 		ifTrue: [ ^ self vertices ].
 	verts := self vertices copy.
 	(arrows == #back or: [ arrows == #both ])
-		ifTrue: [ 
+		ifTrue: [
 			| arrow |
 			arrow := self arrowBoundsAt: verts first from: verts second.
 			arrow size = 4
 				ifTrue: [ verts at: 1 put: arrow third ]
 				ifFalse: [ verts at: 1 put: (arrow copyFrom: 2 to: 3) average ] ].
 	(arrows == #forward or: [ arrows == #both ])
-		ifTrue: [ 
+		ifTrue: [
 			| arrow |
 			arrow := self arrowBoundsAt: verts last from: verts nextToLast.
 			arrow size = 4
@@ -31,9 +31,9 @@ PolygonMorph >> asAthensCurvedOpenPathOn: anAthensCanvas [
 	| points |
 	points := self computeCurvedSegmentCtrlPoints.
 	^ anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			self vertices notEmpty
-				ifTrue: [ 
+				ifTrue: [
 					| prior |
 					"points contains {ctrl1 vertice ctrl2}"
 					prior := points first.
@@ -41,7 +41,7 @@ PolygonMorph >> asAthensCurvedOpenPathOn: anAthensCanvas [
 					builder moveTo: prior second.
 					builder curveVia: (points at: 2) first to: (points at: 2) second.
 					prior := points at: 2.
-					3 to: points size - 1 do: [ :index | 
+					3 to: points size - 1 do: [ :index |
 							| p |
 							p := points at: index.
 							builder curveVia: prior third and: p first to: p second.
@@ -55,19 +55,19 @@ PolygonMorph >> asAthensCurvedPathOn: anAthensCanvas [
 	| points |
 	points := self computeCurvedSegmentCtrlPoints.
 	^ anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			self vertices notEmpty
-				ifTrue: [ 
+				ifTrue: [
 					| prior | "points contains {ctrl1 vertice ctrl2}"
 					prior := points first.
 					builder absolute.
 					builder moveTo: prior second.
 					points allButFirst
-						do: [ :p | 
+						do: [ :p |
 							builder curveVia: prior third and: p first to: p second.
 							prior := p ].
 					self isClosed
-						ifTrue: [ 
+						ifTrue: [
 							builder curveVia: prior third and: points first first to: points first second.
 							builder close ] ].
 			builder ]
@@ -78,9 +78,9 @@ PolygonMorph >> asAthensLinePathOn: anAthensCanvas [
 	| verts |
 	verts := self adjustSegmentPointsForArrows.
 	^ anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			verts notEmpty
-				ifTrue: [ 
+				ifTrue: [
 					builder absolute.
 					builder moveTo: verts first.
 					verts allButFirstDo: [ :p | builder lineTo: p ] ].
@@ -92,7 +92,7 @@ PolygonMorph >> asAthensLinePathOn: anAthensCanvas [
 { #category : #'*Athens-Morphic' }
 PolygonMorph >> asAthensPathOn: anAthensCanvas [
 	^ self isCurvy
-		ifTrue: [ 
+		ifTrue: [
 			self isOpen
 				ifTrue: [ self asAthensCurvedOpenPathOn: anAthensCanvas ]
 				ifFalse: [ self asAthensCurvedPathOn: anAthensCanvas ] ]
@@ -111,7 +111,7 @@ for the current vertice C.
 	| ctrls vert |
 	vert := self adjustSegmentPointsForArrows.
 	ctrls := (1 to: vert size)
-		collect: [ :i | 
+		collect: [ :i |
 			| prior current next lenpc lencn ctrl1 ctrl2 tangent |
 			prior := vert atWrap: i - 1.
 			current := vert atWrap: i.
@@ -135,7 +135,7 @@ for the current vertice C.
 
 { #category : #'*Athens-Morphic' }
 PolygonMorph >> drawArrowOnAthensCanvas: anAthensCanvas at: endPoint from: priorPoint [
-	"Draw a triangle oriented along the line from priorPoint to  
+	"Draw a triangle oriented along the line from priorPoint to
 	endPoint. Answer the wingBase."
 
 	| pts spec wingBase path |
@@ -145,14 +145,14 @@ PolygonMorph >> drawArrowOnAthensCanvas: anAthensCanvas at: endPoint from: prior
 		ifFalse: [ (pts copyFrom: 2 to: 3) average ].
 	spec := self valueOfProperty: #arrowSpec ifAbsent: [ PolygonMorph defaultArrowSpec ].
 	path := anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder absolute.
 			builder moveTo: pts first.
 			pts allButFirst do: [ :p | builder lineTo: p ]. builder close. ].
 	spec x sign = spec y sign
-		ifTrue: [ 
+		ifTrue: [
 			anAthensCanvas setPaint: self borderColor]
-		ifFalse: [ 
+		ifFalse: [
 			(anAthensCanvas
 				setStrokePaint: self borderColor)
 				width: (borderWidth + 1) // 2].
@@ -161,7 +161,7 @@ PolygonMorph >> drawArrowOnAthensCanvas: anAthensCanvas at: endPoint from: prior
 ]
 
 { #category : #'*Athens-Morphic' }
-PolygonMorph >> drawArrowsOnAthensCanvas: aAthensCanvas [ 
+PolygonMorph >> drawArrowsOnAthensCanvas: aAthensCanvas [
 	"Answer (possibly modified) endpoints for border drawing"
 	"ArrowForms are computed only upon demand"
 	| array |
@@ -197,7 +197,7 @@ PolygonMorph >> drawOnAthensCanvas: anAthensCanvas [
 	border := self borderStyle.
 	shape := self asAthensPathOn: anAthensCanvas.
 	self isClosed
-		ifTrue: [ 
+		ifTrue: [
 			anAthensCanvas setPaint: self fillStyle.
 			anAthensCanvas drawShape: shape ].
 	stroke := anAthensCanvas setStrokePaint: border color.
@@ -206,7 +206,7 @@ PolygonMorph >> drawOnAthensCanvas: anAthensCanvas [
 		ifTrue: [ self setDashOnStroke: stroke ].
 	anAthensCanvas drawShape: shape.
 	self hasTwoColorDash
-		ifTrue: [ 
+		ifTrue: [
 			self setSecondColorDashOnStroke: stroke.
 			anAthensCanvas drawShape: shape ].
 	self drawArrowsOnAthensCanvas: anAthensCanvas

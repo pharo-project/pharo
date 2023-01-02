@@ -36,7 +36,7 @@ Class {
 }
 
 { #category : #'field definition' }
-CairoFontExtents class >> fieldsDesc [ 
+CairoFontExtents class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
 	double ascent;
