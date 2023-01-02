@@ -15,8 +15,8 @@ MemoryLoggerTest >> testRecordOneSignal [
 { #category : #testing }
 MemoryLoggerTest >> testRecordTwoSignalsInTheRightOrder [
 	| logger |
-	logger := MemoryLogger new 
-					runDuring: [ 
+	logger := MemoryLogger new
+					runDuring: [
 						StringSignal emit: 'test1'.
 						StringSignal emit: 'test2' ].
 	self assert: logger recordings size equals: 2.
@@ -28,7 +28,7 @@ MemoryLoggerTest >> testRecordTwoSignalsInTheRightOrder [
 MemoryLoggerTest >> testRunDuringStopsAtTheEnd [
 	| logger |
 	logger := MemoryLogger new.
-	logger runDuring: [ 
+	logger runDuring: [
 		self assert: logger isRunning ].
 	self assert: logger isRunning not
 ]
