@@ -153,7 +153,7 @@ RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 	search
 		matches: 'a' do: block;
  		matchesArgument: 'a' do: blockArg.
-	search executeTree: tree.
+	search executeTree: tree
 ]
 
 { #category : #tests }
@@ -567,7 +567,7 @@ RBParseTreeSearcherTest >> testSearchSelectorsNotMatching [
 		do: [ :aNode :answer | contextDictionary := searcher context ].
 	searcher executeTree: (self parseExpression: 'self assert: preferences exists.').
 
-	self assert: contextDictionary isNil.
+	self assert: contextDictionary isNil
 ]
 
 { #category : #tests }
