@@ -22,10 +22,13 @@ OmFileStoreTest >> setUpStore [
 
 { #category : #running }
 OmFileStoreTest >> tearDown [
-	
+	"tearDown the test environment.
+	The stores are flushed by the superclass, which should be done prior to deleting the underlying file.  Put `super tearDown` at the top, even though the lint checker complains."
+
+	super tearDown.
 	store fileReference ensureDelete.
 	otherStore fileReference ensureDelete.
-	super tearDown
+
 ]
 
 { #category : #tests }
