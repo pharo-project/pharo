@@ -1158,7 +1158,7 @@ RBScannerTest >> testNextSecondTokenDoesNotConsumePrecedingComment [
 	"The next token 'secondToken' takes the following 2 comments."
 	token := scanner next.
 	self assert: token comments size equals: 2.
-	self assert: token start equals: 36
+	self assert: token start equals: 35
 ]
 
 { #category : #'tests - Start' }

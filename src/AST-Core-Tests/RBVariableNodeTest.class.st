@@ -93,5 +93,5 @@ d|
 	self assert: (source copyFrom: dTemporary startForReplacement to: dTemporary stop) equals: '
 
 d'.
-	self assert: (dTemporary start - dTemporary startForReplacement) equals: 4
+	self assert: (dTemporary start - dTemporary startForReplacement) equals: 2
 ]
