@@ -42,8 +42,8 @@ SQSurfaceDispatch class >> fieldsDesc [
 
 " self rebuildFieldAccessors
 
-A structure from SurfacePlugin.h 
- 
+A structure from SurfacePlugin.h
+
 
 typedef struct sqSurfaceDispatch {
 	/* Version information. Must be provided by the client
@@ -57,7 +57,7 @@ typedef struct sqSurfaceDispatch {
 	fn_lockSurface lockSurface;
 	fn_unlockSurface unlockSurface;
 	fn_showSurface showSurface;
-} sqSurfaceDispatch; 
+} sqSurfaceDispatch;
 "
 	^ #(
 		int majorVersion;
@@ -84,8 +84,8 @@ SQSurfaceDispatch >> getSurfaceFormatFn [
 SQSurfaceDispatch >> getSurfaceFormatFn: aCallback [
 	"This method was automatically generated"
 	getSurfaceFormatFn := aCallback.
-	handle 
-		pointerAt: OFFSET_GETSURFACEFORMATFN 
+	handle
+		pointerAt: OFFSET_GETSURFACEFORMATFN
 		put: aCallback thunk asExternalAddress
 ]
 
@@ -93,7 +93,7 @@ SQSurfaceDispatch >> getSurfaceFormatFn: aCallback [
 SQSurfaceDispatch >> initialize [
 	super initialize.
 	self
-		majorVersion: 1; 
+		majorVersion: 1;
 		minorVersion: 0
 ]
 
@@ -107,8 +107,8 @@ SQSurfaceDispatch >> lockSurfaceFn [
 SQSurfaceDispatch >> lockSurfaceFn: aCallback [
 	"This method was automatically generated"
 	lockSurfaceFn := aCallback.
-	handle 
-		pointerAt: OFFSET_LOCKSURFACEFN 
+	handle
+		pointerAt: OFFSET_LOCKSURFACEFN
 		put: aCallback thunk asExternalAddress
 ]
 
@@ -146,9 +146,9 @@ SQSurfaceDispatch >> showSurfaceFn [
 SQSurfaceDispatch >> showSurfaceFn: aCallbackOrNil [
 	"This method was automatically generated"
 	showSurfaceFn := aCallbackOrNil.
-	handle 
-		pointerAt: OFFSET_SHOWSURFACEFN 
-		put: (aCallbackOrNil 
+	handle
+		pointerAt: OFFSET_SHOWSURFACEFN
+		put: (aCallbackOrNil
 			ifNotNil: [ aCallbackOrNil thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
@@ -163,9 +163,9 @@ SQSurfaceDispatch >> unlockSurfaceFn [
 SQSurfaceDispatch >> unlockSurfaceFn: aCallbackOrNil [
 	"This method was automatically generated"
 	unlockSurfaceFn := aCallbackOrNil.
-	handle 
-		pointerAt: OFFSET_UNLOCKSURFACEFN 
-		put: (aCallbackOrNil 
+	handle
+		pointerAt: OFFSET_UNLOCKSURFACEFN
+		put: (aCallbackOrNil
 			ifNotNil: [ aCallbackOrNil thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]

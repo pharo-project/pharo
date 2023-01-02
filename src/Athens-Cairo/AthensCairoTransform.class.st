@@ -12,6 +12,11 @@ Class {
 	#category : #'Athens-Cairo-Transforms'
 }
 
+{ #category : #'library path' }
+AthensCairoTransform class >> ffiLibraryName [
+	^ CairoLibrary
+]
+
 { #category : #'instance creation' }
 AthensCairoTransform class >> for: cairoCanvas [
 	^ self new canvas: cairoCanvas
@@ -20,6 +25,11 @@ AthensCairoTransform class >> for: cairoCanvas [
 { #category : #initializing }
 AthensCairoTransform >> canvas: aCairoCanvas [
 	canvas := aCairoCanvas
+]
+
+{ #category : #'library path' }
+AthensCairoTransform >> ffiLibraryName [
+	^ self class ffiLibraryName
 ]
 
 { #category : #primitives }
@@ -66,7 +76,7 @@ AthensCairoTransform >> primTransformX: x Y: y [
 
 { #category : #primitives }
 AthensCairoTransform >> primTranslateX: px Y: py [
-	
+
 	^ self ffiCall: #(
 		void cairo_translate (AthensCairoCanvas canvas,
                                                          double px,
@@ -81,7 +91,7 @@ AthensCairoTransform >> restore [
 { #category : #transformations }
 AthensCairoTransform >> restoreAfter: aBlock [
 	self save.
-	aBlock ensure:  [ self restore ].
+	aBlock ensure:  [ self restore ]
 ]
 
 { #category : #transformations }
@@ -109,14 +119,14 @@ AthensCairoTransform >> scaleBy: aScalarOrPoint [
 			self
 				scaleX: aScalarOrPoint x asFloat
 				Y: aScalarOrPoint y asFloat ]
-		ifFalse:[ 
+		ifFalse:[
 			double := aScalarOrPoint asFloat.
-			self scaleX: double Y: double ].
+			self scaleX: double Y: double ]
 ]
 
 { #category : #transformation }
 AthensCairoTransform >> scaleX: fx Y: fy [
-	
+
 	^ self primScaleX: fx asFloat Y: fy asFloat
 ]
 

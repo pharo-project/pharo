@@ -12,13 +12,13 @@ Class {
 
 { #category : #accessing }
 AthensMorphScene >> morph [
-	
+
 	^ morph
 ]
 
 { #category : #accessing }
 AthensMorphScene >> morph: anObject [
-	
+
 	morph := anObject
 ]
 

@@ -17,14 +17,19 @@ Class {
 	#category : #'Athens-Cairo-Paints'
 }
 
+{ #category : #'library path' }
+AthensCairoSolidPaint class >> ffiLibraryName [
+	^ CairoLibrary
+]
+
 { #category : #drawing }
-AthensCairoSolidPaint >> athensFillPath: path on: aCanvas [ 
+AthensCairoSolidPaint >> athensFillPath: path on: aCanvas [
 
 	aCanvas
-		setSourceR: r g: g b: b a: a; 
+		setSourceR: r g: g b: b a: a;
 		newPath;
 		loadPath: path;
-		fill.
+		fill
 ]
 
 { #category : #drawing }
@@ -35,12 +40,12 @@ AthensCairoSolidPaint >> athensFillRectangle: aRect on: aCanvas [
 	o := origin ifNil:[aRect origin] ifNotNil:[origin].
 	e := extent ifNil:[aRect extent] ifNotNil:[extent].
 	toFillRect := o extent:e.
-	
+
 	aCanvas
-		setSourceR: r g: g b: b a: a; 
+		setSourceR: r g: g b: b a: a;
 		newPath;
 		rectangleX: toFillRect left y: toFillRect top width: toFillRect width height: toFillRect height;
-		fill.
+		fill
 ]
 
 { #category : #accessing }
@@ -48,12 +53,17 @@ AthensCairoSolidPaint >> color: aColor [
 	r := aColor red.
 	g := aColor green.
 	b := aColor blue.
-	a := aColor alpha.
+	a := aColor alpha
 ]
 
 { #category : #accessing }
 AthensCairoSolidPaint >> extent: anExtent [
 	extent := anExtent
+]
+
+{ #category : #'library path' }
+AthensCairoSolidPaint >> ffiLibraryName [
+	^ self class ffiLibraryName
 ]
 
 { #category : #drawing }
