@@ -234,8 +234,8 @@ EFContext >> newLineAfterCascade [
 ]
 
 { #category : #accessing }
-EFContext >> newLineAfterCascade: anInteger [
-	newLineAfterCascade := anInteger
+EFContext >> newLineAfterCascade: aBoolean [
+	newLineAfterCascade := aBoolean
 ]
 
 { #category : #accessing }
@@ -244,8 +244,8 @@ EFContext >> newLineBeforeFirstCascade [
 ]
 
 { #category : #accessing }
-EFContext >> newLineBeforeFirstCascade: anInteger [
-	newLineBeforeFirstCascade := anInteger
+EFContext >> newLineBeforeFirstCascade: aBoolean [
+	newLineBeforeFirstCascade := aBoolean
 ]
 
 { #category : #accessing }
@@ -274,8 +274,8 @@ EFContext >> numberOfNewLinesAfterMethodComment [
 ]
 
 { #category : #accessing }
-EFContext >> numberOfNewLinesAfterMethodComment: aBoolean [
-	numberOfNewLinesAfterMethodComment := aBoolean
+EFContext >> numberOfNewLinesAfterMethodComment: anInteger [
+	numberOfNewLinesAfterMethodComment := anInteger
 ]
 
 { #category : #accessing }
@@ -284,8 +284,8 @@ EFContext >> numberOfNewLinesAfterMethodSignature [
 ]
 
 { #category : #accessing }
-EFContext >> numberOfNewLinesAfterMethodSignature: aBoolean [
-	newLinesAfterMethodSignature := aBoolean
+EFContext >> numberOfNewLinesAfterMethodSignature: anInteger [
+	newLinesAfterMethodSignature := anInteger
 ]
 
 { #category : #accessing }
@@ -295,8 +295,8 @@ EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
 ]
 
 { #category : #accessing }
-EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment: aBoolean [
-	newLinesAfterMethodSignatureWithMethodComment := aBoolean
+EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
+	newLinesAfterMethodSignatureWithMethodComment := anInteger
 ]
 
 { #category : #accessing }
@@ -315,9 +315,9 @@ EFContext >> numberOfSpacesAfterCaretSymbolInReturn [
 ]
 
 { #category : #accessing }
-EFContext >> numberOfSpacesAfterCaretSymbolInReturn: aNumber [
-	spacesAfterCaretSymbolInReturn := self stringFromSpaceNumber: aNumber.
-	numberOfSpacesAfterCaretSymbolInReturn := aNumber
+EFContext >> numberOfSpacesAfterCaretSymbolInReturn: anInteger [
+	spacesAfterCaretSymbolInReturn := self stringFromSpaceNumber: anInteger.
+	numberOfSpacesAfterCaretSymbolInReturn := anInteger
 ]
 
 { #category : #accessing }
@@ -362,9 +362,9 @@ EFContext >> numberOfSpacesInsideBlock [
 ]
 
 { #category : #accessing }
-EFContext >> numberOfSpacesInsideBlock: aNumber [
-	spacesInsideBlocks := self stringFromSpaceNumber: aNumber.
-	numberOfSpacesInsideBlock := aNumber
+EFContext >> numberOfSpacesInsideBlock: anInteger [
+	spacesInsideBlocks := self stringFromSpaceNumber: anInteger.
+	numberOfSpacesInsideBlock := anInteger
 ]
 
 { #category : #accessing }
@@ -373,9 +373,9 @@ EFContext >> numberOfSpacesInsideParentheses [
 ]
 
 { #category : #accessing }
-EFContext >> numberOfSpacesInsideParentheses: aNumber [
-	spacesInsideParentheses := self stringFromSpaceNumber: aNumber.
-	numberOfSpacesInsideParentheses := aNumber
+EFContext >> numberOfSpacesInsideParentheses: anInteger [
+	spacesInsideParentheses := self stringFromSpaceNumber: anInteger.
+	numberOfSpacesInsideParentheses := anInteger
 ]
 
 { #category : #accessing }
