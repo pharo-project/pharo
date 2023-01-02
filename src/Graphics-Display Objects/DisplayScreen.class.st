@@ -69,8 +69,9 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 		default: false.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 DisplayScreen class >> initialize [
+
 	| display |
 	display := self new.
 	display
@@ -78,7 +79,7 @@ DisplayScreen class >> initialize [
 		depth: 32. 
 	Smalltalk globals at: #Display put: display.
 	
-	self deferUpdates: false.
+	self deferUpdates: false
 ]
 
 { #category : #displaying }

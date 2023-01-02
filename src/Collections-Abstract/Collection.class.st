@@ -436,6 +436,15 @@ Collection >> asIdentitySet [
 ]
 
 { #category : #converting }
+Collection >> asMultilineString [
+
+	^ String streamContents: [ :stream | 
+		  self
+			  do: [ :each | stream nextPutAll: each asString ]
+			  separatedBy: [ stream nextPut: Character cr ] ]
+]
+
+{ #category : #converting }
 Collection >> asNewArray [
 
 	"Like asArray: but return a copy if self is already an Array.
@@ -693,6 +702,12 @@ Collection >> copyWith: newElement [
 ]
 
 { #category : #copying }
+Collection >> copyWithAll: aCollection [
+
+	^ self , aCollection
+]
+
+{ #category : #copying }
 Collection >> copyWithDependent: newElement [
 	"Answer a new collection with newElement added (as last
 	element if sequenceable)."
@@ -729,6 +744,27 @@ Collection >> copyWithoutDuplicates [
 	"(#('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates) >>> #('la' 'do' 'si')"
 	"(#(#do #la #si #do #la) copyWithoutDuplicates) >>> #(#la #do #si)"
 	^ self asSet asArray
+]
+
+{ #category : #copying }
+Collection >> copyWithoutFirst: anObject [
+	| done |
+	done := false.
+	^ self reject: [ :each |
+		(each = anObject
+			and: [ done not ])
+				and: [ done := true ]]
+]
+
+{ #category : #copying }
+Collection >> copyWithoutFirstOccurrenceOf: anObject [
+
+	| done |
+	done := false.
+	^ self reject: [ :each |
+		each = anObject
+			and: [ done not
+			and: [ done := true ] ] ]
 ]
 
 { #category : #enumerating }
