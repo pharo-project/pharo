@@ -36,7 +36,7 @@ AthensProjectiveTransform >> loadIdentity [
 { #category : #transformations }
 AthensProjectiveTransform >> transform: aPoint [
 	| px py tx ty tw |
-	
+
 	px := aPoint x.
 	py := aPoint y.
 	"Transform x and y coordinates by receiver, and perform perspective division to answer a 2D point."

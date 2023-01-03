@@ -30,7 +30,7 @@ AthensTextDisplayCommand >> do: aBlock [
 	| nn |
 	nn := self.
 
-	[ nn isNil ] whileFalse: [ 
+	[ nn isNil ] whileFalse: [
 		aBlock value: nn.
 		nn := nn next ]
 ]
@@ -52,7 +52,7 @@ AthensTextDisplayCommand >> next [
 
 { #category : #accessing }
 AthensTextDisplayCommand >> next: anObject [
-	
+
 	next := anObject
 ]
 

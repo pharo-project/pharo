@@ -47,7 +47,7 @@ CairoFontFace class >> fromFreetypeFace: aFace [
 	| handle cairoFace |
 	handle := aFace getHandle.
  	cairoFace := self primFtFace: handle loadFlags: 0.
-	
+
 	^ cairoFace initializeWithFreetypeFace: aFace
 ]
 
@@ -77,7 +77,7 @@ load_flags: flags to pass to FT_Load_Glyph when loading glyphs from the font. Th
 ]
 
 { #category : #initialization }
-CairoFontFace >> initialize [ 
+CairoFontFace >> initialize [
 	self autoRelease
 ]
 
@@ -102,7 +102,7 @@ cairo_ft_font_face_set_synthesize (cairo_font_face_t *font_face,
 ]
 
 { #category : #'external resource management' }
-CairoFontFace >> resourceData [ 
+CairoFontFace >> resourceData [
 	^ handle value
 ]
 
