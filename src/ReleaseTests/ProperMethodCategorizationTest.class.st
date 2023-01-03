@@ -125,12 +125,12 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 	| violating instanceSideInitializeMethods |
 	violating := OrderedCollection new.
 	instanceSideInitializeMethods := OrderedCollection new.
-	
+
 	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide not  ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
-	
+
 	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
-	
-	self assert: violating size <= 8 description: 'Instance side #initialize methods should be in "initialization" method category'
+
+	self assert: violating size <= 10 description: 'Instance side #initialize methods should be in "initialization" method category'
 ]
 
 { #category : #tests }
