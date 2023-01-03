@@ -71,7 +71,7 @@ LibC >> fgetc: stream [
 
 { #category : #'api - accessing' }
 LibC >> getpid [
-	"Get character from stream."
+	"Get PID of current process."
 	 
 	 ^self ffiCall: #(int getpid(void))
 ]
