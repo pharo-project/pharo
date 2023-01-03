@@ -26,7 +26,7 @@ Class {
 	#category : #'Graphics-Canvas-Canvases'
 }
 
-{ #category : #all }
+{ #category : #'class initialization' }
 CornerRounder class >> initialize [  "CornerRounder initialize"
 
 	CR0 := CR1 := self new

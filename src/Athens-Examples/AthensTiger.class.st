@@ -22,24 +22,24 @@ Class {
 AthensTiger class >> checkDataSizes [
 	<script>
 	self assert: (self commands size = self tigerCommandCount).
-	self assert: (self tigerPointsCount = self tigerPoints size).
+	self assert: (self tigerPointsCount = self tigerPoints size)
 ]
 
 { #category : #private }
 AthensTiger class >> commands [
 	| pt str |
-	
+
 	pt := 1.
-	
+
 	str := String new: self tigerCommandCount.
-	
+
 	"merge everything into a single string"
 	self tigerCommands do: [:sub |
 
 		0 to: sub size-1 do: [:i |
 			str at: pt+i put: (sub at: i+1).
 			].
-		pt := pt + sub size.	
+		pt := pt + sub size.
 	].
 
 	^ str
@@ -58,7 +58,7 @@ AthensTiger class >> tigerCenter [
 ]
 
 { #category : #private }
-AthensTiger class >> tigerCommandCount [ 
+AthensTiger class >> tigerCommandCount [
 	^ 4142
 ]
 
@@ -282,22 +282,22 @@ AthensTiger class >> tigerExtent [
 ]
 
 { #category : #private }
-AthensTiger class >> tigerMaxX [ 
+AthensTiger class >> tigerMaxX [
 	^ 612.0
 ]
 
 { #category : #private }
-AthensTiger class >> tigerMaxY [ 
+AthensTiger class >> tigerMaxY [
 	^ 792.0
 ]
 
 { #category : #private }
-AthensTiger class >> tigerMinX [ 
+AthensTiger class >> tigerMinX [
 	^ 0.0
 ]
 
 { #category : #private }
-AthensTiger class >> tigerMinY [ 
+AthensTiger class >> tigerMinY [
 	^ 0.0
 ]
 
@@ -2008,18 +2008,18 @@ AthensTiger class >> tigerPoints [
 ]
 
 { #category : #private }
-AthensTiger class >> tigerPointsCount [ 
+AthensTiger class >> tigerPointsCount [
 	^ 16988
 ]
 
 { #category : #run }
 AthensTiger >> draw [
-	surface drawDuring: [ :canvas | 
+	surface drawDuring: [ :canvas |
 		canvas pathTransform loadIdentity.
 		canvas
 			setPaint: Color white;
 			drawShape: (0@0 corner: surface extent).
-			
+
 		canvas pathTransform
 			translateX: 0.5 * (surface extent x - (self class tigerMaxX * scale * zoom))
 				Y: surface extent y / -12.0;
@@ -2030,7 +2030,7 @@ AthensTiger >> draw [
 			translateBy: (self class tigerCenter * -1);
 			translateBy: position.
 
-		parts do: [ :each | each renderOn: canvas ] ].
+		parts do: [ :each | each renderOn: canvas ] ]
 ]
 
 { #category : #initialization }
@@ -2042,7 +2042,7 @@ AthensTiger >> initializeWith: anAthensSurface [
 	rotation := 180.0.
 	scale := 0.5.
 	zoom := 1.0.
-	position := 0@0.
+	position := 0@0
 ]
 
 { #category : #accessing }
@@ -2059,13 +2059,13 @@ AthensTiger >> position: anObject [
 AthensTiger >> readParts [
 
 	| results currentPart commandStream pointStream fillBlocks strokeBlocks capBlocks joinBlocks cmdBlocks |
-	
+
 	results := OrderedCollection new.
 	commandStream := self class commands readStream.
 	pointStream := self class tigerPoints readStream.
 	currentPart := nil.
-	
-	fillBlocks := { 
+
+	fillBlocks := {
 		"N" [].
 		"F" [ currentPart addFill ].
 		"E" [ currentPart addFill; fillRule: #VGEVENODD ] }.
@@ -2073,30 +2073,30 @@ AthensTiger >> readParts [
 	strokeBlocks := {
 		"N" [].
 		"S" [ currentPart addStroke ] }.
-	
+
 	capBlocks := {
 		"B" [ currentPart capStyle: #VGCAPBUTT ].
 		"R" [ currentPart capStyle: #VGCAPROUND ].
 		"S" [ currentPart capStyle: #VGCAPSQUARE ]	}.
-	
+
 	joinBlocks := {
 		"M" [ currentPart joinStyle: #VGJOINMITER ].
 		"R" [ currentPart joinStyle: #VGJOINROUND ].
 		"B" [ currentPart joinStyle: #VGJOINBEVEL ] }.
-		
-	cmdBlocks := {		
+
+	cmdBlocks := {
 		"M"[:s | s moveToX: pointStream next Y: pointStream next ].
 		"L" [:s | s lineToX: pointStream next Y: pointStream next ].
-		"C"	[:s | s  
+		"C"	[:s | s
 			curveVia: (pointStream next @ pointStream next)
 			and: (pointStream next @ pointStream next)
 			to: (pointStream next @ pointStream next) ].
 		"E"	[:s | s close ] }.
 
-	[		
+	[
 		currentPart := AthensTigerPart new.
 
-		fillBlocks := { 
+		fillBlocks := {
 			"N" [].
 			"F" [ currentPart addFill; fillRule: #VGNONZERO.  ].
 			"E" [ currentPart addFill; fillRule: #VGEVENODD ] }.
@@ -2104,29 +2104,29 @@ AthensTiger >> readParts [
 		strokeBlocks := {
 			"N" [].
 			"S" [ currentPart addStroke ] }.
-		
+
 		" fill type "
 		currentPart fillRule: #VGNONZERO.
 		(fillBlocks at: ('NFE' indexOf: commandStream next)) value.
 
-		" stroke type "	
+		" stroke type "
 		(strokeBlocks at: ('NS' indexOf: commandStream next)) value.
 
 		" line cap "
 		(capBlocks at: ('BRS' indexOf: commandStream next)) value.
-	
+
 		" line join "
 		(joinBlocks at: ('MRB' indexOf: commandStream next)) value.
-	
+
 		" the rest of stroke attributes "
 		currentPart miterLimit: pointStream next.
 		currentPart strokeWidth: pointStream next.
 
 		" paints "
 		currentPart strokePaint: ((Color r: pointStream next g: pointStream next b: pointStream next )).
-		
+
 		currentPart fillPaint: ((Color r: pointStream next g: pointStream next b: pointStream next )).
-		
+
 		currentPart setPath: (
 			surface createPath: [:builder |
 				builder absolute.
@@ -2139,11 +2139,11 @@ AthensTiger >> readParts [
 	] whileFalse.
 
 	results do: [:ea |
-		self assert: ea fillRule = #VGNONZERO.	
+		self assert: ea fillRule = #VGNONZERO.
 		ea prepareFor: surface ].
-	
+
 	self assert: pointStream atEnd.
-	
+
 	^ results
 ]
 

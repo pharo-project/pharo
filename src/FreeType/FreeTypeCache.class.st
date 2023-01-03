@@ -52,8 +52,9 @@ FreeTypeCache class >> defaultMaximumSize [
 	^1024*5000 "5 Megabytes"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 FreeTypeCache class >> initialize [
+
 	SessionManager default 
 		registerGuiClassNamed: self name
 		atPriority: 10.

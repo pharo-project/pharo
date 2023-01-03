@@ -41,7 +41,7 @@ RBMakeClassAbstractTransformation >> preconditions [
 RBMakeClassAbstractTransformation >> transform [
 	(RBAddMethodTransformation
 		                   sourceCode: 'isAbstract
-		
+
 	^ self == ' , targetClass asString
 		                   in: targetClass classSide
 		                   withProtocols: #( #testing )) execute

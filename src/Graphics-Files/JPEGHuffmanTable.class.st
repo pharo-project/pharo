@@ -20,7 +20,7 @@ Class {
 	#category : #'Graphics-Files'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 JPEGHuffmanTable class >> initialize [
 
 	Lookahead := 8.

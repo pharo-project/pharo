@@ -202,7 +202,7 @@ Form class >> fromUser: gridPoint [
 	^ self fromDisplay: (rect origin extent: (rect extent max: gridPoint))
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Form class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]

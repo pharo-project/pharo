@@ -32,7 +32,7 @@ AthensCairoCanvas class >> on: cairoSurface [
 
 { #category : #primitives }
 AthensCairoCanvas class >> primCreate: cairoSurface [
-	^ self ffiCall: #( 
+	^ self ffiCall: #(
 		AthensCairoCanvas cairo_create (AthensCairoSurface cairoSurface) )
 ]
 
@@ -44,28 +44,28 @@ AthensCairoCanvas >> clipBy: aRectangle during: aBlock [
 	transformedClipRectangle := pathTransform transformRectangle: aRectangle.
 	newClip := oldClip
 		ifNil: [ transformedClipRectangle ]
-		ifNotNil: [ oldClip intersect: transformedClipRectangle ifNone:[^ self] ]. 
-	
+		ifNotNil: [ oldClip intersect: transformedClipRectangle ifNone:[^ self] ].
+
 	self
 		setPathMatrix;
 		primSaveState;
 		pushClipRect: aRectangle.
-	
+
 	currentClipRect := newClip.
 
 	[aBlock value] ensure: [
 		self primRestoreState.
 		currentClipRect := oldClip
-	].
+	]
 ]
 
 { #category : #accessing }
 AthensCairoCanvas >> clipRect [
 
-	^ currentClipRect ifNil: [ 
+	^ currentClipRect ifNil: [
 		  currentClipRect := pathTransform
-			                     ifNotNil: [ 
-				                     (pathTransform inverted transform: 0 @ 0) 
+			                     ifNotNil: [
+				                     (pathTransform inverted transform: 0 @ 0)
 					                     extent: self surface extent ]
 			                     ifNil: (0 @ 0 extent: self surface extent) ]
 ]
@@ -84,10 +84,10 @@ AthensCairoCanvas >> destroy [
 AthensCairoCanvas >> draw [
 	"Fill the shape (anObject) using currently selected paint
 	an object should implement double-dispatch to currently selected paint"
-	
+
 	"set the trasformation matrix"
 	self setPathMatrix.
-	
+
 	^ shape paintFillsUsing: paint on: self
 ]
 
@@ -145,9 +145,9 @@ AthensCairoCanvas >> handle [
 ]
 
 { #category : #'initialize-release' }
-AthensCairoCanvas >> initializeWithSurface: anAthensSurface [	
+AthensCairoCanvas >> initializeWithSurface: anAthensSurface [
 	super initializeWithSurface: anAthensSurface.
-	self paintMode default.
+	self paintMode default
 ]
 
 { #category : #private }
@@ -183,7 +183,7 @@ AthensCairoCanvas >> primClip [
 
 { #category : #private }
 AthensCairoCanvas >> primDrawWithAlpha: alpha [
-	^ self ffiCall: #( 
+	^ self ffiCall: #(
 		void cairo_paint_with_alpha ( self , double alpha)
 	)
 ]
@@ -279,7 +279,7 @@ AthensCairoCanvas >> primSetSource: aPattern [
 
 { #category : #private }
 AthensCairoCanvas >> primSetSourceR: red g: green b: blue a: alpha [
-	^ self ffiCall: #( 
+	^ self ffiCall: #(
 		void cairo_set_source_rgba ( self ,
 			double red,
 			double green,
@@ -335,7 +335,7 @@ Note that this option does not affect text rendering, instead see cairo_font_opt
 
 { #category : #private }
 AthensCairoCanvas >> setClipRect: aRectOrNil [
-	aRectOrNil 
+	aRectOrNil
 		ifNil: [ self resetClip ]
 		ifNotNil: [ self pushClipRect: aRectOrNil ]
 ]
@@ -356,7 +356,7 @@ void                cairo_set_font_matrix               (cairo_t *cr,
 
 { #category : #private }
 AthensCairoCanvas >> setFontSize: aSize [
-	
+
 	^ self primSetFontSize: aSize asFloat
 ]
 
@@ -393,7 +393,7 @@ AthensCairoCanvas >> setSourceR: red g: green b: blue a: alpha [
 AthensCairoCanvas >> showGlyphs: glyphs size: numGlyphs [
 	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
 	^ self ffiCall: #(
-	
+
 		void cairo_show_glyphs ( self ,
 			void * glyphs,
 			int numGlyphs) )
@@ -417,19 +417,19 @@ AthensCairoCanvas >> stroke [
 
 { #category : #accessing }
 AthensCairoCanvas >> surface: aCairoSurface [
-	
+
 	"initialize for given surface"
 	surface := aCairoSurface.
-	
+
 	pathTransform := AthensCairoMatrix new.
 	paintTransform := AthensCairoMatrix new.
 	paintMode := AthensCairoPaintMode new canvas: self.
-	
-	self setAA: CAIRO_ANTIALIAS_GOOD.
+
+	self setAA: CAIRO_ANTIALIAS_GOOD
 ]
 
 { #category : #private }
-AthensCairoCanvas >> text: utf8String extents: extentsObj [ 
+AthensCairoCanvas >> text: utf8String extents: extentsObj [
 "cairo_text_extents ()
 
 void                cairo_text_extents                  (cairo_t *cr,
@@ -442,7 +442,7 @@ void                cairo_text_extents                  (cairo_t *cr,
 { #category : #drawing }
 AthensCairoCanvas >> textPath: anUTF8EncodedString [
 	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
-	
+
 	^ self ffiCall: #(void cairo_text_path (self, void* anUTF8EncodedString ))
 ]
 
@@ -470,7 +470,7 @@ AthensCairoCanvas >> visitLineSegment: line [
 ]
 
 { #category : #'path segments visitor' }
-AthensCairoCanvas >> visitMoveSegment: mov [ 
+AthensCairoCanvas >> visitMoveSegment: mov [
 	^ self moveToX: mov endPoint x Y: mov endPoint y
 ]
 
