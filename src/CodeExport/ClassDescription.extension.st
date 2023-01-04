@@ -1,7 +1,7 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutCategory: catName [ 
+ClassDescription >> fileOutCategory: catName [
 
 	self organization fileOutCategory: catName
 ]
@@ -39,7 +39,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
 	"File out methods for this category."
-	
+
 	| selectors |
 	aFileStream cr.
 	selectors := self selectorsToFileOutCategory: aSymbol.
@@ -60,11 +60,11 @@ ClassDescription >> fileOutMethod: selector [
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutMethod: selector on: aStream [
-	
+
 	(selector == #Comment) ifTrue: [^ self inform: 'Sorry, cannot file out class comment in isolation.'].
 	(self includesSelector: selector) ifFalse: [^ self error: 'Selector ', selector asString, ' not found'].
 	aStream header; timeStamp.
-	self printMethodChunk: selector on: aStream.
+	self printMethodChunk: selector on: aStream
 ]
 
 { #category : #'*CodeExport' }
@@ -114,7 +114,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
 	method := self methodDict
 		at: selector
-		ifAbsent: [ 
+		ifAbsent: [
 			outStream
 				nextPutAll: selector;
 				cr.
@@ -128,19 +128,19 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 
 	"Print the preamble"
 	outStream cr; nextChunkPut: ''.
-	outStream nextChunkPut: (String streamContents: [ :strm | 
+	outStream nextChunkPut: (String streamContents: [ :strm |
 		strm nextPutAll: preamble.
-		method stamp ifNotEmpty: [ :stamp | 
+		method stamp ifNotEmpty: [ :stamp |
 			strm
 				nextPutAll: ' stamp: ';
 				print: stamp ] ]).
 	outStream cr.
 
 	"Print the source code"
-	outStream 
+	outStream
 		nextChunkPut: method sourceCode;
 		nextChunkPut: ' '; cr.
-	
+
 	^ outStream
 ]
 
