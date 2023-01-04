@@ -20,7 +20,7 @@ ReCompactSourceCodeCritic >> change [
 	cm := self sourceAnchor sourceEntity.
 
 	^ (RBRefactoryChangeFactory instance)
-		addMethodSource: (ReMethodSourceCleaner clean: cm sourceCode) in: cm methodClass
+		addMethodSource: (ReMethodSourceCleaner clean: cm sourceCode) in: cm origin
 ]
 
 { #category : #testing }

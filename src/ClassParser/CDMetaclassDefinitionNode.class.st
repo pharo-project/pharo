@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 CDMetaclassDefinitionNode >> existingClassIfAbsent: aBlock [
 	| existingClass |
-	existingClass := super existingClassIfAbsent: aBlock.	
+	existingClass := super existingClassIfAbsent: aBlock.
 	^existingClass classSide
 ]
 
@@ -22,7 +22,7 @@ CDMetaclassDefinitionNode >> isInstanceSide [
 ]
 
 { #category : #testing }
-CDMetaclassDefinitionNode >> selector [ 
+CDMetaclassDefinitionNode >> selector [
 
 	^ tokens at: 3
 ]

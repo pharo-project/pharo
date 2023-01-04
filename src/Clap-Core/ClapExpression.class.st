@@ -17,7 +17,7 @@ ClapExpression class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-ClapExpression class >> specification: aParameter [ 
+ClapExpression class >> specification: aParameter [
 	^ self new
 		specification: aParameter;
 		yourself
@@ -89,7 +89,7 @@ ClapExpression >> specification [
 ]
 
 { #category : #initialization }
-ClapExpression >> specification: anArgumentSpec [ 
+ClapExpression >> specification: anArgumentSpec [
 	specification := anArgumentSpec
 ]
 
@@ -102,7 +102,7 @@ ClapExpression >> validateAll [
 { #category : #validation }
 ClapExpression >> validateOn: aReport [
 	"Recursively validate the receiver and any subexpressions, enriching aReport"
-	
+
 	self specification
 		validate: self on: aReport
 ]

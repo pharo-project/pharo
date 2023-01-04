@@ -12,7 +12,7 @@ CDSlotNode >> asSlot [
 
 	"when parsing old style definitions, the node is just the string of all ivars"
 	node isLiteralNode ifTrue: [ ^InstanceVariableSlot named: name ]
-	
+
 	"As we controll the creation of the AST, it is safe to evaluate it. The
 	only thing that can go wrong is that the class of the slot is not yet loaded,
 	we crate an UndefinedSlot for that case".
