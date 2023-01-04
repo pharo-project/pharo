@@ -11,13 +11,13 @@ CDClassWithPoolDictionaryParserTest >> classDefinitionString [
 		classVariableNames: ''{classvar1} {classvar2}''
 		poolDictionaries: ''{sharedPoolName}''
 		package: #MyPackage'
-			format: { 
+			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
 				'instvar1' -> self firstInstanceVariableName.
 				'instvar2' -> self secondInstanceVariableName.
 				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName. 
+				'classvar2' -> self secondClassVariableName.
 				'sharedPoolName' -> self sharedPoolName } asDictionary
 ]
 

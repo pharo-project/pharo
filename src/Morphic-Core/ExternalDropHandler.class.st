@@ -41,11 +41,10 @@ ExternalDropHandler class >> defaultHandler: externalDropHandler [
 	DefaultHandler := externalDropHandler
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ExternalDropHandler class >> initialize [
-	"ExternalDropHandler initialize"
 
-	self resetRegisteredHandlers.
+	self resetRegisteredHandlers
 ]
 
 { #category : #accessing }

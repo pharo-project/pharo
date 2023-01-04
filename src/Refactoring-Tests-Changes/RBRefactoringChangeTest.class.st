@@ -302,7 +302,7 @@ RBRefactoringChangeTest >> testCompileInMetaclass [
 	self assert: change isMeta.
 	self assert: change selector equals: #new.
 	self assert: change source equals: 'new'.
-	self assert: change protocol equals: #accessing.
+	self assert: change protocol equals: Protocol unclassified.
 	self universalTestFor: change
 ]
 

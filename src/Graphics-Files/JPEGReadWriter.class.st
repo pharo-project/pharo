@@ -87,9 +87,8 @@ Class {
 	#category : #'Graphics-Files'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 JPEGReadWriter class >> initialize [
-	"JPEGReadWriter initialize"
 	"general constants"
 	DCTSize := 8.
 	MaxSample := (2 raisedToInteger: DCTSize) - 1.

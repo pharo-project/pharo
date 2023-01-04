@@ -24,5 +24,5 @@ CDTraitSlotRenameNode >> renames: anObject [
 
 { #category : #printing }
 CDTraitSlotRenameNode >> toString [
-	^ subject name ,' @@ ', renames asString.
+	^ subject name ,' @@ ', renames asString
 ]

@@ -28,7 +28,7 @@ CmdWorldMenuRegistration class >> enableWorldShortcuts [
 	CmdKMDispatcher attachedTo: self currentWorld withCommandsFrom: self
 ]
 
-{ #category : #'world menu' }
+{ #category : #'class initialization' }
 CmdWorldMenuRegistration class >> initialize [
 	
 	self enableWorldShortcuts

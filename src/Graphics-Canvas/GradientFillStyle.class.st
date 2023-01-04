@@ -53,9 +53,8 @@ GradientFillStyle class >> initPixelRampCache [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 GradientFillStyle class >> initialize [
-	"GradientFillStyle initialize"
 	
 	self initPixelRampCache
 ]

@@ -39,8 +39,9 @@ Clipboard class >> default [
 	^Default ifNil: [Default := self new].
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Clipboard class >> initialize [
+
 	self startUp: true.
 	SessionManager default 
 		registerSystemClassNamed: self name
