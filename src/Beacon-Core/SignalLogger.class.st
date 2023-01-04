@@ -58,7 +58,7 @@ Class {
 { #category : #'instance creation' }
 SignalLogger class >> for: aBeacon [
 
-	^ self new 
+	^ self new
 		beacon: aBeacon;
 		yourself
 ]
@@ -93,7 +93,7 @@ SignalLogger class >> resetAllInstances [
 { #category : #'class initialization' }
 SignalLogger class >> resetInstance [
 	<script>
-	
+
 	instance := nil
 ]
 
@@ -106,46 +106,45 @@ SignalLogger class >> runDuring: aBlock [
 { #category : #registration }
 SignalLogger class >> start [
 	<script>
-	
+
 	^ self instance start
 ]
 
 { #category : #registration }
 SignalLogger class >> startFor: anAnnouncementOrASetOfAnnouncements [
-	"Start listening to announcements. 
-	
-		logger startFor: StringSignal 
-	
-	to scope the listening consider using
-	 
-		logger runFor: StringSignal during: [ ... ]"
-	
-	^ self instance startFor: anAnnouncementOrASetOfAnnouncements 
+	"Start listening to announcements.
 
+		logger startFor: StringSignal
+
+	to scope the listening consider using
+
+		logger runFor: StringSignal during: [ ... ]"
+
+	^ self instance startFor: anAnnouncementOrASetOfAnnouncements
 ]
 
 { #category : #convenience }
 SignalLogger class >> startSingleGlobalLogger [
 	"Stop any other loggers and start a global instances of the receiver"
 	<script>
-	
-	SignalLogger 
+
+	SignalLogger
 		stopAll;
 		resetAllInstances.
-	self start.
+	self start
 ]
 
 { #category : #registration }
 SignalLogger class >> stop [
 	<script>
-	
+
 	^ self instance stop
 ]
 
 { #category : #registration }
 SignalLogger class >> stopAll [
 	<script>
-	
+
 	self withAllSubclassesDo: #stop
 ]
 
@@ -172,7 +171,7 @@ SignalLogger >> initialize [
 
 { #category : #testing }
 SignalLogger >> isRunning [
-	Beacon instance announcer subscriptions 
+	Beacon instance announcer subscriptions
 		subscriptionsOf: self do: [ :x | ^ true ].
 	^ false
 ]
@@ -192,8 +191,8 @@ SignalLogger >> name: aString [
 { #category : #utilities }
 SignalLogger >> nextPut: aSignal [
 	"Gets a BeaconSignal into the logger"
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
 { #category : #utilities }
@@ -206,7 +205,7 @@ SignalLogger >> nextPutAll: aCollection [
 SignalLogger >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ' named: ';
 		nextPutAll: name asString
 ]
@@ -214,17 +213,16 @@ SignalLogger >> printOn: aStream [
 { #category : #registration }
 SignalLogger >> runDuring: aBlock [
 	"Make all BeaconSignals go to me during aBlock"
-	
+
 	self start.
 	[ aBlock value ]
 		ensure: [ self stop ]
-
 ]
 
 { #category : #registration }
 SignalLogger >> runFor: anAnnouncementOrASetOfAnnouncements during: aBlock [
 	"Makes all provided BeaconSignals got to me during aBlock.
-	
+
 	logger runFor: StringSignal during: [ ... ]"
 
 	self startFor: anAnnouncementOrASetOfAnnouncements.
@@ -234,7 +232,7 @@ SignalLogger >> runFor: anAnnouncementOrASetOfAnnouncements during: aBlock [
 { #category : #registration }
 SignalLogger >> start [
 
-	self startFor: BeaconSignal 
+	self startFor: BeaconSignal
 ]
 
 { #category : #registration }

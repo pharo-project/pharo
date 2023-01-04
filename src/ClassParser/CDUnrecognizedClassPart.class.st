@@ -17,6 +17,6 @@ CDUnrecognizedClassPart >> classDefinition: aNode [
 ]
 
 { #category : #accessing }
-CDUnrecognizedClassPart >> unrecognizedPart: aString [ 
+CDUnrecognizedClassPart >> unrecognizedPart: aString [
 	unrecognizedPart := aString
 ]

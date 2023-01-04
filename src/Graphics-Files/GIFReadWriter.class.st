@@ -94,9 +94,9 @@ GIFReadWriter class >> grabScreenAndSaveOnDisk [
 				onFileNamed: fileName ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 GIFReadWriter class >> initialize [
-	"GIFReadWriter initialize"
+
 	ImageSeparator := $, asInteger.
 	Extension := $! asInteger.
 	Terminator := $; asInteger

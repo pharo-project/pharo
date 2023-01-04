@@ -66,6 +66,18 @@ TFProcessLocalWorker >> defaultWorker: aWorker [
 ]
 
 { #category : #executing }
+TFProcessLocalWorker >> ensureInitialized [
+
+	self worker ensureInitialized
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker >> forCallback [
+
+	^ self worker
+]
+
+{ #category : #executing }
 TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aCollection [ 
 
 	^ self worker

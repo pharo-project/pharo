@@ -38,13 +38,13 @@ UserInputEvent class >> ctrlKeyMask [
 	^ CTRL_KEY_MASK
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 UserInputEvent class >> initialize [
 
 	SHIFT_KEY_MASK := 8.
 	CMD_KEY_MASK := 2r01000000.
 	CTRL_KEY_MASK := 2r00010000.
-	ALT_KEY_MASK := 2r00100000.
+	ALT_KEY_MASK := 2r00100000
 ]
 
 { #category : #initialization }

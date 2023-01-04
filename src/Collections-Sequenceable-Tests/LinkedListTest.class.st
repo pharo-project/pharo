@@ -830,6 +830,20 @@ LinkedListTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
+{ #category : #'tests - instance creation' }
+LinkedListTest >> testNewFromCollection [
+
+	|d|
+	d := LinkedList newFrom: #(a b c).
+		
+	self assert: d firstLink value equals: #a.
+	self assert: d lastLink value equals: #c.
+
+	self assert: d firstLink nextLink value equals: #b.
+	self assert: d firstLink nextLink nextLink value equals: #c.
+	
+]
+
 { #category : #tests }
 LinkedListTest >> testRemoveAll [
 	| list2 |
