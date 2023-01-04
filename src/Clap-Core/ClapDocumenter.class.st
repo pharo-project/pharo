@@ -109,12 +109,12 @@ ClapDocumenter >> usage: aCommand [
 	formatter
 		text: 'Usage: ';
 		text: aCommand canonicalName.
-	aCommand flags ifNotEmpty: [ :flags | 
+	aCommand flags ifNotEmpty: [ :flags |
 		formatter space.
 		flags
 			do: [ :each | self flagSynopsis: each ]
 			separatedBy: [ formatter space ] ].
-	aCommand positionals ifNotEmpty: [ :positionals | 
+	aCommand positionals ifNotEmpty: [ :positionals |
 		formatter space.
 		positionals
 			do: [ :each | self positional: each ]

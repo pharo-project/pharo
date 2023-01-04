@@ -15,7 +15,7 @@ ClapCommandTest >> testAddFlag [
 	subject := self namedSubject.
 	flag := ClapFlag id: #flag.
 	subject add: flag.
-	
+
 	self assert: (subject flags includes: flag)
 ]
 
@@ -25,7 +25,7 @@ ClapCommandTest >> testAddSubcommand [
 	subject := self namedSubject.
 	cmd := ClapCommand id: #cmd.
 	subject add: cmd.
-	
+
 	self assert: (subject subcommands includes: cmd)
 ]
 
@@ -35,9 +35,9 @@ ClapCommandTest >> testMatches [
 	subject := self namedSubject.
 	arg := self subjectName copy.
 	argv := { arg. #remainder } readStream.
-	
+
 	match := subject matchOn: argv.
-	
+
 	self deny: match isMismatch.
 	self assert: match word equals: arg.
 	self assert: argv next equals: #remainder
@@ -49,9 +49,9 @@ ClapCommandTest >> testMatchesWithSingleFlag [
 	subject := self namedSubject.
 	subject add: (ClapFlag id: #bar).
 	argv := { self subjectName . '--bar' . #remainder } readStream.
-		
+
 	match := subject matchOn: argv.
-	
+
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #bar).
 	self assert: argv next equals: #remainder
@@ -83,9 +83,9 @@ ClapCommandTest >> testMatchesWithSingleSubcommand [
 	subject := self namedSubject.
 	subject add: (ClapCommand id: #bar).
 	argv := { self subjectName. 'bar'. #remainder } readStream.
-	
+
 	match := subject matchOn: argv.
-	
+
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #bar).
 	self assert: argv next equals: #remainder
@@ -113,9 +113,9 @@ ClapCommandTest >> testMismatchesDifferentAlias [
 	subject := self namedSubject.
 	badCommand := self subjectName , 'NOT'.
 	argv := { badCommand } readStream.
-	
+
 	match := subject matchOn: argv.
-	
+
 	self assert: match isMismatch.
 	self
 		assert: argv next
