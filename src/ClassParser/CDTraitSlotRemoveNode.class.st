@@ -24,5 +24,5 @@ CDTraitSlotRemoveNode >> removedSlots: anObject [
 
 { #category : #printing }
 CDTraitSlotRemoveNode >> toString [
-	^ subject name ,' -- ', removedSlots asString.
+	^ subject name ,' -- ', removedSlots asString
 ]
