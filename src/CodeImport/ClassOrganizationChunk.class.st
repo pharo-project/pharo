@@ -19,7 +19,7 @@ ClassOrganizationChunk class >> contents: someContents behaviorName: behaviorNam
 ]
 
 { #category : #'instance creation' }
-ClassOrganizationChunk class >> contents: someContents organizer: aClassOrganizer [ 
+ClassOrganizationChunk class >> contents: someContents organizer: aClassOrganizer [
 	^self new
 			contents: someContents;
 			organizer: aClassOrganizer;
@@ -41,8 +41,8 @@ ClassOrganizationChunk >> description [
 { #category : #importing }
 ClassOrganizationChunk >> importFor: aRequestor logSource: logSource [
 	(self existsBehavior)
-		ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString } ) ]. 
-		
+		ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString } ) ].
+
 	self targetClass organization changeFromString: contents
 ]
 
