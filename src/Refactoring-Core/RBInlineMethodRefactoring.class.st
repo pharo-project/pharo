@@ -275,6 +275,7 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 
 { #category : #preconditions }
 RBInlineMethodRefactoring >> preconditions [
+	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
 	^ (RBCondition definesSelector: sourceSelector in: class) 
 		& (RBCondition withBlock: 
 					[self findSelectedMessage.
@@ -282,7 +283,7 @@ RBInlineMethodRefactoring >> preconditions [
 						self isOverridden 
 						ifTrue: 
 							[self 
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?' 
+								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.' 
 										expandMacrosWith: self classOfTheMethodToInline
 										with: self inlineSelector)] ].
 					self parseInlineMethod.
