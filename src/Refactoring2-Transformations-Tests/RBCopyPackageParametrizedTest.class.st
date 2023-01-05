@@ -43,26 +43,26 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
 	self skip.
 	"We should use a small package for this tests and it should have references to its classes
-	so that we can check it. 
-	
+	so that we can check it.
+
 	See https://github.com/pharo-project/pharo/issues/11524"
 	self timeLimit: 2 minutes.
-	refactoring := (self createRefactoringWithArguments: 
+	refactoring := (self createRefactoringWithArguments:
 		{ #'Refactoring-Changes' . #'RRefactoring-Changes2'}).
 	aModel := refactoring model.
-	
+
 	self executeRefactoring: refactoring.
-	
-	self assert: (aModel classNamed: #RBClassCategoryChangeCopy) category 
+
+	self assert: (aModel classNamed: #RBClassCategoryChangeCopy) category
 		equals: #'RRefactoring-Changes2'.
-	self assert: (aModel classNamed: #RBAddProtocolChangeCopy) superclass name 
+	self assert: (aModel classNamed: #RBAddProtocolChangeCopy) superclass name
 		equals: #RBRefactoryProtocolChangeCopy.
 
 	"We should create a little package and this package should have a class pointing to another class of this package.
 	and we should check that the refactored version points to the class copied version.
-	This is what this version is doing: 
-	
-	self  assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages) 
+	This is what this version is doing:
+
+	self  assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages)
 		equals: (self parseMethod: 'pages
 	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')"
 ]
@@ -75,13 +75,13 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 	self executeRefactoring: (refactoring classPattern: '^RB(.*)$' -> 'Bar$1').
 
 	aModel := refactoring model.
-	self 
-		assert: (aModel classNamed: #BarLintRule) name 
-		equals: #BarLintRule.
+	self
+		assert: (aModel classNamed: #BarLintRule) name
+		equals: #BarLintRule
 ]
 
 { #category : #'failure tests' }
 RBCopyPackageParametrizedTest >> testExistingPackage [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
 ]

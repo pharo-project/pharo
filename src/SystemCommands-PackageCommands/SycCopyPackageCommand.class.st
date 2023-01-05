@@ -42,12 +42,18 @@ SycCopyPackageCommand >> execute [
 
 { #category : #execution }
 SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
+
+	| dialog |
+
 	super prepareFullExecutionInContext: aToolContext.
-	
-	package := aToolContext lastSelectedPackage.	
-	newName := UIManager default 
-		request: 'New name of copied package' 
-		initialAnswer: package name 
+
+	package := aToolContext lastSelectedPackage.
+	newName := UIManager default
+		request: 'New name of copied package'
+		initialAnswer: package name
 		title: 'Copy package'.
-	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ]
+	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ].
+
+	dialog := SycClassPatternPresenter openOn: package.
+	dialog cancelled ifTrue: [ ^ CmdCommandAborted signal ]
 ]

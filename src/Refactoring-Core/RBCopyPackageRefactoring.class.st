@@ -34,7 +34,7 @@ RBCopyPackageRefactoring class >> copyPackage: aString1 in: aString2 [
 
 { #category : #copying }
 RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: aString2 [
-	^ self new 
+	^ self new
 		model: aRBSmalltalk;
 		copyPackage: aString1 in: aString2;
 		yourself
@@ -52,27 +52,25 @@ RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
 RBCopyPackageRefactoring >> classPattern: anAssociation [
 	"Set the receiver's class pattern for copying from anAssociation from <String> to <String>.
 	anAssociation could contain <String>s with a regular expression(s)"
-	
+
 	| srcClassPattern dstClassPattern |
 	srcClassPattern := anAssociation key.
 	dstClassPattern := anAssociation value.
-	
+
 	^ RBClassRegexRefactoring new
 		model: model;
 		copyClasses;
-		replace: srcClassPattern with: dstClassPattern.
-
-	
+		replace: srcClassPattern with: dstClassPattern
 ]
 
 { #category : #preconditions }
 RBCopyPackageRefactoring >> copyAllClasses: classes [
 	^ classes collect: [ :symbol | | copyClassName |
 		copyClassName := self copyNameFor: symbol.
-		self performCompositeRefactoring: 
+		self performCompositeRefactoring:
 			(RBCopyClassRefactoring
 				model: self model
-				copyClass: symbol 
+				copyClass: symbol
 				withName: copyClassName
 				in: newName).
 		copyClassName
@@ -85,7 +83,7 @@ RBCopyPackageRefactoring >> copyNameFor: symbol [
 	string := 'Copy'.
 	counter := 1.
 	copyName := symbol, string.
-	[ self model includesGlobal: copyName ] 
+	[ self model includesGlobal: copyName ]
 		whileTrue: [ copyName := symbol, string, counter asString.
 			counter := counter + 1 ].
 	^ copyName
@@ -95,16 +93,16 @@ RBCopyPackageRefactoring >> copyNameFor: symbol [
 RBCopyPackageRefactoring >> copyPackage: aString1 in: aString2 [
 	packageName := aString1 asSymbol.
 	package := self model packageNamed: packageName.
-	newName := aString2 asSymbol.
+	newName := aString2 asSymbol
 ]
 
 { #category : #preconditions }
-RBCopyPackageRefactoring >> preconditions [ 
-	^ super preconditions & (RBCondition withBlock: [ newName = packageName ifTrue: 
+RBCopyPackageRefactoring >> preconditions [
+	^ super preconditions & (RBCondition withBlock: [ newName = packageName ifTrue:
 		[ self refactoringError: 'Use a different name' ].
 		true ]) &
 	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
-			on: Error 
+			on: Error
 			do: [ :e | self refactoringError: e messageText ]
 		])
 ]
@@ -115,19 +113,19 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 	replacer := (self parseTreeRewriterClass replaceLiteral: aClass1 name with: aClass2)
 				replace: aClass1 name with: aClass2;
 				replaceArgument: aClass2
-					withValueFrom: 
-						[:aNode | 
-						self 
+					withValueFrom:
+						[:aNode |
+						self
 							refactoringFailure: aClass2 , ' already exists within the reference scope'];
 				yourself.
 	self model allReferencesToClass: aClass1 inPackages: { newName }
-		do: 
-			[:method | 
-			(method modelClass hierarchyDefinesVariable: aClass2) 
-				ifTrue: 
-					[self refactoringFailure: aClass2 , ' is already defined in hierarchy of ' 
+		do:
+			[:method |
+			(method modelClass hierarchyDefinesVariable: aClass2)
+				ifTrue:
+					[self refactoringFailure: aClass2 , ' is already defined in hierarchy of '
 								, method modelClass printString].
-			self 
+			self
 				convertMethod: method selector
 				for: method modelClass
 				using: replacer]
@@ -137,8 +135,8 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 	| subclasses dict |
 	dict := Dictionary newFromKeys: classes andValues: copyClasses.
-	subclasses := copyClasses 
-		collect: [ :cls | self model classNamed: cls] 
+	subclasses := copyClasses
+		collect: [ :cls | self model classNamed: cls]
 		thenSelect: [ :rb | classes includes: rb superclass name ].
 	subclasses do: [ :cls |
 		self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name))
@@ -146,7 +144,7 @@ RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 ]
 
 { #category : #printing }
-RBCopyPackageRefactoring >> storeOn: aStream [ 
+RBCopyPackageRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' copyPackage: '.
@@ -158,11 +156,11 @@ RBCopyPackageRefactoring >> storeOn: aStream [
 ]
 
 { #category : #preconditions }
-RBCopyPackageRefactoring >> transform [ 
+RBCopyPackageRefactoring >> transform [
 	| classes copyClasses |
 	self model addPackageNamed: newName.
 	classes := (package realPackage definedClasses collect: #name) asArray.
 	copyClasses := self copyAllClasses: classes.
 	self changeReferencesOf: classes with: copyClasses.
-	self reparent: classes  with: copyClasses.
+	self reparent: classes  with: copyClasses
 ]
