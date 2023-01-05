@@ -118,20 +118,20 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	self assureAll: #hash areCategorizedIn: #comparing whenSubclassOf: Object
 ]
 
-{ #category : #'tests - instance creation' }
-ProperMethodCategorizationTest >> testInstanceSideInitialzeMethodNeedsToBeInInitializationProtocol [
+{ #category : #'tests - initialization' }
+ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInInitializationProtocol [
 
 	"The instance side #initialize methods should be in method protocol 'initialization'"
 
 	| violating instanceSideInitializeMethods |
 	violating := OrderedCollection new.
 	instanceSideInitializeMethods := OrderedCollection new.
-	
+
 	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide not  ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
-	
+
 	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
-	
-	self assert: violating size <= 50 description: 'Instance side #initialize methods should be in "initialization" method category'
+
+	self assert: violating size <= 9 description: 'Instance side #initialize methods should be in "initialization" method category'
 ]
 
 { #category : #tests }
