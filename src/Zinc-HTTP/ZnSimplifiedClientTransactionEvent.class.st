@@ -28,7 +28,7 @@ ZnSimplifiedClientTransactionEvent >> duration [
 	^ duration
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnSimplifiedClientTransactionEvent >> initialize [
 	super initialize.
 	duration := 0

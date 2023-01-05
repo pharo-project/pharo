@@ -12,7 +12,7 @@ DTRerunCommand >> execute [
 	self context drTests runPluginFor: (self plugin buildReRunConfigurationFrom: self context drTests)
 ]
 
-{ #category : #hooks }
+{ #category : #initialization }
 DTRerunCommand >> initialize [
 
 	super initialize.
