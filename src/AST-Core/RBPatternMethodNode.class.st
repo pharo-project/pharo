@@ -17,16 +17,16 @@ Class {
 
 { #category : #'instance creation' }
 RBPatternMethodNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
-	^(aSelector isPatternVariable) 
+	^(aSelector isPatternVariable)
 		ifTrue: [super selector: aSelector keywordsPositions: positionList arguments: valueNodes]
-		ifFalse: 
+		ifFalse:
 			[RBMethodNode selector: aSelector keywordsPositions: positionList arguments: valueNodes]
 ]
 
 { #category : #matching }
-RBPatternMethodNode >> copyInContext: aDictionary [ 
+RBPatternMethodNode >> copyInContext: aDictionary [
 	| keywordSelector |
-	keywordSelector := self isSelectorList 
+	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
 		ifFalse: [ ('' join:(self selectorParts collect: [ :each | aDictionary at: each ])) asSymbol  ].
 	^ RBMethodNode new
@@ -51,8 +51,8 @@ RBPatternMethodNode >> isSelectorList [
 ]
 
 { #category : #matching }
-RBPatternMethodNode >> match: aNode inContext: aDictionary [ 
-	aNode class = self matchingClass 
+RBPatternMethodNode >> match: aNode inContext: aDictionary [
+	aNode class = self matchingClass
 		ifFalse: [ ^ false ].
 	aDictionary at: '-source-' put: aNode source.
 	self isSelectorList ifTrue: [
@@ -60,34 +60,34 @@ RBPatternMethodNode >> match: aNode inContext: aDictionary [
 			and: [ (arguments isEmpty or: [(aDictionary at: arguments first ifAbsentPut: [ aNode arguments ]) = aNode arguments])
 			and: [ (self matchPragmas: self pragmas against: aNode pragmas inContext: aDictionary)
 			and: [ body match: aNode body inContext: aDictionary ] ] ] ].
-	^(self matchArgumentsAgainst: aNode inContext: aDictionary) 
+	^(self matchArgumentsAgainst: aNode inContext: aDictionary)
 		and: [ (self matchPragmas: self pragmas against: aNode pragmas inContext: aDictionary)
 		and: [ body match: aNode body inContext: aDictionary ] ]
 ]
 
 { #category : #matching }
-RBPatternMethodNode >> matchArgumentsAgainst: aNode inContext: aDictionary [ 
+RBPatternMethodNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
-	(self matchSelectorAgainst: aNode inContext: aDictionary) 
+	(self matchSelectorAgainst: aNode inContext: aDictionary)
 		ifFalse: [ ^ false ].
 	self arguments with: aNode arguments do: [ :first :second |
-		(first match: second inContext: aDictionary) 
+		(first match: second inContext: aDictionary)
 			ifFalse: [ ^ false ] ].
 	^ true
 ]
 
 { #category : #matching }
-RBPatternMethodNode >> matchSelectorAgainst: aNode inContext: aDictionary [ 
+RBPatternMethodNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
 		keyword := aDictionary
 			at: first
-			ifAbsentPut: [ 
-				first isPatternVariable 
+			ifAbsentPut: [
+				first isPatternVariable
 					ifTrue: [ second ]
 					ifFalse: [ first ] ].
-		keyword = second 
+		keyword = second
 			ifFalse: [ ^ false ] ].
 	^ true
 ]
@@ -98,7 +98,7 @@ RBPatternMethodNode >> matchingClass [
 ]
 
 { #category : #initialization }
-RBPatternMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [ 
+RBPatternMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	super selector: aSymbol keywordsPositions: positionList arguments: valueNodes.
 	isList := (aSymbol keywords first value at: 2) == self listCharacter
 ]

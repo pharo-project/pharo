@@ -23,9 +23,9 @@ RBPatternPragmaNode class >> selector: aSelector keywordsPositions: positionList
 ]
 
 { #category : #matching }
-RBPatternPragmaNode >> copyInContext: aDictionary [ 
+RBPatternPragmaNode >> copyInContext: aDictionary [
 	| keywordSelector |
-	keywordSelector := self isSelectorList 
+	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
 		ifFalse: [ ('' join: (self selectorParts collect: [ :each | aDictionary at: each ])) asSymbol ].
 	^ RBPragmaNode
@@ -54,28 +54,28 @@ RBPatternPragmaNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : #matching }
-RBPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [ 
+RBPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
-	(self matchSelectorAgainst: aNode inContext: aDictionary) 
+	(self matchSelectorAgainst: aNode inContext: aDictionary)
 		ifFalse: [ ^ false ].
 	self arguments with: aNode arguments do: [ :first :second |
-		(first match: second inContext: aDictionary) 
+		(first match: second inContext: aDictionary)
 			ifFalse: [ ^ false ] ].
 	^ true
 ]
 
 { #category : #matching }
-RBPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [ 
+RBPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
 		keyword := aDictionary
 			at: first
-			ifAbsentPut: [ 
-				first isPatternVariable 
+			ifAbsentPut: [
+				first isPatternVariable
 					ifTrue: [ second ]
 					ifFalse: [ first ] ].
-		keyword = second 
+		keyword = second
 			ifFalse: [ ^ false ] ].
 	^ true
 ]
@@ -87,7 +87,7 @@ RBPatternPragmaNode >> matchingClass [
 
 { #category : #initialization }
 RBPatternPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
-	self 
+	self
 		arguments: valueNodes;
 		selector: aSymbol;
 		keywordsPositions: positionList.

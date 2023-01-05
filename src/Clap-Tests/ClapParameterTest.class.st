@@ -48,9 +48,9 @@ ClapParameterTest >> testMismatchesAtEnd [
 	| subject argv match |
 	subject := self namedSubject.
 	argv := #() readStream.
-	
+
 	match := subject matchOn: argv.
-	
+
 	self assert: match isMismatch.
 	self
 		assert: match specification
@@ -62,7 +62,7 @@ ClapParameterTest >> testSubjectIdentifier [
 	| subject |
 	subject := self classToTest id: #subjectId.
 	subject canonicalName: self subjectName.
-	
+
 	self
 		assert: subject identifier
 		equals: #subjectId.

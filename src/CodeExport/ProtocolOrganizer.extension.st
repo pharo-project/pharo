@@ -3,14 +3,14 @@ Extension { #name : #ProtocolOrganizer }
 { #category : #'*CodeExport' }
 ProtocolOrganizer >> stringForFileOut [
 	^ String
-		streamContents: [ :aStream | 
+		streamContents: [ :aStream |
 			self protocols
-				do: [ :p | 
+				do: [ :p |
 					aStream
 						nextPut: $(;
 						nextPutAll: p name printString.
 					p methodSelectors
-						do: [ :m | 
+						do: [ :m |
 							aStream
 								space;
 								nextPutAll: m ].

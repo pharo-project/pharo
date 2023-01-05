@@ -111,21 +111,21 @@ AthensCairoText >> fontWeight: anObject [
 { #category : #initialization }
 AthensCairoText >> initialize [
 	super initialize.
-	
+
 	self beNormal; beSlantNormal.
-	 fontSize := 10.
+	 fontSize := 10
 ]
 
 { #category : #drawing }
 AthensCairoText >> loadOn: aCanvas [
-	
+
 	fontFamily ifNotNil:[
-		self 
+		self
 			primSelectFont:  fontFamily
 			slant:  fontSlant
-			weight:  fontWeight 
+			weight:  fontWeight
 			on: aCanvas ].
-	
+
 	fontSize ifNotNil: [
 		self primSetFontSize: (CairoScaledFont pointsToPixels: fontSize) on: aCanvas ]
 ]
@@ -133,7 +133,7 @@ AthensCairoText >> loadOn: aCanvas [
 { #category : #private }
 AthensCairoText >> primSelectFont: aFontFamily
 		slant: aFontSlant
-		weight: aFontWeight 
+		weight: aFontWeight
 		on: aCanvas [
 	^ self ffiCall: #(void cairo_select_font_face (
 			cairo_t aCanvas,
@@ -161,7 +161,7 @@ AthensCairoText >> readFrom: aFontDescription [
 	self fontFamily: aFontDescription fontFamily.
 	self fontSlant: aFontDescription fontSlant.
 	self fontWeight:  aFontDescription fontWeight.
-	self fontSize: aFontDescription fontSize.
+	self fontSize: aFontDescription fontSize
 ]
 
 { #category : #drawing }

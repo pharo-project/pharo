@@ -1,7 +1,7 @@
 Extension { #name : #PasteUpMorph }
 
 { #category : #'*Athens-Morphic' }
-PasteUpMorph >> drawOnAthensCanvas: aCanvas [ 
+PasteUpMorph >> drawOnAthensCanvas: aCanvas [
 	"Draw in order:
 	- background color
 	- background sketch, if any

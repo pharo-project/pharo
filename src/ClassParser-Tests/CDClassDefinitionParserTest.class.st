@@ -41,9 +41,9 @@ CDClassDefinitionParserTest >> superclassName [
 { #category : #tests }
 CDClassDefinitionParserTest >> testBestNodeForClassVariableSelectionShouldBeClassSlotNode [
 
-	| selectedNode selection |	
+	| selectedNode selection |
 	selection := self selectionOf: self firstClassVariableName.
-	
+
 	selectedNode := classDefinition bestNodeFor: selection.
 	self assert: selectedNode equals: classDefinition sharedVariables first
 ]
@@ -61,7 +61,7 @@ CDClassDefinitionParserTest >> testBestNodeForSuperclassSelectionShouldBeSupercl
 { #category : #tests }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasClassNameNode [
 
-	self assert: classDefinition classNameNode value equals: self className.
+	self assert: classDefinition classNameNode value equals: self className
 ]
 
 { #category : #tests }
@@ -81,18 +81,18 @@ CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 
 	self assert: classDefinition sharedVariables first name equals: self firstClassVariableName.
 	self assert: classDefinition sharedVariables second name equals: self secondClassVariableName.
-	
+
 	self assert: classDefinition sharedVariables second isLiteralVariable
 ]
 
 { #category : #tests }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSuperclassName [
 
-	self assert: classDefinition superclassName equals: self superclassName.
+	self assert: classDefinition superclassName equals: self superclassName
 ]
 
 { #category : #tests }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSuperclassNameNode [
 
-	self assert: classDefinition superclassNameNode name equals: self superclassName.
+	self assert: classDefinition superclassNameNode name equals: self superclassName
 ]
