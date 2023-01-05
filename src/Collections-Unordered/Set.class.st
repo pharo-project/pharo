@@ -1,13 +1,13 @@
 "
 I represent a set of objects without duplicates.  I can hold anything that responds to
-`#hash` and `#=`, except for nil.  My instances will automatically grow, if necessary,
+`#hash` and `#=`, including nil.  My instances will automatically grow, if necessary,
 Note that I rely on `#=`, not `#==`.  If you want a set using `#==`, use `IdentitySet`.
 
 ## Public API and Key Messages
 
 ### Initializing and Adding
 
-A `Set` can be created with values using the `Set class>>#newFrom:` class selector which will add the 
+A `Set` can be created with values using the `Set class>>#newFrom:` class selector, which will add the 
 values of a collection as the values of the `Set`, with any duplicates removed. See `Bag` for a collection
 that will retain the count of duplicate elements.
 
@@ -48,7 +48,7 @@ s remove: 1200 ifAbsent: [ ""do something"" ].
 ```
 
 ### Set operations
-The usual set theoretic operations are also available.
+The usual set-theoretic operations are also available.
 ```
 s1 := Set newFrom: #(1 2 3).
 s2 := Set newFrom: #(2 3 4).
@@ -69,15 +69,15 @@ s1 intersection: s2. ""a Set(2 3)""
 
 ### Instance structure:
 
-- array	An array whose non-nil elements are the elements of the set,
-  and whose nil elements are empty slots.  There is always at least one nil.
-  In fact I try to keep my ""load"" at 75% or less so that hashing will work well.
+- array	An array whose non-nil elements are the elements of the set
+  and whose nil elements are empty slots. There is always at least one nil.
+  In fact, I try to keep my ""load"" at 75% or less so that hashing will work well.
 
--  tally	The number of elements in the set.  The array size is always greater than this.
+-  tally	The number of elements in the set. The array size is always greater than this.
 
 - The core operation is `HashedCollection>>#findElementOrNil:`, which either finds the position where an
   object is stored in array, if it is present, or finds a suitable position holding nil, if
-  its argument is not present in array.
+  its argument is not present in an array.
 
 "
 Class {

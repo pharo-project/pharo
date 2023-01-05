@@ -16,13 +16,13 @@ Class {
 
 { #category : #testing }
 CDVariableNode class >> isAbstract [
-		
+
 	^ self == CDVariableNode
 ]
 
 { #category : #'instance creation' }
 CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
-	
+
 	^ self new
 		node: aNode;
 		name: aName;
@@ -33,7 +33,7 @@ CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: st
 ]
 
 { #category : #accessing }
-CDVariableNode >> asCalypsoVariableOf: aClass [ 
+CDVariableNode >> asCalypsoVariableOf: aClass [
 	^ self subclassResponsibility
 ]
 
@@ -80,12 +80,12 @@ CDVariableNode >> isUndeclaredVariable [
 CDVariableNode >> isVariable [
 	"To be polymorphic to RB method nodes"
 	| existingClass |
-	existingClass := self classDefinitionNode existingClassIfAbsent: [   
-		"Until class will be created the variables does not exist yet" 
+	existingClass := self classDefinitionNode existingClassIfAbsent: [
+		"Until class will be created the variables does not exist yet"
 		^false ].
-	^existingClass 
-		slotNamed: name asSymbol 
-		ifFound: [true] 
+	^existingClass
+		slotNamed: name asSymbol
+		ifFound: [true]
 		ifNone: [
 			"Until class will be compiled with new slot the new slot does not exist yet"
 			false]
@@ -114,7 +114,7 @@ CDVariableNode >> node [
 ]
 
 { #category : #accessing }
-CDVariableNode >> node: aNode [ 
+CDVariableNode >> node: aNode [
 	node := aNode
 ]
 
@@ -142,7 +142,7 @@ CDVariableNode >> start [
 ]
 
 { #category : #accessing }
-CDVariableNode >> start: anInteger [ 
+CDVariableNode >> start: anInteger [
 	start := anInteger
 ]
 
@@ -152,21 +152,21 @@ CDVariableNode >> stop [
 ]
 
 { #category : #accessing }
-CDVariableNode >> stop: anInteger [ 
-	
+CDVariableNode >> stop: anInteger [
+
 	stop := anInteger
 ]
 
 { #category : #accessing }
 CDVariableNode >> variableClassName [
-	"Return a symbol representing the class of the variable i.e., 'x' => InstanceVariableSlot slotClassName returns 
+	"Return a symbol representing the class of the variable i.e., 'x' => InstanceVariableSlot slotClassName returns
 	#InstanceVariableSlot"
-	
+
 	^ variableClassName
 ]
 
 { #category : #accessing }
-CDVariableNode >> variableClassName: aSymbol [ 
-	
+CDVariableNode >> variableClassName: aSymbol [
+
 	variableClassName := aSymbol
 ]

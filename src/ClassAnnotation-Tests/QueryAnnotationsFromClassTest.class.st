@@ -8,15 +8,15 @@ Class {
 QueryAnnotationsFromClassTest >> testAllowDebugBrokenAnnotations [
 
 	| annotations ann |
-	annotations := ClassWithBrokenAnnotatingMethod classAnnotations.	
+	annotations := ClassWithBrokenAnnotatingMethod classAnnotations.
 	self assert: annotations size equals: 1.
-	
+
 	ann := annotations anyOne.
 	self assert: ann class equals: BrokenClassAnnotation.
 
 	[ann debug.
-	self assert: false description: 'should fail'] 
-		on: Error do: [ :err | 
+	self assert: false description: 'should fail']
+		on: Error do: [ :err |
 	self assert: err messageText equals: ClassWithBrokenAnnotatingMethod brokenAnnotationMessage  ]
 ]
 
@@ -24,14 +24,14 @@ QueryAnnotationsFromClassTest >> testAllowDebugBrokenAnnotations [
 QueryAnnotationsFromClassTest >> testAllowDebugForbiddenBrokenAnnotations [
 
 	| annotations ann |
-	annotations := ClassWithForbiddenAnnotationExample classAnnotations.	
+	annotations := ClassWithForbiddenAnnotationExample classAnnotations.
 	self assert: annotations size equals: 2. "onw forbidden and one broken"
-	
+
 	ann := (annotations reject: #isForbidden) anyOne.
 	self assert: ann class equals: BrokenClassAnnotation.
 
 	[ann debug.
-	self assert: false description: 'should fail'] 
+	self assert: false description: 'should fail']
 		on: Error do: [ :err |  ]
 ]
 
@@ -41,7 +41,7 @@ QueryAnnotationsFromClassTest >> testCanBeEnumerated [
 	| enumerated |
 	enumerated := OrderedCollection new.
 	ClassWithThreeAnnotations classAnnotationsDo: [:each | enumerated add: each].
-	
+
 	self assert: enumerated asArray equals: ClassWithThreeAnnotations classAnnotations asArray
 ]
 
@@ -50,9 +50,9 @@ QueryAnnotationsFromClassTest >> testReturnsInstancesFromAllAnnotatingMethods [
 
 	| annotations |
 	annotations := ClassWithThreeAnnotations classAnnotations.
-	
+
 	self assert: annotations size equals: 3.
-	annotations do: [ :each | 
+	annotations do: [ :each |
 		self assert: each annotatedClass equals: ClassWithThreeAnnotations]
 ]
 
@@ -63,11 +63,11 @@ QueryAnnotationsFromClassTest >> testWhenAnnotationFailsCheckForForbiddenPropert
 	[ ClassAnnotationExampleWithFailedForbiddenCheck new isForbidden.
 	self assert: false description: 'should fail'  ] onErrorDo: [ ].
 
-	annotations := ClassWithForbiddenAnnotationExample classAnnotations.	
+	annotations := ClassWithForbiddenAnnotationExample classAnnotations.
 	self assert: annotations size equals: 2. "one forbidden and one broken"
-	
+
 	ann := (annotations reject: #isForbidden) anyOne.
-	
+
 	self assert: ann class equals: BrokenClassAnnotation.
 	self assert: ann annotatedClass equals: ClassWithForbiddenAnnotationExample.
 	self assert: ann declarationSelector equals: #failedForbiddenAnnotation
@@ -78,7 +78,7 @@ QueryAnnotationsFromClassTest >> testWhenClassHasNoAnnotations [
 
 	| annotations |
 	annotations := ClassWithoutAnnotations classAnnotations.
-	
+
 	self assert: annotations isEmpty
 ]
 
@@ -86,26 +86,26 @@ QueryAnnotationsFromClassTest >> testWhenClassHasNoAnnotations [
 QueryAnnotationsFromClassTest >> testWhenDeclaringMethodIsBroken [
 
 	| annotations ann |
-	annotations := ClassWithBrokenAnnotatingMethod classAnnotations.	
+	annotations := ClassWithBrokenAnnotatingMethod classAnnotations.
 	self assert: annotations size equals: 1.
-	
+
 	ann := annotations anyOne.
-	
+
 	self assert: ann class equals: BrokenClassAnnotation.
 	self assert: ann annotatedClass equals: ClassWithBrokenAnnotatingMethod.
 	self assert: ann declarationSelector equals: #brokenAnnotation.
-	self assert: (ann errorString endsWith: ClassWithBrokenAnnotatingMethod brokenAnnotationMessage).
+	self assert: (ann errorString endsWith: ClassWithBrokenAnnotatingMethod brokenAnnotationMessage)
 ]
 
 { #category : #tests }
 QueryAnnotationsFromClassTest >> testWhenDeclaringMethodNotReturnAnnotation [
 
 	| annotations ann |
-	annotations := ClassWithBadAnnotatingMethod classAnnotations.	
+	annotations := ClassWithBadAnnotatingMethod classAnnotations.
 	self assert: annotations size equals: 1.
-	
+
 	ann := annotations anyOne.
-	
+
 	self assert: ann class equals: BrokenClassAnnotation.
 	self assert: ann annotatedClass equals: ClassWithBadAnnotatingMethod.
 	self assert: ann declarationSelector equals: #badAnnotation
@@ -116,10 +116,10 @@ QueryAnnotationsFromClassTest >> testWhenItOverridesSuperclassAnnotations [
 
 	| annotations |
 	annotations := SubclassWithOverridenAnnotation classAnnotations.
-	
+
 	self assert: annotations size equals: 1.
 	self assert: annotations anyOne annotatedClass equals: SubclassWithOverridenAnnotation.
-	self assert: annotations anyOne class equals: ClassAnnotationExample2.
+	self assert: annotations anyOne class equals: ClassAnnotationExample2
 ]
 
 { #category : #tests }
@@ -127,7 +127,7 @@ QueryAnnotationsFromClassTest >> testWhenSuperclassIsAnnotatedToo [
 
 	| annotations |
 	annotations := SubclassWithOnlyInheritedAnnotation classAnnotations.
-	
+
 	self assert: annotations size equals: 1.
 	self assert: annotations anyOne annotatedClass equals: SubclassWithOnlyInheritedAnnotation
 ]

@@ -16,7 +16,7 @@ Class {
 RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
-	message := ('[' = aToken value asString) ifTrue: [ ''']'' expected' ] 
+	message := ('[' = aToken value asString) ifTrue: [ ''']'' expected' ]
 										  				 ifFalse: [ '''['' expected' ].
 	"If the collection is empty, there is only the token in the error."
 	aCollection isEmpty
@@ -41,8 +41,8 @@ RBBlockErrorNode >> repairCollectionFromStart [
 	collection := self content statements.
 	result := OrderedCollection new.
 	removedStatements := OrderedCollection new.
-	[ collection isNotNil ] 
-		whileTrue: [ | statements node | 
+	[ collection isNotNil ]
+		whileTrue: [ | statements node |
 						 statements := OrderedCollection new.
 						 node :=  RBArrayNode statements: collection.
 						 node start: self start.
@@ -51,5 +51,5 @@ RBBlockErrorNode >> repairCollectionFromStart [
 						 removedStatements addFirst: collection last.
 						 collection removeLast. ].
 	result add: removedStatements.
-	^collection.
+	^collection
 ]

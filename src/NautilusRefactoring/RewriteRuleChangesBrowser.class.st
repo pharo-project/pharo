@@ -171,11 +171,6 @@ RewriteRuleChangesBrowser >> initializeWindow: aWindowPresenter [
 		initialExtent: (70@20) * (fontWidth @ rowHeight)
 ]
 
-{ #category : #'instance creation' }
-RewriteRuleChangesBrowser >> open [
-	^ self open
-]
-
 { #category : #accessing }
 RewriteRuleChangesBrowser >> selectedChanges [
 	^ selectedChanges
