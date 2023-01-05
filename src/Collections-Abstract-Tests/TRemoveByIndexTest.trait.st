@@ -35,7 +35,7 @@ TRemoveByIndexTest >> testRemoveAt [
 
 	result := collection removeAt: 3.
 	self assert: result equals: element.
-	self assert: collection size equals: (oldSize - 1).
+	self assert: collection size equals: (oldSize - 1)
 ]
 
 { #category : #'tests - removing by index' }

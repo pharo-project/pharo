@@ -16,7 +16,7 @@ TPutTest >> aValue [
 TPutTest >> indexArray [
 " return a Collection including indexes between bounds of 'nonEmpty' "
 
-	self explicitRequirement.
+	self explicitRequirement
 ]
 
 { #category : #requirements }
@@ -32,7 +32,7 @@ TPutTest >> test0FixturePutOneOrMoreElementsTest [
 
 	self indexArray.
 	self indexArray
-		do: [ :each | 
+		do: [ :each |
 			self assert: each class = SmallInteger.
 			self assert: (each >= 1 & each) <= self nonEmpty size ].
 
@@ -47,16 +47,16 @@ TPutTest >> test0FixturePutOneOrMoreElementsTest [
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtAllIndexesPut [
-	
+
 	self nonEmpty atAllPut: self aValue.
-	self nonEmpty do:[ :each| self assert: each = self aValue].
+	self nonEmpty do:[ :each| self assert: each = self aValue]
 ]
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtAllPut [
- 
+
 	self nonEmpty atAll: self indexArray put: self aValue.
-	
+
 	self indexArray do:
 		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
 ]
@@ -67,7 +67,7 @@ TPutTest >> testAtAllPutAll [
 	| aValueArray |
 	aValueArray := self valueArray .
 	self nonEmpty atAll: self indexArray putAll: aValueArray  .
-	
+
 	self indexArray withIndexDo: [:element :index |
 		self assert: (self nonEmpty at: element) equals: (aValueArray  at: index) ]
 ]
@@ -76,34 +76,34 @@ TPutTest >> testAtAllPutAll [
 TPutTest >> testAtLastPut [
 
 	| index |
-	index := self indexArray anyOne.	
-	self nonEmpty atLast: index put: self aValue.	
+	index := self indexArray anyOne.
+	self nonEmpty atLast: index put: self aValue.
 
 	self assert: (self nonEmpty at: (self nonEmpty size + 1 - index)) equals: self aValue
 ]
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtWrapPut [
-	 
+
 	| index |
 	index := self indexArray anyOne.
-	
+
 	self nonEmpty atWrap: 0 put: self aValue.
 	self assert: self nonEmpty last equals: self aValue.
-	
+
 	self nonEmpty atWrap: (self nonEmpty size + 1) put: self aValue.
 	self assert: self nonEmpty first equals: self aValue.
-	
+
 	self nonEmpty atWrap: index put: self aValue.
 	self assert: (self nonEmpty at: index) equals: self aValue.
-	
+
 	self nonEmpty atWrap: (self nonEmpty size + index) put: self aValue .
-	self assert: (self nonEmpty at: index) equals: self aValue.
+	self assert: (self nonEmpty at: index) equals: self aValue
 ]
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testFromToPut [
-	
+
 	| collection index |
 	index := self indexArray anyOne.
 	collection := self nonEmpty copy.
@@ -111,18 +111,18 @@ TPutTest >> testFromToPut [
 	1 to: index do:
 		[:i | self assert: (collection at: i)= self aValue].
 	(index +1) to: collection size do:
-		[:i | self assert: (collection at:i)= (self nonEmpty at:i)].
+		[:i | self assert: (collection at:i)= (self nonEmpty at:i)]
 ]
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testSwapWith [
- 
+
 	| result index |
 	index := self indexArray anyOne.
 	result:= self nonEmpty copy .
 	result swap: index with: 1.
 	self assert: (result at: index) = (self nonEmpty at:1).
-	self assert: (result at: 1) = (self nonEmpty at: index).
+	self assert: (result at: 1) = (self nonEmpty at: index)
 ]
 
 { #category : #requirements }
@@ -134,5 +134,5 @@ TPutTest >> valueArray [
 		[:i |
 		result at:i put: (self aValue ).
 		].
-	^ result.
+	^ result
 ]
