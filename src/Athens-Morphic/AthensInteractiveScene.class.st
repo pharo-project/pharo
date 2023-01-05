@@ -24,19 +24,19 @@ AthensInteractiveScene >> eventHandledByScene: evt [
 
 { #category : #'event handling' }
 AthensInteractiveScene >> eventPositionInScene: evt [
-	| pt | 
-	
+	| pt |
+
 	pt := evt position - self topLeft.
-	
+
 	^ transform transform: pt
 ]
 
 { #category : #'event handling' }
 AthensInteractiveScene >> mouseDown: evt [
 
-	((self inState: #panning) or: [ self inState:#zooming ]) 
+	((self inState: #panning) or: [ self inState:#zooming ])
 		ifFalse: [
-			(self eventHandledByScene: evt) ifTrue: [ ^ self ]. 	
+			(self eventHandledByScene: evt) ifTrue: [ ^ self ].
 		].
 
 	^ super mouseDown: evt
@@ -45,9 +45,9 @@ AthensInteractiveScene >> mouseDown: evt [
 { #category : #'event handling' }
 AthensInteractiveScene >> mouseMove: evt [
 
-	((self inState: #panning) or: [ self inState:#zooming ]) 
+	((self inState: #panning) or: [ self inState:#zooming ])
 		ifFalse: [
-			(self eventHandledByScene: evt) ifTrue: [ ^ self ]. 	
+			(self eventHandledByScene: evt) ifTrue: [ ^ self ].
 		].
 	^ super mouseMove: evt
 ]
@@ -55,10 +55,10 @@ AthensInteractiveScene >> mouseMove: evt [
 { #category : #'event handling' }
 AthensInteractiveScene >> mouseUp: evt [
 
-	((self inState: #panning) or: [ self inState:#zooming ]) 
+	((self inState: #panning) or: [ self inState:#zooming ])
 		ifFalse: [
-			(self eventHandledByScene: evt) ifTrue: [ ^ self ]. 	
+			(self eventHandledByScene: evt) ifTrue: [ ^ self ].
 		].
-		
+
 	^ super mouseUp:evt
 ]

@@ -35,14 +35,14 @@ RBPatternParserTest >> testMatchingPatternBlockNode2 [
 { #category : #'tests - parsing' }
 RBPatternParserTest >> testParseFaultyPatternBlock [
 	| node patternBlockNoArgButBar patternBlockNoArgButColon unfinishedBlock varWithUnfinishedBlock |
-	"parsing pattern block should mark this block as faulty, if it is unfinished no closing brace, or missing parts (colon but no arg, 
+	"parsing pattern block should mark this block as faulty, if it is unfinished no closing brace, or missing parts (colon but no arg,
 	no arg but vertical bar)"
 	patternBlockNoArgButBar := '`{ | }'.
 	patternBlockNoArgButColon := '`{ : }'.
 	unfinishedBlock := '`{ :  '.
 	varWithUnfinishedBlock := '`sth `{ :  '.
 	{patternBlockNoArgButBar. patternBlockNoArgButColon. unfinishedBlock. varWithUnfinishedBlock}
-		do: [ :faultyExpression | 
+		do: [ :faultyExpression |
 			node := self parseFaultyExpression: faultyExpression.
 			self assert: node isBlock.
 			self assert: node isFaulty]

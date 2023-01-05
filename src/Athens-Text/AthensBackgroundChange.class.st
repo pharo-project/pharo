@@ -32,7 +32,7 @@ AthensBackgroundChange >> color: anObject [
 { #category : #initialization }
 AthensBackgroundChange >> initialize [
 	width :=0.
-	color := Color transparent.
+	color := Color transparent
 ]
 
 { #category : #rendering }

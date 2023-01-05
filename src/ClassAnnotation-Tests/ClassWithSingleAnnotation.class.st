@@ -7,6 +7,6 @@ Class {
 { #category : #annotations }
 ClassWithSingleAnnotation class >> annotationExample [
 	<classAnnotation>
-	
+
 	^ClassAnnotationExample3 new
 ]

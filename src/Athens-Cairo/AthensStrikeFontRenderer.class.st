@@ -37,13 +37,13 @@ AthensStrikeFontRenderer >> createCairoText: aString [
 
 { #category : #accessing }
 AthensStrikeFontRenderer >> font [
-	
+
 	^ font
 ]
 
 { #category : #accessing }
 AthensStrikeFontRenderer >> font: anObject [
-	
+
 	font := anObject
 ]
 

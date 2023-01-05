@@ -10,8 +10,8 @@ VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 	| annotationUser actual expected |
 	annotationUser := AnnotationUserExample new.
 	actual := OrderedCollection new.
-	ContextualClassAnnotationExample1 
-		visibleInstancesFor: ClassWithAnnotationsDefinedForUserClass inContext: annotationUser 
+	ContextualClassAnnotationExample1
+		visibleInstancesFor: ClassWithAnnotationsDefinedForUserClass inContext: annotationUser
 		do: [:each | actual add: each].
 	expected := ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser.
 
@@ -24,11 +24,11 @@ VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 	| annotationUser actual expected |
 	annotationUser := AnnotationUserExample new.
 	actual := OrderedCollection new.
-	ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser do: [:each | 
+	ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser do: [:each |
 		actual add: each].
 	expected := ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser.
 
-	self assert: actual asSet equals: expected asSet.
+	self assert: actual asSet equals: expected asSet
 ]
 
 { #category : #tests }
@@ -37,7 +37,7 @@ VisibleClassAnnotationsTest >> testIncludeInstancesDeclaredForSuperclassOfGivenU
 	| annotations annotationUser declaredContext |
 	annotationUser := AnnotationUserExample new.
 	annotations := ContextualClassAnnotationExample2 visibleInstancesInContext: annotationUser.
-	
+
 	self assert: annotations size equals: 1.
 	declaredContext := annotations anyOne activeContext annotationUserClass.
 	self assert: declaredContext equals: BaseAnnotationUserExample
@@ -49,7 +49,7 @@ VisibleClassAnnotationsTest >> testIncludeOnlyInstancesCreatedForGivenUser [
 	| annotations annotationUser declaredContexts |
 	annotationUser := AnnotationUserExample new.
 	annotations := ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser.
-	
+
 	self assert: annotations size equals: 2.
 	declaredContexts := annotations collect: [:each | each activeContext annotationUserClass].
 	self assert: declaredContexts asSet equals: {AnnotationUserExample} asSet
@@ -61,7 +61,7 @@ VisibleClassAnnotationsTest >> testNotIncludeInstancesWithoutContext [
 	| annotations annotationUser |
 	annotationUser := AnnotationUserExample new.
 	annotations := ClassAnnotationExample1 visibleInstancesInContext: annotationUser.
-	
+
 	self assert: annotations isEmpty
 ]
 
@@ -70,8 +70,8 @@ VisibleClassAnnotationsTest >> testWhenThereIsNoOne [
 
 	| annotations annotationUser |
 	annotationUser := Object new. "context can be anything"
-	
+
 	annotations := ContextualClassAnnotationExample1 visibleInstancesInContext: annotationUser.
-	
+
 	self assert: annotations isEmpty
 ]

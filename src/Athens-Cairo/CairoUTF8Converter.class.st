@@ -20,13 +20,13 @@ CairoUTF8Converter >> buffer [
 { #category : #converting }
 CairoUTF8Converter >> checkBufferSpace: minimalSize [
 	| size |
-	
+
 	size := buffer ifNil: [ 0 ] ifNotNil: [ buffer size ].
-	
+
 	size < minimalSize ifTrue: [
 		buffer := ByteArray new: minimalSize.
 		bs := buffer writeStream.
-		
+
 		]
 ]
 
@@ -35,19 +35,19 @@ CairoUTF8Converter >> convert: aString from: start to: end [
 
 	self checkBufferSpace: 4*(end-start + 2).
 	bs reset.
-	
-	encoder next: end-start+1 
-		putAll: aString 
-		startingAt: start 
+
+	encoder next: end-start+1
+		putAll: aString
+		startingAt: start
 		toStream: bs .
-		
+
 	"DO NOT NULL-Terminate because its not used"
 
-	^ bs position.
+	^ bs position
 ]
 
 { #category : #converting }
-CairoUTF8Converter >> convertChar: aCharacter [ 
+CairoUTF8Converter >> convertChar: aCharacter [
 
 	self checkBufferSpace: 8.
 
@@ -59,5 +59,5 @@ CairoUTF8Converter >> convertChar: aCharacter [
 
 { #category : #initialization }
 CairoUTF8Converter >> initialize [
-	encoder := ZnUTF8Encoder new.
+	encoder := ZnUTF8Encoder new
 ]

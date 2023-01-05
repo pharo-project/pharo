@@ -52,7 +52,7 @@ AthensSceneView >> backgroundColor [
 
 { #category : #'session management' }
 AthensSceneView >> checkSession [
-	session == Smalltalk session ifFalse: [ 
+	session == Smalltalk session ifFalse: [
 		self initializeForNewSession ]
 ]
 
@@ -60,9 +60,9 @@ AthensSceneView >> checkSession [
 AthensSceneView >> createSurface [
 	| extent |
 	extent := self extent asIntegerPoint.
-	surface := (scene respondsTo: #createSurface:) 
-		ifTrue: [ scene createSurface: extent ] 
-		ifFalse: [ AthensCairoSurface extent: extent].
+	surface := (scene respondsTo: #createSurface:)
+		ifTrue: [ scene createSurface: extent ]
+		ifFalse: [ AthensCairoSurface extent: extent]
 ]
 
 { #category : #drawing }
@@ -74,9 +74,9 @@ AthensSceneView >> drawOn: canvas [
 	surface displayOnMorphicCanvas: canvas at: bounds origin.
 
 "	 translucentImage: surface asForm at: bounds origin."
-	
+
 	self showDebugInfo
-		ifTrue: [ 
+		ifTrue: [
 			px := transform x printShowingDecimalPlaces: 3.
 			py := transform y printShowingDecimalPlaces: 3.
 			canvas
@@ -121,35 +121,35 @@ AthensSceneView >> initialize [
 	super initialize.
 	keepRefreshing := false.
 	transform := AthensAffineTransform new.
-	
+
 	self hResizing: #spaceFill.
 	self vResizing: #spaceFill.
 	color := Color transparent.
 	state := Dictionary new.
-	self extent: self minimumExtent.
+	self extent: self minimumExtent
 ]
 
 { #category : #'session management' }
 AthensSceneView >> initializeForNewSession [
 	self createSurface.
-	session := Smalltalk session.
+	session := Smalltalk session
 ]
 
 { #category : #accessing }
 AthensSceneView >> keepRefreshing: aBoolean [
 	keepRefreshing := aBoolean.
-	
-	keepRefreshing ifTrue: [  self startStepping ].
+
+	keepRefreshing ifTrue: [  self startStepping ]
 ]
 
 { #category : #layout }
-AthensSceneView >> layoutChanged [ 
+AthensSceneView >> layoutChanged [
 	"react on morph resize"
 	super layoutChanged.
-	surface ifNotNil: [  
-		self extent asIntegerPoint ~= surface extent ifTrue: [ 
+	surface ifNotNil: [
+		self extent asIntegerPoint ~= surface extent ifTrue: [
 			self createSurface ]
-	].
+	]
 ]
 
 { #category : #initialization }
@@ -161,13 +161,13 @@ AthensSceneView >> minimumExtent [
 AthensSceneView >> mouseDown: evt [
 
 	| pos |
-	
+
 	pos := evt cursorPoint.
-	
+
 	"left button"
-	evt redButtonPressed ifTrue: [ 
+	evt redButtonPressed ifTrue: [
 		self setState: #panning value: { transform x@transform y. pos }
-		 ].
+		 ]
 ]
 
 { #category : #'event handling' }
@@ -178,9 +178,9 @@ AthensSceneView >> mouseEnter: evt [
 
 { #category : #'event handling' }
 AthensSceneView >> mouseLeave: evt [
-	self 
+	self
 		resetState: #mouseIn;
-		resetState: #panning.
+		resetState: #panning
 ]
 
 { #category : #'event handling' }
@@ -189,8 +189,8 @@ AthensSceneView >> mouseMove: evt [
 	self inState: #panning do: [ :startPanAndPos |
 		| delta |
 		delta := startPanAndPos first + ( evt cursorPoint - startPanAndPos second ).
-		
-		transform 
+
+		transform
 			x: delta x;
 			y: delta y.
 		self changed.
@@ -201,7 +201,7 @@ AthensSceneView >> mouseMove: evt [
 AthensSceneView >> mouseUp: evt [
 
 	"self halt."
-	
+
 	self resetState: #panning
 ]
 
@@ -210,18 +210,18 @@ AthensSceneView >> mouseWheel: event [
 
 
 	"Handle a mouseWheel event."
-	
+
 	| center zoom  |
-	
+
 	center := transform inverseTransform: (event cursorPoint - bounds origin).
 
 	zoom := 1.
-	
+
 	event isUp ifTrue: [ zoom := 1.25 ].
 	event isDown ifTrue: [ zoom := 1/1.25 ].
-	
-	
-	(self inState: #zooming) ifTrue: [   
+
+
+	(self inState: #zooming) ifTrue: [
 		self updateZoom: zoom cursor: event cursorPoint.
 	] ifFalse: [
 		self startZooming: zoom center: center.
@@ -233,8 +233,8 @@ AthensSceneView >> renderScene [
 
 	self checkSession.
 
-	scene ifNotNil: [ 
-		surface drawDuring: [ :acanvas | 
+	scene ifNotNil: [
+		surface drawDuring: [ :acanvas |
 			surface clear.
 			acanvas pathTransform loadAffineTransform: transform.
 			scene isBlock
@@ -248,8 +248,8 @@ AthensSceneView >> resetState: stateName [
 	state at: stateName put: nil.
 
 	"receiver's state changed"
-	
-	self changed.
+
+	self changed
 ]
 
 { #category : #accessing }
@@ -259,10 +259,10 @@ AthensSceneView >> scene [
 
 { #category : #accessing }
 AthensSceneView >> scene: aScene [
-	
+
 	scene := aScene.
-	
-	self changed.
+
+	self changed
 ]
 
 { #category : #'state tracking' }
@@ -271,8 +271,8 @@ AthensSceneView >> setState: stateName [
 	state at: stateName put: true.
 
 	"receiver's state changed"
-	
-	self changed.
+
+	self changed
 ]
 
 { #category : #'state tracking' }
@@ -281,8 +281,8 @@ AthensSceneView >> setState: stateName value: aValue [
 	state at: stateName put: aValue.
 
 	"receiver's state changed"
-	
-	self changed.
+
+	self changed
 ]
 
 { #category : #drawing }
@@ -294,7 +294,7 @@ AthensSceneView >> showDebugInfo [
 AthensSceneView >> startZooming: zoom center: center [
 	| start end |
 
-		
+
 	start := Time millisecondClockValue.
 	end := start + 250.
 
@@ -311,25 +311,25 @@ AthensSceneView >> step [
 		now := Time millisecondClockValue.
 		start := zoomState at: 4.
 		end := zoomState at: 5.
-		
+
 		(now between: start and:end) ifFalse: [ now := end.
 			self resetState: #zooming.
 			self stopStepping ].
-		
+
 		transform := (zoomState at: 2) copy.
 		center := zoomState at: 1.
-		
+
 		factor :=  (now-start)/(end - start ).
 		targetZoom := zoomState at: 3.
 		targetZoom := 1* (1-factor) + (targetZoom * factor).
-		
+
 		transform
 			translateBy: center;
 			scaleBy:targetZoom;
 			translateBy: center negated.
-		
+
 	].
-	self changed.
+	self changed
 ]
 
 { #category : #stepping }
@@ -348,20 +348,20 @@ AthensSceneView >> updateZoom: zoom cursor: cursorPoint [
 
 	| zoomState targetZoom start end now fraction newCenter |
 	zoomState := state at:#zooming.
-		
+
 	"change the target zoom and increase time a bit"
 	targetZoom := zoomState at: 3.
-	
+
 	start := zoomState at: 4.
 	end := zoomState at: 5.
-		
+
 	now := Time millisecondClockValue.
-	
+
 	(now > end) ifTrue: [  now := end ].
-	
+
 	 "interpolate linearly the target zoom factor over time start ... end"
 	fraction := (now - start) / (end - start).
-	
+
 	"zoom goes from 1..target zoom"
 	targetZoom := 1*(1-fraction) + (targetZoom * fraction).
 
@@ -371,5 +371,5 @@ AthensSceneView >> updateZoom: zoom cursor: cursorPoint [
 	zoomState at: 1 put: newCenter.
 	zoomState at: 2 put: transform copy.
 	zoomState at: 4 put: now.
-	zoomState at: 5 put: now + 250 .
+	zoomState at: 5 put: now + 250
 ]
