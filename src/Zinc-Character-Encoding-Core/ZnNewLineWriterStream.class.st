@@ -69,7 +69,7 @@ ZnNewLineWriterStream >> forPlatformLineEnding [
 	lineEnding := OSPlatform current lineEnding
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnNewLineWriterStream >> initialize [
 
 	super initialize.

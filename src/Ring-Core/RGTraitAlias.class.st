@@ -42,7 +42,7 @@ RGTraitAlias >> defaultAliases [
 	^ OrderedCollection new
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGTraitAlias >> initialize [
 
 	super initialize.

@@ -33,7 +33,7 @@ RBRemoveClassKeepingSubclassesRefactoring >> initalizeRefactorings [
 			self pushDownClassVarsOf: class]
 ]
 
-{ #category : #preconditions }
+{ #category : #initialization }
 RBRemoveClassKeepingSubclassesRefactoring >> initialize [
 	refactorings := OrderedCollection new
 ]

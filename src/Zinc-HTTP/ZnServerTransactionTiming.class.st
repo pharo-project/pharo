@@ -25,7 +25,7 @@ ZnServerTransactionTiming >> handlerDuration: anObject [
 	handlerDuration := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnServerTransactionTiming >> initialize [
 	super initialize.
 	requestDuration := handlerDuration := responseDuration := 0
