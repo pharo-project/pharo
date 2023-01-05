@@ -44,7 +44,7 @@ ClyTextEditingMode >> editorClass [
 	^ClyTextEditor
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ClyTextEditingMode >> initialize [
 	super initialize.
 	

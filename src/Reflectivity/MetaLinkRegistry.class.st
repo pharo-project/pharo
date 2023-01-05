@@ -64,7 +64,7 @@ MetaLinkRegistry >> hasPermaLinks: aLink [
 	^ permalinks keys includes: aLink
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MetaLinkRegistry >> initialize [
 	links := WeakKeyDictionary new.
 	permalinks := WeakKeyDictionary new.
