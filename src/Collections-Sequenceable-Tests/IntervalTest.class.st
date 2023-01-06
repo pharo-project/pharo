@@ -39,7 +39,7 @@ IntervalTest >> anotherElementNotIn [
 
 { #category : #coverage }
 IntervalTest >> classToBeTested [
-	
+
 	^ Interval
 ]
 
@@ -51,13 +51,13 @@ IntervalTest >> collection [
 { #category : #requirements }
 IntervalTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Interval
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionInForIncluding [
-	^ nonEmpty copyWithout: (self nonEmpty last).
+	^ nonEmpty copyWithout: (self nonEmpty last)
 ]
 
 { #category : #requirements }
@@ -83,7 +83,7 @@ IntervalTest >> collectionWith1TimeSubcollection [
 
 { #category : #requirements }
 IntervalTest >> collectionWith5Elements [
-	
+
 	^ collectionWith5Elements
 ]
 
@@ -95,8 +95,8 @@ IntervalTest >> collectionWithCopyNonIdentical [
 
 { #category : #requirements }
 IntervalTest >> collectionWithElementsToRemove [
-	
-	^ subCollectionInNonEmpty .
+
+	^ subCollectionInNonEmpty
 ]
 
 { #category : #requirements }
@@ -191,7 +191,7 @@ IntervalTest >> expectedSizeAfterReject [
 
 { #category : #requirements }
 IntervalTest >> firstCollection [
-	^ nonEmpty.
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -208,13 +208,13 @@ IntervalTest >> firstOdd [
 
 { #category : #requirements }
 IntervalTest >> indexInForCollectionWithoutDuplicates [
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
 IntervalTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
-	
+
 	^ 2
 ]
 
@@ -225,7 +225,7 @@ IntervalTest >> integerCollection [
 
 { #category : #requirements }
 IntervalTest >> integerCollectionWithoutEqualElements [
-	^ 1 to: 23.
+	^ 1 to: 23
 ]
 
 { #category : #requirements }
@@ -255,7 +255,7 @@ IntervalTest >> nonEmpty1Element [
 
 { #category : #requirements }
 IntervalTest >> nonEmptyMoreThan1Element [
-	^nonEmpty .
+	^nonEmpty
 ]
 
 { #category : #requirements }
@@ -265,7 +265,7 @@ IntervalTest >> oldSubCollection [
 
 { #category : #requirements }
 IntervalTest >> replacementCollection [
-	^ 5 to: 7.
+	^ 5 to: 7
 ]
 
 { #category : #requirements }
@@ -296,13 +296,13 @@ IntervalTest >> setUp [
 	subCollection := 2 to: 8.
 	collectionWithSubCollection := 1 to: 10.
 	collectionOfLargeIntegers := 100 factorial to: 100 factorial + 5.
-	collectionWith5Elements := 1 to: 5.
+	collectionWith5Elements := 1 to: 5
 ]
 
 { #category : #requirements }
 IntervalTest >> sizeCollection [
 	"Answers a collection whose #size is 4"
-	^ 1 to: 4.
+	^ 1 to: 4
 ]
 
 { #category : #requirements }
@@ -313,7 +313,7 @@ IntervalTest >> sortedInAscendingOrderCollection [
 
 { #category : #requirements }
 IntervalTest >> speciesClass [
-	
+
 	^ Array
 ]
 
@@ -401,7 +401,7 @@ IntervalTest >> testCollectThenSelectLocal [
 	| letters vowels |
 	letters := 'abcdefghijklmnopqrstuvwxyz'.
 	vowels := (1 to: 26) collect: [:index | letters at: index] thenSelect: [:char | char isVowel].
-	self assert: (vowels hasEqualElements: 'aeiou').
+	self assert: (vowels hasEqualElements: 'aeiou')
 ]
 
 { #category : #tests }
@@ -456,11 +456,11 @@ IntervalTest >> testEquals4 [
 { #category : #tests }
 IntervalTest >> testEquals5 [
 	"Interval>>= and Interval>>hash do not match #11070"
-	self assert: (2 to: 10 by: 3) equals: (2 to: 9 by: 3). 
-	self assert: (2 to: 10 by: 3) hash equals: (2 to: 9 by: 3) hash. 
+	self assert: (2 to: 10 by: 3) equals: (2 to: 9 by: 3).
+	self assert: (2 to: 10 by: 3) hash equals: (2 to: 9 by: 3) hash.
 
-	self deny: (2 to: 10 by: 3) equals: (2 to: 10 by: 4). 
-	self deny: (2 to: 10 by: 3) hash equals: (2 to: 10 by: 4) hash	
+	self deny: (2 to: 10 by: 3) equals: (2 to: 10 by: 4).
+	self deny: (2 to: 10 by: 3) hash equals: (2 to: 10 by: 4) hash
 ]
 
 { #category : #tests }
@@ -485,7 +485,7 @@ IntervalTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 IntervalTest >> testIncludesElementIsNotThere [
-	
+
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -501,7 +501,7 @@ IntervalTest >> testInclusion [
 IntervalTest >> testInclusionBug1603 [
 	"This test is by german morales.
 	It is about mantis bug 1603"
-	
+
 	self shouldnt: ((1 to: 5 by: 1) includes: 2.5). "obvious"
 	self shouldnt: ((100000000000000 to: 500000000000000 by: 100000000000000)
  		  includes: 250000000000000). "same as above with 14 zeros appended"
@@ -513,7 +513,7 @@ IntervalTest >> testInclusionBug6455 [
 	It should work as long as Fuzzy inclusion test feature for Interval of Float is maintained.
 	This is a case when tested element is near ones of actual value, but by default.
 	Code used to work only in the case of close numbers by excess..."
-	
+
 	self assert: ((0 to: Float pi by: Float pi / 100) includes: Float pi * (3/100))
 ]
 
@@ -521,7 +521,7 @@ IntervalTest >> testInclusionBug6455 [
 IntervalTest >> testIndexOfBug1602 [
 	"This test is by german morales.
 	It is about mantis bug 1602"
-	
+
 	self should: ((1 to: 5 by: 1) indexOf: 2.5) = 0. "obvious"
 	self should: ((100000000000000 to: 500000000000000 by: 100000000000000)
  		  indexOf: 250000000000000) = 0. "same as above with 14 zeros appended"
@@ -613,14 +613,14 @@ IntervalTest >> testNewFrom [
 IntervalTest >> testNumericTypes [
 
 	self assert: ((3 asNumber) to: 5) equals: #(3 4 5).
-	
+
 	self assert: (3.0 to: 5.0) equals: #(3.0 4.0 5.0).
 	self assert: (3.0 to: 5.0 by: 0.5) equals: #(3.0 3.5 4.0 4.5 5.0).
-	
+
 	self assert: (3/1 to: 5/1) equals: #(3 4 5).
 
 	"dynamic array, because fractions aren't literals"
-	self assert: (1/2 to: 5/2 by: 1/2) equals: {1/2 . 1 . 3/2 . 2 . 5/2}.
+	self assert: (1/2 to: 5/2 by: 1/2) equals: {1/2 . 1 . 3/2 . 2 . 5/2}
 ]
 
 { #category : #tests }
@@ -656,7 +656,7 @@ IntervalTest >> testRangeIncludes [
 	self assert: ((10 to: 1 by: -2) rangeIncludes: 3).
 	self assert: ((1 to: 10 by: 2) rangeIncludes: 4).
 	self assert: ((1 to: 10) rangeIncludes: 3.5).
-	
+
 	self deny: ((1 to: 10) rangeIncludes: 0).
 	self deny: ((1 to: 10) rangeIncludes: 11).
 	self deny: ((1 to: 10 by: 2) rangeIncludes: 0).
@@ -696,7 +696,7 @@ IntervalTest >> testShuffled [
 	self assert: i ~= is.
 	self assert: i size equals: is size.
 	self assert: (is includesAll: i).
-	self assert: (i includesAll: is).
+	self assert: (i includesAll: is)
 ]
 
 { #category : #tests }
