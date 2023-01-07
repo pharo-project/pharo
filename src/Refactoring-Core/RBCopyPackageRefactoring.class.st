@@ -20,7 +20,8 @@ Class {
 	#name : #RBCopyPackageRefactoring,
 	#superclass : #RBPackageRefactoring,
 	#instVars : [
-		'package'
+		'package',
+		'classMappings'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -42,51 +43,56 @@ RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: 
 
 { #category : #preconditions }
 RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
-	classes with: copyClasses do: [ :cls :cp | | rbClass |
-		rbClass := self model classNamed: cls.
-		self renameReferencesOf: rbClass with: cp.
-	]
+
+	[ : job |
+		| jobIndex |
+		jobIndex := 1.
+		job max: classes size.
+		classes with: copyClasses do: [ :cls :copiedClass |
+			| rbClass |
+			job
+				currentValue: jobIndex;
+				title: 'Changing reference of ' , copiedClass printString.
+			rbClass := self model classNamed: cls.
+			self renameReferencesOf: rbClass with: copiedClass.
+			jobIndex := jobIndex + 1 ]
+	] asJob run
+]
+
+{ #category : #accessing }
+RBCopyPackageRefactoring >> classMappings [
+
+	^ classMappings
+]
+
+{ #category : #accessing }
+RBCopyPackageRefactoring >> classMappings: aDictionary [
+	"Set the receiver's dictionary containing mappings between the source class name to be copied and the target new namename"
+
+	classMappings := aDictionary
 ]
 
 { #category : #preconditions }
-RBCopyPackageRefactoring >> classPattern: anAssociation [
-	"Set the receiver's class pattern for copying from anAssociation from <String> to <String>.
-	anAssociation could contain <String>s with a regular expression(s)"
+RBCopyPackageRefactoring >> classes [
+	"Answer a <Collection> of the receiver's class names to be copied"
 
-	| srcClassPattern dstClassPattern |
-	srcClassPattern := anAssociation key.
-	dstClassPattern := anAssociation value.
-
-	^ RBClassRegexRefactoring new
-		model: model;
-		copyClasses;
-		replace: srcClassPattern with: dstClassPattern
+	^ self classMappings keys
 ]
 
 { #category : #preconditions }
-RBCopyPackageRefactoring >> copyAllClasses: classes [
-	^ classes collect: [ :symbol | | copyClassName |
-		copyClassName := self copyNameFor: symbol.
+RBCopyPackageRefactoring >> copyAllClasses [
+	"Perform a copy class refactoring on each new class to be copied and answer a <Collection> with the names of the new"
+
+	^ self classes collect: [ :symbol |
+		| copyClassName |
+		copyClassName := (self classMappings at: symbol) asSymbol.
 		self performCompositeRefactoring:
 			(RBCopyClassRefactoring
 				model: self model
 				copyClass: symbol
 				withName: copyClassName
 				in: newName).
-		copyClassName
-	]
-]
-
-{ #category : #preconditions }
-RBCopyPackageRefactoring >> copyNameFor: symbol [
-	| string counter copyName |
-	string := 'Copy'.
-	counter := 1.
-	copyName := symbol, string.
-	[ self model includesGlobal: copyName ]
-		whileTrue: [ copyName := symbol, string, counter asString.
-			counter := counter + 1 ].
-	^ copyName
+		copyClassName ]
 ]
 
 { #category : #copying }
@@ -133,14 +139,20 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 
 { #category : #preconditions }
 RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
-	| subclasses dict |
-	dict := Dictionary newFromKeys: classes andValues: copyClasses.
-	subclasses := copyClasses
-		collect: [ :cls | self model classNamed: cls]
-		thenSelect: [ :rb | classes includes: rb superclass name ].
-	subclasses do: [ :cls |
-		self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name))
-	]
+
+	[ : job | | jobIndex subclasses dict |
+		jobIndex := 1.
+		dict := Dictionary newFromKeys: classes andValues: copyClasses.
+		subclasses := copyClasses
+			collect: [ :cls | self model classNamed: cls]
+			thenSelect: [ :rb | classes includes: rb superclass name ].
+		subclasses do: [ :cls |
+			self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name)).
+			job
+				currentValue: jobIndex;
+				title: (String streamContents: [ : stream | stream << 'Reparent class '; << cls printString ]).
+			jobIndex := jobIndex + 1 ]
+		] asJob run
 ]
 
 { #category : #printing }
@@ -155,12 +167,12 @@ RBCopyPackageRefactoring >> storeOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #preconditions }
+{ #category : #transforming }
 RBCopyPackageRefactoring >> transform [
-	| classes copyClasses |
+	| copyClasses |
+
 	self model addPackageNamed: newName.
-	classes := (package realPackage definedClasses collect: #name) asArray.
-	copyClasses := self copyAllClasses: classes.
-	self changeReferencesOf: classes with: copyClasses.
-	self reparent: classes  with: copyClasses
+	copyClasses := self copyAllClasses.
+	self changeReferencesOf: self classes with: copyClasses.
+	self reparent: self classes with: copyClasses
 ]
