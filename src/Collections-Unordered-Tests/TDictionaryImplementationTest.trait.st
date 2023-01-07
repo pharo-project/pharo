@@ -38,9 +38,9 @@ TDictionaryImplementationTest >> testFindElementOrNil [
 	| assoc indexForG |
 	assoc := #g -> 100.
 	self assert: (self nonEmptyDict findElementOrNil: assoc key) = (self nonEmptyDict array indexOf: nil).
-	
+
 	indexForG := (#g hash \\ self emptyDict array size) + 1.
-	self assert: (self emptyDict findElementOrNil: assoc key) = ((self emptyDict array indexOf: nil) max: indexForG).
+	self assert: (self emptyDict findElementOrNil: assoc key) = ((self emptyDict array indexOf: nil) max: indexForG)
 ]
 
 { #category : #'tests - implementation' }
@@ -48,7 +48,7 @@ TDictionaryImplementationTest >> testNew [
 	| d |
 	d := self classToBeTested new: 10.
 	self assert: d size = 0.
-	
+
 	"Why 14? Mysterious"
 	self assert: d capacity = 14
 ]
@@ -89,7 +89,7 @@ TDictionaryImplementationTest >> testScanFor [
 	self assert: (self nonEmptyDict scanFor: assoc) = (self nonEmptyDict array indexOf: nil).
 
 	indexForG := (#g hash \\ self emptyDict array size) + 1.
-	self assert: (self emptyDict scanFor: assoc) = ((self emptyDict array indexOf: nil) max: indexForG).
+	self assert: (self emptyDict scanFor: assoc) = ((self emptyDict array indexOf: nil) max: indexForG)
 ]
 
 { #category : #'tests - implementation' }

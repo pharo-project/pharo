@@ -275,7 +275,7 @@ RGChunkImporter >> if: selectorParts in: ast includes: aSymbol do: aBlock [
 	aBlock value: (ast arguments at: index).
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGChunkImporter >> initialize [
 	super initialize.
 	environment := RGEnvironment new.
