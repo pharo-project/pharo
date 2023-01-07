@@ -63,27 +63,6 @@ RBCopyPackageParametrizedTest >> testBadName [
 ]
 
 { #category : #tests }
-RBCopyPackageParametrizedTest >> testCopyPackage [
-	| refactoring aModel |
-
-	refactoring := (self createRefactoringWithArguments: { #'RefactoringSmallPackageForTest' . #'RefactoringCOPYSmallPackageForTest'}).
-	self executeRefactoring: (refactoring classMappings: { #RBFTTest1 -> #BarFTTest1 . #RBFTTest2 -> #BarFTTest2 } asDictionary).
-	aModel := refactoring model.
-	self
-		assert: (aModel includesClassNamed: #BarFTTest1)
-		description: 'It test that class was copied'.
-	self
-		assert: (aModel includesClassNamed: #BarFTTest2)
-		description: 'It test that class was copied'.
-	self
-		assert: (aModel includesClassNamed: #RBFTTest1)
-		description: 'It test that original class where we copied from is still there'.
-	self
-		assert: (aModel includesClassNamed: #RBFTTest2)
-		description: 'It test that original class where we copied from is still there'
-]
-
-{ #category : #tests }
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
 	"We should use a small package for this tests and it should have references to its classes sso that we can check it.
@@ -108,6 +87,27 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	self  assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages)
 		equals: (self parseMethod: 'pages
 	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')"
+]
+
+{ #category : #tests }
+RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
+	| refactoring aModel |
+
+	refactoring := (self createRefactoringWithArguments: { #'RefactoringSmallPackageForTest' . #'RefactoringCOPYSmallPackageForTest'}).
+	self executeRefactoring: (refactoring classMappings: { #RBFTTest1 -> #BarFTTest1 . #RBFTTest2 -> #BarFTTest2 } asDictionary).
+	aModel := refactoring model.
+	self
+		assert: (aModel includesClassNamed: #BarFTTest1)
+		description: 'It test that class was copied'.
+	self
+		assert: (aModel includesClassNamed: #BarFTTest2)
+		description: 'It test that class was copied'.
+	self
+		assert: (aModel includesClassNamed: #RBFTTest1)
+		description: 'It test that original class where we copied from is still there'.
+	self
+		assert: (aModel includesClassNamed: #RBFTTest2)
+		description: 'It test that original class where we copied from is still there'
 ]
 
 { #category : #'failure tests' }

@@ -73,21 +73,6 @@ RBCopyPackageRefactoring >> classMappings: aDictionary [
 ]
 
 { #category : #preconditions }
-RBCopyPackageRefactoring >> classPattern: anAssociation [
-	"Set the receiver's class pattern for copying from anAssociation from <String> to <String>.
-	anAssociation could contain <String>s with a regular expression(s)"
-
-	| srcClassPattern dstClassPattern |
-	srcClassPattern := anAssociation key.
-	dstClassPattern := anAssociation value.
-
-	^ RBClassRegexRefactoring new
-		model: model;
-		copyClasses;
-		replace: srcClassPattern with: dstClassPattern
-]
-
-{ #category : #preconditions }
 RBCopyPackageRefactoring >> classes [
 	"Answer a <Collection> of the receiver's class names to be copied"
 
@@ -108,32 +93,6 @@ RBCopyPackageRefactoring >> copyAllClasses [
 				withName: copyClassName
 				in: newName).
 		copyClassName ]
-]
-
-{ #category : #preconditions }
-RBCopyPackageRefactoring >> copyAllClasses: classes [
-	^ classes collect: [ :symbol | | copyClassName |
-		copyClassName := self copyNameFor: symbol.
-		self performCompositeRefactoring:
-			(RBCopyClassRefactoring
-				model: self model
-				copyClass: symbol
-				withName: copyClassName
-				in: newName).
-		copyClassName
-	]
-]
-
-{ #category : #preconditions }
-RBCopyPackageRefactoring >> copyNameFor: symbol [
-	| string counter copyName |
-	string := 'Copy'.
-	counter := 1.
-	copyName := symbol, string.
-	[ self model includesGlobal: copyName ]
-		whileTrue: [ copyName := symbol, string, counter asString.
-			counter := counter + 1 ].
-	^ copyName
 ]
 
 { #category : #copying }
@@ -179,7 +138,7 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 ]
 
 { #category : #preconditions }
-RBCopyPackageRefactoring >> reparent: classes with: copyClasses [
+RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 
 	[ : job | | jobIndex subclasses dict |
 		jobIndex := 1.
@@ -191,9 +150,7 @@ RBCopyPackageRefactoring >> reparent: classes with: copyClasses [
 			self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name)).
 			job
 				currentValue: jobIndex;
-				title: (String streamContents: [ : stream | stream
-						nextPutAll: 'Reparent class ';
-						nextPutAll: cls printString ]).
+				title: (String streamContents: [ : stream | stream << 'Reparent class '; << cls printString ]).
 			jobIndex := jobIndex + 1 ]
 		] asJob run
 ]

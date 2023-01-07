@@ -10,11 +10,7 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SycCopyPackageCommand,
 	#superclass : #CmdCommand,
-	#instVars : [
-		'package',
-		'newName'
-	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : #'SystemCommands-PackageCommands-Scope'
 }
 
 { #category : #testing }
@@ -35,15 +31,9 @@ SycCopyPackageCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycCopyPackageCommand >> execute [
-
-	(RBCopyPackageRefactoring copyPackage: package name in: newName) execute
-]
-
-{ #category : #execution }
 SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
 
-	| dialog |
+	| dialog package newName |
 
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -54,6 +44,6 @@ SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
 		title: 'Copy package'.
 	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ].
 
-	dialog := SycClassPatternPresenter openOn: package.
+	dialog := SycCopyClassUsingPatternPresenter openOn: package -> newName.
 	dialog cancelled ifTrue: [ ^ CmdCommandAborted signal ]
 ]
