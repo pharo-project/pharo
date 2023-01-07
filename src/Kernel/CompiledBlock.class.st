@@ -38,6 +38,11 @@ CompiledBlock >> hasPragmaNamed: aSymbol [
 	^ false
 ]
 
+{ #category : #testing }
+CompiledBlock >> hasProperties [
+	^false
+]
+
 { #category : #properties }
 CompiledBlock >> hasProperty: aString [ 
 	
@@ -130,9 +135,39 @@ CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
 ]
 
+{ #category : #scanning }
+CompiledBlock >> pcInOuter [
+	| outer end instructionStream |
+	outer := self outerCode.
+	instructionStream := InstructionStream on: outer.
+	end := outer endPC.
+	[instructionStream pc <= end] whileTrue: 
+		[ (self encoderClass isCreateFullBlock: self code: outer at: instructionStream pc)
+			ifTrue: [ ^ instructionStream pc ].
+			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].
+	"scan for clean block"	
+	instructionStream := InstructionStream on: outer.
+	[instructionStream pc <= end] whileTrue: [
+			| literalOffset |
+			literalOffset := self encoderClass literalIndexOfBytecodeAt: instructionStream pc in: outer.
+			literalOffset ifNotNil: [
+				| literal |
+				literal := (self outerCode literalAt: literalOffset + 1).
+				((literal isKindOf: CleanBlockClosure) and: [literal compiledBlock == self  ])ifTrue: [ ^ instructionStream pc ].  ].
+			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].	
+		
+	self error: 'block not installed in outer code'.
+]
+
 { #category : #accessing }
 CompiledBlock >> pragmas [
 	^ #()
+]
+
+{ #category : #accessing }
+CompiledBlock >> primitive [
+	"for now we do not compile Quick CompiedBlocks, see IRBytecodeGenerator>>#compiledBlockWith:"
+	^0
 ]
 
 { #category : #printing }

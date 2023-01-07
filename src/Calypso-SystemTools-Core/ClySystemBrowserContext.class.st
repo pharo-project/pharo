@@ -157,6 +157,12 @@ ClySystemBrowserContext >> lastSelectedSourceNode [
 	^self lastSelectedMethod astForStylingInCalypso
 ]
 
+{ #category : #accessing }
+ClySystemBrowserContext >> metaLevelScope [
+
+	^ nil
+]
+
 { #category : #'refactoring support' }
 ClySystemBrowserContext >> refactoringScopes [
 	"It returns default browser scope as first one which makes it default for users"

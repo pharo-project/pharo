@@ -25,19 +25,16 @@ StepIntoTest >> stepA1 [
 ]
 
 { #category : #tests }
-StepIntoTest >> testStepIntoDeadContextShouldRaiseException [
-	self settingUpSessionAndProcessAndContextForBlock: [  ].
-	session stepInto. "The first step into executes the (empty) body of the block and returns from it. From this point on, the context is dead since it returned."
-	
-	"We should be able to call stepInto.
-	However, calling it provokes infinite exceptions and non recuperable images."
-	"session stepInto."
-	
-	"We have found that the debugSession calls stepToSendOrReturn after step: which could be the cause of the issue.
-	This test is green if we avoid calling that part and just call step:"
-	session interruptedProcess step: session interruptedContext.
-	
-	self assert: context isDead
+StepIntoTest >> testStepIntoDeadContext [
+	self settingUpSessionAndProcessAndContextForBlock: [ self returnQuickMethodResult ].
+	"we step till the block returns"
+	session stepInto. 
+	session stepInto.
+	session stepInto.
+	session stepInto.
+	self assert: context isDead.
+	"Further steps are ignored, see DebugSession>>#stepInto:"
+	session stepInto
 ]
 
 { #category : #tests }
@@ -86,8 +83,18 @@ StepIntoTest >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheSta
 
 { #category : #tests }
 StepIntoTest >> testStepIntoUntilTermination [ 
-	"Stepping over a message node brings the execution to the next node in the same method."
-	self settingUpSessionAndProcessAndContextForBlock: [ #test ].
+	"Stepping until termination."
+	self settingUpSessionAndProcessAndContextForBlock: [ 1+2 ].
+
+	[ session interruptedProcess isTerminated ] whileFalse: [ session stepInto ].
+
+	self assert: session interruptedProcess isTerminated
+]
+
+{ #category : #tests }
+StepIntoTest >> testStepIntoUntilTerminationClean [
+	"Stepping until termination."
+	self settingUpSessionAndProcessAndContextForCleanBlock: [ ].
 
 	[ session interruptedProcess isTerminated ] whileFalse: [ session stepInto ].
 

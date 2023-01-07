@@ -51,7 +51,7 @@ BaselineOfBasicTools >> baseline: spec [
 					repository: repository ];
 			baseline: 'SUnit' with: [ 
 			spec
-				loads: #( 'UI' 'Help' 'JenkinsSupport' );
+				loads: #( 'UI' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
 		spec 
@@ -65,7 +65,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'NECompletion'.
 		spec package: 'NECompletion-Morphic'.
 		spec package: 'NECompletion-Preferences'.
-		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
 		spec package: 'Metacello-Reference'.
@@ -77,13 +76,10 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloGUI-Tests'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Pharo-Help'.
 		spec package: 'ProfStef-Core'.
-		spec package: 'ProfStef-Help'.
 		spec package: 'Refactoring-Changes'.
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
-		spec package: 'Regex-Help'.
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		

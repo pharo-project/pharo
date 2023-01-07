@@ -118,7 +118,7 @@ BytecodeEncoder >> nextPut: aByte [
 { #category : #'bytecode generation' }
 BytecodeEncoder >> outOfRangeError: string index: index range: rangeStart to: rangeEnd [
 	"For now..."
-	^self error: thisContext sender compiledCode method selector, ' ', string
+	^self error: thisContext sender homeMethod selector, ' ', string
 				, ' index ', index printString
 				, ' is out of range ', rangeStart printString, ' to ', rangeEnd printString
 ]

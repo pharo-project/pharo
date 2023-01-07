@@ -141,15 +141,38 @@ BlockClosureTest >> testCullCullCullCull [
 ]
 
 { #category : #'tests - evaluating' }
-BlockClosureTest >> testHasMethodReturn [
+BlockClosureTest >> testHasNonLocalReturn [
 
-	self assert: [ ^self  ] hasMethodReturn.
-	self deny: [ 1 + 2 ] hasMethodReturn.
-	self deny: [ self printString ] hasMethodReturn.
+	self assert: [ ^self  ] hasNonLocalReturn.
+	self deny: [ 1 + 2 ] hasNonLocalReturn.
+	self deny: [ self printString ] hasNonLocalReturn.
 	
 	"nested blocks"
-	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasMethodReturn.
-	self assert: [ #(1) do: [ ^self ] ] hasMethodReturn
+	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasNonLocalReturn.
+	self assert: [ #(1) do: [ ^self ] ] hasNonLocalReturn
+]
+
+{ #category : #tests }
+BlockClosureTest >> testHomeMethod [
+	<compilerOptions: #(+ #optionConstantBlockClosure) >
+	| block |
+	"block with non-local return, will go via #home"
+	block := [ ^self ].
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block home method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method.
+	"constant block does not know the outerContext, but can discover home method
+	statically"
+	block := [ ].
+	self assert: block home isNil.
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method.
+	"nested block"
+	block := [[]] value.
+	self assert: block home isNil.
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method	
+
 ]
 
 { #category : #'tests - testing' }

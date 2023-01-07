@@ -75,40 +75,7 @@ HEInstaller >> build: aHEClass [
 	self processTraitsFrom: aHEClass in: newClass.
 	
 	^newClass.
-]
 
-{ #category : #'creating traits' }
-HEInstaller >> buildTrait: aTraitDefinition [
-	| newTrait traitComposition traitClass|
-	
-	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
-	
-	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
-	
-	traitComposition := self buildTraitCompositionFor: aTraitDefinition traitComposition.	
-	
-	newTrait := traitClass
-		named: aTraitDefinition traitName
-		uses: traitComposition
-		package: aTraitDefinition category
-		env: environment.
-
-	newTrait classTrait traitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition).
-
-	^ newTrait
-]
-
-{ #category : #'creating traits' }
-HEInstaller >> buildTraitCompositionFor: traitComposition [
-
-	| aLiteral |
-	
-	aLiteral := (traitComposition asLiteralIn: environment).
-	aLiteral isArray 
-		ifTrue: [ ^ aLiteral 
-							ifEmpty: [ self emptyTraitCompositionClass new ]
-							ifNotEmpty: [ self traitSequenceClass withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
-		ifFalse: [ ^ aLiteral asTraitComposition ]
 ]
 
 { #category : #accessing }
@@ -119,7 +86,7 @@ HEInstaller >> classNamed: aSymbol [
 
 { #category : #'reporting undeclared' }
 HEInstaller >> createdUndeclared [
-	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary
+	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
 ]
 
 { #category : #'installing package' }
@@ -148,12 +115,6 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	"7. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
 	self validateNoNewUndeclared
-]
-
-{ #category : #'creating traits' }
-HEInstaller >> emptyTraitCompositionClass [
-
-	^ Smalltalk at: #TaEmptyComposition ifAbsent: [ self error: 'Trait support has not been loaded' ]
 ]
 
 { #category : #accessing }
@@ -240,6 +201,7 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 
 	newClass setTraitComposition: (self buildTraitCompositionFor: aHEClass traitComposition).
 	newClass class setTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition).
+
 ]
 
 { #category : #'installing methods' }
@@ -253,7 +215,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod newMethod: aMethod bytecodes size header: (aMethod headerFor: extendedEnvironment).
+	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
@@ -264,7 +226,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	newMethod classBinding: aClass binding.
 	literalSpace := (aMethod literals size + 1) * Smalltalk wordSize.
 
-	aMethod bytecodes doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
+	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
 	aClass
 		addAndClassifySelector: aMethod name
@@ -285,12 +247,6 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].  	
 			self error: (self messageMethod: aHEMethod alreadyExistsIn: aClass ) ]
 		ifAbsent: [ ^ true ]
-]
-
-{ #category : #'creating traits' }
-HEInstaller >> traitSequenceClass [
-
-	^ Smalltalk at: #TaSequence ifAbsent: [ self error: 'Trait support has not been loaded' ]
 ]
 
 { #category : #'reporting undeclared' }

@@ -63,6 +63,14 @@ DABrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 	^ self analyzedPackage = anotherBrowserTool analyzedPackage
 ]
 
+{ #category : #testing }
+DABrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
+	self context class = aClyFullBrowserContext class 
+		ifFalse: [ ^ false ].
+		
+	^ self analyzedPackage rPackageSet packageName = aClyFullBrowserContext lastSelectedClassGroup name
+]
+
 { #category : #initialization }
 DABrowserToolMorph >> setUpModelFromContext [
 

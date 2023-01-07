@@ -34,7 +34,7 @@ MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 		ifFalse: [#()].
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : #'class initialization' }
 MczInstaller class >> initialize [
 	self clearVersionInfo
 ]

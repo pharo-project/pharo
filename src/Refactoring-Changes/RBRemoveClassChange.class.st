@@ -51,7 +51,7 @@ RBRemoveClassChange >> changeString [
 	^ 'Remove ' , self displayClassName
 ]
 
-{ #category : #printing }
+{ #category : #initialization }
 RBRemoveClassChange >> initialize [
 
 	super initialize.

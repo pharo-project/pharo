@@ -1,6 +1,9 @@
 Class {
 	#name : #CompiledCodeTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'var'
+	],
 	#category : #'Kernel-Tests-Classes'
 }
 
@@ -19,6 +22,12 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
+{ #category : #examples }
+CompiledCodeTest >> methodReturnOne [
+
+	^ 1
+]
+
 { #category : #'tests - scanning' }
 CompiledCodeTest >> testAccessesRef [
 	| readMethod writeMethod classVar |
@@ -28,6 +37,23 @@ CompiledCodeTest >> testAccessesRef [
 	
 	self assert: (readMethod accessesRef: classVar).
 	self assert: (writeMethod accessesRef: classVar).
+]
+
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testBlockReturnSpecial [
+	"we do not compile blocks with quick returns for now"
+	self deny: [ ^ self ] compiledBlock isReturnSpecial.
+	self deny: [ ^ nil ] compiledBlock isReturnSpecial.
+	self deny: [ ^ true ] compiledBlock isReturnSpecial.
+	self deny: [ ^ false ] compiledBlock isReturnSpecial.
+	self deny: [ ^ -1 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 0 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 1 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 2 ] compiledBlock isReturnSpecial.
+	
+	self deny: [ ^ 3 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ var ] compiledBlock isReturnSpecial.
+	self deny: [ ^ Object ] compiledBlock isReturnSpecial
 ]
 
 { #category : #'tests - literals' }
@@ -269,6 +295,17 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
+]
+
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testMethodReturnSpecial [
+
+	| returnSpecialMethod normalMethod |
+	returnSpecialMethod := self class >> #methodReturnOne.
+	self assert: returnSpecialMethod isReturnSpecial.
+
+	normalMethod := self class >> #method1.
+	self deny: normalMethod isReturnSpecial
 ]
 
 { #category : #'tests - scanning' }

@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : #initialization }
-RBDoItMethodNode >> initialize [ 	
+RBDoItMethodNode >> initialize [
 	super initialize.
-	
+
 	selector := #DoIt
 ]
 
 { #category : #testing }
-RBDoItMethodNode >> isDoIt [ 
+RBDoItMethodNode >> isDoIt [
 	^true
 ]

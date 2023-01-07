@@ -154,32 +154,28 @@ FluidClassDefinitionPrinter >> expandedDefinitionString [
 
 { #category : #'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
-	
+
 	^ String streamContents: [ :s | 
-		
-		forClass soleInstance = ProtoObject
-			ifTrue: [ 
-				"we are on the class of ProtoObject class.
+		  forClass soleInstance = ProtoObject
+			  ifTrue: [ "we are on the class of ProtoObject class.
 				Yes this is strange but the fluid printer is printing
 				this." 
-				s nextPutAll: 'Class class << ProtoObject class'
-				]
-			ifFalse: [		
-				s nextPutAll: forClass superclass name.
-				s nextPutAll: ' << #'.
-				s nextPutAll: forClass name. ].
-		s crtab. 
-		forClass hasTraitComposition 
-			ifTrue: [
-				s 
-					nextPutAll: 'traits: ';
-					nextPutAll: forClass traitCompositionString;
-					nextPutAll: ';']
-			ifFalse: [ s nextPutAll: 'traits: {};'].
-		s crtab.
-		s nextPutAll: 'slots: '.
-		self slotDefinitionsOn: s. 
-		]
+				  s nextPutAll: 'Class class << ProtoObject class' ]
+			  ifFalse: [ 
+				  s nextPutAll: forClass superclass name.
+				  s nextPutAll: ' << '.
+				  s nextPutAll: forClass name ].
+		  s crtab.
+		  forClass hasTraitComposition
+			  ifTrue: [ 
+				  s
+					  nextPutAll: 'traits: ';
+					  nextPutAll: forClass traitCompositionString;
+					  nextPutAll: ';' ]
+			  ifFalse: [ s nextPutAll: 'traits: {};' ].
+		  s crtab.
+		  s nextPutAll: 'slots: '.
+		  self slotDefinitionsOn: s ]
 ]
 
 { #category : #'expanded double dispatch API' }

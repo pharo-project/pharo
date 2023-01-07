@@ -130,7 +130,7 @@ Context class >> contextOn: exceptionClass do: block [
 	^ chain
 ]
 
-{ #category : #simulation }
+{ #category : #'class initialization' }
 Context class >> initialize [
 
 	"A unique object to be returned when a primitive fails during simulation"
@@ -233,11 +233,12 @@ Context class >> tryNamedPrimitiveTemplateMethod [
 ]
 
 { #category : #private }
-Context >> aboutToReturn: result through: firstUnwindContext [ 
+Context >> aboutToReturn: result through: firstUnwindContext [
+
 	"Called from VM when an unwindBlock is found between self and its home.
 	 Return to home's sender, executing unwind blocks on the way."
 
-	self methodReturnContext return: result through: firstUnwindContext
+	self home return: result through: firstUnwindContext
 ]
 
 { #category : #controlling }
@@ -266,13 +267,13 @@ Context >> activateReturn: aContext value: value [
 Context >> activeHome [
 	"If executing closure, search senders for the activation of the original
 	 (outermost) method that (indirectly) created my closure (the closureHome).
-	 If the closureHome is not found on the sender chain answer nil."
+	 If the closureHome is not found on the sender chain answer nil.
+	This method does not use #home and thus works for any block without and outerContext"
 
-	| methodReturnContext |
+	| homeMethod |
 	self isBlockContext ifFalse: [^self].
-	self sender ifNil: [^nil].
-	methodReturnContext := self methodReturnContext.
-	^self sender findContextSuchThat: [:ctxt | ctxt = methodReturnContext]
+	homeMethod := self homeMethod.
+	^self findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
 ]
 
 { #category : #accessing }
@@ -375,7 +376,7 @@ Context >> basicSize [
 
 { #category : #testing }
 Context >> belongsToDoIt [
-	^self home method isDoIt
+	^self homeMethod isDoIt
 ]
 
 { #category : #'instruction decoding' }
@@ -669,9 +670,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 
 { #category : #private }
 Context >> endPC [
-	^closureOrNil
-		ifNil:	[self compiledCode endPC]
-		ifNotNil: [closureOrNil endPC]
+	^ self compiledCode endPC
 ]
 
 { #category : #'debugger access' }
@@ -789,6 +788,19 @@ Context >> findContextSuchThat: testBlock [
 	^ nil
 ]
 
+{ #category : #query }
+Context >> findMethodContextSuchThat: testBlock [
+	"Search self and my sender chain for first one that satisfies testBlock. Ignore block contexts. Return nil if none satisfy"
+
+	| context |
+	context := self.
+	[ context isNil ] whileFalse: [
+		(context isBlockContext not and: [testBlock value: context])
+			ifTrue: [ ^ context ].
+		context := context sender ].
+	^ nil
+]
+
 { #category : #'private - exceptions' }
 Context >> findNextHandlerContext [
 	"Return the next handler marked context, returning nil if there is none.  
@@ -860,7 +872,18 @@ Context >> hasInstVarRef [
 
 { #category : #testing }
 Context >> hasMethodReturn [
-	^closureOrNil hasMethodReturn
+	self 
+		deprecated: 'use #hasNonLocalReturn' 
+		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
+	^self hasNonLocalReturn
+]
+
+{ #category : #testing }
+Context >> hasNonLocalReturn [
+	"check if this context does a non-local return, do not recurse into nested blocks as they will have anohter context"
+	^ closureOrNil
+		  ifNil: [ false ]
+		  ifNotNil: [ :closure | closure compiledBlock hasMethodReturn ]
 ]
 
 { #category : #testing }
@@ -892,6 +915,14 @@ Context >> home [
 	"this happens for clean blocks. We should later check if it is not better to return nil"
 	closureOrNil outerContext ifNil: [ ^ self ].
 	^ closureOrNil outerContext home
+]
+
+{ #category : #accessing }
+Context >> homeMethod [
+	"Answer the method in which the receiver was defined, i.e. the context from which an ^-return ] should return from. Note: implemented to not need #home"
+
+	^ closureOrNil ifNil: [ self method ] ifNotNil: [ :closure | closure homeMethod ]
+	
 ]
 
 { #category : #private }
@@ -1067,12 +1098,14 @@ Context >> methodClass [
 
 { #category : #accessing }
 Context >> methodNode [
-	^ self compiledCode methodNode.
+	^ self homeMethod methodNode
 ]
 
 { #category : #accessing }
 Context >> methodReturnContext [
-
+	self 
+		deprecated: 'Use #home instead' 
+		transformWith: '`@receiver methodReturnContext' -> '`@receiver home'.
 	^ self home.
 ]
 
@@ -1081,20 +1114,24 @@ Context >> methodReturnReceiver [
 	"Simulate the action of a 'return receiver' bytecode. This corresponds to
 	 the source expression '^self'."
 
-	^self return: self receiver from: self methodReturnContext
+	^self return: self receiver from: self home
 ]
 
 { #category : #'instruction decoding' }
 Context >> methodReturnTop [
+
 	"Simulate the action of a 'return top of stack' bytecode. This corresponds
 	 to source expressions like '^something'."
 
-	^self return: self pop from: self methodReturnContext
+	^ self return: self pop from: self home
 ]
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self compiledCode selector
+	self 
+		deprecated: 'use #selector' 
+		transformWith: '`@receiver methodSelector' -> '`@receiver selector'.
+	^ self selector
 ]
 
 { #category : #'private - exceptions' }
@@ -1339,6 +1376,15 @@ Context >> printDebugOn: aStream [
 ]
 
 { #category : #printing }
+Context >> printDebugStackOn: aStream [
+
+	"Print the debug stack from the context on my sender chain. 
+	To avoid defining an arbitrary amount of elements in the stack, I use the SmallInteger >> maxVal 	constant."
+
+	^ self debugStack: SmallInteger maxVal on: aStream
+]
+
+{ #category : #printing }
 Context >> printDetails: stream [
 
 	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
@@ -1383,7 +1429,7 @@ Context >> printDetails: stream [
 Context >> printOn: aStream [
 	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue: 
 		[ | selector |
-			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			selector := self selector.
 			aStream 
 			 print: closureOrNil;
 			 nextPutAll: ' in ';
@@ -1399,7 +1445,7 @@ Context >> printOn: aStream [
 				ifNil: [ ^ super printOn: aStream ].
 			class := self receiver class.
 			mclass := self methodClass.
-			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			selector := self selector.
 			aStream nextPutAll: class name.
 			mclass == class
 				ifFalse:

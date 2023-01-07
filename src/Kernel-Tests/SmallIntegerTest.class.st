@@ -13,6 +13,18 @@ SmallIntegerTest >> classToBeTested [
 	^ SmallInteger
 ]
 
+{ #category : #'tests - arithmetic' }
+SmallIntegerTest >> testAbs [
+
+	self assert: SmallInteger maxVal abs equals: SmallInteger maxVal.
+	self assert: 1 abs equals: 1.
+	self assert: 0 abs equals: 0.
+	self assert: -1 abs equals: 1.
+	self
+		assert: SmallInteger minVal abs
+		equals: SmallInteger minVal negated
+]
+
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testBasicNew [
 

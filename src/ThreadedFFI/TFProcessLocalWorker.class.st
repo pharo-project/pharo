@@ -35,7 +35,7 @@ Class {
 	#category : #'ThreadedFFI-Worker'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TFProcessLocalWorker class >> initialize [
 	
 	worker := ProcessLocalVariable new

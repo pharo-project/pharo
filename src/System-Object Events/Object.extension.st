@@ -4,12 +4,7 @@ Extension { #name : #Object }
 Object >> actionForEvent: anEventSelector [
     "Answer the action to be evaluated when <anEventSelector> has been triggered."
 
-	| actions |
-	actions := self actionMap
-		at: anEventSelector asSymbol
-		ifAbsent: [^nil].
- 
-	^ actions asMinimalRepresentation
+	^ self actionForEvent: anEventSelector ifAbsent: [nil]
 ]
 
 { #category : #'*System-Object Events' }
@@ -21,8 +16,9 @@ ifAbsent: anExceptionBlock [
 	actions := self actionMap
 		at: anEventSelector asSymbol
 		ifAbsent: [nil].
-	actions ifNil: [^anExceptionBlock value].
-	^ actions asMinimalRepresentation
+	^actions 
+		ifNil: [anExceptionBlock value]
+		ifNotNil: [:act | act asMinimalRepresentation ]
 ]
 
 { #category : #'*System-Object Events' }

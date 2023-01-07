@@ -27,6 +27,7 @@ HEAssociation >> asLiteralIn: env [
 HEAssociation >> doReadFrom: aReader [
 	key := HEExportedLiteral readFrom: aReader.
 	value := HEExportedLiteral readFrom: aReader.
+
 ]
 
 { #category : #accessing }

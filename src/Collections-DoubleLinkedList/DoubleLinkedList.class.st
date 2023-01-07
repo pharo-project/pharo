@@ -15,6 +15,14 @@ Class {
 	#category : #'Collections-DoubleLinkedList-Base'
 }
 
+{ #category : #'instance creation' }
+DoubleLinkedList class >> newFrom: aCollection [
+
+	^ self new
+			addAll: aCollection;
+			yourself
+]
+
 { #category : #adding }
 DoubleLinkedList >> add: anObjectOrLink [
 	"Add anObjectOrLink at the end of me.
@@ -167,6 +175,13 @@ DoubleLinkedList >> isEmpty [
 	"Return true when I contain no elements, false otherwise."
 
 	^ head isNil and: [ tail isNil ]
+]
+
+{ #category : #testing }
+DoubleLinkedList >> isNotEmpty [
+	"Answer whether the receiver contains any elements."
+
+	^ self isEmpty not
 ]
 
 { #category : #accessing }

@@ -13,6 +13,13 @@ ScaledDecimalTest >> classToBeTested [
 	^ ScaledDecimal
 ]
 
+{ #category : #'tests - arithmetic' }
+ScaledDecimalTest >> testAbs [
+
+	self assert: 1.40s2 abs equals: 1.40s2.
+	self assert: -1.40s2 abs equals: 1.40s2
+]
+
 { #category : #tests }
 ScaledDecimalTest >> testAsNumber [
 	"Ensure no loss of precision"

@@ -25,7 +25,7 @@ MCMockClassA class >> initializationOrder [
 	^ InitializationOrder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 MCMockClassA class >> initialize [
 	CVar := #initialized.
 	InitializationOrder := 1.
@@ -44,8 +44,7 @@ MCMockClassA class >> touchCVar [
 ]
 
 { #category : #numeric }
-MCMockClassA >> a [
-	^ 'a2'
+MCMockClassA >> a [ ^ 'a2'
 ]
 
 { #category : #numeric }

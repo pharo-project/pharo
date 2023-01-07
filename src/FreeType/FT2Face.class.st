@@ -799,3 +799,8 @@ FT2Face >> underlineThickness [
 FT2Face >> unitsPerEm [
 	^unitsPerEm
 ]
+
+{ #category : #validation }
+FT2Face >> validate [
+	"Do nothing, overridden in subclass FreeTypeFace>>#validate"
+]

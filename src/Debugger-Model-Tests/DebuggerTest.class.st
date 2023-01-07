@@ -43,3 +43,14 @@ DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	context := process suspendedContext.
 	session := process newDebugSessionNamed: 'test session' startedAt: context.
 ]
+
+{ #category : #utilities }
+DebuggerTest >> settingUpSessionAndProcessAndContextForCleanBlock: aBlock [
+	process := aBlock newProcess.
+
+	"We need to do an additional step to enter the execution of the block"
+	"process step."
+
+	context := process suspendedContext.
+	session := process newDebugSessionNamed: 'test session' startedAt: context.
+]

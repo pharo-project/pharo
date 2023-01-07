@@ -290,7 +290,8 @@ ProcessTest >> testIsNotSuspendedWhenItIsTerminated [
 ProcessTest >> testIsNotTerminatedWhenItIsInsideLastTerminationMethod [
 	
 	| process processBody |
-	processBody := [ #test ].
+	"We do not use a constant block, it has no context when executing"
+	processBody := [ #test yourself].
 	process := processBody newProcess.
 	
 	[process step.

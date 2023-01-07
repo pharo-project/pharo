@@ -6,6 +6,6 @@ Class {
 
 { #category : #accessing }
 RBInvalidCascadeErrorNode >> cascade [
-	
+
 	^ content first
 ]

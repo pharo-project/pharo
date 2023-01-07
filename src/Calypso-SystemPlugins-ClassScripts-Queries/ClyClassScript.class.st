@@ -94,7 +94,7 @@ ClyClassScript >> iconName [
 
 { #category : #accessing }
 ClyClassScript >> implementorClass [
-	^ implementorMethod origin
+	^ implementorMethod methodClass
 ]
 
 { #category : #accessing }
@@ -103,8 +103,8 @@ ClyClassScript >> implementorMethod [
 ]
 
 { #category : #accessing }
-ClyClassScript >> implementorMethod: anObject [
-	implementorMethod := anObject
+ClyClassScript >> implementorMethod: aCompiledMethod [
+	implementorMethod := aCompiledMethod
 ]
 
 { #category : #accessing }

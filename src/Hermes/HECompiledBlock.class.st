@@ -70,23 +70,8 @@ HECompiledBlock >> headerFor: anEnvironment [
 	^ (CompiledMethod headerFlagForEncoder: encoderClass) + (numArgs bitShift: 24) + (numTemps bitShift: 18) + literals size + (hasPrimitive bitShift: 16)
 ]
 
-{ #category : #accessing }
-HECompiledBlock >> value: aCompiledBlock [
-	
-	| literalSpace |
+{ #category : #comparing }
+HECompiledBlock >> instVarNamesForEqualityComparison [
 
-	encoderClassName := self encoderClassName: aCompiledBlock.
-	
-	numArgs := aCompiledBlock numArgs.
-	numTemps := aCompiledBlock numTemps.
-	hasPrimitive := aCompiledBlock isPrimitive asBit.
-
-	literalSpace := (aCompiledBlock numLiterals + 1) * Smalltalk wordSize.
-
-	bytecode := ByteArray new: aCompiledBlock size - literalSpace.
-	1 to: bytecode size do: [ :i | bytecode at: i put: (aCompiledBlock at: i + literalSpace) ].
-
-	literals := aCompiledBlock allLiterals allButLast collect: [ :e | e asExportedLiteral ].
-	"The last literal is the home method or block of this compiledBlock"
-	literals := literals copyWith: nil asExportedLiteral.
+	^ self class allInstVarNames reject: [ :e | e = #value ]
 ]

@@ -287,6 +287,14 @@ BlockClosure >> forkNamed: aString [
 
 { #category : #testing }
 BlockClosure >> hasMethodReturn [
+	self 
+		deprecated: 'use #hasNonLocalReturn' 
+		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
+	^self hasNonLocalReturn
+]
+
+{ #category : #testing }
+BlockClosure >> hasNonLocalReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	self withAllBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
 	^false
@@ -295,6 +303,14 @@ BlockClosure >> hasMethodReturn [
 { #category : #accessing }
 BlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
+]
+
+{ #category : #accessing }
+BlockClosure >> homeMethod [
+	"return the home method. If no #home is available due to no outerContext, use the compiledBlock"
+	^ (self home
+		   ifNotNil: [ :homeContext | homeContext ]
+		   ifNil: [ self compiledBlock ]) method
 ]
 
 { #category : #exceptions }

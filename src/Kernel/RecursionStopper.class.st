@@ -29,7 +29,7 @@ RecursionStopper class >> default [
 RecursionStopper class >> during: aBlock [
 	<debuggerCompleteToSender>
 	self default 
-		stopMethod: thisContext sender compiledCode method
+		stopMethod: thisContext sender homeMethod
 		during: aBlock
 ]
 

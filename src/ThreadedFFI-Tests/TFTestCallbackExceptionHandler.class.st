@@ -20,7 +20,7 @@ TFTestCallbackExceptionHandler >> handleExceptionDuring: aBlockClosure [
 		available signal ]
 ]
 
-{ #category : #handling }
+{ #category : #initialization }
 TFTestCallbackExceptionHandler >> initialize [
 
 	super initialize.

@@ -87,7 +87,7 @@ ReAbstractCritique >> actions [
 				
 				changesBrowser := (ChangesBrowser changes: { crit change })
 					extent: 500@400;
-					setModal: SystemWindow topWindow;
+					asModalWindow;
 					yourself.
 					
 				changesBrowser openDialog

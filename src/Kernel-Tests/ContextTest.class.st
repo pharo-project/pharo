@@ -113,7 +113,7 @@ ContextTest >> privRestartBlockTest [
 ContextTest >> setUp [
 
 	super setUp.
-	aCompiledMethod := Rectangle methodDict at: #areasOutside:.
+	aCompiledMethod := Rectangle compiledMethodAt: #areasOutside:.
 	aReceiver := 100 @ 100 corner: 200 @ 200.
 	aSender := thisContext.
 	anArgument := 420 @ 420 corner: 200 @ 200.
@@ -137,21 +137,74 @@ ContextTest >> testActivateReturnValue [
 ]
 
 { #category : #tests }
-ContextTest >> testActiveBlockContextHomeAndActiveHome [
-	[ self assert: thisContext home identicalTo:  thisContext activeHome.] value
-]
-
-{ #category : #private }
-ContextTest >> testActiveHomeMethodContext [
+ContextTest >> testActiveHome [
+	| block |
+	"Active BlockContext Home And ActiveHome"
+	block := [ self. "to make it non-clean" thisContext home == thisContext activeHome].
+	self assert: block class equals: FullBlockClosure.
+	self assert: block value.
+	
+	"for Method Context"
 	self
 		assert: aMethodContext activeHome identicalTo: aMethodContext;
-		assert: aMethodContext activeHome identicalTo: aMethodContext home
+		assert: aMethodContext activeHome identicalTo: aMethodContext home.
+	
+	"non-active block context"
+	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
+	self assert: (nonActiveBlockContext activeHome) isNil.
+		
+	
+]
+
+{ #category : #tests }
+ContextTest >> testAstScope [
+
+	| scope |
+	"test that we get a scope for optimized blocks"
+	aMethodContext pc: 88 + 1.
+	scope := aMethodContext astScope.
+	self assert: scope isOptimized.
+	
+	"test that we do not get a block scope when pushing a block on the stack"
+	aMethodContext pc: 92 + 1.
+	scope := aMethodContext astScope.
+	self assert: aMethodContext sourceNodeExecuted isBlock.
+	self deny: scope isBlockScope
 ]
 
 { #category : #tests }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext)
+]
+
+{ #category : #tests }
+ContextTest >> testHasNonLocalReturn [
+	"the method has a non-local return, in some block inside"
+	self assert: thisContext method hasNonLocalReturn.
+	"but the context that executes not (as it is later another block context"
+	self deny: thisContext hasNonLocalReturn.
+	"this block context has no non-local return"
+	[ self deny: thisContext hasNonLocalReturn] value.
+	"but this"
+	[ self assert: thisContext hasNonLocalReturn. ^self] value.
+	"again, this is about the context locally, nested blocks to not count"
+	[ self deny: thisContext hasNonLocalReturn. [^self]] value.
+	[ self deny: thisContext hasNonLocalReturn. [self assert: thisContext hasNonLocalReturn. ^self]] value
+]
+
+{ #category : #tests }
+ContextTest >> testHome [
+
+	self assert: aMethodContext home identicalTo: aMethodContext.
+	[ self assert: thisContext home identicalTo:  thisContext sender] value
+]
+
+{ #category : #tests }
+ContextTest >> testHomeMethod [
+
+	self assert: aMethodContext homeMethod identicalTo: aMethodContext home method.
+	[ self assert: thisContext homeMethod identicalTo:  thisContext home method] value
 ]
 
 { #category : #tests }
@@ -198,12 +251,6 @@ ContextTest >> testNoStepIntoQuickMethod [
 	has not been set."
 	newContext := aMethodContext step.
 	self assert: newContext identicalTo: aMethodContext
-]
-
-{ #category : #tests }
-ContextTest >> testNonActiveBlockContextActiveHome [
-	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
-	self assert: (nonActiveBlockContext activeHome) isNil.
 ]
 
 { #category : #tests }

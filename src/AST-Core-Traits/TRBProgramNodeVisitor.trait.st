@@ -13,7 +13,7 @@ TRBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitArgumentNodes: aNodeCollection [ 
+TRBProgramNodeVisitor >> visitArgumentNodes: aNodeCollection [
 	"Sent *once* when visiting method and block nodes"
 	^aNodeCollection do: [ :each | self visitArgumentNode: each ]
 ]
@@ -25,7 +25,7 @@ TRBProgramNodeVisitor >> visitArgumentVariableNode: anArgumentNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitArrayNode: anArrayNode [ 
+TRBProgramNodeVisitor >> visitArrayNode: anArrayNode [
 
 	anArrayNode children do: [:each | self visitNode: each]
 ]
@@ -33,25 +33,24 @@ TRBProgramNodeVisitor >> visitArrayNode: anArrayNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitAssignmentNode: anAssignmentNode [
 
-	self 
+	self
 		visitNode: anAssignmentNode variable;
 		visitNode: anAssignmentNode value
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitBlockNode: aBlockNode [ 
-	self 
+TRBProgramNodeVisitor >> visitBlockNode: aBlockNode [
+	self
 		visitArgumentNodes: aBlockNode arguments;
 		visitNode: aBlockNode body
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [ 
+TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 	aCascadeNode messages do: [:aMessage | self visitNode: aMessage]
 ]
 
 { #category : #visiting }
-
 TRBProgramNodeVisitor >> visitClassVariableNode: aNode [
 	^ self visitLiteralVariableNode: aNode
 ]
@@ -78,7 +77,7 @@ TRBProgramNodeVisitor >> visitInstanceVariableNode: aSelfNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
+TRBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	aRBLiteralArrayNode contents do: [:each | self visitNode: each]
 ]
 
@@ -107,14 +106,14 @@ TRBProgramNodeVisitor >> visitLocalVariableNode: aNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitMessageNode: aMessageNode [ 
-	(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded]) 
+TRBProgramNodeVisitor >> visitMessageNode: aMessageNode [
+	(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded])
 		ifTrue: [self visitNode: aMessageNode receiver].
 	aMessageNode arguments do: [:each | self visitNode: each]
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitMethodNode: aMethodNode [ 
+TRBProgramNodeVisitor >> visitMethodNode: aMethodNode [
 	self visitArgumentNodes: aMethodNode arguments.
 	aMethodNode pragmas
 		do: [:each | self visitNode: each ].
@@ -122,7 +121,7 @@ TRBProgramNodeVisitor >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitNode: aNode [ 
+TRBProgramNodeVisitor >> visitNode: aNode [
 	^aNode acceptVisitor: self
 ]
 
@@ -131,15 +130,15 @@ TRBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitPatternBlockNode: aRBPatternBlockNode [ 
-	self 
+TRBProgramNodeVisitor >> visitPatternBlockNode: aRBPatternBlockNode [
+	self
 		visitArgumentNodes: aRBPatternBlockNode arguments;
 		visitNode: aRBPatternBlockNode body
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [ 
-	self 
+TRBProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
+	self
 		visitNode: aRBPatternWrapperBlockNode wrappedNode;
 		visitArgumentNodes: aRBPatternWrapperBlockNode arguments;
 		visitNode: aRBPatternWrapperBlockNode body
@@ -151,7 +150,7 @@ TRBProgramNodeVisitor >> visitPragmaNode: aPragmaNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitReturnNode: aReturnNode [ 
+TRBProgramNodeVisitor >> visitReturnNode: aReturnNode [
 	^ self visitNode: aReturnNode value
 ]
 
@@ -161,7 +160,7 @@ TRBProgramNodeVisitor >> visitSelfNode: aSelfNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitSequenceNode: aSequenceNode [ 
+TRBProgramNodeVisitor >> visitSequenceNode: aSequenceNode [
 	self visitTemporaryNodes: aSequenceNode temporaries.
 	aSequenceNode statements do: [:each | self visitNode: each]
 ]
@@ -191,7 +190,7 @@ TRBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNod
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitTemporaryNode: aNode [ 
+TRBProgramNodeVisitor >> visitTemporaryNode: aNode [
 	"Sent *each time* a temporary node is found"
 	^ self visitVariableNode: aNode
 ]
@@ -206,7 +205,7 @@ TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
-	
+
 	^ self visitLocalVariableNode: aNode
 ]
 
@@ -217,7 +216,7 @@ TRBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
-	
+
 	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 

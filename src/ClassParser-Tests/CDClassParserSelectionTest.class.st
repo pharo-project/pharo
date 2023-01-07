@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #running }
-CDClassParserSelectionTest >> setUp [ 
+CDClassParserSelectionTest >> setUp [
 	super setUp.
-	slotuse := ClassDefinitionPrinter showFluidClassDefinition.
+	slotuse := ClassDefinitionPrinter showFluidClassDefinition
 ]
 
 { #category : #running }
@@ -27,15 +27,15 @@ CDClassParserSelectionTest >> testParsingAClassWhenFluidSyntaxIsOnShouldSelectTh
  	self deny: self class needsSlotClassDefinition.
 	ClassDefinitionPrinter showFluidClassDefinition: true.
 	self assert: ClassDefinitionPrinter showFluidClassDefinition.
-	
-	self 
+
+	self
 		assert: (self class definitionString)
-		equals: 
+		equals:
 	  'TestCase << #CDClassParserSelectionTest
 	slots: { #slotuse };
 	package: ''ClassParser-Tests'''.
 	"ok so far so good"
-	
+
 	self assert: self class classDefinitionParserClass equals: CDFluidClassDefinitionParser.
 	"here we cannot invoke the definition printer because it is chosen without asking the class so far."
 ]
@@ -45,15 +45,15 @@ CDClassParserSelectionTest >> testParsingAFluidClassShouldSelectTheFluidParser [
 
 	"we get a complex class"
 	self assert: MockWithComplexSlot needsSlotClassDefinition.
-	self 
+	self
 		assert: (MockWithComplexSlot definitionString)
-		equals: 
+		equals:
 	  'Object << #MockWithComplexSlot
 	slots: { #aComplexSlot => ObservableSlot };
 	tag: ''Fluid'';
 	package: ''Kernel-Tests'''.
 	"ok so far so good"
-	
+
 	self assert: MockWithComplexSlot classDefinitionParserClass equals: CDFluidClassDefinitionParser.
 	"here we cannot invoke the definition printer because it is chosen without asking the class so far."
 ]
@@ -65,15 +65,15 @@ CDClassParserSelectionTest >> testParsingAFluidClassShouldSelectTheFluidParserEv
 	self assert: MockWithComplexSlot needsSlotClassDefinition.
 	ClassDefinitionPrinter showFluidClassDefinition: false.
 	self deny: 	ClassDefinitionPrinter showFluidClassDefinition.
-	self 
+	self
 		assert: (MockWithComplexSlot definitionString)
-		equals: 
+		equals:
 	  'Object << #MockWithComplexSlot
 	slots: { #aComplexSlot => ObservableSlot };
 	tag: ''Fluid'';
 	package: ''Kernel-Tests'''.
 	"ok so far so good"
-	
+
 	self assert: MockWithComplexSlot classDefinitionParserClass equals: CDFluidClassDefinitionParser.
 	"here we cannot invoke the definition printer because it is chosen without asking the class so far."
 ]
@@ -85,16 +85,16 @@ CDClassParserSelectionTest >> testParsingANonComplexClassWhenFluidSyntaxOff [
  	self deny: self class needsSlotClassDefinition.
 	ClassDefinitionPrinter showFluidClassDefinition: false.
 	self deny: ClassDefinitionPrinter showFluidClassDefinition.
-	
-	self 
+
+	self
 		assert: (self class definitionString)
-		equals: 
+		equals:
 	  'TestCase subclass: #CDClassParserSelectionTest
 	instanceVariableNames: ''slotuse''
 	classVariableNames: ''''
 	package: ''ClassParser-Tests'''.
 	"ok so far so good"
-	
+
 	self assert: self class classDefinitionParserClass equals: CDClassDefinitionParser.
 	"here we cannot invoke the definition printer because it is chosen without asking the class so far."
 ]

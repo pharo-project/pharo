@@ -2,9 +2,9 @@ Extension { #name : #Class }
 
 { #category : #'*CodeExport' }
 Class >> fileOut [
-	"Create a file whose name is the name of the receiver with '.st' as the 
+	"Create a file whose name is the name of the receiver with '.st' as the
 	extension, and file a description of the receiver onto it."
-	
+
 	| internalStream |
 	internalStream := (String new: 100) writeStream.
 	internalStream header; timeStamp.
@@ -44,7 +44,7 @@ Class >> fileOutOn: aFileStream initializing: aBool [
 ]
 
 { #category : #'*CodeExport' }
-Class >> fileOutPool: aPool onFileStream: aFileStream [ 
+Class >> fileOutPool: aPool onFileStream: aFileStream [
 	| aPoolName |
 	(aPool  isKindOf: SharedPool class) ifTrue:[^self notify: 'we do not fileout SharedPool type shared pools for now'].
 	aPoolName := self environment keyAtIdentityValue: aPool.
@@ -67,9 +67,9 @@ Class >> fileOutPool: aPool onFileStream: aFileStream [
 Class >> fileOutSharedPoolsOn: aFileStream [
 	"file out the shared pools of this class after prompting the user about each pool"
 	| poolsToFileOut |
-	poolsToFileOut := self sharedPools select: 
+	poolsToFileOut := self sharedPools select:
 		[:aPool | (self shouldFileOutPool: (self environment keyAtIdentityValue: aPool))].
-	poolsToFileOut do: [:aPool | self fileOutPool: aPool onFileStream: aFileStream].
+	poolsToFileOut do: [:aPool | self fileOutPool: aPool onFileStream: aFileStream]
 ]
 
 { #category : #'*CodeExport' }

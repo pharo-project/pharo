@@ -1054,6 +1054,25 @@ Integer >> hex [
 	^ self storeStringBase: 16
 ]
 
+{ #category : #converting }
+Integer >> hexString [
+	"Returns a string representation of the receiver as hexadecimal, prefixed with 16r."
+	
+	"Consider using any of
+		printStringHex
+		printStringBase: 16
+		printStringBase: 16 length: 8 padded: true
+		storeStringHex
+		storeStringBase: 16
+		storeStringBase: 16 length: 11 padded: true"
+		
+	"12 hexString >>> '16rC'"	
+	"10 hexString >>> '16rA'"	
+	"-10 hexString >>> '-16rA'"	
+		
+	^ self storeStringBase: 16
+]
+
 { #category : #'bit manipulation' }
 Integer >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the  
@@ -1070,6 +1089,35 @@ Integer >> highBitOfMagnitude [
 	"Answer the index of the high order bit of the magnitude of the  
 	receiver, or zero if the receiver is zero."
 	^ self subclassResponsibility
+]
+
+{ #category : #converting }
+Integer >> humanReadableSISizeOn: aStream [
+	"Print a SI representation of myself on the argument. See humanReadableSIByteSize for better comment."
+	
+	| exponent base |
+	base := 1000.
+	self < base
+		ifTrue: [ ^ aStream print: self; space; nextPut: $B ].
+	exponent := (self log / base log) asInteger.
+	(self / (base ** exponent)) printOn: aStream showingDecimalPlaces: 2.
+	aStream
+		space;
+		nextPut: ('kMGTPE' at: exponent);
+		nextPut: $B.
+]
+
+{ #category : #converting }
+Integer >> humanReadableSISizeString [
+	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'. It means that it takes 1000 and not 1024 as unit as humanReadableByteSizeString does."
+	
+	"(1000 * 1000 * 1000) humanReadableSISizeString >>> '1.00 GB'"
+	"(1000 * 1000 * 1000) humanReadableByteSizeString >>> '953 MB'"
+	"(1024 * 1024 * 1024) humanReadableSISizeString >>> '1.07 GB'"
+	
+	
+	^ String streamContents: [ :s|
+		self humanReadableSISizeOn: s ]
 ]
 
 { #category : #testing }

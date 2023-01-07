@@ -40,7 +40,7 @@ ZnFastLineReader >> close [
 	readStream close
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnFastLineReader >> initialize [
 	super initialize.
 	cr := Character cr.

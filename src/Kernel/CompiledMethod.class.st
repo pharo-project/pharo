@@ -468,6 +468,13 @@ CompiledMethod >> hasComment [
 ]
 
 { #category : #testing }
+CompiledMethod >> hasNonLocalReturn [
+	"Answer whether any block has a method-return ('^') in its code."
+	self allBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
+	^false
+]
+
+{ #category : #testing }
 CompiledMethod >> hasPragma [
 	^ self hasProperties and: [self pragmas isNotEmpty]
 ]
@@ -653,13 +660,6 @@ CompiledMethod >> isRequired: marker [
 CompiledMethod >> isReturnField [
 	"Answer whether the receiver is a quick return of an instance variable."
 	^ self primitive between: 264 and: 519
-]
-
-{ #category : #testing }
-CompiledMethod >> isReturnSpecial [
-	"Answer whether the receiver is a quick return of self or constant."
-
-	^ self primitive between: 256 and: 263
 ]
 
 { #category : #printing }
