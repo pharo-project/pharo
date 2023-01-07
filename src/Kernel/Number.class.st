@@ -206,7 +206,6 @@ Number >> asPoint [
 { #category : #converting }
 Number >> asScaledDecimal [
 	"Answer a scaled decimal number approximating the receiver."
-	#Numeric.
 
 	^ self asScaledDecimal: 8
 ]
