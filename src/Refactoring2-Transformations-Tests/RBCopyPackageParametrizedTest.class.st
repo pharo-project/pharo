@@ -11,6 +11,20 @@ RBCopyPackageParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : #running }
+RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: className [
+
+	(RBAddMethodTransformation
+		sourceCode: (String streamContents: [ : stream |
+									stream << 'foo';
+										cr;
+										<< '	^ ';
+										<< classRefName ])
+		in: className asSymbol
+		withProtocols: { #accessing }) 
+			asRefactoring execute
+]
+
 { #category : #accessing }
 RBCopyPackageParametrizedTest >> constructor [ 
 	^ #copyPackage:in:
@@ -45,15 +59,16 @@ RBCopyPackageParametrizedTest >> setUp [
 	model := self defaultNamespace new.
 	self
 		createPackageNamed: 'RefactoringSmallPackageForTest'
-		withClasses: #('RBFTTest1' 'RBFTTest2')
+		withClasses: #('RBFTTest1' 'RBFTTest2').
+	self addMethodWithRefTo: 'RBFTTest2' inClass: 'RBFTTest1'
 ]
 
 { #category : #running }
 RBCopyPackageParametrizedTest >> tearDown [
 
-	super tearDown.
 	(RBRefactoryChangeFactory instance removePackageNamed: 'RefactoringSmallPackageForTest')
 		execute.
+	super tearDown
 ]
 
 { #category : #'failure tests' }
@@ -65,9 +80,7 @@ RBCopyPackageParametrizedTest >> testBadName [
 { #category : #tests }
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
-	"We should use a small package for this tests and it should have references to its classes sso that we can check it.
 
-	See https://github.com/pharo-project/pharo/issues/11524"
 	self timeLimit: 2 minutes.
 	refactoring := (self createRefactoringWithArguments: { #'RefactoringSmallPackageForTest' . #'RefactoringCOPYSmallPackageForTest'}).
 	self executeRefactoring: (refactoring classMappings: { #RBFTTest1 -> #BarFTTest1 . #RBFTTest2 -> #BarFTTest2 } asDictionary).
@@ -80,13 +93,10 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 		assert: (aModel classNamed: #BarFTTest2) superclass name
 		equals: #Object.
 
-	"We should create a little package and this package should have a class pointing to another class of this package.
-	and we should check that the refactored version points to the class copied version.
-	This is what this version is doing:
-
-	self  assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages)
-		equals: (self parseMethod: 'pages
-	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')"
+	self
+		assert: ((aModel classNamed: #BarFTTest1) parseTreeFor: #foo)
+		equals: (self parseMethod: 'foo
+			^ BarFTTest2')
 ]
 
 { #category : #tests }
