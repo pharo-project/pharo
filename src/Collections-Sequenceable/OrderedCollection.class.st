@@ -83,13 +83,13 @@ OrderedCollection class >> arrayType [
 OrderedCollection class >> cleanUp: aggressive [
 	"Rehash all instances when cleaning aggressively"
 
-	aggressive ifTrue: [self compactAll].
+	aggressive ifTrue: [self compactAll]
 ]
 
 { #category : #cleanup }
 OrderedCollection class >> compactAll [
-	"OrderedCollection compactAll"	
-		
+	"OrderedCollection compactAll"
+
 	self allSubclassesDo: #compactAllInstances
 ]
 
@@ -104,7 +104,7 @@ OrderedCollection class >> new [
 ]
 
 { #category : #'instance creation' }
-OrderedCollection class >> new: anInteger [ 
+OrderedCollection class >> new: anInteger [
 	^ self basicNew setCollection: (self arrayType new: anInteger)
 ]
 
@@ -119,7 +119,7 @@ OrderedCollection class >> new: anInteger withAll: anObject [
 ]
 
 { #category : #'instance creation' }
-OrderedCollection class >> newFrom: aCollection [ 
+OrderedCollection class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 
 	| newCollection |
@@ -162,10 +162,10 @@ OrderedCollection class >> streamSpecies [
 OrderedCollection >> add: newObject [
 	"Add a new object at the end of the collection, and returns the object itself"
 	"((OrderedCollection new add: 42; yourself) add: 43; yourself) asArray >>> #(42 43)"
-	
+
 	"Add returns the object itself"
 	"(OrderedCollection new add: 42) >>> 42"
-	
+
 	"You may want to use yourself to return the collection itself"
 	"(OrderedCollection new add: 42; yourself) class >>> OrderedCollection"
 	"(OrderedCollection new add: 42; yourself) size >>> 1"
@@ -173,45 +173,45 @@ OrderedCollection >> add: newObject [
 ]
 
 { #category : #adding }
-OrderedCollection >> add: newObject after: oldObject [ 
-	"Add the argument, newObject, as an element of the receiver. Put it in 
+OrderedCollection >> add: newObject after: oldObject [
+	"Add the argument, newObject, as an element of the receiver. Put it in
 	the sequence just succeeding oldObject. Answer newObject.
 	Raises an error if oldObject is not found"
-	
+
 	"(OrderedCollection new add: 41; add: 42 after: 41; yourself) asArray >>>  #(41 42)"
 	"(OrderedCollection new add: 41; add: 42 after: 41; add: 43 after: 41; yourself) asArray >>>  #(41 43 42)"
-		
+
 	^self insert: newObject before: (self find: oldObject) + 1
 ]
 
 { #category : #adding }
-OrderedCollection >> add: newObject afterIndex: index [ 
-	"Add the argument, newObject, as an element of the receiver. Put it in 
+OrderedCollection >> add: newObject afterIndex: index [
+	"Add the argument, newObject, as an element of the receiver. Put it in
 	the sequence just after index. Answer newObject."
 	(index between: 0 and: self size) ifFalse:[^self errorSubscriptBounds: index].
 	^self insert: newObject before: firstIndex + index
 ]
 
 { #category : #adding }
-OrderedCollection >> add: newObject before: oldObject [ 
-	"Add the argument, newObject, as an element of the receiver. Put it in 
+OrderedCollection >> add: newObject before: oldObject [
+	"Add the argument, newObject, as an element of the receiver. Put it in
 	the sequence just preceding oldObject. Answer newObject."
-	
+
 	"(OrderedCollection new add: 42; add: 41 before: 42; yourself) asArray >>> #(41 42)"
-	
+
 	^ self insert: newObject before: (self find: oldObject)
 ]
 
 { #category : #adding }
-OrderedCollection >> add: newObject beforeIndex: index [ 
-	"Add the argument, newObject, as an element of the receiver. Put it in 
+OrderedCollection >> add: newObject beforeIndex: index [
+	"Add the argument, newObject, as an element of the receiver. Put it in
 	the sequence just before index. Answer newObject."
 	(index between: 1 and: self size+1) ifFalse:[^self errorSubscriptBounds: index].
 	^self insert: newObject before: firstIndex + index - 1
 ]
 
 { #category : #adding }
-OrderedCollection >> addAll: aCollection [ 
+OrderedCollection >> addAll: aCollection [
 	"Add each element of aCollection at my end. Answer aCollection."
 
 	"(OrderedCollection new addAll: #(41 42); yourself) asArray >>> #(41 42)"
@@ -221,10 +221,10 @@ OrderedCollection >> addAll: aCollection [
 ]
 
 { #category : #adding }
-OrderedCollection >> addAllFirst: anOrderedCollection [ 
-	"Add each element of anOrderedCollection at the beginning of the 
+OrderedCollection >> addAllFirst: anOrderedCollection [
+	"Add each element of anOrderedCollection at the beginning of the
 	receiver. Answer anOrderedCollection."
-	
+
 	"((OrderedCollection new add: 40; addAllFirst: #(41 42); yourself) asArray) >>  #(41 42 40)"
 
 	anOrderedCollection reverseDo: [:each | self addFirst: each].
@@ -232,7 +232,7 @@ OrderedCollection >> addAllFirst: anOrderedCollection [
 ]
 
 { #category : #adding }
-OrderedCollection >> addAllFirstUnlessAlreadyPresent: anOrderedCollection [ 
+OrderedCollection >> addAllFirstUnlessAlreadyPresent: anOrderedCollection [
 	"Add each element of anOrderedCollection at the beginning of the receiver, preserving the order, but do not add any items that are already in the receiver.  Answer anOrderedCollection."
 
 	anOrderedCollection reverseDo:
@@ -241,8 +241,8 @@ OrderedCollection >> addAllFirstUnlessAlreadyPresent: anOrderedCollection [
 ]
 
 { #category : #adding }
-OrderedCollection >> addAllLast: aCollection [ 
-	"Add each element of aCollection at the end of the receiver. 
+OrderedCollection >> addAllLast: aCollection [
+	"Add each element of aCollection at the end of the receiver.
 	Answer aCollection."
 
 	aCollection do: [:each | self addLast: each].
@@ -250,7 +250,7 @@ OrderedCollection >> addAllLast: aCollection [
 ]
 
 { #category : #adding }
-OrderedCollection >> addFirst: newObject [ 
+OrderedCollection >> addFirst: newObject [
 	"Add newObject to the beginning of the receiver. Answer newObject."
 
 	firstIndex = 1 ifTrue: [self makeRoomAtFirst].
@@ -259,7 +259,7 @@ OrderedCollection >> addFirst: newObject [
 ]
 
 { #category : #adding }
-OrderedCollection >> addLast: newObject [ 
+OrderedCollection >> addLast: newObject [
 	"Add newObject to the end of the receiver. Answer newObject."
 
 	lastIndex = array size ifTrue: [self makeRoomAtLast].
@@ -274,12 +274,12 @@ OrderedCollection >> asArray [
 	"OrderedCollection new class >>> OrderedCollection"
 	"OrderedCollection new asArray class >>> Array"
 	"(OrderedCollection new add: 42; add: 43; yourself) asArray >>> #(42 43)"
-	
-	^ (Array new: self size) replaceFrom: 1 to: self size with: array startingAt: firstIndex.
+
+	^ (Array new: self size) replaceFrom: 1 to: self size with: array startingAt: firstIndex
 ]
 
 { #category : #converting }
-OrderedCollection >> asOrderedCollection [ 
+OrderedCollection >> asOrderedCollection [
 
 	self species == OrderedCollection ifTrue: [ ^self ].
 	^super asOrderedCollection
@@ -336,19 +336,19 @@ OrderedCollection >> capacity [
 
 	"OrderedCollection new capacity >>> 10"
 	"(OrderedCollection new addAll: (1 to: 15); yourself) capacity >>> 20"
-	
+
 	^ array size
 ]
 
 { #category : #enumerating }
-OrderedCollection >> collect: aBlock [ 
-	"Evaluate aBlock with each of my elements as the argument. Collect the 
-	resulting values into a collection that is like me. Answer the new 
+OrderedCollection >> collect: aBlock [
+	"Evaluate aBlock with each of my elements as the argument. Collect the
+	resulting values into a collection that is like me. Answer the new
 	collection. Override superclass in order to use addLast:, not at:put:."
 
 	"(#(1 2 3) asOrderedCollection collect: [ :v | v * 10 ]) asArray >>> #(10 20 30)"
 	"(#(1 2 3) asOrderedCollection collect: [ :v | 10 ]) asArray >>> #(10 10 10)"
-	
+
 	| newCollection |
 	newCollection := self species new: self size.
 	firstIndex to: lastIndex do:
@@ -375,9 +375,9 @@ OrderedCollection >> collect: collectBlock thenSelect: selectBlock [
     | newCollection newElement |
 
     newCollection := self copyEmpty.
-    firstIndex to: lastIndex do: [ :index | 
+    firstIndex to: lastIndex do: [ :index |
 		newElement := collectBlock value: (array at: index).
-		(selectBlock value: newElement) 
+		(selectBlock value: newElement)
 			ifTrue: [ newCollection addLast: newElement ]].
     ^ newCollection
 ]
@@ -393,7 +393,7 @@ OrderedCollection >> compact [
 
     | newArray |
     newArray := self class arrayType new: lastIndex.
-    newArray 
+    newArray
         replaceFrom: firstIndex
         to: lastIndex
         with: array
@@ -409,7 +409,7 @@ OrderedCollection >> copyEmpty [
 ]
 
 { #category : #copying }
-OrderedCollection >> copyFrom: startIndex to: endIndex [ 
+OrderedCollection >> copyFrom: startIndex to: endIndex [
 	"Answer a copy of the receiver that contains elements from position
 	startIndex to endIndex."
 
@@ -417,16 +417,16 @@ OrderedCollection >> copyFrom: startIndex to: endIndex [
 ]
 
 { #category : #copying }
-OrderedCollection >> copyReplaceFrom: start to: stop with: replacementCollection [ 
+OrderedCollection >> copyReplaceFrom: start to: stop with: replacementCollection [
 	"Answer a copy of the receiver with replacementCollection's elements in
 	place of the receiver's start'th to stop'th elements. This does not expect
 	a 1-1 map from replacementCollection to the start to stop elements, so it
 	will do an insert or append."
 
 	| newOrderedCollection delta startIndex stopIndex |
-	"if start is less than 1, ignore stop and assume this is inserting at the front. 
-	if start greater than self size, ignore stop and assume this is appending. 
-	otherwise, it is replacing part of me and start and stop have to be within my 
+	"if start is less than 1, ignore stop and assume this is inserting at the front.
+	if start greater than self size, ignore stop and assume this is appending.
+	otherwise, it is replacing part of me and start and stop have to be within my
 	bounds. "
 	delta := 0.
 	startIndex := start.
@@ -435,22 +435,22 @@ OrderedCollection >> copyReplaceFrom: start to: stop with: replacementCollection
 		ifTrue: [startIndex := stopIndex := 0]
 		ifFalse: [startIndex > self size
 				ifTrue: [startIndex := stopIndex := self size + 1]
-				ifFalse: 
+				ifFalse:
 					[(stopIndex < (startIndex - 1) or: [stopIndex > self size])
 						ifTrue: [self errorOutOfBounds].
 					delta := stopIndex - startIndex + 1]].
-	newOrderedCollection := 
+	newOrderedCollection :=
 		self species new: self size + replacementCollection size - delta.
 	1 to: startIndex - 1 do: [:index | newOrderedCollection add: (self at: index)].
-	1 to: replacementCollection size do: 
+	1 to: replacementCollection size do:
 		[:index | newOrderedCollection add: (replacementCollection at: index)].
 	stopIndex + 1 to: self size do: [:index | newOrderedCollection add: (self at: index)].
 	^newOrderedCollection
 ]
 
 { #category : #copying }
-OrderedCollection >> copyWith: newElement [ 
-	"Answer a copy of the receiver that is 1 bigger than the receiver and 
+OrderedCollection >> copyWith: newElement [
+	"Answer a copy of the receiver that is 1 bigger than the receiver and
 	includes the argument, newElement, at the end."
 
 	| newCollection |
@@ -463,7 +463,7 @@ OrderedCollection >> copyWith: newElement [
 OrderedCollection >> do: aBlock [
 	"Override the superclass for performance reasons."
 
-	firstIndex to: lastIndex do: [ :index | 
+	firstIndex to: lastIndex do: [ :index |
 		aBlock value: (array at: index) ]
 ]
 
@@ -472,7 +472,7 @@ OrderedCollection >> ensureBoundsFrom: fromIndex to: toIndex [
 	(fromIndex < 1)
 		ifTrue: [^self errorSubscriptBounds: fromIndex].
 	(toIndex + firstIndex - 1 > lastIndex)
-		ifTrue: [^self errorSubscriptBounds: toIndex].
+		ifTrue: [^self errorSubscriptBounds: toIndex]
 ]
 
 { #category : #private }
@@ -500,16 +500,16 @@ OrderedCollection >> find: oldObject [
 { #category : #private }
 OrderedCollection >> growAtFirst [
 	"Add new empty slots to the front of array, while keeping the empty slots at the end."
-	
+
 	"OrderedCollection new capacity >>> 10"
 	"(OrderedCollection new growAtFirst; capacity) >>> 20"
-	
+
 
 	| newArray newFirstIndex newLastIndex |
 	newArray := self class arrayType new: (array size * 2 max: 1).
 	newFirstIndex := newArray size - array size + firstIndex.
 	newLastIndex := newFirstIndex + lastIndex - firstIndex.
-	newArray 
+	newArray
 		replaceFrom: newFirstIndex
 		to: newLastIndex
 		with: array
@@ -528,7 +528,7 @@ OrderedCollection >> growAtLast [
 
 	| newArray |
 	newArray := self class arrayType new: (array size * 2 max: 1).
-	newArray 
+	newArray
 		replaceFrom: firstIndex
 		to: lastIndex
 		with: array
@@ -539,7 +539,7 @@ OrderedCollection >> growAtLast [
 { #category : #private }
 OrderedCollection >> insert: anObject before: spot [
 
-  "  spot is an index in the range firstIndex .. lastIndex, such an index is not known from outside the collection. 
+  "  spot is an index in the range firstIndex .. lastIndex, such an index is not known from outside the collection.
      Never use this method in your code, it is meant for private use by OrderedCollection only.
      The methods for use are:
         #add:before:   to insert an object before another object
@@ -548,7 +548,7 @@ OrderedCollection >> insert: anObject before: spot [
 	spotIndex := spot.
 	delta := spotIndex - firstIndex.
 	firstIndex = 1
-		ifTrue: 
+		ifTrue:
 			[self makeRoomAtFirst.
 			spotIndex := firstIndex + delta].
 	firstIndex := firstIndex - 1.
@@ -560,7 +560,7 @@ OrderedCollection >> insert: anObject before: spot [
 	array at: spotIndex - 1 put: anObject.
 "	index := firstIndex := firstIndex - 1.
 	[index < (spotIndex - 1)]
-		whileTrue: 
+		whileTrue:
 			[array at: index put: (array at: index + 1).
 			index := index + 1].
 	array at: index put: anObject."
@@ -568,9 +568,9 @@ OrderedCollection >> insert: anObject before: spot [
 ]
 
 { #category : #splitjoin }
-OrderedCollection >> join: aCollection [ 
+OrderedCollection >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
-	
+
 	| result |
 	result := self class new.
 	aCollection
@@ -582,10 +582,10 @@ OrderedCollection >> join: aCollection [
 { #category : #private }
 OrderedCollection >> makeRoomAtFirst [
 	"Make some empty slots at the front of the array. If we have more than 50% free space, then just move the elements, so that the first 50% of the slots are free, otherwise add new free slots to the front by growing. Precondition: firstIndex = 1"
-	
+
 	"#(1 2 3) asOrderedCollection capacity >>> 3"
 	"#(1 2 3) asOrderedCollection makeRoomAtFirst capacity >>> 6"
-	
+
 	| tally newFirstIndex newLastIndex |
 	tally := self size.
 	tally * 2 >= array size ifTrue: [ ^self growAtFirst ].
@@ -602,14 +602,14 @@ OrderedCollection >> makeRoomAtFirst [
 { #category : #private }
 OrderedCollection >> makeRoomAtLast [
 	"Make some empty slots at the end of the array. If we have more than 50% free space, then just move the elements, so that the last 50% of the slots are free, otherwise add new free slots to the end by growing. Precondition: lastIndex = array size"
-	
+
 	| tally newFirstIndex newLastIndex |
 	tally := self size.
 	tally * 2 >= lastIndex ifTrue: [ ^self growAtLast ].
 	tally = 0 ifTrue: [ ^self resetTo: 1 ].
 	newLastIndex := lastIndex // 2.
 	newFirstIndex := newLastIndex - lastIndex + firstIndex.
-	array 
+	array
 		replaceFrom: newFirstIndex
 		to: newLastIndex
 		with: array
@@ -625,7 +625,7 @@ OrderedCollection >> postCopy [
 ]
 
 { #category : #copying }
-OrderedCollection >> postCopyFrom: startIndex to: endIndex [ 
+OrderedCollection >> postCopyFrom: startIndex to: endIndex [
 	"finish copying the array in a certain range."
 
 	endIndex < startIndex ifFalse: [
@@ -634,7 +634,7 @@ OrderedCollection >> postCopyFrom: startIndex to: endIndex [
 		if this sanity check were not applied."
 		(startIndex between: 1 and: self size) ifFalse: [^SubscriptOutOfBounds signalFor: startIndex lowerBound: (1 min: self size) upperBound: self size in: self].
 		(endIndex between: 1 and: self size) ifFalse: [^SubscriptOutOfBounds signalFor: endIndex lowerBound: (1 min: self size) upperBound: self size in: self]].
-	
+
 	"Add a protection that lacks in Array>>postcopy"
 	array := array copyFrom: startIndex + firstIndex - 1 to: (endIndex max: startIndex - 1) + firstIndex - 1.
 	firstIndex := 1.
@@ -642,17 +642,17 @@ OrderedCollection >> postCopyFrom: startIndex to: endIndex [
 ]
 
 { #category : #enumerating }
-OrderedCollection >> reject: rejectBlock [ 
+OrderedCollection >> reject: rejectBlock [
 	"Optimized version of Collection>>#reject:"
 
 	| newCollection element |
-	
+
 	newCollection := self copyEmpty.
-	
+
 	firstIndex to: lastIndex do: [ :index |
 		(rejectBlock value: (element := array at: index))
 			ifFalse: [ newCollection addLast: element ]].
-		
+
 	^ newCollection
 ]
 
@@ -667,7 +667,7 @@ OrderedCollection >> reject: rejectBlock thenCollect: collectBlock [
     firstIndex to: lastIndex do: [ :index |
 		| element |
 		element := array at: index.
-		(rejectBlock value: element) 
+		(rejectBlock value: element)
 			ifFalse: [ newCollection addLast: (collectBlock value: element) ]].
 
     ^ newCollection
@@ -679,9 +679,9 @@ OrderedCollection >> remove: oldObject ifAbsent: absentBlock [
 	| index |
 	index := firstIndex.
 	[index <= lastIndex]
-		whileTrue: 
+		whileTrue:
 			[oldObject = (array at: index)
-				ifTrue: 
+				ifTrue:
 					[self removeIndex: index.
 					^ oldObject]
 				ifFalse: [index := index + 1]].
@@ -692,12 +692,12 @@ OrderedCollection >> remove: oldObject ifAbsent: absentBlock [
 OrderedCollection >> removeAll [
 	"remove all the elements from this collection.
 	Keep same amount of storage"
-	
+
 	self setCollection: (self class arrayType new: array size)
 ]
 
 { #category : #removing }
-OrderedCollection >> removeAllSuchThat: aBlock [ 
+OrderedCollection >> removeAllSuchThat: aBlock [
 	"Remove each element of the receiver for which aBlock evaluates to true.
 	The method in Collection is O(N^2), this is O(N)."
 
@@ -722,7 +722,7 @@ OrderedCollection >> removeAt: index [
 { #category : #removing }
 OrderedCollection >> removeDuplicates [
 	"Remove the copies of elements, but keep the same order"
-	
+
 	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
 	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
 
@@ -741,7 +741,7 @@ OrderedCollection >> removeDuplicates [
 
 { #category : #removing }
 OrderedCollection >> removeFirst [
-	"Remove the first element of the receiver and answer it. If the receiver is 
+	"Remove the first element of the receiver and answer it. If the receiver is
 	empty, create an error notification."
 	| firstObject |
 	self emptyCheck.
@@ -752,7 +752,7 @@ OrderedCollection >> removeFirst [
 ]
 
 { #category : #removing }
-OrderedCollection >> removeFirst: n [ 
+OrderedCollection >> removeFirst: n [
 	"Remove first n object into an array"
 	| list |
 	list := self class arrayType new: n.
@@ -772,18 +772,18 @@ OrderedCollection >> removeIndex: removedIndex [
      The method for public use is:
         #removeAt: "
 
-	array 
-		replaceFrom: removedIndex 
-		to: lastIndex - 1 
-		with: array 
+	array
+		replaceFrom: removedIndex
+		to: lastIndex - 1
+		with: array
 		startingAt: removedIndex+1.
 	array at: lastIndex put: nil.
-	lastIndex := lastIndex - 1.
+	lastIndex := lastIndex - 1
 ]
 
 { #category : #removing }
 OrderedCollection >> removeLast [
-	"Remove the last element of the receiver and answer it. If the receiver is 
+	"Remove the last element of the receiver and answer it. If the receiver is
 	empty, create an error notification."
 	| lastObject |
 	self emptyCheck.
@@ -794,7 +794,7 @@ OrderedCollection >> removeLast [
 ]
 
 { #category : #removing }
-OrderedCollection >> removeLast: n [ 
+OrderedCollection >> removeLast: n [
 	"Remove last n object into an array with last in last position"
 	| list |
 	list := self class arrayType new: n.
@@ -811,7 +811,7 @@ OrderedCollection >> removeLast: n [
 { #category : #initialization }
 OrderedCollection >> reset [
 	"Quickly remove all elements. The objects will be still referenced, but will not be 	accessible."
-	
+
 	self resetTo: 1
 ]
 
@@ -825,7 +825,7 @@ OrderedCollection >> resetTo: index [
 OrderedCollection >> reverseDo: aBlock [
 	"Override the superclass for performance reasons."
 
-	lastIndex to: firstIndex by: -1 do: [ :index | 
+	lastIndex to: firstIndex by: -1 do: [ :index |
 		aBlock value: (array at: index) ]
 ]
 
@@ -841,17 +841,17 @@ OrderedCollection >> reversed [
 ]
 
 { #category : #enumerating }
-OrderedCollection >> select: selectBlock [ 
+OrderedCollection >> select: selectBlock [
 	"Optimized version of Collection>>#select: "
 
 	| newCollection element |
-	
+
 	newCollection := self copyEmpty.
-	
+
 	firstIndex to: lastIndex do: [ :index |
 		(selectBlock value: (element := array at: index))
 			ifTrue: [ newCollection addLast: element ]].
-		
+
 	^ newCollection
 ]
 
@@ -865,7 +865,7 @@ OrderedCollection >> select: selectBlock thenCollect: collectBlock [
 
     firstIndex to: lastIndex do: [ :index |
 		element := array at: index.
-		(selectBlock value: element) 
+		(selectBlock value: element)
 			ifTrue: [ newCollection addLast: (collectBlock value: element) ]].
 
     ^ newCollection
@@ -881,7 +881,7 @@ OrderedCollection >> setCollection: anArray [
 OrderedCollection >> setContents: anArray [
 	array := anArray.
 	firstIndex := 1.
-	lastIndex := array size.
+	lastIndex := array size
 ]
 
 { #category : #accessing }
@@ -892,22 +892,22 @@ OrderedCollection >> size [
 ]
 
 { #category : #sorting }
-OrderedCollection >> sort: aSortBlock [ 
+OrderedCollection >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
 
 	self size <= 1 ifTrue: [^ self].  "nothing to do"
 	array
 		mergeSortFrom: firstIndex
-		to: lastIndex 
-		src: array shallowCopy 
-		dst: array 
+		to: lastIndex
+		src: array shallowCopy
+		dst: array
 		by: aSortBlock
 ]
 
 { #category : #enumerating }
-OrderedCollection >> with: otherCollection collect: twoArgBlock [ 
-	"Collect and return the result of evaluating twoArgBlock with 
+OrderedCollection >> with: otherCollection collect: twoArgBlock [
+	"Collect and return the result of evaluating twoArgBlock with
 	corresponding elements from this collection and otherCollection."
 	| result |
 	otherCollection size = self size ifFalse: [self error: 'otherCollection must be the same size'].
@@ -919,7 +919,7 @@ OrderedCollection >> with: otherCollection collect: twoArgBlock [
 ]
 
 { #category : #enumerating }
-OrderedCollection >> withIndexCollect: elementAndIndexBlock [ 
+OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 	"Just like with:collect: except that the iteration index supplies the second argument to the block. Override superclass in order to use addLast:, not at:put:."
 
 	| newCollection |
@@ -940,7 +940,7 @@ OrderedCollection >> withIndexSelect: elementAndIndexBlock select: selectBlock [
 
 	| newCollection element |
 	newCollection := self copyEmpty.
-	firstIndex to: lastIndex do: [ :index | 
+	firstIndex to: lastIndex do: [ :index |
 		(selectBlock value: (element := array at: index) value: index)
 			ifTrue: [ newCollection addLast: element ] ].
 	^ newCollection

@@ -87,9 +87,9 @@ Generator class >> on: aBlock [
 
 { #category : #examples }
 Generator class >> somePrimes [
-	"self somePrimes" 
-	
-	^ String streamContents: [ :str | 
+	"self somePrimes"
+
+	^ String streamContents: [ :str |
 		| generator |
 		generator := Generator on: [:g| Integer primesUpTo: 100 do:[:prime| g yield: prime]].
 		[generator atEnd] whileFalse:[ str nextPutAll: generator next printString; cr]]
@@ -188,14 +188,14 @@ Generator >> size [
 ]
 
 { #category : #public }
-Generator >> value: anObject [ 
+Generator >> value: anObject [
 	"Allows passing generators as arguments to methods expecting blocks.
 	A synonym for #yield: / #nextPut:."
 	^ self nextPut: anObject
 ]
 
 { #category : #public }
-Generator >> yield: anObject [ 
+Generator >> yield: anObject [
 	"Yield the next value to the consumer of the generator.
 	A synonym for #nextPut:"
 	^ self nextPut: anObject
