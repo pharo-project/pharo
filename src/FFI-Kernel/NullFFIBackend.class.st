@@ -4,7 +4,6 @@ I am a null implementation of a FFIBackend
 Class {
 	#name : #NullFFIBackend,
 	#superclass : #FFIBackend,
-	#type : #bytes,
 	#category : #'FFI-Kernel'
 }
 

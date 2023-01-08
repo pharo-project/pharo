@@ -4,7 +4,6 @@ I am an strategy to implement different backends for FFI.
 Class {
 	#name : #FFIBackend,
 	#superclass : #Object,
-	#type : #bytes,
 	#classVars : [
 		'Current'
 	],
