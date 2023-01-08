@@ -94,7 +94,7 @@ RGMetaclassStrategy >> definition [
 							nextPutAll: self owner slotDefinitionString]]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : #initialization }
 RGMetaclassStrategy >> initialize [
 
 	baseClass := RGUnresolvedValue recursive.

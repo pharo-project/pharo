@@ -16,7 +16,7 @@ Class {
 AtomicQueueItem >> initialize [
 	"make circular"
 	super initialize.
-	next := self.
+	next := self
 ]
 
 { #category : #testing }
@@ -35,9 +35,9 @@ AtomicQueueItem >> isZombie [
 { #category : #accessing }
 AtomicQueueItem >> makeCircular [
 	"Make a receiver circular, i.e. point to itself,
-	answer the old value of next variable. 
+	answer the old value of next variable.
 	Note, this operation should be atomic"
-	
+
 	| temp |
 
 	" atomic swap here"
@@ -80,11 +80,11 @@ AtomicQueueItem >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream << '('.
-	self isZombie ifTrue: 
+	self isZombie ifTrue:
 		[ aStream << '<zombie>' ]
 	ifFalse:
 		[ object printOn: aStream ].
-	self isCircular ifTrue: 
+	self isCircular ifTrue:
 		[ aStream << ', Circular' ].
 	aStream
 		<< ')'

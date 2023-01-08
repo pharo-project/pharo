@@ -14,7 +14,7 @@ Class {
 		'extractionInterval',
 		'extractedMethodSelector'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }

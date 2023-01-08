@@ -76,9 +76,9 @@ CollectionArithmeticTest >> testDevision [
 CollectionArithmeticTest >> testRunningAverage [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
-	result := collection runningAverage: 2. 
+	result := collection runningAverage: 2.
 
-	self assert: result equals: {1 . (3/2) . 2 . (5/2) . 3}.
+	self assert: result equals: {1 . (3/2) . 2 . (5/2) . 3}
 ]
 
 { #category : #tests }
@@ -87,43 +87,43 @@ CollectionArithmeticTest >> testRunningAverageSubscriptOutOfBounds [
 	collection := #(1 1 2 2 3 3).
 
 	self should: [ collection runningAverage: 7 ] raise: SubscriptOutOfBounds.
-	self  should: [ collection runningAverage: -2 ] raise: SubscriptOutOfBounds.
+	self  should: [ collection runningAverage: -2 ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #tests }
 CollectionArithmeticTest >> testRunningAverageWithFullSubsetSizeIsSameAsAverage [
 	| collection |
 	collection := #(1 1 2 2 3 3).
-	
+
 	self
-		assert: (collection runningAverage: collection size) 
-		equals: { collection average }.
+		assert: (collection runningAverage: collection size)
+		equals: { collection average }
 ]
 
 { #category : #tests }
 CollectionArithmeticTest >> testRunningAverageWithSubsetSize1IsSameAsCollection [
 	| collection |
 	collection := #(1 1 2 2 3 3).
-	
+
 	self
-		assert: (collection runningAverage: 1) 
-		equals: collection.
+		assert: (collection runningAverage: 1)
+		equals: collection
 ]
 
 { #category : #tests }
 CollectionArithmeticTest >> testRunningMax [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
-	result := collection runningMax: 3. 
+	result := collection runningMax: 3.
 
-	self assert: result equals: {2 . 2 . 3 . 3}.
+	self assert: result equals: {2 . 2 . 3 . 3}
 ]
 
 { #category : #tests }
 CollectionArithmeticTest >> testRunningMin [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
-	result := collection runningMin: 3. 
+	result := collection runningMin: 3.
 
-	self assert: result equals: {1 . 1 . 2 . 2}.
+	self assert: result equals: {1 . 1 . 2 . 2}
 ]

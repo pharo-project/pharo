@@ -16,7 +16,7 @@ RGTraitDescriptionStrategy >> bindingOf: varName [
 	^ self environment bindingOf: varName
 ]
 
-{ #category : #variables }
+{ #category : #initialization }
 RGTraitDescriptionStrategy >> initialize [
 
 	super initialize.

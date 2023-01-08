@@ -64,7 +64,7 @@ ByteArray >> asString [
 { #category : #converting }
 ByteArray >> asWideString [
 
-	^ WideString fromByteArray: self.
+	^ WideString fromByteArray: self
 ]
 
 { #category : #accessing }
@@ -99,12 +99,12 @@ ByteArray >> defaultElement [
 ]
 
 { #category : #'platform independent access' }
-ByteArray >> doubleAt: index bigEndian: bool [ 
+ByteArray >> doubleAt: index bigEndian: bool [
 	"Return a 64 bit float starting from the given byte index"
 	| w1 w2 dbl |
 	w1 := self unsignedLongAt: index bigEndian: bool.
 	w2 := self unsignedLongAt: index + 4 bigEndian: bool.
-	dbl := Float new: 2. 
+	dbl := Float new: 2.
 	bool
 		ifTrue: [dbl basicAt: 1 put: w1.
 			dbl basicAt: 2 put: w2]
@@ -114,21 +114,21 @@ ByteArray >> doubleAt: index bigEndian: bool [
 ]
 
 { #category : #'platform independent access' }
-ByteArray >> doubleAt: index put: value bigEndian: bool [ 
+ByteArray >> doubleAt: index put: value bigEndian: bool [
 	"Store a 64 bit float starting from the given byte index"
 	| w1 w2 |
 	bool
 		ifTrue: [w1 := value basicAt: 1.
 			w2 := value basicAt: 2]
 		ifFalse: [w1 := value basicAt: 2.
-			w2 := value basicAt: 1]. 
+			w2 := value basicAt: 1].
 	self unsignedLongAt: index put: w1 bigEndian: bool.
 	self unsignedLongAt: index + 4 put: w2 bigEndian: bool.
 	^ value
 ]
 
 { #category : #'platform independent access' }
-ByteArray >> floatAt: index bigEndian: boolean [ 
+ByteArray >> floatAt: index bigEndian: boolean [
 	^ Float
 		fromIEEE32Bit: (self unsignedLongAt: index bigEndian: boolean)
 ]
@@ -145,7 +145,7 @@ ByteArray >> hash [
 { #category : #converting }
 ByteArray >> hex [
 	"Answer a lowercase hexadecimal String representation of the receiver"
-		
+
 	^ String
 		new: self size * 2
 		streamContents: [ :out |
@@ -161,21 +161,21 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 	i := 0.
 	self readStreamDo: [ :stream |
 		ch := stream next.
-		[ch notNil and: [ i < maxBytes ]] whileTrue: [ 
+		[ch notNil and: [ i < maxBytes ]] whileTrue: [
 			remainder := i \\ 16.
-			remainder = 0 ifTrue: [ 
+			remainder = 0 ifTrue: [
 				i = 0 ifFalse: [ aStream cr ].
-				aStream 
+				aStream
 					<< (i printPaddedWith: $0 to: 8 base: 16);
 					<< '  '.
 				string := String new writeStream ].
 			ch printHexByteOn: aStream.
 			aStream space.
-			(ch between: 32 and: 126) ifTrue: 
+			(ch between: 32 and: 126) ifTrue:
 				[ string nextPut: (Character value: ch) ]
 			ifFalse:
 				[ string nextPut: $. ].
-			remainder = 15 ifTrue: [ 
+			remainder = 15 ifTrue: [
 				aStream
 					<< '  |';
 					<< string contents;
@@ -183,7 +183,7 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 			ch := stream next.
 			i := i + 1 ].
 		remainder := i \\ 16.
-		(ch isNil and: [remainder between: 1 and: 15]) ifTrue: [ 
+		(ch isNil and: [remainder between: 1 and: 15]) ifTrue: [
 			(16 - remainder) timesRepeat: [ aStream nextPutAll: '   ' ].
 			aStream
 				<< '  |';
@@ -192,14 +192,14 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 			aStream
 				<< '|' ].
 		aStream cr.
-		self size > maxBytes ifTrue: 
-			[ aStream nextPutAll: '  ... truncated ...'; cr ] ].
+		self size > maxBytes ifTrue:
+			[ aStream nextPutAll: '  ... truncated ...'; cr ] ]
 ]
 
 { #category : #accessing }
 ByteArray >> indexOf: anInteger startingAt: start [
 
-	(anInteger isInteger and: [ anInteger between: 0 and: 255 ]) ifFalse: [ ^0 ].
+	(anInteger isInteger and: [ anInteger between: 0 and: 255 ]) ifFalse: [ ^ 0 ].
 	^ByteString indexOfAscii: anInteger inString: self startingAt: start
 ]
 
@@ -287,13 +287,13 @@ ByteArray >> putOn: aStream [
 { #category : #initialization }
 ByteArray >> readHexFrom: characterReadStream [
 	"Initialize the receiver from a hexadecimal representation."
-	
+
 	1 to: self size do: [ :offset |
 		self at: offset put: (Integer readHexByteFrom: characterReadStream) ]
 ]
 
 { #category : #private }
-ByteArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+ByteArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	replacement isString
@@ -379,9 +379,9 @@ ByteArray >> unsignedLongAt: index put: value bigEndian: aBool [
 { #category : #'platform independent access' }
 ByteArray >> unsignedShortAt: index bigEndian: aBool [
 	"Return a 16 bit unsigned integer quantity starting from the given byte index"
-	^aBool 
+	^aBool
 		ifTrue:[((self at: index) bitShift: 8) + (self at: index+1)]
-		ifFalse:[((self at: index+1) bitShift: 8) + (self at: index)].
+		ifFalse:[((self at: index+1) bitShift: 8) + (self at: index)]
 ]
 
 { #category : #'platform independent access' }

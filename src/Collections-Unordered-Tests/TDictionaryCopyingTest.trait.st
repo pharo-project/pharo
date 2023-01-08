@@ -38,7 +38,7 @@ TDictionaryCopyingTest >> nonEmptyDict [
 { #category : #requirements }
 TDictionaryCopyingTest >> nonEmptyDifferentFromNonEmptyDict [
 " return a dictionary for which all keys are not included in nonEmptyDict"
-self explicitRequirement.
+self explicitRequirement
 ]
 
 { #category : #'tests - fixture' }
@@ -63,10 +63,10 @@ TDictionaryCopyingTest >> test0FixtureDictionaryCopyingTest [
 
 { #category : #'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyCreatesNewObject [
-	
-	| copy | 
+
+	| copy |
 	copy := self nonEmpty copy.
-	self deny: self nonEmpty == copy.
+	self deny: self nonEmpty == copy
 ]
 
 { #category : #'tests - copy - clone' }
@@ -91,7 +91,7 @@ TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeys [
 	dictionary2 := self nonEmptyDict.
 	result := dictionary1 , dictionary2.
 	self assert: result size = ( dictionary2 size).
-	
+
 	dictionary2 associationsDo: [ :assoc | self assert: (result at: assoc key) = assoc value ]
 ]
 
@@ -99,16 +99,16 @@ TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeys [
 TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeysDifferentValues [
 
 	| dictionary1 dictionary2 result value |
-	
+
 	dictionary1 := self nonEmptyDict.
 	value := self nonEmptyDifferentFromNonEmptyDict   values anyOne.
 	dictionary2 := dictionary1 copy.
 	dictionary2 keys do: [ :key | dictionary2 at: key put: value ].
-	
-	
+
+
 	result := dictionary1 , dictionary2.
 	self assert: result size = ( dictionary2 size).
-	
+
 	dictionary2 associationsDo: [ :assoc | self assert: (result at: assoc key) = assoc value ]
 ]
 

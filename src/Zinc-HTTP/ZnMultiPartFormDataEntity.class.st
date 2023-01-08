@@ -81,7 +81,7 @@ ZnMultiPartFormDataEntity >> getBoundary [
 	^ (self contentType parameterAt: 'boundary') withoutQuoting 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnMultiPartFormDataEntity >> initialize [
 	super initialize.
 	self contentType: self mimeTypeWithBoundary  

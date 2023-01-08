@@ -70,7 +70,7 @@ MockObject >> doesNotUnderstand: aMessage [
 					failed := true ] ]
 ]
 
-{ #category : #'reflective operations' }
+{ #category : #initialization }
 MockObject >> initialize [
 
 	super initialize.

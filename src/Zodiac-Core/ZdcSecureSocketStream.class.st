@@ -148,7 +148,7 @@ ZdcSecureSocketStream >> flushEncryptedBytes: bytes startingAt: offset count: co
 	^ super flushBytes: bytes startingAt: offset count: count
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZdcSecureSocketStream >> initialize [ 
 	super initialize.
 	connecting := false
