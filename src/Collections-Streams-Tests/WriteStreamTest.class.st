@@ -70,43 +70,43 @@ WriteStreamTest >> testEnsureASpace2 [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureEndsWith [
-	
+
 	| stream |
 	stream := self newStream.
 	stream nextPutAll: 'this is a test'.
 	stream ensureEndsWith: Character cr.
 	stream nextPutAll: 'for WriteStreamTest'.
 	self assert: stream contents equals: (('this is a test' copyWith: Character cr), 'for WriteStreamTest').
-	
+
 	"Manually put a new line and verify there are no 2 new lines"
 	stream := self newStream.
 	stream nextPutAll: ('this is a test' copyWith: Character cr).
 	stream ensureEndsWith: Character cr.
 	stream nextPutAll: 'for WriteStreamTest'.
 	self assert: stream contents equals: (('this is a test' copyWith: Character cr), 'for WriteStreamTest').
-	
+
 	"Test with a empty stream"
 	stream := self newStream.
 	stream ensureEndsWith: Character cr.
-	self assert: stream contents equals: ''.
+	self assert: stream contents equals: ''
 ]
 
 { #category : #tests }
 WriteStreamTest >> testEnsureNoSpace [
-	 
+
 	| stream |
 	stream := self newStream.
 	stream ensureNoSpace.
-	
+
 	self assert: stream contents equals: ''.
-	
+
 	stream nextPutAll: ' a '.
 	stream ensureNoSpace.
 	self assert: stream contents equals: ' a'.
-	
+
 	stream nextPutAll: 'b  '.
 	stream ensureNoSpace.
-	self assert: stream contents equals: ' ab'.
+	self assert: stream contents equals: ' ab'
 ]
 
 { #category : #tests }
@@ -117,20 +117,20 @@ WriteStreamTest >> testIsEmpty [
 	stream nextPut: $a.
 	self deny: stream isEmpty.
 	stream reset.
-	self deny: stream isEmpty.
+	self deny: stream isEmpty
 ]
 
 { #category : #tests }
 WriteStreamTest >> testLessThanLessThan [
 	"Tests for #<< output operator shortcut on WriteStreams"
-	
-	self 
+
+	self
 		assert: (String streamContents: [ :out | out << $a << 'bcd' << $e ])
 		equals: 'abcde'.
-	self 
+	self
 		assert: (ByteArray streamContents: [ :out | out << 1 << #[2 3 4] << 5 ])
 		equals: #[1 2 3 4 5].
-	self 
+	self
 		assert: (Array streamContents: [ :out | out << 1 << #(2 3 4) asOrderedCollection << 5 ])
 		equals: #(1 2 3 4 5).
 	"no conversions, wrong element type"
@@ -141,7 +141,7 @@ WriteStreamTest >> testLessThanLessThan [
 { #category : #tests }
 WriteStreamTest >> testNew [
 
-	self should: [self streamClass new] raise: Error.
+	self should: [self streamClass new] raise: Error
 ]
 
 { #category : #tests }
@@ -149,7 +149,7 @@ WriteStreamTest >> testNextPut [
 	| stream |
 	stream := self newStream.
 	self string
-		withIndexDo: [ :each :i | 
+		withIndexDo: [ :each :i |
 			self
 				assert: (stream nextPut: each) equals: each;
 				assert: stream position equals: i;
@@ -194,7 +194,7 @@ WriteStreamTest >> testPosition [
 	| stream |
 	stream := self newStream.
 	stream nextPutAll: self string.
-	0 to: self stringSize do: [ :i | 
+	0 to: self stringSize do: [ :i |
 		self
 			assert: stream position equals: self stringSize;
 			assert: (stream position: i) identicalTo: stream;
@@ -214,7 +214,7 @@ WriteStreamTest >> testSetToEnd [
 		assert: stream position isZero;
 		assert: stream contents isEmpty.
 	stream nextPutAll: self string.
-	self stringSize - 1 to: 0 by: -1 do: [ :i | 
+	self stringSize - 1 to: 0 by: -1 do: [ :i |
 		stream position: i.
 		self
 			assert: stream setToEnd identicalTo: stream;
