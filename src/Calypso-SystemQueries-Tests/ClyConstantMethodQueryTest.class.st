@@ -54,9 +54,9 @@ ClyConstantMethodQueryTest >> testConvertingToSemiAsyncQuery [
 { #category : #tests }
 ClyConstantMethodQueryTest >> testEmptyWhenNoMethods [
 	query scope: (ClyMethodScope of: (self class >> #method1) in: environment).
-		
+
 	query methods: #().
-	
+
 	self assert: query checkEmptyResult
 ]
 
@@ -64,8 +64,8 @@ ClyConstantMethodQueryTest >> testEmptyWhenNoMethods [
 ClyConstantMethodQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
-	
-	self assert: resultItems size equals: 2.	
+
+	self assert: resultItems size equals: 2.
 	self assert: (resultItems identityIncludes: self class >> #method1).
 	self assert: (resultItems identityIncludes: self class >> #method2)
 ]
@@ -74,8 +74,8 @@ ClyConstantMethodQueryTest >> testFromPackageScope [
 ClyConstantMethodQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.
-	
-	self assert: resultItems size equals: 2.	
+
+	self assert: resultItems size equals: 2.
 	self assert: (resultItems identityIncludes: self class >> #method1).
 	self assert: (resultItems identityIncludes: self class >> #method2)
 ]
@@ -84,7 +84,7 @@ ClyConstantMethodQueryTest >> testFromSystemScope [
 ClyConstantMethodQueryTest >> testFromWrongClassScope [
 
 	self queryFromScope: ClyClassScope of: self class superclass.
-	
+
 	self assert: resultItems isEmpty
 ]
 
@@ -98,7 +98,7 @@ ClyConstantMethodQueryTest >> testIsEmptyFromEmptyMethodScope [
 { #category : #tests }
 ClyConstantMethodQueryTest >> testNotEmptyFromEmptyMethodScope [
 	query scope: (ClyMethodScope emptyIn: environment).
-	
+
 	self deny: query checkEmptyResult
 ]
 

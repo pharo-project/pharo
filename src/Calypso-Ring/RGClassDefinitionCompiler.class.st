@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-RGClassDefinitionCompiler class >> on: anRGEnvironment [ 
-	^self new 
+RGClassDefinitionCompiler class >> on: anRGEnvironment [
+	^self new
 		environment: anRGEnvironment
 ]
 
@@ -37,23 +37,23 @@ RGClassDefinitionCompiler >> environment: anObject [
 
 { #category : #'public access' }
 RGClassDefinitionCompiler >> evaluate [
-	
+
 	| importer class createdClass |
-	
+
 	importer := RGChunkImporter new.
-	
+
 	importer fileInFrom: (definitionString, '!') readStream.
-	
-	class := importer environment ask behaviors detect: [:each | 
+
+	class := importer environment ask behaviors detect: [:each |
 		each isRingResolved and: [each superclass isRingResolved ]].
 
 	importer := RGChunkImporter new.
 	importer environment: environment.
 	importer fileInFrom: (definitionString, '!') readStream.
-	
+
 	createdClass := environment ask behaviorNamed: class name.
 
-	createdClass superclass metaclass metaclass isRingResolved ifTrue: [ 
+	createdClass superclass metaclass metaclass isRingResolved ifTrue: [
 		environment cleanWithMetaclassNamed: createdClass superclass metaclass metaclass name
 		].
 	^createdClass
@@ -69,11 +69,11 @@ RGClassDefinitionCompiler >> new [
 ]
 
 { #category : #'public access' }
-RGClassDefinitionCompiler >> requestor: anObject [ 
+RGClassDefinitionCompiler >> requestor: anObject [
 	requestor := anObject
 ]
 
 { #category : #'public access' }
-RGClassDefinitionCompiler >> source: aString [ 
+RGClassDefinitionCompiler >> source: aString [
 	definitionString := aString
 ]

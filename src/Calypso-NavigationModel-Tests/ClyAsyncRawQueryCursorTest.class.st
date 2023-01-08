@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #testing }
-ClyAsyncRawQueryCursorTest class >> shouldInheritSelectors [ 
+ClyAsyncRawQueryCursorTest class >> shouldInheritSelectors [
 	^true
 ]
 

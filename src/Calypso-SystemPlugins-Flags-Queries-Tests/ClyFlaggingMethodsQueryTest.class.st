@@ -15,7 +15,7 @@ ClyFlaggingMethodsQueryTest >> testCheckIfEmpty [
 		of: (ClyClassWithFlags >> #methodWithFlag)
 		in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithFlags >> #methodWithoutFlag)
 		in: environment).
@@ -26,9 +26,9 @@ ClyFlaggingMethodsQueryTest >> testCheckIfEmpty [
 ClyFlaggingMethodsQueryTest >> testFromTwoMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClassWithFlags >> #methodWithFlag. 
+		ClyClassWithFlags >> #methodWithFlag.
 		ClyClassWithFlags >> #methodWithoutFlag}.
-	
+
 	self assert: foundSelectors sorted asArray equals: #(methodWithFlag)
 ]
 

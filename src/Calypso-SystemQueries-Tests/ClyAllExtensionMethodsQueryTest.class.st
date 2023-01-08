@@ -15,7 +15,7 @@ ClyAllExtensionMethodsQueryTest >> testCheckIfEmpty [
 		of: (ClySubclassLOfClass0FromPExtendedByP1Mock>>#extensionMethodFromSubclassL)
 		in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope of: (ClyClass1FromP1Mock >> #tag1Method1) in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -24,8 +24,8 @@ ClyAllExtensionMethodsQueryTest >> testCheckIfEmpty [
 ClyAllExtensionMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString. 
+		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString.
 		ClySubclassLOfClass0FromPExtendedByP1Mock >> #extensionMethodFromSubclassL}.
-	
+
 	self assert: foundSelectors equals: #(#extensionMethodFromSubclassL)
 ]

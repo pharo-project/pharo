@@ -30,7 +30,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyItemChildrenTag class >> childrenType: itemTypeClass [
-	^self types at: itemTypeClass ifAbsentPut: [ 
+	^self types at: itemTypeClass ifAbsentPut: [
 		self new childrenType: itemTypeClass]
 ]
 
@@ -54,5 +54,5 @@ ClyItemChildrenTag >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	childrenType printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]

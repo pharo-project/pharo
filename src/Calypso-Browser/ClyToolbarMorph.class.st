@@ -30,7 +30,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyToolbarMorph class >> of: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 
@@ -85,7 +85,7 @@ ClyToolbarMorph >> updateItems [
 	| menu |
 	menu := CmdMenu activatedBy: ClyToolbarActivation.
 	browser navigationContextsDo: [ :eachContext | menu buildInContext: eachContext].
-	
+
 	self hide.
 	self removeAllMorphs.
 	self initialize.

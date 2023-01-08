@@ -33,7 +33,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyMethodChange class >> of: aMethod [
-	^self new 
+	^self new
 		affectedMethod: aMethod
 ]
 
@@ -56,10 +56,10 @@ ClyMethodChange >> affectedMethod: anObject [
 ClyMethodChange >> handlesAnnouncement: anAnnouncement [
 
 	| newMethod |
-	affectedMethod isInstalled ifFalse: [ 
-		newMethod := affectedMethod origin 
+	affectedMethod isInstalled ifFalse: [
+		newMethod := affectedMethod origin
 			localMethodNamed: affectedMethod selector ifAbsent: [nil].
 		newMethod ifNotNil: [ affectedMethod := newMethod ]  ].
-	
+
 	^anAnnouncement affectsMethod: affectedMethod
 ]
