@@ -79,7 +79,7 @@ ArrayTest >> anotherElementNotIn [
 { #category : #requirements }
 ArrayTest >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
-	^ self collection anyOne.
+	^ self collection anyOne
 ]
 
 { #category : #requirements }
@@ -105,26 +105,26 @@ ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 
 { #category : #coverage }
 ArrayTest >> classToBeTested [
-	
+
 	^ Array
 ]
 
 { #category : #initialization }
-ArrayTest >> collection [ 
+ArrayTest >> collection [
 
 	^ collectionWith4Elements
 ]
 
 { #category : #'tests - creation' }
-ArrayTest >> collectionClass [ 
+ArrayTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-		
+
 	^ Array
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionInForIncluding [
-	^ self nonEmpty copyWithoutFirst.
+	^ self nonEmpty copyWithoutFirst
 ]
 
 { #category : #requirements }
@@ -136,23 +136,23 @@ ArrayTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
-	
+
 	^ collection5Elements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionNotIncluded [
-	^ collectionNotIncluded.
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionOfCollectionsOfInts [
-	^collectionOfCollectionsOfInts.
+	^collectionOfCollectionsOfInts
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionOfCollectionsOfStrings [
-	^ collectionOfCollectionsOfStrings.
+	^ collectionOfCollectionsOfStrings
 ]
 
 { #category : #requirements }
@@ -162,23 +162,23 @@ ArrayTest >> collectionOfFloat [
 
 { #category : #requirements }
 ArrayTest >> collectionWith1TimeSubcollection [
-	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst).
+	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst)
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWith2TimeSubcollection [
-	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst),self oldSubCollection .
+	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst),self oldSubCollection
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWith5Elements [
-	
+
 	^ collection5Elements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithCharacters [
-	^ withCharacters.
+	^ withCharacters
 ]
 
 { #category : #requirements }
@@ -194,7 +194,7 @@ ArrayTest >> collectionWithElementsToRemove [
 
 { #category : #requirements }
 ArrayTest >> collectionWithEqualElements [
-	^ withEqualElements.
+	^ withEqualElements
 ]
 
 { #category : #requirements }
@@ -352,24 +352,24 @@ ArrayTest >> firstOdd [
 
 { #category : #requirements }
 ArrayTest >> indexArray [
-	^ indexArray .
+	^ indexArray
 ]
 
 { #category : #requirements }
 ArrayTest >> indexInForCollectionWithoutDuplicates [
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
 ArrayTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
-	
+
 	^ 2
 ]
 
 { #category : #requirements }
 ArrayTest >> integerCollection [
-	^example1 .
+	^example1
 ]
 
 { #category : #requirements }
@@ -409,7 +409,7 @@ ArrayTest >> nonEmpty1Element [
 
 { #category : #requirements }
 ArrayTest >> nonEmptyMoreThan1Element [
-	^nonEmptyMoreThan1Element .
+	^nonEmptyMoreThan1Element
 ]
 
 { #category : #requirements }
@@ -419,7 +419,7 @@ ArrayTest >> oldSubCollection [
 
 { #category : #requirements }
 ArrayTest >> replacementCollection [
-	^replacementCollection .
+	^replacementCollection
 ]
 
 { #category : #requirements }
@@ -429,7 +429,7 @@ ArrayTest >> replacementCollectionSameSize [
 
 { #category : #initialization }
 ArrayTest >> result [
-	
+
 	^ collectResult
 ]
 
@@ -446,7 +446,7 @@ ArrayTest >> secondIndex [
 { #category : #parameters }
 ArrayTest >> selectorToAccessValuePutIn [
 	"return the selector of the method that should be invoked to access an element"
-	
+
 	^ #second
 ]
 
@@ -466,9 +466,9 @@ ArrayTest >> setUp [
 	subCollectionNotIn:= {1. 8. 3.}.
 	collectionNotIncluded:= {7. 8. 9.}.
 	removedCollection:=  { 2. 4. }.
-	
+
 	example2 := {1. 2. 3/4. 4. 5}.
-	collectionWith4Elements := #(1 -2 3 1). 
+	collectionWith4Elements := #(1 -2 3 1).
 	collectionWithoutNil := #( 1 2 3 4).
 	simpleCollection := #( 1 8 3).
 	collectionOfCollectionsOfInts := { 1. { 2. 3 }. { 4. { 5. 6} } }.
@@ -486,7 +486,7 @@ ArrayTest >> setUp [
 	firstIndex:= 2.
 	secondIndex:= 4.
 	replacementCollection:= {4. 3. 2. 1.}.
-	replacementCollectionSameSize := {5. 4. 3.}.	
+	replacementCollectionSameSize := {5. 4. 3.}.
 	nonEmpty1Element:={ 5.}.
 	collectionOfCollection:={'a'. 'b'. 'c'.}.
 	collectionOfFloat:={1.5. 5.5. 6.5.}.
@@ -495,12 +495,12 @@ ArrayTest >> setUp [
 	collection5Elements := { 1. 2. 5. 3. 4.}.
 
 	recursiveArray := example1 copy.
-	recursiveArray at: 5 put: recursiveArray.
+	recursiveArray at: 5 put: recursiveArray
 ]
 
 { #category : #requirements }
 ArrayTest >> simpleCollection [
-	^simpleCollection.
+	^simpleCollection
 ]
 
 { #category : #requirements }
@@ -516,12 +516,12 @@ ArrayTest >> smallerIndex [
 
 { #category : #requirements }
 ArrayTest >> sortedInAscendingOrderCollection [
-	^sortedInAscendingOrderCollection .
+	^sortedInAscendingOrderCollection
 ]
 
 { #category : #'tests - iterate' }
 ArrayTest >> speciesClass [
-	
+
 	^ Array
 ]
 
@@ -588,7 +588,7 @@ ArrayTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 ArrayTest >> testAnySatisfy [
 
 	self assert: ( self collection anySatisfy: [:each | each = -2]).
-	self deny: (self collection anySatisfy: [:each | each isString]).
+	self deny: (self collection anySatisfy: [:each | each isString])
 ]
 
 { #category : #'tests - converting' }
@@ -703,22 +703,21 @@ ArrayTest >> testIdentityIndexOf [
 
 { #category : #tests }
 ArrayTest >> testIsArray [
-	
+
 	self assert: example1 isArray
 ]
 
 { #category : #tests }
 ArrayTest >> testIsLiteral [
 	"We work with a copy of literalArray, to avoid corrupting the code."
-	
+
 	| aLiteralArray |
 	aLiteralArray := literalArray copy.
 	self assert: aLiteralArray isLiteral.
 	aLiteralArray at: 1 put: self class.
 	self deny: aLiteralArray isLiteral.
 	self deny: (literalArray as: WeakArray) isLiteral description: 'instances of Array subclasses are not literal'.
-	self deny: recursiveArray isLiteral.
-
+	self deny: recursiveArray isLiteral
 ]
 
 { #category : #tests }
@@ -806,9 +805,7 @@ ArrayTest >> testSelfEvaluating [
 	self assert: selfEvaluatingArray equals: (self class compiler evaluate: selfEvaluatingArray printString).
 
 	self deny: recursiveArray isSelfEvaluating.
-	self deny: nonSEArray1 isSelfEvaluating.
-
-
+	self deny: nonSEArray1 isSelfEvaluating
 ]
 
 { #category : #tests }
@@ -828,9 +825,9 @@ ArrayTest >> testShouldBePrintedAsLiteral [
 
 	self assert: empty shouldBePrintedAsLiteral.
 	self assert: literalArray shouldBePrintedAsLiteral.
-	
+
 	self deny: (literalArray copyWith: 3/4) shouldBePrintedAsLiteral.
-	self deny: recursiveArray shouldBePrintedAsLiteral.
+	self deny: recursiveArray shouldBePrintedAsLiteral
 ]
 
 { #category : #'tests - shuffling' }
@@ -840,8 +837,8 @@ ArrayTest >> testShuffleBy [
 	base := #(1 2 3 4 5) copy.
 	random := (Random seed: 42).
 	shuffleByResult := #(2 5 4 3 1) copy.
-	
-	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult).
+
+	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult)
 ]
 
 { #category : #'tests - shuffling' }
@@ -859,26 +856,26 @@ ArrayTest >> testShuffleModifyTheReceiver [
 	| array shuffled |
 	array := #( 1 2 3 4 5) copy.
 	shuffled := array shuffle.
-	self assert: array == shuffled.
+	self assert: array == shuffled
 ]
 
 { #category : #'tests - arithmetic' }
 ArrayTest >> testSumNumberItemsWithoutBlock [
-	
+
 	self assert: #() sumNumbers equals: 0.
-	
+
 	self assert: #(1 2 3) sumNumbers equals: 6
 ]
 
 { #category : #requirements }
 ArrayTest >> unsortedCollection [
-	^unsortedCollection .
+	^unsortedCollection
 ]
 
 { #category : #parameters }
 ArrayTest >> valuePutIn [
 	"the value that we will put in the non empty collection"
-	
+
 	^ 2
 ]
 

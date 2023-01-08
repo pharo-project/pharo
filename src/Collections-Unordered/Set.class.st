@@ -91,7 +91,7 @@ Set class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	"(Set newFrom: {1. 2. 3}) >>> #( 1 2 3) asSet"
 	"({1. 2. 3} as: Set) >>> #( 1 2 3) asSet"
-	
+
 	| newCollection |
 	newCollection := self new: aCollection size.
 	newCollection addAll: aCollection.
@@ -131,9 +131,9 @@ Set >> asSet [
 ]
 
 { #category : #enumerating }
-Set >> collect: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Collect the resulting values into a collection like the receiver. Answer  
+Set >> collect: aBlock [
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Collect the resulting values into a collection like the receiver. Answer
 	the new collection."
 
 	| newSet |
@@ -143,7 +143,7 @@ Set >> collect: aBlock [
 ]
 
 { #category : #removing }
-Set >> copyWithout: oldElement [ 
+Set >> copyWithout: oldElement [
 	"Answer a copy of the receiver that does not contain any
 	elements equal to oldElement."
 
@@ -158,9 +158,9 @@ Set >> difference: aCollection [
 
 	"#(a b c d e f) difference:  #(a b z k)
 	=> #(#f #d #e #c)
-	
-	#(a b z k) difference: #(a b c d e f) 
-	=> #(#k #z) 
+
+	#(a b z k) difference: #(a b c d e f)
+	=> #(#k #z)
 	"
 
 	| set |
@@ -170,7 +170,7 @@ Set >> difference: aCollection [
 ]
 
 { #category : #enumerating }
-Set >> do: aBlock [ 
+Set >> do: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: array size do:
 		[:index |
@@ -202,13 +202,13 @@ Set >> grow [
 	tally := 0.
 	oldElements
 		do:
-			[ :each | 
+			[ :each |
 			each == nil
 				ifFalse: [ self noCheckAdd: each enclosedElement] ]
 ]
 
 { #category : #testing }
-Set >> includes: anObject [ 
+Set >> includes: anObject [
 	^ (array at: (self findElementOrNil: anObject)) ~~ nil
 ]
 
@@ -233,7 +233,7 @@ Set >> intersection: aCollection [
 Set >> isHealthy [
 	"Test that object hashes match their positions stored in set's array,
 	answer true if everything ok, false otherwise
-	
+
 	Set allSubInstances select: [:badSet |
 		badSet isHealthy not ]
 	"
@@ -287,7 +287,7 @@ Set >> noCheckNoGrowFillFrom: anArray [
 ]
 
 { #category : #testing }
-Set >> occurrencesOf: anObject [ 
+Set >> occurrencesOf: anObject [
 	^ (self includes: anObject) ifTrue: [1] ifFalse: [0]
 ]
 
@@ -323,7 +323,7 @@ Set >> scanFor: anObject [
 
 	| index start |
 	index := start := anObject hash \\ array size + 1.
-	[ 
+	[
 		| element |
 		((element := array at: index) == nil or: [ element enclosedElement = anObject ])
 			ifTrue: [ ^index ].

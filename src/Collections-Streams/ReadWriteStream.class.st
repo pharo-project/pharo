@@ -49,7 +49,7 @@ ReadWriteStream >> next [
 ]
 
 { #category : #accessing }
-ReadWriteStream >> next: anInteger [ 
+ReadWriteStream >> next: anInteger [
 	"Answer the next anInteger elements of my collection.  overriden for efficiency"
 
 	| ans endPosition |
@@ -63,13 +63,13 @@ ReadWriteStream >> next: anInteger [
 
 { #category : #accessing }
 ReadWriteStream >> readInto: aCollection startingAt: startIndex count: n [
-	"Read n objects into the given collection. 
+	"Read n objects into the given collection.
 	Return number of elements that have been read."
-	
+
 	| max |
 	max := (readLimit - position) min: n.
-	aCollection 
-		replaceFrom: startIndex 
+	aCollection
+		replaceFrom: startIndex
 		to: startIndex + max - 1
 		with: collection
 		startingAt: position + 1.
