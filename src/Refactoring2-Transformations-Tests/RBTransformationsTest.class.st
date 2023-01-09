@@ -156,11 +156,8 @@ RBTransformationsTest >> testCustomTransform [
 	transformation := RBCustomTransformation with: [ :aModel |
 		"add class"
 		aModel
-			defineClass: ('<1p> subclass: #<2s>
-				instanceVariableNames: ''''
-				classVariableNames: ''''
-				poolDictionaries: ''''
-				category: <3p>' 
+			defineClass: ('<1p> %<%< #<2s>
+				package: <3p>' 
 			expandMacrosWith: 'Object'
 			with: newClassName
 			with: self class category).
@@ -208,11 +205,9 @@ RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 
 	| transformation oldClass newClass |
 	model := RBNamespace new.
-	model defineClass: 'Object subclass: #FOOBAR 
-				instanceVariableNames: ''asdf'' 	
-				classVariableNames: ''''
-				poolDictionaries: ''''
-				category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #FOOBAR 
+				slots: { #asdf }; 	
+				package: #''Refactory-Test data'''.
 				
 	transformation := RBMoveInstanceVariableToClassTransformation
 							model: model

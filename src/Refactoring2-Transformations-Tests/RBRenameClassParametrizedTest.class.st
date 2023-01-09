@@ -41,10 +41,8 @@ RBRenameClassParametrizedTest >> testMetaClassFailure [
 { #category : #tests }
 RBRenameClassParametrizedTest >> testModelRenameSequenceClass [
 
-	model defineClass: 'Object subclass: #Foo1 
-			instanceVariableNames: '''' 
-			classVariableNames: '''' poolDictionaries: ''''
-			category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #Foo1 
+			package: #''Refactory-Test data'''.
 	(model classNamed: #Foo1)
 		compile: 'foo	 ^ Foo1' classified: #(accessing);
 		compile: 'objectName ^ #(Foo1)' classified: #(accessing).
@@ -67,11 +65,10 @@ RBRenameClassParametrizedTest >> testModelRenameSequenceClass [
 RBRenameClassParametrizedTest >> testRefactoring [
 
 	| refactoring class |
-	model 	defineClass: 'Object subclass: #Foo
-		instanceVariableNames: ''a''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: #''Refactoring2-Refactorings-Tests'''.
+	model 	defineClass: 'Object << #Foo
+		slots: { #a };
+		package: #''Refactoring2-Refactorings-Tests'''.
+		
 	class := model classNamed: #Foo.
 	class compile: 'foo	^Object' classified: #(#accessing);
 			compile: 'objectName ^#(Object)' classified: #(#accessing).
