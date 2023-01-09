@@ -40,10 +40,10 @@ TAddForUniquenessTest >> testAddAlreadyThereDoesNotCount [
 	self assert: (self collectionWithElement includes: self element).
 
 	added := self collectionWithElement add: self element.
-	
+
 	self assert: added = self element.
 	self assert: (self collectionWithElement includes: self element).
-	self assert: self collectionWithElement size = oldSize.
+	self assert: self collectionWithElement size = oldSize
 ]
 
 { #category : #'tests - adding uniquely' }
@@ -65,10 +65,10 @@ TAddForUniquenessTest >> testTAddIfNotPresentWithElementAlreadyIn [
 	self assert: (self collectionWithElement includes: self element).
 
 	added := self collectionWithElement addIfNotPresent: self element.
-	
+
 	self assert: added = self element.
 	self assert: (self collectionWithElement includes: self element).
-	self assert: self collectionWithElement size = oldSize.
+	self assert: self collectionWithElement size = oldSize
 ]
 
 { #category : #'tests - adding uniquely' }

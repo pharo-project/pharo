@@ -34,23 +34,14 @@ RBDeprecateClassParametrizedTest >> testMetaClassFailure [
 RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	| refactoring replacement deprecated user |
 
-	model defineClass: 'Object subclass: #ClassDeprecatorTestingClassReplacement 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #ClassDeprecatorTestingClassReplacement 
+		package: #''Refactory-Test data'''.
 
-	model defineClass: 'ClassDeprecatorTestingClassReplacement subclass: #ClassDeprecatorTestingClassDeprecated 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'ClassDeprecatorTestingClassReplacement << #ClassDeprecatorTestingClassDeprecated 
+		package: #''Refactory-Test data'''.
 	
-	model defineClass: 'ClassDeprecatorTestingClassDeprecated subclass: #ClassDeprecatorTestingClassDeprecatedUser 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'ClassDeprecatorTestingClassDeprecated << #ClassDeprecatorTestingClassDeprecatedUser 
+		package: #''Refactory-Test data'''.
 
 	replacement := model classNamed: #ClassDeprecatorTestingClassReplacement.
 	deprecated := model classNamed: #ClassDeprecatorTestingClassDeprecated.
