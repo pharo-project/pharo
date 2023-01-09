@@ -40,9 +40,9 @@ TCopyPartOfSequenceable >> testCopyAfter [
 	collection := self collectionWithoutEqualElements .
 	index:= self indexInForCollectionWithoutDuplicates .
 	result := collection   copyAfter: (collection  at:index ).
-	
+
 	"Verify content"
-	result withIndexDo: 
+	result withIndexDo:
 		[:e :i | self assert: (collection at: (i + index )) equals: (result at: i)].
 
 	"Verify size"
@@ -63,9 +63,9 @@ TCopyPartOfSequenceable >> testCopyAfterLast [
 	collection := self collectionWithoutEqualElements .
 	index:= self indexInForCollectionWithoutDuplicates .
 	result := collection copyAfterLast: (collection  at:index ).
-	
+
 	"Verify content"
-	result withIndexDo: 
+	result withIndexDo:
 		[:el :i | self assert: (collection at: (i + index )) equals: (result at: i)].
 
 	"Verify size"
@@ -93,11 +93,11 @@ TCopyPartOfSequenceable >> testCopyFromTo [
 	collection := self collectionWithoutEqualElements .
 	index :=self indexInForCollectionWithoutDuplicates .
 	result := collection   copyFrom: index  to: collection  size .
-	
+
 	"Verify content"
-	result withIndexDo: 
+	result withIndexDo:
 		[:el :i | self assert: (result at:i) equals: (collection  at: (i + index - 1))].
-	
+
 	"Verify size"
 	self assert: result size equals: (collection  size - index + 1)
 ]
@@ -109,10 +109,10 @@ TCopyPartOfSequenceable >> testCopyUpTo [
 	collection := self collectionWithoutEqualElements.
 	index:= self indexInForCollectionWithoutDuplicates.
 	result := collection   copyUpTo: (collection  at:index).
-	
+
 	"Verify content"
 	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at:i)].
-	
+
 	"Verify size"
 	self assert: result size equals: (index-1)
 ]
@@ -131,10 +131,10 @@ TCopyPartOfSequenceable >> testCopyUpToLast [
 	collection := self collectionWithoutEqualElements.
 	index:= self indexInForCollectionWithoutDuplicates.
 	result := collection copyUpToLast: (collection at:index).
-	
+
 	"Verify content"
 	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at: i)].
-	
+
 	"Verify size"
 	self assert: result size equals: (index-1)
 ]

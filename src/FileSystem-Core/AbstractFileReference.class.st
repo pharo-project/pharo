@@ -525,7 +525,8 @@ AbstractFileReference >> hash [
 
 { #category : #accessing }
 AbstractFileReference >> humanReadableSize [
-	^ self size humanReadableSIByteSize
+
+	^ self size humanReadableSISizeString
 ]
 
 { #category : #delegated }
