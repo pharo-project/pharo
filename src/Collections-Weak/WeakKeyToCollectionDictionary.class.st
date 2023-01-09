@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #finalization }
-WeakKeyToCollectionDictionary >> finalizeValues [ 
+WeakKeyToCollectionDictionary >> finalizeValues [
 	self rehash
 ]
 
@@ -21,7 +21,7 @@ WeakKeyToCollectionDictionary >> noCheckAddForRehash: anAssociation [
 	cleanedValue notEmpty ifTrue:[
 		anAssociation value: cleanedValue.
 		super noCheckAddForRehash: anAssociation.
-	].
+	]
 ]
 
 { #category : #private }
@@ -33,7 +33,7 @@ WeakKeyToCollectionDictionary >> noCheckNoGrowFillFrom: anArray [
 		(anArray at: index) ifNotNil: [ :association |
 			association key ifNotNil: [ :key | "Don't let the key go away"
 				| cleanedValue |
-				(cleanedValue := association value copyWithout: nil) isEmpty 
+				(cleanedValue := association value copyWithout: nil) isEmpty
 					ifFalse: [
 						association value: cleanedValue.
 						array
