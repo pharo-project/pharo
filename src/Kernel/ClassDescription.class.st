@@ -751,9 +751,9 @@ ClassDescription >> isDeprecated [
 { #category : #'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
-	"Point isClassSide >>> false"
-	"Point class isClassSide >>> true"
-	
+	"Point isInstanceSide >>> true"
+	"Point class isInstanceSide >>> false"
+
 	^ self isClassSide not
 ]
 

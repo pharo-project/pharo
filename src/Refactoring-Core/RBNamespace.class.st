@@ -363,9 +363,9 @@ RBNamespace >> defineClass: aString [
 			newClass classSide superclass: ( self classFor: Object class superclass )
 			]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
-	newClass instanceVariableNames: change instanceVariableNames.
-	newClass classVariableNames: change classVariableNames.
-	newClass poolDictionaryNames: change sharedPoolNames.
+	newClass instanceVariableNames: (change instanceVariableNames ifNil: ['']).
+	newClass classVariableNames: (change classVariableNames ifNil: ['']).
+	newClass poolDictionaryNames: (change sharedPoolNames ifNil: ['']).
 	newClass category: change category.
 	^ change
 ]
@@ -665,15 +665,6 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	value first subclasses do: [ :each | each superclass: value first ].
 	value last subclasses do: [ :each | each superclass: value last ].
 	^ change
-]
-
-{ #category : #'private - changes' }
-RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBlock [ 
-	^self performChange: (changeFactory  
-				renameClassVariable: oldName
-				to: newName
-				in: aRBClass)
-		around: aBlock
 ]
 
 { #category : #'private - changes' }

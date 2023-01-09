@@ -1028,13 +1028,13 @@ Float >> printOn: stream base: base [
 ]
 
 { #category : #printing }
-Float >> printPaddedWith: aCharacter to: aNumber [ 
-	"Answer the string containing the ASCII representation of the receiver 
-	padded on the left with aCharacter to be at least on aNumber 
-	integerPart characters and padded the right with aCharacter to be at 
+Float >> printPaddedWith: aCharacter to: aNumber [
+	"Answer the string containing the ASCII representation of the receiver
+	padded on the left with aCharacter to be at least on aNumber
+	integerPart characters and padded the right with aCharacter to be at
 	least anInteger fractionPart characters."
 	| aStream digits fPadding fLen iPadding iLen curLen periodIndex |
-	#Numeric.
+
 	"2000/03/04  Harmon R. Added Date and Time support"
 	aStream := (String new: 10) writeStream.
 	self printOn: aStream.

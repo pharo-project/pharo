@@ -48,11 +48,11 @@ TSequencedElementAccessTest >> test0FixtureSequencedElementAccessTest [
 TSequencedElementAccessTest >> testAfter [
 
 	self assert: (self moreThan4Elements after: (self moreThan4Elements at: 1)) = (self moreThan4Elements at: 2).
-	self 
-		should: 
+	self
+		should:
 			[ self moreThan4Elements after: (self moreThan4Elements at: self moreThan4Elements size) ]
 		raise: Error.
-	self 
+	self
 		should: [ self moreThan4Elements after: self elementNotInForElementAccessing ]
 		raise: Error
 ]
@@ -60,13 +60,13 @@ TSequencedElementAccessTest >> testAfter [
 { #category : #'tests - element accessing' }
 TSequencedElementAccessTest >> testAfterIfAbsent [
 
-	self assert: (self moreThan4Elements 
+	self assert: (self moreThan4Elements
 			after: (self moreThan4Elements at: 1)
 			ifAbsent: [ 33 ]) = (self moreThan4Elements at: 2).
-	self assert: (self moreThan4Elements 
+	self assert: (self moreThan4Elements
 			after: (self moreThan4Elements at: self moreThan4Elements size)
 			ifAbsent: [ 33 ]) = 33.
-	self assert: (self moreThan4Elements 
+	self assert: (self moreThan4Elements
 			after: self elementNotInForElementAccessing
 			ifAbsent: [ 33 ]) = 33
 ]
@@ -77,7 +77,7 @@ TSequencedElementAccessTest >> testAt [
 	self assert: (self accessCollection at: 1) = 1.
 	self assert: (self accessCollection at: 2) = 2.
 	"
-	
+
 	| index |
 	index := self moreThan4Elements indexOf: self elementInForElementAccessing.
 	self assert: (self moreThan4Elements at: index) = self elementInForElementAccessing
@@ -86,7 +86,7 @@ TSequencedElementAccessTest >> testAt [
 { #category : #'tests - element accessing' }
 TSequencedElementAccessTest >> testAtAll [
 	"	self flag: #theCollectionshouldbe102030intheFixture.
-	
+
 	self assert: (self accessCollection atAll: #(2 1)) first = self accessCollection second.
 	self assert: (self accessCollection atAll: #(2)) first = self accessCollection second."
 	| result |
@@ -102,12 +102,12 @@ TSequencedElementAccessTest >> testAtIfAbsent [
 
 	| absent |
 	absent := false.
-	self moreThan4Elements 
+	self moreThan4Elements
 		at: self moreThan4Elements size + 1
 		ifAbsent: [ absent := true ].
 	self assert: absent = true.
 	absent := false.
-	self moreThan4Elements 
+	self moreThan4Elements
 		at: self moreThan4Elements size
 		ifAbsent: [ absent := true ].
 	self assert: absent = false
@@ -126,7 +126,7 @@ TSequencedElementAccessTest >> testAtLast [
 { #category : #'tests - element accessing' }
 TSequencedElementAccessTest >> testAtLastError [
 
-	self 
+	self
 		should: [ self moreThan4Elements atLast: self moreThan4Elements size + 1 ]
 		raise: Error
 ]
@@ -134,10 +134,10 @@ TSequencedElementAccessTest >> testAtLastError [
 { #category : #'tests - element accessing' }
 TSequencedElementAccessTest >> testAtLastIfAbsent [
 
-	self assert: (self moreThan4Elements 
+	self assert: (self moreThan4Elements
 			atLast: 1
 			ifAbsent: [ nil ]) = self moreThan4Elements last.
-	self assert: (self moreThan4Elements 
+	self assert: (self moreThan4Elements
 			atLast: self moreThan4Elements size + 1
 			ifAbsent: [ 222 ]) = 222
 ]
@@ -145,10 +145,10 @@ TSequencedElementAccessTest >> testAtLastIfAbsent [
 { #category : #'tests - element accessing' }
 TSequencedElementAccessTest >> testAtOutOfBounds [
 
-	self 
+	self
 		should: [ self moreThan4Elements at: self moreThan4Elements size + 1 ]
 		raise: Error.
-	self 
+	self
 		should: [ self moreThan4Elements at: -1 ]
 		raise: Error
 ]
@@ -175,7 +175,7 @@ TSequencedElementAccessTest >> testAtWrap [
 	self assert: (self accessCollection at: 1) = 1.
 	self assert: (self accessCollection at: 2) = 2.
 	"
-	
+
 	| index |
 	index := self moreThan4Elements indexOf: self elementInForElementAccessing.
 	self assert: (self moreThan4Elements atWrap: index) = self elementInForElementAccessing.
@@ -188,10 +188,10 @@ TSequencedElementAccessTest >> testAtWrap [
 TSequencedElementAccessTest >> testBefore [
 
 	self assert: (self moreThan4Elements before: (self moreThan4Elements at: 2)) = (self moreThan4Elements at: 1).
-	self 
+	self
 		should: [ self moreThan4Elements before: (self moreThan4Elements at: 1) ]
 		raise: Error.
-	self 
+	self
 		should: [ self moreThan4Elements before: 66 ]
 		raise: Error
 ]
@@ -199,11 +199,11 @@ TSequencedElementAccessTest >> testBefore [
 { #category : #'tests - element accessing' }
 TSequencedElementAccessTest >> testBeforeIfAbsent [
 
-	self assert: (self moreThan4Elements 
+	self assert: (self moreThan4Elements
 			before: (self moreThan4Elements at: 1)
 			ifAbsent: [ 99 ]) = 99.
-			
-	self assert: (self moreThan4Elements 
+
+	self assert: (self moreThan4Elements
 			before: (self moreThan4Elements at: 2)
 			ifAbsent: [ 99 ]) = (self moreThan4Elements at: 1)
 ]

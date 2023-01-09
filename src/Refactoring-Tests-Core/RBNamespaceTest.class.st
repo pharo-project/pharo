@@ -58,11 +58,8 @@ RBNamespaceTest >> testDefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
 	st 
-		defineClass: 'RefactoringBrowserTest subclass: #SmalltalkTestXXX
-				instanceVariableNames: ''''
-				classVariableNames: ''''
-				poolDictionaries: ''''
-				category: #''Refactory-Testing'''.
+		defineClass: 'RefactoringBrowserTest << #SmalltalkTestXXX
+				package: #''Refactory-Testing'''.
 	self assert: (st includesClassNamed: #SmalltalkTestXXX).
 	self assert: (st classNamed: #SmalltalkTestXXX) notNil
 ]
@@ -94,11 +91,7 @@ RBNamespaceTest >> testModelImplementorsSenders [
 	| model class modelImps refs found |
 	model := modelFactory rbNamespace new.
 	model 
-		defineClass: 'Object subclass: #Asdf
-			instanceVariableNames: ''''
-			classVariableNames: ''''
-			poolDictionaries: ''''
-			category: #''Refactory-Testing'''.
+		defineClass: 'Object << #Asdf package: #''Refactory-Testing'''.
 	class := model classNamed: #Asdf.
 	class compile: 'storeOn: aStream ^super storeOn: aStream'
 		classified: #(#printing).
@@ -123,11 +116,11 @@ RBNamespaceTest >> testModelImplementorsSenders [
 RBNamespaceTest >> testRedefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
-	st defineClass: 'nil subclass: #Object
-				instanceVariableNames: ''a''
-				classVariableNames: ''A''
-				poolDictionaries: ''TextConstants''
-				category: #''Refactory-Testing'''.
+	st defineClass: 'nil << #Object
+				slots: { #a};
+				sharedVariables: {#A};
+				sharedPools: {TextConstants};
+				package: #''Refactory-Testing'''.
 	self assert: (st includesClassNamed: #Object).
 	self assert: (st classNamed: #Object) notNil
 ]

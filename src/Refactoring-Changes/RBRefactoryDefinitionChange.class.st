@@ -147,6 +147,5 @@ RBRefactoryDefinitionChange >> primitiveExecute [
 RBRefactoryDefinitionChange >> printOn: aStream [
 
 	aStream
-		nextPutAll: definition;
-		nextPut: $!
+		nextPutAll: definition
 ]
