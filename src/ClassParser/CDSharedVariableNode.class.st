@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-CDSharedVariableNode class >> slot: aSlot node: aNode [ 
-	
+CDSharedVariableNode class >> slot: aSlot node: aNode [
+
 	^ self new
 		slot: aSlot;
 		node: aNode;
@@ -18,9 +18,9 @@ CDSharedVariableNode class >> slot: aSlot node: aNode [
 
 { #category : #transforming }
 CDSharedVariableNode >> asClassVariable [
-	"for not this only supports ClassVariables. 
+	"for not this only supports ClassVariables.
 	We need to create a ClassVariable here using the Variable Definition"
-	^ ClassVariable named: self name.
+	^ ClassVariable named: self name
 ]
 
 { #category : #testing }
@@ -31,9 +31,9 @@ CDSharedVariableNode >> isClassVariable [
 
 { #category : #testing }
 CDSharedVariableNode >> isGlobalClassNameBinding [
-	"To be polymorphic to RB method nodes. This is a bit odd as this is just called due to 
+	"To be polymorphic to RB method nodes. This is a bit odd as this is just called due to
 	#binding returning self, normally this should be called on LiteralVariable"
-	
+
 	^false
 ]
 

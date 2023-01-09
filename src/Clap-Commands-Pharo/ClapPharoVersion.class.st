@@ -78,7 +78,7 @@ ClapPharoVersion >> releaseVersionString [
 ClapPharoVersion >> showVersionsNamed: formatNames [
 	| out |
 	out := self context stdout.
-	formatNames do: [ :each | 
+	formatNames do: [ :each |
 		out nextPutAll: (self formatStringFor: each); lf ].
 	out flush
 ]

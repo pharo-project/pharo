@@ -54,7 +54,7 @@ Class {
 	#category : #'FFI-Kernel'
 }
 
-{ #category : #'pool initialization' }
+{ #category : #'class initialization' }
 FFIConstants class >> initialize [
 	"FFIConstants initialize"
 	

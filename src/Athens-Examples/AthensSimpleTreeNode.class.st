@@ -19,13 +19,13 @@ Class {
 
 { #category : #accessing }
 AthensSimpleTreeNode >> box [
-	
+
 	^ box
 ]
 
 { #category : #accessing }
 AthensSimpleTreeNode >> box: anObject [
-	
+
 	box := anObject
 ]
 
@@ -52,19 +52,19 @@ AthensSimpleTreeNode >> color: aColor [
 
 { #category : #accessing }
 AthensSimpleTreeNode >> extent [
-	
+
 	^ extent
 ]
 
 { #category : #accessing }
 AthensSimpleTreeNode >> extent: anObject [
-	
+
 	extent := anObject
 ]
 
 { #category : #accessing }
 AthensSimpleTreeNode >> height [
-	
+
 	^ extent y
 ]
 
@@ -73,30 +73,30 @@ AthensSimpleTreeNode >> layoutHorizontally: center [
 	| pos |
 	"position ourselves in the middle X"
 	originX := center - (self width * 0.5).
-	
+
 	"childs"
 	pos := center - (self layoutWidth *0.5).
-	
+
 	children do: [ :each |
 		each layoutHorizontally: pos + (each layoutWidth *0.5).
-		pos := pos + each layoutWidth + self spacingBetweenChilds. 
+		pos := pos + each layoutWidth + self spacingBetweenChilds.
 	]
 ]
 
 { #category : #accessing }
-AthensSimpleTreeNode >> layoutWidth [ 
+AthensSimpleTreeNode >> layoutWidth [
 
-	^ layoutWidth ifNil: [  
+	^ layoutWidth ifNil: [
 		| childWidth |
 
 		childWidth := 0.
-		children isEmpty ifFalse: [  
+		children isEmpty ifFalse: [
 			children do: [ :each | childWidth := childWidth + each layoutWidth  ].
 			childWidth := childWidth + (self spacingBetweenChilds * (children size-1)).
 		].
 
 		layoutWidth := self width max: childWidth.
-	].
+	]
 ]
 
 { #category : #accessing }
@@ -135,16 +135,16 @@ AthensSimpleTreeNode >> renderOn: aCanvas [
 	[  ^ self ] value.
 	"
 	children do: [ :each | | path |
-		
+
 		"we cache the path connecting each child and its parent, to not recreate it each time"
-		path := aCanvas cacheAt: each ifAbsentPut: [ 
+		path := aCanvas cacheAt: each ifAbsentPut: [
 			| midTop midBot |
-			
+
 			midTop := self midBottom.
 			midBot := each midTop.
-			
-			aCanvas createPath: [:builder | 
-				builder 
+
+			aCanvas createPath: [:builder |
+				builder
 					absolute;
 					moveTo: self midBottom;
 					curveVia: midTop x@midBot y and: midBot x@ midTop y to: midBot
@@ -152,8 +152,8 @@ AthensSimpleTreeNode >> renderOn: aCanvas [
 			]].
 
 		aCanvas setStrokePaint: (Color red alpha:0.5).
-		aCanvas drawShape: path. 
-		
+		aCanvas drawShape: path.
+
 		each renderOn: aCanvas
 	]
 ]
@@ -165,18 +165,18 @@ AthensSimpleTreeNode >> spacingBetweenChilds [
 
 { #category : #accessing }
 AthensSimpleTreeNode >> subject [
-	
+
 	^ subject
 ]
 
 { #category : #accessing }
 AthensSimpleTreeNode >> subject: anObject [
-	
+
 	subject := anObject
 ]
 
 { #category : #accessing }
 AthensSimpleTreeNode >> width [
-	
+
 	^ extent x
 ]

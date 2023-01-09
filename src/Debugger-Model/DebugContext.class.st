@@ -125,7 +125,7 @@ DebugContext >> locateClosureHomeWithContent: aText [
 	context isBlockContext ifTrue: [
 		closureHome := context activeHome.
 		closureHome ifNil: [
-			self blockNotFoundDialog: context compiledCode method with: aText.
+			self blockNotFoundDialog: context homeMethod with: aText.
 		 	^ nil ].
 		 (self confirm: 'I will have to revert to the method from\which this block originated.  Is that OK?' withCRs) 
 			ifFalse: [ ^ nil ].
@@ -184,7 +184,7 @@ DebugContext >> selectedMessageName [
 	"Answer the message selector of the current context.
 	 If the method is unbound we can still usefully answer its old selector."
 
-	^ context methodSelector
+	^ context selector
 ]
 
 { #category : #private }

@@ -164,6 +164,12 @@ CompiledBlock >> pragmas [
 	^ #()
 ]
 
+{ #category : #accessing }
+CompiledBlock >> primitive [
+	"for now we do not compile Quick CompiedBlocks, see IRBytecodeGenerator>>#compiledBlockWith:"
+	^0
+]
+
 { #category : #printing }
 CompiledBlock >> printOn: anStream [
 	

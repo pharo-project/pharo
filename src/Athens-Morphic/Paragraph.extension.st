@@ -5,7 +5,7 @@ Paragraph >> displayCaretAndSelectionOnAthensCanvas: anAthensCanvas [
 	selectionStart ifNil: [ ^ self ].
 	selectionStart = selectionStop
 		ifTrue: [ self drawCaretOnAthensCanvas: anAthensCanvas ]
-		ifFalse: [ 
+		ifFalse: [
 			| selection |
 			caretRect := nil.
 			selection := ParagraphSelectionBlock first: selectionStart last: selectionStop color: self selectionColor.
@@ -19,10 +19,10 @@ Paragraph >> displayExtraSelectionOnAthensCanvas: anAthensCanvas [
 	refreshExtraSelection = true
 		ifTrue: [ self buildSelectionBlocksFrom: visibleRectangle topLeft to: visibleRectangle bottomRight.
 			refreshExtraSelection := false ].
-		
+
 	extraSelectionBlocks
-		ifNotNil: [ 
-			self forLinesIn: visibleRectangle	do: [ :line | 
+		ifNotNil: [
+			self forLinesIn: visibleRectangle	do: [ :line |
 					extraSelectionBlocks
 						do: [ :selblock | self displaySelectionBlock: selblock inLine: line onAthensCanvas: anAthensCanvas ] ] ]
 ]
@@ -43,7 +43,7 @@ Paragraph >> displaySelectionBarOnAthensCanvas: anAthensCanvas [
 { #category : #'*Athens-Morphic' }
 Paragraph >> displaySelectionBlock: aSelBlock inLine: line onAthensCanvas: anAthensCanvas [
 	(selectionStart notNil and: [ selectionStop notNil and: [ selectionStart ~= selectionStop ] ])
-		ifTrue: [ 
+		ifTrue: [
 			| startIdx stopIdx selSartIdx selStopIdx selBlockRange selRange |
 			startIdx := aSelBlock first stringIndex.
 			stopIdx := aSelBlock last stringIndex.
@@ -52,7 +52,7 @@ Paragraph >> displaySelectionBlock: aSelBlock inLine: line onAthensCanvas: anAth
 			selBlockRange := startIdx to: stopIdx.
 			selRange := selSartIdx to: selStopIdx.
 			((selBlockRange rangeIncludes: selSartIdx + 1)
-				or: [ 
+				or: [
 					(selBlockRange rangeIncludes: selStopIdx - 1)
 						or: [ (selRange rangeIncludes: startIdx + 1) or: [ selRange rangeIncludes: stopIdx - 1 ] ] ])
 				ifTrue: [ ^ self ] ].	"regular selection and this selection block overlap"
@@ -64,13 +64,13 @@ Paragraph >> displayTextOnAthensCanvas: anAthensCanvas in: aRectangle [
 	| athensDisplayScanner offset leftInRun |
 	anAthensCanvas clipBy: aRectangle during:[
 	anAthensCanvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			offset := aRectangle topLeft - positionWhenComposed.
 			athensDisplayScanner := AthensDisplayScanner for: self on: anAthensCanvas.
 			leftInRun := 0.
 			self
 				forLinesIn: anAthensCanvas clipRect
-				do: [ :line | 
+				do: [ :line |
 					line first <= line last
 						ifTrue: [ leftInRun := athensDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ] ] ]
 ]
@@ -85,7 +85,7 @@ Paragraph >> drawCaretOnAthensCanvas: anAthensCanvas [
 ]
 
 { #category : #'*Athens-Morphic' }
-Paragraph >> drawOnAthensCanvas: aCanvas bounds: aRectangle [ 
+Paragraph >> drawOnAthensCanvas: aCanvas bounds: aRectangle [
 	"do nothing"
 ]
 
@@ -94,12 +94,12 @@ Paragraph >> drawOnAthensCanvas: anAthensCanvas bounds: aRectangle color: aColor
 	self displayCaretAndSelectionOnAthensCanvas: anAthensCanvas.
 	self displayExtraSelectionOnAthensCanvas: anAthensCanvas.
 	anAthensCanvas setPaint: aColor.
-	self displayTextOnAthensCanvas: anAthensCanvas in: aRectangle.
+	self displayTextOnAthensCanvas: anAthensCanvas in: aRectangle
 ]
 
 { #category : #'*Athens-Morphic' }
 Paragraph >> forLinesIn: aVisibleRect do: aBlock [
-	(self lineIndexForPoint: aVisibleRect topLeft) to: 
-	(self lineIndexForPoint: aVisibleRect bottomRight) do: 
+	(self lineIndexForPoint: aVisibleRect topLeft) to:
+	(self lineIndexForPoint: aVisibleRect bottomRight) do:
 		[:i | aBlock value: (lines at: i) ]
 ]

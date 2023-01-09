@@ -36,13 +36,13 @@ Class {
 }
 
 { #category : #accessing }
-HEMethod >> bytecode: anObject [
-	bytecode := anObject
+HEMethod >> bytecode [
+	^ bytecode
 ]
 
 { #category : #accessing }
-HEMethod >> bytecodes [
-	^ bytecode
+HEMethod >> bytecode: anObject [
+	bytecode := anObject
 ]
 
 { #category : #accessing }
@@ -120,4 +120,9 @@ HEMethod >> readFrom: aReader [
 	numberOfLiterals := aReader readInt32.
 	literals := Array new: numberOfLiterals.
 	1 to: numberOfLiterals do: [ :idx | literals at:idx put: (HEExportedLiteral readFrom: aReader) ]
+]
+
+{ #category : #accessing }
+HEMethod >> selector [
+	^ self name
 ]

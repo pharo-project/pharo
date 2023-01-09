@@ -4,7 +4,6 @@ I am an strategy to implement different backends for FFI.
 Class {
 	#name : #FFIBackend,
 	#superclass : #Object,
-	#type : #bytes,
 	#classVars : [
 		'Current'
 	],
@@ -25,7 +24,7 @@ FFIBackend class >> detectFFIBackend [
 		ifNone: [ ^ NullFFIBackend ]) new
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFIBackend class >> initialize [
 
 	SessionManager default

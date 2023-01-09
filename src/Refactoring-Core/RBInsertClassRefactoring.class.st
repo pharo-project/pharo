@@ -108,7 +108,7 @@ RBInsertClassRefactoring >> storeOn: aStream [
 RBInsertClassRefactoring >> transform [
 
 	| classDefinitionString |
-	classDefinitionString := '<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>'
+	classDefinitionString := '<1p> %<%< #<2s> package: <3p>'
 		                         expandMacrosWith: superclass
 		                         with: className
 		                         with: category asString.

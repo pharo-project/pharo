@@ -26,7 +26,7 @@ AthensCanvasWrapper >> allocateForm: extentPoint [
 
 { #category : #'canvas converting' }
 AthensCanvasWrapper >> asShadowDrawingCanvas [
-	"this may not work, but it 
+	"this may not work, but it
 	doesn't hurt yet and HandMorph relies on this"
 
 	^ (ShadowDrawingCanvas on: self) shadowColor: (Color orange alpha: 0.2)
@@ -68,9 +68,9 @@ AthensCanvasWrapper >> clipWrapperAndAthensTransformBy: aDisplayTransform clippi
 	rect := aDisplayTransform globalBoundsToLocal: aClipRect.
 	self
 		clipBy: rect
-		during: [ :c | 
+		during: [ :c |
 			c canvas pathTransform
-				restoreAfter: [ 
+				restoreAfter: [
 					"c canvas morphicClipBy: rect during: [ "
 					c canvas pathTransform translateBy: aDisplayTransform offset negated.
 					c canvas pathTransform rotateByRadians: aDisplayTransform angle negated.
@@ -84,7 +84,7 @@ AthensCanvasWrapper >> clipWrapperTransformBy: aDisplayTransform clippingTo: aCl
 	| rect |
 	rect := aDisplayTransform globalBoundsToLocal: aClipRect.
 	self canvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			self canvas pathTransform translateBy: aDisplayTransform offset negated.
 			self canvas pathTransform rotateByRadians: aDisplayTransform angle negated.
 			self canvas pathTransform scaleBy: aDisplayTransform scale.
@@ -132,7 +132,7 @@ AthensCanvasWrapper >> createClosedEllipsePathIn: aRectangle [
 	width := aRectangle width.
 	radius := width / 2.
 	^ self canvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: width @ radius;
@@ -143,7 +143,7 @@ AthensCanvasWrapper >> createClosedEllipsePathIn: aRectangle [
 { #category : #private }
 AthensCanvasWrapper >> createClosedPolygonPathFrom: aPointsArray [
 	^ self canvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			aPointsArray ifEmpty: [ builder ].
 			builder absolute.
 			builder moveTo: aPointsArray first.
@@ -192,7 +192,7 @@ AthensCanvasWrapper >> drawMorph: aMorph [
 AthensCanvasWrapper >> drawPolygon: vertices color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	| path |
 	self canvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			self canvas pathTransform.
 			path := self createClosedPolygonPathFrom: vertices ].
 	self canvas setPaint: aColor.
@@ -205,7 +205,7 @@ AthensCanvasWrapper >> drawPolygon: vertices color: aColor borderWidth: aBorderW
 AthensCanvasWrapper >> drawPolygon: vertices fillStyle: aFillStyle [
 	| path |
 	self canvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			self canvas pathTransform.
 			path := self createClosedPolygonPathFrom: vertices ].
 	self canvas setPaint: aFillStyle.
@@ -230,7 +230,7 @@ AthensCanvasWrapper >> drawString: aString at: aPoint font: aFontOrNil color: aC
 AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bounds font: aFontOrNil color: aColor underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	| font |
 	font := aFontOrNil ifNil: [ TextStyle defaultFont ].
-	self canvasClipBy: (bounds intersect: self canvas clipRect) during:[ 
+	self canvasClipBy: (bounds intersect: self canvas clipRect) during:[
 			self canvas pathTransform restoreAfter:[ | advance |
 			self canvas pathTransform translateBy: bounds origin.
 			self canvas pathTransform translateX: 0 Y: font getPreciseAscent.
@@ -242,7 +242,7 @@ AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bo
 			underline ifTrue:[
 				self canvas setPaint: uc.
 				self canvas drawShape:(0@1 extent: advance x @1).
-			]]].
+			]]]
 ]
 
 { #category : #'canvas drawing - text' }
@@ -255,7 +255,7 @@ AthensCanvasWrapper >> drawString: aString in: bounds font: aFontOrNil color: aC
 	| font |
 	font := aFontOrNil ifNil: [ TextStyle defaultFont ].
 	self canvasClipBy: (bounds intersect: self canvas clipRect) during:[
-			self canvas pathTransform restoreAfter:[ 
+			self canvas pathTransform restoreAfter:[
 			self canvas pathTransform translateBy: bounds origin.
 			self canvas pathTransform translateX: 0 Y: font getPreciseAscent.
 			self flag: #pharoTodo. "scaled, so that FT-Plugin and Athens don't mix cached faces"
@@ -288,7 +288,7 @@ AthensCanvasWrapper >> extent [
 { #category : #'canvas drawing - ovals' }
 AthensCanvasWrapper >> fillOval: r color: c [
 
-	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent.
+	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent
 ]
 
 { #category : #'canvas drawing - ovals' }
@@ -309,7 +309,7 @@ AthensCanvasWrapper >> fillOval: aRectangle fillStyle: aFillStyle [
 AthensCanvasWrapper >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: aBorderWidth borderColor: aBorderColor [
 	self canvas setPaint: aFillStyle.
 	self canvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			| path t |
 			path := self createClosedEllipsePathIn: aRectangle.
 			t := self canvas pathTransform.
@@ -336,7 +336,7 @@ AthensCanvasWrapper >> fillRectangle: aRectangle fillStyle: aFillStyle [
 AthensCanvasWrapper >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderStyle [
 	self
 		canvasClipBy: self clipRect
-		during: [ 
+		during: [
 			self canvas setPaint: aFillStyle.
 			self canvas drawShape: (aRectangle insetBy: aBorderStyle width).
 			self canvas setStrokePaint: aBorderStyle.
@@ -350,7 +350,7 @@ AthensCanvasWrapper >> finish [
 
 { #category : #'canvas drawing - support' }
 AthensCanvasWrapper >> flush [
-	^ self canvas surface flush.
+	^ self canvas surface flush
 ]
 
 { #category : #accessing }
@@ -362,7 +362,7 @@ AthensCanvasWrapper >> form [
 AthensCanvasWrapper >> frameAndFillRectangle: aRectangle fillColor: aFillColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	self
 		canvasClipBy: self clipRect
-		during: [ 
+		during: [
 			self canvas setPaint: aFillColor.
 			self canvas drawShape: aRectangle.
 			(self canvas setStrokePaint: aBorderColor) width: aBorderWidth.
@@ -395,7 +395,7 @@ AthensCanvasWrapper >> frameRectangle: aRectangle width: width colors: colors da
 	stroke dashes: dashes offset: 0.
 	self canvas drawShape: aRectangle.
 	colors allButFirst
-		ifNotEmpty: [ :e | 
+		ifNotEmpty: [ :e |
 			stroke fillPaint: e first.
 			stroke dashes: dashes reverse offset: dashes first.
 			self canvas drawShape: aRectangle ]
@@ -426,7 +426,7 @@ AthensCanvasWrapper >> image: aForm at: aPoint sourceRect: sourceRect rule: rule
 { #category : #private }
 AthensCanvasWrapper >> imagePaint: aForm at: aPoint sourceRect: sourceRect [
 	self canvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			self canvas setPaint: aForm.
 			self canvas pathTransform translateBy: aPoint.
 			self canvas drawShape: sourceRect]
@@ -442,7 +442,7 @@ AthensCanvasWrapper >> initialize [
 AthensCanvasWrapper >> isVisible: aRectangle [
 	"Return true if the given rectangle is (partially) visible"
 
-	^ self clipRect intersects: aRectangle.
+	^ self clipRect intersects: aRectangle
 ]
 
 { #category : #'canvas drawing' }
@@ -458,9 +458,9 @@ AthensCanvasWrapper >> line: pt1 to: pt2 color: c [
 AthensCanvasWrapper >> line: pt1 to: pt2 width: w color: c [
 	| path |
 	path := self createClosedPolygonPathFrom: {pt1 . pt2}.
-		
+
 	(self canvas setStrokePaint: c) width:w.
-	self canvas drawShape: path.
+	self canvas drawShape: path
 ]
 
 { #category : #'canvas accessing' }
@@ -521,7 +521,7 @@ AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect co
 		self canvas setPaint: aColor.
 		self canvas draw.
 		mask maskOn: self canvas.
-		].
+		]
 ]
 
 { #category : #'canvas drawing - support' }
@@ -537,9 +537,9 @@ AthensCanvasWrapper >> transformBy: aDisplayTransform clippingTo: aClipRect duri
 AthensCanvasWrapper >> translateBy: offset clippingTo: aRect during: aBlock [
 	self
 		canvasClipBy: aRect
-		during: [ 
+		during: [
 			self canvas pathTransform
-				restoreAfter: [ 
+				restoreAfter: [
 					self canvas pathTransform translateBy: offset.
 					aBlock value: self ] ]
 ]

@@ -61,7 +61,7 @@ LinkedListTest >> collection [
 { #category : #requirements }
 LinkedListTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ LinkedList
 ]
 
@@ -210,7 +210,7 @@ LinkedListTest >> n [
 
 { #category : #accessing }
 LinkedListTest >> n: number [
-	n := number.
+	n := number
 ]
 
 { #category : #accessing }
@@ -236,7 +236,7 @@ LinkedListTest >> nonEmpty1Element [
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyMoreThan1Element [
-" return a collection that don't includes equl elements'" 
+" return a collection that don't includes equl elements'"
 	^collectionWithoutNil
 ]
 
@@ -260,7 +260,7 @@ LinkedListTest >> otherCollection [
 
 { #category : #requirements }
 LinkedListTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	^ collectionWithoutNil
 ]
 
@@ -272,7 +272,7 @@ LinkedListTest >> result [
 
 { #category : #running }
 LinkedListTest >> setUp [
-	
+
 	super setUp.
 	list := LinkedList new.
 	link1 := 133.
@@ -302,7 +302,7 @@ LinkedListTest >> sortedInAscendingOrderCollection [
 
 { #category : #requirements }
 LinkedListTest >> speciesClass [
-	
+
 	^LinkedList
 ]
 
@@ -319,11 +319,11 @@ LinkedListTest >> tearDown [
 	link2 := nil.
 	link3 := nil.
 	link4 := nil.
-	
+
 	link := nil.
 	nonEmpty := nil.
 	otherList := nil.
-	
+
 	super tearDown
 ]
 
@@ -717,22 +717,22 @@ LinkedListTest >> test22addAll [
 	link6 := Link new.
 	link7 := Link new.
 	link8 := Link new.
-	
+
 	list
 		add: link1;
 		add: link2;
 		add: link3;
 		add: link4.
-		
+
 	listToBeAdded := LinkedList new.
 	listToBeAdded
 		add: link5;
 		add: link6;
 		add: link7;
 		add: link8.
-		
+
 	list addAll: listToBeAdded.
-	
+
 	self should: [(list at: 1) == link1].
 	self should: [(list at: 2) == link2].
 	self should: [(list at: 3) == link3].
@@ -740,7 +740,7 @@ LinkedListTest >> test22addAll [
 	self should: [(list at: 5) == link5].
 	self should: [(list at: 6) == link6].
 	self should: [(list at: 7) == link7].
-	self should: [(list at: 8) == link8].
+	self should: [(list at: 8) == link8]
 ]
 
 { #category : #tests }
@@ -830,6 +830,19 @@ LinkedListTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
+{ #category : #'tests - instance creation' }
+LinkedListTest >> testNewFromCollection [
+
+	|d|
+	d := LinkedList newFrom: #(a b c).
+
+	self assert: d firstLink value equals: #a.
+	self assert: d lastLink value equals: #c.
+
+	self assert: d firstLink nextLink value equals: #b.
+	self assert: d firstLink nextLink nextLink value equals: #c
+]
+
 { #category : #tests }
 LinkedListTest >> testRemoveAll [
 	| list2 |
@@ -856,54 +869,54 @@ LinkedListTest >> testSort [
 LinkedListTest >> testSwapAdjacent [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 3 with: 4.
 	self assert: (aList at: 3) equals: 2.
-	self assert: (aList at: 4) equals: 3.
+	self assert: (aList at: 4) equals: 3
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapAdjacentEnd [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 4 with: 5.
 	self assert: (aList at: 4) equals: 1.
 	self assert: (aList at: 5) equals: 2.
-	self assert: aList last equals: 2.
+	self assert: aList last equals: 2
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapAdjacentStart [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 1 with: 2.
 	self assert: (aList at: 1) equals: 4.
 	self assert: (aList at: 2) equals: 5.
-	self assert: aList first equals: 4.
+	self assert: aList first equals: 4
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapBasic [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 2 with: 4.
 	self assert: (aList at: 2) equals: 2.
-	self assert: (aList at: 4) equals: 4.
+	self assert: (aList at: 4) equals: 4
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapStartAndEnd [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 1 with: 5.
 	self assert: (aList at: 1) equals: 1.
 	self assert: (aList at: 5) equals: 5.
 	self assert: aList first equals: 1.
-	self assert: aList last equals: 5.
+	self assert: aList last equals: 5
 ]
 
 { #category : #'tests - adding' }

@@ -12,10 +12,11 @@ Class {
 	#category : #'Collections-Weak-Base'
 }
 
+
 { #category : #'class initialization' }
 WeakArray class >> initialize [
 	"Do we need to initialize specialObjectsArray?"
-	Smalltalk specialObjectsArray size < 42 
+	Smalltalk specialObjectsArray size < 42
 		ifTrue: [Smalltalk recreateSpecialObjectsArray].
 
 	SessionManager default

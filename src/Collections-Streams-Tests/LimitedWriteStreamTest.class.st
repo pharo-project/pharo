@@ -26,7 +26,7 @@ LimitedWriteStreamTest >> testLimit [
 		assert: stream limit equals: self stringSize;
 		deny: overLimit.
 
-	self stringSize - 1 to: 0 by: -1 do: [ :i | 
+	self stringSize - 1 to: 0 by: -1 do: [ :i |
 		overLimit := false.
 		self
 			assert: (stream limit: i) identicalTo: stream;
@@ -57,14 +57,14 @@ LimitedWriteStreamTest >> testNextPut [
 	stream := self streamClass on: String new limit: self stringSize limitBlock: [ overLimit := true ].
 	overLimit := false.
 	self string
-		withIndexDo: [ :each :i | 
+		withIndexDo: [ :each :i |
 			self
 				assert: (stream nextPut: each) equals: each;
 				assert: stream position equals: i;
 				assert: stream contents equals: (self string first: i);
 				deny: overLimit ].
 	self string
-		do: [ :each | 
+		do: [ :each |
 			overLimit := false.
 			self
 				assert: (stream nextPut: each) equals: each;
@@ -135,7 +135,7 @@ LimitedWriteStreamTest >> testSetLimitLimitBlock [
 	stream nextPutAll: self string.
 	self deny: overLimit.
 
-	self stringSize - 1 to: 0 by: -1 do: [ :i | 
+	self stringSize - 1 to: 0 by: -1 do: [ :i |
 		overLimit := false.
 		"ensure the new block argument is used when the new limit is less than
 		the position by setting it to nil first"
@@ -160,14 +160,14 @@ LimitedWriteStreamTest >> testWith [
 		limit: self stringSize * 2;
 		limitBlock: [ overLimit := true ].
 	self string
-		withIndexDo: [ :each :i | 
+		withIndexDo: [ :each :i |
 			self
 				assert: (stream nextPut: each) equals: each;
 				assert: stream position equals: self stringSize + i;
 				assert: stream contents equals: self string , (self string first: i);
 				deny: overLimit ].
 	self string
-		do: [ :each | 
+		do: [ :each |
 			overLimit := false.
 			self
 				assert: (stream nextPut: each) equals: each;
@@ -190,14 +190,14 @@ LimitedWriteStreamTest >> testWithFromTo [
 		limit: self stringSize * 2;
 		limitBlock: [ overLimit := true ].
 	self string
-		withIndexDo: [ :each :i | 
+		withIndexDo: [ :each :i |
 			self
 				assert: (stream nextPut: each) equals: each;
 				assert: stream position equals: self stringSize + i;
 				assert: stream contents equals: self string , (self string first: i);
 				deny: overLimit ].
 	self string
-		do: [ :each | 
+		do: [ :each |
 			overLimit := false.
 			self
 				assert: (stream nextPut: each) equals: each;

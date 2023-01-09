@@ -2,9 +2,9 @@ Extension { #name : #Metaclass }
 
 { #category : #'*CodeExport' }
 Metaclass >> fileOutInitializerOn: aStream [
-	(self includesSelector: #initialize) ifTrue: 
+	(self includesSelector: #initialize) ifTrue:
 		[aStream cr.
-		aStream nextChunkPut: self soleInstance name , ' initialize'].
+		aStream nextChunkPut: self soleInstance name , ' initialize']
 ]
 
 { #category : #'*CodeExport' }
@@ -25,7 +25,7 @@ Metaclass >> fileOutOn: aFileStream initializing: aBool [
 ]
 
 { #category : #'*CodeExport' }
-Metaclass >> nonTrivial [ 
+Metaclass >> nonTrivial [
 	"Answer whether the receiver has any methods or instance variables."
 
 	^ self instVarNames notEmpty or: [self hasMethods or: [self hasTraitComposition]]

@@ -398,6 +398,14 @@ IntegerTest >> testHex [
 	self assert: 1234 hex equals: '16r4D2'
 ]
 
+{ #category : #'tests - printing' }
+IntegerTest >> testHexString [
+	self assert: 0 hexString equals: '16r0'.
+	self assert: 12 hexString equals: '16rC'.
+	self assert: 1234 hexString equals: '16r4D2'.
+	self assert: -1234 hexString equals: '-16r4D2'
+]
+
 { #category : #'tests - bitLogic' }
 IntegerTest >> testHighBit [
 	| suite |
@@ -435,6 +443,21 @@ IntegerTest >> testHighBitOfMagnitude [
 					shifted := shifted bitShift: 1 ].
 			self assert: anInteger highBitOfMagnitude equals: highBit.
 			self assert: anInteger negated highBitOfMagnitude equals: highBit ]
+]
+
+{ #category : #'tests - other' }
+IntegerTest >> testHumanReadableSISizeString [
+	self assert: 1000 humanReadableSISizeString equals: '1.00 kB'.
+	self assert: 1024 humanReadableSISizeString equals: '1.02 kB'.
+
+	self assert: (1000 * 1000) humanReadableSISizeString equals: '1.00 MB'.
+	self assert: (1024 * 1024) humanReadableSISizeString equals: '1.05 MB'.
+
+	self assert: (1000 * 1000 * 1000) humanReadableSISizeString equals: '1.00 GB'.
+	self assert: (1024 * 1024 * 1024) humanReadableSISizeString equals: '1.07 GB'.
+
+	self assert: (1000 * 1000 * 1000 * 1000) humanReadableSISizeString equals: '1.00 TB'.
+	self assert: (1024 * 1024 * 1024 * 1024) humanReadableSISizeString equals: '1.10 TB'.
 ]
 
 { #category : #'tests - printing' }

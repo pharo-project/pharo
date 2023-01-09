@@ -162,7 +162,7 @@ Character class >> home [
 	^ self value: 1
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Character class >> initialize [
 	"Create the DigitsValues table."
  

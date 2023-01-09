@@ -20,18 +20,18 @@ Class {
 }
 
 { #category : #accessing }
-RBReadBeforeWrittenTester class >> isVariable: aString readBeforeWrittenIn: aBRProgramNode [ 
+RBReadBeforeWrittenTester class >> isVariable: aString readBeforeWrittenIn: aBRProgramNode [
 	^(self isVariable: aString writtenBeforeReadIn: aBRProgramNode) not
 ]
 
 { #category : #accessing }
-RBReadBeforeWrittenTester class >> isVariable: aString writtenBeforeReadIn: aBRProgramNode [ 
-	^(self readBeforeWritten: (Array with: aString) in: aBRProgramNode) 
+RBReadBeforeWrittenTester class >> isVariable: aString writtenBeforeReadIn: aBRProgramNode [
+	^(self readBeforeWritten: (Array with: aString) in: aBRProgramNode)
 		isEmpty
 ]
 
 { #category : #accessing }
-RBReadBeforeWrittenTester class >> readBeforeWritten: varNames in: aParseTree [ 
+RBReadBeforeWrittenTester class >> readBeforeWritten: varNames in: aParseTree [
 	^(self new)
 		checkNewTemps: false;
 		initializeVars: varNames;
@@ -40,19 +40,19 @@ RBReadBeforeWrittenTester class >> readBeforeWritten: varNames in: aParseTree [
 ]
 
 { #category : #accessing }
-RBReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [ 
+RBReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [
 	^(self new)
 		executeTree: aParseTree;
 		read
 ]
 
 { #category : #initialization }
-RBReadBeforeWrittenTester >> checkNewTemps: aBoolean [ 
+RBReadBeforeWrittenTester >> checkNewTemps: aBoolean [
 	checkNewTemps := aBoolean
 ]
 
 { #category : #private }
-RBReadBeforeWrittenTester >> copyDictionary: aDictionary [ 
+RBReadBeforeWrittenTester >> copyDictionary: aDictionary [
 	"We could send aDictionary the copy message, but that doesn't copy the associations."
 
 	| newDictionary |
@@ -72,7 +72,7 @@ RBReadBeforeWrittenTester >> currentScope [
 ]
 
 { #category : #accessing }
-RBReadBeforeWrittenTester >> executeTree: aParseTree [ 
+RBReadBeforeWrittenTester >> executeTree: aParseTree [
 	^self visitNode: aParseTree
 ]
 
@@ -85,19 +85,19 @@ RBReadBeforeWrittenTester >> initialize [
 ]
 
 { #category : #initialization }
-RBReadBeforeWrittenTester >> initializeVars: varNames [ 
+RBReadBeforeWrittenTester >> initializeVars: varNames [
 	varNames do: [:each | self currentScope at: each put: nil]
 ]
 
 { #category : #private }
-RBReadBeforeWrittenTester >> processBlock: aNode [ 
+RBReadBeforeWrittenTester >> processBlock: aNode [
 	| newScope |
 	self createScope.
 	self executeTree: aNode body.
 	newScope := self removeScope.
-	newScope keysAndValuesDo: 
-			[:key :value | 
-			(value == true and: [(self currentScope at: key) isNil]) 
+	newScope keysAndValuesDo:
+			[:key :value |
+			(value == true and: [(self currentScope at: key) isNil])
 				ifTrue: [self currentScope at: key put: value]]
 ]
 
@@ -113,7 +113,7 @@ RBReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [
 	self executeTree: aNode arguments last body.
 	falseScope := self removeScope.
 	self currentScope
-		keysAndValuesDo: [ :key :value | 
+		keysAndValuesDo: [ :key :value |
 			value
 				ifNil: [ ( trueScope at: key ) == ( falseScope at: key )
 						ifTrue: [ self currentScope at: key put: ( trueScope at: key ) ]
@@ -138,7 +138,7 @@ RBReadBeforeWrittenTester >> processStatementNode: aNode [
 	self initializeVars: temps.
 	aNode statements do: [ :each | self executeTree: each ].
 	self removeScope
-		keysAndValuesDo: [ :key :value | 
+		keysAndValuesDo: [ :key :value |
 			( temps includes: key )
 				ifTrue: [ value == true
 						ifTrue: [ read add: key ]
@@ -176,36 +176,36 @@ RBReadBeforeWrittenTester >> variableWritten: aNode [
 ]
 
 { #category : #visiting }
-RBReadBeforeWrittenTester >> visitAssignmentNode: anAssignmentNode [ 
+RBReadBeforeWrittenTester >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode value.
 	self variableWritten: anAssignmentNode
 ]
 
 { #category : #visiting }
-RBReadBeforeWrittenTester >> visitBlockNode: aBlockNode [ 
+RBReadBeforeWrittenTester >> visitBlockNode: aBlockNode [
 	self processBlock: aBlockNode
 ]
 
 { #category : #visiting }
-RBReadBeforeWrittenTester >> visitMessageNode: aMessageNode [ 
-	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse #whileNil:) 
-		includes: aMessageNode selector) and: [aMessageNode receiver isBlock]) 
+RBReadBeforeWrittenTester >> visitMessageNode: aMessageNode [
+	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse #whileNil:)
+		includes: aMessageNode selector) and: [aMessageNode receiver isBlock])
 		ifTrue: [self executeTree: aMessageNode receiver body]
-		ifFalse: 
-			[(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded]) 
+		ifFalse:
+			[(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded])
 				ifTrue: [self visitNode: aMessageNode receiver]].
-	((#(#ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aMessageNode selector) 
-		and: [aMessageNode arguments allSatisfy: [:each | each isBlock]]) 
+	((#(#ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aMessageNode selector)
+		and: [aMessageNode arguments allSatisfy: [:each | each isBlock]])
 			ifTrue: [^self processIfTrueIfFalse: aMessageNode].
 	aMessageNode arguments do: [:each | self visitNode: each]
 ]
 
 { #category : #visiting }
-RBReadBeforeWrittenTester >> visitSequenceNode: aSequenceNode [ 
+RBReadBeforeWrittenTester >> visitSequenceNode: aSequenceNode [
 	self processStatementNode: aSequenceNode
 ]
 
 { #category : #visiting }
-RBReadBeforeWrittenTester >> visitVariableNode: aVariableNode [ 
+RBReadBeforeWrittenTester >> visitVariableNode: aVariableNode [
 	self variableRead: aVariableNode
 ]
