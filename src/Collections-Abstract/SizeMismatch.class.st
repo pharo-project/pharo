@@ -11,13 +11,13 @@ Class {
 { #category : #accessing }
 SizeMismatch >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #printing }
 SizeMismatch >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ 'Collections sizes do not match'
 ]

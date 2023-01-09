@@ -13,11 +13,11 @@ Class {
 
 { #category : #finalization }
 VileFinalizer >> finalize [
-	weakRegistry remove: self ifAbsent: [].
+	weakRegistry remove: self ifAbsent: []
 ]
 
 { #category : #initialization }
 VileFinalizer >> initialize: registry [
 	weakRegistry := registry.
-	weakRegistry add: self.
+	weakRegistry add: self
 ]
