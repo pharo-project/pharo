@@ -1,7 +1,7 @@
 Extension { #name : #Categorizer }
 
 { #category : #'*CodeImport' }
-Categorizer >> changeFromString: aString [ 
+Categorizer >> changeFromString: aString [
 	"Parse the argument, aString, and make this be the receiver's structure."
 
 	| categorySpecs |

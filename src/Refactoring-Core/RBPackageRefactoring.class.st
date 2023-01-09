@@ -34,6 +34,18 @@ RBPackageRefactoring class >> packageName: aName [
 ]
 
 { #category : #accessing }
+RBPackageRefactoring >> newName [
+
+	^ newName
+]
+
+{ #category : #accessing }
+RBPackageRefactoring >> newName: anObject [
+
+	newName := anObject
+]
+
+{ #category : #accessing }
 RBPackageRefactoring >> packageName [
 
 	^ packageName

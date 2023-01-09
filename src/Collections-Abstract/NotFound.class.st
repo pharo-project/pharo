@@ -19,7 +19,7 @@ Class {
 { #category : #'instance creation' }
 NotFound class >> signalFor: anObject [
 	"Create and signal a NotFound exception for anObject in the default receiver."
-	
+
 	^ self new
 		object: anObject;
 		signal
@@ -38,42 +38,42 @@ NotFound class >> signalFor: anObject in: aCollection [
 { #category : #accessing }
 NotFound >> collection [
 	"Return the collection where something is not found in"
-	
+
 	^ self signaler
 ]
 
 { #category : #accessing }
 NotFound >> collection: aCollection [
 	"Set the collection where something is not found in"
-	
+
 	self signaler: aCollection
 ]
 
 { #category : #accessing }
 NotFound >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #accessing }
 NotFound >> object [
 	"Return the object that was not found"
-	
+
 	^ object
 ]
 
 { #category : #accessing }
 NotFound >> object: anObject [
 	"Set the object that was not found"
-	
+
 	object := anObject
 ]
 
 { #category : #private }
 NotFound >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		stream print: self object.
 		stream << ' not found in '.
