@@ -20,7 +20,7 @@ NativeArrayTest >> alignmentIndexesDo: aBlock [
 { #category : #utilities }
 NativeArrayTest >> alignments [
 	"Arrays aligned differently on 8 bytes boundary (when turned into byteArrays)"
-	^ #( 
+	^ #(
 	(10 20 30 40 50 60 70 80 10 20 30 40 50 60 70 80 10 20 30 40 50 60 70 80) "aligned"
 	(10 20 30 40 50 60 70 80 10 20 30 40 50 60 70 80 10 20 30 40 50 60 70 80 10) "+ 1.."
 	(10 20 30 40 50 60 70 80 10 20 30 40 50 60 70 80 10 20 30 40 50 60 70 80 10 20)
@@ -103,7 +103,7 @@ NativeArrayTest >> testReplaceFromToWithStartingAt [
 	self guineaPigHerd do: [ :guineaPig |
 		| copy |
 		copy := guineaPig copy.
-		1 to: copy size do: [ :l | copy at: l put: l ]. 
+		1 to: copy size do: [ :l | copy at: l put: l ].
 		self alignmentIndexesDo: [ :i :j :k |
 					guineaPig replaceFrom: i to: j + 8 with: copy startingAt: k.
 					self assert: (guineaPig at: i) equals: (copy at: k).
