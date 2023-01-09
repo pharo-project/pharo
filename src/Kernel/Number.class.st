@@ -318,10 +318,10 @@ Number >> floor [
 
 	| truncation |
 	truncation := self truncated.
-	self >= 0 ifTrue: [^truncation].
-	self = truncation
-		ifTrue: [^truncation]
-		ifFalse: [^truncation - 1]
+	self >= 0 ifTrue: [ ^ truncation ].
+	^ self = truncation
+		  ifTrue: [ truncation ]
+		  ifFalse: [ truncation - 1 ]
 ]
 
 { #category : #'truncation and round off' }
