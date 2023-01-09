@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 WeakArray class >> addWeakDependent: anObject [
-	
+
 	FinalizationLock critical:[ | index finished weakDependent |
 		finished := false.
 		index := 0.
@@ -33,13 +33,13 @@ WeakArray class >> addWeakDependent: anObject [
 			FinalizationDependents := FinalizationDependents, (WeakArray new: 10).
 			FinalizationDependents at: index put: anObject.
 		].
-	] ifError: [:err | err signal].
+	] ifError: [:err | err signal]
 ]
 
 { #category : #'class initialization' }
 WeakArray class >> initialize [
 	"Do we need to initialize specialObjectsArray?"
-	Smalltalk specialObjectsArray size < 42 
+	Smalltalk specialObjectsArray size < 42
 		ifTrue: [Smalltalk recreateSpecialObjectsArray].
 
 	SessionManager default
@@ -47,7 +47,7 @@ WeakArray class >> initialize [
 
 	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42.
 	FinalizationLock := Semaphore forMutualExclusion.
-	FinalizationDependents ifNil: [FinalizationDependents := WeakArray new: 10].
+	FinalizationDependents ifNil: [FinalizationDependents := WeakArray new: 10]
 ]
 
 { #category : #private }
@@ -64,7 +64,7 @@ WeakArray class >> removeWeakDependent: anObject [
 				FinalizationDependents at: i put: nil.
 			].
 		].
-	] ifError: [:err | err signal].
+	] ifError: [:err | err signal]
 ]
 
 { #category : #accessing }
