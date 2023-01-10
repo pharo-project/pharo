@@ -57,10 +57,11 @@ FFICompilerPluginTest >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
 FFICompilerPluginTest >> testFFIMethodDelegatesWhenLookingForHasSelector [
 
 	| buffer ffiMethod |
+	"Execute the method to ensure it is compiled as FFI method"
 	buffer := ByteArray new: 12.
 	self ffiCopyString: 'Hello World!' to: buffer.
 
-	ffiMethod := (FFICompilerPluginTest >> #ffiCopyString:to:).
+	ffiMethod := FFICompilerPluginTest >> #ffiCopyString:to:.
 	
 	self assert: (ffiMethod hasSelector: #ffiCall: specialSelectorIndex: nil).
 ]
