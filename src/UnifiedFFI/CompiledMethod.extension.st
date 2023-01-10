@@ -12,6 +12,23 @@ CompiledMethod >> ffiArgumentNames [
 ]
 
 { #category : #'*UnifiedFFI' }
+CompiledMethod >> hasSelector: selector specialSelectorIndex: specialOrNil [
+
+	| ffiNonCompiledMethod |
+	ffiNonCompiledMethod := self
+		propertyAt: #ffiNonCompiledMethod
+		ifAbsent: [
+			^ super
+				hasSelector: selector
+				specialSelectorIndex: specialOrNil ].
+
+	^ ffiNonCompiledMethod
+		hasSelector: selector
+		specialSelectorIndex: specialOrNil
+
+]
+
+{ #category : #'*UnifiedFFI' }
 CompiledMethod >> isFFIMethod [
 	
 	^ self hasProperty: #isFFIMethod
