@@ -13,6 +13,9 @@ CompiledMethod >> ffiArgumentNames [
 
 { #category : #'*UnifiedFFI' }
 CompiledMethod >> hasSelector: selector specialSelectorIndex: specialOrNil [
+	"Answer whether this method refers to a selector. FFI methods require special
+	consideration since a substitution of the original method is installed in the
+	method dictionary."
 
 	| ffiNonCompiledMethod |
 	ffiNonCompiledMethod := self
