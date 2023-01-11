@@ -55,12 +55,12 @@ Integer class >> new [
 
 { #category : #'instance creation' }
 Integer class >> new: length neg: neg [
-	"Answer an instance of a large integer whose size is length. neg is a flag 
+	"Answer an instance of a large integer whose size is length. neg is a flag
 	determining whether the integer is negative or not."
 
-	neg 
-		ifTrue: [^LargeNegativeInteger new: length]
-		ifFalse: [^LargePositiveInteger new: length]
+	^ neg
+		  ifTrue: [ LargeNegativeInteger new: length ]
+		  ifFalse: [ LargePositiveInteger new: length ]
 ]
 
 { #category : #reading }
