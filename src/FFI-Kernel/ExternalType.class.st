@@ -399,17 +399,19 @@ ExternalType class >> void [
 { #category : #converting }
 ExternalType >> asNonPointerType [
 	"convert the receiver into a non pointer type"
-	self isPointerType
-		ifTrue:[^referencedType]
-		ifFalse:[^self]
+
+	^ self isPointerType
+		  ifTrue: [ referencedType ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #converting }
 ExternalType >> asPointerType [
 	"convert the receiver into a pointer type"
-	self isPointerType
-		ifTrue:[^self]
-		ifFalse:[^referencedType]
+
+	^ self isPointerType
+		  ifTrue: [ self ]
+		  ifFalse: [ referencedType ]
 ]
 
 { #category : #converting }
