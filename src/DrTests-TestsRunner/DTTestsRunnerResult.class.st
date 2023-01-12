@@ -60,7 +60,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 DTTestsRunnerResult >> buildTreeForUI [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
-		subResults: { 
+		subResults: {
 			DTTreeNode new
 				name: DTTestResultType error pluralName;
 				subResults: (self buildLeavesFrom: self errors type: DTTestResultType error);
@@ -137,13 +137,13 @@ DTTestsRunnerResult >> expectedFailures [
 
 { #category : #accessing }
 DTTestsRunnerResult >> failures [
-	^ self testResults failures asOrderedCollection 
+	^ self testResults failures asOrderedCollection
 	   select: [ :t | t shouldPass ]
 ]
 
 { #category : #accessing }
 DTTestsRunnerResult >> passed [
-	^ self testResults passed asOrderedCollection 
+	^ self testResults passed asOrderedCollection
 		select: [ :t | t shouldPass]
 ]
 
@@ -157,7 +157,7 @@ DTTestsRunnerResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				print: self testResults passed size;
 				<< ' passed';
