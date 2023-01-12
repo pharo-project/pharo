@@ -27,5 +27,5 @@ EpEntryAdded >> entry [
 EpEntryAdded >> initializeWith: anEntry [
 
 	self initialize.
-	entry := anEntry.
+	entry := anEntry
 ]

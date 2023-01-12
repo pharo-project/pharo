@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 EpMethodAddition class >> method: aCompiledMethod [
-	
+
 	^ self basicNew
 		initializeMethod: aCompiledMethod;
 		yourself
@@ -34,7 +34,7 @@ EpMethodAddition >> affectedPackageName [
 EpMethodAddition >> initializeMethod: aCompiledMethod [
 
 	self initialize.
-	method := aCompiledMethod asEpiceaRingDefinition.
+	method := aCompiledMethod asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

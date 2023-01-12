@@ -45,7 +45,7 @@ EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 
 	detector := EpLostChangesDetector newWithLog: logWithALostChange.
 	self deny: detector hasLostChanges.
-	self assertEmpty: detector lostChanges.
+	self assertEmpty: detector lostChanges
 ]
 
 { #category : #tests }
@@ -54,12 +54,12 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 	| logWithALostChange |
 	"Create an initial change that will be ignored by the detector (read below)"
 	classFactory newClass.
-	
+
 	"Simulate the image session starts here (then previous change shouldn't be detected as lost... that's how it works)."
 	logWithALostChange := EpLog newWithStore: monitor sessionStore store flush copyReopened refresh.
 	classFactory newClass.
 	monitor sessionStore flush.
-	
+
 	"At this moment, the log meets the conditions of opening an image after a crash."
 	detector := EpLostChangesDetector newWithLog: logWithALostChange.
 
@@ -88,5 +88,5 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 	self assert: detectedLostChanges size equals: numberOfLostChanges.
 	self
 		assert: (detectedLostChanges collect: [ :each | each content behaviorAffectedName ]) asArray
-		equals: expectedLostClassNames.
+		equals: expectedLostClassNames
 ]

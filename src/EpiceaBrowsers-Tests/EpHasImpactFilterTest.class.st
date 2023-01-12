@@ -14,13 +14,13 @@ EpHasImpactFilterTest >> setUp [
 	classFactory := ClassFactoryForTestCase new.
 	impactFilter := EpImpactCodeChangeFilter new
 		environment: self class environment;
-		yourself.
+		yourself
 ]
 
 { #category : #running }
 EpHasImpactFilterTest >> tearDown [
 	classFactory cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -74,7 +74,7 @@ EpHasImpactFilterTest >> testCommentWithImpact [
 	aClass := classFactory newClass.
 	aClass comment: 'a'.
 	aClass comment: 'b'.
-	anEvent := OmEntry content: (EpBehaviorCommentChange 
+	anEvent := OmEntry content: (EpBehaviorCommentChange
 		newWithBehavior: aClass asEpiceaRingDefinition
 		oldComment: 'a'
 		newComment: 'b'
@@ -89,7 +89,7 @@ EpHasImpactFilterTest >> testCommentWithoutImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
 	aClass comment: 'a'.
-	anEvent := OmEntry content: (EpBehaviorCommentChange 
+	anEvent := OmEntry content: (EpBehaviorCommentChange
 		newWithBehavior: aClass asEpiceaRingDefinition
 		oldComment: 'a'
 		newComment: 'b'
@@ -124,19 +124,19 @@ EpHasImpactFilterTest >> testProtocolRemovalOfTraitProtocol [
 	| anEntry aClass |
 
 	aClass := classFactory
-		newSubclassOf: classFactory defaultSuperclass 
+		newSubclassOf: classFactory defaultSuperclass
 		uses: TAssertable
-		instanceVariableNames: '' 
-		classVariableNames: '' 
+		instanceVariableNames: ''
+		classVariableNames: ''
 		category: classFactory defaultTagPostfix.
 	anEntry := OmEntry content: (EpProtocolRemoval
-		behavior: aClass asRingDefinition 
+		behavior: aClass asRingDefinition
 		protocol: #private).
 	self deny: (impactFilter accepts: anEntry).
 
-	aClass 
+	aClass
 		compile: 'a ^1'
 		classified: #private.
 
-	self assert: (impactFilter accepts: anEntry).
+	self assert: (impactFilter accepts: anEntry)
 ]
