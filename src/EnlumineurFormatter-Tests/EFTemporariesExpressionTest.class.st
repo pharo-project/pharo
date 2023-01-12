@@ -55,7 +55,7 @@ EFTemporariesExpressionTest >> newLinesAfterTemporariesConfiguration [
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
-		
+
 	^ self contextClass basicNew
 		numberOfNewLinesAfterTemporaries: 1;
 		useBasicCommentFormat: false;
@@ -130,7 +130,7 @@ EFTemporariesExpressionTest >> testCommentNotBasicFormat [
 	self
 		assert: source
 		equals:
-			'| d "comment     
+			'| d "comment
 " e |'
 ]
 
@@ -140,7 +140,7 @@ EFTemporariesExpressionTest >> testDontRetainBlankLinesBeforeComments [
 	configurationSelector := #dontRetainBlankLinesBeforeComments.
 	source := self
 		formatExpression:
-			' | d 
+			' | d
 	"comment"e |'.
 	self
 		assert: source
@@ -154,8 +154,8 @@ EFTemporariesExpressionTest >> testDontRetainBlankLinesBeforeComments2 [
 	configurationSelector := #dontRetainBlankLinesBeforeComments.
 	source := self
 		formatExpression:
-			' | d 
-	
+			' | d
+
 	"comment"
 	e |'.
 	self
@@ -188,7 +188,7 @@ EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments [
 	configurationSelector := #retainBlankLinesBeforeComments.
 	source := self
 		formatExpression:
-			' | d 
+			' | d
 	"comment"e |'.
 	self
 		assert: source
@@ -204,8 +204,8 @@ EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments2 [
 	configurationSelector := #retainBlankLinesBeforeComments.
 	source := self
 		formatExpression:
-			' | d 
-	
+			' | d
+
 	"comment"e |'.
 	self
 		assert: source
@@ -271,7 +271,7 @@ EFTemporariesExpressionTest >> twoLinesAfterTemporariesConfiguration [
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
-		
+
 	^ self contextClass basicNew
 		numberOfNewLinesAfterTemporaries: 2;
 		useBasicCommentFormat: false;

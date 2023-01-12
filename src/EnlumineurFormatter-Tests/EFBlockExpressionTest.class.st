@@ -415,16 +415,16 @@ EFBlockExpressionTest >> testArgumentIsFormated [
 
 { #category : #tests }
 EFBlockExpressionTest >> testArgumentsAreFormated [
-	
-	self 
+
+	self
 		validate:':i :j| i '
-		isFormattedAs:' :i :j | i '.
+		isFormattedAs:' :i :j | i '
 ]
 
 { #category : #tests }
 EFBlockExpressionTest >> testArgumentsComments [
-	
-	self 
+
+	self
 		validate:':i "aComment" :j "anotherComment"| i '
 		isFormattedAs:
 ' :i "aComment" :j "anotherComment" | i '
@@ -432,14 +432,14 @@ EFBlockExpressionTest >> testArgumentsComments [
 
 { #category : #tests }
 EFBlockExpressionTest >> testDoNotKeepBlockInMessageConfiguration [
-	
+
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i. Transcript show: j]'
-		isFormattedAs: ' :i | 
+		isFormattedAs: ' :i |
 i to: 10 do:
-	[ :j | 
+	[ :j |
 	Transcript show: i.
 	Transcript show: j ] '
-	with: #doNotKeepBlockInMessageConfiguration.
+	with: #doNotKeepBlockInMessageConfiguration
 ]
 
 { #category : #tests }
@@ -447,7 +447,7 @@ EFBlockExpressionTest >> testDontFormatCommentWithStatement [
 	self
 		validate: '1 factorial. "aComment" 2 factorial'
 		isFormattedAs:
-			' 
+			'
 1 factorial "aComment".
 2 factorial '
 		with: #dontFormatCommentWithStatementConfiguration
@@ -455,8 +455,8 @@ EFBlockExpressionTest >> testDontFormatCommentWithStatement [
 
 { #category : #tests }
 EFBlockExpressionTest >> testEndPeriodInside [
-	
-	self 
+
+	self
 		validate:'2.'
 		isFormattedAs:' 2. '
 		with: #periodAtEndConfiguration
@@ -467,7 +467,7 @@ EFBlockExpressionTest >> testFormatBody [
 	self
 		validate: ' [1]. [ a:=1] '
 		isFormattedAs:
-			' 
+			'
 [ 1 ].
 [ a := 1 ] '
 ]
@@ -477,7 +477,7 @@ EFBlockExpressionTest >> testFormatCommentWithStatement [
 	self
 		validate: '1 factorial. "aComment" 2 factorial'
 		isFormattedAs:
-			' 
+			'
 1 factorial. "aComment"
 2 factorial '
 		with: #formatCommentWithStatementConfiguration
@@ -488,8 +488,8 @@ EFBlockExpressionTest >> testFourSpaceIndent [
 	self
 		validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 		isFormattedAs:
-' :i | 
-i to: 10 do: [ :j | 
+' :i |
+i to: 10 do: [ :j |
     Transcript
         show: i;
         show: j ] '
@@ -499,10 +499,10 @@ i to: 10 do: [ :j |
 { #category : #tests }
 EFBlockExpressionTest >> testLongMultipleArguments [
 	self skip.
-	self 
+	self
 		validate: ' :superlong :longlong :long | Transcript show: longlong ; show: long'
-		isFormattedAs: 
-' :superlong :longlong :long | 
+		isFormattedAs:
+' :superlong :longlong :long |
 Transcript
 	show: longlong;
 	show: long '
@@ -512,10 +512,10 @@ Transcript
 { #category : #tests }
 EFBlockExpressionTest >> testLongSingleArgument [
 	self skip.
-	self 
+	self
 		validate: ' [:superlonglonglong | Transcript show:i; show: j]'
-		isFormattedAs: 
-'[ :superlonglonglong | 
+		isFormattedAs:
+'[ :superlonglonglong |
 	Transcript show:i; show: j]'
 		with: #numberOfSpaceChangedAfterIndentCharacterConfiguration
 ]
@@ -523,10 +523,10 @@ EFBlockExpressionTest >> testLongSingleArgument [
 { #category : #tests }
 EFBlockExpressionTest >> testMultiline [
 
-	self 
+	self
 		validate: '1+3. 6 factorial '
-		isFormattedAs: 
-' 
+		isFormattedAs:
+'
 1 + 3.
 6 factorial '
 ]
@@ -534,10 +534,10 @@ EFBlockExpressionTest >> testMultiline [
 { #category : #tests }
 EFBlockExpressionTest >> testNewLineAfterFirstBracketWhenMultilineWithArguments [
 
-	self 
+	self
 		validate: ':i | i+3. i factorial '
-		isFormattedAs: 
-' :i | 
+		isFormattedAs:
+' :i |
 i + 3.
 i factorial '
 ]
@@ -545,10 +545,10 @@ i factorial '
 { #category : #tests }
 EFBlockExpressionTest >> testNewLineAfterFirstBracketWhenMultilineWithTemporaries [
 
-	self 
+	self
 		validate: '| tmp | 1+3. 6 factorial '
-		isFormattedAs: 
-' 
+		isFormattedAs:
+'
 | tmp |
 1 + 3.
 6 factorial '
@@ -558,13 +558,13 @@ with: #blockWithTemporariesConfiguration
 { #category : #tests }
 EFBlockExpressionTest >> testNewLineBeforeEndBrackets [
 
-	self 
-		validate:'3. 4'  
+	self
+		validate:'3. 4'
 		isFormattedAs:
-' 
+'
 3.
 4
-'  		with: #newLineBeforeEndBracketConfiguration.
+'  		with: #newLineBeforeEndBracketConfiguration
 ]
 
 { #category : #tests }
@@ -592,12 +592,12 @@ EFBlockExpressionTest >> testNoExtraSpaceInside [
 { #category : #tests }
 EFBlockExpressionTest >> testNoNewLineBeforeEndBrackets [
 
-	self 
-		validate: '3. 4'  
+	self
+		validate: '3. 4'
 		isFormattedAs:
-' 
+'
 3.
-4 '  with: #noNewLineBeforeEndBracketConfiguration.
+4 '  with: #noNewLineBeforeEndBracketConfiguration
 ]
 
 { #category : #tests }
@@ -613,14 +613,14 @@ EFBlockExpressionTest >> testNumberOfSpaces [
 
 { #category : #tests }
 EFBlockExpressionTest >> testOneSpaceIndent [
-	
+
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
-		isFormattedAs: ' :i | 
-i to: 10 do: [ :j | 
+		isFormattedAs: ' :i |
+i to: 10 do: [ :j |
  Transcript
   show: i;
   show: j ] '
-	with: #oneSpaceIndentConfiguration.
+	with: #oneSpaceIndentConfiguration
 ]
 
 { #category : #tests }
@@ -632,8 +632,8 @@ EFBlockExpressionTest >> testSpace [
 { #category : #tests }
 EFBlockExpressionTest >> testTabIndent [
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
-	isFormattedAs: ' :i | 
-i to: 10 do: [ :j | 
+	isFormattedAs: ' :i |
+i to: 10 do: [ :j |
 	Transcript
 		show: i;
 		show: j ] '
@@ -644,8 +644,8 @@ i to: 10 do: [ :j |
 EFBlockExpressionTest >> testTabIndentIsNotAffectedByNumberOfSpace [
 
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
-	 isFormattedAs: ' :i | 
-i to: 10 do: [ :j | 
+	 isFormattedAs: ' :i |
+i to: 10 do: [ :j |
 	Transcript
 		show: i;
 		show: j ] '
@@ -655,14 +655,14 @@ i to: 10 do: [ :j |
 { #category : #tests }
 EFBlockExpressionTest >> testTooLongBlockBody [
 	self validate: 'tooLongStatement' isFormattedAs:
-' 
+'
 tooLongStatement ' with: #tooLongStatementConfiguration
 ]
 
 { #category : #tests }
 EFBlockExpressionTest >> testTooLongBlockBodyWithArgument [
 	self validate: ':i | tooLongStatement' isFormattedAs:
-' :i | 
+' :i |
 tooLongStatement ' with: #tooLongStatementConfiguration
 ]
 
@@ -670,8 +670,8 @@ tooLongStatement ' with: #tooLongStatementConfiguration
 EFBlockExpressionTest >> testnumberOfSpaceChangedAfterIndentCharacter [
 
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
-	isFormattedAs: ' :i | 
-i to: 10 do: [ :j | 
+	isFormattedAs: ' :i |
+i to: 10 do: [ :j |
   Transcript
     show: i;
     show: j ] '
@@ -702,9 +702,9 @@ EFBlockExpressionTest >> tooLongStatementConfiguration [
 
 { #category : #helpers }
 EFBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: expectedStringInsideBlock [
-	self 
-		validate: stringInsideBlock 
-		isFormattedAs: expectedStringInsideBlock 
+	self
+		validate: stringInsideBlock
+		isFormattedAs: expectedStringInsideBlock
 		with: #basicConfiguration
 ]
 

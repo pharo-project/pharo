@@ -58,17 +58,17 @@ EFFormatter class >> defaultPrettyPrintContext [
 ]
 
 { #category : #accessing }
-EFFormatter class >> defaultPrettyPrintContext: aContext [ 
+EFFormatter class >> defaultPrettyPrintContext: aContext [
 	DefaultPrettyPrintContext := aContext
 ]
 
 { #category : #public }
-EFFormatter class >> format: aParseTree [ 
+EFFormatter class >> format: aParseTree [
 	^self format: aParseTree withIndents: 0
 ]
 
 { #category : #public }
-EFFormatter class >> format: aParseTree withIndents: anInteger [ 
+EFFormatter class >> format: aParseTree withIndents: anInteger [
 	^ self new
 		indent: anInteger;
 		format: aParseTree
@@ -136,14 +136,14 @@ EFFormatter class >> isPrettyPrinter [
 
 { #category : #accessing }
 EFFormatter class >> keepBlockInMessage [
-	"Return a boolean for 
-		1 to: 4 do: [ :i | 
-			
-	vs. 
-	
-		1 to: 4 do: 
+	"Return a boolean for
+		1 to: 4 do: [ :i |
+
+	vs.
+
+		1 to: 4 do:
 			[ :i |"
-		
+
 	^ DefaultPrettyPrintContext keepBlockInMessage
 ]
 
@@ -452,12 +452,12 @@ When lineUpBlockBrackets is set to false
 
 { #category : #settings }
 EFFormatter class >> settingsCommentCloseToStatement: aBuilder [
-	
+
 	(aBuilder setting: #formatCommentCloseToStatements)
 		label: 'Place comment close to expression';
 		default: true;
-		description: 'This setting places a comment close to an expression before the separator. 
-	
+		description: 'This setting places a comment close to an expression before the separator.
+
 When formatCommentCloseToStatements is set to true
  1+1."We do an addition" 2+2
 
@@ -471,7 +471,7 @@ EFFormatter class >> settingsIndentStyle: aBuilder [
 	(aBuilder pickOne: #indentStyle)
 		label: 'Indent Style';
 		domainValues:#(#tabulation #space);
-		description: 'Set the character used for an indentation, it can be space or tabulation. When a space is used you can decide how many spaces are used using numberOfSpacesInIndent.		
+		description: 'Set the character used for an indentation, it can be space or tabulation. When a space is used you can decide how many spaces are used using numberOfSpacesInIndent.
 Exemple:
 aBoolean
 	ifTrue:[^1]
@@ -479,12 +479,12 @@ aBoolean
 ]
 
 { #category : #settings }
-EFFormatter class >> settingsIndentsForKeywords: aBuilder [ 
-	
+EFFormatter class >> settingsIndentsForKeywords: aBuilder [
+
 	(aBuilder setting: #indentsForKeywords)
 		default: 1;
 		label: 'Indents for keywords';
-		description: 'Number of indentations before each keyword of a multiline message. 
+		description: 'Number of indentations before each keyword of a multiline message.
 For example:
 aBoolean:
 		ifTrue:[^1]
@@ -494,21 +494,21 @@ is the result for 2 indents'
 
 { #category : #settings }
 EFFormatter class >> settingsKeepBlockInMessage: aBuilder [
-	
+
 	(aBuilder setting: #keepBlockInMessage)
 		label: 'Keep block in message';
 		default: true;
 		description: 'Keep the begining of the block on the line of the message
 
-When keepBlockInMessage is true: 
-1 to: 4 do: [ :i | 
+When keepBlockInMessage is true:
+1 to: 4 do: [ :i |
 		Transcript
 			show: i;cr]
-		
 
-When keepBlockInMessage is false: 		
+
+When keepBlockInMessage is false:
 1 to: 4 do:
-	[ :i | 
+	[ :i |
 	Transcript
 		show: i;
 		cr ]
@@ -537,7 +537,7 @@ EFFormatter class >> settingsMethodSignatureOnMultipleLines: aBuilder [
 		description: 'Write a multiline method signature on multiple lines only if set to true.
 Pay attention the fact that a method signature is considered multilined depends of the setting selectorAndArgumentCombinedMaxSize).
 
-For example: the method myMethod:foo: will be shown as 
+For example: the method myMethod:foo: will be shown as
 
 myMethod: arg1
 	foo: arg2
@@ -555,9 +555,9 @@ EFFormatter class >> settingsMinimumNewLinesBetweenStatements: aBuilder [
 
 The following is obtained by setting minimumNewLinesBetweenStatements to 2.
 	1+1.
-	
+
 	2+2.
-	
+
 	3+3
 '
 ]
@@ -569,7 +569,7 @@ EFFormatter class >> settingsMultiLineMessages: aBuilder [
 		label: 'Multi line messages';
 		default: '#(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)';
 		description: 'An array containing all the messages that should be written on multiple lines.
-		
+
 Example:
 aBoolean
 	ifTrue: [ 1 ]
@@ -589,7 +589,7 @@ When newLineAfterCascade is set to false.
 
 OrderedCollection new
 	add: 1; add: 2; add: 3
-	
+
 When newLineAfterCascade is set to true.
 
 OrderedCollection new
@@ -650,7 +650,7 @@ EFFormatter class >> settingsNewLinesAfterMethodComment: aBuilder [
 		label: 'New lines after method comment';
 		default: 2;
 		description: 'Set the number of new lines after the comment of a method.
-		
+
 When numberOfNewLinesAfterMethodComment is set to 2
 
 myMethod
@@ -686,7 +686,7 @@ When numberOfNewLinesAfterMethodSignature is set to 1 new lines
 
 myMethod: arg
 	"myComment"
-	
+
 	^ true
 '
 ]
@@ -708,12 +708,12 @@ myMethod
 ]
 
 { #category : #settings }
-EFFormatter class >> settingsNumberOfArgumentsForMultiLine: aBuilder [ 
-	
+EFFormatter class >> settingsNumberOfArgumentsForMultiLine: aBuilder [
+
 	(aBuilder setting: #numberOfArgumentsForMultiLine)
 		label: 'Number of arguments for multiLine';
-		default: 4;		
-		description: 'To set the number of argument that a message must have to be considered as a multiline message. 
+		default: 4;
+		description: 'To set the number of argument that a message must have to be considered as a multiline message.
 
 For example when set to 2 we obtain
 
@@ -742,14 +742,14 @@ aBoolean
 { #category : #settings }
 EFFormatter class >> settingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder group: self settingGroup)
 		target: self;
 		parent: #codeFormatters;
 		label: 'Enlumineur Pretty Printer';
 		description: 'Settings related to automatic code formatting';
-		with: [ 
-			self 
+		with: [
+			self
 				settingsMaxLineLength: aBuilder;
 				settingsCommentCloseToStatement: aBuilder;
 				settingsIndentStyle: aBuilder;
@@ -787,9 +787,9 @@ EFFormatter class >> settingsOneLineMessages: aBuilder [
 	(aBuilder setting: #oneLineMessages)
 		label: 'One line messages';
 		default: #(#to: #to:do: #to:by: #to:by:do:);
-		description: 'All the messages listed in this setting will be formatted on one single line. 
-		
-If we include #todo: in the oneLineMessages we get 
+		description: 'All the messages listed in this setting will be formatted on one single line.
+
+If we include #todo: in the oneLineMessages we get
 
 1 to: 4 do: [ :i | Transcript show: i ]'
 ]
@@ -806,7 +806,7 @@ Example: when set to true
 
 	1 to:10 do: [:i | i+1.]
 
-'.
+'
 ]
 
 { #category : #settings }
@@ -816,7 +816,7 @@ EFFormatter class >> settingsPeriodsAtEndOfMethod: aBuilder [
 		label: 'Period at end of method';
 		default: false;
 		description: 'This setting puts a period after the last expression of a method.
-		
+
 For example: when set to true
 
 myMethod
@@ -831,13 +831,13 @@ EFFormatter class >> settingsRetainBlankLinesBeforeComments: aBuilder [
 	(aBuilder setting: #retainBlankLinesBeforeComments)
 		label: 'Retain blank lines before comments';
 		default: true;
-		description: 'Keep blank lines which are before comments. 
+		description: 'Keep blank lines which are before comments.
 
 For example, when set to true the formatter will not change the following
 
 	|a b|
 	a :=1.
-	
+
 	"Comment"
 	b :=2
 '
@@ -850,8 +850,8 @@ EFFormatter class >> settingsRetainBlankLinesBetweenStatements: aBuilder [
 		label: 'Retain blank lines between statements';
 		default: true;
 		description: 'Keep blank lines which are between statements.
-		
-For example: when set to true the formatter will not change the following: 
+
+For example: when set to true the formatter will not change the following:
 | a b c |
 a := 1.
 
@@ -869,9 +869,9 @@ EFFormatter class >> settingsSelectorAndArgumentCombinedMaxSize: aBuilder [
 		label: 'Selector and argument combined in method signature max size';
 		default: 40;
 		description: 'the maximum length a selector and his argument can be before the message is considered multiline
-		(depends of the setting methodSignatureOnMultipleLines 
+		(depends of the setting methodSignatureOnMultipleLines
 		which will write the message on multiple lines only if is set to true)
-		
+
 Example:
 myMethod: argument1
 	and: argument2
@@ -880,13 +880,13 @@ myMethod: argument1
 ]
 
 { #category : #settings }
-EFFormatter class >> settingsSpacesAfterCaretSymbolInReturn: aBuilder [ 
+EFFormatter class >> settingsSpacesAfterCaretSymbolInReturn: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesAfterCaretSymbolInReturn)
 		label: 'Spaces following caret symbol in return';
 		default: 1;
-		description: 'Number of spaces expressed that is put just after the caret (^) of a return expression. 
-For example: ^   self is the result for 3 spaces'.
+		description: 'Number of spaces expressed that is put just after the caret (^) of a return expression.
+For example: ^   self is the result for 3 spaces'
 ]
 
 { #category : #settings }
@@ -895,7 +895,7 @@ EFFormatter class >> settingsSpacesBeforeDotInDynamicArray: aBuilder [
 	(aBuilder setting: #numberOfSpacesBeforeDotInDynamicArray)
 		label: 'Spaces before separating period in dynamic array';
 		description: 'To set the number of spaces before the separating period in dynamic array { 1here. 2})
-for example, when set to one space: {1 . 2 . 3}, 
+for example, when set to one space: {1 . 2 . 3},
 
 when set to zero space: {1. 2. 3}'
 ]
@@ -907,8 +907,8 @@ EFFormatter class >> settingsSpacesInsideArray: aBuilder [
 		label: 'Spaces inside arrays #( here ) or { there }';
 		default: 1;
 		description: 'Set the number of spaces after the opening and before the closing symbols of an array.
-		
-For example, we get the following wehn set to 3 spaces: 
+
+For example, we get the following wehn set to 3 spaces:
 #(   1 2 3   )
 {   1. 2. 3.   }
 '
@@ -972,14 +972,14 @@ EFFormatter class >> useBasicCommentFormat: aBoolean [
 ]
 
 { #category : #private }
-EFFormatter >> addNewLinesBeforeStatementStartingAt: anInteger [ 
+EFFormatter >> addNewLinesBeforeStatementStartingAt: anInteger [
 	| newLines |
-	newLines := self minimumNewLinesBetweenStatements 
-				max: (self retainBlankLinesBetweenStatements 
+	newLines := self minimumNewLinesBetweenStatements
+				max: (self retainBlankLinesBetweenStatements
 						ifTrue: [ self newLinesBeforeStartingAt: anInteger ]
 						ifFalse: [ 0 ]).
-	newLines = 0 
-		ifTrue: [ self space ] 
+	newLines = 0
+		ifTrue: [ self space ]
 		ifFalse: [ self newLines: newLines ]
 ]
 
@@ -1058,7 +1058,7 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 
 { #category : #'public interface' }
 EFFormatter >> format: aParseTree [
-	
+
 	self initializeCodeStream.
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
@@ -1072,18 +1072,18 @@ EFFormatter >> formatArray: anArrayNode [
 	(anArrayNode statements
 		reject: [ :each | each class = RBLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
-				do: [ :each | 
+				do: [ :each |
 					current := each.
 					self visitNode: each ]
 				separatedBy: [ (self isLineTooLongWithNode: current)
 						ifTrue: [ codeStream nextPutAll: self spacesBeforeDotInDynamicArray; nextPut: $..
 							self newLine ]
-						ifFalse: [ codeStream nextPutAll: self spacesBeforeDotInDynamicArray ; nextPutAll: '. ' ] 
+						ifFalse: [ codeStream nextPutAll: self spacesBeforeDotInDynamicArray ; nextPutAll: '. ' ]
 						"here there is something wrong since we should also be able to put a space in front"] ]
 		ifNotEmpty: [ anArrayNode statements size > 1
 				ifTrue: [ self
-						indentAround: [ 
-							"I do not get why we do not have a property to decide if we emit or not the line" 
+						indentAround: [
+							"I do not get why we do not have a property to decide if we emit or not the line"
 							"with the introduction of formatArrayBody: we may remove formatSingleArrayElement"
 							self
 								newLine;
@@ -1098,7 +1098,7 @@ EFFormatter >> formatArrayBody: aSequenceNode [
 	statements := aSequenceNode statements.
 	statements isEmpty
 		ifTrue: [ ^ self ].
-	statements withIndexDo: [:statement :i | 
+	statements withIndexDo: [:statement :i |
 		self visitNode: statement.
 		i < statements size
 			ifTrue: [ codeStream nextPutAll: self spacesBeforeDotInDynamicArray ; nextPut: $. ].
@@ -1109,18 +1109,18 @@ EFFormatter >> formatArrayBody: aSequenceNode [
 
 { #category : #'private - formatting' }
 EFFormatter >> formatBlock2: aBlockNode [
- 
-	"This is a change to speed up and avoid the use of willBeMultiline: 
+
+	"This is a change to speed up and avoid the use of willBeMultiline:
 	Now it breaks many tests and we should investigate why
-	For example 
-	
+	For example
+
 	we obtain
-		hkjhjkh 
+		hkjhjkh
 			ifTrue: [ self foo
 				 ]
-	
-	and not 
-		hkjhjkh 
+
+	and not
+		hkjhjkh
 			ifTrue: [ self foo ]
 	"
 
@@ -1128,16 +1128,16 @@ EFFormatter >> formatBlock2: aBlockNode [
 	codeStream nextPutAll: self spacesInsideBlocksString.
 	self formatBlockArgumentsFor: aBlockNode.
 	self formatBlockCommentFor: aBlockNode.
-	
+
 	doesFirstStatementFit := self isLineTooLongWithNode: aBlockNode body statements first.
-	
+
 	((self shouldPassNewLineAfterHeadOfBlock: aBlockNode)
 		and: [ (aBlockNode body statements size > 1) or: [ doesFirstStatementFit ] ])
 					ifTrue: [ self newLine ].
-  
+
 	self visitSequenceNode: aBlockNode body.
-	
-	(self lineUpBlockBrackets and: [ (aBlockNode body statements size > 1) 
+
+	(self lineUpBlockBrackets and: [ (aBlockNode body statements size > 1)
 													or: [ doesFirstStatementFit ] ])
 		ifTrue: [ self newLine ]
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
@@ -1146,22 +1146,22 @@ EFFormatter >> formatBlock2: aBlockNode [
 { #category : #'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
  	" see formatBlock2: for a possible alternate and faster definition."
-	
+
 	| isMultiline |
 	isMultiline := self willBeMultiline: aBlockNode body.
-  
+
 	codeStream nextPutAll: self spacesInsideBlocksString.
-	
+
 	self formatBlockArgumentsFor: aBlockNode.
 	self formatBlockCommentFor: aBlockNode.
-	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ]) 
-		and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ]) 
+	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
+		and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
 			ifTrue: [ self newLine ].
-  
+
 	self visitSequenceNode: aBlockNode body.
-	
-	(self lineUpBlockBrackets and: [ isMultiline ]) 
-		ifTrue: [ self newLine ] 
+
+	(self lineUpBlockBrackets and: [ isMultiline ])
+		ifTrue: [ self newLine ]
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
 ]
 
@@ -1172,9 +1172,9 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 	args := aBlockNode arguments.
 	args isEmpty
 		ifTrue: [ ^ self ].
-	onAnotherLine := self areArgumentsTooLong: args. 
+	onAnotherLine := self areArgumentsTooLong: args.
 	args
-		do: [ :each | 
+		do: [ :each |
 			onAnotherLine ifTrue: [self newLine ].
 			codeStream nextPut: $:.
 			self visitVariableNode: each.
@@ -1182,7 +1182,7 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 				ifTrue:
 					[ self spaceAndFormatComments: each ].
 			self space ].
-	codeStream nextPutAll: '| '.
+	codeStream nextPutAll: '| '
 ]
 
 { #category : #'private - formatting' }
@@ -1218,9 +1218,9 @@ EFFormatter >> formatMessageNode: aMessageNode [
 EFFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround:
-			[ 
-			self newLines: (aMethodNode comments 
-									ifEmpty: [ self numberOfNewLinesAfterMethodSignature ] 
+			[
+			self newLines: (aMethodNode comments
+									ifEmpty: [ self numberOfNewLinesAfterMethodSignature ]
 			 						ifNotEmpty: [ self numberOfNewLinesAfterMethodSignatureWithMethodComment ]).
 			self formatMethodCommentFor: aMethodNode.
 			self formatPragmasFor: aMethodNode.
@@ -1229,9 +1229,9 @@ EFFormatter >> formatMethodBodyFor: aMethodNode [
 
 { #category : #'private - formatting' }
 EFFormatter >> formatMethodCommentFor: aMethodNode [
-  aMethodNode comments do: [:each |  
-				self useBasicCommentFormat 
-					ifTrue: [ self basicFormatCommentFor: each ] 
+  aMethodNode comments do: [:each |
+				self useBasicCommentFormat
+					ifTrue: [ self basicFormatCommentFor: each ]
 					ifFalse: [ self resizeCommentFor: each startingAt: 0 ].
         		self newLines: self numberOfNewLinesAfterMethodComment ]
 ]
@@ -1240,7 +1240,7 @@ EFFormatter >> formatMethodCommentFor: aMethodNode [
 EFFormatter >> formatMethodPatternFor: aMethodNode [
 	aMethodNode arguments isEmpty
 		ifTrue: [ codeStream nextPutAll: aMethodNode selector ]
-		ifFalse: [ 
+		ifFalse: [
 			(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
 				ifTrue: [ self privateFormatMethodPatternMultiLineFor: aMethodNode ]
 				ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ] ]
@@ -1248,14 +1248,14 @@ EFFormatter >> formatMethodPatternFor: aMethodNode [
 
 { #category : #'private - formatting' }
 EFFormatter >> formatPragmasFor: aMethodNode [
-	
+
 	aMethodNode pragmas do: [ :each | self visitPragmaNode: each; newLine ]
 ]
 
 { #category : #'private - formatting' }
 EFFormatter >> formatSelectorAndArguments: aMessageNode [
 	"We are formatting a message and here we are about to format the message selector and its arguments."
-	
+
 	| isMultilineMessage hasMultiLineArguments multilineArgumentBeforeAnotherArgument |
 	multilineArgumentBeforeAnotherArgument := self messageHasMultilineArgumentBeforeAnotherArgument: aMessageNode.
 	isMultilineMessage := (self isMultiLineMessage: aMessageNode) or:[multilineArgumentBeforeAnotherArgument].
@@ -1299,13 +1299,13 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	statements := aSequenceNode statements.
 	statements isEmpty
 		ifTrue: [ ^ self ].
-	statements withIndexDo: [:statement :i | 
+	statements withIndexDo: [:statement :i |
 		self visitNode: statement.
 		(i < statements size
-			or: [ 
+			or: [
 				aSequenceNode parent
 					ifNil: [ self periodsAtEndOfBlock or:[ self periodsAtEndOfMethod ] ]
-					ifNotNil: [ :parent | 
+					ifNotNil: [ :parent |
 						parent isBlock
 							ifTrue: [ self periodsAtEndOfBlock ]
 							ifFalse: [ self periodsAtEndOfMethod ] ] ])
@@ -1316,9 +1316,9 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 ]
 
 { #category : #'private - formatting' }
-EFFormatter >> formatSingleArrayElement: aRBNode [ 
+EFFormatter >> formatSingleArrayElement: aRBNode [
 	"Imagine that you have {1 factorial}, you do not want an ending period. This method is only invoked on the last array element."
-	
+
 	self visitNode: aRBNode
 ]
 
@@ -1328,7 +1328,7 @@ EFFormatter >> formatStatementCommentsFor: aStatementNode [
 		ifFalse: [ ^ self ].
 	aStatementNode statementComments
 		do:
-			[ :each | 
+			[ :each |
 			| count |
 			count := self newLinesBeforeStartingAt: each start.
 			self retainBlankLinesBeforeComments & (count > 0)
@@ -1346,11 +1346,11 @@ EFFormatter >> formatTemporariesFor: aSequenceNode [
 	self
 		bracketWith: '|'
 		around:
-			[ 
+			[
 			self space.
 			aSequenceNode temporaries
 				do:
-					[ :each | 
+					[ :each |
 					self visitNode: each.
 					self formatCommentCloseToStatements
 						ifTrue: [ self formatStatementCommentsFor: each ].
@@ -1361,7 +1361,7 @@ EFFormatter >> formatTemporariesFor: aSequenceNode [
 { #category : #private }
 EFFormatter >> formattedSourceFor: aNode [
 
-	^ lookAheadCode at: aNode ifAbsentPut: [ 
+	^ lookAheadCode at: aNode ifAbsentPut: [
 		  self class new
 			indent: self indent;
 			installNewContext: context;
@@ -1407,13 +1407,13 @@ EFFormatter >> indent: anInteger [
 ]
 
 { #category : #private }
-EFFormatter >> indent: anInteger around: aBlock [ 
+EFFormatter >> indent: anInteger around: aBlock [
 	self indent: self indent + anInteger.
 	^aBlock ensure: [self indent: self indent - anInteger]
 ]
 
 { #category : #private }
-EFFormatter >> indentAround: aBlock [ 
+EFFormatter >> indentAround: aBlock [
 	self indent: 1 around: aBlock
 ]
 
@@ -1453,8 +1453,8 @@ EFFormatter >> indentStyle: aSymbole [
 
 { #category : #accessing }
 EFFormatter >> indentTimesRepeat: anInteger [
-	
-	anInteger timesRepeat: 
+
+	anInteger timesRepeat:
 			[ codeStream nextPutAll: self indentString ].
 	codeStream nextPutAll: self indentExtraSpaces
 ]
@@ -1491,13 +1491,13 @@ EFFormatter >> initializeTemporaryLookAheadCode [
 
 	lookAheadCode := IdentityDictionary new
 	"this is strange because using an identity should normally produce more entries in the cache
-	since each node is a different object. 
+	since each node is a different object.
 	However on simple methods it is still faster than using a Dictionary."
 ]
 
 { #category : #'public interface' }
 EFFormatter >> installNewContext: aContext [
-	
+
 	context := aContext
 ]
 
@@ -1514,7 +1514,7 @@ EFFormatter >> isInCascadeNode: aBoolean [
 { #category : #private }
 EFFormatter >> isLineTooLongWithNewCharacters: aNumber [
 	"Is the length of the current line + the length of the first fragment of code until a new line is >= the max line length"
-	
+
 	^ self currentLineLength + aNumber >= self maxLineLength
 ]
 
@@ -1526,7 +1526,7 @@ EFFormatter >> isLineTooLongWithNode: aNode [
 { #category : #private }
 EFFormatter >> isLineTooLongWithString: aString [
 	"Is the length of the current line + the length of the first fragment of code until a new line is >= the max line length"
-	
+
 	^ self currentLineLength + (aString indexOf: Character cr ifAbsent: [ aString size ])
 		>= self maxLineLength
 ]
@@ -1551,14 +1551,14 @@ EFFormatter >> isNonEmptySingleLineBlock: aBlockNode [
 
 { #category : #accessing }
 EFFormatter >> keepBlockInMessage [
-	"Return a boolean for 
-		1 to: 4 do: [ :i | 
-			
-	vs. 
-	
-		1 to: 4 do: 
+	"Return a boolean for
+		1 to: 4 do: [ :i |
+
+	vs.
+
+		1 to: 4 do:
 			[ :i |"
-			
+
 	^ context keepBlockInMessage
 ]
 
@@ -1718,7 +1718,7 @@ EFFormatter >> newLineBefore [
 
 	| currentIndentationString |
 	currentIndentationString := WriteStream on: (String new: self maxLineLength).
-	1 to: self indent do: [ :i | 
+	1 to: self indent do: [ :i |
 		currentIndentationString nextPutAll: self indentString ].
 	currentIndentationString nextPutAll: self indentExtraSpaces.
 	^ self codeStream contents lines last = currentIndentationString contents
@@ -1747,7 +1747,7 @@ EFFormatter >> newLineBeforeFirstKeyword: aBoolean [
 { #category : #private }
 EFFormatter >> newLines: anInteger [
 	"Add a number of new lines and in addition store the position of the latest new lines in the stream so that latter we can compute the current line length."
-	
+
 	anInteger + self indentString size = 0
 		ifTrue: [ codeStream space ].
 	anInteger timesRepeat: [ codeStream cr ].
@@ -1766,9 +1766,9 @@ EFFormatter >> newLinesBeforeStartingAt: anIndex [
 	count := 0.
 	index := anIndex - 1.
 	[ index > 0 and: [ (char := originalSource at: index) isSeparator ] ]
-		whileTrue: [ 
+		whileTrue: [
 			char == lf
-				ifTrue: [ 
+				ifTrue: [
 					count := count + 1.
 					(originalSource at: (index - 1 max: 1)) == cr
 						ifTrue: [ index := index - 1 ] ].
@@ -1918,7 +1918,7 @@ EFFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 	self
 		with: aMethodNode selectorParts
 		and: aMethodNode arguments
-		do: [ :key :arg | 
+		do: [ :key :arg |
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
@@ -1937,7 +1937,7 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 	self
 		with: selectors allButFirst
 		and: arguments allButFirst
-		do: [ :key :arg | 
+		do: [ :key :arg |
 			codeStream nextPutAll: self indentString.
 			codeStream nextPutAll: key.
 			self space.
@@ -1969,10 +1969,10 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	self maxLineLength < 50
 		ifTrue: [ codeStream nextPutAll: aComment contents ]
 		ifFalse:
-			[ 
+			[
 			aComment contents
 				ifNotEmpty:
-					[ 
+					[
 					(anIndex = 0 or: [ anIndex >= self maxLineLength ])
 						ifTrue: [ self resizeStringDependingOnWindowSizeFor: aComment ]
 						ifFalse: [ self resizeComment: aComment withFirstLineShorterOf: anIndex ] ] ].
@@ -1983,7 +1983,7 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 EFFormatter >> resizeStringDependingOnWindowSizeFor: aComment [
 	| resizedComment |
 	resizedComment := aComment contents withNoLineLongerThan: self maxLineLength.
-	resizedComment do: [ :each | 
+	resizedComment do: [ :each |
 		codeStream nextPut: each.
 		each = Character cr
 			ifTrue: [ self indentTimesRepeat: self indent  ] ]
@@ -2041,7 +2041,7 @@ EFFormatter >> spacesAfterCaretSymbolInReturnString [
 ]
 
 { #category : #accessing }
-EFFormatter >> spacesBeforeDotInDynamicArray [ 
+EFFormatter >> spacesBeforeDotInDynamicArray [
 	^ context spacesBeforeDotInDynamicArray
 ]
 
@@ -2062,7 +2062,7 @@ EFFormatter >> spacesInsideParenthesesString [
 ]
 
 { #category : #accessing }
-EFFormatter >> useBasicCommentFormat [ 
+EFFormatter >> useBasicCommentFormat [
 	^ context useBasicCommentFormat
 ]
 
@@ -2099,12 +2099,12 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 	self isInCascadeNode: true.
 	self visitNode: aCascadeNode receiver.
 	self
-		indentAround: [ 
+		indentAround: [
 			self newLineBeforeFirstCascade
 				ifTrue: [ self newLine ]
 				ifFalse: [ self space ].
 			aCascadeNode messages
-				do: [ :each | 
+				do: [ :each |
 							self formatCommentsFor: each;
 								formatSelectorAndArguments: each
 								firstSeparator: [  ]
@@ -2112,7 +2112,7 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 									((self isMultiLineMessage: each)
 										ifTrue: [ [ self newLine ] ]
 										ifFalse: [ [ self space ] ])]
-				separatedBy: [ 
+				separatedBy: [
 					codeStream nextPut: $;.
 					self newLineAfterCascade
 						ifTrue: [ self newLine ]
@@ -2142,7 +2142,7 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 				indentExtraSpaces: '#(' size + self numberOfSpacesInsideArray
 				around: [ codeStream nextPutAll: self spacesInsideArray.
 					aRBArrayLiteralNode contents
-						do: [ :each | 
+						do: [ :each |
 							current := each.
 							self visitNode: each ]
 						separatedBy: [ (self isLineTooLongWithNode: current)
@@ -2165,7 +2165,7 @@ EFFormatter >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #visiting }
-EFFormatter >> visitMethodNode: aMethodNode [ 
+EFFormatter >> visitMethodNode: aMethodNode [
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode
 ]
@@ -2179,7 +2179,7 @@ EFFormatter >> visitNode: aNode [
 			(needsParenthesis
 				ifTrue: [ '()' ]
 				ifFalse: [ '' ])
-		around: [ 
+		around: [
 			needsParenthesis
 				ifTrue: [ codeStream nextPutAll: self spacesInsideParenthesesString ].
 			super visitNode: aNode.
@@ -2196,10 +2196,10 @@ EFFormatter >> visitParseErrorNode: aNode [
 ]
 
 { #category : #'visiting - patterns' }
-EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [ 
+EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
 	codeStream nextPut: $`.
-	self 
-		bracketWith: '{}' 
+	self
+		bracketWith: '{}'
 		around: [self formatBlock: aRBPatternBlockNode]
 ]
 
@@ -2207,17 +2207,17 @@ EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
 EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
-	self 
-		bracketWith: '{}' 
+	self
+		bracketWith: '{}'
 		around: [self formatBlock: aRBPatternWrapperBlockNode]
 ]
 
 { #category : #visiting }
 EFFormatter >> visitPragmaNode: aPragmaNode [
 	codeStream nextPut: $<.
-	self 
-		formatSelectorAndArguments: aPragmaNode 
-		firstSeparator: [ 
+	self
+		formatSelectorAndArguments: aPragmaNode
+		firstSeparator: [
 			aPragmaNode selector isInfix
 				ifTrue: [ self space ] ]
 		restSeparator: [ self space ].
@@ -2245,7 +2245,7 @@ EFFormatter >> visitSequenceNode: aSequenceNode [
 ]
 
 { #category : #visiting }
-EFFormatter >> visitVariableNode: aVariableNode [ 
+EFFormatter >> visitVariableNode: aVariableNode [
 	codeStream nextPutAll: aVariableNode name
 ]
 
@@ -2259,7 +2259,7 @@ EFFormatter >> with: firstCollection and: secondCollection do: aBlock separatedB
 	firstCollection isEmpty
 		ifTrue: [ ^ self ].
 	aBlock value: firstCollection first value: secondCollection first.
-	2 to: firstCollection size do: [ :i | 
+	2 to: firstCollection size do: [ :i |
 		separatorBlock value.
 		aBlock value: (firstCollection at: i) value: (secondCollection at: i) ]
 ]

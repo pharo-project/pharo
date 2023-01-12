@@ -8,7 +8,7 @@ Class {
 EFContextTest >> testNumberOfSpaces [
 
 	| context |
-	context := EFContext new. 
+	context := EFContext new.
 	self assert: context indentExtraSpaces equals: ''
 ]
 
@@ -16,14 +16,14 @@ EFContextTest >> testNumberOfSpaces [
 EFContextTest >> testOneLineMessage [
 
 	| context |
-	context := EFContext new. 
+	context := EFContext new.
 	self assert: (context oneLineMessages includes: #to:).
-	self assert: (context oneLineMessages includes: #to:do:).
+	self assert: (context oneLineMessages includes: #to:do:)
 ]
 
 { #category : #tests }
 EFContextTest >> testOneLineMessageClassSide [
 
-	self assert: (EFFormatter oneLineMessages includes: #to:).  
-	self assert: (EFFormatter oneLineMessages includes: #to:do:).
+	self assert: (EFFormatter oneLineMessages includes: #to:).
+	self assert: (EFFormatter oneLineMessages includes: #to:do:)
 ]

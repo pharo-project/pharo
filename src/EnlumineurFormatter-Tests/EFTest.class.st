@@ -19,7 +19,7 @@ EFTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
 			addCase: { #formatterClass -> EFFormatter. #contextClass -> EFContext };
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -37,7 +37,7 @@ EFTest >> formatExpression: anExpression [
 
 	| expr |
 	expr := self parseExpression: anExpression.
-	^ self formatter format: expr.
+	^ self formatter format: expr
 ]
 
 { #category : #hooks }

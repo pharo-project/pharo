@@ -272,7 +272,7 @@ EFArrayExpressionTest >> testPeriodAtEndOfMethodWithMultipleElementArrayShouldNo
 	| source |
 	configurationSelector := #periodAtEndOfMethod.
 	source := self formatExpression: '{1 factorial . 3 + 2}'.
-	self assert: source equals: 
+	self assert: source equals:
  '{
 	1 factorial.
 	(3 + 2)}' "we should not have a point at the end."

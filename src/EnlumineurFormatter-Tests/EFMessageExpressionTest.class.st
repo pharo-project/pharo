@@ -502,7 +502,7 @@ EFMessageExpressionTest >> testBlockParameterOnTheMethodLineWhenMultiline [
 	self
 		assert: source
 		equals:
-'1 to: 10 do: [ :i | 
+'1 to: 10 do: [ :i |
 	Transcript show: i.
 	Transcript cr.
 	Transcript cr ]'
@@ -515,8 +515,8 @@ EFMessageExpressionTest >> testBlockParameterWhenTheLineWillBeTooLong [
 	source := self formatExpression: 'aMessage take:[ :i | i factorial]'.
 	self
 		assert: source
-		equals: 
-'aMessage take: [ :i | 
+		equals:
+'aMessage take: [ :i |
 	i factorial ]'
 ]
 
@@ -528,8 +528,8 @@ EFMessageExpressionTest >> testBlockParameterWhenTheLineWillBeTooLong2 [
 	self
 		assert: source
 		equals:
-'aMessage take: [ 
-	:iiiiiiiiiiiiiii | 
+'aMessage take: [
+	:iiiiiiiiiiiiiii |
 	i factorial ]'
 ]
 
@@ -552,7 +552,7 @@ EFMessageExpressionTest >> testDontKeepBlockInMessage [
 		assert: source
 		equals:
 'aBoolean ifTrue:
-	[ :i | 
+	[ :i |
 	i := i factorial.
 	Transcript show: i ]'
 ]
@@ -591,7 +591,7 @@ EFMessageExpressionTest >> testExtraIndentInParentheses [
 	configurationSelector := #blockAndParenthesesInMessageConfiguration.
 	source := self formatExpression: '( [ :i | 	i factorial; +3 ] value: 15 )*3'.
 	self assert: source equals:
-'( [ :i | 
+'( [ :i |
   i
 	  factorial;
 	  + 3 ] value: 15 ) * 3'
@@ -603,7 +603,7 @@ EFMessageExpressionTest >> testExtraIndentInParenthesesWhenThreeSpacesInsidePare
 	configurationSelector := #extraIndentWithThreeSpacesInsideParenthesesConfiguration.
 	source := self formatExpression:'( [ :i | 	i factorial; +3 ] value: 15 )*3'.
 	self assert: source equals:
-'(   [ :i | 
+'(   [ :i |
     i
 	    factorial;
 	    + 3 ] value: 15   ) * 3'
@@ -647,7 +647,7 @@ EFMessageExpressionTest >> testKeepBlockInMessage [
 	self
 		assert: source
 		equals:
-'aBoolean ifTrue: [ :i | 
+'aBoolean ifTrue: [ :i |
 	i := i factorial.
 	Transcript show: i ]'
 ]
@@ -661,7 +661,7 @@ EFMessageExpressionTest >> testKeepBlockInMessageMutlilineNewLine [
 	self
 		assert: source
 		equals:
-'aBoolean ifTrue: [ 
+'aBoolean ifTrue: [
 	Transcript cr.
 	Transcript cr.
 	Transcript cr ]'
@@ -678,7 +678,7 @@ EFMessageExpressionTest >> testKeepBlockInMessageMutlilineSpace [
 	self
 		assert: source
 		equals:
-'aBoolean ifTrue: [ 
+'aBoolean ifTrue: [
 	12 factorial.
 	12 factorial.
 	3 factorial ]'
@@ -704,7 +704,7 @@ EFMessageExpressionTest >> testKeepBlockInMessageNotMutlilineNewLine [
 	self
 		assert: source
 		equals:
-			'aBoolean ifTrue: [ 
+			'aBoolean ifTrue: [
 	LongLongLongExpression ]'
 ]
 
@@ -719,7 +719,7 @@ EFMessageExpressionTest >> testKeywordComments [
 { #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordCommentsFormatCommentsWithStatement [
 	| source |
-	self flag: #toCheck. "why no more comment." 
+	self flag: #toCheck. "why no more comment."
 	configurationSelector := #formatStatementsWithCommentsConfiguration.
 	source := self formatExpression: '1 between: 2"firstComment" and: 3 "secondComment"'.
 	self assert: source equals: '1 between: 2 and: 3'
@@ -796,7 +796,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine [
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression: '1 to: 100 by: 2 do: [ :i | transcript show: i;cr; cr]'.
 	self assert: source equals:
-'1 to: 100 by: 2 do: [ :i | 
+'1 to: 100 by: 2 do: [ :i |
 	transcript
 		show: i;
 		cr;
@@ -809,13 +809,13 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine10 [
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
 'foo
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5.'.
 	self assert: source equals:
 'foo
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5'
@@ -826,11 +826,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine11 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
-'foo bar3: 5 bar2: [ 
+'foo bar3: 5 bar2: [
 	1 + 1.
 	2 + 2 ]'.
 	self assert: source equals:
-'foo bar3: 5 bar2: [ 
+'foo bar3: 5 bar2: [
 	1 + 1.
 	2 + 2 ]'
 ]
@@ -842,14 +842,14 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine12 [
 	source := self formatExpression:
 'foo
 	bar3: 5
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5'.
 	self assert: source equals:
 'foo
 	bar3: 5
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5'
@@ -860,11 +860,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine13 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
-'foo bar3: 5 bar3: 5 bar2: [ 
+'foo bar3: 5 bar3: 5 bar2: [
 	1 + 1.
 	2 + 2 ]'.
 	self assert: source equals:
-'foo bar3: 5 bar3: 5 bar2: [ 
+'foo bar3: 5 bar3: 5 bar2: [
 	1 + 1.
 	2 + 2 ]'
 ]
@@ -875,18 +875,18 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine14 [
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
 'foo
-	bar: [ 
-		1 + 2.
-		2 + 2 ]
-	bar3: 5 
-	bar3: 5'.
-	self assert: source equals:
-'foo
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5
 	bar3: 5'.
+	self assert: source equals:
+'foo
+	bar: [
+		1 + 2.
+		2 + 2 ]
+	bar3: 5
+	bar3: 5'
 ]
 
 { #category : #'tests - keyword' }
@@ -900,10 +900,10 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine15 [
 		around: [ 1. 2 ]'.
 	self assert: source equals:
 'self
-	indent: (self do: [ 
+	indent: (self do: [
 			 1.
 			 2 ])
-	around: [ 
+	around: [
 		1.
 		2 ]'
 ]
@@ -916,7 +916,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine2 [
 	self assert: source equals:
 'aBoolean
 	ifTrue: [ ^1 ]
-	ifFalse: [ 
+	ifFalse: [
 		tmp := tmp + a.
 		^tmp ]'
 ]
@@ -928,7 +928,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine3 [
 	source := self formatExpression: 'aBoolean ifTrue:[ tmp := tmp + a. ^ tmp] ifFalse:[ ^ 0 ]'.
 	self assert: source equals:
 'aBoolean
-	ifTrue: [ 
+	ifTrue: [
 		tmp := tmp + a.
 		^ tmp ]
 	ifFalse: [ ^ 0 ]'
@@ -941,10 +941,10 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine4 [
 	source := self formatExpression: 'aBoolean ifTrue:[ tmp := tmp + a. ^ tmp] ifFalse:[ tmp := tmp + a. ^tmp]'.
 	self assert: source equals:
 'aBoolean
-	ifTrue: [ 
+	ifTrue: [
 		tmp := tmp + a.
 		^ tmp ]
-	ifFalse: [ 
+	ifFalse: [
 		tmp := tmp + a.
 		^ tmp ]'
 ]
@@ -955,7 +955,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine5 [
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression: 'aBoolean ifTrue:[ ^ 1] ifFalse:[ tmp := tmp + a. ^tmp]'.
 	self assert: source equals:
-'aBoolean ifTrue: [ ^ 1 ] ifFalse: [ 
+'aBoolean ifTrue: [ ^ 1 ] ifFalse: [
 	tmp := tmp + a.
 	^ tmp ]'
 ]
@@ -965,20 +965,20 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine6 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
-'foo 
-	bar: [ 
+'foo
+	bar: [
 		1 + 2.
 		2 + 2 ]
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]
 	bar3: 5'.
 	self assert: source equals:
 'foo
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]
 	bar3: 5'
@@ -989,21 +989,21 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine7 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
-'foo 
+'foo
 	bar3: 5
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]'.
 	self assert: source equals:
 'foo
 	bar3: 5
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]'
 ]
@@ -1014,22 +1014,22 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine8 [
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
 	source := self formatExpression:
 'foo
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]'.
 	self assert: source equals:
 'foo
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
 	bar3: 5
-	bar2: [ 
+	bar2: [
 		1 + 1.
-		2 + 2 ]'.
+		2 + 2 ]'
 ]
 
 { #category : #'tests - keyword' }
@@ -1039,20 +1039,20 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine9 [
 	source := self formatExpression:
 'foo
 	bar3: 5
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]
 	bar3: 5'.
 	self assert: source equals:
 'foo
 	bar3: 5
-	bar: [ 
+	bar: [
 		1 + 2.
 		2 + 2 ]
-	bar2: [ 
+	bar2: [
 		1 + 1.
 		2 + 2 ]
 	bar3: 5'
@@ -1140,7 +1140,7 @@ EFMessageExpressionTest >> testNewLineBeforeStatementsWhenMultilineBlock [
 	self
 		assert: source
 		equals:
-'x = 0 ifFalse: [ 
+'x = 0 ifFalse: [
 	tan := y asFloat / x asFloat.
 	theta := tan arcCos ]'
 ]
@@ -1156,7 +1156,7 @@ EFMessageExpressionTest >> testNewLineWhenSelectorAndBeginingOfParametersWillBeT
 	self assert: source equals:
 '( newLineBetweenArguments and: [ aMessageNode isKeyword ] )
 	ifTrue: [ self indentsForKeywords ]
-	ifFalse: [ 0 ]'.
+	ifFalse: [ 0 ]'
 ]
 
 { #category : #tests }
@@ -1178,13 +1178,13 @@ EFMessageExpressionTest >> testNoNewLineBetweenVariableAndIfTrue [
 	| source |
 	configurationSelector := #blockInMessageConfiguration.
 	source := self formatExpression: 'x
-		ifTrue: [ 
+		ifTrue: [
 			  aBitBlt copyBitsColor: foreColorVal
 				  alpha: foreColorAlpha
 				  gammaTable: gammaTable
 				  ungammaTable: gammaInverseTable ]'.
-	self assert: source equals: 
-'x ifTrue: [ 
+	self assert: source equals:
+'x ifTrue: [
 	aBitBlt
 		copyBitsColor: foreColorVal
 		alpha: foreColorAlpha
@@ -1210,10 +1210,10 @@ EFMessageExpressionTest >> testNoNewLineForBeginingOfATooLongArgument2 [
 	source := self
 		formatExpression: 'self
 		parseMethod:
-			''foo: abd bar: cde  
+			''foo: abd bar: cde
 ^ abd + cde'''.
 	self assert: source equals:
-'self parseMethod: ''foo: abd bar: cde  
+'self parseMethod: ''foo: abd bar: cde
 ^ abd + cde'''
 ]
 

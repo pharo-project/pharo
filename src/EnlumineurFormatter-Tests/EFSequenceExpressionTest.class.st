@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #configurations }
-EFSequenceExpressionTest >> basicConfiguration [ 
+EFSequenceExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
 		formatCommentCloseToStatements:true;
@@ -52,7 +52,7 @@ EFSequenceExpressionTest >> dontRetainBlankLinesBeforeCommentsConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 
-		
+
 	^ self contextClass basicNew
 		retainBlankLinesBeforeComments:false;
 		formatCommentCloseToStatements:true;
@@ -163,7 +163,7 @@ EFSequenceExpressionTest >> newLineAfterTemporariesConfiguration [
 ]
 
 { #category : #configurations }
-EFSequenceExpressionTest >> noPeriodAtEndOfMethodConfiguration [ 
+EFSequenceExpressionTest >> noPeriodAtEndOfMethodConfiguration [
 
 	^ self contextClass basicNew
 		periodAtEndOfBlock:false;
@@ -301,10 +301,10 @@ EFSequenceExpressionTest >> testDontRetainBlankLinesBetweenStatements [
 	configurationSelector := #dontRetainBlankLinesBetweenStatementsConfiguration.
 	source := self
 		formatExpression:
-			'|a b| 
-	
+			'|a b|
+
 	a:=1.
-	
+
 	b:=a'.
 	self assert: source equals: '| a b |a := 1. b := a'
 ]
@@ -314,7 +314,7 @@ EFSequenceExpressionTest >> testFormatCommentWithStatement [
 	| source |
 	configurationSelector := #formatCommentWithStatementConfiguration.
 	source := self formatExpression: '1+1 "We do an addition". 2'.
-	self assert: source equals: 
+	self assert: source equals:
 '1 + 1. "We do an addition" 2'
 ]
 
@@ -355,31 +355,31 @@ b := a'
 EFSequenceExpressionTest >> testNoNewLineBetweenVariableAndIfTrue [
 	| source |
 	configurationSelector := #formatBlockConfiguration.
-	source := self formatExpression: 
+	source := self formatExpression:
 '| x aBitBlt foreColorVal foreColorAlpha gammaTable gammaInverseTable |
-	"x ifTrue: [ 
+	"x ifTrue: [
 		aBitBlt
 			copyBitsColor: foreColorVal
 			alpha: foreColorAlpha
 			gammaTable: gammaTable
-			ungammaTable: gammaInverseTable ]		
+			ungammaTable: gammaInverseTable ]
 "
-	x ifTrue: [ 
+	x ifTrue: [
 			aBitBlt
 				copyBitsColor: foreColorVal
 				alpha: foreColorAlpha
 				gammaTable: gammaTable
 				ungammaTable: gammaInverseTable ]'.
-	self assert: source equals: 
+	self assert: source equals:
 '| x aBitBlt foreColorVal foreColorAlpha gammaTable gammaInverseTable |
-"x ifTrue: [ 
+"x ifTrue: [
 		aBitBlt
 			copyBitsColor: foreColorVal
 			alpha: foreColorAlpha
 			gammaTable: gammaTable
-			ungammaTable: gammaInverseTable ]		
+			ungammaTable: gammaInverseTable ]
 "
-x ifTrue: [ 
+x ifTrue: [
 	aBitBlt
 		copyBitsColor: foreColorVal
 		alpha: foreColorAlpha
@@ -426,10 +426,10 @@ EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements [
 	configurationSelector := #retainBlankLinesBetweenStatementsConfiguration.
 	source := self
 		formatExpression:
-			'|a b| 
-	
+			'|a b|
+
 	a:=1.
-	
+
 	b:=a'.
 	self
 		assert: source
@@ -445,11 +445,11 @@ EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements2 [
 	configurationSelector := #retainBlankLinesBetweenStatementsConfiguration.
 	source := self
 		formatExpression:
-			'|a b| 
-	
+			'|a b|
+
 	a:=1.
-	
-	
+
+
 	b:=a'.
 	self
 		assert: source
@@ -466,8 +466,8 @@ EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements3 [
 	configurationSelector := #retainBlankLinesBetweenStatementsConfiguration.
 	source := self
 		formatExpression:
-			'|a b| 
-	
+			'|a b|
+
 	a:=1.
 	b:=a'.
 	self

@@ -95,7 +95,7 @@ EFContext >> indentExtraSpaces: anInteger [
 { #category : #accessing }
 EFContext >> indentString [
 	"My value is set using numberOfSpacesInIndent: "
-	
+
 	^ indentString
 ]
 
@@ -107,7 +107,7 @@ EFContext >> indentStyle [
 { #category : #accessing }
 EFContext >> indentStyle: aSymbol [
 	"Indent style can be either #tabulation or #space."
-	
+
 	indentStyle := aSymbol.
 	indentString := aSymbol = #space
 		ifTrue: [ self stringFromSpaceNumber: numberOfSpacesInIndent ]
@@ -177,7 +177,7 @@ EFContext >> lineUpBlockBrackets [
 		cr
 	]
 	"
-	
+
 	^ lineUpBlockBrackets
 ]
 
@@ -340,7 +340,7 @@ EFContext >> numberOfSpacesInIndent [
 { #category : #accessing }
 EFContext >> numberOfSpacesInIndent: anInteger [
 	numberOfSpacesInIndent := anInteger.
-	indentString := self indentStyle = #space 
+	indentString := self indentStyle = #space
 		ifTrue: [ self stringFromSpaceNumber: anInteger ]
 		ifFalse: [ String tab ]
 ]
@@ -445,7 +445,7 @@ EFContext >> spacesAfterCaretSymbolInReturnString [
 ]
 
 { #category : #accessing }
-EFContext >> spacesBeforeDotInDynamicArray [ 
+EFContext >> spacesBeforeDotInDynamicArray [
 	^ spacesBeforeDotInDynamicArray
 ]
 
@@ -471,7 +471,7 @@ EFContext >> storeOn: aStream [
 		nextPutAll: ' new';
 		cr.
 	self class instVarNames sorted
-		do: [ :each | 
+		do: [ :each |
 			aStream tab;
 				nextPutAll: each;
 				nextPutAll: ': '.
@@ -483,7 +483,7 @@ EFContext >> storeOn: aStream [
 
 { #category : #accessing }
 EFContext >> stringFromSpaceNumber: aNumber [
-	
+
 	^ String new: aNumber withAll: Character space
 ]
 

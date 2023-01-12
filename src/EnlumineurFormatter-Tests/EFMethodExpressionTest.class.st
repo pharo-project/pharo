@@ -187,7 +187,7 @@ EFMethodExpressionTest >> oneNewLineAfterCommentConfiguration [
 		  useBasicCommentFormat: false;
 		  maxLineLength: 50;
 		  numberOfNewLinesAfterMethodSignature: 1;
-  		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1; 
+  		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
 		  numberOfNewLinesAfterMethodComment: 2;
 		  indentExtraSpaces: 0
 ]
@@ -317,7 +317,7 @@ EFMethodExpressionTest >> testBasicSpaceIndent [
 { #category : #tests }
 EFMethodExpressionTest >> testBigMethod [
 	| expr source |
-	expr := RBParser parseMethod: 
+	expr := RBParser parseMethod:
 	'aMethode
 	"aComment"
 	"anotherComment"
@@ -335,7 +335,7 @@ EFMethodExpressionTest >> testBigMethod [
 	<pragma>
 	| tmp |
 	tmp := 1.
-	tmp to: 10 do: [:i | 
+	tmp to: 10 do: [:i |
 		Transcript
 			show: i;
 			cr;
@@ -398,7 +398,7 @@ EFMethodExpressionTest >> testIndentCascade [
 { #category : #tests }
 EFMethodExpressionTest >> testMethodWithMessageArgument [
 	| expr source |
-	expr := RBParser parseMethod: 
+	expr := RBParser parseMethod:
 'aMethod
 
 	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
@@ -407,7 +407,7 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 	source := self formatter format: expr.
 	self assert: source equals:
 'aMethod
-	1 to: 10 do: [:i | 
+	1 to: 10 do: [:i |
 		Transcript
 			show: i;
 			cr;

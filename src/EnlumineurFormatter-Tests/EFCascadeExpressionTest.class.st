@@ -100,7 +100,7 @@ EFCascadeExpressionTest >> newLineBeforeCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"		
+			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		newLineAfterCascade: false;
@@ -230,7 +230,7 @@ EFCascadeExpressionTest >> testFormatMultilineMessage [
 		equals:
 '1
 	between: 2 and: 5;
-	to: 4 do: [ :each | 
+	to: 4 do: [ :each |
 		each factorial.
 		each + 1 ]'
 ]
