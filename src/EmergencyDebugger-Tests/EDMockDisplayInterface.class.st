@@ -24,7 +24,7 @@ EDMockDisplayInterface >> displayData [
 
 { #category : #'reflective operations' }
 EDMockDisplayInterface >> doesNotUnderstand: aMessage [
-	
+
 	"self inform: 'Ed display: ', aMessage printString"
 ]
 

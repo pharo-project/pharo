@@ -6,20 +6,20 @@ Context >> printWithArgsValueOn: aStream [
 	aStream << self method methodClass name.
 	aStream << '>>'.
 	self method numArgs = 0
-		ifTrue: [ 
+		ifTrue: [
 			"If self method is a compiled block, we ask its method.
 			The method of a method is the method itself."
 			aStream << self method method name.
 			^ self ].
 	keywords := self method selector keywords.
-	1 to: keywords size do: [ :i | 
+	1 to: keywords size do: [ :i |
 		| keyword argName argValue |
 		keyword := keywords at: i.
 		self flag: 'Sometimes the arguments cannot be accessed. Why?'.
 		argName := [ self method argumentNames at: i ]
 			on: Error
 			do: [ $? ].
-		
+
 		argValue := [ self arguments at: i ]
 			on: Error
 			do: [ $? ].
