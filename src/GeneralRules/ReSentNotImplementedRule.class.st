@@ -23,9 +23,7 @@ ReSentNotImplementedRule class >> uniqueIdentifierName [
 ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| ignored problemSends |
 
-	ignored := (aMethod pragmaAt: #ignoreNotImplementedSelectors:)
-			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-			             ifNil: [ #(  ) ].
+	ignored := aMethod allIgnoredNotImplementedSelectors.
 
 	problemSends := aMethod sendNodes reject: [ :msgSend |
 		                msgSend selector isSelectorSymbol ].

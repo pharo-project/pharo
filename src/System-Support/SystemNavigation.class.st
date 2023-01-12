@@ -237,15 +237,13 @@ SystemNavigation >> allSentMessages [
 
 { #category : #query }
 SystemNavigation >> allSentNotImplementedSelectors [
-
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
-	^ self allMethods select: [ :meth |
+	^ self allMethods select: [ :method |
 		  | ignored |
-		  ignored := (meth pragmaAt: #ignoreNotImplementedSelectors:)
-			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-			             ifNil: [ #(  ) ].
-		  meth messages anySatisfy: [ :m |
+		  ignored := method allIgnoredNotImplementedSelectors.
+
+		  method messages anySatisfy: [ :m |
 			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
 ]
 
