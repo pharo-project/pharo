@@ -36,7 +36,7 @@ Class {
 }
 
 { #category : #'field definition' }
-ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [ 
+ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
 	"Compile a type specification for the FFI machinery.
 	Return the newly compiled spec.
 	Eventually generate the field accessors according to the policy defined in aSymbol."

@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 ExternalAddress class >> allocate: byteSize [
-	
+
 	^ FFIBackend current allocate: byteSize
 ]
 
@@ -30,7 +30,7 @@ ExternalAddress class >> gcallocate: byteSize [
 	"Primitive. Allocate an object on the external heap.
 	The external memory will be freed when i am garbage collected.
 	BEWARE: there should be no copy of self, nor any pointer to a sub part..."
-	
+
 	| externalAddress |
 	externalAddress := self allocate: byteSize.
 	self finalizationRegistry add: externalAddress.
@@ -38,7 +38,7 @@ ExternalAddress class >> gcallocate: byteSize [
 ]
 
 { #category : #'instance creation' }
-ExternalAddress class >> loadSymbol: moduleSymbol module: module [ 
+ExternalAddress class >> loadSymbol: moduleSymbol module: module [
 
 	^ FFIBackend current loadSymbol: moduleSymbol module: module
 ]
@@ -93,9 +93,9 @@ ExternalAddress >> = other [
 
 	self == other ifTrue: [ ^ true ].
 	self species == other species ifFalse: [ ^ false ].
-	1 to: self size do: [ :index | 
+	1 to: self size do: [ :index |
 		(self at: index) = (other at: index) ifFalse: [ ^ false ] ].
-	
+
 	^ true
 ]
 
@@ -122,7 +122,7 @@ ExternalAddress >> asInteger [
 { #category : #initialization }
 ExternalAddress >> beNull [
 	"Make the receiver a NULL pointer"
-	self atAllPut: 0.
+	self atAllPut: 0
 ]
 
 { #category : #accessing }
@@ -148,7 +148,7 @@ ExternalAddress >> bytesFromCString [
 
 	^ ByteArray streamContents: [ :aStream |
 			index := 1.
-			[(aByte := self unsignedByteAt: index) = 0] 
+			[(aByte := self unsignedByteAt: index) = 0]
 				whileFalse: [
 					aStream nextPut: aByte.
 					index := index + 1]]
@@ -179,14 +179,14 @@ ExternalAddress >> free [
 ExternalAddress >> fromCString [
 	| index aByte |
 
-	self 
-		deprecated:  'Please use #bytesFromCString instead' 
-		transformWith:  '`@receiver fromCString' 
+	self
+		deprecated:  'Please use #bytesFromCString instead'
+		transformWith:  '`@receiver fromCString'
 						-> '`@receiver bytesFromCString utf8Decoded'.
 
 	^ (ByteArray streamContents: [ :aStream |
 			index := 1.
-			[(aByte := self unsignedByteAt: index) = 0] 
+			[(aByte := self unsignedByteAt: index) = 0]
 				whileFalse: [
 					aStream nextPut: aByte.
 					index := index + 1]]) utf8Decoded
