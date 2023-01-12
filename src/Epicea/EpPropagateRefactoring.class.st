@@ -25,8 +25,8 @@ EpPropagateRefactoring >> asRBRefactoring [
 { #category : #initialization }
 EpPropagateRefactoring >> initializeWith: aTargetRefactoring [
 	self initialize.
-	
-	targetRefactoring := aTargetRefactoring.
+
+	targetRefactoring := aTargetRefactoring
 ]
 
 { #category : #accessing }
