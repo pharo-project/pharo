@@ -12,5 +12,5 @@ IntegerTest >> testHumanReadableByteSizeString [
 	self assert: (1024 * 1024 * 1024) humanReadableByteSizeString equals: '1 GB'.
 
 	self assert: (1000 * 1000 * 1000 * 1000) humanReadableByteSizeString equals: '931 GB'.
-	self assert: (1024 * 1024 * 1024 * 1024) humanReadableByteSizeString equals: '1 TB'.
+	self assert: (1024 * 1024 * 1024 * 1024) humanReadableByteSizeString equals: '1 TB'
 ]
