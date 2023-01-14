@@ -26,12 +26,11 @@ HEAssociation >> asLiteralIn: env [
 { #category : #reading }
 HEAssociation >> doReadFrom: aReader [
 	key := HEExportedLiteral readFrom: aReader.
-	value := HEExportedLiteral readFrom: aReader.
-
+	value := HEExportedLiteral readFrom: aReader
 ]
 
 { #category : #accessing }
 HEAssociation >> value: anAssociation [
 	value := anAssociation value asExportedLiteral.
-	key := anAssociation key asExportedLiteral.
+	key := anAssociation key asExportedLiteral
 ]
