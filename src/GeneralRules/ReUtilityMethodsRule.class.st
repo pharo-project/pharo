@@ -15,7 +15,7 @@ ReUtilityMethodsRule class >> checksMethod [
 { #category : #accessing }
 ReUtilityMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'UtilityMethodsRule'
 ]
 
@@ -29,7 +29,7 @@ ReUtilityMethodsRule >> basicCheck: aMethod [
 	aMethod isOverriding ifTrue: [ ^ false ].
 	aMethod readsSelf ifTrue: [ ^ false ].
 	aMethod sendsToSuper ifTrue: [ ^ false ].
-	
+
 	^ aMethod methodClass definedVariables noneSatisfy: [ :variable |
 		  variable isAccessedIn: aMethod ]
 ]
