@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #asserting }
-GoferApiTest >> assert: registry on: serverUrlString hasUser: nameString withPassword: passwordString [ 
+GoferApiTest >> assert: registry on: serverUrlString hasUser: nameString withPassword: passwordString [
 
 	registry repositoryAt: serverUrlString credentialsDo: [ :user :password |
 		self assert: nameString equals: user.
-		self assert: passwordString equals: password ].
+		self assert: passwordString equals: password ]
 ]
 
 { #category : #utilities }
@@ -20,7 +20,7 @@ GoferApiTest >> assert: aGofer repositories: anArray [
 
 	self assert: aGofer repositories size equals: anArray size.
 	aGofer repositories with: anArray
-		do: [ :first :second | 
+		do: [ :first :second |
 			self assert: first description equals: second ]
 ]
 
@@ -35,14 +35,14 @@ GoferApiTest >> testBlueplane [
 GoferApiTest >> testConstraintReference [
 
 	| reference |
-	gofer 
-		repository: self monticelloRepository; 
+	gofer
+		repository: self monticelloRepository;
 		package: 'GoferBar' constraint: [ :ref | ref branch = 'branch' ].
-	
+
 	self assert: gofer resolved size equals: 1.
-	
+
 	reference := gofer resolved first.
-	
+
 	self assert: (reference isKindOf: GoferResolvedReference).
 	self assert: reference packageName equals: 'GoferBar'.
 	self assert: reference author equals: 'lr'.
@@ -55,7 +55,7 @@ GoferApiTest >> testConstraintReference [
 GoferApiTest >> testCustomRepository [
 
 	gofer repository: self monticelloRepository.
-	
+
 	self assert: gofer repositories: (Array with: self monticelloRepository description).
 	self assert: gofer repositories first equals: self monticelloRepository
 ]
@@ -93,14 +93,14 @@ GoferApiTest >> testHttpRepositoryOverrideStoredCredentials [
 		exampleServer := 'http://my.cool.repo.server.com/'.
 		registry := MCServerRegistry uniqueInstance.
 		registry on: exampleServer beUser: 'myusername' withPassword: 'mypassword'.
-		
+
 		gofer url: exampleServer username: 'foo' password: 'bar'.
-		
+
 		self assert: gofer repositories: { exampleServer }.
 		self assert: gofer repositories first user equals: 'foo'.
 		self assert: registry on: exampleServer hasUser: 'myusername' withPassword: 'mypassword'.
 	] ensure: [
-		registry removeCredentialsFor: exampleServer ].
+		registry removeCredentialsFor: exampleServer ]
 ]
 
 { #category : #'tests - repositories' }
@@ -111,13 +111,13 @@ GoferApiTest >> testHttpRepositoryUseStoredCredentials [
 		exampleServer := 'http://my.cool.repo.server.com/'.
 		registry := MCServerRegistry uniqueInstance.
 		registry on: exampleServer beUser: 'myusername' withPassword: 'mypassword'.
-		
+
 		gofer url: exampleServer.
-		
+
 		self assert: gofer repositories: { exampleServer }.
 		self assert: gofer repositories first user equals: 'myusername'
 	] ensure: [
-		registry removeCredentialsFor: exampleServer ].
+		registry removeCredentialsFor: exampleServer ]
 ]
 
 { #category : #tests }
@@ -139,10 +139,10 @@ GoferApiTest >> testInitialRepositories [
 GoferApiTest >> testPackageCache [
 
 	gofer squeaksource: 'r1'; squeaksource: 'r2'.
-	
+
 	gofer enablePackageCache.
 	self assert: gofer repositories: (Array with: MCCacheRepository uniqueInstance description) , #('http://www.squeaksource.com/r1' 'http://www.squeaksource.com/r2').
-	
+
 	gofer disablePackageCache.
 	self assert: gofer repositories: #('http://www.squeaksource.com/r1' 'http://www.squeaksource.com/r2')
 ]
@@ -210,13 +210,13 @@ GoferApiTest >> testSubDirectoryRepository [
 GoferApiTest >> testVersionReference [
 
 	| reference |
-	gofer 
-		repository: self monticelloRepository; 
+	gofer
+		repository: self monticelloRepository;
 		version: 'GoferFoo-lr.2'.
 	self assert: gofer resolved size equals: 1.
-	
+
 	reference := gofer resolved first.
-	
+
 	self assert: (reference isKindOf: GoferResolvedReference).
 	self assert: reference packageName equals: 'GoferFoo'.
 	self assert: reference author equals: 'lr'.
