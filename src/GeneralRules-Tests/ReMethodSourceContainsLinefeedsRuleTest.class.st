@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #sample }
+{ #category : #'test-help' }
 ReMethodSourceContainsLinefeedsRuleTest >> sampleMethod [
 	"This method contains two linefeeds which should be carriage returns."
 	"There is one after this line" 7.

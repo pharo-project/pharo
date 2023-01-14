@@ -13,7 +13,7 @@ ReMultiplePeriodsTerminatingStatementRuleTest >> sampleMethod [
 	2+3.  .
 	{1.2..3}.
 	99.
-
+.
 ]
 
 { #category : #tests }
