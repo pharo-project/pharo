@@ -47,7 +47,7 @@ Class {
 
 { #category : #'instance creation' }
 AbstractBinaryFileStream class >> handle: aCollection file: aFile forWrite: aTrue [
-	
+
 	^ self basicNew
 		handle: aCollection file: aFile forWrite: aTrue;
 		yourself
@@ -55,7 +55,7 @@ AbstractBinaryFileStream class >> handle: aCollection file: aFile forWrite: aTru
 
 { #category : #testing }
 AbstractBinaryFileStream class >> isAbstract [
-		
+
 	^ self == AbstractBinaryFileStream
 ]
 
@@ -82,13 +82,13 @@ AbstractBinaryFileStream >> contents [
 
 { #category : #'character writing' }
 AbstractBinaryFileStream >> cr [
-	
+
 	self nextPut: Character cr asInteger
 ]
 
 { #category : #'character writing' }
 AbstractBinaryFileStream >> crlf [
-	
+
 	self nextPutAll: String crlf
 ]
 
@@ -98,8 +98,8 @@ AbstractBinaryFileStream >> file [
 ]
 
 { #category : #accessing }
-AbstractBinaryFileStream >> file: aFile [ 
-	
+AbstractBinaryFileStream >> file: aFile [
+
 	file := aFile
 ]
 
@@ -108,13 +108,13 @@ AbstractBinaryFileStream >> flush [
 	"When writing, this flushes the write buffer the stream uses to reduce
 	the number of write() system calls it makes. This should generally be
 	used before #sync, but on Windows they do the same thing."
-	
+
 	File flush: handle
 ]
 
 { #category : #initialization }
 AbstractBinaryFileStream >> handle: aCollection file: aFile forWrite: aBoolean [
-	
+
 	handle := aCollection.
 	file := aFile.
 	forWrite := aBoolean
@@ -157,7 +157,7 @@ AbstractBinaryFileStream >> next: n into: aBuffer [
 	| readBuffer read |
 	readBuffer := aBuffer.
 	read := File read: handle into: readBuffer startingAt: 1 count: n.
-	^read = n 
+	^read = n
 		ifTrue: [ readBuffer ]
 		ifFalse: [ readBuffer copyFrom: 1 to: read ]
 ]
@@ -169,7 +169,7 @@ AbstractBinaryFileStream >> next: n into: aString startingAt: startIndex [
 	n elements have been read."
 	|read|
 	read := (self readInto: aString startingAt: startIndex count: n).
-	^read = n 
+	^read = n
 		ifTrue: [ aString ]
 		ifFalse: [ aString copyFrom: 1 to: startIndex + read - 1 ]
 ]
@@ -200,7 +200,7 @@ AbstractBinaryFileStream >> nextInto: aBuffer [
 ]
 
 { #category : #endianess }
-AbstractBinaryFileStream >> nextLittleEndianNumber: n [ 
+AbstractBinaryFileStream >> nextLittleEndianNumber: n [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 
 	| bytes s |
@@ -244,7 +244,7 @@ AbstractBinaryFileStream >> position [
 
 { #category : #positioning }
 AbstractBinaryFileStream >> position: aPosition [
-	
+
 	File setPosition: handle to: aPosition
 ]
 
@@ -269,11 +269,11 @@ AbstractBinaryFileStream >> releaseSemaphores [
 
 	"To wait for data to arrival in an stream, it is required to keep a semaphore and this one should be registered in the VM. As this is a constrained resource, the user of wait data should relelease the semaphore when it is not used anymore"
 
-	semaphore ifNotNil: [ 
+	semaphore ifNotNil: [
 		Smalltalk unregisterExternalObject: semaphore].
-	
-	semaphoreIndex := nil.	
-	semaphore := nil.
+
+	semaphoreIndex := nil.
+	semaphore := nil
 ]
 
 { #category : #initialization }
@@ -283,7 +283,7 @@ AbstractBinaryFileStream >> reset [
 
 { #category : #positioning }
 AbstractBinaryFileStream >> setToEnd [
-	
+
 	self position: self size
 ]
 
@@ -302,7 +302,7 @@ AbstractBinaryFileStream >> skip: n [
 ]
 
 { #category : #flushing }
-AbstractBinaryFileStream >> sync [	
+AbstractBinaryFileStream >> sync [
 	"When writing, this syncs any written/flushed data still in the kernel
 	file system buffers to disk. This should generally be used after #flush,
 	but on Windows they do the same thing."
@@ -320,7 +320,7 @@ AbstractBinaryFileStream >> upTo: delim [
 AbstractBinaryFileStream >> upToAnyOf: delimiters [
 
 	^ ByteArray new: 1000 streamContents: [ :stream | | ch |
-		[ (ch := self next) isNil or: [ delimiters includes: ch] ] 
+		[ (ch := self next) isNil or: [ delimiters includes: ch] ]
 			whileFalse: [ stream nextPut: ch ] ]
 ]
 
@@ -336,18 +336,18 @@ AbstractBinaryFileStream >> upToEnd [
 
 { #category : #reading }
 AbstractBinaryFileStream >> waitForData [
-	
+
 	"Waits for data on a semaphore.
-	This message is useful for using on streams and pipes. 
-	
+	This message is useful for using on streams and pipes.
+
 	This message uses a primitive that needs to be available to work.
 	Also, it uses an external semaphore, so after ending its use please send the message #releaseSemaphores
-	
-	Ex: [[Stdio stdin atEnd] 
+
+	Ex: [[Stdio stdin atEnd]
 			whileFalse: [Stdio stdin waitForData.
 			(Stdio stdin next: 100) printString traceCr]] fork.
 	In Windows, it is better to use something like:
-	
+
 	[[Stdio stdin waitForData.
 			(Stdio stdin next: 100) printString traceCr] repeat] fork
 
@@ -357,15 +357,15 @@ AbstractBinaryFileStream >> waitForData [
 	semaphoreIndex ifNil: [ semaphoreIndex := Smalltalk registerExternalObject: semaphore].
 
 	File primitiveWaitForDataOn: handle signalling: semaphoreIndex.
-	semaphore wait.
+	semaphore wait
 ]
 
 { #category : #writing }
 AbstractBinaryFileStream >> writeFrom: writeBuffer startingAt: aNumber count: length [
 
-	^ File 
-		write: handle 
-		from: writeBuffer 
-		startingAt: aNumber 
+	^ File
+		write: handle
+		from: writeBuffer
+		startingAt: aNumber
 		count: length
 ]
