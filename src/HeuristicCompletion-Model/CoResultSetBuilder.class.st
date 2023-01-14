@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 CoResultSetBuilder class >> initializeOnContext: aSystemCompletionContext [
-	
+
 	^ self new
 		initializeOnContext: aSystemCompletionContext;
 		yourself
@@ -39,7 +39,7 @@ CoResultSetBuilder >> completionContext: anObject [
 ]
 
 { #category : #initialization }
-CoResultSetBuilder >> initializeOnContext: aCompletionContext [ 
-	
+CoResultSetBuilder >> initializeOnContext: aCompletionContext [
+
 	completionContext := aCompletionContext
 ]

@@ -14,7 +14,7 @@ CoRepeatedHierarchyImplementedSelectorsFetcherTest >> setUp [
 		withoutRepetition withNarrowHistory.
 	self completionClass superclass
 		selectors: (self completionClass superclass selectors copyWith: 'ma').
-	expectedElements := { 
+	expectedElements := {
 		NECSelectorEntry contents: 'ma' node: nil.
 		NECSelectorEntry contents: 'mb' node: nil.
 		NECSelectorEntry contents: 'mc' node: nil.
