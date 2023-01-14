@@ -29,10 +29,10 @@ HiLink >> doesContinue: anotherLink [
 HiLink >> initializeWithOrigin: aNode target: anotherNode intermediatePoints: aCollectionOfPoints [
 
 	self initialize.
-	
+
 	origin := aNode.
 	target := anotherNode.
-	intermediatePoints := aCollectionOfPoints.
+	intermediatePoints := aCollectionOfPoints
 ]
 
 { #category : #accessing }
@@ -56,13 +56,13 @@ HiLink >> origin [
 HiLink >> printOn: aStream [
 
 	super printOn: aStream.
-	
+
 	aStream
 		nextPut: $(;
 		print: origin theValue;
 		nextPutAll: '->';
 		print: target theValue;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #accessing }
