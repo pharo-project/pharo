@@ -162,6 +162,24 @@ OldPharoClassDefinitionPrinter >> poolOn: stream [
 			store: poolString ]
 ]
 
+{ #category : #'instance creation' }
+OldPharoClassDefinitionPrinter >> template: aSystemCategoryName [ 
+	"Answer an expression that can be edited and evaluated in order to define a new class."
+
+	^ self templateForSubclassOf: Object name category: aSystemCategoryName
+]
+
+{ #category : #'instance creation' }
+OldPharoClassDefinitionPrinter >> templateForSubclassOf: priorClassName category: systemCategoryName [ 
+	"Answer an expression that can be edited and evaluated in order to define a new class, given that the class previously looked at was as given"
+
+	^priorClassName asString, ' subclass: #NameOfSubclass
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	poolDictionaries: ''''
+	package: ''' , systemCategoryName asString , ''''
+]
+
 { #category : #template }
 OldPharoClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
 
