@@ -112,7 +112,7 @@ DateAndTime class >> fromUnixTime: anInteger [
 	^ self fromSeconds: anInteger + 2177452800 "unix epoch constant"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 DateAndTime class >> initialize [
 	ClockProvider := Time
 ]

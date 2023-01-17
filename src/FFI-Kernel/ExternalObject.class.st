@@ -19,7 +19,7 @@ ExternalObject class >> initialize [
 	SessionManager default
 				registerSystemClassNamed: self name
 				atPriority: 60.
-				
+
 	Smalltalk recreateSpecialObjectsArray
 ]
 
@@ -35,20 +35,20 @@ ExternalObject class >> install [
 { #category : #'system startup' }
 ExternalObject class >> installSubclasses [
 	"Notify all the subclasses of ExternalObject that we are starting up on a new platform."
-	self withAllSubclassesDo:[:cls| cls install].
+	self withAllSubclassesDo:[:cls| cls install]
 ]
 
 { #category : #'instance creation' }
 ExternalObject class >> null [
-	
-	^ self fromHandle: (ExternalAddress null).
+
+	^ self fromHandle: (ExternalAddress null)
 ]
 
 { #category : #'system startup' }
 ExternalObject class >> startUp: resuming [
 	"The system is coming up. If it is on a new platform, clear out the existing handles."
 	ExternalAddress startUp: resuming. "Make sure handles are invalid"
-	resuming ifTrue:[self installSubclasses].
+	resuming ifTrue:[self installSubclasses]
 ]
 
 { #category : #private }

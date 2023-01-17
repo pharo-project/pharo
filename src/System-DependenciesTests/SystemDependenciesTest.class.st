@@ -54,10 +54,13 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
- 
-	"ideally this list should be empty"	
-	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
+
+	"ideally this list should be empty"
+
+	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
+	     #'Refactoring-Critics' #'Refactoring2-Transformations'
+	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
+	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets' )
 ]
 
 { #category : #'known dependencies' }
@@ -306,7 +309,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfFuzzyMatcher.
 	BaselineOfZodiac.
 	BaselineOfReflectionMirrors.
-	BaselineOfGeneralHelp.
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.

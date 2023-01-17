@@ -22,16 +22,16 @@ Class {
 
 { #category : #'instance creation' }
 RBEnglobingErrorNode class >> content: aCollection start: aStart stop: aStop errorMessage: message [
-	^self new 
-		content: aCollection; 
-		start: aStart; 
-		stop: aStop; 
+	^self new
+		content: aCollection;
+		start: aStart;
+		stop: aStop;
 		errorMessage: message
 ]
 
 { #category : #construction }
 RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
-	"Realise a selection between the different englobing error node classes possible according to the 
+	"Realise a selection between the different englobing error node classes possible according to the
 	 received token. If the value of the token is not recognised, we create an undetermined one."
 	('()' includes: aToken value)
 		ifTrue: [ ^RBParenthesesErrorNode error: aToken withNodes: aCollection ].
@@ -73,10 +73,10 @@ RBEnglobingErrorNode >> content: aCollection [
 ]
 
 { #category : #initialization }
-RBEnglobingErrorNode >> initialize [ 
+RBEnglobingErrorNode >> initialize [
 	super initialize.
 	content := OrderedCollection new.
-	value := ''.
+	value := ''
 ]
 
 { #category : #testing }
@@ -86,5 +86,5 @@ RBEnglobingErrorNode >> isEnglobingError [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> stop: anInterger [
-	stop := anInterger.
+	stop := anInterger
 ]

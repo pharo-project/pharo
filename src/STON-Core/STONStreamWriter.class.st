@@ -19,7 +19,7 @@ STONStreamWriter class >> on: stonWriter [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONStreamWriter >> initialize [
 	super initialize.
 	first := true

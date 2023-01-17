@@ -54,8 +54,8 @@ MethodChunk >> displayStringOn: stream [
 { #category : #importing }
 MethodChunk >> handleMissingBehavior [
 	"self error: ('Cannot install method in unexistent behavior {1}' format: {(behaviorName asString)})"
-	
-	(MissingClassError 
+
+	(MissingClassError
 		className: behaviorName asString)
 		signal: 'Cannot install method in non-existent behavior ', behaviorName asString
 ]
@@ -71,7 +71,7 @@ MethodChunk >> importFor: requestor logSource: logSource [
 		notifying: (self methodCompileRequestorFor: requestor)
 		logSource: logSource ]
 		on: ReparseAfterSourceEditing
-		do: [ :exception | 
+		do: [ :exception |
 			contents := exception newSource.
 			self importFor: requestor logSource: logSource ]
 ]
@@ -93,7 +93,7 @@ MethodChunk >> methodCompileRequestorFor: aRequestor [
 
 { #category : #accessing }
 MethodChunk >> methodSelector [
-	
+
 	^ RBParser parseMethodPattern: self contents
 ]
 

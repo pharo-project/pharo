@@ -255,7 +255,7 @@ RubTextEditor >> backWord: aKeyboardEvent [
 RubTextEditor >> backspace: aKeyboardEvent [
 	| result startIndex |
 	self closeTypeIn.
-	result := aKeyboardEvent shiftPressed
+	result := aKeyboardEvent controlKeyPressed
 		ifTrue: [ self backWord: aKeyboardEvent keyCharacter ]
 		ifFalse: [ 
 			self hasSelection
@@ -778,7 +778,8 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey keypadDown -> #cursorDown:).
 	(KeyboardKey keypadEnter -> #crWithIndent:).
 	(KeyboardKey tab -> #tab:).
-	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
+	(KeyboardKey delete -> #forwardDelete:).
+	(KeyboardKey menu -> #menu:)} do: [ :assoc | 
 		cmdMap at: assoc key  put: assoc value ].
 	^ cmdMap
 ]
@@ -1174,8 +1175,8 @@ RubTextEditor >> forwardDelete: aKeyboardEvent [
 			| idx1 idx2 |
 			idx1 := self startIndex min: self stopIndex.
 			idx2 := self stopIndex max: self startIndex.
-			aKeyboardEvent shiftPressed
-				ifTrue: [ idx2 := self nextWord: idx1 ]
+			aKeyboardEvent controlKeyPressed
+				ifTrue: [ idx2 := self nextWord: idx1 + 1 ]
 				ifFalse: [ idx2 := idx2 + 1 ].
 			self selectInvisiblyFrom: idx1 to: idx2 - 1 ].
 	self addDeleteSelectionUndoRecord.
@@ -1522,6 +1523,13 @@ RubTextEditor >> markIndex [
 { #category : #'accessing - selection' }
 RubTextEditor >> markIndex: markIndex pointIndex: pointIndex [
 	textArea markIndex: markIndex pointIndex: pointIndex
+]
+
+{ #category : #'menu messages' }
+RubTextEditor >> menu: aKeyboardEvent [
+	"Displays the menu"
+	self textArea openMenu.
+	^ false
 ]
 
 { #category : #accessing }

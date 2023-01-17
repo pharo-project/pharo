@@ -16,22 +16,6 @@ CompiledMethod >> decompileIR [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-CompiledMethod >> ir [
-	"We as the AST for the IR... for decompiling ir from bytecode, look at IRBytecodeDecompiler"
-	^ self ast ir
-]
-
-{ #category : #'*OpalCompiler-Core' }
-CompiledMethod >> irPrimitive [
-
-	| primNode n |
-	primNode := IRPrimitive new num: (n := self primitive).
-	(n = 117 or: [n = 120]) ifTrue: [
-		primNode spec: (self literalAt: 1)].
-	^ primNode
-]
-
-{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> methodNode [
 	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
 	^self parseTree

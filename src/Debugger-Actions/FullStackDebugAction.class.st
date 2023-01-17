@@ -34,7 +34,7 @@ FullStackDebugAction >> enabled [
 
 { #category : #actions }
 FullStackDebugAction >> executeAction [
-	
+
 	self debugger stack expandBy: self expandedStackSize
 ]
 
@@ -58,10 +58,10 @@ FullStackDebugAction >> id [
 { #category : #testing }
 FullStackDebugAction >> shouldEnableFullStackButton [
 
-	self debugger ifNil: [ ^ false ].  
-		
-	^ self debugger stack listItems 
-		ifEmpty: [ false ] 
+	self debugger ifNil: [ ^ false ].
+
+	^ self debugger stack listItems
+		ifEmpty: [ false ]
 		ifNotEmpty: [ :aList |
 			aList last sender notNil ]
 ]

@@ -33,13 +33,13 @@ End'
 { #category : #tests }
 ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 
-	printer 
-		forClass: RBNode; 
+	printer
+		forClass: RBNode;
 		doNotShowState;
 		doNotShowSuperclasses;
 		excludedClasses: (RBNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
 		limitedToClasses: (RBNode withAllSubclasses select: [:each | each name beginsWith: 'RB']).
-	self assert: printer print equals: 
+	self assert: printer print equals:
 	'RBNode
 	RBProgramNode
 		RBComment
@@ -64,7 +64,6 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 					RBInvalidCascadeErrorNode
 					RBLiteralArrayErrorNode
 					RBLiteralByteArrayErrorNode
-					RBMissingOpenerErrorNode
 					RBParenthesesErrorNode
 					RBPragmaErrorNode
 					RBTemporariesErrorNode

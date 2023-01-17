@@ -38,10 +38,10 @@ EvaluateCommandLineHandler class >> description [
 { #category : #'handler selection' }
 EvaluateCommandLineHandler class >> isResponsibleFor: commandLineArguments [
 	"directly handle top-level -e and --evaluate options"
-	commandLineArguments withFirstArgument: [ :arg| 
+	commandLineArguments withFirstArgument: [ :arg|
 		(#('-e' '--evaluate') includes: arg)
 			ifTrue: [ ^ true ]].
-	
+
 	^ commandLineArguments includesSubCommand: self commandName
 ]
 
@@ -49,18 +49,18 @@ EvaluateCommandLineHandler class >> isResponsibleFor: commandLineArguments [
 EvaluateCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
-		
-	self arguments 
+
+	self arguments
 		ifEmpty: [ ^ self evaluateStdIn ].
-		
+
 	self evaluateArguments.
-	
+
 	(self hasOption: 'save')
-		ifTrue: [ 
-			^ Smalltalk 
-				snapshot: true 
+		ifTrue: [
+			^ Smalltalk
+				snapshot: true
 				andQuit: (self hasOption: 'no-quit') not ].
-	
+
 	(self hasOption: 'no-quit')
 		ifFalse: [ self quit ]
 ]
@@ -68,7 +68,7 @@ EvaluateCommandLineHandler >> activate [
 { #category : #activation }
 EvaluateCommandLineHandler >> argumentString [
 	| arguments skipArguments |
-	
+
 	"Now this is ugly... Coral would be nice here! Basically we strip skipArguments if, and only if they appear at the beginning of arguments"
 	skipArguments := #( '--no-quit' '--save' '-e' '--evaluate').
 
@@ -78,17 +78,17 @@ EvaluateCommandLineHandler >> argumentString [
 			(self arguments size >= 2 and: [ skipArguments includes: self arguments second ])
 				ifTrue: [ self arguments allButFirst: 2 ]
 				ifFalse: [ self arguments allButFirst ]].
-		
-	^ arguments joinUsing: Character space.
+
+	^ arguments joinUsing: Character space
 ]
 
 { #category : #commands }
 EvaluateCommandLineHandler >> evaluate: aStream [
 	| result |
-	[ 
+	[
 	result := Smalltalk compiler evaluate: aStream.
 	self hasSessionChanged
-		ifFalse: [ 
+		ifFalse: [
 			self stdout
 				print: result;
 				lf ] ]

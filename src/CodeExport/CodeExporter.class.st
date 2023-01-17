@@ -28,7 +28,7 @@ CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReferen
 	UIManager default
 		inform:
 			(String
-				streamContents: [ :s | 
+				streamContents: [ :s |
 					s
 						nextPutAll: 'Filed out to: ';
 						cr;

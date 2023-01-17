@@ -22,15 +22,15 @@ Class {
 { #category : #accessing }
 AthensTextLine >> addCommand: aCommand [
 
-	commands 
+	commands
 		ifNil: [ tail := commands := aCommand. ]
 		ifNotNil: [ tail next: aCommand ].
-	tail := tail tail.
+	tail := tail tail
 ]
 
 { #category : #accessing }
 AthensTextLine >> addWidth: aNumber [
-	width := width + aNumber.
+	width := width + aNumber
 ]
 
 { #category : #accessing }
@@ -112,15 +112,15 @@ AthensTextLine >> maxHeight: aHeight [
 
 { #category : #rendering }
 AthensTextLine >> renderOn: aTextRenderer [
-	
-	commands ifNil: [ ^ self ]. 
+
+	commands ifNil: [ ^ self ].
 	commands do: [ :cmd |
 		cmd renderOn: aTextRenderer
-	].
+	]
 ]
 
 { #category : #rendering }
-AthensTextLine >> renderOn: anAthensTextRenderer x: aSmallInteger y: aSmallInteger3 [ 
+AthensTextLine >> renderOn: anAthensTextRenderer x: aSmallInteger y: aSmallInteger3 [
 	self shouldBeImplemented
 ]
 
@@ -142,7 +142,7 @@ AthensTextLine >> text [
 ]
 
 { #category : #accessing }
-AthensTextLine >> text: aText [ 
+AthensTextLine >> text: aText [
 	text := aText
 ]
 

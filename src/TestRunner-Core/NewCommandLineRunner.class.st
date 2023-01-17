@@ -24,9 +24,15 @@ NewCommandLineRunner class >> with: aReporterClass [
 ]
 
 { #category : #accessing }
-NewCommandLineRunner >> defaultReporterClass [
+NewCommandLineRunner >> classForReporter [
 
-	^ StdReporter
+	^ AbstractReporter
+]
+
+{ #category : #private }
+NewCommandLineRunner >> classForTestFailure [
+
+	^ TestFailure
 ]
 
 { #category : #test }
@@ -34,6 +40,12 @@ NewCommandLineRunner >> hasDefaultReporter [
 	"check if the Runner has a default reporter"
 
 	^ self reporter isNotNil
+]
+
+{ #category : #initialization }
+NewCommandLineRunner >> initialize [
+	super initialize.
+	self reporter: self classForReporter stdReporter.
 ]
 
 { #category : #recording }
@@ -45,7 +57,7 @@ NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
 	self reportError: aTestFailure of: aTestCase
 ]
 
-{ #category : #running }
+{ #category : #recording }
 NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	"store the test case then report it as failure"
 
@@ -56,7 +68,6 @@ NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 
 { #category : #private }
 NewCommandLineRunner >> recordPassOf: aTestCase [
-
 	"store the test case then report it as passed test"
 
 	self result addPass: aTestCase.
@@ -74,11 +85,10 @@ NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aTestCase [
 
 { #category : #private }
 NewCommandLineRunner >> recordUnexpectedPassOf: aTestCase [
-
 	"store the testcase as failure. A test which is excpected to fail should not pass"
 
 	| exception |
-	exception := TestFailure new messageText:
+	exception := self classForTestFailure new messageText:
 		             'Unexpected pass (test is marked as expected failure)'.
 	self recordFailure: exception duringTest: aTestCase
 ]
@@ -101,7 +111,7 @@ NewCommandLineRunner >> reportFailure: aTestFailure of: aTestCase [
 { #category : #private }
 NewCommandLineRunner >> reporter [
 
-	^ reporter ifNil: [ reporter := self defaultReporterClass new ]
+	^ reporter
 ]
 
 { #category : #accessing }
@@ -127,8 +137,7 @@ NewCommandLineRunner >> runCase: aTestCase [
 
 { #category : #running }
 NewCommandLineRunner >> runCaseManaged: aTestCase [
-
-	"saving the failure context"
+	"run then report the test according to its state (passed, error, failure) during the execution"
 
 	[ 
 	self timeToRun: aTestCase.

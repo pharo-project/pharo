@@ -29,7 +29,7 @@ CoNarrowHistoryFetcher >> entriesDo: aBlock [
 	currentFinished := true.
 ]
 
-{ #category : #enumerating }
+{ #category : #initialization }
 CoNarrowHistoryFetcher >> initialize [
 
 	super initialize.

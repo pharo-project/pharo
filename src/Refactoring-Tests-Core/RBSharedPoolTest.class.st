@@ -18,17 +18,16 @@ RBSharedPoolTest >> setUp [
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
 	
-	rbNamespace defineClass: 'SharedPool subclass: #ChronologyConstants
-	instanceVariableNames: ''''
-	classVariableNames: ''DayNames DaysInMonth HoursInDay MicrosecondsInDay MinutesInHour MonthNames NanosInMillisecond NanosInSecond SecondsInDay SecondsInHour SecondsInMinute SqueakEpoch''
+	rbNamespace defineClass: 'SharedPool << #ChronologyConstants
+	sharedVariables:  { #DayNames . #DaysInMonth . #HoursInDay . #MicrosecondsInDay . #MinutesInHour . #MonthNames . #NanosInMillisecond . #NanosInSecond . #SecondsInDay . #SecondsInHour . #SecondsInMinute . #SqueakEpoch};
 	package: ''Kernel-Chronology'''.
 	
 	defineOf := rbNamespace classNamed: #ChronologyConstants.
 	
-	rbNamespace defineClass: 'Magnitude subclass: #DateAndTime
-	instanceVariableNames: ''seconds offset julianDayNumber nanos''
-	classVariableNames: ''ClockProvider LocalTimeZoneCache''
-	poolDictionaries: ''ChronologyConstants''
+	rbNamespace defineClass: 'Magnitude << #DateAndTime
+	slots: {#seconds . #offset . #julianDayNumber . #nanos};
+	sharedVariables: {#ClockProvider . LocalTimeZoneCache};
+	sharedPools: {ChronologyConstants};
 	package: ''Kernel-Chronology'''.
 	
 	userOf := rbNamespace classNamed: #DateAndTime.

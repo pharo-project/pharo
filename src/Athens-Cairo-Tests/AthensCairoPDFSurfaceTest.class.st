@@ -6,5 +6,6 @@ Class {
 
 { #category : #accessing }
 AthensCairoPDFSurfaceTest >> athensSurfaceClass [
+
 	^ AthensCairoPDFSurface
 ]

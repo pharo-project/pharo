@@ -93,6 +93,14 @@ CompiledCode >> accessesSlot: aSlot [
 ]
 
 { #category : #accessing }
+CompiledCode >> allBlocks [
+	| all |
+	all := IdentitySet new.
+	self allBlocksDo: [ :each | all add: each ].
+	^all
+]
+
+{ #category : #accessing }
 CompiledCode >> allBlocksDo: aBlock [
 
 	self literals 
@@ -238,9 +246,9 @@ CompiledCode >> frameSize [
 	"Answer the size of temporary frame needed to run the receiver."
 	"NOTE:  Versions 2.7 and later use two sizes of contexts."
 
-	(self header noMask: 16r20000)
-		ifTrue: [^ SmallFrame]
-		ifFalse: [^ LargeFrame]
+	^ (self header noMask: 16r20000)
+		ifTrue: [SmallFrame]
+		ifFalse: [LargeFrame]
 ]
 
 { #category : #literals }
@@ -410,6 +418,11 @@ CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
 
+{ #category : #accessing }
+CompiledCode >> isInstalled [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 CompiledCode >> isNamedPrimitive [
 	^self primitive = 117
@@ -437,6 +450,13 @@ CompiledCode >> isReturnSelf [
 	"Answer whether the receiver is a quick return of self."
 
 	^ self primitive = 256
+]
+
+{ #category : #testing }
+CompiledCode >> isReturnSpecial [
+	"Answer whether the receiver is a quick return of self or constant."
+
+	^ self primitive between: 256 and: 263
 ]
 
 { #category : #accessing }
@@ -655,7 +675,12 @@ CompiledCode >> pragmas [
 
 { #category : #accessing }
 CompiledCode >> primitive [
-	^ self subclassResponsibility
+	"Answer the primitive index associated with the receiver.
+	 Zero indicates that this is not a primitive method."
+	| initialPC |
+	^(self header anyMask: 65536) "Is the hasPrimitive? flag set?"
+		ifTrue: [(self at: (initialPC := self initialPC) + 1) + ((self at: initialPC + 2) bitShift: 8)]
+		ifFalse: [0]
 ]
 
 { #category : #printing }

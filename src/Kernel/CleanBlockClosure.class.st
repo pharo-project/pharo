@@ -23,10 +23,17 @@ Class {
 	#superclass : #BlockClosure,
 	#type : #variable,
 	#instVars : [
-		'receiver'
+		'literal'
 	],
 	#category : #'Kernel-Methods'
 }
+
+{ #category : #accessing }
+CleanBlockClosure class >> compiledBlock: aCompiledBlock [
+	^self new 
+		numArgs: aCompiledBlock numArgs;
+		compiledBlock: aCompiledBlock
+]
 
 { #category : #printing }
 CleanBlockClosure >> doPrintOn: aStream [
@@ -65,6 +72,14 @@ CleanBlockClosure >> isEmbeddedBlock [
 ]
 
 { #category : #accessing }
+CleanBlockClosure >> literal [
+	"The variable and accessor should be in the subclass ConstantBlockClosure.
+	It seems that the VM expects closures to have 4 ivars
+	We should check if we can fix that."
+	^literal
+]
+
+{ #category : #accessing }
 CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
 	^self compiledBlock literalsEvenTheOnesInTheInnerBlocks
 ]
@@ -85,23 +100,27 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 ]
 
 { #category : #scanning }
-CleanBlockClosure >> readsField: varIndex [ 
-	^self compiledBlock readsField: varIndex
+CleanBlockClosure >> readsField: varIndex [
+	"Clean blocks by definition do not read fields"
+	^false
 ]
 
 { #category : #scanning }
 CleanBlockClosure >> readsSelf [
-	^self compiledBlock readsSelf
+	"Clean blocks by definition do not access self"
+	^false
 ]
 
 { #category : #scanning }
 CleanBlockClosure >> readsThisContext [
+	"Clean blocks can access thisContext, we have to forward to the compiled block to check"
 	^self compiledBlock readsThisContext
 ]
 
 { #category : #accessing }
 CleanBlockClosure >> receiver [
-	^ receiver
+	"Clean blocks do not know the receiver"
+	^ nil
 ]
 
 { #category : #accessing }
@@ -122,10 +141,12 @@ CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 
 { #category : #scanning }
 CleanBlockClosure >> sendsToSuper [
-	^self compiledBlock sendsToSuper
+	"Clean blocks by definition do not access super"
+	^false
 ]
 
 { #category : #scanning }
-CleanBlockClosure >> writesField: varIndex [ 
-	^self compiledBlock writesField: varIndex
+CleanBlockClosure >> writesField: varIndex [
+	"Clean blocks by definition do not read fields"
+	^false
 ]

@@ -11,11 +11,11 @@ Class {
 DTMockPluginTest >> testResultTreeViews [
 	| plugin treeViews |
 	plugin := DTMockPlugin new.
-	
+
 	treeViews := plugin resultTreeViews.
-	
+
 	self assert: treeViews size equals: 2.
-	
+
 	self assert: treeViews first name equals: 'for tests'.
-	self assert: treeViews second name equals: 'for other tests'.
+	self assert: treeViews second name equals: 'for other tests'
 ]

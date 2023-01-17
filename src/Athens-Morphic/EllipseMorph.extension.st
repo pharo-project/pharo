@@ -8,7 +8,7 @@ EllipseMorph >> asAthensShapeOn: anAthensCanvas [
 	halfWidth := self bounds width / 2 asFloat.
 	halfHeight := self bounds height / 2 asFloat.
 	^ anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: self bounds center;

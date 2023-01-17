@@ -35,7 +35,7 @@ Beeper class >> beep [
 	
 	self default 
 		ifNil: [self beepPrimitive]
-		ifNotNil: [ self default play].
+		ifNotNil: [: def | def play]
 ]
 
 { #category : #beeping }

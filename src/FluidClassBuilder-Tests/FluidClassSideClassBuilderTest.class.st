@@ -22,15 +22,15 @@ FluidClassSideClassBuilderTest >> setUp [
 ]
 
 { #category : #tests }
-FluidClassSideClassBuilderTest >> testBuilderClassName [	
+FluidClassSideClassBuilderTest >> testBuilderClassName [
 	"Yes a class side builder expects the instance name."
-	
+
 	self assert: builder nameToBuild equals: #'Point33'
 ]
 
 { #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderSuperclass [
-	
+
 	self assert: builder superclassToBuild equals: Object
 ]
 
@@ -39,7 +39,7 @@ FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #metaX . #metaY }.
 	"the builder is class side builder so we are setting the class level"
-	
+
 	self assert: builder classSlotsToBuild equals: {#metaX => InstanceVariableSlot. #metaY => InstanceVariableSlot}.
 	self assert: builder slotsToBuild equals: #()
 ]
@@ -47,9 +47,9 @@ FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 { #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderWithTraits [
 
-	builder traits: { TViewModelMock classTrait }.	
+	builder traits: { TViewModelMock classTrait }.
 	"the builder is class side builder so we are setting the class level"
-	
+
 	self assert: builder traitsToBuild isEmpty.
 	self assert: builder classTraitsToBuild name equals: TViewModelMock classTrait name
 ]

@@ -14,7 +14,7 @@ Class {
 	#category : #'Fuel-Core-Collections'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 FLLargeIdentityHashedCollection class >> initialize [
 
 	| rng |
@@ -26,7 +26,7 @@ FLLargeIdentityHashedCollection class >> initialize [
 FLLargeIdentityHashedCollection class >> permuteHash: anInteger [
 	"Return an integer between 1 and 4096 when the argument is between 1 and 4096."
 
-	^PermutationMap at: anInteger
+	^ PermutationMap at: anInteger
 ]
 
 { #category : #initialization }

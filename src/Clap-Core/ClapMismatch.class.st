@@ -16,7 +16,7 @@ ClapMismatch >> at: identifierOrSpec [
 { #category : #matching }
 ClapMismatch >> completeMatchOn: aStream [
 	word:= aStream peek.
-	startIndex := aStream position + 1.
+	startIndex := aStream position + 1
 ]
 
 { #category : #testing }
@@ -44,6 +44,6 @@ ClapMismatch >> printDetailsOn: aStream [
 ]
 
 { #category : #adding }
-ClapMismatch >> recordIn: parentMatch [ 
+ClapMismatch >> recordIn: parentMatch [
 	"this match failed, so do nothing"
 ]

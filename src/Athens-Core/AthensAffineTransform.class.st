@@ -21,7 +21,7 @@ Class {
 { #category : #transformations }
 AthensAffineTransform >> clearTranslation [
 	"Reset a translation from matrix, leaving only scale and rotation"
-	
+
 	x := y := 0.0
 ]
 
@@ -31,10 +31,10 @@ AthensAffineTransform >> initialize [
 ]
 
 { #category : #'vector - transform' }
-AthensAffineTransform >> inverseTransform: aPoint [ 
+AthensAffineTransform >> inverseTransform: aPoint [
 	"We assume matrix is never degenerated"
 	| px py y0 x0 |
-	
+
 	px := aPoint x.
 	py := aPoint y.
 	"for rotations around +/- half pi"
@@ -47,15 +47,15 @@ AthensAffineTransform >> inverseTransform: aPoint [
 		].
     "otherwise:
      Given straight transformation formulae:
-		
+
 	px := x0*sx + y0*shx + x.
 	py := x0*shy + y0*sy + y.
-	
+
 	we doing inverse one, trying to find x0,y0 for rest of given variables (px,py,x,y,sx,sy,shx,shy).
-	
+
 	x0 := px - x - (shx*y0) / sx.
 	y0 := py - y - (shy*x0) / sy.
-	
+
 	y0 := py - y - (shy*(px - x - (shx*y0) / sx)) / sy.
 
 	sy * y0  == py - y - (shy*(px - x - (shx*y0) / sx)).
@@ -65,7 +65,7 @@ AthensAffineTransform >> inverseTransform: aPoint [
 	sx * sy * y0  == sx*py - (sx*y) - (shy*px) + (shy*x) + (shy*shx*y0).
 
 	(sx * sy * y0) - (shy*shx*y0)  == sx*py - (sx*y) - (shy*px) + (shy*x) .
-	
+
 	y0* ((sx * sy) - (shy*shx))  == sx*py - (sx*y) - (shy*px) + (shy*x) .
 
 "
@@ -78,13 +78,13 @@ AthensAffineTransform >> inverseTransform: aPoint [
 { #category : #private }
 AthensAffineTransform >> inverseTransformHalfPi: aPoint [
 	"Assume sx,sy = 0
-		
+
 	px := y0*shx + x.
 	py := x0*shy + y.
-	
+
 	we doing inverse one, trying to find x0,y0 for rest of given variables (px,py,x,y,sx,sy,shx,shy)"
 	| px py y0 x0 |
-	
+
 	px := aPoint x.
 	py := aPoint y.
 
@@ -97,13 +97,13 @@ AthensAffineTransform >> inverseTransformHalfPi: aPoint [
 { #category : #private }
 AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
 	"Assume shx,shy = 0
-		
+
 	px := x0*sx + x.
 	py := y0*sy + y.
 	we doing inverse one, trying to find x0,y0 for rest of given variables (px,py,x,y,sx,sy,shx,shy)"
-	
+
 	| px py y0 x0 |
-	
+
 	px := aPoint x.
 	py := aPoint y.
 
@@ -123,7 +123,7 @@ AthensAffineTransform >> invert [
 	| det isx ishx ishy isy nx ny ix iy |
 	det := (sx*sy) - (shy*shx).
 	self assert: (det closeTo: 0) not.
-	
+
 	"Prefer direct division to improve floating point precision".
 	isx := sy / det. ishx := shx negated / det.
 	ishy := shy negated / det. isy := sx / det.
@@ -135,7 +135,7 @@ AthensAffineTransform >> invert [
 
 	"Set the result."
 	sx := isx. shx := ishx. x := ix.
-	shy := ishy. sy := isy. y := iy.
+	shy := ishy. sy := isy. y := iy
 ]
 
 { #category : #accessing }
@@ -186,28 +186,28 @@ AthensAffineTransform >> loadIdentity [
 AthensAffineTransform >> multiplyBy: m [
 	"Multiply receiver by given affine matrix"
 "
-| sx   shx   x   |        | sx'   shx'   x'   | 
+| sx   shx   x   |        | sx'   shx'   x'   |
 | shy  sy    y   |   *    | shy'  sy'    y'   |
-|  0   0     1   |        | 0  	0   	 1	   |       
+|  0   0     1   |        | 0  	0   	 1	   |
 
-"	
-	
+"
+
 	| nsx nshx nx nshy nsy ny |
-	
+
 	nsx := sx * m sx + (shx  * m shy).
 	nshx := sx * m shx + (shx * m sy).
 	nx := sx * m x + (shx * m y) + x.
-	
+
 	nshy := shy * m sx + (sy * m shy).
 	nsy := shy * m shx  + (sy * m sy).
 	ny := shy* m x + (sy * m y) + y.
-	
+
 	sx := nsx.
 	sy := nsy.
 	shx := nshx.
 	shy := nshy.
 	x := nx.
-	y := ny.
+	y := ny
 ]
 
 { #category : #transformations }
@@ -234,19 +234,19 @@ AthensAffineTransform >> rotateByRadians: angle [
 
 "
 	| cos sin newSx newSy |
-	
+
 	cos := angle cos.
 	sin := angle sin.
-	
-	
+
+
 	newSx := sx*cos + (shx*sin).
 	newSy := sy*cos - (shy*sin).
-	
+
 	shx := shx*cos - (sx*sin).
 	shy := shy*cos + (sy*sin).
 
 	sx := newSx.
-	sy := newSy.
+	sy := newSy
 ]
 
 { #category : #accessing }
@@ -263,13 +263,13 @@ AthensAffineTransform >> scaleBy: factor [
 | shy sy     y   |   *   | 0 (f y) 0  |    ===> | shy*(f x)     sy*(f y)    y |
 |  0     0     1  |        | 0 0     1  |                |  0      0              1  |
 
-"	
-	factor isPoint 
+"
+	factor isPoint
 		ifTrue: [
 			sx := sx*factor x.
 			shx := shx*factor y.
 			sy := sy*factor y.
-			shy := shy*factor x ] 
+			shy := shy*factor x ]
 		ifFalse: [
 			sx := sx*factor.
 			shx := shx*factor.
@@ -290,7 +290,7 @@ AthensAffineTransform >> scaleX: fx Y: fy [
 	sx := sx*fx.
 	shx := shx*fy.
 	sy := sy*fy.
-	shy := shy*fx.
+	shy := shy*fx
 ]
 
 { #category : #accessing }
@@ -334,12 +334,12 @@ AthensAffineTransform >> sy: number [
 ]
 
 { #category : #'vector - transform' }
-AthensAffineTransform >> transform: aPoint [ 
+AthensAffineTransform >> transform: aPoint [
 	| px py |
-	
+
 	px := aPoint x.
 	py := aPoint y.
-	^ Point 
+	^ Point
 		x: (sx*px +(shx*py) + x)
 		y: (shy*px + (sy*py) + y)
 ]
@@ -347,7 +347,7 @@ AthensAffineTransform >> transform: aPoint [
 { #category : #'vector - transform' }
 AthensAffineTransform >> transformX: px Y: py [
 	"Transform x and y coordinates by receiver. Answer a Point"
-	^ Point 
+	^ Point
 		x: (sx*px +(shx*py) + x)
 		y: (shy*px + (sy*py) + y)
 ]
@@ -397,7 +397,7 @@ AthensAffineTransform >> translation: aPoint [
 
 { #category : #transformations }
 AthensAffineTransform >> transposed [
-	
+
 	| s |
 	s := shx.
 	shx := shy.

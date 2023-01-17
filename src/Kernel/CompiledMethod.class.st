@@ -468,6 +468,13 @@ CompiledMethod >> hasComment [
 ]
 
 { #category : #testing }
+CompiledMethod >> hasNonLocalReturn [
+	"Answer whether any block has a method-return ('^') in its code."
+	self allBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
+	^false
+]
+
+{ #category : #testing }
 CompiledMethod >> hasPragma [
 	^ self hasProperties and: [self pragmas isNotEmpty]
 ]
@@ -655,13 +662,6 @@ CompiledMethod >> isReturnField [
 	^ self primitive between: 264 and: 519
 ]
 
-{ #category : #testing }
-CompiledMethod >> isReturnSpecial [
-	"Answer whether the receiver is a quick return of self or constant."
-
-	^ self primitive between: 256 and: 263
-]
-
 { #category : #printing }
 CompiledMethod >> isSelfEvaluating [
 
@@ -807,16 +807,6 @@ CompiledMethod >> prepareForSimulationWith: numArgs [
 	self objectAt: 1 put: newHeader.
 	
 	self encoderClass prepareMethod: self forSimulationWith: numArgs
-]
-
-{ #category : #accessing }
-CompiledMethod >> primitive [
-	"Answer the primitive index associated with the receiver.
-	 Zero indicates that this is not a primitive method."
-	| initialPC |
-	^(self header anyMask: 65536) "Is the hasPrimitive? flag set?"
-		ifTrue: [(self at: (initialPC := self initialPC) + 1) + ((self at: initialPC + 2) bitShift: 8)]
-		ifFalse: [0]
 ]
 
 { #category : #printing }

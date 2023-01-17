@@ -170,9 +170,9 @@ MenuMorph class >> fromList: anArray [
 	^ self new addList: anArray.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 MenuMorph class >> initialize [
-	"MenuMorph initialize"
+
 	PushPinImage := nil
 ]
 

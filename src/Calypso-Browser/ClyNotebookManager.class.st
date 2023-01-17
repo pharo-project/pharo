@@ -93,14 +93,13 @@ ClyNotebookManager >> addTool: aBrowserTool [
 
 { #category : #updating }
 ClyNotebookManager >> basicUpdateTools [
-		| newTools needsNewSelection selectedTools currentTools |
-		newTools := OrderedCollection new.	
-		browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each].
+		| needsNewSelection selectedTools currentTools |
+
 		needsNewSelection := self requiresNewDesiredSelection.
 		selectedTools := self selectedTools.
 		currentTools := tools copy.
 
-		self updateTabsWith: newTools.
+		self updateTabs.
 		(needsNewSelection or: [ tools ~= currentTools ]) 
 			ifTrue: [ self restoreSelectedTools: selectedTools].
 ]
@@ -391,22 +390,21 @@ ClyNotebookManager >> tools: anObject [
 ]
 
 { #category : #updating }
-ClyNotebookManager >> updateTabsWith: newTools [
-	| toRemove toInstall |
+ClyNotebookManager >> updateTabs [
+	| toRemove toInstall recycler |
 
-	toRemove := OrderedCollection withAll: tools.
-	toInstall := OrderedCollection new.
-	newTools do: [ :new | 
-		tools 
-			detect: [ :existing | existing isSimilarTo: new ]
-			ifFound: [ :existing | toRemove remove: existing ]
-			ifNone: [ toInstall add: new ] ].
-
+	recycler := ClyNotebookPageRecycler on: tools contexts: browser navigationContexts.
+	toInstall := recycler toolsToInstall.
+	toRemove := recycler toolsToRemove.
+		
 	"We need to install the new tabs before removing the old ones.
 	Because removing the old ones force to generate the content of the existing ones.
 	Even the ones we are going to remove"
-	toInstall do: [ :each | self addTool: each ].
-	toRemove 
+	toInstall do: [ :targetTool | | tool |
+		tool := targetTool createToolFor: browser.
+		browser decorateTool: tool.
+		self addTool: tool ].
+	toRemove
 		reject: [ :each | each wantsStayInDifferentContext ]
 		thenDo: [ :each | self removeTool: each ].
 	tools do: [ :each | each browserContextWasChanged ].

@@ -35,12 +35,12 @@ TConvertAsSortedTest >> testAsSortedCollection [
 	| aCollection result |
 	aCollection := self collectionWithSortableElements .
 	result := aCollection asSortedCollection.
-	
+
 	self assert: (result class includesBehavior: SortedCollection).
-	result do: 
-		[ :each | 
+	result do:
+		[ :each |
 		self assert: (aCollection occurrencesOf: each) = (result occurrencesOf: each) ].
-	
+
 	self assert: result size = aCollection size
 ]
 
@@ -50,8 +50,8 @@ TConvertAsSortedTest >> testAsSortedCollectionWithSortBlock [
 	| result tmp |
 	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
 	self assert: (result class includesBehavior: SortedCollection).
-	result do: 
-		[ :each | 
+	result do:
+		[ :each |
 		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
 	self assert: result size equals: self collectionWithSortableElements  size.
 	tmp:=result at: 1.

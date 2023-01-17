@@ -101,7 +101,7 @@ CoFetcher >> generator [
 					ifTrue: [ g yield: entry ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 CoFetcher >> initialize [
 	super initialize.
 	

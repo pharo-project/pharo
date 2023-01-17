@@ -1468,7 +1468,6 @@ RPackage >> selectorsForClass: aClass [
 
 { #category : #'system compatibility' }
 RPackage >> systemCategories [
-	"(RPackageOrganizer default packageNamed: 'HelpSystem-Core' asSymbol) systemCategories"
 
 	^ self systemOrganization categories select: [:cat | self includesSystemCategory: cat]
 ]

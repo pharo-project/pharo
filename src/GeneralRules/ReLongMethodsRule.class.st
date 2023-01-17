@@ -30,6 +30,8 @@ ReLongMethodsRule class >> uniqueIdentifierName [
 { #category : #running }
 ReLongMethodsRule >> basicCheck: aMethod [
 	| numberOfStatements |
+	"long methods are no problem for tests"
+	aMethod isTestMethod ifTrue: [ ^false ].
 	numberOfStatements := 0.
 
 	aMethod ast

@@ -25,7 +25,7 @@ Trait {
 
 { #category : #accessing }
 TDebugger classSide >> availableAutomatically [
-	^ availableAutomatically ifNil: [ 
+	^ availableAutomatically ifNil: [
 		  availableAutomatically := DebuggerSettings defaultAvailability ]
 ]
 

@@ -89,7 +89,7 @@ MetaLinkAnonymousClassBuilder >> compiledMethodsOfSelector: selector inClasses: 
 		collect: [ :ac | ac compiledMethodAt: selector ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MetaLinkAnonymousClassBuilder >> initialize [
 	classes := Dictionary new.
 	migratedObjects := WeakIdentityKeyDictionary new

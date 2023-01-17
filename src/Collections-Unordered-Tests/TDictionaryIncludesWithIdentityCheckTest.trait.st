@@ -54,16 +54,16 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesAssociation [
 	|  nonExistantAssociation associationIn keyIn valueIn |
 
 	keyIn := self nonEmpty keys anyOne.
-	valueIn := self nonEmpty values anyOne. 
+	valueIn := self nonEmpty values anyOne.
 	nonExistantAssociation := self keyNotInNonEmpty -> self valueNotInNonEmpty .
-	associationIn := self nonEmpty associations anyOne.	
+	associationIn := self nonEmpty associations anyOne.
 
 	self assert:  (self nonEmpty includesAssociation: associationIn ).
 	self deny:  (self nonEmpty includesAssociation: nonExistantAssociation ).
 	" testing the case where key is included but not with the same value :"
 	self deny: (self nonEmpty includesAssociation: (keyIn-> self valueNotInNonEmpty )).
 	" testing the case where value is included but not corresponding key :"
-	self deny: (self nonEmpty includesAssociation: (self keyNotInNonEmpty -> valueIn  )).
+	self deny: (self nonEmpty includesAssociation: (self keyNotInNonEmpty -> valueIn  ))
 ]
 
 { #category : #'tests - dictionary including' }
@@ -86,7 +86,7 @@ collection := self nonEmpty .
 valueIn := collection  values anyOne.
 
 self assert: (collection includesIdentity: valueIn ) .
-self deny: (collection includesIdentity: self valueNotInNonEmpty ).
+self deny: (collection includesIdentity: self valueNotInNonEmpty )
 ]
 
 { #category : #'tests - dictionary including' }
@@ -97,7 +97,7 @@ collection := self nonEmptyWithCopyNonIdentical  .
 valueIn := collection  values anyOne.
 
 self assert: (collection includesIdentity: valueIn ) .
-self deny: (collection includesIdentity: valueIn copy ) .
+self deny: (collection includesIdentity: valueIn copy )
 ]
 
 { #category : #'tests - dictionary including' }
@@ -107,10 +107,10 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesKey [
 
 	collection := self nonEmpty .
 	keyIn := collection keys anyOne.
-	nonExistantKey := self keyNotInNonEmpty. 
+	nonExistantKey := self keyNotInNonEmpty.
 
 	self assert: ( collection includesKey: keyIn ).
-	self deny: ( collection includesKey: nonExistantKey ).
+	self deny: ( collection includesKey: nonExistantKey )
 ]
 
 { #category : #requirements }

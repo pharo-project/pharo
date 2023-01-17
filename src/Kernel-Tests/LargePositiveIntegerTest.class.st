@@ -48,6 +48,14 @@ LargePositiveIntegerTest >> classToBeTested [
 	^ LargePositiveInteger
 ]
 
+{ #category : #'tests - arithmetic' }
+LargePositiveIntegerTest >> testAbs [
+
+	self
+		assert: (SmallInteger maxVal + 2) abs
+		equals: SmallInteger maxVal + 2
+]
+
 { #category : #tests }
 LargePositiveIntegerTest >> testBitShift [
 

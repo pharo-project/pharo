@@ -48,7 +48,7 @@ MouseOverHandler >> inform: evt to: aLeftMorph originatedFrom: anEvent ifNotFocu
 
 	^ (self is: anEvent withFocusOver: aLeftMorph) 
 		ifTrue: [ self transform: evt from: anEvent andSendTo: aLeftMorph ]
-		ifFalse: aBlock
+		ifFalse: [ aBlock value ]
 ]
 
 { #category : #'event handling - private' }
