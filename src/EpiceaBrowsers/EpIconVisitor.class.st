@@ -53,6 +53,12 @@ EpIconVisitor >> visitCategoryAddition: aCategoryChange [
 ]
 
 { #category : #visitor }
+EpIconVisitor >> visitCategoryRegistration: aCategoryChange [
+
+	^ self additionIcon
+]
+
+{ #category : #visitor }
 EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
 	^ self removalIcon
 ]

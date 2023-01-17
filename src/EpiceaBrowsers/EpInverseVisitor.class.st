@@ -47,6 +47,14 @@ EpInverseVisitor >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
+EpInverseVisitor >> visitCategoryRegistration: aChange [
+
+	^ EpCategoryRegistration
+			named: aChange categoryName
+			packageName: aChange affectedPackageName
+]
+
+{ #category : #visitor }
 EpInverseVisitor >> visitCategoryRemoval: aChange [
 
 	^ EpCategoryAddition

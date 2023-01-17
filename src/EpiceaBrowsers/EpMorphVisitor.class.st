@@ -110,6 +110,12 @@ EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
 ]
 
 { #category : #visitor }
+EpMorphVisitor >> visitCategoryRegistration: aCategoryChange [
+
+	^ self displayCategory: aCategoryChange categoryName
+]
+
+{ #category : #visitor }
 EpMorphVisitor >> visitCategoryRemoval: aCategoryChange [
 
 	^ self displayCategory: aCategoryChange categoryName
