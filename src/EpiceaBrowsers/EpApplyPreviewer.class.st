@@ -99,6 +99,14 @@ EpApplyPreviewer >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
+EpApplyPreviewer >> visitCategoryRegistration: aChange [
+
+	^ (self includesCategory: aChange categoryName)
+			ifTrue: [ #() ]
+			ifFalse: [ { aChange } ]
+]
+
+{ #category : #visitor }
 EpApplyPreviewer >> visitCategoryRemoval: aChange [
 
 	^ (self includesCategory: aChange categoryName)

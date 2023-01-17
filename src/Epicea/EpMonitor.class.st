@@ -255,7 +255,7 @@ EpMonitor >> categoryAdded: aCategoryAdded [
 EpMonitor >> categoryRegistered: aCategoryAdded [
 
 	self handleAnyErrorDuring: [
-			self addEvent: (EpCategoryAddition named: aCategoryAdded package name) ]
+			self addEvent: (EpCategoryRegistration named: aCategoryAdded package name) ]
 ]
 
 { #category : #'announcement handling' }
