@@ -947,20 +947,6 @@ OrderedCollectionTest >> testIdentityIncludes [
 OrderedCollectionTest >> testIfCutDoWithCutAndUncutsFirst [
 
 	| res |
-	res := OrderedCollection new.
-
-	#(#east 1 1 1 #north 5 #east)
-		ifCutOn: [ :s | s isSymbol ]
-		doWithCutAndUncuts: [ :cut :before | res addLast: cut; addAll: before ]
-		finally: [ :u | res addAll: u ].
-
-	self assert: res equals: #(#east #north 1 1 1 #east 5) asOrderedCollection
-]
-
-{ #category : #tests }
-OrderedCollectionTest >> testIfCutDoWithCutAndUncutsFirst [
-
-	| res |
 	res := OrderedCollection new. 
 	
 	#(#east 1 1 1 #north 5 #east) 
@@ -968,6 +954,20 @@ OrderedCollectionTest >> testIfCutDoWithCutAndUncutsFirst [
 		doWithCutAndUncuts: [ :cut :before | res addLast: cut; addAll: before ]
 		finally: [ :u | res addAll: u ].
 	
+	self assert: res equals: #(#east #north 1 1 1 #east 5) asOrderedCollection
+]
+
+{ #category : #tests }
+OrderedCollectionTest >> testIfCutDoWithCutAndUncutsFirst [
+
+	| res |
+	res := OrderedCollection new.
+
+	#(#east 1 1 1 #north 5 #east)
+		ifCutOn: [ :s | s isSymbol ]
+		doWithCutAndUncuts: [ :cut :before | res addLast: cut; addAll: before ]
+		finally: [ :u | res addAll: u ].
+
 	self assert: res equals: #(#east #north 1 1 1 #east 5) asOrderedCollection
 ]
 
