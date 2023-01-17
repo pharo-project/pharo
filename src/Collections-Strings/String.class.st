@@ -2178,6 +2178,19 @@ String >> match: text [
 	^ self startingAt: 1 match: text startingAt: 1
 ]
 
+{ #category : #converting }
+String >> normalizeCamelCase [
+	"
+	'TheRollingStones' normalizeCamelCase >>> 'The Rolling Stones'
+	"
+	^ self class streamContents: [ :out |
+		self do: [ :e |
+			| isNewWord |
+			isNewWord := e isUppercase and: [ out position > 0 and: [ out peekLast isUppercase not ] ].
+			isNewWord ifTrue: [ out nextPut: Character space ].
+			out nextPut: e ] ]
+]
+
 { #category : #'system primitives' }
 String >> numArgs [
 	"Answer either the number of arguments that the receiver would take if considered a selector.  Answer -1 if it couldn't be a selector. It is intended mostly for the assistance of spelling correction."
