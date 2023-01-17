@@ -42,8 +42,6 @@ EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
 { #category : #visitor }
 EpApplyVisitor >> visitCategoryRegistration: aPackageCreated [
 
-	self halt.
-	environment organization addCategory: aPackageCreated categoryName
 ]
 
 { #category : #visitor }
