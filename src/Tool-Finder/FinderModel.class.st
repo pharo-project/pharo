@@ -34,6 +34,13 @@ FinderModel class >> defaultSearches [
 		  FinderClassSearch }
 ]
 
+{ #category : #adding }
+FinderModel >> addSearch: aFinderSearch [
+	"Add aFinderSearch to the availableSearches."
+
+	availableSearches add: aFinderSearch
+]
+
 { #category : #information }
 FinderModel >> availablePackages [
 
@@ -77,11 +84,18 @@ FinderModel >> initialize [
 	useRegex := false.
 
 	availableSearches := self class defaultSearches collect: [ :search |
-		                     search new ].
+		                     search new ] as: OrderedCollection.
 	currentSearch := availableSearches first.
 
 	environment := RBBrowserEnvironment new.
 	self selectAllPackages
+]
+
+{ #category : #removing }
+FinderModel >> removeSearchByName: aString [
+	"Removes a search from availableSearches by its name."
+
+	availableSearches removeAllSuchThat: [ :each | each name = aString ]
 ]
 
 { #category : #accessing }
