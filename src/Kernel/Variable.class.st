@@ -91,6 +91,12 @@ Variable >> definingNode [
 	^ nil
 ]
 
+{ #category : #printing }
+Variable >> definitionOn: aStream [
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printOn: aStream
+]
+
 { #category : #'code generation' }
 Variable >> emitStore: methodBuilder [
 
