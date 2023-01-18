@@ -19,7 +19,8 @@ Class {
 		'lastSelection',
 		'lastKeystrokeTime',
 		'lastKeystrokes',
-		'searchedElement'
+		'searchedElement',
+		'keystrokeActionSelector'
 	],
 	#category : #'Morphic-Widgets-List'
 }
@@ -582,18 +583,28 @@ SimpleHierarchicalListMorph >> insertNewMorphs: morphList [
 ]
 
 { #category : #'event handling' }
+SimpleHierarchicalListMorph >> keyDown: event [
+
+	| aCharacter args |
+	event anyModifierKeyPressed ifFalse: [ ^ false ].
+	keystrokeActionSelector ifNil: [ ^ false ].
+	aCharacter := event keyCharacter.
+	(args := keystrokeActionSelector numArgs) = 1 ifTrue: [ 
+		^ model perform: keystrokeActionSelector with: aCharacter ].
+	args = 2 ifTrue: [ 
+		^ model perform: keystrokeActionSelector with: aCharacter with: self ].
+]
+
+{ #category : #'event handling' }
 SimpleHierarchicalListMorph >> keyStroke: event [
-
 	"Process potential command keys that are not handled by keymappings yet"
-	| aCharacter |
 
+	| aCharacter args |
 	aCharacter := event keyValue asCharacter.
-	event anyModifierKeyPressed
-		ifFalse: [ self basicKeyPressed: aCharacter.
-			^ false
-			].
-	( self scrollByKeyboard: event )
-		ifTrue: [ ^ true ].
+	event anyModifierKeyPressed ifFalse: [ 
+		self basicKeyPressed: aCharacter.
+		^ false ].
+	(self scrollByKeyboard: event) ifTrue: [ ^ true ].
 	^ false
 ]
 
@@ -603,6 +614,11 @@ SimpleHierarchicalListMorph >> keyboardFocusChange: aBoolean [
 	Update for focus feedback."
 	super keyboardFocusChange: aBoolean.
 	self focusChanged
+]
+
+{ #category : #accessing }
+SimpleHierarchicalListMorph >> keystrokeActionSelector: aString [ 
+	keystrokeActionSelector := aString
 ]
 
 { #category : #accessing }
@@ -822,6 +838,7 @@ SimpleHierarchicalListMorph >> on: anObject list: getListSel selected: getSelect
 	setSelectionSelector := setSelectionSel.
 	getMenuSelector := getMenuSel.
 	autoDeselect := true.
+	keystrokeActionSelector := keyActionSel.
 	self borderWidth: 1.
 	self list: self getList.
 ]
