@@ -31,7 +31,7 @@ KMRepository class >> default: aDefault [
 { #category : #'class initialization' }
 KMRepository class >> reset [
 	"Do not reset KMDispatchers instances, it may make the image unusable or force the user to close all the windows."
-	
+
 	"TODO: a better reset, allowing the KMDispatcher instances to reload all named, updated, keymaps from the resetted KMRepository."
 
 	self currentWorld setProperty: #kmDispatcher toValue: nil.
@@ -39,27 +39,27 @@ KMRepository class >> reset [
 	KMCategory allSubclasses
 		select: [ :c | c isGlobalCategory ]
 		thenDo: [ :c | c new installAsGlobalCategory ].
-	KMPragmaKeymapBuilder uniqueInstance reset.
+	KMPragmaKeymapBuilder uniqueInstance reset
 ]
 
 { #category : #associating }
 KMRepository >> addCategory: aCategory [
 	(self includesCategory: aCategory)
 		ifTrue: [ self error: 'a Category named ' , aCategory name, ' already exists.' ].
-	self categories at: aCategory name put: aCategory.
+	self categories at: aCategory name put: aCategory
 ]
 
 { #category : #keymaps }
 KMRepository >> attach: aCategory to: aClass [
-	(self categoryHolders includesKey: aClass) 
+	(self categoryHolders includesKey: aClass)
 		ifFalse: [ self categoryHolders at: aClass put: Set new ].
-	
+
 	(self categoryHolders at: aClass) add: aCategory
 ]
 
 { #category : #keymaps }
-KMRepository >> attachCategoryName: aCategorySymbol to: aClass [ 
-	self attach: (self ensureCategoryByName: aCategorySymbol) to: aClass.
+KMRepository >> attachCategoryName: aCategorySymbol to: aClass [
+	self attach: (self ensureCategoryByName: aCategorySymbol) to: aClass
 ]
 
 { #category : #accessing }
@@ -81,7 +81,7 @@ KMRepository >> categoryHolders [
 KMRepository >> ensureCategoryByName: aCategorySymbol [
 	| category |
 	(self includesCategoryNamed: aCategorySymbol)
-		ifFalse: [ 
+		ifFalse: [
 			category := KMCategory named: aCategorySymbol.
 			self addCategory: category ]
 		ifTrue: [ category := self categoryForName: aCategorySymbol ].
