@@ -1662,7 +1662,8 @@ StringTest >> testNormalizeCamelCase [
 	self assert: 'CamelCase123' normalizeCamelCase equals:'Camel Case123'.
 	self assert: 'ABC' normalizeCamelCase equals: 'ABC'.
 	self assert: 'TresTristesTigres' normalizeCamelCase equals: 'Tres Tristes Tigres'.
-	self assert: 'TresTristesTigresABC' normalizeCamelCase equals: 'Tres Tristes Tigres ABC'
+	self assert: 'TresTristesTigresABC' normalizeCamelCase equals: 'Tres Tristes Tigres ABC'.
+	self assert: 'CamelCase HelloWorld' normalizeCamelCase equals: 'Camel Case Hello World'.
 ]
 
 { #category : #tests }

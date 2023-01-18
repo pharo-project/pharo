@@ -2183,12 +2183,13 @@ String >> normalizeCamelCase [
 	"
 	'TheRollingStones' normalizeCamelCase >>> 'The Rolling Stones'
 	"
-	^ self class streamContents: [ :out |
-		self do: [ :e |
-			| isNewWord |
-			isNewWord := e isUppercase and: [ out position > 0 and: [ out peekLast isUppercase not ] ].
-			isNewWord ifTrue: [ out nextPut: Character space ].
-			out nextPut: e ] ]
+	^ self class streamContents: [ : stream |
+		self do: [ : char |
+			(char isUppercase and: [
+				(stream position > 0 and: [ stream peekLast isUppercase not ])
+					and: [ stream peekLast isSpaceSeparator not  ] ])
+						ifTrue: [ stream nextPut: Character space ].
+			stream nextPut: char ] ]
 ]
 
 { #category : #'system primitives' }
