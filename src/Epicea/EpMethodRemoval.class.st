@@ -34,7 +34,7 @@ EpMethodRemoval >> affectedPackageName [
 EpMethodRemoval >> initializeWithMethod: aCompiledMethod [
 
 	self initialize.
-	method := aCompiledMethod asEpiceaRingDefinition.
+	method := aCompiledMethod asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

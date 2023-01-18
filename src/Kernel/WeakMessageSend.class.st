@@ -74,9 +74,9 @@ WeakMessageSend >> asMessageSend [
 { #category : #converting }
 WeakMessageSend >> asMinimalRepresentation [
 
-	self isReceiverOrAnyArgumentGarbage
-		ifTrue: [^nil]
-		ifFalse:[^self].
+	^ self isReceiverOrAnyArgumentGarbage
+		  ifTrue: [ nil ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #private }

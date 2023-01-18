@@ -17,7 +17,7 @@ CoInitializeTypeInferenceTest >> testInferInstanceVariableNotUsedInInitializeHas
 			instanceVariables: #(a b c);
 			yourself);
 		variables.
-		
+
 	self assert: (types at: #b) isEmpty
 ]
 
@@ -34,7 +34,7 @@ CoInitializeTypeInferenceTest >> testInferInstanceVariableUsedInInitialize [
 			instanceVariables: #(a b c);
 			yourself);
 		variables.
-		
+
 	self assertCollection: (types at: #a) hasSameElements: { SmallInteger }
 ]
 
@@ -51,7 +51,7 @@ CoInitializeTypeInferenceTest >> testInferUndefinedInstanceVariableUsedInInitial
 			instanceVariables: #();
 			yourself);
 		variables.
-		
+
 	self assertCollection: (types at: #a) hasSameElements: Set new
 ]
 
@@ -64,6 +64,6 @@ CoInitializeTypeInferenceTest >> testInferVariablesWithNoInitializeFindsNoTypes 
 			instanceVariables: #(a b c);
 			yourself);
 		variables.
-		
-	self assert: (types values allSatisfy: [ :e | e isEmpty ]).
+
+	self assert: (types values allSatisfy: [ :e | e isEmpty ])
 ]
