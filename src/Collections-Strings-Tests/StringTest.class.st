@@ -1655,6 +1655,18 @@ StringTest >> testMatch [
 ]
 
 { #category : #tests }
+StringTest >> testNormalizeCamelCase [
+
+	self assert: '' normalizeCamelCase equals: String empty.
+	self assert: 'CamelCase' normalizeCamelCase equals: 'Camel Case'.
+	self assert: 'CamelCase123' normalizeCamelCase equals:'Camel Case123'.
+	self assert: 'ABC' normalizeCamelCase equals: 'ABC'.
+	self assert: 'TresTristesTigres' normalizeCamelCase equals: 'Tres Tristes Tigres'.
+	self assert: 'TresTristesTigresABC' normalizeCamelCase equals: 'Tres Tristes Tigres ABC'.
+	self assert: 'CamelCase HelloWorld' normalizeCamelCase equals: 'Camel Case Hello World'.
+]
+
+{ #category : #tests }
 StringTest >> testNumArgs [
 	"This is about http://code.google.com/p/pharo/issues/detail?id=237"
 	
