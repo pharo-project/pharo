@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMergeInstanceVariableIntoAnotherTransformation,
 	#superclass : #RBRenameVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Migrated'
+	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }
 
 { #category : #preconditions }
