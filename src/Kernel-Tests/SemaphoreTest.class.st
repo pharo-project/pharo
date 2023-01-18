@@ -12,7 +12,7 @@ Class {
 
 { #category : #coverage }
 SemaphoreTest >> classToBeTested [
-	
+
 	^ Semaphore
 ]
 
@@ -24,7 +24,7 @@ SemaphoreTest >> criticalError [
 { #category : #tests }
 SemaphoreTest >> testAfterCriticalWait [
 	"This tests whether a semaphore that has just left the wait in Semaphore>>critical: leaves it with signaling the associated semaphore."
-	
+
 	| s p |
 	s := Semaphore new.
 	p := [s critical:[]] forkAt: Processor activePriority-1.
@@ -74,7 +74,7 @@ SemaphoreTest >> testMutualExclusion [
 	| lock steps |
 	steps := OrderedCollection new.
 	lock := Semaphore forMutualExclusion.
-	
+
 	[
 		steps add: #startProcess1.
 		lock critical: [
@@ -86,11 +86,11 @@ SemaphoreTest >> testMutualExclusion [
 		"Waiting first process run"
 		[steps includes: #startProcess1] whileFalse: [Processor yield].
 		steps add: #startProcess2.
-		lock critical: [ 
+		lock critical: [
 			steps add: #startCritical2.
 			Processor yield.
 			steps add: #endCritical2 ] ] fork.
-	
+
 	[ steps size = 6 ] whileFalse: [ Processor yield ].
 
 	self assert: (steps hasEqualElements: #(startProcess1 startCritical1 startProcess2 endCritical1 startCritical2 endCritical2))
@@ -102,7 +102,7 @@ SemaphoreTest >> testReturnsAsManyWaitsAsSignalsReceived [
 	| semaphore semaphoreReturnedOnce semaphoreReturnedTwice |
 	semaphoreReturnedOnce := semaphoreReturnedTwice := false.
 	semaphore := Semaphore new.
-	
+
 	[
 		semaphore wait.
 		semaphoreReturnedOnce := true.
@@ -111,15 +111,15 @@ SemaphoreTest >> testReturnsAsManyWaitsAsSignalsReceived [
 
 	Processor yield.
 	self deny: semaphoreReturnedOnce.
-	
+
 	semaphore signal.
 	Processor yield.
 	self assert: semaphoreReturnedOnce.
 	self deny: semaphoreReturnedTwice.
-	
+
 	semaphore signal.
 	Processor yield.
-	self assert: semaphoreReturnedTwice.
+	self assert: semaphoreReturnedTwice
 ]
 
 { #category : #tests }
@@ -129,7 +129,7 @@ SemaphoreTest >> testSchedulesFIFO [
 	| semaphore waitingLongestResumed higherPriorityResumed |
 	waitingLongestResumed := higherPriorityResumed := false.
 	semaphore := Semaphore new.
-	
+
 	[
 		semaphore wait.
 		waitingLongestResumed := true ] forkAt: Processor activeProcess priority + 10.
@@ -142,9 +142,9 @@ SemaphoreTest >> testSchedulesFIFO [
 
 	semaphore signal.
 	self assert: waitingLongestResumed.
-	
+
 	semaphore signal.
-	self assert: higherPriorityResumed.
+	self assert: higherPriorityResumed
 ]
 
 { #category : #tests }
@@ -154,21 +154,21 @@ SemaphoreTest >> testSimpleCommunication [
 	| semaphore wasBlockStarted wasBlockFinished |
 	wasBlockStarted := wasBlockFinished := false.
 	semaphore := Semaphore new.
-	
+
 	[
 		wasBlockStarted := true.
 		semaphore wait.
 		wasBlockFinished := true ] fork.
 
 	Processor yield.
-	
+
 	self assert: wasBlockStarted.
 	self deny: wasBlockFinished.
-	
+
 	semaphore signal.
 	Processor yield.
-	
-	self assert: wasBlockFinished.
+
+	self assert: wasBlockFinished
 ]
 
 { #category : #tests }

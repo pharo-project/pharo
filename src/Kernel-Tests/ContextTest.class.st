@@ -30,10 +30,10 @@ Class {
 }
 
 { #category : #'closures for testing' }
-ContextTest class >> contextWithTempForTesting [ 
+ContextTest class >> contextWithTempForTesting [
 	| string |
 	string := 'test'.
-	^ [self class. string asUppercase] asContext.
+	^ [self class. string asUppercase] asContext
 ]
 
 { #category : #helper }
@@ -58,7 +58,7 @@ ContextTest >> privRestartArgBlockTest [
 	self
 		assert: 30
 		equals:
-			([ :a | 
+			([ :a |
 			| b |
 			self assert: 10 equals: a.
 			self assert: nil identicalTo: b.
@@ -76,7 +76,7 @@ ContextTest >> privRestartBlockArgsNoRemoteTempsTest [
 	self
 		assert: 30
 		equals:
-			([ :a :first | 
+			([ :a :first |
 			| b |
 			self assert: 10 equals: a.
 			self assert: nil identicalTo: b.
@@ -143,17 +143,15 @@ ContextTest >> testActiveHome [
 	block := [ self. "to make it non-clean" thisContext home == thisContext activeHome].
 	self assert: block class equals: FullBlockClosure.
 	self assert: block value.
-	
+
 	"for Method Context"
 	self
 		assert: aMethodContext activeHome identicalTo: aMethodContext;
 		assert: aMethodContext activeHome identicalTo: aMethodContext home.
-	
+
 	"non-active block context"
 	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
-	self assert: (nonActiveBlockContext activeHome) isNil.
-		
-	
+	self assert: (nonActiveBlockContext activeHome) isNil
 ]
 
 { #category : #tests }
@@ -164,7 +162,7 @@ ContextTest >> testAstScope [
 	aMethodContext pc: 88 + 1.
 	scope := aMethodContext astScope.
 	self assert: scope isOptimized.
-	
+
 	"test that we do not get a block scope when pushing a block on the stack"
 	aMethodContext pc: 92 + 1.
 	scope := aMethodContext astScope.
@@ -212,20 +210,20 @@ ContextTest >> testMethodContext [
 
 	self assert: aMethodContext home notNil.
 	self assert: aMethodContext receiver notNil.
-	self assert: (aMethodContext method isKindOf: CompiledMethod).
+	self assert: (aMethodContext method isKindOf: CompiledMethod)
 ]
 
 { #category : #tests }
 ContextTest >> testMethodContextPrintDetails [
 
 	self
-		assert: (String streamContents: [ :stream | 
+		assert: (String streamContents: [ :stream |
 				 aMethodContext printDetails: stream ])
 		equals: 'Rectangle>>areasOutside:
 	Receiver: (100@100) corner: (200@200)
-	Arguments and temporary variables: 
+	Arguments and temporary variables:
 		aRectangle: 	(200@200) corner: (420@420)
-	Receiver''s instance variables: 
+	Receiver''s instance variables:
 		origin: 	(100@100)
 		corner: 	(200@200)
 
@@ -241,7 +239,7 @@ ContextTest >> testNoStepIntoQuickMethod [
 		receiver: aReceiver
 		method: (Rectangle >>#center)
 		arguments: #().
-	
+
 	"We step into #center to get on the topLeft message.
 	We did not change context."
 	aMethodContext step.
@@ -256,7 +254,7 @@ ContextTest >> testNoStepIntoQuickMethod [
 { #category : #tests }
 ContextTest >> testNonActiveBlockContextHome [
 	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
-	self assert: (nonActiveBlockContext home) isNotNil.
+	self assert: (nonActiveBlockContext home) isNotNil
 ]
 
 { #category : #tests }
@@ -292,11 +290,11 @@ ContextTest >> testStepIntoQuickMethod [
 		receiver: aReceiver
 		method: (Rectangle >>#center)
 		arguments: #().
-	
+
 	"We step into #center to get on the topLeft message.
 	We did not change context."
 	aMethodContext step.
-	
+
 	"Now we step into #topLeft which is a quick method"
 	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
@@ -304,7 +302,7 @@ ContextTest >> testStepIntoQuickMethod [
 	self assert: newContext sender identicalTo: aMethodContext.
 	self assert: newContext method identicalTo: quickMethod.
 	self assert: quickMethod isQuick.
-	
+
 	"The quick method contains 3 bytecodes:
 	- primitive 264: a 3 bytecode primitive (initialPC)
 	- a push of a value (endPC - 1)
@@ -341,14 +339,14 @@ ContextTest >> testStepIntoReturnSelfMethod [
 		sender: thisContext
 		receiver: SimulationMock new
 		method: (SimulationMock >>#exampleSelfReturnCall)
-		arguments: #().	
-	
-	"(SimulationMock >>#exampleSelfReturnCall) just executes 
+		arguments: #().
+
+	"(SimulationMock >>#exampleSelfReturnCall) just executes
 	self yourself
 	We step over self to get on the yourself message.
 	We did not change context."
 	aMethodContext step.
-	
+
 	"Now we step into #yourself which is a quick method just returning self"
 	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
@@ -356,7 +354,7 @@ ContextTest >> testStepIntoReturnSelfMethod [
 	self assert: newContext sender identicalTo: aMethodContext.
 	self assert: newContext method identicalTo: quickMethod.
 	self assert: quickMethod isQuick.
-	
+
 	"The quick method contains 3 bytecodes:
 	- primitive 256: a 3 bytecode primitive (initialPC)
 	- the return self instruction (endPC)
@@ -375,19 +373,19 @@ ContextTest >> testSteppingAQuickMethod [
 		sender: thisContext
 		receiver: aReceiver
 		method: (Rectangle >>#center)
-		arguments: #().	
-	
+		arguments: #().
+
 	aMethodContext step.
 	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
-	
+
 	"We're in the quick method now, it should be steppable"
 	self assert: newContext sender identicalTo: aMethodContext.
 	self deny: newContext instructionStream willReturn.
-	
+
 	newContext := newContext step.
 	self assert: newContext instructionStream willReturn.
-	
+
 	newContext := newContext step.
 	self assert: newContext identicalTo: aMethodContext
 ]
@@ -400,16 +398,16 @@ ContextTest >> testSteppingReturnSelfMethod [
 		sender: thisContext
 		receiver: SimulationMock new
 		method: (SimulationMock >>#exampleSelfReturnCall)
-		arguments: #().	
-			
+		arguments: #().
+
 	aMethodContext step.
 	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
-	
+
 	"We're in the quick method now, it should be steppable"
 	self assert: newContext sender identicalTo: aMethodContext.
 	self assert: newContext instructionStream willReturn.
-	
+
 	newContext := newContext step.
 	self assert: newContext identicalTo: aMethodContext
 ]
