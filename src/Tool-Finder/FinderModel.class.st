@@ -23,6 +23,17 @@ Class {
 	#category : #'Tool-Finder-Base'
 }
 
+{ #category : #'default values' }
+FinderModel class >> defaultSearches [
+	"Returns a list of supported searches. Each item in the list is a subclass of `FinderSearch`."
+
+	"The first element is used as the default search mode."
+
+	^ {
+		  FinderSelectorSearch.
+		  FinderClassSearch }
+]
+
 { #category : #information }
 FinderModel >> availablePackages [
 
