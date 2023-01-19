@@ -26,7 +26,7 @@ ScaledDecimal class >> newFromNumber: aNumber scale: anInteger [
 { #category : #arithmetic }
 ScaledDecimal >> * aNumber [
 
-	aNumber class = self class ifTrue: [ 
+	aNumber class = self class ifTrue: [
 		^ self asFraction * aNumber asFraction asScaledDecimal:
 			  scale + aNumber scale ].
 	^ self coerce: self asFraction * aNumber
@@ -95,7 +95,7 @@ ScaledDecimal >> adaptToInteger: rcvr andSend: selector [
 ]
 
 { #category : #converting }
-ScaledDecimal >> asFraction [	
+ScaledDecimal >> asFraction [
 	"Convert the receiver to a Fraction.
 	Avoid using numerator / denominator to save a useless and costly gcd: computation"
 
@@ -107,7 +107,7 @@ ScaledDecimal >> asFraction [
 { #category : #private }
 ScaledDecimal >> coerce: aNumber [
 	"Note: this quick hack could be replaced by double dispatching"
-	
+
 	aNumber class = self class ifTrue: [^self class newFromNumber: aNumber scale: (scale max: aNumber scale)].
 	(aNumber isFraction or: [aNumber isInteger]) ifTrue: [^self class newFromNumber: aNumber scale: scale].
 	^aNumber
@@ -116,7 +116,7 @@ ScaledDecimal >> coerce: aNumber [
 { #category : #testing }
 ScaledDecimal >> isFraction [
 	"Though kind of Fraction, pretend we are not a Fraction to let coercion works correctly"
-	
+
 	^false
 ]
 
@@ -127,7 +127,7 @@ ScaledDecimal >> isLiteral [
 	This is not the case of all ScaledDecimals.
 	Some have an infinite precision and would need an infinite number of digits to print literally.
 	Try for example (3.00s2 reciprocal)."
-	
+
 	^denominator = 1 "first test trivial case before engaging arithmetic"
 		or: ["Exactly we should test:
 				(numerator * (10 raisedTo; scale)) \\ denominator = 0.
@@ -146,7 +146,7 @@ ScaledDecimal >> literalEqual: other [
 	"Testing equality is not enough.
 	It is also necessary to test number of decimal places (scale).
 	Otherwise we cannot compile both literals 0.5s1 and 0.50s2 in the same method"
-	
+
 	^(super literalEqual: other) and: [self scale = other scale]
 ]
 
@@ -159,11 +159,11 @@ ScaledDecimal >> negated [
 ScaledDecimal >> printOn: aStream [
 	"Append an approximated representation of the receiver on aStream.
 	Use prescribed number of digits after decimal point (the scale) using a rounding operation if not exact"
-	
+
 	self printOn: aStream showingDecimalPlaces: scale.
 
 	"Append a scale specification so that the number can be recognized as a ScaledDecimal"
-	aStream nextPut: $s; print: scale.
+	aStream nextPut: $s; print: scale
 ]
 
 { #category : #printing }
@@ -214,10 +214,10 @@ ScaledDecimal >> squared [
 ]
 
 { #category : #printing }
-ScaledDecimal >> storeOn: aStream [ 
+ScaledDecimal >> storeOn: aStream [
 	"ScaledDecimal sometimes have more digits than they print (potentially an infinity).
 	In this case, do not use printOn: because it would loose some extra digits"
-	
+
 	self shouldBePrintedAsLiteral
 		ifTrue: [self printOn: aStream]
 		ifFalse: [aStream

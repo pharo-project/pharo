@@ -104,7 +104,7 @@ ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 ContinuationTest >> intersectWithCCAllWithCC: sets [
 	^ sets
 		ifNotEmpty: [ Continuation
-				currentDo: [ :cc | 
+				currentDo: [ :cc |
 					self
 						intersectWithCC: sets first
 						withAll: sets allButFirst
@@ -163,7 +163,7 @@ ContinuationTest >> remove: anObj oneStar: aTree [
 	| newTree sentinel |
 	sentinel := #absent.
 	newTree := self
-		callcc: [ :oh | 
+		callcc: [ :oh |
 			self
 				remove: anObj
 				oneStar: aTree
@@ -191,7 +191,7 @@ ContinuationTest >> remove: anObj oneStar: aTree sentinel: aSymbol continuation:
 			(car isMemberOf: ValueLink)
 				ifTrue: [ | newCar |
 					newCar := Continuation
-						currentDo: [ :ooh | 
+						currentDo: [ :ooh |
 							self
 								remove: anObj
 								oneStar: car
@@ -224,7 +224,7 @@ ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 			car ~~> newCdr ].
 			(car isMemberOf: ValueLink)
 				ifTrue: [ Continuation
-						try: [ :ooh | 
+						try: [ :ooh |
 							| newCar |
 							newCar := self
 								remove: anObj
@@ -242,7 +242,7 @@ ContinuationTest >> remove: anObj uptoLast: aLinkedList [
 	^ aLinkedList
 		ifNotEmpty: [ | valueLink |
 			valueLink := Continuation
-				currentDo: [ :skip | 
+				currentDo: [ :skip |
 					self
 						remove: anObj
 						uptoLastValueLink: aLinkedList firstLink
@@ -271,7 +271,7 @@ ContinuationTest >> testBlockEscape [
 	x := [ tmp := tmp + 1.
 	tmp2 value ].
 	self
-		callcc: [ :cc | 
+		callcc: [ :cc |
 			tmp2 := cc.
 			x value ].
 	tmp2 := [  ].
@@ -283,18 +283,18 @@ ContinuationTest >> testBlockEscape [
 ContinuationTest >> testBlockTemps [
 	| y |
 	#(1 2 3)
-		do: [ :i | 
+		do: [ :i |
 			| x |
 			x := i.
 			tmp
 				ifNil: [ tmp2 := self
-						callcc: [ :cc | 
+						callcc: [ :cc |
 							tmp := cc.
 							[ :q |  ] ] ].
 			tmp2 value: x.
 			x := 17 ].
 	y := self
-		callcc: [ :cc | 
+		callcc: [ :cc |
 			tmp value: cc.
 			42 ].
 	self assert: y equals: 1
@@ -305,15 +305,15 @@ ContinuationTest >> testBlockVars [
 	| continuation |
 	tmp := 0.
 	tmp := (self
-		callcc: [ :cc | 
+		callcc: [ :cc |
 			continuation := cc.
 			0 ]) + tmp.
 	tmp2
 		ifNotNil: [ tmp2 value ]
 		ifNil: [ #(1 2 3)
-				do: [ :i | 
+				do: [ :i |
 					self
-						callcc: [ :cc | 
+						callcc: [ :cc |
 							tmp2 := cc.
 							continuation value: i ] ] ].
 	self assert: tmp equals: 6

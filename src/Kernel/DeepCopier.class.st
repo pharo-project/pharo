@@ -41,27 +41,27 @@ Class {
 DeepCopier >> basicCheckClass: aClass [
 	"Every class that implements veryDeepInner: or veryDeepCopyWith: must copy all its inst vars.
 	The danger is that a user will add a new instance variable and forget to copy it.
-	
+
 	This method will check those conditions on a class and return a collection of methods that looked suspicious.
 	If you get a non-empty collection, an implementation of veryDeepCopyWith: or veryDeepInner: needs to be updated (check inside the collection).
 	The idea is to catch a change while it is still in the system of the programmer who made it.
-		
+
 	This is an old method. We do not know why it is checking for the size of the method > 20, or the inclusion of the selector in the literals.
 	May require a further refactor."
 	| warnings |
 	warnings := Set new.
-	
+
 	(aClass includesSelector: #veryDeepInner:) ifTrue: [ | veryDeepInnerMethod |
 		veryDeepInnerMethod := aClass >> #veryDeepInner:.
 		((self doesMethod: #veryDeepInner: writeAllInstanceVariablesOfClass: aClass)) ifFalse: [
 			warnings add: veryDeepInnerMethod ]].
-	
+
 	(aClass includesSelector: #veryDeepCopyWith:) ifTrue: [ | veryDeepCopyWithMethod |
 		veryDeepCopyWithMethod := aClass >> #veryDeepCopyWith:.
 		(veryDeepCopyWithMethod size > 20) & (veryDeepCopyWithMethod literals includes: #veryDeepCopyWith:) not ifTrue: [
 			(self doesMethod: #veryDeepCopyWith: writeAllInstanceVariablesOfClass: aClass) ifFalse: [
 				warnings add: veryDeepCopyWithMethod]]].
-	
+
 	^ warnings
 ]
 
@@ -72,14 +72,14 @@ DeepCopier >> checkAllClasses [
 	warnings := ((self systemNavigation allClassesImplementing: #veryDeepInner:),
 		(self systemNavigation allClassesImplementing: #veryDeepCopyWith:)) flatCollect: [ :aClass |
 			 self basicCheckClass: aClass ].
-	
+
 	self raiseWarningsIfAny: warnings
 ]
 
 { #category : #checking }
 DeepCopier >> checkClass: aClass [
 	(self basicCheckClass: aClass)
-		ifNotEmpty: [ :warnings | 
+		ifNotEmpty: [ :warnings |
 			Warning new
 				messageText:
 					'VeryDeepCopy out of sync in some classes. Some classes contain veryDeepCopyWith: or veryDeepInner: methods that are not in sync with their instance variables. Check the exception #tag for a list of them';
@@ -89,21 +89,21 @@ DeepCopier >> checkClass: aClass [
 
 { #category : #'like fullCopy' }
 DeepCopier >> checkDeep [
-	"Write exceptions in the Transcript.  Every class that implements veryDeepInner: must copy all its inst vars.  Danger is that a user will add a new instance variable and forget to copy it.  This check is only run by hand once in a while to make sure nothing was forgotten.  
+	"Write exceptions in the Transcript.  Every class that implements veryDeepInner: must copy all its inst vars.  Danger is that a user will add a new instance variable and forget to copy it.  This check is only run by hand once in a while to make sure nothing was forgotten.
 (Please do not remove this method.)
 	DeepCopier new checkDeep 	"
 
 	<script: 'DeepCopier new checkDeep'>
 	Warning signal:
 			(String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					stream
 						nextPutAll: 'Instance variables shared with the original object when it is copied'.
 					(self systemNavigation allClassesImplementing: #veryDeepInner:)
-						do: [ :aClass | 
+						do: [ :aClass |
 							| mm |
 							(mm := aClass instVarNames size) > 0
-								ifTrue: [ aClass instSize - mm + 1 to: aClass instSize do: [ :index | 
+								ifTrue: [ aClass instSize - mm + 1 to: aClass instSize do: [ :index |
 										((aClass compiledMethodAt: #veryDeepInner:) writesField: index)
 											ifFalse: [ stream cr; tab.
 												aClass name printOn: stream.
@@ -116,12 +116,12 @@ DeepCopier >> doesMethod: aSelector writeAllInstanceVariablesOfClass: aClass [
 
 	"This method returns true if the method of the given selector writes all instance variables of the given class.
 	As an optimization, this method only checks that the last instance variable is written, assuming that all the rest are being written if the last one is."
- 
+
 	| lastFieldIndex method hasNoInstanceVariables |
 	hasNoInstanceVariables := aClass instSize = 0.
-	
+
 	lastFieldIndex := aClass instSize.
-	method := aClass compiledMethodAt: aSelector. 
+	method := aClass compiledMethodAt: aSelector.
 	^ hasNoInstanceVariables or: [ method writesField: lastFieldIndex ]
 ]
 
@@ -136,20 +136,20 @@ DeepCopier >> fixDependents [
 			(references at: dep ifAbsent: [nil]) ifNotNil:
 				[:newDep| | newModel |
 				newModel := references at: pair key ifAbsent: [pair key].
-				newModel addDependent: newDep]]].
+				newModel addDependent: newDep]]]
 ]
 
 { #category : #initialization }
 DeepCopier >> initialize [
 
 	super initialize.
-	self initialize: 4096.
+	self initialize: 4096
 ]
 
 { #category : #initialization }
 DeepCopier >> initialize: size [
 
-	references := IdentityDictionary new: size.
+	references := IdentityDictionary new: size
 ]
 
 { #category : #checking }

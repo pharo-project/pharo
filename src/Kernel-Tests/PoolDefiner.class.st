@@ -13,7 +13,7 @@ Class {
 
 { #category : #'class initialization' }
 PoolDefiner class >> initialize [
-	
+
 	Gloups := 42.
 	AnAuthor := 'Ducasse'
 ]

@@ -19,7 +19,7 @@ DurationTest >> classToBeTested [
 { #category : #coverage }
 DurationTest >> selectorsToBeIgnored [
 
-	| private | 
+	| private |
 	private := #( #printOn: ).
 
 	^ super selectorsToBeIgnored, private
@@ -247,17 +247,17 @@ DurationTest >> testHumanReadablePrintString [
 	self assert: 0 seconds humanReadablePrintString equals: '0 seconds'.
 	self assert: 1 second humanReadablePrintString equals: '1 second'.
 	self assert: 1 second negated humanReadablePrintString equals: '- 1 second'.
-	self 
-		assert: 1002003004 nanoSeconds humanReadablePrintString 
+	self
+		assert: 1002003004 nanoSeconds humanReadablePrintString
 		equals: '1 second 2 milliseconds 3 microseconds 4 nanoseconds'.
-	self 
-		assert: (Duration days: 1 hours: 1 minutes: 1 seconds: 1) humanReadablePrintString 
+	self
+		assert: (Duration days: 1 hours: 1 minutes: 1 seconds: 1) humanReadablePrintString
 		equals: '1 day 1 hour 1 minute 1 second'.
-	self 
-		assert: (Duration days: 2 hours: 4 minutes: 8 seconds: 16) humanReadablePrintString 
+	self
+		assert: (Duration days: 2 hours: 4 minutes: 8 seconds: 16) humanReadablePrintString
 		equals: '2 days 4 hours 8 minutes 16 seconds'.
-		
-	self shouldnt: [ 17.6782 years humanReadablePrintString ] raise: MessageNotUnderstood .
+
+	self shouldnt: [ 17.6782 years humanReadablePrintString ] raise: MessageNotUnderstood
 ]
 
 { #category : #tests }
@@ -276,14 +276,14 @@ DurationTest >> testIsZero [
 { #category : #tests }
 DurationTest >> testLessThan [
 	self assert: aDuration  < (aDuration + 1 day ).
-	self deny: aDuration < aDuration.
+	self deny: aDuration < aDuration
 ]
 
 { #category : #tests }
 DurationTest >> testMicroSeconds [
 	#(#(5 0 5000) #(1000005 1 5000) #(-5 0 -5000) #(-1000005 -1 -5000) #(1234000567 1234 567000) #(-1234000567 -1234 -567000))
-		do: [ :each | 
-			| duration | 
+		do: [ :each |
+			| duration |
 			duration := Duration microSeconds: each first.
 			self assert: duration asSeconds equals: each second.
 			self assert: duration nanoSeconds equals: each third ]
@@ -293,7 +293,7 @@ DurationTest >> testMicroSeconds [
 { #category : #tests }
 DurationTest >> testMilliSeconds [
 	#(#(5 0 5000000) #(1005 1 5000000) #(-5 0 -5000000) #(-1005 -1 -5000000) #(1234567 1234 567000000) #(-1234567 -1234 -567000000))
-		do: [ :each | 
+		do: [ :each |
 			| duration |
 			duration := Duration milliSeconds: each first.
 			self assert: duration asSeconds equals: each second.
@@ -538,20 +538,20 @@ DurationTest >> testReadFromMillisecond [
 ]
 
 { #category : #tests }
-DurationTest >> testReadFromNoException [	
+DurationTest >> testReadFromNoException [
 
-	#(	'0:00:00:00' 
-		'0:00:00:00.000000001' 
-		'0:00:00:00.999999999' 
-		'0:00:00:00.100000000' 
-		'0:00:00:00.10' 
-		'0:00:00:00.1' 
-		'0:00:00:01' 
-		'0:12:45:45' 
-		'1:00:00:00' 
-		'365:00:00:00' 
-		'-7:09:12:06.10' 
-		'+0:01:02:55' 
+	#(	'0:00:00:00'
+		'0:00:00:00.000000001'
+		'0:00:00:00.999999999'
+		'0:00:00:00.100000000'
+		'0:00:00:00.10'
+		'0:00:00:00.1'
+		'0:00:00:01'
+		'0:12:45:45'
+		'1:00:00:00'
+		'365:00:00:00'
+		'-7:09:12:06.10'
+		'+0:01:02:55'
 		'+0:01:02:3') do: [:each | each asDuration printString = each]
 ]
 

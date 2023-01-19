@@ -13,7 +13,7 @@ Class {
 
 { #category : #'class initialization' }
 PoolDefiner2 class >> initialize [
-	
+
 	VariableInPoolDefiner2 := 33.
 	AnAuthor := 'NotDucasse'
 ]
