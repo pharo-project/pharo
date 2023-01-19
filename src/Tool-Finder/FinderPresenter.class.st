@@ -1,6 +1,11 @@
+"
+I am the presenter for the ̀Finder̀ tool.
+
+I define the user interface of the finder tool.
+"
 Class {
 	#name : #FinderPresenter,
-	#superclass : #SpPresenter,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'searchInput',
 		'searchButton',
@@ -52,18 +57,21 @@ FinderPresenter >> connectPresenters [
 		whenActivatedDo: [ self model useRegex: true ];
 		whenDeactivatedDo: [ self model useRegex: false ].
 
-	helpButton action: [ 
+	helpButton action: [
 		self flag: #todo. "Make better help text dialog."
 		(self newText
 			 beNotEditable;
 			 withoutEditionContextMenu;
 			 text: self class defaultExplanation;
-			 openDialog) title: 'Finder Help' ]
+			 openDialog) title: 'Finder Help' ].
+
+	self subscribeToAnnouncements
 ]
 
 { #category : #layout }
 FinderPresenter >> defaultLayout [
 
+	self flag: #todo. "Add Statusbar back again"
 	^ SpBoxLayout newTopToBottom
 		  spacing: 5;
 		  add: (SpBoxLayout newTopToBottom
@@ -83,7 +91,7 @@ FinderPresenter >> defaultLayout [
 				   yourself)
 		  expand: false;
 		  add: resultTree;
-		  add: resultStatusBar expand: false;
+		  "add: resultStatusBar expand: false;"
 		  add: resultButtonBar expand: false;
 		  yourself
 ]
@@ -185,8 +193,31 @@ FinderPresenter >> searchInPackages: aCollection [
 
 	"Sets the search environment in the model to the package names given in aCollection."
 
-	self model selectedPackages: aCollection.
+	self model selectedPackagesByName: aCollection.
 
 	searchAllPackagesButton iconName: #radioButtonUnselected.
 	searchChosenPackagesButton iconName: #radioButtonSelected
+]
+
+{ #category : #'updating - widgets' }
+FinderPresenter >> updateResults [
+	"Call to update resultTree from the model."
+
+	self updateResultsWith: self model resultDictionary
+]
+
+{ #category : #'updating - widgets' }
+FinderPresenter >> updateResultsWith: results [
+	"Call to update resultTree with results."
+
+	resultTree
+		roots: results keys;
+		children: [ :key |
+			results at: key ifAbsent: [ #(  ) ] ]
+]
+
+{ #category : #'updating - widgets' }
+FinderPresenter >> updateSearchModes [
+
+	searchModeDropList items: self model availableSearches
 ]
