@@ -223,7 +223,7 @@ ContextTest >> testMethodContextPrintDetails [
 	Receiver: (100@100) corner: (200@200)
 	Arguments and temporary variables: 
 		aRectangle: 	(200@200) corner: (420@420)
-	Receiver''s instance variables:
+	Receiver''s instance variables: 
 		origin: 	(100@100)
 		corner: 	(200@200)
 
