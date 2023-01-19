@@ -2,7 +2,7 @@
 A SearchEnded is an announcement raised when a search has ended.
 "
 Class {
-	#name : #SearchEnded,
+	#name : #FinderSearchEnded,
 	#superclass : #Announcement,
 	#instVars : [
 		'results'
@@ -11,19 +11,19 @@ Class {
 }
 
 { #category : #accessing }
-SearchEnded class >> results: anObject [
+FinderSearchEnded class >> results: anObject [
 
 	^ self new results: anObject; yourself
 ]
 
 { #category : #accessing }
-SearchEnded >> results [
+FinderSearchEnded >> results [
 
 	^ results
 ]
 
 { #category : #accessing }
-SearchEnded >> results: anObject [
+FinderSearchEnded >> results: anObject [
 
 	results := anObject
 ]
