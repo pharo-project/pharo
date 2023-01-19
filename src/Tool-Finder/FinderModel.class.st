@@ -38,7 +38,8 @@ FinderModel class >> defaultSearches [
 FinderModel >> addSearch: aFinderSearch [
 	"Add aFinderSearch to the availableSearches."
 
-	availableSearches add: aFinderSearch
+	availableSearches add: aFinderSearch.
+	self searchTypesChanged
 ]
 
 { #category : #information }
@@ -95,7 +96,8 @@ FinderModel >> initialize [
 FinderModel >> removeSearchByName: aString [
 	"Removes a search from availableSearches by its name."
 
-	availableSearches removeAllSuchThat: [ :each | each name = aString ]
+	availableSearches removeAllSuchThat: [ :each | each name = aString ].
+	self searchTypesChanged
 ]
 
 { #category : #accessing }
@@ -111,14 +113,18 @@ FinderModel >> search [
 	searchString isEmpty ifTrue: [ ^ self ].
 
 	[ :job |
+	self searchStarted.
 	job title: 'Searching...' translated.
 	resultsDictionary := useRegex
 		                     ifTrue: [
-		                     currentSearch searchByRegex:
-			                     searchString asRegex in: environment ]
+		                     currentSearch
+			                     searchByRegex: searchString asRegex
+			                     in: environment ]
 		                     ifFalse: [
-		                     currentSearch searchByString: searchString in: environment ].
-	self valueChanged ] asJob run
+		                     currentSearch
+			                     searchByString: searchString
+			                     in: environment ].
+	self searchEnded ] asJob run
 ]
 
 { #category : #searching }
@@ -128,6 +134,25 @@ FinderModel >> searchBy: aString [
 
 	self searchString: aString.
 	self search
+]
+
+{ #category : #announcing }
+FinderModel >> searchEnded [
+	"Announce the start of a new search."
+
+	"This method is used internally and called whenever a search has finished."
+
+	self announcer announce:
+		(FinderSearchEnded results: self resultsDictionary)
+]
+
+{ #category : #announcing }
+FinderModel >> searchStarted [
+	"Announce the start of a new search."
+
+	"This method is used internally and called whenever a search is started."
+
+	self announcer announce: FinderSearchStarted new
 ]
 
 { #category : #accessing }
@@ -144,6 +169,16 @@ FinderModel >> searchString: aString [
 	"Set the search string, which is to be used for further searches."
 
 	searchString := aString
+]
+
+{ #category : #announcing }
+FinderModel >> searchTypesChanged [
+	"Announce a modification of availableSearches."
+
+	"This method is used internally and called whenever a availableSearches modified."
+
+	self announcer announce:
+		(FinderSearchTypesChanged newValue: self availableSearches)
 ]
 
 { #category : #selection }
@@ -188,4 +223,44 @@ FinderModel >> useRegex [
 FinderModel >> useRegex: aBoolean [
 
 	useRegex := aBoolean
+]
+
+{ #category : #announcing }
+FinderModel >> whenSearchEnded: aBlock [
+	"Calls aBlock everytime a search has ended and passes the results to it."
+
+	"Culled block [ :results :announcement :announcer | ... ]"
+
+	| block |
+	block := [ :announcement :ann |
+	         aBlock
+		         cull: announcement results
+		         cull: announcement
+		         cull: ann ].
+	self announcer when: FinderSearchEnded do: block
+]
+
+{ #category : #announcing }
+FinderModel >> whenSearchStarted: aBlock [
+	"Calls aBlock everytime a search is started."
+
+	"aBlock [ :announcement :announcer | ... ]"
+
+	self announcer when: FinderSearchStarted do: aBlock
+]
+
+{ #category : #announcing }
+FinderModel >> whenSearchTypesChanged: aBlock [
+	"Calls aBlock everytime a search has been added or removed from availableSearches."
+
+	"Culled block [ :newValue oldValue :announcement :announcer | ... ]"
+
+	| block |
+	block := [ :announcement :ann |
+	         aBlock
+		         cull: announcement newValue
+		         cull: announcement oldValue
+		         cull: announcement
+		         cull: ann ].
+	self announcer when: FinderSearchTypesChanged do: aBlock
 ]
