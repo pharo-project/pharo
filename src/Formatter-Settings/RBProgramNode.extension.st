@@ -9,7 +9,7 @@ RBProgramNode class >> formatters [
 { #category : #'*Formatter-Settings' }
 RBProgramNode class >> settingsGroupOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder group: #codeFormatters)
 		label: 'Code Formatting';
 		parent: #codeBrowsing
@@ -20,7 +20,7 @@ RBProgramNode class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #formatterClass)
 		target: RBProgramNode ;
-		domainValues: self formatters; 
+		domainValues: self formatters;
 		label: 'Default Formatter';
 		order: 0;
 		default: (Smalltalk at: #EFFormatter);

@@ -20,9 +20,9 @@ Class {
 { #category : #enumerating }
 CoAvoidRepeatedFetcher >> entriesDo: aBlock [
 	decoree
-		entriesDo: [ :elem | 
+		entriesDo: [ :elem |
 			(self hasAlreadyReturned: elem)
-				ifFalse: [ 
+				ifFalse: [
 					"As the NECEntry does not know how to compare I will enter the content as symbol"
 					elements add: elem contents asSymbol.
 					aBlock value: elem ] ]
@@ -38,12 +38,12 @@ CoAvoidRepeatedFetcher >> hasAlreadyReturned: anEntry [
 CoAvoidRepeatedFetcher >> initialize [
 
 	super initialize.
-	elements := Set new.
+	elements := Set new
 ]
 
 { #category : #resetting }
 CoAvoidRepeatedFetcher >> reset [
 
 	super reset.
-	elements := Set new.
+	elements := Set new
 ]

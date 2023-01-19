@@ -15,7 +15,7 @@ Class {
 		'statementNodes',
 		'transformedNode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }

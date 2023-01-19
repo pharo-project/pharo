@@ -57,15 +57,15 @@ CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 ]
 
 { #category : #visiting }
-CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [ 
-	
+CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [
+
 	^ self
 		configureFetcherForNode: aRBMessageNode
 		usingHeuristicAvoidingRepetitions: self messageHeuristic
 ]
 
 { #category : #visiting }
-CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [ 
+CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
 
 	^ self
 		configureFetcherForNode: aRBMethodNode
@@ -73,7 +73,7 @@ CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
 ]
 
 { #category : #visiting }
-CoASTHeuristicsResultSetBuilder >> visitVariableNode: aRBVariableNode [ 
+CoASTHeuristicsResultSetBuilder >> visitVariableNode: aRBVariableNode [
 
 	^ self
 		configureFetcherForNode: aRBVariableNode
