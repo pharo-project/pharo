@@ -199,6 +199,15 @@ FinderPresenter >> searchInPackages: aCollection [
 	searchChosenPackagesButton iconName: #radioButtonSelected
 ]
 
+{ #category : #initialization }
+FinderPresenter >> subscribeToAnnouncements [
+
+	self model whenSearchStarted: [  ].
+	self model whenSearchEnded: [ :results |
+		self updateResultsWith: results ].
+	self model whenSearchTypesChanged: [ self updateSearchModes ]
+]
+
 { #category : #'updating - widgets' }
 FinderPresenter >> updateResults [
 	"Call to update resultTree from the model."
