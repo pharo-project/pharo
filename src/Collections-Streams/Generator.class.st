@@ -85,6 +85,18 @@ Generator class >> on: aBlock [
 	^ self basicNew initializeOn: aBlock
 ]
 
+{ #category : #enumerating }
+Generator class >> onDo: aBlock [
+
+	"Helper to tranform any `do:`-like method into a generator."
+	
+	"|generator|
+	generator := Generator onDo: [ :doBody | Integer primesUpTo: 10000000 do: doBody ].
+	(generator next: 5) asArray >>> #(2 3 5 7 11)"
+		
+	^ self on: [ :generator | aBlock value: [ :arg | generator yield: arg ] ]
+]
+
 { #category : #examples }
 Generator class >> somePrimes [
 	"self somePrimes" 
