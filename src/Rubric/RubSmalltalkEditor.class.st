@@ -495,24 +495,6 @@ RubSmalltalkEditor >> debugSelection [
 	self debug: self selectionAsStream
 ]
 
-{ #category : #'typing/selecting keys' }
-RubSmalltalkEditor >> displayIfFalse: aKeyboardEvent [
-	"Replace the current text selection with the text 'ifFalse:'--initiated by 
-	ctrl-f."
-
-	self addString: 'ifFalse:'.
-	^false
-]
-
-{ #category : #'typing/selecting keys' }
-RubSmalltalkEditor >> displayIfTrue: aKeyboardEvent [
-	"Replace the current text selection with the text 'ifTrue:'--initiated by 
-	ctrl-t."
-
-	self addString: 'ifTrue:'.
-	^false
-]
-
 { #category : #'do-its' }
 RubSmalltalkEditor >> doIt [
 	"Set the context to include pool vars of the model.  Then evaluate."
