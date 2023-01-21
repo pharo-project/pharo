@@ -13,12 +13,6 @@ Class {
 		'searchEnableRegexpCheckBox',
 		'helpButton',
 		'resultTree',
-		'resultBrowseButton',
-		'resultSendersButton',
-		'resultImplementorsButton',
-		'resultVersionsButton',
-		'resultInheritanceButton',
-		'resultHierarchyButton',
 		'searchOptionsBar',
 		'resultButtonBar',
 		'resultStatusBar',
@@ -76,23 +70,12 @@ FinderPresenter >> connectPresenters [
 { #category : #initialization }
 FinderPresenter >> connectResultButtons [
 
-	resultBrowseButton action: [
-		resultTree selectedItem ifNotNil: [ :result | result browseAction ] ].
-
-	resultSendersButton action: [
-		resultTree selectedItem ifNotNil: [ :result | result sendersAction ] ].
-
-	resultImplementorsButton action: [
-		resultTree selectedItem ifNotNil: [ :result | result implementersAction ] ].
-
-	resultVersionsButton action: [
-		resultTree selectedItem ifNotNil: [ :result | result versionsAction ] ].
-
-	resultInheritanceButton action: [
-		resultTree selectedItem ifNotNil: [ :result | result inheritanceAction ] ].
-
-	resultHierarchyButton action: [
-		resultTree selectedItem ifNotNil: [ :result | result hierarchyAction ] ]
+	resultButtonBar browseAction: [ self selectedResult ifNotNil: [ :result | result browseAction ] ].
+	resultButtonBar sendersAction: [ self selectedResult ifNotNil: [ :result | result sendersAction ] ].
+	resultButtonBar implementersAction: [ self selectedResult ifNotNil: [ :result | result implementersAction ] ].
+	resultButtonBar versionsAction: [ self selectedResult ifNotNil: [ :result | result versionsAction ] ].
+	resultButtonBar inheritanceAction: [ self selectedResult ifNotNil: [ :result | result inheritanceAction ] ].
+	resultButtonBar hierarchyAction: [ self selectedResult ifNotNil: [ :result | result hierarchyAction ] ]
 ]
 
 { #category : #layout }
@@ -133,29 +116,6 @@ FinderPresenter >> initializePresenters [
 	self flag: #toImplement. "StatusBar with info about nr of packages searched and results."
 	self initializeStatusBar.
 	self initializeResultButtonBar
-]
-
-{ #category : #initialization }
-FinderPresenter >> initializeResultButtonBar [
-
-	resultBrowseButton := self newButton disable label: 'Browse'.
-	resultSendersButton := self newButton disable label: 'Senders'.
-	resultImplementorsButton := self newButton disable label:
-		                            'Implementors'.
-	resultVersionsButton := self newButton disable label: 'Versions'.
-	resultInheritanceButton := self newButton disable label:
-		                           'Inheritance'.
-	resultHierarchyButton := self newButton disable label: 'Hierarchy'.
-
-	resultButtonBar := SpBoxLayout newHorizontal
-		                   spacing: 2;
-		                   add: resultBrowseButton expand: false;
-		                   add: resultSendersButton expand: false;
-		                   add: resultImplementorsButton expand: false;
-		                   add: resultVersionsButton expand: false;
-		                   add: resultInheritanceButton expand: false;
-		                   add: resultHierarchyButton expand: false;
-		                   yourself
 ]
 
 { #category : #initialization }
@@ -238,6 +198,12 @@ FinderPresenter >> searchInPackages: aCollection [
 	searchChosenPackagesButton iconName: #radioButtonSelected
 ]
 
+{ #category : #information }
+FinderPresenter >> selectedResult [
+
+	^ resultTree selectedItem
+]
+
 { #category : #initialization }
 FinderPresenter >> subscribeToAnnouncements [
 
@@ -245,21 +211,6 @@ FinderPresenter >> subscribeToAnnouncements [
 	self model whenSearchEnded: [ :results |
 		self updateResultsWith: results ].
 	self model whenSearchTypesChanged: [ self updateSearchModes ]
-]
-
-{ #category : #'updating - widgets' }
-FinderPresenter >> updateResultButtonsFor: newResult [
-	"Enables or disables result action buttons depending on the defined
-	 actions for the selected result."
-
-	newResult ifNil: [ ^ self ].
-
-	resultBrowseButton enabled: newResult hasBrowseAction.
-	resultSendersButton enabled: newResult hasSendersAction.
-	resultImplementorsButton enabled: newResult hasImplementersAction.
-	resultVersionsButton enabled: newResult hasVersionsAction.
-	resultInheritanceButton enabled: newResult hasInheritanceAction.
-	resultHierarchyButton enabled: newResult hasHierarchyAction
 ]
 
 { #category : #'updating - widgets' }
