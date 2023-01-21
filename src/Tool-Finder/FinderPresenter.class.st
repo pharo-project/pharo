@@ -60,7 +60,9 @@ FinderPresenter >> connectPresenters [
 			 openDialog) title: 'Finder Help' ].
 
 	resultTree whenSelectedItemChangedDo: [ :newResult |
-		self updateResultButtonsFor: newResult ].
+		newResult
+			ifNil: [ resultButtonBar disableAll ]
+			ifNotNil: [ resultButtonBar enableButtonsFor: newResult ] ].
 
 	self connectResultButtons.
 
@@ -112,10 +114,10 @@ FinderPresenter >> initializePresenters [
 	self initializeSearchBar.
 
 	resultTree := self newTree display: [ :result | result displayString ].
+	resultButtonBar := self instantiate: FinderResultButtonBar.
 
 	self flag: #toImplement. "StatusBar with info about nr of packages searched and results."
-	self initializeStatusBar.
-	self initializeResultButtonBar
+	self initializeStatusBar
 ]
 
 { #category : #initialization }
