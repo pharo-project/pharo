@@ -14,19 +14,24 @@ Class {
 { #category : #private }
 FinderSelectorSearch >> buildResult: aListOfMethods [
 
-	| result |
-	result := Dictionary new.
+	| results |
+	results := OrderedCollection new.
+
 	aListOfMethods do: [ :method |
-		| key value |
-		key := method selector.
-		value := method methodClass.
-		(result includesKey: key)
-			ifTrue: [ (result at: key) add: value ]
-			ifFalse: [
-				result at: key put: (OrderedCollection new
-						 add: value;
-						 yourself) ] ].
-	^ result
+		| classResult |
+		classResult := FinderClassResult new content: method methodClass.
+		results
+			detect: [ :elem | elem content = method selector ]
+			ifFound: [ :elem | elem addChild: classResult ]
+			ifNone: [
+				| newResult |
+				newResult := FinderSelectorResult new
+					             content: method selector;
+					             addChild: classResult;
+					             yourself.
+				results add: newResult ] ].
+
+	^ results
 ]
 
 { #category : #information }
