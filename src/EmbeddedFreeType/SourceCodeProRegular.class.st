@@ -114,7 +114,7 @@ SourceCodeProRegular class >> fontContentsData [
 ]
 
 { #category : #'class initialization' }
-SourceCodeProRegular class >> initialize [ 
+SourceCodeProRegular class >> initialize [
 	EmbeddedFreeTypeFontInstaller registerFont: self
 ]
 

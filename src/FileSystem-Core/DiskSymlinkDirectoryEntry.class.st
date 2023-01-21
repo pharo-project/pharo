@@ -26,5 +26,5 @@ DiskSymlinkDirectoryEntry >> targetPath [
 	fileString := self statAttributes first.
 	^fileString
 		ifNil: [ reference path ]
-		ifNotNil: [ fileString asPath ].
+		ifNotNil: [ fileString asPath ]
 ]

@@ -64,7 +64,7 @@ SolidFillStyle >> isTransparent [
 { #category : #printing }
 SolidFillStyle >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPut:$(; print: color; nextPut:$).
+	aStream nextPut:$(; print: color; nextPut:$)
 ]
 
 { #category : #accessing }

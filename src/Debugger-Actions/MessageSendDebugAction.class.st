@@ -34,8 +34,8 @@ MessageSendDebugAction >> arguments [
 
 { #category : #actions }
 MessageSendDebugAction >> executeAction [
-	
-	self receiver 
+
+	self receiver
 		perform: self selector
 		withEnoughArguments: self arguments
 ]
@@ -58,7 +58,7 @@ MessageSendDebugAction >> id [
 
 { #category : #accessing }
 MessageSendDebugAction >> id: aSymbol [
-	
+
 	id := aSymbol
 ]
 

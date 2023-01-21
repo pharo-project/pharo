@@ -43,7 +43,7 @@ Class {
 	#instVars : [
 		'expressions'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }

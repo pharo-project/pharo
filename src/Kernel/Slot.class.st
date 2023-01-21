@@ -102,12 +102,6 @@ Slot >> definingClass: aClass [
 ]
 
 { #category : #printing }
-Slot >> definitionOn: aStream [
-	"Every subclass that adds state must redefine either this method or #printOn:"
-	^ self printOn: aStream
-]
-
-{ #category : #printing }
 Slot >> definitionString [
 	"Every subclass that adds state must redefine either this method or #printOn:"
 	^ String streamContents: [:s | self definitionOn: s]

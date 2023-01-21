@@ -21,12 +21,12 @@ MemoryHandle >> at: index put: anObject [
 ]
 
 { #category : #public }
-MemoryHandle >> at: index read: aCollection startingAt: start count: count [ 
+MemoryHandle >> at: index read: aCollection startingAt: start count: count [
 	^ entry at: index read: aCollection startingAt: start count: count
 ]
 
 { #category : #public }
-MemoryHandle >> at: first write: aCollection startingAt: start count: count [ 
+MemoryHandle >> at: first write: aCollection startingAt: start count: count [
 	writable ifFalse: [ self primitiveFailed ].
 	entry at: first write: aCollection startingAt: start count: count
 ]
@@ -39,7 +39,7 @@ MemoryHandle >> binaryReadStream [
 
 { #category : #streams }
 MemoryHandle >> binaryWriteStream [
-	
+
 	^ entry binaryWriteStream
 ]
 

@@ -21,8 +21,8 @@ EDDisplayInterface >> black [
 
 { #category : #accessing }
 EDDisplayInterface >> clear [
-	
-	self drawDuring: [ :canvas | 
+
+	self drawDuring: [ :canvas |
 		canvas
 			frameAndFillRectangle: self frame
 			fillColor: self white
@@ -33,7 +33,7 @@ EDDisplayInterface >> clear [
 { #category : #'private - display' }
 EDDisplayInterface >> closeWindow [
 
-	windowClosedAction 
+	windowClosedAction
 		ifNotNil: [ windowClosedAction value ]
 		ifNil: [ self terminateWindow ]
 ]
@@ -48,7 +48,7 @@ EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 		style: self textStyle
 		from: 1
 		in: ((aRect insetBy: 4) withHeight: aRect height).
-	
+
 	^ paragraph
 ]
 
@@ -74,27 +74,27 @@ EDDisplayInterface >> drawDuring: aBlock [
 { #category : #'private - display' }
 EDDisplayInterface >> ensureWindowOpen [
 	| attrs |
-	
-	window ifNotNil: [ 
+
+	window ifNotNil: [
 		window isVisible ifFalse: [ window show ].
 		^ self ].
-	
+
 	attrs := OSWindowAttributes new.
-	attrs 
+	attrs
 		title: 'Emergency Debugger';
 		extent: self extent;
 		resizable: false.
-		
-	window := OSWindow 
+
+	window := OSWindow
 		createWithAttributes: attrs
 		eventHandler: (EDDisplayEventHandler on: self).
-	renderer := window newFormRenderer: (Form extent: self extent depth: 32).
+	renderer := window newFormRenderer: (Form extent: self extent depth: 32)
 ]
 
 { #category : #'private - display' }
 EDDisplayInterface >> extent [
 
-	^ extent ifNil: [ 
+	^ extent ifNil: [
 		extent := DisplayScreen actualScreenSize min: (650@700) ]
 ]
 
@@ -123,10 +123,10 @@ EDDisplayInterface >> red [
 
 { #category : #accessing }
 EDDisplayInterface >> show: aText [
-	
+
 	self
-		display: (self 
-			composeParagraphWith: aText 
+		display: (self
+			composeParagraphWith: aText
 			inFrame: self frame)
 		in: self frame
 ]

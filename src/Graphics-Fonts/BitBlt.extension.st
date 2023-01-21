@@ -13,21 +13,21 @@ BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint 
 	self primDisplayString: aString from: startIndex to: stopIndex
 			map: font characterToGlyphMap xTable: font xTable
 			kern: kernDelta.
-	^ destX@destY.
+	^ destX@destY
 ]
 
 { #category : #'*Graphics-Fonts' }
-BitBlt >> cachedFontColormapFrom: sourceDepth to: destDepth [ 
+BitBlt >> cachedFontColormapFrom: sourceDepth to: destDepth [
 	"Modified from computeColormapFrom:to:."
 	| srcIndex map |
 	CachedFontColorMaps class == Array ifFalse: [ CachedFontColorMaps := (1 to: 9) collect: [ :i | Array new: 32 ] ].
 	srcIndex := sourceDepth.
 	sourceDepth > 8 ifTrue: [ srcIndex := 9 ].
 	(map := (CachedFontColorMaps at: srcIndex) at: destDepth) ~~ nil ifTrue: [ ^ map ].
-	map := (Color 
+	map := (Color
 		cachedColormapFrom: sourceDepth
 		to: destDepth) copy.
-	(CachedFontColorMaps at: srcIndex) 
+	(CachedFontColorMaps at: srcIndex)
 		at: destDepth
 		put: map.
 	^ map
@@ -61,7 +61,7 @@ BitBlt >> displayGlyph: aForm at: aPoint left: leftX right: rightX font: aFont [
 		colorMap := secondPassMap.
 		self copyBits.
 		combinationRule := prevRule.
-	] ifFalse:[self copyBits].
+	] ifFalse:[self copyBits]
 ]
 
 { #category : #'*Graphics-Fonts' }
@@ -90,7 +90,7 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strik
 	If not, do it simply"
 	combinationRule = 37 "rgbMul" ifFalse: [
 		^self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta ].
-	
+
 	"We need to do a second pass. The colormap set is for use in the second pass."
 	secondPassMap := colorMap.
 	colorMap := sourceForm depth ~= destForm depth

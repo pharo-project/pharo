@@ -129,7 +129,7 @@ DebugAction >> defaultIcon [
 { #category : #accessing }
 DebugAction >> defaultKeyText [
 	"I return a string based on which a default shortcut is created for this action.
-	
+
 	I am still present to ensure backwards compatibility.
 	The method #defaultKeymap should be overridden instead."
 	self flag: 'Enable the deprecation once all usages of #defaultKeyText are removed.'.
@@ -137,7 +137,7 @@ DebugAction >> defaultKeyText [
 		deprecated: 'Override #defaultKeymap instead to set a keymap object as shortcut.'
 		on: '2016-09-05'
 		in: #Pharo6."
-	
+
 	^ nil
 ]
 
@@ -168,7 +168,7 @@ DebugAction >> enabled [
 { #category : #actions }
 DebugAction >> execute [
 
-	self precondition ifTrue: [ 
+	self precondition ifTrue: [
 		self preAction.
 		self perform: self actionSelector.
 		self postAction ]
@@ -210,7 +210,7 @@ DebugAction >> id [
 
 { #category : #'accessing - context' }
 DebugAction >> interruptedContext [
-	
+
 	^ self debugger interruptedContext
 ]
 
@@ -219,8 +219,8 @@ DebugAction >> keyText [
 	"I return the character associated with this shortcut.
 	I return an uppercase character if the keymap has shift as a modifier."
 
-	^  self keymap 
-		ifNil: [ 
+	^  self keymap
+		ifNil: [
 			"Backwards compatibility."
 			self defaultKeyText ]
 		ifNotNil: [ |currentCharacter|
@@ -234,12 +234,12 @@ DebugAction >> keyText [
 { #category : #accessing }
 DebugAction >> keymap [
 
-	^ keymap ifNil: [ 
-		self defaultKeymap ifNil: [ 
+	^ keymap ifNil: [
+		self defaultKeymap ifNil: [
 			"Code to ensure backwards compatibility with the previous
 			solution that used #defaultKeyText."
 			self defaultKeyText ifNotNil: [ :aString |
-				aString first isUppercase 
+				aString first isUppercase
 					ifTrue: [ aString first meta shift ]
 					ifFalse: [ aString first meta ] ] ] ]
 ]
@@ -300,13 +300,13 @@ DebugAction >> needsValidation: anObject [
 
 { #category : #actions }
 DebugAction >> notifyDebuggingActionAboutToExecute [
-	
+
 	self debugger announce: (DebugActionAboutToExecute forDebuggingAction: self)
 ]
 
 { #category : #actions }
 DebugAction >> notifyDebuggingActionExecuted [
-	
+
 	self debugger announce: (DebugActionExecuted forDebuggingAction: self)
 ]
 
@@ -342,7 +342,7 @@ DebugAction >> precondition [
 
 { #category : #'accessing - context' }
 DebugAction >> selectedContext [
-	
+
 	^ self debugger selectedContext
 ]
 

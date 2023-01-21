@@ -87,8 +87,8 @@ MiniDrTests >> title [
 MiniDrTests >> updateUI [
 
 	super updateUI.
-	startButton styles copy 
-		do: [ :each | startButton removeStyle: each ]. 
+	startButton styles copy
+		do: [ :each | startButton removeStyle: each ].
 	startButton addStyle: self evaluateStyle.
 	startButton label: pluginResult summarizeInfo
 ]
