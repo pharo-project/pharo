@@ -13,12 +13,12 @@ Class {
 	#superclass : #Model,
 	#instVars : [
 		'searchString',
-		'resultsDictionary',
 		'useRegex',
 		'environment',
 		'searchEnvironment',
 		'availableSearches',
-		'currentSearch'
+		'currentSearch',
+		'results'
 	],
 	#category : #'Tool-Finder-Base'
 }
@@ -81,11 +81,12 @@ FinderModel >> initialize [
 
 	super initialize.
 	searchString := ''.
-	resultsDictionary := Dictionary new.
+	results := FinderResult new.
 	useRegex := false.
 
-	availableSearches := self class defaultSearches collect: [ :search |
-		                     search new ] as: OrderedCollection.
+	availableSearches := self class defaultSearches
+		                     collect: [ :search | search new ]
+		                     as: OrderedCollection.
 	currentSearch := availableSearches first.
 
 	environment := RBBrowserEnvironment new.
@@ -101,9 +102,9 @@ FinderModel >> removeSearchByName: aString [
 ]
 
 { #category : #accessing }
-FinderModel >> resultsDictionary [
+FinderModel >> results [
 
-	^ resultsDictionary
+	^ results
 ]
 
 { #category : #searching }
@@ -115,7 +116,7 @@ FinderModel >> search [
 	[ :job |
 	self searchStarted.
 	job title: 'Searching...' translated.
-	resultsDictionary := useRegex
+	results := useRegex
 		                     ifTrue: [
 		                     currentSearch
 			                     searchByRegex: searchString asRegex
@@ -143,7 +144,7 @@ FinderModel >> searchEnded [
 	"This method is used internally and called whenever a search has finished."
 
 	self announcer announce:
-		(FinderSearchEnded results: self resultsDictionary)
+		(FinderSearchEnded results: self results)
 ]
 
 { #category : #announcing }
