@@ -14,11 +14,15 @@ Class {
 { #category : #private }
 FinderClassSearch >> buildResult: aListOfClasses [
 
-	| result |
-	result := Dictionary new.
-	aListOfClasses do: [ :each |
-		result at: each put: (each selectors sort: [ :a :b | a < b ]) ].
-	^ result
+	^ aListOfClasses
+		  collect: [ :each |
+			  | newResult |
+			  newResult := FinderClassResult new content: each.
+			  each selectors sort do: [ :selector |
+				 newResult addChild: (FinderSelectorResult new content: selector) ].
+			  newResult
+			 ]
+		  as: OrderedCollection
 ]
 
 { #category : #information }
