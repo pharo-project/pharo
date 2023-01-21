@@ -13,7 +13,6 @@ Class {
 		'searchEnableRegexpCheckBox',
 		'helpButton',
 		'resultTree',
-		'searchOptionsBar',
 		'resultButtonBar',
 		'resultStatusBar',
 		'searchChosenPackagesButton',
@@ -131,7 +130,7 @@ FinderPresenter >> initializeSearchBar [
 	searchModeDropList := self newDropList
 		                      items: self model availableSearches;
 		                      display: [ :search | search name ];
-		                      whenSelectedItemChangedDo: [ :new | 
+		                      whenSelectedItemChangedDo: [ :new |
 			                      self model currentSearch: new ];
 		                      yourself.
 	searchChosenPackagesButton := self newButton
