@@ -68,6 +68,28 @@ FinderPresenter >> connectPresenters [
 	self subscribeToAnnouncements
 ]
 
+{ #category : #initialization }
+FinderPresenter >> connectResultButtons [
+
+	resultBrowseButton action: [
+		resultTree selectedItem ifNotNil: [ :result | result browseAction ] ].
+
+	resultSendersButton action: [
+		resultTree selectedItem ifNotNil: [ :result | result sendersAction ] ].
+
+	resultImplementorsButton action: [
+		resultTree selectedItem ifNotNil: [ :result | result implementersAction ] ].
+
+	resultVersionsButton action: [
+		resultTree selectedItem ifNotNil: [ :result | result versionsAction ] ].
+
+	resultInheritanceButton action: [
+		resultTree selectedItem ifNotNil: [ :result | result inheritanceAction ] ].
+
+	resultHierarchyButton action: [
+		resultTree selectedItem ifNotNil: [ :result | result hierarchyAction ] ]
+]
+
 { #category : #layout }
 FinderPresenter >> defaultLayout [
 
@@ -111,12 +133,14 @@ FinderPresenter >> initializePresenters [
 { #category : #initialization }
 FinderPresenter >> initializeResultButtonBar [
 
-	resultBrowseButton := self newButton label: 'Browse'.
-	resultSendersButton := self newButton label: 'Senders'.
-	resultImplementorsButton := self newButton label: 'Implementors'.
-	resultVersionsButton := self newButton label: 'Versions'.
-	resultInheritanceButton := self newButton label: 'Inheritance'.
-	resultHierarchyButton := self newButton label: 'Hierarchy'.
+	resultBrowseButton := self newButton disable label: 'Browse'.
+	resultSendersButton := self newButton disable label: 'Senders'.
+	resultImplementorsButton := self newButton disable label:
+		                            'Implementors'.
+	resultVersionsButton := self newButton disable label: 'Versions'.
+	resultInheritanceButton := self newButton disable label:
+		                           'Inheritance'.
+	resultHierarchyButton := self newButton disable label: 'Hierarchy'.
 
 	resultButtonBar := SpBoxLayout newHorizontal
 		                   spacing: 2;
@@ -206,6 +230,21 @@ FinderPresenter >> subscribeToAnnouncements [
 	self model whenSearchEnded: [ :results |
 		self updateResultsWith: results ].
 	self model whenSearchTypesChanged: [ self updateSearchModes ]
+]
+
+{ #category : #'updating - widgets' }
+FinderPresenter >> updateResultButtonsFor: newResult [
+	"Enables or disables result action buttons depending on the defined
+	 actions for the selected result."
+
+	newResult ifNil: [ ^ self ].
+
+	resultBrowseButton enabled: newResult hasBrowseAction.
+	resultSendersButton enabled: newResult hasSendersAction.
+	resultImplementorsButton enabled: newResult hasImplementersAction.
+	resultVersionsButton enabled: newResult hasVersionsAction.
+	resultInheritanceButton enabled: newResult hasInheritanceAction.
+	resultHierarchyButton enabled: newResult hasHierarchyAction
 ]
 
 { #category : #'updating - widgets' }
