@@ -65,6 +65,11 @@ FinderPresenter >> connectPresenters [
 			 text: self class defaultExplanation;
 			 openDialog) title: 'Finder Help' ].
 
+	resultTree whenSelectedItemChangedDo: [ :newResult |
+		self updateResultButtonsFor: newResult ].
+
+	self connectResultButtons.
+
 	self subscribeToAnnouncements
 ]
 
