@@ -101,7 +101,7 @@ FinderPresenter >> initializePresenters [
 
 	self initializeSearchBar.
 
-	resultTree := self newTree.
+	resultTree := self newTree display: [ :result | result displayString ].
 
 	self flag: #toImplement. "StatusBar with info about nr of packages searched and results."
 	self initializeStatusBar.
@@ -212,7 +212,7 @@ FinderPresenter >> subscribeToAnnouncements [
 FinderPresenter >> updateResults [
 	"Call to update resultTree from the model."
 
-	self updateResultsWith: self model resultDictionary
+	self updateResultsWith: self model results
 ]
 
 { #category : #'updating - widgets' }
@@ -220,9 +220,8 @@ FinderPresenter >> updateResultsWith: results [
 	"Call to update resultTree with results."
 
 	resultTree
-		roots: results keys;
-		children: [ :key |
-			results at: key ifAbsent: [ #(  ) ] ]
+		roots: results;
+		children: [ :result | result children ]
 ]
 
 { #category : #'updating - widgets' }
