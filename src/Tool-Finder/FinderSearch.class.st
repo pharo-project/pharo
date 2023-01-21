@@ -2,7 +2,7 @@
 I am an abstract base class for searches in the `Finder` Tool.
 
 I provide a common interface for performing searches and results are expected to be returned in
-form of a `Dictionary`.
+form of a `FinderResult` composite object.
 
 # Subclass Responsibilities
 
