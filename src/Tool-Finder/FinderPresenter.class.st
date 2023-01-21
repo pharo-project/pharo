@@ -191,6 +191,16 @@ FinderPresenter >> initializeStatusBar [
 	resultStatusBar := self newStatusBar
 ]
 
+{ #category : #initialization }
+FinderPresenter >> initializeWindow: aWindowPresenter [
+
+	self flag: #todo. "Find a way to set minimal needed extent for contents."
+	aWindowPresenter
+		title: 'Finder';
+		initialExtent: 800 @ 600;
+		windowIcon: (self iconNamed: #smallFind)
+]
+
 { #category : #private }
 FinderPresenter >> openPackageChooserDialog [
 	"Opens a `SpChooserPresenter` dialog to allow the user to choose the packages to search in."
