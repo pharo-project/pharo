@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }

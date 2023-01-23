@@ -56,7 +56,7 @@ CompositeTransform >> globalPointToLocal: aPoint [
 ]
 
 { #category : #initialization }
-CompositeTransform >> globalTransform: gt localTransform: lt [ 
+CompositeTransform >> globalTransform: gt localTransform: lt [
 	globalTransform := gt.
 	localTransform := lt
 ]
