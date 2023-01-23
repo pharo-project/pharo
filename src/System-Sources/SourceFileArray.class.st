@@ -95,7 +95,7 @@ SourceFileArray >> createReadOnlyFiles [
 		self sourcesFileStream ifNotNil: [self sourcesFileStream readOnlyCopy].
 		self changesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
 
-	^readOnly 
+	^readOnly
 ]
 
 { #category : #'public - string writing' }
