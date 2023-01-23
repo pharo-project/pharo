@@ -93,7 +93,7 @@ SourceFileArray >> createReadOnlyFiles [
 	| readOnly |
 	readOnly := {
 		self sourcesFileStream ifNotNil: [self sourcesFileStream readOnlyCopy].
-		self sourcesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
+		self changesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
 	^ (readOnly anySatisfy: [ :any | any isNil or: [any closed] ])
 			ifTrue: [ self closeFileArray: readOnly ]
 			ifFalse: [ readOnly ]
