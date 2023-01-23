@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'returnValue'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }

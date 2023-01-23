@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #vocabulary }
-CoSession >> addVocabulary: aString at: aDateAndTime [ 
-	
+CoSession >> addVocabulary: aString at: aDateAndTime [
+
 	vocabularyCache at: aString put: aDateAndTime
 ]
 
@@ -31,6 +31,6 @@ CoSession >> size [
 
 { #category : #accessing }
 CoSession >> words [
-	
+
 	^ vocabularyCache keys
 ]

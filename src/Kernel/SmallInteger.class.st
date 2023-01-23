@@ -1,5 +1,11 @@
 "
 My instances are 31-bit numbers or 63-bit numbers depending on the image architecture, stored in twos complement form. The allowable range is approximately +- 1 billion (31 bits), 1 quintillion (63 bits)  (see SmallInteger minVal, maxVal).
+
+Handy guide to the kinds of Integer division:
+- /  exact division, returns a fraction if result is not a whole integer.
+- //  returns an Integer, rounded towards negative infinity.
+- \\ is modulo rounded towards negative infinity.
+- quo:  truncated division, rounded towards zero.
 "
 Class {
 	#name : #SmallInteger,
@@ -16,15 +22,6 @@ Class {
 SmallInteger class >> basicNew [
 
 	self error: 'SmallIntegers can only be created by performing arithmetic'
-]
-
-{ #category : #documentation }
-SmallInteger class >> guideToDivision [
-	"Handy guide to the kinds of Integer division: 
-	/  exact division, returns a fraction if result is not a whole integer. 
-	//  returns an Integer, rounded towards negative infinity. 
-	\\ is modulo rounded towards negative infinity. 
-	quo:  truncated division, rounded towards zero."
 ]
 
 { #category : #'class initialization' }

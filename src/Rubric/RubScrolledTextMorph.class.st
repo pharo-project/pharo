@@ -30,7 +30,7 @@ RubScrolledTextMorph class >> on: aModel [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> accept [
-	self acceptContents.
+	self acceptContents
 ]
 
 { #category : #'model protocol' }
@@ -784,16 +784,19 @@ RubScrolledTextMorph >> model [
 
 { #category : #accessing }
 RubScrolledTextMorph >> model: aModel [
+
 	self textArea model: aModel.
 	self setTextWith: self getTextFromModel.
 	self setSelection: self getSelectionFromModel.
-	aModel announcer when: RubTextAcceptedInModel send: #whenTextAcceptedInModel: to: self.	
-	aModel announcer when: RubEditsStateChangedInModel send: #whenEditsStateChangedInModel: to: self.
-	aModel announcer when: RubTextSetInModel send: #whenTextSetInModel: to: self.	
-	aModel announcer when: RubTextUpdatedInModel send: #whenTextUpdatedInModel: to: self.	
-	aModel announcer when: RubPrimarySelectionUpdatedInModel send: #whenPrimarySelectionUpdatedInModel: to: self.
-	aModel announcer when: RubCancelEditRequestedInModel send: #whenCancelEditRequestedInModel: to: self.	
-	aModel announcer when: RubConfigurationChange send: #whenConfigurationChangedFromModel: to: self.
+
+	aModel announcer
+		when: RubTextAcceptedInModel send: #whenTextAcceptedInModel: to: self;
+		when: RubEditsStateChangedInModel send: #whenEditsStateChangedInModel: to: self;
+		when: RubTextSetInModel send: #whenTextSetInModel: to: self;
+		when: RubTextUpdatedInModel send: #whenTextUpdatedInModel: to: self;
+		when: RubPrimarySelectionUpdatedInModel send: #whenPrimarySelectionUpdatedInModel: to: self;
+		when: RubCancelEditRequestedInModel send: #whenCancelEditRequestedInModel: to: self;
+		when: RubConfigurationChange send: #whenConfigurationChangedFromModel: to: self
 ]
 
 { #category : #'event handling' }
@@ -808,11 +811,11 @@ RubScrolledTextMorph >> mouseDown: event [
 ]
 
 { #category : #'event handling' }
-RubScrolledTextMorph >> mouseWheel: event [ 
+RubScrolledTextMorph >> mouseWheel: event [
 	"Handle a mouseWheel event."
-	
+
 	(self scrollPane scrollTarget handlesMouseWheel: event)
-		ifTrue: [^self scrollTarget mouseWheel: event]. "pass on"
+		ifTrue: [^self scrollPane scrollTarget mouseWheel: event]. "pass on"
 ]
 
 { #category : #'accessing - selection' }

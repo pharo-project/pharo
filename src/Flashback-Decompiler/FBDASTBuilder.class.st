@@ -134,7 +134,7 @@ FBDASTBuilder >> codeRepeatNode: body [
 	^ (self
 		codeMessage: #repeat
 		receiver: (self codeBlock: body)
-		arguments: #() ) 
+		arguments: #() )
 			propertyAt: #reconstructed put: true;
 			yourself
 ]

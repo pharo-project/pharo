@@ -56,7 +56,7 @@ HiWheelColorStrategy >> defaultColorWheelSize [
 { #category : #private }
 HiWheelColorStrategy >> newColorGenerator [
 	^ Generator
-		on: [ :generator | 
+		on: [ :generator |
 			| nextIndex |
 			nextIndex := 1.
 			[ generator yield: (self colorWheel at: nextIndex).
@@ -66,7 +66,7 @@ HiWheelColorStrategy >> newColorGenerator [
 { #category : #accessing }
 HiWheelColorStrategy >> ruler: aHiRuler [
 	aHiRuler ifNil: [ ^self ].
-	
+
 	branchMapping := HiBranchMapping builtFor: aHiRuler.
 
 	colorByBranch := Array streamContents: [ :stream |
