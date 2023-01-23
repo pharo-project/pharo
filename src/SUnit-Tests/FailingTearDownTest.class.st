@@ -11,7 +11,6 @@ Class {
 	#name : #FailingTearDownTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'instanceVariable',
 		'shouldFailTearDown',
 		'assignedVariableToTestCleanup'
 	],
