@@ -263,6 +263,23 @@ RGClassStrategy >> definition [
 	^ aStream contents
 ]
 
+{ #category : #accessing }
+RGClassStrategy >> definitionString [
+	"Answer the receiver's <String> class definition resolving it from the receiver's package information"
+
+	^ self package definitionFor: self
+]
+
+{ #category : #accessing }
+RGClassStrategy >> definitionStringFor: aRGPackage [
+	"Answer the receiver's definition <String> contained in aRGPackage Monticello snapshot information"
+
+	^ (aRGPackage asMCSnapshot
+		classDefinitionNamed: self owner name
+		ifAbsent: [ self error: 'No class definition found for the recever' ])
+			definitionString
+]
+
 { #category : #testing }
 RGClassStrategy >> definitionWithSlots [
 

@@ -44,6 +44,16 @@ RGPackage >> addoptToParentStub [
 ]
 
 { #category : #accessing }
+RGPackage >> buildMicroDownUsing: aMicMicrodownTextualBuilder withComment: aString [ 
+
+	aMicMicrodownTextualBuilder 
+		header: [ aMicMicrodownTextualBuilder text: 'Class: '.
+					aMicMicrodownTextualBuilder text: self name ] withLevel: 1;
+		horizontalLine;
+		text: aString
+]
+
+{ #category : #accessing }
 RGPackage >> categories [
 	
 	^ self definedBehaviors collect: #category as: Set
@@ -155,6 +165,13 @@ RGPackage >> definedTraits [
 	"Retrieves the traits defined in the receiver"
 
 	^self definedBehaviors select: #isTrait
+]
+
+{ #category : #accessing }
+RGPackage >> definitionFor: aRGClassStrategy [
+	"Answer a <String>. Use aRGBehaviourStrategy to access the definition <String> for the receiver"
+
+	^ aRGClassStrategy definitionStringFor: self
 ]
 
 { #category : #accessing }

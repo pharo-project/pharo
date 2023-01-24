@@ -222,6 +222,16 @@ RGBehavior >> asYetUnclassifiedProtocolName [
 	^ Protocol unclassified
 ]
 
+{ #category : #accessing }
+RGBehavior >> buildMicroDownUsing: aMicMicrodownTextualBuilder withComment: aString [ 
+
+	aMicMicrodownTextualBuilder 
+		header: [ aMicMicrodownTextualBuilder text: 'Class: '.
+					aMicMicrodownTextualBuilder text: self name ] withLevel: 1;
+		horizontalLine;
+		text: aString
+]
+
 { #category : #testing }
 RGBehavior >> canMergeWith: anRGObject visited: visitedDefinitions [
 
@@ -409,6 +419,13 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self.
 ]
 
+{ #category : #accessing }
+RGBehavior >> definitionString [
+	"Answer a <String> with the receiver's definition accordingly to its strategy"
+
+	^ self behaviorStrategy definitionString
+]
+
 { #category : #fileout }
 RGBehavior >> definitionStringFor: aConfiguredPrinter [
 
@@ -486,17 +503,16 @@ RGBehavior >> includesSelector: aString [
 ]
 
 { #category : #'testing - class hierarchy' }
-RGBehavior >> inheritsFrom: aClass [ 
-	"Answer whether the argument, aClass, is on the receiver's superclass 
-	chain."
+RGBehavior >> inheritsFrom: aClass [
+	"Answer whether the argument, aClass, is on the receiver's superclass chain."
 
 	| aSuperclass |
 	aSuperclass := self superclass.
-	[aSuperclass == nil]
-		whileFalse: 
-			[aSuperclass == aClass ifTrue: [^true].
-			aSuperclass := aSuperclass superclass].
-	^false
+	[ aSuperclass isNil ] whileFalse: [
+		aSuperclass == aClass ifTrue: [ ^ true ].
+		aSuperclass hasResolvedName ifFalse: [ ^ false ].
+		aSuperclass := aSuperclass superclass ].
+	^ false
 ]
 
 { #category : #initialization }
@@ -744,6 +760,12 @@ RGBehavior >> name: aString [
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
 		self announcer behaviorModificationAppliedTo: assoc key.
 		self announcer behaviorParentRenamed: assoc key from: oldName ].
+]
+
+{ #category : #testing }
+RGBehavior >> needsSlotClassDefinition [
+
+	^ false
 ]
 
 { #category : #fileout }
