@@ -249,8 +249,8 @@ UIThemePalette >> growlContentsColorFor: aGrowlMorph [
 		  ifAbsentPut: [ colorConfigurator growlContentsColorFor: aGrowlMorph ]
 ]
 
-{ #category : #'as yet unclassified' }
-UIThemePalette >> growlFillColorFor: aGrowlMorph [ 
+{ #category : #colors }
+UIThemePalette >> growlFillColorFor: aGrowlMorph [
 
 	^ paletteDictionary at: #growlFillColorFor: ifAbsentPut: [ colorConfigurator growlFillColorFor: aGrowlMorph ]
 ]
