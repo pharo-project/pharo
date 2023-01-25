@@ -25,7 +25,7 @@ FFIExternalString >> basicHandle: aHandle at: index [
 		fromHandle: (aHandle pointerAt: index)
 		type: ExternalType string.
 	data isNull ifTrue: [ ^ nil ].
-	^ data bytesFromCString
+	^ data bytesFromCString utf8Decoded
 ]
 
 { #category : #private }
