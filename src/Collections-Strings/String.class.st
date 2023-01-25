@@ -699,6 +699,13 @@ String >> asLowercase [
 ]
 
 { #category : #converting }
+String >> asNumber [
+	"Answer the Number created by interpreting the receiver as the string representation of a number."
+
+	^ Number readFromString: self
+]
+
+{ #category : #converting }
 String >> asOctetString [
 	"Convert the receiver into an octet string, if possible"
 	"(IE, I am a WideString containing only character with codePoints < 255, so all of them fit in a latin1-string)."
