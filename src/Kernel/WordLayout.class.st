@@ -24,7 +24,7 @@ WordLayout class >> subclassDefiningSymbol [
 
 { #category : #accessing }
 WordLayout >> bytesPerSlot [
-	
+
 	^ 4
 ]
 

@@ -8,23 +8,23 @@ Class {
 }
 
 { #category : #running }
-ClassHierarchyPrinterTest >> setUp [ 
+ClassHierarchyPrinterTest >> setUp [
 	super setUp.
-	printer := ClassHierarchyPrinter new.
+	printer := ClassHierarchyPrinter new
 ]
 
 { #category : #tests }
 ClassHierarchyPrinterTest >> testOnlyFreeText [
 
-	printer 
+	printer
 		nextPutAll: 'Start';
 		cr;
 		tab;
 		nextPutAll: 'Tabbed';
 		cr;
 		nextPutAll: 'End'.
-		
-		
+
+
 	self assert: printer print equals: 'Start
 	Tabbed
 End'
@@ -78,13 +78,13 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintClassNamesOnly [
 
-	printer 
-		forClass: Rectangle; 
+	printer
+		forClass: Rectangle;
 		doNotShowState;
 		doNotShowSuperclasses.
-	self 
-		assert: printer print 
-		equals: 
+	self
+		assert: printer print
+		equals:
 'Rectangle
 	CharacterBlock
 '
@@ -93,9 +93,9 @@ ClassHierarchyPrinterTest >> testPrintClassNamesOnly [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintFullHierarchyOfRectangle [
 
-	printer forClass: Rectangle. 
-	self 
-		assert: printer print  
+	printer forClass: Rectangle.
+	self
+		assert: printer print
 		equals: 'ProtoObject
 	Object
 
@@ -107,9 +107,9 @@ ClassHierarchyPrinterTest >> testPrintFullHierarchyOfRectangle [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 
-	printer forClass: Point. 
-	self 
-		assert: printer print 
+	printer forClass: Point.
+	self
+		assert: printer print
 		equals:
 'ProtoObject
 	Object
@@ -121,11 +121,11 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoState [
 
-	printer 
-		forClass: Point ; 
+	printer
+		forClass: Point ;
 		doNotShowState.
-	self 
-		assert: printer print 
+	self
+		assert: printer print
 		equals:
 'ProtoObject
 	Object
@@ -137,11 +137,11 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoState [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoSuperclasses [
 
-	printer 
+	printer
 		forClass: Point;
 		doNotShowSuperclasses.
-	self 
-		assert: printer print 
+	self
+		assert: printer print
 		equals: 'Point ( x y )
 '
 ]
@@ -149,9 +149,9 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoSuperclasses [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 
-	printer forClass: Rectangle. 
-	self 
-		assert: printer print 
+	printer forClass: Rectangle.
+	self
+		assert: printer print
 		equals:
 'ProtoObject
 	Object
@@ -164,11 +164,11 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleNoSuperclasses [
 
-	printer 
-		forClass: Rectangle; 
+	printer
+		forClass: Rectangle;
 		doNotShowSuperclasses.
-	self 
-		assert: printer print 
+	self
+		assert: printer print
 		equals:
 'Rectangle ( origin corner )
 	CharacterBlock ( stringIndex text textLine )
@@ -178,11 +178,11 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleNoSuperclasses [
 { #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleWithFilteredClasses [
 
-	printer forClass: Rectangle. 
+	printer forClass: Rectangle.
 	printer limitedToClasses: { Rectangle }.
-	self 
-		assert: printer print 
-		equals: 
+	self
+		assert: printer print
+		equals:
 'ProtoObject
 	Object
 

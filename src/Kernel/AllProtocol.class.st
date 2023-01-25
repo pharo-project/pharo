@@ -35,7 +35,7 @@ AllProtocol >> canBeRenamed [
 ]
 
 { #category : #testing }
-AllProtocol >> isVirtualProtocol [ 
+AllProtocol >> isVirtualProtocol [
 	^ true
 ]
 
@@ -52,18 +52,18 @@ AllProtocol >> name [
 ]
 
 { #category : #accessing }
-AllProtocol >> name: aString [ 
-	self error: 'You cannot change my name'.
+AllProtocol >> name: aString [
+	self error: 'You cannot change my name'
 ]
 
 { #category : #accessing }
 AllProtocol >> protocolOrganizer [
-	
+
 	^ protocolOrganizer
 ]
 
 { #category : #accessing }
 AllProtocol >> protocolOrganizer: anObject [
-	
-	protocolOrganizer := anObject.
+
+	protocolOrganizer := anObject
 ]

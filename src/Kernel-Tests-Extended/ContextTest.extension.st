@@ -37,7 +37,7 @@ ContextTest >> testReadVariableNamed [
 	self assert: (thisContext readVariableNamed: #localVar) equals: 2.
 	self assert: (thisContext readVariableNamed: #instVarForTestLookupSymbol) equals: 3.
 	self assert: (thisContext readVariableNamed: #classVarForTestLookupSymbol) equals: 4.
-	self assert: (thisContext readVariableNamed: #Smalltalk) equals: Smalltalk.
+	self assert: (thisContext readVariableNamed: #Smalltalk) equals: Smalltalk
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -50,7 +50,7 @@ ContextTest >> testSourceNodeExecuted [
 { #category : #'*Kernel-Tests-Extended' }
 ContextTest >> testSourceNodeExecutedWhenContextIsJustAtStartpc [
 	| sourceNode context |
-	
+
 	context := Context sender: thisContext receiver: self method: self class >> testSelector arguments: #().
 	sourceNode := context sourceNodeExecuted.
 	self assert: sourceNode equals: (self class >> testSelector) ast sendNodes first receiver
