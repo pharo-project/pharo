@@ -18,14 +18,14 @@ ReClassNotCategorizedRule class >> checksClass [
 { #category : #accessing }
 ReClassNotCategorizedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ReClassNotCategorizedRule'
 ]
 
 { #category : #running }
 ReClassNotCategorizedRule >> basicCheck: aClass [
 	aClass isMeta ifTrue: [ ^ false ].
-	
+
 	^aClass tags isEmpty and: [ aClass package classTags size > 1 ]
 ]
 

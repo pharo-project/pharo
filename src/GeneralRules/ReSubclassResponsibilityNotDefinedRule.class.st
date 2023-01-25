@@ -15,25 +15,25 @@ ReSubclassResponsibilityNotDefinedRule class >> checksClass [
 { #category : #accessing }
 ReSubclassResponsibilityNotDefinedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'SubclassResponsibilityNotDefinedRule'
 ]
 
 { #category : #running }
 ReSubclassResponsibilityNotDefinedRule >> check: aClass forCritiquesDo: aCriticBlock [
 
-	(aClass whichSelectorsReferTo: #subclassResponsibility) do:  
-		[ :selector | 
-		(aClass subclasses do: [ :class | 
+	(aClass whichSelectorsReferTo: #subclassResponsibility) do:
+		[ :selector |
+		(aClass subclasses do: [ :class |
 				(class subclasses isEmpty and:
-				[ (class whichClassIncludesSelector: selector) == aClass ]) ifTrue: [ 
+				[ (class whichClassIncludesSelector: selector) == aClass ]) ifTrue: [
 					aCriticBlock cull: (ReMissingMethodCritique
 						for: aClass
 						by: self
 						class: class
 						selector: selector)
 						beShouldBeImplemented;
-						yourself ] ]) ].
+						yourself ] ]) ]
 ]
 
 { #category : #accessing }
