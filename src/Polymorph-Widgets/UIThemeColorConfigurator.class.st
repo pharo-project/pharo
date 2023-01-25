@@ -253,7 +253,7 @@ UIThemeColorConfigurator >> growlContentsColorFor: aGrowlMorph [
 	^ Color white
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 UIThemeColorConfigurator >> growlFillColorFor: aGrowlMorph [
 
 	^ Color darkGray alpha: 0.5
