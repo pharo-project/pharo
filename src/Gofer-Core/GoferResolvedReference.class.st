@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 GoferResolvedReference class >> name: aString repository: aRepository [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeName: aString repository: aRepository;
 		yourself
 ]
@@ -27,10 +27,10 @@ GoferResolvedReference >> <= aResolvedReference [
 		3. version number
 		4. author name
 		5. repository priority"
-	
+
 	self packageName = aResolvedReference packageName
 		ifFalse: [ ^ self packageName <= aResolvedReference packageName ].
-	self branch = aResolvedReference branch ifFalse: [ 
+	self branch = aResolvedReference branch ifFalse: [
 		^ (self branch isEmpty or: [ aResolvedReference branch isEmpty ])
 			ifTrue: [ self branch size > aResolvedReference branch size ]
 			ifFalse: [ self branch <= aResolvedReference branch ] ].
@@ -52,7 +52,7 @@ GoferResolvedReference >> initializeName: aString repository: aRepository [
 { #category : #actions }
 GoferResolvedReference >> merge [
 	"Merge-in the changes of this refence"
-	
+
 	Gofer new
 		repository: self repository;
 		package: package;
@@ -63,7 +63,7 @@ GoferResolvedReference >> merge [
 { #category : #accessing }
 GoferResolvedReference >> repository [
 	"Answer the repository of the receiver."
-	
+
 	^ repository
 ]
 

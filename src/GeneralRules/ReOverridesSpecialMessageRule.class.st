@@ -15,20 +15,20 @@ ReOverridesSpecialMessageRule class >> checksClass [
 { #category : #accessing }
 ReOverridesSpecialMessageRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'OverridesSpecialMessageRule'
 ]
 
 { #category : #running }
 ReOverridesSpecialMessageRule >> check: aClass forCritiquesDo: aCriticBlock [
 	| selectors |
-	selectors := aClass isMeta 
+	selectors := aClass isMeta
 		ifTrue: [ self metaclassShouldNotOverride ]
 		ifFalse: [ self classShouldNotOverride ].
 	(selectors anySatisfy: [ :each |
 		(aClass superclass notNil
 			and: [ (aClass superclass canUnderstand: each)
-			and: [ (aClass includesSelector: each) ] ]) ]) ifTrue: [ 
+			and: [ (aClass includesSelector: each) ] ]) ]) ifTrue: [
 		aCriticBlock cull: (self critiqueFor: aClass) ]
 ]
 
@@ -53,7 +53,7 @@ ReOverridesSpecialMessageRule >> name [
 ]
 
 { #category : #accessing }
-ReOverridesSpecialMessageRule >> rationale [ 
+ReOverridesSpecialMessageRule >> rationale [
 
 	^ 'Checks that a class does not override a message that is essential to the base system. For example, if you override the #class method from object, you are likely to crash your image.
 In the class the messages we should not override are: ',  (', ' join: (self classShouldNotOverride) ),'.

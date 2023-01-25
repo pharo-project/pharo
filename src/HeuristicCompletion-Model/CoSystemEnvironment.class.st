@@ -27,19 +27,19 @@ CoSystemEnvironment class >> new [
 
 { #category : #accessing }
 CoSystemEnvironment >> at: aString ifPresent: aBlockClosure [
-	
+
 	systemDictionary at: aString ifPresent: aBlockClosure
 ]
 
 { #category : #accessing }
 CoSystemEnvironment >> environmentAt: aKey ifPresent: aBlock [
-	
+
 	^ systemDictionary at: aKey ifPresent: aBlock
 ]
 
 { #category : #accessing }
 CoSystemEnvironment >> globals [
-	
+
 	^ systemDictionary keys sorted
 ]
 

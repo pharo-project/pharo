@@ -35,12 +35,12 @@ CoMethodVariableFetcher >> methodVariableNamesDo: aBlock [
 
 	| currentNode |
 	currentNode := completionASTNode.
-	[ currentNode notNil ] whileTrue: [ 
+	[ currentNode notNil ] whileTrue: [
 		"ASTs are strange.
 		There is no way to ask the variables defined in the scope in an ordered way.
 		Hack our way through"
 		self flag: #notNice.
-		currentNode isSequence ifTrue: [ 
+		currentNode isSequence ifTrue: [
 			currentNode temporaryNames do: aBlock.
 			currentNode parent argumentNames do: aBlock ].
 		currentNode := currentNode parent ]

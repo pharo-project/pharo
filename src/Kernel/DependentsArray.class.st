@@ -20,7 +20,7 @@ DependentsArray class >> with: anObject [
 ]
 
 { #category : #'instance creation' }
-DependentsArray class >> with: firstObject with: secondObject [ 
+DependentsArray class >> with: firstObject with: secondObject [
 	^(self basicNew: 2)
 		basicAt: 1 put: firstObject;
 		basicAt: 2 put: secondObject;
@@ -28,7 +28,7 @@ DependentsArray class >> with: firstObject with: secondObject [
 ]
 
 { #category : #'instance creation' }
-DependentsArray class >> with: firstObject with: secondObject with: thirdObject [ 
+DependentsArray class >> with: firstObject with: secondObject with: thirdObject [
 	^(self basicNew: 3)
 		basicAt: 1 put: firstObject;
 		basicAt: 2 put: secondObject;
@@ -37,7 +37,7 @@ DependentsArray class >> with: firstObject with: secondObject with: thirdObject 
 ]
 
 { #category : #'instance creation' }
-DependentsArray class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [ 
+DependentsArray class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [
 	^(self basicNew: 4)
 		basicAt: 1 put: firstObject;
 		basicAt: 2 put: secondObject;
@@ -105,7 +105,7 @@ DependentsArray >> at: anIndex put: anObject [
 ]
 
 { #category : #private }
-DependentsArray >> basicReplaceFrom: start to: stop with: replacement startingAt: repStart [ 
+DependentsArray >> basicReplaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	start to: stop do: [:i |
@@ -113,7 +113,7 @@ DependentsArray >> basicReplaceFrom: start to: stop with: replacement startingAt
 ]
 
 { #category : #enumerating }
-DependentsArray >> collect: aBlock [ 
+DependentsArray >> collect: aBlock [
 	"Refer to the comment in Collection|select:."
 	| basicSize newSelf size dep selection |
 	basicSize := self basicSize.
@@ -127,7 +127,7 @@ DependentsArray >> collect: aBlock [
 ]
 
 { #category : #copying }
-DependentsArray >> copyWith: newElement [ 
+DependentsArray >> copyWith: newElement [
 	"Re-implemented to not copy any niled out dependents."
 	| copy i |
 	copy := self class new: self size + 1.
@@ -142,7 +142,7 @@ DependentsArray >> do: aBlock [
 	"Evaluate a Block on non nil elements of the receiver"
 	| dep |
 	1 to: self basicSize do:[:i|
-		(dep := self basicAt: i) ifNotNil:[aBlock value: dep]].
+		(dep := self basicAt: i) ifNotNil:[aBlock value: dep]]
 ]
 
 { #category : #accessing }
@@ -166,7 +166,7 @@ DependentsArray >> reverseDo: aBlock [
 ]
 
 { #category : #enumerating }
-DependentsArray >> select: aBlock [ 
+DependentsArray >> select: aBlock [
 	"Refer to the comment in Collection|select:."
 	| basicSize newSelf size selection |
 	basicSize := self basicSize.
@@ -185,7 +185,7 @@ DependentsArray >> select: aBlock [
 DependentsArray >> size [
 	"count each non nil elements in self.
 	Note: count: will use do: which will already have filtered out nil elements"
-	
+
 	^self count: [:each | true]
 ]
 

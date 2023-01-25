@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : #EFFormatter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #RBAbstractFormatter,
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -387,6 +387,12 @@ EFFormatter class >> periodsAtEndOfBlock [
 { #category : #accessing }
 EFFormatter class >> periodsAtEndOfMethod [
 	^ DefaultPrettyPrintContext periodsAtEndOfMethod
+]
+
+{ #category : #priority }
+EFFormatter class >> priority [
+	
+	^ 10
 ]
 
 { #category : #accessing }

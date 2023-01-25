@@ -20,7 +20,7 @@ AbstractProtocol class >> defaultName [
 
 { #category : #testing }
 AbstractProtocol class >> isAbstract [
-		
+
 	^ self == AbstractProtocol
 ]
 
@@ -57,8 +57,8 @@ AbstractProtocol >> isEmpty [
 ]
 
 { #category : #testing }
-AbstractProtocol >> isExtensionProtocol [ 
-	^ self name first = $*.
+AbstractProtocol >> isExtensionProtocol [
+	^ self name first = $*
 ]
 
 { #category : #testing }
@@ -78,7 +78,7 @@ AbstractProtocol >> name [
 ]
 
 { #category : #accessing }
-AbstractProtocol >> name: aString [ 
+AbstractProtocol >> name: aString [
 	^ self subclassResponsibility
 ]
 

@@ -7,7 +7,7 @@ I could be improved, but the goal is to get the information is a more or less ok
 "
 Class {
 	#name : #RBSimpleFormatter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #RBAbstractFormatter,
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -45,6 +45,11 @@ RBSimpleFormatter class >> formatAsYouReadPolicy: anObject [
 RBSimpleFormatter class >> initialize [
 
   FormatAsYouReadPolicy := false
+]
+
+{ #category : #priority }
+RBSimpleFormatter class >> priority [
+	^ 0
 ]
 
 { #category : #private }

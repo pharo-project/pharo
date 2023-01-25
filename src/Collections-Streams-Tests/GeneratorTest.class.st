@@ -131,6 +131,17 @@ GeneratorTest >> testNext [
 ]
 
 { #category : #tests }
+GeneratorTest >> testOnDo [
+
+	| generator |
+	generator := Generator onDo: [ :doBody | Integer primesUpTo: 10000000 do: doBody ].
+	
+	self assert: generator next equals: 2.
+	self assert: generator next equals: 3.
+	self assert: generator next equals: 5.
+]
+
+{ #category : #tests }
 GeneratorTest >> testPeek [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.

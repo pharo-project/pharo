@@ -699,6 +699,13 @@ String >> asLowercase [
 ]
 
 { #category : #converting }
+String >> asNumber [
+	"Answer the Number created by interpreting the receiver as the string representation of a number."
+
+	^ Number readFromString: self
+]
+
+{ #category : #converting }
 String >> asOctetString [
 	"Convert the receiver into an octet string, if possible"
 	"(IE, I am a WideString containing only character with codePoints < 255, so all of them fit in a latin1-string)."
@@ -2176,6 +2183,20 @@ String >> match: text [
 	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
 	^ self startingAt: 1 match: text startingAt: 1
+]
+
+{ #category : #converting }
+String >> normalizeCamelCase [
+	"
+	'TheRollingStones' normalizeCamelCase >>> 'The Rolling Stones'
+	"
+	^ self class streamContents: [ : stream |
+		self do: [ : char |
+			(char isUppercase and: [
+				(stream position > 0 and: [ stream peekLast isUppercase not ])
+					and: [ stream peekLast isSpaceSeparator not  ] ])
+						ifTrue: [ stream nextPut: Character space ].
+			stream nextPut: char ] ]
 ]
 
 { #category : #'system primitives' }

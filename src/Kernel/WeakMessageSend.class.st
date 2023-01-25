@@ -63,7 +63,7 @@ WeakMessageSend >> arguments [
 WeakMessageSend >> arguments: anArray [
 	arguments := WeakArray withAll: anArray.
 	"no reason this should be a WeakArray"
-	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ]).
+	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ])
 ]
 
 { #category : #converting }
@@ -98,21 +98,21 @@ WeakMessageSend >> collectArguments: anArgArray [
 
 { #category : #evaluating }
 WeakMessageSend >> cull: arg [
-	^ selector numArgs = 0 
+	^ selector numArgs = 0
 		ifTrue: [ self value ]
-		ifFalse: [ self value: arg ].
+		ifFalse: [ self value: arg ]
 ]
 
 { #category : #evaluating }
 WeakMessageSend >> cull: arg1 cull: arg2 [
-	^ selector numArgs < 2 
+	^ selector numArgs < 2
 		ifTrue: [ self cull: arg1]
 		ifFalse: [ self value: arg1 value: arg2 ]
 ]
 
 { #category : #evaluating }
 WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 [
-	^ selector numArgs < 3 
+	^ selector numArgs < 3
 		ifTrue: [ self cull: arg1 cull: arg2 ]
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
 ]
@@ -134,7 +134,7 @@ WeakMessageSend >> ensureReceiver [
   self receiver ifNil: [^ false].
   (self receiver class isObsolete) ifTrue: [^ false].
   (self receiver isBehavior and: [self receiver isObsolete]) ifTrue: [^ false].
-  ^ true.
+  ^ true
 ]
 
 { #category : #private }
@@ -143,7 +143,7 @@ WeakMessageSend >> ensureReceiver: anObject [
   anObject ifNil: [^ false].
   (anObject class isObsolete) ifTrue: [^ false].
   (anObject isBehavior and: [anObject isObsolete]) ifTrue: [^ false].
-  ^ true.
+  ^ true
 ]
 
 { #category : #private }
@@ -214,7 +214,7 @@ WeakMessageSend >> isReceiverGarbage [
 { #category : #private }
 WeakMessageSend >> isReceiverOrAnyArgumentGarbage [
 	"Make sure that my receiver hasn't gone away"
-	^self isReceiverGarbage 
+	^self isReceiverGarbage
 		or: [self isAnyArgumentGarbage]
 ]
 
@@ -227,13 +227,13 @@ WeakMessageSend >> isValid [
 WeakMessageSend >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		print: selector;
 		nextPutAll: ' -> ';
 		print: self receiver;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #accessing }
@@ -278,27 +278,27 @@ WeakMessageSend >> value [
 WeakMessageSend >> value: anObject [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
-	
+
 	^ strongReceiver
-		perform: selector 
+		perform: selector
 		with: anObject
 ]
 
 { #category : #evaluating }
-WeakMessageSend >> value: anObject1 value: anObject2 [ 
+WeakMessageSend >> value: anObject1 value: anObject2 [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
-	
-	^ strongReceiver 
-		perform: selector 
+
+	^ strongReceiver
+		perform: selector
 		with: anObject1
 		with: anObject2
 ]
@@ -307,13 +307,13 @@ WeakMessageSend >> value: anObject1 value: anObject2 [
 WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
-	
+
 	^ strongReceiver
-		perform: selector 
+		perform: selector
 		with: anObject1
 		with: anObject2
 		with: anObject3
@@ -323,12 +323,12 @@ WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 WeakMessageSend >> valueWithArguments: anArray [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiverAndArguments: strongReceiver) ifFalse: [ ^nil ].
-	^ strongReceiver 
-		perform: selector 
+	^ strongReceiver
+		perform: selector
 		withArguments: (self collectArguments: anArray)
 ]
 
@@ -336,9 +336,9 @@ WeakMessageSend >> valueWithArguments: anArray [
 WeakMessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
 	| args strongReceiver |
-	
+
 	strongReceiver := self receiver.
-	
+
 	(self ensureReceiverAndArguments: strongReceiver) ifFalse: [ ^nil ].
 	args := Array new: selector numArgs.
 	args replaceFrom: 1

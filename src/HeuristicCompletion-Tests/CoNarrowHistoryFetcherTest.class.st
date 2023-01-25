@@ -10,7 +10,7 @@ CoNarrowHistoryFetcherTest >> setUp [
 	super setUp.
 	fetcher := CoNarrowHistoryFetcher new
 		decoree: (CoCollectionFetcher onCollection: #( a b c )).
-	expectedElements := #(a b c).
+	expectedElements := #(a b c)
 ]
 
 { #category : #tests }
@@ -42,9 +42,9 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectly [
 
 	| originalSearch narrowedResults selectors |
-	
+
 	selectors := Symbol selectorTable asArray.
-	
+
 	"First execution with complete query"
 	fetcher := (CoCollectionFetcher onCollection: selectors)
 		           withNarrowHistory.
@@ -65,7 +65,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectl
 		           narrowKey: 'asL'.
 
 	narrowedResults := fetcher next: 10.
-	
+
 	self assertCollection: originalSearch equals: narrowedResults
 ]
 
