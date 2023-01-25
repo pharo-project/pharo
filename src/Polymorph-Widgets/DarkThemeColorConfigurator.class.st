@@ -335,9 +335,3 @@ DarkThemeColorConfigurator >> windowActiveLabelFillStyleFor: aWindow [
 
 	^ self textColor
 ]
-
-{ #category : #colors }
-DarkThemeColorConfigurator >> windowColor [
-
-	^ Color lightGray
-]

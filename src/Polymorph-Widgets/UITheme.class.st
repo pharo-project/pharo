@@ -1678,7 +1678,7 @@ UITheme >> defaultMenuTitleColor [
 
 { #category : #initialization }
 UITheme >> defaultSettings [
-	
+
 	^ ThemeSettings new
 		buttonColor: Color gray;
 		scrollbarColor: Color gray;
@@ -1692,7 +1692,8 @@ UITheme >> defaultSettings [
 		autoSelectionColor: false;
 		preferRoundCorner: false;
 		fadedBackgroundWindows: false;
-		flatMenu: true
+		flatMenu: true;
+		yourself
 ]
 
 { #category : #initialization }
