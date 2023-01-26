@@ -14,7 +14,8 @@ Class {
 		'font',
 		'isForWorkspace',
 		'pixelHeight',
-		'workspace'
+		'workspace',
+		'plugins'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -838,6 +839,12 @@ SHRBTextStyler class >> vintageStyleTable [
 			(module 								(cyan muchDarker) bold))
 ]
 
+{ #category : #private }
+SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
+
+	self plugins add: aPlugin
+]
+
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
 	self 
@@ -867,6 +874,12 @@ SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aT
 					to: stop ]].
 		
 	^ aText
+]
+
+{ #category : #accessing }
+SHRBTextStyler >> addPlugin: aPlugin [
+
+	self plugins add: aPlugin
 ]
 
 { #category : #formatting }
@@ -1012,6 +1025,12 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
 { #category : #private }
 SHRBTextStyler >> pixelHeight [
 	^ pixelHeight ifNil: [ pixelHeight := (font ifNil: [ TextStyle defaultFont ]) pixelSize ]
+]
+
+{ #category : #private }
+SHRBTextStyler >> plugins [
+
+	^ plugins ifNil: [ plugins := OrderedCollection new ]
 ]
 
 { #category : #private }

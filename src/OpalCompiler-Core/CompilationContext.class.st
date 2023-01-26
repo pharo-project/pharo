@@ -30,6 +30,7 @@ Class {
 		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
+		'astParseTransformPlugins',
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
@@ -340,12 +341,26 @@ CompilationContext class >> writeDefaultOption: option value: boolean [
 
 { #category : #plugins }
 CompilationContext >> addASTTransformationPlugin: aPlugin [
+
 	astTransformPlugins add: aPlugin
 ]
 
 { #category : #plugins }
+CompilationContext >> addParseASTTransformationPlugin: aPlugin [
+
+	astParseTransformPlugins add: aPlugin
+]
+
+{ #category : #plugins }
+CompilationContext >> astParseTransformPlugins [
+
+	^ astParseTransformPlugins
+]
+
+{ #category : #plugins }
 CompilationContext >> astTransformPlugins [
-	^astTransformPlugins
+
+	^ astTransformPlugins
 ]
 
 { #category : #accessing }
@@ -466,7 +481,8 @@ CompilationContext >> getClass [
 CompilationContext >> initialize [
 	options := Set new.
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
-	semanticScope := OCMethodSemanticScope targetingClass: nil class
+	semanticScope := OCMethodSemanticScope targetingClass: nil class.
+	astParseTransformPlugins := OrderedCollection new: 2
 ]
 
 { #category : #accessing }

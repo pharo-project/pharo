@@ -475,6 +475,14 @@ RBMessageNode >> sentMessages [
 ]
 
 { #category : #accessing }
+RBMessageNode >> start: newStart [
+	| oldStart |
+
+	oldStart := self start.
+	keywordsPositions := keywordsPositions collect: [ :each | each - oldStart + newStart ]
+]
+
+{ #category : #accessing }
 RBMessageNode >> startWithoutParentheses [
 	^receiver start
 ]

@@ -126,3 +126,12 @@ Behavior >> scopeLevel [
 	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
 	^ 0
 ]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> syntaxHighlighter [
+	"Answer a compiler appropriate for source methods of this class."
+
+	^ SHRBTextStyler new
+		classOrMetaClass: self;
+		yourself
+]
