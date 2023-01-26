@@ -17,10 +17,10 @@ SendsDeprecatedMethodToGlobalRuleTest >> deprecatedMethodName [
 { #category : #properties }
 SendsDeprecatedMethodToGlobalRuleTest >> globalName [
 
-	^ globalName ifNil: [ 
+	^ globalName ifNil: [
 		[ globalName :=
 			('TestGlobal', 1e10 atRandom asString) asSymbol
-		] doWhileTrue: [ 
+		] doWhileTrue: [
 			"if the name already exists, we generate another one"
 			testingEnvironment includesKey: globalName ] ]
 ]
@@ -35,13 +35,13 @@ SendsDeprecatedMethodToGlobalRuleTest >> nonDeprecatedMethodName [
 SendsDeprecatedMethodToGlobalRuleTest >> setUp [
 	| deprClass |
 	super setUp.
-	deprClass := Object newAnonymousSubclass. 
+	deprClass := Object newAnonymousSubclass.
 	testingEnvironment at: self globalName put: deprClass new.
-	
+
 	deprClass compile: self deprecatedMethodName, ' self deprecated: ''this method is deprecated'''.
 	deprClass compile: self nonDeprecatedMethodName.
-	
-	testClass := Object newAnonymousSubclass.
+
+	testClass := Object newAnonymousSubclass
 ]
 
 { #category : #running }
@@ -90,9 +90,9 @@ SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck2 [
 SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck3 [
 
 	| testMethod |
-	
+
 	testClass addClassVarNamed: #TestVar.
-	
+
 	testMethod := testClass >> (
 		testClass compile: 'testMethod TestVar yourself').
 

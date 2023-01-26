@@ -28,7 +28,7 @@ MacOSResolver >> library [
 ]
 
 { #category : #origins }
-MacOSResolver >> preferences [ 
+MacOSResolver >> preferences [
 	^ self home / 'Library' / 'Preferences'
 ]
 

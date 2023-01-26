@@ -15,7 +15,7 @@ GeneratorTest class >> packageNamesUnderTest [
 { #category : #generators }
 GeneratorTest >> fibonacciSequence [
 	"Yields an infinite sequence of fibonacci numbers."
-	
+
 	^ Generator on: [ :generator |
 		| a b |
 		a := 0. b := 1.
@@ -27,9 +27,9 @@ GeneratorTest >> fibonacciSequence [
 { #category : #generators }
 GeneratorTest >> numbersBetween: aStartInteger and: aStopInteger [
 	"Yields the nubmers between aStartInteger and aStopInteger."
-	
+
 	^ Generator on: [ :generator |
-		aStartInteger to: aStopInteger 
+		aStartInteger to: aStopInteger
 			do: [ :value | generator yield: value ] ]
 ]
 
@@ -51,7 +51,7 @@ GeneratorTest >> testClose [
 	| generator doEnsure notEnsure |
 	doEnsure := notEnsure := 0.
 	[ generator := Generator
-		on: [ :g | 
+		on: [ :g |
 			[ g
 				yield: 1;
 				yield: 2 ]
@@ -93,7 +93,7 @@ GeneratorTest >> testEmpty [
 GeneratorTest >> testEnsure [
 	| generator |
 	generator := Generator
-		on: [ :g | 
+		on: [ :g |
 			[ g
 				yield: 1;
 				yield: 2 ]
@@ -107,7 +107,7 @@ GeneratorTest >> testErrorPropagation [
 
 	| generator |
 	generator := Generator
-		on: [ :g | 
+		on: [ :g |
 			g yield: 1.
 			g error: 'yo' ].
 	self should: [ generator next ] raise: Error
@@ -128,6 +128,17 @@ GeneratorTest >> testNext [
 	self assert: generator next equals: 2.
 	self assert: generator next equals: 3.
 	self assert: generator next isNil
+]
+
+{ #category : #tests }
+GeneratorTest >> testOnDo [
+
+	| generator |
+	generator := Generator onDo: [ :doBody | Integer primesUpTo: 10000000 do: doBody ].
+	
+	self assert: generator next equals: 2.
+	self assert: generator next equals: 3.
+	self assert: generator next equals: 5.
 ]
 
 { #category : #tests }
@@ -162,7 +173,7 @@ GeneratorTest >> testResetUnwind [
 	| generator doEnsure notEnsure |
 	doEnsure := notEnsure := 0.
 	[ generator := Generator
-		on: [ :g | 
+		on: [ :g |
 			[ g
 				yield: 1;
 				yield: 2 ]
@@ -188,7 +199,7 @@ GeneratorTest >> testResetUnwind [
 GeneratorTest >> testSimple [
 	| generator |
 	generator := Generator
-		on: [ :g | 
+		on: [ :g |
 			g
 				yield: 1;
 				yield: 2 ].

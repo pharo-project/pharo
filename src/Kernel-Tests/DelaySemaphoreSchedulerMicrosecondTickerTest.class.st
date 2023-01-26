@@ -13,6 +13,6 @@ Class {
 }
 
 { #category : #tests }
-DelaySemaphoreSchedulerMicrosecondTickerTest >> classForScheduler [ 
+DelaySemaphoreSchedulerMicrosecondTickerTest >> classForScheduler [
 	^ DelaySemaphoreScheduler
 ]

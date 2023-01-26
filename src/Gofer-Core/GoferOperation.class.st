@@ -60,6 +60,6 @@ GoferOperation >> initializeOn: aGofer [
 { #category : #accessing }
 GoferOperation >> model [
 	"Answer the Monticello model of this operation."
-	
+
 	^ model
 ]

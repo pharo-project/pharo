@@ -56,9 +56,9 @@ HermesCommandLineHandler class >> description [
 HermesCommandLineHandler >> activate [
 	self activateHelp ifTrue: [ ^ self ].
 	self validateParameters.
-	
+
 	self processFiles.
-		
+
 	(self hasOption: 'save')
 		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
 
@@ -67,13 +67,13 @@ HermesCommandLineHandler >> activate [
 
 { #category : #'processing files' }
 HermesCommandLineHandler >> createInstaller [
-	"In the basic installation, the bootstraped version of Hermes, 
-	there is only one Installer, the HEInstaller. 
+	"In the basic installation, the bootstraped version of Hermes,
+	there is only one Installer, the HEInstaller.
 	When the extensions are installed the new installer to use is the HEExtendedInstaller."
 
 	^ Smalltalk globals
 		at: #HEExtendedInstaller
-		ifPresent: [ :instClass | 
+		ifPresent: [ :instClass |
 			instClass new
 				forOptions: self commandLine;
 				yourself ]

@@ -93,7 +93,7 @@ RBInsertClassTransformation >> preconditions [
 RBInsertClassTransformation >> privateTransform [
 
 	self model
-		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
+		defineClass: ('<1p> %<%< #<2s> package: <3p>' 
 			expandMacrosWith: (self model classObjectFor: superclass)
 			with: className
 			with: category asString);

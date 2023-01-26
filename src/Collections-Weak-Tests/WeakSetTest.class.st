@@ -112,13 +112,13 @@ WeakSetTest >> testCollisions [
 
 	"create a weak set"
 	ws := self classToBeTested new: 15.
-	
+
 	"select some fractions wanting same place in ws array"
 	o1 := (2 to: 100) select: [:i | (ws scanFor: 1 / i) = 1].
 	o2 := (2 to: 100) select: [:i | (ws scanFor: 1 / i) = 2].
 	o5 := (2 to: 100) select: [:i | (ws scanFor: 1 / i) = 5].
 	on := (2 to: 200) select: [:i | (ws scanFor: 1 / i) = (ws array size - 1)].
-	
+
 	"Add some fractions to the weak set, and remember a pointer for a few of them"
 	remember := OrderedCollection new.
 	forget := OrderedCollection new.
@@ -134,15 +134,15 @@ WeakSetTest >> testCollisions [
 	ws add: (remember add: 1 / o2 fourth).
 	ws add: (remember add: 1 / on first).
 	ws add: (remember add: 1 / o5 first).
-	
+
 	"forget and reclaim all entries but those in remember"
 	forget := nil.
 	Smalltalk garbageCollect.
-	
+
 	remember do: [:m | self assert: (ws includes: m)].
 	ws add: 1/on second.
 	remember do: [:m | self assert: (ws includes: m)].
-	
+
 	ws add: (remember add: 1 / o1 fourth).
 	ws add: (remember add: 1 / on fourth).
 	remember remove: (ws remove: (1 / o5 first)).
@@ -152,7 +152,7 @@ WeakSetTest >> testCollisions [
 	remember do: [:m | self assert: (ws includes: m)].
 	ws add: 1/on second.
 	ws add: 1/o5 second.
-	remember do: [:m | self assert: (ws includes: m)].
+	remember do: [:m | self assert: (ws includes: m)]
 ]
 
 { #category : #tests }
@@ -161,7 +161,7 @@ WeakSetTest >> testDoAfter [
 	input := (1 to: 11) collect: [ :each | each asString asSymbol ].	"Some symbols might be garbage collected without this variable"
 	weakSet := self classToBeTested withAll: input.
 	array := weakSet asArray.	"Assume that the elements will have the same order as the internal array of the weakset"
-	0 to: array size do: [ :index | 
+	0 to: array size do: [ :index |
 		| element result |
 		element := array at: index ifAbsent: nil.
 		result := Array new: weakSet size - index streamContents: [ :stream | weakSet do: [ :each | stream nextPut: each ] after: element ].
@@ -185,7 +185,7 @@ WeakSetTest >> testDoDontIterateOnReclaimedObjects [
 
 	size := 0.
 	ws
-		do: [ :each | 
+		do: [ :each |
 			size := size + 1.
 			self deny: each isNil ].
 
@@ -196,19 +196,19 @@ WeakSetTest >> testDoDontIterateOnReclaimedObjects [
 WeakSetTest >> testDontGrowWhenUnecessary [
 	| ws objs initialSize |
 	objs := (2 to: 20) collect: [:i | 1 / i].
-	
+
 	ws := self classToBeTested new: 20.
 	initialSize := ws array size.
 	objs do: [:k | ws add: k].
 	objs do: [:k | ws remove: k].
 	self assert: ws array size = initialSize
 		description: 'The WeakSet did not have to grow because enough room were preallocated'.
-	
+
 	objs do: [:k | ws add: k + 1].
 	Smalltalk garbageCollect.
 	objs do: [:k | ws add: k].
 	self assert: ws array size = initialSize
-		description: 'The WeakSet did not have to grow because slots of reclaimed objects were recycled'.
+		description: 'The WeakSet did not have to grow because slots of reclaimed objects were recycled'
 ]
 
 { #category : #tests }
@@ -219,7 +219,7 @@ WeakSetTest >> testGrowWhenNecessary [
 	initialSize := ws array size.
 	1 to: objs size do: [:k | ws add: (objs at: k)].
 	self assert: ws array size > initialSize
-		description: 'The WeakSet grown because not enough room were preallocated'.
+		description: 'The WeakSet grown because not enough room were preallocated'
 ]
 
 { #category : #tests }
@@ -233,8 +233,8 @@ WeakSetTest >> testGrowWithNil [
 ]
 
 { #category : #tests }
-WeakSetTest >> testIncludes [	
-	
+WeakSetTest >> testIncludes [
+
 	| weakSet transientFakeNilObject |
 	weakSet := self classToBeTested new.
 	#(true nil 1) do: [ :each | self deny: (weakSet includes: each) ].
@@ -257,10 +257,10 @@ WeakSetTest >> testIncludesNil [
 	| ws |
 	ws := self classToBeTested new.
 	self deny: (ws includes: nil).
-	
+
 	"After reclamation, should not includes nil: nil counts for nothing"
 	ws add: 1/2.
 	ws add: 1/3.
 	Smalltalk garbageCollect.
-	self deny: (ws includes: nil).
+	self deny: (ws includes: nil)
 ]

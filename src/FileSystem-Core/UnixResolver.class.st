@@ -79,9 +79,9 @@ UnixResolver >> xdgUserDir: userDirName [
 	| configFile |
 	configFile := self preferences / 'user-dirs.dirs'.
 	(configFile isFile and: [ configFile isReadable ]) ifFalse: [ ^ nil ].
-	configFile readStreamDo: [ :stream | 
+	configFile readStreamDo: [ :stream |
 		[ stream atEnd ]
-			whileFalse: [ 
+			whileFalse: [
 				((stream peek ~= $#) and: [ (stream upTo: $=) = ('XDG_', userDirName, '_DIR') ])
 							ifTrue: [ ^ self xdgParseUserDirLine: stream ]
 							ifFalse: [ stream nextLine ] ] ].

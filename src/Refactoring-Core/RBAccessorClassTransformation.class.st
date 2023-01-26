@@ -20,7 +20,7 @@ If the class already contains that accessor, I will create another one with a nu
 Class {
 	#name : #RBAccessorClassTransformation,
 	#superclass : #RBClassRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #accessing }

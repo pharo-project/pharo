@@ -24,7 +24,7 @@ FileSystemTreeTest >> createFile: aString [
 
 { #category : #running }
 FileSystemTreeTest >> setUpGreek [
-	self 
+	self
 		createDirectory: '/alpha';
 		createDirectory: '/alpha/beta';
 		createFile: '/alpha/beta/gamma';

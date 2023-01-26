@@ -58,7 +58,7 @@ HEExportedLiteral >> asLiteralIn: anEnvironment [
 { #category : #reading }
 HEExportedLiteral >> doReadFrom: aReader [
 	"Main template method to read the instance from the reader stream"
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

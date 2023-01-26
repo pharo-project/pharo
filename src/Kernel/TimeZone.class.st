@@ -25,14 +25,14 @@ Class {
 { #category : #accessing }
 TimeZone class >> abbreviated: aString [
  	"Return the timezone whose abbreviation is aString."
- 	^ self timeZones detect: [ :timeZone | 
-		timeZone abbreviation = aString ].
+ 	^ self timeZones detect: [ :timeZone |
+		timeZone abbreviation = aString ]
 ]
 
 { #category : #accessing }
 TimeZone class >> default [
  	"Answer the default time zone - GMT"
- 
+
  	^ self timeZones detect: [ :timeZone |
 		timeZone offset = Duration zero ]
 ]
@@ -45,17 +45,17 @@ TimeZone class >> local [
 { #category : #accessing }
 TimeZone class >> offset: aDuration [
  	"Return the timezone with the given offset
-	
+
 		TimeZone offset: 2 hours
 	"
- 	^ self timeZones 
+ 	^ self timeZones
 		detect: [ :timeZone | timeZone offset = aDuration ]
 		ifNone: [ self new offset: aDuration ]
 ]
 
 { #category : #'instance creation' }
 TimeZone class >> offset: aDuration name: aName abbreviation: anAbbreviation [
- 
+
  	^ self new
  		offset: aDuration;
  		name: aName;
@@ -84,7 +84,7 @@ TimeZone class >> timeZones [
 
 { #category : #accessing }
 TimeZone >> abbreviation [
- 
+
  	^ abbreviation
 ]
 
@@ -96,7 +96,7 @@ TimeZone >> abbreviation: aString [
 
 { #category : #accessing }
 TimeZone >> name [
- 
+
  	^ name
 ]
 
@@ -108,7 +108,7 @@ TimeZone >> name: aString [
 
 { #category : #accessing }
 TimeZone >> offset [
- 
+
  	^ offset
 ]
 

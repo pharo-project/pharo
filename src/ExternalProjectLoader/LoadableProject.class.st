@@ -20,34 +20,34 @@ Class {
 }
 
 { #category : #'instance creation' }
-LoadableProject class >> allProjects [ 
-	
+LoadableProject class >> allProjects [
+
 	^ { 	self new
 				name: 'Microdown';
 				baselineName: 'Microdown';
 				repository: 'pillar-markup/Microdown';
 				version: 'dev';
 				group: #default;
-				yourself. 
-			self new 
+				yourself.
+			self new
 				name: 'Beautiful Comments';
-				baselineName: 'BeautifulComments';				
+				baselineName: 'BeautifulComments';
 				repository: 'pillar-markup/BeautifulComments';
 				version: 'master';
 				summary: 'A nice extension of Pharo to support class comments in Microdown and nice rendering.';
 				group: #default;
 				yourself.
-			self new 
+			self new
 				name: 'Serial Port Support';
-				baselineName: 'SerialPort';				
+				baselineName: 'SerialPort';
 				repository: 'tesonep/SerialPort';
 				version: 'main';
 				summary: 'An UFFI implementation of the SerialPort connection';
 				group: #default;
 				yourself.
-			self new 
+			self new
 				name: 'Roassal3.0';
-				baselineName: 'Roassal3';				
+				baselineName: 'Roassal3';
 				repository: 'ObjectProfile/Roassal3';
 				version: 'v0.9.9b';
 				summary: 'Roassal3 is an agile visualization engine for Pharo 8 and Pharo 9. Roassal was created to enable interactive data visualization.';
@@ -63,13 +63,13 @@ LoadableProject class >> named: aString [
 
 { #category : #accessing }
 LoadableProject >> baselineName [
-	
+
 	^ baselineName
 ]
 
 { #category : #accessing }
 LoadableProject >> baselineName: aString [
- 
+
 	baselineName := aString
 ]
 
@@ -84,7 +84,7 @@ LoadableProject >> fetchDescription [
 
 	| request |
 	request := ZnEasy get: self readMeUrl.
-	
+
 	^ request isError
 		ifTrue: [ nil ]
 		ifFalse: [ request contents ]
@@ -106,7 +106,7 @@ LoadableProject >> load [
 	Metacello new
 		baseline: self baselineName;
 		repository: self repositoryWithVersion;
-		load: self group.
+		load: self group
 ]
 
 { #category : #accessing }
@@ -138,7 +138,7 @@ LoadableProject >> repository: aRepository [
 
 { #category : #accessing }
 LoadableProject >> repositoryWithVersion [
-	
+
 	^ 'github://' , self repository , ':' , self version
 ]
 

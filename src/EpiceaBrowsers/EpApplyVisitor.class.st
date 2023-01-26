@@ -22,8 +22,8 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :aClass | 
-			aClass 
+		ifPresent: [ :aClass |
+			aClass
 				classComment: aChange newComment
 				stamp: aChange newStamp ]
 ]
@@ -37,6 +37,11 @@ EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 { #category : #visitor }
 EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
 	environment organization addCategory: aPackageCreated categoryName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitCategoryRegistration: aPackageCreated [
+
 ]
 
 { #category : #visitor }
@@ -63,7 +68,6 @@ EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 
 	(self compiler evaluate: aModifiedClassChange newClass definitionSource) fluidInstall.
 	(self compiler evaluate: aModifiedClassChange newClass classSide definitionSource) fluidInstall
-	
 ]
 
 { #category : #visitor }
@@ -74,54 +78,54 @@ EpApplyVisitor >> visitClassRemoval: aClassRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitCodeChange: aChange [
 	"Default behavior for any change."
-		
+
 	^ self visitEvent: aChange
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitMethodAddition: aMethodCreated [
 
-	self 
+	self
 		behaviorNamed: aMethodCreated behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior
-				compile: aMethodCreated sourceCode 
+				compile: aMethodCreated sourceCode
 				classified: aMethodCreated protocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitMethodModification: aMethodModified [
 
-	self 
+	self
 		behaviorNamed: aMethodModified behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior
-				compile: aMethodModified newSourceCode 
+				compile: aMethodModified newSourceCode
 				classified: aMethodModified newProtocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 
-	self 
+	self
 		behaviorNamed: aMethodRemoval behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior removeSelector: aMethodRemoval selector ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
-	self 
+	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior organization addCategory: aProtocolAddition protocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolRemoval: aProtocolRemoved [
-	self 
+	self
 		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior removeProtocol: aProtocolRemoved protocol ]
 ]
 

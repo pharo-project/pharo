@@ -14,7 +14,7 @@ Class {
 
 { #category : #signalling }
 RuntimeSyntaxError class >> signalSyntaxError: aNode [
-	"we use signalSyntaxError: instead of signal: so we can quickly check 
+	"we use signalSyntaxError: instead of signal: so we can quickly check
 	compiledMethods for syntax errors by checking the literals"
 	^(self new errorNode: aNode) signal
 ]

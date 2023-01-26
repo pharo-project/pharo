@@ -38,7 +38,7 @@ AnimatedImageMorph >> backgroundColor [
 
 { #category : #accessing }
 AnimatedImageMorph >> backgroundColor: aColor [
-	self color: aColor.
+	self color: aColor
 ]
 
 { #category : #accessing }
@@ -56,12 +56,12 @@ AnimatedImageMorph >> drawOn: aCanvas [
 	"currentFrame ifNil: [ ^ self ]."
 	aCanvas
 		translucentImage: activeForm
-		at: self bounds origin.
+		at: self bounds origin
 ]
 
 { #category : #accessing }
 AnimatedImageMorph >> forms [
-	^ frames collect: [ :frame | frame form ].
+	^ frames collect: [ :frame | frame form ]
 ]
 
 { #category : #accessing }
@@ -78,7 +78,7 @@ AnimatedImageMorph >> frames [
 AnimatedImageMorph >> frames: aCollection [
 	"A collection of AnimagedImageFrame instances"
 	frames := aCollection.
-	frameStream := ReadStream on: frames.
+	frameStream := ReadStream on: frames
 ]
 
 { #category : #initialization }
@@ -87,7 +87,7 @@ AnimatedImageMorph >> initialize [
 	self color: Color transparent.
 	frames := OrderedCollection new.
 	currentDisposal := #restoreBackground.
-	activeForm := Form extent: self extent.
+	activeForm := Form extent: self extent
 ]
 
 { #category : #drawing }
@@ -99,8 +99,8 @@ AnimatedImageMorph >> leaveCurrent [
 	canvas
 		translucentImage: currentFrame form
 		at: currentFrame offset.
-	
-	activeForm := canvas form.
+
+	activeForm := canvas form
 ]
 
 { #category : #accessing }
@@ -115,26 +115,26 @@ AnimatedImageMorph >> restoreBackground [
 	| canvas r |
 	canvas := activeForm getCanvas.
 	r := (prevFrame offset extent: (prevFrame form extent)).
-	
+
 	"We restore the area of the previous frame to the backgroundColor.
 	 Usually this is transparent"
 	canvas
 		clipBy: r
 		during: [ :c |
 			c fillColor: self backgroundColor ].
-	
+
 	"Draw the current frame's form atop the current canvas form"
 	canvas
 		translucentImage: currentFrame form
 		at: currentFrame offset.
 
-	activeForm := canvas form.
+	activeForm := canvas form
 ]
 
 { #category : #stepping }
 AnimatedImageMorph >> step [
 	frameStream ifNil: [ ^ self ].
-	frameStream atEnd ifTrue: [ 
+	frameStream atEnd ifTrue: [
 		frameStream reset.
 		prevFrame := nil.
 		currentFrame := frameStream next.
@@ -143,21 +143,21 @@ AnimatedImageMorph >> step [
 			updateActiveForm
 			changed.
 		^ self ].
-	(frameStream position = 0) ifTrue: [ 
+	(frameStream position = 0) ifTrue: [
 		prevFrame := nil.
 		currentDisposal := #restoreBackground  ]
-	ifFalse: [ 
+	ifFalse: [
 		prevFrame := frameStream peekBack.
 		currentDisposal := prevFrame disposal ].
 	currentFrame := frameStream next.
 	self updateActiveForm.
-	self changed.
+	self changed
 ]
 
 { #category : #stepping }
 AnimatedImageMorph >> stepTime [
 	frameStream ifNil: [ ^ self defaultDelay ].
-	^ currentFrame delay.
+	^ currentFrame delay
 ]
 
 { #category : #drawing }

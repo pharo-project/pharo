@@ -152,7 +152,7 @@ VariableBreakpoint >> breakLink [
 		  yourself
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 VariableBreakpoint >> initialize [
 	super initialize.
 	accessStrategy := #all.

@@ -77,7 +77,7 @@ TFVariadicFunctionDefinition >> fixedArgumentCount: anObject [
 	fixedArgumentCount := anObject
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 TFVariadicFunctionDefinition >> initialize [ 
 	
 	super initialize.

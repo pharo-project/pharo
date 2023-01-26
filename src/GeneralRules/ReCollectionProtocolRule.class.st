@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReCollectionProtocolRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'CollectionProtocolRule'
 ]
 
@@ -24,21 +24,21 @@ ReCollectionProtocolRule >> initialize [
 	super initialize.
 	self matchesAny: #(
 		'`@collection do: [:`each | | `@temps | `@.Statements1. `@object add: `@arg. `@.Statements2]'
-		
-		'`@collection do: [:`each | | `@temps | 
-			`@.Statements1. 
-			`@condition ifTrue: [| `@blockTemps | 
-					`@.BlockStatements1. 
-					`@object add: `each. 
-					`@.BlockStatements2]. 
+
+		'`@collection do: [:`each | | `@temps |
+			`@.Statements1.
+			`@condition ifTrue: [| `@blockTemps |
+					`@.BlockStatements1.
+					`@object add: `each.
+					`@.BlockStatements2].
 			`@.Statements2]'
-			
-		'`@collection do: [:`each | | `@temps | 
-			`@.Statements1. 
-			`@condition ifFalse: [| `@blockTemps | 
-					`@.BlockStatements1. 
-					`@object add: `each. 
-					`@.BlockStatements2]. 
+
+		'`@collection do: [:`each | | `@temps |
+			`@.Statements1.
+			`@condition ifFalse: [| `@blockTemps |
+					`@.BlockStatements1.
+					`@object add: `each.
+					`@.BlockStatements2].
 			`@.Statements2]' )
 ]
 

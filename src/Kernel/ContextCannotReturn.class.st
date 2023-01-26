@@ -13,7 +13,7 @@ Class {
 { #category : #signalling }
 ContextCannotReturn class >> result: anObject to: aContext [
 
-	^self new 
+	^self new
 		result: anObject;
 		target: aContext;
 		signal

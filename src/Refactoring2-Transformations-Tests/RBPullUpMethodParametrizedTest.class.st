@@ -14,45 +14,27 @@ RBPullUpMethodParametrizedTest class >> testParameters [
 
 { #category : #tests }
 RBPullUpMethodParametrizedTest >> addClassHierarchy [
-	model defineClass: 'Object subclass: #SomeClass 
-		instanceVariableNames: '''' 
-		classVariableNames: ''Foo'' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'SomeClass subclass: #Subclass 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Subclass subclass: #Foo1 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Subclass subclass: #Foo2 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #SomeClass 
+		sharedVariables: {Foo}; 
+		package: #''Refactory-Test data'''.
+	model defineClass: 'SomeClass << #Subclass 
+		package: #''Refactory-Test data'''.
+	model defineClass: 'Subclass << #Foo1 
+		package: #''Refactory-Test data'''.
+	model defineClass: 'Subclass << #Foo2 
+		package: #''Refactory-Test data'''.
 ]
 
 { #category : #tests }
 RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
-	model defineClass: 'SharedPool subclass: #TotoSharedPool 
-		instanceVariableNames: '''' 
-		classVariableNames: ''SP'' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Object subclass: #TotoSuperclass 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'TotoSuperclass subclass: #Toto 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: ''TotoSharedPool'' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'SharedPool << #TotoSharedPool 
+		sharedVariables: { #SP };  
+		package: #''Refactory-Test data'''.
+		
+	model defineClass: 'Object << #TotoSuperclass package: #''Refactory-Test data'''.
+	model defineClass: 'TotoSuperclass << #Toto 
+		sharedPools: {TotoSharedPool}; 
+		package: #''Refactory-Test data'''.
 	
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing).
 ]
@@ -198,23 +180,11 @@ RBPullUpMethodParametrizedTest >> testPullUpWhenSuperClassDoesNotDirectlyImpleme
 	classEnvironment := RBClassEnvironment classes: classes.
 	model name: 'Test'.
 	"Classes"
-	#('Object subclass: #ClassA
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' ' 
+	#('Object << #ClassA package: ''Testing'' ' 
 		
-		'ClassA subclass: #ClassB
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' ' 
+		'ClassA << #ClassB package: ''Testing'' ' 
 		
-		'ClassB subclass: #ClassC
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' ') do: [ :each | model defineClass: each ].
+		'ClassB << #ClassC package: ''Testing'' ') do: [ :each | model defineClass: each ].
 	#(#(#ClassA #(#('foo
 			^ ''ClassA foo''' #private))) #(#ClassC #(#('foo
 			^ ''ClassC foo''' #private))))
@@ -245,7 +215,9 @@ RBPullUpMethodParametrizedTest >> testPullUpWithInvalidSuperSend [
 { #category : #'failure tests' }
 RBPullUpMethodParametrizedTest >> testPullUpWithMethodThatCannotBePullUp [
 	model 
-		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''' category: #''Refactory-Test data'''.
+		defineClass: 'Object << #SomeClass 
+		sharedVariables: {#Foo}; 
+		package: #''Refactory-Test data'''.
 	(model classNamed: #SomeClass) compile: 'yourself ^54'
 		classified: #(#accessing).
 	

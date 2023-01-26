@@ -47,14 +47,14 @@ ImageReadWriter class >> allTypicalFileExtensions [
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> formFromFileNamed: fileName [ 
+ImageReadWriter class >> formFromFileNamed: fileName [
 	"Answer a Form of the image stored (encoded) on the file with fileName.
 	This will (normally) autodetect the format and delegate to the correct concrete subclass."
-	
+
 	"ImageReadWriter formFromFileNamed: 'test.png'"
 	"ImageReadWriter formFromFileNamed: 'test.jpg'"
-	
-	^ fileName asFileReference 
+
+	^ fileName asFileReference
 		binaryReadStreamDo: [ :in | self formFromStream: in ]
 ]
 
@@ -63,7 +63,7 @@ ImageReadWriter class >> formFromStream: aBinaryReadStream [
 	"Answer a Form of the image stored on aBinaryReadStream.
 	This will (normally) autodetect the format and delegate to the correct concrete subclass.
 	Closes aBinaryReadStream when done."
-	
+
 	"ImageReadWriter formFromStream: 'test.png' asFileReference binaryReadStream"
 	"ImageReadWriter formFromStream: 'test.jpg' asFileReference binaryReadStream"
 
@@ -85,19 +85,19 @@ ImageReadWriter class >> on: binaryStream [
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> putForm: aForm onFileNamed: fileName [ 
+ImageReadWriter class >> putForm: aForm onFileNamed: fileName [
 	"Store (encode) the image of the Form aForm on a file of with fileName.
 	Use a concrete subclass to select the desired format."
-	
+
 	"PNGReadWriter putForm: PolymorphSystemSettings pharoLogoForm onFileNamed: 'test.png'"
 	"PluginBasedJPEGReadWriter putForm: PolymorphSystemSettings pharoLogoForm onFileNamed: 'test.jpg'"
-	
-	fileName asFileReference 
+
+	fileName asFileReference
 		binaryWriteStreamDo: [ :out | (self on: out) nextPutImage: aForm ]
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [ 
+ImageReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [
 	"Store (encode) the image of the Form aForm on aBinaryWriteStream.
 	Use a concrete subclass to select the desired format.
 	Closes aBinaryWriteStream when done."
@@ -115,8 +115,8 @@ ImageReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [
 ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 	| readerClass |
 	readerClass := self withAllSubclasses
-		detect: [ :subclass | 
-			positionableReadStream savingPositionDo: [ 
+		detect: [ :subclass |
+			positionableReadStream savingPositionDo: [
 				subclass understandsImageFormat: positionableReadStream ] ]
 		ifNone: [ positionableReadStream close.
 			^ self unrecognizedImageFormatError: 'Image format is not recognized.' ].
@@ -159,7 +159,7 @@ ImageReadWriter >> atEnd [
 ]
 
 { #category : #private }
-ImageReadWriter >> changePadOfBits: bits width: width height: height depth: depth from: oldPad to: newPad [ 
+ImageReadWriter >> changePadOfBits: bits width: width height: height depth: depth from: oldPad to: newPad [
 	"Change padding size of bits."
 	| srcRowByteSize dstRowByteSize newBits srcRowBase rowEndOffset |
 	(#(8 16 32 ) includes: oldPad) ifFalse: [ ^ self error: 'Invalid pad: ' , oldPad printString ].
@@ -170,12 +170,12 @@ ImageReadWriter >> changePadOfBits: bits width: width height: height depth: dept
 	newBits := ByteArray new: dstRowByteSize * height.
 	srcRowBase := 1.
 	rowEndOffset := dstRowByteSize - 1.
-	1 
+	1
 		to: newBits size
 		by: dstRowByteSize
-		do: 
-			[ :dstRowBase | 
-			newBits 
+		do:
+			[ :dstRowBase |
+			newBits
 				replaceFrom: dstRowBase
 				to: dstRowBase + rowEndOffset
 				with: bits
@@ -186,7 +186,7 @@ ImageReadWriter >> changePadOfBits: bits width: width height: height depth: dept
 
 { #category : #'stream access' }
 ImageReadWriter >> close [
-	
+
 	stream close
 ]
 
@@ -203,7 +203,7 @@ ImageReadWriter >> cr [
 ]
 
 { #category : #private }
-ImageReadWriter >> hasMagicNumber: aByteArray [ 
+ImageReadWriter >> hasMagicNumber: aByteArray [
 	| position |
 	position := stream position.
 	(stream next: aByteArray size) = aByteArray
@@ -246,18 +246,18 @@ ImageReadWriter >> nextImage [
 { #category : #'stream access' }
 ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian [
 	"Assuming the receiver is a stream of bytes, read the next integer of size numberOfBytes.
-	If bigEndian is true, use network byte order, most significant byte first, 
+	If bigEndian is true, use network byte order, most significant byte first,
 	else use little endian order, least significant byte first.
-	If signed is true, interpret as a two-complement signed value, 
+	If signed is true, interpret as a two-complement signed value,
 	else interpret as a plain unsigned value."
-	
+
 	| value |
 	value := 0.
 	bigEndian
-		ifTrue: [ 
+		ifTrue: [
 			(numberOfBytes - 1) * 8 to: 0 by: -8 do: [ :shift |
 				value := value + (self next bitShift: shift) ] ]
-		ifFalse: [ 
+		ifFalse: [
 			0 to: (numberOfBytes - 1) * 8 by: 8 do: [ :shift |
 				value := value + (self next bitShift: shift) ] ].
 	^ (signed and: [ (value bitAt: numberOfBytes * 8) = 1 ])
@@ -268,22 +268,22 @@ ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bi
 { #category : #'stream access' }
 ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian put: value [
 	"Assuming the receiver is a stream of bytes, write value as the next integer of size numberOfBytes.
-	If bigEndian is true, use network byte order, most significant byte first, 
+	If bigEndian is true, use network byte order, most significant byte first,
 	else use little endian order, least significant byte first.
-	If signed is true, encode as a two-complement signed value, 
+	If signed is true, encode as a two-complement signed value,
 	else encode as a plain unsigned value."
-	
+
 	| unsignedValue |
 	unsignedValue := (signed and: [ value negative ])
-		ifTrue: [ (1 << (numberOfBytes * 8)) + value ] 
+		ifTrue: [ (1 << (numberOfBytes * 8)) + value ]
 		ifFalse: [ value ].
 	(unsignedValue between: 0 and: (2 ** (numberOfBytes * 8)) - 1)
 		ifFalse: [ DomainError signalFrom: 0 to: (2 ** (numberOfBytes * 8)) - 1 ].
 	bigEndian
-		ifTrue: [ 
+		ifTrue: [
 			numberOfBytes to: 1 by: -1 do: [ :index |
 				self nextPut: (unsignedValue byteAt: index) ] ]
-		ifFalse: [ 
+		ifFalse: [
 			1 to: numberOfBytes do: [ :index |
 				self nextPut: (unsignedValue byteAt: index) ] ].
 	^ value
@@ -354,7 +354,7 @@ ImageReadWriter >> nextWordPut: a16BitW [
 ]
 
 { #category : #private }
-ImageReadWriter >> on: binaryStream [ 
+ImageReadWriter >> on: binaryStream [
 	stream := binaryStream
 ]
 
@@ -411,7 +411,7 @@ ImageReadWriter >> understandsImageFormat [
 ]
 
 { #category : #private }
-ImageReadWriter >> unpackBits: bits depthTo8From: depth with: width height: height pad: pad [ 
+ImageReadWriter >> unpackBits: bits depthTo8From: depth with: width height: height pad: pad [
 	"Unpack bits of depth 1, 2, or 4 image to it of depth 8 image."
 	| bitMask pixelInByte bitsWidth upBitsWidth stopWidth trailingSize upBits bitIndex upBitIndex val |
 	(#(1 2 4 ) includes: depth) ifFalse: [ ^ self error: 'depth must be 1, 2, or 4' ].
@@ -423,33 +423,33 @@ ImageReadWriter >> unpackBits: bits depthTo8From: depth with: width height: heig
 	stopWidth := (width * depth + 7) // 8.
 	trailingSize := width - ((stopWidth - 1) * pixelInByte).
 	upBits := ByteArray new: upBitsWidth * height.
-	1 
+	1
 		to: height
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			bitIndex := (i - 1) * bitsWidth.
 			upBitIndex := (i - 1) * upBitsWidth.
-			1 
+			1
 				to: stopWidth - 1
-				do: 
-					[ :j | 
+				do:
+					[ :j |
 					val := bits at: (bitIndex := bitIndex + 1).
 					upBitIndex := upBitIndex + pixelInByte.
-					1 
+					1
 						to: pixelInByte
-						do: 
-							[ :k | 
-							upBits 
+						do:
+							[ :k |
+							upBits
 								at: upBitIndex - k + 1
 								put: (val bitAnd: bitMask).
 							val := val bitShift: depth negated ] ].
 			val := (bits at: (bitIndex := bitIndex + 1)) bitShift: depth negated * (pixelInByte - trailingSize).
 			upBitIndex := upBitIndex + trailingSize.
-			1 
+			1
 				to: trailingSize
-				do: 
-					[ :k | 
-					upBits 
+				do:
+					[ :k |
+					upBits
 						at: upBitIndex - k + 1
 						put: (val bitAnd: bitMask).
 					val := val bitShift: depth negated ] ].

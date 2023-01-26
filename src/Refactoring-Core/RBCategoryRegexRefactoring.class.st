@@ -6,7 +6,7 @@ See comment of superclass for a nice script to be adapated to package names.
 Class {
 	#name : #RBCategoryRegexRefactoring,
 	#superclass : #RBRegexRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #transforming }

@@ -30,7 +30,7 @@ Class {
 
 { #category : #accessing }
 CleanBlockClosure class >> compiledBlock: aCompiledBlock [
-	^self new 
+	^self new
 		numArgs: aCompiledBlock numArgs;
 		compiledBlock: aCompiledBlock
 ]
@@ -85,7 +85,7 @@ CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
 ]
 
 { #category : #accessing }
-CleanBlockClosure >> messages [ 
+CleanBlockClosure >> messages [
 	^self compiledBlock messages
 ]
 

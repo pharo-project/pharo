@@ -199,7 +199,7 @@ DateAndTimeDosEpochTest >> testMeridianAbbreviation [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testMiddleOf [
-	self assert: (aDateAndTime middleOf: '2:00:00:00' asDuration) 
+	self assert: (aDateAndTime middleOf: '2:00:00:00' asDuration)
 	     equals: (Timespan starting: '12-31-1979' asDate duration: 2 days)
 ]
 
@@ -303,7 +303,7 @@ DateAndTimeDosEpochTest >> testTo [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testToBy [
-	self assert: (aDateAndTime to: aDateAndTime + 10 days by: 5 days) equals: 
+	self assert: (aDateAndTime to: aDateAndTime + 10 days by: 5 days) equals:
 				((DateAndTime year: 1980 month: 1 day: 1) to:
 				 (DateAndTime year: 1980 month: 1 day: 1) + 10 days by: 5 days)
 ]
@@ -312,7 +312,7 @@ DateAndTimeDosEpochTest >> testToBy [
 DateAndTimeDosEpochTest >> testToByDo [
 	| schedule |
 	schedule := aDateAndTime to: aDateAndTime + 10 days by: 5 days do: [:i | ].
-	self 
+	self
 		assert: schedule notNil;
 		assert: schedule duration equals: 10 days
 ]
@@ -362,7 +362,7 @@ DateAndTimeDosEpochTest >> testYearMonthDayHourMinuteSecond [
 DateAndTimeDosEpochTest >> testYearMonthDayHourMinuteSecondNanosSecondOffset [
 	self assert: aDateAndTime equals: (DateAndTime year: 1980 month: 1 day: 1 hour: 0 minute: 0 second: 0 nanoSecond: 0 offset:0 hours ).
 	self assert: ((DateAndTime year: 1 month: 1 day: 1 hour: 0 minute: 0 second: 0 nanoSecond: 0 offset: 0 hours ) +
-				(Duration days: 1 hours: 2 minutes: 3 seconds: 4  nanoSeconds: 5) ) equals:  	
+				(Duration days: 1 hours: 2 minutes: 3 seconds: 4  nanoSeconds: 5) ) equals:
 				(DateAndTime year: 1 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 0 hours)
 ]
 

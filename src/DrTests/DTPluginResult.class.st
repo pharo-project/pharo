@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 DTPluginResult >> backgroundColorStyle [
-	
+
 	^ 'testResult'
 ]
 

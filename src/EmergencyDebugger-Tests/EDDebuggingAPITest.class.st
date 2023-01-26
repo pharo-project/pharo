@@ -67,7 +67,7 @@ EDDebuggingAPITest >> testCloseEmergencySession [
 
 { #category : #'tests - context' }
 EDDebuggingAPITest >> testContextAt [
-	1 to: session stack size do: [ :i | 
+	1 to: session stack size do: [ :i |
 		self
 			assert: (debugAPI contextAt: i)
 			identicalTo: (session stack at: i) ]
@@ -120,7 +120,7 @@ EDDebuggingAPITest >> testLongStackSize [
 
 { #category : #'tests - context' }
 EDDebuggingAPITest >> testMethodAt [
-	1 to: session stack size do: [ :i | 
+	1 to: session stack size do: [ :i |
 		self
 			assert: (debugAPI methodAt: i)
 			identicalTo: (session stack at: i) method ]
@@ -142,7 +142,7 @@ EDDebuggingAPITest >> testMethodVersionSizeAt [
 
 { #category : #'tests - context' }
 EDDebuggingAPITest >> testNodeAt [
-	1 to: session stack size do: [ :i | 
+	1 to: session stack size do: [ :i |
 		| context |
 		context := session stack at: i.
 		self
@@ -182,22 +182,22 @@ EDDebuggingAPITest >> testRevertTo [
 	self prepareMethodVersionTest.
 	method := (EDMockObjectForTests >> #mWithVersion).
 	changes := debugAPI changeRecordsForMethod: method.
-		
+
 	self assert: method sourceCode equals: self sampleMethodSourceCodeVersion2.
 	debugAPI revert: (EDMockObjectForTests >> #mWithVersion) to: changes second.
-	
+
 	"Method version is now the reverted one"
 	method := (EDMockObjectForTests >> #mWithVersion).
 	self assert: method sourceCode equals: self sampleMethodSourceCodeVersion1.
-	
+
 	"Changes now include new version, equals to the first one"
-	changes := debugAPI changeRecordsForMethod: method. 
+	changes := debugAPI changeRecordsForMethod: method.
 	self assert: changes size equals: 3.
 	self assert: changes first sourceCode equals: self sampleMethodSourceCodeVersion1.
 	self assert: changes second sourceCode equals: self sampleMethodSourceCodeVersion2.
 	self assert: changes third sourceCode equals: self sampleMethodSourceCodeVersion1.
-	
-	"Changes cache should be updated: 
+
+	"Changes cache should be updated:
 	we test for source code version, as changes cannot compare otherwise than using identity check =="
 	self assert: (debugAPI versionsForMethod: method) size equals: 3.
 	self assertCollection: ((debugAPI versionsForMethod: method) collect:[:c| c sourceCode])
@@ -210,28 +210,28 @@ EDDebuggingAPITest >> testRevertToInContext [
 	self prepareMethodVersionTest.
 	method := (EDMockObjectForTests >> #mWithVersion).
 	changes := debugAPI changeRecordsForMethod: method.
-		
+
 	self assert: method sourceCode equals: self sampleMethodSourceCodeVersion2.
-	debugAPI revert: (EDMockObjectForTests >> #mWithVersion) 
-				to: changes second 
+	debugAPI revert: (EDMockObjectForTests >> #mWithVersion)
+				to: changes second
 				inContext: debugAPI stack first.
-	
+
 	"Method version is now the reverted one"
 	method := (EDMockObjectForTests >> #mWithVersion).
 	self assert: method sourceCode equals: self sampleMethodSourceCodeVersion1.
-	
+
 	"Stack is updated"
-	self assertCollection: debugAPI longStack 
+	self assertCollection: debugAPI longStack
 		  equals: (debugAPI session stackOfSize: debugAPI longStackSize).
-	
+
 	"Changes now include new version, equals to the first one"
-	changes := debugAPI changeRecordsForMethod: method. 
+	changes := debugAPI changeRecordsForMethod: method.
 	self assert: changes size equals: 3.
 	self assert: changes first sourceCode equals: self sampleMethodSourceCodeVersion1.
 	self assert: changes second sourceCode equals: self sampleMethodSourceCodeVersion2.
 	self assert: changes third sourceCode equals: self sampleMethodSourceCodeVersion1.
-	
-	"Changes cache should be updated: 
+
+	"Changes cache should be updated:
 	we test for source code version, as changes cannot compare otherwise than using identity check =="
 	self assert: (debugAPI versionsForMethod: method) size equals: 3.
 	self assertCollection: ((debugAPI versionsForMethod: method) collect:[:c| c sourceCode])
@@ -239,7 +239,7 @@ EDDebuggingAPITest >> testRevertToInContext [
 ]
 
 { #category : #'tests - stack' }
-EDDebuggingAPITest >> testStack [ 
+EDDebuggingAPITest >> testStack [
 	self assert: debugAPI stack identicalTo: debugAPI longStack
 ]
 
@@ -257,11 +257,11 @@ EDDebuggingAPITest >> testStackFromTo [
 	self
 		assertCollection: (debugAPI stackFrom: 5 to: 10)
 		equals: stackExtract.
-		
+
 	stackExtract := (stack copyFrom: (stack size - 2) to: (stack size)).
 	self
 		assertCollection: (debugAPI stackFrom: (stack size - 2) to: (stack size + 5))
-		equals: stackExtract.
+		equals: stackExtract
 ]
 
 { #category : #'tests - stack' }
@@ -276,9 +276,9 @@ EDDebuggingAPITest >> testTerminateProcesses [
 	|processes|
 	processes := { [  ] newProcess.  [  ] newProcess.}.
 	processes do:[:p| self deny: p isTerminated].
-	
+
 	EDDebuggingAPI terminateProcesses: processes.
-	processes do:[:p| self assert: p isTerminated].
+	processes do:[:p| self assert: p isTerminated]
 ]
 
 { #category : #'tests - debugging support' }
@@ -297,7 +297,7 @@ EDDebuggingAPITest >> testTerminateSession [
 EDDebuggingAPITest >> testVersionsForMethod [
 	|changes|
 	self prepareMethodVersionTest.
-	changes := debugAPI versionsForMethod: (EDMockObjectForTests >> #mWithVersion).	
+	changes := debugAPI versionsForMethod: (EDMockObjectForTests >> #mWithVersion).
 	self assert: debugAPI changesForMethods size equals: 1.
 	self assert: (debugAPI changesForMethods at: (EDMockObjectForTests >> #mWithVersion))
 			identicalTo: changes
