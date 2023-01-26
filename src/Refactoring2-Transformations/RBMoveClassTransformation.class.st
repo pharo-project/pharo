@@ -20,7 +20,7 @@ Class {
 		'oldCategory',
 		'category'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }

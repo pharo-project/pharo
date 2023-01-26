@@ -19,27 +19,27 @@ HEDuplicationModeStrategy class >> forOption: keyword [
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> doExistingTrait: aTrait hermesTrait: aHETrait installer: installer [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> doShouldBuildMethod: aHEMethod in: installer installer: aClass original: aMethod [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> existingClass: aHEClass on: installer [
 	^ installer environment
 		at: aHEClass className
-		ifPresent: [ :aClass | 
-			self 
-				doExistingClass: aClass 
-				hermesClass: aHEClass 
+		ifPresent: [ :aClass |
+			self
+				doExistingClass: aClass
+				hermesClass: aHEClass
 				installer: installer  ]
 		ifAbsent: [ nil ]
 ]
@@ -48,10 +48,10 @@ HEDuplicationModeStrategy >> existingClass: aHEClass on: installer [
 HEDuplicationModeStrategy >> existingTrait: aHETrait on: installer [
 	^ installer environment
 		at: aHETrait traitName
-		ifPresent: [ :aTrait | 
-			self 
-				doExistingTrait: aTrait 
-				hermesTrait: aHETrait 
+		ifPresent: [ :aTrait |
+			self
+				doExistingTrait: aTrait
+				hermesTrait: aHETrait
 				installer: installer ]
 		ifAbsent: [ nil ]
 ]
@@ -60,13 +60,13 @@ HEDuplicationModeStrategy >> existingTrait: aHETrait on: installer [
 HEDuplicationModeStrategy >> shouldBuildMethod: aHEMethod in: aClass installer: installer [
 	^ aClass
 		compiledMethodAt: aHEMethod name
-		ifPresent: [ :m | 
+		ifPresent: [ :m |
 			(m isFromTrait and: [ aClass isTrait not ])
 				ifTrue: [ ^ true ].
-			self 
-				doShouldBuildMethod: aHEMethod 
-				in: installer 
-				installer: aClass 
+			self
+				doShouldBuildMethod: aHEMethod
+				in: installer
+				installer: aClass
 				original: m]
 		ifAbsent: [ true ]
 ]

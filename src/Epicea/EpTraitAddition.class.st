@@ -39,7 +39,7 @@ EpTraitAddition >> behaviorAffectedName [
 EpTraitAddition >> initializeWithTrait: aTrait [
 
 	self initialize.
-	trait := aTrait asEpiceaRingDefinition.
+	trait := aTrait asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

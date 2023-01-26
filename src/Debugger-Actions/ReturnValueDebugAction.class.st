@@ -28,7 +28,7 @@ ReturnValueDebugAction >> defaultOrder [
 { #category : #actions }
 ReturnValueDebugAction >> executeAction [
 	|expression value|
-	
+
 	expression := UIManager default request: 'Enter expression for return value:'.
 	value := self class compiler
 			source: expression;

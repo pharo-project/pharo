@@ -107,9 +107,9 @@ DTTestCoverageTest >> testNotExecutedMethodList [
 	self
 		assert:
 			(notExecutedMethodList
-				allSatisfy: [ :expectedNotExecutedMethod | 
+				allSatisfy: [ :expectedNotExecutedMethod |
 					result methodList
-						anySatisfy: [ :anyMethod | 
+						anySatisfy: [ :anyMethod |
 							anyMethod methodClass = expectedNotExecutedMethod methodClass
 								and: [ anyMethod selector = expectedNotExecutedMethod selector ] ] ])
 ]

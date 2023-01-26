@@ -32,7 +32,7 @@ FT2Outline >> allocateArrays [
 	" allocate the arrays for the primLoadArraysFrom:"
 	points := 	IntegerArray new: pointsSize * 2.
 	tags := 		ByteArray new: pointsSize.
-	contours := 	ShortIntegerArray new: contoursSize.
+	contours := 	ShortIntegerArray new: contoursSize
 ]
 
 { #category : #accessing }
@@ -40,7 +40,7 @@ FT2Outline >> contoursCollection [
 	"returns a list of contours with tag => points list pairs"
 	| allPoints result start end |
 	allPoints := self pointCollection.
-	
+
 	result := OrderedCollection new.
 	start := 1.
 	"no normal iteration because contours size can be bigger than contourSize"
@@ -64,21 +64,21 @@ FT2Outline >> primLoadArraysFrom: anFT2Face [
 	| outline contoursArray pointsArray |
 	outline := anFT2Face outline.
 	contoursArray := FFIExternalArray externalNewType: 'short' size: outline n_contours.
-	
+
 	1 to: outline n_contours do: [ :idx |
-		contours at: 1 put: (contoursArray at: 1).	
+		contours at: 1 put: (contoursArray at: 1).
 	].
 
 	pointsArray := FFIExternalArray externalNewType: 'int' size: outline n_points * 2.
 
 	1 to: (outline n_points * 2) do: [ :idx |
 		points at: 1 put: (pointsArray at: 1).
-	].
+	]
 ]
 
 { #category : #private }
 FT2Outline >> primLoadSizesFrom: anFT2Face [
-	
+
 	contoursSize := anFT2Face outline n_contours.
-	pointsSize := anFT2Face outline n_points.
+	pointsSize := anFT2Face outline n_points
 ]

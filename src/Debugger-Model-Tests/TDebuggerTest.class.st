@@ -54,9 +54,9 @@ TDebuggerTest >> testSystemDebuggers [
 
 	| debuggers traitUsersWithSubclasses |
 	debuggers := DebuggerSettings systemDebuggers.
-	traitUsersWithSubclasses := TDebugger users flatCollect: [ :class | 
+	traitUsersWithSubclasses := TDebugger users flatCollect: [ :class |
 		                            class withAllSubclasses ].
-	self assert: (debuggers allSatisfy: [ :dbg | 
+	self assert: (debuggers allSatisfy: [ :dbg |
 			 traitUsersWithSubclasses includes: dbg ]).
 	self deny: (debuggers anySatisfy: [ :dbg | dbg isTestCase ])
 ]

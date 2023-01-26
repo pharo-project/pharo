@@ -30,9 +30,9 @@ TimeTest >> selectorsToBeIgnored [
 	special := #( #< #= #new #printOn: #storeOn: ).
 	primitives := #( #primMillisecondClock #primSecondsClock #primUTCSecondsClock #primUTCMicrosecondsClock #primUTCMillisecondsClock).
 	timing := #( #millisecondClockValue #milliseconds:since: #millisecondsSince: ).
-	benchmarks := #( #benchmarkMillisecondClock #benchmarkPrimitiveResponseDelay ). 
+	benchmarks := #( #benchmarkMillisecondClock #benchmarkPrimitiveResponseDelay ).
 
-	^ super selectorsToBeIgnored, deprecated, private, special, primitives, timing, benchmarks.
+	^ super selectorsToBeIgnored, deprecated, private, special, primitives, timing, benchmarks
 ]
 
 { #category : #running }
@@ -188,7 +188,7 @@ TimeTest >> testGeneralInquiries [
 	time := '4:02:47 am' asTime.
 	aDateAndTime := self timeClass dateAndTimeFromSeconds: (2285280000 + 14567).
 	self
-		assert: aDateAndTime equals: {date. time}.
+		assert: aDateAndTime equals: {date. time}
 ]
 
 { #category : #tests }
@@ -298,15 +298,15 @@ TimeTest >> testReadFrom [
 
 { #category : #'tests - input' }
 TimeTest >> testReadFromWithError [
-		
-	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each | 
+
+	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each |
 	self should: [self timeClass readFrom: each readStream] raise: Error.]
 ]
 
 { #category : #'tests - input' }
 TimeTest >> testReadFromWithNanos [
 	#('4:02:47.5 am' '4:02:55.521 pm')
-		do: [ :each | 
+		do: [ :each |
 			| t |
 			t := self timeClass readFrom: each readStream.
 			self assert: t printString equals: each ]
@@ -366,8 +366,7 @@ TimeTest >> testValidationTicks [
 	self should: [ Time new ticks: {0. day. 0}] raise: TimeError.
 	self should: [ Time new ticks: {0. -1. 0}] raise: TimeError.
 	self should: [ Time new ticks: {0. 0. 1000000000}] raise: TimeError.
-	self should: [ Time new ticks: {0. 0. -1}] raise: TimeError.
-	
+	self should: [ Time new ticks: {0. 0. -1}] raise: TimeError
 ]
 
 { #category : #tests }
@@ -377,8 +376,7 @@ TimeTest >> testValidationWallClock [
 	self should: [ Time hour: 0 minute: 60 second: 0] raise: TimeError.
 	self should: [ Time hour: 0 minute: -1 second: 0] raise: TimeError.
 	self should: [ Time hour: 0 minute: 0 second: 60] raise: TimeError.
-	self should: [ Time hour: 0 minute: 0 second: -1] raise: TimeError.
-	
+	self should: [ Time hour: 0 minute: 0 second: -1] raise: TimeError
 ]
 
 { #category : #setup }

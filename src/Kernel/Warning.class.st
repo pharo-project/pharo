@@ -9,10 +9,10 @@ Class {
 
 { #category : #handling }
 Warning >> defaultAction [
-	"No one has handled this warning, but now give them a chance to decide how to debug it. 
+	"No one has handled this warning, but now give them a chance to decide how to debug it.
 	If none handles this either then open debugger (see UnhandedError-defaultAction).
-	
-	Note about naming here: 
+
+	Note about naming here:
 	Even if warnings are not errors the absence of a handler for signaled warning is considered as an error by default although it can be resumed because warnings are resumable.
 	Therefore #defaultAction for Warning raises an error, an UnhandledError"
 

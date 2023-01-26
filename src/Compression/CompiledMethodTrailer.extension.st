@@ -4,13 +4,13 @@ Extension { #name : #CompiledMethodTrailer }
 CompiledMethodTrailer >> decodeEmbeddedSourceZip [
 
 	"data is string with method's source code, compressed using zip compression"
-	self decodeZip.
+	self decodeZip
 ]
 
 { #category : #'*Compression-Streams' }
 CompiledMethodTrailer >> decodeZip [
 	"data := <trailer> unzip utf8 to image"
-	
+
 	| len bytes |
 	len := self decodeLengthField.
 	bytes := ByteArray new: len.
@@ -34,19 +34,19 @@ CompiledMethodTrailer >> encodeUsingZip [
 
 	[data isString] assert.
 	utf8str := data utf8Encoded.
-	
+
 	stream := ((ZipWriteStream on: (ByteArray new: utf8str size))
 		nextPutAll: utf8str asByteArray;
 		close;
 		encodedStream).
-		
+
 	length := stream position.
 	encodedLength := self encodeLengthField: length.
 
 	stream nextPutAll: encodedLength.
 	"trailing byte"
 	stream nextPut: (self kindAsByte + encodedLength size - 1).
-	
+
 	encodedData := stream contents.
-	size := encodedData size.
+	size := encodedData size
 ]

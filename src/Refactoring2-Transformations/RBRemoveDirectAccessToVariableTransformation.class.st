@@ -22,7 +22,7 @@ Class {
 		'setterMethod',
 		'receiver'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #private }

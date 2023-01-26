@@ -57,8 +57,8 @@ Class {
 { #category : #'class initialization' }
 FFIConstants class >> initialize [
 	"FFIConstants initialize"
-	
-	self 
+
+	self
 		initializeTypeConstants;
 		initializeErrorConstants;
 		initializeCallingConventions

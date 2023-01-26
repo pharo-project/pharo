@@ -2,7 +2,7 @@ Extension { #name : #Object }
 
 { #category : #'*Epicea' }
 Object >> isEpEvent [
-	
+
 	^ false
 ]
 

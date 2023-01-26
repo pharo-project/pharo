@@ -44,7 +44,7 @@ AbstractLayoutScope >> extend: someSlots as: type [
 	scope := type new: someSlots size.
 	fieldIndex := self firstFieldIndex.
 	scope parentScope: self.
-	
+
 	someSlots withIndexDo: [ :slot :slotIndex | |realSlot|
 		realSlot := slot asSlot.
 		realSlot scope: scope.
@@ -70,7 +70,7 @@ AbstractLayoutScope >> flatten [
 ]
 
 { #category : #accessing }
-AbstractLayoutScope >> hasBindingThatBeginsWith: arg1 [ 
+AbstractLayoutScope >> hasBindingThatBeginsWith: arg1 [
 	^ self subclassResponsibility
 ]
 
@@ -96,7 +96,7 @@ AbstractLayoutScope >> ifNotEmpty: aBlock [
 
 { #category : #enumerating }
 AbstractLayoutScope >> indexOf: anElement [
-	"Answer the index of the first occurrence of anElement within the  
+	"Answer the index of the first occurrence of anElement within the
 	receiver. If the receiver does not contain anElement, answer 0."
 
 	^ self indexOf: anElement ifAbsent: 0
@@ -104,8 +104,8 @@ AbstractLayoutScope >> indexOf: anElement [
 
 { #category : #enumerating }
 AbstractLayoutScope >> indexOf: anElement ifAbsent: exceptionBlock [
-	"Answer the index of the first occurrence of anElement within the  
-	receiver. If the receiver does not contain anElement, answer the 
+	"Answer the index of the first occurrence of anElement within the
+	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
 
 	1 to: self size do:
@@ -121,15 +121,15 @@ AbstractLayoutScope >> ownFieldSize [
 
 { #category : #accessing }
 AbstractLayoutScope >> resolveSlot: aName [
-	^ self 
-		resolveSlot: aName 
-		ifFound: [:slot | slot ] 
-		ifNone: [ SlotNotFound signalForName: aName ].
+	^ self
+		resolveSlot: aName
+		ifFound: [:slot | slot ]
+		ifNone: [ SlotNotFound signalForName: aName ]
 ]
 
 { #category : #accessing }
 AbstractLayoutScope >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
-	self allSlotsDo: [ :slot | 
+	self allSlotsDo: [ :slot |
 		slot name = aName ifTrue: [ ^ foundBlock cull: slot ]].
 	^ exceptionBlock value
 ]
