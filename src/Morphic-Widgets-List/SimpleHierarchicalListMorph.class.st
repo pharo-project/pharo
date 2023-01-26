@@ -599,7 +599,7 @@ SimpleHierarchicalListMorph >> keyDown: event [
 SimpleHierarchicalListMorph >> keyStroke: event [
 	"Process potential command keys that are not handled by keymappings yet"
 
-	| aCharacter args |
+	| aCharacter |
 	aCharacter := event keyValue asCharacter.
 	event anyModifierKeyPressed ifFalse: [ 
 		self basicKeyPressed: aCharacter.
