@@ -32,6 +32,12 @@ EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
 ]
 
 { #category : #visitor }
+EpNewStateVisitor >> visitCategoryRegistration: aClassCategoryCreatedChange [
+
+	^ aClassCategoryCreatedChange categoryName
+]
+
+{ #category : #visitor }
 EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
 
 	^ aClassCategoryRenamedChange newCategoryName

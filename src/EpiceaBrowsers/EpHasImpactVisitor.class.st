@@ -84,6 +84,12 @@ EpHasImpactVisitor >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
+EpHasImpactVisitor >> visitCategoryRegistration: aChange [
+
+	^ (environment organization includesCategory: aChange categoryName) not
+]
+
+{ #category : #visitor }
 EpHasImpactVisitor >> visitCategoryRemoval: aChange [
 
 	^ environment organization includesCategory: aChange categoryName

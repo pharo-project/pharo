@@ -27,7 +27,9 @@ EpLostChangesDetectorTest >> testDetectNoChange [
 	self deny: detector hasLostChanges.
 	self assertEmpty: detector lostChanges.
 
-	self assert: monitor log entriesCount equals: 2	"Just to be sure of the assumed precondition: category and only one class created"
+	"Category addition and registration are two separate events"
+	"Just to be sure of the assumed precondition: category and only one class created"	
+	self assert: monitor log entriesCount equals: 3
 ]
 
 { #category : #tests }
@@ -71,7 +73,7 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 { #category : #tests }
 EpLostChangesDetectorTest >> testDetectThreeChanges [
 
-	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges |
+	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges detectedLostClassChanges |
 
 	"Build a log with several lost changes (class additions)"
 	numberOfLostChanges := 3.
@@ -83,10 +85,14 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 	detector := EpLostChangesDetector newWithLog: logWithLostChanges.
 
 	detectedLostChanges := detector lostChanges.
-	detectedLostChanges do: [ :each | self assert: each content isEpClassChange ].
-
-	self assert: detectedLostChanges size equals: numberOfLostChanges.
 	self
-		assert: (detectedLostChanges collect: [ :each | each content behaviorAffectedName ]) asArray
+		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpCategoryChange ])
+		description: 'It test that the class additions include a category registration'.
+	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpCategoryChange ].
+	detectedLostClassChanges do: [ :each | self assert: each content isEpClassChange ].
+
+	self assert: detectedLostClassChanges size equals: numberOfLostChanges.
+	self
+		assert: (detectedLostClassChanges collect: [ :each | each content behaviorAffectedName ]) asArray
 		equals: expectedLostClassNames
 ]
