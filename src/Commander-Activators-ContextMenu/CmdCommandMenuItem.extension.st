@@ -2,7 +2,7 @@ Extension { #name : #CmdCommandMenuItem }
 
 { #category : #'*Commander-Activators-ContextMenu' }
 CmdCommandMenuItem >> buildContextMenu: aMenuView [
-	
+
 	activator buildContextMenu: aMenuView
 ]
 
