@@ -5969,18 +5969,42 @@ Morph >> startSteppingSubmorphs [
 	]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 Morph >> step [
 	"Do some periodic activity. Use startStepping/stopStepping to start and stop getting sent this message. The time between steps is specified by this morph's answer to the stepTime message.  The generic version dispatches control to the player, if any.  The nasty circumlocation about owner's transformation is necessitated by the flexing problem that the player remains in the properties dictionary both of the flex and the real morph.  In the current architecture, only the top renderer's pointer to the player should actually be honored for the purpose of firing."
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 Morph >> stepAt: millisecondClockValue [
 	"Do some periodic activity. Use startStepping/stopStepping to start and stop getting sent this message. The time between steps is specified by this morph's answer to the stepTime message.
 	The millisecondClockValue parameter gives the value of the millisecond clock at the moment of dispatch.
 	Default is to dispatch to the parameterless step method for the morph, but this protocol makes it possible for some morphs to do differing things depending on the clock value"
 
 	self step
+]
+
+{ #category : #stepping }
+Morph >> stepAt: millisecondClockValue in: aWindow [
+
+	^ self stepIn: aWindow
+]
+
+{ #category : #stepping }
+Morph >> stepIn: aWindow [
+
+	^ self step
+]
+
+{ #category : #stepping }
+Morph >> stepTime [
+
+	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
+]
+
+{ #category : #stepping }
+Morph >> stepTimeIn: aSystemWindow [
+
+	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
 { #category : #menus }
@@ -6780,15 +6804,18 @@ Morph >> wantsRoundedCorners [
 	^ self cornerStyle == #rounded
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 Morph >> wantsSteps [
 	"Return true if the receiver overrides the default Morph step method."
 	"Details: Find first class in superclass chain that implements #step and return true if it isn't class Morph."
 
-	| c |
-	c := self class.
-	[c includesSelector: #step] whileFalse: [c := c superclass].
-	^ c ~= Morph
+	^ false
+]
+
+{ #category : #stepping }
+Morph >> wantsStepsIn: aSystemWindow [
+
+	^ self wantsSteps
 ]
 
 { #category : #accessing }
