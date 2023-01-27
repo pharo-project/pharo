@@ -190,7 +190,8 @@ OpalCompiler >> addParsePlugin: aClass [
 ]
 
 { #category : #plugins }
-OpalCompiler >> addPlugin: aClass [ 
+OpalCompiler >> addPlugin: aClass [
+
 	compilationContext addASTTransformationPlugin: aClass
 ]
 

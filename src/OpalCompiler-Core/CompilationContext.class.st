@@ -38,10 +38,17 @@ Class {
 	],
 	#classVars : [
 		'DefaultOptions',
+		'DefaultParseTransformationPlugins',
 		'DefaultTransformationPlugins'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
+
+{ #category : #adding }
+CompilationContext class >> addDefaultParseTransformationPlugin: aPlugin [
+
+	self defaultParseTransformationPlugins add: aPlugin
+]
 
 { #category : #adding }
 CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
