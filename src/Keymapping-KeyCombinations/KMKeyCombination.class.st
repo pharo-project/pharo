@@ -41,7 +41,7 @@ KMKeyCombination class >> fromKeyboardEvent: evt [
 ]
 
 { #category : #testing }
-KMKeyCombination class >> isAbstract [ 
+KMKeyCombination class >> isAbstract [
 
 	^ self == KMKeyCombination
 ]
@@ -57,7 +57,7 @@ KMKeyCombination >> = aShortcut [
 ]
 
 { #category : #printing }
-KMKeyCombination >> acceptVisitor: aKMShortcutPrinter [ 
+KMKeyCombination >> acceptVisitor: aKMShortcutPrinter [
 
 	^ aKMShortcutPrinter visitSingleShortcut: self
 ]
@@ -152,7 +152,7 @@ KMKeyCombination >> printOsRepresentation [
 
 { #category : #printing }
 KMKeyCombination >> printOsRepresentationOn: aStream [
-	self shortcut modifier ifNotNil: [: modifier |  
+	self shortcut modifier ifNotNil: [: modifier |
 		modifier printOsRepresentationOn: aStream.
 		aStream << $+].
 	self shortcut character printOn: aStream

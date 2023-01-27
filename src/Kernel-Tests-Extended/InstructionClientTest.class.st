@@ -17,7 +17,7 @@ InstructionClientTest >> testInstructions [
 	| client |
 	client := InstructionClient new.
 	Object methods
-		do: [ :method | 
+		do: [ :method |
 			| scanner |
 			scanner := InstructionStream on: method.
 			[ scanner pc <= method endPC ] whileTrue: [ scanner interpretNextInstructionFor: client ] ]

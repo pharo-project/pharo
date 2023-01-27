@@ -65,7 +65,7 @@ ClyClassGroup class >> named: aString on: aClassQuery [
 
 { #category : #'instance creation' }
 ClyClassGroup class >> named: aString on: aClassQuery  withSubgroupsFrom: subgroupsQuery [
-	^(self named: aString on: aClassQuery) 
+	^(self named: aString on: aClassQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
@@ -77,7 +77,7 @@ ClyClassGroup class >> named: aString priority: aNumber on: aClassQuery [
 
 { #category : #'instance creation' }
 ClyClassGroup class >> named: aString priority: aNumber on: aClassQuery withSubgroupsFrom: subgroupsQuery [
-	^(self named: aString priority: aNumber on: aClassQuery) 
+	^(self named: aString priority: aNumber on: aClassQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
@@ -119,8 +119,8 @@ ClyClassGroup >> classesSize [
 { #category : #decoration }
 ClyClassGroup >> decorateOwnBrowserItem: myItem [
 	super decorateOwnBrowserItem: myItem.
-		
-	classQuery decorateItemGroup: myItem.	
+
+	classQuery decorateItemGroup: myItem.
 	subgroupsQuery decorateItemGroup: myItem
 ]
 
@@ -144,7 +144,7 @@ ClyClassGroup >> importClasses: classesCollection [
 { #category : #initialization }
 ClyClassGroup >> initialize [
 	super initialize.
-	
+
 	subgroupsQuery := ClyUnknownQuery instance
 ]
 
@@ -153,7 +153,7 @@ ClyClassGroup >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	classQuery printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #operations }

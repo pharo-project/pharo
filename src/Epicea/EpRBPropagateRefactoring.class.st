@@ -13,8 +13,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpRBPropagateRefactoring class >> target: aRefactoring [ 
-	^ self basicNew 
+EpRBPropagateRefactoring class >> target: aRefactoring [
+	^ self basicNew
 		initializeWith: aRefactoring;
 		yourself
 ]
@@ -25,22 +25,22 @@ EpRBPropagateRefactoring >> asEpiceaEvent [
 ]
 
 { #category : #initialization }
-EpRBPropagateRefactoring >> initializeWith: aRefactoring [ 
+EpRBPropagateRefactoring >> initializeWith: aRefactoring [
 	self initialize.
 	targetRefactoring := aRefactoring
 ]
 
 { #category : #private }
 EpRBPropagateRefactoring >> primitiveExecute [
-	targetRefactoring propagateTransformation.
+	targetRefactoring propagateTransformation
 ]
 
 { #category : #accessing }
-EpRBPropagateRefactoring >> setOption: aString toUse: aBlockClosure [ 
+EpRBPropagateRefactoring >> setOption: aString toUse: aBlockClosure [
 	targetRefactoring setOption: aString toUse: aBlockClosure
 ]
 
 { #category : #accessing }
-EpRBPropagateRefactoring >> whatToDisplayIn: aNautilusChangesBrowser [ 
+EpRBPropagateRefactoring >> whatToDisplayIn: aNautilusChangesBrowser [
 	^ targetRefactoring whatToDisplayIn: aNautilusChangesBrowser
 ]

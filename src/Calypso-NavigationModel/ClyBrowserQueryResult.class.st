@@ -35,7 +35,7 @@ ClyBrowserQueryResult >> adoptForBrowser [
 
 { #category : #building }
 ClyBrowserQueryResult >> buildIndexes [
-	
+
 	items withIndexDo: [ :each :index | each position: index]
 ]
 
@@ -48,10 +48,10 @@ ClyBrowserQueryResult >> containerForItemsSortedByName [
 ClyBrowserQueryResult >> createUpdateWithItemsStartingAt: startPosition count: cacheSize [
 	"it is important for remote scenario to call new metadata and new cache by single message.
 	In this case all required properties of metadata and cache will be transferred in one request using update instance"
-	
+
 	| itemCache |
-	itemCache := ClyBrowserQueryCache 
-		filledBy: self 
+	itemCache := ClyBrowserQueryCache
+		filledBy: self
 		startingAt: startPosition
 		size: cacheSize.
 	^ClyBrowserQueryUpdate of: self withItems: itemCache
@@ -60,17 +60,17 @@ ClyBrowserQueryResult >> createUpdateWithItemsStartingAt: startPosition count: c
 { #category : #queries }
 ClyBrowserQueryResult >> findItemsSimilarTo: sampleBrowserItems [
 	| rest found |
-	self protectItemsWhile: [ 
+	self protectItemsWhile: [
 		rest := sampleBrowserItems as: OrderedCollection.
-		found := OrderedCollection new.	
+		found := OrderedCollection new.
 		items do: [ :existing |
 			rest
 				detect: [ :sample | sample isSimilarTo: existing]
-				ifFound: [ :sample | 
+				ifFound: [ :sample |
 					existing prepareIn: environment.
-					found add: existing. 
+					found add: existing.
 					rest remove: sample.
-					rest ifEmpty: [ ^found ] ]].	
+					rest ifEmpty: [ ^found ] ]].
 		^found]
 ]
 
@@ -83,11 +83,11 @@ ClyBrowserQueryResult >> findItemsWith: actualObjects [
 	| result |
 	self protectItemsWhile: [
 		result := actualObjects collect: [ :eachObject |
-			items 
-				detect: [ :item | item representsObjectEqualTo: eachObject ] 
+			items
+				detect: [ :item | item representsObjectEqualTo: eachObject ]
 				ifNone: nil].
-	
-		result select: #notNil thenDo: [ :each | 
+
+		result select: #notNil thenDo: [ :each |
 			each prepareIn: environment ].
 		^result]
 ]
@@ -102,7 +102,7 @@ ClyBrowserQueryResult >> itemsStartingAt: startIndex count: size [
 ]
 
 { #category : #queries }
-ClyBrowserQueryResult >> itemsWhere: conditionBlock [	
+ClyBrowserQueryResult >> itemsWhere: conditionBlock [
 	| result |
 	result := super itemsWhere: conditionBlock.
 	result do: [ :each | each prepareIn: environment  ].
@@ -124,7 +124,7 @@ ClyBrowserQueryResult >> rawItemsDo: aBlock [
 { #category : #building }
 ClyBrowserQueryResult >> rebuild [
 	super rebuild.
-	
+
 	self buildIndexes
 ]
 

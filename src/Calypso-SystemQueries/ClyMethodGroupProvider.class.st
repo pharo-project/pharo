@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #'building groups' }
-ClyMethodGroupProvider >> buildGroupsFrom: aClassScope [ 
+ClyMethodGroupProvider >> buildGroupsFrom: aClassScope [
 	self subclassResponsibility
 ]
 
@@ -27,8 +27,8 @@ ClyMethodGroupProvider >> isStatic [
 { #category : #'system changes' }
 ClyMethodGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aClassScope [
 
-	aClassScope classesDo: [ :each | 
+	aClassScope classesDo: [ :each |
 		(aSystemAnnouncement affectsClass: each) ifTrue: [ ^true ]].
-		
+
 	^false
 ]

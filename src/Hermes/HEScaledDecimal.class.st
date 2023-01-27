@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #accessing }
-HEScaledDecimal class >> tag [ 
+HEScaledDecimal class >> tag [
 	^ 25
 ]
 
@@ -19,8 +19,6 @@ HEScaledDecimal >> doReadFrom: aReader [
 	| scale |
 	super doReadFrom: aReader.
 	scale := HEExportedLiteral readFrom: aReader.
-	
-	value := ScaledDecimal newFromNumber: value scale: scale value.
-	
-	
+
+	value := ScaledDecimal newFromNumber: value scale: scale value
 ]

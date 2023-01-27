@@ -12,7 +12,7 @@ Class {
 
 { #category : #compiling }
 FT2Handle class >> compileAllFieldsInOrder [
-	"Force the correct order of generation of FFI Bindings"	
+	"Force the correct order of generation of FFI Bindings"
 	"This used to be done in #startUp:, we keep it in case FTBindings are changed and have to be regenerated"
  	FTBitmap compileFields.
  	FTBitmapSize compileFields.
@@ -21,12 +21,12 @@ FT2Handle class >> compileAllFieldsInOrder [
 
  	FTCharMapRec compileFields.
  	FTGlyphSlotRec compileFields.
- 	FTFaceRec compileFields.
+ 	FTFaceRec compileFields
 ]
 
 { #category : #initialization }
 FT2Handle >> beNull [
-	
+
 	^ self handle beNull
 ]
 

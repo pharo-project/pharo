@@ -27,7 +27,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserDialogContext class >> of: aDialogClass in: aBrowserClass [
-	^self new 
+	^self new
 		dialogClass: aDialogClass;
 		browserClass: aBrowserClass
 ]

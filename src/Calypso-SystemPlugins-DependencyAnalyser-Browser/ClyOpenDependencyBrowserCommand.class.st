@@ -10,7 +10,7 @@ Class {
 { #category : #activation }
 ClyOpenDependencyBrowserCommand class >> packageContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext
 ]
 

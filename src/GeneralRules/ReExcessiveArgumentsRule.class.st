@@ -19,7 +19,7 @@ ReExcessiveArgumentsRule class >> checksMethod [
 { #category : #accessing }
 ReExcessiveArgumentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ExcessiveArgumentsRule'
 ]
 
@@ -33,7 +33,7 @@ ReExcessiveArgumentsRule >> basicCheck: aMethod [
 
 	"If method includes UFFI calls then it is OK to have high number of arguments"
 	aMethod isFFIMethod ifTrue: [ ^false ].
- 
+
 	^ aMethod numArgs >= self argumentsCount
 ]
 

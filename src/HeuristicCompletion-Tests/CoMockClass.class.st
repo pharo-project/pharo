@@ -15,8 +15,8 @@ Class {
 }
 
 { #category : #configuration }
-CoMockClass >> addInstanceVariable: aString [ 
-	
+CoMockClass >> addInstanceVariable: aString [
+
 	instanceVariables := instanceVariables copyWith: aString
 ]
 
@@ -31,7 +31,7 @@ CoMockClass >> allClassVarNames [
 
 { #category : #accessing }
 CoMockClass >> allInstVarNames [
-	
+
 	| superclassVarNames |
 	superclassVarNames := superclass
 		ifNil: [ #() ]
@@ -41,7 +41,7 @@ CoMockClass >> allInstVarNames [
 
 { #category : #accessing }
 CoMockClass >> classVarNames [
-	
+
 	^ classVariables
 ]
 
@@ -60,13 +60,13 @@ CoMockClass >> initialize [
 
 { #category : #accessing }
 CoMockClass >> instVarNames [
-	
+
 	^ self instanceVariables
 ]
 
 { #category : #accessing }
 CoMockClass >> instanceSide [
-	
+
 	^ self
 ]
 
@@ -82,23 +82,23 @@ CoMockClass >> instanceVariables: anObject [
 
 { #category : #testing }
 CoMockClass >> isTestCase [
-	
+
 	^ false
 ]
 
 { #category : #methods }
-CoMockClass >> lookupSelector: aString [ 
-	
+CoMockClass >> lookupSelector: aString [
+
 	^ methodDictionary
 		at: aString
-		ifAbsent: [ 
+		ifAbsent: [
 			superclass ifNil: [ ^ nil ].
 			superclass lookupSelector: aString ]
 ]
 
 { #category : #methods }
-CoMockClass >> methodAt: aString put: aCoMockMethod [ 
-	
+CoMockClass >> methodAt: aString put: aCoMockMethod [
+
 	methodDictionary at: aString asSymbol put: aCoMockMethod.
 	aCoMockMethod methodClass: self
 ]
@@ -109,7 +109,7 @@ CoMockClass >> selectors [
 ]
 
 { #category : #accessing }
-CoMockClass >> selectors: aCollection [ 
+CoMockClass >> selectors: aCollection [
 
 	"Install nil methods just for compatibility"
 	aCollection do: [ :k |
@@ -118,30 +118,30 @@ CoMockClass >> selectors: aCollection [
 ]
 
 { #category : #enumerating }
-CoMockClass >> selectorsDo: aBlockClosure [ 
-	
+CoMockClass >> selectorsDo: aBlockClosure [
+
 	self selectors do: aBlockClosure
 ]
 
 { #category : #accessing }
 CoMockClass >> sharedPools [
-	
+
 	^ sharedPools ifNil: [ #() ]
 ]
 
 { #category : #accessing }
-CoMockClass >> sharedPools: aCollection [ 
+CoMockClass >> sharedPools: aCollection [
 	sharedPools := aCollection
 ]
 
 { #category : #accessing }
 CoMockClass >> superclass [
-	
+
 	^ superclass
 ]
 
 { #category : #accessing }
-CoMockClass >> superclass: aCompletionMockClass [ 
-	
+CoMockClass >> superclass: aCompletionMockClass [
+
 	superclass := aCompletionMockClass
 ]

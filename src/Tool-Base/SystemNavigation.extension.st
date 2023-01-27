@@ -132,9 +132,10 @@ SystemNavigation >> browseAllStoresInto: instVarName from: aClass [
 
 { #category : #'*Tool-Base' }
 SystemNavigation >> browseAllUsersOfTrait: aTrait [
+
 	"Launch a class-list list browser on all classes or traits which import aTrait"
-	
-	^Smalltalk tools messageList browseClasses: aTrait traitUsers
+
+	^ self tools messageList browseClasses: aTrait traitUsers
 ]
 
 { #category : #'*Tool-Base' }
@@ -196,13 +197,18 @@ SystemNavigation >> browseClassVariables: aClass [
 ]
 
 { #category : #'*Tool-Base' }
-SystemNavigation >> browseClassesWithNamesContaining: aString caseSensitive: caseSensitive [ 
+SystemNavigation >> browseClassesWithNamesContaining: aString caseSensitive: caseSensitive [
+
 	"Launch a class-list list browser on all classes whose names containg aString as a substring."
+
 	"SystemNavigation default browseClassesWithNamesContaining: 'Morph' caseSensitive: true "
-	
-	|  classes |
-	classes :=  self environment allClasses select: [:class | (class name includesSubstring: aString caseSensitive: caseSensitive)].				
-	^Smalltalk tools messageList browseClasses: classes
+
+	| classes |
+	classes := self environment allClasses select: [ :class | 
+		           class name
+			           includesSubstring: aString
+			           caseSensitive: caseSensitive ].
+	^ self tools messageList browseClasses: classes
 ]
 
 { #category : #'*Tool-Base' }
@@ -217,9 +223,9 @@ SystemNavigation >> browseHierarchy: aClass selector: aSelector [
 	"Open a browser"
 
 	aClass ifNil: [ ^ self ].
-	^ Smalltalk tools browser new
-		spawnHierarchyForClass: aClass selector: aSelector;
-		yourself
+	^ self tools browser new
+		  spawnHierarchyForClass: aClass selector: aSelector;
+		  yourself
 ]
 
 { #category : #'*Tool-Base' }
@@ -254,20 +260,21 @@ SystemNavigation >> browseMessageList: messageList name: labelString autoSelect:
 
 { #category : #'*Tool-Base' }
 SystemNavigation >> browseMessageList: messageList name: labelString autoSelect: autoSelectString refreshingBlock: aBlock [
+
 	"Create and schedule a MessageSet browser on the message list."
+
 	| methods |
-	
 	"Do not show trait methods"
-	methods := messageList reject: [ :each| each isFromTrait ].
-	methods isEmpty ifTrue: 
-		[^ self inform: 'There are no ', String cr, labelString].
-	
-	^ Smalltalk tools messageList new
-		messages: methods; 
-		title: labelString; 
-		autoSelect: autoSelectString;
-		refreshingBlock: aBlock;
-		open
+	methods := messageList reject: [ :each | each isFromTrait ].
+	methods isEmpty ifTrue: [ 
+		^ self inform: 'There are no ' , String cr , labelString ].
+
+	^ self tools messageList new
+		  messages: methods;
+		  title: labelString;
+		  autoSelect: autoSelectString;
+		  refreshingBlock: aBlock;
+		  open
 ]
 
 { #category : #'*Tool-Base' }
@@ -519,4 +526,10 @@ SystemNavigation >> openBrowserFor: aLiteral withMethods: aCollection [
 			name: label
 			autoSelect: autoSelect
 			refreshingBlock: [ :method | method hasSelector: aLiteral ] ]
+]
+
+{ #category : #'*Tool-Base' }
+SystemNavigation >> tools [
+
+	^ Smalltalk tools
 ]

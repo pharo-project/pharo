@@ -17,7 +17,7 @@ ClyQueryViewStateTest >> selectedItem [
 ClyQueryViewStateTest >> setUp [
 	| packages |
 	super setUp.
-	packages := ClyAllPackagesQuery 
+	packages := ClyAllPackagesQuery
 		from: ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 	"it is P5WithTag package which allow items expansion"
 	viewDataSource := ClyCollapsedDataSource on: packages.
@@ -31,7 +31,7 @@ ClyQueryViewStateTest >> setUp [
 { #category : #running }
 ClyQueryViewStateTest >> snapshotState [
 
-	navigationState := queryView snapshotState.
+	navigationState := queryView snapshotState
 ]
 
 { #category : #tests }
@@ -41,7 +41,7 @@ ClyQueryViewStateTest >> testApplyingToQueryViewShouldCreateOpenedDataSource [
 	self snapshotState.
 	newView := ClyQueryViewMorph for: browser.
 	navigationState applyTo: newView.
-	 
+
 	self assert: newView dataSource ~~ navigationState dataSource.
 	self deny: newView dataSource isClosed.
 	self assert: newView dataSource queryView equals: newView.
@@ -53,15 +53,15 @@ ClyQueryViewStateTest >> testApplyingToQueryViewShouldRestoreExpandedItems [
 
 	| expandedItem newView |
 	self selectedItem expand.
-	
+
 	self snapshotState.
 	newView := ClyQueryViewMorph for: browser.
 	navigationState applyTo: newView.
 
 	expandedItem := navigationState dataSource expandedItems first.
 	self assert: expandedItem childrenDataSource isClosed description: 'applying should not open data source snapshot'.
-	
-	self assert: newView dataSource expandedItems size equals: 1.	
+
+	self assert: newView dataSource expandedItems size equals: 1.
 	expandedItem := newView dataSource expandedItems first.
 	self assert: (expandedItem isSameAs: self selectedItem).
 	self deny: expandedItem childrenDataSource isClosed.
@@ -73,7 +73,7 @@ ClyQueryViewStateTest >> testApplyingToQueryViewShouldRestoreExpandedItems [
 ClyQueryViewStateTest >> testDataSourceIsClosed [
 
 	self snapshotState.
-	
+
 	self assert: navigationState dataSource isClosed
 ]
 
@@ -81,9 +81,9 @@ ClyQueryViewStateTest >> testDataSourceIsClosed [
 ClyQueryViewStateTest >> testDataSourceWithExpandedItems [
 
 	self selectedItem expand.
-	
+
 	self snapshotState.
-	
+
 	self assert: (navigationState dataSource expandedItems first isSameAs: viewDataSource expandedItems first)
 ]
 
@@ -91,7 +91,7 @@ ClyQueryViewStateTest >> testDataSourceWithExpandedItems [
 ClyQueryViewStateTest >> testDataSourceWithoutQueryView [
 
 	self snapshotState.
-	
+
 	self assert: navigationState dataSource queryView isNil
 ]
 
@@ -99,7 +99,7 @@ ClyQueryViewStateTest >> testDataSourceWithoutQueryView [
 ClyQueryViewStateTest >> testDataSourceWithoutTable [
 
 	self snapshotState.
-	
+
 	self assert: navigationState dataSource table isNil
 ]
 
@@ -108,9 +108,9 @@ ClyQueryViewStateTest >> testExpandedDataSourceIsClosed [
 
 	| expandedItem |
 	self selectedItem expand.
-	
+
 	self snapshotState.
-	
+
 	expandedItem := navigationState dataSource expandedItems first.
 	self assert: expandedItem childrenDataSource isClosed
 ]
@@ -120,9 +120,9 @@ ClyQueryViewStateTest >> testExpandedDataSourceWithRetrievedExpandedItem [
 
 	| expandedItem |
 	self selectedItem expand.
-	
+
 	self snapshotState.
-	
+
 	expandedItem := navigationState dataSource expandedItems first.
 	self assert: expandedItem childrenDataSource parentItem equals: expandedItem
 ]
@@ -132,9 +132,9 @@ ClyQueryViewStateTest >> testExpandedDataSourceWithoutQueryView [
 
 	| expandedItem |
 	self selectedItem expand.
-	
+
 	self snapshotState.
-	
+
 	expandedItem := navigationState dataSource expandedItems first.
 	self assert: expandedItem childrenDataSource queryView isNil
 ]
@@ -144,9 +144,9 @@ ClyQueryViewStateTest >> testExpandedDataSourceWithoutTable [
 
 	| expandedItem |
 	self selectedItem expand.
-	
+
 	self snapshotState.
-	
+
 	expandedItem := navigationState dataSource expandedItems first.
 	self assert: expandedItem childrenDataSource table isNil
 ]
@@ -156,9 +156,9 @@ ClyQueryViewStateTest >> testExpandedItemWithRetrievedOwnerDataSource [
 
 	| expandedItem |
 	self selectedItem expand.
-	
+
 	self snapshotState.
-	
+
 	expandedItem := navigationState dataSource expandedItems first.
 	self assert: expandedItem ownerDataSource equals: navigationState dataSource
 ]
@@ -167,7 +167,7 @@ ClyQueryViewStateTest >> testExpandedItemWithRetrievedOwnerDataSource [
 ClyQueryViewStateTest >> testRetrievesCurrentSelection [
 
 	self snapshotState.
-	
+
 	self assert: (navigationState selection lastSelectedItem isSameAs: self selectedItem)
 ]
 
@@ -179,7 +179,7 @@ ClyQueryViewStateTest >> testSelectedChildInExpandedItemWithRetrievedExpandedDat
 	selectedItem := self selectedItem childrenDataSource elementAt: 1. "some class group".
 	queryView selection selectItems: { selectedItem }.
 	self snapshotState.
-	
+
 	retrievedSelectedItem := navigationState selection items first.
 	self assert: retrievedSelectedItem ownerDataSource equals: navigationState dataSource expandedItems first childrenDataSource
 ]
@@ -189,7 +189,7 @@ ClyQueryViewStateTest >> testSelectedItemPointsToRetrievedDataSource [
 
 	| item |
 	self snapshotState.
-	
+
 	item := navigationState selection items first.
 	self assert: item ownerDataSource equals: navigationState dataSource
 ]
@@ -198,7 +198,7 @@ ClyQueryViewStateTest >> testSelectedItemPointsToRetrievedDataSource [
 ClyQueryViewStateTest >> testSelectionWithRetrievedDataSourceCopy [
 
 	self snapshotState.
-	
+
 	self assert: navigationState selection rootDataSource equals: navigationState dataSource
 ]
 
@@ -206,6 +206,6 @@ ClyQueryViewStateTest >> testSelectionWithRetrievedDataSourceCopy [
 ClyQueryViewStateTest >> testViewDataSourceIsNotDetatchedAfterSnapshoting [
 
 	self snapshotState.
-	
+
 	self assert: (viewDataSource queryResult hasSubscriber: viewDataSource)
 ]

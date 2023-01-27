@@ -80,7 +80,7 @@ Class {
 
 { #category : #'class initialization' }
 ZipFileConstants class >> initialize [
-	
+
 	FaMsdos		:= 0.
 	FaUnix 		:= 3.
 	DeflatingCompressionNormal	:= 0.
@@ -103,12 +103,12 @@ ZipFileConstants class >> initialize [
 
 	"0x02014b50 little-endian i.e. #(16r50 16r4B 16r01 16r02) [1]"
 	CentralDirectoryFileHeaderSignature := #[80 75 1 2].
-	
+
 	"0x04034b50 little-endian i.e. #(16r50 16r4B 16r03 16r04) [1]"
 	LocalFileHeaderSignature := #[80 75 3 4].
-	
+
 	"0x06054b50 little-endian i.e. #(16r50 16r4B 16r05 16r06) [1]"
 	EndOfCentralDirectorySignature := #[80 75 5 6].
-	
+
 	"[1] http://en.wikipedia.org/wiki/Zip_(file_format)#File_headers"
 ]

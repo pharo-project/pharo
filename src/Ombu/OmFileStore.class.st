@@ -305,6 +305,12 @@ OmFileStore >> lowLevelFileStoreIfNone: aBlock [
 	^ self
 ]
 
+{ #category : #accessing }
+OmFileStore >> mustRefresh [
+
+	^ mustRefresh
+]
+
 { #category : #writing }
 OmFileStore >> newEntry: anEntry [
 

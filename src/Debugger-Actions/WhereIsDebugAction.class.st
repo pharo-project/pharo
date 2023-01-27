@@ -29,7 +29,7 @@ WhereIsDebugAction >> defaultOrder [
 { #category : #actions }
 WhereIsDebugAction >> executeAction [
 
-	self debugger code setSelection: (self session 
+	self debugger code setSelection: (self session
 		pcRangeForContext:  self currentContext)
 ]
 
@@ -48,7 +48,7 @@ WhereIsDebugAction >> id [
 WhereIsDebugAction >> initialize [
 
 	super initialize.
-	"This action just updates the selection in the code editor. 
+	"This action just updates the selection in the code editor.
 	No need to do any update or validation."
 	self needsUpdate: false.
 	self needsValidation: false.

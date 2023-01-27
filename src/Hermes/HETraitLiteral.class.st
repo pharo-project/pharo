@@ -23,5 +23,5 @@ HETraitLiteral >> asLiteralIn: env [
 
 { #category : #accessing }
 HETraitLiteral >> value: aTrait [
-	value := aTrait name.
+	value := aTrait name
 ]

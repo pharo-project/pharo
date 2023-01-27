@@ -23,14 +23,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-CmCommandError class >> command: aCmSpecCommand [ 
+CmCommandError class >> command: aCmSpecCommand [
 	^ self new
 		command: aCmSpecCommand;
 		yourself
 ]
 
 { #category : #signalling }
-CmCommandError class >> signalCommand: aCmSpecCommand [ 
+CmCommandError class >> signalCommand: aCmSpecCommand [
 	(self command: aCmSpecCommand) signal
 ]
 
@@ -40,6 +40,6 @@ CmCommandError >> command [
 ]
 
 { #category : #accessing }
-CmCommandError >> command: aCmSpecCommand [ 
+CmCommandError >> command: aCmSpecCommand [
 	command := aCmSpecCommand
 ]

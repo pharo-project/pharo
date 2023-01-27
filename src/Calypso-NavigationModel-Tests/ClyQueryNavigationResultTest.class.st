@@ -16,7 +16,7 @@ ClyQueryNavigationResultTest class >> isAbstract [
 { #category : #running }
 ClyQueryNavigationResultTest >> createQuery [
 
-	^ClyReturningScopeBasisExampleQuery 
+	^ClyReturningScopeBasisExampleQuery
 		from: (ClyExampleScope emptyIn: environment)
 ]
 
@@ -28,11 +28,11 @@ ClyQueryNavigationResultTest >> createQueryResult [
 { #category : #running }
 ClyQueryNavigationResultTest >> setUp [
 	super setUp.
-	
+
 	query := self createQuery.
-	
+
 	queryResult := self createQueryResult prepareNewFor: query in: environment.
-	queryResult cancelRebuild. 
+	queryResult cancelRebuild.
 	"by default result is in state to be rebuilt by query.
 	We do not need it in tests where we usually just test fillWith: logic"
 ]
@@ -54,7 +54,7 @@ ClyQueryNavigationResultTest >> testComparisonWithCopy [
 
 	| queryResult2 |
 	queryResult2 := queryResult copy.
-	
+
 	self assert: queryResult equals: queryResult2
 ]
 
@@ -70,46 +70,46 @@ ClyQueryNavigationResultTest >> testComparisonWithSimilarResult [
 	| queryResult2 |
 	queryResult := self createQueryResult.
 	queryResult2 := self createQueryResult.
-	
+
 	self assert: queryResult equals: queryResult2.
 	self assert: queryResult hash equals: queryResult2 hash
 ]
 
 { #category : #tests }
 ClyQueryNavigationResultTest >> testForceLazyRebuild [
-	
+
 	self assert: queryResult items notNil.
-	
+
 	queryResult forceLazyRebuild.
-	
+
 	self assert: queryResult needsRebuild
 ]
 
 { #category : #tests }
 ClyQueryNavigationResultTest >> testIsBuiltWhenItemsExist [
-	
+
 	queryResult initializeItems.
-	
+
 	self assert: queryResult isBuilt
 ]
 
 { #category : #tests }
 ClyQueryNavigationResultTest >> testItemsChangedNotificationShouldResetItems [
-	
+
 	queryResult initializeItems.
 	self assert: queryResult isBuilt.
-	
+
 	queryResult itemsChanged.
-	
+
 	self deny: queryResult isBuilt.
 	self assert: queryResult items isNil
 ]
 
 { #category : #tests }
 ClyQueryNavigationResultTest >> testNeedsRebuildByDefault [
-	
+
 	queryResult := self createQueryResult.
-	
+
 	self assert: queryResult needsRebuild
 ]
 

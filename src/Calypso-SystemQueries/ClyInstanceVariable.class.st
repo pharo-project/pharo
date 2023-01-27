@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyInstanceVariable class >> named: aSymbol definedIn: aClass [
-	^self 
+	^self
 		on: (aClass slotNamed: aSymbol)
 		definedIn: aClass
 ]
@@ -27,13 +27,13 @@ ClyInstanceVariable class >> queryClass [
 { #category : #accessing }
 ClyInstanceVariable >> detectDefiningClassFrom: anUserClass [
 
-	(anUserClass slots includes: actualVariable) ifTrue: [ 
+	(anUserClass slots includes: actualVariable) ifTrue: [
 		definingClass := anUserClass.
 		^self].
-	
-	anUserClass isRootInEnvironment ifTrue: [ 
+
+	anUserClass isRootInEnvironment ifTrue: [
 		self error: 'Cant find the class defining variable' ].
-	
+
 	self detectDefiningClassFrom: anUserClass superclass
 ]
 
@@ -56,8 +56,8 @@ ClyInstanceVariable >> isLive [
 
 { #category : #operations }
 ClyInstanceVariable >> openInspector [
-	definingClass isClassSide ifTrue: [ 
+	definingClass isClassSide ifTrue: [
 		^(actualVariable read: definingClass instanceSide) inspect].
-	
-	super openInspector.
+
+	super openInspector
 ]

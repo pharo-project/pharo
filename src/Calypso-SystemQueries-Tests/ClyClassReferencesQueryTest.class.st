@@ -55,9 +55,9 @@ ClyClassReferencesQueryTest >> referencedClass [
 { #category : #running }
 ClyClassReferencesQueryTest >> setUp [
 	super setUp.
-	
+
 	environment system: ClySystemEnvironment currentImage.
-	environment detachFromSystem.
+	environment detachFromSystem
 ]
 
 { #category : #tests }
@@ -65,7 +65,7 @@ ClyClassReferencesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (self class >> #reference1OfClass) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (self class >> #referenceOfAnotherClass) in: environment).
 	self assert: query checkEmptyResult
@@ -84,7 +84,7 @@ ClyClassReferencesQueryTest >> testComparison [
 ClyClassReferencesQueryTest >> testDescriptionWhenSimpleClassBindingIsUsed [
 
 	query := ClyClassReferencesQuery to: Object binding.
-	
+
 	self assert: query description equals: 'references to Object'
 ]
 
@@ -111,8 +111,8 @@ ClyClassReferencesQueryTest >> testForMetaclass [
 ClyClassReferencesQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: foundSelectors equals: #(classSideReference1OfClass reference1OfClass reference2OfClass)
 ]
 
@@ -128,8 +128,8 @@ ClyClassReferencesQueryTest >> testFromMethodScope [
 ClyClassReferencesQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: foundSelectors equals: #(classSideReference1OfClass reference1OfClass reference2OfClass)
 ]
 
@@ -137,8 +137,8 @@ ClyClassReferencesQueryTest >> testFromPackageScope [
 ClyClassReferencesQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: foundSelectors equals: #(classSideReference1OfClass reference1OfClass reference2OfClass)
 ]
 

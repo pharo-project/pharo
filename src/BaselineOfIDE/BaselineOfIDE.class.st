@@ -391,15 +391,16 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 	| baselineClass className |
 
 	className := ('BaselineOf', baselineName) asSymbol.
-	baselineClass := Smalltalk classNamed: className. 
+	baselineClass := Smalltalk classNamed: className.
 	baselineClass ifNil: [ ^ self ].
 
-	self pharoPluginClass 
-		addProjectNamed: projectName 
-		commit: (self pharoPluginClass commitOfExternalProject: externalProject) 
-		baselines: { className }.
+	self pharoPluginClass
+		addProjectNamed: projectName
+		commit: (self pharoPluginClass commitOfExternalProject: externalProject)
+		baselines: { className }
+		tags: #(#system).
 	"Register baselines"
-	({baselineName}, anArray) do: [ :each | 
+	({baselineName}, anArray) do: [ :each |
 		Metacello new baseline: each; register ]
 ]
 

@@ -6,9 +6,8 @@ Class {
 
 { #category : #'tests - expanded' }
 OldClassDefinitionPrinterTest >> expandedForClass: aClass [
-	
+
 	^ aClass expandedDefinitionStringFor: (OldPharoClassDefinitionPrinter for: aClass)
-	
 ]
 
 { #category : #helpers }
@@ -26,8 +25,8 @@ OldClassDefinitionPrinterTest >> setUp [
 { #category : #'tests - classes' }
 OldClassDefinitionPrinterTest >> testArray [
 
-	self 
-		assert: (self forClass: Array) 
+	self
+		assert: (self forClass: Array)
 		equals: 'ArrayedCollection variableSubclass: #Array
 	instanceVariableNames: ''''
 	classVariableNames: ''''
@@ -47,8 +46,8 @@ OldClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 { #category : #'tests - classes' }
 OldClassDefinitionPrinterTest >> testByteString [
 
-	self 
-		assert: (self forClass: ByteString) 
+	self
+		assert: (self forClass: ByteString)
 		equals: 'String variableByteSubclass: #ByteString
 	instanceVariableNames: ''''
 	classVariableNames: ''NonAsciiMap''
@@ -75,7 +74,7 @@ OldClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
 { #category : #'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testMetaclass [
-	
+
 	self assert: (self forClass: Metaclass) equals:  'ClassDescription subclass: #Metaclass
 	instanceVariableNames: ''thisClass''
 	classVariableNames: ''''
@@ -84,9 +83,9 @@ OldClassDefinitionPrinterTest >> testMetaclass [
 
 { #category : #'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testMetaclassClass [
-	
-	self 
-		assert: (self forClass: Metaclass class) 
+
+	self
+		assert: (self forClass: Metaclass class)
 		equals: 'Metaclass class
 	instanceVariableNames: '''''
 ]
@@ -94,8 +93,8 @@ OldClassDefinitionPrinterTest >> testMetaclassClass [
 { #category : #'tests - classes' }
 OldClassDefinitionPrinterTest >> testPoint [
 
-	self 
-		assert: (self forClass: Point) 
+	self
+		assert: (self forClass: Point)
 		equals: 'Object subclass: #Point
 	instanceVariableNames: ''x y''
 	classVariableNames: ''''
@@ -104,7 +103,7 @@ OldClassDefinitionPrinterTest >> testPoint [
 
 { #category : #'tests - classes' }
 OldClassDefinitionPrinterTest >> testProtoObject [
-	
+
 	self assert: (self forClass: ProtoObject) equals: 'ProtoObject subclass: #ProtoObject
 	instanceVariableNames: ''''
 	classVariableNames: ''''
@@ -114,9 +113,9 @@ ProtoObject superclass: nil'
 
 { #category : #'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testSystemAnnouncerClass [
-	
-	self 
-		assert: (self forClass: SystemAnnouncer class) 
+
+	self
+		assert: (self forClass: SystemAnnouncer class)
 		equals: 'SystemAnnouncer class
 	instanceVariableNames: ''announcer'''
 ]

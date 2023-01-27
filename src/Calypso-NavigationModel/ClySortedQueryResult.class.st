@@ -26,8 +26,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClySortedQueryResult class >> using: aSortFunction [ 
-	^self new 
+ClySortedQueryResult class >> using: aSortFunction [
+	^self new
 		sortFunction: aSortFunction
 ]
 
@@ -48,7 +48,7 @@ ClySortedQueryResult >> defaultItems [
 ]
 
 { #category : #building }
-ClySortedQueryResult >> fillWith: objects [ 
+ClySortedQueryResult >> fillWith: objects [
 	items addAll: objects
 ]
 

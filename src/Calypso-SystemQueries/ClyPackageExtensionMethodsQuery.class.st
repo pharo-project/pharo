@@ -24,7 +24,7 @@ Class {
 { #category : #'instance creation' }
 ClyPackageExtensionMethodsQuery class >> of: aPackage [
 
-	^self new 
+	^self new
 		package: aPackage
 ]
 
@@ -59,7 +59,7 @@ ClyPackageExtensionMethodsQuery >> hash [
 
 { #category : #'system changes' }
 ClyPackageExtensionMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^(aSystemAnnouncement affectsMethodsDefinedInPackage: package)
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]

@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #testing }
-AbstractFontFamilyMember class >> isAbstract [ 
+AbstractFontFamilyMember class >> isAbstract [
 
 	^ self name = #AbstractFontFamilyMember
 ]
@@ -21,8 +21,8 @@ AbstractFontFamilyMember class >> isAbstract [
 AbstractFontFamilyMember >> asLogicalFontOfPointSize: pointSize [
 
 	^LogicalFont
-		familyName: self family familyName 
-		pointSize: pointSize 
+		familyName: self family familyName
+		pointSize: pointSize
 		stretchValue: self stretchValue
 		weightValue: self weightValue
 		slantValue: self slantValue
@@ -42,9 +42,9 @@ AbstractFontFamilyMember >> closenessVectorForStretch: stretch slant: slant weig
 
 	| normalizedSlant |
 	normalizedSlant := slant.
-	normalizedSlant ~= 0 ifTrue: [ "treat italic and oblique as though they were they same" 
+	normalizedSlant ~= 0 ifTrue: [ "treat italic and oblique as though they were they same"
 		normalizedSlant := LogicalFont slantItalic ].
-	^ { 
+	^ {
 		  (stretch - LogicalFont stretchRegular * 11).
 		  (slant * 7).
 		  (weight - LogicalFont weightRegular / 100 * 5) }
@@ -63,9 +63,9 @@ AbstractFontFamilyMember >> family: aFontFamily [
 ]
 
 { #category : #comparing }
-AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStretch weight: inputWeight slant: inputSlant [ 
+AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStretch weight: inputWeight slant: inputSlant [
 	| inputVector vector otherVector distance otherDistance dotProduct otherDotProduct |
-	
+
 	inputVector := self closenessVectorForStretch: inputStretch slant: inputSlant weight: inputWeight.
 	vector := self closenessVector.
 	otherVector := otherMember closenessVector.
@@ -76,7 +76,7 @@ AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStret
 			((inputVector second - otherVector second) raisedTo: 2) +
 			((inputVector third - otherVector third) raisedTo: 2)) sqrt.
 	distance < otherDistance ifTrue:[^true].
-	distance > otherDistance ifTrue:[^false].	
+	distance > otherDistance ifTrue:[^false].
 	dotProduct := (inputVector first * vector first) +
 				(inputVector second * vector second) +
 				(inputVector third * vector third).
@@ -84,7 +84,7 @@ AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStret
 				(inputVector second * otherVector second) +
 				(inputVector third * otherVector third).
 	dotProduct > otherDotProduct ifTrue:[^true].
-	dotProduct < otherDotProduct ifTrue:[^false].	
+	dotProduct < otherDotProduct ifTrue:[^false].
 	vector first > otherVector first ifTrue:[^true].
 	vector first < otherVector first ifTrue:[^false].
 	vector second > otherVector second ifTrue:[^true].
@@ -97,7 +97,7 @@ AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStret
 { #category : #testing }
 AbstractFontFamilyMember >> isSimulatedStyle [
 	"Return false by default, subclasses can override when they simulate the style"
-	
+
 	 ^false
 ]
 

@@ -130,10 +130,10 @@ Deprecation >> date: aDate [
 
 { #category : #handling }
 Deprecation >> defaultAction [
-	Log 
+	Log
 		ifNotNil: [:log | log add: self].
 	self logTranscript.
-	self raiseWarning 
+	self raiseWarning
 		ifTrue: [super defaultAction]
 ]
 
@@ -173,9 +173,9 @@ Deprecation >> logTranscript [
 { #category : #accessing }
 Deprecation >> messageText [
 	^String streamContents: [ :str |
-		self shouldTransform ifTrue: [ 
+		self shouldTransform ifTrue: [
 			str nextPutAll:  'Automatic deprecation code rewrite: '].
-		str 
+		str
 			nextPutAll: 'The method ';
 			nextPutAll: self deprecatedMethodName;
 			nextPutAll: ' called from ';
@@ -236,14 +236,14 @@ Deprecation >> transform [
 	aMethod isDoIt ifTrue:[ ^ self signal ]. "no need to transform doits"
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [
-		rewriteRule := self rewriterClass new 
+		rewriteRule := self rewriterClass new
 			replace: rule key with: rule value.
 		(rewriteRule executeTree: node)
 			ifFalse: [ ^ self signal ].
-		node replaceWith: rewriteRule tree. 
-		Author 
+		node replaceWith: rewriteRule tree.
+		Author
 			useAuthor: 'AutoDeprecationRefactoring'
-			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
+			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].
 		Log  ifNotNil: [:log | log add: self].
 		self logTranscript]
 ]

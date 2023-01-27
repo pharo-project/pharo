@@ -29,8 +29,8 @@ EpOmbuFileReaderService class >> fileSuffix [
 
 { #category : #'System-FileRegistry' }
 EpOmbuFileReaderService class >> service [
-	^ SimpleServiceEntry 
-		provider: self 
+	^ SimpleServiceEntry
+		provider: self
 		label: 'Browse Epicea Log'
 		selector: #browseLogInFileNamed:
 		description: 'Browse the Epicea log.'

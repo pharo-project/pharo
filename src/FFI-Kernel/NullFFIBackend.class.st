@@ -44,14 +44,14 @@ NullFFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: 
 ]
 
 { #category : #'instance creation' }
-NullFFIBackend >> loadSymbol: moduleSymbol module: module [ 
+NullFFIBackend >> loadSymbol: moduleSymbol module: module [
 
 	^ self primitiveFailed
 ]
 
 { #category : #callbacks }
-NullFFIBackend >> lookupCallbackByAddress: address [ 
-	
+NullFFIBackend >> lookupCallbackByAddress: address [
+
 	^ self error: 'Null FFI backend does not know about callback in address ' , address printString
 ]
 

@@ -42,20 +42,20 @@ KMKeyCombinationChoice >> includes: aShortcut [
 
 { #category : #matching }
 KMKeyCombinationChoice >> matches: anEventBuffer [
-	
+
 	^ shortcuts anySatisfy: [ :each | each matches: anEventBuffer ]
 ]
 
 { #category : #matching }
 KMKeyCombinationChoice >> matchesCompletely: anEventBuffer [
-	
+
 	^ shortcuts anySatisfy: [ :each | each matchesCompletely: anEventBuffer ]
 ]
 
 { #category : #'accessing - platform' }
 KMKeyCombinationChoice >> platformCharacter [
 
-	shortcuts do: [ :each | 
+	shortcuts do: [ :each |
 		each platformCharacter ifNotNil: [ :char | ^ char ] ].
 	^ nil
 ]
@@ -63,7 +63,7 @@ KMKeyCombinationChoice >> platformCharacter [
 { #category : #'accessing - platform' }
 KMKeyCombinationChoice >> platformModifier [
 
-	shortcuts do: [ :each | 
+	shortcuts do: [ :each |
 		each platformModifier ifNotNil: [ :mod | ^ mod ] ].
 	^ nil
 ]
