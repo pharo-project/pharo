@@ -10,7 +10,7 @@ Class {
 	#category : #'Hiedra-Tests-Model'
 }
 
-{ #category : #'initialize - event' }
+{ #category : #'class initialization' }
 HiRulerBuilderTest class >> initialize [
 	DebugShowingRulerInWindow := false
 ]
