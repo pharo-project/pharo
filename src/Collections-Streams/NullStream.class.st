@@ -24,7 +24,7 @@ NullStream class >> new [
 NullStream >> ascii [
 	"Switches the stream to ascii mode"
 
-	binary := false.
+	binary := false
 ]
 
 { #category : #testing }
@@ -72,7 +72,7 @@ NullStream >> initialize [
 	"Initialize the receiver"
 
 	binary := false.
-	position := 0.
+	position := 0
 ]
 
 { #category : #testing }
@@ -103,9 +103,9 @@ NullStream >> next [
 ]
 
 { #category : #accessing }
-NullStream >> next: anInteger [ 
-	"Answer the next anInteger elements of my collection. Must override 
-	because default uses self contents species, which might involve a large 
+NullStream >> next: anInteger [
+	"Answer the next anInteger elements of my collection. Must override
+	because default uses self contents species, which might involve a large
 	collection."
 
 	position := position + anInteger.
@@ -123,7 +123,7 @@ NullStream >> next: n into: aCollection [
 
 { #category : #reading }
 NullStream >> next: n into: aCollection startingAt: startIndex [
-	"Read n objects into the given collection. 
+	"Read n objects into the given collection.
 	Return aCollection or a partial copy if less than
 	n elements have been read."
 
@@ -153,7 +153,7 @@ NullStream >> nextInto: aCollection [
 	Return aCollection or a partial copy if less than aCollection
 	size elements have been read."
 
-	^self next: aCollection size into: aCollection startingAt: 1.
+	^self next: aCollection size into: aCollection startingAt: 1
 ]
 
 { #category : #reading }
@@ -162,12 +162,12 @@ NullStream >> nextInto: aCollection startingAt: startIndex [
 	Return aCollection or a partial copy if less than aCollection
 	size elements have been read."
 
-	^self next: (aCollection size - startIndex +1) into: aCollection startingAt: startIndex.
+	^self next: (aCollection size - startIndex +1) into: aCollection startingAt: startIndex
 ]
 
 { #category : #accessing }
-NullStream >> nextPut: anObject [ 
-	"Insert the argument, anObject, as the next object accessible by the 
+NullStream >> nextPut: anObject [
+	"Insert the argument, anObject, as the next object accessible by the
 	receiver. Answer anObject."
 
 	position := position + 1.
@@ -177,7 +177,7 @@ NullStream >> nextPut: anObject [
 
 { #category : #accessing }
 NullStream >> nextPutAll: aCollection [
-	"Append the elements of aCollection to the sequence of objects accessible 
+	"Append the elements of aCollection to the sequence of objects accessible
 	by the receiver. Answer aCollection."
 
 	position := position + aCollection size.
@@ -188,7 +188,7 @@ NullStream >> nextPutAll: aCollection [
 
 { #category : #writing }
 NullStream >> peek [
-	"Answer what would be returned if the message next were sent to the 
+	"Answer what would be returned if the message next were sent to the
 	receiver. If the receiver is at the end, answer nil."
 
 	^self element
@@ -207,9 +207,9 @@ NullStream >> position [
 ]
 
 { #category : #positioning }
-NullStream >> position: anInteger [ 
-	"Set the current position for accessing the objects to be anInteger, as long 
-	as anInteger is within the bounds of the receiver's contents. If it is not, 
+NullStream >> position: anInteger [
+	"Set the current position for accessing the objects to be anInteger, as long
+	as anInteger is within the bounds of the receiver's contents. If it is not,
 	create an error notification."
 
 	(anInteger >= 0)
@@ -219,7 +219,7 @@ NullStream >> position: anInteger [
 
 { #category : #positioning }
 NullStream >> positionError [
-	"Since I am not necessarily writable, it is up to my subclasses to override 
+	"Since I am not necessarily writable, it is up to my subclasses to override
 	position: if expanding the collection is preferrable to giving this error."
 
 	self error: 'Attempt to set the position of a PositionableStream out of bounds'
@@ -227,12 +227,12 @@ NullStream >> positionError [
 
 { #category : #printing }
 NullStream >> printOn: aStream [
-	aStream nextPutAll: 'a '; nextPutAll: self class name.
+	aStream nextPutAll: 'a '; nextPutAll: self class name
 ]
 
 { #category : #reading }
 NullStream >> readInto: collection startingAt: startIndex count: n [
-	"Read n objects into the given collection. 
+	"Read n objects into the given collection.
 	Return number of elements that have been read."
 
 	position := position + n.
@@ -247,10 +247,10 @@ NullStream >> reset [
 ]
 
 { #category : #positioning }
-NullStream >> skip: anInteger [ 
-	"Set the receiver's position to be the current position+anInteger. A 
-	subclass might choose to be more helpful and select the minimum of the 
-	receiver's size and position+anInteger, or the maximum of 1 and 
+NullStream >> skip: anInteger [
+	"Set the receiver's position to be the current position+anInteger. A
+	subclass might choose to be more helpful and select the minimum of the
+	receiver's size and position+anInteger, or the maximum of 1 and
 	position+anInteger for the repositioning."
 
 	self position: position + anInteger

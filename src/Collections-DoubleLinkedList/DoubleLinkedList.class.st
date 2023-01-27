@@ -15,11 +15,19 @@ Class {
 	#category : #'Collections-DoubleLinkedList-Base'
 }
 
+{ #category : #'instance creation' }
+DoubleLinkedList class >> newFrom: aCollection [
+
+	^ self new
+			addAll: aCollection;
+			yourself
+]
+
 { #category : #adding }
 DoubleLinkedList >> add: anObjectOrLink [
 	"Add anObjectOrLink at the end of me.
 	Return the internal link object."
-	
+
 	^ self addLast: anObjectOrLink
 ]
 
@@ -63,7 +71,7 @@ DoubleLinkedList >> add: anObjectOrLink beforeLink: otherLink [
 DoubleLinkedList >> addAll: collection [
 	"Add all elements of collection to me, in order.
 	Each can be either a value object or a link."
-	
+
 	collection do: [ :each | self add: each ]
 ]
 
@@ -71,7 +79,7 @@ DoubleLinkedList >> addAll: collection [
 DoubleLinkedList >> addFirst: anObjectOrLink [
 	"Add anObjectOrLink to me, so that it becomes the first one.
 	Return the internal link object."
-	
+
 	| link |
 	link := anObjectOrLink asDoubleLink.
 	link nextLink: head.
@@ -98,7 +106,7 @@ DoubleLinkedList >> addLast: anObjectOrLink [
 { #category : #converting }
 DoubleLinkedList >> asArray [
 	"Return a new Array containing my elements"
-	
+
 	^ Array streamContents: [ :out |
 		self do: [ :each | out nextPut: each ] ]
 ]
@@ -106,7 +114,7 @@ DoubleLinkedList >> asArray [
 { #category : #enumerating }
 DoubleLinkedList >> collect: block [
 	"Execute block for each of my elements and return a new instance of me containing the results."
-	
+
 	| result |
 	result := self class new.
 	self do: [ :each |
@@ -131,7 +139,7 @@ DoubleLinkedList >> emptyCheck [
 { #category : #private }
 DoubleLinkedList >> errorEmptyCollection [
 	"Signal a CollectionIsEmpty exception"
-	
+
 	CollectionIsEmpty signalWith: self
 ]
 
@@ -139,7 +147,7 @@ DoubleLinkedList >> errorEmptyCollection [
 DoubleLinkedList >> first [
 	"Return the first element that I hold, also known as my head value.
 	Signal a CollectionIsEmpty exception when I am empty."
-	
+
 	self emptyCheck.
 	^ head value
 ]
@@ -148,7 +156,7 @@ DoubleLinkedList >> first [
 DoubleLinkedList >> firstLink [
 	"Return the first link that I hold, also known as my head.
 	Signal a CollectionIsEmpty excpetion when I am empty."
-	
+
 	self emptyCheck.
 	^ head
 ]
@@ -156,7 +164,7 @@ DoubleLinkedList >> firstLink [
 { #category : #testing }
 DoubleLinkedList >> includes: object [
 	"Return true when I hold object as a value, false otherwise."
-	
+
 	self do: [ :each |
 		each = object ifTrue: [ ^ true ] ].
 	^ false
@@ -169,11 +177,18 @@ DoubleLinkedList >> isEmpty [
 	^ head isNil and: [ tail isNil ]
 ]
 
+{ #category : #testing }
+DoubleLinkedList >> isNotEmpty [
+	"Answer whether the receiver contains any elements."
+
+	^ self isEmpty not
+]
+
 { #category : #accessing }
 DoubleLinkedList >> last [
 	"Return the last element that I hold, also known as my tail value.
 	Signal a CollectionIsEmpty excpetion when I am empty."
-	
+
 	self emptyCheck.
 	^ tail value
 ]
@@ -182,7 +197,7 @@ DoubleLinkedList >> last [
 DoubleLinkedList >> lastLink [
 	"Return the last link that I hold, also known as my tail.
 	Signal a CollectionIsEmpty excpetion when I am empty."
-	
+
 	self emptyCheck.
 	^ tail
 ]
@@ -190,18 +205,18 @@ DoubleLinkedList >> lastLink [
 { #category : #enumerating }
 DoubleLinkedList >> linksDo: block [
 	"Execute block for each of the links that I hold internally."
-	
+
 	| current |
 	current := head.
-	[ current isNil ] 
-		whileFalse: [ 
+	[ current isNil ]
+		whileFalse: [
 	 		block value: current.
 			current := current nextLink ]
 ]
 
 { #category : #enumerating }
 DoubleLinkedList >> reject: block [
-	"Execute block for each of my elements and return a new instance of me 
+	"Execute block for each of my elements and return a new instance of me
 	containing those elements for which the block returned false."
 
 	| result |
@@ -215,7 +230,7 @@ DoubleLinkedList >> reject: block [
 { #category : #removing }
 DoubleLinkedList >> removeAll [
 	"Remove all the elements that I hold."
-	
+
 	head := tail := nil
 ]
 
@@ -224,12 +239,12 @@ DoubleLinkedList >> removeFirst [
 	"Remove my first element.
 	Signal a CollectionIsEmpty exception when I am empty.
 	Return the removed internal link."
-	
+
 	| link |
 	self emptyCheck.
 	link := head.
 	head := head nextLink.
-	head 
+	head
 		ifNil: [ tail := nil ]
 		ifNotNil: [ head previousLink: nil ].
 	link clearLinks.
@@ -246,7 +261,7 @@ DoubleLinkedList >> removeLast [
 	self emptyCheck.
 	link := tail.
 	tail := tail previousLink.
-	tail 
+	tail
 		ifNil: [ head := nil ]
 		ifNotNil: [ tail nextLink: nil ].
 	link clearLinks.
@@ -285,15 +300,15 @@ DoubleLinkedList >> reverseLinksDo: block [
 
 	| current |
 	current := tail.
-	[ current isNil ] 
-		whileFalse: [ 
+	[ current isNil ]
+		whileFalse: [
 	 		block value: current.
 			current := current previousLink ]
 ]
 
 { #category : #enumerating }
 DoubleLinkedList >> select: block [
-	"Execute block for each of my elements and return a new instance of me 
+	"Execute block for each of my elements and return a new instance of me
 	containing those elements for which the block returned true."
 
 	| result |

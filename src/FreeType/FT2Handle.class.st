@@ -10,24 +10,23 @@ Class {
 	#category : #'FreeType-Base'
 }
 
-{ #category : #'system startup' }
-FT2Handle class >> startUp: isImageStarting [
-	isImageStarting ifFalse: [ ^self ].
+{ #category : #compiling }
+FT2Handle class >> compileAllFieldsInOrder [
+	"Force the correct order of generation of FFI Bindings"
+	"This used to be done in #startUp:, we keep it in case FTBindings are changed and have to be regenerated"
+ 	FTBitmap compileFields.
+ 	FTBitmapSize compileFields.
+ 	FTGeneric compileFields.
+ 	FTBBox compileFields.
 
-	"Force the correct order of initialization of FTBindings"	
-	FTBitmap compileFields.
-	FTBitmapSize compileFields.
-	FTGeneric compileFields.
-	FTBBox compileFields.
-	
-	FTCharMapRec compileFields.
-	FTGlyphSlotRec compileFields.
-	FTFaceRec compileFields.
+ 	FTCharMapRec compileFields.
+ 	FTGlyphSlotRec compileFields.
+ 	FTFaceRec compileFields
 ]
 
 { #category : #initialization }
 FT2Handle >> beNull [
-	
+
 	^ self handle beNull
 ]
 

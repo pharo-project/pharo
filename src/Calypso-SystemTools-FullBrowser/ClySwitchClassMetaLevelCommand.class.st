@@ -20,10 +20,10 @@ Class {
 { #category : #activation }
 ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
-	
-	^ClyToolbarActivation 
-		byItemOf: ClyMetaLevelToolbarGroup 
-		order: self toolbarOrder 
+
+	^ClyToolbarActivation
+		byItemOf: ClyMetaLevelToolbarGroup
+		order: self toolbarOrder
 		for: ClyFullBrowserClassContext
 ]
 
@@ -35,7 +35,7 @@ ClySwitchClassMetaLevelCommand class >> isAbstract [
 { #category : #activation }
 ClySwitchClassMetaLevelCommand class >> toolbarOrder [
 	<classAnnotationDependency>
-	
+
 	self subclassResponsibility
 ]
 

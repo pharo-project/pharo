@@ -11,7 +11,7 @@ EpAsEpiceaRingDefinitionTest >> definitions [
 	^ {	(FLSerializer >> #serialize).
 		(Object >> #fuelAccept:).
 		FLSerializer.
-		FLSerializer class. 
+		FLSerializer class.
 		FLTGlobalClassOrTraitSerializationTest.
 		FLTGlobalClassOrTraitSerializationTest classTrait.
 		} collect: [:each | each asEpiceaRingDefinition]

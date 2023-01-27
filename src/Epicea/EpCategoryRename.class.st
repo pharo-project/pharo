@@ -29,14 +29,14 @@ EpCategoryRename class >> oldName: oldName newName: newName packageName: package
 
 { #category : #visitor }
 EpCategoryRename >> accept: aVisitor [
-	^ aVisitor visitCategoryRename: self.
+	^ aVisitor visitCategoryRename: self
 ]
 
 { #category : #accessing }
 EpCategoryRename >> initializeOldName: theOldName newName: theNewName packageName: aPackageName [
 
 	self initializeNamed: theNewName packageName: aPackageName.
-	oldCategoryName := theOldName.
+	oldCategoryName := theOldName
 ]
 
 { #category : #accessing }

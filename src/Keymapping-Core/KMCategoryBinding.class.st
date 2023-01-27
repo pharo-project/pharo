@@ -36,12 +36,12 @@ KMCategoryBinding >> category: aCategory [
 KMCategoryBinding >> completeMatch: aKeymap buffer: aBuffer [
 	KMLog logCompleteMatch: aKeymap.
 	KMBuffer uniqueInstance completeMatch.
-	aKeymap action cull: target value cull: morph cull: aBuffer first.
+	aKeymap action cull: target value cull: morph cull: aBuffer first
 ]
 
 { #category : #binding }
 KMCategoryBinding >> keymapForShortcut: aKey [
-	
+
 	^ category keymapForShortcut: aKey
 ]
 
@@ -77,7 +77,7 @@ KMCategoryBinding >> printOn: aStream [
 	aStream
 		nextPut: $(;
 		print: category name;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ KMCategoryBinding >> target: aTarget [
 { #category : #matching }
 KMCategoryBinding >> verifyMatchWith: anEventBuffer notifying: aListener thenDoing: anAction [
 	self flag: #pharoFixMe. "ugly hack with array of listeners"
-	category 
+	category
 		onMatchWith:  anEventBuffer
 		notify: { self . aListener } " first we have to tell the dispatcher "
 		andDo: anAction

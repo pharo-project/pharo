@@ -53,7 +53,7 @@ Form class >> dotOfSize: diameter [
 	"Create a form which contains a round black dot."
 	| radius form bb rect centerX centerY centerYBias centerXBias radiusSquared xOverY maxy dx |
 	radius := diameter//2.
-	form := self extent: diameter@diameter offset: (0@0) - (radius@radius).	
+	form := self extent: diameter@diameter offset: (0@0) - (radius@radius).
 	bb := (BitBlt toForm: form)
 		sourceX: 0; sourceY: 0;
 		combinationRule: Form over;
@@ -121,7 +121,7 @@ Form class >> extent: extentPoint depth: bitsPerPixel bits: aBitmap [
 ]
 
 { #category : #'instance creation' }
-Form class >> extent: extentPoint depth: bitsPerPixel fromArray: anArray offset: offsetPoint [ 
+Form class >> extent: extentPoint depth: bitsPerPixel fromArray: anArray offset: offsetPoint [
 	"Answer an instance of me with a pixmap of the given depth initialized from anArray."
 
 	^ (self extent: extentPoint depth: bitsPerPixel)
@@ -130,7 +130,7 @@ Form class >> extent: extentPoint depth: bitsPerPixel fromArray: anArray offset:
 ]
 
 { #category : #'instance creation' }
-Form class >> extent: extentPoint fromArray: anArray offset: offsetPoint [ 
+Form class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 	"Answer an instance of me of depth 1 with bitmap initialized from anArray."
 
 	^ (self extent: extentPoint depth: 1)
@@ -142,7 +142,7 @@ Form class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 Form class >> extent: extentPoint fromStipple: fourNibbles [
 	"Answer an instance of me with bitmap initialized from
 	a repeating 4x4 bit stipple encoded in a 16-bit constant."
-	
+
 	^ (self extent: extentPoint depth: 1)
 		initFromArray: ((1 to: 4) collect:
 				[:i | | nibble | nibble := (fourNibbles bitShift: -4*(4-i)) bitAnd: 16rF.
@@ -150,7 +150,7 @@ Form class >> extent: extentPoint fromStipple: fourNibbles [
 ]
 
 { #category : #'instance creation' }
-Form class >> extent: extentPoint offset: offsetPoint [ 
+Form class >> extent: extentPoint offset: offsetPoint [
 	"Answer an instance of me with a blank bitmap of depth 1."
 
 	^ (self extent: extentPoint depth: 1) offset: offsetPoint
@@ -164,8 +164,8 @@ Form class >> floodFillTolerance: aFloat [
 ]
 
 { #category : #'instance creation' }
-Form class >> fromDisplay: aRectangle [ 
-	"Answer an instance of me with bitmap initialized from the area of the 
+Form class >> fromDisplay: aRectangle [
+	"Answer an instance of me with bitmap initialized from the area of the
 	display screen defined by aRectangle."
 
 	^ (self extent: aRectangle extent depth: Display depth)
@@ -184,25 +184,25 @@ Form class >> fromDisplay: aRectangle using: oldForm [
 
 { #category : #'instance creation' }
 Form class >> fromUser [
-	"Answer an instance of me with bitmap initialized from the area of the 
-	display screen designated by the user. The grid for selecting an area is 
+	"Answer an instance of me with bitmap initialized from the area of the
+	display screen designated by the user. The grid for selecting an area is
 	1@1."
 	"self fromUser asMorph openInWorld"
-	
+
 	^self fromUser: 1 @ 1
 ]
 
 { #category : #'instance creation' }
 Form class >> fromUser: gridPoint [
-	"Answer an instance of me with bitmap initialized from the area of the 
-	display screen designated by the user. The grid for selecting an area is 
+	"Answer an instance of me with bitmap initialized from the area of the
+	display screen designated by the user. The grid for selecting an area is
 	aPoint. Ensures that the returned form has positive extent."
 	| rect |
 	rect := Rectangle fromUser: gridPoint.
 	^ self fromDisplay: (rect origin extent: (rect extent max: gridPoint))
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Form class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
@@ -253,7 +253,7 @@ Form class >> reverse [
 Form class >> shutDown [  "Form shutDown"
 	"Compress all instances in the system.  Will decompress on demand..."
 	Form allInstancesDo: [:f | f hibernate].
-	ColorForm allInstancesDo: [:f | f hibernate].
+	ColorForm allInstancesDo: [:f | f hibernate]
 ]
 
 { #category : #'mode constants' }
@@ -347,7 +347,7 @@ Form >> asGrayScale [
 		combinationRule: Form erase;
 		colorMap: map;
 		copyBits.
-	
+
 	grays := (0 to: 255) collect: [:brightness | Color gray: brightness asFloat / 255.0].
 	grays at: 1 put: Color transparent.
 	result colors: grays.
@@ -371,24 +371,22 @@ Form >> asSourceForm [
 Form >> balancedPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
-	^ self hasNonStandardPalette
-		ifTrue: [ self bitPatternFor: aColor ]
-		ifFalse: [ self balancedPatternFor: aColor depth: self depth ]
+	^  self balancedPatternFor: aColor depth: self depth
 ]
 
 { #category : #'color mapping' }
-Form >> balancedPatternFor: aColor depth: aDepth [ 
-	 
+Form >> balancedPatternFor: aColor depth: aDepth [
+
 	"A generalization of bitPatternForDepth: as it exists.  Generates a 2x2 stipple of color.
 	The topLeft and bottomRight pixel are closest approx to this color"
 	| pv1 pv2 mask1 mask2 pv3 c |
-	
+
 	aColor isTransparent ifTrue:[  ^ Bitmap with: 0 ].
 
-	(depth 
+	(depth
 		between: 4
 		and: 16) ifFalse: [ ^ aColor bitPatternForDepth: depth ].
-	
+
 	pv1 := aColor pixelValueForDepth: depth.
 	"
 	Subtract error due to pv1 to get pv2.
@@ -399,10 +397,10 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 						pixelValueForDepth: depth.
 "
 	"Above two statements computed faster by the following..."
-	pv2 := (c := aColor - ((Color 
+	pv2 := (c := aColor - ((Color
 			colorFromPixelValue: pv1
 			depth: depth) - aColor)) pixelValueForDepth: depth.
-	pv3 := c + (c - (Color 
+	pv3 := c + (c - (Color
 				colorFromPixelValue: pv2
 				depth: depth)) pixelValueForDepth: depth.
 
@@ -443,9 +441,9 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 		#-
 		65536
 	) at: depth.	"replicates the other 4 bits"	"replicates the other 8 bits"	"replicates the other 16 bits"
-	^  Bitmap 
+	^  Bitmap
 		with: mask1 * pv1 + (mask2 * pv2)
-		with: mask1 * pv3 + (mask2 * pv1).
+		with: mask1 * pv3 + (mask2 * pv1)
 ]
 
 { #category : #'color mapping' }
@@ -453,9 +451,7 @@ Form >> bitPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
 	aColor isColor ifFalse: [ ^ aColor bitPatternForDepth: self depth ].
-	^ self hasNonStandardPalette
-		ifTrue: [ Bitmap with: (self pixelWordFor: aColor) ]
-		ifFalse: [ aColor bitPatternForDepth: self depth ]
+	^ aColor bitPatternForDepth: self depth
 ]
 
 { #category : #filling }
@@ -474,7 +470,7 @@ Form >> bits [
 ]
 
 { #category : #accessing }
-Form >> bits: aBitmap [ 
+Form >> bits: aBitmap [
 	"Reset the Bitmap containing the receiver's bits."
 
 	bits := aBitmap
@@ -513,7 +509,7 @@ borderWidth; copyBits.
 
 { #category : #bordering }
 Form >> borderWidth: anInteger color: aMask [
-	"Set the width of the border for the receiver to be anInteger and paint it 
+	"Set the width of the border for the receiver to be anInteger and paint it
 	using aMask as the border color."
 
 	self border: self boundingBox width: anInteger fillColor: aMask
@@ -521,7 +517,7 @@ Form >> borderWidth: anInteger color: aMask [
 
 { #category : #bordering }
 Form >> borderWidth: anInteger fillColor: aMask [
-	"Set the width of the border for the receiver to be anInteger and paint it 
+	"Set the width of the border for the receiver to be anInteger and paint it
 	using aMask as the border color."
 
 	self border: self boundingBox width: anInteger fillColor: aMask
@@ -543,9 +539,9 @@ Form >> center [
 Form >> collectColors: aBlock [
 	"Create a new copy of the receiver with all the colors transformed by aBlock"
 	^self collectPixels:[:pv|
-		(aBlock value: (Color colorFromPixelValue: pv depth: self depth)) 
+		(aBlock value: (Color colorFromPixelValue: pv depth: self depth))
 			pixelValueForDepth: self depth.
-	].
+	]
 ]
 
 { #category : #converting }
@@ -555,8 +551,8 @@ Form >> collectPixels: aBlock [
 		"Perform the operation in 32bpp"
 		^((self asFormOfDepth: 32) collectPixels: aBlock) asFormOfDepth: self depth].
 	self unhibernate. "ensure unhibernated before touching bits"
-	^Form 
-		extent: self extent 
+	^Form
+		extent: self extent
 		depth: self depth
 		bits: (self bits collect: aBlock)
 ]
@@ -565,7 +561,7 @@ Form >> collectPixels: aBlock [
 Form >> colorAt: aPoint [
 	"Return the color in the pixel at the given point.  "
 
-	^ Color 
+	^ Color
 		colorFromPixelValue: (self pixelValueAt: aPoint)
 		depth: self depth
 ]
@@ -602,7 +598,7 @@ Form >> colorReduced [
 	nextColorIndex := 2.
 	2 to: cm size do: [:i |
 		(tally at: i) > 0 ifTrue: [
-			oldPixelValues 
+			oldPixelValues
 				ifNil: [c := Color colorFromPixelValue: i - 1 depth: tallyDepth]
 				ifNotNil: [c := Color colorFromPixelValue: (oldPixelValues at: i) depth: 32].
 			newFormColors at: nextColorIndex put: c.
@@ -626,17 +622,15 @@ Form >> colorReduced [
 Form >> colormapFromARGB [
 	"Return a ColorMap mapping from canonical ARGB space into the receiver.
 	Note: This version is optimized for image forms."
-	
+
 	| map nBits |
-	self hasNonStandardPalette 
-		ifTrue:[^ColorMap mappingFromARGB: self rgbaBitMasks].
 	self depth <= 8 ifTrue:[
 		map := Color colorMapIfNeededFrom: 32 to: self depth.
 		map size = 512 ifTrue:[nBits := 3].
 		map size = 4096 ifTrue:[nBits := 4].
 		map size = 32768 ifTrue:[nBits := 5].
 		^ColorMap
-			shifts: (Array 
+			shifts: (Array
 						with: 3 * nBits - 24
 						with: 2 * nBits - 16
 						with: 1 * nBits - 8
@@ -662,9 +656,7 @@ Form >> colormapFromARGB [
 Form >> colormapIfNeededFor: destForm [
 	"Return a ColorMap mapping from the receiver to destForm."
 
-	^ (self hasNonStandardPalette or: [ destForm hasNonStandardPalette ])
-		ifTrue: [ self colormapFromARGB mappingTo: destForm colormapFromARGB ]
-		ifFalse: [ self colormapIfNeededForDepth: destForm depth ]
+	^ self colormapIfNeededForDepth: destForm depth
 ]
 
 { #category : #'color mapping' }
@@ -673,27 +665,6 @@ Form >> colormapIfNeededForDepth: destDepth [
 
 	self depth = destDepth ifTrue: [^ nil].  "not needed if depths are the same"
 	^ Color colorMapIfNeededFrom: self depth to: destDepth
-]
-
-{ #category : #'color mapping' }
-Form >> colormapToARGB [
-	"Return a ColorMap mapping from the receiver into canonical ARGB space."
-	self hasNonStandardPalette 
-		ifTrue:[^self colormapFromARGB inverseMap].
-	self depth <= 8 ifTrue:[
-		^ColorMap
-			shifts: #(0 0 0 0)
-			masks: #(16rFF0000 16rFF00 16rFF 16rFF000000)
-			colors: (Color colorMapIfNeededFrom: self depth to: 32)].
-	self depth = 16 ifTrue:[
-		^ColorMap 
-			shifts: #( 9 6 3 0) 
-			masks: #(16r7C00 16r3E0 16r1F 0)].
-	self depth = 32 ifTrue:[
-		^ColorMap
-			shifts: #(0 0 0 0) 
-			masks: #(16rFF0000 16rFF00 16rFF 16rFF000000)].
-	self error:'Bad depth'
 ]
 
 { #category : #analyzing }
@@ -719,8 +690,8 @@ Form >> computeBoundingBox [
 { #category : #copying }
 Form >> contentsOfArea: aRect [
  	"Return a new form which derives from the portion of the original form delineated by aRect."
-	^self contentsOfArea: aRect 
-		into: (self class extent: aRect extent depth: depth).
+	^self contentsOfArea: aRect
+		into: (self class extent: aRect extent depth: depth)
 ]
 
 { #category : #copying }
@@ -731,7 +702,7 @@ Form >> contentsOfArea: aRect into: newForm [
 ]
 
 { #category : #filling }
-Form >> convexShapeFill: aMask [ 
+Form >> convexShapeFill: aMask [
 	"Fill the interior of the outtermost outlined region in the receiver.  The outlined region must not be concave by more than 90 degrees.  Typically aMask is Color black, to produce a solid fill. then the resulting form is used with fillShape: to paint a solid color.  See also anyShapeFill"
 	| destForm tempForm |
 	destForm := Form extent: self extent.  destForm fillBlack.
@@ -758,7 +729,7 @@ Form >> copy: aRect [
 ]
 
 { #category : #copying }
-Form >> copy: destRectangle from: sourcePt in: sourceForm rule: rule [ 
+Form >> copy: destRectangle from: sourcePt in: sourceForm rule: rule [
 	"Make up a BitBlt table and copy the bits."
 	(BitBlt toForm: self)
 		copy: destRectangle
@@ -775,7 +746,7 @@ Form >> copy: sourceRectangle from: sourceForm to: destPt rule: rule [
 { #category : #copying }
 Form >> copyBits: sourceForm at: destOrigin translucent: factor [
 	"Make up a BitBlt table and copy the bits with the given colorMap."
-	(BitBlt  
+	(BitBlt
 		destForm: self
 		sourceForm: sourceForm
 		halftoneForm: nil
@@ -794,10 +765,10 @@ Form >> copyBits: sourceForm at: destOrigin translucent: factor [
 ]
 
 { #category : #copying }
-Form >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRect rule: rule fillColor: aForm [ 
+Form >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRect rule: rule fillColor: aForm [
 	"Make up a BitBlt table and copy the bits."
 
-	(BitBlt  
+	(BitBlt
 		destForm: self
 		sourceForm: sourceForm
 		fillColor: aForm
@@ -812,7 +783,7 @@ Form >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRe
 Form >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRect rule: rule fillColor: aForm map: map [
 	"Make up a BitBlt table and copy the bits.  Use a colorMap."
 
-	((BitBlt  
+	((BitBlt
 		destForm: self
 		sourceForm: sourceForm
 		fillColor: aForm
@@ -824,9 +795,9 @@ Form >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRe
 ]
 
 { #category : #copying }
-Form >> copyBits: sourceRect from: sourceForm at: destOrigin colorMap: map [ 
+Form >> copyBits: sourceRect from: sourceForm at: destOrigin colorMap: map [
 	"Make up a BitBlt table and copy the bits with the given colorMap."
-	((BitBlt  
+	((BitBlt
 		destForm: self
 		sourceForm: sourceForm
 		halftoneForm: nil
@@ -853,17 +824,17 @@ Form >> copyWithColorsReducedTo: nColors [
 { #category : #converting }
 Form >> darker [
 	"Answer a darker variant of this form."
-	
+
 	^ self darker: 0.16
 ]
 
 { #category : #converting }
 Form >> darker: aFactor [
-	"Answer a darker variant of this form. aFactor is a float between 0 and 1 representing the strength of 
+	"Answer a darker variant of this form. aFactor is a float between 0 and 1 representing the strength of
 	the darkening."
 	"(Form fromUser darker: 0.08) asMorph openInWorld"
 	"(Form fromUser darker: 0.16) asMorph openInWorld"
-	
+
 	^ self collectColors: [ :color |
 				color adjustBrightness: aFactor negated]
 ]
@@ -913,7 +884,7 @@ Form >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle r
 		clippingBox: clipRectangle
 		rule: rule
 		fillColor: aForm
-		map: (self colormapIfNeededFor: aDisplayMedium).
+		map: (self colormapIfNeededFor: aDisplayMedium)
 ]
 
 { #category : #displaying }
@@ -924,7 +895,7 @@ Form >> displayOnPort: port at: location [
 { #category : #displaying }
 Form >> displayResourceFormOn: aForm [
 	"a special display method for blowing up resource thumbnails"
-	
+
 	self extent = aForm extent
 		ifTrue: [ ^ self displayOn: aForm ].
 
@@ -933,7 +904,7 @@ Form >> displayResourceFormOn: aForm [
 		sourceForm: self destRect: aForm boundingBox;
 		combinationRule: 3;
 		cellSize: 2;
-		warpBits.
+		warpBits
 ]
 
 { #category : #displaying }
@@ -946,12 +917,12 @@ Form >> displayScaledOn: aForm [
 		sourceForm: self destRect: aForm boundingBox;
 		combinationRule: Form paint;
 		cellSize: 2;
-		warpBits.
+		warpBits
 ]
 
 { #category : #accessing }
 Form >> displayScreen [
-	"Return the display screen the receiver is allocated on. 
+	"Return the display screen the receiver is allocated on.
 	Forms in general are internal and not allocated on any particular display."
 	^ nil
 ]
@@ -968,13 +939,13 @@ Form >> dominantColor [
 ]
 
 { #category : #displaying }
-Form >> drawLine: sourceForm from: beginPoint to: endPoint clippingBox: clipRect rule: anInteger fillColor: aForm [ 
-	"Refer to the comment in 
-	DisplayMedium|drawLine:from:to:clippingBox:rule:mask:." 
-	
+Form >> drawLine: sourceForm from: beginPoint to: endPoint clippingBox: clipRect rule: anInteger fillColor: aForm [
+	"Refer to the comment in
+	DisplayMedium|drawLine:from:to:clippingBox:rule:mask:."
+
 	| dotSetter |
 	"set up an instance of BitBlt for display"
-	dotSetter := BitBlt 
+	dotSetter := BitBlt
 		destForm: self
 		sourceForm: sourceForm
 		fillColor: aForm
@@ -989,14 +960,14 @@ Form >> drawLine: sourceForm from: beginPoint to: endPoint clippingBox: clipRect
 { #category : #filling }
 Form >> eraseShape: bwForm [
 	"use bwForm as a mask to clear all pixels where bwForm has 1's"
-	((BitBlt  destForm: self sourceForm: bwForm 
+	((BitBlt  destForm: self sourceForm: bwForm
 		fillColor: nil
 		combinationRule: Form erase1bitShape	"Cut a hole in the picture with my mask"
-		destOrigin: bwForm offset 
+		destOrigin: bwForm offset
 		sourceOrigin: 0@0
 		extent: self extent clipRect: self boundingBox)
 		colorMap: (Bitmap with: 0 with: 16rFFFFFFFF))
-		copyBits.
+		copyBits
 ]
 
 { #category : #accessing }
@@ -1007,9 +978,9 @@ Form >> extent [
 { #category : #transitions }
 Form >> fadeImage: otherImage at: topLeft
 	indexAndMaskDo: indexAndMaskBlock [
-	
+
 	"This fade uses halftones as a blending hack.
-	Zeros in the halftone produce the original image (self), and 
+	Zeros in the halftone produce the original image (self), and
 	ones in the halftone produce the 'otherImage'.
 	IndexAndMaskBlock gets evaluated prior to each cycle,
 	and the resulting boolean determines whether to continue cycling."
@@ -1089,7 +1060,7 @@ Form >> fadeImageHorFine: otherImage at: topLeft [
 ]
 
 { #category : #transitions }
-Form >> fadeImageSquares: otherImage at: topLeft [ 
+Form >> fadeImageSquares: otherImage at: topLeft [
 	"Display fadeImageSquares: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40"
 	^ self fadeImage: otherImage at: topLeft indexAndMaskDo:
 		[:i :mask |
@@ -1109,8 +1080,8 @@ Form >> fadeImageVert: otherImage at: topLeft [
 ]
 
 { #category : #filling }
-Form >> fill: aRectangle rule: anInteger fillColor: aForm [ 
-	"Replace a rectangular area of the receiver with the pattern described by aForm 
+Form >> fill: aRectangle rule: anInteger fillColor: aForm [
+	"Replace a rectangular area of the receiver with the pattern described by aForm
 	according to the rule anInteger."
 	(BitBlt toForm: self)
 		copy: aRectangle
@@ -1126,7 +1097,7 @@ Form >> fillAlpha: alphaValue [
 	bb := BitBlt toForm: self.
 	bb combinationRule: 7. "bitOr:with:"
 	bb fillColor: (Bitmap with: alphaValue << 24).
-	bb copyBits.
+	bb copyBits
 ]
 
 { #category : #filling }
@@ -1137,7 +1108,7 @@ Form >> fillFromXColorBlock: colorBlock [
 	| xRel |
 	0 to: width-1 do:
 		[:x |  xRel := x asFloat / (width-1) asFloat.
-		self fill: (x@0 extent: 1@height) 
+		self fill: (x@0 extent: 1@height)
 			fillColor: (colorBlock value: xRel)]
 "
 ((Form extent: 100@100 depth: Display depth)
@@ -1175,7 +1146,7 @@ Form >> fillFromYColorBlock: colorBlock [
 	| yRel |
 	0 to: height-1 do:
 		[:y |  yRel := y asFloat / (height-1) asFloat.
-		self fill: (0@y extent: width@1) 
+		self fill: (0@y extent: width@1)
 			fillColor: (colorBlock value: yRel)]
 "
 ((Form extent: 100@100 depth: Display depth)
@@ -1185,9 +1156,9 @@ Form >> fillFromYColorBlock: colorBlock [
 
 { #category : #filling }
 Form >> findShapeAroundSeedBlock: seedBlock [
-	"Build a shape that is black in any region marked by seedBlock. 
+	"Build a shape that is black in any region marked by seedBlock.
 	SeedBlock will be supplied a form, in which to blacken various
-	pixels as 'seeds'.  Then the seeds are smeared until 
+	pixels as 'seeds'.  Then the seeds are smeared until
 	there is no change in the smear when it fills the region, ie,
 	when smearing hits a black border and thus goes no further."
 	| smearForm previousSmear all count smearPort |
@@ -1203,7 +1174,7 @@ Form >> findShapeAroundSeedBlock: seedBlock [
 		[count := 1.
 		previousSmear copy: all from: 0 @ 0 in: smearForm rule: Form reverse.
 		previousSmear isAllWhite]]
-		whileFalse: 
+		whileFalse:
 			[smearPort copyForm: smearForm to: 1 @ 0 rule: Form under.
 			smearPort copyForm: smearForm to: -1 @ 0 rule: Form under.
 			"After horiz smear, trim around the region border"
@@ -1231,7 +1202,7 @@ Form >> fixAlpha [
 	self depth = 32 ifFalse:[^self].
 	bb := BitBlt toForm: self.
 	bb combinationRule: 40 "fixAlpha:with:".
-	bb copyBits.
+	bb copyBits
 ]
 
 { #category : #'scaling, rotation' }
@@ -1278,7 +1249,7 @@ Form >> flipHorizontally [
 		bits replaceFrom: topIndex to: topIndex+rowLen-1 with: bits startingAt: botIndex.
 		bits replaceFrom: botIndex to: botIndex+rowLen-1 with: row startingAt: 1.
 		topIndex := topIndex + rowLen.
-		 botIndex := botIndex - rowLen ].
+		 botIndex := botIndex - rowLen ]
 ]
 
 { #category : #initialization }
@@ -1306,9 +1277,9 @@ Form >> formForColorCount: colorCount [
 ]
 
 { #category : #initialization }
-Form >> fromDisplay: aRectangle [ 
-	"Create a virtual bit map from a user specified rectangular area on the 
-	display screen. Reallocates bitmap only if aRectangle ~= the receiver's 
+Form >> fromDisplay: aRectangle [
+	"Create a virtual bit map from a user specified rectangular area on the
+	display screen. Reallocates bitmap only if aRectangle ~= the receiver's
 	extent."
 
 	(width = aRectangle width and: [height = aRectangle height])
@@ -1324,7 +1295,7 @@ Form >> fromDisplay: aRectangle [
 
 { #category : #private }
 Form >> hackBits: bitThing [
-	"This method provides an initialization so that BitBlt may be used, eg, to 
+	"This method provides an initialization so that BitBlt may be used, eg, to
 	copy ByteArrays and other non-pointer objects efficiently.
 	The resulting form looks 4 wide, 8 deep, and bitThing-size-in-words high."
 	width := 4.
@@ -1340,7 +1311,7 @@ Form >> hackBits: bitThing [
 Form >> hasBeenModified [
 	"Return true if something *might* have been drawn into the receiver"
 	^(bits == nil or:[bits class == ByteArray]) not
-	"Read the above as: If the receiver has forgotten its contents (bits == nil) 
+	"Read the above as: If the receiver has forgotten its contents (bits == nil)
 	or is still hibernated it can't be modified."
 ]
 
@@ -1351,15 +1322,6 @@ Form >> hasBeenModified: aBool [
 	self shouldPreserveContents
 		ifTrue:[self hibernate]
 		ifFalse:[bits := nil]
-]
-
-{ #category : #testing }
-Form >> hasNonStandardPalette [
-	"Return true if the receiver has a non-standard palette.
-	Non-standard means that RGBA components may be located
-	at positions differing from the standard Pharo RGBA layout
-	at the receiver's depth."
-	^false
 ]
 
 { #category : #accessing }
@@ -1407,7 +1369,7 @@ Form >> initFromArray: array [
 
 { #category : #analyzing }
 Form >> innerPixelRectFor: pv orNot: not [
-	"Return a rectangle describing the smallest part of me that includes 
+	"Return a rectangle describing the smallest part of me that includes
 	all pixels of value pv.
 	Note:  If orNot is true, then produce a copy that includes all pixels
 	that are DIFFERENT from the supplied (background) value"
@@ -1491,7 +1453,7 @@ Form >> isTranslucent [
 ]
 
 { #category : #'pixel access' }
-Form >> isTransparentAt: aPoint [ 
+Form >> isTransparentAt: aPoint [
 	"Return true if the receiver is transparent at the given point."
 
 	self depth = 1 ifTrue: [^ false].  "no transparency at depth 1"
@@ -1507,16 +1469,16 @@ Form >> lighter [
 
 { #category : #converting }
 Form >> lighter: aFactor [
-	"Answer a lighter variant of this form. aFactor is a float from 0 to 1 representing the strength of 
+	"Answer a lighter variant of this form. aFactor is a float from 0 to 1 representing the strength of
 	the lightening."
 	"(Form fromUser lighter: 0.16) asMorph openInWorld"
 	"(Form fromUser lighter: 0.30) asMorph openInWorld"
-	^self collectColors: [:color | 
+	^self collectColors: [:color |
 			color adjustSaturation: -0.03 brightness: aFactor]
 ]
 
 { #category : #'scaling, rotation' }
-Form >> magnify: aRectangle by: scale [ 
+Form >> magnify: aRectangle by: scale [
 	"Answer a Form created as a scaling of the receiver.
 	Scale may be a Float, and may be greater or less than 1.0."
 	^ self magnify: aRectangle by: scale smoothing: 1
@@ -1571,7 +1533,7 @@ Display restoreAfter: [Sensor waitNoButton.
 ]
 
 { #category : #'scaling, rotation' }
-Form >> magnifyBy: scale [ 
+Form >> magnifyBy: scale [
 	"Answer a Form created as a scaling of the receiver.
 	Scale may be a Float, and may be greater or less than 1.0."
 
@@ -1604,7 +1566,7 @@ Form >> mapColor: oldColor to: newColor [
 		combinationRule: Form over;
 		destX: 0 destY: 0 width: width height: height;
 		colorMap: map;
-		copyBits.
+		copyBits
 ]
 
 { #category : #'color mapping' }
@@ -1627,7 +1589,7 @@ Form >> mapColors: oldColorBitsCollection to: newColorBits [
 		combinationRule: Form over;
 		destX: 0 destY: 0 width: width height: height;
 		colorMap: map;
-		copyBits.
+		copyBits
 ]
 
 { #category : #'color mapping' }
@@ -1649,7 +1611,7 @@ Form >> nativeDepth [
 ]
 
 { #category : #'color mapping' }
-Form >> newColorMap [ 
+Form >> newColorMap [
 	"Return an uninitialized color map array appropriate to this Form's depth."
 
 	^ Bitmap new: (1 bitShift: (self depth min: 15))
@@ -1694,7 +1656,7 @@ Form >> orderedDither32To16 [
 			b := (pv bitShift: -16) bitAnd: 255.	di := b * 496 bitShift: -8.
 			dmi := di bitAnd: 15.	dmo := di bitShift: -4.
 			b := dmv < dmi ifTrue:[ii at: 2+dmo] ifFalse:[ii at: 1+dmo].
-			pvOut := (pvOut bitShift: 16) + 
+			pvOut := (pvOut bitShift: 16) +
 						(b bitShift: 10) + (g bitShift: 5) + r.
 			(x bitAnd: 1) = 1 ifTrue:[
 				outBits at: (outIndex := outIndex+1) put: pvOut.
@@ -1757,7 +1719,7 @@ Form >> pixelCompare: aRect with: otherForm at: otherLoc [
 ]
 
 { #category : #'pixel access' }
-Form >> pixelValueAt: aPoint [ 
+Form >> pixelValueAt: aPoint [
 	"Return the raw pixel value at the given point. This pixel value depends on the receiver's depth. Typical clients use colorAt: to get a Color.  "
 
 	^ (BitBlt bitPeekerFromForm: self) pixelAt: aPoint
@@ -1767,28 +1729,21 @@ Form >> pixelValueAt: aPoint [
 Form >> pixelValueAt: aPoint put: pixelValue [
 	"Store the given raw pixel value at the given point. Typical clients use colorAt:put: to store a color. "
 
-	(BitBlt bitPokerToForm: self) pixelAt: aPoint put: pixelValue.
+	(BitBlt bitPokerToForm: self) pixelAt: aPoint put: pixelValue
 ]
 
 { #category : #'color mapping' }
 Form >> pixelValueFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
-	^ self hasNonStandardPalette
-		ifTrue: [ self colormapFromARGB mapPixel: (aColor pixelValueForDepth: 32) ]
-		ifFalse: [ aColor pixelValueForDepth: self depth ]
+	^ aColor pixelValueForDepth: self depth
 ]
 
 { #category : #'color mapping' }
 Form >> pixelWordFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
-	| basicPattern |
-	self hasNonStandardPalette ifFalse: [ ^ aColor pixelWordForDepth: self depth ].
-	basicPattern := self pixelValueFor: aColor.
-	^ self depth = 32
-		ifTrue: [ basicPattern ]
-		ifFalse: [ aColor pixelWordFor: self depth filledWith: basicPattern ]
+	^ aColor pixelWordForDepth: self depth
 ]
 
 { #category : #other }
@@ -1804,7 +1759,7 @@ Form >> preMultiplyAlpha [
 		r := ((v bitShift: -16) bitAnd: 255) * a // 255.
 		g := ((v bitShift: -8) bitAnd: 255) * a // 255.
 		b := (v bitAnd: 255) * a // 255.
-		bits at: i put: (a bitShift: 24) + (r bitShift: 16) + (g bitShift: 8) + b].
+		bits at: i put: (a bitShift: 24) + (r bitShift: 16) + (g bitShift: 8) + b]
 ]
 
 { #category : #analyzing }
@@ -1835,7 +1790,7 @@ Form >> printOn: aStream [
         nextPut: $(; print: width;
         nextPut: $x; print: height;
         nextPut: $x; print: depth;
-        nextPut: $).
+        nextPut: $)
 ]
 
 { #category : #private }
@@ -1845,17 +1800,17 @@ Form >> privateFloodFillValue: aColor [
 	f1 := Form extent: 1@1 depth: depth.
 	f2 := Form extent: 1@1 depth: 32.
 	bb := BitBlt toForm: f1.
-	bb fillColor: aColor; 
-		destRect: (0@0 corner: 1@1); 
-		combinationRule: 3; 
+	bb fillColor: aColor;
+		destRect: (0@0 corner: 1@1);
+		combinationRule: 3;
 		copyBits.
 	bb := BitBlt toForm: f2.
-	bb sourceForm: f1; 
+	bb sourceForm: f1;
 		sourceOrigin: 0@0;
 		destRect: (0@0 corner: 1@1);
 		combinationRule: 3;
 		copyBits.
-	^f2 pixelValueAt: 0@0.
+	^f2 pixelValueAt: 0@0
 ]
 
 { #category : #'file in/out' }
@@ -1870,12 +1825,12 @@ Form >> readAttributesFrom: aBinaryStream [
 	offsetY := aBinaryStream nextWord.
 	offsetX > 32767 ifTrue: [offsetX := offsetX - 65536].
 	offsetY > 32767 ifTrue: [offsetY := offsetY - 65536].
-	offset := Point x: offsetX y: offsetY.
+	offset := Point x: offsetX y: offsetY
 ]
 
 { #category : #'file in/out' }
 Form >> readBitsFrom: aBinaryStream [
-	
+
 	bits := Bitmap newFromStream: aBinaryStream.
 	bits size = self bitsSize ifFalse: [self error: 'wrong bitmap size; bad Form file?'].
 	^ self
@@ -1916,14 +1871,14 @@ Form >> rectangleEnclosingPixelsNotOfColor: aColor [
 
 	"scan in from top and bottom"
 	top := (0 to: height)
-		detect: [ :y | 
+		detect: [ :y |
 			copyBlt
 				sourceOrigin: 0 @ y;
 				copyBits.
 			countBlt copyBits > 0 ]
 		ifNone: [ ^ 0 @ 0 extent: 0 @ 0 ].
 	bottom := (height - 1 to: top by: -1)
-		detect: [ :y | 
+		detect: [ :y |
 			copyBlt
 				sourceOrigin: 0 @ y;
 				copyBits.
@@ -1947,13 +1902,13 @@ Form >> rectangleEnclosingPixelsNotOfColor: aColor [
 
 	"scan in from left and right"
 	left := (0 to: width)
-		detect: [ :x | 
+		detect: [ :x |
 			copyBlt
 				sourceOrigin: x @ top;
 				copyBits.
 			countBlt copyBits > 0 ].
 	right := (width - 1 to: left by: -1)
-		detect: [ :x | 
+		detect: [ :x |
 			copyBlt
 				sourceOrigin: x @ top;
 				copyBits.
@@ -2005,7 +1960,7 @@ Form >> replaceByResource: aForm [
 	"Replace the receiver by some resource that just got loaded"
 	(self extent = aForm extent and:[self depth = aForm depth]) ifTrue:[
 		bits := aForm bits.
-	].
+	]
 ]
 
 { #category : #'image manipulation' }
@@ -2019,7 +1974,7 @@ Form >> replaceColor: oldColor withColor: newColor [
 				1 to: cm size do: [:i | cm at: i put: i - 1]].
 	newInd := newColor pixelValueForDepth: self depth.
 	cm at: (oldColor pixelValueForDepth: (self depth min: 16))+1 put: newInd.
-	target := newColor isTransparent 
+	target := newColor isTransparent
 		ifTrue: [ff := Form extent: self extent depth: depth.
 			ff fillWithColor: newColor.  ff]
 		ifFalse: [self].
@@ -2030,8 +1985,8 @@ Form >> replaceColor: oldColor withColor: newColor [
 		destX: 0 destY: 0 width: width height: height;
 		colorMap: cm;
 		copyBits.
-	newColor = Color transparent 
-		ifTrue: [target displayOn: self].
+	newColor = Color transparent
+		ifTrue: [target displayOn: self]
 ]
 
 { #category : #'color mapping' }
@@ -2063,7 +2018,7 @@ f display
 
 { #category : #'scaling, rotation' }
 Form >> rotateBy: direction centerAt: aPoint [
-	"Return a rotated copy of the receiver. 
+	"Return a rotated copy of the receiver.
 	direction = #none, #right, #left, or #pi"
 	| newForm quad rot scale |
 	direction == #none ifTrue: [^ self].
@@ -2109,7 +2064,7 @@ Form >> rotateBy: deg magnify: scale smoothing: cellSize [
 		combinationRule: Form paint.
 	r1 := (0@0 extent: side@side) align: (side@side)//2 with: self boundingBox center.
 
-	"Rotate the corners of the source rectangle." 
+	"Rotate the corners of the source rectangle."
 	pts := r1 innerCorners collect:
 		[:pt | | p | p := pt - r1 center.
 		(r1 center x asFloat + (p x asFloat*deg degreeCos) + (p y asFloat*deg degreeSin)) @
@@ -2145,7 +2100,7 @@ Form >> scaledToSize: newExtent [
 
 	newExtent = self extent ifTrue: [^self].
 	scale := newExtent x / self width min: newExtent y / self height.
-	^self magnify: self boundingBox by: scale smoothing: 2.
+	^self magnify: self boundingBox by: scale smoothing: 2
 ]
 
 { #category : #private }
@@ -2176,7 +2131,7 @@ Form >> setExtent: extent depth: bitsPerPixel bits: bitmap [
 { #category : #private }
 Form >> setResourceBits: aForm [
 	"Private. Really. Used for setting the 'resource bits' when externalizing some form"
-	bits := aForm.
+	bits := aForm
 ]
 
 { #category : #testing }
@@ -2186,7 +2141,7 @@ Form >> shouldPreserveContents [
 ]
 
 { #category : #'scaling, rotation' }
-Form >> shrink: aRectangle by: scale [ 
+Form >> shrink: aRectangle by: scale [
 	| scalePt |
 	scalePt := scale asPoint.
 	^ self magnify: aRectangle by: (1.0 / scalePt x asFloat) @ (1.0 / scalePt y asFloat)
@@ -2236,7 +2191,7 @@ Form >> store15To24HexBitsOn:aStream [
 
 	lineWidth := 0.
 	buf := String new: 12.
-	bits do: [:word | | i | 
+	bits do: [:word | | i |
 		i := 0.
 		"upper pixel"
 		buf at: (i := i + 1) put: ((word bitShift: -27) bitAnd: 15) asHexDigit.
@@ -2262,31 +2217,31 @@ Form >> store15To24HexBitsOn:aStream [
 		lineWidth := lineWidth + 12.
 		lineWidth > 100 ifTrue: [ aStream cr. lineWidth := 0 ].
 		"#( 31 26 21 15 10 5 )  do:[:startBit | ]"
-	].
+	]
 ]
 
 { #category : #'file in/out' }
 Form >> store32To24HexBitsOn:aStream [
-	^self storeBits:20 to:0 on:aStream.
+	^self storeBits:20 to:0 on:aStream
 ]
 
 { #category : #'file in/out' }
 Form >> storeBits:startBit to:stopBit on:aStream [
-	bits storeBits:startBit to:stopBit on:aStream.
+	bits storeBits:startBit to:stopBit on:aStream
 ]
 
 { #category : #'file in/out' }
 Form >> storeBitsOn:aStream base:anInteger [
-	bits do: [:word | 
+	bits do: [:word |
 		anInteger = 10
 			ifTrue: [aStream space]
 			ifFalse: [aStream crtab: 2].
-		word storeOn: aStream base: anInteger].
+		word storeOn: aStream base: anInteger]
 ]
 
 { #category : #'file in/out' }
 Form >> storeHexBitsOn:aStream [
-	^self storeBits:28 to:0 on:aStream.
+	^self storeBits:28 to:0 on:aStream
 ]
 
 { #category : #'file in/out' }
@@ -2296,7 +2251,7 @@ Form >> storeOn: aStream [
 ]
 
 { #category : #'file in/out' }
-Form >> storeOn: aStream base: anInteger [ 
+Form >> storeOn: aStream base: anInteger [
 	"Store the receiver out as an expression that can be evaluated to recreate a Form with the same contents as the original."
 
 	self unhibernate.
@@ -2315,13 +2270,13 @@ Form >> storeOn: aStream base: anInteger [
 	aStream crtab: 1.
 	aStream nextPutAll: 'offset: '.
 	self offset printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #initialization }
 Form >> swapEndianness [
 	"Swap from big to little endian pixels and vice versa"
-	depth := 0 - depth.
+	depth := 0 - depth
 ]
 
 { #category : #analyzing }
@@ -2425,7 +2380,7 @@ Form >> wipeImage: otherImage at: topLeft clippingBox: clipBox rectForIndex: rec
 					clippingBox: clipRect rule: Form over fillColor: nil].
 			waitTime := 3 - (Time millisecondClockValue - t).
 			waitTime > 0 ifTrue:
-				["(Delay forMilliseconds: waitTime) wait"]].
+				["(Delay forMilliseconds: waitTime) wait"]]
 ]
 
 { #category : #transitions }
@@ -2433,7 +2388,7 @@ Form >> wipeImage: otherImage at: topLeft delta: delta [
 	"Display wipeImage: (Form fromDisplay: (40@40 extent: 300@300)) reverse
 		at: 40@40 delta: 0@-2"
 
-	self wipeImage: otherImage at: topLeft delta: delta clippingBox: nil.
+	self wipeImage: otherImage at: topLeft delta: delta clippingBox: nil
 ]
 
 { #category : #transitions }
@@ -2468,7 +2423,7 @@ Form >> withAlphaExtractedFromSubpixelRendering [
 		b := c blue.
 		a := c alpha.
 		a := ((r max: g) max: b) * a.
-		
+
 		Color r: r g: g b: b alpha: a
 	]
 ]
@@ -2484,7 +2439,7 @@ Form >> writeAttributesOn: file [
 					ifFalse: [self offset x + 65536]).
 	file nextWordPut: ((self offset y) >=0
 					ifTrue: [self offset y]
-					ifFalse: [self offset y + 65536]).
+					ifFalse: [self offset y + 65536])
 ]
 
 { #category : #'file in/out' }
@@ -2564,7 +2519,7 @@ Form >> yTallyPixelValue: pv orNot: not [
 ]
 
 { #category : #transitions }
-Form >> zoomIn: goingIn orOutTo: otherImage at: topLeft vanishingPoint: vp [ 
+Form >> zoomIn: goingIn orOutTo: otherImage at: topLeft vanishingPoint: vp [
 	"Display zoomInTo: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40.
 	Display zoomOutTo: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40."
 	| nSteps minTime startTime |

@@ -10,7 +10,7 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #visiting }
+{ #category : #initialization }
 TypingVisitor >> initialize [
 
 	typeStack := Stack new.

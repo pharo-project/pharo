@@ -26,7 +26,7 @@ Class {
 { #category : #accessing }
 ReFileBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'FileBlocksRule'
 ]
 
@@ -39,15 +39,15 @@ ReFileBlocksRule >> group [
 ReFileBlocksRule >> initialize [
 	super initialize.
 	self matchesAny: #(
-			'[| `@temps | 
-				`var := `@object.  
-				`@.statements] 
-						ensure: 
+			'[| `@temps |
+				`var := `@object.
+				`@.statements]
+						ensure:
 							[`var `@messages: `@args]'
-			'[| `@temps | 
-				`var := `@object.  
-				`@.statements] 
-						ifCurtailed: 
+			'[| `@temps |
+				`var := `@object.
+				`@.statements]
+						ifCurtailed:
 							[`var `@messages: `@args]' )
 ]
 

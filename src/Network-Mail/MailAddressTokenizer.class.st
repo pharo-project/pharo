@@ -23,7 +23,7 @@ MailAddressTokenizer class >> forString: aString [
 	^self basicNew initialize: aString
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MailAddressTokenizer class >> initialize [
 	"Initalize class variables using   MailAddressTokenizer initialize"
 

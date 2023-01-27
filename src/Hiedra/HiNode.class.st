@@ -24,12 +24,12 @@ HiNode class >> value: aValue rulerPoint: aPoint [
 ]
 
 { #category : #accessing }
-HiNode >> addIncomingLink: aHiLink [ 
+HiNode >> addIncomingLink: aHiLink [
 	incomingLinks add: aHiLink
 ]
 
 { #category : #accessing }
-HiNode >> addOutgoingLink: aHiLink [ 
+HiNode >> addOutgoingLink: aHiLink [
 	outgoingLinks add: aHiLink
 ]
 
@@ -62,7 +62,7 @@ HiNode >> initializeWithValue: aValue rulerPoint: aPoint [
 	rulerPoint := aPoint.
 	value := aValue.
 	outgoingLinks := LinkedList new.
-	incomingLinks := LinkedList new.
+	incomingLinks := LinkedList new
 ]
 
 { #category : #accessing }
@@ -86,13 +86,13 @@ HiNode >> outgoingLinks [
 HiNode >> printOn: aStream [
 
 	super printOn: aStream.
-	
+
 	aStream
 		nextPut: $(;
 		print: value;
 		space;
 		print: self rulerPoint;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #accessing }

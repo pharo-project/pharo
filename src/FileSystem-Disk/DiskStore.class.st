@@ -19,13 +19,13 @@ Class {
 DiskStore class >> activeClass [
 
 	| writableClass |
-	
-	writableClass := self allSubclasses detect: [:each | 
+
+	writableClass := self allSubclasses detect: [:each |
 		each isActiveClass ] ifNone: [ ^ self ].
-	
+
 	^ SessionManager default currentSession isReadOnlyAccessMode
 		ifFalse: [ writableClass ]
-		ifTrue: [ writableClass readOnlyVariant ].
+		ifTrue: [ writableClass readOnlyVariant ]
 ]
 
 { #category : #'system startup' }
@@ -34,8 +34,8 @@ DiskStore class >> checkVMVersion [
 	| displayError |
 	displayError := [ ^ self inform: 'Your VM is too old for this image. Please download the latest VM.' ].
 	[(Smalltalk vm interpreterSourceDate >= '2019-01-05' asDate)
-		ifFalse: displayError
-	] on: Error do: [ :e| displayError value ].
+		ifFalse: [ displayError value ]
+	] on: Error do: [ :e| displayError value ]
 ]
 
 { #category : #current }
@@ -61,7 +61,7 @@ DiskStore class >> defaultWorkingDirectory [
 	| pathString |
 
 	pathString := OSPlatform current currentWorkingDirectoryPath.
-	^(Path from: pathString delimiter: self delimiter).
+	^(Path from: pathString delimiter: self delimiter)
 ]
 
 { #category : #public }
@@ -120,9 +120,9 @@ DiskStore class >> shutDown: quitting [
 { #category : #'system startup' }
 DiskStore class >> startUp: resuming [
 	self checkVMVersion.
-	resuming 
+	resuming
 		ifTrue: [ self reset ].
-	DefaultWorkingDirectory := self defaultWorkingDirectory.
+	DefaultWorkingDirectory := self defaultWorkingDirectory
 ]
 
 { #category : #public }
@@ -172,30 +172,30 @@ DiskStore >> basicCreationTimeOf: anEntry [
 { #category : #private }
 DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	| encodedPathString index entry pathString |
-		
+
 	index := 1.
 	pathString := self stringFromPath: aPath.
 	encodedPathString := File encodePathString: pathString.
 	entry := File lookupEntryIn: encodedPathString index: index.
 	entry = #badDirectoryPath ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
-	
+
 	[ entry isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			entry at: 1 put: (File decodePathString: entry first).
 			aBlock value: entry.
 			index := index + 1.
-			entry := File lookupEntryIn: encodedPathString index: index ].
+			entry := File lookupEntryIn: encodedPathString index: index ]
 ]
 
 { #category : #public }
 DiskStore >> basicEntryAt: aPath [
 	| encodedPath encodedBasename |
-	
+
 	encodedPath := File encodePathString: (self stringFromPath: aPath parent).
 	encodedBasename := File encodePathString: aPath basename.
-	
+
 	^ (File lookupDirectory: encodedPath filename: encodedBasename)
-		ifNil: [ #badDirectoryPath ].
+		ifNil: [ #badDirectoryPath ]
 ]
 
 { #category : #private }
@@ -231,7 +231,7 @@ DiskStore >> basicOpen: aPath writable: aBoolean [
 DiskStore >> basicPosixPermissions: anEntry [
 	^ (anEntry size >= 6)
 		ifTrue: [ anEntry at: 6 ]
-		ifFalse: [ nil ].
+		ifFalse: [ nil ]
 ]
 
 { #category : #private }
@@ -246,7 +246,7 @@ DiskStore >> changeTimeOf: aPath [
 
 	| pathString time |
 	pathString := self stringFromPath: aPath.
-	time := (File fileAttribute: pathString number: 11) ifNil: 
+	time := (File fileAttribute: pathString number: 11) ifNil:
 			[ File fileAttribute: pathString number: 12 ].
 	^DateAndTime fromInternalTime: time
 ]
@@ -254,7 +254,7 @@ DiskStore >> changeTimeOf: aPath [
 { #category : #public }
 DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	"Check a string aFileName for validity as a file name. Answer the original file name if it is valid. If the name is not valid (e.g., it is too long or contains illegal characters) and fixing is false, raise an error. If fixing is true, fix the name (usually by truncating and/or tranforming characters), and answer the corrected name. The default behavior is just to truncate the name to the maximum length for this platform. Subclasses can do any kind of checking and correction appropriate for their platform."
-	
+
 	| maxLength |
 	aFileName size = 0 ifTrue: [self error: 'zero length file name'].
 	maxLength := self maxFileNameLength.
@@ -267,7 +267,7 @@ DiskStore >> checkName: aFileName fixErrors: fixErrors [
 
 { #category : #public }
 DiskStore >> createDirectory: path [
-	"Create a directory for the argument path. 
+	"Create a directory for the argument path.
 	If the path refers to an existing file, raise FileExists.
 	If the path refers to an existing directory, raise DirectoryExists.
 	If the parent directory of the path does not exist, raise DirectoryDoesNotExist"
@@ -277,10 +277,10 @@ DiskStore >> createDirectory: path [
 	encodedPathString := File encodePathString: pathString.
 	result := File createDirectory: encodedPathString.
 	result
-		ifNil: [ 
+		ifNil: [
 			parent := path parent.
 			(self exists: path)
-				ifTrue: [ 
+				ifTrue: [
 					(self isFile: path)
 						ifTrue: [ self signalFileExists: path ]
 						ifFalse: [ self signalDirectoryExists: path ] ].
@@ -293,7 +293,7 @@ DiskStore >> createDirectory: path [
 { #category : #accessing }
 DiskStore >> creationTimeOf: aPath [
 	"Answer the creation time of aPath.  If the platform doesn't support creation time, use change time"
-	
+
 	| pathString time |
 	pathString := self stringFromPath: aPath.
 	time := (File fileAttribute: pathString number: 12) ifNil: [ File fileAttribute: pathString number: 11 ].
@@ -317,9 +317,9 @@ DiskStore >> delete: path [
 
 	pathString := self stringFromPath: path.
 
-	(self isDirectory: path) ifTrue: 
+	(self isDirectory: path) ifTrue:
 		[ File deleteDirectory: (File encodePathString: pathString) ]
-	ifFalse: 
+	ifFalse:
 		[ File deleteFile: pathString ]
 ]
 
@@ -331,20 +331,20 @@ DiskStore >> deviceIdOf: aPath [
 
 { #category : #public }
 DiskStore >> directoryAt: aPath  directoryNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
+	^ self
+		directoryAt: aPath
 		nodesDo: [ :node |
-			(self basicIsDirectory: node) 
-				ifTrue: [ aBlock value: node ]].
+			(self basicIsDirectory: node)
+				ifTrue: [ aBlock value: node ]]
 ]
 
 { #category : #public }
 DiskStore >> directoryAt: aPath fileNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
+	^ self
+		directoryAt: aPath
 		nodesDo: [ :node |
-			(self basicIsDirectory: node) 
-				ifFalse: [ aBlock value: node ]].
+			(self basicIsDirectory: node)
+				ifFalse: [ aBlock value: node ]]
 ]
 
 { #category : #public }
@@ -352,25 +352,25 @@ DiskStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 
 	^[ self directoryAt: aPath nodesDo: aBlock ]
 		on: DirectoryDoesNotExist, FileDoesNotExistException
-		do: [ absentBlock value ].
+		do: [ absentBlock value ]
 ]
 
 { #category : #private }
 DiskStore >> directoryAt: aPath nodesDo: aBlock [
 
 	| pathString openDir dirPointer entryData fileName attributes targetName |
-	
+
 	pathString := File encodePathString: (self stringFromPath: aPath).
 	(self isDirectory: aPath) ifFalse:
 		[ ^self signalDirectoryDoesNotExist: aPath ].
 
 	openDir := File primOpendir: pathString.
 	openDir ifNil: [ ^nil ].
-	(openDir isArray and: [openDir size = 3]) ifTrue: [ 
+	(openDir isArray and: [openDir size = 3]) ifTrue: [
 		"New VM (FileAttributesPlugin > 1.4)"
 		dirPointer := openDir at: 3.
 		entryData := openDir. ]
-	ifFalse: [ 
+	ifFalse: [
 		"Old VM (FileAttributesPlugin <= 1.4.x)"
 		dirPointer := openDir.
 		entryData := File primReaddir: dirPointer ].
@@ -380,13 +380,13 @@ DiskStore >> directoryAt: aPath nodesDo: aBlock [
 				fileName := entryData first.
 				entryData at: 1 put: (File decodePathString: fileName).
 				attributes := entryData at: 2.
-				attributes ifNotNil: 
+				attributes ifNotNil:
 					[ targetName := attributes at: 1.
 					targetName ifNotNil: [ attributes at: 1 put: (File decodePathString: targetName) ] ].
 				aBlock value: entryData.
 				entryData := File primReaddir: dirPointer.
 			]
-	] ensure: [ File primClosedir: dirPointer ].
+	] ensure: [ File primClosedir: dirPointer ]
 ]
 
 { #category : #public }
@@ -394,16 +394,16 @@ DiskStore >> entryFromNode: node path: path for: aFileSystem [
 
 	| entryPath |
 	entryPath := path / (self basenameFromEntry: node).
-	^DiskDirectoryEntry 
+	^DiskDirectoryEntry
 		reference: (FileReference fileSystem: aFileSystem path: entryPath)
-		statAttributes: (node at: 2).
+		statAttributes: (node at: 2)
 ]
 
 { #category : #public }
 DiskStore >> exists: aPath [
 
 	aPath isRoot ifTrue: [ ^true ].
-	^File exists: (self stringFromPath: aPath).
+	^File exists: (self stringFromPath: aPath)
 ]
 
 { #category : #public }
@@ -451,7 +451,7 @@ DiskStore >> hash [
 { #category : #initialization }
 DiskStore >> initialize [
 	super initialize.
-	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ].
+	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ]
 ]
 
 { #category : #accessing }
@@ -582,7 +582,7 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	encodedSourcePathString := File encodePathString: sourcePathString.
 	targetPathString := self stringFromPath: destinationPath.
 	encodedTargetPathString := File encodePathString: targetPathString.
-	^ File rename: encodedSourcePathString to: encodedTargetPathString.
+	^ File rename: encodedSourcePathString to: encodedTargetPathString
 ]
 
 { #category : #private }
@@ -604,7 +604,7 @@ DiskStore >> rootNode [
 { #category : #accessing }
 DiskStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
-	^File fileAttribute: (self stringFromPath: aPath) number: 8.
+	^File fileAttribute: (self stringFromPath: aPath) number: 8
 ]
 
 { #category : #accessing }

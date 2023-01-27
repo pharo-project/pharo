@@ -22,7 +22,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyAsyncQueryIsDone class >> with: anAsyncQueryResult [
-	^self new 
+	^self new
 		queryResult: anAsyncQueryResult
 ]
 

@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : #'method groups' }
-ClyFlagsEnvironmentPlugin >> collectMethodGroupProviders [ 
+ClyFlagsEnvironmentPlugin >> collectMethodGroupProviders [
 	^{ClyFlagMethodGroupProvider new}
 ]
 
 { #category : #'item decoration' }
 ClyFlagsEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	(aMethod sendsAnySelectorOf: #(flag:)) ifTrue: [ 
+	(aMethod sendsAnySelectorOf: #(flag:)) ifTrue: [
 		anItem markWith: ClyMethodFlag]
 ]

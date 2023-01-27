@@ -13,7 +13,7 @@ Class {
 { #category : #signalling }
 ClyNoChildrenError class >> signalFor: aParentObject [
 	"Create and signal a ClyNotFoundError exception for aParentObject in the default receiver."
-			
+
 	^ self new
 		parent: aParentObject;
 		signal

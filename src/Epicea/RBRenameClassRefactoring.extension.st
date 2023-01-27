@@ -2,7 +2,7 @@ Extension { #name : #RBRenameClassRefactoring }
 
 { #category : #'*Epicea-Refactorings' }
 RBRenameClassRefactoring >> asEpiceaEvent [
-	^ EpRenameClassRefactoring 
+	^ EpRenameClassRefactoring
 		rename: className
 		to: newName
 ]

@@ -13,7 +13,6 @@ BaselineOfFreeType >> baseline: spec [
 		spec package: 'FreeType-Graphics' with: [ spec requires: #('FreeType') ].		
 		spec package: 'FreeType-Morphic' with: [ spec requires: #('FreeType-Graphics') ].
 		spec package: 'FreeType-Tests' with: [ spec requires: #('FreeType') ].
-		spec package: 'FreeType-Help' with: [ spec requires: #('FreeType') ].
 
 		spec group: 'core' with: #('FreeType').
 		spec group: 'ui' with: #('core' 'FreeType-Graphics' 'FreeType-Morphic').

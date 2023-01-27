@@ -21,7 +21,7 @@ ClyScopeTest >> createSampleScope [
 { #category : #running }
 ClyScopeTest >> setUp [
 	super setUp.
-	
+
 	"For tests we want predictable order or collected items to simplify assertions"
 	result := SortedCollection sortBlock: #printString ascending
 ]
@@ -32,7 +32,7 @@ ClyScopeTest >> testBindToEnvironment [
 	scope := self createSampleScope.
 
 	scope bindTo: environment.
-	
+
 	self assert: scope environment equals: environment.
 	self assert: scope isBoundToEnvironment
 ]
@@ -42,7 +42,7 @@ ClyScopeTest >> testComparisonWithCopy [
 
 	| copy |
 	scope := self createSampleScope.
-	copy := scope copy.	
+	copy := scope copy.
 	self assert: scope equals: copy.
 	self assert: scope hash equals: copy hash
 ]
@@ -59,7 +59,7 @@ ClyScopeTest >> testComparisonWithDifferentScope [
 ClyScopeTest >> testComparisonWithItself [
 
 	scope := self createSampleScope.
-	
+
 	self assert: scope equals: scope
 ]
 
@@ -69,7 +69,7 @@ ClyScopeTest >> testComparisonWithSimilarScope [
 	| scope2 |
 	scope := self createSampleScope.
 	scope2 := self createSampleScope.
-	
+
 	self assert: scope equals: scope2.
 	self assert: scope hash equals: scope2 hash
 ]
@@ -78,9 +78,9 @@ ClyScopeTest >> testComparisonWithSimilarScope [
 ClyScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
-	
+
 	convertedScope := scope asScope: ClyExampleScope.
-	
+
 	self assert: convertedScope class equals: ClyExampleScope.
 	self assert: convertedScope basisObjects asIdentitySet equals: scope basisObjects asIdentitySet.
 	self assert: convertedScope environment equals: environment
@@ -91,8 +91,8 @@ ClyScopeTest >> testConvertingToAnotherScopeClassShouldKeepName [
 	| convertedScope |
 	scope := self createSampleScope.
 	scope name: 'test scope'.
-	
+
 	convertedScope := scope asScope: ClyExampleScope.
-	
-	self assert: convertedScope name equals: 'test scope'.
+
+	self assert: convertedScope name equals: 'test scope'
 ]

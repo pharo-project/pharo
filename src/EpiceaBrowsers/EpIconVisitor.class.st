@@ -53,13 +53,19 @@ EpIconVisitor >> visitCategoryAddition: aCategoryChange [
 ]
 
 { #category : #visitor }
+EpIconVisitor >> visitCategoryRegistration: aCategoryChange [
+
+	^ self additionIcon
+]
+
+{ #category : #visitor }
 EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
 	^ self removalIcon
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitCategoryRename: aCategoryChange [
-	^ self modificationIcon.
+	^ self modificationIcon
 ]
 
 { #category : #visitor }
@@ -78,7 +84,7 @@ EpIconVisitor >> visitClassRemoval: aClassRemovedChange [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitEvent: anEvent [ 
+EpIconVisitor >> visitEvent: anEvent [
 	^ self empty
 ]
 

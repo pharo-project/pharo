@@ -223,7 +223,7 @@ AthensFT2Constants class >> initialize [
 	RenderModeNormal := 0.
 	RenderModeLight := 1.
 	RenderModeMono := 2.
-	RenderModeLCD := 3.	
+	RenderModeLCD := 3.
 	RenderModeLCDV := 4.
 
 	"pixel mode constants"
@@ -234,7 +234,7 @@ AthensFT2Constants class >> initialize [
 	PixelModeGray4 := 4.
 	PixelModeLCD := 5.
 	PixelModeLCDV := 6.
-	
+
 	StyleFlagItalic := 1.
-	StyleFlagBold := 2.
+	StyleFlagBold := 2
 ]

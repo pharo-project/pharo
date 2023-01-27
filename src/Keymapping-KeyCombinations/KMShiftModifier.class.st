@@ -16,7 +16,7 @@ KMShiftModifier >> eventCode [
 KMShiftModifier >> initialize [
 	super initialize.
 	identifier := #s.
-	name := 'Shift'.
+	name := 'Shift'
 ]
 
 { #category : #matching }

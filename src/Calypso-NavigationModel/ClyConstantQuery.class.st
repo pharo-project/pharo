@@ -31,13 +31,13 @@ ClyConstantQuery class >> resultItemsType [
 
 { #category : #'instance creation' }
 ClyConstantQuery class >> returning: objects [
-	^self new 
+	^self new
 		resultItems: objects
 ]
 
 { #category : #'instance creation' }
 ClyConstantQuery class >> returning: objects as: aQueryResult [
-	^self new 
+	^self new
 		resultItems: objects;
 		requiredResult: aQueryResult
 ]
@@ -54,7 +54,7 @@ ClyConstantQuery >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-		
+
 	^ resultItems = anObject resultItems
 ]
 
@@ -128,7 +128,7 @@ ClyConstantQuery >> retrievesItem: anObject [
 
 { #category : #testing }
 ClyConstantQuery >> retrievesItemsOfType: itemTypeClass [
-	^resultItems anySatisfy: [ :each | 
+	^resultItems anySatisfy: [ :each |
 		each calypsoEnvironmentType = itemTypeClass  ]
 ]
 
@@ -138,6 +138,6 @@ ClyConstantQuery >> semiAsync [
 ]
 
 { #category : #converting }
-ClyConstantQuery >> withMetaLevelScope: aScopeClass [ 
+ClyConstantQuery >> withMetaLevelScope: aScopeClass [
 	^self withScope: (scope withMetaLevel: aScopeClass)
 ]

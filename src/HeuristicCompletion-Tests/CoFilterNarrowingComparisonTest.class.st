@@ -13,7 +13,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNarrowWhenTheInter
 	caseSensitive2 := CoCaseInsensitiveBeginsWithFilter filterString: 'abc'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive).
+	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
 { #category : #tests }
@@ -23,7 +23,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowThanNegat
 
 	caseInsensitive := CoCaseInsensitiveBeginsWithFilter filterString: 'ab'.
 	negated := caseInsensitive negated.
-	
+
 	self deny: (caseInsensitive isMoreNarrowThan: negated)
 ]
 
@@ -36,7 +36,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowWhenTheIn
 	caseSensitive2 := CoCaseInsensitiveBeginsWithFilter filterString: 'ax'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive).
+	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNarrowWhenTheInterna
 	caseSensitive2 := CoCaseSensitiveBeginsWithFilter filterString: 'abc'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive).
+	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
 { #category : #tests }
@@ -58,7 +58,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowThanNegated
 
 	caseSensitive := CoCaseSensitiveBeginsWithFilter filterString: 'ab'.
 	negated := caseSensitive negated.
-	
+
 	self deny: (caseSensitive isMoreNarrowThan: negated)
 ]
 
@@ -71,7 +71,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowWhenTheInte
 	caseSensitive2 := CoCaseSensitiveBeginsWithFilter filterString: 'ax'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive).
+	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
 { #category : #tests }
@@ -83,11 +83,11 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNarrowWhenTheInternalAreNa
 	caseSensitive2 := CoCaseSensitiveBeginsWithFilter filterString: 'abc'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive). 
+	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive).
 
 	negated := caseSensitive negated.
 	negated2 := caseSensitive2 negated.
-	
+
 	self deny: (negated isMoreNarrowThan: negated2).
 	self assert: (negated2 isMoreNarrowThan: negated)
 ]
@@ -101,11 +101,11 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanANegatedWithA
 	caseSensitive2 := CoCaseSensitiveBeginsWithFilter filterString: 'ax'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive). 
+	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive).
 
 	negated := caseSensitive negated.
 	negated2 := caseSensitive2 negated.
-	
+
 	self deny: (negated isMoreNarrowThan: negated2).
 	self deny: (negated2 isMoreNarrowThan: negated)
 ]
@@ -117,7 +117,7 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanCaseInsensiti
 
 	caseInsensitive := CoCaseInsensitiveBeginsWithFilter filterString: 'ab'.
 	negated := caseInsensitive negated.
-	
+
 	self deny: (negated isMoreNarrowThan: caseInsensitive)
 ]
 
@@ -128,6 +128,6 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanCaseSensitive
 
 	caseSensitive := CoCaseSensitiveBeginsWithFilter filterString: 'ab'.
 	negated := caseSensitive negated.
-	
+
 	self deny: (negated isMoreNarrowThan: caseSensitive)
 ]

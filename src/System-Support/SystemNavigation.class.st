@@ -113,6 +113,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 
 { #category : #query }
 SystemNavigation >> allMethods [
+	"all methods, including copies from Traits"
 	^ self environment allMethods
 ]
 
@@ -319,6 +320,12 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 SystemNavigation >> isUnsentMessage: selector [
 	^ self allBehaviors
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
+]
+
+{ #category : #query }
+SystemNavigation >> methods [
+	"all methods, but without those installed by Traits"
+	^ self environment methods
 ]
 
 { #category : #'identifying obsoletes' }

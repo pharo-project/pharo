@@ -44,7 +44,9 @@ SycAddNewPackageCommand >> defaultMenuItemName [
 { #category : #execution }
 SycAddNewPackageCommand >> execute [
 
-	resultPackage := systemEnvironment createPackageNamed: packageName
+	resultPackage := [ systemEnvironment createPackageNamed: packageName ]
+		                 on: RPackageConflictError
+		                 do: [ systemEnvironment packageNamed: packageName ]
 ]
 
 { #category : #accessing }

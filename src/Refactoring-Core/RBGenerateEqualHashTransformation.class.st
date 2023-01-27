@@ -47,14 +47,21 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBGenerateEqualHashTransformation class >> basicMenuItemString [
+
+	^ 'Generate equal and hash'
+]
+
 { #category : #'instance creation' }
 RBGenerateEqualHashTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #accessing }
-RBGenerateEqualHashTransformation class >> kind [ 
-	^ 'Transformation'
+{ #category : #testing }
+RBGenerateEqualHashTransformation class >> isTransformation [ 
+
+	^ true
 ]
 
 { #category : #'instance creation' }

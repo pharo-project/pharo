@@ -41,24 +41,24 @@ AthensPathConverter class >> dest: aDest [
 { #category : #'instance creation' }
 AthensPathConverter class >> source: aSource dest: aDest [
 	" answer a converted path from source to dest, using my instance as a converter"
-	
+
 	^ self new source: aSource dest: aDest
 ]
 
 { #category : #'converting path commands' }
-AthensPathConverter >> close: aPoint [ 
+AthensPathConverter >> close: aPoint [
 	^ dest close: aPoint
 ]
 
 { #category : #actions }
 AthensPathConverter >> convert: aSourcePath [
-	
+
 	" iterate over segments and do conversion "
-	
+
 	| segment |
-	
+
 	segment := aSourcePath.
-	
+
 	[ segment notNil ] whileTrue: [
 		segment convertWith: self.
 		endPoint := segment endPoint.
@@ -85,12 +85,12 @@ AthensPathConverter >> finish [
 ]
 
 { #category : #'converting path commands' }
-AthensPathConverter >> lineTo: aPoint [ 
+AthensPathConverter >> lineTo: aPoint [
 	^ dest lineTo: aPoint
 ]
 
 { #category : #'converting path commands' }
-AthensPathConverter >> moveTo: aPoint [ 
+AthensPathConverter >> moveTo: aPoint [
 	^ dest moveTo: aPoint
 ]
 

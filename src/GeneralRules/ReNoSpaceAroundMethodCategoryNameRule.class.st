@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #testing }
-ReNoSpaceAroundMethodCategoryNameRule class >> checksMethod [ 
+ReNoSpaceAroundMethodCategoryNameRule class >> checksMethod [
 
 	^ true
 ]
 
 { #category : #manifest }
-ReNoSpaceAroundMethodCategoryNameRule class >> uniqueIdentifierName [ 
+ReNoSpaceAroundMethodCategoryNameRule class >> uniqueIdentifierName [
 
 	^ 'ReNoSpaceAroundMethodCategoryNameRule'
 ]
@@ -33,7 +33,7 @@ ReNoSpaceAroundMethodCategoryNameRule >> basicCheck: aMethod [
 ReNoSpaceAroundMethodCategoryNameRule >> critiqueFor: aMethod [
 	| proposedCategory |
 	proposedCategory := protocolName trimBoth.
-		
+
 	^ (ReRefactoringCritique
 		   withAnchor: (self anchorFor: aMethod)
 		   by: self) refactoring: (RBMethodProtocolTransformation
@@ -49,7 +49,7 @@ ReNoSpaceAroundMethodCategoryNameRule >> group [
 ]
 
 { #category : #accessing }
-ReNoSpaceAroundMethodCategoryNameRule >> name [ 
+ReNoSpaceAroundMethodCategoryNameRule >> name [
 
 	^ 'Category name "{1}" should be trimmed (includes space at start or end)'
 		format: { protocolName }

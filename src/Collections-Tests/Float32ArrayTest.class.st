@@ -63,7 +63,7 @@ Float32ArrayTest >> anotherValue [
 
 { #category : #coverage }
 Float32ArrayTest >> classToBeTested [
-	
+
 	^ Float32Array
 ]
 
@@ -74,9 +74,9 @@ Float32ArrayTest >> collection [
 ]
 
 { #category : #requirements }
-Float32ArrayTest >> collectionClass [ 
+Float32ArrayTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Float32Array
 ]
 
@@ -89,27 +89,27 @@ Float32ArrayTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 Float32ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
-	
+
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 Float32ArrayTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionNotIncluded 
-		ifNil: [ collectionNotIncluded := (Float32Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ].
+	^ collectionNotIncluded
+		ifNil: [ collectionNotIncluded := (Float32Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ]
 ]
 
 { #category : #requirements }
 Float32ArrayTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ collectionWith1TimeSubcollection ifNil: [ collectionWith1TimeSubcollection := collectionWithSameAtEndAndBegining  , self oldSubCollection , collectionWithSameAtEndAndBegining  ].
+	^ collectionWith1TimeSubcollection ifNil: [ collectionWith1TimeSubcollection := collectionWithSameAtEndAndBegining  , self oldSubCollection , collectionWithSameAtEndAndBegining  ]
 ]
 
 { #category : #requirements }
 Float32ArrayTest >> collectionWith2TimeSubcollection [
 " return a collection including 'oldSubCollection'  two or many time "
-	^ collectionWith2TimeSubcollection ifNil: [ collectionWith2TimeSubcollection := self collectionWith1TimeSubcollection, self oldSubCollection  ].
+	^ collectionWith2TimeSubcollection ifNil: [ collectionWith2TimeSubcollection := self collectionWith1TimeSubcollection, self oldSubCollection  ]
 ]
 
 { #category : #requirements }
@@ -121,7 +121,7 @@ Float32ArrayTest >> collectionWithCopyNonIdentical [
 { #category : #requirements }
 Float32ArrayTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ nonEmptySubcollection 
+	^ nonEmptySubcollection
 	ifNil: [ nonEmptySubcollection := (Float32Array new:2 ) at:1 put: self nonEmpty first ; at:2 put: self nonEmpty last ; yourself ]
 ]
 
@@ -167,7 +167,7 @@ Float32ArrayTest >> elementInForElementAccessing [
 { #category : #requirements }
 Float32ArrayTest >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
-	^ elementInNonEmpty .
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -191,7 +191,7 @@ Float32ArrayTest >> elementNotInForIndexAccessing [
 
 { #category : #requirements }
 Float32ArrayTest >> elementToAdd [
-" return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty" 
+" return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty"
 	^ elementNotIn
 ]
 
@@ -229,7 +229,7 @@ Float32ArrayTest >> indexArray [
 { #category : #requirements }
 Float32ArrayTest >> indexInForCollectionWithoutDuplicates [
 " return an index between 'collectionWithoutEqualsElements'  bounds"
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
@@ -272,7 +272,7 @@ Float32ArrayTest >> nonEmpty1Element [
 
 { #category : #requirements }
 Float32ArrayTest >> nonEmptyMoreThan1Element [
-" return a collection that doesn't includes equal elements' and doesn't include nil elements'" 
+" return a collection that doesn't includes equal elements' and doesn't include nil elements'"
 	^nonEmpty5ElementsNoDuplicate
 ]
 
@@ -285,19 +285,19 @@ ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 
 
 { #category : #requirements }
 Float32ArrayTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	^ collectionWithSameAtEndAndBegining
 ]
 
 { #category : #requirements }
 Float32ArrayTest >> replacementCollectionSameSize [
 " return a collection of size (secondIndex - firstIndex + 1)"
-	^replacementCollectionSameSize 
+	^replacementCollectionSameSize
 		ifNil: [ 	replacementCollectionSameSize := Float32Array new: (self secondIndex  - self firstIndex  + 1).
 				 1 to: replacementCollectionSameSize size do:
 					[ :i | replacementCollectionSameSize at:i put: elementInNonEmpty ].
 				replacementCollectionSameSize.
-				 ].
+				 ]
 ]
 
 { #category : #requirements }
@@ -356,8 +356,8 @@ Float32ArrayTest >> sortedInAscendingOrderCollection [
 { #category : #requirements }
 Float32ArrayTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'moreThan4Elements' "
-	^ collectionNotIncluded 
-		ifNil: [ collectionNotIncluded := (Float32Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ].
+	^ collectionNotIncluded
+		ifNil: [ collectionNotIncluded := (Float32Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ]
 ]
 
 { #category : #'tests - arithmetic' }
@@ -375,7 +375,7 @@ Float32ArrayTest >> testAddNoMutation [
 { #category : #'tests - arithmetic' }
 Float32ArrayTest >> testArithmeticCoercion [
 	"This test is related to http://bugs.squeak.org/view.php?id=6782"
-	
+
 	self assert: 3.0 / (Float32Array with: 2.0) equals: (Float32Array with: 1.5).
 	self assert: 3.0 * (Float32Array with: 2.0) equals: (Float32Array with: 6.0).
 	self assert: 3.0 + (Float32Array with: 2.0) equals: (Float32Array with: 5.0).
@@ -400,7 +400,7 @@ Float32ArrayTest >> testFloatArrayPluginPrimitiveAt [
 	Otherwise, it will compare primitive and #fromIEEE32Bit:"
 
 	#(2r0.0 2r1.0 2r1.1 2r1.00000000000000000000001 2r1.0e-10 2r1.1e-10 2r1.00000000000000000000001e-10 2r1.0e10 2r1.1e10 2r1.00000000000000000000001e10 2r1.0e-126 2r1.11111111111111111111111e127 2r1.11111111111111111111111e128 2r0.11111111111111111111111e-126 2r0.00000000000000000000001e-126 2r1.0000000000000000000000001 2r1.0000000000000000000000010 2r1.0000000000000000000000011 2r1.0000000000000000000000100 2r1.0000000000000000000000101 2r1.0000000000000000000000110 2r1.0000000000000000000000111 2r1.1111111111111111111111001 2r1.1111111111111111111111010 2r1.1111111111111111111111011 2r1.1111111111111111111111101 2r1.1111111111111111111111110 2r1.1111111111111111111111111 2r1.1111111111111111111111110e127 2r0.1111111111111111111111111e-126 2r0.1111111111111111111111110e-126 2r0.1111111111111111111111101e-126 2r0.1111111111111111111111011e-126 2r0.1111111111111111111111010e-126 2r0.1111111111111111111111001e-126 2r0.0000000000000000000000111e-126 2r0.0000000000000000000000110e-126 2r0.0000000000000000000000101e-126 2r0.0000000000000000000000011e-126 2r0.0000000000000000000000010e-126 2r0.0000000000000000000000001e-126 2r0.0000000000000000000000010000000000000000000000000001e-126)
-		do: [ :e | 
+		do: [ :e |
 			self assert: ((Float32Array with: e) at: 1) equals: (Float fromIEEE32Bit: ((Float32Array with: e) basicAt: 1)).
 			self assert: ((Float32Array with: e negated) at: 1) equals: (Float fromIEEE32Bit: ((Float32Array with: e negated) basicAt: 1)) ].
 	"regular numbers no truncation or rounding"
@@ -433,7 +433,7 @@ Float32ArrayTest >> testFloatArrayPluginPrimitiveAtPut [
 	Otherwise, it will compare primitive and #asIEEE32BitWord"
 
 	#(2r0.0 2r1.0 2r1.1 2r1.00000000000000000000001 2r1.0e-10 2r1.1e-10 2r1.00000000000000000000001e-10 2r1.0e10 2r1.1e10 2r1.00000000000000000000001e10 2r1.0e-126 2r1.11111111111111111111111e127 2r1.11111111111111111111111e128 2r0.11111111111111111111111e-126 2r0.00000000000000000000001e-126 2r1.0000000000000000000000001 2r1.0000000000000000000000010 2r1.0000000000000000000000011 2r1.0000000000000000000000100 2r1.0000000000000000000000101 2r1.0000000000000000000000110 2r1.0000000000000000000000111 2r1.1111111111111111111111001 2r1.1111111111111111111111010 2r1.1111111111111111111111011 2r1.1111111111111111111111101 2r1.1111111111111111111111110 2r1.1111111111111111111111111 2r1.1111111111111111111111110e127 2r0.1111111111111111111111111e-126 2r0.1111111111111111111111110e-126 2r0.1111111111111111111111101e-126 2r0.1111111111111111111111011e-126 2r0.1111111111111111111111010e-126 2r0.1111111111111111111111001e-126 2r0.0000000000000000000000111e-126 2r0.0000000000000000000000110e-126 2r0.0000000000000000000000101e-126 2r0.0000000000000000000000011e-126 2r0.0000000000000000000000010e-126 2r0.0000000000000000000000001e-126 2r0.0000000000000000000000010000000000000000000000000001e-126)
-		do: [ :e | 
+		do: [ :e |
 			self assert: ((Float32Array with: e) basicAt: 1) equals: e asIEEE32BitWord.
 			self assert: ((Float32Array with: e negated) basicAt: 1) equals: e negated asIEEE32BitWord ].
 	"regular numbers no truncation or rounding"
@@ -463,53 +463,53 @@ Float32ArrayTest >> testFloatArrayPluginPrimitiveAtPut [
 { #category : #tests }
 Float32ArrayTest >> testSumWithFloatScalar [
 	| floatArray scalar expectedResult actualResult |
-	
+
 	floatArray := #(1 2) asFloatArray.
 	scalar := 0.1.
-	
+
 	expectedResult := #(1.1 2.1) asFloatArray.
 	actualResult := floatArray + scalar.
-	
-	self assert: actualResult equals: expectedResult.
+
+	self assert: actualResult equals: expectedResult
 ]
 
 { #category : #tests }
 Float32ArrayTest >> testSumWithIntegerArray [
 	| floatArray integerArray expectedResult actualResult |
-	
+
 	floatArray := #(1 2) asFloatArray.
 	integerArray := #(3 4) asIntegerArray.
-	
+
 	expectedResult := #(4 6) asFloatArray.
 	actualResult := floatArray + integerArray.
-	
-	self assert: actualResult equals: expectedResult.
+
+	self assert: actualResult equals: expectedResult
 ]
 
 { #category : #tests }
 Float32ArrayTest >> testSumWithIntegerScalar [
 	| floatArray scalar expectedResult actualResult |
-	
+
 	floatArray := #(1 2) asFloatArray.
 	scalar := 3.
-	
+
 	expectedResult := #(4 5) asFloatArray.
 	actualResult := floatArray + scalar.
-	
-	self assert: actualResult equals: expectedResult.
+
+	self assert: actualResult equals: expectedResult
 ]
 
 { #category : #tests }
 Float32ArrayTest >> testSumWithOrderedCollection [
 	| floatArray collection expectedResult actualResult |
-	
+
 	floatArray := #(1 2) asFloatArray.
 	collection := #(3 4) asOrderedCollection.
-	
+
 	expectedResult := #(4 6) asFloatArray.
 	actualResult := floatArray + collection.
-	
-	self assert: actualResult equals: expectedResult.
+
+	self assert: actualResult equals: expectedResult
 ]
 
 { #category : #requirements }

@@ -13,6 +13,6 @@ Class {
 CoGlobalSelectorFetcher >> entriesDo: aBlock [
 
 	self systemNavigation
-		allSelectorsStartingWith: filter completionString 
+		allSelectorsStartingWith: filter completionString
 		do: [ :e | aBlock value: (NECSelectorEntry contents: e node: astNode) ]
 ]

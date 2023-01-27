@@ -12,7 +12,7 @@ Class {
 { #category : #'method visibility' }
 ClyTraitUserHierarchy class >> hierarchyForMethodVisibility [
 	"It will add inherited traits to the list of inherited classes to toggle visibility of methods"
-	^(ClySubclassHierarchy hierarchyForMethodVisibility, self inverse) 
+	^(ClySubclassHierarchy hierarchyForMethodVisibility, self inverse)
 		sortedBy: ClyTraitFirstSortFunction ascending
 ]
 
@@ -26,11 +26,11 @@ ClyTraitUserHierarchy class >> methodVisibilityProvider [
 { #category : #building }
 ClyTraitUserHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 	| allParents eachParent |
-	allParents := IdentitySet withAll: aClass traits.  		
+	allParents := IdentitySet withAll: aClass traits.
 	[allParents isEmpty] whileFalse: [
 		eachParent := allParents anyOne.
 		allParents remove: eachParent.
-		(aHierarchyMap includesClass: eachParent) 
+		(aHierarchyMap includesClass: eachParent)
 			ifTrue: [aHierarchyMap addChild: aClass to: eachParent]
 			ifFalse: [ allParents addAll: eachParent traits].
 	]

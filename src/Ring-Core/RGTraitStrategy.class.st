@@ -124,7 +124,7 @@ RGTraitStrategy >> hasComment [
 	^ self comment isEmptyOrNil not
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 RGTraitStrategy >> initialize [
 
 	super initialize.

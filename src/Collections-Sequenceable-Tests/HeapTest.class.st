@@ -64,7 +64,7 @@ HeapTest >> anotherElementOrAssociationNotIn [
 
 { #category : #coverage }
 HeapTest >> classToBeTested [
-	
+
 	^ Heap
 ]
 
@@ -76,7 +76,7 @@ HeapTest >> collection [
 { #category : #requirements }
 HeapTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Heap
 ]
 
@@ -89,7 +89,7 @@ HeapTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 HeapTest >> collectionMoreThan5Elements [
 	" return a collection including at least 5 elements"
-	
+
 	^nonEmpty5ElementsWithoutDuplicate
 ]
 
@@ -176,13 +176,13 @@ HeapTest >> element [
 { #category : #requirements }
 HeapTest >> elementInForElementAccessing [
 	" return an element inculded in 'moreThan4Elements'"
-	^ self moreThan4Elements anyOne.
+	^ self moreThan4Elements anyOne
 ]
 
 { #category : #requirements }
 HeapTest >> elementInForIndexAccessing [
 	" return an element included in 'collectionMoreThan1NoDuplicates' "
-	^ self collectionMoreThan1NoDuplicates anyOne.
+	^ self collectionMoreThan1NoDuplicates anyOne
 ]
 
 { #category : #requirements }
@@ -238,19 +238,19 @@ HeapTest >> elementsCopyNonIdenticalWithoutEqualElements [
 
 { #category : #requirements }
 HeapTest >> empty [
-	^empty.
+	^empty
 ]
 
 { #category : #requirements }
 HeapTest >> expectedElementByDetect [
 	"Returns the first even element of #collection"
-	^ expectedElementByDetect.
+	^ expectedElementByDetect
 ]
 
 { #category : #requirements }
 HeapTest >> expectedSizeAfterReject [
 	"Number of even elements in #collection"
-	^ expectedSizeAfterReject.
+	^ expectedSizeAfterReject
 ]
 
 { #category : #requirements }
@@ -312,7 +312,7 @@ HeapTest >> newElement [
 
 { #category : #requirements }
 HeapTest >> nonEmpty [
-	^nonEmpty.
+	^nonEmpty
 ]
 
 { #category : #requirements }
@@ -323,8 +323,8 @@ HeapTest >> nonEmpty1Element [
 
 { #category : #requirements }
 HeapTest >> nonEmptyMoreThan1Element [
-	" return a collection that don't includes equal elements'" 
-	^nonEmpty5ElementsWithoutDuplicate .
+	" return a collection that don't includes equal elements'"
+	^nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
@@ -352,7 +352,7 @@ HeapTest >> replacementCollectionSameSize [
 
 { #category : #requirements }
 HeapTest >> result [
-	^ collectResult.
+	^ collectResult
 ]
 
 { #category : #requirements }
@@ -376,7 +376,7 @@ HeapTest >> setUp [
 	expectedSizeAfterReject := 1.
 	expectedElementByDetect := -2.
 	nonEmpty5ElementsWithoutDuplicate := Heap
-		new 
+		new
 		add: 2;
 		add: 98;
 		add: 4;
@@ -419,7 +419,7 @@ HeapTest >> setUp [
 	subCollection := Heap new.
 	duplicateElement := 1.
 	collectionWithDuplicateElement := Heap new add: duplicateElement ; add: duplicateElement ; add:4 ; yourself.
-	self firstIndex to: self secondIndex do: [:each | subCollection add: elementNotIn  ].
+	self firstIndex to: self secondIndex do: [:each | subCollection add: elementNotIn  ]
 ]
 
 { #category : #requirements }
@@ -430,7 +430,7 @@ HeapTest >> sizeCollection [
 
 { #category : #requirements }
 HeapTest >> speciesClass [
-	
+
 	^ speciesClass
 ]
 
@@ -471,7 +471,7 @@ HeapTest >> test1 [
 
 { #category : #'basic tests' }
 HeapTest >> testAdd [
-	
+
 	| heap |
 	heap := Heap new.
 	self assert: heap size equals: 0.
@@ -486,7 +486,7 @@ HeapTest >> testAdd [
 
 { #category : #'tests - growable' }
 HeapTest >> testAddNonEmptyGrowsWhenNewElement [
-	
+
 	| oldSize |
 	oldSize := self nonEmpty size.
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
@@ -500,9 +500,9 @@ HeapTest >> testDo [
 	| heap coll |
 	heap := Heap withAll: #(1 3 5).
 	coll := OrderedCollection new.
-	
+
 	heap do: [:each | coll add: each].
-	
+
 	self assert: coll equals: #(1 3 5) asOrderedCollection
 ]
 
@@ -514,14 +514,14 @@ HeapTest >> testExamples [
 
 { #category : #'basic tests' }
 HeapTest >> testFirst [
-	| heap | 
+	| heap |
 	heap := Heap new.
 	heap add: 5.
 	heap add: 12.
 	heap add: 1.
 	self assert: heap first equals: 1.
 	heap removeFirst.
-	self assert: heap first equals: 5.
+	self assert: heap first equals: 5
 ]
 
 { #category : #'basic tests' }
@@ -567,7 +567,7 @@ HeapTest >> testSortBlock [
 	| heap |
 	heap := Heap withAll: #(1 3 5).
 	self assert: heap asArray equals: #(1 3 5).
-	
+
 	heap sortBlock: [ :e1 :e2 | e1 >= e2 ].
 	self assert: heap asArray equals: #(5 3 1)
 ]
@@ -575,7 +575,7 @@ HeapTest >> testSortBlock [
 { #category : #parameters }
 HeapTest >> valuePutIn [
 	"the value that we will put in the non empty collection"
-	
+
 	^ 7
 ]
 

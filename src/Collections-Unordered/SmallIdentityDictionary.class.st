@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #private }
-SmallIdentityDictionary >> findIndexForKey: aKey [ 
+SmallIdentityDictionary >> findIndexForKey: aKey [
 	^ keys identityIndexOf: aKey
 ]
 
