@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'systemSettings',
 		'memory',
-		'preferences'
+		'preferencesFile'
 	],
 	#category : #'System-Settings-Tests'
 }
@@ -16,9 +16,9 @@ Class {
 SystemSettingsPersistenceTest >> assertStoredSettingsDoNotInclude: aIdentifier [
 
 	| nodes |
-	self assert: preferences exists.	
+	self assert: preferencesFile exists.	
 	
-	nodes := preferences readStreamDo: [ :stream | STON fromStream: stream ].
+	nodes := preferencesFile readStreamDo: [ :stream | STON fromStream: stream ].
 	
 	nodes detect: [ :aNode | aNode settingNodeIdentifier = aIdentifier printString ]  
 		ifFound: [ :aNode | self fail: 'The node has been found, it should not be there' ] 
@@ -29,9 +29,9 @@ SystemSettingsPersistenceTest >> assertStoredSettingsDoNotInclude: aIdentifier [
 SystemSettingsPersistenceTest >> assertStoredSettingsInclude: aIdentifier withValue: aValue [ 
 
 	| nodes |
-	self assert: preferences exists.	
+	self assert: preferencesFile exists.	
 	
-	nodes := preferences readStreamDo: [ :stream | STON fromStream: stream ].
+	nodes := preferencesFile readStreamDo: [ :stream | STON fromStream: stream ].
 	
 	nodes detect: [ :aNode | aNode settingNodeIdentifier = aIdentifier printString ]  
 		ifFound: [ :aNode | self assert: aNode realValue equals: aValue ] 
@@ -53,10 +53,10 @@ SystemSettingsPersistenceTest >> setUp [
 	super setUp.
 	MockSettings cleanUp.
 	memory := FileSystem memory.
-	preferences := memory root / 'pharo' / 'pharoX.Y' / 'preferences.ston.txt'.
+	preferencesFile := memory root / 'pharo' / 'pharoX.Y' / 'preferences.ston.txt'.
 	systemSettings := SystemSettingsPersistence new.
 	systemSettings
-		fileReference: preferences;
+		fileReference: preferencesFile;
 		settingTree: MockSettings settingTree
 ]
 
@@ -103,11 +103,11 @@ SystemSettingsPersistenceTest >> testDefaultImageDoesNotStoreAnySetting [
 	| nodesToStore |
 	"An image with all default values should not save any setting.
 	The settings only should be saved if changed from default value"
-
 	Author
 		useAuthor: ''
 		during: [ 
-			nodesToStore := StoredSettingsFactory new fromSettingNodes: SettingBrowser currentTree nodeList.
+			nodesToStore :=  StoredSettingsFactory new fromSettingNodes: 
+				(MockSettings settingTree nodeList select: [ :aNode | aNode item hasDefault ]).
 			nodesToStore := nodesToStore reject: [ :aNode | aNode hasDefaultValue ] ].
 
 	self assertCollection: nodesToStore hasSameElements: #()
@@ -190,57 +190,57 @@ SystemSettingsPersistenceTest >> testStoreBooleanToSton [
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreIdentifier [
-	self deny: preferences exists.
+	self deny: preferencesFile exists.
 	systemSettings storeIdentifier: MockSettings booleanSettingNode settingNodeIdentifier.
-	self assert: preferences exists.
-	self assert: preferences size > 0.
+	self assert: preferencesFile exists.
+	self assert: preferencesFile size > 0.
 ]
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreSettingNode [
-	self deny: preferences exists.
+	self deny: preferencesFile exists.
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
-	self assert: preferences exists.
-	self assert: preferences size > 0.
+	self assert: preferencesFile exists.
+	self assert: preferencesFile size > 0.
 ]
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreSettingNodeTwice [
 	| fileSize fullPath |
-	self deny: preferences exists.
-	fullPath := preferences fullPath.
+	self deny: preferencesFile exists.
+	fullPath := preferencesFile fullPath.
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
-	self assert: preferences fullPath equals: fullPath.
-	self assert: preferences exists.
-	fileSize := preferences size.
+	self assert: preferencesFile fullPath equals: fullPath.
+	self assert: preferencesFile exists.
+	fileSize := preferencesFile size.
 	self assert: fileSize > 0.
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
-	self assert: preferences fullPath equals: fullPath.
-	self assert: preferences size equals: fileSize.
+	self assert: preferencesFile fullPath equals: fullPath.
+	self assert: preferencesFile size equals: fileSize.
 ]
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreSettingNodes [
-	self deny: preferences exists.
+	self deny: preferencesFile exists.
 	self testRealValueModification.
 	systemSettings storeSettingNodes: { 
 		MockSettings booleanSettingNode.
 		MockSettings rangeSettingNode }.
-	self assert: preferences exists.
-	self assert: preferences size > 0.
-	self assert: preferences contents equals: MockSettings twoStoredSettingsSTONString
+	self assert: preferencesFile exists.
+	self assert: preferencesFile size > 0.
+	self assert: preferencesFile contents equals: MockSettings twoStoredSettingsSTONString
 ]
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreTwoSettingNodeSeparately [
 	| fileSize |
-	self deny: preferences exists.
+	self deny: preferencesFile exists.
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
-	self assert: preferences exists.
-	fileSize := preferences size.
+	self assert: preferencesFile exists.
+	fileSize := preferencesFile size.
 	self assert: fileSize > 0.
 	systemSettings storeSettingNode: MockSettings rangeSettingNode.
-	self assert: preferences size > fileSize.
+	self assert: preferencesFile size > fileSize.
 ]
 
 { #category : #tests }
@@ -318,8 +318,8 @@ SystemSettingsPersistenceTest >> testWriteAndReadBoolean [
 { #category : #tests }
 SystemSettingsPersistenceTest >> testWriteStream [
 	| writeStream |
-	self deny: preferences exists.
-	self deny: preferences parent exists.
+	self deny: preferencesFile exists.
+	self deny: preferencesFile parent exists.
 	writeStream := systemSettings writeStream.
 	self assert: writeStream isStream.
 	writeStream close.
@@ -328,7 +328,7 @@ SystemSettingsPersistenceTest >> testWriteStream [
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testWritingStoredSettingNodesShouldNotCloseFileStream [
 	| writeStream storedSettings |
-	writeStream := preferences ensureCreateFile writeStream.
+	writeStream := preferencesFile ensureCreateFile writeStream.
 	storedSettings := StoredSettingsFactory new
 		fromSettingNodes: (Array with: MockSettings booleanSettingNode).
 	systemSettings storeExactStoredSettings: storedSettings on: writeStream.
