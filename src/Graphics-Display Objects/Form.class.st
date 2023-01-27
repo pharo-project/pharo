@@ -182,7 +182,7 @@ Form class >> fromDisplay: aRectangle using: oldForm [
 		ifFalse: [ self fromDisplay: aRectangle ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Form class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
