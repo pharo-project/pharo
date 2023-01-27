@@ -479,7 +479,8 @@ RBMessageNode >> start: newStart [
 	| oldStart |
 
 	oldStart := self start.
-	keywordsPositions := keywordsPositions collect: [ :each | each - oldStart + newStart ]
+ 	keywordsPositions := keywordsPositions collect: [ :each | each - oldStart + newStart ].
+	receiver start: newStart
 ]
 
 { #category : #accessing }
