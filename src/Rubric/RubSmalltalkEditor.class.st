@@ -251,19 +251,21 @@ RubSmalltalkEditor >> bindingOf: aString [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> browseClassFrom: aClassString [
+
 	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
 
 	| selectedClass |
 	"self lineSelectAndEmptyCheck: [ ^ self ]."
-	( aClassString isNil or: [ aClassString isEmpty ] )
-		ifTrue: [ textArea flash.
-			^ self ].
+	(aClassString isNil or: [ aClassString isEmpty ]) ifTrue: [ 
+		textArea flash.
+		^ self ].
 
 	selectedClass := self model systemNavigation
-		classFromPattern: aClassString
-		withCaption: 'choose a class to browse...'.
-	selectedClass ifNil: [ ^ self internalCallToImplementorsOf: aClassString ].
-	Smalltalk tools browser openOnClass: selectedClass
+		                 classFromPattern: aClassString
+		                 withCaption: 'choose a class to browse...'.
+	selectedClass ifNil: [ 
+		^ self internalCallToImplementorsOf: aClassString ].
+	self tools browser openOnClass: selectedClass
 ]
 
 { #category : #'editing keys' }
@@ -757,14 +759,16 @@ RubSmalltalkEditor >> inspectIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> internalCallToBrowse: aSelector [
+
 	"Launch a browser for the class indicated by the given selector. 
 	If multiple classes matching the selection exist, let the user choose among them."
+
 	| aClass |
-	aClass := self model systemNavigation 
-				classFromPattern: aSelector
-				withCaption: 'choose a class to browse...'.
-	aClass ifNil: [^ self].
-	Smalltalk tools browser openOnClass: aClass
+	aClass := self model systemNavigation
+		          classFromPattern: aSelector
+		          withCaption: 'choose a class to browse...'.
+	aClass ifNil: [ ^ self ].
+	self tools browser openOnClass: aClass
 ]
 
 { #category : #'menu messages' }
