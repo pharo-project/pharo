@@ -29,13 +29,6 @@ MCGitHubRepository class >> cacheDirectory: aDirectory [
   CacheDirectory := aDirectory
 ]
 
-{ #category : #accessing }
-MCGitHubRepository class >> cacheDirectoryPath [
-  <preference: 'GitHub Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
-]
-
 { #category : #'instance creation' }
 MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createGithubRepository: aRepositorySpec

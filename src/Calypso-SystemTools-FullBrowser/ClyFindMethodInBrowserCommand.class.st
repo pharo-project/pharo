@@ -14,20 +14,20 @@ Class {
 { #category : #menu }
 ClyFindMethodInBrowserCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodContext
 ]
 
 { #category : #menu }
 ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
 ]
 
 { #category : #accessing }
 ClyFindMethodInBrowserCommand >> defaultMenuIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #accessing }
@@ -38,9 +38,9 @@ ClyFindMethodInBrowserCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyFindMethodInBrowserCommand >> execute [
 	| method |
-	
-	method := browser searchDialog 
+
+	method := browser searchDialog
 		requestSingleObject: 'Choose method' from: browser methodView query.
-	
+
 	browser selectMethod: method
 ]

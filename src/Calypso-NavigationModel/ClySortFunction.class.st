@@ -30,7 +30,7 @@ ClySortFunction class >> ascending [
 { #category : #'instance creation' }
 ClySortFunction class >> descending [
 
-	^self new 
+	^self new
 		direction: -1
 ]
 

@@ -28,7 +28,7 @@ ClyBrowseIcebergCommitCommand >> execute [
 	methodHistoryLogEntry commit packageNames
 		do: [ :packageName |
 			snapshot := methodHistoryLogEntry commit snapshotFor: (RPackage named: packageName).
-			snapshot importInto: env asPackageNamed: packageName ] 
+			snapshot importInto: env asPackageNamed: packageName ]
 		displayingProgress: 'loading'.
 	env clean.
 	env browseAs: methodHistoryLogEntry commit repository origin url , '[', methodHistoryLogEntry shortId, ']'

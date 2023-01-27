@@ -3,15 +3,15 @@ Extension { #name : #BitBlt }
 { #category : #'*FreeType-Graphics' }
 BitBlt >> combinationRule [
 	"Answer the receiver's combinationRule"
-	
-	^combinationRule
+
+	^ combinationRule
 ]
 
 { #category : #'*FreeType-Graphics' }
 BitBlt >> copyBitsColor: argbColorSmallInteger alpha: argbAlphaSmallInteger gammaTable: gammaByteArray ungammaTable: ungammaByteArray [
 	"This entry point to BitBlt supplies an extra argument to specify the fore color
 	argb value for operation 41. This is split into an alpha value and an rgb value,
-	so that both can be passed as smallIntegers to the primitive.  
+	so that both can be passed as smallIntegers to the primitive.
 	rgbColorInteger must be a smallInteger between 0 and 16rFFFFFF.
 	alpha must be a smallInteger between 0 and 16rFF."
 
@@ -41,19 +41,20 @@ BitBlt >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor ba
 		ifFalse:[
 			"use combination rule 34 when rule 41 is not available in the BitBlt plugin,
 			or the destination form depth <= 8"
-			destForm depth <= 8 
+			destForm depth <= 8
 				ifTrue: [
 					self colorMap: (self cachedFontColormapFrom: 32 to: destForm depth).
-					self combinationRule: Form paint.] 
+					self combinationRule: Form paint.]
 				ifFalse: [
 					self colorMap: nil.
 					self combinationRule: 34]].
 	halftoneForm := nil.
 	sourceX := sourceY := 0.
-	height := aFreeTypeFont height.
+	height := aFreeTypeFont height
 ]
 
 { #category : #'*FreeType-Graphics' }
 BitBlt >> lastFontForegroundColor [
+
 	^ nil
 ]

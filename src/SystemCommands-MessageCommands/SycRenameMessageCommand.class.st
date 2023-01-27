@@ -35,7 +35,7 @@ SycRenameMessageCommand >> createRefactoring [
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
 		to: newSignature selector 
 		permutation: newSignature permutation)
-		renameMap: newSignature renameMap
+			renameMap: newSignature renameMap
 ]
 
 { #category : #accessing }

@@ -245,7 +245,7 @@ SettingBrowser class >> menuCommandOn: aBuilder [
 	(aBuilder item: #Settings)
 		parent: #Pharo;
 		order: 1;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
 		help: 'Opens a SystemSettingBrowser which allows you to alter many system settings.';
@@ -289,7 +289,7 @@ SettingBrowser class >> settingsKeywords [
 
 { #category : #icons }
 SettingBrowser class >> taskbarIconName [
-	^#smallConfigurationIcon
+	^#smallConfiguration
 ]
 
 { #category : #'private helpers' }

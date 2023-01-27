@@ -11,10 +11,9 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 PoolDefiner class >> initialize [
-	"self initialize"
-	
+
 	Gloups := 42.
-	AnAuthor := 'Ducasse'.
+	AnAuthor := 'Ducasse'
 ]

@@ -48,6 +48,12 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> firstPcForNode: aNode [
+
+	^ self bcToASTCache firstBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate [
 	"The receiver is the root of a parse tree. Answer a CompiledMethod. The
 	argument, trailer, is the references to the source code that is stored with 
@@ -67,10 +73,29 @@ RBMethodNode >> generate: trailer [
 RBMethodNode >> generateIR [
 	| ir |
 	scope ifNil: [self doSemanticAnalysis].
+	
+	self pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
+		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
+		copy := self copy.
+		copy removePragmaNamed: pragma selector.
+		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
+		ir sourceNode: self.
+		^ ir
+	].
+	
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
 	^ self ir: ir
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> generateMethod [
+	| methodTrailer |
+	methodTrailer := self compilationContext optionEmbeddSources
+			ifTrue: [ CompiledMethodTrailer new sourceCode: source ]
+			ifFalse: [self compilationContext compiledMethodTrailer ].
+	^self generate: methodTrailer
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -94,6 +119,12 @@ RBMethodNode >> ir: aIRMethodNode [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> irInstruction [
 	^ self ir
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> lastPcForNode: aNode [
+
+	^ self bcToASTCache lastBcOffsetForNode: aNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -130,15 +161,14 @@ RBMethodNode >> methodPropertyAt: aKey put: anObject [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> notShadowedTemporaryNamesFrom: aContext [
-	| ownVariableNames |
-	ownVariableNames := self allDefinedVariables collect: [ :var | var asString ].
-	^ aContext tempNames difference: ownVariableNames
+RBMethodNode >> owningScope [
+	^ self scope
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> owningScope [
-	^ self scope
+RBMethodNode >> pcsForNode: aNode [
+
+	^ self bcToASTCache pcsForNode: aNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -147,23 +177,6 @@ RBMethodNode >> primitiveFromPragma [
 		detect: [ :each | each isPrimitive ]
 		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
 		ifNone: [ IRPrimitive null ]
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> rewriteTempsForContext: aContext [
-	| rewriter contextOnlyTemps |
-	rewriter := RBParseTreeRewriter new.
-	contextOnlyTemps := self notShadowedTemporaryNamesFrom: aContext.
-	aContext tempNames do:
-			[ :tempName | 
-			(contextOnlyTemps includes: tempName)
-				ifTrue:
-					[ rewriter
-						replace: tempName , ' := ``@object' with: 'ThisContext writeVariableNamed: ', tempName asString printString  , ' value: ``@object';
-						replace: tempName with: 'ThisContext readVariableNamed: ' , tempName asString printString ] ].
-	^ rewriter
-		executeTree: self;
-		tree
 ]
 
 { #category : #'*OpalCompiler-Core' }

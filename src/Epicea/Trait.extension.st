@@ -5,5 +5,5 @@ Trait >> asEpiceaRingDefinition [
 
 	^ self asRingDefinition
 		package: (EpPlatform current packageNameFor: self);
-		yourself.
+		yourself
 ]

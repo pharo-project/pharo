@@ -21,7 +21,7 @@ CoGlobalSorterResultSetBuilder >> parseNode [
 
 { #category : #accessing }
 CoGlobalSorterResultSetBuilder >> sorterClass [
-	
+
 	^ sorterClass ifNil: [ completionContext class sorterClass ]
 ]
 

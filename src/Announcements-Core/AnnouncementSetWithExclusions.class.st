@@ -25,17 +25,17 @@ Class {
 AnnouncementSetWithExclusions >> addExclusion: anAnnouncement [
 	"Add anAnnouncement as an exclusion to me.
 	I will explicitly not handle my exclusion announcements."
-	
+
 	^ exclusions add: anAnnouncement
 ]
 
 { #category : #testing }
 AnnouncementSetWithExclusions >> handlesAnnouncement: anAnnouncement [
 	"Return true when I will handle anAnnouncement.
-	I extend my superclass behavior by explicitly 
+	I extend my superclass behavior by explicitly
 	not handling the exclusions."
 
-	^ (super handlesAnnouncement: anAnnouncement) 
+	^ (super handlesAnnouncement: anAnnouncement)
 			and: [ exclusions noneSatisfy: [ :each | each handlesAnnouncement: anAnnouncement ] ]
 ]
 

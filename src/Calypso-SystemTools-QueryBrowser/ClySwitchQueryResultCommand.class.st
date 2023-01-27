@@ -20,6 +20,6 @@ ClySwitchQueryResultCommand class >> isAbstract [
 { #category : #activation }
 ClySwitchQueryResultCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
-	
+
 	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup for: ClyQueryBrowserContext
 ]

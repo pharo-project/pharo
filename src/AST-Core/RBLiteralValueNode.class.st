@@ -24,24 +24,24 @@ RBLiteralValueNode class >> value: aValue [
 ]
 
 { #category : #'instance creation' }
-RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition [ 
+RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition [
  	^ self new
 		value: aValue start: aPosition stop: anotherPosition;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
-RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition  source: aString [ 
+RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition  source: aString [
  	^ self new
 		value: aValue start: aPosition stop: anotherPosition source: aString;
-		yourself.
+		yourself
 ]
 
 { #category : #comparing }
-RBLiteralValueNode >> = anObject [ 
-	^ super = anObject 
+RBLiteralValueNode >> = anObject [
+	^ super = anObject
 		and: [ self value = anObject value
-		and: [ self value class = anObject value class 
+		and: [ self value class = anObject value class
 		and: [ self value species = anObject value species ] ] ]
 ]
 
@@ -69,19 +69,14 @@ RBLiteralValueNode >> evaluateForReceiver: aReceicer [
 
 { #category : #accessing }
 RBLiteralValueNode >> sourceText [
-	^ sourceText ifNil: [
-		String streamContents: [:aStream|			
-			value isSymbol
-				ifTrue: [
-					aStream nextPut: $#.
-					((value isValidSelector) and: [value ~~ #'||']) 
-						ifTrue: [aStream nextPutAll: value]
-						ifFalse: [value asString printOn: aStream]]
-				ifFalse: [ 
-					value class == Character 
-						ifTrue: 
-							[aStream nextPut: $$;	nextPut: value]
-						ifFalse: [ value storeOn: aStream ]]] ]
+
+	sourceText ifNotNil: [ ^ sourceText ].
+	^ String streamContents: [ :aStream |
+		  value class == Character
+			  ifTrue: [ "Character>>storeOn might return `Character space` (or something else) that is not a literal. So, force the `$x` syntax."
+				  aStream nextPut: $$; nextPut: value ]
+			  ifFalse: [ "For other literals, we assume that storeOn returns a valid literal syntactic representation."
+				  value storeOn: aStream ] ]
 ]
 
 { #category : #accessing }
@@ -93,13 +88,13 @@ RBLiteralValueNode >> value [
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 
 	value := aValue.
-	start := aPosition. 
-	stop := anotherPosition.
+	start := aPosition.
+	stop := anotherPosition
 ]
 
 { #category : #initialization }
-RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [ 
+RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [
 
 	self value: aValue start: aPosition stop: anotherPosition.
-	sourceText := aString.
+	sourceText := aString
 ]

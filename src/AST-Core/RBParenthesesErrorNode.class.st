@@ -16,7 +16,7 @@ Class {
 RBParenthesesErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
-	message := ('(' = aToken value asString) ifTrue: [ ''')'' expected' ] 
+	message := ('(' = aToken value asString) ifTrue: [ ''')'' expected' ]
 										  				 ifFalse: [ '''('' expected' ].
 	"If the collection is empty, there is only the token in the error."
 	aCollection isEmpty

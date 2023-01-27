@@ -1,7 +1,7 @@
 Class {
 	#name : #RBExtractMethodToComponentParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -70,7 +70,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 { #category : #tests }
 RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
-	refactoring := self createRefactoringWithArguments: { (118 to: 286) . #copyDictionary: . RBReadBeforeWrittenTester }.
+	refactoring := self createRefactoringWithArguments: { (118 to: 285) . #copyDictionary: . RBReadBeforeWrittenTester }.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Dictionary)).

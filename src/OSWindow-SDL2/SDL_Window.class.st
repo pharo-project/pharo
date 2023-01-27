@@ -158,6 +158,12 @@ SDL_Window >> setSizeW: w h: h [
 	^ self ffiCall: #( void SDL_SetWindowSize ( self , int w , int h ) )
 ]
 
+{ #category : #'text input' }
+SDL_Window >> setTextInputRectangle: aSDL2Rectangle [
+
+	^ self ffiCall: #(void SDL_SetTextInputRect(SDL_Rect* aSDL2Rectangle))
+]
+
 { #category : #'window management' }
 SDL_Window >> show [
 	^ self ffiCall: #( void SDL_ShowWindow( self ) )

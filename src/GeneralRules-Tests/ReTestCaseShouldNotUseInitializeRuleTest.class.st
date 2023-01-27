@@ -10,15 +10,15 @@ Class {
 { #category : #accessing }
 ReTestCaseShouldNotUseInitializeRuleTest >> aDummyVar [
 	"Only necessary that ivar does not appear unused"
-	
+
 	^ aDummyVar
 ]
 
 { #category : #running }
-ReTestCaseShouldNotUseInitializeRuleTest >> tearDown [ 
+ReTestCaseShouldNotUseInitializeRuleTest >> tearDown [
 
 	self class removeSelector: #initialize.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -29,8 +29,8 @@ ReTestCaseShouldNotUseInitializeRuleTest >> testRule [
 		aDummyVar := 2 ' classified: 'test-help'.
 
 	critiques := self myCritiquesOnClass: self class.
-	
-	self assert: critiques size equals: 1.
+
+	self assert: critiques size equals: 1
 ]
 
 { #category : #tests }
@@ -40,6 +40,6 @@ ReTestCaseShouldNotUseInitializeRuleTest >> testRuleDoesNotAppear [
 		super initialize. ' classified: 'test-help'.
 
 	critiques := self myCritiquesOnClass: self class.
-	
-	self assert: critiques size equals: 0.
+
+	self assert: critiques size equals: 0
 ]

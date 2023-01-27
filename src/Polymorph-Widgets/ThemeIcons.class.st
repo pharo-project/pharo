@@ -138,7 +138,7 @@ ThemeIcons class >> fetchPacks [
 { #category : #private }
 ThemeIcons class >> loadDefault [
 	^ self new 
-	name: 'idea11';
+	name: 'svgPack';
 	loadIconsFromUrl;
 	yourself.
 ]
@@ -163,7 +163,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 2;
 		label: 'Icon Set';
-		default: (ThemeIcons named: 'idea11');
+		default: (ThemeIcons named: 'svgPack');
 		target: self;
 		dialog: [ self createSettingRow ]
 ]
@@ -229,6 +229,17 @@ ThemeIcons >> blankIcon [
 
 { #category : #utilities }
 ThemeIcons >> blankIconOfWidth: aNumber [ 
+
+	"We hard-code the most used cases to avoid symbol creation"
+
+	aNumber == 16 ifTrue: [ ^ self icons
+		at: #blank16
+		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
+	
+	aNumber == 10 ifTrue: [ ^ self icons
+		at: #blank10
+		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
+
 	^ self icons
 		at: ('blank-' , aNumber asString) asSymbol
 		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]
@@ -324,14 +335,16 @@ ThemeIcons >> loadIconsFromUrl [
 	
 	newIcons := IdentityDictionary new.
 	zipArchive := self downloadFromUrl.
-	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*.png')
+
+	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale1.0' ) anyOne
+	allChildrenMatching: '*.png')
 		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each | 
+		thenDo: [ :each |
 			[ newIcons 	
 				at: each base asSymbol
 				put: (self readPNGFrom: each) ]
 			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
-	icons := newIcons.
+	icons := newIcons
 ]
 
 { #category : #accessing }

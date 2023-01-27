@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 ReAsOrderedCollectionNotNeededRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'AsOrderedCollectionNotNeededRule'
 ]
 
@@ -24,9 +24,9 @@ ReAsOrderedCollectionNotNeededRule >> group [
 ReAsOrderedCollectionNotNeededRule >> initialize [
 	super initialize.
 	#('addAll:' 'removeAll:' 'includesAll:' 'copyWithoutAll:')
-		do: [ :collectionMessage | 
+		do: [ :collectionMessage |
 			#('asArray' 'asOrderedCollection' 'asSortedCollection')
-				do: [ :conversionMessage | 
+				do: [ :conversionMessage |
 					| baseString |
 					baseString := '``@receiver ' , collectionMessage , ' ``@arg '.
 					self replace: baseString , conversionMessage with: baseString ] ]

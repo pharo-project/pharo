@@ -28,11 +28,6 @@ SycOpenDebuggingInMethodMenuCommand >> activationStrategy [
 	^ SycDebuggingMenuActivation
 ]
 
-{ #category : #'context menu' }
-SycOpenDebuggingInMethodMenuCommand >> cmCommandClass [
-	^ SycDebuggingCommand
-]
-
 { #category : #accessing }
 SycOpenDebuggingInMethodMenuCommand >> defaultMenuIconName [
 	^ #halt

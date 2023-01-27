@@ -32,8 +32,6 @@ FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
 FFIExternalEnumerationTest >> testCall [
 	| result buffer |
 
-	self skipOnAppleARM.
-
 	buffer := ByteArray new: 100. 
 	result := self ffiTestCall: self enumClass DDD format: '%d' to: buffer.
 	self assert: result equals: 4.
@@ -69,8 +67,6 @@ FFIExternalEnumerationTest >> testNewError [
 { #category : #tests }
 FFIExternalEnumerationTest >> testReturn [
 	| result buffer |
-
-	self skipOnAppleARM.
 
 	buffer := ByteArray new: 100. 
 	result := self ffiTestReturn: 123 format: '%d' to: buffer.

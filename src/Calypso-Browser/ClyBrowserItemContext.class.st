@@ -23,7 +23,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserItemContext class >> itemType: scopeClass [
-	^self new 
+	^self new
 		itemType: scopeClass
 ]
 

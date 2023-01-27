@@ -28,21 +28,21 @@ CDSharedPoolNode >> name [
 ]
 
 { #category : #accessing }
-CDSharedPoolNode >> name: aString [ 
+CDSharedPoolNode >> name: aString [
 	name := aString
 ]
 
 { #category : #accessing }
-CDSharedPoolNode >> node: aRBLiteralValueNode [ 
+CDSharedPoolNode >> node: aRBLiteralValueNode [
 	originalNode := aRBLiteralValueNode
 ]
 
 { #category : #accessing }
-CDSharedPoolNode >> start: anInteger [ 
+CDSharedPoolNode >> start: anInteger [
 	start := anInteger
 ]
 
 { #category : #accessing }
-CDSharedPoolNode >> stop: anInteger [ 
+CDSharedPoolNode >> stop: anInteger [
 	stop := anInteger
 ]

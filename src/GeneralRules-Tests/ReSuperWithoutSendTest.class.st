@@ -14,5 +14,5 @@ ReSuperWithoutSendTest >> testBasicCheck [
 	ast := self class compiler parse: 'testMethod ^ super doit'.
 	self deny: (ReSuperWithoutSend new basicCheck: ast variableNodes first).
 	ast := self class compiler parse: 'testMethod ^ self doit: super'.
-	self assert: (ReSuperWithoutSend new basicCheck: ast variableNodes second).
+	self assert: (ReSuperWithoutSend new basicCheck: ast variableNodes second)
 ]

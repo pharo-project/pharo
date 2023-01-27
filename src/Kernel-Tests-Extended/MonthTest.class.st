@@ -25,21 +25,21 @@ MonthTest >> selectorsToBeIgnored [
 	private := #( #printOn: ).
 	special := #( #next ).
 
-	^ super selectorsToBeIgnored, deprecated, private, special.
+	^ super selectorsToBeIgnored, deprecated, private, special
 ]
 
 { #category : #running }
 MonthTest >> setUp [
 
 	super setUp.
-	month := Month year: 1998 month: 7.
+	month := Month year: 1998 month: 7
 ]
 
 { #category : #running }
 MonthTest >> tearDown [
 
 	month := nil.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -67,6 +67,32 @@ MonthTest >> testIndexOfMonth [
 	self should: [ Month indexOfMonth: #Marsh ] raise: self defaultTestError.
 	"notice the misspell!!"
 	self should: [ Month indexOfMonth: #UnexistingMonth ] raise: self defaultTestError
+]
+
+{ #category : #tests }
+MonthTest >> testIndexOfMonthCaseInsensitive [
+	self assert: (Month indexOfMonth: 'january') equals: 1.
+	self assert: (Month indexOfMonth: #january) equals: 1.
+	self assert: (Month indexOfMonth: 'jAnUaRy') equals: 1.
+	self assert: (Month indexOfMonth: #jAnUaRy) equals: 1
+]
+
+{ #category : #tests }
+MonthTest >> testIndexOfMonthIncompleteMonths [
+	| m |
+	m := #(Jan Feb Mar Apr May Jun Jul Aug Sept Oct Nov Dec).
+
+	m withIndexDo: [ :item :index | self assert: (Month indexOfMonth: item) equals: index ]
+]
+
+{ #category : #tests }
+MonthTest >> testIndexOfMonthWithStrings [
+	| m |
+	m := #(#January #February #March #April #May #June #July #August #September #October #November #December)
+		collect: [ :aMonth | aMonth asString ].
+
+	m withIndexDo: [ :item :index |
+		self assert: (Month indexOfMonth: item) equals: index ]
 ]
 
 { #category : #tests }

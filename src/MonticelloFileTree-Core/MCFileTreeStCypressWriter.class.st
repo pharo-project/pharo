@@ -43,11 +43,9 @@ MCFileTreeStCypressWriter class >> fileNameForSelector: selector [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCFileTreeStCypressWriter class >> initialize [
-    "self initialize"
-
-    "force initialization of specials ..."
+    "Force initialization of specials ..."
 
     specials := nil
 ]

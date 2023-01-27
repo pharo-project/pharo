@@ -54,7 +54,7 @@ ClapContext class >> pragmaCommands [
 			theClass := pragma method methodClass.
 			theSelector := pragma method selector.
 			self assert: [ theSelector isUnary ].
-			
+
 			theClass instanceSide
 				perform: theSelector ]
 ]
@@ -65,13 +65,13 @@ ClapContext class >> withAll: commandCandidates [
 ]
 
 { #category : #'instance creation' }
-ClapContext class >> withPragmaCommands [ 
+ClapContext class >> withPragmaCommands [
 	^ self withAll: self pragmaCommands
 ]
 
 { #category : #validation }
 ClapContext >> allValidations [
-	^ self validateOn: ClapValidationReport success.
+	^ self validateOn: ClapValidationReport success
 ]
 
 { #category : #accessing }
@@ -138,7 +138,7 @@ ClapContext >> execute [
 ClapContext >> executeToExit: exitBlock [
 	^ [
 		self rememberSession;
-			ifMatch: [ :m | 
+			ifMatch: [ :m |
 				m value: self.
 				self exitSuccess ]
 			ifMismatch: [ self noneMatched ]
@@ -303,7 +303,7 @@ ClapContext >> validateAll [
 	| report |
 	report := self allValidations.
 	report isSuccess ifTrue: [ ^ self ].
-	
+
 	self stderr print: report; flush.
 	self exitFailure
 ]

@@ -48,7 +48,7 @@ ThreadSafeTranscript class >> installThreadSafeAsTranscript [
 ThreadSafeTranscript class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#transcriptIcon
+	^#transcript
 ]
 
 { #category : #streaming }

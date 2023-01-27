@@ -105,7 +105,7 @@ PragmaSetting >> chooseFilePath [
 
 { #category : #'user interface' }
 PragmaSetting >> defaultIcon [
-	^ self iconNamed: #smallConfigurationIcon
+	^ self iconNamed: #smallConfiguration
 ]
 
 { #category : #accessing }

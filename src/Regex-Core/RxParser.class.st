@@ -32,7 +32,7 @@ RxParser class >> doHandlingMessageNotUnderstood: aBlock [
 
 { #category : #'class initialization' }
 RxParser class >> initialize [
-	"self initialize"
+
 	self
 		initializeBackslashConstants;
 		initializeBackslashSpecials

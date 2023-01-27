@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> empty [ 
+Protocol class >> empty [
 	 ^ self name: #''
 ]
 
@@ -49,7 +49,7 @@ Protocol >> initialize [
 	super initialize.
 
 	methodSelectors := IdentitySet new.
-	name := self class defaultName.
+	name := self class defaultName
 ]
 
 { #category : #accessing }

@@ -70,8 +70,8 @@ MergeJoinSection >> containsPoint: aPoint [
 MergeJoinSection >> defaultStateIcons [
 	"Answer the default state icons."
 
-	^ {(self iconNamed: #smallBackIcon) . (self iconNamed: #smallForwardIcon) .
-	(self iconNamed: #smallOkIcon) . (self iconNamed: #smallCancelIcon)}
+	^ {(self iconNamed: #smallBack) . (self iconNamed: #smallForward) .
+	(self iconNamed: #smallOk) . (self iconNamed: #smallCancel)}
 ]
 
 { #category : #drawing }

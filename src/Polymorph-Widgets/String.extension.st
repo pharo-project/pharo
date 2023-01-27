@@ -9,7 +9,7 @@ String >> heightToDisplayInTree: aTree [
 { #category : #'*Polymorph-Widgets-Themes' }
 String class >> systemIconName [
 
-	^ #stringIcon
+	^ #string
 ]
 
 { #category : #'*Polymorph-Widgets' }

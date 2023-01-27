@@ -200,6 +200,16 @@ MorphicEventDispatcher >> handleStep: anEvent [
 ]
 
 { #category : #'dispatching - callback' }
+MorphicEventDispatcher >> handleTextEditionEvent: aTextEditionEvent [
+	^ self dispatchDefault: aTextEditionEvent with: morph
+]
+
+{ #category : #'dispatching - callback' }
+MorphicEventDispatcher >> handleTextInputEvent: aTextInputEvent [ 
+	^ self dispatchDefault: aTextInputEvent with: morph
+]
+
+{ #category : #'dispatching - callback' }
 MorphicEventDispatcher >> handleUnknownEvent: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
 ]

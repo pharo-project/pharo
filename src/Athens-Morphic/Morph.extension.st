@@ -8,11 +8,11 @@ Morph >> athensSurface [
 { #category : #'*Athens-Morphic' }
 Morph >> drawClippedOnAthensCanvas: anAthensCanvas during: aBlock [
 
-	^ self clipSubmorphs 
-		ifTrue: [ 
+	^ self clipSubmorphs
+		ifTrue: [
 			 anAthensCanvas
 				clipBy: (self clippingBounds intersect: anAthensCanvas clipRect ifNone:[^ self])
-				during: aBlock ] 
+				during: aBlock ]
 		ifFalse: [ aBlock value ]
 ]
 
@@ -25,24 +25,24 @@ Morph >> drawKeyboardFocusOnAthensCanvas: anAthensCanvas [
 ]
 
 { #category : #'*Athens-Morphic' }
-Morph >> drawOnAthensCanvas: anAthensCanvas [ 
+Morph >> drawOnAthensCanvas: anAthensCanvas [
 	| border |
-	border := self borderStyle. 
+	border := self borderStyle.
 	anAthensCanvas setPaint: self fillStyle.
 	anAthensCanvas drawShape: self bounds.
-	
+
 	"Fill the given rectangle."
 	anAthensCanvas drawShape: (self bounds insetBy: border width).
 
 	(anAthensCanvas setStrokePaint: border).
 	anAthensCanvas drawShape: (self bounds insetBy: (border width /2 asFloat)).
-	
+
 
 	"aBorderStyle frameRectangle: aRectangle on: self "
 ]
 
 { #category : #'*Athens-Morphic' }
-Morph >> drawOnCanvasWrapperFor: anAthensCanvas [ 
+Morph >> drawOnCanvasWrapperFor: anAthensCanvas [
 	self drawOn: anAthensCanvas asCanvasWrapper
 ]
 
@@ -54,7 +54,7 @@ Morph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 ]
 
 { #category : #'*Athens-Morphic' }
-Morph >> fullDrawOnAthensCanvas: anAthensCanvas [ 
+Morph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	"Draw the full Morphic structure on the given Canvas"
 
 	self visible ifFalse: [^ self].
@@ -62,7 +62,7 @@ Morph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	(self hasProperty: #errorOnDraw) ifTrue: [^self "drawErrorOn: aCanvas" ].
 
 	(anAthensCanvas isVisible: self bounds) ifTrue: [ anAthensCanvas draw: self ].
-	
+
 	submorphs isEmpty ifTrue: [^self].
 
 	self drawSubmorphsOnAthensCanvas: anAthensCanvas

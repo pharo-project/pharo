@@ -125,6 +125,11 @@ ParametrizedTestMatrix >> selector: aString [
 ]
 
 { #category : #accessing }
+ParametrizedTestMatrix >> selectors [
+	^ self options collect: [ :option | option selector ]
+]
+
+{ #category : #accessing }
 ParametrizedTestMatrix >> values: aCollection [ 
 	options := aCollection collect:[ :aValue | 
 		ParametrizedTestExpandedParameter new 

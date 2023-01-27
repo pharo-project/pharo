@@ -39,10 +39,10 @@ TAddTest >> testTAdd [
 	| added collection |
 	collection := self otherCollection.
 	added := collection add: self element.
-	
+
 	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
 	self assert: (collection includes: self element)	.
-	self assert: (self collectionWithElement includes: self element).
+	self assert: (self collectionWithElement includes: self element)
 ]
 
 { #category : #'tests - adding' }
@@ -64,9 +64,9 @@ TAddTest >> testTAddIfNotPresentWithElementAlreadyIn [
 	oldSize := collection size.
 	anElement := self element.
 	self assert: (collection includes: anElement).
-	
+
 	added := collection addIfNotPresent: anElement.
-	
+
 	self assert: added == anElement .	"test for identiy because #add: has not reason to copy its parameter."
 	self assert: collection size equals: oldSize
 ]
@@ -79,10 +79,10 @@ TAddTest >> testTAddIfNotPresentWithNewElement [
 	oldSize := collection size.
 	elem := self element.
 	self deny: (collection includes: elem ).
-	
+
 	added := collection  addIfNotPresent: elem .
 	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
-	self assert: collection size equals: (oldSize + 1).
+	self assert: collection size equals: (oldSize + 1)
 ]
 
 { #category : #'tests - adding' }
@@ -92,7 +92,7 @@ TAddTest >> testTAddTwice [
 	collection := self collectionWithElement.
 	anElement := self element.
 	oldSize := collection size.
-	added := collection 
+	added := collection
 		add: anElement;
 		add: anElement.
 	self assert: added == anElement.	"test for identiy because #add: has not reason to copy its parameter."
@@ -107,7 +107,7 @@ TAddTest >> testTAddWithOccurrences [
 	anElement := self element.
 	oldSize := collection size.
 	added := collection add: anElement withOccurrences: 5.
-	
+
 	self assert: added == anElement.	"test for identiy because #add: has not reason to copy its parameter."
 	self assert: (collection includes: anElement).
 	self assert: collection size equals: (oldSize + 5)

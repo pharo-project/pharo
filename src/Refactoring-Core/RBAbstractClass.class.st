@@ -65,10 +65,11 @@ RBAbstractClass >> addInstanceVariable: aString [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> addMethod: aRBMethod [ 
+RBAbstractClass >> addMethod: aRBMethod [
+
 	self newMethods at: aRBMethod selector put: aRBMethod.
-	removedMethods notNil 
-		ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: []]
+	removedMethods ifNotNil: [ 
+		removedMethods remove: aRBMethod selector ifAbsent: [  ] ]
 ]
 
 { #category : #private }
@@ -749,12 +750,16 @@ RBAbstractClass >> superclassRedefines: aSelector [
 
 { #category : #'accessing - deprecated' }
 RBAbstractClass >> theMetaClass [
-	^ model metaclassNamed: self name
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass' 
+						-> '`@receiver classSide'.
+	^ self classSide
 ]
 
 { #category : #'accessing - deprecated' }
 RBAbstractClass >> theNonMetaClass [
-	^ model classNamed: self name
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass' 
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
 ]
 
 { #category : #'variable accessing' }

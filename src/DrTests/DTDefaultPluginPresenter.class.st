@@ -46,57 +46,31 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 	|group|
 	group := (CmCommandGroup named: 'Package tools') asSpecGroup.
 	group description: 'Commands related to packages list.'.
-	
-	DTPackagesCommand allSubclasses do: [:each | 
+
+	DTPackagesCommand allSubclasses do: [:each |
 		group register: (each forSpec context: presenterInstance) ].
-	
-	^group 
+
+	^group
 		beDisplayedAsGroup;
 		yourself
 ]
 
 { #category : #'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-
 	| commandGroup pluginCommands |
+
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
 		description: 'Commands related to result.';
-		register:
-			(DTResultBrowseCommand forSpec context: presenterInstance)
-				beHiddenWhenCantBeRun;
+		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
 		yourself.
+
 	pluginCommands := presenterInstance plugin
 		buildContextualMenuGroupWith: presenterInstance.
 	pluginCommands entries ifEmpty: [ ^ commandGroup ].
+
 	^ commandGroup
 		register: pluginCommands beDisplayedAsGroup;
 		yourself
-]
-
-{ #category : #layout }
-DTDefaultPluginPresenter class >> defaultLayout [
-
-	^ SpBoxLayout newTopToBottom 
-		add: (SpPanedLayout newLeftToRight
-		  add: (SpPanedLayout newLeftToRight
-				   add: (SpBoxLayout newTopToBottom
-						    add: #packagesList;
-						    yourself);
-				   add: (SpBoxLayout newTopToBottom
-						    add: #itemsList;
-						    yourself);
-				   yourself);
-		  add: (SpBoxLayout newTopToBottom
-				   add: #resultViewsDropList
-				   withConstraints: [ :constraints | constraints expand: false ];
-				   add: #resultLabel
-				   withConstraints: [ :constraints | 
-					   constraints height: self labelHeight ];
-				   add: #resultsList;
-				   yourself);
-		  yourself);
-		add: #startButton
-			withConstraints: [ :constraints | constraints width: self buttonWidth ]
 ]
 
 { #category : #actions }
@@ -104,7 +78,7 @@ DTDefaultPluginPresenter >> browseSelectedItem [
 	"Because of DTBrowseSelectedItem>>#canBeExecuted, we know there is a single item in the selection.
 	 Thus, we take the first one and browse it.
 	"
-	
+
 	self selectedItems first drTestsBrowse
 ]
 
@@ -114,45 +88,76 @@ DTDefaultPluginPresenter >> browseSelectedResult [
 	self resultSelected drTestsBrowse
 ]
 
-{ #category : #utilities }
+{ #category : #private }
 DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected: aInt [
-	^ String
-		streamContents: [ :s | 
-			s
-				<< nameOfItems;
-				nextPut: $(;
-				<< aInt asString;
-				<< ' selected):' ]
+
+	^ String streamContents: [ :stream |
+		stream
+			<< nameOfItems;
+			<< ' (';
+			<< aInt asString;
+			<< ' selected):' ]
 ]
 
 { #category : #initialization }
 DTDefaultPluginPresenter >> connectPresenters [
 
 	super connectPresenters.
-	
+
 	self resultViewsDropList
-		whenSelectedItemChangedDo: [ :resultTreeViewOrNil | 
+		whenSelectedItemChangedDo: [ :resultTreeViewOrNil |
 			resultTreeViewOrNil
 				ifNotNil: [ resultsList
-						roots: (resultTreeViewOrNil resultTreeFor: drTests pluginResult) subResults ] ].
+						roots: (resultTreeViewOrNil resultTreeFor: drTests pluginResult) subResults ] ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #layout }
+DTDefaultPluginPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		add: (SpPanedLayout newLeftToRight
+			add: (SpPanedLayout newLeftToRight
+		  		add: packagesList;
+				add: itemsList;
+				yourself);
+			add: (SpBoxLayout newTopToBottom
+				spacing: 5;
+				add: resultViewsDropList expand: false;
+				add: resultLabel expand: false;
+				add: resultsList;
+				yourself);
+		  yourself);
+		add: startButton expand: false;
+		yourself
+]
+
+{ #category : #accessing }
+DTDefaultPluginPresenter >> drTests [
+	^ drTests
+]
+
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
 	itemsList := self newFilterableListPresenter.
 	itemsList
+		displayIcon: [ :aClass | self iconNamed: aClass systemIconName  ];
+		displayColor: [ :aClass |
+			(self packagesSelected includes: aClass package)
+				ifTrue: [ self theme textColor ]
+				ifFalse: [ self theme classExtensionColor ] ];
 		help: 'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
 		sortingBlock: #name ascending;
 		displayBlock: [ :item | item name ];
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
 		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
+
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 
 	packagesList := self newFilterableListPresenter.
@@ -168,18 +173,18 @@ DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 DTDefaultPluginPresenter >> initializePresenters [
 
 	super initializePresenters.
-		
+
 	self
 		initializePackagesListAndLabel;
 		initializeItemsListAndLabel;
 		initializeResultsTreeAndLabel;
 		initializeResultViewsDropList.
-		
+
 	startButton := self newButton.
 	startButton action: [ drTests runPlugin ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializeResultViewsDropList [
 
 	resultViewsDropList := self newDropList.
@@ -188,17 +193,21 @@ DTDefaultPluginPresenter >> initializeResultViewsDropList [
 		display: [ :resultTreeView | resultTreeView name ]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 
 	resultLabel := self newLabel label: 'Results:'.
-	resultsList := self newTreeTable.
+	resultsList := self newTree.
 	resultsList
-		addColumn: (SpStringTableColumn evaluated: #drTestsName);
+		display: [ :node | node drTestsName ];
+		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		contextMenu: [
+			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
 
-	self resultTree: DTTreeNode empty.
+	resultsList outputActivationPort
+		transmitDo: [
+			(DTResultBrowseCommand forSpecContext: self) execute ]
 ]
 
 { #category : #accessing }
@@ -236,9 +245,15 @@ DTDefaultPluginPresenter >> resultSelected [
 
 { #category : #api }
 DTDefaultPluginPresenter >> resultTree: aResultGroup [
+	| roots |
 
-	aResultGroup
-		ifNotNil: [ resultsList roots: aResultGroup subResults ]
+	aResultGroup ifNil: [ ^ self ].
+	roots := aResultGroup subResults.
+	resultsList roots: roots.
+	roots withIndexDo: [ :each :index |
+		each shouldStartExpanded ifTrue: [
+			each name crTrace.
+			resultsList expandPath: { index } ] ]
 ]
 
 { #category : #accessing }
@@ -283,7 +298,7 @@ DTDefaultPluginPresenter >> startButton [
 
 { #category : #accessing }
 DTDefaultPluginPresenter >> subwidgetsToLock [
-	
+
 	^ { packagesList. itemsList. resultsList. startButton}
 ]
 
@@ -291,12 +306,13 @@ DTDefaultPluginPresenter >> subwidgetsToLock [
 DTDefaultPluginPresenter >> updateItemsListLabel [
 
 	itemsList label: (self
-			 buildLabelString: plugin secondListLabel
-			 numberOfItemsSelected: self selectedItems size)
+		 buildLabelString: plugin secondListLabel
+		 numberOfItemsSelected: self selectedItems size)
 ]
 
 { #category : #'private - updating' }
 DTDefaultPluginPresenter >> updatePackagesList [
+
 	packagesList unselectAll.
 	itemsList beEmpty.
 	packagesList items: plugin packagesAvailableForAnalysis.
@@ -308,11 +324,10 @@ DTDefaultPluginPresenter >> updatePackagesList [
 
 { #category : #'private - updating' }
 DTDefaultPluginPresenter >> updatePackagesListLabel [
-	self packagesList
-		label:
-			(self
-				buildLabelString: plugin firstListLabel
-				numberOfItemsSelected: self packagesSelected size)
+
+	self packagesList label: (self
+		buildLabelString: plugin firstListLabel
+		numberOfItemsSelected: self packagesSelected size)
 ]
 
 { #category : #initialization }
@@ -322,30 +337,33 @@ DTDefaultPluginPresenter >> updatePresenter [
 
 	self updatePackagesList.
 	self updateResultViewsDropList.
-	
+
 	startButton label: plugin startButtonLabel.
-	startButton help: plugin startButtonHelp.
+	startButton help: plugin startButtonHelp
 ]
 
 { #category : #updating }
 DTDefaultPluginPresenter >> updateResultLabel [
+
+	resultLabel styles copy
+		do: [ :each | resultLabel removeStyle: each ].
 	resultLabel
-		label: 'Results: ■';
-		color: lastResults backgroundColor
+		label: 'Results:';
+		addStyle: lastResults backgroundColorStyle
 ]
 
 { #category : #updating }
 DTDefaultPluginPresenter >> updateResultViewsDropList [
 	| newPragmas |
+
 	newPragmas := plugin resultTreeViews.
-	
 	(resultViewsDropList listItems = newPragmas
 		and: [ newPragmas isNotEmpty ])
-		ifTrue: [ 
+		ifTrue: [
 			"Trigger action attached to selection change."
 			resultViewsDropList selectedIndex: resultViewsDropList selectedIndex.
 			^ self ].
-	
+
 	self resultViewsDropList selectedItem
 		ifNotNil: [ self resultViewsDropList resetSelection ].
 	self resultViewsDropList items: newPragmas.
@@ -355,18 +373,19 @@ DTDefaultPluginPresenter >> updateResultViewsDropList [
 
 { #category : #updating }
 DTDefaultPluginPresenter >> updateWithResults: someResults [
+
 	lastResults := someResults.
 
-	self resultTree: lastResults buildTreeForUI.
 	self updateResultViewsDropList.
 	self updateResultLabel.
-	resultsList
-		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+	self resultTree: lastResults buildTreeForUI.
+	resultsList contextMenu: [
+		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
 ]
 
 { #category : #private }
 DTDefaultPluginPresenter >> whenItemsSelectionChanged: itemsSelected [
-	
+
 	self updateItemsListLabel.
 	drTests updateSwitchButton: itemsSelected
 ]

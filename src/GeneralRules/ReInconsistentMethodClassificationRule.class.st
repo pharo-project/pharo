@@ -17,7 +17,7 @@ ReInconsistentMethodClassificationRule class >> checksMethod [
 { #category : #accessing }
 ReInconsistentMethodClassificationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'InconsistentMethodClassificationRule'
 ]
 
@@ -28,16 +28,16 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 	ownerProtocol ifNil: [ ^ self ].
 	((#('as yet unclassified' 'deprecation') includes: ownerProtocol)
 				or: [ ownerProtocol first = $*	 ]) ifTrue: [ ^ self ].
-	
+
 	aMethod methodClass superclass ifNotNil: [ :superclass |
 			(superclass lookupSelector: aMethod selector) ifNotNil: [ :superMethod |
 				| superProtocol |
 				superProtocol := superMethod protocol.
-				(superProtocol isNil or: [ 
-			 	 superProtocol == #'as yet unclassified' or: [ 
-			 	 superProtocol first = $*	 ] ]) ifFalse: [ 
+				(superProtocol isNil or: [
+			 	 superProtocol == #'as yet unclassified' or: [
+			 	 superProtocol first = $*	 ] ]) ifFalse: [
 					ownerProtocol ~= superProtocol ifTrue: [
-        aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ]] ] ].
+        aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ]] ] ]
 ]
 
 { #category : #helpers }
@@ -45,7 +45,7 @@ ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 	| supercategory |
 	supercategory := (aMethod methodClass superclass lookupSelector:
 		                  aMethod selector) protocol.
-		
+
 	^ (ReRefactoringCritique
 		   withAnchor: (self anchorFor: aMethod)
 		   by: self) refactoring: (RBMethodProtocolTransformation

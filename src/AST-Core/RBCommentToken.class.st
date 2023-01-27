@@ -1,3 +1,6 @@
+"
+First class representation of a scanned comment
+"
 Class {
 	#name : #RBCommentToken,
 	#superclass : #RBValueToken,
@@ -11,7 +14,7 @@ Class {
 RBCommentToken class >> value: aString start: aStartPosition stop: aStopPosition [
 	^self new value: aString;
 		   		 start: aStartPosition;
-				 stop: aStopPosition.
+				 stop: aStopPosition
 ]
 
 { #category : #accessing }

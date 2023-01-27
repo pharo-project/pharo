@@ -21,8 +21,8 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 	crit := ReRefactoringCritique
 		withAnchor: (self anchorFor: aNode)
 		by: self.
-		
-	crit	
+
+	crit
 		tinyHint: aNode name;
 		refactoring: (
 			RBRenameArgumentOrTemporaryRefactoring
@@ -30,7 +30,7 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 				to: aNode name uncapitalized
 				in: aNode methodNode methodClass
 				selector: aNode methodNode selector).
-				
+
 	^ crit
 ]
 

@@ -7,16 +7,16 @@ Class {
 { #category : #running }
 RegisteredClassAnnotationsTest >> setUp [
 	super setUp.
-	
+
 	ClassAnnotation resetCache
 ]
 
 { #category : #running }
 RegisteredClassAnnotationsTest >> tearDown [
-		
+
 	ClassAnnotation resetCache.
-	
-	super tearDown.
+
+	super tearDown
 ]
 
 { #category : #tests }
@@ -41,7 +41,7 @@ RegisteredClassAnnotationsTest >> testAreEmptyForUnusedAnnotation [
 
 	| actual |
 	actual := ClassAnnotationUnusedExample registeredInstances.
-	
+
 	self assert: actual isEmpty
 ]
 
@@ -50,9 +50,9 @@ RegisteredClassAnnotationsTest >> testAreSortedByPriority [
 
 	| annotations expected |
 	annotations := ClassAnnotationExampleWithPriority registeredInstances.
-	
+
 	self assert: annotations size equals: 3.
-	
+
 	expected := annotations sorted: #priority descending.
 	self assert: annotations asArray equals: expected asArray
 ]
@@ -63,7 +63,7 @@ RegisteredClassAnnotationsTest >> testCanBeEnumerated [
 	| enumerated |
 	enumerated := OrderedCollection new.
 	ClassAnnotationExample1 registeredInstancesDo: [:each | enumerated add: each].
-	
+
 	self assert: enumerated asArray equals: ClassAnnotationExample1 registeredInstances asArray
 ]
 
@@ -72,7 +72,7 @@ RegisteredClassAnnotationsTest >> testCanBeQueriedForConcreteClass [
 
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstancesFor: ClassWithThreeAnnotations.
-	
+
 	self assert: annotations size equals: 2.
 	self assert: (annotations collect: #annotatedClass as: Set) equals: {ClassWithThreeAnnotations} asSet
 ]
@@ -82,14 +82,14 @@ RegisteredClassAnnotationsTest >> testIncludeCopiesForEachSubclassOfOriginDeclar
 
 	| annotations |
 	annotations := ClassAnnotationExample3 registeredInstances.
-	
+
 	self assert: (annotations anySatisfy: [ :each | each annotatedClass = SubclassWithOnlyInheritedAnnotation ])
 ]
 
 { #category : #tests }
 RegisteredClassAnnotationsTest >> testIncludeForbiddenClassesAsSpecialForbiddenAnnotations [
 	| allForbidden forbidden actualAnnotation |
-	
+
 	allForbidden := ForbiddenClassAnnotation registeredInstancesFor: ClassWithForbiddenAnnotationExample.
 	forbidden := allForbidden detect: [:each | each declarationSelector = #forbiddenAnnotation].
 	actualAnnotation := forbidden actualAnnotation.
@@ -101,7 +101,7 @@ RegisteredClassAnnotationsTest >> testIncludeInstancesFromAllAnnotatingMethodsOf
 
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstances.
-	
+
 	self assert: annotations size equals: 2.
 	self assert: (annotations collect: #class as: Set) equals: {ClassAnnotationExample1} asSet
 ]
@@ -109,9 +109,9 @@ RegisteredClassAnnotationsTest >> testIncludeInstancesFromAllAnnotatingMethodsOf
 { #category : #tests }
 RegisteredClassAnnotationsTest >> testNotIncludeForbiddenClassesAsBrokenAnnotations [
 	| broken |
-	
+
 	broken := BrokenClassAnnotation registeredInstancesFor: ClassWithForbiddenAnnotationExample.
-	broken 
+	broken
 		detect: [:each | each declarationSelector = #forbiddenAnnotation]
 		ifFound: [ :ann | self assert: false description: 'forbidden annotation should not be broken' ]
 ]
@@ -122,6 +122,6 @@ RegisteredClassAnnotationsTest >> testNotIncludeInstancesAnnotatingForbiddenClas
 	So any annotating methods which define it should never register their instances"
 	| annotations |
 	annotations := ForbiddenClassAnnotationExample registeredInstances.
-	
+
 	self assert: annotations isEmpty
 ]

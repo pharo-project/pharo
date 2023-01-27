@@ -137,7 +137,7 @@ ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
 
 { #category : #'instance creation' }
 ClyQueryViewMorph class >> for: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 
@@ -148,17 +148,16 @@ ClyQueryViewMorph class >> settingsDragAndDropDelayOn: aBuilder [
 		parent: #Calypso;
 		default: 1500;
 		label: 'DragAndDrop delay (ms)';
-		description: 'Delay to extend the list of item in the target of a drag and drop. 
+		description: 'Delay to extend the list of item in the target of a drag and drop.
 For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
 Expects an integer giving the number of miliseconds';
-		target: self.
-		
+		target: self
 ]
 
 { #category : #controlling }
 ClyQueryViewMorph >> activateFilterWith: patternString [
-	
-	self initiateUIChangeBy: [ 
+
+	self initiateUIChangeBy: [
 		table activateFilterWith: patternString.
 		"Following update forces new selection instance which will be based on filtered data source.
 		Selection always should be bound to actual data source of table"
@@ -213,17 +212,17 @@ ClyQueryViewMorph >> changesWasInitiatedByUser [
 
 { #category : #controlling }
 ClyQueryViewMorph >> closeDataSource [
-	 
-	table initialDataSource ifNil: [ ^self dataSource close ].	
-	
-	"In filter mode initial data source is the main original data source. 
+
+	table initialDataSource ifNil: [ ^self dataSource close ].
+
+	"In filter mode initial data source is the main original data source.
 	It manages filtered data source by itself.
-	So we do not need to close it manually"	
+	So we do not need to close it manually"
 	table cleanupFilter.
-	table initialDataSource close.		
+	table initialDataSource close.
 	"We could not reset to nil because some filter process of table can be spawned.
 	And it will fail if initialDataSource is nil.
-	Normally process should be terminated if table is closed 
+	Normally process should be terminated if table is closed
 	but it is not done in fast table"
 ]
 
@@ -235,8 +234,8 @@ ClyQueryViewMorph >> createCommandContext [
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> createDragPassengerFor: aSelection [
 	| context |
-	context := self createSelectionContextOf: aSelection. 
-	
+	context := self createSelectionContextOf: aSelection.
+
 	^CmdDragAndDropActivation createDragPassengerInContext: context
 ]
 
@@ -259,9 +258,9 @@ ClyQueryViewMorph >> dataSource [
 { #category : #accessing }
 ClyQueryViewMorph >> dataSource: aDataSource [
 
-	self changeStateBy: [ 
-		self closeDataSource.	
-		self setUpDataSource: aDataSource.	
+	self changeStateBy: [
+		self closeDataSource.
+		self setUpDataSource: aDataSource.
 		self refreshTable
 	]
 ]
@@ -280,8 +279,8 @@ ClyQueryViewMorph >> dataSourceClass: aClass [
 ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
 	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
-	
-	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy | 
+
+	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy |
 		strategy decorateMainTableCell: anItemCellMorph inContext: context]
 ]
 
@@ -289,8 +288,8 @@ ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem 
 ClyQueryViewMorph >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
 	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
-	
-	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy | 
+
+	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy |
 		strategy decorateTableCell: anItemCellMorph inContext: context]
 ]
 
@@ -314,13 +313,13 @@ ClyQueryViewMorph >> displayMainColumnBy: cellAndItemBlock [
 ClyQueryViewMorph >> dropPassenger: aPassanger at: aDataSourceItem [
 	| context |
 	context := self createSelectionContextOf: aDataSourceItem asSelection.
-	
+
 	^aPassanger dropInContext: context
 ]
 
 { #category : #controlling }
 ClyQueryViewMorph >> enableCollapsingOfPreexpandedItems [
-	dataSourceClass := ClyExpandedDataSource.
+	dataSourceClass := ClyExpandedDataSource
 ]
 
 { #category : #controlling }
@@ -350,8 +349,8 @@ ClyQueryViewMorph >> enableFilterUsing: aStringPattern [
 { #category : #controlling }
 ClyQueryViewMorph >> enableFilterWithFactory: aTableFilterFactory [
 
-	table 
-		enableFilter: aTableFilterFactory; 
+	table
+		enableFilter: aTableFilterFactory;
 		explicitFunction
 ]
 
@@ -360,10 +359,10 @@ ClyQueryViewMorph >> ensureSelectedItem [
 
 	| selectionIndex |
 	self selection isEmpty ifFalse: [ ^self ].
-	self dataSource isEmpty ifTrue: [ ^self ]. 
-	
+	self dataSource isEmpty ifTrue: [ ^self ].
+
 	selectionIndex := 1.
-	(desiredSelection notNil and: [desiredSelection isEmpty not]) ifTrue: [ 
+	(desiredSelection notNil and: [desiredSelection isEmpty not]) ifTrue: [
 		selectionIndex := desiredSelection lastSelectedItem globalPosition
 									min: self dataSource numberOfRows ].
 	self selection selectItems: {self dataSource elementAt: selectionIndex}.
@@ -383,7 +382,7 @@ ClyQueryViewMorph >> ensureVisibleSelection [
 	self selection isEmpty ifFalse: [ ^self ].
 
 	"following sentence is required to make first item selected in cases
-	where browser is just opened and automatic item visibility 
+	where browser is just opened and automatic item visibility
 	can be wrongly computed"
 	UIManager default defer: [self selection ensureVisibleLastItem]
 ]
@@ -395,8 +394,8 @@ ClyQueryViewMorph >> filterField [
 
 { #category : #queries }
 ClyQueryViewMorph >> findAllItemsBy: aBlockWithDataSource [
-	self 
-		findAllItemsBy: aBlockWithDataSource 
+	self
+		findAllItemsBy: aBlockWithDataSource
 		stopLookupWhen: [:result | false "by default we always look into both data source if exists"]
 ]
 
@@ -404,14 +403,14 @@ ClyQueryViewMorph >> findAllItemsBy: aBlockWithDataSource [
 ClyQueryViewMorph >> findAllItemsBy: aBlockWithDataSource stopLookupWhen: stopCondition [
 	| result fullResult |
 	result := aBlockWithDataSource value: self dataSource.
-	self isFilterActive ifFalse: [^result].	
+	self isFilterActive ifFalse: [^result].
 	(stopCondition value: result) ifTrue: [ ^result ].
 	"In case if view is in filter mode we should try to find items in full original data source.
-	If it will be different result then we should reset filter. 
+	If it will be different result then we should reset filter.
 	Idea that if view is able to find items then they should be accessible/visible in table.
 	And view must find items in original data source in case if filter do not include them"
 	fullResult := aBlockWithDataSource value: table initialDataSource.
-	result size = fullResult size ifTrue: [ 
+	result size = fullResult size ifTrue: [
 		"if full lookup produces same result as filtered data source
 		then no need for full mode switch"
 		^result ].
@@ -436,8 +435,8 @@ ClyQueryViewMorph >> findItemsWhere: conditionBlock [
 { #category : #queries }
 ClyQueryViewMorph >> findItemsWith: actualObjects [
 
-	^self 
-		findAllItemsBy: [:ds | ds findItemsWith: actualObjects] 
+	^self
+		findAllItemsBy: [:ds | ds findItemsWith: actualObjects]
 		stopLookupWhen: [:result | result size = actualObjects size]
 ]
 
@@ -453,7 +452,7 @@ ClyQueryViewMorph >> grabSelectionAt: rowIndex [
 ]
 
 { #category : #testing }
-ClyQueryViewMorph >> hasKeyboardFocus [ 
+ClyQueryViewMorph >> hasKeyboardFocus [
 	^super hasKeyboardFocus or: [ table hasKeyboardFocus  ]
 ]
 
@@ -506,10 +505,10 @@ ClyQueryViewMorph >> initialize [
 	self changeTableLayout.
 	self initializeTable.
 	self whenDoubleClickDo: [ self triggerDoubleClickCommands ].
-	
+
 	shouldRestoreSelection := true.
 	changesWasInitiatedByUser := true.
-	treeStructure := #().	
+	treeStructure := #().
 	self setUpDataSource: ClyDataSource empty
 ]
 
@@ -522,6 +521,7 @@ ClyQueryViewMorph >> initializeTable [
 	table dragEnabled: true.
 	table dropEnabled: true.
 	table onAnnouncement: FTSelectionChanged send: #selectionChanged to: self.
+	table onAnnouncement: FTSelectionRejected send: #selectionRejected: to: self.
 	table addColumn: ClyMainTableColumn default.
 	table vResizing: #spaceFill.
 	table hResizing: #spaceFill.
@@ -533,7 +533,7 @@ ClyQueryViewMorph >> initiateUIChangeBy: aBlock [
 	"We need to distingish UI state changes produced by user or by tool itself.
 	This method setup special flag which shows that all following operations are performed by tool.
 	So in any method we could check that it was initiated by user or not"
-	
+
 	changesWasInitiatedByUser ifFalse: [ ^aBlock value ].
 	changesWasInitiatedByUser := false.
 	aBlock ensure: [ changesWasInitiatedByUser := true ]
@@ -542,20 +542,20 @@ ClyQueryViewMorph >> initiateUIChangeBy: aBlock [
 { #category : #testing }
 ClyQueryViewMorph >> isFilterActive [
 	table initialDataSource ifNil: [ ^false ].
-	
+
 	^self dataSource ~~ table initialDataSource
 ]
 
 { #category : #testing }
 ClyQueryViewMorph >> isFilterChanged [
-	"when user filters the table in the filter field 
+	"when user filters the table in the filter field
 	the table resets selection and sets the new data source.
-	But existing selection will points to another original data source 
+	But existing selection will points to another original data source
 	which allows detect this event in current fast table logic"
-	table initialDataSource ifNil: [ 
+	table initialDataSource ifNil: [
 		"it means that filter is not used by user"
-		^false ]. 
-	"only way to change data source of table without affecting selection is by using filter 
+		^false ].
+	"only way to change data source of table without affecting selection is by using filter
 	which set up new filtered data source almost on every key stroke"
 	^selection rootDataSource ~~ self dataSource
 ]
@@ -563,17 +563,16 @@ ClyQueryViewMorph >> isFilterChanged [
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> isReadyToExpandForDrop: aSelectedItem [
 	"/!\ Although the selector sounds like a tester, it is modifying the state upon returning true/
-	
+
 	Current limitation:
 	- You have to move to send another dragAndDrop event so the time can be checked again"
 	| newFocus |
 
-	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem) 
+	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem)
 		ifTrue:[ nil ]
 		ifFalse: [ aSelectedItem ].
-	
+
 	^ self userNowFocusesOn: newFocus
-	
 ]
 
 { #category : #accessing }
@@ -587,12 +586,12 @@ ClyQueryViewMorph >> itemCount [
 ]
 
 { #category : #'event handling' }
-ClyQueryViewMorph >> itemsChangedIn: aDataSource [ 
+ClyQueryViewMorph >> itemsChangedIn: aDataSource [
 	| selectionWasEmpty |
 	self refreshAsyncState.
 	selectionWasEmpty := 	self selection isEmpty.
-		
-	browser ignoreNavigationDuring: [ 
+
+	browser ignoreNavigationDuring: [
 		self updateSelectedItemsOf: aDataSource.
 		selectionWasEmpty ifTrue: [self ensureSelectedItemIfNeeded]].
 	browser itemsChanged
@@ -613,12 +612,12 @@ ClyQueryViewMorph >> mainColumn [
 
 { #category : #'menu building' }
 ClyQueryViewMorph >> menuColumn: column row: rowIndex [
-	
+
 	| menuSelection context |
 	menuSelection := self grabSelectionAt: rowIndex.
-		
+
 	context := self createSelectionContextOf: menuSelection.
-	
+
 	^CmdContextMenuActivation buildContextMenuFor: self inContext: context
 ]
 
@@ -647,13 +646,13 @@ ClyQueryViewMorph >> query [
 
 { #category : #'tree support' }
 ClyQueryViewMorph >> queryToExpand: aDataSourceItem ifAbsent: absentBlock [
-	
+
 	| itemTypeAndQuerySelector |
-	itemTypeAndQuerySelector := treeStructure 
-		detect: [:each | aDataSourceItem isBasedOnItemType: each key ] 
+	itemTypeAndQuerySelector := treeStructure
+		detect: [:each | aDataSourceItem isBasedOnItemType: each key ]
 		ifNone: absentBlock.
-	^aDataSourceItem type 
-		perform: itemTypeAndQuerySelector value 
+	^aDataSourceItem type
+		perform: itemTypeAndQuerySelector value
 		with: aDataSourceItem actualObject
 		with: self dataSource queryEnvironment
 ]
@@ -661,8 +660,8 @@ ClyQueryViewMorph >> queryToExpand: aDataSourceItem ifAbsent: absentBlock [
 { #category : #initialization }
 ClyQueryViewMorph >> refreshAsyncState [
 	(self findA: ClyActivityAnimationIconMorph) ifNotNil: #delete.
-	
-	self areItemsLoaded ifFalse: [ 
+
+	self areItemsLoaded ifFalse: [
 		self addMorph: (ClyActivityAnimationIconMorph label: 'loading items') ]
 ]
 
@@ -679,7 +678,7 @@ ClyQueryViewMorph >> requestNavigationBy: aBlock [
 { #category : #controlling }
 ClyQueryViewMorph >> restoreSelectedItems [
 
-	self initiateUIChangeBy: [ 
+	self initiateUIChangeBy: [
 		selection restoreTableSelection].
 	highlighting restoreTableSelection
 ]
@@ -690,7 +689,7 @@ ClyQueryViewMorph >> selectLastItem [
 	| rowsCount |
 	rowsCount := self dataSource numberOfRows.
 	rowsCount = 0 ifTrue: [ ^self ].
-	
+
 	self selection selectItems: {self dataSource elementAt: rowsCount}.
 	UIManager default defer: [self selection ensureVisibleLastItem]
 ]
@@ -700,10 +699,10 @@ ClyQueryViewMorph >> selection [
 	"following logic fixes the case when filter is applied on table without selected items.
 	In that case selectionChanged is not triggered and existing selection is not updated.
 	It continue points to the old data source from the last selection update"
-	self isFilterChanged ifTrue: [ 
+	self isFilterChanged ifTrue: [
 		self initiateUIChangeBy: [self updateSelection] ].
 	selection updateIfDirty.
-	
+
 	^selection
 ]
 
@@ -712,23 +711,36 @@ ClyQueryViewMorph >> selectionChanged [
 	"This method is called by two reasons:
 		- user selects the item
 		- user typed the filter (table is reset selection in current Fast table logic)
-	The isFilterChanged condition handle last case 
+	The isFilterChanged condition handle last case
 	when we want to keep selection on filtered data source if it exists.
 	The main complexity is how and when update desired selection instance
 	which is performed by #updateSelectionForNewFilter and #updateSelection methods"
 	| selectionIsChanged |
 	selectionIsChanged := true.
-	self changeStateBy: [		
-		self isFilterChanged ifTrue: [ 
+	self changeStateBy: [
+		self isFilterChanged ifTrue: [
 			selectionIsChanged := self updateSelectionForNewFilter.
-			selectionIsChanged ifFalse: [ ^self ] "No selection change happens"].		
+			selectionIsChanged ifFalse: [ ^self ] "No selection change happens"].
 		selectionIsChanged ifTrue: [ self updateSelection].
 		navigationSelector ifNotNil: [
-			browser 
-				perform: navigationSelector 
+			browser
+				perform: navigationSelector
 				withEnoughArguments: {self selection}].
 	].
 	self triggerClickCommands
+]
+
+{ #category : #'event handling' }
+ClyQueryViewMorph >> selectionRejected: announcement [
+	"Called when a selection is performed outside the table bounds"
+	announcement direction = #left ifTrue: [
+		self selection items do: [ :item | item isExpanded ifTrue: [ item collapse ] ].
+		self update.
+		^ self
+	].
+	announcement direction = #right ifTrue: [
+		self selection items do: [ :item | [ item expand ] on: ClyNoChildrenError do: ["ignored"] ]
+	]
 ]
 
 { #category : #initialization }
@@ -736,10 +748,10 @@ ClyQueryViewMorph >> setUpDataSource: aDataSource [
 	table dataSource: aDataSource.
 	table initialDataSource: nil. "We should always cleanup initial data source when set up new one. And it is required to restart filter process if it was terminated before"
 	highlighting := ClyHighlightingSelection fromRoot: aDataSource items: #().
-	highlighting restoreTableSelection. 
+	highlighting restoreTableSelection.
 	"it is important to reset highligting before selection restore because desired selection could lead to new highlighting items"
-	selection := self newSelectionWith: #().	
-	aDataSource openOn: self.	
+	selection := self newSelectionWith: #().
+	aDataSource openOn: self.
 	self showDesiredSelection.
 	self refreshAsyncState.
 	self ensureSelectedItemIfNeeded
@@ -747,10 +759,10 @@ ClyQueryViewMorph >> setUpDataSource: aDataSource [
 
 { #category : #controlling }
 ClyQueryViewMorph >> showDesiredSelection [
-	
+
 	self initiateUIChangeBy: [
 		desiredSelection ifNil: [ ^selection beEmpty ].
-		
+
 		desiredSelection restoreCurrentSelection: selection]
 ]
 
@@ -759,7 +771,7 @@ ClyQueryViewMorph >> showQueries: queries as: aQueryResult [
 
 	| fullQuery |
 	fullQuery := ClyQuery unionFrom: queries as: aQueryResult.
-	
+
 	self showQuery: fullQuery
 ]
 
@@ -767,10 +779,10 @@ ClyQueryViewMorph >> showQueries: queries as: aQueryResult [
 ClyQueryViewMorph >> showQuery: aQuery [
 
 	| dataSource |
-	self initiateUIChangeBy: [ 
+	self initiateUIChangeBy: [
 		dataSource := self dataSourceClass on: aQuery.
 		self dataSource: dataSource.
-		self ensureSelectedItemIfNeeded].
+		self ensureSelectedItemIfNeeded]
 ]
 
 { #category : #testing }
@@ -799,11 +811,11 @@ ClyQueryViewMorph >> showsItemsOfType: itemTypeClass [
 
 { #category : #accessing }
 ClyQueryViewMorph >> snapshotState [
-	
+
 	| dataSourceSnapshot |
 	dataSourceSnapshot := selection rootDataSource copyForBrowserStateSnapshot.
-	
-	^ClyQueryViewState new 
+
+	^ClyQueryViewState new
 		dataSource: dataSourceSnapshot;
 		selection: (selection copyForBrowserStateSnapshotOf: dataSourceSnapshot)
 ]
@@ -862,12 +874,12 @@ ClyQueryViewMorph >> update [
 ClyQueryViewMorph >> updateSelectedItemsOf: aDataSource [
 
 	| actualSelectionChanged |
-	self initiateUIChangeBy: [ 
+	self initiateUIChangeBy: [
 		actualSelectionChanged := selection updateItemsWhichBelongsTo: aDataSource.
 		highlighting updateItemsWhichBelongsTo: aDataSource.
 		desiredSelection ifNotNil: [
 			desiredSelection updateItemsWhichBelongsTo: aDataSource.
-			actualSelectionChanged := actualSelectionChanged 
+			actualSelectionChanged := actualSelectionChanged
 				| (desiredSelection restoreCurrentSelectionAfterUpdate: selection)].
 		^actualSelectionChanged]
 ]
@@ -896,13 +908,13 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 	which is true when filtered data source does not include selected items"
 	| oldSelection |
 	oldSelection := selection.
-	
-	self initiateUIChangeBy: [ 
+
+	self initiateUIChangeBy: [
 		self updateSelection.
 		(desiredSelection notNil and: [ desiredSelection isEmpty not ]) ifTrue: [
 			"We should never restore empty selection when filter was changed"
 			desiredSelection restoreCurrentSelection: selection]].
-	
+
 	^(selection isSameAs: oldSelection) not
 ]
 
@@ -911,7 +923,7 @@ ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	"if this is true, then we're not ready to expand, and we do not want to update the time."
 	(targetDropItem isNotNil and: [ aSelectedItem isNotNil
 		and: [ targetDropItem browserItem = aSelectedItem browserItem ]]) ifTrue: [ ^ false ].
-	
+
 	targetDropItem := aSelectedItem.
 	hoverOverDropItemStartTime := Time microsecondClockValue.
 	"new focus, we do not expand"
@@ -921,10 +933,10 @@ ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	| context |
-	 
+
 	context := self createSelectionContextOf: dropTargetItem asSelection.
 	(aPassenger canBeDroppedInContext: context) ifFalse:[ ^ false ].
-	
+
 	"if we are able to drop, we always return true.
 	However, the rest is guarded to enable expansion"
 	dropTargetItem hasChildren ifFalse: [ ^ true ].

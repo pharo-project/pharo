@@ -65,7 +65,8 @@ BitmapFillStyle >> form: aForm [
 
 { #category : #testing }
 BitmapFillStyle >> isBitmapFill [
-	^true
+
+	^ true
 ]
 
 { #category : #testing }

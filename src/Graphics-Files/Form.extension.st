@@ -15,7 +15,7 @@ Form class >> fromBase64String: aBase64EncodedString [
 	"Convenient method to instantiate a Form from an image content encoded in base64 (used to store image data in a method for example".
 	"Encoded string can be obtained with:
 	(Base64MimeConverter mimeEncode: 'picture.png' asFileReference binaryReadStream) contents."
-	
+
 	^ self fromBinaryStream: aBase64EncodedString base64Decoded asByteArray readStream
 ]
 
@@ -35,18 +35,18 @@ Form class >> fromBinaryStream: aBinaryStream [
 ]
 
 { #category : #'*Graphics-Files' }
-Form class >> fromFileNamed: fileName [ 
+Form class >> fromFileNamed: fileName [
 	"Read a Form or ColorForm from the given file."
-	
-	^ fileName asFileReference 
+
+	^ fileName asFileReference
 			binaryReadStreamDo: [ :in | self fromBinaryStream: in ]
 ]
 
 { #category : #'*Graphics-Files-FileRegistry' }
-Form class >> openImageInWindow: fullName [ 
+Form class >> openImageInWindow: fullName [
 	"Handle five file formats: GIF, JPG, PNG, Form storeOn: (run coded), and
 	BMP. Fail if file format is not recognized."
-	
+
 	| image |
 	image := self fromFileNamed: fullName.
 	(ImageMorph withForm: image) openInWorld
@@ -68,33 +68,33 @@ Form >> readNativeResourceFrom: byteStream [
 ]
 
 { #category : #'*Graphics-Files' }
-Form >> readResourceFrom: aStream [ 
+Form >> readResourceFrom: aStream [
 	"Store a resource representation of the receiver on aStream.
 	Must be specific to the receiver so that no code is filed out."
 
 	| bitsSize msb |
-	(aStream next: 4) asString = self resourceTag 
-		ifFalse: 
+	(aStream next: 4) asString = self resourceTag
+		ifFalse:
 			[aStream position: aStream position - 4.
 			^self readNativeResourceFrom: aStream].
 	width := aStream nextNumber: 4.
 	height := aStream nextNumber: 4.
 	depth := aStream nextNumber: 4.
 	bitsSize := aStream nextNumber: 4.
-	bitsSize = 0 
-		ifFalse: 
+	bitsSize = 0
+		ifFalse:
 			[bits := aStream next: bitsSize.
 			^self].
 	msb := (aStream nextNumber: 4) = 1.
 	bitsSize := aStream nextNumber: 4.
 	bits := Bitmap new: self bitsSize.
-	(Form 
+	(Form
 		extent: width @ height
 		depth: depth
 		bits: (aStream next: bitsSize * 4)) displayOn: self.
-	msb = EndianDetector isBigEndian 
-		ifFalse: 
-			[Bitmap 
+	msb = EndianDetector isBigEndian
+		ifFalse:
+			[Bitmap
 				swapBytesIn: bits
 				from: 1
 				to: bits size]
@@ -109,8 +109,8 @@ Form >> resourceTag [
 Form class >> serviceImageAsBackground [
 	"Answer a service for setting the desktop background from a given graphical file's contents"
 	<formService>
-	^ SimpleServiceEntry 
-		provider: self 
+	^ SimpleServiceEntry
+		provider: self
 		label: 'Use graphic as background'
 		selector: #setBackgroundFromImageFileNamed:
 		description: 'Use the graphic as the background for the desktop'
@@ -121,8 +121,8 @@ Form class >> serviceImageAsBackground [
 Form class >> serviceOpenImageInWindow [
 	"Answer a service for opening a graphic in a window"
 	<formService>
-	^ SimpleServiceEntry 
-		provider: self 
+	^ SimpleServiceEntry
+		provider: self
 		label: 'Open graphic in a window'
 		selector: #openImageInWindow:
 		description: 'Open a graphic file in a window'
@@ -134,12 +134,12 @@ Form class >> services [
 	"Defines what options are available when a user drags and drop an image file (jpeg, png...) onto the pharo image. These options are defined by methods with the #formService pragma on this class."
 	| services |
 	services := OrderedCollection new.
-	(Pragma allNamed: #formService in: self class) do: [:pragma | 
-		pragma method selector isUnary ifTrue: [  
+	(Pragma allNamed: #formService in: self class) do: [:pragma |
+		pragma method selector isUnary ifTrue: [
 			services add: (self perform: (pragma method selector))
 		]
 	].
-	^ services asArray.
+	^ services asArray
 ]
 
 { #category : #'*Graphics-Files-FileRegistry' }
@@ -162,7 +162,7 @@ Form >> storeResourceOn: aStream [
 		[aStream nextNumber: 4 put: 0. "tag"
 		aStream nextNumber: 4 put: (EndianDetector isBigEndian ifTrue:[1] ifFalse: [0])].
 	aStream nextNumber: 4 put: bits size.
-	aStream nextPutAll: bits.
+	aStream nextPutAll: bits
 ]
 
 { #category : #'*Graphics-Files' }
@@ -171,7 +171,7 @@ Form >> writeBMPfileNamed: fName [  "Display writeBMPfileNamed: 'display.bmp'"
 ]
 
 { #category : #'*Graphics-Files' }
-Form >> writeJPEGfileNamed: fileName [ 
+Form >> writeJPEGfileNamed: fileName [
 	"Write a JPEG file to the given filename using default settings"
 
 	self writeJPEGfileNamed: fileName progressive: false
@@ -202,6 +202,6 @@ Form >> writeOnMovie: file [
 ]
 
 { #category : #'*Graphics-Files' }
-Form >> writePNGFileNamed: fileName [  
+Form >> writePNGFileNamed: fileName [
 	PNGReadWriter putForm: self onFileNamed: fileName
 ]

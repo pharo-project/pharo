@@ -10,26 +10,26 @@ Class {
 { #category : #printing }
 ExtendedDatePrinter >> printDate: aDate format: formatArray on: aStream [
 
-	"Print a description of aDate on aStream using the format 
-	denoted the argument, formatArray: 
-	
-		#(item item item sep monthfmt yearfmt twoDigits) 
-	
-		items: 1=day 2=month 3=year will appear in the order given, 
-	
-		separated by sep which is either an ASCII code or character. 
-	
-		monthFmt: 1=09 2=Sep 3=September 
-	
-		yearFmt: 1=1996 2=96 
-	
-		digits: (missing or)1=9 2=09. 
-	
+	"Print a description of aDate on aStream using the format
+	denoted the argument, formatArray:
+
+		#(item item item sep monthfmt yearfmt twoDigits)
+
+		items: 1=day 2=month 3=year will appear in the order given,
+
+		separated by sep which is either an ASCII code or character.
+
+		monthFmt: 1=09 2=Sep 3=September
+
+		yearFmt: 1=1996 2=96
+
+		digits: (missing or)1=9 2=09.
+
 	See the examples in printOn: and mmddyy"
 	| day month year twoDigits element monthFormat |
 	aDate dayMonthYearDo: [ :d :m :y | day := d. month := m. year := y ].
 	twoDigits := formatArray size > 6 and: [ (formatArray at: 7) > 1 ].
-	1 to: 3 do:  [ :i | 
+	1 to: 3 do:  [ :i |
 		element := formatArray at: i.
 		element = 1
 			ifTrue: [

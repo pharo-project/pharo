@@ -8,6 +8,21 @@ SystemWindow >> basicTaskThumbnailOfSize: thumbExtent [
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
+SystemWindow >> canBeMovedToLeft [
+	
+	
+	self worldTaskbar ifNil: [ ^ false ].
+	^ self worldTaskbar canMoveLeft: self.
+]
+
+{ #category : #'*Morphic-Widgets-Taskbar' }
+SystemWindow >> canBeMovedToRight [
+
+	self worldTaskbar ifNil: [ ^ false ].
+	^ self worldTaskbar canMoveRight: self.
+]
+
+{ #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> isTaskbarPresent [
 	"Answer whether there is a taskbar in the world."
 
@@ -110,7 +125,7 @@ SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
-	| menu theme submenu  |
+	| menu theme submenu  moveSubmenu |
 	theme :=  self theme.	
 	menu := theme newMenuIn: self for: self.
 	
@@ -146,11 +161,36 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		
 	menu addLine.
 
+	moveSubmenu := theme newMenuIn: self for: self.
+	menu
+		add: 'Move'
+		icon: (self iconNamed: #blank)
+		subMenu: moveSubmenu.
+	moveSubmenu
+		addToggle: 'Move left' translated
+		target: self
+		selector: #taskbarMoveLeft
+		getStateSelector: nil
+		enablementSelector: #canBeMovedToLeft.
+	moveSubmenu
+		addToggle: 'Move right' translated
+		target: self
+		selector: #taskbarMoveRight
+		getStateSelector: nil
+		enablementSelector: #canBeMovedToRight.
+	menu addLine.
+	
 	submenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Close all'
 		icon: self theme windowCloseForm
 		subMenu: submenu.
+	submenu
+		addToggle: 'all windows' translated
+		target: self
+		selector: #taskbarCloseAllWindows
+		getStateSelector: nil
+		enablementSelector: true.
 	submenu
 		addToggle: 'windows to left' translated
 		target: self
@@ -198,30 +238,44 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllLikeThis [
 
+	(self confirm: 'Do you really want to close all windows like this ?') ifFalse: [ 
+		^ self ].
 	(SystemWindow allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ].
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToLeft [
-	| wasFound |
-	wasFound := false.
-	self worldTaskbar ifNotNil: [ :worldTaskbar |
+
+	(self confirm: 'Do you really want to close all windows to left ?') 
+		ifFalse: [ ^ self ].
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
 		worldTaskbar orderedTasks copy do: [ :task | 
-			(task morph == self) ifTrue: [ ^ self ].
-			task morph delete ] ].
+			task morph == self ifTrue: [ ^ self ].
+			task morph delete ] ]
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToRight [
+
 	| wasFound |
+	(self confirm: 'Do you really want to close all windows to right ?') 
+		ifFalse: [ ^ self ].
 	wasFound := false.
-	self worldTaskbar ifNotNil: [ :worldTaskbar |
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
 		worldTaskbar orderedTasks copy do: [ :task | 
-			wasFound 
-				ifTrue:  [ task morph delete ] 
-				ifFalse: [ wasFound := task morph == self ].
-			]. 
-		].
+			wasFound
+				ifTrue: [ task morph delete ]
+				ifFalse: [ wasFound := task morph == self ] ] ]
+]
+
+{ #category : #'*Morphic-Widgets-Taskbar' }
+SystemWindow >> taskbarCloseAllWindows [
+
+	(self confirm: 'Do you really want to close all windows ?') ifFalse: [ 
+		^ self ].
+
+	self worldTaskbar ifNotNil: [ :worldTaskbar | 
+		worldTaskbar tasks do: [ :task | task morph delete ] ]
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
@@ -247,15 +301,16 @@ SystemWindow >> taskbarState [
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarTask [
-	"Answer a new taskbar task for the receiver.
+	"Answer a taskbar task for the receiver.
 	Answer nil if not required."
 
 	(self valueOfProperty: #noTaskbarTask ifAbsent: [false]) ifTrue: [^nil].
-	^TaskbarTask
+	taskbarTask := TaskbarTask
 		morph: self
 		state: self taskbarState
-		icon: self taskbarIcon
-		label: self taskbarLabel
+		icon: (self iconNamed: self taskbarIconName)
+		label: self taskbarLabel.
+	^taskbarTask.
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }

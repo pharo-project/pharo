@@ -13,7 +13,7 @@ transformation := (RBMoveMethodToClassTransformation
 Class {
 	#name : #RBMoveMethodToClassTransformation,
 	#superclass : #RBMethodTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #initialization }

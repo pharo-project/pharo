@@ -7,14 +7,7 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
-{ #category : #failures }
-FLByteArrayBasicSerializationTest >> expectedFailures [
-	^ super expectedFailures, #(testConsiderCustomWideSymbolGlobal)
-]
-
 { #category : #running }
-FLByteArrayBasicSerializationTest >> setUp [
-	super setUp.
-	
-	self useByteArrayStream
+FLByteArrayBasicSerializationTest >> setUpStreamStrategy [ 
+	streamStrategy := FLByteArrayStreamStrategy new
 ]

@@ -11,7 +11,6 @@ Class {
 		'EncodedCharSets'
 	],
 	#classInstVars : [
-		'compoundTextSequence',
 		'ucsTable'
 	],
 	#category : #'Multilingual-Encodings-CharSets'
@@ -64,12 +63,17 @@ EncodedCharSet class >> digitValueOf: char [
 	^ -1
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 EncodedCharSet class >> initialize [
-	"self initialize"
 	
 	EncodedCharSets := Array new: 256.
 	self allSubclassesDo: [:each | each initialize]
+]
+
+{ #category : #testing }
+EncodedCharSet class >> isAbstract [
+
+	^ self == EncodedCharSet
 ]
 
 { #category : #'accessing - displaying' }
@@ -120,12 +124,6 @@ EncodedCharSet class >> isUppercase: char [
 	| value |
 	value := char asciiValue.
 	^ 8r101 <= value and: [value <= 8r132].
-]
-
-{ #category : #'class methods' }
-EncodedCharSet class >> leadingChar [
-
-	self subclassResponsibility.
 ]
 
 { #category : #'class methods' }

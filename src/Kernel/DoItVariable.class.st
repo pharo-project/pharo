@@ -45,15 +45,15 @@ Class {
 { #category : #'instance creation' }
 DoItVariable class >> fromContext: aContext variable: aVariable [
 
-	^self new 
+	^self new
 		doItContext: aContext;
 		actualVariable: aVariable
 ]
 
 { #category : #'instance creation' }
-DoItVariable class >> named: aString fromContext: aContext [ 
-	^self 
-		fromContext: aContext 
+DoItVariable class >> named: aString fromContext: aContext [
+	^self
+		fromContext: aContext
 		variable: (aContext lookupVar: aString)
 ]
 
@@ -66,6 +66,11 @@ DoItVariable >> actualVariable [
 DoItVariable >> actualVariable: aVariable [
 	actualVariable := aVariable.
 	name := actualVariable name
+]
+
+{ #category : #testing }
+DoItVariable >> allowsShadowing [
+	^true
 ]
 
 { #category : #accessing }
@@ -82,7 +87,7 @@ DoItVariable >> doItContext: anObject [
 DoItVariable >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := '0slotTempForStackManipulation'.  
+	tempName := '0slotTempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -170,14 +175,14 @@ DoItVariable >> isWorkspaceVariable [
 ]
 
 { #category : #accessing }
-DoItVariable >> key [ 
+DoItVariable >> key [
 	^self name
 ]
 
 { #category : #printing }
-DoItVariable >> printOn: aStream [ 
+DoItVariable >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	actualVariable printOn: aStream.
 	aStream nextPut: $)
@@ -194,7 +199,7 @@ DoItVariable >> readInContext: aContext [
 ]
 
 { #category : #accessing }
-DoItVariable >> scope [ 
+DoItVariable >> scope [
 	^ actualVariable scope
 ]
 

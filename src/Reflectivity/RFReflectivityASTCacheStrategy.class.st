@@ -17,7 +17,6 @@ Class {
 { #category : #accessing }
 RFReflectivityASTCacheStrategy >> getASTFor: aCompiledMethod [
 	^ aCompiledMethod reflectiveMethod
-		ifNil: [ aCompiledMethod parseTree
-				doSemanticAnalysisIn: aCompiledMethod methodClass ]
+		ifNil: [ aCompiledMethod parseTree ]
 		ifNotNil: [ :rfMethod | rfMethod ast ]
 ]

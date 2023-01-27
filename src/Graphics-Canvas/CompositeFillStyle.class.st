@@ -21,7 +21,7 @@ CompositeFillStyle class >> fillStyles: aCollection [
 CompositeFillStyle >> asColor [
 	"Answer a colour that is a best match to the receiver.
 	Simple approach for the moment."
-	
+
 	^self fillStyles
 		ifEmpty: [Color transparent]
 		ifNotEmpty: [self fillStyles last asColor]
@@ -57,7 +57,7 @@ CompositeFillStyle >> direction: aPoint [
 CompositeFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver.
 	Render from bottom to top."
-	
+
 	self fillStyles do: [:fs |
 		fs fillRectangle: aRectangle on: aCanvas]
 ]
@@ -99,9 +99,9 @@ CompositeFillStyle >> isCompositeFill [
 CompositeFillStyle >> isGradientFill [
 	"Answer whether any of the composited fill styles are gradients."
 
-	self fillStyles reverseDo: [:fs |
-		fs isGradientFill ifTrue: [^true]].
-	^false
+	self fillStyles reverseDo: [ :fs |
+		fs isGradientFill ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }
@@ -117,14 +117,14 @@ CompositeFillStyle >> isOrientedFill [
 CompositeFillStyle >> isTranslucent [
 	"Answer whether all of the composited fill styles are transparent."
 
-	^self fillStyles allSatisfy: [:fs | fs isTranslucent]
+	^ self fillStyles allSatisfy: [ :fs | fs isTranslucent ]
 ]
 
 { #category : #testing }
 CompositeFillStyle >> isTransparent [
 	"Answer whether all of the composited fill styles are transparent."
 
-	^self fillStyles allSatisfy: [:fs | fs isTransparent]
+	^ self fillStyles allSatisfy: [ :fs | fs isTransparent ]
 ]
 
 { #category : #accessing }

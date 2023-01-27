@@ -56,9 +56,9 @@ GZipConstants class >> gzipMagic [
 	^GZipMagic
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'class initialization' }
 GZipConstants class >> initialize [
-	"GZipConstants initialize"
+
 	GZipMagic := 16r8B1F.		"GZIP magic number"
 	GZipDeflated := 8.			"Compression method"
 

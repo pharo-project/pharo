@@ -34,24 +34,24 @@ ClyQueryBrowserFilter >> createBlockFromPattern [
 		badScript := true.
 		^self].
 
-	[scriptBlock := self class compiler evaluate: pattern value] 
+	[scriptBlock := self class compiler evaluate: pattern value]
 		on: Exception do: [:err | badScript := true ]
 ]
 
 { #category : #initialization }
 ClyQueryBrowserFilter >> initialize [
 	super initialize.
-	
-	badScript := false.
+
+	badScript := false
 ]
 
 { #category : #testing }
 ClyQueryBrowserFilter >> matches: aBrowserItem [
 	| actualObject |
-	actualObject := aBrowserItem class = ClyBrowserItem 
+	actualObject := aBrowserItem class = ClyBrowserItem
 		ifTrue: [ aBrowserItem actualObject] ifFalse: [ aBrowserItem ].
-		
-	(pattern value beginsWith: '[') ifTrue: [ 
+
+	(pattern value beginsWith: '[') ifTrue: [
 			^self matchesByScript: actualObject].
 
 	^actualObject matchesQueryBrowserFilter: self
@@ -62,8 +62,8 @@ ClyQueryBrowserFilter >> matchesByScript: anObject [
 
 	badScript ifTrue: [ ^true ].
 	scriptBlock ifNil: [ self createBlockFromPattern].
-	badScript ifTrue: [ ^true ].	
-	
+	badScript ifTrue: [ ^true ].
+
 	^[(scriptBlock value: anObject) ~~ false] onErrorDo: [ false ]
 ]
 

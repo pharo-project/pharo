@@ -25,7 +25,6 @@ MemoryStore class >> delimiter [
 
 { #category : #'class initialization' }
 MemoryStore class >> initialize [
-	"self initialize"
 
 	SessionManager default registerSystemClassNamed: self name
 ]
@@ -41,7 +40,7 @@ MemoryStore class >> reset [
 ]
 
 { #category : #public }
-MemoryStore class >> separator [ 
+MemoryStore class >> separator [
 	^ $:
 ]
 
@@ -96,7 +95,7 @@ MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
 MemoryStore >> basicOpen: path writable: aBoolean [
 	^ self
 		nodeAt: path
-		ifPresent: [ :aMemoryFileSystemEntry | 
+		ifPresent: [ :aMemoryFileSystemEntry |
 			aMemoryFileSystemEntry
 				basicOpen;
 				yourself ]
@@ -158,10 +157,10 @@ MemoryStore >> createDirectory: path [
 	parent := path parent.
 	^ self
 		nodeAt: parent
-		ifPresent: [ :entry | 
+		ifPresent: [ :entry |
 			entry
 				fileEntryAt: path basename
-				ifPresent: [ :node | 
+				ifPresent: [ :node |
 					node isDirectory
 						ifTrue: [ self signalDirectoryExists: path ]
 						ifFalse: [ self signalFileExists: path ] ].
@@ -173,7 +172,7 @@ MemoryStore >> createDirectory: path [
 MemoryStore >> createFile: aPath [
 	^ self
 		nodeAt: aPath parent
-		ifPresent: [ :entry | 
+		ifPresent: [ :entry |
 			entry isDirectory
 				ifTrue: [ entry ensureCreateFile: aPath basename ]]
 		ifAbsent: [ self signalDirectoryDoesNotExist: aPath parent ]
@@ -181,10 +180,10 @@ MemoryStore >> createFile: aPath [
 
 { #category : #public }
 MemoryStore >> delete: path [
-	self 
+	self
 		nodeAt: path parent
-		ifPresent: [ :dict | 
-			dict fileEntryRemove: path basename ifAbsent: [ FileDoesNotExistException signalWith: path ]] 
+		ifPresent: [ :dict |
+			dict fileEntryRemove: path basename ifAbsent: [ FileDoesNotExistException signalWith: path ]]
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
 ]
 
@@ -193,7 +192,7 @@ MemoryStore >> entryFromNode: node path: path for: aFileSystem [
 
 	| entryPath |
 	entryPath := path / (self basenameFromEntry: node).
-	^MemoryDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
+	^MemoryDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath)
 ]
 
 { #category : #printing }
@@ -207,7 +206,7 @@ MemoryStore >> handleClass [
 ]
 
 { #category : #initialization }
-MemoryStore >> initialize [ 
+MemoryStore >> initialize [
 	root := MemoryFileSystemDirectory new
 ]
 
@@ -244,7 +243,7 @@ MemoryStore >> isWritable: aPath [
 MemoryStore >> nodeAt: aPath [
 	| current |
 	current := self root.
-	aPath do: [ :segment | 
+	aPath do: [ :segment |
 		current isDirectory
 			ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ FileDoesNotExistException signalWith: aPath ]]
 			ifFalse: [ ^ FileDoesNotExistException signalWith: aPath ]].
@@ -258,7 +257,7 @@ MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 		ifTrue: [ ^ presentBlock value: self root ].
 	current := self root.
 	aPath
-		do: [ :segment | 
+		do: [ :segment |
 			current isDirectory
 				ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ absentBlock value ] ]
 				ifFalse: [ ^ absentBlock value ] ].
@@ -268,24 +267,24 @@ MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 { #category : #public }
 MemoryStore >> rename: sourcePath to: destinationPath [
 	| sourceEntry destinationParentEntry newName |
-	
+
 	sourceEntry := self nodeAt: sourcePath.
 	newName := destinationPath basename.
-	
+
 	destinationParentEntry := self nodeAt: destinationPath parent.
-	
+
 	destinationParentEntry isDirectory
 		ifFalse: [ Error signal: 'Copy destination has to be a directory' ].
-	destinationParentEntry 
+	destinationParentEntry
 		fileEntryAt: newName
 		ifPresent: [ Error signal: 'Destination file exists already' ].
-		
-	destinationParentEntry 
+
+	destinationParentEntry
 		fileEntryAt: newName
 		put: sourceEntry.
 	sourceEntry basename: newName.
-	
-	
+
+
 	(self nodeAt: sourcePath parent)
 		fileEntryRemove: sourcePath basename
 ]

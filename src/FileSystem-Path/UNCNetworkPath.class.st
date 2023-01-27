@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 UNCNetworkPath >> isAbsolute [
-	
+
 	^ true
 ]
 
@@ -27,19 +27,19 @@ UNCNetworkPath >> isNetworkPath [
 
 { #category : #testing }
 UNCNetworkPath >> isRoot [
-	
+
 	"A network path is a root if it only has the machine name, it is of the form \\machine"
-	^ self size = 1.
+	^ self size = 1
 ]
 
 { #category : #printing }
 UNCNetworkPath >> printOn: aStream [
-	aStream nextPutAll: 'Path ''//'. 
-	
+	aStream nextPutAll: 'Path ''//'.
+
 	self segments do: [ :e | aStream nextPutAll: e ]
 		separatedBy: [ aStream nextPutAll: '/' ].
 
-	aStream nextPut: $'.
+	aStream nextPut: $'
 ]
 
 { #category : #printing }

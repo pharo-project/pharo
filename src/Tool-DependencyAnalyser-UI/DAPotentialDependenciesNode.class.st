@@ -39,7 +39,7 @@ DAPotentialDependenciesNode >> hasChildren [
 
 { #category : #accessing }
 DAPotentialDependenciesNode >> icon [
-	^ self iconNamed: #smallHelpIcon
+	^ self iconNamed: #smallHelp
 ]
 
 { #category : #testing }

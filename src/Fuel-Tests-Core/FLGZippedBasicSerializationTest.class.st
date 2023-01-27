@@ -7,16 +7,9 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
-{ #category : #'expected failures' }
-FLGZippedBasicSerializationTest >> expectedFailures [
-
-	^ super expectedFailures, #(testWideString)
-]
-
 { #category : #running }
-FLGZippedBasicSerializationTest >> setUp [
-	super setUp.
-	self useGzipInMemoryStream.
+FLGZippedBasicSerializationTest >> setUpStreamStrategy [
+	streamStrategy := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
 ]
 
 { #category : #tests }

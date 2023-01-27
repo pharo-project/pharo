@@ -16,7 +16,7 @@ Class {
 LocalTimeZone >> abbreviation [
 	^ String streamContents: [ :s |
 		s nextPutAll: 'LT'; print: self offset hours; nextPut: $:.
-		s nextPutAll: (self offset minutes printPaddedWith: $0 to: 2) ].
+		s nextPutAll: (self offset minutes printPaddedWith: $0 to: 2) ]
 ]
 
 { #category : #converting }

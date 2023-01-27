@@ -168,6 +168,6 @@ DisplayTransform >> setIdentity [
 
 { #category : #'transforming rects' }
 DisplayTransform >> sourceQuadFor: aRectangle [
-	^ aRectangle innerCorners collect: 
+	^ aRectangle innerCorners collect:
 		[:p | self globalPointToLocal: p]
 ]

@@ -17,17 +17,15 @@ FLVariableObjectCluster >> add: anObject traceWith: aAnalysis [
 
 	self 
 		referencesOf: anObject 
-		do: [ :aChild || actual |
-			actual := aChild fuelReplacement.
-			self addReferenceFrom: anObject to: actual.
-			aAnalysis trace: actual ].
+		do: [ :aChild |
+			self addReferenceFrom: anObject to: aChild.
+			aAnalysis trace: aChild ].
 		
 	self
 		variablePartReferencesOf: anObject
-		do: [ :aChild || actual |
-			actual := aChild fuelReplacement.
-			self addVariableReferenceFrom: anObject to: actual.
-			aAnalysis trace: actual ]
+		do: [ :aChild |
+			self addVariableReferenceFrom: anObject to: aChild.
+			aAnalysis trace: aChild ]
 ]
 
 { #category : #analyzing }

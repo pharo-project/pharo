@@ -17,8 +17,8 @@ Class {
 { #category : #comparing }
 FreeTypeCacheEntry >> = aFreeTypeCacheEntry [
 	"equailty based on font,charcode, type, object, but not nextLink"
-	
-	(aFreeTypeCacheEntry isKindOf: FreeTypeCacheEntry) 
+
+	(aFreeTypeCacheEntry isKindOf: FreeTypeCacheEntry)
 		ifFalse:[^false].
 	^font = aFreeTypeCacheEntry font and: [
 		charCode = aFreeTypeCacheEntry charCode
@@ -56,7 +56,8 @@ FreeTypeCacheEntry >> font: anObject [
 
 { #category : #comparing }
 FreeTypeCacheEntry >> hash [
-	^charCode hash
+
+	^ charCode hash
 ]
 
 { #category : #accessing }

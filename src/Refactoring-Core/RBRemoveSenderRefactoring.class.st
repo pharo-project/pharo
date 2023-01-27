@@ -71,12 +71,6 @@ RBRemoveSenderRefactoring >> findSelectedMessage [
 		ifTrue: [ self refactoringFailure: 'The sender is directly used' ].
 ]
 
-{ #category : #transforming }
-RBRemoveSenderRefactoring >> inlineClassName [
-
-	^ 'Object'
-]
-
 { #category : #accessing }
 RBRemoveSenderRefactoring >> inlineParseTree [
 
@@ -86,6 +80,12 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 		selector:  aSymbol
 		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | RBVariableNode named: 'arg', e asString ])
 		body: ( RBSequenceNode statements: #())]
+]
+
+{ #category : #transforming }
+RBRemoveSenderRefactoring >> nameOfTheClassOfTheMethodToInline [
+
+	^ 'Object'
 ]
 
 { #category : #preconditions }

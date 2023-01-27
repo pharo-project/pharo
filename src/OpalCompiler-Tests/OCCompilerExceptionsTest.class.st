@@ -25,11 +25,6 @@ OCCompilerExceptionsTest >> compiling: sourceCode shouldRaise: exceptionClass [
 ]
 
 { #category : #compiling }
-OCCompilerExceptionsTest >> interactive [ 
-	^ true
-]
-
-{ #category : #compiling }
 OCCompilerExceptionsTest >> removeGeneratedMethods [
 
 	self class removeProtocol: 'generated'
