@@ -284,7 +284,8 @@ ClyBrowserMorph >> createWindowGroupFrom: currentWindow [
 	group addWindow: currentWindow.
 	(group openInWindowLabeled: currentWindow label)
  		extent: ext;
-		position: pos.
+		position: pos;
+		model: group.
 	^group
 ]
 
