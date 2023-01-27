@@ -154,7 +154,7 @@ BaselineOfIDE >> baseline: spec [
 		"
 		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
+
 		spec
 			baseline: 'ReflectionMirrors'
 			with: [ spec repository: repository ].
@@ -203,7 +203,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
 						
-		spec package: 'Pharo-WelcomeHelp'.
 		spec package: 'Kernel-ExtraUtils' 
 		
 	]
@@ -392,15 +391,16 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 	| baselineClass className |
 
 	className := ('BaselineOf', baselineName) asSymbol.
-	baselineClass := Smalltalk classNamed: className. 
+	baselineClass := Smalltalk classNamed: className.
 	baselineClass ifNil: [ ^ self ].
 
-	self pharoPluginClass 
-		addProjectNamed: projectName 
-		commit: (self pharoPluginClass commitOfExternalProject: externalProject) 
-		baselines: { className }.
+	self pharoPluginClass
+		addProjectNamed: projectName
+		commit: (self pharoPluginClass commitOfExternalProject: externalProject)
+		baselines: { className }
+		tags: #(#system).
 	"Register baselines"
-	({baselineName}, anArray) do: [ :each | 
+	({baselineName}, anArray) do: [ :each |
 		Metacello new baseline: each; register ]
 ]
 

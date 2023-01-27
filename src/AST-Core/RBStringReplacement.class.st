@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aString [ 
+RBStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aString [
 	^(self new)
 		startPosition: startInteger;
 		stopPosition: stopInteger;
@@ -34,7 +34,7 @@ RBStringReplacement >> startPosition [
 ]
 
 { #category : #initialization }
-RBStringReplacement >> startPosition: anInteger [ 
+RBStringReplacement >> startPosition: anInteger [
 	startPosition := anInteger
 ]
 
@@ -44,7 +44,7 @@ RBStringReplacement >> stopPosition [
 ]
 
 { #category : #initialization }
-RBStringReplacement >> stopPosition: anInteger [ 
+RBStringReplacement >> stopPosition: anInteger [
 	stopPosition := anInteger
 ]
 
@@ -54,6 +54,6 @@ RBStringReplacement >> string [
 ]
 
 { #category : #initialization }
-RBStringReplacement >> string: aString [ 
+RBStringReplacement >> string: aString [
 	string := aString
 ]

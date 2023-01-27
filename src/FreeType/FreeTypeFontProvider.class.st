@@ -41,21 +41,21 @@ FreeTypeFontProvider class >> current [
 	current := nil.
 	TimeProfileBrowser onBlock: [FreeTypeFontProvider current]
 	"
-	^current 
+	^current
 		ifNil:[
 			current := self new.
 			current updateFromSystem]
 ]
 
 { #category : #'class initialization' }
-FreeTypeFontProvider class >> initialize [	 
+FreeTypeFontProvider class >> initialize [
 	"Ensure that other classes have also been initialized by forcefully initializing them now.
 	 It then does not matter which order they are initialized in during the package load"
 	FT2Constants initialize.
 	FreeTypeCache initialize.
 	FreeTypeCacheConstants initialize.
 	FreeTypeSettings initialize.
-	
+
 	current := nil.
 	self current "this creates an instance of me, and updates from the system"
 ]
@@ -64,7 +64,7 @@ FreeTypeFontProvider class >> initialize [
 FreeTypeFontProvider class >> registerFont: aClassWithFont [
 	"Do nothing if freetype is disabled currently"
 
-	FreeTypeSystemSettings loadFt2Library ifTrue: [ 
+	FreeTypeSystemSettings loadFt2Library ifTrue: [
 		aClassWithFont installFontsIn: self current ]
 ]
 
@@ -72,7 +72,7 @@ FreeTypeFontProvider class >> registerFont: aClassWithFont [
 FreeTypeFontProvider class >> resetCurrent [
 	"I reset all provider contents.
 	 I do not free current because I do not want an update (see #current) each time I reset."
-	
+
 	current ifNil: [ ^ self ].
 	self current initialize "Reexecute initialization is dirty, but it makes the trick"
 ]
@@ -105,7 +105,7 @@ FreeTypeFontProvider >> buildFamilies [
 	familyNames := (fileInfos collect: [:each | each familyGroupName]) asSet asSortedCollection asArray.
 	familyNames do:[:familyName | | family |
 		family := self buildFamilyNamed: familyName.
-		families at: familyName put: family ].
+		families at: familyName put: family ]
 ]
 
 { #category : #'font families' }
@@ -113,7 +113,7 @@ FreeTypeFontProvider >> buildFamilyNamed: aFamilyGroupName [
 	| infos family|
 	family := FreeTypeFontFamily new
 		familyName: aFamilyGroupName;
-		yourself. 
+		yourself.
 	infos := fileInfos select:[:each | each familyGroupName = aFamilyGroupName].
 	family addMembersFromFileInfos: infos.
 	family addSimulatedMembers.
@@ -141,7 +141,7 @@ FreeTypeFontProvider >> failedToOpen: face index: i [
 
 { #category : #'font families' }
 FreeTypeFontProvider >> families [
-	
+
 	^tempFamilies ifNil:[families]
 ]
 
@@ -149,7 +149,7 @@ FreeTypeFontProvider >> families [
 FreeTypeFontProvider >> fileInfosByFamilyAndGroup [
 	"Answer a Dictionary of Dictionaries of Sets.
 	familyName->familyGroupName->Set(FreeTypeFileInfo)
-	
+
 	self current fileInfosByFamilyAndGroup
 	"
 	| answer |
@@ -159,8 +159,8 @@ FreeTypeFontProvider >> fileInfosByFamilyAndGroup [
 	fileInfos do:[:info | | group family |
 		family := answer at: info familyName ifAbsentPut:[Dictionary new].
 		group := family at: info familyGroupName ifAbsentPut: [OrderedCollection new].
-		group 
-			detect:[:each| 
+		group
+			detect:[:each|
 				each bold = info bold
 				and:[ each italic = info italic
 				and:[ each fixedWidth = info fixedWidth
@@ -174,7 +174,7 @@ FreeTypeFontProvider >> fileInfosByFamilyAndGroup [
 FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 	| info answer simulatedSqueakEmphasis needsSimulatedBold needsSimulatedSlant
 	squeakBoldEmphasis squeakItalicEmphasis |
-	
+
 	FT2Library current isAvailable ifFalse:[^nil].
 	info:= self fontInfoFor: aLogicalFont familyName: familyName.
 	info ifNil:[^nil].
@@ -186,10 +186,10 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 			squeakBoldEmphasis := 1.
 			squeakItalicEmphasis := 2.
 			simulatedSqueakEmphasis := 0.
-			needsSimulatedBold 
+			needsSimulatedBold
 				ifTrue:[
 					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakBoldEmphasis].
-			needsSimulatedSlant 
+			needsSimulatedSlant
 				ifTrue:[
 					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakItalicEmphasis].
 			answer simulatedEmphasis: simulatedSqueakEmphasis].
@@ -201,14 +201,14 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 { #category : #'font lookup' }
 FreeTypeFontProvider >> fontInfoFor: aLogicalFont familyName: familyName [
 	| family member |
-	
-	"use tempFileInfos if not nil, i.e. during an update" 
+
+	"use tempFileInfos if not nil, i.e. during an update"
 	"^self fontInfoFor: aLogicalFont in: (tempFileInfos ifNil:[fileInfos]) "
 	family := self families at: familyName ifAbsent:[].
 	family ifNil:[^nil].
-	member := family 
-		closestMemberWithStretchValue: aLogicalFont stretchValue 
-		weightValue: aLogicalFont weightValue 
+	member := family
+		closestMemberWithStretchValue: aLogicalFont stretchValue
+		weightValue: aLogicalFont weightValue
 		slantValue: aLogicalFont slantValue.
 	member ifNil:[^nil].
 	^member fileInfo
@@ -223,11 +223,11 @@ FreeTypeFontProvider >> getWindowsFontFolderPath [
 	| tfExternalFunctionClass tfBasicType fun buff |
 	tfExternalFunctionClass := Smalltalk globals at: #TFExternalFunction ifAbsent: [ ^ self guessWindowsFontFolderPath ].
 	tfBasicType := Smalltalk globals at: #TFBasicType.
-		
+
 	fun := tfExternalFunctionClass
 		       name: 'SHGetFolderPathA'
 		       moduleName: 'shfolder.dll'
-		       parameterTypes: { 
+		       parameterTypes: {
 				       tfBasicType slong.
 				       tfBasicType slong.
 				       tfBasicType slong.
@@ -236,18 +236,18 @@ FreeTypeFontProvider >> getWindowsFontFolderPath [
 		       returnType: tfBasicType slong.
 
 	buff := ByteArray new: 1024.
-	
+
 	[ TFSameThreadRunner uniqueInstance invokeFunction: fun withArguments: { 0. 16r0014. 0. 0. buff } ]
 		on: Error
 		do: [ :e | "will get error if ffiplugin is missing" ^ self guessWindowsFontFolderPath ].
-	
+
 	^ (buff copyFrom: 1 to: (buff indexOf: 0) - 1) asString
 ]
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> getWindowsLocalPaths [
-	
-	"This values should be read from the repository in the key 
+
+	"This values should be read from the repository in the key
 	HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Fonts
 	However, things happened and we don't have support of the registry in the base image.
 	So this is the best alternative... or not...??  "
@@ -280,14 +280,14 @@ FreeTypeFontProvider >> imageRelativeFontFolder [
 FreeTypeFontProvider >> initialize [
 	super initialize.
 	fileInfos := OrderedCollection  new: 100.
-	fileInfoCache := Dictionary new: 100. "keyed by file size" 
+	fileInfoCache := Dictionary new: 100. "keyed by file size"
 	families := Dictionary new.
-	fontInstallers := OrderedCollection new.
+	fontInstallers := OrderedCollection new
 ]
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> loadFromSystem [
-	self updateFromSystem.
+	self updateFromSystem
 ]
 
 { #category : #'file paths' }
@@ -295,19 +295,19 @@ FreeTypeFontProvider >> macOSXFolderDirectories [
 	| localUserFonts |
 	"Answer the Mac OS X font folder paths.
 	This needs some FFI code, but for the time being, we guess these and omit the user fonts folder"
-	
+
 	"Adding some directories following the guidelines in https://support.apple.com/en-us/HT201722"
-	
+
 	localUserFonts := FileLocator home / 'Library' / 'Fonts'.
-	
+
 	^{localUserFonts} , #('/System/Library/Fonts' '/Network/Library/Fonts/' '/Library/Fonts')
 		collect: [ :each| each asFileReference ]
-		thenSelect: [ :each| each exists ].
+		thenSelect: [ :each| each exists ]
 ]
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> platformAbsoluteDirectories [
-	Smalltalk os isWindows 
+	Smalltalk os isWindows
 		ifTrue: [ ^ self winFontDirectories ].
 	Smalltalk os isUnix
 		ifTrue: [ ^ self unixFontDirectories ].
@@ -318,7 +318,7 @@ FreeTypeFontProvider >> platformAbsoluteDirectories [
 
 { #category : #'font families' }
 FreeTypeFontProvider >> platformImageRelativeDirectories [
-	
+
 	| directory |
 	directory := self imageRelativeFontFolder.
 	directory exists
@@ -345,14 +345,14 @@ FreeTypeFontProvider >> prepareForRelease [
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> prepareForUpdating [
-	
+
 	tempFileInfos := fileInfos. "tempFileInfos will be used during update"
 	tempFamilies := families.   "tempFamilies will be used during update"
-	fileInfos := OrderedCollection  new: 100.
+	fileInfos := OrderedCollection  new: 100
 ]
 
 { #category : #removing }
-FreeTypeFontProvider >> removeFontInstaller: anEmbeddedFreeTypeFontInstaller [ 
+FreeTypeFontProvider >> removeFontInstaller: anEmbeddedFreeTypeFontInstaller [
 	fontInstallers remove: anEmbeddedFreeTypeFontInstaller ifAbsent: [ ]
 ]
 
@@ -368,10 +368,10 @@ FreeTypeFontProvider >> unixFontDirectories [
 { #category : #'file paths' }
 FreeTypeFontProvider >> unixUsualDirectories [
 	"Trying with some common directories in unix. The prefered version is to read the /etc/fonts/fonts.conf"
-	
+
 	| localUserFonts |
 	localUserFonts := FileLocator home / 'Library' / 'Fonts'.
-	
+
 	^ {localUserFonts} , #('/usr/share/fonts' '/usr/local/share/fonts') collect: [ :each | each asFileReference ] thenSelect: [ :each | each exists ]
 ]
 
@@ -382,12 +382,12 @@ FreeTypeFontProvider >> updateAvailableFontFamilies [
 		"self addTextStylesWithPointSizes: #(8 10 12 15 24)."
 		tempFileInfos := nil.
 		self buildFamilies.
-		tempFamilies := nil ].
+		tempFamilies := nil ]
 ]
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateEmbeddedFreeTypeFonts [
-	"Ensure the provider is installed"	
+	"Ensure the provider is installed"
 	self addFontInstaller: EmbeddedFreeTypeFontInstaller current.
 	"Now install embeded fonts"
 	fontInstallers do: [ :each | each installAllFontsIn: self ].
@@ -422,34 +422,34 @@ FreeTypeFontProvider >> updateFontsFromSystem [
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFromDirectory: aDirectory done: aSet [
 	"get info from fonts in aDirectory"
-	
+
 	(aSet includes: aDirectory) ifTrue: [ ^ self ].
 	aSet add: aDirectory.
-	aDirectory files 
+	aDirectory files
 		do: [ :each |
 			"SUSE 10.2 has lots of files ending .gz that aren't fonts.
 			We skip them to save time'"
 			((each basename beginsWith: '.' ) or: [ each basename asLowercase endsWith:' .gz' ])
 				ifFalse: [ self updateFromFile: each ]]
 		displayingProgress: 'Loading fonts in ', aDirectory fullName.
-		
+
 	aDirectory directories do: [ :each |
-		self updateFromDirectory: each done: aSet ].
+		self updateFromDirectory: each done: aSet ]
 ]
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFromFile: aFile [
 	| i face numFaces cachedInfo info cachedNumFaces path |
-	
+
 	i:= 0.
 	[(cachedInfo := self validCachedInfoFor: aFile index: i) notNil]
 		whileTrue:[
 			i = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
 			self addFileInfo: cachedInfo index: i.
 			i := i + 1.].
-		
+
 	(cachedNumFaces notNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
-	
+
 	path := aFile fullName utf8Encoded asString.
 	[face := FreeTypeFace basicNew filename: path; index:  i.
 	["we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
@@ -481,13 +481,13 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 			self cacheFileInfo: info index: i.
 			"Transcript show: 'from file : ', info asString."].
 	i := i + 1.
-	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[].
+	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[]
 ]
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFromSystem [
 	self prepareForUpdating.
-	'FreeType' displayProgressFrom: 0 to: 3 during: [ :mainBar | 
+	'FreeType' displayProgressFrom: 0 to: 3 during: [ :mainBar |
 		self updateFileCacheInfo.
 		mainBar current: 1.
 		self updateFontsFromSystem.
@@ -506,7 +506,7 @@ FreeTypeFontProvider >> validCachedInfoFor: aFile index: i [
 	modificationTime :=  aFile modificationTime.
 	path := aFile fullName.
 	cacheEntry := (fileInfoCache at: {fileSize. i} ifAbsentPut: [ Set new ])
-		detect: [ :each | 
+		detect: [ :each |
 			each modificationTime = modificationTime
 			and: [ each absolutePath = path ]]
 		ifNone:[].
@@ -517,19 +517,19 @@ FreeTypeFontProvider >> validCachedInfoFor: aFile index: i [
 { #category : #'file paths' }
 FreeTypeFontProvider >> winFontDirectories [
 	| results |
-	
+
 	results := OrderedCollection new.
-	
+
 	self getWindowsFontFolderPath
 		ifNotNil: [ :aString | | directory |
 				directory := aString asFileReference.
-				directory exists 
+				directory exists
 					ifTrue: [ results add: directory ]].
-	
+
 	self getWindowsLocalPaths
-		do: [ :directory | 
-				directory exists 
+		do: [ :directory |
+				directory exists
 					ifTrue: [ results add: directory ]].
-		
+
 	^ results
 ]

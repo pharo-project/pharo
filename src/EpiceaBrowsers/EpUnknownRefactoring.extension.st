@@ -3,7 +3,7 @@ Extension { #name : #EpUnknownRefactoring }
 { #category : #'*EpiceaBrowsers' }
 EpUnknownRefactoring >> summaryOn: aWriteStream [
 	"Write a string summarizing myself."
-	
-	aWriteStream 
+
+	aWriteStream
 		nextPutAll: printString
 ]

@@ -69,6 +69,13 @@ LibC >> fgetc: stream [
 	 ^self ffiCall: #(int* fgetc(void* stream))
 ]
 
+{ #category : #'api - accessing' }
+LibC >> getpid [
+	"Get PID of current process."
+	 
+	 ^self ffiCall: #(int getpid(void))
+]
+
 { #category : #'private - accessing' }
 LibC >> macLibraryName [
 	^ 'libc.dylib'

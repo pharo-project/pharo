@@ -29,9 +29,9 @@ ClyTaggedMethodGroup >> convertToMethodTag: aTagName [
 ]
 
 { #category : #operations }
-ClyTaggedMethodGroup >> importMethod: aMethod [ 
+ClyTaggedMethodGroup >> importMethod: aMethod [
 	super importMethod: aMethod.
-	
+
 	aMethod tagWith: self tag
 ]
 
@@ -42,15 +42,15 @@ ClyTaggedMethodGroup >> removeWithMethods [
 ]
 
 { #category : #operations }
-ClyTaggedMethodGroup >> renameMethodTagTo: newTag [ 
+ClyTaggedMethodGroup >> renameMethodTagTo: newTag [
 	newTag = self tag ifTrue: [ ^self ].
-	
+
 	self methods do: [ :each |
 		each tagWith: newTag.
 		each untagFrom: self tag].
-	
-	methodQuery scope classesDo:  [ :each | 
-		(each tagsForMethods includes: newTag) 
+
+	methodQuery scope classesDo:  [ :each |
+		(each tagsForMethods includes: newTag)
 			ifFalse: [ each addMethodTag: newTag ].
 		each removeMethodTag: self tag]
 ]

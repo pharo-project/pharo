@@ -33,6 +33,12 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBCreateLazyAccessorsForVariableTransformation class >> basicMenuItemString [ 
+
+	^ 'Generate lazy accessors'
+]
+
 { #category : #'instance creation' }
 RBCreateLazyAccessorsForVariableTransformation class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 	^(self 

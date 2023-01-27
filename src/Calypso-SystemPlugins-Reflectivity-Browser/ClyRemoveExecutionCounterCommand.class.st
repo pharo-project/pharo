@@ -14,7 +14,7 @@ ClyRemoveExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContex
 ]
 
 { #category : #activation }
-ClyRemoveExecutionCounterCommand class >> contextMenuOrder [	
+ClyRemoveExecutionCounterCommand class >> contextMenuOrder [
 	^2
 ]
 
@@ -22,15 +22,15 @@ ClyRemoveExecutionCounterCommand class >> contextMenuOrder [
 ClyRemoveExecutionCounterCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
-	^ SycAdvancedDebuggingMenuActivation 
+	^ SycAdvancedDebuggingMenuActivation
 			byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
-	^SycAdvancedDebuggingMenuActivation 
+
+	^SycAdvancedDebuggingMenuActivation
 		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
@@ -38,14 +38,14 @@ ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
 ClyRemoveExecutionCounterCommand >> createTableCellButtonWith: anIcon using: aCommandActivator [
 	| button |
 	button := super createTableCellButtonWith: anIcon using: aCommandActivator.
-	sourceNode hasExecutionCounter ifTrue: [ 
+	sourceNode hasExecutionCounter ifTrue: [
 		ClyDynamicBallonTooltip from: [self tableDescription] installInto: button].
 	^button
 ]
 
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> currentCallsCount [
-	
+
 	^sourceNode counter count
 ]
 
@@ -56,8 +56,8 @@ ClyRemoveExecutionCounterCommand >> debuggingToolClass [
 
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> defaultMenuItemName [
-	
-	^sourceNode hasExecutionCounter 
+
+	^sourceNode hasExecutionCounter
 		ifTrue: [ 'Remove counter (', self currentCallsCount asString, ')']
 	 	ifFalse: [ 'Remove counter' ]
 ]

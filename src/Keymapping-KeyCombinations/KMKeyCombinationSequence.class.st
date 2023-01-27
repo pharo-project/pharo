@@ -27,16 +27,16 @@ KMKeyCombinationSequence class >> first: aShortcut next: anotherShortcut [
 ]
 
 { #category : #combining }
-KMKeyCombinationSequence >> + aCharacter [ 
+KMKeyCombinationSequence >> + aCharacter [
 	| last |
 	last := self sequence last.
 	self sequence removeLast.
-	self addShortcut: last + aCharacter.
+	self addShortcut: last + aCharacter
 ]
 
 { #category : #combining }
 KMKeyCombinationSequence >> , aShortcut [
-	self addShortcut: aShortcut asKeyCombination.
+	self addShortcut: aShortcut asKeyCombination
 ]
 
 { #category : #comparing }
@@ -45,8 +45,8 @@ KMKeyCombinationSequence >> = aShortcut [
 ]
 
 { #category : #printing }
-KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [ 
-	
+KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [
+
 	^ aKMShortcutPrinter visitCombinationShortcut: self
 ]
 
@@ -56,8 +56,8 @@ KMKeyCombinationSequence >> addShortcut: aShortcut [
 ]
 
 { #category : #matching }
-KMKeyCombinationSequence >> beginsWith: aShortcut [ 
-	
+KMKeyCombinationSequence >> beginsWith: aShortcut [
+
 	^ self sequence first = aShortcut
 ]
 
@@ -84,7 +84,7 @@ KMKeyCombinationSequence >> matches: anEventBuffer [
 	1 to: maxIndex do: [:index|
 		((shortcuts at: index) = (anEventBuffer at: index) asKeyCombination)
 			ifFalse: [ ^ false]].
-	^ true.
+	^ true
 ]
 
 { #category : #accessing }
@@ -96,14 +96,14 @@ KMKeyCombinationSequence >> next: aShortcut [
 KMKeyCombinationSequence >> platformModifier [
 
 	self sequence do: [ :each | ^ each platformModifier ].
-	
+
 	^ nil
 ]
 
 { #category : #printing }
 KMKeyCombinationSequence >> prettyPrintOn: aStream [
 
-	shortcuts 
+	shortcuts
 		do: [ :e | e prettyPrintOn: aStream ]
 		separatedBy: [ aStream << ' + ' ]
 ]
@@ -113,7 +113,7 @@ KMKeyCombinationSequence >> printOn: aStream [
 
 	self haveShortcutsSameModifier
 		ifTrue: [ self printSequenceWithSameModifierOn: aStream ]
-		ifFalse: [ 
+		ifFalse: [
 			shortcuts
 				do: [ :shortcut | shortcut printOn: aStream ]
 				separatedBy: [ aStream nextPutAll: ' + ' ] ]

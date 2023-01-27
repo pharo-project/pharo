@@ -23,7 +23,7 @@ CmCommand class >> defaultDescription [
 ]
 
 { #category : #default }
-CmCommand class >> defaultName [ 
+CmCommand class >> defaultName [
 
 	^ 'Unnamed'
 ]

@@ -20,7 +20,7 @@ Class {
 { #category : #accessing }
 ReWhileTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'WhileTrueRule'
 ]
 
@@ -33,36 +33,36 @@ ReWhileTrueRule >> group [
 ReWhileTrueRule >> initialize [
 	super initialize.
 	self matchesAny: #(
-			'| `@temps | 
-			`@.Statements1. 
-			[`index <= `@stop] 
-				whileTrue: 
-					[| `@blockTemps | 
-					`@.BlockStmts1. 
+			'| `@temps |
+			`@.Statements1.
+			[`index <= `@stop]
+				whileTrue:
+					[| `@blockTemps |
+					`@.BlockStmts1.
 					`index := `index + 1].
 			`@.Statements2'
-			'| `@temps | 
-			`@.Statements1. 
-			[`index < `@stop] 
-				whileTrue: 
-					[| `@blockTemps | 
-					`@.BlockStmts1. 
+			'| `@temps |
+			`@.Statements1.
+			[`index < `@stop]
+				whileTrue:
+					[| `@blockTemps |
+					`@.BlockStmts1.
 					`index := `index + 1].
 			`@.Statements2'
-			'| `@temps | 
-			`@.Statements1. 
-			[`index >= `@stop] 
-				whileTrue: 
-					[| `@blockTemps | 
-					`@.BlockStmts1. 
+			'| `@temps |
+			`@.Statements1.
+			[`index >= `@stop]
+				whileTrue:
+					[| `@blockTemps |
+					`@.BlockStmts1.
 					`index := `index - 1].
 			`@.Statements2'
-			'| `@temps | 
-			`@.Statements1. 
-			[`index > `@stop] 
-				whileTrue: 
-					[| `@blockTemps | 
-					`@.BlockStmts1. 
+			'| `@temps |
+			`@.Statements1.
+			[`index > `@stop]
+				whileTrue:
+					[| `@blockTemps |
+					`@.BlockStmts1.
 					`index := `index - 1].
 			`@.Statements2' )
 ]

@@ -41,6 +41,12 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBCreateAccessorsForVariableTransformation class >> basicMenuItemString [
+
+	^ 'Generate accessors'
+]
+
 { #category : #'instance creation' }
 RBCreateAccessorsForVariableTransformation class >> classVariable: aVarName class: aClass [
 	^ self variable: aVarName class: aClass classVariable: true
@@ -52,8 +58,9 @@ RBCreateAccessorsForVariableTransformation class >> instanceVariable: aVarName c
 ]
 
 { #category : #accessing }
-RBCreateAccessorsForVariableTransformation class >> kind [
-	^ 'Transformation'
+RBCreateAccessorsForVariableTransformation class >> isTransformation [ 
+
+	^ true
 ]
 
 { #category : #'instance creation' }

@@ -14,7 +14,7 @@ Class {
 { #category : #testing }
 ClyAddBreakpointCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+	^ (super canBeExecutedInContext: aBrowserContext) and: [
 		  aBrowserContext isSelectedItemHasBreakpoint not ]
 ]
 
@@ -41,7 +41,7 @@ ClyAddBreakpointCommand >> defaultMenuIconName [
 
 { #category : #execution }
 ClyAddBreakpointCommand >> execute [
-	
+
 	| breakpoint |
 	breakpoint := Breakpoint new node: sourceNode.
 	self applyBreakpointCondition: breakpoint.

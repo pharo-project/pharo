@@ -63,9 +63,10 @@ DangerousClassNotifier class >> enabled [
 	^enabled ifNil: [  enabled := false ]
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 DangerousClassNotifier class >> initialize [
-	enabled := true.
+
+	enabled := true
 ]
 
 { #category : #accessing }

@@ -27,7 +27,7 @@ ClyCriticalTextSegmentMorph >> addItemToMenu: aMenu [
 	listItem addMorphBack: (ImageMorph withForm: critique icon).
 	listItem addMorphBack: critique title asStringMorph.
 	critique actions
-		do: [ :action | 
+		do: [ :action |
 			listItem
 				addMorphBack:
 					(IconicButtonMorph new

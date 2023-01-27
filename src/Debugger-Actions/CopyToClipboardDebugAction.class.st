@@ -28,7 +28,7 @@ CopyToClipboardDebugAction >> defaultOrder [
 { #category : #actions }
 CopyToClipboardDebugAction >> executeAction [
 
-	Clipboard clipboardText: (String streamContents: [ :s| 
+	Clipboard clipboardText: (String streamContents: [ :s|
 		self debugger interruptedContext shortDebugStackOn: s ])
 ]
 

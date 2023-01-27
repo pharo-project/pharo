@@ -16,33 +16,60 @@ Class {
 	#instVars : [
 		'methodToDeprecate',
 		'methodToReplaceDeprecatedMethod',
-		'refactoring'
+		'refactoring',
+		'scopes',
+		'model'
 	],
 	#category : #'Refactoring-Core-UI'
 }
 
 { #category : #'instance creation' }
-RBDeprecateMethodDriver class >> model: aRBNamespace deprecateMethod: aString in: aClass [
+RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCollection [
 
-	^ self new model: aRBNamespace deprecateMethod: aString in: aClass
+	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
+]
+
+{ #category : #initialization }
+RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
+
+	methodToDeprecate := aSelector.
+	methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
+	scopes := aCollection.
+	model := self refactoringScopeOn: scopes first.
+
+	refactoring := RBDeprecateMethodRefactoring
+		               model: model
+		               deprecateMethod: aSelector
+		               in: aClass
+		               using: methodToReplaceDeprecatedMethod
 ]
 
 { #category : #execution }
 RBDeprecateMethodDriver >> execute [
 
-	| changes |
-	changes := [ 
-	           [ refactoring generateChanges ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err | 
-		           ^ RBRefactoringFailure signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err | 
-			           RBRefactoringWarning signal: err messageText.
-			           "If user answers no, error is being propagated."
-			           err resume ].
-	self flag: #TODO. "preview changes and confirm before executing"
-	refactoring performChanges
+	| compositeChange |
+	compositeChange := [ 
+	                   [ 
+	                   [ refactoring generateChanges ]
+		                   on: RBInputValidationFailedError
+		                   do: [ :err | 
+			                   methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
+			                   refactoring newSelector:
+				                   methodToReplaceDeprecatedMethod.
+									err resume ] ]
+		                   on: RBApplicabilityChecksFailedError
+		                   do: [ :err | 
+		                   ^ RBRefactoringFailure signal: err messageText ] ]
+		                   on: RBBreakingChangeChecksFailedWarning
+		                   do: [ :err | 
+			                   RBRefactoringWarning signal: err messageText.
+			                   "If user answers no, error is being propagated."
+			                   err resume ].
+
+	(RBRefactoringPreviewPresenter
+		 changes: compositeChange
+		 inEnvironment: model
+		 scopes: scopes) open
 ]
 
 { #category : #'ui - requests' }
@@ -50,23 +77,14 @@ RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 
 	| newSelector |
 	newSelector := UIManager default
-		               request: 'Method to replace ' , methodToDeprecate
+		               request: 'Method to replace ' , methodToDeprecate , '. The new selectors cannot be an empty string or same as the old selector.'
 		               initialAnswer: methodToDeprecate
 		               title: 'New selector'.
-	newSelector isEmptyOrNil | (newSelector = methodToDeprecate) ifTrue: [ 
-		RBRefactoringFailure signal: 'New selector should not be empty OR same as current selector.' ].
 	^ newSelector
 ]
 
-{ #category : #initialization }
-RBDeprecateMethodDriver >> model: aRBNamespace deprecateMethod: aSelector in: aClass [
+{ #category : #utilities }
+RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
 
-	methodToDeprecate := aSelector.
-	methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
-
-	refactoring := RBDeprecateMethodRefactoring
-		               model: aRBNamespace
-		               deprecateMethod: aSelector
-		               in: aClass
-		               using: methodToReplaceDeprecatedMethod
+	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment 
 ]

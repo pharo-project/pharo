@@ -75,7 +75,7 @@ DTTreeNode >> displayColor: aValuableOrColor [
 { #category : #accessing }
 DTTreeNode >> displayColorIfNotEmpty: aColor [
 
-	self displayColor: [ 
+	self displayColor: [
 		self subResults
 			ifNotEmpty: [ aColor ]
 			ifEmpty: [ nil ] ]
@@ -87,7 +87,7 @@ DTTreeNode >> drTestsBrowse [
 	 If my #browseBlock is nil, does nothing."
 	self canBeBrowsed
 		ifFalse: [ ^ self ].
-	
+
 	self browseBlock cull: self
 ]
 

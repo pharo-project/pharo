@@ -19,15 +19,15 @@ GoferMetacelloLoad >> configuration [
 GoferMetacelloLoad >> configurationReference [
 	^ gofer references
 		detect: [ :ref | ref isConfigurationReference ]
-		ifNone: [ 
+		ifNone: [
 			gofer configuration.
-			^ self configurationReference ].
+			^ self configurationReference ]
 ]
 
 { #category : #running }
 GoferMetacelloLoad >> execute [
 	super execute.
-	self loadConfiguration.
+	self loadConfiguration
 ]
 
 { #category : #running }
@@ -38,26 +38,26 @@ GoferMetacelloLoad >> loadConfiguration [
 { #category : #accessing }
 GoferMetacelloLoad >> metacelloVersion [
 	| configuration |
-	
+
 	configuration := self configuration project.
-	self version 
+	self version
 		ifNil: [ ^ configuration stableVersion ].
-		
+
 	"Now let's wrap Metcaello's strange behaviors of distinguishing strings and symbols"
-	[ 
+	[
 		"First we try to load the latest version for a given version string"
 		^ (configuration latestVersion: self version)
-			ifNil: [ 
+			ifNil: [
 				"If that doesn't work we use the default version lookup to find a version with the given name"
-				configuration version: self version ] 
+				configuration version: self version ]
 	] on: MetacelloVersionDoesNotExistError do: [ :error |
 			^ self version = 'last'
 				ifTrue: [
 					"manual fallback since there is no symbolic name for lastVersion"
 					configuration lastVersion ]
-				ifFalse: [ 
+				ifFalse: [
 					"symbols and strings are not equal in Meteacello..."
-					configuration version: self version asSymbol ]].
+					configuration version: self version asSymbol ]]
 ]
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ GoferMetacelloLoad >> version [
 ]
 
 { #category : #accessing }
-GoferMetacelloLoad >> version: aVersionStringOrSymbol [ 
+GoferMetacelloLoad >> version: aVersionStringOrSymbol [
 	"A version identifiery see MetacelloProject>>#version:"
 	version := aVersionStringOrSymbol
 ]

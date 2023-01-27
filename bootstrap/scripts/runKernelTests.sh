@@ -32,7 +32,7 @@ TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2
 #  - taking the entire name,
 #  - removing the suffix after the first dot
 #  - removing the prefix "Pharo"
-TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -c6-`0
+TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -d'-' -f 1 | cut -c6-`0
 
 #Odd PR builds use the the latest VM, else use the stable VM
 if [[ $(is_development_build) == "0" && $((${BUILD_NUMBER} % 2)) -eq 1 ]]

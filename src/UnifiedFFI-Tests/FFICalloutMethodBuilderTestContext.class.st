@@ -40,6 +40,11 @@ FFICalloutMethodBuilderTestContext >> ffiLibrary [
 ]
 
 { #category : #accessing }
+FFICalloutMethodBuilderTestContext >> homeMethod [
+	^ self
+]
+
+{ #category : #accessing }
 FFICalloutMethodBuilderTestContext >> method [
 	^ self
 ]

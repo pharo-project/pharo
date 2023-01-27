@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-CairoGlyphsArray class >> externalNew: size [ 
+CairoGlyphsArray class >> externalNew: size [
 	^ self externalNewType: CairoGlyph size: size
 ]
 
@@ -30,7 +30,7 @@ CairoGlyphsArray class >> new [
 ]
 
 { #category : #'instance creation' }
-CairoGlyphsArray class >> new: size [ 
+CairoGlyphsArray class >> new: size [
 	^ self newType: CairoGlyph size: size
 ]
 

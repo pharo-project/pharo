@@ -27,12 +27,12 @@ EmbeddedFreeTypeFontDescription class >> installAllFontsIn: provider [
 EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 	self canBeInstalled ifFalse: [ ^ self ].
 	provider
-		addFromFileContents: self fontContents 
+		addFromFileContents: self fontContents
 		baseName: self originalFileName
 ]
 
 { #category : #testing }
-EmbeddedFreeTypeFontDescription class >> isAbstract [ 
+EmbeddedFreeTypeFontDescription class >> isAbstract [
 	^self name = #EmbeddedFreeTypeFontDescription
 ]
 

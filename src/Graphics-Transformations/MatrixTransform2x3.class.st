@@ -60,13 +60,13 @@ MatrixTransform2x3 class >> withScale: aPoint [
 ]
 
 { #category : #comparing }
-MatrixTransform2x3 >> = aMatrixTransform2x3 [ 
+MatrixTransform2x3 >> = aMatrixTransform2x3 [
 	| length |
 	<primitive: 'primitiveEqual' module: 'FloatArrayPlugin'>
 	self class = aMatrixTransform2x3 class ifFalse: [ ^ false ].
 	length := self size.
 	length = aMatrixTransform2x3 size ifFalse: [ ^ false ].
-	1 
+	1
 		to: self size
 		do: [ :i | (self at: i) = (aMatrixTransform2x3 at: i) ifFalse: [ ^ false ] ].
 	^ true
@@ -146,7 +146,7 @@ MatrixTransform2x3 >> at: index [
 { #category : #accessing }
 MatrixTransform2x3 >> at: index put: value [
 	<primitive: 'primitiveAtPut' module: 'FloatArrayPlugin'>
-	value isFloat 
+	value isFloat
 		ifTrue:[self basicAt: index put: value asIEEE32BitWord]
 		ifFalse:[self at: index put: value asFloat].
 	^value
@@ -174,7 +174,7 @@ MatrixTransform2x3 >> composedWithLocal: aTransformation [
 ]
 
 { #category : #composing }
-MatrixTransform2x3 >> composedWithLocal: aTransformation into: result [ 
+MatrixTransform2x3 >> composedWithLocal: aTransformation into: result [
 	"Return the composition of the receiver and the local transformation passed in.
 	Store the composed matrix into result."
 	| a11 a12 a13 a21 a22 a23 b11 b12 b13 b21 b22 b23 matrix |
@@ -226,7 +226,7 @@ MatrixTransform2x3 >> hash [
 	| result |
 	<primitive: 'primitiveHashArray' module: 'FloatArrayPlugin'>
 	result := 0.
-	1 
+	1
 		to: self size
 		do: [ :i | result := result + (self basicAt: i) ].
 	^ result bitAnd: 536870911
@@ -254,7 +254,7 @@ MatrixTransform2x3 >> inverseTransformation [
 ]
 
 { #category : #'transforming points' }
-MatrixTransform2x3 >> invertPoint: aPoint [ 
+MatrixTransform2x3 >> invertPoint: aPoint [
 	"Transform aPoint from global coordinates into local coordinates"
 	| x y det a11 a12 a21 a22 detX detY |
 	x := aPoint x asFloat - self a13.
@@ -319,17 +319,17 @@ MatrixTransform2x3 >> offset [
 { #category : #accessing }
 MatrixTransform2x3 >> offset: aPoint [
 	self a13: aPoint x asFloat.
-	self a23: aPoint y asFloat.
+	self a23: aPoint y asFloat
 ]
 
 { #category : #printing }
 MatrixTransform2x3 >> printOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: self class name;
 		nextPut: $(;
 		cr; print: self a11; tab; print: self a12; tab; print: self a13;
 		cr; print: self a21; tab; print: self a22; tab; print: self a23;
-		cr; nextPut:$).
+		cr; nextPut:$)
 ]
 
 { #category : #'objects from disk' }
@@ -337,18 +337,18 @@ MatrixTransform2x3 >> restoreEndianness [
 	"This word object was just read in from a stream.  It was stored in Big Endian (Mac) format.  Swap each pair of bytes (16-bit word), if the current machine is Little Endian.
 	Why is this the right thing to do?  We are using memory as a byteStream.  High and low bytes are reversed in each 16-bit word, but the stream of words ascends through memory.  Different from a Bitmap."
 	| w b1 b2 b3 b4 |
-	EndianDetector isLittleEndian ifTrue: 
-		[ 1 
+	EndianDetector isLittleEndian ifTrue:
+		[ 1
 			to: self basicSize
-			do: 
-				[ :i | 
+			do:
+				[ :i |
 				w := self basicAt: i.
 				b1 := w byteAt: 1.
 				b2 := w byteAt: 2.
 				b3 := w byteAt: 3.
 				b4 := w byteAt: 4.
 				w := (b1 << 24) + (b2 << 16) + (b3 << 8) + b4.
-				self 
+				self
 					basicAt: i
 					put: w ] ]
 ]
@@ -363,7 +363,7 @@ MatrixTransform2x3 >> setAngle: angle [
 	self a11: c.
 	self a12: s negated.
 	self a21: s.
-	self a22: c.
+	self a22: c
 ]
 
 { #category : #initialize }
@@ -371,11 +371,11 @@ MatrixTransform2x3 >> setIdentiy [
 	"Initialize the receiver to the identity transformation (e.g., not affecting points)"
 	self
 		a11: 1.0; a12: 0.0; a13: 0.0;
-		a21: 0.0; a22: 1.0; a23: 0.0.
+		a21: 0.0; a22: 1.0; a23: 0.0
 ]
 
 { #category : #private }
-MatrixTransform2x3 >> setOffset: aPoint [ 
+MatrixTransform2x3 >> setOffset: aPoint [
 	"Set the raw offset in the receiver"
 	| pt |
 	pt := aPoint asPoint.
@@ -384,7 +384,7 @@ MatrixTransform2x3 >> setOffset: aPoint [
 ]
 
 { #category : #private }
-MatrixTransform2x3 >> setScale: aPoint [ 
+MatrixTransform2x3 >> setScale: aPoint [
 	"Set the raw scale in the receiver"
 	| pt |
 	pt := aPoint asPoint.
@@ -393,7 +393,7 @@ MatrixTransform2x3 >> setScale: aPoint [
 ]
 
 { #category : #'transforming points' }
-MatrixTransform2x3 >> transformDirection: aPoint [ 
+MatrixTransform2x3 >> transformDirection: aPoint [
 	"Transform aPoint from local coordinates into global coordinates"
 	| x y |
 	x := aPoint x * self a11 + (aPoint y * self a12).
@@ -402,7 +402,7 @@ MatrixTransform2x3 >> transformDirection: aPoint [
 ]
 
 { #category : #'transforming points' }
-MatrixTransform2x3 >> transformPoint: aPoint [ 
+MatrixTransform2x3 >> transformPoint: aPoint [
 	"Transform aPoint from local coordinates into global coordinates"
 	| x y |
 	x := aPoint x * self a11 + (aPoint y * self a12) + self a13.
@@ -412,5 +412,5 @@ MatrixTransform2x3 >> transformPoint: aPoint [
 
 { #category : #'objects from disk' }
 MatrixTransform2x3 >> writeOn: aStream [
-	aStream nextWordsPutAll: self.
+	aStream nextWordsPutAll: self
 ]

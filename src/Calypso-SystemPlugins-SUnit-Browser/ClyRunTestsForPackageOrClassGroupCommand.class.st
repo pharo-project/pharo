@@ -21,10 +21,14 @@ ClyRunTestsForPackageOrClassGroupCommand >> execute [
 ClyRunTestsForPackageOrClassGroupCommand >> runTestsOf: aClassGroup [
 
 	| testResult |
-	testResult := self testRunnerClass new runClasses:
-		              aClassGroup classes asOrderedCollection.
+	
+	testResult := self testRunnerClass new. 
+	testResult runClasses: aClassGroup classes asOrderedCollection.
 	testResult updateResultsInHistory.
-	self notifyUserAboutResults: testResult with: aClassGroup name
+	
+	self 
+		notifyUserAboutResults: testResult 
+		with: aClassGroup name
 ]
 
 { #category : #initialization }

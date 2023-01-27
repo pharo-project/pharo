@@ -19,7 +19,7 @@ WeakValueAssociation class >> new [
 ]
 
 { #category : #accessing }
-WeakValueAssociation >> key: aKey value: anObject [ 
+WeakValueAssociation >> key: aKey value: anObject [
 	"Store the arguments as the variables of the receiver."
 
 	key := aKey.

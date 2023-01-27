@@ -15,14 +15,14 @@ Class {
 UndeclaredVariable class >> registeredWithName: aString [
 	| varName |
 	varName := aString asSymbol.
-	
-	Undeclared associationAt: varName ifPresent: [ :found | 
-		found class == Association ifTrue: [ 
+
+	Undeclared associationAt: varName ifPresent: [ :found |
+		found class == Association ifTrue: [
 			"Found undeclared var can be an association during current bootstrap process.
 			So here we should convert it to real variable object otherwise the build will be broken"
 			found becomeForward: (self named: varName)].
 		^found	].
-	
+
 	^(self named: varName)
 		register;
 		yourself
@@ -46,7 +46,7 @@ UndeclaredVariable >> emitValue: methodBuilder [
 ]
 
 { #category : #registry }
-UndeclaredVariable >> isRegistered [ 
+UndeclaredVariable >> isRegistered [
 	^Undeclared includesKey: name
 ]
 
@@ -57,11 +57,11 @@ UndeclaredVariable >> isUndeclaredVariable [
 ]
 
 { #category : #registry }
-UndeclaredVariable >> register [ 
+UndeclaredVariable >> register [
 	Undeclared add: self
 ]
 
 { #category : #registry }
-UndeclaredVariable >> unregister [ 
+UndeclaredVariable >> unregister [
 	Undeclared removeKey: name ifAbsent: [ ]
 ]

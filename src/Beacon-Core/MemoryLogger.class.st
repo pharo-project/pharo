@@ -42,7 +42,7 @@ MemoryLogger class >> fromStonFile: aFileReference [
 	| logger |
 
 	logger := aFileReference asFileReference binaryReadStreamDo: [ :bstream |
-		STON fromStream: (ZnCharacterReadStream 
+		STON fromStream: (ZnCharacterReadStream
 			on: (GZipReadStream on: bstream)
 			encoding: 'utf8') ].
 	^logger
@@ -51,7 +51,7 @@ MemoryLogger class >> fromStonFile: aFileReference [
 { #category : #'class initialization' }
 MemoryLogger class >> reset [
 	<script>
-	
+
 	self instance reset
 ]
 
@@ -59,7 +59,7 @@ MemoryLogger class >> reset [
 MemoryLogger class >> startAutoSaving [
 	"Write the default instance to a file every WritePeriod"
 	<script>
-	
+
 	WriteProcess ifNotNil: [ self error: 'Write process already running' ].
 
 	WriteProcess := [ self writeLoop ]
@@ -71,11 +71,11 @@ MemoryLogger class >> startAutoSaving [
 MemoryLogger class >> stopAutoSaving [
 	"Terminate writing the default instance to a file every WritePeriod"
 	<script>
-		
+
 	WriteProcess ifNil: [ ^ self ].
 	WriteProcess terminate.
 	100 milliSeconds wait.
-	WriteProcess isTerminated ifFalse: [ 
+	WriteProcess isTerminated ifFalse: [
 		self error: 'Unable to terminate auto-save process' ].
 	WriteProcess := nil
 ]
@@ -83,8 +83,8 @@ MemoryLogger class >> stopAutoSaving [
 { #category : #accessing }
 MemoryLogger class >> writeFilename [
 
-	^ WriteFilename ifNil: [ 
-		  WriteFilename := String streamContents: [ :stream | 
+	^ WriteFilename ifNil: [
+		  WriteFilename := String streamContents: [ :stream |
 			                   stream
 				                   << self name;
 				                   << '-';
@@ -95,7 +95,7 @@ MemoryLogger class >> writeFilename [
 { #category : #accessing }
 MemoryLogger class >> writeFilename: aFilename [
 
-	WriteFilename := aFilename 
+	WriteFilename := aFilename
 ]
 
 { #category : #private }
@@ -103,7 +103,7 @@ MemoryLogger class >> writeLoop [
 	"Write the default instance out to a file every WritePeriod"
 
 	[ self instance saveStonFile: self writeFilename.
-	self writePeriod wait ] repeat.
+	self writePeriod wait ] repeat
 ]
 
 { #category : #accessing }
@@ -119,19 +119,18 @@ MemoryLogger class >> writePeriod: aDuration [
 ]
 
 { #category : #accessing }
-MemoryLogger >> announcer [ 
+MemoryLogger >> announcer [
 	"The announcer announces to potential watchers (typically viewers)
 	that a new signal was recorded"
 	^ announcer
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MemoryLogger >> initialize [
 	super initialize.
 	mutex := Mutex new.
 	self reset.
-	announcer := Announcer new.
-
+	announcer := Announcer new
 ]
 
 { #category : #utilities }
@@ -148,7 +147,7 @@ MemoryLogger >> nextPut: aSignal [
 { #category : #accessing }
 MemoryLogger >> recordings [
 	"It answers a copy of the recorded collection to not grant
-	access to the users to a shared resource that should only be 
+	access to the users to a shared resource that should only be
 	modified via the mutex"
 	^ recordings copy
 ]

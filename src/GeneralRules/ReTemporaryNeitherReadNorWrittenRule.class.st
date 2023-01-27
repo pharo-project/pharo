@@ -11,7 +11,7 @@ Class {
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isTempVariable ifFalse: [ ^ self ].
 	aNode isDefinition ifFalse: [ ^ self ].
-	aNode variable isReferenced ifFalse: [ 
+	aNode variable isReferenced ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
 ]
 

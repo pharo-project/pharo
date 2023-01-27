@@ -70,7 +70,7 @@ FLDecoder >> globalEnvironment [
 	^ globalEnvironment
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 FLDecoder >> initialize [
 	super initialize.
 	

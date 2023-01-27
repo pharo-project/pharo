@@ -70,7 +70,7 @@ KMKeymap >> defaultShortcut [
 
 { #category : #accessing }
 KMKeymap >> defaultShortcut: aShortcut [
-	defaultShortcut := aShortcut.
+	defaultShortcut := aShortcut
 ]
 
 { #category : #accessing }
@@ -85,7 +85,7 @@ KMKeymap >> description: aDescription [
 
 { #category : #printing }
 KMKeymap >> displayStringOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: self name displayString;
 		nextPutAll: ' on ';
 		nextPutAll: self shortcut displayString;
@@ -140,15 +140,15 @@ KMKeymap >> name: aName [
 KMKeymap >> notifyCompleteMatchTo: aListener buffer: aBuffer [
 	| listeners |
 	aListener isCollection ifTrue: [ listeners := aListener ] ifFalse: [ listeners := { aListener } ].
-	listeners do: [ :l | l completeMatch: self buffer: aBuffer ].
+	listeners do: [ :l | l completeMatch: self buffer: aBuffer ]
 ]
 
 { #category : #matching }
 KMKeymap >> notifyPartialMatchTo: aListener [
 	| listeners |
 
-	listeners := aListener isCollection 
-		ifTrue: [ aListener ] 
+	listeners := aListener isCollection
+		ifTrue: [ aListener ]
 		ifFalse: [ { aListener } ].
 	listeners do: [ :each | each partialMatch ]
 ]
@@ -156,7 +156,7 @@ KMKeymap >> notifyPartialMatchTo: aListener [
 { #category : #matching }
 KMKeymap >> onMatchWith: anEventBuffer notify: aMatchListener andDo: anAction [
 	(self matches: anEventBuffer)
-			ifTrue: [ 
+			ifTrue: [
 				(self matchesCompletely: anEventBuffer)
 					ifTrue: [ self notifyCompleteMatchTo: aMatchListener buffer: anEventBuffer ]
 					ifFalse: [ self notifyPartialMatchTo: aMatchListener ].
@@ -166,19 +166,19 @@ KMKeymap >> onMatchWith: anEventBuffer notify: aMatchListener andDo: anAction [
 
 { #category : #printing }
 KMKeymap >> printOn: aStream [
-	aStream 
+	aStream
 		print: self name ;
 		nextPutAll: ' on ';
 		print: self shortcut ;
 		nextPutAll: ' do ' ;
 		print: self action ;
-		cr.
+		cr
 ]
 
 { #category : #initialization }
 KMKeymap >> reset [
 
-	self shortcut: self defaultShortcut.
+	self shortcut: self defaultShortcut
 ]
 
 { #category : #accessing }
@@ -188,7 +188,7 @@ KMKeymap >> shortcut [
 
 { #category : #accessing }
 KMKeymap >> shortcut: aShortcut [
-	shortcut := aShortcut.
+	shortcut := aShortcut
 ]
 
 { #category : #accessing }

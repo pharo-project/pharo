@@ -72,7 +72,7 @@ Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."
 
-	^self return: value from: self methodReturnContext
+	^self return: value from: self home
 ]
 
 { #category : #'*Debugging-Core' }
@@ -175,7 +175,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	prior to each instruction executed. Answer the simulated value of aBlock."
 	| current returnContext exception |
 	
-	aBlock hasMethodReturn
+	aBlock hasNonLocalReturn
 		ifTrue: [ self error: 'simulation of blocks with ^ can run loose' ].
 		
 	current := [ aBlock

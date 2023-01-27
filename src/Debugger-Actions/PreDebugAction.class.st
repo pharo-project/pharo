@@ -14,8 +14,8 @@ Class {
 { #category : #'actions creation' }
 PreDebugAction class >> debugActionsFor: aDebugger [
 	<preDebuggingAction>
-	
-	^ { 
+
+	^ {
 		self new
 			id: #abandonAction;
 			selector: #close;
@@ -36,18 +36,18 @@ PreDebugAction >> initialize [
 
 	super initialize.
 	self needsUpdate: false.
-	self needsValidation: false.
+	self needsValidation: false
 ]
 
 { #category : #accessing }
 PreDebugAction >> preDebugWindow [
-	
+
 	^ preDebugWindow
 ]
 
 { #category : #accessing }
 PreDebugAction >> preDebugWindow: anObject [
-	
+
 	preDebugWindow := anObject
 ]
 

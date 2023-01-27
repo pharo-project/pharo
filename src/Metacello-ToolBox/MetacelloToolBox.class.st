@@ -520,66 +520,12 @@ MetacelloToolBox class >> createVersion: targetVersionString for: configurationB
 						description: aString ] ]
 ]
 
-{ #category : #help }
-MetacelloToolBox class >> defaultTopic: pageSelector for: aConfigurationClass [
-	| stream helpTopicClass |
-	(helpTopicClass := self helpTopicClass) ifNil: [^self error: 'Help system not installed'].
-	stream := WriteStream on: String new.
-	pageSelector == #helpInstallation
-		ifTrue: [ 
-			stream
-				nextPutAll: 'To install this configuration, execute the following expression in a workspace:'; cr; tab.
-			(aConfigurationClass project hasVersion: #stable)
-				ifTrue: [ stream nextPutAll: '(', aConfigurationClass name asString, ' project version: #stable) load.' ]
-				ifFalse: [ 
-					(aConfigurationClass respondsTo: #load)
-						ifTrue: [ stream nextPutAll: aConfigurationClass name asString , ' load.' ]
-						ifFalse: [ stream nextPutAll: aConfigurationClass name asString, ' project latestVersion load.' ]].
-			^ helpTopicClass perform: #title:contents: withArguments: { 'Installing'.  stream contents} ].
-	pageSelector == #helpIntro
-		ifTrue: [ 
-			stream
-				nextPutAll: 'I am a Metacello configuration for the ', (MetacelloToolBox baseNameOfConfiguration: aConfigurationClass), ' project.'.
-			^ helpTopicClass perform: #title:contents: withArguments: { 'Intro' . stream contents} ].
-	pageSelector == #helpGettingStarted
-		ifTrue: [ 
-			stream
-				nextPutAll: 'I guess you''re on your own:).'.
-			^ helpTopicClass perform: #title:contents: withArguments: { 'Getting Started' .stream contents} ].
-]
-
 { #category : #validation }
 MetacelloToolBox class >> descriptionForValidationReasonCode: reasonCode [
 	"Description of validation reasonCode"
 
 	<apiDocumentation>
 	^MetacelloMCVersionValidator descriptionForReasonCode: reasonCode
-]
-
-{ #category : #help }
-MetacelloToolBox class >> helpTopicClass [
-
-	^self environment at: #HelpTopic ifAbsent: []
-]
-
-{ #category : #help }
-MetacelloToolBox class >> helpTopicFor: aConfigurationClass [
-	| topic pages page helpTopicClass |
-	(helpTopicClass := self helpTopicClass) ifNil: [^self error: 'Help system not installed'].
-	topic := helpTopicClass named: (self baseNameOfConfiguration: aConfigurationClass).
-	pages := (aConfigurationClass respondsTo: #helpPages)
-		ifTrue: [ aConfigurationClass perform: #helpPages ]
-		ifFalse: [ #(#helpIntro #helpInstallation #helpGettingStarted) ].
-	pages
-		do: [ :pageSelectorOrClass | 
-			page := (Smalltalk hasClassNamed: pageSelectorOrClass asString)
-				ifTrue: [ (Smalltalk classNamed: pageSelectorOrClass asString) perform: #asHelpTopic ]
-				ifFalse: [ 
-					[ aConfigurationClass perform: pageSelectorOrClass ]
-						on: MessageNotUnderstood
-						do: [ :ex | self defaultTopic: pageSelectorOrClass for: aConfigurationClass ] ].
-			topic perform: #addSubtopic: with: page ].
-	^ topic
 ]
 
 { #category : #'development support' }

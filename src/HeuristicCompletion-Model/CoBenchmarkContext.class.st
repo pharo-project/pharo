@@ -25,13 +25,13 @@ CoBenchmarkContext >> callsite: anObject [
 
 { #category : #accessing }
 CoBenchmarkContext >> completionClass [
-	
+
 	^ callsite methodNode methodClass
 ]
 
 { #category : #accessing }
 CoBenchmarkContext >> doItContext [
-	
+
 	^ nil
 ]
 
@@ -42,31 +42,31 @@ CoBenchmarkContext >> doItRequestor [
 ]
 
 { #category : #accessing }
-CoBenchmarkContext >> environmentAt: aString ifPresent: aBlockClosure [ 
-	
+CoBenchmarkContext >> environmentAt: aString ifPresent: aBlockClosure [
+
 	self class environment at: aString ifPresent: aBlockClosure
 ]
 
 { #category : #testing }
 CoBenchmarkContext >> isScripting [
-	
+
 	^ false
 ]
 
 { #category : #accessing }
 CoBenchmarkContext >> position [
-	
+
 	^ position first + 1
 ]
 
 { #category : #accessing }
 CoBenchmarkContext >> position: aPosition [
-	
+
 	position := aPosition
 ]
 
 { #category : #accessing }
 CoBenchmarkContext >> source [
-	
+
 	^ callsite methodNode method sourceCode
 ]

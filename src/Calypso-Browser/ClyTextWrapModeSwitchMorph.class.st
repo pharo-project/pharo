@@ -16,9 +16,9 @@ Class {
 }
 
 { #category : #controlling }
-ClyTextWrapModeSwitchMorph >> attachToTextMorph [ 
+ClyTextWrapModeSwitchMorph >> attachToTextMorph [
 	super attachToTextMorph.
-	
+
 	wrapModeLabel := StringMorph new.
 	wrapModeLabel setBalloonText:
 			'Let you decide if the code pane should automaticaly wrap lines if a line reach the end of the line. W: Wrap / NW: Add a scrollbar.'.
@@ -29,7 +29,7 @@ ClyTextWrapModeSwitchMorph >> attachToTextMorph [
 
 { #category : #operations }
 ClyTextWrapModeSwitchMorph >> toggle [
-	textMorph wrapped 
+	textMorph wrapped
 		ifTrue: [ textMorph beNotWrapped  ]
 		ifFalse: [ textMorph beWrapped ].
 	self updateLabel

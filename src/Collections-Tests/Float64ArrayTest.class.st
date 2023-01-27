@@ -60,7 +60,7 @@ Float64ArrayTest >> anotherValue [
 
 { #category : #coverage }
 Float64ArrayTest >> classToBeTested [
-	
+
 	^ Float64Array
 ]
 
@@ -71,9 +71,9 @@ Float64ArrayTest >> collection [
 ]
 
 { #category : #requirements }
-Float64ArrayTest >> collectionClass [ 
+Float64ArrayTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Float64Array
 ]
 
@@ -86,27 +86,27 @@ Float64ArrayTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 Float64ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
-	
+
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 Float64ArrayTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionNotIncluded 
-		ifNil: [ collectionNotIncluded := (Float64Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ].
+	^ collectionNotIncluded
+		ifNil: [ collectionNotIncluded := (Float64Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ]
 ]
 
 { #category : #requirements }
 Float64ArrayTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ collectionWith1TimeSubcollection ifNil: [ collectionWith1TimeSubcollection := collectionWithSameAtEndAndBegining  , self oldSubCollection , collectionWithSameAtEndAndBegining  ].
+	^ collectionWith1TimeSubcollection ifNil: [ collectionWith1TimeSubcollection := collectionWithSameAtEndAndBegining  , self oldSubCollection , collectionWithSameAtEndAndBegining  ]
 ]
 
 { #category : #requirements }
 Float64ArrayTest >> collectionWith2TimeSubcollection [
 " return a collection including 'oldSubCollection'  two or many time "
-	^ collectionWith2TimeSubcollection ifNil: [ collectionWith2TimeSubcollection := self collectionWith1TimeSubcollection, self oldSubCollection  ].
+	^ collectionWith2TimeSubcollection ifNil: [ collectionWith2TimeSubcollection := self collectionWith1TimeSubcollection, self oldSubCollection  ]
 ]
 
 { #category : #requirements }
@@ -118,7 +118,7 @@ Float64ArrayTest >> collectionWithCopyNonIdentical [
 { #category : #requirements }
 Float64ArrayTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ nonEmptySubcollection 
+	^ nonEmptySubcollection
 	ifNil: [ nonEmptySubcollection := (Float64Array new:2 ) at:1 put: self nonEmpty first ; at:2 put: self nonEmpty last ; yourself ]
 ]
 
@@ -164,7 +164,7 @@ Float64ArrayTest >> elementInForElementAccessing [
 { #category : #requirements }
 Float64ArrayTest >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
-	^ elementInNonEmpty .
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -188,7 +188,7 @@ Float64ArrayTest >> elementNotInForIndexAccessing [
 
 { #category : #requirements }
 Float64ArrayTest >> elementToAdd [
-" return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty" 
+" return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty"
 	^ elementNotIn
 ]
 
@@ -226,7 +226,7 @@ Float64ArrayTest >> indexArray [
 { #category : #requirements }
 Float64ArrayTest >> indexInForCollectionWithoutDuplicates [
 " return an index between 'collectionWithoutEqualsElements'  bounds"
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
@@ -269,7 +269,7 @@ Float64ArrayTest >> nonEmpty1Element [
 
 { #category : #requirements }
 Float64ArrayTest >> nonEmptyMoreThan1Element [
-" return a collection that doesn't includes equal elements' and doesn't include nil elements'" 
+" return a collection that doesn't includes equal elements' and doesn't include nil elements'"
 	^nonEmpty5ElementsNoDuplicate
 ]
 
@@ -282,19 +282,19 @@ ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 
 
 { #category : #requirements }
 Float64ArrayTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	^ collectionWithSameAtEndAndBegining
 ]
 
 { #category : #requirements }
 Float64ArrayTest >> replacementCollectionSameSize [
 " return a collection of size (secondIndex - firstIndex + 1)"
-	^replacementCollectionSameSize 
+	^replacementCollectionSameSize
 		ifNil: [ 	replacementCollectionSameSize := Float32Array new: (self secondIndex  - self firstIndex  + 1).
 				 1 to: replacementCollectionSameSize size do:
 					[ :i | replacementCollectionSameSize at:i put: elementInNonEmpty ].
 				replacementCollectionSameSize.
-				 ].
+				 ]
 ]
 
 { #category : #requirements }
@@ -353,8 +353,8 @@ Float64ArrayTest >> sortedInAscendingOrderCollection [
 { #category : #requirements }
 Float64ArrayTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'moreThan4Elements' "
-	^ collectionNotIncluded 
-		ifNil: [ collectionNotIncluded := (Float64Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ].
+	^ collectionNotIncluded
+		ifNil: [ collectionNotIncluded := (Float64Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ]
 ]
 
 { #category : #requirements }

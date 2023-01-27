@@ -22,14 +22,14 @@ Class {
 InstructionStream class >> initialize [
 	"Initialize an array of special constants returned by single-bytecode returns."
 
-	SpecialConstants := 
+	SpecialConstants :=
 		(Array with: true with: false with: nil)
-			, (Array with: -1 with: 0 with: 1 with: 2)	
+			, (Array with: -1 with: 0 with: 1 with: 2)
 	"InstructionStream initialize."
 ]
 
 { #category : #'instance creation' }
-InstructionStream class >> on: method [ 
+InstructionStream class >> on: method [
 	"Answer an instance of me on the argument, method."
 
 	^self on: method pc: method initialPC
@@ -70,8 +70,8 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 					[^client pushLiteralVariable: literal].
 				 ^client pushConstant: literal].
 			bytecode = 229 ifTrue:
-				[^client pushTemporaryVariable: byte]. 
-			^client pushClosureTemps: byte]. 
+				[^client pushTemporaryVariable: byte].
+			^client pushClosureTemps: byte].
 		bytecode = 231 ifTrue:
 			[^byte < 128
 				ifTrue: [client pushNewArrayOfSize: byte]
@@ -80,13 +80,13 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 			[^client pushConstant: (extB bitShift: 8) + byte].
 		^client pushConstant: (Character value: (extB bitShift: 8) + byte)].
 	bytecode < 240 ifTrue: "sends, trap and jump"
-		[bytecode < 236 "sends" 
+		[bytecode < 236 "sends"
 			ifTrue: [
 			"The 64 is used as a mark to tell if the send is a direct super send"
-			extB >= 64 
+			extB >= 64
 				ifTrue: [ | fixedExtB |
 					fixedExtB := extB - 64.
-					^ client 
+					^ client
 						 directedSuperSend: (method literalAt: (extA bitShift: 5) + (byte // 8) + 1)
 						 numArgs: (fixedExtB bitShift: 3) + (byte \\ 8)].
 			^client
@@ -139,22 +139,22 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	bytecode = 253 ifTrue:
 		[^client popIntoRemoteTemp: byte2 inVectorAt: byte3].
 	"249		11111001 	xxxxxxxx	syyyyyyy	Reserved for Push Float"
-	bytecode = 254 ifTrue: 
-		[^client 
-			jumpOrPopIfNotInstanceOf: (method literalAt: (extA bitShift: 8) + byte2 + 1) 
+	bytecode = 254 ifTrue:
+		[^client
+			jumpOrPopIfNotInstanceOf: (method literalAt: (extA bitShift: 8) + byte2 + 1)
 			distance: ((extB bitShift: 8) + byte3) ].
-	bytecode = 249 ifTrue: 
-		[^client 
-			pushFullClosure: (method literalAt: (extA bitShift: 8) + byte2 + 1) 
-			numCopied: (byte3 bitAnd: 16r3F) 
+	bytecode = 249 ifTrue:
+		[^client
+			pushFullClosure: (method literalAt: (extA bitShift: 8) + byte2 + 1)
+			numCopied: (byte3 bitAnd: 16r3F)
 			receiverOnStack: (byte3 bitAt: 7) = 1
 			ignoreOuterContext: (byte3 bitAt: 8) = 1 ].
 	^self interpretUnusedBytecode: client at: startPC
 ]
 
 { #category : #interpreting }
-InstructionStream >> interpretNextInstructionFor: client [ 
-	"Send to the argument, client, a message that specifies the type of the 
+InstructionStream >> interpretNextInstructionFor: client [
+	"Send to the argument, client, a message that specifies the type of the
 	next instruction."
 	^ self compiledCode encoderClass interpretNextInstructionFor: client  in: self
 ]
@@ -212,7 +212,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 				[^self interpretSistaV1ExtendedPush: extB for: client].
 			 offset = 3 ifTrue:
 				[^client doDup].
-			
+
 			 offset = 8 ifTrue:
 				[^client methodReturnReceiver].
 			 offset = 9 ifTrue:
@@ -269,7 +269,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 ]
 
 { #category : #interpreting }
-InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [ 
+InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 	"Implement the extended push for non-zero extensions."
 	"*	82			01010010			Push thisContext, (then Extend B = 1 => push
 	thisProcess) "
@@ -295,7 +295,7 @@ InstructionStream >> method [
 { #category : #private }
 InstructionStream >> method: method pc: startpc [
 
-	sender := method. 
+	sender := method.
 	"allows this class to stand alone as a method scanner"
 	pc := startpc
 ]

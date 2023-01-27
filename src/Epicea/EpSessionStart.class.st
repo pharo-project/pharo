@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #visitor }
-EpSessionStart >> accept: aVisitor [ 
+EpSessionStart >> accept: aVisitor [
 	^ aVisitor visitSessionStart: self
 ]

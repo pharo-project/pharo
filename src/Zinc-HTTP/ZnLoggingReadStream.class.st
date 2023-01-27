@@ -59,7 +59,7 @@ ZnLoggingReadStream >> identifier: string [
 	identifier := string
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnLoggingReadStream >> initialize [
 	super initialize.
 	logger := [ :string | Transcript crShow: string ].

@@ -89,6 +89,15 @@ ClassVariableTest >> testPossiblyUsingClasses [
 	self assert: (variable possiblyUsingClasses includes: CompositionScanner class)
 ]
 
+{ #category : #tests }
+ClassVariableTest >> testPrintOn [
+	| variable |
+	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	self assert: variable definitionString equals: '#CompilerClass'.
+	"but we print as a self-evaluation varibale defition"
+	self assert: variable printString equals: '#CompilerClass => ClassVariable'
+]
+
 { #category : #'tests - properties' }
 ClassVariableTest >> testPropertyAtPut [
 

@@ -3,7 +3,10 @@ Extension { #name : #Set }
 { #category : #'*OpalCompiler-Core' }
 Set >> parseOptions: anArray [
 
-	"parse an array, which is a sequence of options in a form of: 
+	"
+	Helper method for option parsing, used by the compiler (see pragma #compilerOptions:).
+	
+	Parse an array, which is a sequence of options in a form of: 
 	
 	#( + option1 option2 - option3 ... )
 	

@@ -18,20 +18,20 @@ ClyTestCommand >> applyResultInContext: aToolContext [
 	"Following code forces browser update to not wait for deferred updating logic
 	to give immediate feedback with actual test icons.
 	Without this code the icons updating is visually delayed"
-	
-	aToolContext activeQueryView dataSource runUpdate.
+
+	aToolContext activeQueryView dataSource runUpdate
 ]
 
 { #category : #'context menu support' }
 ClyTestCommand >> defaultMenuIcon [
-	
+
 	^self testResult createIcon
 ]
 
 { #category : #execution }
 ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 
-	| color |	
+	| color |
 	color := Color gray.
 	testResult hasPassed
 		ifTrue: [ color := TestResult defaultColorBackGroundForPassingTest ].
@@ -39,8 +39,8 @@ ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 		ifTrue: [ color := TestResult defaultColorBackGroundForFailureTest ].
 	testResult hasErrors
 		ifTrue: [ color := TestResult defaultColorBackGroundForErrorTest ].
-		
-	GrowlMorph 
+
+	GrowlMorph
 		openWithLabel: message
 		contents: testResult printString
 		backgroundColor: color

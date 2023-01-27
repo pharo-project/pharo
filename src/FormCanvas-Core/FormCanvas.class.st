@@ -24,7 +24,7 @@ FormCanvas class >> defaultTranslucentPatterns [
 	| patterns |
 	patterns := Array new: 8.
 	#(1 2 4 8)
-		do: [ :d | 
+		do: [ :d |
 			| mask bits pattern patternList |
 			patternList := Array new: 5.
 			mask := (1 bitShift: d) - 1.
@@ -162,7 +162,7 @@ FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderC
 		fill: c
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: self transform.
+		transform: self transform
 ]
 
 { #category : #'drawing - polygons' }
@@ -181,7 +181,7 @@ FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWid
 		fill: aFillStyle
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: self transform.
+		transform: self transform
 ]
 
 { #category : #'private - balloon engine' }
@@ -193,7 +193,7 @@ FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: bo
 		fill: c
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: self transform.
+		transform: self transform
 ]
 
 { #category : #'drawing - text' }
@@ -205,8 +205,8 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font
 	font installOn: port
 		foregroundColor: c
 		backgroundColor: Color transparent.
-	font displayString: aString on: port 
-		from: firstIndex to: lastIndex at: (origin + aPoint) kern: 0.
+	font displayString: aString on: port
+		from: firstIndex to: lastIndex at: (origin + aPoint) kern: 0
 ]
 
 { #category : #'drawing - text' }
@@ -214,18 +214,18 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	| font portRect |
 	port colorMap: nil.
 	portRect := port clipRect.
-	port clipByX1: bounds left + origin x 
-		y1: bounds top + origin y 
-		x2: bounds right + origin x 
+	port clipByX1: bounds left + origin x
+		y1: bounds top + origin y
+		x2: bounds right + origin x
 		y2: bounds bottom + origin y.
 	font := fontOrNil ifNil: [TextStyle defaultFont].
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
 		backgroundColor: Color transparent.
-	font displayString: aString asString on: port 
+	font displayString: aString asString on: port
 		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
-	port clipRect: portRect.
+	port clipRect: portRect
 ]
 
 { #category : #'drawing - text' }
@@ -233,31 +233,31 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	| font portRect endPoint |
 	port colorMap: nil.
 	portRect := port clipRect.
-	port clipByX1: bounds left + origin x 
-		y1: bounds top + origin y 
-		x2: bounds right + origin x 
+	port clipByX1: bounds left + origin x
+		y1: bounds top + origin y
+		x2: bounds right + origin x
 		y2: bounds bottom + origin y.
 	font := fontOrNil ifNil: [TextStyle defaultFont].
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
 		backgroundColor: Color transparent.
-	endPoint := font displayString: aString asString on: port 
+	endPoint := font displayString: aString asString on: port
 		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
 	underline ifTrue:[
 		font installOn: port
 			foregroundColor: uc
 			backgroundColor: Color transparent;
-			displayUnderlineOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.	
+			displayUnderlineOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
 		].
-	strikethrough ifTrue: [ 
+	strikethrough ifTrue: [
 		font installOn: port
 			foregroundColor: uc
 			backgroundColor: Color transparent;
-			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.	
+			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
 	].
 
-	port clipRect: portRect.
+	port clipRect: portRect
 ]
 
 { #category : #'private - balloon engine' }
@@ -284,7 +284,7 @@ FormCanvas >> extent [
 FormCanvas >> fillColor: c [
 	"Note: This always fills, even if the color is transparent."
 	self setClearColor: c.
-	port fillRect: form boundingBox offset: origin.
+	port fillRect: form boundingBox offset: origin
 ]
 
 { #category : #'drawing - ovals' }
@@ -294,13 +294,13 @@ FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor:
 	rect := (r translateBy: origin) truncated.
 	(borderWidth = 0 or: [borderColor isTransparent]) ifFalse:[
 		self setFillColor: borderColor.
-		(r area > 10000 or: [fillColor isTranslucent]) 
+		(r area > 10000 or: [fillColor isTranslucent])
 			ifTrue: [port frameOval: rect borderWidth: borderWidth]
 			ifFalse: [port fillOval: rect]]. "faster this way"
 	"fill the inside"
 	fillColor isTransparent ifFalse:
 		[self setFillColor: fillColor.
-		port fillOval: (rect insetBy: borderWidth)].
+		port fillOval: (rect insetBy: borderWidth)]
 ]
 
 { #category : #'drawing - ovals' }
@@ -318,7 +318,7 @@ FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderC
 	"Use a BalloonCanvas instead"
 
 	self drawOval: (aRectangle insetBy: bw // 2)
-			color: aFillStyle 
+			color: aFillStyle
 			borderWidth: bw
 			borderColor: bc
 ]
@@ -326,24 +326,24 @@ FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderC
 { #category : #'drawing - rectangles' }
 FormCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"Fill the given rectangle with the given, non-composite, fill style."
-	
+
 	| pattern |
 
 	(aFillStyle isKindOf: InfiniteForm) ifTrue: [
 		^self infiniteFillRectangle: aRectangle fillStyle: aFillStyle
 	].
 
-	(aFillStyle isSolidFill) 
+	(aFillStyle isSolidFill)
 		ifTrue:[^self fillRectangle: aRectangle color: aFillStyle asColor].
 	"We have a very special case for filling with infinite forms"
 	(aFillStyle isBitmapFill and:[aFillStyle origin = (0@0)]) ifTrue:[
 		pattern := aFillStyle form.
-		(aFillStyle direction = (pattern width @ 0) 
+		(aFillStyle direction = (pattern width @ 0)
 			and:[aFillStyle normal = (0@pattern height)]) ifTrue:[
 				"Can use an InfiniteForm"
 				^self fillRectangle: aRectangle color: (InfiniteForm with: pattern)].
 	].
-	
+
 	^self drawRectangle: aRectangle
 			color: aFillStyle
 			borderWidth: 0
@@ -359,7 +359,7 @@ FormCanvas >> finish [
 { #category : #copying }
 FormCanvas >> flush [
 	"Force all pending primitives onscreen"
-	engine ifNotNil:[engine flush].
+	engine ifNotNil:[engine flush]
 ]
 
 { #category : #other }
@@ -390,7 +390,7 @@ FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderW
 	"fill the inside"
 	fillColor isTransparent ifFalse:
 		[self setFillColor: fillColor.
-		port fillRect: (rect insetBy: borderWidth) offset: origin].
+		port fillRect: (rect insetBy: borderWidth) offset: origin]
 ]
 
 { #category : #'drawing - rectangles' }
@@ -410,23 +410,23 @@ FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderW
 			ifFalse: [w := borderWidth x.   h := borderWidth y].
 		rect := r translateBy: origin.
 		self setFillColor: bottomRightColor.
-		port 
+		port
 			 frameRectRight: rect width: w;
-			 frameRectBottom: rect height: h].
+			 frameRectBottom: rect height: h]
 ]
 
 { #category : #private }
-FormCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [ 
+FormCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 	port colorMap: (aForm colormapIfNeededFor: form); fillColor: nil.
-	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule.
+	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule
 ]
 
 { #category : #private }
 FormCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sourceAlpha [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 	port colorMap: (aForm colormapIfNeededFor: form); fillColor: nil.
-	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule alpha: sourceAlpha.
+	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule alpha: sourceAlpha
 ]
 
 { #category : #'drawing - rectangles' }
@@ -482,7 +482,7 @@ FormCanvas >> paragraph: para bounds: bounds color: c [
 	scanner := (port clippedBy: (bounds translateBy: origin)) displayScannerFor: para
 		foreground: c background: Color transparent
 		ignoreColorChanges: false.
-	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft.
+	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft
 ]
 
 { #category : #copying }
@@ -498,7 +498,7 @@ FormCanvas >> postCopy [
 { #category : #printing }
 FormCanvas >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPutAll:' on: '; print: form.
+	aStream nextPutAll:' on: '; print: form
 ]
 
 { #category : #private }
@@ -535,12 +535,12 @@ FormCanvas >> reset [
 
 	origin := 0@0.							"origin of the top-left corner of this cavas"
 	clipRect := (0@0 corner: 10000@10000).		"default clipping rectangle"
-	self shadowColor: nil.
+	self shadowColor: nil
 ]
 
 { #category : #'private - balloon engine' }
 FormCanvas >> resetEngine [
-	engine := nil.
+	engine := nil
 ]
 
 { #category : #private }
@@ -548,7 +548,7 @@ FormCanvas >> resetGrafPort [
 	"Private! Create a new grafPort for a new copy."
 
 	port := GrafPort toForm: form.
-	port clipRect: clipRect.
+	port clipRect: clipRect
 ]
 
 { #category : #private }
@@ -565,7 +565,7 @@ FormCanvas >> setClearColor: aColor [
 	port fillPattern: clearColor.
 	self depth = 8 ifTrue:[
 		"Use a stipple pattern"
-		port fillColor: (form balancedPatternFor: clearColor)].
+		port fillColor: (form balancedPatternFor: clearColor)]
 ]
 
 { #category : #private }
@@ -599,7 +599,7 @@ FormCanvas >> setFillColor: aColor [
 	screen := self translucentMaskFor: fillColor alpha depth: self depth.
 	patternWord := form pixelWordFor: fillColor.
 	port fillPattern: (screen collect: [:maskWord | maskWord bitAnd: patternWord]).
-	port combinationRule: Form paint.
+	port combinationRule: Form paint
 ]
 
 { #category : #private }
@@ -607,7 +607,7 @@ FormCanvas >> setForm: aForm [
 
 	self reset.
 	form := aForm.
-	port := GrafPort toForm: form.
+	port := GrafPort toForm: form
 ]
 
 { #category : #private }
@@ -615,18 +615,18 @@ FormCanvas >> setOrigin: aPoint clipRect: aRectangle [
 
 	origin := aPoint.
 	clipRect := aRectangle.
-	port clipRect: aRectangle.
+	port clipRect: aRectangle
 ]
 
 { #category : #private }
 FormCanvas >> setPaintColor: aColor [
 	"Install a new color used for filling."
-	
+
 	| paintColor screen patternWord |
 	paintColor := aColor.
 	paintColor ifNil: [paintColor := Color transparent].
-	paintColor isColor ifFalse: [ 
-		(paintColor isKindOf: InfiniteForm) 
+	paintColor isColor ifFalse: [
+		(paintColor isKindOf: InfiniteForm)
 			ifFalse: [^self error:'Cannot install color'].
 		^port fillPattern: paintColor; combinationRule: Form paint].
 	"Okay, so paintColor really *is* a color"
@@ -680,7 +680,7 @@ FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aCol
 	port colorMap: stencilForm maskingMap.
 	port stencil: stencilForm
 		at: aPoint + origin
-		sourceRect: sourceRect.
+		sourceRect: sourceRect
 ]
 
 { #category : #'private - balloon engine' }

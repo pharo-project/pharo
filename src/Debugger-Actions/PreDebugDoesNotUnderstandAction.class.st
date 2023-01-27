@@ -43,7 +43,7 @@ PreDebugDoesNotUnderstandAction >> id [
 
 { #category : #initialization }
 PreDebugDoesNotUnderstandAction >> initialize [
-	
+
 	super initialize.
 	self needsUpdate: false.
 	self needsValidation: false
@@ -51,12 +51,12 @@ PreDebugDoesNotUnderstandAction >> initialize [
 
 { #category : #accessing }
 PreDebugDoesNotUnderstandAction >> preDebugWindow [
-	
+
 	^ preDebugWindow
 ]
 
 { #category : #accessing }
 PreDebugDoesNotUnderstandAction >> preDebugWindow: anObject [
-	
+
 	preDebugWindow := anObject
 ]

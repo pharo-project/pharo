@@ -10,7 +10,7 @@ Class {
 { #category : #cleaning }
 GoferCleanup >> cleanup: aWorkingCopy [
 
-	self 
+	self
 		cleanupCategories: aWorkingCopy;
 		cleanupProtocols: aWorkingCopy
 ]
@@ -30,7 +30,7 @@ GoferCleanup >> cleanupProtocols: aWorkingCopy [
 		(aWorkingCopy packageSet extensionCategoriesForClass: class) do: [ :category |
 			(class organization listAtCategoryNamed: category) isEmpty
 				ifTrue: [ class organization removeCategory: category ] ] ].
-		
+
 	aWorkingCopy packageSet classesAndMetaClasses do: [ :class |
 		(aWorkingCopy packageSet coreCategoriesForClass: class) do: [ :category |
 			(class organization listAtCategoryNamed: category) isEmpty

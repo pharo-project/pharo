@@ -9,8 +9,16 @@ Class {
 
 { #category : #coverage }
 LargeNegativeIntegerTest >> classToBeTested [
-	
+
 	^ LargeNegativeInteger
+]
+
+{ #category : #'tests - arithmetic' }
+LargeNegativeIntegerTest >> testAbs [
+
+	self
+		assert: (SmallInteger minVal - 2) abs
+		equals: (SmallInteger minVal - 2) negated
 ]
 
 { #category : #tests }
@@ -122,7 +130,7 @@ LargeNegativeIntegerTest >> testSqrt [
 LargeNegativeIntegerTest >> testStoreOn [
 	| integer |
 	integer := SmallInteger minVal - 1.
-	
+
 	"Store on adds a space before a negative number to avoid mistaking it with a - message"
 	self
 		assert: integer class equals: LargeNegativeInteger;

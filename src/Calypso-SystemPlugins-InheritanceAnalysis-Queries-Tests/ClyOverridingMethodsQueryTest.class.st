@@ -12,7 +12,7 @@ ClyOverridingMethodsQueryTest >> createQuery [
 { #category : #running }
 ClyOverridingMethodsQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
+
 	environment addPlugin: ClyInheritanceAnalysisEnvironmentPlugin new
 ]
 
@@ -21,11 +21,11 @@ ClyOverridingMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClassWhichInheritsAbstractClassMock >> #abstractMethod1) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWhichInheritsAbstractClassMock >> #overriddenMethod) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod) in: environment).
 	self assert: query checkEmptyResult
@@ -35,38 +35,38 @@ ClyOverridingMethodsQueryTest >> testCheckIfEmpty [
 ClyOverridingMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClassWhichInheritsAbstractClassMock >> #abstractMethod1. 
+		ClyClassWhichInheritsAbstractClassMock >> #abstractMethod1.
 		ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod.
 		ClyClassWhichInheritsAbstractClassMock >> #overriddenMethod}.
-	
+
 	self assert: foundSelectors equals: #(abstractMethod1 #overriddenMethod)
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfOwnMethodWhichIsNotOverridden [
-	
+
 	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod)
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfSuperclassMethodWhichIsAlreadyImplemented [
-	
+
 	self assert: (query isAffectedByChangedMethod: ClyAbstractClassMock >> #overriddenMethod)
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfSuperclassMethodWhichOverridesAnotherSuperclassMethod [
 	"this case is important to be affected when override method was removed"
-	
-	query := ClyOverridingMethodsQuery 
+
+	query := ClyOverridingMethodsQuery
 		from: ClyClassScope of: ClyClassWhichInheritsAbstractSubclassMock in: environment.
-		
+
 	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testNotAffectedByChangeOfOverriddenMethodFromAnotherHierarchyWhenSameMethodExistsHereToo [
-	
+
 	self deny: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
 ]
 
