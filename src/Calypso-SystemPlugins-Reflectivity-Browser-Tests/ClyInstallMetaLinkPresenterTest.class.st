@@ -69,7 +69,7 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	|presenter list|
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
 	list := presenter metalinkListPresenter.
-	list clickItem: 1.	
+	list clickItem: 1.
 	self deny: self nodeInRealMethod hasMetaLinks.
 	presenter toolbarButtons first click.
 	self assert: self nodeInRealMethod hasMetaLinks.
@@ -82,7 +82,7 @@ ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForInstallation [
 	links := self presenterForMetalinkInstallation allRelevantMetaLinks.
 	self assert: links size >= 2.
 	self assertCollection: links includesAll: { metalink. metalink2 }.
-	self denyCollection: links includesAll: { breakpoint. watchpoint. executionCounter  }.
+	self denyCollection: links includesAll: { breakpoint. watchpoint. executionCounter  }
 ]
 
 { #category : #tests }
@@ -96,7 +96,7 @@ ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForUninstallation [
 { #category : #tests }
 ClyInstallMetaLinkPresenterTest >> testToolbarButtonsCollectionSize [
 	self assert: self presenterForMetalinkInstallation toolbarButtons size equals: 2.
-	self assert: self presenterForMetalinkUninstallation toolbarButtons size equals: 2.
+	self assert: self presenterForMetalinkUninstallation toolbarButtons size equals: 2
 ]
 
 { #category : #tests }
@@ -104,7 +104,7 @@ ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkInstallation [
 	|toolbarButtons|
 	toolbarButtons := self presenterForMetalinkInstallation toolbarButtons.
 	self assert: toolbarButtons first label equals: 'Install'.
-	self assert: toolbarButtons last label equals: 'Cancel'.
+	self assert: toolbarButtons last label equals: 'Cancel'
 ]
 
 { #category : #tests }
@@ -112,7 +112,7 @@ ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkUninstallation [
 	|toolbarButtons|
 	toolbarButtons := self presenterForMetalinkUninstallation toolbarButtons.
 	self assert: toolbarButtons first label equals: 'Uninstall'.
-	self assert: toolbarButtons last label equals: 'Cancel'.
+	self assert: toolbarButtons last label equals: 'Cancel'
 ]
 
 { #category : #tests }
@@ -133,7 +133,7 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
 	self nodeInRealMethod link: metalink.
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
 	list := presenter metalinkListPresenter.
-	list clickItem: 1.	
+	list clickItem: 1.
 	self assert: self nodeInRealMethod hasMetaLinks.
 	presenter toolbarButtons first click.
 	self deny: self nodeInRealMethod hasMetaLinks

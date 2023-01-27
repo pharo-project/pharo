@@ -11,8 +11,8 @@ Class {
 
 { #category : #'building groups' }
 ClyInheritedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	
-	^ClyAllMethodGroup 
+
+	^ClyAllMethodGroup
 		withMethodQuery: aMethodQuery andClassesInheritedFrom: aClassScope
 ]
 
@@ -28,6 +28,6 @@ ClyInheritedMethodGroupProvider >> isStatic [
 
 { #category : #testing }
 ClyInheritedMethodGroupProvider >> shouldBuildGroupWith: aMethodQuery [
-	
+
 	^true
 ]

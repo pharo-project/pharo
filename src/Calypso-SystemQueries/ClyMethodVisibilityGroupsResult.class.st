@@ -43,7 +43,7 @@ ClyMethodVisibilityGroupsResult class >> withDefaultHierarchy [
 { #category : #'instance creation' }
 ClyMethodVisibilityGroupsResult class >> withHierarchy: aClassHierarchy [
 
-	^self new 
+	^self new
 		hierarchy: aClassHierarchy
 ]
 
@@ -53,7 +53,7 @@ ClyMethodVisibilityGroupsResult >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^false ].
-	
+
 	^ hierarchy = anObject hierarchy
 ]
 
@@ -70,11 +70,11 @@ ClyMethodVisibilityGroupsResult >> buildGroupFor: aClass depth: depth toShowMeth
 { #category : #building }
 ClyMethodVisibilityGroupsResult >> fillWith: classes [
 	| actualClassScope classMap addedClasses |
-	actualClassScope := self scope asLocalClassScope. 
+	actualClassScope := self scope asLocalClassScope.
 	classMap := hierarchy buildFrom: classes.
 	addedClasses := Set new.
 	classMap doInOrderWithDepth: [ :each :depth |
-		(addedClasses includes: each) ifFalse: [ 
+		(addedClasses includes: each) ifFalse: [
 			addedClasses add: each.
 			self buildGroupFor: each depth: depth toShowMethodsFrom: actualClassScope]]
 ]

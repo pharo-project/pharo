@@ -40,7 +40,7 @@ KMBuilder >> setAsGlobalCategory: aGlobalCategory [
 
 { #category : #'keymap-building' }
 KMBuilder >> shortcut: aKeymapName [
-	^KMKeymapBuilder 
+	^KMKeymapBuilder
 		for: aKeymapName
 		platform: platform
 ]

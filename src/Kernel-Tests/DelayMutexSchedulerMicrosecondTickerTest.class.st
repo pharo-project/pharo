@@ -13,6 +13,6 @@ Class {
 }
 
 { #category : #tests }
-DelayMutexSchedulerMicrosecondTickerTest >> classForScheduler [ 
+DelayMutexSchedulerMicrosecondTickerTest >> classForScheduler [
 	^ DelayMutexScheduler
 ]

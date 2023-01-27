@@ -3,7 +3,7 @@ Extension { #name : #CmdMenuGroup }
 { #category : #'*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> buildContextMenu: aMenu [
 
-	self isInlined 
+	self isInlined
 		ifTrue: [ self inlineContextMenuItemsInto: aMenu ]
 		ifFalse: [ self buildContextSubMenuIn: aMenu ]
 ]
@@ -13,10 +13,10 @@ CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 
 	| submenu |
 	submenu := UIManager default newMenuIn: aMenu defaultTarget for: aMenu defaultTarget.
-	
+
 	contents do: [ :each | each buildContextMenu: submenu ].
-	
-	submenu hasItems ifTrue: [ 
+
+	submenu hasItems ifTrue: [
 		aMenu add: self name icon: self icon subMenu: submenu.
 		self description ifNotNil: [:d | aMenu lastItem setBalloonText: d] ]
 ]
@@ -25,25 +25,25 @@ CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 CmdMenuGroup >> inlineContextMenuItemsInto: aMenu [
 
 	aMenu addLine.
-	
+
 	contents do: [ :each | each buildContextMenu: aMenu ].
-	
-	aMenu addLine.
+
+	aMenu addLine
 ]
 
 { #category : #'*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 
 	self isActive ifFalse: [ ^self ].
-	
+
 	self isInlined
 		ifTrue: [ aBuilder items ifNotEmpty: [aBuilder withSeparatorAfter] ]
 		ifFalse: [ self registerContextSubMenuWithBuilder: aBuilder].
-		
-	contents do: [ :each | 
+
+	contents do: [ :each |
 		each registerContextMenuItemsWithBuilder: aBuilder ].
-	
-	self isInlined & aBuilder items notEmpty 
+
+	self isInlined & aBuilder items notEmpty
 		ifTrue: [ aBuilder withSeparatorAfter ]
 ]
 

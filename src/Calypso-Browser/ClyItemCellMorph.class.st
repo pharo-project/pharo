@@ -25,7 +25,7 @@ ClyItemCellMorph >> build [
 { #category : #initialization }
 ClyItemCellMorph >> initialize [
 	super initialize.
-	label := StringMorph new.
+	label := StringMorph new
 ]
 
 { #category : #accessing }

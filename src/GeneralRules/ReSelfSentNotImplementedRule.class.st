@@ -15,7 +15,7 @@ ReSelfSentNotImplementedRule class >> checksMethod [
 { #category : #accessing }
 ReSelfSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'SelfSentNotImplementedRule'
 ]
 
@@ -23,10 +23,10 @@ ReSelfSentNotImplementedRule class >> uniqueIdentifierName [
 ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemSends |
 	aMethod methodClass isTrait ifTrue: [ ^ self ].
-	problemSends := 
-		(aMethod sendNodes select: [ :msgSend | msgSend isSelfSend  | msgSend isSuperSend ]) 
+	problemSends :=
+		(aMethod sendNodes select: [ :msgSend | msgSend isSelfSend  | msgSend isSuperSend ])
 			reject: [:msgSend | aMethod methodClass canUnderstand: (msgSend selector)].
-	
+
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
 ]

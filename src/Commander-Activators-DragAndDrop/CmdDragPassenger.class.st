@@ -22,7 +22,7 @@ Class {
 { #category : #'instance creation' }
 CmdDragPassenger class >> draggedFromContext: aToolContext toActivate: commandActivators [
 
-	^self new 
+	^self new
 		dragContext: aToolContext;
 		dropActivators: commandActivators
 ]
@@ -35,7 +35,7 @@ CmdDragPassenger >> asDraggableMorph [
 { #category : #testing }
 CmdDragPassenger >> canBeDroppedInContext: aToolContext [
 
-	^dropActivators anySatisfy: [ :each | 
+	^dropActivators anySatisfy: [ :each |
 		each canExecuteDropInContext: aToolContext]
 ]
 
@@ -62,10 +62,10 @@ CmdDragPassenger >> dropActivators: anObject [
 { #category : #dropping }
 CmdDragPassenger >> dropInContext: aToolContext [
 	| targetActivator |
-	targetActivator := dropActivators detect: [ :each | 
+	targetActivator := dropActivators detect: [ :each |
 		each canExecuteDropInContext: aToolContext].
-	
+
 	targetActivator executeDropInContext: aToolContext.
-	
+
 	^true
 ]

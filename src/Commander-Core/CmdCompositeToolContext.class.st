@@ -18,14 +18,14 @@ Class {
 
 { #category : #accessing }
 CmdCompositeToolContext >> activeContextFor: aCommand [
-	^existingContexts detect: [ :each | 
+	^existingContexts detect: [ :each |
 		each allowsExecutionOf: aCommand]
 ]
 
 { #category : #testing }
 CmdCompositeToolContext >> allowsExecutionOf: aCommandClass [
 
-	^existingContexts anySatisfy: [:each | 
+	^existingContexts anySatisfy: [:each |
 		each allowsExecutionOf: aCommandClass]
 ]
 
@@ -55,7 +55,7 @@ CmdCompositeToolContext >> prepareFullExecutionOf: aCommand [
 
 { #category : #'command execution' }
 CmdCompositeToolContext >> prepareNewCommand: aCommand [
-	
+
 	(self activeContextFor: aCommand)
 		prepareNewCommand: aCommand
 ]

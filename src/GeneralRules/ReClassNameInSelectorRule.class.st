@@ -17,7 +17,7 @@ ReClassNameInSelectorRule class >> checksMethod [
 { #category : #accessing }
 ReClassNameInSelectorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ClassNameInSelectorRule'
 ]
 
@@ -26,12 +26,12 @@ ReClassNameInSelectorRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| className classNameIndex |
 	(aMethod methodClass isMeta) ifFalse: [ ^ self ].
 	className := aMethod methodClass soleInstance name.
-	classNameIndex := aMethod selector 
+	classNameIndex := aMethod selector
 		indexOfSubCollection: className
 		startingAt: 1.
-		
+
 	classNameIndex > 0 ifTrue: [ aCriticBlock cull: (
-		(self 
+		(self
 			critiqueFor: aMethod
 			withInterval: (classNameIndex to: classNameIndex + className size ))
 			tinyHint: className;

@@ -20,7 +20,7 @@ TwoInARowStar >> T: anObj [
 { #category : #API }
 TwoInARowStar >> getNext: previousObj [
 	^ Continuation
-		currentDo: [ :here_again | 
+		currentDo: [ :here_again |
 			leave := here_again.
 			fill value: previousObj ]
 ]
@@ -29,7 +29,7 @@ TwoInARowStar >> getNext: previousObj [
 TwoInARowStar >> tree: aTree [
 	| fst |
 	fst := Continuation
-		currentDo: [ :here | 
+		currentDo: [ :here |
 			leave := here.
 			self waddle: aTree.
 			leave value: nil ].
@@ -47,7 +47,7 @@ TwoInARowStar >> waddle: aTree [
 			(car isKindOf: Link)
 				ifTrue: [ self waddle: car ]
 				ifFalse: [ Continuation
-						currentDo: [ :rest | 
+						currentDo: [ :rest |
 							fill := rest.
 							leave value: car ] ].
 			self waddle: cdr ]

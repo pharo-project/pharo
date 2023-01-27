@@ -25,7 +25,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyMethodSourcesQuery class >> filteredBy: aStringPattern [
-	^self new 
+	^self new
 		pattern: aStringPattern
 ]
 
@@ -50,7 +50,7 @@ ClyMethodSourcesQuery class >> withString: aString caseSensitive: aBool [
 { #category : #'instance creation' }
 ClyMethodSourcesQuery class >> withString: aString caseSensitive: aBool from: aScope [
 
-	^self 
+	^self
 		filteredBy: (ClySubstringPattern with: aString caseSensitive: aBool)
 		from: aScope
 ]

@@ -12,10 +12,10 @@ KMCombinationTest >> testCombinationOfSimpleShortcuts [
 
 	| shortcut otherShortcut combination |
 	shortcut := $a command.
-	otherShortcut := $b ctrl.	
+	otherShortcut := $b ctrl.
 	combination := shortcut | otherShortcut.
 	self assert: (combination includes: shortcut).
-	self assert: (combination includes: otherShortcut).	
+	self assert: (combination includes: otherShortcut).
 	self assert: ((combination collect: [:each | each platform]) allSatisfy: [ :p | p = #all ])
 ]
 
@@ -23,7 +23,7 @@ KMCombinationTest >> testCombinationOfSimpleShortcuts [
 KMCombinationTest >> testCombinationSeveralShortcuts [
 	| shortcut platforms |
 	platforms := Set new.
-	
+
 	shortcut := $a command mac | $a ctrl win | $a ctrl unix | $a alt.
 	shortcut combinationsDo: [ :c | platforms add: c platform ].
 	self assert: (platforms includes: #MacOSX).
@@ -36,9 +36,9 @@ KMCombinationTest >> testCombinationSeveralShortcuts [
 KMCombinationTest >> testMacDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl mac.
-	
+
 	self assert: shortcut shortcut equals: $a ctrl.
-	
+
 	self assert: shortcut platform equals: #MacOSX
 ]
 
@@ -55,9 +55,9 @@ KMCombinationTest >> testMacMetaShouldBeCmd [
 KMCombinationTest >> testPlatformDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl win.
-	
+
 	self assert: shortcut shortcut equals: $a ctrl.
-	
+
 	self assert: shortcut platform equals: #Windows
 ]
 
@@ -73,9 +73,9 @@ KMCombinationTest >> testShortcutIsSimpleCombination [
 KMCombinationTest >> testUnixDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl unix.
-	
+
 	self assert: shortcut shortcut equals: $a ctrl.
-	
+
 	self assert: shortcut platform equals: #Unix
 ]
 
@@ -92,8 +92,8 @@ KMCombinationTest >> testWindowsAndUnixMetaShouldBeCtrl [
 KMCombinationTest >> testWindowsDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl win.
-	
+
 	self assert: shortcut shortcut equals: $a ctrl.
-	
+
 	self assert: shortcut platform equals: #Windows
 ]

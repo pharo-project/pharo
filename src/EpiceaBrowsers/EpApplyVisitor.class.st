@@ -40,6 +40,11 @@ EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
 ]
 
 { #category : #visitor }
+EpApplyVisitor >> visitCategoryRegistration: aPackageCreated [
+
+]
+
+{ #category : #visitor }
 EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
 	environment organization removeCategory: aPackageRemoved categoryName
 ]

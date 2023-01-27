@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : #queries }
-ClyPackageExtensionScope >> classesDo: aBlock [ 
-	self packagesDo: [ :package | 
-		package extendedClasses 
-			collect: [ :each | each instanceSide ] 
+ClyPackageExtensionScope >> classesDo: aBlock [
+	self packagesDo: [ :package |
+		package extendedClasses
+			collect: [ :each | each instanceSide ]
 			thenDo: aBlock]
 ]
 
 { #category : #queries }
 ClyPackageExtensionScope >> methodsDo: aBlock [
-	
-	self packagesDo: [ :package | 
+
+	self packagesDo: [ :package |
 		package extensionMethods do: aBlock ]
 ]
 

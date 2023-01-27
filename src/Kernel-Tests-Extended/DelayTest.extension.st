@@ -11,13 +11,13 @@ DelayTest >> testSemaphoreNoTimeout [
 		delay unschedule.
 		self deny: process isTerminated.
 	] ensure: [sem signal].
-	self assert: process isTerminated.
+	self assert: process isTerminated
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 DelayTest >> testSemaphoreTimeout [
 	"When we provide our own semaphore for a Delay, it should be used"
-	
+
 	| sem |
 	sem := Semaphore new.
 	[ | process |

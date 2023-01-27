@@ -57,7 +57,7 @@ Week class >> starting: aDateAndTime duration: aDuration [
 
 	^ super
 		starting: adjusted
-		duration: (Duration weeks: 1).
+		duration: (Duration weeks: 1)
 ]
 
 { #category : #'instance creation' }
@@ -93,7 +93,7 @@ Week >> index [
 Week >> printOn: aStream [
 
 	aStream nextPutAll: 'a Week starting: '.
-	self start printOn: aStream.
+	self start printOn: aStream
 ]
 
 { #category : #private }

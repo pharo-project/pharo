@@ -12,11 +12,11 @@ Class {
 ClyClassSideLinkTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 	| command activator icon button |
 	super decorateMainTableCell: anItemCellMorph inContext: itemContext.
-	
+
 	command := ClySwitchToClassSideCommand new.
 	itemContext prepareNewCommand: command.
-	activator := CmdCommandActivator new 
-			command: command; 
+	activator := CmdCommandActivator new
+			command: command;
 			context: itemContext.
 	icon := anItemCellMorph iconNamed: #forward.
 	button := command createTableCellButtonWith: icon using: activator.
@@ -31,14 +31,14 @@ ClyClassSideLinkTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 { #category : #decoration }
 ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext
 ]
 
 { #category : #decoration }
 ClyClassSideLinkTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyTaggedMethodGroup asCalypsoItemContext
 ]
 
@@ -49,9 +49,9 @@ ClyClassSideLinkTableDecorator class >> priority [
 
 { #category : #decoration }
 ClyClassSideLinkTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	
+
 	| tagName |
-	tagName := aDataSourceItem name asLowercase.	
-	^#('see class side' 'seeclassside') 
+	tagName := aDataSourceItem name asLowercase.
+	^#('see class side' 'seeclassside')
 		anySatisfy: [ :each | tagName beginsWith: each ]
 ]
