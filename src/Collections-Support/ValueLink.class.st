@@ -21,8 +21,8 @@ ValueLink class >> value:	 aValue [
 
 { #category : #comparing }
 ValueLink >> = anotherObject [
-	^self species == anotherObject species 
-		and: [self value = anotherObject value 
+	^self species == anotherObject species
+		and: [self value = anotherObject value
 				and: [self nextLink == anotherObject nextLink]]
 ]
 
