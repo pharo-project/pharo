@@ -22,7 +22,7 @@ ClyClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 
 { #category : #'system changes' }
 ClyClassGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aPackageScope [
-	aPackageScope packagesDo: [ :each | 
+	aPackageScope packagesDo: [ :each |
 		(aSystemAnnouncement affectsPackage: each) ifTrue: [^true]].
 	^false
 ]

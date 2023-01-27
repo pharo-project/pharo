@@ -13,7 +13,7 @@ ClyAllVariablesQueryTest >> createQuery [
 ClyAllVariablesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: ClyClass2FromP1Mock in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyClassScope of: ProtoObject in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -23,9 +23,9 @@ ClyAllVariablesQueryTest >> testFromSingleClass [
 
 	| varNames |
 	self queryFromScope: ClyClassScope of: ClyClass2FromP1Mock.
-	
+
 	varNames := resultItems collect: [:each | each name] as: Set.
-	self 
-		assert: varNames 
+	self
+		assert: varNames
 		equals: ClyClass2FromP1Mock instVarNames asSet, (ClyClass2FromP1Mock classVariables collect: [:each | each name])
 ]

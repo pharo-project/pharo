@@ -40,21 +40,21 @@ ClyTargetTool >> createToolFor: browser [
 
 { #category : #initialization }
 ClyTargetTool >> forActivation: aClyTabActivationStrategyAnnotation context: aClyBrowserContext [
-	
+
 	activation := aClyTabActivationStrategyAnnotation.
-	context := aClyBrowserContext 
+	context := aClyBrowserContext
 ]
 
 { #category : #testing }
 ClyTargetTool >> isMatched [
-	
+
 	^ matchedTool isNotNil
 ]
 
 { #category : #matching }
-ClyTargetTool >> match: aListOfClyTool [ 
-	
-	aListOfClyTool 
+ClyTargetTool >> match: aListOfClyTool [
+
+	aListOfClyTool
 		detect: [ :tool | activation toolClass = tool class
 			and: [ tool isValidInContext: self context ] ]
 		ifFound: [ :tool | matchedTool := tool ]

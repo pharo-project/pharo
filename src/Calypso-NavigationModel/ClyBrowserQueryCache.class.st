@@ -54,7 +54,7 @@ ClyBrowserQueryCache class >> filledBy: aBrowserQueryResult startingAt: startPos
 { #category : #'instance creation' }
 ClyBrowserQueryCache class >> withSize: cacheSize [
 
-	^self new 
+	^self new
 		sizeLimit: cacheSize
 ]
 
@@ -82,7 +82,7 @@ ClyBrowserQueryCache >> findItemsWith: actualObjects forAbsentDo: absentBlock [
 	If there is no item for some of given objects method uses absentBlock result.
 	For comparision cache uses identity while normally content delegates comparison to environment property which by default is equality.
 	We use identity for cache because with remote scenario actual objects will be proxies which will send remote messages for each object to compare	and we want to escape it"
-	
+
 	^actualObjects collect: [ :eachObject |
 		items detect: [ :item | item actualObject == eachObject ] ifNone: absentBlock]
 ]
@@ -119,18 +119,18 @@ ClyBrowserQueryCache >> items: anObject [
 { #category : #controlling }
 ClyBrowserQueryCache >> loadItemOf: aBrowserQueryResult at: position [
 	(self includesItemAt: position) ifTrue: [ ^ self ].
-	
+
 	startPosition := position.
 	self fillItemsFrom: aBrowserQueryResult
 ]
 
 { #category : #controlling }
 ClyBrowserQueryCache >> loadItemsOf: aBrowserQueryResult startingWhere: conditionBlock [
-	
+
 	| newItems |
 	newItems := aBrowserQueryResult itemsStartingWhere: conditionBlock count: sizeLimit.
 	newItems ifEmpty: [ ^false  ].
-	
+
 	startPosition := newItems first position.
 	items := newItems.
 	^true

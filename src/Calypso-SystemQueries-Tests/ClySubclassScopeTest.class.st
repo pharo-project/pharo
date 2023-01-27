@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClySubclassScopeTest >> scopeClass [
-	
+
 	^ClySubclassScope
 ]
 
@@ -14,9 +14,9 @@ ClySubclassScopeTest >> scopeClass [
 ClySubclassScopeTest >> testClassEnumeration [
 	| expected |
 	scope := ClySubclassScope of: ClyClass1FromP1Mock.
-	
+
 	scope classesDo: [ :each | result add: each ].
-	
+
 	expected := ClyClass1FromP1Mock allSubclasses.
 	self assert: result asSet equals: expected asSet
 ]
@@ -28,7 +28,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenBothMetaLevelsAreLocalS
 	scope := ClySubclassScope of: Class localScope: ClyBothMetaLevelClassScope.
 
 	scope classesDo: [ :each | result add: each].
-	
+
 	expected := Class subclasses select: #isInstanceSide.
 	expected := expected flatCollect: [:each | {each instanceSide. each classSide}].
 	self assert: result asSet equals: expected asSet
@@ -41,7 +41,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenClassSideIsLocalScope [
 	scope := ClySubclassScope of: Class localScope: ClyClassSideScope.
 
 	scope classesDo: [ :each | result add: each].
-	
+
 	expected := Class subclasses select: #isInstanceSide thenCollect: #classSide.
 	self assert: result asSet equals: expected asSet
 ]
@@ -53,7 +53,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenConcreteClassScopeIsLoc
 	scope := ClySubclassScope of: Class localScope: ClyClassScope.
 
 	scope classesDo: [ :each | result add: each].
-	
+
 	expected := Class allSubclasses asSet.
 	self assert: result asSet equals: expected asSet
 ]
@@ -65,7 +65,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenInstanceSideIsLocalScop
 	scope := ClySubclassScope of: Class localScope: ClyInstanceSideScope.
 
 	scope classesDo: [ :each | result add: each].
-	
+
 	expected := Class subclasses select: #isInstanceSide.
 	self assert: result asSet equals: expected asSet
 ]
@@ -83,9 +83,9 @@ ClySubclassScopeTest >> testClassEnumerationOverMetaClass [
 { #category : #tests }
 ClySubclassScopeTest >> testMethodsEnumeration [
 	scope := ClySubclassScope of: ClyClass1FromP1Mock.
-	
+
 	scope methodsDo: [ :each | result add: each ].
-	
+
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses first localMethods).
 	self deny: (result includesAll: ClyClass1FromP1Mock subclasses first classSide localMethods).
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses second localMethods).
@@ -100,9 +100,9 @@ ClySubclassScopeTest >> testMethodsEnumeration [
 ClySubclassScopeTest >> testMethodsEnumerationWhenBothMetaLevels [
 
 	scope := ClySubclassScope of: ClyClass1FromP1Mock localScope: ClyBothMetaLevelClassScope.
-	
+
 	scope methodsDo: [ :each | result add: each].
-	
+
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses first localMethods).
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses first classSide localMethods).
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses second localMethods).
@@ -118,9 +118,9 @@ ClySubclassScopeTest >> testMethodsEnumerationWhenInstanceSideMetaLevel [
 	| subclassMethods |
 	scope := ClySubclassScope of: ClyClass1FromP1Mock.
 	scope localScopeClass: ClyInstanceSideScope.
-	
+
 	scope methodsDo: [ :each | result add: each ].
-	
+
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses first localMethods).
 	subclassMethods := ClyClass1FromP1Mock subclasses
 		flatCollect: [ :each | each classSide localMethods ].

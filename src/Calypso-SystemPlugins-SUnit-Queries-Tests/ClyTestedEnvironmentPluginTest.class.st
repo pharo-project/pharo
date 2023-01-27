@@ -10,10 +10,10 @@ Class {
 { #category : #running }
 ClyTestedEnvironmentPluginTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
+
 	environment system: ClySystemEnvironment currentImage.
 	plugin := ClyTestedEnvironmentPlugin new.
-	plugin environment: environment.
+	plugin environment: environment
 ]
 
 { #category : #tests }
@@ -104,7 +104,7 @@ ClyTestedEnvironmentPluginTest >> testFindingTestCoveringMethod [
 ClyTestedEnvironmentPluginTest >> testNormalizingSelectorForComparison [
 	#(#one #one: #two #two: #one:two: #oneTwo: #+ #- #+-)
 		with: #('one' 'one' 'two' 'two' 'onetwo' 'onetwo' '+' '-' '+-')
-		do: [ :original :transformed | 
+		do: [ :original :transformed |
 			self assert: (plugin normalizeSelectorForComparison: original) equals: transformed.
 			self assert: (plugin normalizeSelectorForComparison: original asString) equals: transformed.
 			self assert: (plugin normalizeSelectorForComparison: transformed) equals: transformed.

@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : #'method groups' }
-ClyFFIEnvironmentPlugin >> collectMethodGroupProviders [ 
+ClyFFIEnvironmentPlugin >> collectMethodGroupProviders [
 	^{ClyFFIMethodGroupProvider new}
 ]
 
 { #category : #'item decoration' }
 ClyFFIEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	aMethod isFFIMethod ifTrue: [ 
+	aMethod isFFIMethod ifTrue: [
 		anItem markWith: ClyFFIMethodTag]
 ]

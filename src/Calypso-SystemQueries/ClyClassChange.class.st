@@ -29,7 +29,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyClassChange class >> of: aClass [
-	^self new 
+	^self new
 		affectedClass: aClass
 ]
 
