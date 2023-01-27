@@ -107,7 +107,7 @@ RBInlineTemporaryRefactoring >> transform [
 { #category : #preconditions }
 RBInlineTemporaryRefactoring >> verifySelectedInterval [
 
-	sourceTree := class parseTreeFor: selector.
+	sourceTree := class parseTreeForSelector: selector.
 	sourceTree ifNil: [ self refactoringFailure: 'Could not parse source' ].
 	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
 	assignmentNode isAssignment

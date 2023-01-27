@@ -83,7 +83,7 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 	protocols := class protocolsFor: aSelector.
 	refactoring := RBExpandReferencedPoolsTransformation
 		               model: self model
-		               forMethod: (class parseTreeFor: aSelector)
+		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
 	^ {refactoring}, (self allClasses select: [ :each | (each directlyDefinesMethod: aSelector) not ] 

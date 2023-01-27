@@ -26,7 +26,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	class compile: 'foo: arg1 bar: arg2 ^ (super foo: arg1 bar: arg2) - arg1' classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #foo:bar: . superclass }).
-	self assert: (class parseTreeFor: #foo:bar:) 
+	self assert: (class parseTreeForSelector: #foo:bar:) 
 			equals: (self parseMethod: 'foo: arg1 bar: arg2 ^ (arg1 + arg2) - arg1')
 ]
 
@@ -49,7 +49,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 		classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #foo:bar: . class }).
-	self assert: (class parseTreeFor: #exampleInline) 
+	self assert: (class parseTreeForSelector: #exampleInline) 
 			equals: (self parseMethod: 'exampleInline
 	| x |
 	x := 3 + (a + b).
@@ -63,9 +63,9 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod
 	refactoring := self createRefactoringWithArguments:  
 		{ methodName . RBRefactoryTestDataApp }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineLast) equals: (self parseMethod: 'inlineLast
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]] ').
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #multipleCalls) equals: (self parseMethod: 'multipleCalls
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #multipleCalls) equals: (self parseMethod: 'multipleCalls
 	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)].
 	(1 to: 10) inject: 1 into: [:sum1 :each1 | sum1 * (self foo: each1)]')
 ]
@@ -80,8 +80,8 @@ RBInlineAllMethodParametrizedTest >> testRecursiveMethod [
 		compile: 'bar ^self foo' classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #foo . class }).
-	self assert: (class parseTreeFor: #foo) 
+	self assert: (class parseTreeForSelector: #foo) 
 			equals: (self parseMethod: 'foo ^self foo').
-	self assert: (class parseTreeFor: #bar) 
+	self assert: (class parseTreeForSelector: #bar) 
 			equals: (self parseMethod: 'bar ^self foo')
 ]

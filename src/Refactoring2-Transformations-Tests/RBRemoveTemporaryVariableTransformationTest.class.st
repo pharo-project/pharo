@@ -50,7 +50,7 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 	
 	class := refactoring model classNamed: #RBRemoveTemporaryVariableTransformationTest.
 	self assert: (class directlyDefinesMethod: #foo).		
-	self assert: (class parseTreeFor: #foo) temporaries size equals: 1
+	self assert: (class parseTreeForSelector: #foo) temporaries size equals: 1
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 	
 	class := transformation model classNamed: self changeMock name.
 	self assert: (class directlyDefinesMethod: #one).		
-	self assert: (class parseTreeFor: #foo) temporaries size equals: 1
+	self assert: (class parseTreeForSelector: #foo) temporaries size equals: 1
 ]
 
 { #category : #tests }

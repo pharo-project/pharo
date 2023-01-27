@@ -61,5 +61,5 @@ RBAddSubtreeTransformationTest >> testTransform [
 	
 	class := transformation model classNamed: self changeMock name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
-	self assert: (class parseTreeFor: #one) body statements size equals: 2
+	self assert: (class parseTreeForSelector: #one) body statements size equals: 2
 ]

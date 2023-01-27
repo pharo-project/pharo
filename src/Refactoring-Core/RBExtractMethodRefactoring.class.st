@@ -180,7 +180,7 @@ RBExtractMethodRefactoring >> extractMethod [
 	extractedParseTree body temporaries
 		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
 	extractedParseTree source: extractCode.
-	parseTree := class parseTreeFor: selector.
+	parseTree := class parseTreeForSelector: selector.
 	parseTree
 		ifNil: [ self refactoringFailure: 'Could not parse ' , selector printString ].
 	subtree := isSequence
@@ -269,7 +269,7 @@ RBExtractMethodRefactoring >> isMethodEquivalentTo: aSelector [
 RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [ 
 	| tree definingClass |
 	definingClass := class whoDefinesMethod: aSelector.
-	tree := definingClass parseTreeFor: aSelector.
+	tree := definingClass parseTreeForSelector: aSelector.
 	tree ifNil: [^false].
 	tree isPrimitive ifTrue: [^false].
 	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
@@ -390,7 +390,7 @@ RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
 { #category : #transforming }
 RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [ 
 	| tree dictionary |
-	tree := class parseTreeFor: aSelector.
+	tree := class parseTreeForSelector: aSelector.
 	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
 	dictionary := Dictionary new.
 	tree body equalTo: extractedParseTree body withMapping: dictionary.

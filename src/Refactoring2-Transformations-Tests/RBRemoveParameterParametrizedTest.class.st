@@ -54,9 +54,9 @@ RBRemoveParameterParametrizedTest >> testRemoveParameter [
 		{ 'anArg' . RBRefactoryTestDataApp . ('rename' , 'ThisMethod:') asSymbol }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #renameThisMethod) equals: (self parseMethod: 'renameThisMethod
+	self assert: (class parseTreeForSelector: #renameThisMethod) equals: (self parseMethod: 'renameThisMethod
 								^self').
-	self assert: (class parseTreeFor: #callMethod) equals: (self parseMethod: 'callMethod
+	self assert: (class parseTreeForSelector: #callMethod) equals: (self parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)
 ]

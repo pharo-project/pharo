@@ -30,7 +30,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 			toReturn: false.
 		self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
-		parseTreeFor: #inlineComponent) 
+		parseTreeForSelector: #inlineComponent) 
 		equals: (self parseMethod: 'inlineComponent
 	| a aBehavior |
 	a := 5.
@@ -62,7 +62,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 			setupImplementorToInlineFor: refactoring
 			toReturn: class.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMax) equals: (self parseMethod: 'inlineMax
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
 								| x y q |
 								x := 5.
 								y := 10.
@@ -88,7 +88,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 			toReturn: (refactoring model classNamed: #Object).
 		self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
-		parseTreeFor: #inlineComponent) 
+		parseTreeForSelector: #inlineComponent) 
 		equals: (self parseMethod: 'inlineComponent
 	| a anObject |
 	a := 5.
@@ -118,7 +118,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 				{ (72 to: 84) . #foo . (model classNamed: #Object)}.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
+	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo) 
 			equals: (self 
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')
 ]
@@ -140,7 +140,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
+	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo) 
 			equals: (self 
 						parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')
 ]
@@ -159,7 +159,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 				{ (72 to: 84) . #foo . (model classNamed: #Object) }.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
+	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo) 
 				equals: (self 
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')
 ]
