@@ -182,27 +182,7 @@ Form class >> fromDisplay: aRectangle using: oldForm [
 		ifFalse: [ self fromDisplay: aRectangle ]
 ]
 
-{ #category : #'instance creation' }
-Form class >> fromUser [
-	"Answer an instance of me with bitmap initialized from the area of the
-	display screen designated by the user. The grid for selecting an area is
-	1@1."
-	"self fromUser asMorph openInWorld"
-
-	^self fromUser: 1 @ 1
-]
-
-{ #category : #'instance creation' }
-Form class >> fromUser: gridPoint [
-	"Answer an instance of me with bitmap initialized from the area of the
-	display screen designated by the user. The grid for selecting an area is
-	aPoint. Ensures that the returned form has positive extent."
-	| rect |
-	rect := Rectangle fromUser: gridPoint.
-	^ self fromDisplay: (rect origin extent: (rect extent max: gridPoint))
-]
-
-{ #category : #'class initialization' }
+{ #category : #'initialize-release' }
 Form class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
@@ -1284,13 +1264,10 @@ Form >> fromDisplay: aRectangle [
 
 	(width = aRectangle width and: [height = aRectangle height])
 		ifFalse: [self setExtent: aRectangle extent depth: depth].
-	self
-		copyBits: (aRectangle origin extent: self extent)
-		from: Display
-		at: 0 @ 0
-		clippingBox: self boundingBox
-		rule: Form over
-		fillColor: nil
+
+	self currentWorld copyRectangle: aRectangle into: self. 
+	
+
 ]
 
 { #category : #private }
