@@ -174,7 +174,7 @@ Bag >> includes: anObject [
 Bag >> keys [
 	"Returns the keys of the receiver."
 	
-	"Bag new add: #a; add: #a; add: #b; keys >>> #(#a #b)"
+	"(Bag new add: #a; add: #a; add: #b; keys) >>> #(#a #b)"
 	
 	^ contents keys
 ]
