@@ -298,8 +298,7 @@ EFBlockExpressionTest >> numberOfSpaceChangedAfterIndentCharacterConfiguration [
 		newLineAfterCascade:true;
 		newLineBeforeFirstCascade: true;
 		numberOfSpacesInIndent: 1;
-		indentStyle: #space;
-		numberOfSpacesInIndent: 2;
+		indentStyle: #tabulation;
 		indentExtraSpaces:0
 ]
 
@@ -410,6 +409,7 @@ EFBlockExpressionTest >> tabIndentIsnotAffectedConfiguration [
 
 { #category : #tests }
 EFBlockExpressionTest >> testArgumentIsFormated [
+
 	self validate: ':i|i' isFormattedAs: ' :i | i '
 ]
 
@@ -498,7 +498,7 @@ i to: 10 do: [ :j |
 
 { #category : #tests }
 EFBlockExpressionTest >> testLongMultipleArguments [
-	self skip.
+
 	self 
 		validate: ' :superlong :longlong :long | Transcript show: longlong ; show: long'
 		isFormattedAs: 
@@ -511,12 +511,15 @@ Transcript
 
 { #category : #tests }
 EFBlockExpressionTest >> testLongSingleArgument [
-	self skip.
+
 	self 
 		validate: ' [:superlonglonglong | Transcript show:i; show: j]'
 		isFormattedAs: 
-'[ :superlonglonglong | 
-	Transcript show:i; show: j]'
+' 
+[ :superlonglonglong | 
+Transcript
+	show: i;
+	show: j ] '
 		with: #numberOfSpaceChangedAfterIndentCharacterConfiguration
 ]
 
@@ -615,7 +618,7 @@ EFBlockExpressionTest >> testNumberOfSpaces [
 EFBlockExpressionTest >> testOneSpaceIndent [
 	
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
-		isFormattedAs: ' :i | 
+	isFormattedAs: ' :i | 
 i to: 10 do: [ :j | 
  Transcript
   show: i;
@@ -667,7 +670,7 @@ tooLongStatement ' with: #tooLongStatementConfiguration
 ]
 
 { #category : #tests }
-EFBlockExpressionTest >> testnumberOfSpaceChangedAfterIndentCharacter [
+EFBlockExpressionTest >> testTwoSpaceIndent [
 
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i | 
@@ -675,7 +678,7 @@ i to: 10 do: [ :j |
   Transcript
     show: i;
     show: j ] '
-	with: #numberOfSpaceChangedAfterIndentCharacterConfiguration
+	with: #twoSpacesIndentConfiguration
 ]
 
 { #category : #configurations }
@@ -698,6 +701,12 @@ EFBlockExpressionTest >> tooLongStatementConfiguration [
 		formatCommentCloseToStatements:true;
 		maxLineLength:10;
 		indentExtraSpaces: 0
+]
+
+{ #category : #configurations }
+EFBlockExpressionTest >> twoSpacesIndentConfiguration [
+
+	^ self oneSpaceIndentConfiguration numberOfSpacesInIndent: 2
 ]
 
 { #category : #helpers }
