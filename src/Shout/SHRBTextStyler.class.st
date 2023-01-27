@@ -14,7 +14,8 @@ Class {
 		'font',
 		'isForWorkspace',
 		'pixelHeight',
-		'workspace'
+		'workspace',
+		'plugins'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -873,12 +874,6 @@ SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aT
 					to: stop ]].
 		
 	^ aText
-]
-
-{ #category : #accessing }
-SHRBTextStyler >> addPlugin: aPlugin [
-
-	self plugins add: aPlugin
 ]
 
 { #category : #formatting }
