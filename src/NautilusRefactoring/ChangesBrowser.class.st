@@ -5,9 +5,9 @@ Class {
 	#name : #ChangesBrowser,
 	#superclass : #SpPresenterWithModel,
 	#instVars : [
-		'textArea',
 		'changesTree',
-		'selectedItems'
+		'selectedItems',
+		'diffView'
 	],
 	#category : #'NautilusRefactoring-Utilities'
 }
@@ -16,17 +16,6 @@ Class {
 ChangesBrowser class >> changes: aCollection [
 
 	^ self on: aCollection
-]
-
-{ #category : #layout }
-ChangesBrowser class >> defaultLayout [
-	
-	^ SpPanedLayout newTopToBottom 
-		add: #changesTree;
-		add: #textArea;
-		yourself
-	
-
 ]
 
 { #category : #visiting }
@@ -43,12 +32,11 @@ ChangesBrowser >> accept [
 { #category : #private }
 ChangesBrowser >> buildDiffFor: aChange [
 
-	^ aChange
-		ifNil: [ '' ]
-		ifNotNil: [
-			TextDiffBuilder 
-				buildDisplayPatchFrom: aChange oldVersionTextToDisplay 
-				to: aChange textToDisplay ].
+	^ aChange ifNil: [ '' ] ifNotNil: [
+		  diffView
+			  contextClass: aChange changeClass;
+			  leftText: aChange oldVersionTextToDisplay;
+			  rightText: aChange textToDisplay ]
 ]
 
 { #category : #accessing }
@@ -73,11 +61,16 @@ ChangesBrowser >> changesTree [
 { #category : #initialization }
 ChangesBrowser >> connectPresenters [
 
-	changesTree whenSelectionChangedDo: [ :selection |
-		selection selectedItem 
-			ifNil: [ textArea text: '' ]
-			ifNotNil: [ :item | textArea text: (self buildDiffFor: item)  ]
-		 ]
+	changesTree whenActivatedDo: [ :selection | self buildDiffFor: selection selectedItem ]
+]
+
+{ #category : #layout }
+ChangesBrowser >> defaultLayout [
+
+	^ SpPanedLayout newTopToBottom
+		  add: changesTree;
+		  add: diffView;
+		  yourself
 ]
 
 { #category : #initialization }
@@ -87,6 +80,7 @@ ChangesBrowser >> initializeDialogWindow: aWindow [
 
 	aWindow
 		title: 'Changes Browser';
+		initialExtent: 600 @ 500;
 		okAction: [ self accept ]
 ]
 
@@ -94,22 +88,23 @@ ChangesBrowser >> initializeDialogWindow: aWindow [
 ChangesBrowser >> initializePresenters [
 
 	changesTree := self newTreeTable.
-	textArea := self newCode.
-	textArea enabled: false.
+	diffView := self newDiff
+		            enabled: false;
+		            showOptions: true;
+		            yourself.
 
 	changesTree
-		children: [ :node | 
-			(node whatToDisplayIn: self) copyWithout: node ];
+		children: [ :node | (node whatToDisplayIn: self) copyWithout: node ];
 		addColumn: (SpCompositeTableColumn
-			with: ((SpCheckBoxTableColumn evaluated: [:item | selectedItems includes: item ])
-					onActivation: [ :item | selectedItems add: item ];
-					onDeactivation: [ :item | selectedItems remove: item ifAbsent: [  ] ]
-					yourself)
-			with: (SpStringTableColumn evaluated: [ :item | item nameToDisplay ]) ).	
+				 with: ((SpCheckBoxTableColumn evaluated: [ :item | selectedItems includes: item ])
+						  onActivation: [ :item | selectedItems add: item ];
+						  onDeactivation: [ :item | selectedItems remove: item ifAbsent: [  ] ] yourself)
+				 with: (SpStringTableColumn evaluated: [ :item | item nameToDisplay ]));
+		activateOnSingleClick.
 
 	self focusOrder
 		add: changesTree;
-		add: textArea
+		add: diffView
 ]
 
 { #category : #showing }
@@ -126,7 +121,7 @@ ChangesBrowser >> pickedChanges [
 
 { #category : #accessing }
 ChangesBrowser >> textArea [
-	^ textArea
+	^ diffView
 ]
 
 { #category : #private }
