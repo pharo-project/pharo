@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpAndFilter class >> withAll: aCollection [ 
-	^ self new 
+EpAndFilter class >> withAll: aCollection [
+	^ self new
 		subFilters: aCollection;
 		yourself
 ]
 
 { #category : #comparing }
-EpAndFilter >> = other [ 
+EpAndFilter >> = other [
 	^ self class = other class and: [ self subFilters = other subFilters ]
 ]
 

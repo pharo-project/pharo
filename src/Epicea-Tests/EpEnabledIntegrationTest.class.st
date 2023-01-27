@@ -10,5 +10,5 @@ Class {
 { #category : #running }
 EpEnabledIntegrationTest >> setUp [
 	super setUp.
-	monitor enable.
+	monitor enable
 ]

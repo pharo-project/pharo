@@ -28,7 +28,7 @@ Class {
 
 { #category : #testing }
 AbstractFreeTypeFileInfo class >> isAbstract [
-		
+
 	^ self == AbstractFreeTypeFileInfo
 ]
 
@@ -70,14 +70,14 @@ AbstractFreeTypeFileInfo >> extractAttributesFromNames [
 	styleNameExtracted := ''.
 	stretch ifNotNil:[
 		styleNameExtracted := styleNameExtracted ,stretch].
-	(weight notNil "and:[weight asLowercase ~= 'medium']") 
+	(weight notNil "and:[weight asLowercase ~= 'medium']")
 		ifTrue:[
 			styleNameExtracted := styleNameExtracted , ' ', weight].
 	slant ifNotNil:[
 		styleNameExtracted := styleNameExtracted , ' ', slant].
 	styleNameExtracted := styleNameExtracted trimBoth.
 	styleNameExtracted ifEmpty: [
-		styleNameExtracted := upright ifNil:['Regular']].
+		styleNameExtracted := upright ifNil:['Regular']]
 ]
 
 { #category : #accessing }
@@ -251,7 +251,7 @@ AbstractFreeTypeFileInfo >> styleNameWithItalicForcedToBe: aString [
 	answer := ''.
 	stretch ifNotNil:[
 		answer := answer ,stretch].
-	(weight notNil "and:[weight asLowercase ~= 'medium']") 
+	(weight notNil "and:[weight asLowercase ~= 'medium']")
 		ifTrue:[
 			answer := answer , ' ', weight].
 	answer := answer , ' ', aString.
@@ -286,10 +286,10 @@ AbstractFreeTypeFileInfo >> styleNameWithWeightForcedToBe: aString italicForcedT
 
 { #category : #accessing }
 AbstractFreeTypeFileInfo >> validFamilyName [
-	"answer the receiver's familyName, or an alternative 
+	"answer the receiver's familyName, or an alternative
 	name to use if the familyName is invalid for some reason"
-	
-	(familyName copyWithout: $? ) 
+
+	(familyName copyWithout: $? )
 		ifEmpty:[
 			"workaround problem with FreeType 2.2.1 and MS Gothic, MS Mincho
 			where familyName is not read correctly. This may be fixed in later versions
@@ -302,18 +302,18 @@ AbstractFreeTypeFileInfo >> validFamilyName [
 			self baseName asUppercase = 'MSMINCHO'
 				ifTrue:[
 					index = 0 ifTrue:[^'MS Mincho'].
-					index = 1 ifTrue:[^'MS PMincho'].				
+					index = 1 ifTrue:[^'MS PMincho'].
 			^self baseName asUppercase, ' ', index asString]].
 	^familyName
 ]
 
 { #category : #accessing }
 AbstractFreeTypeFileInfo >> validStyleName [
-	"answer the receiver's styleName, or an alternative 
+	"answer the receiver's styleName, or an alternative
 	name to use if the styleName is invalid for some reason"
-	
-	
-	(styleName copyWithout: $? ) 
+
+
+	(styleName copyWithout: $? )
 		ifEmpty:[ | answer |
 			"workaround problem with FreeType 2.2.1 and MS Gothic, MS Mincho
 			where familyName is not read correctly. This may be fixed in later versions

@@ -17,10 +17,10 @@ SubclassResponsibilityDebugAction class >> actionType [
 { #category : #testing }
 SubclassResponsibilityDebugAction >> appliesToDebugger: aDebugger [
 	| interruptedContext |
-	
+
 	interruptedContext := aDebugger session interruptedContext.
-	^ (interruptedContext selector == #subclassResponsibility) and: [ 
-		"If we work with an instance of the abstract class (shouldn't normally happen) do not add this action, 
+	^ (interruptedContext selector == #subclassResponsibility) and: [
+		"If we work with an instance of the abstract class (shouldn't normally happen) do not add this action,
 		as the abstract class alredy contains the the method."
 		interruptedContext sender receiver class ~~ interruptedContext sender methodClass  ]
 ]
@@ -28,7 +28,7 @@ SubclassResponsibilityDebugAction >> appliesToDebugger: aDebugger [
 { #category : #private }
 SubclassResponsibilityDebugAction >> askForSuperclassOf: aClass to: aSuperclass toImplement: aSelector ifCancel: cancelBlock [
 	| classes currentSuperclass chosenClassIndex |
-	
+
 	classes := OrderedCollection new.
 	classes add: aClass.
 	currentSuperclass := aClass superclass.
@@ -37,9 +37,9 @@ SubclassResponsibilityDebugAction >> askForSuperclassOf: aClass to: aSuperclass 
 			classes add: currentSuperclass.
 			currentSuperclass := currentSuperclass superclass ].
 	classes := classes addAll: (aClass traits sort: [ :t1 :t2 | t1 asString < t2 asString ]); yourself.
-	
+
 	classes size = 1 ifTrue: [ ^ classes at: 1 ].
-	chosenClassIndex := UIManager default 
+	chosenClassIndex := UIManager default
 		chooseFrom: (classes collect: [:c | c name])
 		title: 'Define #', aSelector, ' in which class?'.
 	chosenClassIndex = 0 ifTrue: [^ cancelBlock value].
@@ -61,24 +61,24 @@ SubclassResponsibilityDebugAction >> defaultOrder [
 { #category : #actions }
 SubclassResponsibilityDebugAction >> executeAction [
 	| senderContext msg msgCategory chosenClass |
-	
+
 	senderContext := self interruptedContext sender.
-	msg := Message 
+	msg := Message
 		selector: senderContext selector
 		arguments: senderContext arguments.
 	msgCategory := senderContext methodClass organization categoryOfElement: msg selector.
-	
-	chosenClass := self 
-		askForSuperclassOf: senderContext receiver class 
-		to: senderContext methodClass 
-		toImplement: senderContext selector 
+
+	chosenClass := self
+		askForSuperclassOf: senderContext receiver class
+		to: senderContext methodClass
+		toImplement: senderContext selector
 		ifCancel: [ ^ self ].
 
-	self session 
-		implement: msg 
-		classified: msgCategory 
-		inClass: chosenClass 
-		forContext: senderContext.
+	self session
+		implement: msg
+		classified: msgCategory
+		inClass: chosenClass
+		forContext: senderContext
 ]
 
 { #category : #accessing }

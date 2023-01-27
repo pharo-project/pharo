@@ -30,8 +30,8 @@ ZipFileSystemFile >> member: aZipArchiveMember [
 
 { #category : #private }
 ZipFileSystemFile >> readFromMember [
-	^ ByteArray 
+	^ ByteArray
 		new: self member uncompressedSize
-		streamContents: [ :stream |		
+		streamContents: [ :stream |
 			self member extractTo: stream ]
 ]

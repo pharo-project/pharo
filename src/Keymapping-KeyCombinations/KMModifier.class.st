@@ -62,8 +62,8 @@ KMModifier >> = aShortcut [
 { #category : #accessing }
 KMModifier >> eventCode [
 	"No modifiers"
-	
-	^ 0.
+
+	^ 0
 ]
 
 { #category : #comparing }

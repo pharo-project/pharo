@@ -21,7 +21,7 @@ DelayWaitTimeout >> isExpired [
 DelayWaitTimeout >> setDelay: anInteger forSemaphore: aSemaphore [
 	super setDelay: anInteger forSemaphore: aSemaphore.
 	process := Processor activeProcess.
-	expired := false.
+	expired := false
 ]
 
 { #category : #private }
@@ -34,7 +34,7 @@ DelayWaitTimeout >> timingPrioritySignalExpired [
 	process suspendingList == delaySemaphore ifTrue:[
 		expired := true.
 		process suspend; resume.
-		].
+		]
 ]
 
 { #category : #waiting }
@@ -43,9 +43,9 @@ DelayWaitTimeout >> wait [
 	[self schedule.
 	"It is critical that the following has no suspension point so that
 	the test and the wait primitive are atomic. In addition, if the delay
-	is no longer being waited on while entering the way we know that it 
+	is no longer being waited on while entering the way we know that it
 	is expired because the delay has already fired."
-	beingWaitedOn 
+	beingWaitedOn
 		ifTrue:[delaySemaphore wait]
 		ifFalse:[expired := true]] ensure:[self unschedule].
 	^self isExpired

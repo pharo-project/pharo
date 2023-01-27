@@ -19,13 +19,13 @@ Class {
 { #category : #API }
 FluidClassSideClassBuilder >> slots: anArray [
 	"Pay attention on the class side we do not have to have classSlots: but slots:"
-	
+
 	classSlotsToBuild := anArray collect: [ :each | each asSlot ]
 ]
 
 { #category : #API }
 FluidClassSideClassBuilder >> traits: aCollection [
 	"Pay attention that on class side we want to write traits: and not classTraits:"
-	
+
 	classTraitsToBuild := aCollection asTraitComposition
 ]

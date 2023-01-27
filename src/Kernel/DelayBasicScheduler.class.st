@@ -78,8 +78,8 @@ Class {
 
 { #category : #accessing }
 DelayBasicScheduler class >> defaultSuspendedDelaysHeap [
-	 ^ Heap 
-			sortBlock: [ :delay1 :delay2 | 
+	 ^ Heap
+			sortBlock: [ :delay1 :delay2 |
 				delay1 resumptionTick <= delay2 resumptionTick ]
 ]
 
@@ -99,8 +99,8 @@ DelayBasicScheduler >> anyActive [
 DelayBasicScheduler >> initialize [
 	"Default configuration."
 
-	self initializeTicker: (DelayMicrosecondTicker new) 
-		  suspendedDelaysHeap: DelayBasicScheduler defaultSuspendedDelaysHeap.
+	self initializeTicker: (DelayMicrosecondTicker new)
+		  suspendedDelaysHeap: DelayBasicScheduler defaultSuspendedDelaysHeap
 ]
 
 { #category : #initialization }
@@ -112,7 +112,7 @@ DelayBasicScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap
 
 { #category : #testing }
 DelayBasicScheduler >> nextWakeUpTime [
-	^ activeDelay 
+	^ activeDelay
 			ifNil: [ 0 ]
 			ifNotNil: [ :delay | delay resumptionTick ]
 ]
@@ -120,11 +120,11 @@ DelayBasicScheduler >> nextWakeUpTime [
 { #category : #printing }
 DelayBasicScheduler >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: '(';
 		print: self identityHash ;
 		nextPutAll: ') on ' ;
-		nextPutAll: ticker className.
+		nextPutAll: ticker className
 ]
 
 { #category : #'system-api' }
@@ -132,17 +132,17 @@ DelayBasicScheduler >> restartTimerEventLoop [
 	"Start the timer event loop"
 	"Delay restartTimerEventLoop"
 	self stopTimerEventLoop.
-	self startTimerEventLoop.
+	self startTimerEventLoop
 ]
 
 { #category : #'user-api' }
 DelayBasicScheduler >> resume [
 	"Unsuspend the timing-priority delay scheduling loop when resuming a snapshot."
-	
+
 	suspendSemaphore
 		ifNil:[ ^self error: 'Not suspended' ].
-	suspendSemaphore signal. 
-	"signal transfers execution to #suspendAtTimingPriority, 
+	suspendSemaphore signal.
+	"signal transfers execution to #suspendAtTimingPriority,
 	 which does... suspendSemaphore := nil."
 ]
 
@@ -151,20 +151,20 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 	"Private! Outer loop for the timing priority timer event loop.
 	 Invoked by api-system #startTimerEventLoop"
 
-	"Unit tests may run this at a lower priority" 
-	[  [runTimerEventLoop] whileTrue: 
+	"Unit tests may run this at a lower priority"
+	[  [runTimerEventLoop] whileTrue:
 		[	|nowTick|
 			"Warning! Stepping <Over> the following line may lock the Image. Use <Into> or <Proceed>."
-		 	ticker waitForUserSignalled: timingSemaphore orExpired: activeDelay. 
+		 	ticker waitForUserSignalled: timingSemaphore orExpired: activeDelay.
 
-			"Invoke the api back-ends, which set the transfer-variable to nil" 		
+			"Invoke the api back-ends, which set the transfer-variable to nil"
 			suspendSemaphore ifNotNil: [ self suspendAtTimingPriority    ].
 			delayToStart     ifNotNil: [ self scheduleAtTimingPriority   ].
 			delayToStop      ifNotNil: [ self unscheduleAtTimingPriority ].
 
 			"Signal any expired delays"
 			nowTick := ticker nowTick.
-			[ 	activeDelay notNil and: [nowTick >= activeDelay resumptionTick] ] 
+			[ 	activeDelay notNil and: [nowTick >= activeDelay resumptionTick] ]
 					whileTrue: [
 						activeDelay timingPrioritySignalExpired.
 						activeDelay := suspendedDelays removeFirstOrNil ].
@@ -172,18 +172,18 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 	] ensure: [ "When timer event loop exits, expire remaining delays."
 		[activeDelay notNil] whileTrue: [
 				activeDelay timingPrioritySignalExpired.
-				activeDelay := suspendedDelays removeFirstOrNil ]].
+				activeDelay := suspendedDelays removeFirstOrNil ]]
 ]
 
 { #category : #'user-api' }
 DelayBasicScheduler >> schedule: aDelay [
-	"This is the front-half of scheduling a delay. Invoked from user processes. 
+	"This is the front-half of scheduling a delay. Invoked from user processes.
 	 For back-half see #scheduleAtTimingPriority"
-	
+
 	"Only one signal is sent when delay expires, and if that is already spoken for"
 	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
-	
-	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
+
+	"The basic scheduler is highly dependant on semantics of cooperative multitasking and
 	 bytecode inlining such that interruption *cannot* occur between the following assignment and signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
@@ -196,10 +196,10 @@ DelayBasicScheduler >> schedule: aDelay [
 DelayBasicScheduler >> scheduleAtTimingPriority [
 	"Private! Invoke only from the timing-priority process.
 	 This is the back-half of scheduling a delay. For front-half see #schedule:"
-	
+
 	(delayToStart timingPriorityScheduleTicker: ticker) ifFalse:[ ^self ]. "Already scheduled"
 
-	activeDelay 
+	activeDelay
 		ifNil: [ activeDelay := delayToStart ]
 		ifNotNil: [
 			delayToStart resumptionTick < activeDelay resumptionTick
@@ -221,17 +221,17 @@ DelayBasicScheduler >> shutDown [
 ]
 
 { #category : #'support - test cases' }
-DelayBasicScheduler >> simulate_vmMilliseconds: milliseconds [ 
-	"This method is only called from tests which make use of the 'simulation' tickers 
+DelayBasicScheduler >> simulate_vmMilliseconds: milliseconds [
+	"This method is only called from tests which make use of the 'simulation' tickers
 	which implement the next method."
-	ticker simulate_vmMilliseconds: milliseconds.
+	ticker simulate_vmMilliseconds: milliseconds
 ]
 
 { #category : #'system-api' }
 DelayBasicScheduler >> startTimerEventLoop [
 	"Start the timer event loop"
 	"Delay restartTimerEventLoop"
-	
+
 	self startTimerEventLoopPriority: Processor timingPriority
 ]
 
@@ -239,16 +239,16 @@ DelayBasicScheduler >> startTimerEventLoop [
 DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 	"Start the timer event loop"
 	"Delay restartTimerEventLoop"
-	
+
 	timerEventLoop ifNotNil: [ self error: 'Timer event loop has already been started.' ].
-	
+
 	runTimerEventLoop := true.
-	
+
 	timerEventLoop := [ self runBackendLoopAtTimingPriority ] newProcess.
-	timerEventLoop 
+	timerEventLoop
 		name: self className , '(' , ticker className, ')';
 		priority: processorPriority.
-	timerEventLoop resume.
+	timerEventLoop resume
 ]
 
 { #category : #'system-api' }
@@ -258,19 +258,19 @@ DelayBasicScheduler >> startUp [
 
 { #category : #'system-api' }
 DelayBasicScheduler >> stopTimerEventLoop [
-	"Stop the timingpriority event loop"	
-		
+	"Stop the timingpriority event loop"
+
 	runTimerEventLoop := false.
 	"Transfer execution to #timingPriorityWaitForUserOrDelay:"
-	timingSemaphore signal. 
-	
-	"In normal operation the timingpriority event loop process should already have terminated, 
-	but things can get out of order with multi-threaded debuggin. Ensure its terminated." 
-	timerEventLoop isTerminated  
-		ifFalse: [ 
+	timingSemaphore signal.
+
+	"In normal operation the timingpriority event loop process should already have terminated,
+	but things can get out of order with multi-threaded debuggin. Ensure its terminated."
+	timerEventLoop isTerminated
+		ifFalse: [
 			self error: 'Expected timing priority event loop terminated already'.
 			timerEventLoop terminate ].
-	timerEventLoop := nil.
+	timerEventLoop := nil
 ]
 
 { #category : #'user-api' }
@@ -280,9 +280,9 @@ DelayBasicScheduler >> suspend [
 	 For back-half see #suspendAtTimingPriority"
 
 	suspendSemaphore := Semaphore new.
-	timingSemaphore signal.	
-		
-	"That #signal transfers execution to timingPriorityRunEventLoop 
+	timingSemaphore signal.
+
+	"That #signal transfers execution to timingPriorityRunEventLoop
 	 which then waits for suspendSemaphore to be signalled from #startup"
 ]
 
@@ -290,12 +290,12 @@ DelayBasicScheduler >> suspend [
 DelayBasicScheduler >> suspendAtTimingPriority [
 	"Private! This is the front-half for suspending the delay scheduler to prevent
 	 wake-up of delayed threads in the middle of snapshotting. For front-half see #suspend"
-	
+
 	ticker saveResumptionTimes: suspendedDelays asArray, {activeDelay}.
 	"Warning! Stepping <Over> the following line may lock the Image. Use <Proceed>."
 	suspendSemaphore wait.
-	
-	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.  
+
+	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.
 	suspendSemaphore := nil
 ]
 
@@ -306,10 +306,10 @@ DelayBasicScheduler >> ticker [
 
 { #category : #'user-api' }
 DelayBasicScheduler >> unschedule: aDelay [
-	"This is the front-half of unscheduling a delay. Invoked from user processes. 
+	"This is the front-half of unscheduling a delay. Invoked from user processes.
 	 For back-half see #unscheduleAtTimingPriority"
 
-	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
+	"The basic scheduler is highly dependant on semantics of cooperative multitasking and
 	 bytecode inlining such that interruption *cannot* occur between the assignment and the signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
@@ -322,13 +322,13 @@ DelayBasicScheduler >> unschedule: aDelay [
 DelayBasicScheduler >> unscheduleAtTimingPriority [
 	"Private! Invoke only from the timing-priority process.
 	 This is the back-half of unscheduling a delay. For front-half see #unschedule:"
-	
+
 	delayToStop beingWaitedOn ifFalse:[ ^self ].
-	
-	activeDelay == delayToStop 
-		ifTrue: [ activeDelay := suspendedDelays removeFirstOrNil ] 
+
+	activeDelay == delayToStop
+		ifTrue: [ activeDelay := suspendedDelays removeFirstOrNil ]
 		ifFalse:[ suspendedDelays remove: delayToStop ifAbsent: [] ].
-	
+
 	delayToStop timingPriorityUnschedule.
-	delayToStop := nil.
+	delayToStop := nil
 ]

@@ -223,7 +223,7 @@ FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 	"Returns a file locator if aPath is a reference to a supported origin or is a child of an origin.
 	If no locator matches, return the result of the evaluation of notFoundBlock.
 	Locators are sorted so that the deepest matching origin path is returned.
-	Ex: '/Users/me/Documents/foo.txt' will return a locator 
+	Ex: '/Users/me/Documents/foo.txt' will return a locator
 		with #documents origin (path /Users/me/Documents) and not #home (path /Users/me).
 	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference. "
 
@@ -233,7 +233,7 @@ FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 		as: OrderedCollection.
 	locatorsPaths := (locators collect: [ :e | e -> e asPath ]) asDictionary.
 	(locators sort:	[ :a :b | (locatorsPaths at: b) <= (locatorsPaths at: a) ])
-		do: [ :locator | 
+		do: [ :locator |
 			((locatorsPaths at: locator) = aPath or: [ (locatorsPaths at: locator) containsPath: aPath ])
 				ifTrue: [ ^ locator resolve: (aPath relativeToPath: (locatorsPaths at: locator)) ] ].
 	^ notFoundBlock value
@@ -244,7 +244,7 @@ FileLocator class >> fromString: aString ifNone: notFoundBlock [
 	"Returns a file locator if aString converted as path is a reference to a supported origin or is a child of an origin.
 	If no locator matches, return the result of the evaluation of notFoundBlock.
 	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference "
-	
+
 	^ self fromPath: aString asPath ifNone: notFoundBlock
 ]
 
@@ -268,7 +268,7 @@ FileLocator class >> initialize [
 	"FileLocator is needed to initialize SystemSettingsPersistence (call to FileLocator>>#preferences),
 	and could be useful for other classes.
 	Let initialize FileLocator before other standard system classes."
-	SessionManager default 
+	SessionManager default
 		registerSystemClassNamed: self name atPriority: 90.
 	self startUp: true
 ]
@@ -279,13 +279,13 @@ FileLocator class >> localDirectory [
 ]
 
 { #category : #'instance creation' }
-FileLocator class >> origin: aSymbol [ 
+FileLocator class >> origin: aSymbol [
 	^ self origin: aSymbol path: Path workingDirectory
 ]
 
 { #category : #'instance creation' }
 FileLocator class >> origin: aSymbol path: aPath [
-	^ self basicNew 
+	^ self basicNew
 			initializeWithOrigin: aSymbol path: aPath
 ]
 
@@ -417,12 +417,12 @@ FileLocator >> doesNotUnderstand: aMessage [
 	If FileReference won't understand the message send a normal DNU."
 
 	| resolved |
-	
+
 	resolved := self resolve.
 	(resolved respondsTo: aMessage selector)
 		ifTrue: [ ^ resolved perform: aMessage selector withArguments: aMessage arguments ].
-	
-	^ super doesNotUnderstand: aMessage.
+
+	^ super doesNotUnderstand: aMessage
 ]
 
 { #category : #accessing }
@@ -439,7 +439,7 @@ FileLocator >> hash [
 FileLocator >> initializeWithOrigin: aSymbol path: aPath [
 	self initialize.
 	origin := aSymbol.
-	path := aPath.
+	path := aPath
 ]
 
 { #category : #testing }
@@ -478,7 +478,7 @@ FileLocator >> readStream [
 
 { #category : #operations }
 FileLocator >> renameTo: newBasename [
-	
+
 	| result |
 	result := self resolve renameTo: newBasename.
 	path size > 0

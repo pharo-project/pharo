@@ -27,7 +27,7 @@ ReImplementedNotSentRule class >> allMessages [
 
 	^allMessages ifNil: [
 		allMessages := IdentitySet new.
-		Smalltalk globals allBehaviors do: [ :behavior | 
+		Smalltalk globals allBehaviors do: [ :behavior |
 				behavior methodsDo: [ :method |
 						allMessages addAll: method messages ] ].
 		allMessages	]
@@ -52,7 +52,7 @@ ReImplementedNotSentRule class >> enabled [
 ReImplementedNotSentRule class >> enabled: aBoolean [
 	super enabled: aBoolean.
 	self reset.
-	aBoolean 
+	aBoolean
 		ifTrue: [ self subscribe ]
 		ifFalse: [ self unsubscribe ]
 ]
@@ -63,7 +63,7 @@ ReImplementedNotSentRule class >> initialize [
 	self enabled ifFalse: [ ^self ].
 	self reset.
 	self subscribe.
-	SessionManager default 
+	SessionManager default
 		registerToolClassNamed: self name
 ]
 
@@ -86,7 +86,7 @@ ReImplementedNotSentRule class >> reset [
 ]
 
 { #category : #cleanup }
-ReImplementedNotSentRule class >> shutDown [	
+ReImplementedNotSentRule class >> shutDown [
 	self reset
 ]
 
@@ -94,7 +94,7 @@ ReImplementedNotSentRule class >> shutDown [
 ReImplementedNotSentRule class >> subscribe [
 	<systemEventRegistration>
 	self unsubscribe.
-	
+
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAdded    send: #methodAdded: to: self;
 		when: MethodModified send: #methodModified: to: self
@@ -103,7 +103,7 @@ ReImplementedNotSentRule class >> subscribe [
 { #category : #accessing }
 ReImplementedNotSentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ImplementedNotSentRule'
 ]
 

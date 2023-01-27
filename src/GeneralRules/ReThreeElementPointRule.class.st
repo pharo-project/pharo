@@ -10,17 +10,17 @@ Class {
 { #category : #accessing }
 ReThreeElementPointRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ThreeElementPointRule'
 ]
 
 { #category : #running }
 ReThreeElementPointRule >> check: aNode forCritiquesDo: aCriticBlock [
 	| parentPoint |
-	
+
 	aNode isMessage ifFalse: [ ^ self ].
 	aNode selector = #@ ifFalse: [ ^ self ].
-	
+
 	parentPoint := self
 		findSuspiciousParentFor: aNode
 		ifNone: [ ^self ].
@@ -41,7 +41,7 @@ ReThreeElementPointRule >> findSuspiciousParentFor: aNode ifNone: alternativeBlo
 			ifNone: alternativeBlock ].
 	tentativeNode isBinary ifFalse: [ ^ alternativeBlock value ].
 	tentativeNode selector = #@ ifTrue: [ ^ tentativeNode ].
-	
+
 	^ self
 		findSuspiciousParentFor: tentativeNode
 		ifNone: alternativeBlock

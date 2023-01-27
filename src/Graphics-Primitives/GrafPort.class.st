@@ -26,8 +26,8 @@ GrafPort >> clippedBy: aRectangle [
 
 { #category : #accessing }
 GrafPort >> contentsOfArea: aRectangle into: aForm [
-	destForm 
-		displayOn: aForm 
+	destForm
+		displayOn: aForm
 		at:  aRectangle origin
 		clippingBox: (0@0 extent: aRectangle extent).
 	^aForm
@@ -67,13 +67,13 @@ GrafPort >> fillOval: rect [
 	height := 1 + yBias.
 	width := rect width.
 	destX := rect left.
-	self copyBits.
+	self copyBits
 ]
 
 { #category : #accessing }
 GrafPort >> fillPattern: anObject [
 	fillPattern := anObject.
-	self fillColor: anObject.
+	self fillColor: anObject
 ]
 
 { #category : #'drawing support' }
@@ -93,7 +93,7 @@ GrafPort >> fillRect: rect offset: aPoint [
 	sourceY := 0.
 	width := rect width.
 	height := rect height.
-	self copyBits.
+	self copyBits
 ]
 
 { #category : #'drawing support' }
@@ -141,7 +141,7 @@ GrafPort >> frameOval: rect borderWidth: borderWidth [
 	destX := rect left.
 	self copyBits.
 	destX := rect right - wp x.
-	self copyBits.
+	self copyBits
 ]
 
 { #category : #'drawing support' }
@@ -149,7 +149,7 @@ GrafPort >> frameRect: rect borderWidth: borderWidth [
 	sourceX := 0.
 	sourceY := 0.
 	(rect areasOutside: (rect insetBy: borderWidth)) do:
-		[:edgeStrip | self destRect: edgeStrip; copyBits].
+		[:edgeStrip | self destRect: edgeStrip; copyBits]
 ]
 
 { #category : #'drawing support' }
@@ -163,7 +163,7 @@ GrafPort >> frameRectBottom: rect height: h [
 		self copyBits.
 		destX := destX + 1.
 		destY := destY - 1.
-		width := width - 2].
+		width := width - 2]
 ]
 
 { #category : #'drawing support' }
@@ -177,7 +177,7 @@ GrafPort >> frameRectRight: rect width: w [
 		self copyBits.
 		destX := destX - 1.
 		destY := destY + 1.
-		height := height - 2].
+		height := height - 2]
 ]
 
 { #category : #'drawing support' }
@@ -199,7 +199,7 @@ GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sou
 	combinationRule := rule.
 	self sourceRect: sourceRect.
 	self destOrigin: aPoint.
-	self copyBitsTranslucent: (alpha := (sourceAlpha * 255) truncated min: 255 max: 0).
+	self copyBitsTranslucent: (alpha := (sourceAlpha * 255) truncated min: 255 max: 0)
 ]
 
 { #category : #accessing }

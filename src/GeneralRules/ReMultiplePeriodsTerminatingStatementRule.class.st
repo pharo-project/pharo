@@ -20,12 +20,12 @@ ReMultiplePeriodsTerminatingStatementRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReMultiplePeriodsTerminatingStatementRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	
+
 	aMethod ast
-		nodesDo: [ :node | 
+		nodesDo: [ :node |
 			(node isSequence and:
 			[ node periods size > node statements size ])
-				ifTrue: [ 
+				ifTrue: [
 					self periodPairs: node critiqueBlock: aCriticBlock in: aMethod ] ]
 ]
 
@@ -47,8 +47,8 @@ ReMultiplePeriodsTerminatingStatementRule >> periodPairs: node critiqueBlock: aC
 		start := periods at: index-1.
 		stop := periods at: index.
 		code := node methodNode sourceCode copyFrom: start+1 to: stop-1.
-		code trim ifEmpty: [ 
-			aCriticBlock cull: (ReTrivialCritique  
+		code trim ifEmpty: [
+			aCriticBlock cull: (ReTrivialCritique
 			withAnchor: (ReIntervalSourceAnchor
 				entity: aMethod
 				interval: (start to: stop))

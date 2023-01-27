@@ -51,8 +51,8 @@ EpLatestCodeChangeFilter >> logBrowserModel [
 ]
 
 { #category : #accessing }
-EpLatestCodeChangeFilter >> logBrowserModel: anEpLogBrowserModel [ 
-	
+EpLatestCodeChangeFilter >> logBrowserModel: anEpLogBrowserModel [
+
 	logBrowserModel := anEpLogBrowserModel
 ]
 

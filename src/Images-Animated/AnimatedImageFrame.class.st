@@ -45,7 +45,7 @@ AnimatedImageFrame >> disposal: aSymbol [
 		#restorePreviousState"
 	"({ #restoreBackground.
 		#leaveCurrent.
-		#restorePreviousState } includes: aSymbol) ifTrue: [ 
+		#restorePreviousState } includes: aSymbol) ifTrue: [
 			disposal := aSymbol ]."
 	disposal := aSymbol
 ]

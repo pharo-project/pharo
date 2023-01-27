@@ -15,6 +15,6 @@ CoEmptyFetcher >> entriesDo: aBlock [
 
 { #category : #testing }
 CoEmptyFetcher >> isEmptyCompletionFetcher [
-	
+
 	^ true
 ]

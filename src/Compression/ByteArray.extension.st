@@ -20,9 +20,9 @@ ByteArray >> lastIndexOfPKSignature: aSignature [
 
 { #category : #'*Compression' }
 ByteArray >> unzipped [
-	"Assuming the receiver contains GZIP compressed data, 
+	"Assuming the receiver contains GZIP compressed data,
 	return a ByteArray with the decompressed data."
-	
+
 	"#[31 139 8 0 0 0 0 0 0 0 99 100 98 6 0 29 128 188 85 3 0 0 0] unzipped >>> #[1 2 3]"
 
 	^ (GZipReadStream on: self) upToEnd
@@ -31,10 +31,10 @@ ByteArray >> unzipped [
 { #category : #'*Compression' }
 ByteArray >> zipped [
 	"Return a ByteArray containing a GZIP compressed version of the receiver"
-	
+
 	"#[ 1 2 3 ] zipped >>> #[31 139 8 0 0 0 0 0 0 0 99 100 98 6 0 29 128 188 85 3 0 0 0]"
 
-	^ ByteArray streamContents: [ :out | 
+	^ ByteArray streamContents: [ :out |
 		(GZipWriteStream on: out)
 			nextPutAll: self;
 			close ]
