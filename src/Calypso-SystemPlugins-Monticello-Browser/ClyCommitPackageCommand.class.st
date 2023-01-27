@@ -5,43 +5,43 @@ I use Iceberg if it is repository of package.
 Otherwise I use Komitter.
 "
 Class {
-	#name : #ClyCommitMCPackageCommand,
+	#name : #ClyCommitPackageCommand,
 	#superclass : #SycPackageCommand,
 	#category : #'Calypso-SystemPlugins-Monticello-Browser'
 }
 
 { #category : #testing }
-ClyCommitMCPackageCommand class >> canBeExecutedInContext: aToolContext [
+ClyCommitPackageCommand class >> canBeExecutedInContext: aToolContext [
 	"if no packages are selected then command will commit all changes in image"
 	^true
 ]
 
 { #category : #activation }
-ClyCommitMCPackageCommand class >> fullBrowserMenuActivation [
+ClyCommitPackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
 ]
 
 { #category : #activation }
-ClyCommitMCPackageCommand class >> fullBrowserShortcutActivation [
+ClyCommitPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
 ]
 
 { #category : #accessing }
-ClyCommitMCPackageCommand >> defaultMenuIconName [
+ClyCommitPackageCommand >> defaultMenuIconName [
 	^#monticelloPackage
 ]
 
 { #category : #accessing }
-ClyCommitMCPackageCommand >> defaultMenuItemName [
+ClyCommitPackageCommand >> defaultMenuItemName [
 	^'Commit'
 ]
 
 { #category : #execution }
-ClyCommitMCPackageCommand >> execute [
+ClyCommitPackageCommand >> execute [
 
 	| repoBrowser commitBrowser repos targetRepo |
 	repoBrowser := self class environment
