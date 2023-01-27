@@ -1028,12 +1028,6 @@ SHRBTextStyler >> pixelHeight [
 ]
 
 { #category : #private }
-SHRBTextStyler >> plugins [
-
-	^ plugins ifNil: [ plugins := OrderedCollection new ]
-]
-
-{ #category : #private }
 SHRBTextStyler >> privateStyle: aText [
 	| compiler |
 
