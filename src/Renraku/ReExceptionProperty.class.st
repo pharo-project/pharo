@@ -37,7 +37,7 @@ ReExceptionProperty >> actions [
 
 { #category : #accessing }
 ReExceptionProperty >> icon [
-	^ self iconNamed: #exceptionIcon
+	^ self iconNamed: #exception
 ]
 
 { #category : #accessing }

@@ -111,8 +111,10 @@ FTBasicItem >> collapseAll [
 
 { #category : #'expanding-collapsing' }
 FTBasicItem >> collapseAndRefresh [
-	self collapse.
-	self refreshTable
+
+	self dataSource preservingScrollbarPositionDo: [ 
+		self collapse.
+		self refreshTable ]
 ]
 
 { #category : #button }
@@ -176,8 +178,10 @@ FTBasicItem >> expandAllTo: aDepth [
 
 { #category : #'expanding-collapsing' }
 FTBasicItem >> expandAndRefresh [
-	self expand.
-	self refreshTable
+
+	self dataSource preservingScrollbarPositionDo: [ 
+		self expand.
+		self refreshTable ]
 ]
 
 { #category : #private }

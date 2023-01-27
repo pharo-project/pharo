@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClyAddExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+	^ (super canBeExecutedInContext: aBrowserContext) and: [
 		  aBrowserContext isSelectedItemHasExecutionCounter not ]
 ]
 
@@ -21,7 +21,7 @@ ClyAddExecutionCounterCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddExecutionCounterCommand >> defaultMenuIconName [
-	^#classIcon
+	^#class
 ]
 
 { #category : #accessing }
@@ -36,7 +36,7 @@ ClyAddExecutionCounterCommand >> description [
 
 { #category : #execution }
 ClyAddExecutionCounterCommand >> execute [
-	
+
 	ExecutionCounter installOn: sourceNode
 ]
 

@@ -13,7 +13,7 @@ ReNoUnusedInstanceVariableRule class >> checksClass [
 { #category : #accessing }
 ReNoUnusedInstanceVariableRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'NoUnusedInstanceVariableRule'
 ]
 
@@ -40,7 +40,7 @@ ReNoUnusedInstanceVariableRule >> critiqueFor: aClass about: aVarName [
 ]
 
 { #category : #accessing }
-ReNoUnusedInstanceVariableRule >> group [ 
+ReNoUnusedInstanceVariableRule >> group [
 
 	^ 'Optimization'
 ]

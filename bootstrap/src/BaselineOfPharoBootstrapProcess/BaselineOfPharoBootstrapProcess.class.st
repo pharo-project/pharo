@@ -18,7 +18,7 @@ BaselineOfPharoBootstrapProcess >> baseline: spec [
 	spec for: #common do: [
 		spec blessing: #baseline.
 		spec baseline: 'Hermes' with: [ spec
-			repository: 'github://tesonep/hermes:v2.6.0';
+			repository: 'github://pharo-project/hermes:v2.7.0';
   			loads: 'core' ].
 		spec
 			 package: 'Pharo30Bootstrap' ]

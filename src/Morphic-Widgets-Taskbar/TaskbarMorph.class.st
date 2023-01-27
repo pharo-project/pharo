@@ -112,6 +112,18 @@ TaskbarMorph >> buttonForMorph: aMorph [
 	^index = 0 ifTrue: [nil] ifFalse: [self submorphs at: index ifAbsent: []]
 ]
 
+{ #category : #taskbar }
+TaskbarMorph >> canMoveLeft: task [
+
+ ^ ((self orderedTasks first morph) ~= task).
+]
+
+{ #category : #taskbar }
+TaskbarMorph >> canMoveRight: task [
+
+ ^ ((self orderedTasks last morph) ~= task).
+]
+
 { #category : #drawing }
 TaskbarMorph >> clipSubmorphs [ 
 
@@ -247,6 +259,21 @@ TaskbarMorph >> morphicLayerNumber [
 	behind others. Smaller numbers are in front"
 	
 	^11
+]
+
+{ #category : #taskbar }
+TaskbarMorph >> move: task withOffset: offset [
+
+	| currentTaskIndex newOrderedTasks newTaskIndex currentOrderedTasks |
+	currentOrderedTasks := self orderedTasks.
+	currentTaskIndex := currentOrderedTasks indexOf: task .
+	(currentTaskIndex = 0 ) ifTrue: [ ^ nil ].
+	newOrderedTasks := currentOrderedTasks copy.
+	newOrderedTasks removeAt: currentTaskIndex.
+	newTaskIndex := ((currentTaskIndex + offset) clampBetween: 1 and: (self orderedTasks size)) .
+	newOrderedTasks add: task beforeIndex: newTaskIndex.
+	self orderedTasks: newOrderedTasks.
+	^ self updateTaskButtons
 ]
 
 { #category : #accessing }

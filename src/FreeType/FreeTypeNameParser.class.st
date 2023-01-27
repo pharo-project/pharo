@@ -32,7 +32,8 @@ Class {
 
 { #category : #'known names' }
 FreeTypeNameParser class >> italicAndObliqueNames [
-	^self italicNames, self obliqueNames
+
+	^ self italicNames , self obliqueNames
 ]
 
 { #category : #'known names' }
@@ -43,13 +44,14 @@ FreeTypeNameParser class >> italicNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #italicNames put: nil.
 	"
+
 	italicNames ifNotNil:[^italicNames].
-	^italicNames := #(
+	^ italicNames := #(
 		'ita'
 		'ital'
 		'italic'
 		'cursive'
-		'kursiv').
+		'kursiv')
 ]
 
 { #category : #'known names' }
@@ -60,8 +62,9 @@ FreeTypeNameParser class >> normalNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #normalNames put: nil.
 	"
+
 	normalNames ifNotNil:[^normalNames].
-	^normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright').
+	^ normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright')
 ]
 
 { #category : #'known names' }
@@ -72,13 +75,14 @@ FreeTypeNameParser class >> obliqueNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #obliqueNames put: nil.
 	"
+
 	obliqueNames ifNotNil:[^obliqueNames].
-	^obliqueNames := #(
+	^ obliqueNames := #(
 		'inclined'
 		'oblique'
 		'backslanted'
 		'backslant'
-		'slanted').
+		'slanted')
 ]
 
 { #category : #'known names' }
@@ -91,8 +95,9 @@ FreeTypeNameParser class >> stretchNames [
 	TO RE-INITIALIZE...
 	self instVarNamed: #stretchNames put: nil.
 	"
+
 	stretchNames ifNotNil:[^stretchNames].
-	^stretchNames := {
+	^ stretchNames := {
 		{LogicalFont stretchExtraCompressed. 'extra'. 'compressed'}.
 		{LogicalFont stretchExtraCompressed. 'extracompressed'}.
 		{LogicalFont stretchExtraCompressed. 'ext'. 'compressed'}.
@@ -138,7 +143,7 @@ FreeTypeNameParser class >> stretchNames [
 		{LogicalFont stretchCondensed. 'condensed'}.
 		{LogicalFont stretchCondensed. 'cond'}.
 		{LogicalFont stretchExpanded. 'expanded'}.
-		{LogicalFont stretchExtended. 'extended'}	
+		{LogicalFont stretchExtended. 'extended'}
 		}.  "search for them in the order given here"
 ]
 
@@ -153,7 +158,7 @@ FreeTypeNameParser class >> weightNames [
 	self instVarNamed: #weightNames put: nil.
 	"
 	weightNames ifNotNil:[^weightNames].
-	^weightNames := {
+	^ weightNames := {
 		{LogicalFont weightExtraThin. 'extra'. 'thin'}.
 		{LogicalFont weightExtraThin.'extrathin'}.
 		{LogicalFont weightExtraThin. 'ext'. 'thin'}.
@@ -173,7 +178,7 @@ FreeTypeNameParser class >> weightNames [
 		{LogicalFont weightExtraBold. 'extra'. 'bold'}.
 		{LogicalFont weightExtraBold. 'extrabold'}.
 		{LogicalFont weightExtraBold. 'ext'. 'bold'}.
-		{LogicalFont weightExtraBold. 'extbold'}. 
+		{LogicalFont weightExtraBold. 'extbold'}.
 		{LogicalFont weightUltraBold. 'ultra'. 'bold'}.
 		{LogicalFont weightUltraBold. 'ultrabold'}.
 		{LogicalFont weightExtraBlack. 'extra'. 'black'}.
@@ -201,13 +206,13 @@ FreeTypeNameParser >> addStyleNameToCombinedName: aStyleString [
 	lcStyleName := aStyleString asLowercase.
 	addStyle := true.
 	(index := lcCombined findString: lcStyleName) > 0
-		ifTrue:[ 
+		ifTrue:[
 			(index = 1 or:[delimiters includes: (lcCombined at: index - 1)])
 				ifTrue:[
 					((index + lcStyleName size > lcCombined size) or:[ delimiters includes: (lcCombined at: index + lcStyleName size) ])
 						ifTrue:["don't add the style to the combinedName, because it already contains it"
 							addStyle := false]]].
-	addStyle ifTrue:[combinedName := combinedName , ' ', aStyleString].
+	addStyle ifTrue:[combinedName := combinedName , ' ', aStyleString]
 ]
 
 { #category : #accessing }
@@ -223,7 +228,7 @@ FreeTypeNameParser >> extractSlant [
 	"match and remove last italic/oblique token"
 	extractedSlant := nil.
 	extractedSlantValue := LogicalFont slantRegular. "not italic or oblique"
-	(self italicAndObliqueNames 
+	(self italicAndObliqueNames
 		detect: [:each |
 			(matches := self lastMatchValueSequence: {each}) notNil]
 		ifNone:[]) ifNotNil:[
@@ -237,7 +242,7 @@ FreeTypeNameParser >> extractSlant [
 			[start > 1 and:[delimiters includes: (combinedName at: start - 1)]] "also remove delimiters before token"
 				whileTrue:[start := start - 1].
 			[end < combinedName size and:[delimiters includes: (combinedName at: end + 1)]] "also remove delimiters after token"
-				whileTrue:[end := end + 1].		
+				whileTrue:[end := end + 1].
 			combinedName := combinedName copyReplaceFrom: start to: end with: ' '.].
 	(extractedSlant isNil and:[italicFlag])
 		ifTrue:["no italic specified in familyName or styleName; force it to be 'Italic'"
@@ -251,7 +256,7 @@ FreeTypeNameParser >> extractStretch [
 	| matches start end |
 
 	extractedStretchValue := LogicalFont stretchRegular.
-	(self stretchNames 
+	(self stretchNames
 		detect: [:each |
 			matches := self lastMatchValueSequence: each allButFirst.
 			matches ifNotNil:[extractedStretchValue := each first].
@@ -263,22 +268,22 @@ FreeTypeNameParser >> extractStretch [
 			[start > 1 and:[delimiters includes: (combinedName at: start - 1)]] "also remove delimiters before token"
 				whileTrue:[start := start - 1].
 			[end < combinedName size and:[delimiters includes: (combinedName at: end + 1)]] "also remove delimiters after token"
-				whileTrue:[end := end + 1].		
+				whileTrue:[end := end + 1].
 			combinedName := combinedName copyReplaceFrom: start to: end with: ' '.
 			"re-tokenize"
-			"tokens := self tokenize: combinedName delimiters: delimiters"].
+			"tokens := self tokenize: combinedName delimiters: delimiters"]
 ]
 
 { #category : #parsing }
 FreeTypeNameParser >> extractUpright [
 	"extract from current combined name.
 	answer new combinedName"
-	| normalTok start end | 
+	| normalTok start end |
 
-	normalTok := tokens reversed 
-		detect: [:tok | 
-			(self normalNames 
-				detect: [:str | str asLowercase = tok first asLowercase] 
+	normalTok := tokens reversed
+		detect: [:tok |
+			(self normalNames
+				detect: [:str | str asLowercase = tok first asLowercase]
 				ifNone:[]) notNil ]
 		ifNone:[].
 	normalTok ifNotNil:[
@@ -289,8 +294,8 @@ FreeTypeNameParser >> extractUpright [
 		[start > 1 and:[delimiters includes: (combinedName at: start - 1)]]
 			whileTrue:[start := start - 1].
 		[end < combinedName size and:[delimiters includes: (combinedName at: end + 1)]]
-			whileTrue:[end := end + 1].		
-		combinedName := combinedName copyReplaceFrom: start to: end with: ' '].
+			whileTrue:[end := end + 1].
+		combinedName := combinedName copyReplaceFrom: start to: end with: ' ']
 ]
 
 { #category : #parsing }
@@ -299,7 +304,7 @@ FreeTypeNameParser >> extractWeight [
 	| matches start end |
 
 	extractedWeightValue := LogicalFont weightRegular.
-	(self weightNames 
+	(self weightNames
 		detect: [:each |
 			matches := self lastMatchValueSequence: each allButFirst.
 			matches ifNotNil:[extractedWeightValue := each first].
@@ -311,8 +316,8 @@ FreeTypeNameParser >> extractWeight [
 			[start > 1 and:[delimiters includes: (combinedName at: start - 1)]] "also remove delimiters before token"
 				whileTrue:[start := start - 1].
 			[end < combinedName size and:[delimiters includes: (combinedName at: end + 1)]] "also remove delimiters after token"
-				whileTrue:[end := end + 1].		
-			combinedName := combinedName copyReplaceFrom: start to: end with: ' '.].	
+				whileTrue:[end := end + 1].
+			combinedName := combinedName copyReplaceFrom: start to: end with: ' '.].
 	(extractedWeight isNil and:[boldFlag])
 		ifTrue:["no weight specified in familyName or styleName; force it to be 'Bold'"
 			extractedWeight := 'Bold'.
@@ -361,19 +366,19 @@ FreeTypeNameParser >> familyName [
 
 { #category : #accessing }
 FreeTypeNameParser >> familyName: familyName [
-	familyNameIn := familyName.
+	familyNameIn := familyName
 ]
 
 { #category : #accessing }
 FreeTypeNameParser >> familyNameIn: familyName [
-	familyNameIn := familyName.
+	familyNameIn := familyName
 ]
 
 { #category : #initialization }
 FreeTypeNameParser >> initialize [
 	super initialize.
 	delimiters := ',.-_'.
-	Character separators do:[:c | delimiters := delimiters , c asString].
+	Character separators do:[:c | delimiters := delimiters , c asString]
 ]
 
 { #category : #'known names' }
@@ -393,7 +398,7 @@ FreeTypeNameParser >> italicNames [
 
 { #category : #parsing }
 FreeTypeNameParser >> lastMatchValueSequence: values [
-	"answer the last contiguous tokens that match pattern tokens, 
+	"answer the last contiguous tokens that match pattern tokens,
 	or nil if not found.
 	matching is case insensitive "
 	| answer  nullToken match tok |
@@ -431,7 +436,7 @@ FreeTypeNameParser >> parse [
 	tokens := self tokenize: combinedName.
 	self extractStretch.
 	tokens := self tokenize: combinedName.
-	self extractWeight.
+	self extractWeight
 ]
 
 { #category : #parsing }
@@ -454,22 +459,22 @@ FreeTypeNameParser >> stretchNames [
 
 { #category : #accessing }
 FreeTypeNameParser >> styleName: styleName [
-	
-	styleNameIn := styleName.
+
+	styleNameIn := styleName
 ]
 
 { #category : #accessing }
 FreeTypeNameParser >> styleNameIn: styleName [
-	
-	styleNameIn := styleName.
+
+	styleNameIn := styleName
 ]
 
 { #category : #parsing }
-FreeTypeNameParser >> tokenize: aString [ 
+FreeTypeNameParser >> tokenize: aString [
 	"answer an OrderedCollection of {string. start. end} tuples.
 	tokens are separated by $- $_ $, $. and whitespace"
 	| currentTokens answer start |
-	
+
 	currentTokens := aString findTokens: delimiters keep: delimiters.
 	answer := OrderedCollection new.
 	start := 1.

@@ -36,9 +36,8 @@ Class {
 	#category : #'Morphic-Base-Menus'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MenuItemMorph class >> initialize [
-	"MenuItemMorph initialize"
 
 	| f |
 	f := Form

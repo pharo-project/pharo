@@ -26,5 +26,5 @@ IsContextPostMortemTest >> testIsContextPostMortem [
 	self assert: (session isContextPostMortem: [2] asContext).
 	process suspendedContext: nil.
 	"...unless the process' suspended context is nil, in which case, no context is post mortem"
-	self assert: (session isContextPostMortem: [2] asContext) not.
+	self assert: (session isContextPostMortem: [2] asContext) not
 ]

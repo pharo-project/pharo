@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 ThisContextVariable class >> variableName [
-	^'thisContext'
+	^#thisContext
 ]
 
 { #category : #visiting }
@@ -35,6 +35,6 @@ ThisContextVariable >> readInContext: aContext [
 
 { #category : #queries }
 ThisContextVariable >> usingMethods [
-	^ environment allMethods select: [ :method | 
+	^ environment allMethods select: [ :method |
 		  method readsThisContext ]
 ]

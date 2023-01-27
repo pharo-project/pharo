@@ -191,7 +191,7 @@ SHPreferences class >> settingsOn: aBuilder [
 		description: 'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
 		selector: #enabled;
 		default: true;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		with: [
 			(aBuilder setting: #selectorPatternsStyle) 
 				label: 'Selector Patterns';

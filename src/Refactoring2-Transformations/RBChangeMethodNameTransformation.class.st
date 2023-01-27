@@ -8,7 +8,7 @@ Class {
 		'implementors',
 		'renameMap'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #support }
@@ -82,7 +82,7 @@ RBChangeMethodNameTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : #support }
+{ #category : #preconditions }
 RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 

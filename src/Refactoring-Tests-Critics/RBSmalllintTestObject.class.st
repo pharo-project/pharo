@@ -335,6 +335,11 @@ RBSmalllintTestObject >> nonUnaryAccessingMethodWithoutReturn: anObject [
 ]
 
 { #category : #methods }
+RBSmalllintTestObject >> notOptimizedIf [
+	^ true ifFalse: 1
+]
+
+{ #category : #methods }
 RBSmalllintTestObject >> onlyReadOrWrittenTemporary [
 	| a |
 	a := 1
@@ -451,11 +456,6 @@ RBSmalllintTestObject >> testMethod1 [
 { #category : #methods }
 RBSmalllintTestObject >> threeElementPoint [
 	^5 @ 5 + 6 @ 6
-]
-
-{ #category : #methods }
-RBSmalllintTestObject >> toDo [
-	1 to: self size do: [:i | (self at: i) printString]
 ]
 
 { #category : #methods }

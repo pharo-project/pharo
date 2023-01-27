@@ -7,14 +7,14 @@ My instances are looked up in the image, not materialized.
 Class {
 	#name : #FLGlobalCompiledCodeCluster,
 	#superclass : #FLGlobalCluster,
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #'serialize/materialize' }
 FLGlobalCompiledCodeCluster >> materializeGlobalClassFrom: aDecoder [
 	| class |
 	class := super materializeGlobalClassFrom: aDecoder.
-	^ aDecoder nextEncodedByte = 1
+	^ aDecoder nextEncodedByte = true asBit
 		ifTrue: [ class classSide ]
 		ifFalse: [ class instanceSide ]
 ]
@@ -24,8 +24,5 @@ FLGlobalCompiledCodeCluster >> serializeGlobalClass: aClass on: anEncoder [
 	super
 		serializeGlobalClass: aClass instanceSide
 		on: anEncoder. 
-	anEncoder
-		encodeByte: (aClass isClassSide
-			ifTrue: [ 1 ]
-			ifFalse: [ 0 ])
+	anEncoder encodeByte: aClass isClassSide asBit
 ]

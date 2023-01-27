@@ -49,18 +49,6 @@ HelpBrowser class >> defaultHelpBrowser: aClass [
 	DefaultHelpBrowser := aClass
 ]
 
-{ #category : #'world menu' }
-HelpBrowser class >> menuCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #'Help Browser')
-		parent: #HelpBrowser;
-		order: 1;
-		action: [ self open ];
-		iconName: #smallHelpIcon;
-		help: 'Explore a list of help topics to learn to use Pharo tools.';
-		withSeparatorAfter
-]
-
 { #category : #ui }
 HelpBrowser class >> menuOn: aBuilder [
 	
@@ -101,7 +89,7 @@ HelpBrowser class >> openOn: aHelpTopic [
 HelpBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^ #bookIcon
+	^ #book
 ]
 
 { #category : #ui }

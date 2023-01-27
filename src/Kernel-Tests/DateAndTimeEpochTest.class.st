@@ -29,7 +29,7 @@ Class {
 
 { #category : #running }
 DateAndTimeEpochTest >> setUp [
- 	super setUp.  
+ 	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
 	aDateAndTime :=  DateAndTime localTimeZone: TimeZone default; epoch.
 	aTimeZone := TimeZone offset: (Duration minutes: 135) name: 'Epoch Test Time Zone' abbreviation: 'ETZ'.
@@ -200,7 +200,7 @@ DateAndTimeEpochTest >> testJulianDayNumber [
 { #category : #tests }
 DateAndTimeEpochTest >> testLessThan [
 	self assert: aDateAndTime  < (aDateAndTime + '1:00:00:00').
-	self assert: aDateAndTime + -1 < aDateAndTime.
+	self assert: aDateAndTime + -1 < aDateAndTime
 ]
 
 { #category : #tests }

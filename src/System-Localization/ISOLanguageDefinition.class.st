@@ -65,9 +65,8 @@ ISOLanguageDefinition class >> initISOCountries [
 		ISO3Countries at: (entry at: 3) put: (entry at: 1)].
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ISOLanguageDefinition class >> initialize [
-	"self initialize"
 
 	ISO3Table := nil.
 	ISO2Table := nil

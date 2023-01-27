@@ -39,7 +39,7 @@ Class {
 		'referenceVariableName',
 		'newClass'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
@@ -64,27 +64,28 @@ RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariab
 ]
 
 { #category : #'private - transforming' }
-RBSplitClassRefactoring >> abstractReferenceTo: each [ 
+RBSplitClassRefactoring >> abstractReferenceTo: each [
+
 	| setterMethod replacer accessorRef getterMethod |
-	accessorRef := RBCreateAccessorsForVariableRefactoring 
-				variable: each
-				class: newClass
-				classVariable: false.
+	accessorRef := RBCreateAccessorsForVariableTransformation
+		               variable: each
+		               class: newClass
+		               classVariable: false.
 	self performCompositeRefactoring: accessorRef.
-	getterMethod := accessorRef getterMethod.
-	setterMethod := accessorRef setterMethod.
-	replacer := self parseTreeRewriterClass 
-				variable: each
-				getter: getterMethod
-				setter: setterMethod
-				receiver: referenceVariableName.
-	self 
+	getterMethod := accessorRef getterMethodName.
+	setterMethod := accessorRef setterMethodName.
+	replacer := self parseTreeRewriterClass
+		            variable: each
+		            getter: getterMethod
+		            setter: setterMethod
+		            receiver: referenceVariableName.
+	self
 		convertClasses: class withAllSubclasses
-		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: each]
+		select: [ :aClass | 
+		aClass whichSelectorsReferToInstanceVariable: each ]
 		using: replacer.
-	self performCompositeRefactoring: (RBRemoveInstanceVariableRefactoring 
-				remove: each
-				from: class)
+	self performCompositeRefactoring:
+		(RBRemoveInstanceVariableRefactoring remove: each from: class)
 ]
 
 { #category : #transforming }
@@ -94,7 +95,7 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 
 { #category : #'private - transforming' }
 RBSplitClassRefactoring >> addClass [
-	self performCompositeRefactoring: (RBAddClassRefactoring 
+	self performCompositeRefactoring: (RBInsertClassRefactoring 
 				model: self model
 				addClass: newClassName
 				superclass: Object

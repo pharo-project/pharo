@@ -1,14 +1,14 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutCategory: catName [ 
+ClassDescription >> fileOutCategory: catName [
 
 	self organization fileOutCategory: catName
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutCategory: aSymbol on: aFileStream [
-	"File a description of the receiver's category, aString, onto aFileStream. If 
+	"File a description of the receiver's category, aString, onto aFileStream. If
 	moveSource, is true, then set the method source pointer to the new file position.
 	Note when this method is called with moveSource=true, it is condensing the
 	.sources file, and should only write one preamble per method category."
@@ -25,12 +25,12 @@ ClassDescription >> fileOutCategory: aSymbol on: aFileStream [
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
-	"File a description of the messages of this class that have been 
+	"File a description of the messages of this class that have been
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
 	| org |
 	(org := self organization) categories
-		do: [ :cat | 
+		do: [ :cat |
 			| sels |
 			sels := (org listAtCategoryNamed: cat) select: [ :sel | aSet includes: sel ].
 			sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
@@ -39,7 +39,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
 	"File out methods for this category."
-	
+
 	| selectors |
 	aFileStream cr.
 	selectors := self selectorsToFileOutCategory: aSymbol.
@@ -51,29 +51,30 @@ ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutMethod: selector [
 	"Write source code of a single method on a file.  Make up a name for the file."
-	
+
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutMethod: selector on: internalStream.
-	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '..')) isSt: true.
+	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '..')) isSt: true
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutMethod: selector on: aStream [
-	
+
 	(selector == #Comment) ifTrue: [^ self inform: 'Sorry, cannot file out class comment in isolation.'].
 	(self includesSelector: selector) ifFalse: [^ self error: 'Selector ', selector asString, ' not found'].
 	aStream header; timeStamp.
-	self printMethodChunk: selector on: aStream.
+	self printMethodChunk: selector on: aStream
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
 
-	aFileStream nextChunkPut: self definitionString.
+	"we for now file out old style class definitions"
+	aFileStream nextChunkPut: self oldPharoDefinition.
 	self organization putCommentOnFile: aFileStream forClass: self.
-	self organization categories 
+	self organization categories
 		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]
 ]
 
@@ -87,7 +88,7 @@ ClassDescription >> fileOutOrganizationOn: aFileStream [
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: changeStamp priorMethod: priorMethod [ 
+ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
 	"Print a method category preamble.  This must have a category name.
 	It may have an author/date stamp, and it may have a prior source link.
 	If it has a prior source link, it MUST have a stamp, even if it is empty."
@@ -102,7 +103,7 @@ ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: chan
 			[changeStamp size > 0 or: [priorMethod ~~ nil]]) ifTrue:
 			[strm nextPutAll: ' stamp: '; print: changeStamp].
 		priorMethod ~~ nil ifTrue:
-			[strm nextPutAll: ' prior: '; print: priorMethod sourcePointer]]).
+			[strm nextPutAll: ' prior: '; print: priorMethod sourcePointer]])
 ]
 
 { #category : #'*CodeExport' }
@@ -113,7 +114,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
 	method := self methodDict
 		at: selector
-		ifAbsent: [ 
+		ifAbsent: [
 			outStream
 				nextPutAll: selector;
 				cr.
@@ -127,19 +128,19 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 
 	"Print the preamble"
 	outStream cr; nextChunkPut: ''.
-	outStream nextChunkPut: (String streamContents: [ :strm | 
+	outStream nextChunkPut: (String streamContents: [ :strm |
 		strm nextPutAll: preamble.
-		method stamp ifNotEmpty: [ :stamp | 
+		method stamp ifNotEmpty: [ :stamp |
 			strm
 				nextPutAll: ' stamp: ';
 				print: stamp ] ]).
 	outStream cr.
 
 	"Print the source code"
-	outStream 
+	outStream
 		nextChunkPut: method sourceCode;
 		nextChunkPut: ' '; cr.
-	
+
 	^ outStream
 ]
 

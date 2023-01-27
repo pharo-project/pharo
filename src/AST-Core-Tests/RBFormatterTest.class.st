@@ -32,7 +32,7 @@ RBFormatterTest >> formatterClass [
 { #category : #tests }
 RBFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
-		do: [ :each | 
+		do: [ :each |
 			| class |
 			class := testingEnvironment classNamed: each.
 			self
@@ -48,13 +48,13 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
 	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
-	
+
 	"already worked and still should for non-symbol arguments"
 	inputSource := 'foo  <selector: 0 > ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
 	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
-	
+
 	"already worked and should still work for pragmas without arguments"
 	inputSource := 'foo  <selector> ^ self'.
 	tree := self parseMethod: inputSource.

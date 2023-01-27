@@ -12,15 +12,15 @@ Class {
 }
 
 { #category : #'meta-actions' }
-MorphHandlingMiddleButton >> blueButtonDown: anEvent [
-
-	receivedBlueButtonDown := true.
-]
-
-{ #category : #'meta-actions' }
 MorphHandlingMiddleButton >> blueButtonUp: anEvent [
 
 	receivedBlueButtonUp := true.
+]
+
+{ #category : #'meta-actions' }
+MorphHandlingMiddleButton >> handleSpecialGesture: anEvent [
+
+	receivedBlueButtonDown := true.
 ]
 
 { #category : #'meta-actions' }

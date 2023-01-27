@@ -64,6 +64,16 @@ NullWorldRenderer >> icon: aForm [
 	"Do nothing, a null world rendered has no window, so no icon either"
 ]
 
+{ #category : #events }
+NullWorldRenderer >> requestStopTextEditing [
+]
+
+{ #category : #events }
+NullWorldRenderer >> requestTextEditingAt: aRectangle [
+
+	
+]
+
 { #category : #rendering }
 NullWorldRenderer >> updateDamage: rectangles [
 

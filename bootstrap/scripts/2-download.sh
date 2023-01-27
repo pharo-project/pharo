@@ -23,12 +23,13 @@ function download_to {
 }
 
 if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
-    # Downloads a SPUR vm for the configured architecture
-    mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
-    cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
-    ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm $BOOTSTRAP_ARCH
-    cd -
-    echo "Target VM: $(${VM} --version)"
+	rm -rf "${BOOTSTRAP_DOWNLOADS}/vmtarget"
+	# Downloads a SPUR vm for the configured architecture
+	mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
+	cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 100 vm $BOOTSTRAP_ARCH
+	cd -
+	echo "Target VM: $(${VM} --version)"
 fi
 
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then

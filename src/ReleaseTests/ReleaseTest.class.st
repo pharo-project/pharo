@@ -281,6 +281,19 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 				print: methods ] ]"
 ]
 
+{ #category : #'tests - variables' }
+ReleaseTest >> testNoLiteralIsPinnedInMemory [
+	| methodsWithPinnedLiterals |
+	
+	methodsWithPinnedLiterals := SystemNavigation default allMethods flatCollect: [ :each | 
+	(each allLiterals select: [ :eachLiteral | eachLiteral isPinnedInMemory ])
+		ifNotEmpty: [ { each } ]
+		ifEmpty: [ #() ] ].
+	
+	self assertEmpty: methodsWithPinnedLiterals
+	
+]
+
 { #category : #tests }
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 	
@@ -331,6 +344,14 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	self 
 		assert: remaining isEmpty 
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
+]
+
+{ #category : #'tests - methods' }
+ReleaseTest >> testNoUnimplementedCalls [
+	"There is a long term cleanup to fix 'selectors send but not implemented'.
+	 This test makes sure that we do not introduce new cases until we are down to zero"
+
+	self assert: SystemNavigation default allUnimplementedCalls size < 315
 ]
 
 { #category : #tests }
@@ -406,7 +427,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
-	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache FT2Handle) 
+	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache) 
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]

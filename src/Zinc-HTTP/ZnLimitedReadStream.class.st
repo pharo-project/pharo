@@ -4,22 +4,17 @@ but limiting reading to a fixed number of elements.
 
 I can be atEnd while my wrapped stream is not.
 
-My contentSpecies can be forced to be ByteArray (binary) or ByteString (ascii).
-
-I do byte/char conversions on the fly (support bivalent access).
-
-This implementation is really a kludge.
-
+I am binary if the stream that I wrap is binary, else I am textual.
+ 
 Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnLimitedReadStream,
-	#superclass : #Stream,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'position',
-		'limit',
-		'binary'
+		'limit'
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }
@@ -31,19 +26,9 @@ ZnLimitedReadStream class >> on: stream limit: limit [
 		yourself
 ]
 
-{ #category : #accessing }
-ZnLimitedReadStream >> ascii [
-	binary := false
-]
-
 { #category : #testing }
 ZnLimitedReadStream >> atEnd [
 	^ position >= limit or: [ stream atEnd ]
-]
-
-{ #category : #accessing }
-ZnLimitedReadStream >> binary [
-	binary := true
 ]
 
 { #category : #'initialize-release' }
@@ -53,16 +38,11 @@ ZnLimitedReadStream >> close [
 
 { #category : #accessing }
 ZnLimitedReadStream >> collectionSpecies [
-	"I can be set to binary or ascii explicitly.
-	If not set, delegate to our wrapped stream."
+	"Delegate to our wrapped stream if possible."
 	
-	^ binary notNil
-		ifTrue: [ 
-			binary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ]
-		ifFalse: [
-			(stream respondsTo: #collectionSpecies)
-				ifTrue: [ stream collectionSpecies ]  
-				ifFalse: [ stream isBinary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ] ]
+	^ (stream respondsTo: #collectionSpecies)
+			ifTrue: [ stream collectionSpecies ]  
+			ifFalse: [ stream isBinary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ]
 ]
 
 { #category : #accessing }
@@ -79,9 +59,12 @@ ZnLimitedReadStream >> contentsOfEntireFile [
 
 { #category : #testing }
 ZnLimitedReadStream >> isBinary [
-	^ binary isNil
-		ifTrue: [ stream isBinary ]
-		ifFalse: [ binary ]
+	^ stream isBinary
+]
+
+{ #category : #testing }
+ZnLimitedReadStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
@@ -118,18 +101,11 @@ ZnLimitedReadStream >> match: subCollection [
 
 { #category : #accessing }
 ZnLimitedReadStream >> next [
-	"We do byte/char conversions on the fly."
-	
-	^ self atEnd 
-		ifTrue: [ nil ] 
+	^ self atEnd
+		ifTrue: [ nil ]
 		ifFalse: [ 
-			position := position + 1. 
-			binary isNil
-				ifTrue: [ stream next ] 
-				ifFalse: [ 
-					binary
-					 	ifTrue: [ stream next asInteger ]
-						ifFalse: [ stream next asCharacter ] ] ]
+			position := position + 1.
+			stream next ]
 ]
 
 { #category : #accessing }
@@ -187,17 +163,9 @@ ZnLimitedReadStream >> on: readStream limit: integer [
 
 { #category : #accessing }
 ZnLimitedReadStream >> peek [
-	"We do byte/char conversions on the fly."
-	
-	^ self atEnd 
-		ifTrue: [ nil ] 
-		ifFalse: [ 
-			binary isNil
-				ifTrue: [ stream peek ] 
-				ifFalse: [ 
-					binary
-					 	ifTrue: [ stream peek asInteger ]
-						ifFalse: [ stream peek asCharacter ] ] ]
+	^ self atEnd
+		ifTrue: [ nil ]
+		ifFalse: [ stream peek ]
 ]
 
 { #category : #accessing }
@@ -208,13 +176,6 @@ ZnLimitedReadStream >> peekFor: anElement [
 { #category : #accessing }
 ZnLimitedReadStream >> position [
 	^ position
-]
-
-{ #category : #printing }
-ZnLimitedReadStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
-		nextPutAll: self class name
 ]
 
 { #category : #accessing }

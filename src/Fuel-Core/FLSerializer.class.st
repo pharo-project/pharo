@@ -1,242 +1,383 @@
 "
-I am a binary object serializer.
+I am the configuration for serialization.
 
-An example of use:
-
-| sourceArray loadedArray |
-sourceArray := 
-	Array 
-		with: 'a string' 
-		with: Transcript
-		with: [ Transcript show: 'a string' ].
-
-""Store to the file""
-FLSerializer serialize: sourceArray toFileNamed: 'example.FL'. 
-
-""Load from the file""
-loadedArray := FLMaterializer materializeFromFileNamed: 'example.FL'. 
-
-""The arrays are not the same""
-[ sourceArray ~~ loadedArray ] assert.
-
-""The strings are not the same""
-[ sourceArray first ~~ loadedArray first ] assert.
-[ sourceArray first = loadedArray first ] assert.
-
-""The global instance Transcript is the same""
-[ sourceArray second == loadedArray second ] assert.
-
-""Appreciate in Transcript that the loaded block prints a string""
-loadedArray third value.
-
+I hold all the configuration information necessary for serializing objects.
 "
 Class {
 	#name : #FLSerializer,
-	#superclass : #Object,
-	#instVars : [
-		'analyzer',
-		'serializationFactory',
-		'signature',
-		'version',
-		'stream',
-		'header'
-	],
-	#category : #'Fuel-Core-Base'
+	#superclass : #FLConfiguration,
+	#category : #'Fuel-Core-Public'
 }
 
-{ #category : #protected }
-FLSerializer class >> currentVersion [
-	^ 303
+{ #category : #'accessing-defaults' }
+FLSerializer class >> defaultDepthLimit [
+	^ -1
 ]
 
-{ #category : #protected }
-FLSerializer class >> defaultSignature [
-	^ 'FUEL'
+{ #category : #'accessing-defaults' }
+FLSerializer class >> defaultLimitObjectsExceptionEnabled [
+	^ false
 ]
 
-{ #category : #'instance creation' }
-FLSerializer class >> newDefault [
-
-	^self newLight
+{ #category : #'accessing-defaults' }
+FLSerializer class >> defaultObjectsLimit [
+	^ -1
 ]
 
-{ #category : #'instance creation' }
-FLSerializer class >> newLight [
-
-	^self new
-]
-
-{ #category : #'instance creation' }
-FLSerializer class >> on: aStream [
-	^ self newLight 
-		stream: aStream;
-		yourself
-]
-
-{ #category : #'serializing-shortcuts' }
+{ #category : #convenience }
 FLSerializer class >> serialize: anObject on: aStream [
-
-	self newDefault serialize: anObject on: aStream
+	self new
+		object: anObject;
+		onStream: aStream;
+		serialize
 ]
 
-{ #category : #'serializing-shortcuts' }
-FLSerializer class >> serialize: anObject toFileNamed: aFilename [
-
-	self newDefault serialize: anObject toFileNamed: aFilename
+{ #category : #convenience }
+FLSerializer class >> serialize: anObject toFileNamed: aFilePath [
+	self new
+		object: anObject;
+		filePath: aFilePath;
+		serialize
 ]
 
-{ #category : #'serializing-shortcuts' }
+{ #category : #convenience }
 FLSerializer class >> serializeToByteArray: anObject [
-	"No stream is needed by the user. An internal in-memory stream will be used. This method returns a ByteArray representing the serialization"
-
-	| aStream |
-	aStream := WriteStream on: (ByteArray new: 100).
-	self newDefault serialize: anObject on: aStream.
-	^ aStream contents
+	^ ByteArray
+		new: 100
+		streamContents: [ :stream |
+			self new
+				object: anObject;
+				onStream: stream;
+				serialize ]
 ]
 
-{ #category : #header }
+{ #category : #'configuring-materialization' }
 FLSerializer >> addPostMaterializationAction: aCleanBlockClosure [
-	header addPostMaterializationAction: aCleanBlockClosure
+	"Takes a clean (no dependency on outer variables) block closure which will be
+	activated after materialization automatically.
+	This closure takes three optional arguments:
+		1. the header (FLHeader)
+		2. the materialization (FLMateralization)
+		3. the global environment
+	
+	Example: 
+	
+	configuration addPostMaterializationAction: [ :header :materialization :environment |
+		| selector |
+		selector := header additionalObjectAt: #selector.
+		materialization root perform: 'Materialization done!' ]"
+	aCleanBlockClosure isBlock ifFalse: [
+		FLConfigurationError signal: 'Argument must be a block' ].
+	
+	aCleanBlockClosure isClean ifFalse: [
+		FLConfigurationError signal: 'Post materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean' ].
+	
+	aCleanBlockClosure numArgs > 3 ifTrue: [
+		FLConfigurationError signal: 'Block accepts too many arguments, only three will be passed' ].
+	
+	(map
+		at: #postMaterializationActions
+		ifAbsentPut: [ IdentitySet new ])
+			add: aCleanBlockClosure
 ]
 
-{ #category : #header }
+{ #category : #'configuring-materialization' }
 FLSerializer >> addPreMaterializationAction: aCleanBlockClosure [
-	header addPreMaterializationAction: aCleanBlockClosure
+	"Takes a clean (no dependency on outer variables) block closure which will be
+	activated before materialization automatically.
+	This closure takes two optional arguments:
+		1. the header (FLHeader)
+		2. the global environment
+	
+	Example:
+	
+	configuration addPostMaterializationAction: [ :header :environment |
+		environment at: (header additionalObjectAt: #transcripClassName)
+			show: 'Materialization starting!' ]"
+	aCleanBlockClosure isBlock ifFalse: [
+		FLConfigurationError signal: 'Argument must be a block' ].
+	
+	aCleanBlockClosure isClean ifFalse: [
+		FLConfigurationError signal: 'Pre materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean' ].
+	
+	aCleanBlockClosure numArgs > 2 ifTrue: [
+		FLConfigurationError signal: 'Block accepts too many arguments, only two will be passed' ].
+	
+	(map
+		at: #preMaterializationActions
+		ifAbsentPut: [ IdentitySet new ])
+			add: aCleanBlockClosure
 ]
 
-{ #category : #accessing }
-FLSerializer >> analyzer [
-	^ analyzer ifNil: [ analyzer := self defaultAnalyzer ]
-]
-
-{ #category : #accessing }
-FLSerializer >> analyzer: anObject [
-	analyzer := anObject
-]
-
-{ #category : #header }
-FLSerializer >> at: key putAdditionalObject: anObject [ 
+{ #category : #'configuring-materialization' }
+FLSerializer >> at: aKey putAdditionalObject: anObject [ 
 	"This is useful if we want to attach objects to a package that will also be serialized. The way they are stored is key-value."
-	header at: key putAdditionalObject: anObject
-]
-
-{ #category : #protected }
-FLSerializer >> defaultAnalyzer [
-
-	^FLAnalyzer newDefault
-]
-
-{ #category : #protected }
-FLSerializer >> encodeHeaderWith: anEncoder [
-
-	"todo: fix how header is encoded"
-	anEncoder encodeByte: (header isEmpty ifTrue: [0] ifFalse: [1]).
-
-	header isEmpty ifFalse: [
-		self class newDefault serializationFactory value: header value: anEncoder ]
-]
-
-{ #category : #protected }
-FLSerializer >> encodeSignatureWith: anEncoder [
-	anEncoder encodeBytes: self signature asByteArray
-]
-
-{ #category : #protected }
-FLSerializer >> encodeVersionWith: anEncoder [
-	anEncoder encodeUint16: self version
-]
-
-{ #category : #hooks }
-FLSerializer >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
+	(map
+		at: #additionalObjects
+		ifAbsentPut: [ IdentityDictionary new ])
+			at: aKey
+			put: anObject
 ]
 
 { #category : #accessing }
-FLSerializer >> header [
-	^ header
+FLSerializer >> behaviorsToSerialize [
+	^ map
+		at: #behaviorsToSerialize
+		ifAbsentPut: [ IdentitySet new ]
 ]
 
-{ #category : #initialization }
-FLSerializer >> initialize [
-
-	super initialize.
-	self signature: self class defaultSignature.
-	self version: self class currentVersion.
-	header := FLHeader new.
-]
-
-{ #category : #protected }
-FLSerializer >> serializationFactory [
-
-	^ serializationFactory ifNil: [ 
-		self setDefaultSerialization.
-		serializationFactory ].
-]
-
-{ #category : #serializing }
-FLSerializer >> serialize: anObject [
-	"Serialize the graph starting at the root object received and answers the FLSerialization object"
-
-	^ self serialize: anObject on: stream
-]
-
-{ #category : #serializing }
-FLSerializer >> serialize: anObject on: aStream [
-	"Serialize the graph starting at the root object received and answers the FLSerialization object"
-
-	FLEncoder
-		on: aStream 
-		globalEnvironment: self analyzer globalEnvironment
-		do: [ :anEncoder | 
-			self encodeSignatureWith: anEncoder.
-			self encodeVersionWith: anEncoder.
-			self encodeHeaderWith: anEncoder.
-			^ self serializationFactory value: anObject value: anEncoder ]
-]
-
-{ #category : #serializing }
-FLSerializer >> serialize: anObject toFileNamed: aFilename [
-	"Serialize the graph starting at the root object received and answers the FLSerialization object"
-	FLPlatform current
-		fileNamed: aFilename 
-		writeStreamDo: [ :aFileStream |
-			self serialize: anObject on: aFileStream ]
-]
-
-{ #category : #protected }
-FLSerializer >> setDefaultSerialization [
-
-	^ serializationFactory := [:anObject :anEncoder | 
-		(FLSerialization 
-			with: anEncoder
-			root: anObject 
-			analyzer: self analyzer)
-			run;
-			yourself ]
+{ #category : #private }
+FLSerializer >> computeGlobals [
+	| globals defaultGlobals configuredGlobals allGlobals |
+	defaultGlobals := (self class defaultGlobalSymbols select: [ :symbol |
+		self environment includesKey: symbol ]) asSet.
+	configuredGlobals := map
+		at: #globals
+		ifAbsent: [ #() ].
+	allGlobals := defaultGlobals, configuredGlobals.
+	allGlobals isEmpty ifTrue: [ ^ IdentityDictionary new ].
+	
+	globals := IdentityDictionary new.
+	allGlobals do: [ :object |
+		globals add: (self globalAssociationFor: object) ].
+	
+	^ globals
 ]
 
 { #category : #accessing }
-FLSerializer >> signature [
-	^ signature
+FLSerializer >> depthLimit [
+	^ map
+		at: #depthLimit
+		ifAbsent: [ self class defaultDepthLimit ]
+]
+
+{ #category : #configuring }
+FLSerializer >> enableLimitObjectsException [
+	"Setting this to true will force Fuel to signal an exception if the number of objects
+	that will be serialized exceeds the limit set via #limitObjectsTo:"
+
+	map
+		at: #limitObjectsExceptionEnabled
+		put: true
+]
+
+{ #category : #'configuring-globals' }
+FLSerializer >> fullySerializeAllBehaviors: aCollection [
+	aCollection isCollection ifFalse: [
+		FLConfigurationError signal: 'Argument must be a collection' ].
+	
+	aCollection do: [ :behavior |
+		self fullySerializeBehavior: behavior ]
+]
+
+{ #category : #'configuring-globals' }
+FLSerializer >> fullySerializeAllMethods: aCollection [
+	aCollection isCollection ifFalse: [
+		FLConfigurationError signal: 'Argument must be a collection' ].
+	
+	aCollection do: [ :behavior |
+		self fullySerializeMethod: behavior ]
+]
+
+{ #category : #'configuring-globals' }
+FLSerializer >> fullySerializeBehavior: aBehavior [
+	aBehavior isBehavior ifFalse: [
+		FLConfigurationError signal: 'Argument must be a Behavior' ].
+	
+	self behaviorsToSerialize add: aBehavior
+]
+
+{ #category : #'configuring-globals' }
+FLSerializer >> fullySerializeMethod: aCompiledMethod [
+	aCompiledMethod isCompiledMethod ifFalse: [
+		FLConfigurationError signal: 'Argument must be a CompiledMethod' ].
+	
+	self methodsToSerialize add: aCompiledMethod
+]
+
+{ #category : #private }
+FLSerializer >> globalAssociationFor: anObject [
+	"Some globals, like ActiveHand have a nil value in the Smalltalk globals. Therefore, we cannot map nil to globalCluster. We could filter before in #defaultGlobalSymbols but that means that not even the Association will be consider global."
+	(self environment
+		at: anObject
+		ifPresent: [ :value |
+			^ anObject -> (value ifNil: [ anObject ]) ]
+		ifAbsent: [
+			self environment
+				keyAtIdentityValue: anObject
+				ifPresent: [ :key |
+					^ key -> anObject ]
+				ifAbsent: [
+					FLConfigurationError signal: 'No such global found in environment: ', anObject asString ] ])
 ]
 
 { #category : #accessing }
-FLSerializer >> signature: anObject [
-	signature := anObject
+FLSerializer >> globals [
+	^ map
+		at: #computedGlobals
+		ifAbsentPut: [ self computeGlobals ]
+]
+
+{ #category : #testing }
+FLSerializer >> hasDepthLimit [
+	^ self depthLimit > 0
+]
+
+{ #category : #testing }
+FLSerializer >> hasObjectsLimit [
+	^ self objectLimit > 0
+]
+
+{ #category : #testing }
+FLSerializer >> isLimitObjectsExceptionEnabled [
+	^ map
+		at: #limitObjectsExceptionEnabled
+		ifAbsent: [ self class defaultLimitObjectsExceptionEnabled ]
+]
+
+{ #category : #configuring }
+FLSerializer >> limitDepthTo: anInteger [
+	"Fuel will traverse the serialization object graph until it has reached the depth
+	specified and ignore any objects above the limit. You can think of the depth as the distance
+	between the root object and the one currently being analyzed.
+	
+	You should be aware that this can have unexpected side effects since it his hard to tell what
+	objects will be missing in the resulting object graph.
+	
+	Graph traversal is depth first."
+	
+	anInteger isInteger ifFalse: [
+		FLConfigurationError signal: 'Depth limit must be an integer' ].
+
+	map
+		at: #depthLimit
+		put: anInteger
+]
+
+{ #category : #configuring }
+FLSerializer >> limitObjectsTo: anInteger [
+	"Fuel will traverse the serialization object graph until it has reached the number of objects
+	specified. Depending on the setting of #enableLimitObjectsException Fuel will then either
+	signal an exception or continue with writing out the encountered objects.
+	
+	You should be aware that this can have unexpected side effects since it his hard to tell what
+	objects will be missing in the resulting object graph.
+	
+	Graph traversal is depth first."
+
+	anInteger isInteger ifFalse: [
+		FLConfigurationError signal: 'Object limit must be an integer' ].
+	
+	map
+		at: #objectLimit
+		put: anInteger
+]
+
+{ #category : #'configuring-globals' }
+FLSerializer >> lookUpAllInGlobals: aCollection [
+	aCollection isCollection ifFalse: [
+		FLConfigurationError signal: 'Argument must be collection' ].
+	
+	aCollection do: [ :object |
+		self lookUpInGlobals: object ]
+]
+
+{ #category : #'configuring-globals' }
+FLSerializer >> lookUpInGlobals: anObject [
+	(map
+		at: #globals
+		ifAbsentPut: [ IdentitySet new ])
+			add: anObject
 ]
 
 { #category : #accessing }
-FLSerializer >> stream: aStream [
-	stream := aStream
+FLSerializer >> methodsToSerialize [
+	^ map
+		at: #methodsToSerialize
+		ifAbsentPut: [ IdentitySet new ]
+]
+
+{ #category : #configuring }
+FLSerializer >> object: anObject [
+	map
+		at: #object
+		ifPresent: [ :object | FLConfigurationError signal: 'Object already set' ]
+		ifAbsentPut: [ anObject ]
+]
+
+{ #category : #configuring }
+FLSerializer >> objectCollection: aCollection [
+	aCollection isCollection ifFalse: [
+		FLConfigurationError signal: 'Argument must be a collection' ].
+	
+	self object: aCollection.
+	
+	map
+		at: #hasMultipleObjects
+		put: true
 ]
 
 { #category : #accessing }
-FLSerializer >> version [
-	^ version
+FLSerializer >> objectLimit [
+	^ map
+		at: #objectLimit
+		ifAbsent: [ self class defaultObjectsLimit ]
 ]
 
 { #category : #accessing }
-FLSerializer >> version: anObject [
-	version := anObject
+FLSerializer >> postMaterializationActions [
+	^ map
+		at: #postMaterializationActions
+		ifAbsent: [ IdentityDictionary new ]
+]
+
+{ #category : #accessing }
+FLSerializer >> preMaterializationActions [
+	^ map
+		at: #preMaterializationActions
+		ifAbsent: [ IdentityDictionary new ]
+]
+
+{ #category : #running }
+FLSerializer >> serialize [
+	self useDuring: [ FLSerialization run ]
+]
+
+{ #category : #private }
+FLSerializer >> streamFactoryForFilePath: aString [
+	^ [ FLPlatform current writeStreamForFilePath: aString ]
+]
+
+{ #category : #accessing }
+FLSerializer >> substitutions [
+	^ map
+		at: #substitutions
+		ifAbsent: [ Bag new ]
+]
+
+{ #category : #configuring }
+FLSerializer >> when: aConditionBlock substituteBy: aSubstitutionBlock [
+	"Dynamically substitute any object in the object graph with aValuable (understands #value and #value:)
+	if conditionBlock answers true.
+	Every object in the graph will be passed as an argument to aConditionBlock and to aValuable if
+	aCondition Block answers true.
+	Note that this may reduce performance significantly compared to static substitution (i.e. using methods
+	on the classes of the objects to replace, e.g. #fuelReplacement).
+	Example:
+		configuration
+			when: [ :object | object isString ]
+			substituteBy: [ :object | nil ]"
+	aConditionBlock isBlock ifFalse: [
+		FLConfigurationError signal: 'Condition must be a block' ].
+	aConditionBlock numArgs = 1 ifFalse: [
+		FLConfigurationError signal: 'Condition block must accept the currently analysed object as single argument' ].
+	aSubstitutionBlock isBlock ifFalse: [
+		FLConfigurationError signal: 'Substitution must be a block' ].
+	aSubstitutionBlock numArgs = 1 ifFalse: [
+		FLConfigurationError signal: 'Substitution block must accept the currently analysed object as single argument' ].
+
+	(map
+		at: #substitutions
+		ifAbsentPut: [ Bag new ])
+			add: aConditionBlock -> aSubstitutionBlock
 ]

@@ -82,9 +82,10 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 			node := node parent messages first ] ].
 	
 	"In the case of doIt methods"
-	(node selector = #noMethod and: [ aNode isVariable ])
-		ifTrue: [  ^ aNode name ].
-
+	(node isMethod and: [ node isDoIt and: [ aNode isVariable ]])
+		ifTrue: [  ^ aNode name ].		
+	(node isMethod and: [ node isDoIt and: [ aNode isParseError ]])
+		ifTrue: [ ^ aNode value asSymbol ifEmpty: [ nil ] ].
 
 	^ node selector
 ]

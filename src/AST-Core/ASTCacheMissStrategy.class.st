@@ -16,5 +16,5 @@ Class {
 
 { #category : #accessing }
 ASTCacheMissStrategy >> getASTFor: aCompiledMethod [
-	^ aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass
+	^ aCompiledMethod parseTree
 ]

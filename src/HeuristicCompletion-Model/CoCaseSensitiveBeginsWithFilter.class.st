@@ -19,8 +19,7 @@ CoCaseSensitiveBeginsWithFilter class >> filterString: aString [
 
 { #category : #testing }
 CoCaseSensitiveBeginsWithFilter >> accepts: aCandidate [
-	
-	completionString ifEmpty: [ ^ true ].
+
 	^ aCandidate contents beginsWith: completionString
 ]
 

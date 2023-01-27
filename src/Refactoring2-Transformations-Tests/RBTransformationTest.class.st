@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #mocking }
@@ -21,16 +21,12 @@ RBTransformationTest >> abstractVariableTestData [
 	newModel := RBNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 	
-	#('Object subclass: #Foo
-		instanceVariableNames: ''instVarName1 instVarName2''
-		classVariableNames: ''ClassVarName1 ClassVarName2 ''
-		poolDictionaries: ''''
-		category: ''Testing'' '
-	'Foo subclass: #Bar
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' '
+	#('Object << #Foo
+		slots: { #instVarName1 . #instVarName2};
+		sharedVariables: { #ClassVarName1 . #ClassVarName2};
+		package: ''Testing'' '
+	'Foo << #Bar
+		package: ''Testing'' '
 	) do: [ :each | newModel defineClass: each ].
 	
 	#(#(#Bar #(

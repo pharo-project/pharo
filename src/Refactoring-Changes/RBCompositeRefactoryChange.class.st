@@ -71,6 +71,19 @@ RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [
 ]
 
 { #category : #accessing }
+RBCompositeRefactoryChange >> addProtocolNamed: aString in: aClass [
+
+	^ self addChange:
+		  (RBAddProtocolChange addProtocolNamed: aString in: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> category: aString for: aClass [ 
+
+	^ self addChange: (RBClassCategoryChange category: aString for: aClass)
+]
+
+{ #category : #accessing }
 RBCompositeRefactoryChange >> changeClass [
 
 	^ self subclassResponsibility
@@ -244,6 +257,13 @@ RBCompositeRefactoryChange >> removePool: aPoolVariable from: aClass [
 ]
 
 { #category : #accessing }
+RBCompositeRefactoryChange >> removeProtocolNamed: aString in: aClass [ 
+	self flag: #todo. 
+	"This change is not made via the changefactory!!!"
+	^ self addChange: (RBRemoveProtocolChange removeProtocolNamed: aString in: aClass)
+]
+
+{ #category : #accessing }
 RBCompositeRefactoryChange >> renameChangesForClass: oldClassName to: newClassName [
 
 	^ self copy
@@ -274,4 +294,14 @@ RBCompositeRefactoryChange >> renameInstanceVariable: oldNameLocal to: newNameLo
 			   renameInstanceVariable: oldNameLocal
 			   to: newNameLocal
 			   in: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> selector: aSelector in: aClass classified: aProtocol [
+	self flag: #todo. 
+	"This change is not made via the changefactory!!!"
+	^ self addChange: (RBMethodProtocolChange
+							selector: aSelector
+							in: aClass
+							classified: aProtocol)
 ]

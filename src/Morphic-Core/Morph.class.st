@@ -341,7 +341,7 @@ Morph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 { #category : #'debug and other' }
 Morph >> addDebuggingItemsTo: aMenu hand: aHandMorph [
 	aMenu add: 'debug...' subMenu: (self buildDebugMenu: aHandMorph).
-	aMenu lastItem icon: (self iconNamed: #smallDebugIcon)
+	aMenu lastItem icon: (self iconNamed: #smallDebug)
 ]
 
 { #category : #updating }
@@ -415,10 +415,10 @@ Morph >> addExportMenuItems: aMenu hand: aHandMorph [
 			aSubMenu add: 'PNG file' selector: #exportAsPNG.
 			aMenu
 				add: 'export...'
-				icon: (self iconNamed: #smallExportIcon)
+				icon: (self iconNamed: #smallExport)
 				subMenu: aSubMenu.
 			aMenu lastItem
-				icon: (self iconNamed: #smallExportIcon) ]
+				icon: (self iconNamed: #smallExport) ]
 ]
 
 { #category : #menus }
@@ -437,18 +437,19 @@ Morph >> addFillStyleMenuItems: aMenu hand: aHand [
 
 { #category : #'rotate scale and flex' }
 Morph >> addFlexShell [
+
 	"Wrap a rotating and scaling shell around this morph."
 
 	| oldHalo flexMorph myWorld anIndex |
-
 	myWorld := self world.
 	oldHalo := self halo.
 	anIndex := self owner submorphIndexOf: self.
-	self owner addMorph: (flexMorph := self newTransformationMorph asFlexOf: self)
+	self owner
+		addMorph: (flexMorph := self newTransformationMorph asFlexOf: self)
 		asElementNumber: anIndex.
 	self transferStateToRenderer: flexMorph.
-	oldHalo ifNotNil: [oldHalo setTarget: flexMorph].
-	myWorld ifNotNil: [myWorld startSteppingSubmorphsOf: flexMorph].
+	oldHalo ifNotNil: [ oldHalo setTarget: flexMorph ].
+	myWorld ifNotNil: [ flexMorph startSteppingSubmorphs ].
 
 	^ flexMorph
 ]
@@ -884,6 +885,12 @@ Morph >> adhereToEdge [
 Morph >> adhereToEdge: edgeSymbol [ 
 	| edgeMessage |
 	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
+	
+	"these are implemented in Morph, no need to use perform:"
+	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
+	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
+	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
+	
 	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
 	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
 		 ifFalse:  [^self].
@@ -1231,34 +1238,6 @@ Morph >> beginsWith: aString fromList: aMorph [
 ]
 
 { #category : #'meta-actions' }
-Morph >> blueButtonDown: anEvent [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
-	| h tfm doNotDrag |
-	h := anEvent hand halo.
-	"Prevent wrap around halo transfers originating from throwing the event back in"
-	doNotDrag := false.
-	h ifNotNil:[
-		(h innerTarget == self) ifTrue:[doNotDrag := true].
-		(h innerTarget hasOwner: self) ifTrue:[doNotDrag := true].
-		(self hasOwner: h target) ifTrue:[doNotDrag := true]].
-
-	tfm := (self transformedFrom: nil) inverseTransformation.
-
-	"cmd-drag on flexed morphs works better this way"
-	h := self addHalo: (anEvent transformedBy: tfm).
-	h ifNil: [^ self].
-	doNotDrag ifTrue:[^self].
-	"Initiate drag transition if requested"
-	anEvent hand 
-		waitForClicksOrDrag: h
-		event: (anEvent transformedBy: tfm)
-		selectors: { nil. nil. nil. #dragTarget:. }
-		threshold: 5.
-	"Pass focus explicitly here"
-	anEvent hand newMouseFocus: h.
-]
-
-{ #category : #'meta-actions' }
 Morph >> blueButtonUp: anEvent [
 	"Ignored. Theoretically we should never get here since control is transferred to the halo on #blueButtonDown: but subclasses may implement this differently."
 ]
@@ -1450,10 +1429,10 @@ Morph >> buildDebugMenu: aHand [
 			aMenu addLine ].
 	aMenu add: 'inspect morph' selector: #inspectInMorphic:.
 	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
 	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'
@@ -1512,7 +1491,7 @@ Morph >> buildMetaMenu: evt [
 		argument: evt position.
 	menu add: 'explore' selector: #inspect.
 	menu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	menu addLine.
 	menu add: 'show actions' selector: #showActions.
 	menu addLine.
@@ -2829,18 +2808,22 @@ Morph >> handleFocusEvent: anEvent [
 
 { #category : #'events - processing' }
 Morph >> handleKeyDown: anEvent [
+
 	"System level event handling."
-	
-	anEvent wasHandled ifTrue:[ ^ self ].
-	
-	self shortcutsHandler ifNotNil: [:handler | 
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+
+	self shortcutsHandler ifNotNil: [ :handler | 
 		handler handleKeystroke: anEvent inMorph: self.
-		anEvent wasHandled ifTrue: [^ self]].
-	
-	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
+		anEvent wasHandled ifTrue: [ 
+			anEvent supressNextKeyPress: true.
+			^ self ] ].
+
+	(self handlesKeyDown: anEvent) ifFalse: [ ^ self ].
 	anEvent wasHandled: true.
 	self keyDown: anEvent.
-	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
+	^ self eventHandler ifNotNil: [ :handler | 
+		  handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events - processing' }
@@ -2876,31 +2859,39 @@ Morph >> handleListenEvent: anEvent [
 
 { #category : #'events - processing' }
 Morph >> handleMouseDown: anEvent [
+
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self]. "not interested"
+
+	anEvent wasHandled ifTrue: [ ^ self ]. "not interested"
 	anEvent hand removePendingBalloonFor: self.
 	anEvent wasHandled: true.
-	
-	(anEvent controlKeyPressed
-			and: [self cmdGesturesEnabled and: [ anEvent shiftPressed]])
-		ifTrue: [
-			self invokeMetaMenu: anEvent.
-			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ] ].
+
+	(anEvent controlKeyPressed and: [ 
+		 self cmdGesturesEnabled and: [ anEvent shiftPressed ] ]) ifTrue: [ 
+		self invokeMetaMenu: anEvent.
+		^ self eventHandler ifNotNil: [ :handler | 
+			  handler mouseDown: anEvent fromMorph: self ] ].
 
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
-	anEvent blueButtonChanged ifTrue:[^self blueButtonDown: anEvent].
 	
+	"Check to open halo"
+	anEvent isSpecialGesture  
+		ifTrue: [ 
+			^ self handleSpecialGesture: anEvent ].
+
 	self mouseDown: anEvent.
-	
+
 	anEvent hand removeHaloFromClick: anEvent on: self.
-	(self handlesMouseStillDown: anEvent) ifTrue:[
-		self startStepping: #handleMouseStillDown: 
+	(self handlesMouseStillDown: anEvent) ifTrue: [ 
+		self
+			startStepping: #handleMouseStillDown:
 			at: Time millisecondClockValue + self mouseStillDownThreshold
-			arguments: {anEvent copy resetHandlerFields}
+			arguments: { anEvent copy resetHandlerFields }
 			stepTime: self mouseStillDownStepRate ].
-		
-	^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ]
+
+	^ self eventHandler ifNotNil: [ :handler | 
+		  handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events - processing' }
@@ -3001,6 +2992,54 @@ Morph >> handleMouseWheel: anEvent [
 		self mouseWheel: anEvent]
 ]
 
+{ #category : #'meta-actions' }
+Morph >> handleSpecialGesture: mouseDownEvent [
+	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
+	| h tfm doNotDrag |
+	h := mouseDownEvent hand halo.
+	"Prevent wrap around halo transfers originating from throwing the event back in"
+	doNotDrag := false.
+	h ifNotNil:[
+		(h innerTarget == self) ifTrue:[doNotDrag := true].
+		(h innerTarget hasOwner: self) ifTrue:[doNotDrag := true].
+		(self hasOwner: h target) ifTrue:[doNotDrag := true]].
+
+	tfm := (self transformedFrom: nil) inverseTransformation.
+
+	"cmd-drag on flexed morphs works better this way"
+	h := self addHalo: (mouseDownEvent transformedBy: tfm).
+	h ifNil: [^ self].
+	doNotDrag ifTrue:[^self].
+	"Initiate drag transition if requested"
+	mouseDownEvent hand 
+		waitForClicksOrDrag: h
+		event: (mouseDownEvent transformedBy: tfm)
+		selectors: { nil. nil. nil. #dragTarget:. }
+		threshold: 5.
+	"Pass focus explicitly here"
+	mouseDownEvent hand newMouseFocus: h.
+]
+
+{ #category : #'event handling' }
+Morph >> handleTextEditionEvent: anEvent [
+	"System level event handling."
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+	(self handlesTextEditionEvent: anEvent) ifTrue: [ 
+		anEvent wasHandled: true.
+		self textEdition: anEvent ]
+]
+
+{ #category : #'event handling' }
+Morph >> handleTextInputEvent: anEvent [
+	"System level event handling."
+	
+	anEvent wasHandled ifTrue:[^self].
+	(self handlesTextInputEvent: anEvent) ifTrue:[
+		anEvent wasHandled: true.
+		self textInput: anEvent]
+]
+
 { #category : #'events - processing' }
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
@@ -3025,26 +3064,10 @@ Morph >> handleWindowEvent: anEvent [
 
 { #category : #'meta-actions' }
 Morph >> handlerForBlueButtonDown: anEvent [
-	"Return the (prospective) handler for a mouse down event. The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event.
-	Note: Halos handle blue button events themselves so we will only be asked if there is currently no halo on top of us.
-	Check whtehr halods are enabled (for deployment)."
+	"Return the (prospective) handler for a mouse down event.
+	In this case all blue buttons are disabled unless the subclass whant to handle it"
 
-	self wantsHaloFromClick ifFalse: [ ^ nil ].
-
-	self class cycleHalosBothDirections
-		ifTrue: [ anEvent handler ifNil: [ ^ self ].
-			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
-	^ anEvent shiftPressed
-		ifFalse: [ "let outer guy have it" nil ]
-		ifTrue: [ "let me have it" self ]
-]
-
-{ #category : #'meta-actions' }
-Morph >> handlerForMetaMenu: evt [
-	"Return the prospective handler for invoking the meta menu. By default, the top-most morph in the innermost world gets this menu"
-	self isWorldMorph ifTrue:[^self].
-	evt handler ifNotNil:[evt handler isWorldMorph ifTrue:[^self]].
-	^nil
+	^ nil
 ]
 
 { #category : #'event handling' }
@@ -3053,12 +3076,13 @@ Morph >> handlerForMouseDown: anEvent [
 	installed and can be used for morphs further down the hierarchy to negotiate whether 
 	the inner or the outer morph should finally handle the event."
 
+	anEvent isSpecialGesture 
+		ifTrue: [ ^ self handlerForSpecialGestureDown: anEvent ].
+
 	anEvent blueButtonPressed
 		ifTrue: [^ self handlerForBlueButtonDown: anEvent].
 	anEvent yellowButtonPressed
 		ifTrue: [^ self handlerForYellowButtonDown: anEvent].
-	anEvent controlKeyPressed
-		ifTrue: [^ self handlerForMetaMenu: anEvent].
 	(self handlesMouseDown: anEvent)
 		ifFalse: [^ nil].	"not interested"
 
@@ -3069,6 +3093,20 @@ Morph >> handlerForMouseDown: anEvent [
 	^self mouseDownPriority >= anEvent handler mouseDownPriority
 		ifTrue: [ self]
 		ifFalse: [ nil]
+]
+
+{ #category : #'meta-actions' }
+Morph >> handlerForSpecialGestureDown: anEvent [
+	"Return the (prospective) handler for a special gesture event (Halos). 
+	The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event."
+
+	self wantsHaloFromClick ifFalse: [ ^ nil ].
+
+	self class cycleHalosBothDirections
+		ifTrue: [ anEvent handler ifNil: [ ^ self ].
+			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
+		
+	^ self
 ]
 
 { #category : #'event handling' }
@@ -3174,6 +3212,20 @@ Morph >> handlesMouseStillDown: evt [
 { #category : #'events - processing' }
 Morph >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?." 
+
+	^false
+]
+
+{ #category : #'event handling' }
+Morph >> handlesTextEditionEvent: evt [
+	"Do I want to receive text edition events?" 
+
+	^false
+]
+
+{ #category : #'event handling' }
+Morph >> handlesTextInputEvent: evt [
+	"Do I want to receive text edition events?" 
 
 	^false
 ]
@@ -3360,12 +3412,9 @@ Morph >> highlight [
 
 { #category : #accessing }
 Morph >> highlightColor [
-	
-	^ (self valueOfProperty: #highlightColor)
-		ifNotNil:
-			[:val | val ifNil: [self error: 'nil highlightColor']]
-		ifNil:
-			[owner ifNil: [self color] ifNotNil: [owner highlightColor]]
+
+	^ (self valueOfProperty: #highlightColor) ifNil: [ 
+		  owner ifNil: [ self color ] ifNotNil: [ owner highlightColor ] ]
 ]
 
 { #category : #accessing }
@@ -3502,8 +3551,8 @@ Morph >> innerBounds [
 
 { #category : #accessing }
 Morph >> insetColor [
-	owner ifNil:[^self color].
-	^ self colorForInsets
+
+	^ owner ifNil: [ self color ] ifNotNil: [ self colorForInsets ]
 ]
 
 { #category : #'meta-actions' }
@@ -3642,8 +3691,8 @@ Morph >> isLineMorph [
 { #category : #accessing }
 Morph >> isLocked [
 	"answer whether the receiver is Locked"
-	extension ifNil: [^ false].
-	^ extension locked
+
+	^ extension ifNil: [ false ] ifNotNil: [ :ext | ext locked ]
 ]
 
 { #category : #testing }
@@ -3969,9 +4018,9 @@ Morph >> listSpacing [
 		#equal - all rows have the same height
 		#none - all rows may have different heights
 	"
-	| props |
-	props := self layoutProperties.
-	^props ifNil:[#none] ifNotNil:[props listSpacing].
+	^ self layoutProperties
+		  ifNil: [ #none ]
+		  ifNotNil: [ :props | props listSpacing ]
 ]
 
 { #category : #'layout - properties' }
@@ -4657,7 +4706,7 @@ Morph >> positionSubmorphs [
 { #category : #opening }
 Morph >> postOpenInWorld: aWorld [
 
-	aWorld startSteppingSubmorphsOf: self
+	self startSteppingSubmorphs
 ]
 
 { #category : #'meta-actions' }
@@ -5201,6 +5250,7 @@ Morph >> repelsMorph: aMorph event: ev [
 
 { #category : #'submorphs - add/remove' }
 Morph >> replaceSubmorph: oldMorph by: newMorph [
+
 	| index itsPosition w |
 	oldMorph stopStepping.
 	itsPosition := oldMorph referencePositionInWorld.
@@ -5208,8 +5258,37 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 	oldMorph privateDelete.
 	self privateAddMorph: newMorph atIndex: index.
 	newMorph referencePositionInWorld: itsPosition.
-	(w := newMorph world) ifNotNil:
-		[w startSteppingSubmorphsOf: newMorph]
+	(w := newMorph world) ifNotNil: [ newMorph startSteppingSubmorphs ]
+]
+
+{ #category : #'event handling' }
+Morph >> requestStopTextEditing [
+
+	"Used by a morph to request stop text edition capabilities.
+	The rendering backend can use this, for example, close the IME (input-method-editor).
+	Use it in pair with requestTextEditingAt:
+	
+	By default, propagate the request to the owner.
+	If this morph has no owner, do nothing.
+	Particular morphs (e.g., the root of the composition hierarchy should override)"
+	self owner ifNil: [ ^ self ].
+	self owner requestStopTextEditing
+]
+
+{ #category : #'event handling' }
+Morph >> requestTextEditingAt: aRectangle [
+
+	"Used by a morph to request text edition capabilities.
+	The rendering backend can use this information to, for example, open the IME (input-method-editor).
+	The rectangle indicates the position where the IME menu could be shown.
+	
+	Use it in pair with requestStopTextEditing
+	
+	By default, propagate the request to the owner.
+	If this morph has no owner, do nothing.
+	Particular morphs (e.g., the root of the composition hierarchy should override)"
+	self owner ifNil: [ ^ self ].
+	self owner requestTextEditingAt: aRectangle
 ]
 
 { #category : #'accessing - extension' }
@@ -5882,6 +5961,15 @@ Morph >> startSteppingSelector: aSelector [
 ]
 
 { #category : #'stepping and presenter' }
+Morph >> startSteppingSubmorphs [
+	"Ensure that all submorphs of the given morph that want to be stepped are added to the step list.   Typically used after adding a morph to the world."
+
+	self allMorphsDo: [:submorph |
+		submorph wantsSteps ifTrue: [submorph arrangeToStartSteppingIn: submorph world].
+	]
+]
+
+{ #category : #'stepping and presenter' }
 Morph >> step [
 	"Do some periodic activity. Use startStepping/stopStepping to start and stop getting sent this message. The time between steps is specified by this morph's answer to the stepTime message.  The generic version dispatches control to the player, if any.  The nasty circumlocation about owner's transformation is necessitated by the flexing problem that the player remains in the properties dictionary both of the flex and the real morph.  In the current architecture, only the top renderer's pointer to the player should actually be honored for the purpose of firing."
 ]
@@ -6090,6 +6178,14 @@ Morph >> textAnchorType: aSymbol [
 	^ aSymbol == #document
 		ifTrue: [ self removeProperty: #textAnchorType ]
 		ifFalse: [ self setProperty: #textAnchorType toValue: aSymbol ]
+]
+
+{ #category : #'event handling' }
+Morph >> textEdition: aTextEditionEvent [
+]
+
+{ #category : #'event handling' }
+Morph >> textInput: aTextInputEvent [
 ]
 
 { #category : #theme }

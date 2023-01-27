@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #visitor }
-EpSessionEnd >> accept: aVisitor [ 
+EpSessionEnd >> accept: aVisitor [
 	^ aVisitor visitSessionEnd: self
 ]

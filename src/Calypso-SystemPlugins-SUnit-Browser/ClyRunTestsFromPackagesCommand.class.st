@@ -15,6 +15,6 @@ ClyRunTestsFromPackagesCommand class >> contextClass [
 { #category : #activation }
 ClyRunTestsFromPackagesCommand class >> fullBrowserClassGroupTableIconActivation [
 	<classAnnotation>
-	
+
 	^ClyTableIconCommandActivation for: ClyFullBrowserClassGroupContext
 ]

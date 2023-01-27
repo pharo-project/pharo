@@ -16,13 +16,13 @@ Preconditions:
 Class {
 	#name : #RBRemoveVariableTransformation,
 	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditions [
 
-	class := self definingClass theNonMetaClass.
+	class := self definingClass instanceSide.
 
 	^ isClassVariable
 		ifTrue: [ self preconditionsForClassVariable ]
@@ -48,6 +48,6 @@ RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
 RBRemoveVariableTransformation >> privateTransform [
 
 	isClassVariable
-		ifTrue: [ self definingClass theNonMetaClass removeClassVariable: variableName ]
+		ifTrue: [ self definingClass instanceSide removeClassVariable: variableName ]
 		ifFalse: [ self definingClass removeInstanceVariable: variableName ]
 ]

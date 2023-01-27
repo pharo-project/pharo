@@ -22,7 +22,7 @@ RenrakuBaseTestCase class >> isAbstract [
 { #category : #running }
 RenrakuBaseTestCase >> setUp [
 	super setUp.
-	testPackage := (RPackage named: #'Renraku-Nuclear-Site') register.
+	testPackage := (RPackage named: #'RenrakuCreatedForTests') register.
 	self setupScreamerRule.
 ]
 

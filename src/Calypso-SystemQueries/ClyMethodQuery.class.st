@@ -20,19 +20,19 @@ ClyMethodQuery class >> resultItemsType [
 ClyMethodQuery >> buildResult: aQueryResult [
 	| filteredMethods |
 	filteredMethods := OrderedCollection new.
-	
-	scope methodsDo: [ :each | 
+
+	scope methodsDo: [ :each |
 		(self selectsMethod: each) ifTrue: [filteredMethods add: each]].
-	
+
 	aQueryResult fillWith: filteredMethods
 ]
 
 { #category : #execution }
 ClyMethodQuery >> checkEmptyResult [
 
-	scope methodsDo: [ :each | 
+	scope methodsDo: [ :each |
 		(self selectsMethod: each) ifTrue: [^false]].
-	
+
 	^true
 ]
 
@@ -43,13 +43,13 @@ ClyMethodQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 
 { #category : #'system changes' }
 ClyMethodQuery >> isAffectedByChangedMethod: aMethod [
-	
+
 	^self selectsMethod: aMethod
 ]
 
 { #category : #'system changes' }
 ClyMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^(aSystemAnnouncement canAffectResultOfMethodQuery: self)
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]

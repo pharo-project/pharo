@@ -69,7 +69,7 @@ SoundSystem class >> soundQuickStart: aBoolean [
 	SoundQuickStart := aBoolean
 ]
 
-{ #category : #'activation hooks' }
+{ #category : #'activation - hooks' }
 SoundSystem >> activate [
 	"Hook for possible specialization when activating a sound system"
 ]
@@ -81,7 +81,7 @@ SoundSystem >> beep [
 	self subclassResponsibility
 ]
 
-{ #category : #'activation hooks' }
+{ #category : #'activation - hooks' }
 SoundSystem >> deactivate [
 	"Hook for possible specialization when activating a sound system"
 ]
@@ -122,7 +122,7 @@ SoundSystem >> sampledSoundChoices [
 	self subclassResponsibility
 ]
 
-{ #category : #'activation hooks' }
+{ #category : #'activation - hooks' }
 SoundSystem >> shutDown [
 	"by default do nothing"
 ]

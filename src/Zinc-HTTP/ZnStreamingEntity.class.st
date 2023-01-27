@@ -10,7 +10,7 @@ use to read from.
 When the client is done, either all data must be read or #consumeContent must be called.
 A client should normally not close the stream.
 
-A ZnStreamingEntity can also be instanciated with an existing read stream.
+A ZnStreamingEntity can also be instanciated with an existing binary read stream.
 During #writeOn: this stream is copied to the output stream.
 
 Part of Zinc HTTP Components.
@@ -74,7 +74,7 @@ ZnStreamingEntity >> contents [
 	this can thus only be done once"
 	
 	stream ifNil: [ ^ nil ].
-	^ ZnUtils readUpToEnd: self stream limit: ZnMaximumEntitySize value
+	^ ZnUtils readUpToEnd: self stream limit: (ZnCurrentOptions at: #maximumEntitySize)
 ]
 
 { #category : #testing }
@@ -86,10 +86,10 @@ ZnStreamingEntity >> isEmpty [
 
 { #category : #'initialize-release' }
 ZnStreamingEntity >> readFrom: readStream [
-	self contentLength isNil
-		ifTrue: [ 
-			self stream: readStream ]
-		ifFalse: [ | limitedStream |
+
+	self contentLength
+		ifNil: [ self stream: readStream ]
+		ifNotNil: [ | limitedStream |
 			limitedStream := ZnLimitedReadStream on: readStream limit: self contentLength.
 			self stream: limitedStream ]
 ]

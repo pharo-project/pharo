@@ -8,12 +8,12 @@ Trait {
 
 { #category : #requirements }
 TBeginsEndsWith >> empty [
-	self explicitRequirement.
+	self explicitRequirement
 ]
 
 { #category : #requirements }
 TBeginsEndsWith >> nonEmpty [
-	self explicitRequirement.
+	self explicitRequirement
 ]
 
 { #category : #'tests - fixture' }
@@ -27,7 +27,7 @@ TBeginsEndsWith >> test0FixtureBeginsEndsWithTest [
 
 { #category : #'tests - begins ends with' }
 TBeginsEndsWith >> testsBeginsWith [
-	
+
 	self assert: (self nonEmpty beginsWith: (self nonEmpty copyUpTo: self nonEmpty last)).
 	self assert: (self nonEmpty beginsWith: self nonEmpty).
 	self deny: (self nonEmpty beginsWith: (self nonEmpty copyWith: self nonEmpty first))
@@ -35,14 +35,14 @@ TBeginsEndsWith >> testsBeginsWith [
 
 { #category : #'tests - begins ends with' }
 TBeginsEndsWith >> testsBeginsWithEmpty [
-	
-	self deny: (self nonEmpty beginsWith:(self empty)).
+
+	self assert: (self nonEmpty beginsWith:(self empty)).
 	self deny: (self empty beginsWith:(self nonEmpty))
 ]
 
 { #category : #'tests - begins ends with' }
 TBeginsEndsWith >> testsEndsWith [
-	
+
 	self assert: (self nonEmpty endsWith: self nonEmpty copyWithoutFirst).
 	self assert: (self nonEmpty endsWith: self nonEmpty).
 	self deny: (self nonEmpty endsWith: (self nonEmpty copyWith: self nonEmpty first))
@@ -50,7 +50,7 @@ TBeginsEndsWith >> testsEndsWith [
 
 { #category : #'tests - begins ends with' }
 TBeginsEndsWith >> testsEndsWithEmpty [
-	
-	self deny: (self nonEmpty endsWith: self empty).
+
+	self assert: (self nonEmpty endsWith: self empty).
 	self deny: (self empty endsWith: self nonEmpty)
 ]

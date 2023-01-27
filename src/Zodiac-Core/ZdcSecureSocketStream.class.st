@@ -148,7 +148,7 @@ ZdcSecureSocketStream >> flushEncryptedBytes: bytes startingAt: offset count: co
 	^ super flushBytes: bytes startingAt: offset count: count
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZdcSecureSocketStream >> initialize [ 
 	super initialize.
 	connecting := false
@@ -228,7 +228,7 @@ ZdcSecureSocketStream >> sslSession [
 	that we use for encryption and decryption, 
 	as well as connection setup handshaking, connect and accept"
 	
-	sslSession isNil ifTrue: [ sslSession := self sslSessionClass new ].
+	sslSession ifNil: [ sslSession := self sslSessionClass new ].
 	^ sslSession
 ]
 

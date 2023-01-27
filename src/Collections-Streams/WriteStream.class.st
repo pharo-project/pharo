@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-WriteStream class >> with: aCollection [ 
-	"Answer an instance of me on the argument, aCollection, positioned to 
+WriteStream class >> with: aCollection [
+	"Answer an instance of me on the argument, aCollection, positioned to
 	store objects at the end of aCollection."
 
 	^self basicNew with: aCollection
 ]
 
 { #category : #'instance creation' }
-WriteStream class >> with: aCollection from: firstIndex to: lastIndex [ 
-	"Answer an instance of me on the subcollection of the argument, 
-	aCollection, determined by the indices firstIndex and lastIndex. Position 
+WriteStream class >> with: aCollection from: firstIndex to: lastIndex [
+	"Answer an instance of me on the subcollection of the argument,
+	aCollection, determined by the indices firstIndex and lastIndex. Position
 	the instance to store at the end of the subcollection."
 
 	^self basicNew
@@ -60,7 +60,7 @@ WriteStream >> braceArray: anArray [
 	collection := anArray.
 	position := 0.
 	readLimit := 0.
-	writeLimit := anArray size.
+	writeLimit := anArray size
 ]
 
 { #category : #accessing }
@@ -86,15 +86,15 @@ WriteStream >> crlf [
 
 { #category : #'character writing' }
 WriteStream >> crtab [
-	"Append a return character, followed by a single tab character, to the 
+	"Append a return character, followed by a single tab character, to the
 	receiver."
 
 	self cr; tab
 ]
 
 { #category : #'character writing' }
-WriteStream >> crtab: anInteger [ 
-	"Append a return character, followed by anInteger tab characters, to the 
+WriteStream >> crtab: anInteger [
+	"Append a return character, followed by anInteger tab characters, to the
 	receiver."
 
 	self cr; tab: anInteger
@@ -127,22 +127,22 @@ WriteStream >> ensureEndsWith: anObject [
 WriteStream >> ensureNoSpace [
 	"If there is not one on the end, remove it."
 	| space |
-	
+
 	space := Character space.
-	
+
 	[ position > 0 and: [(collection at: position) = space ]]
 		whileTrue: [ self skip: -1 ]
 ]
 
 { #category : #private }
 WriteStream >> growTo: anInteger [
- 
+
     " anInteger is the required minimal new size of the collection "
  	| oldSize length |
  	oldSize := collection size.
       length := anInteger + (oldSize // 4 max: 20) - oldSize.
  	collection := collection grownBy: length.
- 	writeLimit := collection size.
+ 	writeLimit := collection size
 ]
 
 { #category : #'character writing' }
@@ -172,7 +172,7 @@ WriteStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 		[^ super next: anInteger putAll: aCollection startingAt: startIndex "Trigger normal pastEndPut: logic"].
 
 	collection replaceFrom: position+1 to: newEnd with: aCollection startingAt: startIndex.
-	position := newEnd.
+	position := newEnd
 ]
 
 { #category : #accessing }
@@ -192,18 +192,18 @@ WriteStream >> nextPut: anObject [
 
 { #category : #accessing }
 WriteStream >> nextPutAll: aCollection [
- 
+
  	| newEnd |
  	collection class == aCollection class ifFalse:
  		[^ super nextPutAll: aCollection ].
- 
+
  	newEnd := position + aCollection size.
  	newEnd > writeLimit ifTrue:
  		[self growTo: newEnd + 10].
- 
+
  	collection replaceFrom: position+1 to: newEnd  with: aCollection startingAt: 1.
  	position := newEnd.
-	
+
 	^ aCollection
 ]
 
@@ -220,7 +220,7 @@ WriteStream >> on: aCollection from: firstIndex to: lastIndex [
 
 	| len |
 	collection := aCollection.
-	readLimit := 
+	readLimit :=
 		writeLimit := lastIndex > (len := collection size)
 						ifTrue: [len]
 						ifFalse: [lastIndex].
@@ -231,10 +231,9 @@ WriteStream >> on: aCollection from: firstIndex to: lastIndex [
 
 { #category : #private }
 WriteStream >> pastEndPut: anObject [
-	"Grow the collection by doubling the size, but keeping the growth between 20 and 1000000.
-	Then put <anObject> at the current write position."
+	"Grow the collection, then put <anObject> at the current write position."
 
-	collection := collection grownBy: ((collection size max: 20) min: 1000000).
+	collection := collection grownBy: (collection size max: 20).
 	writeLimit := collection size.
 	collection at: (position := position + 1) put: anObject.
 	^ anObject
@@ -244,13 +243,13 @@ WriteStream >> pastEndPut: anObject [
 WriteStream >> peekLast [
 	"Return that item just put at the end of the stream"
 
-	^ position > 0 
+	^ position > 0
 		ifTrue: [collection at: position]
 		ifFalse: [nil]
 ]
 
 { #category : #positioning }
-WriteStream >> position: anInteger [ 
+WriteStream >> position: anInteger [
 	"Refer to the comment in PositionableStream|position:."
 
 	readLimit := readLimit max: position.
@@ -258,7 +257,7 @@ WriteStream >> position: anInteger [
 ]
 
 { #category : #initialization }
-WriteStream >> reset [ 
+WriteStream >> reset [
 	"Refer to the comment in PositionableStream|reset."
 
 	readLimit := readLimit max: position.
@@ -267,15 +266,15 @@ WriteStream >> reset [
 
 { #category : #positioning }
 WriteStream >> resetToStart [
-	readLimit := position := 0.
+	readLimit := position := 0
 ]
 
 { #category : #positioning }
-WriteStream >> setToEnd [ 
+WriteStream >> setToEnd [
 	"Refer to the comment in PositionableStream|setToEnd."
 
 	readLimit := readLimit max: position.
-	super setToEnd.
+	super setToEnd
 ]
 
 { #category : #accessing }
@@ -292,14 +291,14 @@ WriteStream >> space [
 ]
 
 { #category : #'character writing' }
-WriteStream >> space: anInteger [ 
+WriteStream >> space: anInteger [
 	"Append anInteger space characters to the receiver."
-	
+
 	self next: anInteger put: Character space
 ]
 
 { #category : #printing }
-WriteStream >> store: anObject [ 
+WriteStream >> store: anObject [
 	"Have anObject print on the receiver for purposes of rereading."
 
 	anObject storeOn: self
@@ -313,9 +312,9 @@ WriteStream >> tab [
 ]
 
 { #category : #'character writing' }
-WriteStream >> tab: anInteger [ 
+WriteStream >> tab: anInteger [
 	"Append anInteger tab characters to the receiver."
-	
+
 	self next: anInteger put: Character tab
 ]
 
@@ -332,13 +331,13 @@ WriteStream >> with: aCollection from: firstIndex to: lastIndex [
 ]
 
 { #category : #private }
-WriteStream >> withAttribute: att do: strmBlock [ 
+WriteStream >> withAttribute: att do: strmBlock [
 	"No-op here is overriden in TextStream for font emphasis"
 	^ strmBlock value
 ]
 
 { #category : #private }
-WriteStream >> withAttributes: attributes do: strmBlock [ 
+WriteStream >> withAttributes: attributes do: strmBlock [
 	"No-op here is overriden in TextStream for font emphasis"
 	^ strmBlock value
 ]

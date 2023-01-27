@@ -1,9 +1,9 @@
 "
-An AllProtocol is a special protocol to hanlde the ""all"" case
+An AllProtocol is a special protocol to handle the ""all"" case
 "
 Class {
 	#name : #AllProtocol,
-	#superclass : #Protocol,
+	#superclass : #AbstractProtocol,
 	#instVars : [
 		'protocolOrganizer'
 	],
@@ -24,7 +24,7 @@ AllProtocol class >> protocolOrganizer: protocolOrganizer [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : #private }
 AllProtocol >> canBeRemoved [
 	^ false
 ]
@@ -35,7 +35,7 @@ AllProtocol >> canBeRenamed [
 ]
 
 { #category : #testing }
-AllProtocol >> isVirtualProtocol [ 
+AllProtocol >> isVirtualProtocol [
 	^ true
 ]
 
@@ -48,22 +48,22 @@ AllProtocol >> methodSelectors [
 AllProtocol >> name [
 	^ (self isEmpty and: [ protocolOrganizer protocols isEmpty ])
 		ifTrue: [ self class nullCategory ]
-		ifFalse: [ name ]
+		ifFalse: [  self class defaultName ]
 ]
 
 { #category : #accessing }
-AllProtocol >> name: aString [ 
-	self error: 'You cannot change my name'.
+AllProtocol >> name: aString [
+	self error: 'You cannot change my name'
 ]
 
 { #category : #accessing }
 AllProtocol >> protocolOrganizer [
-	
+
 	^ protocolOrganizer
 ]
 
 { #category : #accessing }
 AllProtocol >> protocolOrganizer: anObject [
-	
-	protocolOrganizer := anObject.
+
+	protocolOrganizer := anObject
 ]

@@ -13,7 +13,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnMultiValueDictionary,
-	#superclass : #Dictionary,
+	#superclass : #OrderedDictionary,
 	#instVars : [
 		'limit'
 	],
@@ -47,18 +47,23 @@ ZnMultiValueDictionary >> addAllMulti: keyedCollection [
 { #category : #accessing }
 ZnMultiValueDictionary >> at: key add: value [
 	"Store value under key. If key already exists, store multiple values as Array"
-	
+
 	| existingValue newValue |
+
 	existingValue := self at: key ifAbsent: [ nil ].
-	newValue := existingValue isNil
-		ifTrue: [ value ] 
-		ifFalse: [
-			existingValue isArray 
-				ifTrue: [ existingValue copyWith: value ]
-				ifFalse: [ Array with: existingValue with: value ] ].
-	^ self at: key put: newValue 
-
-
+	newValue := existingValue
+		ifNil: [ value ]
+		ifNotNil: [ existingValue isArray
+				ifTrue: [ ( existingValue includes: value )
+						ifTrue: [ ^ value ].
+					existingValue copyWith: value
+					]
+				ifFalse: [ existingValue = value
+						ifTrue: [ ^ value ].
+					Array with: existingValue with: value
+					]
+			].
+	^ self at: key put: newValue
 ]
 
 { #category : #accessing }

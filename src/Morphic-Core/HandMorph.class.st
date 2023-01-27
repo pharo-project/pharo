@@ -526,6 +526,9 @@ HandMorph >> handleEvent: anEvent [
 	"Notify listeners"
 	self sendListenEvent: evt to: self eventListeners.
 
+	(evt isTextEditionEvent or: [evt isTextInputEvent]) ifTrue: [
+		^ self sendEvent: evt focus: keyboardFocus  ].
+
 	evt isWindowEvent ifTrue: [
 		^ self sendEvent: evt focus: nil ].
 	
@@ -577,6 +580,7 @@ HandMorph >> handleEvent: anEvent [
 	].
 	self showMouseFocusEvent: evt.
 	self mouseOverHandler processMouseOver: lastMouseEvent.
+
 ]
 
 { #category : #drawing }
@@ -864,21 +868,16 @@ HandMorph >> processEvents [
 	"Process user input events from the local input devices."
 
 	| evt |
-
 	[ (evt := self pendingEventQueue nextOrNil) notNil ] whileTrue: [ 
 		evt == #invalid ifTrue: [ ^ self ].
 		evt ifNotNil: [ "Finally, handle it"
 			self handleEvent: evt.
 			"For better user feedback, return immediately after a mouse event has been processed."
-			( evt isMouse and: [ evt isMouseWheel not ] )
-				ifTrue: [ ^ self ]
-		]
-	].
-	
+			(evt isMouse and: [ evt isMouseWheel not ]) ifTrue: [ ^ self ] ] ].
+
 	"note: if we come here we didn't have any mouse events"
-	mouseClickState notNil ifTrue: [ 
-		"No mouse events during this cycle. Make sure click states time out accordingly"
-		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
+	mouseClickState ifNotNil: [ "No mouse events during this cycle. Make sure click states time out accordingly" 
+		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ]
 ]
 
 { #category : #'private - events' }

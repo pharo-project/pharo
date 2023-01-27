@@ -30,7 +30,7 @@ RubScrolledTextMorph class >> on: aModel [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> accept [
-	self acceptContents.
+	self acceptContents
 ]
 
 { #category : #'model protocol' }
@@ -330,6 +330,7 @@ RubScrolledTextMorph >> defaultGhostTextMorph [
 RubScrolledTextMorph >> defaultScrollTarget [
 	| textArea |
 	textArea := self textAreaClass new.
+	textArea grow: true. "Ensure morph width tracks line width"
 	textArea backgroundColor: Color lightGray veryMuchLighter.
 	^ textArea
 ]
@@ -603,6 +604,22 @@ RubScrolledTextMorph >> handlesMouseWheel: evt [
 	^ true
 ]
 
+{ #category : #'event handling' }
+RubScrolledTextMorph >> handlesTextEditionEvent: anEvent [
+
+	^ self scrollPane
+		  ifNotNil: [ :pane | pane handlesTextEditionEvent: anEvent ]
+		  ifNil: [ super handlesTextEditionEvent: anEvent ]
+]
+
+{ #category : #'event handling' }
+RubScrolledTextMorph >> handlesTextInputEvent: anEvent [
+
+	^ self scrollPane
+		  ifNotNil: [ :pane | pane handlesTextInputEvent: anEvent ]
+		  ifNil: [ super handlesTextInputEvent: anEvent ]
+]
+
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasEditingConflicts [
 	^ hasEditingConflicts
@@ -681,11 +698,6 @@ RubScrolledTextMorph >> initialize [
 ]
 
 { #category : #testing }
-RubScrolledTextMorph >> isForScripting [
-	^ self textArea isForScripting
-]
-
-{ #category : #testing }
 RubScrolledTextMorph >> isReadOnly [
 	^ self textArea isReadOnly
 ]
@@ -693,6 +705,11 @@ RubScrolledTextMorph >> isReadOnly [
 { #category : #classification }
 RubScrolledTextMorph >> isRenderer [
 	^ true
+]
+
+{ #category : #testing }
+RubScrolledTextMorph >> isScripting [
+	^ self textArea isScripting
 ]
 
 { #category : #'event handling' }
@@ -767,16 +784,19 @@ RubScrolledTextMorph >> model [
 
 { #category : #accessing }
 RubScrolledTextMorph >> model: aModel [
+
 	self textArea model: aModel.
 	self setTextWith: self getTextFromModel.
 	self setSelection: self getSelectionFromModel.
-	aModel announcer when: RubTextAcceptedInModel send: #whenTextAcceptedInModel: to: self.	
-	aModel announcer when: RubEditsStateChangedInModel send: #whenEditsStateChangedInModel: to: self.
-	aModel announcer when: RubTextSetInModel send: #whenTextSetInModel: to: self.	
-	aModel announcer when: RubTextUpdatedInModel send: #whenTextUpdatedInModel: to: self.	
-	aModel announcer when: RubPrimarySelectionUpdatedInModel send: #whenPrimarySelectionUpdatedInModel: to: self.
-	aModel announcer when: RubCancelEditRequestedInModel send: #whenCancelEditRequestedInModel: to: self.	
-	aModel announcer when: RubConfigurationChange send: #whenConfigurationChangedFromModel: to: self.
+
+	aModel announcer
+		when: RubTextAcceptedInModel send: #whenTextAcceptedInModel: to: self;
+		when: RubEditsStateChangedInModel send: #whenEditsStateChangedInModel: to: self;
+		when: RubTextSetInModel send: #whenTextSetInModel: to: self;
+		when: RubTextUpdatedInModel send: #whenTextUpdatedInModel: to: self;
+		when: RubPrimarySelectionUpdatedInModel send: #whenPrimarySelectionUpdatedInModel: to: self;
+		when: RubCancelEditRequestedInModel send: #whenCancelEditRequestedInModel: to: self;
+		when: RubConfigurationChange send: #whenConfigurationChangedFromModel: to: self
 ]
 
 { #category : #'event handling' }
@@ -791,16 +811,29 @@ RubScrolledTextMorph >> mouseDown: event [
 ]
 
 { #category : #'event handling' }
-RubScrolledTextMorph >> mouseWheel: event [ 
+RubScrolledTextMorph >> mouseWheel: event [
 	"Handle a mouseWheel event."
-	
+
 	(self scrollPane scrollTarget handlesMouseWheel: event)
-		ifTrue: [^self scrollTarget mouseWheel: event]. "pass on"
+		ifTrue: [^self scrollPane scrollTarget mouseWheel: event]. "pass on"
 ]
 
 { #category : #'accessing - selection' }
-RubScrolledTextMorph >> moveCursorToIndex: anIndex [ 
-	self selectFrom: anIndex to: anIndex - 1
+RubScrolledTextMorph >> moveCursorBy: amount [
+	"Moves the cursor by the given amount. Amount may be negative"
+	| index |
+	index := self selectionInterval first.
+	index := index + amount.
+	index := 0 max: index.
+	index := (self text size + 1) min: index.
+	self moveCursorToIndex: index
+]
+
+{ #category : #'accessing - selection' }
+RubScrolledTextMorph >> moveCursorToIndex: anIndex [
+	| index |
+	index := #last = anIndex ifTrue: [ self text size + 1 ] ifFalse: [ anIndex ].
+	self selectFrom: index to: index - 1
 ]
 
 { #category : #initialization }
@@ -1075,6 +1108,13 @@ RubScrolledTextMorph >> textColor: aColor [
 	self textArea textColor: aColor
 ]
 
+{ #category : #'event handling' }
+RubScrolledTextMorph >> textEdition: aTextEditionEvent [
+
+	self scrollPane ifNotNil: [ :scrollpane | 
+		scrollpane textEdition: aTextEditionEvent ]
+]
+
 { #category : #accessing }
 RubScrolledTextMorph >> textFont [
 	"We should clean"
@@ -1085,6 +1125,13 @@ RubScrolledTextMorph >> textFont [
 { #category : #accessing }
 RubScrolledTextMorph >> textFont: aFont [
 	self textArea font: aFont
+]
+
+{ #category : #'event handling' }
+RubScrolledTextMorph >> textInput: aTextInputEvent [
+
+	self scrollPane ifNotNil: [ :scrollpane | 
+		scrollpane textInput: aTextInputEvent ]
 ]
 
 { #category : #accessing }

@@ -15,8 +15,7 @@ Class {
 		'stageName',
 		'progressFileName',
 		'progressStream',
-		'shouldSerializeError',
-		'fileName'
+		'shouldSerializeError'
 	],
 	#classVars : [
 		'CurrentStageName'
@@ -283,12 +282,12 @@ HDTestReport >> serializeError: error of: aTestCase [
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
 			context := error signalerContext.
-			testCaseMethodContext := context findContextSuchThat: [ :ctx | 
+			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
-					                         ctx methodSelector == #performTest ] ].
+					                         ctx selector == #performTest ] ].
 			context := context copyTo: testCaseMethodContext.
 
-			fuelFileName := fileName copyReplaceAll: '.xml' with: ('-' , aTestCase class name asString , '-',  aTestCase selector asString , '.fuel').
+			fuelFileName := self suiteFileNameWithoutExtension , ('-' , aTestCase class name asString , '-',  aTestCase selector asString , '.fuel').
 
 			[ fuelOutStackDebugAction 
 					serializeStackFromContext: context sender 
@@ -305,9 +304,7 @@ HDTestReport >> setUp [
 	progressStream nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
 
-	fileName := stageName isEmpty ifTrue: [ '' ] ifFalse: [ stageName , '-' ].
-	fileName := fileName , suite name , '-Test.xml'.
-	aFile := File named: fileName .
+	aFile := File named: self suiteFileNameWithoutExtension , '.xml' .
 	aFile delete.
 	stream := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
@@ -365,6 +362,16 @@ HDTestReport >> suiteErrors [
 { #category : #accessing }
 HDTestReport >> suiteFailures [
 	^ suiteFailures
+]
+
+{ #category : #accessing }
+HDTestReport >> suiteFileNameWithoutExtension [
+
+	| fileName |
+	fileName := stageName isEmpty
+		            ifTrue: [ '' ]
+		            ifFalse: [ stageName , '-' ].
+	^ fileName , suite name , '-Test'
 ]
 
 { #category : #accessing }
@@ -439,7 +446,7 @@ HDTestReport >> writeException: anException of: aTestCase asNode: errorNodeName 
 HDTestReport >> writeExceptionStack: anException of: aTestCase [
 	| context |
 	context := anException signalerContext.
-	[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ]]]
+	[ context isNil or: [ context receiver == aTestCase and: [ context selector == #runCase ]]]
 		whileFalse: [
 			[ stream nextPutAll: (self encode: context printString); lf ] 
 				onErrorDo: [ stream nextPutAll: 'PRINTING ERROR'; lf].

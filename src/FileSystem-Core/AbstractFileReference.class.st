@@ -30,7 +30,7 @@ AbstractFileReference >> <= other [
 { #category : #accessing }
 AbstractFileReference >> absolutePath [
 	"Returns the absolute path"
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -42,14 +42,14 @@ AbstractFileReference >> accessTime [
 { #category : #enumerating }
 AbstractFileReference >> allChildren [
 	"Return all the files and folders recursively nested in the receiver"
-	
+
 	^ CollectVisitor breadthFirst: self resolve collect: [:entry | entry reference]
 ]
 
 { #category : #enumerating }
 AbstractFileReference >> allChildrenMatching: aPattern [
     "Return all the files and folders recursively nested in the receiver and matching the pattern, aPattern"
-    
+
     ^ self allChildren select: [ :each |  aPattern match: each basename ]
 ]
 
@@ -63,8 +63,8 @@ AbstractFileReference >> allDirectories [
 { #category : #enumerating }
 AbstractFileReference >> allDirectoriesMatching: aPattern [
     "Return all the directories recursively nested in the receiver."
-    ^ (SelectVisitor 
-			breadthFirst: self resolve 
+    ^ (SelectVisitor
+			breadthFirst: self resolve
 			select: [:entry | entry isDirectory and: [ aPattern match: entry basename ] ])
         collect: [ :each | each reference ]
 ]
@@ -82,12 +82,12 @@ AbstractFileReference >> allFiles [
 ]
 
 { #category : #converting }
-AbstractFileReference >> asAbsolute [ 
+AbstractFileReference >> asAbsolute [
 	self subclassResponsibility
 ]
 
 { #category : #converting }
-AbstractFileReference >> asFileReference [ 
+AbstractFileReference >> asFileReference [
 	self subclassResponsibility
 ]
 
@@ -122,7 +122,7 @@ AbstractFileReference >> basename [
 
 { #category : #accessing }
 AbstractFileReference >> basenameWithIndicator [
-	"Returns the basename with the indicator appended, i.e. /foo/gloops.taz basenameWithIndicator is 'gloops.taz', whereras /foo basenameWithIndicator is 'foo/'" 
+	"Returns the basename with the indicator appended, i.e. /foo/gloops.taz basenameWithIndicator is 'gloops.taz', whereras /foo basenameWithIndicator is 'foo/'"
 	^ self basename, self indicator
 ]
 
@@ -149,22 +149,22 @@ AbstractFileReference >> binaryReadStream [
 AbstractFileReference >> binaryReadStreamDo: aBlock [
 	| stream |
 	stream := self binaryReadStream.
-	^ [ aBlock value: stream ] 
+	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
 ]
 
 { #category : #streams }
 AbstractFileReference >> binaryReadStreamDo: doBlock ifAbsent: absentBlock [
-	^ self isFile 
+	^ self isFile
 		ifTrue: [ self binaryReadStreamDo: doBlock ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #streams }
 AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self binaryReadStream ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #streams }
@@ -181,14 +181,14 @@ AbstractFileReference >> binaryWriteStreamDo: aBlock [
 	| stream |
 
 	stream := self binaryWriteStream.
-	^ [ aBlock value: stream ] 
+	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
 ]
 
 { #category : #streams }
 AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
-		ifTrue: presentBlock
+		ifTrue: [ presentBlock value ]
 		ifFalse: [ self binaryWriteStreamDo: doBlock ]
 ]
 
@@ -210,16 +210,16 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 	FileSystem workingDirectory filesMatching: '*'
 	FileSystem workingDirectory filesMatching: '*.image;*.changes'
 	"
-	
+
 	| files reference|
 	files := Set new.
 	reference := self resolve.
-	
-	(patterns findTokens: ';', String crlf) do: [ :pattern | 
+
+	(patterns findTokens: ';', String crlf) do: [ :pattern |
 		doBlock value: reference value: [ :basename|
 			(pattern match: basename)
 				ifTrue: [ files add: (self / basename) ]]].
-	
+
 	^files asOrderedCollection
 ]
 
@@ -233,7 +233,7 @@ AbstractFileReference >> children [
 	"Answer an array containing references to the direct children of this reference."
 	| reference |
 	reference := self resolve.
-	^ (reference fileSystem childNamesAt: reference path) 
+	^ (reference fileSystem childNamesAt: reference path)
 		collect: [ :aName | self / aName ]
 ]
 
@@ -243,8 +243,8 @@ AbstractFileReference >> childrenMatching: patterns [
 	FileSystem disk workingDirectory childrenMatching: '*'
 	FileSystem disk workingDirectory childrenMatching: '*.image;*.changes'
 	"
-	^ self 
-		childGeneratorBlock: [:reference : aBlock| 
+	^ self
+		childGeneratorBlock: [:reference : aBlock|
 			reference fileSystem childNamesAt: reference path do: aBlock ]
 		matching:  patterns
 ]
@@ -269,7 +269,7 @@ AbstractFileReference >> contents [
 { #category : #operations }
 AbstractFileReference >> copyAllTo: aResolvable [
 	"Performs a deep copy of the receiver, to a location specified by the argument. If the receiver is a file, the file will be copied; if a directory, the directory and its contents will be copied recursively. The argument must be a reference that doesn't exist; it will be created by the copy."
-	
+
 	CopyVisitor copy: self resolve asAbsolute to: aResolvable resolve
 ]
 
@@ -294,7 +294,7 @@ AbstractFileReference >> createDirectory [
 AbstractFileReference >> createFile [
 	"Create if necessary a file for the receiver. If the parent does not exist return an exception"
 	self parent exists ifFalse:[DirectoryDoesNotExist signalWith: self parent path].
-	self writeStream close.
+	self writeStream close
 ]
 
 { #category : #accessing }
@@ -305,7 +305,7 @@ AbstractFileReference >> creationTime [
 { #category : #operations }
 AbstractFileReference >> delete [
 	"Delete the receiver, does raise an error if it is not present."
-	
+
 	^ self resolve delete
 ]
 
@@ -320,7 +320,7 @@ AbstractFileReference >> deleteAll [
 AbstractFileReference >> deleteAllChildren [
 	"Delete all children of the receiver, raise an error if the receiver does not exist.
 	Don't follow symbolic links (so files outside the receiver's tree will not be deleted)."
-	
+
 	self children do: [:aReference | aReference deleteAll ]
 ]
 
@@ -337,11 +337,11 @@ AbstractFileReference >> deviceId [
 
 { #category : #enumerating }
 AbstractFileReference >> directories [
-	"Return all the directories (by opposition to files) contained in the receiver"
+	"Return all the directories (by opposition to self >> #files) contained in the receiver"
 
 	| reference |
 	reference := self resolve.
-	^ (reference fileSystem directoryNamesAt: reference path) 
+	^ (reference fileSystem directoryNamesAt: reference path)
 		collect: [ :aName | self withPath: self path / aName ]
 ]
 
@@ -351,8 +351,8 @@ AbstractFileReference >> directoriesMatching: patterns [
 	FileSystem disk workingDirectory directoriesMatching: '*'
 	FileSystem disk workingDirectory directoriesMatching: 'package-cache'
 	"
-	^ self 
-		childGeneratorBlock: [:reference : aBlock| 
+	^ self
+		childGeneratorBlock: [:reference : aBlock|
 			reference fileSystem directoryNamesAt: reference path do: aBlock ]
 		matching:  patterns
 ]
@@ -372,16 +372,16 @@ AbstractFileReference >> ensureCreateDirectory [
 AbstractFileReference >> ensureCreateFile [
 	"Create if necessary a file for the receiver. If the parent does not exist creates it"
 	self parent ensureCreateDirectory.
-	self writeStream close.
+	self writeStream close
 ]
 
 { #category : #operations }
 AbstractFileReference >> ensureDelete [
 	"Delete the file and does not raise exception if it does not exist contrary to delete.
-	However if it is a directory and it has children an error is signaled. If it is required to 
+	However if it is a directory and it has children an error is signaled. If it is required to
 	delete even with children, use #ensureDeleteAll."
-	
-	self deleteIfAbsent: [].
+
+	self deleteIfAbsent: []
 ]
 
 { #category : #operations }
@@ -413,7 +413,7 @@ AbstractFileReference >> entry [
 { #category : #delegated }
 AbstractFileReference >> exists [
 	"Return true if the file reference exist (e.g., if there is a file on the hard disk pointed by the file reference)
-	
+
 	E.g., (if you are on Unix or OSX)
 	'/tmp/' asFileReference exists => true
 	'/tmp/zorkbar' asFileReference exists => false
@@ -423,21 +423,21 @@ AbstractFileReference >> exists [
 
 { #category : #accessing }
 AbstractFileReference >> extension [
-	
-	^ self fullPath extension.
+
+	^ self fullPath extension
 ]
 
 { #category : #accessing }
 AbstractFileReference >> extensions [
 	  "#('foo' 'foo.tar' 'foo.tar.gz' 'foo.1.tar' 'foo.1.tar.gz') collect: [:thing| thing extensions] => #(#() #('tar') #('tar' 'gz') #('1' 'tar') #('1' 'tar' 'gz'))"
-	
+
         ^ self fullPath extensions
 ]
 
 { #category : #ToDeprecate }
 AbstractFileReference >> fileIn [
 
-	self readStreamDo: [ :stream | 
+	self readStreamDo: [ :stream |
 		CodeImporter evaluateFileStream: stream ]
 ]
 
@@ -453,11 +453,11 @@ AbstractFileReference >> fileSystem [
 
 { #category : #enumerating }
 AbstractFileReference >> files [
-	"Return all the files (as opposed to folders) contained in the receiver"
-	
+	"Return all the files (as opposed to self >> #directories) contained in the receiver"
+
 	| reference |
 	reference := self resolve.
-	^ (reference fileSystem fileNamesAt: reference path) 
+	^ (reference fileSystem fileNamesAt: reference path)
 		collect: [ :aName | self withPath: self path / aName ]
 ]
 
@@ -467,8 +467,8 @@ AbstractFileReference >> filesMatching: patterns [
 	FileSystem disk workingDirectory filesMatching: '*'
 	FileSystem disk workingDirectory filesMatching: '*.image;*.changes'
 	"
-	^ self 
-		childGeneratorBlock: [:reference : aBlock| 
+	^ self
+		childGeneratorBlock: [:reference : aBlock|
 			reference fileSystem fileNamesAt: reference path do: aBlock ]
 		matching:  patterns
 ]
@@ -481,14 +481,14 @@ AbstractFileReference >> fullName [
 
 { #category : #accessing }
 AbstractFileReference >> fullNameWithIndicator [
-	"Returns the basename with the indicator appended, i.e. /foo/gloops.taz basenameWithIndicator is '/foo/gloops.taz', whereras /foo basenameWithIndicator is '/foo/'" 
+	"Returns the basename with the indicator appended, i.e. /foo/gloops.taz basenameWithIndicator is '/foo/gloops.taz', whereras /foo basenameWithIndicator is '/foo/'"
 	^ self fullName, self indicator
 ]
 
 { #category : #accessing }
 AbstractFileReference >> fullPath [
 	"Returns the absolute path, better use absolutePath"
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -525,7 +525,8 @@ AbstractFileReference >> hash [
 
 { #category : #accessing }
 AbstractFileReference >> humanReadableSize [
-	^ self size humanReadableSIByteSize
+
+	^ self size humanReadableSISizeString
 ]
 
 { #category : #delegated }
@@ -552,11 +553,11 @@ AbstractFileReference >> ifExists: aBlock ifAbsent: anotherBlock [
 { #category : #testing }
 AbstractFileReference >> ifFile: fBlock ifDirectory: dBlock ifAbsent: aBlock [
 	^ self isFile
-		ifTrue: fBlock
+		ifTrue: [ fBlock value ]
 		ifFalse: [
 			self isDirectory
-				ifTrue: dBlock
-				ifFalse: aBlock ]
+				ifTrue: [dBlock value ]
+				ifFalse: [ aBlock value ] ]
 ]
 
 { #category : #printing }
@@ -582,17 +583,19 @@ AbstractFileReference >> inode [
 ]
 
 { #category : #testing }
-AbstractFileReference >> isAbsolute [ 
+AbstractFileReference >> isAbsolute [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 AbstractFileReference >> isBlock [
+
 	^ self resolve isBlock
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 AbstractFileReference >> isCharacter [
+
 	^ self resolve isCharacter
 ]
 
@@ -633,7 +636,7 @@ AbstractFileReference >> isReadable [
 ]
 
 { #category : #testing }
-AbstractFileReference >> isRelative [ 
+AbstractFileReference >> isRelative [
 	self subclassResponsibility
 ]
 
@@ -675,11 +678,11 @@ AbstractFileReference >> modificationTime [
 { #category : #operations }
 AbstractFileReference >> moveTo: aReference [
 	"Move the receiver in the location passed as argument.
-	
+
 	(FileSystem disk workingDirectory / 'paf' ) ensureCreateFile.
-	(FileSystem disk workingDirectory / 'fooFolder') ensureCreateDirectory. 
+	(FileSystem disk workingDirectory / 'fooFolder') ensureCreateDirectory.
 	(FileSystem disk workingDirectory / 'paf' ) moveTo: (FileSystem disk workingDirectory / 'fooFolder' / 'paf')
-	
+
 	Note that the receiver is modified to point to the new location."
 
 	^ self resolve moveTo: aReference
@@ -740,15 +743,15 @@ AbstractFileReference >> readStream [
 AbstractFileReference >> readStreamDo: aBlock [
 	| stream |
 	stream := self readStream.
-	^ [ aBlock value: stream ] 
+	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
 ]
 
 { #category : #streams }
 AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
-	^ self isFile 
+	^ self isFile
 		ifTrue: [ self readStreamDo: doBlock ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #streams }
@@ -763,7 +766,7 @@ AbstractFileReference >> readStreamEncoded: anEncoding [
 AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
 	| stream |
 	stream := self readStreamEncoded: anEncoding.
-	^ [ aBlock value: stream ] 
+	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
 ]
 
@@ -771,30 +774,30 @@ AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self readStream ]
-		ifFalse: absentBlock
+		ifFalse: [ absentBlock value ]
 ]
 
 { #category : #navigating }
 AbstractFileReference >> relativeTo: landmark [
 	"Answer a new path relative to landmark."
-	
+
 	"parent/child/grandChild relativeTo: parent returns child/grandChild
-	(Filesystem disk / 'griffle' / 'plonk' / 'nurp') relativeTo: (Filesystem disk / 'griffle') 
+	(Filesystem disk / 'griffle' / 'plonk' / 'nurp') relativeTo: (Filesystem disk / 'griffle')
 	returns plonk/nurp"
 
 	^ landmark makeRelative: self resolve
 ]
 
 { #category : #navigating }
-AbstractFileReference >> relativeToPath: landmarkPath [ 
-	
+AbstractFileReference >> relativeToPath: landmarkPath [
+
 	^ self fullPath relativeTo: landmarkPath
 ]
 
 { #category : #navigating }
 AbstractFileReference >> relativeToReference: landmarkReference [
 	"Return the path of the receiver relative to landmarkReference."
-	
+
 	^ self fullPath relativeTo: landmarkReference path
 ]
 
@@ -826,20 +829,20 @@ AbstractFileReference >> resolveReference: aReference [
 ]
 
 { #category : #navigating }
-AbstractFileReference >> resolveString: aString [ 
+AbstractFileReference >> resolveString: aString [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 AbstractFileReference >> size [
 	"Return the size of the file in bytes."
-	
+
 	^ self resolve size
 ]
 
 { #category : #streams }
 AbstractFileReference >> streamWritable: writable do: aBlock [
-	^ writable 
+	^ writable
 		ifTrue: [ self writeStreamDo: aBlock ]
 		ifFalse: [ self readStreamDo: aBlock ]
 ]
@@ -896,7 +899,7 @@ AbstractFileReference >> writeStreamDo: aBlock [
 { #category : #streams }
 AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
-		ifTrue: presentBlock
+		ifTrue: [ presentBlock value ]
 		ifFalse: [ self writeStreamDo: doBlock ]
 ]
 
@@ -918,7 +921,7 @@ AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
 
 { #category : #streams }
 AbstractFileReference >> writeStreamIfPresent: presentBlock [
-	^ self isFile 
+	^ self isFile
 		ifTrue: presentBlock
 		ifFalse: [ self writeStream ]
 ]

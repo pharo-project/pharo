@@ -9,7 +9,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnChunkedReadStream,
-	#superclass : #Stream,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'chunk',
@@ -22,11 +22,6 @@ Class {
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }
-
-{ #category : #'instance creation' }
-ZnChunkedReadStream class >> new [
-	^ super new initialize
-]
 
 { #category : #'instance creation' }
 ZnChunkedReadStream class >> on: stream [
@@ -50,6 +45,11 @@ ZnChunkedReadStream >> binary [
 { #category : #accessing }
 ZnChunkedReadStream >> chunkCount [
 	^ chunkCount
+]
+
+{ #category : #'initialize-release' }
+ZnChunkedReadStream >> close [
+	stream ifNotNil: [ stream close. stream := nil ]
 ]
 
 { #category : #accessing }
@@ -127,6 +127,11 @@ ZnChunkedReadStream >> initialize [
 ZnChunkedReadStream >> isBinary [
 	^ stream isBinary
 
+]
+
+{ #category : #testing }
+ZnChunkedReadStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
@@ -221,13 +226,6 @@ ZnChunkedReadStream >> position [
 	^ self atEnd 
 		ifTrue: [ totalSize ]
 		ifFalse: [ totalSize - chunk size + position ]
-]
-
-{ #category : #printing }
-ZnChunkedReadStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
-		nextPutAll: self class name
 ]
 
 { #category : #accessing }

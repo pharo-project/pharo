@@ -14,7 +14,7 @@ UITheme >> newBasicTaskbarButtonIn: aTaskbar for: aMorph [
 	
 	lm := self 
 		newRowIn: aTaskbar
-		for: {(aMorph taskbarIcon ifNil: [^nil]) asMorph. lab}.
+		for: {((self iconNamed: aMorph taskbarIconName) ifNil: [^nil]) asMorph. lab}.
 		
 	lm cellInset: 2.
 	

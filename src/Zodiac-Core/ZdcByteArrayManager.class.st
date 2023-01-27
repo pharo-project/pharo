@@ -64,7 +64,7 @@ ZdcByteArrayManager >> byteArrayOfSize: size zero: zero [
 		^ ByteArray new: size ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZdcByteArrayManager >> initialize [
 	super initialize.
 	limit := 0.

@@ -37,7 +37,7 @@ ZnImageExampleDelegate class >> installInDefaultServer [
 { #category : #accessing }
 ZnImageExampleDelegate >> downloadPharoLogo [
 	^ ZnClient new beOneShot
-		get: 'http://pharo.org/files/pharo.png';
+		get: 'http://pharo.org/web/files/pharo.png';
 		entity
 ]
 

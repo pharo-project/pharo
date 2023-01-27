@@ -232,6 +232,8 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
+	(self confirm: 'Do you really want to close all unchanged windows ?') ifFalse: [ 
+		^ self ].
 	(self  windowsSatisfying: [:w | w model canDiscardEdits])
 		do: [:w | w delete]
 ]
@@ -914,15 +916,6 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	(self isWorldMorph and: [owner notNil]) 
 		ifTrue: [ ^self outermostWorldMorph == aWorld ].
 	^super shouldGetStepsFrom: aWorld
-]
-
-{ #category : #'world state' }
-PasteUpMorph >> startSteppingSubmorphsOf: aMorph [
-	"Ensure that all submorphs of the given morph that want to be stepped are added to the step list.   Typically used after adding a morph to the world."
-
-	aMorph allMorphsDo: [:m |
-		m wantsSteps ifTrue: [m arrangeToStartSteppingIn: m world].
-	]
 ]
 
 { #category : #options }

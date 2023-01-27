@@ -34,7 +34,7 @@ ClyAsyncQueryResultTest >> testBuildCompletionShouldResetProcess [
 	queryResult rebuild.
 	query passExecution.
 	self waitBuildComplete.
-	
+
 	self assert: queryResult buildProcess isNil
 ]
 
@@ -53,18 +53,18 @@ ClyAsyncQueryResultTest >> testBuildShouldSetUpItemsFromActualResultWhenTheyRead
 ClyAsyncQueryResultTest >> testBuildShouldStartBackgroundProcessing [
 
 	queryResult rebuild.
-	
+
 	self assert: (queryResult hasMetaProperty: ClyBackgroundProcessingTag).
 	self deny: queryResult buildProcess isTerminated
 ]
 
 { #category : #tests }
 ClyAsyncQueryResultTest >> testForceLazyRebuildShouldNotResetExistingItems [
-	
+
 	self assert: queryResult items notNil.
-	 
+
 	queryResult forceLazyRebuild.
-	
+
 	self assert: queryResult needsRebuild.
 	self assert: queryResult isBuilt.
 	self assert: queryResult items notNil
@@ -76,17 +76,17 @@ ClyAsyncQueryResultTest >> testIsBuiltWhenBuildComplete [
 	queryResult rebuild.
 	query passExecution.
 	self waitBuildComplete.
-	
+
 	self assert: queryResult isBuilt
 ]
 
 { #category : #tests }
 ClyAsyncQueryResultTest >> testItemsChangedNotificationShouldNotResetExistingItems [
-	
+
 	queryResult items: #(items).
-	
+
 	queryResult itemsChanged.
-	
+
 	self assert: queryResult items equals: #(items).
 	self assert: queryResult needsRebuild
 ]
@@ -96,16 +96,16 @@ ClyAsyncQueryResultTest >> testItemsChangedNotificationShouldResetItems [
 	<expectedFailure>
 	"Async query should not reset own items which was already built.
 	Another test describes that it should only reset actual result"
-	
+
 	super testItemsChangedNotificationShouldResetItems
 ]
 
 { #category : #tests }
 ClyAsyncQueryResultTest >> testItemsInitializationShouldNotResetExistingItems [
-	
+
 	queryResult items: #(items).
 	queryResult initializeItems.
-	
+
 	self assert: queryResult items equals: #(items)
 ]
 
@@ -113,7 +113,7 @@ ClyAsyncQueryResultTest >> testItemsInitializationShouldNotResetExistingItems [
 ClyAsyncQueryResultTest >> testNotBuiltByDefault [
 
 	queryResult := queryResult class new.
-	
+
 	self deny: queryResult isBuilt
 ]
 
@@ -121,7 +121,7 @@ ClyAsyncQueryResultTest >> testNotBuiltByDefault [
 ClyAsyncQueryResultTest >> testNotBuiltWhenBuildIsJustStarted [
 
 	queryResult rebuild.
-	
+
 	self deny: queryResult isBuilt
 ]
 

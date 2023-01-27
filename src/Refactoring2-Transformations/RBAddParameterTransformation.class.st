@@ -5,7 +5,7 @@ Class {
 		'newArgs',
 		'senders'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #adding }

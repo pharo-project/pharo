@@ -47,9 +47,22 @@ ZnManagingMultiThreadedServer >> lock [
 ]
 
 { #category : #private }
+ZnManagingMultiThreadedServer >> rejectConnection: socketStream [
+	| response |
+	response := ZnResponse serviceUnavailable: 'Too many concurrent connections'.
+	response setConnectionClose.
+	response writeOn: socketStream.
+	self logConnectionRejected: socketStream.
+	self closeSocketStream: socketStream.
+	ZnTooManyConcurrentConnections signal
+]
+
+{ #category : #private }
 ZnManagingMultiThreadedServer >> socketStreamOn: socket [
 	| socketStream |
 	socketStream := super socketStreamOn: socket.
+	self connections size >= (ZnCurrentOptions at: #maximumNumberOfConcurrentConnections)
+		ifTrue: [ ^ self rejectConnection: socketStream ].
 	self lock critical: [ 
 		self connections add: socketStream ].
 	^ socketStream

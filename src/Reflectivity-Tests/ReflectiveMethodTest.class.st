@@ -14,6 +14,20 @@ ReflectiveMethodTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : #tests }
+ReflectiveMethodTest >> testASTCacheIsCleanedAfterMetaLinkRemoval [
+	| method bcToASTCache |
+	selector := #exampleBlock.
+	method := ReflectivityExamples >> selector. 
+	method createTwin.
+	bcToASTCache :=  method ast blockNodes first bcToASTCache.
+	
+	(ReflectivityExamples >> selector) invalidate.
+	ReflectivityExamples new perform: selector.
+	
+	self deny: method ast blockNodes first bcToASTCache identicalTo: bcToASTCache.
+]
+
 { #category : #'tests - creation' }
 ReflectiveMethodTest >> testCreateReflectiveMethod [
 	| compiledMethod reflectiveMethod |
@@ -230,6 +244,29 @@ ReflectiveMethodTest >> testSetLinkOnInstanceVariableAndUninstall [
 	link uninstall.
 	self assert: (ReflectivityExamples >> #exampleIvarRead) class equals: CompiledMethod.
 	self assertEmpty: ivar links
+]
+
+{ #category : #'tests - links' }
+ReflectiveMethodTest >> testSetLinkOnPragma [ 
+
+ 	| link a b |
+ 	link := MetaLink new
+ 		        metaObject: #node;
+ 		        selector: #tagExecuted;
+ 		        yourself.
+ 	(ReflectivityExamples >> #examplePragma) compiledMethod recompile.
+ 	a := ReflectivityExamples new examplePragma. 
+ 	(ReflectivityExamples >> #examplePragma) ast nodesDo: [ :n | 
+ 		n removeProperty: #tagExecuted ifAbsent: [  ].
+ 		n isPragma ifTrue: [ 
+ 			n
+ 				propertyAt: #tagExecuted put: false;
+ 				link: link ] ].
+ 	b := ReflectivityExamples new examplePragma.
+ 	link uninstall.
+ 	self assert: a equals: b.
+ 	(ReflectivityExamples >> #examplePragma) ast nodesDo: [ :n | 
+ 		n isPragma ifTrue: [ self assert: (n propertyAt: #tagExecuted) ] ]
 ]
 
 { #category : #'tests - links' }

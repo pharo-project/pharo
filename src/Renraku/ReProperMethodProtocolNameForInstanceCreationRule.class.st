@@ -10,5 +10,5 @@ Class {
 { #category : #idioms }
 ReProperMethodProtocolNameForInstanceCreationRule class >> protocolIdiom [ 
 
-	^self use: 'instance creation' insteadOf: #('instance-creation' 'instances-creation' 'instances creation')
+	^self use: #'instance creation' insteadOf: #(#'instance-creation' #'instances-creation' #'instances creation')
 ]

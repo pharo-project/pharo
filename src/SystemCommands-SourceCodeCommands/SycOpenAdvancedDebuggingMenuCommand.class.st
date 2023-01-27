@@ -4,13 +4,19 @@ I show in the menu all commands annotated by SycAdvancedDebuggingMenuActivation
 "
 Class {
 	#name : #SycOpenAdvancedDebuggingMenuCommand,
-	#superclass : #SycOpenSourceCodeMenuCommand,
+	#superclass : #SycOpenContextMenuCommand,
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
 { #category : #execution }
 SycOpenAdvancedDebuggingMenuCommand >> activationStrategy [
 	^SycAdvancedDebuggingMenuActivation
+]
+
+{ #category : #'context menu' }
+SycOpenAdvancedDebuggingMenuCommand >> cmCommandClass [
+
+	^ SycSourceCodeCmCommand
 ]
 
 { #category : #accessing }

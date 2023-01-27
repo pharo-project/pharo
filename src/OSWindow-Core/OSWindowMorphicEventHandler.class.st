@@ -99,9 +99,6 @@ OSWindowMorphicEventHandler >> activeHand [
 { #category : #converting }
 OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 
-	(self class simulateMiddleClick and: [anEvent button = 1 and: [ anEvent modifiers alt ]])
-		ifTrue: [ ^ MouseButtonEvent blueButton ].
-
 	anEvent button = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
 	anEvent button = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
 	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
@@ -112,17 +109,10 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	| buttons |
 	buttons := 0.
 	
-	"Alt/Option key"
-	modifiers alt ifTrue: [
-		"On windows and unix, treat alt key as command key"
-		buttons := Smalltalk os isWin32 | Smalltalk os isUnix
-			ifTrue: [ buttons | 2r01000000 ]
-			ifFalse: [ buttons | 2r00100000 ]
-	]. 
-	
-	modifiers ctrl ifTrue: [ buttons := buttons | 2r00010000 ]. "Control key"
-	modifiers shift ifTrue: [ buttons := buttons | 8 ]. "Shift key"
-	modifiers cmd ifTrue: [ buttons := buttons | 2r01000000 ]. "Cmd key"
+	modifiers alt ifTrue: [ buttons := buttons | UserInputEvent altKeyMask ].
+	modifiers ctrl ifTrue: [ buttons := buttons | UserInputEvent ctrlKeyMask ].
+	modifiers shift ifTrue: [ buttons := buttons | UserInputEvent shiftKeyMask ].
+	modifiers cmd ifTrue: [ buttons := buttons | UserInputEvent cmdKeyMask ].
 	
 	modifiers buttons button1 ifTrue:  [ buttons := buttons | MouseButtonEvent redButton ].
 	modifiers buttons button2 ifTrue:  [ buttons := buttons | MouseButtonEvent blueButton ].
@@ -275,26 +265,45 @@ OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 ]
 
 { #category : #visiting }
-OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
-	| keyEvent char mods |
-	anEvent text ifNil: [ ^ nil ].
-	char := anEvent text first.
-	char ifNil: [ ^ nil ].
-	mods := anEvent modifiers.
-	"If a modifier key is pressed the keystroke event is handled by #visitMouseDownEvent:"
-	(mods alt or: [ mods ctrl or: [ mods cmd ] ])
-		ifTrue: [ ^ nil ].
-		
-	keyEvent := KeyboardEvent new
-		setType: #keystroke
-		buttons: (self convertModifiers: anEvent modifiers)
-		position: (self convertPosition: anEvent position)
-		keyValue: char charCode
-		charCode: char charCode
-		hand: self activeHand
-		stamp: Time millisecondClockValue.
+OSWindowMorphicEventHandler >> visitTextEditingEvent: anEvent [
 	
+	| keyEvent |
+	keyEvent := TextEditionEvent new
+		setHand: self activeHand;
+		setPosition: (self convertPosition: anEvent position);
+		text: anEvent text;
+		start: anEvent start;
+		length: anEvent length;
+		wasHandled: false.
 	^ keyEvent
+]
+
+{ #category : #visiting }
+OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
+	anEvent text ifNil: [ ^ nil ].
+	(anEvent text size = 1 and: [ anEvent text first codePoint < 128 ])
+		ifTrue: [ 
+			| char mods |
+			char := anEvent text first.
+			char ifNil: [ ^ nil ].
+			mods := anEvent modifiers.
+			"If a modifier key is pressed the keystroke event is handled by #visitMouseDownEvent:"
+			(mods alt or: [ mods ctrl or: [ mods cmd ] ]) ifTrue: [ ^ nil ].
+
+			^ KeyboardEvent new
+				  setType: #keystroke
+				  buttons: (self convertModifiers: anEvent modifiers)
+				  position: (self convertPosition: anEvent position)
+				  keyValue: char charCode
+				  charCode: char charCode
+				  hand: self activeHand
+				  stamp: Time millisecondClockValue ]
+		ifFalse: [ 
+			^ TextInputEvent new
+				  setHand: self activeHand;
+				  setPosition: (self convertPosition: anEvent position);
+				  text: anEvent text;
+				  wasHandled: false ]
 ]
 
 { #category : #visiting }
@@ -324,6 +333,12 @@ OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 				fileNames: { anEvent filePath }. 
 				
 	^ dropEvent
+]
+
+{ #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
+	"Completely redraw world when visible part of window changes to prevent some graphical glitches"
+    morphicWorld worldState doFullRepaint.
 ]
 
 { #category : #visiting }

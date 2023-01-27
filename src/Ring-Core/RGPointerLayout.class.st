@@ -116,7 +116,7 @@ RGPointerLayout >> removeSlot: anRGSlot [
 RGPointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
 
 	self allSlots do: [ :slot | 
-		slot name == aName ifTrue: [ ^ foundBlock cull: slot ] ].
+		slot name = aName ifTrue: [ ^ foundBlock cull: slot ] ].
 	^ noneBlock value
 ]
 

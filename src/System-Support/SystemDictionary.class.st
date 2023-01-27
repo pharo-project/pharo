@@ -85,7 +85,7 @@ SystemDictionary >> allClassesDo: aBlock [
 
 { #category : #'accessing - classes and traits' }
 SystemDictionary >> allMethods [
-
+	"all methods, including copies from Traits"
 	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
 ]
 
@@ -167,16 +167,6 @@ SystemDictionary >> classOrTraitNamed: aString [
 			  meta
 				  ifFalse: [ global ]
 				  ifTrue: [ global classSide ] ] ]
-]
-
-{ #category : #removing }
-SystemDictionary >> defineClass: aDefinition withController: aController [
-
-	^ self class compiler
-		source: aDefinition;
-		requestor: aController;
-		logged: true;
-		evaluate
 ]
 
 { #category : #accessing }
@@ -290,6 +280,12 @@ SystemDictionary >> maxIdentityHash [
 	<primitive: 176>
 	
 	^self primitiveFailed
+]
+
+{ #category : #'accessing - classes and traits' }
+SystemDictionary >> methods [
+	"all methods, but without those installed by Traits"
+	^ self allBehaviors flatCollect: [ :behavior | behavior localMethods ]
 ]
 
 { #category : #'accessing - class and trait names' }

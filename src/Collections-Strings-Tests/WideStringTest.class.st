@@ -12,7 +12,7 @@ Class {
 
 { #category : #coverage }
 WideStringTest >> classToBeTested [
-	
+
 	^  WideString
 ]
 
@@ -40,7 +40,7 @@ WideStringTest >> testAsInteger [
 { #category : #testing }
 WideStringTest >> testAtPut [
 	"Non regression test for http://bugs.squeak.org/view.php?id=6998"
-	
+
 	| w1 |
 	w1 := WideString with: (Unicode value: 402) with: $a with: (Unicode value: 400) with: $b.
 	self assert: (w1 at: 2 put: $b) = $b description: 'at:put: should return the put-object'
@@ -49,7 +49,7 @@ WideStringTest >> testAtPut [
 { #category : #'tests - beginswith' }
 WideStringTest >> testBeginsWith [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-	
+
 	| w1 w2 |
 	self assert: ('abc' beginsWith: 'ab').
 	self assert: ('abc' beginsWith: 'ab' asWideString).
@@ -61,7 +61,7 @@ WideStringTest >> testBeginsWith [
 
 	w1 := WideString with: (Unicode value: 402) with: $a with: (Unicode value: 400) with: $b.
 	w2 := WideString with: (Unicode value: 402).
-	w1 beginsWith: w2.
+	w1 beginsWith: w2
 ]
 
 { #category : #'tests - match' }
@@ -137,14 +137,14 @@ WideStringTest >> testCompare [
 { #category : #'tests - endswith' }
 WideStringTest >> testEndsWith [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-	
+
 	self assert: ('abc' endsWith: 'bc').
 	self assert: ('abc' endsWith: 'bc' asWideString).
 	self assert: ('abc' asWideString endsWith: 'bc').
 	self assert: ('abc' endsWith: 'bX') not .
 	self assert: ('abc' endsWith: 'BC') not.
 	self assert: ('abc' endsWith: 'BC' asWideString) not .
-	self assert: ('ABC' asWideString endsWith: 'bc') not.
+	self assert: ('ABC' asWideString endsWith: 'bc') not
 ]
 
 { #category : #'tests - compare' }
@@ -199,26 +199,26 @@ WideStringTest >> testIsAsciiString [
 { #category : #'tests - match' }
 WideStringTest >> testMatch [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-	
+
 	self assert: ('*baz' match: 'mobaz' ).
 	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort' ).
 	self assert: ('*baz' match: 'mobaz' ).
 	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort' ).
-	
+
 	self assert: ('*baz' match: 'mobaz' asWideString).
 	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort' asWideString).
 	self assert: ('*baz' match: 'mobaz' asWideString).
 	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort' asWideString).
-	
+
 	self assert: ('*baz' asWideString match: 'mobaz' ).
 	self assert: ('*foo#zort' asWideString match: 'afoo3zortthenfoo3zort' ).
 	self assert: ('*baz' asWideString match: 'mobaz' ).
 	self assert: ('*foo#zort' asWideString match: 'afoo3zortthenfoo3zort' ).
-	
+
 	self assert: ('*baz' asWideString match: 'mobaz' asWideString).
 	self assert: ('*foo#zort' asWideString match: 'afoo3zortthenfoo3zort' asWideString).
 	self assert: ('*baz' asWideString match: 'mobaz' asWideString).
-	self assert: ('*foo#zort' asWideString match: 'afoo3zortthenfoo3zort' asWideString).
+	self assert: ('*foo#zort' asWideString match: 'afoo3zortthenfoo3zort' asWideString)
 ]
 
 { #category : #'tests - relation order' }
@@ -231,33 +231,33 @@ WideStringTest >> testRelationOrder [
 	self assert: ('ab' > 'aa').
 	self assert: ('ab' >= 'aa').
 	self assert: ('aa' >= 'aa').
-	
+
 	self assert: ('aa' < 'ab' asWideString).
 	self assert: ('aa' <= 'ab' asWideString).
 	self assert: ('aa' <= 'aa' asWideString).
 	self assert: ('ab' > 'aa' asWideString).
 	self assert: ('ab' >= 'aa' asWideString).
 	self assert: ('aa' >= 'aa' asWideString).
-	
+
 	self assert: ('aa' asWideString < 'ab').
 	self assert: ('aa' asWideString <= 'ab').
 	self assert: ('aa' asWideString <= 'aa').
 	self assert: ('ab' asWideString > 'aa').
 	self assert: ('ab' asWideString >= 'aa').
 	self assert: ('aa' asWideString >= 'aa').
-	
+
 	self assert: ('aa' asWideString< 'ab' asWideString).
 	self assert: ('aa' asWideString<= 'ab' asWideString).
 	self assert: ('aa' asWideString<= 'aa' asWideString).
 	self assert: ('ab' asWideString> 'aa' asWideString).
 	self assert: ('ab' asWideString >= 'aa' asWideString).
-	self assert: ('aa' asWideString>= 'aa' asWideString).
+	self assert: ('aa' asWideString>= 'aa' asWideString)
 ]
 
 { #category : #'tests - relation order' }
 WideStringTest >> testRelationOrderWithCase [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-		
+
 	self assert: ('ABC' caseInsensitiveLessOrEqual: 'abc').
 	self assert: ('ABC' caseInsensitiveLessOrEqual: 'abd').
 	self assert: ('ABD' caseInsensitiveLessOrEqual: 'abc') not.
@@ -270,8 +270,8 @@ WideStringTest >> testRelationOrderWithCase [
 	self assert: ('ABC' asWideString caseInsensitiveLessOrEqual: 'abc' asWideString).
 	self assert: ('ABC' asWideString caseInsensitiveLessOrEqual: 'abd' asWideString).
 	self assert: ('ABD' asWideString caseInsensitiveLessOrEqual: 'abc' asWideString) not.
-	
-	
+
+
 	self assert: ('abc' caseSensitiveLessOrEqual: 'abc').
 	self assert: ('abc' caseSensitiveLessOrEqual: 'abd').
 	self assert: ('abd' caseSensitiveLessOrEqual: 'abc') not.
@@ -281,7 +281,7 @@ WideStringTest >> testRelationOrderWithCase [
 	self assert: ('abc' asWideString caseSensitiveLessOrEqual: 'abc').
 	self assert: ('abc' asWideString caseSensitiveLessOrEqual: 'abd').
 	self assert: ('abd' asWideString caseSensitiveLessOrEqual: 'abc') not.
-	self assert: ('abc' caseSensitiveLessOrEqual: 'ABC') not.
+	self assert: ('abc' caseSensitiveLessOrEqual: 'ABC') not
 ]
 
 { #category : #'tests - compare' }
@@ -291,7 +291,7 @@ WideStringTest >> testSameAs [
 	self assert: ('abc' sameAs: 'aBc' asWideString).
 	self assert: ('aBc' asWideString sameAs: 'abc').
 	self assert: ( #[97 0 0 0] asString sameAs: 'Abcd' asWideString) not.
-	self assert: ('a000' asWideString sameAs:  #[97 0 0 0] asString) not.
+	self assert: ('a000' asWideString sameAs:  #[97 0 0 0] asString) not
 ]
 
 { #category : #'tests - substrings' }

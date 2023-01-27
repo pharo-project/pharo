@@ -26,6 +26,12 @@ OCOptimizedBlockScope >> isInsideOptimizedLoop [
 		ifFalse: [self outerScope isInsideOptimizedLoop]
 ]
 
+{ #category : #testing }
+OCOptimizedBlockScope >> isOptimized [ 
+
+	^ true
+]
+
 { #category : #mark }
 OCOptimizedBlockScope >> markInlinedLoop [
 	isInlinedLoop := true

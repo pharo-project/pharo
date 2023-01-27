@@ -130,6 +130,13 @@ ZnResponse class >> serverErrorWithEntity: entity [
 ]
 
 { #category : #'instance creation' }
+ZnResponse class >> serviceUnavailable: string [
+	^ (self statusLine: ZnStatusLine serviceUnavailable)
+		entity: (ZnEntity textCRLF: string);
+		yourself
+]
+
+{ #category : #'instance creation' }
 ZnResponse class >> statusCode: httpResponeCode [
 	^ self statusLine: (ZnStatusLine code: httpResponeCode)
 ]

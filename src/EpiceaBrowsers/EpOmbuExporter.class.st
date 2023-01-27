@@ -23,32 +23,32 @@ EpOmbuExporter class >> askFileNameAndFileOut: entries in: aDirectory [
 	(OmFileStore existsStoreNamed: fileNameOrNil inDirectory: aDirectory)
 		ifTrue: [ ^ self inform: 'File already exists' ].
 
-	outputLog := EpLog newWithStore: 
+	outputLog := EpLog newWithStore:
 		(OmStoreFactory current named: fileNameOrNil inDirectory: aDirectory).
 
-	self new 
+	self new
 		outputLog: outputLog;
-		fileOut: entries.
+		fileOut: entries
 ]
 
 { #category : #tests }
 EpOmbuExporter >> fileOut: epiceaEntries [
 
-	| originalReference anEvent exportedReference visitor map |	
+	| originalReference anEvent exportedReference visitor map |
 	map := Dictionary new.
 	visitor := EpReferenceFixerVisitor newWithMap: map.
-	
-	epiceaEntries do: [ :anEntry | 
+
+	epiceaEntries do: [ :anEntry |
 		originalReference := (anEntry tagAt: OmStore selfReferenceKey).
 
 		anEvent := anEntry content accept: visitor.
-		
+
 		exportedReference := outputLog addEntryWith: anEvent tags: [ :tags |  ].
-		
+
 		map at: originalReference put: exportedReference.
 		].
-	
-	outputLog store flush.
+
+	outputLog store flush
 ]
 
 { #category : #accessing }

@@ -989,9 +989,10 @@ TextMorph >> installEditorToReplace: priorEditor [
 	^ editor
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isAutoFit [
-	^ self valueOfProperty: #autoFitContents ifAbsent: [true]
+
+	^ self valueOfProperty: #autoFitContents ifAbsent: [ true ]
 ]
 
 { #category : #'linked frames' }
@@ -1006,22 +1007,22 @@ TextMorph >> isTextMorph [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isTranslucentButNotTransparent [
 	"Overridden from BorderedMorph to test backgroundColor instead of (text) color."
 
 	backgroundColor ifNil: [ ^ true ].
-	(backgroundColor isColor and: [ backgroundColor isTranslucentButNotTransparent ])
-		ifTrue: [ ^ true ].
-	(borderColor isColor and: [ borderColor isTranslucentButNotTransparent ])
-		ifTrue: [ ^ true ].
+	(backgroundColor isColor and: [ 
+		 backgroundColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
+	(borderColor isColor and: [ 
+		 borderColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isWrapped [
 	
-	^wrapFlag
+	^ wrapFlag
 ]
 
 { #category : #'editing helpers' }
@@ -1181,41 +1182,45 @@ TextMorph >> narrow [
 ]
 
 { #category : #accessing }
-TextMorph >> newContents: stringOrText [ 
+TextMorph >> newContents: stringOrText [
+
 	"Accept new text contents."
+
 	| newText embeddedMorphs |
 	"If my text is all the same font, use the font for my new contents"
-	newText := stringOrText isString ifTrue: [ | textSize |
-		(text notNil
-		  and: [ (textSize := text size) > 0
-		    and: [ (text runLengthFor: 1) = textSize ]]) ifTrue: [ | attribs |
-			attribs := text attributesAt: 1 forStyle: textStyle.
-			Text string: stringOrText copy attributes: attribs.
-		]
-		ifFalse: [ Text fromString: stringOrText copy ]
-	]
-	ifFalse: [ stringOrText copy asText.	"should be veryDeepCopy?" ].
+	newText := stringOrText isString
+		           ifTrue: [ 
+			           | textSize |
+			           (text notNil and: [ 
+				            (textSize := text size) > 0 and: [ 
+					            (text runLengthFor: 1) = textSize ] ])
+				           ifTrue: [ 
+					           | attribs |
+					           attribs := text attributesAt: 1 forStyle: textStyle.
+					           Text string: stringOrText copy attributes: attribs ]
+				           ifFalse: [ Text fromString: stringOrText copy ] ]
+		           ifFalse: [ 
+		           stringOrText copy asText "should be veryDeepCopy?" ].
 
-	(text = newText and: [text runs = newText runs]) ifTrue: [^ self].	"No substantive change"
-	text ifNotNil: [(embeddedMorphs := text embeddedMorphs)
-			ifNotNil: 
-				[self removeAllMorphsIn: embeddedMorphs.
-				embeddedMorphs do: [:m | m delete]]].
+	(text = newText and: [ text runs = newText runs ]) ifTrue: [ ^ self ]. "No substantive change"
+	text ifNotNil: [ 
+		(embeddedMorphs := text embeddedMorphs) ifNotNil: [ 
+			self removeAllMorphsIn: embeddedMorphs.
+			embeddedMorphs do: [ :m | m delete ] ] ].
 
 	text := newText.
 
 	"add all morphs off the visible region; they'll be moved into the right 
 	place when they become visible. (this can make the scrollable area too 
 	large, though)"
-	newText embeddedMorphs do: 
-		[:m | 
+	newText embeddedMorphs do: [ :m | 
 		self addMorph: m.
-		m position: -1000 @ 0].
+		m position: -1000 @ 0 ].
 	self releaseParagraph.
 	"update the paragraph cache"
 	self paragraph.
 	"re-instantiate to set bounds"
-	self world ifNotNil: [self world startSteppingSubmorphsOf: self]
+	self world ifNotNil: [ self startSteppingSubmorphs ]
 ]
 
 { #category : #'interactive error protocol' }

@@ -14,34 +14,34 @@ Class {
 { #category : #converting }
 AthensPolygon >> finish [
 	"Finally convert contours to arrays"
-	
+
 	contours := contours collect: [:ea | ea asArray ]
 ]
 
 { #category : #converting }
-AthensPolygon >> lineTo: aPoint [ 
+AthensPolygon >> lineTo: aPoint [
 	currentContour add: aPoint
 ]
 
 { #category : #converting }
-AthensPolygon >> moveTo: aPoint [ 
+AthensPolygon >> moveTo: aPoint [
 	" create a new contour "
-	
+
 	self newContour.
-	currentContour add: aPoint.
+	currentContour add: aPoint
 ]
 
 { #category : #converting }
 AthensPolygon >> newContour [
 	contours ifNil: [ contours := OrderedCollection new ].
-	
-	currentContour := contours add: OrderedCollection new.
+
+	currentContour := contours add: OrderedCollection new
 ]
 
 { #category : #drawing }
-AthensPolygon >> paintFillsUsing: aPaint on: anAthensCanvas [ 
-	
+AthensPolygon >> paintFillsUsing: aPaint on: anAthensCanvas [
+
 	"This method is a part of rendering dispatch  Canvas->receiver->paint"
-	
+
 	^ aPaint fillPolygon: self on: anAthensCanvas
 ]

@@ -52,7 +52,7 @@ ClyJumpToTestMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyJumpToTestMethodCommand >> execute [
 	self methods do: [ :method | self generateTestMethodFor: method ].
-	
+
 	testMethodToBrowse ifNotNil: [ :testMethod | browser selectMethod: testMethod ]
 ]
 
@@ -61,11 +61,11 @@ ClyJumpToTestMethodCommand >> generateTestMethodFor: aMethod [
 	[
 	| testClass selector |
 	testClass := self testClassFor: aMethod methodClass.
-	
+
 	selector := self testMethodNameFor: aMethod.
 	(testClass includesSelector: selector) ifFalse: [ self generateTestMethodNamed: selector in: testClass ].
-	
-	testMethodToBrowse := testClass >> selector ] 
+
+	testMethodToBrowse := testClass >> selector ]
 		on: ClyInvalidClassForTestClassGeneration
 		do: [ :ex | self inform: 'Impossible to create test class for ' , ex baseClass printString , '.' ]
 ]

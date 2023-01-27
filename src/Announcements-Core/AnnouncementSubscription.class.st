@@ -56,7 +56,7 @@ AnnouncementSubscription >> deliver: anAnnouncement [
 	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
 
 	^ (self handlesAnnouncement: anAnnouncement ) ifTrue: [
-		[action cull: anAnnouncement cull: announcer] 
+		[action cull: anAnnouncement cull: announcer]
 			on: UnhandledError fork: [:ex | ex pass ]]
 ]
 
@@ -73,12 +73,12 @@ AnnouncementSubscription >> makeStrong [
 
 { #category : #converting }
 AnnouncementSubscription >> makeWeak [
-	
+
 	action isBlock ifTrue: [
 		self error: 'Not currently available due to missing ephemerons support'
 		].
 
-	^ announcer replace: self with: 
+	^ announcer replace: self with:
 		(WeakAnnouncementSubscription new
 			announcer: announcer;
 			action: action asWeakMessageSend;
@@ -100,5 +100,5 @@ AnnouncementSubscription >> subscriber: aSubscriber [
 AnnouncementSubscription >> valuable: aValuable [
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
-	self subscriber: aValuable receiver.
+	self subscriber: aValuable receiver
 ]

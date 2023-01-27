@@ -95,13 +95,17 @@ BaselineOfFuelPlatform >> pharoPackagesAndGroups: spec [
 	spec for: #'pharo10.x' do: [
 		spec package: 'Fuel-Platform-Pharo-10' with: [ spec requires: 'Fuel-Platform-Pharo-Core' ].
 		spec group: 'FuelPlatformCurrentGroup' with: #('Fuel-Platform-Pharo-10') ].
+	spec for: #'pharo11.x' do: [
+		spec package: 'Fuel-Platform-Pharo-11' with: [ spec requires: 'Fuel-Platform-Pharo-Core' ].
+		spec group: 'FuelPlatformCurrentGroup' with: #('Fuel-Platform-Pharo-11') ].
 	spec for: #'fuel-fallback' do: [
-		spec package: 'Fuel-Platform-Pharo-10' with: [ spec requires: 'Fuel-Platform-Pharo-Core' ].
-		spec group: 'FuelPlatformCurrentGroup' with: #('Fuel-Platform-Pharo-10') ]
+		spec package: 'Fuel-Platform-Pharo-11' with: [ spec requires: 'Fuel-Platform-Pharo-Core' ].
+		spec group: 'FuelPlatformCurrentGroup' with: #('Fuel-Platform-Pharo-11') ]
 ]
 
 { #category : #adding }
 BaselineOfFuelPlatform >> platformAttributes [
+	(SystemVersion current version beginsWith: 'Pharo11') ifTrue: [ ^ #('pharo11.x') ].
 	(SystemVersion current version beginsWith: 'Pharo10') ifTrue: [ ^ #('pharo10.x') ].
 	(SystemVersion current version beginsWith: 'Pharo9') ifTrue: [ ^ #('pharo9.x') ].
 	(SystemVersion current version beginsWith: 'Pharo8') ifTrue: [ ^ #('pharo8.x') ].

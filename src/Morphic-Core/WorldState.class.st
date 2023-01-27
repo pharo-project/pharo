@@ -18,12 +18,12 @@ Class {
 		'activeHand',
 		'currentCursor',
 		'worldRenderer',
-		'realWindowExtent'
+		'realWindowExtent',
+		'deferredUIMessages'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
 		'DebugShowDamage',
-		'DeferredUIMessages',
 		'DesktopMenuPragmaKeyword',
 		'DesktopMenuTitle',
 		'EasySelectingWorld',
@@ -41,12 +41,6 @@ WorldState class >> MinCycleLapse: milliseconds [
 	MinCycleLapse := milliseconds ifNotNil: [ milliseconds rounded ].
 ]
 
-{ #category : #'deferred message' }
-WorldState class >> addDeferredUIMessage: aValuable [
-	"aValuable will be executed in the next UI rendering cycle"
-	self deferredUIMessages nextPut: aValuable
-]
-
 { #category : #'testing os' }
 WorldState class >> canSurrenderToOS: aBoolean [
 
@@ -61,18 +55,6 @@ WorldState class >> debugShowDamage [
 { #category : #accessing }
 WorldState class >> debugShowDamage: aBoolean [
 	DebugShowDamage := aBoolean
-]
-
-{ #category : #'deferred message' }
-WorldState class >> defer: aValuable [
-	"aValuable will be executed in the next UI rendering cycle"
-	self addDeferredUIMessage: aValuable.
-]
-
-{ #category : #'deferred message' }
-WorldState class >> deferredUIMessages [
-
-	^DeferredUIMessages ifNil: [DeferredUIMessages := WaitfreeQueue  new].
 ]
 
 { #category : #settings }
@@ -94,7 +76,7 @@ WorldState class >> desktopMenuTitle: aString [
 
 { #category : #settings }
 WorldState class >> discoveredMenuPragmaKeyword [
-	^ DesktopMenuPragmaKeyword ifNil: [DesktopMenuPragmaKeyword := 'worldMenu']
+	^ DesktopMenuPragmaKeyword ifNil: [DesktopMenuPragmaKeyword := #worldMenu]
 ]
 
 { #category : #settings }
@@ -144,9 +126,6 @@ WorldState class >> helpOn: aBuilder [
 		order: 99;
 		help: 'Some help tools on Pharo.';
 		with: [
-			(aBuilder group: #HelpBrowser)
-				order: 1;
-				withSeparatorAfter.
 			(aBuilder group: #PharoHelp)
 				order: 2;
 				withSeparatorAfter.
@@ -162,7 +141,7 @@ WorldState class >> initialize [
 	"WorldState initialize"
 
 	MinCycleLapse := 16.		"allows 60 frames per second..."
-	DeferredUIMessages := nil.
+
 ]
 
 { #category : #'drawing cycle' }
@@ -206,26 +185,26 @@ WorldState class >> pharoItemsOn: aBuilder [
 						help: 'Save the current version of the image on disk.';
 						order: 1;
 						keyText: 'S';
-						iconName: #smallSaveIcon.
+						iconName: #smallSave.
 					(aBuilder item: #'Save as...')
 						target: self;
 						selector: #saveAs;
 						help: 'Save the current version of the image on disk under a new name.';
 						order: 2;
-						iconName: #smallSaveAsIcon.
+						iconName: #smallSaveAs.
 					(aBuilder item: #'Save and quit')
 						target: self;
 						selector: #saveAndQuit;
 						help: 'Save the current image on disk, and quit Pharo.';
 						order: 3;
-						iconName: #smallQuitIcon.
+						iconName: #smallQuit.
 					aBuilder	withSeparatorAfter ]. 
 				(aBuilder item: #Quit)
 					target: self;
 					selector: #quitSession;
 					help: 'Quit Pharo without saving the image on disk.';
 					order: 99;
-					iconName: #smallQuitIcon ]
+					iconName: #smallQuit ]
 ]
 
 { #category : #'world menu items' }
@@ -268,19 +247,6 @@ WorldState class >> saveSession [
 			snapshot: true
 			andQuit: false.
 	]
-]
-
-{ #category : #'world menu items' }
-WorldState class >> screenShotCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Screenshot)
-		parent: #System;
-		target: self currentWorld;
-		order: 99;
-		selector: #makeAScreenshot;
-		label: 'Screenshot';
-		help: 'Take a screenshot';
-		iconName: #smallScreenshotIcon
 ]
 
 { #category : #settings }
@@ -457,8 +423,16 @@ WorldState >> damageRecorder [
 
 { #category : #'deferred message' }
 WorldState >> defer: aValuable [
+	
 	"aValuable will be executed in the next UI rendering cycle"
-	self class defer: aValuable
+	self deferredUIMessages nextPut: aValuable
+]
+
+{ #category : #'private - accessing' }
+WorldState >> deferredUIMessages [
+
+	deferredUIMessages ifNil: [ deferredUIMessages := WaitfreeQueue new ].
+	^ deferredUIMessages
 ]
 
 { #category : #'worldmenu building' }
@@ -780,7 +754,7 @@ WorldState >> runStepMethodsIn: aWorld [
 	
 	| queue nextInQueue|
 	"If available dispatch some deferred UI Message"
-	queue := self class deferredUIMessages.
+	queue := self deferredUIMessages.
 	[(nextInQueue := queue nextOrNil) isNil]
 		whileFalse: [ nextInQueue value].
 	self runLocalStepMethodsIn: aWorld.

@@ -38,10 +38,10 @@ NonBooleanReceiver class >> mustBeBooleanHandler: aHandler [
 	MustBeBooleanHandler := aHandler
 ]
 
-{ #category : #signaledexception }
+{ #category : #testing }
 NonBooleanReceiver >> isResumable [
 
-	^true
+	^ true
 ]
 
 { #category : #accessing }

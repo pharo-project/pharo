@@ -180,9 +180,8 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolorIcon) )
 ]
 
-{ #category : #'halo theme' }
+{ #category : #'class initialization' }
 HaloMorph class >> initialize [
-	"self initialize"
 	
 	self installHaloTheme: #iconicHaloSpecifications
 ]
@@ -659,22 +658,6 @@ HaloMorph >> basicBoxForSimpleHalos [
 		  ifNone: [ self error: 'should not happen' ]
 ]
 
-{ #category : #'meta-actions' }
-HaloMorph >> blueButtonDown: event [
-	"Transfer the halo to the next likely recipient"
-
-	target ifNil: [ ^ self delete ].
-	event hand obtainHalo: self.
-	positionOffset := event position
-	                  - (target point: target position in: owner).
-	"wait for drags or transfer"
-	event hand
-		waitForClicksOrDrag: self
-		event: event
-		selectors: { #transferHalo:. nil. nil. #dragTarget: }
-		threshold: 5
-]
-
 { #category : #accessing }
 HaloMorph >> borderStyle [
 	"Answer the border style to use for the receiver.
@@ -711,7 +694,7 @@ HaloMorph >> containsPoint: aPoint event: anEvent [
 	"Blue buttons are handled by the halo"
 
 	(anEvent isMouse and: [ 
-		 anEvent isMouseDown and: [ anEvent blueButtonPressed ] ]) ifFalse: [ 
+		 anEvent isMouseDown and: [ anEvent isSpecialGesture ] ]) ifFalse: [ 
 		^ super containsPoint: aPoint event: anEvent ].
 	^ bounds containsPoint: anEvent position
 ]
@@ -991,9 +974,24 @@ HaloMorph >> handleSize [
 ]
 
 { #category : #'meta-actions' }
-HaloMorph >> handlerForBlueButtonDown: anEvent [
-	"Blue button was clicked within the receiver"
+HaloMorph >> handleSpecialGesture: event [
+	"Transfer the halo to the next likely recipient"
 
+	target ifNil: [ ^ self delete ].
+	event hand obtainHalo: self.
+	positionOffset := event position
+	                  - (target point: target position in: owner).
+	"wait for drags or transfer"
+	event hand
+		waitForClicksOrDrag: self
+		event: event
+		selectors: { #transferHalo:. nil. nil. #dragTarget: }
+		threshold: 5
+]
+
+{ #category : #'meta-actions' }
+HaloMorph >> handlerForSpecialGestureDown:  anEvent [
+	"The special gesture for halo has been done"
 	^ self
 ]
 

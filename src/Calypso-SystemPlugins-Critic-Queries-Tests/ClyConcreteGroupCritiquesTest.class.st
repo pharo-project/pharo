@@ -8,25 +8,25 @@ Class {
 ClyConcreteGroupCritiquesTest >> createQuery [
 	| exampleCritique |
 	exampleCritique := self methodWithCritiques critiques anyOne.
-	
-	^ClyConcreteGroupCritiqueQuery 
+
+	^ClyConcreteGroupCritiqueQuery
 		filter: ClyAllMethodCritiqueQuery new
-		from: self scopeWithCritiques 
+		from: self scopeWithCritiques
 		byGroup: exampleCritique rule group
 ]
 
 { #category : #tests }
 ClyConcreteGroupCritiquesTest >> testCheckIfEmpty [
-	
+
 	query scope: self scopeWithoutCritiques.
 	self assert: query checkEmptyResult.
 
-	query := self createQuery.		
+	query := self createQuery.
 	query scope: self scopeWithCritiques .
 	self deny: query checkEmptyResult.
-	
+
 	query groupName: 'wrong group'.
-	self assert: query checkEmptyResult.
+	self assert: query checkEmptyResult
 ]
 
 { #category : #tests }
@@ -42,7 +42,7 @@ ClyConcreteGroupCritiquesTest >> testComparisonWithQueryOfAnotherGroup [
 ClyConcreteGroupCritiquesTest >> testExecution [
 
 	self executeQuery.
-	
+
 	self assert: resultItems size equals: 1
 ]
 
@@ -50,8 +50,8 @@ ClyConcreteGroupCritiquesTest >> testExecution [
 ClyConcreteGroupCritiquesTest >> testExecutionWhenNoCritiquesFromRequiredGroup [
 
 	query groupName: 'wrong group'.
-	
+
 	self executeQuery.
-	
+
 	self assert: resultItems isEmpty
 ]

@@ -255,7 +255,7 @@ RubTextEditor >> backWord: aKeyboardEvent [
 RubTextEditor >> backspace: aKeyboardEvent [
 	| result startIndex |
 	self closeTypeIn.
-	result := aKeyboardEvent shiftPressed
+	result := aKeyboardEvent controlKeyPressed
 		ifTrue: [ self backWord: aKeyboardEvent keyCharacter ]
 		ifFalse: [ 
 			self hasSelection
@@ -654,6 +654,7 @@ RubTextEditor >> cursorLeft: aKeyboardEvent [
 	selecting or extending current selection. Don't allow cursor past 
 	beginning of text"
 
+	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
 	self
 		moveCursor:[:position | position - 1 max: 1]
@@ -702,6 +703,7 @@ RubTextEditor >> cursorRight: aKeyboardEvent [
 	start selecting characters or extending already selected characters. 
 	Don't allow cursor past end of text"
 
+	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
 	self
 		moveCursor: [:position | position + 1]
@@ -776,7 +778,8 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey keypadDown -> #cursorDown:).
 	(KeyboardKey keypadEnter -> #crWithIndent:).
 	(KeyboardKey tab -> #tab:).
-	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
+	(KeyboardKey delete -> #forwardDelete:).
+	(KeyboardKey menu -> #menu:)} do: [ :assoc | 
 		cmdMap at: assoc key  put: assoc value ].
 	^ cmdMap
 ]
@@ -1172,8 +1175,8 @@ RubTextEditor >> forwardDelete: aKeyboardEvent [
 			| idx1 idx2 |
 			idx1 := self startIndex min: self stopIndex.
 			idx2 := self stopIndex max: self startIndex.
-			aKeyboardEvent shiftPressed
-				ifTrue: [ idx2 := self nextWord: idx1 ]
+			aKeyboardEvent controlKeyPressed
+				ifTrue: [ idx2 := self nextWord: idx1 + 1 ]
 				ifFalse: [ idx2 := idx2 + 1 ].
 			self selectInvisiblyFrom: idx1 to: idx2 - 1 ].
 	self addDeleteSelectionUndoRecord.
@@ -1522,6 +1525,13 @@ RubTextEditor >> markIndex: markIndex pointIndex: pointIndex [
 	textArea markIndex: markIndex pointIndex: pointIndex
 ]
 
+{ #category : #'menu messages' }
+RubTextEditor >> menu: aKeyboardEvent [
+	"Displays the menu"
+	self textArea openMenu.
+	^ false
+]
+
 { #category : #accessing }
 RubTextEditor >> model [
 	^ textArea model
@@ -1547,7 +1557,11 @@ RubTextEditor >> moveCursor: directionBlock forward: forward specialBlock: speci
 	shift
 		ifTrue: [self selectMark: (indices at: #fixed) point: newPosition - 1]
 		ifFalse: [self selectAt: newPosition].
-	self setEmphasisHereFromTextForward: forward
+	self setEmphasisHereFromTextForward: forward.
+
+	textArea
+		requestTextEditingAt: (textArea cursor positionInWorld
+			corner: textArea cursor positionInWorld).
 ]
 
 { #category : #nesting }
@@ -1997,8 +2011,8 @@ RubTextEditor >> selectInvisiblyAt: characterIndex [
 { #category : #'new selection' }
 RubTextEditor >> selectInvisiblyFrom: start to: stop [
 	"Select the designated characters, inclusive.  Make no visual changes."
-
 	self markIndex: start pointIndex: stop + 1
+	
 ]
 
 { #category : #'new selection' }
@@ -2017,12 +2031,11 @@ RubTextEditor >> selectLine [
 
 { #category : #'new selection' }
 RubTextEditor >> selectMark: mark point: point [
-	"Select the specified characters inclusive.
-	 Be sure the selection is in view."
 
-	(mark =  self markIndex and: [point + 1 = self pointIndex]) ifFalse:
-		[self deselect.
-		self selectInvisiblyMark: mark point: point]
+	(mark = self markIndex and: [ point + 1 = self pointIndex ]) 
+		ifTrue: [ ^ self ].
+	self deselect.
+	self selectInvisiblyMark: mark point: point
 ]
 
 { #category : #'new selection' }
@@ -2100,10 +2113,24 @@ RubTextEditor >> selectWord [
 
 { #category : #'nonediting/nontyping keys' }
 RubTextEditor >> selectWord: aKeyboardEvent [
-
 	self closeTypeIn.
 	self selectWord.
 	^ true
+]
+
+{ #category : #'new selection' }
+RubTextEditor >> selectWordMark: mark point: point [
+	| mark2 point2 |
+	"this method is used my mouse double click and drag.
+	It selects the correct words between the original point and the selection cursor point"
+	mark < point ifTrue: [ 
+		mark2 := self previousWord: mark.
+		point2 := (self nextWord: point) - 1 ]
+	ifFalse: [ 
+		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
+		mark2 := self nextWord: (mark>0 ifTrue:[mark] ifFalse:[1]).
+		point2 := (self previousWord: point)- 1  ].
+	self selectMark: mark2 point: point2.
 ]
 
 { #category : #'accessing - selection' }
@@ -2407,6 +2434,12 @@ RubTextEditor >> textWasAccepted [
 { #category : #accessing }
 RubTextEditor >> theme [
 	^ UITheme current
+]
+
+{ #category : #'menu messages' }
+RubTextEditor >> tools [
+
+	^ Smalltalk tools
 ]
 
 { #category : #accessing }

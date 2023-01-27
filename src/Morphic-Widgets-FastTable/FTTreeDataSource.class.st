@@ -87,14 +87,13 @@ FTTreeDataSource class >> defaultSearchStrategies [
 { #category : #'utilities - morph creation' }
 FTTreeDataSource class >> emptyMorph [
 	| icon |
-	icon := (Smalltalk ui icons iconNamed: #emptyIcon) asMorph.
+	icon := (Smalltalk ui icons iconNamed: #empty) asMorph.
 	icon form: (icon form scaledToSize: 16 @ 16).
 	^ icon
 ]
 
 { #category : #'class initialization' }
 FTTreeDataSource class >> initialize [
-	"self initialize"
 
 	SearchStrategies := nil
 ]
@@ -133,6 +132,12 @@ FTTreeDataSource class >> searchStrategies: anObject [
 { #category : #updating }
 FTTreeDataSource >> addSourceToRootItem [
 	rootItem dataSource: self
+]
+
+{ #category : #accessing }
+FTTreeDataSource >> allShownItems [
+
+	^ rootItem children flatCollect: [ :e | e withExpandedChildren ].
 ]
 
 { #category : #accessing }
@@ -244,6 +249,29 @@ FTTreeDataSource >> newDataSourceMatching: aFTFilter [
 { #category : #accessing }
 FTTreeDataSource >> numberOfRows [
 	^ self rootItem numberOfVisibleChildren
+]
+
+{ #category : #'expanding-collapsing' }
+FTTreeDataSource >> preservingScrollbarPositionDo: aBlock [
+
+	| oldScroll oldItems newScroll newItems |
+	oldItems := self allShownItems size.
+	oldScroll := self table verticalScrollBar value asFraction.
+
+	aBlock value.
+
+	newItems := self allShownItems size.
+	newScroll := oldScroll = 0
+		             ifTrue: [ 0 ]
+		             ifFalse: [ 
+			             oldScroll = 1
+				             ifTrue: [ oldItems / newItems ]
+				             ifFalse: [ 
+					             oldScroll numerator
+					             * (oldItems / oldScroll denominator)
+					             / newItems ] ].
+
+	self table verticalScrollBar setValue: newScroll
 ]
 
 { #category : #accessing }

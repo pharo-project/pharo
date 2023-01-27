@@ -418,9 +418,10 @@ StringMorph >> isEditable: evt [
 	^(self isEditable and: [evt shiftPressed])
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 StringMorph >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
+	
 	^ true
 ]
 

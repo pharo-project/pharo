@@ -1141,7 +1141,7 @@ SmalltalkImage >> memoryHogs [
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
  
-   ^ #(#squeakCommon #pharo #'pharo10.x'  #'pharo10.0.x')
+   ^ #(#squeakCommon #pharo #'pharo11.x'  #'pharo11.0.x')
 ]
 
 { #category : #'special objects' }
@@ -1202,8 +1202,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 30 put: ((self primitiveGetSpecialObjectsArray at: 30) ifNil: [Semaphore new]). "delay Semaphore"
 	newArray at: 31 put: ((self primitiveGetSpecialObjectsArray at: 31) ifNil: [Semaphore new]). "user interrupt Semaphore"
 	"Entries 32 - 34 unreferenced. Previously these contained prototype instances to be copied for fast initialization"
-	newArray at: 32 put: nil. "was the prototype Float"
-	newArray at: 33 put: nil. "was the prototype 4-byte LargePositiveInteger"
+	newArray at: 32 put: Float32Array. "was the prototype Float"
+	newArray at: 33 put: Float64Array. "was the prototype 4-byte LargePositiveInteger"
 	newArray at: 34 put: nil. "was the prototype Point"
 	newArray at: 35 put: #cannotInterpret:.
 	newArray at: 36 put: nil. "was the prototype MethodContext"

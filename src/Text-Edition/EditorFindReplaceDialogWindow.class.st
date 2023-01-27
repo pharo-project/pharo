@@ -37,10 +37,10 @@ EditorFindReplaceDialogWindow class >> finds [
 	^ Finds ifNil: [Finds := OrderedCollection new]
 ]
 
-{ #category : #initializing }
+{ #category : #'class initialization' }
 EditorFindReplaceDialogWindow class >> initialize [
-	"EditorFindReplaceDialogWindow initialize"
-	Singleton := nil.
+
+	Singleton := nil
 ]
 
 { #category : #accessing }
@@ -64,6 +64,12 @@ EditorFindReplaceDialogWindow class >> singleton [
 
 ]
 
+{ #category : #icons }
+EditorFindReplaceDialogWindow class >> taskbarIconName [
+
+	^ #smallFind
+]
+
 { #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> buildWindowMenu [
 	"Build and answer the window menu."
@@ -79,7 +85,7 @@ EditorFindReplaceDialogWindow >> buildWindowMenu [
 	aMenu lastItem icon: self theme windowCloseForm.
 	aMenu addLine.
 	aMenu add: 'About' selector: #showAbout.
-	aMenu lastItem icon: (self iconNamed: #smallHelpIcon).
+	aMenu lastItem icon: (self iconNamed: #smallHelp).
 	^ aMenu
 ]
 
@@ -455,8 +461,9 @@ EditorFindReplaceDialogWindow >> taskbarButtonFor: aTaskBar [
 ]
 
 { #category : #icons }
-EditorFindReplaceDialogWindow >> taskbarIcon [
-	^ self iconNamed: #smallFindIcon
+EditorFindReplaceDialogWindow >> taskbarIconName [
+
+	^ #smallFind
 ]
 
 { #category : #'user-interface' }

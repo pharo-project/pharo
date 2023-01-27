@@ -22,5 +22,5 @@ ClyItemGroupProviderTest >> groupProviderClass [
 ClyItemGroupProviderTest >> setUp [
 	super setUp.
 	groupProvider := self groupProviderClass new.
-	builtGroups := OrderedCollection new.
+	builtGroups := OrderedCollection new
 ]

@@ -3,7 +3,7 @@ A trait to build models for tests purposes
 "
 Trait {
 	#name : #TModelBuilder,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Data'
 }
 
 { #category : #mocking }

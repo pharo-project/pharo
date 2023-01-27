@@ -137,6 +137,11 @@ RFReification >> genForRBMethodNode [
 ]
 
 { #category : #generate }
+RFReification >> genForRBPragmaNode [
+	^ self genForRBProgramNode 
+]
+
+{ #category : #generate }
 RFReification >> genForRBProgramNode [
 	"overriden in subclass if needed"
 ]

@@ -24,7 +24,7 @@ ByteLayout class >> subclassDefiningSymbol [
 
 { #category : #accessing }
 ByteLayout >> bytesPerSlot [
-	
+
 	^ 1
 ]
 

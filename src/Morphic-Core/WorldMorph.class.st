@@ -165,7 +165,7 @@ WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
-	array do: [:m | self startSteppingSubmorphsOf: m]
+	array do: [ :m | m startSteppingSubmorphs ]
 ]
 
 { #category : #'world state' }
@@ -216,7 +216,8 @@ WorldMorph >> becomeActiveDuring: aBlock [
 		on: Error
 		do: [ :ex | 
 			ActiveWorld := priorWorld.
-			ex pass ]
+			ex pass ].
+	ActiveWorld := priorWorld.
 ]
 
 { #category : #'meta-actions' }
@@ -244,14 +245,14 @@ WorldMorph >> contentsMenu: aMenu [
 	(expanded asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
 		do: [ :w | 
 			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #activateAndForceLabelToShow.
-			aMenu lastItem icon: w taskbarIcon.
+			aMenu lastItem icon: (self iconNamed: w taskbarIconName).
 			w model canDiscardEdits 
 				ifFalse: [ aMenu lastItem color: Color red ] ].
 	aMenu addLine.
 	(collapsed asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
 		do: [ :w | 
 			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #collapseOrExpand.
-			aMenu lastItem icon: w taskbarIcon.
+			aMenu lastItem icon: (self iconNamed: w taskbarIconName).
 			w model canDiscardEdits
 				ifFalse: [ aMenu lastItem color: Color red ] ].
 	aMenu addLine.
@@ -259,7 +260,7 @@ WorldMorph >> contentsMenu: aMenu [
 		asSortedCollection: [ :w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name ])
 		do: [ :w | 
 			aMenu add: (self truncatedMenuLabelFor: w class name) target: w selector: #comeToFront.
-			aMenu lastItem icon: w taskbarIcon ].
+			aMenu lastItem icon: (self iconNamed: w taskbarIconName) ].
 		
 	^ aMenu
 ]
@@ -267,6 +268,12 @@ WorldMorph >> contentsMenu: aMenu [
 { #category : #'menu & halo' }
 WorldMorph >> contentsMenuTitle [
 	^ 'World contents' translated
+]
+
+{ #category : #screenshot }
+WorldMorph >> copyRectangle: aRectangle into: aForm [ 
+	
+	^ worldState worldRenderer copyRectangle: aRectangle into: aForm
 ]
 
 { #category : #'world state' }
@@ -468,6 +475,18 @@ WorldMorph >> removeHand: aHandMorph [
 	aHandMorph dropMorphs.
 	self invalidRect: aHandMorph fullBounds.
 	worldState removeHand: aHandMorph
+]
+
+{ #category : #'event handling' }
+WorldMorph >> requestStopTextEditing [
+
+	self worldState worldRenderer requestStopTextEditing
+]
+
+{ #category : #'event handling' }
+WorldMorph >> requestTextEditingAt: aRectangle [
+
+	self worldState worldRenderer requestTextEditingAt: aRectangle
 ]
 
 { #category : #'world state' }

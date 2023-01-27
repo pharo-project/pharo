@@ -41,14 +41,22 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 { #category : #visitor }
 EpInverseVisitor >> visitCategoryAddition: aChange [
 
-	^ EpCategoryRemoval 
+	^ EpCategoryRemoval
+			named: aChange categoryName
+			packageName: aChange affectedPackageName
+]
+
+{ #category : #visitor }
+EpInverseVisitor >> visitCategoryRegistration: aChange [
+
+	^ EpCategoryRegistration
 			named: aChange categoryName
 			packageName: aChange affectedPackageName
 ]
 
 { #category : #visitor }
 EpInverseVisitor >> visitCategoryRemoval: aChange [
-	
+
 	^ EpCategoryAddition
 			named: aChange categoryName
 			packageName: aChange affectedPackageName
@@ -72,7 +80,7 @@ EpInverseVisitor >> visitClassAddition: aChange [
 { #category : #visitor }
 EpInverseVisitor >> visitClassModification: aChange [
 
-	^ EpClassModification oldClass: aChange newClass newClass: aChange oldClass.
+	^ EpClassModification oldClass: aChange newClass newClass: aChange oldClass
 ]
 
 { #category : #visitor }
@@ -118,14 +126,16 @@ EpInverseVisitor >> visitProtocolRemoval: aChange [
 
 { #category : #visitor }
 EpInverseVisitor >> visitTraitAddition: aChange [
-	
+
 	^ EpTraitRemoval trait: aChange behaviorAffected
 ]
 
 { #category : #visitor }
 EpInverseVisitor >> visitTraitModification: aTraitModification [
 
-	self notYetImplemented
+  	^ EpTraitModification
+    		  oldTrait: aTraitModification newTrait
+          		  newTrait: aTraitModification oldTrait
 ]
 
 { #category : #visitor }

@@ -108,7 +108,7 @@ ZnCommonLogFormat >> formatTimestamp: timestamp on: stream [
 	stream nextPut: $]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnCommonLogFormat >> initialize [
 	super initialize.
 	combined := true.

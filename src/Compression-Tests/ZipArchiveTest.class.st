@@ -26,7 +26,7 @@ ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileMod
 	self assert:
 			(lastModificationTime
 				between: fileModified - 2 seconds
-				and: fileModified + 2 seconds).
+				and: fileModified + 2 seconds)
 ]
 
 { #category : #running }
@@ -39,7 +39,7 @@ ZipArchiveTest >> setUp [
 	subdir := fs root / 'test-zip-dir'.
 	subdir ensureCreateDirectory.
 	zipFile := fs root / ('pharo_test' , '.zip').
-	zip := ZipArchive new.
+	zip := ZipArchive new
 ]
 
 { #category : #running }
@@ -56,22 +56,22 @@ ZipArchiveTest >> tearDown [
 
 { #category : #tests }
 ZipArchiveTest >> testAddNonExistentFile [
-	
-	self should: [ zip addFile: 'it_would_be_crazy_if_this_file_existed.ext' asFileReference ] raise: FileDoesNotExistException.
+
+	self should: [ zip addFile: 'it_would_be_crazy_if_this_file_existed.ext' asFileReference ] raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
 ZipArchiveTest >> testAddTreeWhenNoContentInFileShouldSucceed [
-	| zipOutput  extractionDir | 
-	(subdir/'testZipFileInDir') ensureCreateFile. 
-	(subdir/'testZipFileInDir2') ensureCreateFile. 
-	(subdir/'DeeperDirectory') ensureCreateDirectory. 
+	| zipOutput  extractionDir |
+	(subdir/'testZipFileInDir') ensureCreateFile.
+	(subdir/'testZipFileInDir2') ensureCreateFile.
+	(subdir/'DeeperDirectory') ensureCreateDirectory.
 	(subdir/'DeeperDirectory'/'testZipFileInDir3')  ensureCreateFile.
 	extractionDir := fs root / 'extracted'.
 	extractionDir ensureCreateDirectory.
-	
+
 	zipOutput := zip addTree: subdir relativeTo: (subdir parent) match: [ :e | true ].
-	
+
 	zipOutput extractAllTo: extractionDir.
 	self assert:	 (extractionDir / 'test-zip-dir'/'testZipFileInDir') asFileReference isFile.
 	self assert:	 (extractionDir / 'test-zip-dir'/'testZipFileInDir2') asFileReference isFile.
@@ -80,35 +80,35 @@ ZipArchiveTest >> testAddTreeWhenNoContentInFileShouldSucceed [
 
 { #category : #tests }
 ZipArchiveTest >> testAddTreeWithContentInFileShouldSucceed [
-	| zipOutput  extractionDir fileWithContentToZip fileContent extractedFile | 
+	| zipOutput  extractionDir fileWithContentToZip fileContent extractedFile |
 	fileContent := 'some random text '.
 	extractionDir := fs root / 'extracted'.
 	extractionDir ensureCreateDirectory.
 	fileWithContentToZip := subdir / 'fileWithContentToZip'.
 	fileWithContentToZip ensureCreateFile.
 	fileWithContentToZip writeStreamDo: [ :stream | stream nextPutAll: fileContent ].
-	
+
 	zipOutput := zip addTree: subdir relativeTo: (subdir parent) match: [ :e | true ].
-	
+
 	zipOutput extractAllTo: extractionDir.
 	extractedFile :=  (extractionDir / (fileWithContentToZip relativeTo: fs root) fullName) asFileReference.
 	self assert:	 extractedFile isFile.
-	self assert:	 (extractedFile readStreamDo: [ :stream | stream contents]) equals: fileContent.
+	self assert:	 (extractedFile readStreamDo: [ :stream | stream contents]) equals: fileContent
 ]
 
 { #category : #tests }
 ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
-	| zipOutput  extractionDir subSubDir fileInSubSubDIr | 
+	| zipOutput  extractionDir subSubDir fileInSubSubDIr |
 	extractionDir := fs root / 'extracted'.
 	extractionDir ensureCreateDirectory.
 	subSubDir := subdir / 'subSubDir'.
 	subSubDir ensureCreateDirectory.
 	fileInSubSubDIr := subdir / 'subSubDir' / 'fileInSubSubDir'.
 	fileInSubSubDIr ensureCreateFile.
-	
+
 	zipOutput := zip addTree: subdir relativeTo: (subdir parent) match: [ :e | true ].
 	zipOutput extractAllTo: extractionDir.
-	
+
 	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir') asFileReference isDirectory.
 	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir' / 'fileInSubSubDir') asFileReference isFile.
 	self deny: (extractionDir / 'subSubDir') asFileReference isDirectory
@@ -116,23 +116,23 @@ ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
 
 { #category : #tests }
 ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
-	
+
 	"Smoke test showing that we can create zip archives with up to 1000 elements.
 	This test was created as a regression test. Previous implementations were leaking files and reaching the open file limits from the operating system."
-	
+
 	| dir theZip |
 	dir := (FileLocator temp / 'testfiles') ensureCreateDirectory.
 	[
-		1 to: 1000 do: [ :i | 
+		1 to: 1000 do: [ :i |
 			(dir / ('test-' , i asString))
 				writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
 				yourself ].
-		
+
 		theZip := ZipArchive new.
 		dir children do: [ :eachFile | theZip addFile: eachFile resolve ].
-		theZip writeToFile: FileLocator temp / 'result.zip'.	
+		theZip writeToFile: FileLocator temp / 'result.zip'.
 		theZip close.
-	] ensure: [ 
+	] ensure: [
 		dir ensureDeleteAll.
 		(FileLocator temp / 'result.zip') ensureDelete. ]
 ]
@@ -153,14 +153,14 @@ ZipArchiveTest >> testCanUnzipFromFileName [
 			addFile: nestedFileToZip as: nestedFileToZip basename;
 			writeTo: stream;
 			close. ].
-	
-	extracted := fs root / 'extracted'. 
-	extracted ensureCreateDirectory. 
+
+	extracted := fs root / 'extracted'.
+	extracted ensureCreateDirectory.
 	ZipArchive new
 		readFrom: zipFile fullName;
 		extractAllTo: extracted overwrite: true;
 		close.
-	zipFile ensureDelete.
+	zipFile ensureDelete
 ]
 
 { #category : #tests }
@@ -175,19 +175,19 @@ ZipArchiveTest >> testCanUnzipFromStream [
 			addFile: nestedFileToZip as: nestedFileToZip basename;
 			writeTo: stream;
 			close. ].
-	
+
 	zipFile binaryReadStreamDo: [ :stream |
 		ZipArchive new
 			readFrom: stream ;
 			extractAllTo: subdir overwrite: true;
-			close ].
+			close ]
 ]
 
 { #category : #tests }
 ZipArchiveTest >> testCreateWithRelativeNames [
 	"Test creating a zip with a relative tree of files, so that the tree will
 	be created whereever the ."
-	
+
 	| nestedFileToZip localFileHeaderSignature versionNeededToExtract bitFlag deflateCompressionMethod expectedCrc32 expectedUncompressedSize folderModified centralDirectoryOffset centralDirectoryEnd expectedCompressedSize fileModified fileStart |
 	nestedFileToZip := subdir / '_test-zip-file'.
 	nestedFileToZip writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].
@@ -196,16 +196,16 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 	zip
 		addDirectory: subdir
 		as: subdir basename.
-	zip	
+	zip
 		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
-		
+
 	zip writeToFile: zipFile.
-	
+
 	zipFile binaryReadStreamDo: [ :str | | endianStream |
-		
+
 		endianStream := ZnEndianessReadWriteStream on: str.
-		
+
 		localFileHeaderSignature := 16r04034b50.
 		versionNeededToExtract := 20.
 		bitFlag := 0.
@@ -213,7 +213,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		expectedCrc32 := 16r2ab092ee. "I don''t know how to compute this, but OS X returned the same, so guessing it's correct"
 		expectedCompressedSize := 15.
 		expectedUncompressedSize := 13.
-		
+
 		"folder"
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
@@ -226,7 +226,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: subdir basename size + 1.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
 		self assert: (str next: subdir basename size + 1) asString equals: subdir basename, '/'.
-		
+
 		"Test file"
 		fileStart := str position.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
@@ -241,12 +241,12 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
 		self assert: (str next: nestedFileToZip basename size) asString equals: (nestedFileToZip basename copy replaceAll: DiskStore delimiter with: $/).
 		self assert: (str next: expectedCompressedSize) isNil not "I don''t understand the compression yet".
-		
+
 		"Central directory structure"
 		centralDirectoryOffset := str position.
-		
+
 		"Folder entry"
-		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.	
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.
 		self flag: 'I think this is wrong. What is version 1.4?!'.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals:  16r314.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
@@ -261,15 +261,15 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "File comment".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number start".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
-		
+
 		self flag: 'I don''t understand the attributes yet'.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals:  8r040755 << 16 "External file attributes".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals:  0 "Relative offset of local header".
 		self assert: (str next: subdir basename size + 1) asString equals: subdir basename, '/'.
-		
+
 		"Nested file entry"
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.
-		
+
 		self flag: 'I think this is wrong. What is version 1.4?!'.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals:  16r314.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
@@ -284,14 +284,14 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "File comment".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number start".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
-		
+
 		self flag: 'I don''t understand the attributes yet'.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 8r0100666 << 16 "External file attributes".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: fileStart "Relative offset of local header".
 		self assert: (str next: nestedFileToZip basename size) asString equals:  (nestedFileToZip basename copy replaceAll: DiskStore delimiter with: $/).
 
 		centralDirectoryEnd := str position.
-		
+
 		"End of central directory record"
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r6054B50 "Signature".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number".
@@ -301,7 +301,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryEnd  - centralDirectoryOffset "Central directory size".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "zip comment length".
-		self assert: str atEnd ].
+		self assert: str atEnd ]
 ]
 
 { #category : #tests }
@@ -313,7 +313,7 @@ ZipArchiveTest >> testDate29Feb2000 [
 	archive := ZipArchive new.
 	member := archive addDeflateString: 'foo' as: 'bar'.
 	member modifiedAt: theDate.
-	self assert: member lastModTime equals: theDate.
+	self assert: member lastModTime equals: theDate
 ]
 
 { #category : #tests }
@@ -322,17 +322,17 @@ ZipArchiveTest >> testFilePermissions [
 	| nestedFileToZip folderMember fileMember |
 	nestedFileToZip := subdir / '_test-zip-file'.
 	nestedFileToZip writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].
-	
+
 	folderMember := zip
 		addDirectory: subdir
 		as: subdir basename.
-	fileMember := zip	
+	fileMember := zip
 		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
 	zip writeToFile: zipFile.
-	
+
 	self assert: fileMember unixFileAttributes equals: 8r100666.
-	self assert: folderMember unixFileAttributes equals: 8r40755.
+	self assert: folderMember unixFileAttributes equals: 8r40755
 ]
 
 { #category : #tests }
@@ -343,7 +343,7 @@ ZipArchiveTest >> testParsePharoZipTimestamp [
 	"This was the error-causing timestamp from http://code.google.com/p/pharo/issues/detail?id=6054#c1 . It was the 'package' file inside Balloon-CamilloBruni.85.mcz"
 	dosTimestamp := 1001728866.
 	dateAndTime := ZipFileMember new unzipTimestamp: dosTimestamp.
-	self assert: dateAndTime equals: '2011-09-29T04:01:06+00:00' asDateAndTime.
+	self assert: dateAndTime equals: '2011-09-29T04:01:06+00:00' asDateAndTime
 ]
 
 { #category : #tests }
@@ -353,7 +353,7 @@ ZipArchiveTest >> testSetLastModification [
 	aDateAndTime := '15 January, 2000T13:23:55'.
 	member := zip addDeflateString: 'foo' as: 'bar'.
 	member modifiedAt: aDateAndTime.
-	self assert: member lastModTime equals: aDateAndTime.
+	self assert: member lastModTime equals: aDateAndTime
 ]
 
 { #category : #tests }
@@ -390,20 +390,20 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 
 { #category : #tests }
 ZipArchiveTest >> testZip [
-	
+
 	| localFileHeaderSignature versionNeededToExtract bitFlag deflateCompressionMethod realModificationStamp expectedCrc32 expectedCompressedSize expectedUncompressedSize centralDirectoryOffset centralDirectoryEnd |
-	
+
 	realModificationStamp := fileToZip entry modification.
-	zip	
+	zip
 		addFile: fileToZip
 		as: fileToZip basename.
-	
+
 	zip writeToFile: zipFile.
-	
+
 	zipFile binaryReadStreamDo: [ :str | | endianStream |
-		
+
 		endianStream := ZnEndianessReadWriteStream on: str.
-		
+
 		localFileHeaderSignature := 16r04034b50.
 		versionNeededToExtract := 20.
 		bitFlag := 0.
@@ -411,7 +411,7 @@ ZipArchiveTest >> testZip [
 		expectedCrc32 := 16r2ab092ee. "I don''t know how to compute this, but OS X returned the same, so guessing it's correct"
 		expectedCompressedSize := 15.
 		expectedUncompressedSize := 13.
-		
+
 		"Test file"
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
@@ -425,11 +425,11 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
 		self assert: (str next: fileToZip basename size) asString equals: fileToZip basename.
 		self assert: (str next: expectedCompressedSize) isNil not "I don''t understand the compression yet".
-		
+
 		"Central directory structure"
 		centralDirectoryOffset := str position.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.
-		
+
 		self flag: 'I think this is wrong. What is version 1.4?!'.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals:  16r314.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
@@ -444,13 +444,13 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "File comment".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number start".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
-		
+
 		self flag: 'I don''t understand the attributes yet'.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals:  16r81B60000 "External file attributes".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals:  0 "Relative offset of local header".
 		self assert: (str next: fileToZip basename size) asString equals: fileToZip basename.
 		centralDirectoryEnd := str position.
-		
+
 		"End of central directory record"
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r6054B50 "Signature".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number".
@@ -460,7 +460,7 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryEnd  - centralDirectoryOffset "Central directory size".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "zip comment length".
-		self assert: str atEnd ].
+		self assert: str atEnd ]
 ]
 
 { #category : #tests }

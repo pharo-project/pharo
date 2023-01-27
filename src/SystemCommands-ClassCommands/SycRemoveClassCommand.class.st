@@ -12,8 +12,7 @@ Class {
 
 { #category : #execution }
 SycRemoveClassCommand >> asRefactorings [
-
-	^self asRefactoringsOfClass: RBRemoveClassRefactoring
+	^self asRefactoringsOfClass: RBRemoveClassTransformation
 ]
 
 { #category : #execution }

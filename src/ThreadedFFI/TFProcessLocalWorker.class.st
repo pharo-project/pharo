@@ -35,7 +35,7 @@ Class {
 	#category : #'ThreadedFFI-Worker'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TFProcessLocalWorker class >> initialize [
 	
 	worker := ProcessLocalVariable new
@@ -63,6 +63,18 @@ TFProcessLocalWorker >> defaultWorker [
 TFProcessLocalWorker >> defaultWorker: aWorker [
 
 	defaultWorker := aWorker
+]
+
+{ #category : #executing }
+TFProcessLocalWorker >> ensureInitialized [
+
+	self worker ensureInitialized
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker >> forCallback [
+
+	^ self worker
 ]
 
 { #category : #executing }

@@ -5,10 +5,10 @@ Class {
 	#name : #FLSerializationTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'serializer',
-		'materializer',
+		'streamStrategy',
 		'classFactory',
-		'streamFactory'
+		'materializer',
+		'serializer'
 	],
 	#category : #'Fuel-Tests-Core-Base'
 }
@@ -19,11 +19,11 @@ FLSerializationTest class >> packageNamesUnderTest [
 ]
 
 { #category : #accessing }
-FLSerializationTest >> analyzer [
-	^serializer analyzer
+FLSerializationTest class >> resources [
+	^ { FLFilePoolTestResource }
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> assertSerializationEqualityOf: anObject [
 	"Asserts that the original object and the materialized one are equal (but not the same)"
 
@@ -33,7 +33,7 @@ FLSerializationTest >> assertSerializationEqualityOf: anObject [
 	self assert: anObject = materialized description: 'The materialized object should be equal to serialized one'.
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> assertSerializationEqualityOrIdentityOf: anObject [
 	"Asserts that the original object and the materialized one are equal (may be the same)"
 
@@ -42,7 +42,7 @@ FLSerializationTest >> assertSerializationEqualityOrIdentityOf: anObject [
 	self assert: anObject = materialized description: 'The materialized object should be equal to serialized one'.
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> assertSerializationIdentityOf: anObject [
 	"Asserts that the original object and the materialized one are the same"
 
@@ -59,188 +59,129 @@ FLSerializationTest >> classFactory [
 ]
 
 { #category : #cleaning }
-FLSerializationTest >> deleteFileNamed: aFilename [
-	 FLPlatform current deleteFileNamed: aFilename
+FLSerializationTest >> deleteFilePath: aFilename [
+	 FLPlatform current deleteFilePath: aFilename
 ]
 
-{ #category : #running }
-FLSerializationTest >> materialization [
-	
-	self streamFactory readStreamDo: [:aStream |
-		^ self materializer materializeFrom: aStream ]
+{ #category : #testing }
+FLSerializationTest >> expectedFailures [
+
+	^ FLPlatform current expectedFailuresOf: self class
 ]
 
-{ #category : #running }
-FLSerializationTest >> materializationHeader [
-	
-	self streamFactory readStreamDo: [:aStream |
-		^ self materializer materializeHeaderFrom: aStream ]
-]
-
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> materialized [
-	
-	^ self materialization root
+	^ self materializedObjects root
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> materializedObjects [
-	
-	^ self materialization objects
+	^ self materializer materialize
 ]
 
 { #category : #accessing }
 FLSerializationTest >> materializer [
-	^materializer
+	^ materializer
 ]
 
 { #category : #'class-factory' }
-FLSerializationTest >> newClass [
-	^ self newSubclassOf: Object 
-		instanceVariableNames: '' 
-		classVariableNames: ''
+FLSerializationTest >> newClassOrTrait [
+	^ self classFactory silentlyNewClass
 ]
 
-{ #category : #'class-factory' }
-FLSerializationTest >> newClassInCategory: aCategory [
-	^ self classFactory silentlyNewClassInCategory: aCategory
-]
-
-{ #category : #'class-factory' }
-FLSerializationTest >> newSubclassNamed: nameString of: aClass  instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-	| class |
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		class := self class classInstaller make: [ :aBuilder | 
-			aBuilder 
-				name: nameString;
-				superclass: aClass;
-				slots: ivNamesString asSlotCollection;
-				sharedVariablesFromString: classVarsString ] ].
-	self classFactory createdClasses add: class.
-	^ class
-]
-
-{ #category : #'class-factory' }
-FLSerializationTest >> newSubclassOf: aClass  instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-	^ self classFactory silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames:  classVarsString
-]
-
-{ #category : #'traits-factory' }
-FLSerializationTest >> newTraitSuffixed: suffix [
-	^ self classFactory
-		newTraitNamed: (self traitNamePrefix, suffix) asSymbol
-		uses: Array new 
-		tag: (self classFactory packageName, '-', self classFactory defaultTagPostfix) asSymbol
-]
-
-{ #category : #'traits-factory' }
-FLSerializationTest >> registerBehavior: aBehavior [
-	aBehavior isTrait
-		ifTrue: [ self classFactory createdTraits add: aBehavior ]
-		ifFalse: [ self classFactory createdClasses add: aBehavior ]
-]
-
-{ #category : #cleaning }
-FLSerializationTest >> removeFromSystem: aClassOrTrait [
-	aClassOrTrait removeFromSystem: false
-]
-
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> resultOfSerializeAndMaterialize: anObject [
-
-	self serialize: anObject.
-	^ self materialized
+	^ self
+		serialize: anObject;
+		materialized
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> resultOfSerializeAndMaterializeCompiledMethod: aCompiledMethod [
 	| materialized |
 	materialized := self resultOfSerializeAndMaterialize: aCompiledMethod.
 	self assert: (materialized isEqualRegardlessTrailerTo: aCompiledMethod)
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> resultOfSerializeAndMaterializeMethod: aCompiledMethod [
-	self analyzer considerInternalMethod: aCompiledMethod. 
+	self serializer fullySerializeMethod: aCompiledMethod. 
 	self serialize: aCompiledMethod.
 	^ self materialized
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> resultOfSerializeAndMaterializeMethodDictionary: aMethodDictionary [
 	| materialized |
 	materialized := self resultOfSerializeAndMaterialize: aMethodDictionary.
 	self assert: (materialized isEqualRegardlessMethodsTrailerTo: aMethodDictionary)
 ]
 
-{ #category : #running }
-FLSerializationTest >> serializationOf: anObject [ 
-	self streamFactory writeStreamDo: [:aStream |
-	^ serializer serialize: anObject on: aStream. ].
-]
-
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> serializationOf: anObject includes: anotherObject [ 
-	| serialization |
-	self streamFactory writeStreamDo: [:aStream |
-	serialization := serializer serialize: anObject on: aStream.
-	^ serialization objects includes: anotherObject ].
+	self serialize: anObject.
+	^ self materializedObjects objects includes: anotherObject
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 FLSerializationTest >> serialize: anObject [
-
-	self streamFactory writeStreamDo: [:aStream |
-		self serializer serialize: anObject on: aStream ]
+	self serializer
+		object: anObject;
+		serialize
 ]
 
 { #category : #accessing }
 FLSerializationTest >> serializer [
-	^serializer
+	^ serializer
 ]
 
 { #category : #running }
 FLSerializationTest >> setUp [
 	super setUp.
-	self setUpClassFactory.
-	self setUpSerializer.
-	self setUpMaterializer.
-	"You have several stream strategies available on 'stream-strategies' category."
-	self useFileReferenceStream.
-
-	"When rerunning tests from the test runner #initialize
-	will not be sent to the instance but the previous run will
-	have torn down the variable"
-	testingEnvironment ifNil: [ 
-		testingEnvironment := Smalltalk globals ]
+	
+	self
+		setUpEnvironment;
+		setUpClassFactory;
+		setUpStreamStrategy;
+		setUpSerializer;
+		setUpMaterializer
 ]
 
 { #category : #running }
 FLSerializationTest >> setUpClassFactory [
-	classFactory := FLPlatform current classFactoryForTestCaseClass new
+	classFactory := FLPlatform current classFactoryForTestCaseClass
+		forEnvironment: self environmentOfTest
+]
+
+{ #category : #running }
+FLSerializationTest >> setUpEnvironment [
+	self testingEnvironment: (FLEnvironmentProtectingWrapper on: Smalltalk globals)
 ]
 
 { #category : #running }
 FLSerializationTest >> setUpMaterializer [
-	materializer := FLMaterializer newDefault
+	materializer := FLMaterializerMock new
+		environment: self environmentOfTest;
+		streamFactory: [ streamStrategy readStream ]
+		yourself
 ]
 
 { #category : #running }
 FLSerializationTest >> setUpSerializer [
-	serializer := FLSerializer newDefault
+	serializer := FLSerializerMock new
+		environment: self environmentOfTest;
+		streamFactory: [ streamStrategy writeStream ]
+		yourself
 ]
 
-{ #category : #accessing }
-FLSerializationTest >> streamFactory [
-	^streamFactory
+{ #category : #running }
+FLSerializationTest >> setUpStreamStrategy [
+	streamStrategy := FLFileReferenceStreamStrategy new
 ]
 
 { #category : #running }
 FLSerializationTest >> tearDown [
-	self
-		tearDownClassFactory;
-		tearDownGlobalVariables.
-	self streamFactory tearDown.
+	self tearDownClassFactory.
 	
 	super tearDown
 ]
@@ -248,52 +189,4 @@ FLSerializationTest >> tearDown [
 { #category : #running }
 FLSerializationTest >> tearDownClassFactory [
 	self classFactory cleanUp
-]
-
-{ #category : #running }
-FLSerializationTest >> tearDownGlobalVariables [
-	testingEnvironment
-		removeKey: #FLGlobalVariableForTesting
-		ifAbsent: []
-]
-
-{ #category : #'traits-factory' }
-FLSerializationTest >> traitNamePrefix [
-	^'FLTraitForTesting'
-]
-
-{ #category : #'stream-strategies' }
-FLSerializationTest >> useBinaryFileStream [
-
-	streamFactory := FLBinaryFileStreamStrategy new
-]
-
-{ #category : #'stream-strategies' }
-FLSerializationTest >> useByteArrayStream [ 
-	"This is a special factory to test what we offer with FLSerializer class >> #serializeInMemory:  and  FLMaterializer class >> #materializeFromByteArray: "
-	streamFactory := FLByteArrayStreamStrategy new
-]
-
-{ #category : #'stream-strategies' }
-FLSerializationTest >> useFileReferenceStream [
-
-	streamFactory := FLFileReferenceStreamStrategy new
-]
-
-{ #category : #'stream-strategies' }
-FLSerializationTest >> useGzipInMemoryStream [
-
-	streamFactory := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
-]
-
-{ #category : #'class-factory' }
-FLSerializationTest >> withNotificationsNewClass [
-	^ self classFactory withNotificationsNewClass
-]
-
-{ #category : #'class-factory' }
-FLSerializationTest >> withNotificationsNewClassWithInstanceVariableNames: instanceVariableNames [
-	"Returns a class for testing, with the specified instance variables."
-
-	^ classFactory withNotificationsNewClassWithInstanceVariableNames: instanceVariableNames
 ]

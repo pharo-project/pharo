@@ -54,10 +54,13 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
- 
-	"ideally this list should be empty"	
-	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
+
+	"ideally this list should be empty"
+
+	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
+	     #'Refactoring-Critics' #'Refactoring2-Transformations'
+	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
+	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets' )
 ]
 
 { #category : #'known dependencies' }
@@ -208,8 +211,11 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
-		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core),
-		{ BaselineOfFuelPlatform name }, BaselineOfFuelPlatform allPackageNames,
+		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		{ BaselineOfFuelPlatform name.
+			'Fuel-Platform-Core'.
+			'Fuel-Platform-Pharo-Core'.
+			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
@@ -303,7 +309,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfFuzzyMatcher.
 	BaselineOfZodiac.
 	BaselineOfReflectionMirrors.
-	BaselineOfGeneralHelp.
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.
@@ -373,7 +378,9 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
-	
+
+	self flag: 'TODO: remove next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP.'.
+	dependencies := dependencies copyWithout: #'Zinc-HTTP'.
 	self assert: dependencies isEmpty.
 ]
 
@@ -448,9 +455,11 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		{'Fuel-Platform-Core'.
+			'Fuel-Platform-Pharo-Core'.
+			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
-		BaselineOfFuelPlatform allPackageNames,
 		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
@@ -511,8 +520,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core),
-		BaselineOfFuelPlatform allPackageNames,
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		{ 'Fuel-Platform-Core'.
+			'Fuel-Platform-Pharo-Core'.
+			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
@@ -573,8 +584,10 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core),
-		BaselineOfFuelPlatform allPackageNames,
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		{ 'Fuel-Platform-Core'.
+			'Fuel-Platform-Pharo-Core'.
+			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.

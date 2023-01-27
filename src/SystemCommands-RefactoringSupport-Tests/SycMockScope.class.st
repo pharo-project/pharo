@@ -17,12 +17,21 @@ SycMockScope class >> content: aCollection [
 		yourself
 ]
 
+{ #category : #transform }
+SycMockScope >> asRBEnvironment [
+	^ SycMockEnvironment with: content
+]
+
 { #category : #accessing }
 SycMockScope >> content [
 	^ content
 ]
 
 { #category : #accessing }
-SycMockScope >> content: anObject [
-	content := anObject
+SycMockScope >> content: anArray [
+
+	content := anArray collect: [ :each | 
+		           SycMockObject new
+			           changeClass: each;
+			           yourself ]
 ]

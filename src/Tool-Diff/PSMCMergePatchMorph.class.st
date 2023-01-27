@@ -48,7 +48,7 @@ PSMCMergePatchMorph >> allConflictsMenu [
 		enablementSelector: #hasAnyNonConflictConflicts.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallCancelIcon);
+		icon: (self iconNamed: #smallCancel);
 		keyText: 'Shift+Cmd+x'.
 	^ menu
 ]
@@ -119,7 +119,7 @@ PSMCMergePatchMorph >> changesMenu: m [
 		enablementSelector: #selectionIsNotNil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallCancelIcon);
+		icon: (self iconNamed: #smallCancel);
 		keyText: 'Cmd+x'.
 	menu
 		addToggle: 'All conflicts' translated

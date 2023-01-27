@@ -54,9 +54,8 @@ ImageMorph class >> fromString: aString font: aFont [
 	^ self new form: (StringMorph contents: aString font: aFont) imageForm
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ImageMorph class >> initialize [
-	"ImageMorph initialize"
 
 	| h p d |
 	DefaultForm := (Form extent: 80@40 depth: 16).
@@ -184,7 +183,7 @@ ImageMorph >> form: aForm [
 { #category : #'menu commands' }
 ImageMorph >> grabFromScreen [
 
-	self form: Form fromUser.
+	self form: Screenshot new formScreenshotFromUserSelection.
 ]
 
 { #category : #accessing }

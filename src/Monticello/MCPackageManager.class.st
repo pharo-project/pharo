@@ -109,11 +109,11 @@ MCPackageManager class >> forPackage: aPackage [
 			mgr ]
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 MCPackageManager class >> initialize [
 	"Remove this later"
 
-	self unregisterForNotifications.
+	self unregisterForNotifications
 ]
 
 { #category : #'system changes' }

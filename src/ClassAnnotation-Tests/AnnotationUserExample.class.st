@@ -10,7 +10,7 @@ Class {
 { #category : #initialization }
 AnnotationUserExample >> initialize [
 	super initialize.
-	
+
 	isSimulatedActiveAnnotation := true
 ]
 

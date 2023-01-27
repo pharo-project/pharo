@@ -5,24 +5,24 @@ Class {
 	#name : #FLFileReferenceStreamStrategy,
 	#superclass : #FLStreamStrategy,
 	#instVars : [
-		'reference'
+		'fileReference'
 	],
-	#category : #'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }
 
 { #category : #initialization }
 FLFileReferenceStreamStrategy >> initialize [
 	super initialize.
 	
-	reference := FileSystem memory / 'aFile'
+	fileReference := FileSystem memory / 'aFile'
 ]
 
 { #category : #reading }
-FLFileReferenceStreamStrategy >> readStreamDo: aValuable [
-	^ reference binaryReadStreamDo: [ :stream | aValuable value: stream ]
+FLFileReferenceStreamStrategy >> readStream [
+	^ fileReference binaryReadStream
 ]
 
-{ #category : #writing }
-FLFileReferenceStreamStrategy >> writeStreamDo: aValuable [
-	^ reference binaryWriteStreamDo: [ :stream | aValuable value: stream ]
+{ #category : #reading }
+FLFileReferenceStreamStrategy >> writeStream [
+	^ fileReference binaryWriteStream
 ]

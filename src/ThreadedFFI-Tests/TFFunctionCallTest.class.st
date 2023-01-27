@@ -107,8 +107,6 @@ TFFunctionCallTest >> testVariadicFunctionWithOneFixedAndTwoOptional [
 
 	| fun return buffer aString |
 
-	self skipOnAppleARM.
-
 	fun := TFExternalFunction
 		name: 'sprintf'
 		moduleName: LibC uniqueInstance ffiLibraryName

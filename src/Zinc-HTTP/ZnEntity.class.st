@@ -67,11 +67,6 @@ ZnEntity class >> matches: mimeType [
 ]
 
 { #category : #'instance creation' }
-ZnEntity class >> new [
-	^ super new initialize 
-]
-
-{ #category : #'instance creation' }
 ZnEntity class >> readBinaryFrom: stream usingType: mimeType andLength: length [
 	"Create and return a new buffered entity of mimeType and length from stream.
 	The concrete subclass depends on mimeType, but textual type will remain binary"

@@ -13,10 +13,10 @@ ClyFailedTestMethodsQuery >> buildResult: aQueryResult [
 	failedTests := OrderedCollection new.
 	scope classesDo: [ :each | each isTestCase ifTrue: [
 		(each history at: #failures) do: [ :testSelector |
-			(each lookupSelector: testSelector) ifNotNil: [ :method | 
+			(each lookupSelector: testSelector) ifNotNil: [ :method |
 				failedTests add: method ]].
 		(each history at: #errors) do: [ :testSelector |
-			(each lookupSelector: testSelector) ifNotNil: [ :method | 
+			(each lookupSelector: testSelector) ifNotNil: [ :method |
 				failedTests add: method ]].
 	]].
 	aQueryResult fillWith: failedTests
@@ -25,7 +25,7 @@ ClyFailedTestMethodsQuery >> buildResult: aQueryResult [
 { #category : #execution }
 ClyFailedTestMethodsQuery >> checkEmptyResult [
 
-	scope classesDo: [ :each | 
+	scope classesDo: [ :each |
 		(each isTestCase and: [each isAbstract not
 			and: [ each hasFailedTest or: [ each hasErrorTest ] ]])
 				ifTrue: [ ^false ]].
@@ -36,14 +36,14 @@ ClyFailedTestMethodsQuery >> checkEmptyResult [
 ClyFailedTestMethodsQuery >> decorateItemGroup: methodGroupItem [
 	| property |
 	super decorateItemGroup: methodGroupItem.
-	
+
 	property := 	ClyTestResultProperty new.
 	scope classesDo: [:testCase | | failures errors |
-		(testCase isTestCase and: [testCase isAbstract not]) ifTrue: [ 
+		(testCase isTestCase and: [testCase isAbstract not]) ifTrue: [
 			failures := (testCase history at: #failures) size.
 			errors := (testCase history at: #errors) size.
 			property accumulateFailures: failures andErrors: errors]
-	].	
+	].
 	methodGroupItem addProperty: property
 ]
 
@@ -55,6 +55,6 @@ ClyFailedTestMethodsQuery >> description [
 
 { #category : #testing }
 ClyFailedTestMethodsQuery >> selectsMethod: aMethod [
-	
+
 	^aMethod isTestMethod and: [aMethod isPassedTest not]
 ]

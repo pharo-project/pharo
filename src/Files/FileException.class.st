@@ -16,8 +16,8 @@ FileException class >> fileName: aFileName [
 ]
 
 { #category : #'instance creation' }
-FileException class >> signalOnFile: aFile [ 
-	
+FileException class >> signalOnFile: aFile [
+
 	(self fileName: aFile basename) signal
 ]
 
@@ -39,11 +39,11 @@ FileException >> fileName: aFileName [
 	fileName := aFileName
 ]
 
-{ #category : #exceptiondescription }
+{ #category : #testing }
 FileException >> isResumable [
 	"Determine whether an exception is resumable."
 
-	^true
+	^ true
 ]
 
 { #category : #exceptiondescription }

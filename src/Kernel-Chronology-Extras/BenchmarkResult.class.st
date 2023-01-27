@@ -28,14 +28,14 @@ Class {
 { #category : #accessing }
 BenchmarkResult >> elapsedTime [
 	"Return the duration of the total execution time"
-	
+
 	^ elapsedTime
 ]
 
 { #category : #accessing }
 BenchmarkResult >> elapsedTime: duration [
 	"Set the duration of the total execution time"
-	
+
 	elapsedTime := duration
 ]
 
@@ -49,15 +49,15 @@ BenchmarkResult >> executionsPerSecond [
 { #category : #accessing }
 BenchmarkResult >> frequency [
 	"Return the average number of executions per second"
-	
+
 	^ iterations / elapsedTime totalSeconds
 ]
 
 { #category : #testing }
 BenchmarkResult >> isEmpty [
-	iterations isNil | elapsedTime isNil 
+	iterations isNil | elapsedTime isNil
 		ifTrue: [ ^ true ].
-	iterations isZero | elapsedTime isZero 
+	iterations isZero | elapsedTime isZero
 		ifTrue: [ ^ true ].
 	^ false
 ]
@@ -65,7 +65,7 @@ BenchmarkResult >> isEmpty [
 { #category : #accessing }
 BenchmarkResult >> iterations [
 	"Return the number of iterations that were executed"
-	
+
 	^ iterations
 ]
 
@@ -79,7 +79,7 @@ BenchmarkResult >> iterations: integer [
 { #category : #accessing }
 BenchmarkResult >> period [
 	"Return the average duration of one iteration"
-	
+
 	^ elapsedTime / iterations
 ]
 
@@ -94,9 +94,9 @@ BenchmarkResult >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
 	self isEmpty
-		ifTrue: [ 
+		ifTrue: [
 			stream << ' empty' ]
-		ifFalse: [ 
+		ifFalse: [
 			iterations printWithCommasOn: stream.
 			stream space; << ('iteration' asPluralBasedOn: iterations).
 			stream << ' in '.

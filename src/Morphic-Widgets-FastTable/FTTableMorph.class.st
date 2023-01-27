@@ -131,6 +131,13 @@ FTTableMorph >> allowsDeselection: aBoolean [
 	allowsDeselection := aBoolean
 ]
 
+{ #category : #configuring }
+FTTableMorph >> alternateRowsColor: shouldAlternate [
+	shouldAlternate ifFalse: [ ^ self ].
+	
+	self container alternateRowsColor
+]
+
 { #category : #private }
 FTTableMorph >> announceScrollChangedFrom: oldIndex to: newIndex [
 	"If the index did not change, do nothing"
@@ -258,7 +265,7 @@ FTTableMorph >> dataSource: anObject [
 { #category : #initialization }
 FTTableMorph >> defaultColor [
 
-	^self class defaultBackgroundColor
+	^self class defaultBackgroundColor 
 ]
 
 { #category : #accessing }
@@ -518,16 +525,32 @@ FTTableMorph >> initializeKeyBindings [
 		toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
 	self 
 		bindKeyCombination: Character arrowLeft shift | Character arrowLeft asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowLeft: event ].
+		toAction: [ :target :morph :event |
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorBy: -1 ]
+				ifFalse: [ self keyStrokeArrowLeft: event ]
+		].
 	self 
 		bindKeyCombination: Character arrowRight shift | Character arrowRight asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowRight: event ].
+		toAction: [ :target :morph :event |
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorBy: 1 ]
+				ifFalse: [ self keyStrokeArrowRight: event ]
+		].
 	self 
 		bindKeyCombination: Character home asKeyCombination
-		toAction: [ self selectFirst ].
+		toAction: [
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorToIndex: 0 ]
+				ifFalse: [ self selectFirst ]
+			].
 	self 
 		bindKeyCombination: Character end asKeyCombination
-		toAction: [ self selectLast ].
+		toAction: [
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorToIndex: #last ]
+				ifFalse: [ self selectLast ]
+		].
 	self 
 		bindKeyCombination: self shortcutProvider selectAllShortcut
 		toAction: [ self selectAll ]
@@ -667,14 +690,20 @@ FTTableMorph >> keyStrokeArrowDown: event [
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowLeft: event [
-	(self selectionModeStrategy is: self selectedIndex afterColumn: 1) ifFalse: [ ^ self ].
+	(self selectionModeStrategy is: self selectedIndex afterColumn: 1) ifFalse: [ 
+		self announcer announce: (FTSelectionRejected withDirection: #left).
+		^ self 
+	].
 	self resetFunction.
 	self selectIndex: (self selectionModeStrategy selectableIndexBefore: self selectedIndex) event: event
 ]
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowRight: event [
-	(self selectionModeStrategy is: self selectedIndex beforeColumn: self numberOfColumns) ifFalse: [ ^ self ].
+	(self selectionModeStrategy is: self selectedIndex beforeColumn: self numberOfColumns) ifFalse: [ 
+		self announcer announce: (FTSelectionRejected withDirection: #right).
+		^ self 
+	].
 	self resetFunction.
 	self selectIndex: (self selectionModeStrategy selectableIndexAfter: self selectedIndex) event: event
 ]
@@ -729,10 +758,11 @@ FTTableMorph >> mouseDown: event [
 
 	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint)
 		ifNotNil: [ :index | 
+			"If the cell is selected we let the mouse up toggle to avoid any problem with 
+			 the drag and drop"
 			(self selectedIndexes includes: index)
 				ifFalse: [ self selectIndex: index event: event ]
-				ifTrue: [ needToggleAtMouseUp := true ] "If the cell is selected we let the mouse up toggle to avoid any problem with the drag and drop" ]
-		ifNil: [ ^ self ].
+				ifTrue: [ needToggleAtMouseUp := true ] ].
 
 	self wantsKeyboardFocus ifTrue: [ self takeKeyboardFocus ].
 	event hand waitForClicksOrDrag: self event: event

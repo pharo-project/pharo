@@ -22,7 +22,7 @@ The same except that a color is specified
 example 3
 Allows the presentation of one menu (one column) vith two fixed labels followed by the list of all classes.
 (IdentifierChooserMorph 
-		labels: ({'aaaaaa'. 'bbbbbbb'}, { nil }, (Object allSubclasses collect: [:c | c theNonMetaClass  name]) asSet asArray sort)
+		labels: ({'aaaaaa'. 'bbbbbbb'}, { nil }, (Object allSubclasses collect: [:c | c instanceSide  name]) asSet asArray sort)
 		chooseBlock: [ :chosen | (Smalltalk globals at: chosen asSymbol) ifNotNil: [:c | c browse] ]) 
 			oneMenuOfWidth: 300;
 			baseColor: Color white;

@@ -22,7 +22,7 @@ Year class >> currentYearNumber [
 { #category : #accessing }
 Year class >> daysInYear: yearInteger [
 
-	^ 365 + ((self isLeapYear: yearInteger) ifTrue: [1] ifFalse: [0]).
+	^ 365 + ((self isLeapYear: yearInteger) ifTrue: [1] ifFalse: [0])
 ]
 
 { #category : #accessing }
@@ -35,40 +35,40 @@ Year class >> isLeapYear: aYearInteger [
 		ifFalse: [(aYearInteger + 1) negated].
 
 	"There was no year 0"
-	^ ((adjustedYear \\ 4 ~= 0) or: [(adjustedYear \\ 100 = 0) and: [adjustedYear \\ 400 ~= 0]]) not.
+	^ ((adjustedYear \\ 4 ~= 0) or: [(adjustedYear \\ 100 = 0) and: [adjustedYear \\ 400 ~= 0]]) not
 ]
 
 { #category : #'instance creation' }
-Year class >> starting: aDateAndTime duration: aDuration [ 
+Year class >> starting: aDateAndTime duration: aDuration [
 	"Return a new year, starting from the beginning the year the given DateAndTime is in."
 	| aYear |
 	aYear := aDateAndTime asDateAndTime year.
 
 	^ super
 		starting: (DateAndTime year: aYear month: 1 day: 1 offset: aDateAndTime offset)
-		duration: (Duration days: (self daysInYear: aYear)).
+		duration: (Duration days: (self daysInYear: aYear))
 ]
 
 { #category : #'instance creation' }
 Year class >> year: aYear [
 
-	^ self starting: (DateAndTime year: aYear month: 1 day: 1).
+	^ self starting: (DateAndTime year: aYear month: 1 day: 1)
 ]
 
 { #category : #converting }
-Year >> asYear [ 
+Year >> asYear [
 
 	^ self
 ]
 
 { #category : #accessing }
-Year >> daysInMonth [ 
+Year >> daysInMonth [
 
 	^ Date daysInMonth
 ]
 
 { #category : #accessing }
-Year >> daysInMonth: aMonthNumber [ 
+Year >> daysInMonth: aMonthNumber [
     "Returns the days in month for a given month in the context of the receiver"
 
     ^ (DateAndTime year: self year month: aMonthNumber day:1) asMonth daysInMonth
@@ -77,7 +77,7 @@ Year >> daysInMonth: aMonthNumber [
 { #category : #accessing }
 Year >> daysInYear [
 
-	^ self duration days.
+	^ self duration days
 ]
 
 { #category : #accessing }
@@ -90,7 +90,7 @@ Year >> firstThursday [
 { #category : #changes }
 Year >> previous [
 	"This implementation handles leap years correctly"
-	
+
 	^ self class year: (self year - 1)
 ]
 
@@ -98,8 +98,8 @@ Year >> previous [
 Year >> printOn: aStream [
 
 	aStream nextPutAll: 'a Year ('.
- 	self start year printOn: aStream. 
-	aStream nextPutAll: ')'.
+ 	self start year printOn: aStream.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #private }

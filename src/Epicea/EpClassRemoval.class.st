@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 EpClassRemoval class >> class: aClassRemoved [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeClassRemoved: aClassRemoved;
 		yourself
 ]
@@ -53,5 +53,5 @@ EpClassRemoval >> doesOverride: aCodeChange [
 EpClassRemoval >> initializeClassRemoved: aRemovedClass [
 
 	self initialize.
-	classRemoved := aRemovedClass asEpiceaRingDefinition.
+	classRemoved := aRemovedClass asEpiceaRingDefinition
 ]

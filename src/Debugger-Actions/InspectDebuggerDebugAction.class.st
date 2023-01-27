@@ -23,7 +23,7 @@ InspectDebuggerDebugAction >> defaultOrder [
 ]
 
 { #category : #accessing }
-InspectDebuggerDebugAction >> executeAction [ 
+InspectDebuggerDebugAction >> executeAction [
 	self debugger inspect
 ]
 

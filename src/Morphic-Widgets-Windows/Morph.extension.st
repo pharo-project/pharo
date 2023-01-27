@@ -141,6 +141,12 @@ Morph >> previousMorphWantingFocus [
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
+Morph >> selection [
+	
+	^ nil.
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
 Morph >> shadowMargins [
 	"Answer the margins of my shadow"
 	|left right top bottom deltaX deltaY|

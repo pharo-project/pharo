@@ -21,6 +21,11 @@ BreakpointTest >> newDummyClass [
 			  package: 'DummyPackage' ]
 ]
 
+{ #category : #tests }
+BreakpointTest >> parserClass [
+	^ RBParser
+]
+
 { #category : #running }
 BreakpointTest >> setUp [
 	super setUp.
@@ -54,14 +59,14 @@ BreakpointTest >> testAddRemoveBreakpoint [
 	bp	node: (cls >> #dummy) ast.
 	bp install.
 	"after the breakpoint is installed, the method is different"
-	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	self deny: (cls >> #dummy) bytecodes equals: method bytecodes.
 	
 	self assertCollection: Breakpoint all includesAll: {bp}.
 	bp remove.
 	self assertEmpty: Breakpoint all.
 	
 	"Check that the method is correcty reverted"
-	self assert: (cls >> #dummy) bytecode equals: method bytecode
+	self assert: (cls >> #dummy) bytecodes equals: method bytecodes
 ]
 
 { #category : #tests }
@@ -115,9 +120,9 @@ BreakpointTest >> testBreakLink [
 BreakpointTest >> testBreakLinkOnce [
 	|breakpoint|
 	breakpoint := Breakpoint new.
-	self deny: breakpoint oneShot.
-	breakpoint once.
-	self assert: breakpoint oneShot
+	self deny: (breakpoint once).
+	breakpoint once: true.
+	self assert: (breakpoint once)
 ]
 
 { #category : #tests }
@@ -126,7 +131,7 @@ BreakpointTest >> testBreakOnceInContext [
 	|observer breakpoint|
 	observer := DummyBreakpointObserver new.
 	Breakpoint registerObserver: observer.
-	breakpoint := Breakpoint new once.	
+	breakpoint := Breakpoint new once: true.	
 	self assert: breakpoint isEnabled.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
 	self deny: breakpoint isEnabled.
@@ -158,7 +163,7 @@ BreakpointTest >> testBreakpointNodeProperty [
 	cls compile: 'dummy ^42'.
 	breakpoint := Breakpoint new
 		node: (cls >> #dummy) ast;
-		once.
+		once: true.
 	breakpoint install.
 	self assert: (cls >> #dummy) ast hasBreakpoint.
 	self assertCollection: (cls >> #dummy) ast breakpoints equals: {breakpoint} asSet.
@@ -178,12 +183,24 @@ BreakpointTest >> testDisableEnableBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testMessageSend_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'val msg: arg')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ((ThisContext readVariableNamed: #val) msg: (ThisContext readVariableNamed: #arg))]')
+]
+
+{ #category : #tests }
 BreakpointTest >> testModifyMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
 	Breakpoint new
 		node: (cls >> #dummy) ast;
-		once;
+		once: true;
 		install.
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls compile: 'dummy ^43'.
@@ -265,7 +282,7 @@ BreakpointTest >> testRemoveClassWithBreakpoint [
 	self assertEmpty: Breakpoint all.
 	Breakpoint new
 		node: (cls >> #dummy) ast;
-		once;
+		once: true;
 		install.
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls removeFromSystem.
@@ -278,7 +295,7 @@ BreakpointTest >> testRemoveMethodWithBreakpoint [
 	self assertEmpty: Breakpoint all.
 	Breakpoint new
 		node: (cls >> #dummy) ast;
-		once;
+		once: true;
 		install.
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls removeSelector: #dummy.
@@ -296,6 +313,18 @@ BreakpointTest >> testScopeTo [
 	
 	self assert: bp targetInstance identicalTo: object.
 	self assert: bp isObjectCentric
+]
+
+{ #category : #tests }
+BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'self')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ThisContext receiver ]')
 ]
 
 { #category : #tests }
@@ -318,6 +347,42 @@ BreakpointTest >> testSetAsBreakpointProperty [
 	breakpoint removeFromNodeProperty.
 	breakpoint2 removeFromNodeProperty.
 	self deny: node hasBreakpoint
+]
+
+{ #category : #tests }
+BreakpointTest >> testSimpleCondition_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'true')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: true ]')
+]
+
+{ #category : #tests }
+BreakpointTest >> testSuperSendNoArg_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'super msg')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext receiver perform: #msg withArguments: {} inSuperclass: ThisContext receiver class superclass)]')
+]
+
+{ #category : #tests }
+BreakpointTest >> testSuperSendWithArgs_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'super foo: arg1 bar: arg2')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext receiver perform: #foo:bar: withArguments: {ThisContext readVariableNamed: #arg1. ThisContext readVariableNamed: #arg2.} inSuperclass: ThisContext receiver class superclass)]')
 ]
 
 { #category : #tests }
@@ -365,7 +430,43 @@ BreakpointTest >> testUpdateMethod [
 	"no edit the method"
 	cls compile: 'dummy ^nil'.
 	"after the new method is installed, the method is different"
-	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	self deny: (cls >> #dummy) bytecodes equals: method bytecodes.
 	"and the breakpoint is not registered anymore"
 	self assertEmpty: Breakpoint all
+]
+
+{ #category : #tests }
+BreakpointTest >> testVariableLookup_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'var')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext readVariableNamed: #var)]')
+]
+
+{ #category : #tests }
+BreakpointTest >> testVariableNamedThisContext_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'ThisContext')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext readVariableNamed: #ThisContext)]')
+]
+
+{ #category : #tests }
+BreakpointTest >> testthisContext_conditionBlockProducerMethodAST [
+	self
+		assert:
+			(Breakpoint new
+				conditionBlockProducerMethodAST: 'thisContext')
+		equals:
+			(self parserClass
+				parseMethod:
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ThisContext ]')
 ]

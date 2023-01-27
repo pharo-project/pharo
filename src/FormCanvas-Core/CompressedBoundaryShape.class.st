@@ -52,7 +52,7 @@ CompressedBoundaryShape >> bounds [
 
 { #category : #editing }
 CompressedBoundaryShape >> collectFills: aBlock [
-	fillStyles := fillStyles collect: aBlock.
+	fillStyles := fillStyles collect: aBlock
 ]
 
 { #category : #editing }
@@ -94,7 +94,7 @@ CompressedBoundaryShape >> morphFrom: srcShape to: dstShape at: ratio [
 		pt2 := dstPoints at: i.
 		x := ((pt1 x * unscale) + (pt2 x * scale)) bitShift: -10.
 		y := ((pt1 y * unscale) + (pt2 y * scale)) bitShift: -10.
-		points at: i put: x@y].
+		points at: i put: x@y]
 ]
 
 { #category : #accessing }
@@ -134,7 +134,7 @@ CompressedBoundaryShape >> segmentsDo: aBlock [
 		] ifFalse:[
 			aBlock value: (Bezier2Segment from: p1 via: p2 to: p3).
 		].
-	].
+	]
 ]
 
 { #category : #private }
@@ -144,5 +144,5 @@ CompressedBoundaryShape >> setPoints: pointList leftFills: leftFillList rightFil
 	rightFills := rightFillList.
 	lineWidths := lineWidthList.
 	lineFills := lineFillList.
-	fillStyles := fillStyleList.
+	fillStyles := fillStyleList
 ]

@@ -63,6 +63,18 @@ TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 	aBuilder newClass traitUsers do: [:e | e rebuildMethodDictionary].
 ]
 
+{ #category : #accessing }
+TraitBuilderEnhancer >> allSlotsForBuilder: aBuilder [
+
+	| resultingSlots |
+	
+	resultingSlots := self
+		eliminateDuplicates: aBuilder layoutDefinition slots , aBuilder traitComposition asTraitComposition slotsCopy
+		withSuperclassSlots: (aBuilder superclass ifNil: [#()] ifNotNil:[ :x | x allSlots]).
+
+	^ resultingSlots
+]
+
 { #category : #migrating }
 TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 	aBuilder oldClass ifNil: [ ^ self ].
@@ -114,9 +126,7 @@ TraitBuilderEnhancer >> configureClass: newClass superclass: superclass withLayo
 	| resultingSlots |
 	self validateTraitComposition: self traitComposition ofClass: builder oldClass.
 
-	resultingSlots := self
-		eliminateDuplicates: slots , self traitComposition slotsCopy
-		withSuperclassSlots: (superclass ifNil: [#()] ifNotNil:[ :x | x allSlots]).
+	resultingSlots := self allSlotsForBuilder: builder.
 
 	newClass superclass: superclass withLayoutType: layoutType slots: resultingSlots
 ]

@@ -21,9 +21,9 @@ SycVariableBreakpointCommand class >> isAbstract [
 	^self == SycVariableBreakpointCommand
 ]
 
-{ #category : #execution }
-SycVariableBreakpointCommand >> defaultMenuIconName [ 
-	^ #smallDebug
+{ #category : #accessing }
+SycVariableBreakpointCommand >> defaultMenuIconName [
+	^ #halt
 ]
 
 { #category : #execution }

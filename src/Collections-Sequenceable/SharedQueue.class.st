@@ -40,34 +40,34 @@ SharedQueue >> findFirst: aBlock [
 	"Answer the next object that satisfies aBlock, skipping any intermediate objects.
 	If no such object has been queued, answer <nil> and leave me intact."
 
-	
+
 	^monitor critical: [ | index |
 		index := items findFirst: aBlock.
 		index = 0 ifTrue: [
 			nil ]
 		ifFalse: [
-			items removeAt: index ] ].
+			items removeAt: index ] ]
 ]
 
 { #category : #flushing }
 SharedQueue >> flush [
 	"Remove from the queue all objects"
 	monitor critical: [
-		items := items removeAll].
+		items := items removeAll]
 ]
 
 { #category : #flushing }
 SharedQueue >> flushAllSuchThat: aBlock [
 	"Remove from the queue all objects that satisfy aBlock."
 	monitor critical: [
-		items := items reject: aBlock].
+		items := items reject: aBlock]
 ]
 
 { #category : #initialization }
 SharedQueue >> initialize [
 	super initialize.
 	monitor := Monitor new.
-	items := OrderedCollection new.
+	items := OrderedCollection new
 ]
 
 { #category : #size }
@@ -113,8 +113,8 @@ SharedQueue >> nextPut: anObject [
 
 { #category : #accessing }
 SharedQueue >> peek [
-	"Answer the object that was sent through the receiver first and has not 
-	yet been received by anyone but do not remove it from the receiver. If 
+	"Answer the object that was sent through the receiver first and has not
+	yet been received by anyone but do not remove it from the receiver. If
 	no object has been sent, return nil"
 	^monitor critical: [
 		items isEmpty ifTrue: [ nil ] ifFalse: [ items first ] ]
@@ -130,17 +130,17 @@ SharedQueue >> postCopy [
 
 { #category : #printing }
 SharedQueue >> printOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: self class name;
 		nextPutAll: ' with ';
 		print: items size;
-	 	nextPutAll: ' items'.
+	 	nextPutAll: ' items'
 ]
 
 { #category : #accessing }
 SharedQueue >> removeAll [
        monitor critical: [
-		items removeAll ].
+		items removeAll ]
 ]
 
 { #category : #accessing }

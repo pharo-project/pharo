@@ -35,28 +35,32 @@ FreeTypeExternalMemory class >> new [
 
 { #category : #accessing }
 FreeTypeExternalMemory >> bytes [
-	^bytes
+
+	^ bytes
 ]
 
 { #category : #accessing }
 FreeTypeExternalMemory >> bytes: aByteArray [
+
 	bytes := aByteArray
 ]
 
 { #category : #primitives }
 FreeTypeExternalMemory >> primCopyToExternalMemory: aByteArray [
-	"copy aByteArray into newly allocated, external memory, and store the
+	"Copy aByteArray into newly allocated, external memory, and store the
 	address of that memory in the receiver's handle"
 
 	handle := ExternalAddress allocate: aByteArray size.
 	LibC memCopy: aByteArray to: handle size: aByteArray size.
+	aByteArray unpinInMemory
 ]
 
 { #category : #validation }
 FreeTypeExternalMemory >> validate [
+
 	self isValid ifTrue: [ ^ self ].
 	bytes ifNil: [ ^ self  ].
-	
+
 	self primCopyToExternalMemory: bytes.
 	self autoRelease
 ]

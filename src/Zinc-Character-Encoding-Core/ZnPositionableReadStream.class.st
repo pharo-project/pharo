@@ -104,7 +104,7 @@ ZnPositionableReadStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 8
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnPositionableReadStream >> initialize [
 	super initialize.
 	count := index := delta := 0
@@ -238,6 +238,11 @@ ZnPositionableReadStream >> readInto: collection startingAt: offset count: reque
 		(object := self next) ifNil: [ ^ aCount ].  
 		collection at: offset + aCount put: object ].
 	^ requestedCount
+]
+
+{ #category : #accessing }
+ZnPositionableReadStream >> readStream [
+	^ self
 ]
 
 { #category : #positioning }

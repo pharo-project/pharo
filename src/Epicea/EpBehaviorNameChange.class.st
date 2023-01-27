@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 EpBehaviorNameChange class >> oldName: anOldName newName: aNewName class: aClass [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeOldName: anOldName newName: aNewName class: aClass;
 		yourself
 ]
@@ -48,7 +48,7 @@ EpBehaviorNameChange >> initializeOldName: anOldName newName: aNewName class: aB
 	self initialize.
 	behavior := aBehavior asEpiceaRingDefinition.
 	oldName := anOldName.
-	newName := aNewName.
+	newName := aNewName
 ]
 
 { #category : #accessing }

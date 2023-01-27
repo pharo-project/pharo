@@ -334,7 +334,10 @@ DADependencyTreePresenter >> resetFilter [
 { #category : #saving }
 DADependencyTreePresenter >> saveCurrentRelationGraph [
 	self createDirectoryForSaving.
-	^  FLSerializer serialize: relationGraph toFileNamed: self defaultName. 
+	^  FLSerializer new
+			filePath: self defaultName;
+			object: relationGraph;
+			serialize
 ]
 
 { #category : #accessing }

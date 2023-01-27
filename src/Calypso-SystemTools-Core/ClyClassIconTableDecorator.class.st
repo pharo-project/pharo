@@ -12,13 +12,14 @@ Class {
 
 { #category : #decoration }
 ClyClassIconTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
-	
+
 	| icon |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	    
-   icon := Object environment at: aDataSourceItem name asSymbol
-            ifPresent: [ :aClass | aClass systemIcon ]
-            ifAbsent: [ Object systemIcon ].
+
+   icon := self iconNamed: (Object environment
+		at: aDataSourceItem name asSymbol
+		ifPresent: [ :aClass | aClass systemIconName ]
+		ifAbsent: [ Object systemIconName ]).
 
     anItemCellMorph definitionMorph: icon asMorph
 ]

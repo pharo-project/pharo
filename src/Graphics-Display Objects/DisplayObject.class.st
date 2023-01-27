@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #transforming }
-DisplayObject >> align: alignmentPoint with: relativePoint [ 
-	"Translate the receiver's offset such that alignmentPoint aligns with 
+DisplayObject >> align: alignmentPoint with: relativePoint [
+	"Translate the receiver's offset such that alignmentPoint aligns with
 	relativePoint."
 
 	self offset: (self offset translateBy: relativePoint - alignmentPoint)
@@ -17,7 +17,7 @@ DisplayObject >> align: alignmentPoint with: relativePoint [
 
 { #category : #'accessing - display box' }
 DisplayObject >> boundingBox [
-	"Answer the rectangular area that represents the boundaries of the 
+	"Answer the rectangular area that represents the boundaries of the
 	receiver's space of information."
 
 	^self computeBoundingBox
@@ -31,23 +31,23 @@ DisplayObject >> center [
 
 { #category : #'accessing - display box' }
 DisplayObject >> computeBoundingBox [
-	"Answer the rectangular area that represents the boundaries of the 
-	receiver's area for displaying information. This is the primitive for 
+	"Answer the rectangular area that represents the boundaries of the
+	receiver's area for displaying information. This is the primitive for
 	computing the area if it is not already known."
 
 	self subclassResponsibility
 ]
 
 { #category : #'displaying - display' }
-DisplayObject >> display [ 
+DisplayObject >> display [
 	"Display the receiver on the Display at location 0,0."
 
 	self displayOn: Display
 ]
 
 { #category : #'displaying - generic' }
-DisplayObject >> displayAt: aDisplayPoint [ 
-	"Display the receiver located at aDisplayPoint with default settings for 
+DisplayObject >> displayAt: aDisplayPoint [
+	"Display the receiver located at aDisplayPoint with default settings for
 	the displayMedium, rule and halftone."
 
 	self displayOn: Display
@@ -59,15 +59,15 @@ DisplayObject >> displayAt: aDisplayPoint [
 
 { #category : #'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium [
-	"Simple default display in order to see the receiver in the upper left 
+	"Simple default display in order to see the receiver in the upper left
 	corner of screen."
 
 	self displayOn: aDisplayMedium at: 0 @ 0
 ]
 
 { #category : #'displaying - generic' }
-DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [ 
-	"Display the receiver located at aDisplayPoint with default settings for 
+DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [
+	"Display the receiver located at aDisplayPoint with default settings for
 	rule and halftone."
 
 	self displayOn: aDisplayMedium
@@ -78,9 +78,9 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [
 ]
 
 { #category : #'displaying - generic' }
-DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle [ 
-	"Display the receiver located at aDisplayPoint with default settings for 
-	rule and halftone. Information to be displayed must be confined to the 
+DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle [
+	"Display the receiver located at aDisplayPoint with default settings for
+	rule and halftone. Information to be displayed must be confined to the
 	area that intersects with clipRectangle."
 
 	self displayOn: aDisplayMedium
@@ -92,9 +92,9 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRe
 
 { #category : #'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle rule: ruleInteger fillColor: aForm [
-	"This is the basic display primitive for graphic display objects. Display 
-	the receiver located at aDisplayPoint with rule, ruleInteger, and mask, 
-	aForm. Information to be displayed must be confined to the area that 
+	"This is the basic display primitive for graphic display objects. Display
+	the receiver located at aDisplayPoint with rule, ruleInteger, and mask,
+	aForm. Information to be displayed must be confined to the area that
 	intersects with clipRectangle."
 
 	self subclassResponsibility
@@ -102,7 +102,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRe
 
 { #category : #'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
-	"Display the receiver located at aPoint with default setting for the 
+	"Display the receiver located at aPoint with default setting for the
 	halftone and clippingBox."
 
 	self displayOn: aDisplayMedium
@@ -115,12 +115,12 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
 { #category : #'displaying - generic' }
 DisplayObject >> displayOnPort: port at: location rule: rule [
 
-	port copyForm: self to: location rule: rule.
+	port copyForm: self to: location rule: rule
 ]
 
 { #category : #accessing }
 DisplayObject >> extent [
-	"Answer the point that represents the width and height of the receiver's 
+	"Answer the point that represents the width and height of the receiver's
 	bounding box."
 
 	^self boundingBox extent
@@ -132,7 +132,7 @@ DisplayObject >> follow: locationBlock while: durationBlock [
    continuously without causing flashing. The argument, locationBlock,
    supplies each new location, and the argument, durationBlock, supplies
    true to continue, and then false to stop."
- 
+
    | bitsBehind loc |
 	loc := locationBlock value.
    bitsBehind := Form fromDisplay: (loc extent: self extent).
@@ -184,7 +184,7 @@ DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialB
 
 { #category : #accessing }
 DisplayObject >> height [
-	"Answer the number that represents the height of the receiver's 
+	"Answer the number that represents the height of the receiver's
 	bounding box."
 
 	^self boundingBox height
@@ -198,21 +198,22 @@ DisplayObject >> initialExtent [
 	^ self extent + (4@4)
 ]
 
-{ #category : #'displaying - display' }
+{ #category : #testing }
 DisplayObject >> isTransparent [
+
 	^ false
 ]
 
 { #category : #accessing }
 DisplayObject >> offset [
-	"Answer the amount by which the receiver should be offset when it is 
+	"Answer the amount by which the receiver should be offset when it is
 	displayed or its position is tested."
 
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-DisplayObject >> offset: aPoint [ 
+DisplayObject >> offset: aPoint [
 	"Set the amount by which the receiver's position is offset."
 
 	^self
@@ -220,7 +221,7 @@ DisplayObject >> offset: aPoint [
 
 { #category : #accessing }
 DisplayObject >> relativeRectangle [
-	"Answer a Rectangle whose top left corner is the receiver's offset position 
+	"Answer a Rectangle whose top left corner is the receiver's offset position
 	and whose width and height are the same as the receiver."
 
 	^Rectangle origin: self offset extent: self extent
@@ -234,7 +235,7 @@ DisplayObject >> rounded [
 ]
 
 { #category : #transforming }
-DisplayObject >> scaleBy: aPoint [ 
+DisplayObject >> scaleBy: aPoint [
 	"Scale the receiver's offset by aPoint."
 
 	self offset: (self offset scaleBy: aPoint)
@@ -259,23 +260,23 @@ DisplayObject >> slideFrom: startPoint to: stopPoint nSteps: nSteps delay: milli
 ]
 
 { #category : #'displaying - display' }
-DisplayObject >> slideWithFirstFrom: startPoint to: stopPoint nSteps: nSteps delay: milliSecs [ 
-	"Slide this object across the display over the given number of steps, 
+DisplayObject >> slideWithFirstFrom: startPoint to: stopPoint nSteps: nSteps delay: milliSecs [
+	"Slide this object across the display over the given number of steps,
 	pausing for the given number of milliseconds after each step."
 	"Note: Does display at the first point and at the last."
 	| i p delta |
 	i := 0.
 	delta := stopPoint - startPoint / nSteps asFloat.
 	p := startPoint - delta.
-	^ self 
+	^ self
 		follow: [(p := p + delta) truncated]
-		while: 
+		while:
 			[(Delay forMilliseconds: milliSecs) wait.
 			(i := i + 1) <= nSteps]
 ]
 
 { #category : #transforming }
-DisplayObject >> translateBy: aPoint [ 
+DisplayObject >> translateBy: aPoint [
 	"Translate the receiver's offset."
 
 	self offset: (self offset translateBy: aPoint)
@@ -283,7 +284,7 @@ DisplayObject >> translateBy: aPoint [
 
 { #category : #accessing }
 DisplayObject >> width [
-	"Answer the number that represents the width of the receiver's bounding 
+	"Answer the number that represents the width of the receiver's bounding
 	box."
 
 	^self boundingBox width

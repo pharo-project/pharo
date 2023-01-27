@@ -11,7 +11,7 @@ Class {
 ClyShowOverriddenMethodsCommand >> createInheritanceScopeFrom: classes [
 	| classScope |
 	classScope := ClyClassScope ofAll: classes in: browser navigationEnvironment.
-	
+
 	^classScope asInheritedScope
 ]
 
@@ -21,12 +21,12 @@ ClyShowOverriddenMethodsCommand >> defaultMenuIconName [
 ]
 
 { #category : #accessing }
-ClyShowOverriddenMethodsCommand >> defaultMenuItemName [ 
+ClyShowOverriddenMethodsCommand >> defaultMenuItemName [
 	^'Overridden methods'
 ]
 
 { #category : #execution }
-ClyShowOverriddenMethodsCommand >> selectMethodsIn: aQueryBrowser [ 
+ClyShowOverriddenMethodsCommand >> selectMethodsIn: aQueryBrowser [
 
 	aQueryBrowser selectLastItem
 ]

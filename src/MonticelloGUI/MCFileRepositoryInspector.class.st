@@ -170,7 +170,7 @@ MCFileRepositoryInspector >> packageIcon: aPackage [
 		ifAbsent: [ nil ].
 	p ifNil: [ ^ self iconNamed: #emptyPackageIcon ].
 	^ p isDirty
-		ifFalse: [ self iconNamed: #packageIcon ]
+		ifFalse: [ self iconNamed: #package ]
 		ifTrue: [ self iconNamed: #dirtyPackageIcon ]
 ]
 

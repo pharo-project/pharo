@@ -126,7 +126,7 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 				ifFalse: [  
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.	
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
-		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
+		ifTrue: [ methodBuilder pushLiteral: (CleanBlockClosure compiledBlock: compiledBlock)]
 		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ].
 	].
 	self emitMetaLinkAfterNoEnsure: aBlockNode.
@@ -244,9 +244,25 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 			withVars: aMethodNode scope tempVectorVarNames.
 	].
 	effectTranslator visitNode: aMethodNode body.
-	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
-	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFReifyValueVar; returnTop].
-	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
+	(aMethodNode hasProperty: #wrapperMethod)
+	 ifTrue: [
+		"after links are only active in the wrapper method" 
+		self emitMetaLinkAfterNoEnsure: aMethodNode.
+		"the wrapper has to return the value of the wrapped method"
+		methodBuilder pushTemp: #RFReifyValueVar; returnTop]
+	ifFalse: [
+		aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]].
+]
+
+{ #category : #'visitor - double dispatching' }
+RFASTTranslator >> visitPragmaNode: aPragmaNode [  
+
+	self emitPreamble: aPragmaNode.
+	self emitMetaLinkBefore: aPragmaNode.
+	aPragmaNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aPragmaNode ]
+		ifFalse: [super visitPragmaNode: aPragmaNode  ].
+	self emitMetaLinkAfterNoEnsure: aPragmaNode
 ]
 
 { #category : #'visitor - double dispatching' }

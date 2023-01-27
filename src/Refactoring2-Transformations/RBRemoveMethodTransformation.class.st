@@ -15,7 +15,7 @@ Checks whether there are any references to this method
 Class {
 	#name : #RBRemoveMethodTransformation,
 	#superclass : #RBMethodTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }

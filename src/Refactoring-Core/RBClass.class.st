@@ -83,7 +83,6 @@ RBClass >> allClassVariableNames [
 RBClass >> allPoolDictionaryNames [
 
 	| sprClass |
-
 	sprClass := self superclass.
 	^ sprClass
 		ifNil: [ self sharedPoolNames ]
@@ -303,9 +302,4 @@ RBClass >> sharedPoolNames [
 { #category : #accessing }
 RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
-]
-
-{ #category : #'accessing - deprecated' }
-RBClass >> theNonMetaClass [
-	^ self
 ]

@@ -21,7 +21,7 @@ CDBehaviorDefinitionNode class >> isAbstract [
 
 { #category : #accessing }
 CDBehaviorDefinitionNode >> addSlot: aCDSlotNode [
-	
+
 	slotNodes add: aCDSlotNode.
 	self addChild: aCDSlotNode
 ]
@@ -52,7 +52,7 @@ CDBehaviorDefinitionNode >> className: aName astNode: astNode [
 
 { #category : #accessing }
 CDBehaviorDefinitionNode >> classNameNode [
-	
+
 	^ classNameNode
 ]
 
@@ -76,7 +76,7 @@ CDBehaviorDefinitionNode >> existingClassIfAbsent: aBlock [
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> hasTraitComposition [
-	
+
 	^ traitDefinition isNotNil
 ]
 
@@ -103,7 +103,7 @@ CDBehaviorDefinitionNode >> layoutClass [
 ]
 
 { #category : #accessing }
-CDBehaviorDefinitionNode >> layoutClass: aClass [ 
+CDBehaviorDefinitionNode >> layoutClass: aClass [
 	layoutClass := aClass
 ]
 
@@ -114,7 +114,7 @@ CDBehaviorDefinitionNode >> selector [
 
 { #category : #accessing }
 CDBehaviorDefinitionNode >> slotNodes [
-	
+
 	^ slotNodes
 ]
 
@@ -125,8 +125,8 @@ CDBehaviorDefinitionNode >> slots [
 ]
 
 { #category : #accessing }
-CDBehaviorDefinitionNode >> slots: aCollection [ 
-	
+CDBehaviorDefinitionNode >> slots: aCollection [
+
 	slotNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 ]
@@ -141,5 +141,5 @@ CDBehaviorDefinitionNode >> traitDefinition [
 CDBehaviorDefinitionNode >> traitDefinition: aNode [
 
 	traitDefinition := aNode.
-	self addChild: aNode.
+	self addChild: aNode
 ]

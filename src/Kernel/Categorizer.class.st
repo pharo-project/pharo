@@ -51,13 +51,13 @@ Categorizer class >> allCategory [
 ]
 
 { #category : #'class initialization' }
-Categorizer class >> default [ 
+Categorizer class >> default [
 	^ Default
 ]
 
 { #category : #'instance creation' }
-Categorizer class >> defaultList: aSortedCollection [ 
-	"Answer an instance of me with initial elements from the argument, 
+Categorizer class >> defaultList: aSortedCollection [
+	"Answer an instance of me with initial elements from the argument,
 	aSortedCollection."
 
 	^self new setDefaultList: aSortedCollection
@@ -65,23 +65,23 @@ Categorizer class >> defaultList: aSortedCollection [
 
 { #category : #documentation }
 Categorizer class >> documentation [
-	"Instances consist of an Array of category names (categoryArray), each of 
-	which refers to an Array of elements (elementArray). This association is 
-	made through an Array of stop indices (categoryStops), each of which is 
-	the index in elementArray of the last element (if any) of the 
-	corresponding category. For example: categories := Array with: 'firstCat' 
-	with: 'secondCat' with: 'thirdCat'. stops := Array with: 1 with: 4 with: 4. 
-	elements := Array with: #a with: #b with: #c with: #d. This means that 
-	category firstCat has only #a, secondCat has #b, #c, and #d, and 
-	thirdCat has no elements. This means that stops at: stops size must be the 
+	"Instances consist of an Array of category names (categoryArray), each of
+	which refers to an Array of elements (elementArray). This association is
+	made through an Array of stop indices (categoryStops), each of which is
+	the index in elementArray of the last element (if any) of the
+	corresponding category. For example: categories := Array with: 'firstCat'
+	with: 'secondCat' with: 'thirdCat'. stops := Array with: 1 with: 4 with: 4.
+	elements := Array with: #a with: #b with: #c with: #d. This means that
+	category firstCat has only #a, secondCat has #b, #c, and #d, and
+	thirdCat has no elements. This means that stops at: stops size must be the
 	same as elements size."
 ]
 
 { #category : #'class initialization' }
 Categorizer class >> initialize [
-		
+
 	Default := Protocol unclassified.
-	NullCategory := 'no messages' asSymbol.
+	NullCategory := 'no messages' asSymbol
 ]
 
 { #category : #'class initialization' }
@@ -142,7 +142,7 @@ Categorizer >> assertInvariant [
 ]
 
 { #category : #private }
-Categorizer >> basicRemoveElement: element [ 
+Categorizer >> basicRemoveElement: element [
 	"Remove the selector, element, from all categories."
 	| categoryIndex elementIndex nextStop newElements |
 	categoryIndex := 1.
@@ -151,28 +151,28 @@ Categorizer >> basicRemoveElement: element [
 	"nextStop keeps track of the stops in the new element array"
 	newElements := (Array new: elementArray size) writeStream.
 	[(elementIndex := elementIndex + 1) <= elementArray size]
-		whileTrue: 
+		whileTrue:
 			[[elementIndex > (categoryStops at: categoryIndex)]
-				whileTrue: 
+				whileTrue:
 					[categoryStops at: categoryIndex put: nextStop.
 					categoryIndex := categoryIndex + 1].
 			(elementArray at: elementIndex) = element
-				ifFalse: 
+				ifFalse:
 					[nextStop := nextStop + 1.
 					newElements nextPut: (elementArray at: elementIndex)]].
 	[categoryIndex <= categoryStops size]
-		whileTrue: 
+		whileTrue:
 			[categoryStops at: categoryIndex put: nextStop.
 			categoryIndex := categoryIndex + 1].
 	elementArray := newElements contents.
-	self assertInvariant.
+	self assertInvariant
 ]
 
 { #category : #accessing }
 Categorizer >> categories [
 	"Answer an Array of categories (names)."
 	categoryArray ifNil: [^ nil].
-	(categoryArray size = 1 
+	(categoryArray size = 1
 		and: [categoryArray first = Default & (elementArray isEmpty)])
 		ifTrue: [^Array with: NullCategory].
 	^categoryArray
@@ -180,13 +180,13 @@ Categorizer >> categories [
 
 { #category : #accessing }
 Categorizer >> categories: anArray [
-	"Reorder my categories to be in order of the argument, anArray. If the 
+	"Reorder my categories to be in order of the argument, anArray. If the
 	resulting organization does not include all elements, then give an error."
 
-	| newCategories newStops newElements newElementsSet catName list runningTotal | 
-	
+	| newCategories newStops newElements newElementsSet catName list runningTotal |
+
 	anArray size < 2 ifTrue: [ ^ self ].
-	
+
 	newCategories := Array new: anArray size.
 	newStops := Array new: anArray size.
 	newElements := OrderedCollection new: anArray size.
@@ -212,7 +212,7 @@ Categorizer >> categories: anArray [
 ]
 
 { #category : #queries }
-Categorizer >> categoryOfElement: element [ 
+Categorizer >> categoryOfElement: element [
 	"Answer the category associated with the argument, element."
 
 	| index |
@@ -232,19 +232,19 @@ Categorizer >> changeFromCategorySpecs: categorySpecs [
 	newStops := Array new: categorySpecs size.
 	currentStop := 0.
 	newElements := (Array new: 16) writeStream.
-	1 to: categorySpecs size do: [ :i | 
+	1 to: categorySpecs size do: [ :i |
 		| selectors catSpec |
 		catSpec := categorySpecs at: i.
 		newCategories at: i put: catSpec first asSymbol.
 		selectors := catSpec allButFirst
-			collect: [ :each | 
+			collect: [ :each |
 				each isSymbol
 					ifTrue: [ each ]
 					ifFalse: [ each printString asSymbol ] ].
 		selectors asSortedCollection
-			do: [ :elem | 
+			do: [ :elem |
 				(oldElements remove: elem ifAbsent: [ nil ]) notNil
-					ifTrue: [ 
+					ifTrue: [
 						newElements nextPut: elem.
 						currentStop := currentStop + 1 ] ].
 		newStops at: i put: currentStop ].	"Ignore extra elements but don't lose any existing elements!"
@@ -252,16 +252,16 @@ Categorizer >> changeFromCategorySpecs: categorySpecs [
 	newElements := newElements contents.
 	categoryArray := newCategories.
 	(cc := categoryArray asSet) size = categoryArray size
-		ifFalse: [ 
+		ifFalse: [
 			"has duplicate element"
 			temp := categoryArray asOrderedCollection.
 			temp removeAll: categoryArray asSet.
 			temp
-				do: [ :dup | 
+				do: [ :dup |
 					| tmp ii |
 					tmp := dup.
 					ii := categoryArray indexOf: tmp.
-					[ 
+					[
 					tmp := (tmp , ' #2') asSymbol.
 					cc includes: tmp ] whileTrue.
 					cc add: tmp.
@@ -272,7 +272,7 @@ Categorizer >> changeFromCategorySpecs: categorySpecs [
 ]
 
 { #category : #operations }
-Categorizer >> classify: element under: heading [ 
+Categorizer >> classify: element under: heading [
 	self classify: element under: heading suppressIfDefault: true
 ]
 
@@ -287,7 +287,7 @@ Categorizer >> classify: element under: heading suppressIfDefault: aBoolean [
 	(catName := self categoryOfElement: element) = realHeading
 		ifTrue: [^ self].  "done if already under that category"
 
-	catName ~~ nil ifTrue: 
+	catName ~~ nil ifTrue:
 		[(aBoolean and: [realHeading = Default])
 				ifTrue: [^ self].	  "return if non-Default category already assigned in memory"
 		self basicRemoveElement: element].	"remove if in another category"
@@ -295,11 +295,11 @@ Categorizer >> classify: element under: heading suppressIfDefault: aBoolean [
 	(categoryArray indexOf: realHeading) = 0 ifTrue: [self addCategory: realHeading].
 
 	catIndex := categoryArray indexOf: realHeading.
-	elemIndex := 
+	elemIndex :=
 		catIndex > 1
 			ifTrue: [categoryStops at: catIndex - 1]
 			ifFalse: [0].
-	[(elemIndex := elemIndex + 1) <= (categoryStops at: catIndex) 
+	[(elemIndex := elemIndex + 1) <= (categoryStops at: catIndex)
 		and: [element >= (elementArray at: elemIndex)]] whileTrue.
 
 	"elemIndex is now the index for inserting the element. Do the insertion before it."
@@ -307,13 +307,13 @@ Categorizer >> classify: element under: heading suppressIfDefault: aBoolean [
 						with: (Array with: element).
 
 	"add one to stops for this and later categories"
-	catIndex to: categoryArray size do: 
+	catIndex to: categoryArray size do:
 		[:i | categoryStops at: i put: (categoryStops at: i) + 1].
 
 	((categoryArray includes: Default)
 		and: [(self listAtCategoryNamed: Default) size = 0]) ifTrue: [self removeCategory: Default].
-		
-	self assertInvariant.
+
+	self assertInvariant
 ]
 
 { #category : #operations }
@@ -334,7 +334,7 @@ Categorizer >> elementCategoryDict [
 		firstIndex to: lastIndex do: [:el |
 			dict at: (elementArray at: el) put: (categoryArray at: cat)].
 	].
-	^ dict.
+	^ dict
 ]
 
 { #category : #private }
@@ -342,7 +342,7 @@ Categorizer >> firstIndexOfCategoryNumber: anInteger [
 	anInteger < 1 ifTrue: [^ nil].
 	^ (anInteger > 1
 			ifTrue: [(categoryStops at: anInteger - 1) + 1]
-			ifFalse: [1]).
+			ifFalse: [1])
 ]
 
 { #category : #testing }
@@ -379,7 +379,7 @@ Categorizer >> listAtCategoryNamed: categoryName [
 ]
 
 { #category : #private }
-Categorizer >> listAtCategoryNumber: anInteger [ 
+Categorizer >> listAtCategoryNumber: anInteger [
 	"Answer the array of elements stored at the position indexed by anInteger.  Answer nil if anInteger is larger than the number of categories."
 
 	| firstIndex lastIndex |
@@ -398,36 +398,36 @@ Categorizer >> listAtProtocolNamed: categoryName [
 
 { #category : #private }
 Categorizer >> numberOfCategoryOfElement: element [
-	"Answer the index of the category with which the argument, element, is 
+	"Answer the index of the category with which the argument, element, is
 	associated."
 
 	| indexOfElementInElementArray |
 	indexOfElementInElementArray := elementArray
 		                                identityIndexOf: element asSymbol
 		                                ifAbsent: [ ^ 0 ].
-	^ categoryStops findFirst: [ :stopIndex | 
+	^ categoryStops findFirst: [ :stopIndex |
 		  stopIndex >= indexOfElementInElementArray ]
 ]
 
 { #category : #'queries - protocol' }
 Categorizer >> protocolOfElement: element [
 	"when the receiver is used to sort methods, it is nicer to use the right vocabulary."
-	
+
 	^ self categoryOfElement: element
 ]
 
 { #category : #operations }
-Categorizer >> removeCategory: cat [ 
-	"Remove the category named, cat. Create an error notificiation if the 
+Categorizer >> removeCategory: cat [
+	"Remove the category named, cat. Create an error notificiation if the
 	category has any elements in it."
 
 	| index lastStop |
 	index := categoryArray indexOf: cat ifAbsent: [^self].
-	lastStop := 
+	lastStop :=
 		index = 1
 			ifTrue: [0]
 			ifFalse: [categoryStops at: index - 1].
-	(categoryStops at: index) - lastStop > 0 
+	(categoryStops at: index) - lastStop > 0
 		ifTrue: [^self error: 'cannot remove non-empty category ', cat].
 	categoryArray := categoryArray copyReplaceFrom: index to: index with: Array new.
 	categoryStops := categoryStops copyReplaceFrom: index to: index with: Array new.
@@ -438,7 +438,7 @@ Categorizer >> removeCategory: cat [
 ]
 
 { #category : #operations }
-Categorizer >> removeElement: element [ 
+Categorizer >> removeElement: element [
 	^ self basicRemoveElement: element
 ]
 
@@ -451,9 +451,9 @@ Categorizer >> removeEmptyCategories [
 	keptStops := (Array new: 16) writeStream.
 	currentStop := categoryIndex := 0.
 	[(categoryIndex := categoryIndex + 1) <= categoryArray size]
-		whileTrue: 
+		whileTrue:
 			[(categoryStops at: categoryIndex) > currentStop
-				ifTrue: 
+				ifTrue:
 					[keptCategories nextPut: (categoryArray at: categoryIndex).
 					keptStops nextPut: (currentStop := categoryStops at: categoryIndex)]].
 	categoryArray := keptCategories contents.

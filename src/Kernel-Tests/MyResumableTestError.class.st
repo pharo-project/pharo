@@ -7,8 +7,8 @@ Class {
 	#category : #'Kernel-Tests-Exception'
 }
 
-{ #category : #private }
+{ #category : #'private - testing' }
 MyResumableTestError >> isResumable [
 
-	^true
+	^ true
 ]

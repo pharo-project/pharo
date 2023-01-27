@@ -16,11 +16,11 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #'camp smalltalk' }
+{ #category : #testing }
 ResumableTestFailure >> isResumable [
 	"Of course a ResumableTestFailure is resumable ;-)"
 
-	^true
+	^ true
 ]
 
 { #category : #'camp smalltalk' }

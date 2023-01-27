@@ -11,5 +11,5 @@ Class {
 { #category : #testing }
 OutOfMemory >> isResumable [
 
-	^true
+	^ true
 ]

@@ -138,7 +138,7 @@ ZnMimeType class >> fromString: aString [
 	parameters := SmallDictionary new.
 	parts do: [ :each | 
 		parameters
-			at: (each copyUpTo: $=) trimBoth 
+			at: (each copyUpTo: $=) trimBoth asLowercase
 			put: (each copyAfter: $=) trimBoth ].
 	^ self 
 		main: main
@@ -413,7 +413,8 @@ ZnMimeType >> parameterAt: key [
 
 { #category : #parameters }
 ZnMimeType >> parameterAt: key ifAbsent: block [
-	parameters isNil ifTrue: [ ^ block value ].
+
+	parameters ifNil: [ ^ block value ].
 	^ self parameters at: key ifAbsent: block
 ]
 
@@ -424,7 +425,8 @@ ZnMimeType >> parameterAt: aKey put: aValue [
 
 { #category : #accessing }
 ZnMimeType >> parameters [
-	parameters isNil ifTrue: [ parameters := SmallDictionary new ].
+
+	parameters ifNil: [ parameters := SmallDictionary new ].
 	^ parameters
 ]
 
@@ -445,18 +447,20 @@ ZnMimeType >> printOn: stream [
 		nextPutAll: self main;
 		nextPut: $/;
 		nextPutAll: self sub.
-	parameters isNil ifFalse: [ 
-		parameters keysAndValuesDo: [ :key :value | 
-			stream
-				nextPut: $;;
-				nextPutAll: key;
-				nextPut: $=;
-				nextPutAll: value ] ]
+	parameters ifNotNil: [ 
+		parameters
+				keysAndValuesDo: [ :key :value | 
+					stream
+						nextPut: $;;
+						nextPutAll: key;
+						nextPut: $=;
+						nextPutAll: value ] ]
 ]
 
 { #category : #parameters }
 ZnMimeType >> removeParameter: key [
-	parameters isNil ifTrue: [ ^ self ].
+
+	parameters ifNil: [ ^ self ].
 	^ self parameters removeKey: key ifAbsent: [ nil ]
 ]
 

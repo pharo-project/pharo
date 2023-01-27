@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpExpressionEvaluation class >> expression: anExpression [ 
-	^ self basicNew 
+EpExpressionEvaluation class >> expression: anExpression [
+	^ self basicNew
 		initializeExpression: anExpression;
 		yourself
 ]
@@ -20,7 +20,7 @@ EpExpressionEvaluation class >> expression: anExpression [
 { #category : #comparing }
 EpExpressionEvaluation >> = other [
 
-	^ self class = other class 
+	^ self class = other class
 		and: [ self expression = other expression ]
 ]
 
@@ -46,14 +46,14 @@ EpExpressionEvaluation >> hash [
 EpExpressionEvaluation >> initializeExpression: anExpression [
 
 	self initialize.
-	expression := anExpression.
+	expression := anExpression
 ]
 
 { #category : #printing }
 EpExpressionEvaluation >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		print: self expression;
 		nextPut: $)

@@ -9,7 +9,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnBivalentWriteStream,
-	#superclass : #Stream,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'binary'
@@ -40,9 +40,15 @@ ZnBivalentWriteStream >> flush [
 
 { #category : #private }
 ZnBivalentWriteStream >> isBinary [
-	binary isNil
-		ifTrue: [ [ binary := stream isBinary ] on: MessageNotUnderstood do: [ :err | binary := false ] ].
+
+	binary
+		ifNil: [ binary := [ stream isBinary ] on: MessageNotUnderstood do: [ :err | false ] ].
 	^ binary
+]
+
+{ #category : #testing }
+ZnBivalentWriteStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
@@ -82,13 +88,6 @@ ZnBivalentWriteStream >> nextPutAll: collection [
 { #category : #'initialize-release' }
 ZnBivalentWriteStream >> on: writeStream [
 	stream := writeStream
-]
-
-{ #category : #printing }
-ZnBivalentWriteStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
-		nextPutAll: self class name
 ]
 
 { #category : #accessing }

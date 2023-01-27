@@ -41,13 +41,13 @@ SparseLargeTable class >> new: size chunkSize: chunkSize [
 { #category : #'instance creation' }
 SparseLargeTable class >> new: size chunkSize: chunkSize arrayClass: aClass [
 
-	^self new: size chunkSize: chunkSize arrayClass: Array base: 1.
+	^self new: size chunkSize: chunkSize arrayClass: Array base: 1
 ]
 
 { #category : #'instance creation' }
 SparseLargeTable class >> new: size chunkSize: chunkSize arrayClass: aClass base: b [
 
-	^self new: size chunkSize: chunkSize arrayClass: Array base: 1 defaultValue: nil.
+	^self new: size chunkSize: chunkSize arrayClass: Array base: 1 defaultValue: nil
 ]
 
 { #category : #'instance creation' }
@@ -70,7 +70,7 @@ SparseLargeTable >> allDefaultValueSubtableAt: index [
 	t do: [:e |
 		e ~= defaultValue ifTrue: [^ false].
 	].
-	^ true.
+	^ true
 ]
 
 { #category : #private }
@@ -93,7 +93,7 @@ SparseLargeTable >> analyzeSpaceSaving [
 		strm nextPutAll: tablesTotal printString.
 		strm nextPutAll: ' non-nil: '.
 		strm nextPutAll: nonNilTables printString.
-	].
+	]
 ]
 
 { #category : #accessing }
@@ -106,12 +106,12 @@ SparseLargeTable >> arrayClass [
 SparseLargeTable >> at: index [
 
 	self pvtCheckIndex: index.
-	^self noCheckAt: index.
+	^self noCheckAt: index
 ]
 
 { #category : #accessing }
 SparseLargeTable >> at: index put: value [
-	
+
 	self pvtCheckIndex: index.
 	^self noCheckAt: index put: value
 ]
@@ -119,7 +119,7 @@ SparseLargeTable >> at: index put: value [
 { #category : #accessing }
 SparseLargeTable >> base [
 
-	^ base.
+	^ base
 ]
 
 { #category : #accessing }
@@ -145,9 +145,9 @@ SparseLargeTable >> initChunkSize: aChunkSize size: aSize arrayClass: aClass bas
 	1 to: (self basicSize - 1) do: [ :in | self basicAt: in put: (aClass new: chunkSize withAll: defaultValue) ].
 	lastChunkSize := size \\ chunkSize.
 	lastChunkSize = 0 ifTrue: [lastChunkSize := chunkSize].
-	size = 0 
+	size = 0
 		ifTrue: [self basicAt: 1 put: (aClass new: 0)]
-		ifFalse: [self basicAt: self basicSize put: (aClass new: lastChunkSize withAll: defaultValue)].
+		ifFalse: [self basicAt: self basicSize put: (aClass new: lastChunkSize withAll: defaultValue)]
 ]
 
 { #category : #accessing }
@@ -190,7 +190,7 @@ SparseLargeTable >> printElementsOn: aStream [
 { #category : #printing }
 SparseLargeTable >> printOn: aStream [
 
-	(#(String) includes: self arrayClass name) 
+	(#(String) includes: self arrayClass name)
 		ifTrue: [^self storeOn: aStream].
 	^super printOn: aStream
 ]
@@ -198,23 +198,23 @@ SparseLargeTable >> printOn: aStream [
 { #category : #private }
 SparseLargeTable >> privateSize: s [
 
-	size := s.
+	size := s
 ]
 
 { #category : #private }
-SparseLargeTable >> pvtCheckIndex: index [ 
+SparseLargeTable >> pvtCheckIndex: index [
 
 	index isInteger ifFalse: [self errorNonIntegerIndex].
 	index < 1 ifTrue: [self errorSubscriptBounds: index].
-	index > size ifTrue: [self errorSubscriptBounds: index].
+	index > size ifTrue: [self errorSubscriptBounds: index]
 ]
 
 { #category : #private }
 SparseLargeTable >> similarInstance [
 
 	^self class
-		new: self size 
-		chunkSize: self chunkSize 
+		new: self size
+		chunkSize: self chunkSize
 		arrayClass: self arrayClass
 ]
 
@@ -222,8 +222,8 @@ SparseLargeTable >> similarInstance [
 SparseLargeTable >> similarInstance: newSize [
 
 	^self class
-		new: newSize 
-		chunkSize: self chunkSize 
+		new: newSize
+		chunkSize: self chunkSize
 		arrayClass: self arrayClass
 ]
 
@@ -249,8 +249,8 @@ SparseLargeTable >> size [
 SparseLargeTable >> speciesNew [
 
 	^self species
-		new: self size 
-		chunkSize: self chunkSize 
+		new: self size
+		chunkSize: self chunkSize
 		arrayClass: self arrayClass
 ]
 
@@ -258,8 +258,8 @@ SparseLargeTable >> speciesNew [
 SparseLargeTable >> speciesNew: newSize [
 
 	^self species
-		new: newSize 
-		chunkSize: self chunkSize 
+		new: newSize
+		chunkSize: self chunkSize
 		arrayClass: self arrayClass
 ]
 
@@ -267,7 +267,7 @@ SparseLargeTable >> speciesNew: newSize [
 SparseLargeTable >> storeOn: aStream [
 
 	| x |
-	(#(String) includes: self arrayClass name) ifTrue: 
+	(#(String) includes: self arrayClass name) ifTrue:
 		[aStream nextPut: $'.
 		1 to: self size do:
 			[:i |
@@ -284,5 +284,5 @@ SparseLargeTable >> zapDefaultOnlyEntries [
 
 	1 to: self basicSize do: [:i |
 		(self allDefaultValueSubtableAt: i) ifTrue: [self basicAt: i put: nil].
-	].
+	]
 ]

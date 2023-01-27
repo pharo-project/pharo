@@ -11,8 +11,48 @@ Class {
 		'handler',
 		'wasHandled'
 	],
+	#classVars : [
+		'ALT_KEY_MASK',
+		'CMD_KEY_MASK',
+		'CTRL_KEY_MASK',
+		'SHIFT_KEY_MASK'
+	],
 	#category : #'Morphic-Core-Events'
 }
+
+{ #category : #initialization }
+UserInputEvent class >> altKeyMask [
+
+	^ ALT_KEY_MASK
+]
+
+{ #category : #initialization }
+UserInputEvent class >> cmdKeyMask [
+
+	^ 	CMD_KEY_MASK
+]
+
+{ #category : #initialization }
+UserInputEvent class >> ctrlKeyMask [
+
+	^ CTRL_KEY_MASK
+]
+
+{ #category : #'class initialization' }
+UserInputEvent class >> initialize [
+
+	SHIFT_KEY_MASK := 8.
+	CMD_KEY_MASK := 2r01000000.
+	CTRL_KEY_MASK := 2r00010000.
+	ALT_KEY_MASK := 2r00100000
+]
+
+{ #category : #initialization }
+UserInputEvent class >> shiftKeyMask [
+
+	^ SHIFT_KEY_MASK 
+
+]
 
 { #category : #'modifier state' }
 UserInputEvent >> altKeyPressed [
@@ -26,7 +66,7 @@ UserInputEvent >> altKeyPressed [
 UserInputEvent >> anyModifierKeyPressed [
 	"ignore, however, the shift keys 'cause that's not REALLY a command key "
 
-	^ self buttons anyMask: 2r01110000	"cmd | opt | ctrl"
+	^ self buttons anyMask: CMD_KEY_MASK | ALT_KEY_MASK | CTRL_KEY_MASK
 ]
 
 { #category : #printing }
@@ -52,7 +92,7 @@ UserInputEvent >> commandKeyPressed [
 	"Answer true if the command key on the keyboard was being held down when this event occurred."
 
 	"The mask for command bit pressed"
-	^ buttons anyMask: 2r01000000
+	^ buttons anyMask: CMD_KEY_MASK
 ]
 
 { #category : #'modifier state' }
@@ -60,7 +100,7 @@ UserInputEvent >> controlKeyPressed [
 	"Answer true if the control key on the keyboard was being held down when this event occurred."
 
 	"The mask for control bit pressed"
-	^ buttons anyMask: 2r00010000
+	^ buttons anyMask: CTRL_KEY_MASK
 ]
 
 { #category : #initialize }
@@ -96,7 +136,7 @@ UserInputEvent >> optionKeyPressed [
 	"Answer true if the alt/option key on the keyboard was being held down when this event occurred."
 
 	"00100000 is the bit that marks that option/alt has been pressed"
-	^ buttons anyMask: 2r00100000
+	^ buttons anyMask: ALT_KEY_MASK
 ]
 
 { #category : #accessing }
@@ -120,7 +160,7 @@ UserInputEvent >> setPosition: aPoint [
 UserInputEvent >> shiftPressed [
 	"Answer true if the shift key on the keyboard was being held down when this event occurred."
 
-	^ buttons anyMask: 8
+	^ buttons anyMask: SHIFT_KEY_MASK
 ]
 
 { #category : #transforming }

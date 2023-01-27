@@ -24,6 +24,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #'temp vars' }
+OCExtraBindingScope >> allTemps [
+	^#()
+]
+
 { #category : #accessing }
 OCExtraBindingScope >> bindings [
 	^ bindings

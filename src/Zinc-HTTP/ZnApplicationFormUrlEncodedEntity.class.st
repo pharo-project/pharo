@@ -65,14 +65,16 @@ ZnApplicationFormUrlEncodedEntity >> at: key put: value [
 
 { #category : #private }
 ZnApplicationFormUrlEncodedEntity >> computeRepresentation [
-	representation := String streamContents: [ :stream | self writeRepresentationOn: stream ].
+	representation := ByteArray streamContents: [ :stream | 
+		self writeRepresentationOn: (ZnBivalentWriteStream on: stream) ].
 	contentLength := representation size
 ]
 
 { #category : #accessing }
 ZnApplicationFormUrlEncodedEntity >> contentLength [
-	contentLength isNil ifTrue: [ self computeRepresentation ].
-	^ contentLength 
+
+	contentLength ifNil: [ self computeRepresentation ].
+	^ contentLength
 ]
 
 { #category : #accessing }
@@ -125,20 +127,21 @@ ZnApplicationFormUrlEncodedEntity >> printContentsOn: stream [
 { #category : #'initialize-release' }
 ZnApplicationFormUrlEncodedEntity >> readFrom: stream [
 	"We parse from stream, limited to content length if available."
-	
-	| readStream |
+
+	| rawStream readStream |
 	representation := nil.
-	contentLength isNil
-		ifTrue: [ readStream := ZnCharacterReadStream on: stream encoding: 'ascii' ]
-		ifFalse: [ (readStream := ZnLimitedReadStream on: stream limit: contentLength) ascii ].
+	rawStream := contentLength
+		ifNil: [ stream ]
+		ifNotNil: [ ZnLimitedReadStream on: stream limit: contentLength ].
+	readStream := ZnCharacterReadStream on: rawStream encoding: 'ascii'.
 	fields := ZnResourceMetaUtils parseQueryFrom: readStream
 ]
 
 { #category : #writing }
 ZnApplicationFormUrlEncodedEntity >> writeOn: stream [
 	"In most use cases, contentLength will have been asked first so that a representation is cached"
-	
-	representation isNil ifTrue: [ self computeRepresentation ].
+
+	representation ifNil: [ self computeRepresentation ].
 	ZnUtils nextPutAll: representation on: stream
 ]
 

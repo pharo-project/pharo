@@ -74,14 +74,14 @@ OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
 
 	self
-		traceCr: ('Game controller <1s> removed' expandMacrosWith: index)
+		traceCr: ('Game controller <1s> removed' expandMacrosWith: index asString)
 ]
 
 { #category : #private }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
 
-	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index)
+	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index asString)
 ]
 
 { #category : #'window creation and deletion' }
@@ -132,6 +132,10 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
 		osWindow setJustCreatedHandle: aBackendWindow.
 	].
+
+	"Workaround to https://github.com/pharo-project/pharo/issues/10981"
+	20 milliSeconds wait.
+
 	^ aBackendWindow
 ]
 
@@ -152,10 +156,7 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 
 	anSDLEvent isUserInterrupt
-		ifTrue: [ UserInterruptHandler new handleUserInterrupt ].
-		
-	anSDLEvent isUserInterruptKillAll 
-	 	ifTrue: [ UserInterruptHandler new handleUserInterruptKillAll ].
+		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
 ]
 
 { #category : #accessing }
@@ -230,8 +231,7 @@ OSSDL2Driver >> initialize [
 "		initVideo;
 		initJoystick;
 		initGameController;
-"		initEverything.
-	self setupEventLoop.
+"		initEverything
 ]
 
 { #category : #'window creation and deletion' }
@@ -360,19 +360,24 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 
 { #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
+
 	EventLoopProcess ifNotNil: [ 
-		EventLoopProcess isTerminating ifFalse: [EventLoopProcess terminate. EventLoopProcess := nil] ].
-	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
-		[ self eventLoopProcessWithVMWindow ] 
-		forkAt: Processor lowIOPriority
-	] ifFalse: [ 
-		self class hasPlugin ifTrue: [ 
-			[ self eventLoopProcessWithPlugin ] 
-			forkAt: Processor lowIOPriority ]
+		EventLoopProcess isTerminating ifFalse: [ 
+			EventLoopProcess terminate. 
+			EventLoopProcess := nil ] ].
+	
+	EventLoopProcess := self class isVMDisplayUsingSDL2 
+		ifTrue: [ 
+			[ self eventLoopProcessWithVMWindow ] 
+			forkAt: Processor lowIOPriority ] 
 		ifFalse: [ 
-			[ self eventLoopProcessWithoutPlugin ] 
-			forkAt: Processor lowIOPriority ].
-	].
+			self class hasPlugin 
+				ifTrue: [ 
+					[ self eventLoopProcessWithPlugin ] 
+					forkAt: Processor lowIOPriority ]
+				ifFalse: [ 
+					[ self eventLoopProcessWithoutPlugin ] 
+					forkAt: Processor lowIOPriority ] ].
 
 	EventLoopProcess
 		name: 'SDL2 Event loop';
@@ -380,13 +385,29 @@ OSSDL2Driver >> setupEventLoop [
 ]
 
 { #category : #'system startup' }
-OSSDL2Driver >> shutDown [
+OSSDL2Driver >> shutDown: quitting [
 	"Reset WindowMap and JoystickMap when shuting down (otherwise there will be handlers 
 	 remaining on restart)"
 
-	WindowMap := nil.
-	JoystickMap := nil.
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
+	quitting ifTrue: [ 
+		WindowMap := nil.
+		JoystickMap := nil ].
+
+	self shutdownEventLoop
+]
+
+{ #category : #'events-processing' }
+OSSDL2Driver >> shutdownEventLoop [
+
+	EventLoopProcess ifNil: [ ^ self ].
+	EventLoopProcess terminate.
+	EventLoopProcess := nil
+]
+
+{ #category : #'system startup' }
+OSSDL2Driver >> startUp: resuming [
+
+	self setupEventLoop
 ]
 
 { #category : #'global events' }
@@ -479,7 +500,7 @@ OSSDL2Driver >> visitDropEvent: dropEvent [
 	"The dragged file name comes as a C-string of utf8 encoded bytes.
 	Get the string, and decode it to a string using a utf8 decoder"
 	| fileName |
-	fileName := dropEvent file readString asByteArray utf8Decoded.
+	fileName := dropEvent file utf8StringFromCString.
 	
 	"Free the file handle after it has been read, as specified by SDL2
 	https://wiki.libsdl.org/SDL_DropEvent"

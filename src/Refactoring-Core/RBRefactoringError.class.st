@@ -29,5 +29,6 @@ RBRefactoringError >> actionBlock: aBlock [
 
 { #category : #testing }
 RBRefactoringError >> isResumable [
+
 	^ true
 ]

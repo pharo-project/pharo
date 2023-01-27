@@ -155,7 +155,7 @@ ClyAbstractClassScope >> asScope: aClassScopeClass [
 { #category : #queries }
 ClyAbstractClassScope >> classVariablesDo: aBlock [
 
-	self classesDo: [ :eachClass | 
+	self classesDo: [ :eachClass |
 		self classVariablesOf: eachClass do: aBlock]
 ]
 
@@ -163,7 +163,7 @@ ClyAbstractClassScope >> classVariablesDo: aBlock [
 ClyAbstractClassScope >> classVariablesOf: definingClass do: aBlock [
 	"Class variables are visible from any meta level of declaring class.
 	But we can retrieve them only from instance side of given class"
-	definingClass instanceSide classVariables associationsDo: [:var | 
+	definingClass instanceSide classVariables associationsDo: [:var |
 		aBlock value: (ClyClassVariable on: var definedIn: definingClass instanceSide)]
 ]
 
@@ -176,15 +176,15 @@ ClyAbstractClassScope >> classesDo: aBlock [
 ClyAbstractClassScope >> collectAllClasses [
 	| classes |
 	classes := OrderedCollection new: basisObjects size.
-	
+
 	self classesDo: [ :each | classes add: each ].
-	
+
 	^classes
 ]
 
 { #category : #testing }
 ClyAbstractClassScope >> includesClass: aClass [
-	
+
 	self classesDo: [ :each | each = aClass ifTrue: [^true]].
 	^false
 ]
@@ -192,7 +192,7 @@ ClyAbstractClassScope >> includesClass: aClass [
 { #category : #'system changes' }
 ClyAbstractClassScope >> includesClassesAffectedBy: aSystemAnnouncement [
 
-	self classesDo: [ :each | 
+	self classesDo: [ :each |
 		(aSystemAnnouncement affectsClass: each) ifTrue: [ ^true ]].
 	^false
 ]
@@ -200,7 +200,7 @@ ClyAbstractClassScope >> includesClassesAffectedBy: aSystemAnnouncement [
 { #category : #'system changes' }
 ClyAbstractClassScope >> includesMethodGroupsAffectedBy: aSystemAnnouncement [
 	self
-		methodGroupProvidersDo: [ :each | 
+		methodGroupProvidersDo: [ :each |
 			(each providesGroupsAffectedBy: aSystemAnnouncement inScope: self)
 				ifTrue: [ ^ true ] ].
 	^ false
@@ -209,7 +209,7 @@ ClyAbstractClassScope >> includesMethodGroupsAffectedBy: aSystemAnnouncement [
 { #category : #'system changes' }
 ClyAbstractClassScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 
-	self classesDo: [ :each | 
+	self classesDo: [ :each |
 		(each includesMethodsAffectedBy: aSystemAnnouncement) ifTrue: [ ^true ]].
 	^false
 ]
@@ -217,9 +217,9 @@ ClyAbstractClassScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 { #category : #'system changes' }
 ClyAbstractClassScope >> includesVariablesAffectedBy: aSystemAnnouncement [
 
-	self classesDo: [ :class | 
+	self classesDo: [ :class |
 		(aSystemAnnouncement affectsVariablesOf: class) ifTrue: [^true]].
-	
+
 	^false
 ]
 
@@ -232,7 +232,7 @@ ClyAbstractClassScope >> increasedByClassesFrom: aClassScope [
 { #category : #queries }
 ClyAbstractClassScope >> instanceVariablesDo: aBlock [
 
-	self classesDo: [ :eachClass | 
+	self classesDo: [ :eachClass |
 		self instanceVariablesOf: eachClass do: aBlock]
 ]
 
@@ -242,10 +242,10 @@ ClyAbstractClassScope >> instanceVariablesOf: definingClass do: aBlock [
 	| slots |
 	self metaLevelsOf: definingClass do: [ :concreteMetaLevelClass |
 		"Ugly way to support Pharo7 slots from traits"
-		slots := (concreteMetaLevelClass respondsTo: #localSlots) 
+		slots := (concreteMetaLevelClass respondsTo: #localSlots)
 			ifTrue: [ concreteMetaLevelClass localSlots]
 			ifFalse: [ concreteMetaLevelClass slots ].
-		slots do: [:var | 
+		slots do: [:var |
 			aBlock value: (ClyInstanceVariable on: var definedIn: definingClass) ]]
 ]
 
@@ -256,9 +256,9 @@ ClyAbstractClassScope >> localScopeClass [
 
 { #category : #'meta level' }
 ClyAbstractClassScope >> metaLevelsOf: aClass do: aBlock [
-	"Subclasses should decide what class meta level is visible. 
+	"Subclasses should decide what class meta level is visible.
 	For example it can be instance side, class side or both"
-	
+
 	self subclassResponsibility
 ]
 
@@ -266,7 +266,7 @@ ClyAbstractClassScope >> metaLevelsOf: aClass do: aBlock [
 ClyAbstractClassScope >> methodGroupProvidersDo: aBlock [
 	| providers |
 
-	environment pluginsDo: [ :plugin | 
+	environment pluginsDo: [ :plugin |
 		providers := plugin collectMethodGroupProviders.
 		providers do: aBlock ]
 ]
@@ -275,13 +275,13 @@ ClyAbstractClassScope >> methodGroupProvidersDo: aBlock [
 ClyAbstractClassScope >> methodGroupsDo: aBlock [
 	| dynamicGroups groups |
 	dynamicGroups := OrderedCollection new.
-	
+
 	self methodGroupProvidersDo: [ :groupProvider |
 		groups := groupProvider buildGroupsFrom: self.
 		groupProvider isStatic
 			ifTrue: [ groups do: aBlock ]
 			ifFalse: [ dynamicGroups addAll: groups ]].
-		
+
 	self processDynamicMethodGroups: dynamicGroups by: aBlock
 ]
 
@@ -303,13 +303,13 @@ ClyAbstractClassScope >> processDynamicMethodGroups: dynamicGroups by: aBlock [
 	| activeGroups |
 	activeGroups := OrderedCollection new: dynamicGroups size.
 	self methodsDo: [ :eachMethod |
-		dynamicGroups do: [ :eachGroup | 
-			(eachGroup dependsOnMethod: eachMethod) ifTrue: [ 
+		dynamicGroups do: [ :eachGroup |
+			(eachGroup dependsOnMethod: eachMethod) ifTrue: [
 				aBlock value: eachGroup.
 				activeGroups add: eachGroup]].
 		dynamicGroups removeAll: activeGroups.
 		dynamicGroups ifEmpty: [ ^self ].
-		activeGroups reset].
+		activeGroups reset]
 ]
 
 { #category : #converting }
@@ -325,7 +325,7 @@ ClyAbstractClassScope >> reducedByClassesFrom: aClassScope [
 { #category : #queries }
 ClyAbstractClassScope >> variablesDo: aBlock [
 
-	self classesDo: [ :eachClass | 
+	self classesDo: [ :eachClass |
 		self classVariablesOf: eachClass do: aBlock.
 		self instanceVariablesOf: eachClass do: aBlock]
 ]

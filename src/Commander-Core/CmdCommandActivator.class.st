@@ -58,15 +58,15 @@ CmdCommandActivator class >> createCommand: aCommandClass inContext: aToolContex
 CmdCommandActivator class >> for: aCommandClass inContext: aToolContext using: aCommandActivationStrategy [
 	| command |
 	command := self createCommand: aCommandClass inContext: aToolContext.
-	
-	^self new 
+
+	^self new
 		command: command;
 		context: aToolContext;
 		activationStrategy: aCommandActivationStrategy
 ]
 
 { #category : #testing }
-CmdCommandActivator >> activatesCommand: aCommandClass [ 
+CmdCommandActivator >> activatesCommand: aCommandClass [
 	^activationStrategy annotates: aCommandClass
 ]
 
@@ -127,7 +127,7 @@ CmdCommandActivator >> executeCommand [
 
 	[self prepareCommandForExecution.
 	context executeCommand: command by: self.
-	self applyCommandResult] 
+	self applyCommandResult]
 		on: Exception do: [ :exc | self processCommandFailure: exc ]
 ]
 
@@ -155,7 +155,7 @@ CmdCommandActivator >> menuItemOrder [
 
 { #category : #accessing }
 CmdCommandActivator >> newForCommand: aCommand [
-	
+
 	| copy |
 	copy := self copy.
 	copy command: aCommand.
@@ -170,14 +170,14 @@ CmdCommandActivator >> prepareCommandForExecution [
 { #category : #printing }
 CmdCommandActivator >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	command printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #execution }
 CmdCommandActivator >> processCommandFailure: anException [
-	
+
 	context processFailure: anException of: command
 ]

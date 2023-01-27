@@ -25,10 +25,10 @@ PreDebugResumeDebugAction class >> actionType [
 { #category : #actions }
 PreDebugResumeDebugAction >> executeAction [
 
-	self session 
+	self session
 		resume;
 		clear.
-	self preDebugWindow close.
+	self preDebugWindow close
 ]
 
 { #category : #accessing }
@@ -47,12 +47,12 @@ PreDebugResumeDebugAction >> initialize [
 
 { #category : #accessing }
 PreDebugResumeDebugAction >> preDebugWindow [
-	
+
 	^ preDebugWindow
 ]
 
 { #category : #accessing }
 PreDebugResumeDebugAction >> preDebugWindow: anObject [
-	
+
 	preDebugWindow := anObject
 ]

@@ -202,11 +202,6 @@ MCFileTreeRepository >> fileUtils [
     ^ MCFileTreeFileUtils current
 ]
 
-{ #category : #accessing }
-MCFileTreeRepository >> filterFileNames: aCollection forVersionNamed: aString [
-	^ aCollection select: [:ea | (self versionNameFromFileName: ea) = aString]
-]
-
 { #category : #private }
 MCFileTreeRepository >> flushCache [
   "force properties to be reread ... if the directory exists, otherwise let nature

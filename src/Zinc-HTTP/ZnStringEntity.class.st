@@ -71,13 +71,15 @@ ZnStringEntity >> = other [
 
 { #category : #private }
 ZnStringEntity >> computeContentLength [
-	self string isNil ifTrue: [ ^ self ].
+
+	self string ifNil: [ ^ self ].
 	contentLength := self encoder encodedByteCountForString: string
 ]
 
 { #category : #accessing }
 ZnStringEntity >> contentLength [
-	contentLength isNil ifTrue: [ self computeContentLength ].
+
+	contentLength ifNil: [ self computeContentLength ].
 	^ contentLength
 ]
 
@@ -128,14 +130,14 @@ ZnStringEntity >> initializeEncoder [
 	"If the content-type specifies an encoding, use that.
 	If not, use the value of ZnDefaultCharacterEncoder,
 	if that is not set, fall back to UTF-8"
-	
+
 	| charSet newEncoder |
 	self hasEncoder
 		ifTrue: [ ^ self ].
-	newEncoder := (charSet := contentType charSet) isNil
-		ifTrue: [ ZnDefaultCharacterEncoder value ]
-		ifFalse: [ 
-			(ZnCharacterEncoder newForEncoding: charSet)
+	newEncoder := ( charSet := contentType charSet )
+		ifNil: [ ZnDefaultCharacterEncoder value ]
+		ifNotNil: [ 
+			( ZnCharacterEncoder newForEncoding: charSet )
 				beLenient;
 				yourself ].
 	self encoder: newEncoder
@@ -183,7 +185,7 @@ ZnStringEntity >> readFrom: stream [
 						stringStream on: wideString; setFrom: position + 1 to: position ].
 					notification resume ].
 		totalRead := totalRead + read.
-		totalRead > ZnMaximumEntitySize value
+		totalRead > (ZnCurrentOptions at: #maximumEntitySize)
 			ifTrue: [ ZnEntityTooLarge signal ].
 		stringStream ifNil: [ 
 			readStream atEnd
