@@ -15,7 +15,7 @@ BoxedFloat64 >> arcTan [
 	theta := (self * Halfpi) / (self + 1.0).
 
 	"iterate"
-	eps := Halfpi * Epsilon.
+	eps := Halfpi * MathApproximationEpsilon.
 	step := theta.
 	[(step * step) > eps] whileTrue: [
 		sinTheta := theta sin.
@@ -44,7 +44,7 @@ BoxedFloat64 >> sin [
 	sum := delta := self.
 	self2 := 0.0 - (self * self).
 	i := 2.0.
-	[delta > Epsilon] whileTrue: [
+	[delta > MathApproximationEpsilon] whileTrue: [
 		"once"
 		delta := (delta * self2) / (i * (i + 1.0)).
 		i := i + 2.0.
@@ -72,7 +72,7 @@ BoxedFloat64 >> sqrt [
 	exp := self exponent // 2.
 	guess := self timesTwoPower: 0 - exp.
 	"get eps value"
-	eps := guess * Epsilon.
+	eps := guess * MathApproximationEpsilon.
 	eps := eps * eps.
 	delta := (self - (guess * guess)) / (guess * 2.0).
 	[ delta * delta > eps ]

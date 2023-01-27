@@ -118,7 +118,7 @@ Float >> asIEEE64BitWord [
 Float >> closeTo: num [
  	"Tell whether the receiver and arguments are close from each."
 	
-	^ self closeTo: num precision: 0.0001
+	^ self closeTo: num precision: DefaultComparisonPrecision
 ]
 
 { #category : #'*Math-Operations-Extensions' }
