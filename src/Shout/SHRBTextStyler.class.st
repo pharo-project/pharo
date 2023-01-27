@@ -14,8 +14,7 @@ Class {
 		'font',
 		'isForWorkspace',
 		'pixelHeight',
-		'workspace',
-		'plugins'
+		'workspace'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -1025,12 +1024,6 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
 { #category : #private }
 SHRBTextStyler >> pixelHeight [
 	^ pixelHeight ifNil: [ pixelHeight := (font ifNil: [ TextStyle defaultFont ]) pixelSize ]
-]
-
-{ #category : #private }
-SHRBTextStyler >> plugins [
-
-	^ plugins ifNil: [ plugins := OrderedCollection new ]
 ]
 
 { #category : #private }
