@@ -17,16 +17,16 @@ ReUsesTrueRule class >> checksMethod [
 { #category : #accessing }
 ReUsesTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'UsesTrueRule'
 ]
 
 { #category : #running }
 ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemUsages |
-	problemUsages := aMethod ast variableNodes select: [ :aNode | 
+	problemUsages := aMethod ast variableNodes select: [ :aNode |
 			                 aNode isGlobalVariable and: [ #( True False ) includes: aNode name ] ].
-	problemUsages do: [ :ref | 
+	problemUsages do: [ :ref |
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
 ]
 

@@ -56,12 +56,12 @@ FT2Error >> errorString: aString [
 { #category : #accessing }
 FT2Error >> messageText [
 
-	^ String streamContents: [ :strm | 
-		  messageText ifNotNil: [ 
+	^ String streamContents: [ :strm |
+		  messageText ifNotNil: [
 			  strm
 				  nextPutAll: messageText;
 				  space ].
-		  self errorCode isZero ifFalse: [ 
+		  self errorCode isZero ifFalse: [
 			  strm
 				  nextPutAll: '[error ';
 				  print: self errorCode;

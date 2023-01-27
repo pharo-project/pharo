@@ -12,14 +12,14 @@ Class {
 
 { #category : #coverage }
 UndefinedObjectTest >> classToBeTested [
-	
+
 	^ UndefinedObject
 ]
 
 { #category : #'tests - class methods' }
 UndefinedObjectTest >> testAllInstances [
 	self assert: UndefinedObject allInstances size = 1 description: 'There should be a single instance of UndefinedObject'.
-	self assert: (UndefinedObject allInstances includes: nil) description: 'nil should be an instance of UndefinedObject'.
+	self assert: (UndefinedObject allInstances includes: nil) description: 'nil should be an instance of UndefinedObject'
 ]
 
 { #category : #'tests - copying' }
@@ -43,14 +43,14 @@ UndefinedObjectTest >> testIfNilIfNotNil [
 UndefinedObjectTest >> testIfNotNil [
 
 	nil ifNotNil: [
-		self fail: 'should not get here' ].
+		self fail: 'should not get here' ]
 ]
 
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testIfNotNilDo [
 
 	nil ifNotNil: [
-		self fail: 'should not get here' ].
+		self fail: 'should not get here' ]
 ]
 
 { #category : #'tests - testing' }
@@ -62,31 +62,31 @@ UndefinedObjectTest >> testIfNotNilIfNil [
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testIsEmptyOrNil [
 
-	self assert: (nil isEmptyOrNil).
+	self assert: (nil isEmptyOrNil)
 ]
 
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testIsLiteral [
 
-	self assert: (nil isLiteral).
+	self assert: (nil isLiteral)
 ]
 
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testIsNil [
 
-	self assert: (nil isNil).
+	self assert: (nil isNil)
 ]
 
 { #category : #'tests - class methods' }
 UndefinedObjectTest >> testNew [
 
-	self should: [ UndefinedObject new] raise: Error.
+	self should: [ UndefinedObject new] raise: Error
 ]
 
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testNotNil [
 
-	self deny: (nil notNil).
+	self deny: (nil notNil)
 ]
 
 { #category : #'tests - printing' }

@@ -54,7 +54,7 @@ DTTestCoverageResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				<< (percent*100 printShowingDecimalPlaces: 2);
 				<< ' % Code Coverage';

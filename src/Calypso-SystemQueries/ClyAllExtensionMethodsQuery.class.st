@@ -15,7 +15,7 @@ ClyAllExtensionMethodsQuery >> description [
 
 { #category : #'system changes' }
 ClyAllExtensionMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^aSystemAnnouncement affectsClassExtension
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]

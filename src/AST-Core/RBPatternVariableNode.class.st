@@ -31,14 +31,14 @@ Class {
 
 { #category : #'instance creation' }
 RBPatternVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
-	^anIdentifierName isPatternVariable 
+	^anIdentifierName isPatternVariable
 		ifTrue: [super identifierNamed: anIdentifierName at: aPosition]
 		ifFalse: [RBVariableNode identifierNamed: anIdentifierName at: aPosition]
 ]
 
 { #category : #verification }
 RBPatternVariableNode >> compare: anObject with: aNode [
-	^ anObject isCollection  
+	^ anObject isCollection
 		ifTrue: [ anObject anySatisfy: [ :e | e = aNode ] ]
 		ifFalse: [ anObject = aNode ]
 ]
@@ -56,20 +56,20 @@ RBPatternVariableNode >> initializePatternVariables [
 	myname := self name.
 	isAnything := isList := isLiteral := isStatement := recurseInto := false.
 	2 to: myname size
-		do: 
-			[:i | 
+		do:
+			[:i |
 			| character |
 			character := myname at: i.
-			character == self listCharacter 
+			character == self listCharacter
 				ifTrue: [isAnything := isList := true]
-				ifFalse: 
-					[character == self literalCharacter 
+				ifFalse:
+					[character == self literalCharacter
 						ifTrue: [isLiteral := true]
-						ifFalse: 
-							[character == self statementCharacter 
+						ifFalse:
+							[character == self statementCharacter
 								ifTrue: [isStatement := true]
-								ifFalse: 
-									[character == self recurseIntoCharacter 
+								ifFalse:
+									[character == self recurseIntoCharacter
 										ifTrue: [recurseInto := true]
 										ifFalse: [^self]]]]]
 ]
@@ -101,10 +101,10 @@ RBPatternVariableNode >> isStatement [
 
 { #category : #matching }
 RBPatternVariableNode >> match: aNode inContext: aDictionary [
-	self isAnything 
+	self isAnything
 		ifTrue: [^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode].
 	self isLiteralNode ifTrue: [^self matchLiteral: aNode inContext: aDictionary].
-	self isStatement 
+	self isStatement
 		ifTrue: [^self matchStatement: aNode inContext: aDictionary].
 	(aNode isKindOf: self matchingClass) ifFalse: [^false].
 	^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode
@@ -136,16 +136,16 @@ RBPatternVariableNode >> named: aName start: aPosition [
 ]
 
 { #category : #accessing }
-RBPatternVariableNode >> parent: aBRProgramNode [ 
+RBPatternVariableNode >> parent: aBRProgramNode [
 	"Fix the case where '``@node' should match a single node, not a sequence node."
 
 	super parent: aBRProgramNode.
 	parent isDynamicArray
 		ifTrue: [ self isStatement
 				ifFalse: [ isList := false ] ].
-	parent isSequence 
-		ifTrue: 
-			[(self isStatement or: [parent temporaries includes: self]) 
+	parent isSequence
+		ifTrue:
+			[(self isStatement or: [parent temporaries includes: self])
 				ifFalse: [isList := false]]
 ]
 

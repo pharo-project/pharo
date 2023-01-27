@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #accessing }
-UnresolvedVariable class >> instance [ 
+UnresolvedVariable class >> instance [
 	^instance ifNil: [ instance := self new ]
 ]
 

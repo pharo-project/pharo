@@ -18,7 +18,7 @@ ClassOrganization >> putCommentOnFile: aFileStream forClass: aClass [
 	self classComment isEmptyOrNil ifTrue:[ ^ self ].
 
 	aFileStream cr; nextPut: $!.
-	header := String streamContents: [:strm | 
+	header := String streamContents: [:strm |
 			strm nextPutAll: aClass name;
 			nextPutAll: ' commentStamp: '.
 			self commentStamp storeOn: strm.

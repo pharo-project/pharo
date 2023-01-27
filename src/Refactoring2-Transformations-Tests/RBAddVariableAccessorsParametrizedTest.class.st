@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBCreateAccessorsForVariableRefactoring };
+		addCase: { #rbClass -> RBCreateAccessorsForVariableTransformation };
 		addCase: { #rbClass -> RBAddVariableAccessorTransformation };
 		yourself
 ]

@@ -29,7 +29,7 @@ DiskFileSystemTest >> testEntriesHaveAttributes [
 	"Ensure that we are actually checking entries"
 	self assert: entries isNotEmpty.
 	"We can't use the accessor method to get the statAttributes since does lazy initialization"
-	self assert: (entries select: [ :each | (each instVarNamed: 'statAttributes') isNil ]) isEmpty.
+	self assert: (entries select: [ :each | (each instVarNamed: 'statAttributes') isNil ]) isEmpty
 ]
 
 { #category : #tests }
@@ -46,7 +46,7 @@ DiskFileSystemTest >> testIsDirectory [
 
 { #category : #tests }
 DiskFileSystemTest >> testIsDiskFileSystem [
-	self assert: filesystem isDiskFileSystem.
+	self assert: filesystem isDiskFileSystem
 ]
 
 { #category : #tests }
@@ -84,14 +84,14 @@ DiskFileSystemTest >> testMoveMemoryToDisk [
 		out := old writeStream.
 		testString := 'To be moved to disk'.
 		[ out nextPutAll: testString ] ensure: [ out close ].
-		
+
 		new := FileLocator imageDirectory / 'testMoveMemoryToDisk_new'.
 		old moveTo: new.
-		
+
 		self deny: (memfs / 'testMoveMemoryToDisk_old') exists.
 		self assert: new exists.
 		self assert: new contents equals: testString.
-	] ensure: [ 
+	] ensure: [
 		old ensureDelete.
 		new ensureDelete.
 	]

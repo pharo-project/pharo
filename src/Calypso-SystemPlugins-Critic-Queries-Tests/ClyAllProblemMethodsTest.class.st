@@ -15,7 +15,7 @@ ClyAllProblemMethodsTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClassWithProblemMethods >> #methodWithHalt) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query := self createQuery.
 	query scope: (ClyMethodScope
 		of: (ClyClassWithProblemMethods >> #methodWithoutCritiques) in: environment).
@@ -24,9 +24,9 @@ ClyAllProblemMethodsTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyAllProblemMethodsTest >> testExecution [
-	
+
 	self executeQuery.
-	
+
 	self assert: foundSelectors equals: #(methodWithHalt methodWithHalt2)
 ]
 

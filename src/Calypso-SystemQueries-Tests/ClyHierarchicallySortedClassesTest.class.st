@@ -47,9 +47,9 @@ ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSimilarInverse
 
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testFillingWithClassAndItGrandSuperclass [
-	
+
 	queryResult fillWith: { ClyClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock }.
-	
+
 	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1}
 ]
 
@@ -59,7 +59,7 @@ ClyHierarchicallySortedClassesTest >> testFillingWithClassesFromOneHierarchy [
 	queryResult fillWith: { ClySubclassN1OfClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock. ClyClass1FromP1Mock. ClySubclassN2OfClass1FromP1Mock }.
 
 	self assertItems: {
-		ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1. 
+		ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1.
 		ClySubclassN1OfClass1FromP1Mock. 1. ClySubclassN2OfClass1FromP1Mock. 1 }
 ]
 
@@ -67,7 +67,7 @@ ClyHierarchicallySortedClassesTest >> testFillingWithClassesFromOneHierarchy [
 ClyHierarchicallySortedClassesTest >> testFillingWithObjectAndTwoProtoObjects [
 
 	queryResult fillWith: { Object. ProtoObject. ProtoObject }.
-	
+
 	self assertItems: {ProtoObject. 0. Object. 1}
 ]
 

@@ -29,15 +29,15 @@ ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 			entity: aClass
 			string: aVarName)
 		by: self.
-	
-	crit	
+
+	crit
 		tinyHint: aVarName;
 		refactoring: (
 			RBRenameInstanceVariableRefactoring
 				rename: aVarName
 				to: aVarName uncapitalized
 				in: aClass).
-				
+
 	^ crit
 ]
 

@@ -6,9 +6,9 @@ CommandLineUIManager >> syntaxErrorNotificationDefaultAction: aSyntaxErrorNotifi
 	Smalltalk logDuring: [ :logger |
 		logger print: aSyntaxErrorNotification; cr.
 		aSyntaxErrorNotification signalerContext errorReportOn: logger ].
-	
+
 	STCommandLineHandler printCompilerWarning: aSyntaxErrorNotification.
-			
+
 	"in noninteractive mode simply quit"
 	^ self exitFailure
 ]

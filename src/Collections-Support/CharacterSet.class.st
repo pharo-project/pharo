@@ -81,7 +81,7 @@ CharacterSet >> = anObject [
 { #category : #adding }
 CharacterSet >> add: aCharacter [
 	"I automatically become a WideCharacterSet if you add a wide character to myself"
-	
+
 	aCharacter asciiValue >= 256
 		ifTrue: [| wide |
 			wide := WideCharacterSet new.
@@ -97,10 +97,10 @@ CharacterSet >> add: aCharacter [
 CharacterSet >> asString [
 	"Convert the receiver into a String"
 
-	^String 
-		new: self size 
-		streamContents: 
-			[ :s | self do: [ :ch | s nextPut: ch]].
+	^String
+		new: self size
+		streamContents:
+			[ :s | self do: [ :ch | s nextPut: ch]]
 ]
 
 { #category : #private }
@@ -112,7 +112,7 @@ CharacterSet >> byteArrayMap [
 { #category : #converting }
 CharacterSet >> byteComplement [
 	"return a character set containing precisely the single byte characters the receiver does not"
-	
+
 	| set |
 	set := self class allByteCharacters.
 	self do: [ :c | set remove: c ].
@@ -122,7 +122,7 @@ CharacterSet >> byteComplement [
 { #category : #converting }
 CharacterSet >> complement [
 	"return a character set containing precisely the characters the receiver does not"
-	
+
 	^CharacterSetComplement of: self copy
 ]
 
@@ -164,7 +164,7 @@ CharacterSet >> includes: aCharacter [
 { #category : #initialization }
 CharacterSet >> initialize [
 	super initialize.
-	map := ByteArray new: 256 withAll: 0.
+	map := ByteArray new: 256 withAll: 0
 ]
 
 { #category : #copying }
@@ -201,7 +201,7 @@ CharacterSet >> size [
 { #category : #private }
 CharacterSet >> wideCharacterMap [
 	"used for comparing with WideCharacterSet"
-	
+
 	| wide |
 	wide := WideCharacterSet new.
 	wide addAll: self.

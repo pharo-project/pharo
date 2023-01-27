@@ -27,7 +27,7 @@ ClyMainTableColumn >> createCellFor: aDataSourceItem in: aQueryView [
 ]
 
 { #category : #testing }
-ClyMainTableColumn >> isMainColumn [ 
+ClyMainTableColumn >> isMainColumn [
 
 	^ true
 ]

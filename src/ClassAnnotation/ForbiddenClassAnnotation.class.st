@@ -27,6 +27,6 @@ ForbiddenClassAnnotation >> isForbidden [
 { #category : #printing }
 ForbiddenClassAnnotation >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	self printDeclarationOn: aStream
 ]

@@ -167,7 +167,6 @@ SessionManager class >> initializedSessionManager [
 		registerGuiClassNamed: #Color; "GUI"
 		registerGuiClassNamed: #FreeTypeCache; "GUI"
 		registerGuiClassNamed: #LogicalFont; "GUI"
-		registerGuiClassNamed: #FT2Handle; "GUI"
 		registerGuiClassNamed: #FreeTypeSettings; "GUI"
 		registerGuiClassNamed: #WorldMorph atPriority: 110; "GUI"
 		"It Should run at the end of everything to correctly handle the errors"

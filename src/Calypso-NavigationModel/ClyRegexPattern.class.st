@@ -12,7 +12,7 @@ ClyRegexPattern >> createFixedRegexMatcherIfFailed: errorBlock [
 
 	| fixedPattern |
 	fixedPattern := value copyReplaceAll: '*' with: '.*' .
-	
+
 	^ [ fixedPattern asRegexIgnoringCase ]
 		on: RegexSyntaxError
 		do: [ :ex | errorBlock value ]
@@ -22,7 +22,7 @@ ClyRegexPattern >> createFixedRegexMatcherIfFailed: errorBlock [
 ClyRegexPattern >> createRegexMatcherIfFailed: errorBlock [
 
 	value trimBoth ifEmpty: [^errorBlock value].
-	
+
 	^ [ value asRegexIgnoringCase ]
 		on: RegexSyntaxError
 		do: [ :ex | ^self createFixedRegexMatcherIfFailed: errorBlock ]
@@ -32,6 +32,6 @@ ClyRegexPattern >> createRegexMatcherIfFailed: errorBlock [
 ClyRegexPattern >> matches: aString [
 	| matcher |
 	matcher := self createRegexMatcherIfFailed: [^true].
-	
+
 	^matcher search: aString
 ]

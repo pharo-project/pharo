@@ -15,7 +15,7 @@ RGPackage >> calypsoEnvironmentType [
 RGPackage >> classTags [
 
 	self isRingResolved not ifTrue: [ ^ '' ].
-	
+
 	 ^ self classes collect: [:aClass | (aClass category ifNil: [ '' ]) withoutPrefix: (self name, '-')] as: Set
 ]
 
@@ -34,7 +34,7 @@ RGPackage >> extendedClassNames [
 { #category : #'*Calypso-Ring' }
 RGPackage >> extendsClass: aClass [
 
-	^ self extendedClasses includes: aClass.
+	^ self extendedClasses includes: aClass
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -45,7 +45,7 @@ RGPackage >> extensionSelectorsForClass: aClass [
 
 { #category : #'*Calypso-Ring' }
 RGPackage >> importClasses: classCollection [
-	classCollection do: [ :each | 
+	classCollection do: [ :each |
 		each package: self. ]
 ]
 
@@ -83,7 +83,7 @@ RGPackage >> packageName [
 { #category : #'*Calypso-Ring' }
 RGPackage >> removeFromSystem [
 
-	self environment removePackage: self.
+	self environment removePackage: self
 ]
 
 { #category : #'*Calypso-Ring' }

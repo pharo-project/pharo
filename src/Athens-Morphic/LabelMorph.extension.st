@@ -7,15 +7,15 @@ LabelMorph >> drawOnAthensCanvas: aCanvas [
 	| pc |
 	pc := self owner
 		ifNil: [ self paneColor ]
-		ifNotNil: [ 
+		ifNotNil: [
 			self owner color isTransparent
 				ifTrue: [ self owner paneColor ]
 				ifFalse: [ self owner color ] ].
 	aCanvas
 		clipBy: self bounds
-		during: [ 
+		during: [
 			aCanvas pathTransform
-				restoreAfter: [ 
+				restoreAfter: [
 					aCanvas pathTransform translateX: self left Y: self top + self fontToUse ascent.
 					aCanvas
 						setFont: self fontToUse;

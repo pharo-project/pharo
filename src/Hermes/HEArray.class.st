@@ -19,7 +19,7 @@ Class {
 
 { #category : #accessing }
 HEArray class >> tag [
-	^ 2.
+	^ 2
 ]
 
 { #category : #converting }
@@ -30,12 +30,12 @@ HEArray >> asLiteralIn: env [
 
 { #category : #reading }
 HEArray >> doReadFrom: aReader [
-	| size | 
+	| size |
 	"The size of the array is stored as a 32bits integer. Before any of the elements"
 	size := aReader readInt32.
 	value := Array new:size.
-	
-	1 to:size do:[:idx | value at:idx put: (HEExportedLiteral readFrom: aReader)].
+
+	1 to:size do:[:idx | value at:idx put: (HEExportedLiteral readFrom: aReader)]
 ]
 
 { #category : #accessing }

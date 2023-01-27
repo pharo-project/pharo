@@ -15,7 +15,7 @@ ReMethodSourceContainsLinefeedsRule class >> checksMethod [
 { #category : #accessing }
 ReMethodSourceContainsLinefeedsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'MethodSourceContainsLinefeedsRule'
 ]
 
@@ -23,9 +23,9 @@ ReMethodSourceContainsLinefeedsRule class >> uniqueIdentifierName [
 ReMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| linefeeds |
 	linefeeds := aMethod sourceCode allRangesOfSubstring: String lf.
-	
+
 	linefeeds do: [ :lfInterval |
-			aCriticBlock cull: (ReTrivialCritique  
+			aCriticBlock cull: (ReTrivialCritique
 			withAnchor: (ReIntervalSourceAnchor
 				entity: aMethod
 				interval: lfInterval)

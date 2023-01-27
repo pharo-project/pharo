@@ -24,7 +24,7 @@ FTBBox class >> fieldsDesc [
 	^ #(
 	 FT_Pos  xMin;
 	 FT_Pos  yMin;
-    FT_Pos  xMax; 
+    FT_Pos  xMax;
 	 FT_Pos  yMax;
 )
 ]

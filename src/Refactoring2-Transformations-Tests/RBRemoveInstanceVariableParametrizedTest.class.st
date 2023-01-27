@@ -17,11 +17,10 @@ RBRemoveInstanceVariableParametrizedTest class >> testParameters [
 { #category : #tests }
 RBRemoveInstanceVariableParametrizedTest >> testModelRemoveInstanceVariable [
 	| class |
-	model defineClass: 'nil subclass: #Object 
-		instanceVariableNames: ''foo1'' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'nil << #Object 
+		slots: {#foo1};  
+		package: #''Refactory-Test data'''.
+		
 	class := model classNamed: #Object.
 	self assert: (class definesInstanceVariable: 'foo1').
 	

@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 HEClassVariable class >> tag [
-	^ 6.
+	^ 6
 ]
 
 { #category : #converting }
@@ -24,5 +24,5 @@ HEClassVariable >> asLiteralIn: env [
 
 { #category : #accessing }
 HEClassVariable >> value: aClassVariable [
-	value := aClassVariable name.
+	value := aClassVariable name
 ]

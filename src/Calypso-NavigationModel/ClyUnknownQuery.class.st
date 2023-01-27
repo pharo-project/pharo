@@ -52,11 +52,11 @@ ClyUnknownQuery >> defaultResult [
 ]
 
 { #category : #testing }
-ClyUnknownQuery >> executesQuery: aClass [ 
+ClyUnknownQuery >> executesQuery: aClass [
 	^false
 ]
 
 { #category : #testing }
-ClyUnknownQuery >> retrievesItemsOfType: itemTypeClass [ 
+ClyUnknownQuery >> retrievesItemsOfType: itemTypeClass [
 	^false
 ]

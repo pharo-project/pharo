@@ -22,11 +22,19 @@ find ${CACHE}
 # WARNING: If you change this, you will need to change "runKernelTests.sh" too
 #
 TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
-#TEST_VM_VERSION=$(echo "${TEST_NAME_PREFIX}" | cut -d'-' -f 1| cut -c 6- | cut -d'.' -f 1-2 | sed 's/\.//')
-TEST_VM_VERSION="90"
+
+# Extract the VM version from the image file version, avoiding going to git to extract the tags
+# This is handy in later stages of the build process when no repository is available, e.g., to run the tests
+# Input: Pharo11.0-PR-64bit-7264e14.zip
+# Output: 110
+# Works by 
+#  - taking the entire name,
+#  - removing the suffix after the first dot
+#  - removing the prefix "Pharo"
+TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -d'-' -f 1 | cut -c6-`0
 
 #Odd PR builds use the the latest VM, else use the stable VM
-if [[ $(is_development_build) == "1" && $((${BUILD_NUMBER} % 2)) -eq 1 ]]
+if [[ $(is_development_build) == "0" && $((${BUILD_NUMBER} % 2)) -eq 1 ]]
 then
  TEST_VM_KIND="vmLatest"
 else

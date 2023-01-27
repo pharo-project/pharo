@@ -33,5 +33,5 @@ BadHasher class >> randomValue [
 BadHasher >> hash [
 	"Answer with a different hash some of the time"
 
-	self class randomValue
+	^ self class randomValue
 ]

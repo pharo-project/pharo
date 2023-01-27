@@ -25,7 +25,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyStringPattern class >> with: patternString [
-	^self new 
+	^self new
 		value: patternString
 ]
 
@@ -55,8 +55,8 @@ ClyStringPattern >> matches: aString [
 { #category : #printing }
 ClyStringPattern >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		nextPutAll: value;
 		nextPut: $)

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-DTLeafResultCommand class >> isAbstract [ 
+DTLeafResultCommand class >> isAbstract [
 
 	^ self name = #DTLeafResultCommand
 ]

@@ -32,7 +32,7 @@ MemoryFileSystemEntry >> basename: aString [
 
 { #category : #accessing }
 MemoryFileSystemEntry >> creationTime [
-	
+
 	^ creationTime
 ]
 
@@ -42,7 +42,7 @@ MemoryFileSystemEntry >> fileSize [
 ]
 
 { #category : #initialization }
-MemoryFileSystemEntry >> initialize [ 
+MemoryFileSystemEntry >> initialize [
 	creationTime := modificationTime := DateAndTime now.
 	super initialize
 ]
@@ -64,11 +64,11 @@ MemoryFileSystemEntry >> modificationTime [
 
 { #category : #accessing }
 MemoryFileSystemEntry >> modificationTime: anObject [
-	
+
 	modificationTime := anObject
 ]
 
 { #category : #private }
 MemoryFileSystemEntry >> modified [
-	modificationTime := DateAndTime now.
+	modificationTime := DateAndTime now
 ]

@@ -92,11 +92,13 @@ You will need to restart the image to make this changes take effect.';
 
 { #category : #'system startup' }
 OSWindowDriver class >> shutDown: quitting [
+
 	quitting ifFalse: [ ^ self ].
+
 	Current ifNil: [ ^ self ].
 
 	"Clean driver"
-	Current shutDown.
+	Current shutDown: quitting.
 	Current := nil.
 	
 	"clean OSWindow worlds"
@@ -127,6 +129,10 @@ OSWindowDriver >> isNullDriver [
 ]
 
 { #category : #'system startup' }
-OSWindowDriver >> shutDown [
-	"A hook to perform cleanups when shuting down a driver"
+OSWindowDriver >> shutDown: quitting [
+]
+
+{ #category : #'system startup' }
+OSWindowDriver >> startUp: resuming [
+
 ]

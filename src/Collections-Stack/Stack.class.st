@@ -15,9 +15,9 @@ Stack >> pop [
 ]
 
 { #category : #adding }
-Stack >> push: anObject [ 
+Stack >> push: anObject [
 	"Adds a new object of any kind on top of the stack."
-	
+
 	self addFirst: anObject.
 	^ anObject
 ]
@@ -25,6 +25,6 @@ Stack >> push: anObject [
 { #category : #accessing }
 Stack >> top [
 	"Answer the first element of the stack without removing it."
-	
+
 	^ self first
 ]

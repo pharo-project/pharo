@@ -104,7 +104,7 @@ ZdcAbstractSocketStream >> flushWriteBuffer [
 	self subclassResponsibility 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZdcAbstractSocketStream >> initialize [ 
 	timeout := 5.
 	debug := false.

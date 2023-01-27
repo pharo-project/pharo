@@ -36,11 +36,11 @@ Class {
 
 { #category : #'instance creation' }
 RBComment class >> with: aCommentToken [
-	"To respect the previously implemented comment node content, 
+	"To respect the previously implemented comment node content,
 	 we strip the surrounding quotes of the comment."
 	^ self new
 		with: aCommentToken value from: aCommentToken start to: aCommentToken stop;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -60,9 +60,9 @@ RBComment >> = anObject [
 
 { #category : #visiting }
 RBComment >> acceptVisitor: aProgramNodeVisitor [
-	"At some point we will have to think what we do to visit comment. 
+	"At some point we will have to think what we do to visit comment.
 	It may have an impact on visitors so this should be done carefully.
-	Since by default previously comment node were not subclass of ProgramNode 
+	Since by default previously comment node were not subclass of ProgramNode
 	we do nothing by default."
 ]
 
@@ -77,7 +77,7 @@ RBComment >> hash [
 ]
 
 { #category : #testing }
-RBComment >> isCommentNode [ 
+RBComment >> isCommentNode [
 	^true
 ]
 
@@ -86,7 +86,7 @@ RBComment >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' "'.
 	aStream nextPutAll: contents.
-	aStream nextPutAll: '" '.
+	aStream nextPutAll: '" '
 ]
 
 { #category : #enumeration }
@@ -102,12 +102,12 @@ RBComment >> start [
 { #category : #accessing }
 RBComment >> stop [
 	^ stop ifNil: [ start + self size - 1 ]
-			 ifNotNil: [ stop ].
+			 ifNotNil: [ stop ]
 ]
 
 { #category : #'instance creation' }
 RBComment >> with: aString from: aStartPosition to: aStopPosition [
 	start := aStartPosition.
 	stop := aStopPosition.
-	contents := aString.
+	contents := aString
 ]

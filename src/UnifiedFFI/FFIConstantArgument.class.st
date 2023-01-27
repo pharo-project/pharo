@@ -47,7 +47,7 @@ FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aCont
 	self shouldNotImplement
 ]
 
-{ #category : #resolving }
+{ #category : #initialization }
 FFIConstantArgument >> initialize [
 
 	super initialize.
