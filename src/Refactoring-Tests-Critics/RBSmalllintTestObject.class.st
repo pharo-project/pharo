@@ -335,6 +335,11 @@ RBSmalllintTestObject >> nonUnaryAccessingMethodWithoutReturn: anObject [
 ]
 
 { #category : #methods }
+RBSmalllintTestObject >> notOptimizedIf [
+	^ true ifFalse: 1
+]
+
+{ #category : #methods }
 RBSmalllintTestObject >> onlyReadOrWrittenTemporary [
 	| a |
 	a := 1

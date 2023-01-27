@@ -1,7 +1,7 @@
 Class {
 	#name : #RBExtractMethodTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #private }

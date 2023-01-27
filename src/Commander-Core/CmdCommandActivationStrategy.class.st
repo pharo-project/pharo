@@ -57,9 +57,9 @@ Class {
 { #category : #activation }
 CmdCommandActivationStrategy class >> activateAllInContext: aToolContext by: blockWithActivator [
 
-	self 
-		activeInstancesInContext: aToolContext 
-		do: [:activationStrategy | 
+	self
+		activeInstancesInContext: aToolContext
+		do: [:activationStrategy |
 			blockWithActivator value: (activationStrategy newActivatorFor: aToolContext)]
 ]
 
@@ -67,11 +67,11 @@ CmdCommandActivationStrategy class >> activateAllInContext: aToolContext by: blo
 CmdCommandActivationStrategy class >> createActivatorsExecutableInContext: aToolContext [
 	| result |
 	result := OrderedCollection new.
-	
-	self 
-		activateAllInContext: aToolContext 
+
+	self
+		activateAllInContext: aToolContext
 		by: [:each | result add: each].
-		
+
 	^result
 ]
 
@@ -98,9 +98,9 @@ CmdCommandActivationStrategy >> isForbidden [
 
 { #category : #activation }
 CmdCommandActivationStrategy >> newActivatorFor: aToolContext [
-	
+
 	^self defaultActivatorClass
 		for: self commandClass
-		inContext: aToolContext 
+		inContext: aToolContext
 		using: self
 ]

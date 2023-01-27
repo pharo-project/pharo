@@ -16,7 +16,7 @@ ClySwitchClassViewModeCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClySwitchClassViewModeCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
-	
+
 	^ClyToolbarActivation byItemOf: ClyClassHierarchyToolbarGroup for: ClyFullBrowserClassContext
 ]
 

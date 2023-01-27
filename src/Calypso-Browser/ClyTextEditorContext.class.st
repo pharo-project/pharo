@@ -13,6 +13,11 @@ ClyTextEditorContext >> browser [
 ]
 
 { #category : #public }
+ClyTextEditorContext >> editor [
+	^ tool
+]
+
+{ #category : #public }
 ClyTextEditorContext >> selectedTextInterval [
 	^tool selectedTextInterval
 ]

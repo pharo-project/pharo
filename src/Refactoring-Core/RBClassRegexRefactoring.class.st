@@ -64,12 +64,7 @@ RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
 			(name := self execute: superclass name) = superclass name
 				ifFalse: [ self duplicate: superclass name: name deep: aBoolean ].
 			name ].
-	self model defineClass: ('<1s>
-		subclass: #<2s>
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: <3p>' 
+	self model defineClass: ('<1s> %<%< #<2s> package: <3p>' 
 			expandMacrosWith: superclassName 
 			with: aSymbol with: aClass category asString).
 	aBoolean ifTrue: [

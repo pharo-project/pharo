@@ -12,9 +12,9 @@ Class {
 BrowseDebugAction class >> debugActionsFor: aDebugger [
 	<contextMenuDebuggingAction>
 	| initilOrder |
-	
+
 	initilOrder := 60.
-	^ { 
+	^ {
 		self new
 			id: #browseSendersOfMessages;
 			order: initilOrder;
@@ -55,7 +55,7 @@ BrowseDebugAction class >> debugActionsFor: aDebugger [
 			help: 'Browse the class variables.';
 			label: 'Class variables';
 			withSeparatorAfter.
-			
+
 		self new
 			id: #browseClassRefs;
 			order: initilOrder + 35;
@@ -74,7 +74,7 @@ BrowseDebugAction class >> debugActionsFor: aDebugger [
 			help: 'Open a system browser on the class of the object receiving the method.';
 			"keymap: PharoShortcuts current browseShortcut;"
 			label: 'Browse receiver'.
-		
+
 		self new
 			id: #fileOutMessage;
 			order: initilOrder + 45;
@@ -99,7 +99,7 @@ BrowseDebugAction >> initialize [
 
 	super initialize.
 	self needsUpdate: false.
-	self needsValidation: false.
+	self needsValidation: false
 ]
 
 { #category : #accessing }

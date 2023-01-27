@@ -88,7 +88,7 @@ IRTranslator >> pushOuterVectors: scope [
 	| scopesWithVector sc |
 	scopesWithVector := OrderedCollection new.
 	sc := scope.
-	[ sc outerScope isBehavior ] whileFalse: [ 
+	[ sc outerScope isNil or: [ sc outerScope isBehavior ] ] whileFalse: [ 
 		sc := sc outerScope.
 		sc hasTempVector ifTrue: [ scopesWithVector add: sc ] ].
 	scopesWithVector reverseDo: [ :scopeWithVector |
@@ -104,7 +104,7 @@ IRTranslator >> pushScope: anIRBlockOrMethod [
 	currentScope push: anIRBlockOrMethod
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
 IRTranslator >> trailer: aTrailer [
 
 	trailer := aTrailer
@@ -145,9 +145,13 @@ IRTranslator >> visitMethod: anIr [
 	gen numArgs: anIr numArgs.
 	gen properties: anIr properties.
 	gen numTemps: (anIr tempMap size).
-	gen additionalLiterals: anIr additionalLiterals.
 	gen forceLongForm: anIr forceLongForm.
 	self visitSequences: anIr allSequences.
+	"Literals for sends and pushLiteral: are added later, here we
+	add all the additionalLiterals from e.g. optimized constructs like #ifTrue:.
+	that have been added with #addLiteral:.
+	With the new bytecode set we have no constraints and can just add all of them."
+	anIr additionalLiterals do: [ :each | gen addLiteral: each ]
 ]
 
 { #category : #visiting }

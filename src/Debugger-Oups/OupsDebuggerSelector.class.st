@@ -54,7 +54,7 @@ OupsDebuggerSelector >> handlesDebuggerErrors [
 ]
 
 { #category : #accessing }
-OupsDebuggerSelector >> handlesDebuggerErrors: aBoolean [ 
+OupsDebuggerSelector >> handlesDebuggerErrors: aBoolean [
 	handlesDebuggerErrors := aBoolean
 ]
 
@@ -78,10 +78,10 @@ OupsDebuggerSelector >> openDebuggerForSession: aDebugSession [
 
 	<debuggerCompleteToSender>
 	handled := false.
-	[ handled or: [ self debuggers isEmpty ] ] whileFalse: [ 
+	[ handled or: [ self debuggers isEmpty ] ] whileFalse: [
 		self
 			tryOpen: aDebugSession
-			with: (self nextDebuggerForSession: aDebugSession) ].			
+			with: (self nextDebuggerForSession: aDebugSession) ].
 	handled ifFalse: [ self signalErrorHandlingErrorForSession: aDebugSession ]
 ]
 
@@ -89,13 +89,13 @@ OupsDebuggerSelector >> openDebuggerForSession: aDebugSession [
 OupsDebuggerSelector >> tryOpen: aDebugSession with: aDebugger [
 
 	<debuggerCompleteToSender>
-	[ 
+	[
 	aDebugger debugSession: aDebugSession.
 	handled := true ]
 		on: Error , UnhandledException
-		do: [ :err | 
+		do: [ :err |
 			error := err.
-			(self handlesDebuggerErrors and: [ 
-				 aDebugSession exception isDebuggerFailure not ]) ifTrue: [ 
+			(self handlesDebuggerErrors and: [
+				 aDebugSession exception isDebuggerFailure not ]) ifTrue: [
 				(OupsDebuggerFailure of: aDebugger on: err) signal ] ]
 ]

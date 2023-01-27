@@ -543,7 +543,8 @@ ScrollPane >> innerBounds [
 
 { #category : #testing }
 ScrollPane >> isAutoFit [
-	^false
+
+	^ false
 ]
 
 { #category : #'geometry testing' }

@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #'instance creation' }
@@ -79,7 +79,7 @@ RBRenamePackageTransformation >> renameManifestClass [
 	manifest ifNotNil: [
 	transformations add: ( RBRenameClassTransformation  
 		model: self model
-		rename: manifest
+		rename: manifest name
 		to: (self manifestClassNameFor: newName)) ]
 ]
 

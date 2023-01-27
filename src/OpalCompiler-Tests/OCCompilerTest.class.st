@@ -8,7 +8,6 @@ Class {
 		'errorMessage',
 		'errorLocation',
 		'errorSource',
-		'interactive',
 		'text'
 	],
 	#category : #'OpalCompiler-Tests-FromOld'
@@ -34,11 +33,6 @@ OCCompilerTest >> initializeErrorMessage [
 	errorMessage := nil.
 	errorLocation := nil.
 	errorSource := nil
-]
-
-{ #category : #mocking }
-OCCompilerTest >> interactive [
-	^interactive
 ]
 
 { #category : #mocking }
@@ -75,7 +69,6 @@ OCCompilerTest >> tempTraitShadowingString [
 
 { #category : #'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfClassNameBinding [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp | | MockForCompilation := nil'.
 
@@ -89,7 +82,6 @@ OCCompilerTest >> testAssignmentOfClassNameBinding [
 
 { #category : #'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfGlobalVarBinding [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp | | OCCompilerTestTestVar := 2'.
 	self initializeErrorMessage.
@@ -104,7 +96,6 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp [:var1 | ]'.
 
@@ -119,7 +110,6 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempArgumentShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp [:temp | |temp|]'.
 
@@ -133,7 +123,6 @@ OCCompilerTest >> testInBlockTempArgumentShadowing [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempInstanceVariableShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp [:temp | |var1|]'.
 
@@ -147,7 +136,6 @@ OCCompilerTest >> testInBlockTempInstanceVariableShadowing [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp |var2| [:temp| |var2|]'.
 
@@ -161,7 +149,6 @@ OCCompilerTest >> testInBlockTempShadowing [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testInstanceVariableShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'var1 |var1|'.
 
@@ -185,7 +172,6 @@ OCCompilerTest >> testNegativeZero [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testNoShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp |var2|  var2:=1'.
 
@@ -197,7 +183,6 @@ OCCompilerTest >> testNoShadowing [
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 
-	interactive := false.
 	self initializeErrorMessage.
 
 	self 
@@ -217,8 +202,7 @@ OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
-	
-	interactive := false.
+
 	self initializeErrorMessage.
 	self 
 		should: [ 
@@ -239,7 +223,6 @@ OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 	
-	interactive := false.
 	self initializeErrorMessage.
 	self 
 		should: [ 
@@ -261,7 +244,6 @@ OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 	
-	interactive := false.
 	self initializeErrorMessage.
 	self 
 		should: [ 
@@ -283,7 +265,6 @@ OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveNoShadowing [
 
-	interactive := false.
 	self initializeErrorMessage.
 
 	self shouldnt: [ 
@@ -299,7 +280,6 @@ OCCompilerTest >> testNotInteractiveNoShadowing [
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 
-	interactive := false.
 	self initializeErrorMessage.
 	self 
 		should: [ 
@@ -320,7 +300,6 @@ OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 
-	interactive := false.
 	self initializeErrorMessage.
 	self 
 		should: [ 
@@ -341,8 +320,6 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
-
-	interactive := false.
 	self initializeErrorMessage.
 
 	self shouldnt: [ 
@@ -357,7 +334,6 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
-	interactive := true.
 	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
 		do: [ :each | 
 			self initializeErrorMessage.
@@ -375,7 +351,6 @@ OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testReservedNameAsMethodArgumentShadowing [
-	interactive := true.
 	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
 		do: [ :each | 
 			self initializeErrorMessage.
@@ -406,7 +381,6 @@ OCCompilerTest >> testScaledDecimalLiterals [
 
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
-	interactive := true.
 	self initializeErrorMessage.
 
 	OpalCompiler new
@@ -423,7 +397,6 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testSiblingBlocksTempShadowing [
 
-	interactive := true.
 	self initializeErrorMessage.
 
 	OpalCompiler new

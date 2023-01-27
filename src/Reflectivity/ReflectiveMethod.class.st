@@ -61,7 +61,7 @@ ReflectiveMethod >> decreaseLinkCount [
 
 { #category : #invalidate }
 ReflectiveMethod >> destroyTwin [
-	(ast hasProperty: #wrappedPrimitive) ifTrue: [  ast :=  compiledMethod parseTree].
+	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
 	self recompileAST.
 	self installCompiledMethod.
 	compiledMethod reflectiveMethod: nil.
@@ -104,7 +104,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 		body: assignmentNode asSequenceNode.
 		
 	wrapperMethod methodClass: ast methodClass.
-	wrapperMethod propertyAt: #wrappedPrimitive put: true.
+	wrapperMethod propertyAt: #wrapperMethod put: true.
 	ast hasMetalink ifTrue: [wrapperMethod propertyAt: #links put: (ast propertyAt: #links)].
 	ast := wrapperMethod.
 ]

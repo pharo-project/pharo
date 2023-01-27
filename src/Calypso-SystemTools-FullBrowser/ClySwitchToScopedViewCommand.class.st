@@ -11,19 +11,19 @@ ClySwitchToScopedViewCommand class >> toolbarOrder [
 
 { #category : #accessing }
 ClySwitchToScopedViewCommand >> defaultMenuItemName [
-	
+
 	^ 'Scoped View'
 ]
 
 { #category : #accessing }
 ClySwitchToScopedViewCommand >> description [
 
-	^ 'Scope to selected packages'.
+	^ 'Scope to selected packages'
 ]
 
 { #category : #execution }
 ClySwitchToScopedViewCommand >> execute [
-	
+
 	^ browser packageSelection actualObjects ifNotEmpty: [ :packages |
 		browser switchToPackageScopeOf: packages]
 ]

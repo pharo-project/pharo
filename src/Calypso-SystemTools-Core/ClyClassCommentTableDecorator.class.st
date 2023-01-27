@@ -12,7 +12,7 @@ Class {
 ClyClassCommentTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
-	anItemCellMorph definitionIcon: #commentsIcon
+	anItemCellMorph definitionIcon: #comments
 ]
 
 { #category : #decoration }
@@ -22,6 +22,6 @@ ClyClassCommentTableDecorator class >> decorateTableCell: anItemCellMorph of: aD
 { #category : #decoration }
 ClyClassCommentTableDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyClassComment asCalypsoItemContext
 ]

@@ -1,13 +1,13 @@
 Class {
 	#name : #RBReplaceSendersMethodParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
 RBReplaceSendersMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBReplaceMethodRefactoring };
+		addCase: { #rbClass -> RBReplaceMessageSendTransformation };
 		yourself
 ]
 

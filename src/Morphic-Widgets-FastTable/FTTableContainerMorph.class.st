@@ -376,6 +376,8 @@ FTTableContainerMorph >> rowAndColumnIndexContainingPoint: aPoint [
 	"answer a tuple containing { rowIndex. columnNumber } to be used for menus, etc. 
 	 (check senders for references)"
 
+	self exposedRows ifNil: [ ^ { nil. nil. } ].
+
 	self exposedRows keysAndValuesDo: [ :rowIndex :row | 
 		(row bounds containsPoint: aPoint) ifTrue: [ 
 			row submorphs withIndexDo: [ :each :columnIndex |
@@ -392,9 +394,12 @@ FTTableContainerMorph >> rowHeight: rowIndex default: aNumber [
 
 { #category : #accessing }
 FTTableContainerMorph >> rowIndexContainingPoint: aPoint [
+
+	self exposedRows ifNil: [ ^ nil ].
 	self exposedRows keysAndValuesDo: [ :rowIndex :row | 
 		(row bounds containsPoint: aPoint)
 			ifTrue: [ ^ rowIndex ] ].
+	
 	^ nil
 ]
 

@@ -22,9 +22,9 @@ FLEncoderTest >> setUp [
 	super setUp.
 	
 	stream := WriteStream on: ByteArray new.
-	encoder := FLEncoder
-		on: stream
-		globalEnvironment: self class environment
+	FLSerializer new
+		streamFactory: [ stream ];
+		useDuring: [ encoder := FLEncoder new ]
 ]
 
 { #category : #tests }

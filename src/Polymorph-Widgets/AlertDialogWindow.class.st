@@ -11,7 +11,7 @@ Class {
 AlertDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^ #smallWarningIcon
+	^ #smallWarning
 ]
 
 { #category : #'visual properties' }

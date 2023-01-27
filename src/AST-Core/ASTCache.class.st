@@ -51,7 +51,7 @@ ASTCache class >> cacheMissStrategy: aCacheMissStrategy [
 
 { #category : #accessing }
 ASTCache class >> default [
-	^ default ifNil: [ 
+	^ default ifNil: [
 		SessionManager default registerSystemClassNamed: self name.
 		default := self new ]
 ]
@@ -69,17 +69,17 @@ ASTCache class >> reset [
 ]
 
 { #category : #'system startup' }
-ASTCache class >> shutDown [	
+ASTCache class >> shutDown [
 	self reset
 ]
 
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod [
-	"for doit methods, the ast is stored in the method propery"
-	^ aCompiledMethod propertyAt: #ast ifAbsent: [ 
+	"For doit methods, the AST is stored in the method property"
+	^ aCompiledMethod propertyAt: #ast ifAbsent: [
 		  self
 			  at: aCompiledMethod
-			  ifAbsentPut: [ 
+			  ifAbsentPut: [
 			  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
 ]
 

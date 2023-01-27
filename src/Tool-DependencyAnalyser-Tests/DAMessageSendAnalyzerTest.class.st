@@ -14,6 +14,16 @@ DAMessageSendAnalyzerTest >> setUp [
 ]
 
 { #category : #tests }
+DAMessageSendAnalyzerTest >> testRPackage [
+
+	self assert: (analyzer rPackage isKindOf: RPackage).
+	analyzer := DAMessageSendAnalyzer on: 'Unloaded-Dummy-Package'.
+	self
+		assert: (analyzer rPackage isKindOf: RPackage)
+		description: 'It test that rPackage still answer a RPackage even when the analyzer was instantiated with an unexisting or unloaded package'
+]
+
+{ #category : #tests }
 DAMessageSendAnalyzerTest >> testShouldFindDependencyWhenUnimplementedCalls [
 	self 
 		assert: analyzer missingMethods size 

@@ -350,10 +350,9 @@ KeyboardKey class >> four [
 KeyboardKey class >> fromCharacter: aCharacter [
 	"For backwards compatibility mainly.
 	Return the key that should correspond to some character.
-	Handle normal ascii characters and special control keys only (enter, tab space...)
+	Handle normal ascii characters and special control keys only (enter, tab space...)"
 	
-	 (KeyboardKey fromCharacter: $a) >>> KeyboardKey A
-	"
+	"(KeyboardKey fromCharacter: $a) >>> KeyboardKey A"
 	
 	^ self keyFromCharacterTable at: aCharacter ifAbsent: [ self named: aCharacter asString asUppercase ]
 ]
@@ -362,10 +361,9 @@ KeyboardKey class >> fromCharacter: aCharacter [
 KeyboardKey class >> fromCharacter: aCharacter ifNone: aBlock [
 	"For backwards compatibility mainly.
 	Return the key that should correspond to some character.
-	Handle normal ascii characters and special control keys only (enter, tab space...)
+	Handle normal ascii characters and special control keys only (enter, tab space...)"
 	
-	 (KeyboardKey fromCharacter: $a) >>> KeyboardKey A
-	"
+	"(KeyboardKey fromCharacter: $a) >>> KeyboardKey A"
 	
 	^ self keyFromCharacterTable
 		at: aCharacter 
@@ -1097,6 +1095,12 @@ KeyboardKey class >> metaRight [
 	^ self named: #META_R
 ]
 
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> menu [
+
+	^ self named: #MENU
+]
+
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> minus [
 	^ self named: #MINUS
@@ -1104,20 +1108,18 @@ KeyboardKey class >> minus [
 
 { #category : #'instance creation' }
 KeyboardKey class >> named: aString [
-	"Returns the instance of myself having aString as name.
+	"Returns the instance of myself having aString as name."
 	
-	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
-	"
+	"(KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)"
 	
 	^ KeyNameTable at: aString
 ]
 
 { #category : #'instance creation' }
 KeyboardKey class >> named: aString ifNone: aBlock [
-	"Returns the instance of myself having aString as name.
+	"Returns the instance of myself having aString as name."
 	
-	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
-	"
+	"(KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)"
 	
 	^ KeyNameTable at: aString ifAbsent: aBlock
 ]

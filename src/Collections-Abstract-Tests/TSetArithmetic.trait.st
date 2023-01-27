@@ -27,13 +27,13 @@ TSetArithmetic >> collection [
 { #category : #requirements }
 TSetArithmetic >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ self explicitRequirement
 ]
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> containsAll: union of: one andOf: another [
-			
+
 	self assert: (one allSatisfy: [:each | union includes: each]).
 	self assert: (another allSatisfy: [:each | union includes: each])
 ]
@@ -77,11 +77,11 @@ TSetArithmetic >> testDifference [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testDifferenceWithNonNullIntersection [
-	"Answer the set theoretic difference of two collections. 
+	"Answer the set theoretic difference of two collections.
 	 	#(1 2 3) difference: #(2 4) ->  #(1 3)"
-	
+
 	| res overlapping |
-	overlapping := self collectionClass 
+	overlapping := self collectionClass
 		with: self anotherElementOrAssociationNotIn
 		with: self anotherElementOrAssociationIn.
 	res := self collection difference: overlapping.
@@ -93,16 +93,16 @@ TSetArithmetic >> testDifferenceWithNonNullIntersection [
 TSetArithmetic >> testDifferenceWithSeparateCollection [
 	"Answer the set theoretic difference of two collections."
 
-	| res separateCol |	
+	| res separateCol |
 	separateCol := self collectionClass with: self anotherElementOrAssociationNotIn.
 	res := self collectionWithoutEqualElements difference: separateCol.
-	
+
 	self deny: (res includes: self anotherElementOrAssociationNotIn).
 	self assert: res size equals: self collectionWithoutEqualElements size.
-	
+
 	self collectionWithoutEqualElements do: [ :each|
 		self assert: (res includes: each)].
-	
+
 	res := separateCol difference: self collection.
 	self deny: (res includes: self collection anyOne).
 	self assert: res equals: separateCol
@@ -127,12 +127,12 @@ TSetArithmetic >> testIntersectionEmpty [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionItself [
-	
+
 	| result |
 	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
 	self assert: result size equals: self collectionWithoutEqualElements size.
 	self collectionWithoutEqualElements do: [ :each|
-		self assert: (result includes: each) ].
+		self assert: (result includes: each) ]
 ]
 
 { #category : #'tests - set arithmetic' }
@@ -146,14 +146,14 @@ TSetArithmetic >> testIntersectionTwoSimilarElementsInIntersection [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testUnion [
-	
+
 	| union |
 	union := self empty union: self nonEmpty.
 	self containsAll: union of: self empty andOf: self nonEmpty.
 	union := self nonEmpty union: self empty.
 	self containsAll: union of: self empty andOf: self nonEmpty.
 	union := self collection union: self nonEmpty.
-	self containsAll: union of: self collection andOf: self nonEmpty.
+	self containsAll: union of: self collection andOf: self nonEmpty
 ]
 
 { #category : #'tests - set arithmetic' }

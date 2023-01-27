@@ -4,7 +4,7 @@ Extension { #name : #ClassModificationApplied }
 ClassModificationApplied >> affectsMethod: aMethod [
 	"Class modification leads to methods recompilation (because variables are changed).
 	So it means that this event affects any method of modified class"
-	
+
 	^self classAffected == aMethod origin
 ]
 
@@ -15,6 +15,6 @@ ClassModificationApplied >> affectsVariablesOf: aClass [
 	And we do not need to distinguish it"
 
 	aClass instanceSide = modifiedClass instanceSide ifTrue: [ ^true ].
-	
+
 	^false
 ]

@@ -87,14 +87,13 @@ FTTreeDataSource class >> defaultSearchStrategies [
 { #category : #'utilities - morph creation' }
 FTTreeDataSource class >> emptyMorph [
 	| icon |
-	icon := (Smalltalk ui icons iconNamed: #emptyIcon) asMorph.
+	icon := (Smalltalk ui icons iconNamed: #empty) asMorph.
 	icon form: (icon form scaledToSize: 16 @ 16).
 	^ icon
 ]
 
 { #category : #'class initialization' }
 FTTreeDataSource class >> initialize [
-	"self initialize"
 
 	SearchStrategies := nil
 ]

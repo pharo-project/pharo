@@ -1,16 +1,23 @@
 "
-I live as an instance variable in a Browser, Debugger, Workspace or other window. I'm the glue between all participants of the completion system. I create the NECContext and pass myself to the NECMenuMorph. I process the keyboard events and pass them to the NECMenuMorph or close the morph if needed.
+I am class defining the main interface of a completion engine.
+-	I subscribe to a widget and receive events to provide completion.
+-	Then, when I decide to accept an element of the completion, I know how to modify the underlying text widget.
 
-My method codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt
+I'm also used by the `NECPreferences` to detect the available engines in the system by checking my subclasses. It is important that I'm here, so there are no circular dependencies between the Morphic specific Completion engine and the abstract backend.
+
+
+I live as an instance variable in a Browser, Debugger, Workspace or other window. I'm the glue between all participants of the completion system. I create a `NECContext` and pass myself to the `NECMenuMorph`. I process the keyboard events and pass them to the `NECMenuMorph` or close the morph if needed.
+
+My method `codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt`
 is the starting point of the completion process.
 
-I'm invoked before and after a keystroke. Check method handleKeystrokeBefore: evt editor: editor and handleKeystrokeAfter: evt editor: editor.
+I'm invoked before and after a keystroke. Check method `handleKeystrokeBefore: evt editor: editor` and `handleKeystrokeAfter: evt editor: editor`.
 
-The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of ==atCompletionPosition==
+The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of `atCompletionPosition`.
 "
 Class {
 	#name : #CompletionEngine,
-	#superclass : #AbstractCompletionEngine,
+	#superclass : #Object,
 	#instVars : [
 		'contextClass',
 		'menuMorph',

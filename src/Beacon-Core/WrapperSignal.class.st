@@ -40,7 +40,7 @@ WrapperSignal >> name [
 { #category : #printing }
 WrapperSignal >> printOneLineContentsOn: stream [
 
-	self target printOn: stream 
+	self target printOn: stream
 ]
 
 { #category : #accessing }

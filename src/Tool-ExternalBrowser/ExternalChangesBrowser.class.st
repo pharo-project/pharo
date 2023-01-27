@@ -129,7 +129,7 @@ ExternalChangesBrowser class >> services [
 ExternalChangesBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallSaveIcon
+	^#smallSave
 ]
 
 { #category : #menu }

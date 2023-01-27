@@ -341,7 +341,7 @@ Morph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 { #category : #'debug and other' }
 Morph >> addDebuggingItemsTo: aMenu hand: aHandMorph [
 	aMenu add: 'debug...' subMenu: (self buildDebugMenu: aHandMorph).
-	aMenu lastItem icon: (self iconNamed: #smallDebugIcon)
+	aMenu lastItem icon: (self iconNamed: #smallDebug)
 ]
 
 { #category : #updating }
@@ -415,10 +415,10 @@ Morph >> addExportMenuItems: aMenu hand: aHandMorph [
 			aSubMenu add: 'PNG file' selector: #exportAsPNG.
 			aMenu
 				add: 'export...'
-				icon: (self iconNamed: #smallExportIcon)
+				icon: (self iconNamed: #smallExport)
 				subMenu: aSubMenu.
 			aMenu lastItem
-				icon: (self iconNamed: #smallExportIcon) ]
+				icon: (self iconNamed: #smallExport) ]
 ]
 
 { #category : #menus }
@@ -885,6 +885,12 @@ Morph >> adhereToEdge [
 Morph >> adhereToEdge: edgeSymbol [ 
 	| edgeMessage |
 	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
+	
+	"these are implemented in Morph, no need to use perform:"
+	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
+	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
+	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
+	
 	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
 	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
 		 ifFalse:  [^self].
@@ -1423,10 +1429,10 @@ Morph >> buildDebugMenu: aHand [
 			aMenu addLine ].
 	aMenu add: 'inspect morph' selector: #inspectInMorphic:.
 	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
 	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'
@@ -1485,7 +1491,7 @@ Morph >> buildMetaMenu: evt [
 		argument: evt position.
 	menu add: 'explore' selector: #inspect.
 	menu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectIt).
 	menu addLine.
 	menu add: 'show actions' selector: #showActions.
 	menu addLine.
@@ -2802,18 +2808,22 @@ Morph >> handleFocusEvent: anEvent [
 
 { #category : #'events - processing' }
 Morph >> handleKeyDown: anEvent [
+
 	"System level event handling."
-	
-	anEvent wasHandled ifTrue:[ ^ self ].
-	
-	self shortcutsHandler ifNotNil: [:handler | 
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+
+	self shortcutsHandler ifNotNil: [ :handler | 
 		handler handleKeystroke: anEvent inMorph: self.
-		anEvent wasHandled ifTrue: [^ self]].
-	
-	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
+		anEvent wasHandled ifTrue: [ 
+			anEvent supressNextKeyPress: true.
+			^ self ] ].
+
+	(self handlesKeyDown: anEvent) ifFalse: [ ^ self ].
 	anEvent wasHandled: true.
 	self keyDown: anEvent.
-	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
+	^ self eventHandler ifNotNil: [ :handler | 
+		  handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events - processing' }
@@ -2866,9 +2876,9 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand newMouseFocus: self event: anEvent.
 	
 	"Check to open halo"
-	(anEvent blueButtonChanged or: [ "HACK"
-		 anEvent redButtonChanged & anEvent altKeyPressed
-		 & anEvent shiftPressed ]) ifTrue: [ ^ self handleSpecialGesture: anEvent ].
+	anEvent isSpecialGesture  
+		ifTrue: [ 
+			^ self handleSpecialGesture: anEvent ].
 
 	self mouseDown: anEvent.
 
@@ -3010,6 +3020,26 @@ Morph >> handleSpecialGesture: mouseDownEvent [
 	mouseDownEvent hand newMouseFocus: h.
 ]
 
+{ #category : #'event handling' }
+Morph >> handleTextEditionEvent: anEvent [
+	"System level event handling."
+
+	anEvent wasHandled ifTrue: [ ^ self ].
+	(self handlesTextEditionEvent: anEvent) ifTrue: [ 
+		anEvent wasHandled: true.
+		self textEdition: anEvent ]
+]
+
+{ #category : #'event handling' }
+Morph >> handleTextInputEvent: anEvent [
+	"System level event handling."
+	
+	anEvent wasHandled ifTrue:[^self].
+	(self handlesTextInputEvent: anEvent) ifTrue:[
+		anEvent wasHandled: true.
+		self textInput: anEvent]
+]
+
 { #category : #'events - processing' }
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
@@ -3034,18 +3064,10 @@ Morph >> handleWindowEvent: anEvent [
 
 { #category : #'meta-actions' }
 Morph >> handlerForBlueButtonDown: anEvent [
-	"Return the (prospective) handler for a mouse down event. The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event.
-	Note: Halos handle blue button events themselves so we will only be asked if there is currently no halo on top of us.
-	Check whtehr halods are enabled (for deployment)."
+	"Return the (prospective) handler for a mouse down event.
+	In this case all blue buttons are disabled unless the subclass whant to handle it"
 
-	self wantsHaloFromClick ifFalse: [ ^ nil ].
-
-	self class cycleHalosBothDirections
-		ifTrue: [ anEvent handler ifNil: [ ^ self ].
-			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
-	^ anEvent shiftPressed
-		ifFalse: [ "let outer guy have it" nil ]
-		ifTrue: [ "let me have it" self ]
+	^ nil
 ]
 
 { #category : #'event handling' }
@@ -3053,6 +3075,9 @@ Morph >> handlerForMouseDown: anEvent [
 	"Return the (prospective) handler for a mouse down event. The handler is temporarily 
 	installed and can be used for morphs further down the hierarchy to negotiate whether 
 	the inner or the outer morph should finally handle the event."
+
+	anEvent isSpecialGesture 
+		ifTrue: [ ^ self handlerForSpecialGestureDown: anEvent ].
 
 	anEvent blueButtonPressed
 		ifTrue: [^ self handlerForBlueButtonDown: anEvent].
@@ -3068,6 +3093,20 @@ Morph >> handlerForMouseDown: anEvent [
 	^self mouseDownPriority >= anEvent handler mouseDownPriority
 		ifTrue: [ self]
 		ifFalse: [ nil]
+]
+
+{ #category : #'meta-actions' }
+Morph >> handlerForSpecialGestureDown: anEvent [
+	"Return the (prospective) handler for a special gesture event (Halos). 
+	The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event."
+
+	self wantsHaloFromClick ifFalse: [ ^ nil ].
+
+	self class cycleHalosBothDirections
+		ifTrue: [ anEvent handler ifNil: [ ^ self ].
+			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
+		
+	^ self
 ]
 
 { #category : #'event handling' }
@@ -3173,6 +3212,20 @@ Morph >> handlesMouseStillDown: evt [
 { #category : #'events - processing' }
 Morph >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?." 
+
+	^false
+]
+
+{ #category : #'event handling' }
+Morph >> handlesTextEditionEvent: evt [
+	"Do I want to receive text edition events?" 
+
+	^false
+]
+
+{ #category : #'event handling' }
+Morph >> handlesTextInputEvent: evt [
+	"Do I want to receive text edition events?" 
 
 	^false
 ]
@@ -3359,12 +3412,9 @@ Morph >> highlight [
 
 { #category : #accessing }
 Morph >> highlightColor [
-	
-	^ (self valueOfProperty: #highlightColor)
-		ifNotNil:
-			[:val | val ifNil: [self error: 'nil highlightColor']]
-		ifNil:
-			[owner ifNil: [self color] ifNotNil: [owner highlightColor]]
+
+	^ (self valueOfProperty: #highlightColor) ifNil: [ 
+		  owner ifNil: [ self color ] ifNotNil: [ owner highlightColor ] ]
 ]
 
 { #category : #accessing }
@@ -3501,8 +3551,8 @@ Morph >> innerBounds [
 
 { #category : #accessing }
 Morph >> insetColor [
-	owner ifNil:[^self color].
-	^ self colorForInsets
+
+	^ owner ifNil: [ self color ] ifNotNil: [ self colorForInsets ]
 ]
 
 { #category : #'meta-actions' }
@@ -3641,8 +3691,8 @@ Morph >> isLineMorph [
 { #category : #accessing }
 Morph >> isLocked [
 	"answer whether the receiver is Locked"
-	extension ifNil: [^ false].
-	^ extension locked
+
+	^ extension ifNil: [ false ] ifNotNil: [ :ext | ext locked ]
 ]
 
 { #category : #testing }
@@ -3968,9 +4018,9 @@ Morph >> listSpacing [
 		#equal - all rows have the same height
 		#none - all rows may have different heights
 	"
-	| props |
-	props := self layoutProperties.
-	^props ifNil:[#none] ifNotNil:[props listSpacing].
+	^ self layoutProperties
+		  ifNil: [ #none ]
+		  ifNotNil: [ :props | props listSpacing ]
 ]
 
 { #category : #'layout - properties' }
@@ -5211,6 +5261,36 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 	(w := newMorph world) ifNotNil: [ newMorph startSteppingSubmorphs ]
 ]
 
+{ #category : #'event handling' }
+Morph >> requestStopTextEditing [
+
+	"Used by a morph to request stop text edition capabilities.
+	The rendering backend can use this, for example, close the IME (input-method-editor).
+	Use it in pair with requestTextEditingAt:
+	
+	By default, propagate the request to the owner.
+	If this morph has no owner, do nothing.
+	Particular morphs (e.g., the root of the composition hierarchy should override)"
+	self owner ifNil: [ ^ self ].
+	self owner requestStopTextEditing
+]
+
+{ #category : #'event handling' }
+Morph >> requestTextEditingAt: aRectangle [
+
+	"Used by a morph to request text edition capabilities.
+	The rendering backend can use this information to, for example, open the IME (input-method-editor).
+	The rectangle indicates the position where the IME menu could be shown.
+	
+	Use it in pair with requestStopTextEditing
+	
+	By default, propagate the request to the owner.
+	If this morph has no owner, do nothing.
+	Particular morphs (e.g., the root of the composition hierarchy should override)"
+	self owner ifNil: [ ^ self ].
+	self owner requestTextEditingAt: aRectangle
+]
+
 { #category : #'accessing - extension' }
 Morph >> resetExtension [
 	"reset the extension slot if it is not needed"
@@ -6098,6 +6178,14 @@ Morph >> textAnchorType: aSymbol [
 	^ aSymbol == #document
 		ifTrue: [ self removeProperty: #textAnchorType ]
 		ifFalse: [ self setProperty: #textAnchorType toValue: aSymbol ]
+]
+
+{ #category : #'event handling' }
+Morph >> textEdition: aTextEditionEvent [
+]
+
+{ #category : #'event handling' }
+Morph >> textInput: aTextInputEvent [
 ]
 
 { #category : #theme }

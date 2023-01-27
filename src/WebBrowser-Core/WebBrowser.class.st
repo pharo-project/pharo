@@ -16,14 +16,14 @@ WebBrowser class >> example [
 { #category : #testing }
 WebBrowser class >> isForCurrentSystem [
 
-	^self subclassResponsibility 
+	^ self subclassResponsibility 
 ]
 
 { #category : #testing }
 WebBrowser class >> isUsed [
-	"all my subclasses are used by me"
+	"All my subclasses are used by me"
 	
-	^self name = #WebBrowser
+	^ self name = #WebBrowser
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
 ]
@@ -48,5 +48,5 @@ WebBrowser class >> webbrowserClassForPlatform [
 
   ^ self allSubclasses 
 				detect: #isForCurrentSystem 
-				ifNone: [ self error: 'No web browser subclass for platform provided' ]
+				ifNone: [ self error: 'No web browser subclass for OS platform provided yet' ]
 ]

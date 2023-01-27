@@ -11,14 +11,14 @@ Class {
 { #category : #activation }
 ClyShowMethodInheritanceCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyShowMethodInheritanceCommand class >> browserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
 ]
 
@@ -27,12 +27,12 @@ ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 
 	| classScope |
 	classScope := ClyClassScope ofAll: classes in: browser navigationEnvironment.
-	
+
 	^classScope asFullHierarchyScope
 ]
 
 { #category : #accessing }
-ClyShowMethodInheritanceCommand >> defaultMenuItemName [ 
+ClyShowMethodInheritanceCommand >> defaultMenuItemName [
 	^'Inheritance'
 ]
 

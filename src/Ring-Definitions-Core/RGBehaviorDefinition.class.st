@@ -499,7 +499,7 @@ RGBehaviorDefinition >> superclass [
 { #category : #accessing }
 RGBehaviorDefinition >> superclass: aRGBehaviorDefinition [
 	"The superclass is assigned.
-	If aRGBehaviorDefinition is not nil the receiver is added as a subclass and the superclass assignment also happens for theMetaClass"
+	If aRGBehaviorDefinition is not nil the receiver is added as a subclass and the superclass assignment also happens for classSide"
 
 	superclass := aRGBehaviorDefinition.
 	superclass notNil

@@ -11,7 +11,7 @@ Class {
 ProceedDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #'event handling' }
@@ -27,7 +27,7 @@ ProceedDialogWindow >> handlesKeyboard: evt [
 ProceedDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #questionIcon
+	^ self iconNamed: #question
 ]
 
 { #category : #'event handling' }

@@ -989,9 +989,10 @@ TextMorph >> installEditorToReplace: priorEditor [
 	^ editor
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isAutoFit [
-	^ self valueOfProperty: #autoFitContents ifAbsent: [true]
+
+	^ self valueOfProperty: #autoFitContents ifAbsent: [ true ]
 ]
 
 { #category : #'linked frames' }
@@ -1006,22 +1007,22 @@ TextMorph >> isTextMorph [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isTranslucentButNotTransparent [
 	"Overridden from BorderedMorph to test backgroundColor instead of (text) color."
 
 	backgroundColor ifNil: [ ^ true ].
-	(backgroundColor isColor and: [ backgroundColor isTranslucentButNotTransparent ])
-		ifTrue: [ ^ true ].
-	(borderColor isColor and: [ borderColor isTranslucentButNotTransparent ])
-		ifTrue: [ ^ true ].
+	(backgroundColor isColor and: [ 
+		 backgroundColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
+	(borderColor isColor and: [ 
+		 borderColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isWrapped [
 	
-	^wrapFlag
+	^ wrapFlag
 ]
 
 { #category : #'editing helpers' }

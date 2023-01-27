@@ -85,6 +85,17 @@ MorphicEvent >> isMove [
 ]
 
 { #category : #testing }
+MorphicEvent >> isTextEditionEvent [
+	^false
+]
+
+{ #category : #testing }
+MorphicEvent >> isTextInputEvent [
+
+	^ false
+]
+
+{ #category : #testing }
 MorphicEvent >> isWindowEvent [
 	^false
 ]

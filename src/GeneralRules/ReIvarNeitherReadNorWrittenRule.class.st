@@ -20,6 +20,11 @@ ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 ]
 
 { #category : #accessing }
+ReIvarNeitherReadNorWrittenRule >> group [
+	^ 'Clean Code'
+]
+
+{ #category : #accessing }
 ReIvarNeitherReadNorWrittenRule >> name [
 
 	^ 'Instance variable not read or not written'

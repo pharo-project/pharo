@@ -139,7 +139,7 @@ UITheme class >> defaultSettings: aThemeSettings [
 
 { #category : #'class initialization' }
 UITheme class >> initialize [
-	"self initialize"
+
 	self current class = UITheme
 		ifTrue: [self current: nil
 			"due to change to being abstract"].
@@ -977,14 +977,14 @@ UITheme >> checkboxMarkerForm [
 UITheme >> checkboxSelectedForm [
 	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxSelectedForm
+	^ self iconNamed: #checkboxSelected
 ]
 
 { #category : #forms }
 UITheme >> checkboxUnselectedForm [
 	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxUnselectedForm
+	^ self iconNamed: #checkboxUnselected
 ]
 
 { #category : #services }
@@ -1288,14 +1288,24 @@ UITheme >> configureWindowDropShadowFor: aWindow [
 UITheme >> configureWindowLabelAreaFor: aWindow [
 	"Configure the label area for the given window."
 
-	|padding|
+	| macOSLayout addCloseBox addCollapseExpandBoxes addMenuBox padding paddingStep |
+	macOSLayout := self labelAreaLayout = #macOS
+		or: [ self labelAreaLayout = #platformDependent and: Smalltalk os isMacOS ].
+	addCloseBox := [ aWindow hasCloseBox ifTrue: [aWindow addCloseBox ] ].
+	addCollapseExpandBoxes := [
+		aWindow hasCollapseBox ifTrue: [aWindow addCollapseBox ].
+		aWindow hasExpandBox ifTrue: [aWindow addExpandBox ] ].
+	addMenuBox := [ aWindow hasMenuBox ifTrue: [aWindow addMenuControl ] ].
 	padding := 0.
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0).
-	aWindow hasCloseBox ifTrue: [aWindow addCloseBox. padding := padding + 1].
-	aWindow hasCollapseBox ifTrue: [aWindow addCollapseBox. padding := padding + 1].
-	aWindow hasExpandBox ifTrue: [aWindow addExpandBox. padding := padding + 1].
-	aWindow hasMenuBox ifTrue: [padding := padding - 1].
+	macOSLayout
+		ifTrue: [ addCloseBox value. addCollapseExpandBoxes value. paddingStep := 1 ]
+		ifFalse: [ addMenuBox value. paddingStep := -1 ].
+	aWindow hasCloseBox ifTrue: [padding := padding + paddingStep].
+	aWindow hasCollapseBox ifTrue: [padding := padding + paddingStep].
+	aWindow hasExpandBox ifTrue: [padding := padding + paddingStep].
+	aWindow hasMenuBox ifTrue: [padding := padding - paddingStep].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
 	aWindow basicLabel ifNotNil: [:label | 
@@ -1308,7 +1318,9 @@ UITheme >> configureWindowLabelAreaFor: aWindow [
 	padding > 0 ifTrue: [
 		aWindow labelArea
 			addMorphBack: (Morph new extent: (aWindow boxExtent x * padding) @ 0)].
-	aWindow hasMenuBox ifTrue: [aWindow addMenuControl].
+	macOSLayout
+		ifTrue: [ addMenuBox value ]
+		ifFalse: [ addCollapseExpandBoxes value. addCloseBox value ].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0)
 ]
@@ -2367,6 +2379,11 @@ UITheme >> initializeForms [
 		at: #windowMaximizePassive put: self newWindowInactiveControlForm;
 		at: #windowMenuPassive put: self newWindowMenuPassiveForm;
 		at: #windowMenuOver put: self newWindowMenuOverForm
+]
+
+{ #category : #accessing }
+UITheme >> labelAreaLayout [
+	^ self settings labelAreaLayout
 ]
 
 { #category : #'label-styles' }
@@ -4586,7 +4603,7 @@ UITheme >> newWindowMenuOverForm [
 UITheme >> newWindowMenuPassiveForm [
 	"Answer a new form for a window menu box."
 
-	^ self iconNamed: #windowMenuInactiveForm
+	^ self iconNamed: #windowMenuInactive
 ]
 
 { #category : #initialization }
@@ -4811,7 +4828,7 @@ UITheme >> radioButtonDisabledFillStyleFor: aRadioButton [
 UITheme >> radioButtonForm [
 	"Answer the form to use for a normal radio button."
 
-	^ self iconNamed: #radioButtonUnselectedForm
+	^ self iconNamed: #radioButtonUnselected
 ]
 
 { #category : #'label-styles' }
@@ -4867,7 +4884,7 @@ UITheme >> radioButtonSelectedFillStyleFor: aRadioButton [
 UITheme >> radioButtonSelectedForm [
 	"Answer the form to use for a selected radio button."
 
-	^ self iconNamed: #radioButtonSelectedForm
+	^ self iconNamed: #radioButtonSelected
 ]
 
 { #category : #'fill-styles' }
@@ -6088,7 +6105,7 @@ UITheme >> windowCloseOverForm [
 UITheme >> windowClosePassiveForm [
 	"Answer the form to use for passive (background) window close buttons"
 
-	^ self iconNamed: #windowCloseInactiveForm
+	^ self iconNamed: #windowCloseInactive
 ]
 
 { #category : #sounds }
@@ -6217,7 +6234,7 @@ UITheme >> windowMaximizeOverForm [
 UITheme >> windowMaximizePassiveForm [
 	"Answer the form to use for passive (background) window maximize/restore buttons"
 
-	^ self iconNamed: #windowMaximizeInactiveForm
+	^ self iconNamed: #windowMaximizeInactive
 ]
 
 { #category : #sounds }
@@ -6273,7 +6290,7 @@ UITheme >> windowMinimizeOverForm [
 UITheme >> windowMinimizePassiveForm [
 	"Answer the form to use for passive (background) window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeInactiveForm
+	^ self iconNamed: #windowMinimizeInactive
 ]
 
 { #category : #sounds }

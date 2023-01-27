@@ -21,7 +21,8 @@ Class {
 		'children',
 		'isRunning',
 		'parent',
-		'process'
+		'process',
+		'owner'
 	],
 	#classInstVars : [
 		'jobAnnouncer'
@@ -34,6 +35,15 @@ Job class >> block: aBlock [
 
 	^(self new)
 		block: aBlock;
+		yourself
+]
+
+{ #category : #'instance creation' }
+Job class >> block: aBlock owner: anObject [
+
+	^(self new)
+		block: aBlock;
+		owner: anObject;
 		yourself
 ]
 
@@ -272,8 +282,12 @@ Job >> min: aNumber [
 
 { #category : #accessing }
 Job >> owner [
+	^ owner
+]
 
-	^ block outerContext receiver
+{ #category : #accessing }
+Job >> owner: anObject [ 
+	owner := anObject
 ]
 
 { #category : #private }

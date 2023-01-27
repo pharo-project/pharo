@@ -25,13 +25,13 @@ EpMorphFactory >> emphasizedStringFor: aString [
 
 	"Hack: emphazised string has 3 blank pixels at the end"
 	morph width: (morph width - 3). "pffff"
-		
+
 	^ morph
 ]
 
 { #category : #strings }
-EpMorphFactory >> pillWith: aString [ 
-	
+EpMorphFactory >> pillWith: aString [
+
 	^ (self wrapping: aString)
 		borderWidth: 1;
 		borderColor: (self textColor alpha: 0.5);
@@ -66,11 +66,11 @@ EpMorphFactory >> secondaryTextColor [
 ]
 
 { #category : #generic }
-EpMorphFactory >> semiTransparent: aForm [ 
+EpMorphFactory >> semiTransparent: aForm [
 
-	^ AlphaImageMorph new 
-		image: aForm; 
-		alpha: 0.5; 
+	^ AlphaImageMorph new
+		image: aForm;
+		alpha: 0.5;
 		yourself
 ]
 

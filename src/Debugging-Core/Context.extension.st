@@ -72,7 +72,7 @@ Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."
 
-	^self return: value from: self methodReturnContext
+	^self return: value from: self home
 ]
 
 { #category : #'*Debugging-Core' }
@@ -175,7 +175,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	prior to each instruction executed. Answer the simulated value of aBlock."
 	| current returnContext exception |
 	
-	aBlock hasMethodReturn
+	aBlock hasNonLocalReturn
 		ifTrue: [ self error: 'simulation of blocks with ^ can run loose' ].
 		
 	current := [ aBlock
@@ -338,14 +338,12 @@ Context >> stepToSendOrReturn [
 
 { #category : #'*Debugging-Core' }
 Context class >> tallyInstructions: aBlock [
-	"
-	Count the occurrences of each bytecode during the execution of aBlock.
+	"Count the occurrences of each bytecode during the execution of aBlock.
 	Return a Array of associations using the byte as key and the occurrences as values sorted by the instruction opcode numeric values.
 	
-	This method uses the in-image bytecode interpreter to evaluate and count the instructions.
+	This method uses the in-image bytecode interpreter to evaluate and count the instructions."
 	
-	(Context tallyInstructions: [3.14159 printString]) size >>> 122
-	"
+	"(Context tallyInstructions: [3.14159 printString]) size >>> 122"
 	
 	| tallies |
 	tallies := Bag new.

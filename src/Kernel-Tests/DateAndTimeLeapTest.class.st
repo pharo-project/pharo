@@ -20,9 +20,9 @@ Class {
 { #category : #running }
 DateAndTimeLeapTest >> setUp [
 	super setUp.
-	aDateAndTime := (DateAndTime 
-		year: 2004 month: 2 day: 29 
-		hour: 13 minute: 33 second: 0 
+	aDateAndTime := (DateAndTime
+		year: 2004 month: 2 day: 29
+		hour: 13 minute: 33 second: 0
 		offset: 2 hours).
 	aTimeZone := TimeZone default.
 	aDuration := Duration days: 0 hours: 13 minutes: 33 seconds: 0 nanoSeconds: 0
@@ -30,7 +30,7 @@ DateAndTimeLeapTest >> setUp [
 
 { #category : #tests }
 DateAndTimeLeapTest >> testAsDate [
-	self assert: aDateAndTime asDate equals:  ('February 29, 2004' asDate translateTo: 2 hours).
+	self assert: aDateAndTime asDate equals:  ('February 29, 2004' asDate translateTo: 2 hours)
 ]
 
 { #category : #tests }
@@ -53,7 +53,7 @@ DateAndTimeLeapTest >> testAsNanoSeconds [
 { #category : #tests }
 DateAndTimeLeapTest >> testAsSeconds [
 	self assert: aDuration asSeconds equals: 48780.
-	self assert: aDateAndTime asSeconds equals: 3255507180.
+	self assert: aDateAndTime asSeconds equals: 3255507180
 ]
 
 { #category : #tests }
@@ -68,7 +68,7 @@ DateAndTimeLeapTest >> testAsUTC [
 
 { #category : #tests }
 DateAndTimeLeapTest >> testDay [
-	self assert: aDateAndTime day equals: 60. 
+	self assert: aDateAndTime day equals: 60.
 	self deny: aDateAndTime day equals: 29
 ]
 
@@ -152,8 +152,8 @@ DateAndTimeLeapTest >> testMeridianAbbreviation [
 
 { #category : #tests }
 DateAndTimeLeapTest >> testMiddleOf [
-	self assert: (aDateAndTime middleOf: aDuration) 
-		  equals: 
+	self assert: (aDateAndTime middleOf: aDuration)
+		  equals:
 	 (Timespan starting: (DateAndTime year: 2004 month: 2 day: 29 hour: 6 minute: 46 second: 30 offset: 2 hours)
 				  duration: (Duration days: 0 hours: 13 minutes: 33 seconds: 0 nanoSeconds: 0 ))
 ]
@@ -217,11 +217,11 @@ DateAndTimeLeapTest >> testSeconds [
 
 { #category : #tests }
 DateAndTimeLeapTest >> testTicks [
-	self 
-		assert: aDateAndTime ticks  
+	self
+		assert: aDateAndTime ticks
 		equals: ((DateAndTime julianDayNumber: 2453065) + 41580 seconds) ticks.
-	self 
-		assert: aDateAndTime ticks 
+	self
+		assert: aDateAndTime ticks
 		equals:  #(2453065 41580 0)
 ]
 
@@ -249,7 +249,7 @@ DateAndTimeLeapTest >> testYear [
 
 { #category : #tests }
 DateAndTimeLeapTest >> testYearDayHourMinuteSecond [
-	self assert: aDateAndTime equals: (DateAndTime year: 2004 day: 60 hour: 13 minute: 33 second: 0 offset: 2 hours).
+	self assert: aDateAndTime equals: (DateAndTime year: 2004 day: 60 hour: 13 minute: 33 second: 0 offset: 2 hours)
 ]
 
 { #category : #tests }

@@ -148,10 +148,9 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Smalltalk globals flushClassNameCache.
 	ScrollBarMorph initializeImagesCache.
 
-	3 timesRepeat: [ 
-		Smalltalk garbageCollect.
-	 	Symbol compactSymbolTable ].
-	 	HashedCollection rehashAll.
+	Smalltalk garbageCollect.
+	HashedCollection rehashAll.
+	Symbol rehash.
 	  
 	  "Remove empty categories, which are not in MC packages, because MC does
 	  not do this (this script does not make packages dirty)"

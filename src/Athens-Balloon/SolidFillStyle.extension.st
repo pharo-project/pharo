@@ -1,7 +1,7 @@
 Extension { #name : #SolidFillStyle }
 
 { #category : #'*Athens-Balloon' }
-SolidFillStyle >> asAthensPaintOn: anAthensCanvas [ 
+SolidFillStyle >> asAthensPaintOn: anAthensCanvas [
 
 	^ anAthensCanvas surface createSolidColorPaint: color
 ]

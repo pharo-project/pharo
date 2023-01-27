@@ -2,8 +2,8 @@ Extension { #name : #RBRenameMethodRefactoring }
 
 { #category : #'*Epicea-Refactorings' }
 RBRenameMethodRefactoring >> asEpiceaEvent [
-	^ EpRenameMethodRefactoring 
-		renameMethod: oldSelector 
+	^ EpRenameMethodRefactoring
+		renameMethod: oldSelector
 		in: class name
 		to: newSelector
 ]

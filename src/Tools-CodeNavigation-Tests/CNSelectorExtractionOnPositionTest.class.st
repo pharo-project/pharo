@@ -109,7 +109,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlock [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -119,7 +119,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlockWithArgument [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -129,7 +129,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArray [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -139,7 +139,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArrayWithAnElement [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -149,7 +149,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArray [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -159,7 +159,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArrayWithAnElement [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -460,7 +460,7 @@ CNSelectorExtractionOnPositionTest >> testCaretOnNonValidCode [
 	sourceCode := 'anObjectdo : 2'.
 	ast := (RBParser parseFaultyExpression: sourceCode).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod.
+	self assert: self selectedSelector equals: ast methodNode selector.
 ]
 
 { #category : #'tests - no selection - withOutMessage' }

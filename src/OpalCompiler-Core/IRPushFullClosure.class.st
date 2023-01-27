@@ -8,7 +8,8 @@ Class {
 	#superclass : #IRInstruction,
 	#instVars : [
 		'compiledBlock',
-		'copiedValues'
+		'copiedValues',
+		'outerContextNeeded'
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }
@@ -41,6 +42,18 @@ IRPushFullClosure >> copiedValues: anObject [
 { #category : #debugging }
 IRPushFullClosure >> indexForVarNamed: aName [
 	^ sourceNode ir indexForVarNamed: aName
+]
+
+{ #category : #accessing }
+IRPushFullClosure >> outerContextNeeded [
+
+	^ outerContextNeeded ifNil: [ true ]
+]
+
+{ #category : #accessing }
+IRPushFullClosure >> outerContextNeeded: anObject [
+
+	outerContextNeeded := anObject
 ]
 
 { #category : #scoping }

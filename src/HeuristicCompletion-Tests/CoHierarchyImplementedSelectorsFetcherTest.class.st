@@ -11,7 +11,7 @@ CoHierarchyImplementedSelectorsFetcherTest >> setUp [
 	fetcher := CoClassImplementedMessagesFetcher new
 		completionClass: self completionClass;
 		forHierarchy.
-	expectedElements := { 
+	expectedElements := {
 		NECSelectorEntry contents: 'ma' node: nil.
 		NECSelectorEntry contents: 'mb' node: nil.
 		NECSelectorEntry contents: 'mc' node: nil.

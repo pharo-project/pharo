@@ -110,8 +110,6 @@ RPackage class >> help [
 
 { #category : #'class initialization' }
 RPackage class >> initialize [
-	"self initialize"
-	
 	"Ensure the organizer will be the RPackageOrganizer default"
 	self organizer: nil.
 	Properties
@@ -552,6 +550,11 @@ RPackage >> definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName [
 	
 	self definedMethodsBecomeExtendedForClass: aClassName.
 	self definedMethodsBecomeExtendedForMetaclass: aClassName.
+]
+
+{ #category : #accessing }
+RPackage >> definedOrExtendedClasses [
+	^ self definedClasses | self extendedClasses
 ]
 
 { #category : #accessing }
@@ -1465,7 +1468,6 @@ RPackage >> selectorsForClass: aClass [
 
 { #category : #'system compatibility' }
 RPackage >> systemCategories [
-	"(RPackageOrganizer default packageNamed: 'HelpSystem-Core' asSymbol) systemCategories"
 
 	^ self systemOrganization categories select: [:cat | self includesSystemCategory: cat]
 ]
@@ -1491,7 +1493,7 @@ RPackage >> tagsForClasses [
 
 { #category : #private }
 RPackage >> toTagName: aSymbol [
-	^ (aSymbol beginsWith: self name, '-')
+	^ (aSymbol beginsWith: self name asString, '-')
 		ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
 		ifFalse: [ aSymbol ]
 ]

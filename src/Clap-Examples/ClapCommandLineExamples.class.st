@@ -73,8 +73,8 @@ ClapCommandLineExamples class >> hello [
 				description: 'Recipient of the greetings';
 				multiple: true;
 				implicitMeaning: [ :arg :app | app defaultRecipient ]);
-		meaning: [ :args | 
-			args at: #helpFlag ifPresent: [ :help | 
+		meaning: [ :args |
+			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			(self with: args) execute ]
 ]

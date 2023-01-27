@@ -16,7 +16,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 			(m selector = selector and: [ m protocol ~= protocol ])
 				ifTrue: [ violating add: m -> m protocol ] ] ].
 	self 
-		assert: violating isEmpty 
+		assert: violating isEmpty
 		description: ('Violations: {1}.
 		Reason: {1} subclasses should have #{2} in protocol {3}' 
 			format: { self explanationFrom: violating . aClass asString. selector. protocol })
@@ -52,6 +52,21 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 	"The #basicNew methods should be in method protocol 'instance creation'"
 	
 	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
+]
+
+{ #category : #'tests - initialization' }
+ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
+	"The class side #initialize methods should be in method protocol 'class initialization'"
+
+	| violating classSideInitializeMethods |
+	violating := OrderedCollection new.
+	classSideInitializeMethods := OrderedCollection new.
+	
+	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide ]) ifTrue: [ classSideInitializeMethods add: m ]]].
+	
+	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
+	
+	self assert: violating size <= 7 description: 'Class side #initialize methods should be in "class initialization" method category'
 ]
 
 { #category : #'tests - object' }
@@ -103,6 +118,22 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	self assureAll: #hash areCategorizedIn: #comparing whenSubclassOf: Object
 ]
 
+{ #category : #'tests - initialization' }
+ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInInitializationProtocol [
+
+	"The instance side #initialize methods should be in method protocol 'initialization'"
+
+	| violating instanceSideInitializeMethods |
+	violating := OrderedCollection new.
+	instanceSideInitializeMethods := OrderedCollection new.
+
+	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide not  ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
+
+	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
+
+	self assert: violating size <= 9 description: 'Instance side #initialize methods should be in "initialization" method category'
+]
+
 { #category : #tests }
 ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	"Check that we have no protocols left without methods"
@@ -141,12 +172,11 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: Protocol unclassified ].
 
 
-	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass).	
+	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand).	
 	
 	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
 
-	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: remaining size <= 3
+	self assert: remaining isEmpty description: ('the following classes have uncategorized methods: ', remaining asString)
 ]
 
 { #category : #tests }

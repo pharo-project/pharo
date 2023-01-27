@@ -31,7 +31,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBBlockNode class >> arguments: argNodes body: sequenceNode [ 
+RBBlockNode class >> arguments: argNodes body: sequenceNode [
 	^(self new)
 		arguments: argNodes;
 		body: sequenceNode;
@@ -39,12 +39,12 @@ RBBlockNode class >> arguments: argNodes body: sequenceNode [
 ]
 
 { #category : #'instance creation' }
-RBBlockNode class >> body: sequenceNode [ 
+RBBlockNode class >> body: sequenceNode [
 	^self arguments: #() body: sequenceNode
 ]
 
 { #category : #comparing }
-RBBlockNode >> = anObject [ 
+RBBlockNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	self body = anObject body ifFalse: [^false].
@@ -91,7 +91,7 @@ RBBlockNode >> arguments [
 ]
 
 { #category : #accessing }
-RBBlockNode >> arguments: argCollection [ 
+RBBlockNode >> arguments: argCollection [
 	arguments := argCollection.
 	arguments do: [:each | each parent: self ]
 ]
@@ -120,7 +120,7 @@ RBBlockNode >> body [
 ]
 
 { #category : #accessing }
-RBBlockNode >> body: stmtsNode [ 
+RBBlockNode >> body: stmtsNode [
 	body := stmtsNode.
 	body parent: self
 ]
@@ -136,12 +136,20 @@ RBBlockNode >> colons [
 ]
 
 { #category : #'accessing - token' }
-RBBlockNode >> colons: anArray [ 
+RBBlockNode >> colons: anArray [
 	colons := anArray
 ]
 
+{ #category : #accessing }
+RBBlockNode >> constantValue [
+	self isConstant ifFalse: [ self error: 'block is not constant' ].
+	^ body statements
+		ifEmpty: [ nil ]
+		ifNotEmpty: [:statements | statements first value ]
+]
+
 { #category : #matching }
-RBBlockNode >> copyInContext: aDictionary [ 
+RBBlockNode >> copyInContext: aDictionary [
 	^ self class new
 		arguments: (self copyList: self arguments inContext: aDictionary);
 		body: (self body copyInContext: aDictionary);
@@ -149,17 +157,17 @@ RBBlockNode >> copyInContext: aDictionary [
 ]
 
 { #category : #testing }
-RBBlockNode >> defines: aName [ 
+RBBlockNode >> defines: aName [
 	^arguments anySatisfy: [:each | each name = aName]
 ]
 
 { #category : #testing }
-RBBlockNode >> directlyUses: aNode [ 
+RBBlockNode >> directlyUses: aNode [
 	^false
 ]
 
 { #category : #comparing }
-RBBlockNode >> equalTo: anObject withMapping: aDictionary [ 
+RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self arguments size = anObject arguments size ifFalse: [^false].
 	self arguments
@@ -172,7 +180,7 @@ RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : #testing }
-RBBlockNode >> hasArgumentNamed: aString [	
+RBBlockNode >> hasArgumentNamed: aString [
 	^ self arguments anySatisfy: [ :argument| argument name = aString ]
 ]
 
@@ -194,7 +202,7 @@ RBBlockNode >> hasTemporaries [
 ]
 
 { #category : #testing }
-RBBlockNode >> hasTemporaryNamed: aString [	
+RBBlockNode >> hasTemporaryNamed: aString [
 	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
 ]
 
@@ -206,7 +214,7 @@ RBBlockNode >> hash [
 { #category : #testing }
 RBBlockNode >> headIsNotEmpty [
 	"Return true whether the receiver has some arguments or comments"
-	
+
 	^ arguments isNotEmpty or: [ self comments isNotEmpty ]
 ]
 
@@ -222,7 +230,16 @@ RBBlockNode >> initialize [
 
 { #category : #testing }
 RBBlockNode >> isBlock [
-	^true
+
+	^ true
+]
+
+{ #category : #testing }
+RBBlockNode >> isConstant [
+	"is the block just returning a literal?"
+	^ body statements
+		ifEmpty: [ true "empty block returns nil" ]
+		ifNotEmpty: [:statements | statements first isLiteralNode ]
 ]
 
 { #category : #testing }
@@ -236,7 +253,7 @@ RBBlockNode >> isImmediateNode [
 ]
 
 { #category : #testing }
-RBBlockNode >> isLast: aNode [ 
+RBBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
@@ -256,12 +273,12 @@ RBBlockNode >> left: anInteger [
 ]
 
 { #category : #matching }
-RBBlockNode >> match: aNode inContext: aDictionary [ 
+RBBlockNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
-	^(self 
+	^(self
 		matchList: arguments
 		against: aNode arguments
-		inContext: aDictionary) 
+		inContext: aDictionary)
 			and: [body match: aNode body inContext: aDictionary]
 ]
 
@@ -273,6 +290,11 @@ RBBlockNode >> methodOrBlockNode [
 { #category : #testing }
 RBBlockNode >> needsParenthesis [
 	^false
+]
+
+{ #category : #accessing }
+RBBlockNode >> numArgs [
+	^ self arguments size
 ]
 
 { #category : #copying }
@@ -288,7 +310,7 @@ RBBlockNode >> precedence [
 ]
 
 { #category : #testing }
-RBBlockNode >> references: aVariableName [ 
+RBBlockNode >> references: aVariableName [
 	^body references: aVariableName
 ]
 
@@ -299,9 +321,9 @@ RBBlockNode >> removeTemporaryNamed: aName [
 ]
 
 { #category : #replacing }
-RBBlockNode >> replaceNode: aNode withNode: anotherNode [ 
+RBBlockNode >> replaceNode: aNode withNode: anotherNode [
 	body == aNode ifTrue: [self body: anotherNode].
-	self arguments: (arguments 
+	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
@@ -358,12 +380,12 @@ RBBlockNode >> temporaryNames [
 ]
 
 { #category : #testing }
-RBBlockNode >> uses: aNode [ 
+RBBlockNode >> uses: aNode [
 	aNode = body ifFalse: [^false].
-	^parent isMessage 
-		ifTrue: 
-			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:) 
-				includes: parent selector) not 
+	^parent isMessage
+		ifTrue:
+			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:)
+				includes: parent selector) not
 				or: [parent isUsed]]
 		ifFalse: [self isUsed]
 ]

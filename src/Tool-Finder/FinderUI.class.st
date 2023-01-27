@@ -15,9 +15,6 @@ Class {
 		'searchedTextList',
 		'sourceTextModel'
 	],
-	#classInstVars : [
-		'searchedTextListMaxSize'
-	],
 	#category : #'Tool-Finder-UI'
 }
 
@@ -34,12 +31,7 @@ FinderUI class >> doAllSubscriptionsOn: aFinder to: anInstance [
 
 { #category : #icons }
 FinderUI class >> icon [
-	^ self iconNamed: #smallFindIcon
-]
-
-{ #category : #'class initialization' }
-FinderUI class >> initialize [
-	searchedTextListMaxSize := 15
+	^ self iconNamed: #smallFind
 ]
 
 { #category : #explanations }
@@ -120,13 +112,6 @@ FinderUI class >> on: aFinder [
 	^instance
 ]
 
-{ #category : #accessing }
-FinderUI class >> searchedTextListMaxSize: anInteger [
-
-	self allInstancesDo: [:each | each searchedTextListMaxSize: anInteger].
-	searchedTextListMaxSize := anInteger
-]
-
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesDisableUseRegExOn: aFinder to: anInstance [
 
@@ -192,7 +177,7 @@ FinderUI class >> subscribesUpdateSourceCodeOn: aFinder to: anInstance [
 
 { #category : #icons }
 FinderUI class >> taskbarIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #'items creation' }
@@ -781,14 +766,14 @@ FinderUI >> open [
 
 { #category : #private }
 FinderUI >> openPackageChooser [
-	(DialogItemsChooser
-		on: self
-		unselectedItems: self constructPackagesSet
-		selectedItems: (self constructPackagesSet: self packagesSelection)
-		selectedItemsSetterSelector: #collectFromPackages: 
-		title: 'Package Chooser'
-		unselectedItemsLabel: 'Unselected Packages' translated
-		selectedItemsLabel: 'Selected Packages' translated) open
+
+	(SpChooserPresenter
+		 sourceItems: self constructPackagesSet
+		 chosenItems: (self constructPackagesSet: self packagesSelection))
+		openDialog
+		title: 'Package Chooser';
+		okAction: [ :dialog |
+			self collectFromPackages: dialog presenter chosenItems ]
 ]
 
 { #category : #private }
@@ -872,12 +857,6 @@ FinderUI >> searchedTextList: aCollection [
 { #category : #accessing }
 FinderUI >> searchedTextListMaxSize [
 	^20
-]
-
-{ #category : #accessing }
-FinderUI >> searchedTextListMaxSize: anInteger [
-	[ self searchedTextList size > anInteger ] whileTrue: [ self searchedTextList removeLast ].
-	self changed: #searchedTextList
 ]
 
 { #category : #'text areas behavior' }

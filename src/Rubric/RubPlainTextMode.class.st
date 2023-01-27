@@ -59,11 +59,11 @@ RubPlainTextMode class >> menuOn: aBuilder [
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
@@ -72,37 +72,37 @@ RubPlainTextMode class >> menuOn: aBuilder [
 			(aBuilder item: #Undo translated)
 				keyText: 'z';
 				selector: #undo;
-				iconName: #smallUndoIcon;
+				iconName: #smallUndo;
 				withSeparatorAfter.
 			self fontMenuOn: aBuilder ].
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	aBuilder model canChangeText
 		ifTrue: [ 
 			(aBuilder item: #Cut translated)
 				keyText: 'x';
 				selector: #cut;
-				iconName: #smallCutIcon.
+				iconName: #smallCut.
 			(aBuilder item: #Paste translated)
 				keyText: 'v';
 				selector: #paste;
-				iconName: #smallPasteIcon.
+				iconName: #smallPaste.
 			(aBuilder item: #'Paste Recent' translated)
 				selector: #pasteRecent;
-				iconName: #smallCopyIcon;
+				iconName: #smallCopy;
 				withSeparatorAfter.
 			(aBuilder model model notNil and: [ aBuilder model acceptAllowed ])
 				ifTrue: [ 
 					(aBuilder item: #Accept translated)
 						keyText: 's';
 						selector: #accept;
-						iconName: #smallOkIcon.
+						iconName: #smallOk.
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;
-						iconName: #smallCancelIcon ] ]
+						iconName: #smallCancel ] ]
 ]
 
 { #category : #'text area font' }

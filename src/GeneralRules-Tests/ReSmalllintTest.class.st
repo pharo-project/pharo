@@ -162,7 +162,7 @@ ReSmalllintTest >> ruleClassFor: aTestSelector [
 	^ self classNamed:
 		('Re',
 		(aTestSelector asString allButFirst: 4), "'test' size"
-		'Rule') asSymbol.
+		'Rule') asSymbol
 ]
 
 { #category : #private }
@@ -179,7 +179,7 @@ ReSmalllintTest >> ruleFor: aTestSelector plusSelectors: aCollectionOfTestedSele
 	expectedResultEnvironment := RBSelectorEnvironment new.
 	(aCollectionOfTestedSelectors
 		copyWith: (self objectClassSelectorFor: aTestSelector))
-		do: [ :each | 
+		do: [ :each |
 			expectedResultEnvironment addClass: RBSmalllintTestObject selector: each.
 			self
 				assert: (RBSmalllintTestObject includesSelector: each)
@@ -194,11 +194,11 @@ ReSmalllintTest >> runRule: aRule onEnvironment: anEnvironment [
 	| runner |
 	self assertIsValidRule: aRule.
 	runner := ReSmalllintChecker new.
-	runner 
+	runner
 		rule: {aRule};
 		environment: anEnvironment;
 		run.
-	^ runner.
+	^ runner
 ]
 
 { #category : #private }
@@ -207,11 +207,11 @@ ReSmalllintTest >> runRuleFor: aTestSelector onEnvironment: anEnvironment [
 	rule := (self ruleClassFor: aTestSelector) new.
 	self assertIsValidRule: rule.
 	runner := ReSmalllintChecker new.
-	runner 
+	runner
 		rule: {rule};
 		environment: anEnvironment;
 		run.
-	^ runner criticsOf: rule.
+	^ runner criticsOf: rule
 ]
 
 { #category : #tests }
@@ -326,7 +326,7 @@ ReSmalllintTest >> testEquivalentSuperclassMethods [
 
 { #category : #tests }
 ReSmalllintTest >> testExtraBlock [
-	self 
+	self
 		ruleFor: self currentSelector
 		plusSelectors: #(#testMethod1 )
 ]
@@ -399,6 +399,11 @@ ReSmalllintTest >> testNoClassComment [
 ]
 
 { #category : #tests }
+ReSmalllintTest >> testNotOptimizedIf [
+	self ruleFor: self currentSelector plusSelectors: {#ifTrueBlocks}
+]
+
+{ #category : #tests }
 ReSmalllintTest >> testPrecedence [
 	self ruleFor: self currentSelector
 ]
@@ -408,19 +413,19 @@ ReSmalllintTest >> testRBMissingSubclassResponsibilityRule [
 	| superClass subClass1 subClass2 rule |
 	rule := ReMissingSubclassResponsibilityRule new.
 
-	superClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	superClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: 'MySuperclass';
 			package: self class category ].
 
-	subClass1 := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	subClass1 := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: 'MySubclass1';
 			superclass: superClass;
 			package: self class category ].
 
-	subClass2 := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	subClass2 := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: 'MySubclass2';
 			superclass: superClass;
 			package: self class category ].
@@ -541,9 +546,9 @@ ReSmalllintTest >> testUniqueIdentifierName [
 	| idToRules |
 
 	idToRules := Dictionary new.
-	RBLintRule allSubclasses do: [ :ruleClass | 
+	RBLintRule allSubclasses do: [ :ruleClass |
 		(idToRules at: ruleClass uniqueIdentifierName ifAbsentPut: [ Set new ]) add: ruleClass ].
-	self assert: (idToRules noneSatisfy: [ :ruleClasses | ruleClasses size > 1 ]).
+	self assert: (idToRules noneSatisfy: [ :ruleClasses | ruleClasses size > 1 ])
 ]
 
 { #category : #tests }

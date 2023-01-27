@@ -20,10 +20,3 @@ OCStoreIntoReadOnlyVariableError >> description [
 			stream cr.
 			stream << self methodNode asString ]
 ]
-
-{ #category : #signaling }
-OCStoreIntoReadOnlyVariableError >> signal [
-	compilationContext interactive
-		ifFalse: [ ^ SystemNotification signal: self asString ].
-	^ super signal
-]

@@ -21,7 +21,7 @@ WatchIconStyler >> iconBlock: aNode [
 WatchIconStyler >> iconFor: aNode [
 	^aNode watch isRecording
 		ifTrue: [ self iconNamed: #testGreen]
-		ifFalse: [ self iconNamed: #testNotRunIcon ]
+		ifFalse: [ self iconNamed: #testNotRun ]
 ]
 
 { #category : #defaults }

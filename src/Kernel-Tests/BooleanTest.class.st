@@ -13,7 +13,7 @@ Class {
 
 { #category : #coverage }
 BooleanTest >> classToBeTested [
-	
+
 	^ Boolean
 ]
 

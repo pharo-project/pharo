@@ -10,7 +10,7 @@ MulticolumnLazyListMorph >> athensDisplay: items atRow: row on: anAthensCanvas [
 	items
 		with: (1 to: items size)
 		do: [ :item :index | "move the bounds to the right at each step"
-			index > 1 ifTrue: [ 
+			index > 1 ifTrue: [
 				drawBounds := drawBounds left:
 					              drawBounds left + listSource gapSize
 					              + (columnWidths at: index - 1) ].
@@ -27,6 +27,6 @@ MulticolumnLazyListMorph >> drawOnAthensCanvas: anAthensCanvas [
 
 	self setColumnWidthsFor: anAthensCanvas.
 	self adjustWidth.
-	
+
 	super drawOnAthensCanvas: anAthensCanvas
 ]

@@ -71,7 +71,6 @@ Class {
 		'numArgs',
 		'properties',
 		'numberOfTemps',
-		'additionalLiterals',
 		'forceLongForm',
 		'primNumber',
 		'encoderClass',
@@ -101,8 +100,8 @@ IRBytecodeGenerator >> addLastLiteral: object [
 
 { #category : #private }
 IRBytecodeGenerator >> addLiteral: object [
-	literals add: object.
-	^ literals identityIndexOf: object
+	^ literals addLiteral: object.
+
 ]
 
 { #category : #private }
@@ -119,11 +118,6 @@ IRBytecodeGenerator >> addProperties: cm [
 		ifNotNil: [ cm penultimateLiteral: properties.
 			properties method: cm.
 			properties pragmas do: [ :each | each method: cm ] ]
-]
-
-{ #category : #accessing }
-IRBytecodeGenerator >> additionalLiterals: aSet [
-	additionalLiterals := aSet.
 ]
 
 { #category : #instructions }
@@ -163,8 +157,17 @@ IRBytecodeGenerator >> compilationContext: aCompilationContext [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledBlockWith: trailer [
-	| lits header cb |
+	| lits quickPrimitive header cb |
 	lits := self literals allButLast "1 free only for compiledBlock".
+	quickPrimitive := self quickMethodPrim.
+	"disabled for now"
+	"(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
+		""if we are a quick method we need to add a bytecode at the beginning. #bytecodes
+		takes primitiveBytes into account""
+		primitiveBytes := (ByteArray new: 4) writeStream.
+		encoder stream: primitiveBytes.
+		encoder genCallPrimitive: quickPrimitive.
+	]."
 	header := self spurVMHeader: lits size.
 	cb := CompiledBlock newMethod: self bytecodes size header: header.
 	(WriteStream with: cb)
@@ -346,16 +349,15 @@ IRBytecodeGenerator >> initialize [
 	numArgs := 0.
 	currentSeqNum := 0.
 	orderSeq := OrderedCollection new.  "reverse map of seqOrder"
-	additionalLiterals := OCLiteralSet new.
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
 	self label: self newDummySeqId
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 IRBytecodeGenerator >> irPrimitive: anIrPrimitive [
 	literals isEmpty ifFalse: [self error: 'init prim before adding instructions'].
-	anIrPrimitive spec ifNotNil: [literals add: anIrPrimitive spec].
+	anIrPrimitive spec ifNotNil: [literals addLiteral: anIrPrimitive spec].
 	primNumber := anIrPrimitive num.
 	primNumber = 0 ifTrue: [ ^ self ].
 	self encoderClass callPrimitiveCode ifNil: [ ^ self ].
@@ -410,8 +412,7 @@ IRBytecodeGenerator >> literalIndexOf: object [
 
 	| index |
 	
-	(index := literals literalIndexOf: object ifAbsent: 0) > 0 ifFalse: [
-		index := self addLiteral: object].
+	index := literals literalIndexOf: object ifAbsent: [self addLiteral: object].
 	
 	"conversion from 1 based to 0 based"
 	^ index - 1
@@ -419,14 +420,7 @@ IRBytecodeGenerator >> literalIndexOf: object [
 
 { #category : #results }
 IRBytecodeGenerator >> literals [
-	literals := literals asArray.	"Put the optimized selectors in literals so as to browse senders more easily"
-	additionalLiterals := additionalLiterals asArray reject: [ :e | literals hasLiteral: e ].
-	additionalLiterals isEmpty
-		ifFalse: [ 
-			"Use one entry per literal if enough room, else make anArray"
-			literals := literals size + additionalLiterals size + 2 > 255
-				ifTrue: [ literals copyWith: additionalLiterals ]
-				ifFalse: [ literals , additionalLiterals ] ].
+	literals := literals asArray.	
 	(literals anySatisfy: [ :each | each isMethodProperties ])
 		ifFalse: [ literals := literals copyWith: nil ].
 	^ lastLiteral ifNil: [ literals copyWith: nil ] ifNotNil: [ literals copyWith: lastLiteral ]
@@ -516,13 +510,15 @@ IRBytecodeGenerator >> pushDup [
 
 { #category : #instructions }
 IRBytecodeGenerator >> pushFullBlockClosure: fullBlock [
-	fullBlock copiedValues size timesRepeat: [ stack pop ].
+	| numCopied |
+	numCopied := fullBlock copiedValues size.
+	numCopied timesRepeat: [ stack pop ].
 	stack push.
 	encoder 
 		genPushFullClosure: (self literalIndexOf: fullBlock compiledBlock) 
-		numCopied: fullBlock copiedValues size
+		numCopied: numCopied
 		receiverOnStack: false
-		outerContextNeeded: true
+		outerContextNeeded: fullBlock outerContextNeeded
 ]
 
 { #category : #instructions }

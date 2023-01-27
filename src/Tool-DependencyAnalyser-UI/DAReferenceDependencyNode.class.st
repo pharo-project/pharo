@@ -14,7 +14,7 @@ DAReferenceDependencyNode >> browseSendersOrUsers [
 
 { #category : #accessing }
 DAReferenceDependencyNode >> icon [
-	^ self iconNamed: #classIcon
+	^ self iconNamed: #class
 ]
 
 { #category : #testing }

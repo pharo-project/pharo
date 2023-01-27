@@ -27,7 +27,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyScopeCompoBoxMorph class >> for: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 
@@ -44,15 +44,15 @@ ClyScopeCompoBoxMorph >> browser: aMethodBrowser [
 
 { #category : #initialization }
 ClyScopeCompoBoxMorph >> build [
-	dropList := self theme 
+	dropList := self theme
 		newDropListIn: self
-		for: self 
+		for: self
 		list: #scopeNames
-		getSelected: #currentScopeIndex 
-		setSelected: #currentScopeIndex: 
+		getSelected: #currentScopeIndex
+		setSelected: #currentScopeIndex:
 		getEnabled: nil useIndex: true
-		help: self currentScope description. 
-		
+		help: self currentScope description.
+
 	self addMorph: dropList
 ]
 
@@ -64,8 +64,8 @@ ClyScopeCompoBoxMorph >> currentScope [
 { #category : #accessing }
 ClyScopeCompoBoxMorph >> currentScope: aScope [
 
-	browser switchScopeTo: aScope.	
-	dropList setBalloonText: aScope description.
+	browser switchScopeTo: aScope.
+	dropList setBalloonText: aScope description
 ]
 
 { #category : #accessing }
@@ -81,7 +81,7 @@ ClyScopeCompoBoxMorph >> currentScopeIndex: index [
 { #category : #initialization }
 ClyScopeCompoBoxMorph >> initialize [
 	super initialize.
-	self 
+	self
 		changeTableLayout;
 		hResizing: #rigid;
 		width: 200

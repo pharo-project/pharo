@@ -54,12 +54,12 @@ ClyTableColumn >> displayItemName [
 
 { #category : #accessing }
 ClyTableColumn >> displayItemPropertyBy: propertyBlock [
-	displayBlock := [ :cell :item | 
+	displayBlock := [ :cell :item |
 		cell label contents: (propertyBlock value: item browserItem) ]
 ]
 
 { #category : #testing }
 ClyTableColumn >> isMainColumn [
-	
+
 	^ false
 ]

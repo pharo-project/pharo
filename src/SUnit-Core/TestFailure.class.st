@@ -12,7 +12,7 @@ TestFailure class >> captureIfSignalledWhenStepping [
 	^self == TestFailure
 ]
 
-{ #category : #'camp smalltalk' }
+{ #category : #testing }
 TestFailure >> isResumable [
 	
 	^ false

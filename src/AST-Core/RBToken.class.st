@@ -26,7 +26,7 @@ RBToken class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBToken class >> start: anInterval [ 
+RBToken class >> start: anInterval [
 	^self new start: anInterval
 ]
 
@@ -121,7 +121,7 @@ RBToken >> length [
 ]
 
 { #category : #printing }
-RBToken >> printOn: aStream [ 
+RBToken >> printOn: aStream [
 	aStream
 		nextPut: $ ;
 		nextPutAll: self class name
@@ -138,13 +138,13 @@ RBToken >> start [
 ]
 
 { #category : #initialization }
-RBToken >> start: anInteger [ 
+RBToken >> start: anInteger [
 	sourcePointer := anInteger
 ]
 
 { #category : #accessing }
 RBToken >> stop [
-	^ sourcePointer 
+	^ sourcePointer
 		ifNil: [ -1 ]
 		ifNotNil: [ self start + self length - 1 ]
 ]

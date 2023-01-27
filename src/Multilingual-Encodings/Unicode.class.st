@@ -730,6 +730,7 @@ Unicode class >> isUppercase: char [
 
 { #category : #'class methods' }
 Unicode class >> leadingChar [
+	self deprecated: 'not supported anymore' on: '6 September 2022' in: 'Pharo11'.
 	^ 0
 ]
 

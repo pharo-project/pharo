@@ -19,7 +19,7 @@ CoASTResultSetBuilder class >> isAbstract [
 
 { #category : #accessing }
 CoASTResultSetBuilder >> astNode [
-	
+
 	^ astNode
 ]
 
@@ -33,7 +33,7 @@ CoASTResultSetBuilder >> buildCompletion [
 
 { #category : #'API - building' }
 CoASTResultSetBuilder >> configureEmptyFetcherForNode: aNode [
-	
+
 	^ self
 		configureFetcher: CoEmptyFetcher new
 		forNode: aNode
@@ -41,7 +41,7 @@ CoASTResultSetBuilder >> configureEmptyFetcherForNode: aNode [
 
 { #category : #'private - building' }
 CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
-	
+
 	| completion |
 	completion := CoResultSet fetcher: aFetcher.
 	completion filter: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: completionContext completionToken).
@@ -51,7 +51,7 @@ CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
 
 { #category : #'private - building' }
 CoASTResultSetBuilder >> configureFetcherForNode: aNode usingHeuristicAvoidingRepetitions: heuristic [
-	
+
 	| fetcher |
 	fetcher := heuristic fetcherFor: aNode inContext: completionContext.
 	^ self
@@ -71,7 +71,7 @@ CoASTResultSetBuilder >> parseNode [
 	^ node ifNil: [
 		(completionContext completionClass compiler
 			source: completionContext source;
-			noPattern: completionContext isWorkspace; 
+			noPattern: completionContext isScripting;
 			options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 			parse) nodeForOffset: completionContext position ]
 ]
@@ -83,25 +83,25 @@ CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [ 
-	
+CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [
+
 	^ self visitNode: aRBArrayNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [ 
-	
+CoASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [
+
 	^ self visitNode: aRBAssignmentNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitBlockNode: aRBBlockNode [ 
+CoASTResultSetBuilder >> visitBlockNode: aRBBlockNode [
 
 	^ self visitNode: aRBBlockNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [ 
+CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 
 	^ self visitNode: aRBCascadeNode
 ]
@@ -113,7 +113,7 @@ CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [ 
+CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [
 	^ self visitNode: aRBVariableNode
 ]
 
@@ -124,19 +124,19 @@ CoASTResultSetBuilder >> visitGlobalVariableNode: aRBVariableNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [ 
+CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [
 	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
+CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 	^ self visitNode: aRBLiteralArrayNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [ 
-	
+CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
+
 	^ self visitNode: aRBLiteralValueNode
 ]
 
@@ -147,25 +147,25 @@ CoASTResultSetBuilder >> visitLiteralVariableNode: aRBVariableNode [
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitMessageNode: aRBMessageNode [
-	
+
 	^ self visitNode: aRBMessageNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitMethodNode: aRBMethodNode [
-	
+
 	^ self visitNode: aRBMethodNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitNode: aNode [
-	
+
 	^ self configureEmptyFetcherForNode: aNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitParseErrorNode: aRBParseErrorNode [ 
-	
+CoASTResultSetBuilder >> visitParseErrorNode: aRBParseErrorNode [
+
 	^ self visitNode: aRBParseErrorNode
 ]
 
@@ -176,26 +176,26 @@ CoASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitReturnNode: aRBReturnNode [ 
-	
+CoASTResultSetBuilder >> visitReturnNode: aRBReturnNode [
+
 	^ self visitNode: aRBReturnNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitSelfNode: aRBSelfNode [ 
-	
+CoASTResultSetBuilder >> visitSelfNode: aRBSelfNode [
+
 	^ self visitNode: aRBSelfNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitSequenceNode: aRBSequenceNode [ 
-	
+CoASTResultSetBuilder >> visitSequenceNode: aRBSequenceNode [
+
 	^ self visitNode: aRBSequenceNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [ 
-	
+CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
+
 	^ self visitNode: aRBSuperNode
 ]
 
@@ -213,6 +213,6 @@ CoASTResultSetBuilder >> visitThisContextNode: aRBThisContextNode [
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitVariableNode: aRBVariableNode [
-	
+
 	^ self visitNode: aRBVariableNode
 ]

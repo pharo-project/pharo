@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-Link class >> nextLink: aLink [ 
+Link class >> nextLink: aLink [
 	"Answer an instance of me referring to the argument, aLink."
 
 	^self new nextLink: aLink; yourself
@@ -36,8 +36,8 @@ Link >> nextLink [
 ]
 
 { #category : #accessing }
-Link >> nextLink: aLink [ 
-	"Store the argument, aLink, as the link to which the receiver refers. 
+Link >> nextLink: aLink [
+	"Store the argument, aLink, as the link to which the receiver refers.
 	Answer aLink."
 
 	^nextLink := aLink

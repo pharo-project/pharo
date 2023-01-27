@@ -51,7 +51,7 @@ ClassAnnotationRegistry class >> annotationDependencyPragmaName [
 	For example CmdShortcutCommandActivation annotation has method #removaFor:.
 	It provides reusable cmd+x shorcut. And all removal related commands are depends on it.
 	When user will modify this method the annotation registry will be updated"
-	
+
 	^#classAnnotationDependency
 ]
 
@@ -59,7 +59,7 @@ ClassAnnotationRegistry class >> annotationDependencyPragmaName [
 ClassAnnotationRegistry class >> annotationPragmaName [
 	"This pragma is used to define class annotations inside methods.
 	They should return instances of ClassAnnotation subclasses"
-	
+
 	^#classAnnotation
 ]
 
@@ -75,12 +75,12 @@ ClassAnnotationRegistry class >> collectAnnotationPragmas [
 
 	| result |
 	result := OrderedCollection new.
-	
-	self environment allClassesDo: [ :each | 
+
+	self environment allClassesDo: [ :each |
 		self annotationPragmasIn: each classSide do: [:pragma | result add: pragma]].
-	self environment allTraitsDo: [ :each | 
+	self environment allTraitsDo: [ :each |
 		self annotationPragmasIn: each classSide do: [:pragma | result add: pragma]].
-	
+
 	^result
 ]
 
@@ -92,35 +92,35 @@ ClassAnnotationRegistry class >> collectNewFromSystem [
 
 { #category : #accessing }
 ClassAnnotationRegistry class >> default [
-	^default ifNil: [ 
+	^default ifNil: [
 		self ensureSystemSubscription.
 		default := self collectNewFromSystem]
 ]
 
 { #category : #'system changes' }
 ClassAnnotationRegistry class >> doesMethodAffectAnnotations: aMethod [
-	
+
 	(self doesMethodDefineAnnotation: aMethod) ifTrue: [ ^true ].
 
-	aMethod methodClass superclass ifNotNil: [ :parentClass | 
+	aMethod methodClass superclass ifNotNil: [ :parentClass |
 		"check if there is overridden method which defines annotation"
 		(parentClass lookupSelector: aMethod selector) ifNotNil: [:overriddenMethod |
 			(self doesMethodDefineAnnotation: overriddenMethod) ifTrue: [^true]].
-	].	
+	].
 
 	^false
 ]
 
 { #category : #'system changes' }
 ClassAnnotationRegistry class >> doesMethodDefineAnnotation: aMethod [
-	"The second condition allows to mark methods 
-	which are sent inside annotation definition methods 
+	"The second condition allows to mark methods
+	which are sent inside annotation definition methods
 	which makes them annotation dependency.
 	For example CmdShortcutCommandActivation annotation has method #removaFor:.
 	It provides reusable cmd+x shorcut. And all removal related commands are depends on it.
-	When user will modify this method the annotation registry will be updated 
+	When user will modify this method the annotation registry will be updated
 	because of <classAnnotationDependency> pragma"
-	
+
 	^(aMethod hasPragmaNamed: self annotationPragmaName)
 		or: [ aMethod hasPragmaNamed: self annotationDependencyPragmaName ]
 ]
@@ -129,7 +129,7 @@ ClassAnnotationRegistry class >> doesMethodDefineAnnotation: aMethod [
 ClassAnnotationRegistry class >> ensureSystemSubscription [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	
+
 	SystemAnnouncer uniqueInstance weak
 		when: ClassRemoved, ClassAdded, ClassModificationApplied send: #handleClassChanged: to: self;
 		when: MethodRemoved, MethodAdded, MethodModified send: #handleMethodChange: to: self;
@@ -139,27 +139,27 @@ ClassAnnotationRegistry class >> ensureSystemSubscription [
 { #category : #'system changes' }
 ClassAnnotationRegistry class >> handleClassChanged: aClassAnnouncement [
 
-	self resetIf: [ 
+	self resetIf: [
 		(default includesAnnotationsFor: aClassAnnouncement classAffected)
 			or: [default includesAnnotationsInheritedBy: aClassAnnouncement classAffected]]
 ]
 
 { #category : #'system changes' }
 ClassAnnotationRegistry class >> handleMethodChange: aMethodAnnouncement [
-	
+
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodAnnouncement methodAffected]
 ]
 
 { #category : #'system changes' }
 ClassAnnotationRegistry class >> handleOldMethodChange: aMethodModified [
-	
+
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodModified oldMethod]
 ]
 
 { #category : #'class initialization' }
 ClassAnnotationRegistry class >> reset [
 	<script>
-	
+
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	default := nil
 ]
@@ -167,7 +167,7 @@ ClassAnnotationRegistry class >> reset [
 { #category : #accessing }
 ClassAnnotationRegistry class >> resetIf: conditionBlock [
 	default ifNil: [ ^self ].
-	
+
 	conditionBlock value ifTrue: [ self reset ]
 ]
 
@@ -187,13 +187,13 @@ ClassAnnotationRegistry >> addAnnotation: aClassAnnotation [
 	actualAnnotation isRedefined ifTrue: [
 		actualAnnotation updateRedefinedInstance.
 		actualAnnotation := actualAnnotation redefiningInstance].
-	
-	container := annotations at: actualAnnotation class ifAbsentPut: [ 
+
+	container := annotations at: actualAnnotation class ifAbsentPut: [
 		aClassAnnotation class createContainerForRegistry ].
 	(container includes: actualAnnotation) ifTrue: [ ^self ].
 	container add: actualAnnotation.
 
-	container := annotatedClasses 
+	container := annotatedClasses
 		at: actualAnnotation annotatedClass ifAbsentPut: [ Set new].
 	container add: actualAnnotation
 ]
@@ -233,41 +233,41 @@ ClassAnnotationRegistry >> annotations: anObject [
 { #category : #private }
 ClassAnnotationRegistry >> createAnnotationFor: aClass fromPragma: aPragma [
 	"Here we evaluate pragma method expecting annotation instance as result.
-	Of course the method can fail or it can not return annotation 
-	(user can forgot return for example). 
+	Of course the method can fail or it can not return annotation
+	(user can forgot return for example).
 	In such cases BrokenClassAnnotation will be used instead.
-	Also here we perform check isForbidden which should be evaluated on initialized instance 
-	and also can fail due to bad implementation. 
+	Also here we perform check isForbidden which should be evaluated on initialized instance
+	and also can fail due to bad implementation.
 	Failed check will also lead to BrokenClassAnnotation instance.
-	If annotation instance is forbidden 
+	If annotation instance is forbidden
 	then the ForbiddenClassAnnotation instance will be returned instead.
 	And it will will not be added to the registry"
 	| annotation |
 	[
 		annotation := aClass perform: aPragma methodSelector.
-		(annotation isKindOf: ClassAnnotation) ifFalse: [ 
+		(annotation isKindOf: ClassAnnotation) ifFalse: [
 			annotation := BrokenClassAnnotation forBadMethodReturn].
 		"isForbidden should be performed with initialized instance"
-		annotation 
+		annotation
 			annotatedClass: aClass;
 			declarationSelector: aPragma methodSelector.
 		annotation isForbidden ifTrue: [ annotation := ForbiddenClassAnnotation new ]
-	] on: Error do: [:err | 
+	] on: Error do: [:err |
 		annotation := BrokenClassAnnotation withError: err].
 	"For simplisity initialization is repeated although it can be already initialized"
-	^annotation 
+	^annotation
 		annotatedClass: aClass;
 		declarationSelector: aPragma methodSelector
 ]
 
 { #category : #private }
 ClassAnnotationRegistry >> createAnnotationsForAllSubclassesFromPragma: aPragma [
-	
+
 	| declaringClass annotation result |
 	result := OrderedCollection new.
 	declaringClass := aPragma methodClass instanceSide.
-	declaringClass withAllSubclassesDo: [ :annotatedClass | 
-		annotation := self createAnnotationFor: annotatedClass fromPragma: aPragma. 
+	declaringClass withAllSubclassesDo: [ :annotatedClass |
+		annotation := self createAnnotationFor: annotatedClass fromPragma: aPragma.
 		result add: annotation].
 	^result
 ]
@@ -279,7 +279,7 @@ ClassAnnotationRegistry >> forgetAnnotation: aClassAnnotation [
 
 	container := annotations at: aClassAnnotation class ifAbsent: [ ^self ].
 	container remove: aClassAnnotation ifAbsent: [ ^self ].
-	
+
 	(annotatedClasses at: aClassAnnotation annotatedClass) remove: aClassAnnotation
 ]
 
@@ -301,7 +301,7 @@ ClassAnnotationRegistry >> includesAnnotationsFor: aClass [
 ClassAnnotationRegistry >> includesAnnotationsInheritedBy: aClass [
 
 	aClass superclass ifNil: [ ^false ].
-	
+
 	^self includesAnnotationsFor: aClass superclass
 ]
 

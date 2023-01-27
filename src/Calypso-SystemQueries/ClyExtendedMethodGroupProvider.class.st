@@ -9,12 +9,12 @@ Class {
 
 { #category : #'building groups' }
 ClyExtendedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	
+
 	| subgroupsQuery |
-	subgroupsQuery := ClyExtendingPackagesQuery 
+	subgroupsQuery := ClyExtendingPackagesQuery
 		from: aClassScope as: ClyGroupedExtendingPackagesResult new.
-		
-	^ClyMethodGroup 
+
+	^ClyMethodGroup
 		named: 'extensions' priority: 9
 		on: aMethodQuery withSubgroupsFrom: subgroupsQuery
 ]

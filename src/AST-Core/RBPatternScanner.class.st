@@ -12,12 +12,12 @@ Class {
 RBPatternScanner >> scanPatternVariable [
 	buffer nextPut: currentCharacter.
 	self step.
-	currentCharacter = ${ 
-		ifTrue: 
+	currentCharacter = ${
+		ifTrue:
 			[self step.
 			^RBPatternBlockToken value: '`{' start: tokenStart].
-	[characterType = #alphabetic] whileFalse: 
-			[characterType = #eof 
+	[characterType = #alphabetic] whileFalse:
+			[characterType = #eof
 				ifTrue: [ ^ self scanError: 'Meta variable expected'].
 			buffer nextPut: currentCharacter.
 			self step].
@@ -26,7 +26,7 @@ RBPatternScanner >> scanPatternVariable [
 
 { #category : #accessing }
 RBPatternScanner >> scanToken [
-	currentCharacter = PatternVariableCharacter 
+	currentCharacter = PatternVariableCharacter
 		ifTrue: [^self scanPatternVariable].
 	currentCharacter = $} ifTrue: [^self scanSpecialCharacter].
 	^super scanToken

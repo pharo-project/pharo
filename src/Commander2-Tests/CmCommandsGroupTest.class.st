@@ -23,20 +23,20 @@ CmCommandsGroupTest >> setUp [
 							block: [ :x | x ];
 							context: [ 1 ];
 							yourself.
-	
-	
+
+
 	subCommand1 :=  CmBlockCommand new
 							name: 'sub command 1';
 							block: [ :x | x ];
 							context: [ 11 ];
 							yourself.
-	
+
 	subGroup1 := (CmCommandGroup named: 'sub group 1')
 							register: subCommand1;
 							yourself.
-	
+
 	subGroup2 := CmCommandGroup named: 'sub group 2'. "Empty on purpose."
-	
+
 	group
 		register: firstCommand;
 		register: subGroup1;
@@ -52,11 +52,11 @@ CmCommandsGroupTest >> testAllCommands [
 CmCommandsGroupTest >> testCommandOrGroupNamed [
 	self assert: (group commandOrGroupNamed: 'first command') equals: firstCommand.
 	self assert: (group commandOrGroupNamed: 'sub group 1') equals: subGroup1.
-	self assert: (group commandOrGroupNamed: 'sub group 2') equals: subGroup2.	
-	
+	self assert: (group commandOrGroupNamed: 'sub group 2') equals: subGroup2.
+
 	self should: [ group commandOrGroupNamed: 'unknown' ] raise: NotFound.
-	
-	self assert: ((group commandOrGroupNamed: 'sub group 1') commandOrGroupNamed: 'sub command 1') equals: subCommand1.
+
+	self assert: ((group commandOrGroupNamed: 'sub group 1') commandOrGroupNamed: 'sub command 1') equals: subCommand1
 ]
 
 { #category : #tests }
@@ -78,24 +78,24 @@ CmCommandsGroupTest >> testGroups [
 { #category : #tests }
 CmCommandsGroupTest >> testHasCommand [
 	self deny: (group hasCommand: CmCommand new).
-	
+
 	self assert: (group hasCommand: firstCommand)
 ]
 
 { #category : #tests }
 CmCommandsGroupTest >> testHasEntryNamed [
 	self deny: (group hasEntryNamed: 'nope').
-	
+
 	self assert: (group hasEntryNamed: 'first command').
-	
-	self deny: (group hasEntryNamed: 'sub command 1').
+
+	self deny: (group hasEntryNamed: 'sub command 1')
 ]
 
 { #category : #tests }
 CmCommandsGroupTest >> testInitialize [
 	| newGroup |
 	newGroup := CmCommandGroup new.
-	
+
 	self assert: newGroup name equals: CmCommandGroup defaultName.
 	self assert: newGroup entries isEmpty
 ]
@@ -104,14 +104,14 @@ CmCommandsGroupTest >> testInitialize [
 CmCommandsGroupTest >> testRegisterCommandWithContext [
 	| secondCommand |
 	self deny: (group hasEntryNamed: 'second command').
-	
-	secondCommand := CmBlockCommand new 
+
+	secondCommand := CmBlockCommand new
 							name: 'second command';
 							block: [ :x | x ];
 							context: 42;
 							yourself.
 	group register: secondCommand.
-	
+
 	self assert: (group hasEntryNamed: 'second command').
 	self assert: (group commandOrGroupNamed: 'second command') equals: secondCommand.
 	self assert: group entries last context equals: 42
@@ -121,23 +121,23 @@ CmCommandsGroupTest >> testRegisterCommandWithContext [
 CmCommandsGroupTest >> testRegisterCommandWithContextBlock [
 	| secondCommand secondCommandWithSameName |
 	self deny: (group hasEntryNamed: 'second command').
-	
-	secondCommand := CmBlockCommand new 
+
+	secondCommand := CmBlockCommand new
 							name: 'second command';
 							block: [ :x | x ];
 							context: [ 42 ];
 							yourself.
 	group register: secondCommand.
-	
+
 	self assert: (group hasEntryNamed: 'second command').
 	self assert: (group commandOrGroupNamed: 'second command') equals: secondCommand.
-	
-	secondCommandWithSameName := CmBlockCommand new 
+
+	secondCommandWithSameName := CmBlockCommand new
 											name: 'second command';
 											block: [ :x | x ];
 											context: [ ];
 											yourself.
-	
+
 	self
 		should: [ group register: secondCommandWithSameName]
 		raise: CmDuplicatedEntryName
@@ -149,13 +149,13 @@ CmCommandsGroupTest >> testRegisterCommandWithContextBlock [
 CmCommandsGroupTest >> testRegisterSubRegister [
 	| subGroup3 |
 	self deny: (group hasEntryNamed: 'sub group 3').
-	
+
 	subGroup3 := CmCommandGroup named: 'sub group 3'.
 	group register: subGroup3.
-	
+
 	self assert: (group hasEntryNamed: 'sub group 3').
 	self assert: (group commandOrGroupNamed: 'sub group 3') equals: subGroup3.
-	
+
 	self
 		should: [ group register: (CmCommandGroup named: 'sub group 3') ]
 		raise: CmDuplicatedEntryName
@@ -168,8 +168,8 @@ CmCommandsGroupTest >> testUnregister [
 	self assert: (group hasEntryNamed: 'first command').
 	group unregister: firstCommand.
 	self deny: (group hasEntryNamed: 'first command').
-	
+
 	self assert: (group hasEntryNamed: 'sub group 1').
 	group unregister: subGroup1.
-	self deny: (group hasEntryNamed: 'sub group 1').
+	self deny: (group hasEntryNamed: 'sub group 1')
 ]

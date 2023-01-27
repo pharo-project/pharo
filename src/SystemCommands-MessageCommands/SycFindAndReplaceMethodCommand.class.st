@@ -14,7 +14,7 @@ SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #accessing }
 SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #execution }

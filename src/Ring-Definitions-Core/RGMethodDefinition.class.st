@@ -325,6 +325,11 @@ RGMethodDefinition >> isDefined [
 	^rClass notNil and: [ rClass includesSelector: self selector ]
 ]
 
+{ #category : #testing }
+RGMethodDefinition >> isDoIt [
+	^self selector isDoIt
+]
+
 { #category : #'testing - SUnit-support' }
 RGMethodDefinition >> isErrorTest [
 	"Is the receiver a test method that raised an error?"
@@ -484,6 +489,12 @@ RGMethodDefinition >> methodClass [
 RGMethodDefinition >> name [
 	"name ivar is used for selector, but the name of a method is Class>>selector"
 	^self printString
+]
+
+{ #category : #displaying }
+RGMethodDefinition >> nameToDisplay [
+
+	^ self printString
 ]
 
 { #category : #accessing }

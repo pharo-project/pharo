@@ -33,7 +33,7 @@ BreakpointObserverTest >> setUp [
 	cls compile: 'dummy ^42'.
 	breakpoint
 		node: (cls >> #dummy) ast;
-		once.
+		once: true.
 	observer := DummyBreakpointObserver new
 ]
 

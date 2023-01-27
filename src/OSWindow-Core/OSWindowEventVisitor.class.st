@@ -65,6 +65,10 @@ OSWindowEventVisitor >> visitMouseWheelEvent: anEvent [
 ]
 
 { #category : #visiting }
+OSWindowEventVisitor >> visitTextEditingEvent: anEvent [
+]
+
+{ #category : #visiting }
 OSWindowEventVisitor >> visitTextInputEvent: anEvent [
 ]
 

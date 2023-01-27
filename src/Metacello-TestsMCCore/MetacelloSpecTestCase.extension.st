@@ -1,16 +1,16 @@
 Extension { #name : #MetacelloSpecTestCase }
 
-{ #category : #'*metacello-testsmccore' }
+{ #category : #'*Metacello-TestsMCCore' }
 MetacelloSpecTestCase >> packageSpec [
     ^ self project packageSpec
 ]
 
-{ #category : #'*metacello-testsmccore' }
+{ #category : #'*Metacello-TestsMCCore' }
 MetacelloSpecTestCase >> repositoriesSpec [
     ^ self project repositoriesSpec
 ]
 
-{ #category : #'*metacello-testsmccore' }
+{ #category : #'*Metacello-TestsMCCore' }
 MetacelloSpecTestCase >> repositorySpec [
     ^ self project repositorySpec
 ]

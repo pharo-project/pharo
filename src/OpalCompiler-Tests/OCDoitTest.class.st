@@ -48,9 +48,9 @@ OCDoitTest >> testDoItContextReadIvar [
 		          source: 'ivarForTesting';
 		          noPattern: true;
 		          context: thisContext;
-		          compileDoit.
+		          compile.
 
-	value := method valueWithReceiver: self arguments: { thisContext }.
+	value := method valueWithReceiver: self arguments: #().
 	self assert: value equals: #someValue
 ]
 
@@ -66,6 +66,33 @@ OCDoitTest >> testDoItContextReadTemp [
 		evaluate.
 		
 	self assert: value equals: #someValue
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItExtraBindings [
+	"We can use extra bindings in a DoIt"
+	
+	| result |
+	result := OpalCompiler new
+		bindings: {  #binding -> 1};
+		evaluate: 'binding'.
+	self assert: result equals: 1
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItHalt [
+	
+	self should: [OpalCompiler new 
+			evaluate: 'self halt'] raise: Halt
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItHaltBinding [
+	"We can evaluate with a halt and extra bindings"
+	
+	self should: [OpalCompiler new 
+			bindings: {#binding -> 1 };
+			evaluate: 'self halt'] raise: Halt
 ]
 
 { #category : #tests }
@@ -110,12 +137,13 @@ OCDoitTest >> testDoItRequestorShadow [
 OCDoitTest >> testDoitContextCheckClass [
 	"if we create a parse tree for a doit in a context, the class should be correctly set"
 	
-	| ast |
-	ast := OpalCompiler new
+	| ast method |
+	method := OpalCompiler new
 		source: 'tempForTesting';
 		noPattern: true;
 		context: thisContext;
-		parseDoIt.
+		compile.
+	ast := method ast.
 	"we expect that the class is set to the class of the context, which is self class"		
 	self assert: ast methodClass equals: self class
 ]

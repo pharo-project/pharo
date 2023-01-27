@@ -21,10 +21,10 @@ ByteArray >> boolean8AtOffset: zeroBasedOffset put: value [
 { #category : #'*FFI-Kernel' }
 ByteArray >> booleanAt: byteIndex [
 	"Returns the boolean the byte at index byteOffset of this ByteArray represents in the C convention ( A byte representing the 0 integer corresponds to false, while all other integers corresponds to true)."
-	
+
 	"(#[1 2 0 4] booleanAt: 2) >>> true."
 	"(#[1 2 0 4] booleanAt: 3) >>> false."
-	
+
 	^ self boolean8AtOffset: byteIndex - 1
 ]
 
@@ -89,14 +89,14 @@ ByteArray >> float32AtOffset: zeroBasedOffset [
 { #category : #'*FFI-Kernel' }
 ByteArray >> float32AtOffset: zeroBasedOffset put: value [
 	<primitive: 628>
-	
+
 	^ FFIBackend current on: self float32At: zeroBasedOffset + 1 put: value
 ]
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> float64AtOffset: zeroBasedOffset [
 	<primitive: 614>
-	
+
 	^ FFIBackend current on: self float64At: zeroBasedOffset + 1
 ]
 

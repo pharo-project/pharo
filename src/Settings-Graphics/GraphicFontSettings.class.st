@@ -69,7 +69,7 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 				newRowIn: self
 				for:
 					{(AlphaImageMorph new
-						image: (self iconNamed: #smallRedoIcon)).
+						image: (self iconNamed: #smallRedo)).
 					(self theme buttonLabelForText: 'Force all' translated)});
 		yourself
 ]

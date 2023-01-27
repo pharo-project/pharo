@@ -43,7 +43,7 @@ ByteSymbol >> asOctetString [
 ]
 
 { #category : #accessing }
-ByteSymbol >> at: index [ 
+ByteSymbol >> at: index [
 	"Primitive. Answer the Character stored in the field of the receiver
 	indexed by the argument. Fail if the index argument is not an Integer or
 	is out of bounds. Essential. See Object documentation whatIsAPrimitive."
@@ -59,7 +59,7 @@ ByteSymbol >> byteAt: index [
 ]
 
 { #category : #accessing }
-ByteSymbol >> byteAt: anInteger put: anObject [ 
+ByteSymbol >> byteAt: anInteger put: anObject [
 	"You cannot modify the receiver."
 	^ self modificationForbiddenFor: #byteAt:put: index: anInteger value: anObject
 ]
@@ -105,10 +105,10 @@ ByteSymbol >> isByteString [
 
 { #category : #testing }
 ByteSymbol >> isOctetString [
-	"Answer whether the receiver can be represented as a byte string. 
-	This is different from asking whether the receiver *is* a ByteString 
+	"Answer whether the receiver can be represented as a byte string.
+	This is different from asking whether the receiver *is* a ByteString
 	(i.e., #isByteString)"
-	^ true.
+	^ true
 ]
 
 { #category : #private }
@@ -119,14 +119,14 @@ ByteSymbol >> privateAt: index put: aCharacter [
 	whatIsAPrimitive."
 
 	<primitive: 64>
-	aCharacter isCharacter 
+	aCharacter isCharacter
 		ifFalse:[^self errorImproperStore].
 	index isInteger
 		ifTrue: [ (index between: 1 and: self size)
 				ifFalse: [ self errorSubscriptBounds: index] ]
 		ifFalse: [self errorNonIntegerIndex].
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
+	self isReadOnlyObject
+		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ]
 ]
 
 { #category : #accessing }
@@ -137,7 +137,7 @@ ByteSymbol >> species [
 
 { #category : #private }
 ByteSymbol >> string: aString [
-	1 to: aString size do: [:j | 
+	1 to: aString size do: [:j |
 		self privateAt: j put: (aString at: j)].
 	^self
 ]

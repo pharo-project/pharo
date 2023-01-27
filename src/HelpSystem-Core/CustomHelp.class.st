@@ -157,7 +157,7 @@ CustomHelp class >> heading: aString withSubtitle: aSubtitleString [
 CustomHelp class >> icon [
 	"Returns an icon used for displaying the custom help book"
 
-	^ self iconNamed: #bookIcon
+	^ self iconNamed: #book
 ]
 
 { #category : #testing }
@@ -243,9 +243,9 @@ CustomHelp class >> subsubheading: aString [
 ]
 
 { #category : #accessing }
-CustomHelp class >> systemIcon [ 
+CustomHelp class >> systemIconName [
 
-	^self icon
+	^ #book
 ]
 
 { #category : #formatting }

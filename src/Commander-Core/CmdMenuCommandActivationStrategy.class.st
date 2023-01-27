@@ -141,5 +141,5 @@ CmdMenuCommandActivationStrategy >> printOn: aStream [
 	menuGroup printOn: aStream.
 	aStream nextPutAll: '; '.
 	menuItemOrder printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]

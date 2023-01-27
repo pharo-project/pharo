@@ -5,8 +5,6 @@ Class {
 }
 
 { #category : #running }
-FLFileReferenceStreamBasicSerializationTest >> setUp [
-	super setUp.
-	
-	self useFileReferenceStream
+FLFileReferenceStreamBasicSerializationTest >> setUpStreamStrategy [
+	streamStrategy := FLFileReferenceStreamStrategy new
 ]

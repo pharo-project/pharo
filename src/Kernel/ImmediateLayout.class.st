@@ -37,7 +37,7 @@ ImmediateLayout >> extend: newScope [
 { #category : #initialization }
 ImmediateLayout >> initialize [
 	super initialize.
-	self host: SmallInteger.
+	self host: SmallInteger
 ]
 
 { #category : #format }

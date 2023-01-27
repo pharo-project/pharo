@@ -27,7 +27,7 @@ Class {
 
 { #category : #adding }
 CoHeuristicBuilder >> add: anHeuristic [
-	
+
 	heuristics add: anHeuristic
 ]
 

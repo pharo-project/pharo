@@ -53,9 +53,9 @@ CoCompletionContext >> completion: anObject [
 { #category : #accessing }
 CoCompletionContext >> completionAt: aNumber [
 	| entry |
-	
+
 	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECEntry spaceAfterCompletion 
+	^ NECEntry spaceAfterCompletion
 		ifTrue: [ entry, ' ' ]
 		ifFalse: [ entry ]
 ]
@@ -66,19 +66,19 @@ CoCompletionContext >> completionBuilder [
 ]
 
 { #category : #accessing }
-CoCompletionContext >> completionBuilder: anUndefinedObject [ 
+CoCompletionContext >> completionBuilder: anUndefinedObject [
 	completionBuilder := anUndefinedObject
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionClass [
-	
+
 	^ completionClass
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionClass: aClass [
-	
+
 	^ completionClass := aClass
 ]
 
@@ -122,8 +122,8 @@ CoCompletionContext >> entryCount [
 ]
 
 { #category : #accessing }
-CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [ 
-	
+CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [
+
 	^ self systemNavigation environmentAt: aString ifPresent: aBlockClosure
 ]
 
@@ -135,7 +135,7 @@ CoCompletionContext >> hasEntries [
 
 { #category : #menu }
 CoCompletionContext >> hasMessage [
-	
+
 	^ false
 ]
 
@@ -147,15 +147,15 @@ CoCompletionContext >> initialize [
 ]
 
 { #category : #testing }
-CoCompletionContext >> isWorkspace [
-	
+CoCompletionContext >> isScripting [
+
 	^ engine notNil and: [ engine isScripting ]
 ]
 
 { #category : #narrowing }
-CoCompletionContext >> narrowWith: aString [ 
+CoCompletionContext >> narrowWith: aString [
 
-	self completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: aString)
+	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
 ]
 
 { #category : #accessing }
@@ -170,7 +170,7 @@ CoCompletionContext >> position: anObject [
 
 { #category : #replacing }
 CoCompletionContext >> replaceTokenInEditorWith: aString [
-	
+
 	engine replaceTokenInEditorWith: aString
 ]
 
@@ -186,7 +186,7 @@ CoCompletionContext >> source: anObject [
 
 { #category : #accessing }
 CoCompletionContext >> systemNavigation [
-	
+
 	^ CoSystemEnvironment new
 ]
 

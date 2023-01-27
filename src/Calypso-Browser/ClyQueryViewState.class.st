@@ -38,10 +38,10 @@ Class {
 ClyQueryViewState >> applyTo: aQueryView [
 
 	| newDataSource |
-	(aQueryView dataSource isInSameStateAs: dataSource) ifFalse: [ 
+	(aQueryView dataSource isInSameStateAs: dataSource) ifFalse: [
 		newDataSource := dataSource copyForBrowserStateSnapshot.
 		aQueryView dataSource: newDataSource].
-	
+
 	selection restoreCurrentSelection: aQueryView selection.
 	aQueryView selection ensureVisibleLastItem
 ]
@@ -58,7 +58,7 @@ ClyQueryViewState >> dataSource: anObject [
 
 { #category : #testing }
 ClyQueryViewState >> isCurrentStateOf: aQueryView [
-	
+
 	^(aQueryView dataSource isInSameStateAs: dataSource)
 		and: [aQueryView selection isSameAs: selection]
 ]
@@ -66,7 +66,7 @@ ClyQueryViewState >> isCurrentStateOf: aQueryView [
 { #category : #testing }
 ClyQueryViewState >> representsConcreteQuery [
 	"this method allows to detect that query view is in state when it not shows any concrete query. It is happens when view was not requested to show anything yet. In that case data source is initialized with unknown query instance"
-	
+
 	^(dataSource isBasedOn: ClyUnknownQuery instance) not
 ]
 

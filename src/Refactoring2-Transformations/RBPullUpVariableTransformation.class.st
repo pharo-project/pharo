@@ -14,7 +14,7 @@ overriden from RBRemoveVariableTransformation and RBAddVariableAccessorTransform
 Class {
 	#name : #RBPullUpVariableTransformation,
 	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #executing }

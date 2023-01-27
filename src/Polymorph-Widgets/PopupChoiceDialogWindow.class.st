@@ -36,7 +36,7 @@ PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
 PopupChoiceDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #actions }

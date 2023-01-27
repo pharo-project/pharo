@@ -29,7 +29,7 @@ DAManuallyAddedDependentPackageNode >> hasChildren [
 
 { #category : #accessing }
 DAManuallyAddedDependentPackageNode >> icon [
-	^ self iconNamed: #smallRedoIcon
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : #'browse-nautilus' }

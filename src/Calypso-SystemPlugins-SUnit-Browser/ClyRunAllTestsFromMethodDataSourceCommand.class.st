@@ -9,10 +9,10 @@ Class {
 
 { #category : #execution }
 ClyRunAllTestsFromMethodDataSourceCommand >> buildTestSuite [
-	
+
 	| suite |
 	suite := TestSuite new.
-	
+
 	self testMethodsDo: [ :eachMethod |
 			suite addTest: (eachMethod methodClass selector: eachMethod selector)].
 
@@ -22,6 +22,6 @@ ClyRunAllTestsFromMethodDataSourceCommand >> buildTestSuite [
 { #category : #accessing }
 ClyRunAllTestsFromMethodDataSourceCommand >> defaultMenuItemName [
 	self hasTestResult ifFalse: [ ^'Run all' ].
-	
+
 	^'Run all (', self testResult allCount asString, ')'
 ]

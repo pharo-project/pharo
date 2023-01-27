@@ -180,9 +180,8 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolorIcon) )
 ]
 
-{ #category : #'halo theme' }
+{ #category : #'class initialization' }
 HaloMorph class >> initialize [
-	"self initialize"
 	
 	self installHaloTheme: #iconicHaloSpecifications
 ]
@@ -695,7 +694,7 @@ HaloMorph >> containsPoint: aPoint event: anEvent [
 	"Blue buttons are handled by the halo"
 
 	(anEvent isMouse and: [ 
-		 anEvent isMouseDown and: [ anEvent blueButtonPressed ] ]) ifFalse: [ 
+		 anEvent isMouseDown and: [ anEvent isSpecialGesture ] ]) ifFalse: [ 
 		^ super containsPoint: aPoint event: anEvent ].
 	^ bounds containsPoint: anEvent position
 ]
@@ -991,9 +990,8 @@ HaloMorph >> handleSpecialGesture: event [
 ]
 
 { #category : #'meta-actions' }
-HaloMorph >> handlerForBlueButtonDown: anEvent [
-	"Blue button was clicked within the receiver"
-
+HaloMorph >> handlerForSpecialGestureDown:  anEvent [
+	"The special gesture for halo has been done"
 	^ self
 ]
 

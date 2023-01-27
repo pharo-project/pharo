@@ -11,7 +11,8 @@ Class {
 	#instVars : [
 		'displayStrategy',
 		'isRoot',
-		'icon'
+		'icon',
+		'iconName'
 	],
 	#category : #'Commander2-UI-Core'
 }
@@ -39,7 +40,7 @@ CmUICommandGroup >> beDisplayedAsSubMenu [
 
 { #category : #configuring }
 CmUICommandGroup >> beRoot [
-	self isRoot: true.
+	self isRoot: true
 ]
 
 { #category : #accessing }
@@ -53,7 +54,7 @@ CmUICommandGroup >> displayStrategy: anObject [
 ]
 
 { #category : #accessing }
-CmUICommandGroup >> icon [ 
+CmUICommandGroup >> icon [
 
 	^ icon
 ]
@@ -68,7 +69,7 @@ CmUICommandGroup >> icon: anIcon [
 CmUICommandGroup >> iconName: aSymbol [
 
 
-	self icon: (self iconNamed: aSymbol)
+	iconName := aSymbol
 ]
 
 { #category : #initialization }

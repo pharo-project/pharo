@@ -37,10 +37,38 @@ WinPlatform >> ffiLibraryName [
 	^ #Kernel32
 ]
 
+{ #category : #'error handling' }
+WinPlatform >> formatMessage: dwFlags _: lpSource _: dwMessageId _: dwLanguageId _: lpBuffer _: nSize _: arguments [ 
+    
+    self ffiCall: #(long FormatMessageW(long   dwFlags,
+                            void* lpSource,
+                            long   dwMessageId,
+                            long   dwLanguageId,
+                            void*  lpBuffer,
+                            long   nSize,
+                            void*  arguments))
+]
+
 { #category : #'environment-variables' }
 WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 	"Primitive to obtain an environment variable using windows Wide Strings"
 	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
+]
+
+{ #category : #'error handling' }
+WinPlatform >> getErrorMessage: anInteger [
+
+    | buffer |
+    buffer := (String new: 500) asWin32WideString.
+    self formatMessage: 16r1000 "Format Message From System"
+                        _: ExternalAddress null
+                        _: anInteger
+                        _: 0
+                        _: buffer
+                        _: 500
+                        _: ExternalAddress null.
+    
+    ^ buffer asString
 ]
 
 { #category : #testing }

@@ -24,7 +24,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyItemStringFilter class >> pattern: aStringPattern [
-	^self new 
+	^self new
 		pattern: aStringPattern
 ]
 
@@ -75,7 +75,7 @@ ClyItemStringFilter >> printCriteria [
 { #category : #printing }
 ClyItemStringFilter >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	pattern printOn: aStream.
 	aStream nextPut: $)

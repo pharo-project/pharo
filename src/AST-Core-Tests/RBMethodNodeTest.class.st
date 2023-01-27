@@ -11,13 +11,37 @@ Class {
 RBMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
 ]
 
+{ #category : #helpers }
+RBMethodNodeTest >> sampleBytecodeMethod [
+
+	<opalBytecodeMethod>
+	^ IRBuilder buildIR: [ :builder |
+		builder
+				pushLiteral: 5;
+				returnTop
+		 ]
+]
+
+{ #category : #helpers }
+RBMethodNodeTest >> sampleBytecodeMethodWithArg: anArg [
+
+	<opalBytecodeMethod>
+	^ IRBuilder buildIR: [ :builder |
+		builder
+				numArgs: 1;
+				addTemps: { #arg };
+				pushTemp: #arg;
+				returnTop
+		 ]
+]
+
 { #category : #tests }
 RBMethodNodeTest >> testAddingMethodProperties [
 
 	| ast |
 	ast := self parseMethod: 'one ^ self'.
-	self assert: ast methodProperties isNil. 
-	
+	self assert: ast methodProperties isNil.
+
 	ast methodPropertyAt: #testKey put: #testValue.
 	ast methodPropertyAt: #testKey2 put: #testValue2.
 	self assert: (ast methodPropertyAt: #testKey) equals: #testValue.
@@ -29,9 +53,9 @@ RBMethodNodeTest >> testAddingMethodProperties [
 RBMethodNodeTest >> testBlockHasArguments [
 
 	| tree |
-	tree := self parseMethod: 'foo 
-		[ :arg | 
-		abd + cde 
+	tree := self parseMethod: 'foo
+		[ :arg |
+		abd + cde
 		]'.
 
 	self assert: tree body statements first hasArguments
@@ -41,10 +65,10 @@ RBMethodNodeTest >> testBlockHasArguments [
 RBMethodNodeTest >> testBlockHasTemporaries [
 
 	| tree |
-	tree := self parseMethod: 'foo 
-		[ 
+	tree := self parseMethod: 'foo
+		[
 		| tmp |
-		abd + cde 
+		abd + cde
 		]'.
 
 	self deny: tree hasTemporaries.
@@ -55,9 +79,9 @@ RBMethodNodeTest >> testBlockHasTemporaries [
 RBMethodNodeTest >> testBlockHeadIsNotEmpty [
 
 	| tree |
-	tree := self parseMethod: 'foo 
-		[ :arg | 
-		abd + cde 
+	tree := self parseMethod: 'foo
+		[ :arg |
+		abd + cde
 		]'.
 
 	self assert: tree body statements first headIsNotEmpty
@@ -67,9 +91,9 @@ RBMethodNodeTest >> testBlockHeadIsNotEmpty [
 RBMethodNodeTest >> testBlockHeadIsNotEmpty2 [
 
 	| tree |
-	tree := self parseMethod: 'foo 
-		[ "blbl" 
-		abd + cde 
+	tree := self parseMethod: 'foo
+		[ "blbl"
+		abd + cde
 		]'.
 
 	self assert: tree body statements first headIsNotEmpty
@@ -79,12 +103,24 @@ RBMethodNodeTest >> testBlockHeadIsNotEmpty2 [
 RBMethodNodeTest >> testBlockHeadIsNotEmpty3 [
 
 	| tree |
-	tree := self parseMethod: 'foo 
-		[ 
-		abd + cde 
+	tree := self parseMethod: 'foo
+		[
+		abd + cde
 		]'.
 
 	self deny: tree body statements first headIsNotEmpty
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBytecodeMethodWithArguments [
+
+	self assert: (self sampleBytecodeMethodWithArg: 1) equals: 1
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBytecodeMethodWithNoArguments [
+
+	self assert: self sampleBytecodeMethod equals: 5
 ]
 
 { #category : #tests }
@@ -93,7 +129,7 @@ RBMethodNodeTest >> testCachingMethodArguments [
 	| ast |
 	ast := (self class >> #methodWithArg:and:) ast.
 	ast propertyAt: #argumentNames put: #(wrongArg wrongArg2).
-	
+
 	ast ensureCachedArgumentNames.
 	self assert: (ast methodPropertyAt: #argumentNames) equals: #(someArgName someAnotherArgName)
 ]
@@ -102,12 +138,12 @@ RBMethodNodeTest >> testCachingMethodArguments [
 RBMethodNodeTest >> testCommentedMethodHasComments [
 
 	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
+	tree := self parseMethod: 'foo: abd bar: cde
 		"this is comment"
 		"this is another comment"
 ^ abd + cde'.
 
-	self assert: tree hasComments.
+	self assert: tree hasComments
 ]
 
 { #category : #'tests - comments' }
@@ -115,7 +151,7 @@ RBMethodNodeTest >> testCommentsParent [
 	"Test if comment has a parent"
 	self
 		assert: (self class >> #testCommentsParent) ast comments first parent selector
-		equals: #testCommentsParent.
+		equals: #testCommentsParent
 ]
 
 { #category : #tests }
@@ -130,17 +166,17 @@ RBMethodNodeTest >> testHasArguments [
 RBMethodNodeTest >> testHasComments [
 
 	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
+	tree := self parseMethod: 'foo: abd bar: cde
 		"this is comment"
 		"this is another comment"
 ^ abd + cde'.
 
 	self assert: tree hasComments.
-	
-	tree := self parseMethod: 'foo: abd bar: cde  
+
+	tree := self parseMethod: 'foo: abd bar: cde
 ^ abd + cde'.
 
-	self deny: tree hasComments.
+	self deny: tree hasComments
 ]
 
 { #category : #'tests - primitives' }
@@ -153,9 +189,9 @@ RBMethodNodeTest >> testIsPrimitive [
 	self assert: ast isPrimitive.
 	ast := (Bitmap >> #primFill:) ast.
 	self assert: ast isPrimitive.
-	
+
 	ast := (Integer >> #+) ast.
-	self deny: ast isPrimitive.
+	self deny: ast isPrimitive
 ]
 
 { #category : #tests }
@@ -164,7 +200,7 @@ RBMethodNodeTest >> testMethodClass [
 	ast :=  (OrderedCollection>>#do:) ast.
 	self assert: ast methodClass equals: OrderedCollection.
 	"if we create an AST, the class should be nil"
-	ast := RBMethodNode selector: #tt body: RBSelectorNode new. 
+	ast := RBMethodNode selector: #tt body: RBSelectorNode new.
 	self assert: ast methodClass equals: nil
 ]
 
@@ -172,7 +208,7 @@ RBMethodNodeTest >> testMethodClass [
 RBMethodNodeTest >> testMethodWithCommentsAndEmptyStatements [
 
 	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
+	tree := self parseMethod: 'foo: abd bar: cde
 		"this is comment".
 		"this is another comment"'.
 
@@ -184,7 +220,7 @@ RBMethodNodeTest >> testMethodWithCommentsAndEmptyStatements [
 RBMethodNodeTest >> testMethodsHasTemporaries [
 
 	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
+	tree := self parseMethod: 'foo: abd bar: cde
 		| tmp |
 ^ abd + cde'.
 
@@ -251,7 +287,7 @@ RBMethodNodeTest >> testOffsetIsComment [
 	self assert: ((OrderedCollection>>#do:) ast offsetIsComment: 62).
 
 	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 63).
-	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 70).
+	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 70)
 ]
 
 { #category : #'tests - primitives' }
@@ -261,13 +297,13 @@ RBMethodNodeTest >> testPrimitiveErrorIsPrimitive [
 		<primitive: 183 error: ec>
 		^self primitiveFailed
 	"
-	
+
 	| ast |
 	ast := (Object >> #isPinnedInMemory) ast.
 	self assert: ast isPrimitive.
 
 	ast := (MirrorPrimitives class >> #makeObject:readOnly:) ast.
-	self assert: ast isPrimitive.
+	self assert: ast isPrimitive
 ]
 
 { #category : #'tests - primitives' }
@@ -275,12 +311,12 @@ RBMethodNodeTest >> testPrimitiveIsPrimitive [
 	"primFill: aPositiveInteger
 		<primitive: 145>
 		self errorImproperStore."
-	
+
 	| ast |
 	ast := (SmallInteger >> #+) ast.
 	self assert: ast isPrimitive.
 	ast := (Bitmap >> #primFill:) ast.
-	self assert: ast isPrimitive.
+	self assert: ast isPrimitive
 ]
 
 { #category : #'tests - primitives' }
@@ -292,7 +328,7 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	"
 	| ast |
 	ast := (File class >> #primClosedir:) ast.
-	self assert: ast isPrimitive.
+	self assert: ast isPrimitive
 ]
 
 { #category : #'tests - primitives' }
@@ -312,7 +348,7 @@ RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
 	self assert: ast isPrimitive.
 
 	ast := (Integer >> #digitSubtract:) ast.
-	self assert: ast isPrimitive.
+	self assert: ast isPrimitive
 ]
 
 { #category : #tests }
@@ -330,7 +366,7 @@ RBMethodNodeTest >> testSizeOfSignatureOfBinaryMethod [
 	| tree |
 	tree := self
 		parseMethod:
-			' + x   
+			' + x
 ^ 2 + 3'.
 	self assert: tree conceptualSelectorSize equals: '+' size.
 	self assert: tree conceptualArgumentSize equals: 'x'  size.
@@ -342,13 +378,13 @@ RBMethodNodeTest >> testSizeOfSignatureOfKeywordsMethod [
 	| tree |
 	tree := self
 		parseMethod:
-			'foo: abd bar: cde  
+			'foo: abd bar: cde
 ^ abd + cde'.
 	self assert: tree conceptualSelectorSize equals: 'foo:bar:' size.
 	self assert: tree conceptualArgumentSize equals: 'abdcde' size.
 	self
 		assert: tree conceptualSignatureSize
-		equals: 'abdcde' size + 'foo:bar:' size + 3.
+		equals: 'abdcde' size + 'foo:bar:' size + 3
 ]
 
 { #category : #tests }
@@ -356,7 +392,7 @@ RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
 	| tree |
 	tree := self
 		parseMethod:
-			'foo  
+			'foo
 ^ 2 + 3'.
 	self assert: tree conceptualSelectorSize equals: 'foo' size.
 	self assert: tree conceptualArgumentSize isZero.
@@ -367,8 +403,8 @@ RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
 RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
 
 	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
+	tree := self parseMethod: 'foo: abd bar: cde
 ^ abd + cde'.
 
-	self deny: tree hasComments.
+	self deny: tree hasComments
 ]

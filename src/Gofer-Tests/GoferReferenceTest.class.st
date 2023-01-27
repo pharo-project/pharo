@@ -86,7 +86,7 @@ GoferReferenceTest >> testContraintShouldFindLatestVersion [
 GoferReferenceTest >> testContraintShouldFindWorkingCopy [
 
 	| constraintReference workingCopy |
-	constraintReference := GoferConstraintReference 
+	constraintReference := GoferConstraintReference
 		name: 'Gofer-Core'
 		constraint: [ :reference | false ].
 	workingCopy := constraintReference workingCopy.
@@ -176,7 +176,7 @@ GoferReferenceTest >> testVersionShouldFindWorkingCopy [
 	| versionReference workingCopy |
 	versionReference := GoferVersionReference name: 'Gofer-Core-lr.18'.
 	workingCopy := versionReference workingCopy.
-	
+
 	self assert: workingCopy packageName equals: 'Gofer-Core'
 ]
 

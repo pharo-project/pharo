@@ -45,7 +45,7 @@ FileSystemGuide >> initialize [
 { #category : #initialization }
 FileSystemGuide >> initializeWithVisitor: aVisitor [
 	self initialize.
-	visitor := aVisitor.
+	visitor := aVisitor
 ]
 
 { #category : #removing }
@@ -59,7 +59,7 @@ FileSystemGuide >> push: anObject [
 ]
 
 { #category : #showing }
-FileSystemGuide >> pushAll: aCollection [ 
+FileSystemGuide >> pushAll: aCollection [
 	aCollection do: [ :ea | self push: ea ]
 ]
 
@@ -71,19 +71,19 @@ FileSystemGuide >> selectChildren [
 { #category : #accessing }
 FileSystemGuide >> selectChildren: aBlock [
 	"With this block you can control how the guide spreads over directories.
-	Example: 
+	Example:
 		self selectChildren: [ :parentEntry | parentEntry isSymlink not ].
 		This will prevent the outer visitor to see any children of symlinked directories.
-		
+
 	Since the guides essentially rearrange the files visited controlling which children
-	you see is the main concern of the guide. All the other visiting aspects can be 
+	you see is the main concern of the guide. All the other visiting aspects can be
 	controlled in the visitor."
 	selectChildren := aBlock
 ]
 
 { #category : #testing }
 FileSystemGuide >> shouldVisitChildrenOf: anEntry [
-	^ selectChildren 
+	^ selectChildren
 		ifNil: [ true ]
 		ifNotNil: [ selectChildren cull: anEntry ]
 ]

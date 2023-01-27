@@ -130,16 +130,16 @@ Deprecation >> date: aDate [
 
 { #category : #handling }
 Deprecation >> defaultAction [
-	Log 
+	Log
 		ifNotNil: [:log | log add: self].
 	self logTranscript.
-	self raiseWarning 
+	self raiseWarning
 		ifTrue: [super defaultAction]
 ]
 
 { #category : #private }
 Deprecation >> deprecatedMethodName [
-	^self contextOfDeprecatedMethod compiledCode method printString
+	^self contextOfDeprecatedMethod homeMethod printString
 ]
 
 { #category : #accessing }
@@ -173,9 +173,9 @@ Deprecation >> logTranscript [
 { #category : #accessing }
 Deprecation >> messageText [
 	^String streamContents: [ :str |
-		self shouldTransform ifTrue: [ 
+		self shouldTransform ifTrue: [
 			str nextPutAll:  'Automatic deprecation code rewrite: '].
-		str 
+		str
 			nextPutAll: 'The method ';
 			nextPutAll: self deprecatedMethodName;
 			nextPutAll: ' called from ';
@@ -201,7 +201,7 @@ Deprecation >> rule: aRule [
 
 { #category : #private }
 Deprecation >> sendingMethodName [
-	^self contextOfSender compiledCode method printString
+	^self contextOfSender homeMethod printString
 ]
 
 { #category : #handling }
@@ -218,10 +218,11 @@ Deprecation >> showWarning [
 
 { #category : #handling }
 Deprecation >> signal [
-	| pragma |
-	(context compiledCode method hasPragmaNamed: #transform:to:) ifFalse: [ ^super signal ].
+	| pragma homeMethod |
+	homeMethod := context homeMethod.
+	(homeMethod hasPragmaNamed: #transform:to:) ifFalse: [ ^super signal ].
 
-	pragma := context compiledCode method pragmaAt: #transform:to:.
+	pragma := homeMethod pragmaAt: #transform:to:.
 	self rule: pragma arguments first -> pragma arguments second.
 	self transform
 ]
@@ -231,18 +232,18 @@ Deprecation >> transform [
 	| node rewriteRule aMethod |
 	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
-	aMethod := self contextOfSender compiledCode method.
+	aMethod := self contextOfSender homeMethod.
 	aMethod isDoIt ifTrue:[ ^ self signal ]. "no need to transform doits"
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [
-		rewriteRule := self rewriterClass new 
+		rewriteRule := self rewriterClass new
 			replace: rule key with: rule value.
 		(rewriteRule executeTree: node)
 			ifFalse: [ ^ self signal ].
-		node replaceWith: rewriteRule tree. 
-		Author 
+		node replaceWith: rewriteRule tree.
+		Author
 			useAuthor: 'AutoDeprecationRefactoring'
-			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
+			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].
 		Log  ifNotNil: [:log | log add: self].
 		self logTranscript]
 ]

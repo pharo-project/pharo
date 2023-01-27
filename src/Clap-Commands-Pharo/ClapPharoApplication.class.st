@@ -14,7 +14,7 @@ ClapPharoApplication >> execute [
 
 { #category : #execution }
 ClapPharoApplication >> prepareImage [
-	arguments at: #rename ifPresent: [ :rename | 
+	arguments at: #rename ifPresent: [ :rename |
 		| imageFile |
 		imageFile := rename value asFileReference.
 		self flag: 'check if it already exists & not same as current'.
