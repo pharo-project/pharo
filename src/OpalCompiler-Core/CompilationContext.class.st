@@ -98,8 +98,17 @@ CompilationContext class >> defaultOptions [
 ]
 
 { #category : #accessing }
+CompilationContext class >> defaultParseTransformationPlugins [
+
+	^ DefaultParseTransformationPlugins
+		ifNil: [ DefaultParseTransformationPlugins := OrderedCollection new ]
+]
+
+{ #category : #accessing }
 CompilationContext class >> defaultTransformationPlugins [
-	^ DefaultTransformationPlugins ifNil: [ DefaultTransformationPlugins := OrderedCollection new ]
+
+	^ DefaultTransformationPlugins ifNil: [
+		DefaultTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -486,10 +495,11 @@ CompilationContext >> getClass [
 
 { #category : #initialization }
 CompilationContext >> initialize [
+
 	options := Set new.
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
-	semanticScope := OCMethodSemanticScope targetingClass: nil class.
-	astParseTransformPlugins := OrderedCollection new: 2
+	astParseTransformPlugins := OrderedCollection withAll: self class defaultParseTransformationPlugins.
+	semanticScope := OCMethodSemanticScope targetingClass: nil class
 ]
 
 { #category : #accessing }

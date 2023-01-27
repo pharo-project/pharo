@@ -1035,20 +1035,15 @@ SHRBTextStyler >> plugins [
 
 { #category : #private }
 SHRBTextStyler >> privateStyle: aText [
-	| compiler |
-
+	| ast |
 	aText ifEmpty: [ ^ self ].
-	compiler := classOrMetaClass compiler
+	ast := classOrMetaClass compiler
 		source: aText asString;
 		noPattern: self isForWorkspace ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: workspace.
-
-	self plugins do: [ :each | compiler addParsePlugin: each ].
-
-	^ self
-		style: aText
-		ast: compiler parse
+		requestor: workspace;
+		parse.				
+	^ self style: aText ast: ast
 ]
 
 { #category : #private }
