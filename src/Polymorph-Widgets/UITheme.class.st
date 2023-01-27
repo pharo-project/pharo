@@ -4732,7 +4732,7 @@ UITheme >> progressBarBorderStyleFor: aProgressBar [
 	c := self progressBarColorFor: aProgressBar.
 	^BorderStyle simple
 		width: 1;
-		baseColor: c darker
+		baseColor: c
 ]
 
 { #category : #'basic-colors' }
@@ -5364,7 +5364,7 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 
 	^BorderStyle inset
 		width: 1;
-		baseColor: aSlider paneColor twiceDarker
+		baseColor: aSlider paneColor
 ]
 
 { #category : #'fill-styles' }

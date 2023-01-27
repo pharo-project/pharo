@@ -140,7 +140,7 @@ PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 
 	^ BorderStyle inset
 		  width: 1;
-		  baseColor: self buttonColor lighter
+		  baseColor: self buttonColor
 ]
 
 { #category : #initialization }
