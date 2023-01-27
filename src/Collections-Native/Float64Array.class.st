@@ -11,7 +11,7 @@ Float64Array >> at64Bits: byteIndex [
 	<primitive: 614>
 	| elementIndex |
 	elementIndex := byteIndex / 8 + 1.
-	^ Float fromIEEE64BitWord: (self basicAt: elementIndex) 
+	^ Float fromIEEE64BitWord: (self basicAt: elementIndex)
 ]
 
 { #category : #accessing }

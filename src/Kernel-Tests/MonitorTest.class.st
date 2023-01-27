@@ -44,7 +44,7 @@ MonitorTest >> testExample1 [
 
 { #category : #'tests - examples' }
 MonitorTest >> testExample2 [
-	"Here is a second version that does not use a semaphore to inform the 
+	"Here is a second version that does not use a semaphore to inform the
 	forking process about termination of both forked processes"
 
 	| producer1 producer2 monitor goal work counter goalReached activeProducers |
@@ -93,5 +93,5 @@ MonitorTest >> testExample2 [
 MonitorTest >> testWaitMaxMilliseconds [
 	| monitor |
 	monitor := Monitor new.
-	monitor critical: [ monitor waitMaxMilliseconds: 10 ].
+	monitor critical: [ monitor waitMaxMilliseconds: 10 ]
 ]

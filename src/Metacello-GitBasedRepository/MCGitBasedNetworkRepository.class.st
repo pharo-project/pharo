@@ -112,7 +112,7 @@ MCGitBasedNetworkRepository class >> initialize [
 MCGitBasedNetworkRepository class >> isAbstract [
     "abstract as far as creating new repositories interactively? yes"
 
-    ^ true
+    ^ self == MCGitBasedNetworkRepository
 ]
 
 { #category : #testing }

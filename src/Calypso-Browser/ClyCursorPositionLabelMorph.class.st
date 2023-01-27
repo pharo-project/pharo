@@ -19,7 +19,7 @@ Class {
 { #category : #controlling }
 ClyCursorPositionLabelMorph >> attachToTextMorph [
 	super attachToTextMorph.
-	
+
 	self textArea announcer when: RubSelectionChanged send: #updateContents to: self.
 	self updateContents
 ]
@@ -27,13 +27,13 @@ ClyCursorPositionLabelMorph >> attachToTextMorph [
 { #category : #controlling }
 ClyCursorPositionLabelMorph >> detachFromTextMorph [
 	super detachFromTextMorph.
-	
+
 	self textArea announcer unsubscribe: self
 ]
 
 { #category : #initialization }
 ClyCursorPositionLabelMorph >> initialize [
-	super initialize.	
+	super initialize.
 	self setBalloonText: 'Current line number/Total line number [Current character number]'.
 	labelMorph := '' asStringMorph.
 	self addMorph: labelMorph

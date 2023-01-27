@@ -15,7 +15,7 @@ CDPointClassParserTest >> classDefinitionString [
 
 { #category : #tests }
 CDPointClassParserTest >> className [
-	self flag: #Revisit. "since it should be a string according to className" 
+	self flag: #Revisit. "since it should be a string according to className"
 	^ #Point
 ]
 
@@ -32,7 +32,7 @@ CDPointClassParserTest >> firstInstanceVariableName [
 ]
 
 { #category : #helpers }
-CDPointClassParserTest >> packageName [ 
+CDPointClassParserTest >> packageName [
 	^ #'Kernel-BasicObjects'
 ]
 

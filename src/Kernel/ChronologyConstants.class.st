@@ -11,6 +11,7 @@ Class {
 		'MicrosecondsInDay',
 		'MinutesInHour',
 		'MonthNames',
+		'NanosInMicroSecond',
 		'NanosInMillisecond',
 		'NanosInSecond',
 		'SecondsInDay',
@@ -24,7 +25,7 @@ Class {
 { #category : #'class initialization' }
 ChronologyConstants class >> initialize [
 	"ChronologyConstants initialize"
-	SqueakEpoch := 2415386. 		"Julian day number of 1 Jan 1901" 
+	SqueakEpoch := 2415386. 		"Julian day number of 1 Jan 1901"
 	SecondsInDay := 86400.
 	MicrosecondsInDay := SecondsInDay * 1e6.
 	SecondsInHour := 3600.
@@ -33,9 +34,10 @@ ChronologyConstants class >> initialize [
 	HoursInDay := 24.
 	NanosInSecond := 10 raisedTo: 9.
 	NanosInMillisecond := 10 raisedTo: 6.
+	NanosInMicroSecond := 10 raisedTo: 3.
 	DayNames := #(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).
-		
+
 	MonthNames := #(January February March April May June July
  			August September October November December).
-	DaysInMonth := #(31 28 31 30 31 30 31 31 30 31 30 31).
+	DaysInMonth := #(31 28 31 30 31 30 31 31 30 31 30 31)
 ]

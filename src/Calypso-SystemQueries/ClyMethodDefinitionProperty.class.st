@@ -28,26 +28,26 @@ ClyMethodDefinitionProperty class >> of: aMethod [
 	methodPackage := aMethod package.
 	methodClass := aMethod origin.
 	methodProtocol := aMethod protocol.
-	
+
 	methodPackage ifNil: [ methodPackage := methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
-	
+
 	^ self package: methodPackage class: methodClass protocol: methodProtocol
 ]
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> package: aPackage class: aClass [
-	
+
 	^(super package: aPackage class: aClass)
 		isExtension: aClass package ~~ aPackage
 ]
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> package: aPackage class: aClass protocol: aProtocol [
-	
+
 	^(super package: aPackage class: aClass)
 		isExtension: aClass package ~~ aPackage;
 		protocol: aProtocol;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }

@@ -48,7 +48,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 		order: 1;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: self taskbarIcon
+		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
 { #category : #'instance creation' }
@@ -387,29 +387,23 @@ TestRunner >> classesSearchFrame [
 
 { #category : #actions }
 TestRunner >> collectCoverageFor: methods [
-	| suite link notExecuted |
+	| suite coverage collector notExecuted |
 	suite := self
 		resetResult;
 		suiteForAllSelected.
 	
-	link := MetaLink new
-		selector: #tagExecuted;
-		metaObject: #node.
-	
-	[ methods do: [ :meth | meth ast link: link].
-	[ self runSuite: suite ] ensure: [ link uninstall ] ] valueUnpreemptively.
+	collector := CoverageCollector new.
+	collector methods: methods.
+	coverage := collector runOn: [ self runSuite: suite ].
 
-	notExecuted := methods reject: [:each | each ast hasBeenExecuted].
+	notExecuted := coverage uncoveredMethods.
 	notExecuted isEmpty 
 		ifTrue:  [ UIManager default inform: 'Congratulations. Your tests cover all code under analysis.' ]
 		ifFalse: [ 
 			Smalltalk tools messageList 
 				browse: notExecuted
 				title: 'Not Covered Code (' , (100 - (100 * notExecuted size // methods size)) printString , '% Code Coverage)'].
-	
-	"cleanup the annotations"
-	methods do: [ :each | each ast removeProperty: #tagExecuted ifAbsent: [ ] ].
-	
+		
 	self saveResultInHistory
 ]
 

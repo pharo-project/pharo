@@ -48,7 +48,7 @@ ClyUnknownQueryResult >> findItemsSimilarTo: sampleEnvironmentItems [
 ]
 
 { #category : #queries }
-ClyUnknownQueryResult >> findItemsWith: aCollection [ 
+ClyUnknownQueryResult >> findItemsWith: aCollection [
 	^Array new: aCollection size withAll: nil
 ]
 

@@ -104,7 +104,7 @@ ZnPositionableReadStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 8
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnPositionableReadStream >> initialize [
 	super initialize.
 	count := index := delta := 0

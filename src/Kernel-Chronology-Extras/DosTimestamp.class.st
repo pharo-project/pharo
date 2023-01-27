@@ -28,7 +28,7 @@ DosTimestamp class >> dateValueFrom: aDate [
 	dosYear := aDate year - DateAndTime dosEpoch year << 9.
 	dosMonth := aDate monthIndex << 5.
 	dosDay := aDate dayOfMonth.
-	^ dosYear + dosMonth + dosDay.
+	^ dosYear + dosMonth + dosDay
 ]
 
 { #category : #accessing }
@@ -38,19 +38,19 @@ DosTimestamp class >> epoch [
 ]
 
 { #category : #'instance creation' }
-DosTimestamp class >> fromDateAndTime: aDateAndTime [ 
+DosTimestamp class >> fromDateAndTime: aDateAndTime [
 
 	| dateValue timeValue local |
 	local := aDateAndTime asLocal.
 	dateValue := self dateValueFrom: local asDate.
 	timeValue := self timeValueFrom: local asTime.
-	^ self on: (dateValue << 16) + timeValue.
+	^ self on: (dateValue << 16) + timeValue
 ]
 
 { #category : #'instance creation' }
 DosTimestamp class >> on: anInteger [
 
-	^ self new initializeValue: anInteger.
+	^ self new initializeValue: anInteger
 ]
 
 { #category : #private }
@@ -60,19 +60,19 @@ DosTimestamp class >> timeValueFrom: aTime [
 	dosHours := aTime hour << 11.
 	dosMinutes := aTime minute << 5.
 	dosSeconds := (aTime second / 2) floor.
-	^ dosHours + dosMinutes + dosSeconds.
+	^ dosHours + dosMinutes + dosSeconds
 ]
 
 { #category : #comparing }
 DosTimestamp >> = rhs [
 
-	^ self value = rhs value.
+	^ self value = rhs value
 ]
 
 { #category : #converting }
 DosTimestamp >> asDateAndTime [
 
-	^ DateAndTime date: self date time: self time.
+	^ DateAndTime date: self date time: self time
 ]
 
 { #category : #private }
@@ -85,38 +85,38 @@ DosTimestamp >> date [
 	month := encodedDate >> 5 & 2r1111. "Middle 4 bits"
 	day := encodedDate & 2r11111. "Low 5 bits"
 	year := self epoch year + yearsSinceDosEpoch.
-	^ Date year: year month: month day: day.
+	^ Date year: year month: month day: day
 ]
 
 { #category : #private }
 DosTimestamp >> epoch [
 
-	^ self class epoch.
+	^ self class epoch
 ]
 
 { #category : #comparing }
 DosTimestamp >> hash [
 
-	^ self value hash.
+	^ self value hash
 ]
 
 { #category : #private }
 DosTimestamp >> high16Bits [
 
-	^ value >> 16.
+	^ value >> 16
 ]
 
 { #category : #private }
-DosTimestamp >> initializeValue: anInteger [ 
+DosTimestamp >> initializeValue: anInteger [
 
 	value := anInteger.
-	^ self.
+	^ self
 ]
 
 { #category : #private }
 DosTimestamp >> low16Bits [
-	
-	^ value & 2r1111111111111111.
+
+	^ value & 2r1111111111111111
 ]
 
 { #category : #printing }
@@ -126,24 +126,24 @@ DosTimestamp >> printOn: aStream [
 		print: self asDateAndTime ;
 		nextPutAll: ' (';
 		print: self value ;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #private }
 DosTimestamp >> time [
 	"See class comment for format details"
-	
+
 	| encodedTime hours minutes secondsHalved seconds |
 	encodedTime := self low16Bits.
 	hours := encodedTime >> 11. "High 5 bits"
 	minutes := encodedTime >> 5 & 2r111111. "Middle 6 bits"
 	secondsHalved := encodedTime & 2r11111. "Low 5 bits"
 	seconds := (secondsHalved * 2) floor.
-	^ Time hour: hours minute: minutes second: seconds.
+	^ Time hour: hours minute: minutes second: seconds
 ]
 
 { #category : #accessing }
 DosTimestamp >> value [
 
-	^ value.
+	^ value
 ]

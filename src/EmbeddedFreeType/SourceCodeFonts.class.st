@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-SourceCodeFonts class >> codeFontName [ 
+SourceCodeFonts class >> codeFontName [
 	^ 'Source Code Pro'
 ]
 
@@ -18,12 +18,12 @@ SourceCodeFonts class >> defaultFontName [
 ]
 
 { #category : #accessing }
-SourceCodeFonts class >> fontButton: aString size: size [ 
-	^ (Smalltalk ui theme 
+SourceCodeFonts class >> fontButton: aString size: size [
+	^ (Smalltalk ui theme
 		newButtonIn: self
 			for: self
-			getState: nil 
-			action: #setSourceCodeFonts:	
+			getState: nil
+			action: #setSourceCodeFonts:
 			arguments: { size }
 			getEnabled: nil
 			getLabel: nil
@@ -40,7 +40,7 @@ SourceCodeFonts class >> fontName [
 { #category : #settings }
 SourceCodeFonts class >> fontSourceCodeRow [
 	| theme |
-	
+
 	theme := Smalltalk ui theme.
 	^ theme newRowIn: self for: {
 		theme buttonLabelForText: 'Predefined styles: ' translated.
@@ -56,8 +56,8 @@ SourceCodeFonts class >> registerFonts: freeTypeFontManager [
 	{ SourceSansProRegular. SourceCodeProRegular } do: [ :each |
 		| font |
 		font := each new.
-		freeTypeFontManager 
-			addFromFileContents: font fontContents 
+		freeTypeFontManager
+			addFromFileContents: font fontContents
 			baseName: font originalFileName ]
 ]
 
@@ -116,14 +116,14 @@ SourceCodeFonts class >> sizeLarge [
 ]
 
 { #category : #accessing }
-SourceCodeFonts class >> sizeMedium [ 
+SourceCodeFonts class >> sizeMedium [
 
 	<styleName: #medium>
 	^ 13
 ]
 
 { #category : #accessing }
-SourceCodeFonts class >> sizeSmall [ 
+SourceCodeFonts class >> sizeSmall [
 
 	<styleName: #small>
 	^ 10

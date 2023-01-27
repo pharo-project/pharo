@@ -1,3 +1,6 @@
+"
+This class contains tests for `FluidClassSideTraitBuilder`
+"
 Class {
 	#name : #FluidClassSideTraitBuilderTest,
 	#superclass : #TestCase,
@@ -24,7 +27,7 @@ FluidClassSideTraitBuilderTest >> testSlots [
 					slots: { #x . #y };
 					package: 'FakedCore'.
 	trait := builder build.
-	
+
 	self assert: trait name equals: #TViewModelMock.
 	self assert: trait class slots size equals: 2
 ]

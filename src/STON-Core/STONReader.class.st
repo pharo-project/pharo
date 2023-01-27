@@ -94,7 +94,7 @@ STONReader >> expectChar: character [
 		ifFalse: [ self error: character asString, ' expected' ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> initialize [
 	super initialize.
 	objects := IdentityDictionary new.

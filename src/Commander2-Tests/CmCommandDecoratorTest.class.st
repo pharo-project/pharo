@@ -15,12 +15,12 @@ Class {
 CmCommandDecoratorTest >> setUp [
 	super setUp.
 	commandToBeDecorated := CmCommand new.
-	
+
 	commandToBeDecorated
 		name: 'command for test';
 		description: 'This command is only cerated for the purpose of unit tests.';
 		context: Object new.
-		
+
 	decorator := CmCommandDecorator decorate: commandToBeDecorated
 ]
 

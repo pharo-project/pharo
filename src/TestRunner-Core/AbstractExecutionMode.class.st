@@ -7,6 +7,12 @@ Class {
 	#category : #'TestRunner-Core-ExecutionModes'
 }
 
+{ #category : #testing }
+AbstractExecutionMode class >> debugExecutionModeClass [
+
+	^ DebugExecutionMode
+]
+
 { #category : #execution }
 AbstractExecutionMode class >> executeCase: aTestCase [
 	"executes the giving test case then returns the result"
@@ -18,4 +24,10 @@ AbstractExecutionMode class >> executeCase: aTestCase [
 AbstractExecutionMode class >> isAbstract [
 
 	^ self == AbstractExecutionMode
+]
+
+{ #category : #testing }
+AbstractExecutionMode class >> runExecutionModeClass [
+
+	^ RunExecutionMode
 ]

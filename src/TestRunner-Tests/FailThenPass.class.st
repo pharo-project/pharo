@@ -5,7 +5,7 @@ I will be use to tests some rerunFailed Tests features.
 "
 Class {
 	#name : #FailThenPass,
-	#superclass : #UtilityTest,
+	#superclass : #MockTest,
 	#classInstVars : [
 		'counter'
 	],

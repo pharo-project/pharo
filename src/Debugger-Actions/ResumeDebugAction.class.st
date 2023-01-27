@@ -41,10 +41,10 @@ ResumeDebugAction >> enabled [
 { #category : #actions }
 ResumeDebugAction >> executeAction [
 
-	self session 
+	self session
 		resume;
 		clear.
-	self debugger close.
+	self debugger close
 ]
 
 { #category : #accessing }

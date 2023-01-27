@@ -17,14 +17,14 @@ Class {
 { #category : #activation }
 ClyCloseBrowserCommand class >> browserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $w meta for: ClyBrowserContext
 ]
 
 { #category : #activation }
 ClyCloseBrowserCommand class >> textToolShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $w meta for: ClyTextEditorContext
 ]
 

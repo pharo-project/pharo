@@ -143,6 +143,7 @@ Object >> ffiLibraryName [
 
 { #category : #'*UnifiedFFI' }
 Object >> isExternalType [
+
 	^ false
 ]
 

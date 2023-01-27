@@ -7,14 +7,14 @@ Class {
 	#category : #'FluidClassBuilder-Base'
 }
 
-{ #category : #accessing }
+{ #category : #building }
 FluidTraitBuilder >> fillShiftClassBuilder [
-	
+
 	super fillShiftClassBuilder.
-	shiftClassBuilder 
+	shiftClassBuilder
 		beTrait;
 		sharedVariables: #();
 		sharedPools: ''.
-		
+
 	^ shiftClassBuilder
 ]

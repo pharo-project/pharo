@@ -5,7 +5,7 @@ LazyMorphListMorph >> athensDisplay: item atRow: row on: aCanvas [
 	"Display the given item at the given row on the given canvas."
 
 	row = self mouseDownRow
-		ifTrue: [ 
+		ifTrue: [
 			(aCanvas setStrokePaint: (self colorForRow: row))
 				width: 1;
 				dashes: {1} offset: 0.
@@ -13,7 +13,7 @@ LazyMorphListMorph >> athensDisplay: item atRow: row on: aCanvas [
 ]
 
 { #category : #'*Athens-Morphic' }
-LazyMorphListMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [ 
+LazyMorphListMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	"Display submorphs back to front"
 
 	| drawBlock|
@@ -22,7 +22,7 @@ LazyMorphListMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 		(self topVisibleRowForCanvas: anAthensCanvas) to: (self bottomVisibleRowForCanvas: anAthensCanvas) do: [ :row |
 			i := self item: row.
 			canvas fullDrawMorph: i]].
-	self clipSubmorphs 
+	self clipSubmorphs
 		ifTrue: [anAthensCanvas clipBy: (anAthensCanvas clipRect intersect: self clippingBounds ifNone: [ ^ self ]) during: drawBlock]
 		ifFalse: [drawBlock value: anAthensCanvas]
 ]

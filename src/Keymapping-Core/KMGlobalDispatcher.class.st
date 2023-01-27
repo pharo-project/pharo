@@ -28,6 +28,6 @@ KMGlobalDispatcher >> isGlobalDispatcher [
 ]
 
 { #category : #iterating }
-KMGlobalDispatcher >> nextForKmChain: aKMDispatchChain [ 
+KMGlobalDispatcher >> nextForKmChain: aKMDispatchChain [
 	^aKMDispatchChain target
 ]

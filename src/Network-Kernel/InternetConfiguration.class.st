@@ -282,7 +282,7 @@ InternetConfiguration class >> getWhoisHost [
 	^self primitiveGetStringKeyedBy: 'WhoisHost'
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 InternetConfiguration class >> initialize [
 	SessionManager default
 		registerNetworkClassNamed: self name

@@ -42,7 +42,7 @@ RBDumpVisitor >> visitArrayNode: anArrayNode [
 		nextPutAll: anArrayNode class name;
 		nextPutAll: ' statements: { '.
 	anArrayNode statements
-		do: [ :each | 
+		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}
@@ -65,7 +65,7 @@ RBDumpVisitor >> visitBlockNode: aBlockNode [
 	aBlockNode arguments
 		ifNotEmpty: [ stream nextPutAll: ' arguments: {'.
 			aBlockNode arguments
-				do: [ :each | 
+				do: [ :each |
 					each acceptVisitor: self.
 					stream nextPutAll: '. ' ].
 			stream nextPutAll: '}' ].
@@ -80,7 +80,7 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 		nextPutAll: aCascadeNode class name;
 		nextPutAll: ' messages: {'.
 	aCascadeNode messages
-		do: [ :each | 
+		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}
@@ -93,7 +93,7 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 		nextPutAll: anEnglobingErrorNode class name;
 		nextPutAll: ' content: {'.
 	anEnglobingErrorNode content
-		do: [ :each | 
+		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}.
@@ -105,7 +105,7 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	anEnglobingErrorNode errorMessage printOn: stream.
 	stream
 		nextPutAll: ') value: ';
-		nextPutAll: anEnglobingErrorNode value printString.
+		nextPutAll: anEnglobingErrorNode value printString
 ]
 
 { #category : #visiting }
@@ -141,7 +141,7 @@ RBDumpVisitor >> visitMessageNode: aMessageNode [
 	aMessageNode arguments
 		ifNotEmpty: [ stream nextPutAll: ' arguments: {'.
 			aMessageNode arguments
-				do: [ :each | 
+				do: [ :each |
 					each acceptVisitor: self.
 					stream nextPutAll: '. ' ].
 			stream nextPut: $} ]
@@ -160,7 +160,7 @@ RBDumpVisitor >> visitMethodNode: aMethodNode [
 	aMethodNode arguments
 		ifNotEmpty: [ stream nextPutAll: ' arguments: {'.
 			aMethodNode arguments
-				do: [ :each | 
+				do: [ :each |
 					each acceptVisitor:self.
 					stream nextPutAll: '. ' ].
 			stream nextPut: $} ].
@@ -172,7 +172,7 @@ RBDumpVisitor >> visitMethodNode: aMethodNode [
 		ifFalse: [ ^ aMethodNode ].
 	stream nextPutAll: ') pragmas: {'.
 	aMethodNode pragmas
-		do: [ :each | 
+		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}
@@ -198,7 +198,7 @@ RBDumpVisitor >> visitPragmaNode: aPragmaNode [
 	aPragmaNode selector printOn: stream.
 	stream nextPutAll: ' arguments: {'.
 	aPragmaNode arguments
-		do: [ :each | 
+		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}
@@ -219,13 +219,13 @@ RBDumpVisitor >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries
 		ifNotEmpty: [ stream nextPutAll: ' temporaries: {'.
 			aSequenceNode temporaries
-				do: [ :each | 
+				do: [ :each |
 					each acceptVisitor: self.
 					stream nextPutAll: '. ' ].
 			stream nextPut: $} ].
 	stream nextPutAll: ' statements: {'.
 	aSequenceNode statements
-		do: [ :each | 
+		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}

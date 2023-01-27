@@ -14,9 +14,9 @@ Class {
 
 { #category : #'instance creation' }
 EpRenameInstanceVariableRefactoring class >> rename: oldName to: newName in: affectedClassName [
-	^ self basicNew 
+	^ self basicNew
 		initializeIn: affectedClassName
-		from: oldName 
+		from: oldName
 		to: newName;
 		yourself
 ]
@@ -28,9 +28,9 @@ EpRenameInstanceVariableRefactoring >> affectedClassName [
 
 { #category : #converting }
 EpRenameInstanceVariableRefactoring >> asRBRefactoring [
-	^ RBRenameInstanceVariableRefactoring 
-		rename: oldName 
-		to: newName 
+	^ RBRenameInstanceVariableRefactoring
+		rename: oldName
+		to: newName
 		in: affectedClassName
 ]
 
@@ -40,7 +40,7 @@ EpRenameInstanceVariableRefactoring >> initializeIn: aClassName from:  anOldName
 
 	affectedClassName := aClassName.
 	newName := aNewName.
-	oldName := anOldName.
+	oldName := anOldName
 ]
 
 { #category : #accessing }

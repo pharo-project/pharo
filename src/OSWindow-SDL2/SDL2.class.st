@@ -31,10 +31,10 @@ SDL2 class >> checkLibraryName: aName [
 
 { #category : #clipboard }
 SDL2 class >> clipboardText [
+
 	| text |
-	
 	text := self primClipboardText.
-	^ text readStringUTF8
+	^ text utf8StringFromCString
 ]
 
 { #category : #clipboard }

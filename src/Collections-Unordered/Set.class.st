@@ -1,21 +1,83 @@
 "
 I represent a set of objects without duplicates.  I can hold anything that responds to
-`#hash` and `#=`, except for nil.  My instances will automatically grow, if necessary,
+`#hash` and `#=`, including nil.  My instances will automatically grow, if necessary,
 Note that I rely on `#=`, not `#==`.  If you want a set using `#==`, use `IdentitySet`.
 
+## Public API and Key Messages
 
-The core operation is #find`ElementOrNil:`, which either finds the position where an
-object is stored in array, if it is present, or finds a suitable position holding nil, if
-its argument is not present in array.
+### Initializing and Adding
+
+A `Set` can be created with values using the `Set class>>#newFrom:` class selector, which will add the 
+values of a collection as the values of the `Set`, with any duplicates removed. See `Bag` for a collection
+that will retain the count of duplicate elements.
+
+```
+s := Set newFrom: #(1 2 3 4 5).  ""a Set(2 4 3 5 1)""
+
+s2 := Set newFrom: #(1 1 1 2 2 ).  ""a Set(1 2)""
+```
+
+Alternatively, an empty set can be created and elements added to it progressively using `Set>>#add:`
+
+```
+s := Set new.
+s add: 13.
+s add: 1.
+```
+
+### Testing
+
+Check if a value is present in a `Set` using the `Set>>#includes:` selector.
+
+```
+""Look if 12 is the value of any key in the Set""
+s := Set newFrom: #(1 2 3 4 5).
+s includes: 12.  ""false""
+```
+		
+### Removing
+
+Use the `Collection>>#remove:` selector to remove a value from the `Set`, which will cause
+an error if the value is not found. Use the `Set>>#remove:ifAbsent:` selector to control this behavior.
+
+```
+s := Set newFrom: #(1 2 3 4 5).
+s remove: 5.  ""a Set(1 3 2 4)""
+s remove: 1200.  ""Error""
+s remove: 1200 ifAbsent: [ ""do something"" ].
+```
+
+### Set operations
+The usual set-theoretic operations are also available.
+```
+s1 := Set newFrom: #(1 2 3).
+s2 := Set newFrom: #(2 3 4).
+```
+#### Union
+```
+s3 := s1 union: s2. ""a Set(1 2 3 4)""
+```
+#### Difference
+```
+s1 difference: s2. ""a Set(1)""
+s2 difference: s1. ""a Set(4)""
+```
+#### Intersection
+```
+s1 intersection: s2. ""a Set(2 3)""
+```
 
 ### Instance structure:
 
-- array	An array whose non-nil elements are the elements of the set,
-  and whose nil elements are empty slots.  There is always at least one nil.
-  In fact I try to keep my ""load"" at 75% or less so that hashing will work well.
+- array	An array whose non-nil elements are the elements of the set
+  and whose nil elements are empty slots. There is always at least one nil.
+  In fact, I try to keep my ""load"" at 75% or less so that hashing will work well.
 
--  tally	The number of elements in the set.  The array size is always greater than this.
+-  tally	The number of elements in the set. The array size is always greater than this.
 
+- The core operation is `HashedCollection>>#findElementOrNil:`, which either finds the position where an
+  object is stored in array, if it is present, or finds a suitable position holding nil, if
+  its argument is not present in an array.
 
 "
 Class {
@@ -29,7 +91,7 @@ Set class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	"(Set newFrom: {1. 2. 3}) >>> #( 1 2 3) asSet"
 	"({1. 2. 3} as: Set) >>> #( 1 2 3) asSet"
-	
+
 	| newCollection |
 	newCollection := self new: aCollection size.
 	newCollection addAll: aCollection.
@@ -69,9 +131,9 @@ Set >> asSet [
 ]
 
 { #category : #enumerating }
-Set >> collect: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Collect the resulting values into a collection like the receiver. Answer  
+Set >> collect: aBlock [
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Collect the resulting values into a collection like the receiver. Answer
 	the new collection."
 
 	| newSet |
@@ -81,7 +143,7 @@ Set >> collect: aBlock [
 ]
 
 { #category : #removing }
-Set >> copyWithout: oldElement [ 
+Set >> copyWithout: oldElement [
 	"Answer a copy of the receiver that does not contain any
 	elements equal to oldElement."
 
@@ -96,9 +158,9 @@ Set >> difference: aCollection [
 
 	"#(a b c d e f) difference:  #(a b z k)
 	=> #(#f #d #e #c)
-	
-	#(a b z k) difference: #(a b c d e f) 
-	=> #(#k #z) 
+
+	#(a b z k) difference: #(a b c d e f)
+	=> #(#k #z)
 	"
 
 	| set |
@@ -108,7 +170,7 @@ Set >> difference: aCollection [
 ]
 
 { #category : #enumerating }
-Set >> do: aBlock [ 
+Set >> do: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: array size do:
 		[:index |
@@ -140,13 +202,13 @@ Set >> grow [
 	tally := 0.
 	oldElements
 		do:
-			[ :each | 
+			[ :each |
 			each == nil
 				ifFalse: [ self noCheckAdd: each enclosedElement] ]
 ]
 
 { #category : #testing }
-Set >> includes: anObject [ 
+Set >> includes: anObject [
 	^ (array at: (self findElementOrNil: anObject)) ~~ nil
 ]
 
@@ -171,7 +233,7 @@ Set >> intersection: aCollection [
 Set >> isHealthy [
 	"Test that object hashes match their positions stored in set's array,
 	answer true if everything ok, false otherwise
-	
+
 	Set allSubInstances select: [:badSet |
 		badSet isHealthy not ]
 	"
@@ -225,7 +287,7 @@ Set >> noCheckNoGrowFillFrom: anArray [
 ]
 
 { #category : #testing }
-Set >> occurrencesOf: anObject [ 
+Set >> occurrencesOf: anObject [
 	^ (self includes: anObject) ifTrue: [1] ifFalse: [0]
 ]
 
@@ -261,7 +323,7 @@ Set >> scanFor: anObject [
 
 	| index start |
 	index := start := anObject hash \\ array size + 1.
-	[ 
+	[
 		| element |
 		((element := array at: index) == nil or: [ element enclosedElement = anObject ])
 			ifTrue: [ ^index ].

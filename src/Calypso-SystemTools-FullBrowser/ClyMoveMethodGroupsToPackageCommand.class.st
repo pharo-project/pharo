@@ -18,16 +18,16 @@ Class {
 { #category : #activation }
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
-	
-	^CmdDragAndDropActivation 
-		for: ClyMethodGroup asCalypsoItemContext 
+
+	^CmdDragAndDropActivation
+		for: ClyMethodGroup asCalypsoItemContext
 		toDropIn: RPackage asCalypsoItemContext
 ]
 
@@ -39,9 +39,9 @@ ClyMoveMethodGroupsToPackageCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyMoveMethodGroupsToPackageCommand >> execute [
-	
+
 	| repackagingCommand |
-	methodGroups do: [ :each | 
+	methodGroups do: [ :each |
 		repackagingCommand := SycMoveMethodsToPackageCommand for: each methods to: package.
 		repackagingCommand execute.
 		each removeWithMethods]
@@ -66,6 +66,6 @@ ClyMoveMethodGroupsToPackageCommand >> prepareExecutionInDropContext: aToolConte
 { #category : #execution }
 ClyMoveMethodGroupsToPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	package := aToolContext requestSinglePackage: 'Choose package'
 ]

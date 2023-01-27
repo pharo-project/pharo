@@ -85,7 +85,7 @@ ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncrease
 		ifNil:[false]
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 ExternalSemaphoreTable class >> initialize [
 	ProtectAdd := Semaphore forMutualExclusion.
 	ProtectRemove := Semaphore forMutualExclusion

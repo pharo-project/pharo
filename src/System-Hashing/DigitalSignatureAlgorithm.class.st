@@ -70,7 +70,7 @@ DigitalSignatureAlgorithm class >> generateKeySet [
  	^ dsa generateKeySet
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 DigitalSignatureAlgorithm class >> initialize [
 	"DigitalSignatureAlgorithm initialize"
 

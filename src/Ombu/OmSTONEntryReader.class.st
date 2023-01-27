@@ -78,7 +78,7 @@ OmSTONEntryReader >> nextEntryPositionIfFound: foundBlock ifNone: noneBlock [
 			exception retry ].
 	stream peek = $\ ] whileTrue.	"here we handle case when log contains this method itself"
 	^ stream atEnd
-		ifTrue: noneBlock
+		ifTrue: [ noneBlock value ]
 		ifFalse: [ foundBlock value: stream position - token size ]
 ]
 

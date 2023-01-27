@@ -33,7 +33,7 @@ EpEntryItem >> asMorph [
 ]
 
 { #category : #operations }
-EpEntryItem >> browseItem [ 
+EpEntryItem >> browseItem [
 	self eventAccept: EpBrowseVisitor new
 ]
 
@@ -49,9 +49,9 @@ EpEntryItem >> browser: anObject [
 
 { #category : #private }
 EpEntryItem >> commentMorphs [
-	
+
 	browser commentsLog
-		commentAt: entry 
+		commentAt: entry
 		ifPresent: [ :comment |
 			comment trim ifNotEmpty: [:trimmedComment |
 				^ { self morphFactory pillWith: trimmedComment } ] ].
@@ -82,7 +82,7 @@ EpEntryItem >> eventAccept: aVisitor [
 
 { #category : #private }
 EpEntryItem >> eventMorphs [
-	
+
 	^ self eventAccept: EpMorphVisitor new
 ]
 
@@ -132,7 +132,7 @@ EpEntryItem >> printOn: aStream [
 
 	aStream nextPut: $(.
 	self entry printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
@@ -142,7 +142,7 @@ EpEntryItem >> reference [
 
 { #category : #private }
 EpEntryItem >> timeMorphs [
-	
+
 	^ self timeString
 		ifEmpty: [ #() ]
 		ifNotEmpty: [:aString | { self morphFactory secondaryStringFor: aString } ]
@@ -152,7 +152,7 @@ EpEntryItem >> timeMorphs [
 EpEntryItem >> timeString [
 	| aDateTime |
 	aDateTime := self log timeAt: entry ifAbsent: [ ^ '' ].
-	
+
 	^ aDateTime epiceaBrowsersAsString
 ]
 

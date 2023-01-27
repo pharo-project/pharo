@@ -37,10 +37,10 @@ EditorFindReplaceDialogWindow class >> finds [
 	^ Finds ifNil: [Finds := OrderedCollection new]
 ]
 
-{ #category : #initializing }
+{ #category : #'class initialization' }
 EditorFindReplaceDialogWindow class >> initialize [
-	"EditorFindReplaceDialogWindow initialize"
-	Singleton := nil.
+
+	Singleton := nil
 ]
 
 { #category : #accessing }
@@ -62,6 +62,12 @@ EditorFindReplaceDialogWindow class >> replacements [
 EditorFindReplaceDialogWindow class >> singleton [ 
 	^ Singleton ifNil: [Singleton := self new].
 
+]
+
+{ #category : #icons }
+EditorFindReplaceDialogWindow class >> taskbarIconName [
+
+	^ #smallFind
 ]
 
 { #category : #'user-interface' }
@@ -455,8 +461,9 @@ EditorFindReplaceDialogWindow >> taskbarButtonFor: aTaskBar [
 ]
 
 { #category : #icons }
-EditorFindReplaceDialogWindow >> taskbarIcon [
-	^ self iconNamed: #smallFind
+EditorFindReplaceDialogWindow >> taskbarIconName [
+
+	^ #smallFind
 ]
 
 { #category : #'user-interface' }

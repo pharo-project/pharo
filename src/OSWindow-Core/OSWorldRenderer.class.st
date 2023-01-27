@@ -93,7 +93,6 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
 { #category : #private }
 OSWorldRenderer >> doActivate [
-
 	| attributes initialExtent |
 	
 	initialExtent := world worldState realWindowExtent ifNil: [976@665].
@@ -113,7 +112,8 @@ OSWorldRenderer >> doActivate [
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
 	
 	driver afterMainPharoWindowCreated: osWindow.
-	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
+	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.	
+	driver startUp: true.
 		
 	osWindow focus. 
 	
@@ -230,6 +230,23 @@ OSWorldRenderer >> requestTextEditingAt: aRectangle [
 OSWorldRenderer >> screenScaleFactor [
 
 	^ world scaleFactor * self windowScaleFactor
+]
+
+{ #category : #'system startup' }
+OSWorldRenderer >> shutDown: quitting [
+
+	super shutDown: quitting.
+	driver ifNotNil: [ 
+		driver shutDown: quitting ]	
+	
+]
+
+{ #category : #'system startup' }
+OSWorldRenderer >> startUp: resuming [
+
+	super startUp: resuming.
+	driver ifNotNil: [ 
+		driver startUp: resuming ]
 ]
 
 { #category : #operations }

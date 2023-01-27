@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 EDDisplayEventHandler class >> on: anInterface [
 
-	^ self new 
+	^ self new
 		interface: anInterface;
 		yourself
 ]
@@ -35,7 +35,7 @@ EDDisplayEventHandler >> interface: anObject [
 { #category : #visiting }
 EDDisplayEventHandler >> visitKeyDownEvent: event [
 
-	event character ifNil: [ ^ self ].	
+	event character ifNil: [ ^ self ].
 	interface pushChar: event character
 ]
 

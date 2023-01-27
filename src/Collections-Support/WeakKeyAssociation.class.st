@@ -21,14 +21,14 @@ WeakKeyAssociation class >> expired [
 
 { #category : #'instance creation' }
 WeakKeyAssociation class >> key: newKey value: newValue [
-	"Answer an instance of me with the arguments as the key and value of 
+	"Answer an instance of me with the arguments as the key and value of
 	the association."
 
 	^(self basicNew: 1) key: newKey value: newValue
 ]
 
 { #category : #testing }
-WeakKeyAssociation >> < aLookupKey [ 
+WeakKeyAssociation >> < aLookupKey [
 	"Refer to the comment in Magnitude|<."
 
 	^self key < aLookupKey key
@@ -74,14 +74,14 @@ WeakKeyAssociation >> key [
 ]
 
 { #category : #accessing }
-WeakKeyAssociation >> key: anObject [ 
+WeakKeyAssociation >> key: anObject [
 	"Store the argument, anObject, as the lookup key of the receiver."
 
 	self basicAt: 1 put:  anObject
 ]
 
 { #category : #accessing }
-WeakKeyAssociation >> key: aKey value: anObject [ 
+WeakKeyAssociation >> key: aKey value: anObject [
 	"Store the arguments as the variables of the receiver."
 
 	self basicAt: 1 put: aKey.
@@ -107,7 +107,7 @@ WeakKeyAssociation >> printOn: aStream [
 { #category : #printing }
 WeakKeyAssociation >> storeOn: aStream [
 	"Store in the format (WeakKeyAssociation key: theKey value: theValue)"
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self class name.
 	self expired ifTrue:[
@@ -129,7 +129,7 @@ WeakKeyAssociation >> value [
 ]
 
 { #category : #accessing }
-WeakKeyAssociation >> value: anObject [ 
+WeakKeyAssociation >> value: anObject [
 	"Store the argument, anObject, as the value of the receiver."
 
 	anObject == self ifTrue: [self error: 'Using the WeakAssociation as its own value'].

@@ -19,14 +19,14 @@ ClyCommitMCPackageCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClyCommitMCPackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
 ]
 
 { #category : #activation }
 ClyCommitMCPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
 ]
 
@@ -46,31 +46,31 @@ ClyCommitMCPackageCommand >> execute [
 	| repoBrowser commitBrowser repos targetRepo |
 	repoBrowser := self class environment
 		               at: #IceTipRepositoriesBrowser
-		               ifAbsent: [ 
+		               ifAbsent: [
 		               ^ self inform: 'Iceberg 0.7 and higher is required' ].
 	commitBrowser := self class environment
 		                 at: #IceTipCommitBrowser
-		                 ifAbsent: [ 
+		                 ifAbsent: [
 		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
 	packages ifEmpty: [ ^ repoBrowser new open ].
-	repos := IceRepository registry select: [ :repo | 
-		         packages anySatisfy: [ :each | 
+	repos := IceRepository registry select: [ :repo |
+		         packages anySatisfy: [ :each |
 			         repo includesPackageNamed: each name ] ].
-	repos ifEmpty: [ 
+	repos ifEmpty: [
 		^ self inform: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1
 		              ifTrue: [ repos first ]
-		              ifFalse: [ 
+		              ifFalse: [
 			              UIManager default
 				              chooseFrom: (repos collect: [ :each | each name ])
 				              values: repos
 				              title: 'Choose repository' ].
 	targetRepo ifNil: [ ^ self ].
-	(targetRepo isMissing or: [ 
-		 targetRepo isCodeMissing or: [ 
-			 targetRepo workingCopy isDetached or: [ 
-				 targetRepo head isDetached or: [ 
-					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [ 
+	(targetRepo isMissing or: [
+		 targetRepo isCodeMissing or: [
+			 targetRepo workingCopy isDetached or: [
+				 targetRepo head isDetached or: [
+					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [
 		UIManager default
 			alert:
 				'The ' , targetRepo name

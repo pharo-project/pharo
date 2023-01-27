@@ -9,7 +9,6 @@ Class {
 		'start',
 		'stop',
 		'name',
-		'initializationMessage',
 		'variableClassName'
 	],
 	#category : #'ClassParser-Model'
@@ -17,52 +16,31 @@ Class {
 
 { #category : #testing }
 CDVariableNode class >> isAbstract [
-		
+
 	^ self == CDVariableNode
 ]
 
 { #category : #'instance creation' }
-CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol initializationMessage: aMessageNode start: start stop: stop [
-	
+CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
+
 	^ self new
 		node: aNode;
 		name: aName;
 		variableClassName: aSymbol;
-		initializationMessage: aMessageNode;
 		start: start;
 		stop: stop;
 		yourself
 ]
 
-{ #category : #'instance creation' }
-CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
-	
-	^ self new
-		node: aNode;
-		name: aName;
-		variableClassName: aSymbol;
-		start: start;
-		stop: stop;
-		yourself
+{ #category : #accessing }
+CDVariableNode >> asCalypsoVariableOf: aClass [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 CDVariableNode >> binding [
 	"To be polymorphic to RB method nodes"
 	^self
-]
-
-{ #category : #accessing }
-CDVariableNode >> initializationMessage [
-	"Return the message node representing the initialization part of a slot."
-	
-	^ initializationMessage
-]
-
-{ #category : #accessing }
-CDVariableNode >> initializationMessage: aMessageNode [ 
-	
-	initializationMessage := aMessageNode
 ]
 
 { #category : #testing }
@@ -102,12 +80,12 @@ CDVariableNode >> isUndeclaredVariable [
 CDVariableNode >> isVariable [
 	"To be polymorphic to RB method nodes"
 	| existingClass |
-	existingClass := self classDefinitionNode existingClassIfAbsent: [   
-		"Until class will be created the variables does not exist yet" 
+	existingClass := self classDefinitionNode existingClassIfAbsent: [
+		"Until class will be created the variables does not exist yet"
 		^false ].
-	^existingClass 
-		slotNamed: name asSymbol 
-		ifFound: [true] 
+	^existingClass
+		slotNamed: name asSymbol
+		ifFound: [true]
 		ifNone: [
 			"Until class will be compiled with new slot the new slot does not exist yet"
 			false]
@@ -131,7 +109,12 @@ CDVariableNode >> name: aString [
 ]
 
 { #category : #accessing }
-CDVariableNode >> node: aNode [ 
+CDVariableNode >> node [
+	^node
+]
+
+{ #category : #accessing }
+CDVariableNode >> node: aNode [
 	node := aNode
 ]
 
@@ -149,7 +132,7 @@ CDVariableNode >> printOn: aStream [
 
 { #category : #accessing }
 CDVariableNode >> sourceInterval [
-	^start to: stop
+	^self start to: self stop
 ]
 
 { #category : #selection }
@@ -159,7 +142,7 @@ CDVariableNode >> start [
 ]
 
 { #category : #accessing }
-CDVariableNode >> start: anInteger [ 
+CDVariableNode >> start: anInteger [
 	start := anInteger
 ]
 
@@ -169,21 +152,21 @@ CDVariableNode >> stop [
 ]
 
 { #category : #accessing }
-CDVariableNode >> stop: anInteger [ 
-	
+CDVariableNode >> stop: anInteger [
+
 	stop := anInteger
 ]
 
 { #category : #accessing }
 CDVariableNode >> variableClassName [
-	"Return a symbol representing the class of the variable i.e., 'x' => InstanceVariableSlot slotClassName returns 
+	"Return a symbol representing the class of the variable i.e., 'x' => InstanceVariableSlot slotClassName returns
 	#InstanceVariableSlot"
-	
+
 	^ variableClassName
 ]
 
 { #category : #accessing }
-CDVariableNode >> variableClassName: aSymbol [ 
-	
+CDVariableNode >> variableClassName: aSymbol [
+
 	variableClassName := aSymbol
 ]

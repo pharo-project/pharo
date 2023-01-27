@@ -57,7 +57,7 @@ RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aCla
 { #category : #transforming }
 RBRenameInstanceVariableRefactoring >> addNewAccessors [
 	| refactoring |
-	refactoring := RBCreateAccessorsForVariableRefactoring
+	refactoring := RBCreateAccessorsForVariableTransformation
 		model: self
 		variable: newName asString
 		class: class

@@ -26,7 +26,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyCritiqueSeverityProperty class >> default [
-	^self new 
+	^self new
 		name: #information;
 		color: Color blue
 ]
@@ -34,7 +34,7 @@ ClyCritiqueSeverityProperty class >> default [
 { #category : #'instance creation' }
 ClyCritiqueSeverityProperty class >> of: aCritique [
 
-	^self new 
+	^self new
 		name: aCritique rule severity;
 		color: aCritique color
 ]

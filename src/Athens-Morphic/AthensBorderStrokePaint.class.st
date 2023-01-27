@@ -49,7 +49,7 @@ AthensBorderStrokePaint >> bottomRightPaint: anAthensPaint [
 { #category : #private }
 AthensBorderStrokePaint >> pathForBottomRightBorderOf: aRectangle on: anAthensCanvas [
 	^ anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveToX: aRectangle left Y: aRectangle bottom;
@@ -64,7 +64,7 @@ AthensBorderStrokePaint >> pathForBottomRightBorderOf: aRectangle on: anAthensCa
 { #category : #private }
 AthensBorderStrokePaint >> pathForTopLeftBorderOf: aRectangle on: anAthensCanvas [
 	^ anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveToX: aRectangle left Y: aRectangle bottom;

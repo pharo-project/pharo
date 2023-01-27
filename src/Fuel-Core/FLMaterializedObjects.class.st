@@ -47,7 +47,7 @@ FLMaterializedObjects >> header [
 	^ headers last
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FLMaterializedObjects >> initialize [
 	super initialize.
 	

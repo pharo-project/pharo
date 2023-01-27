@@ -70,6 +70,15 @@ IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues:
 ]
 
 { #category : #'instance creation' }
+IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean [
+	^IRPushFullClosure new
+			copiedValues: copiedValues;
+			compiledBlock: compiledBlock;
+			outerContextNeeded: aBoolean
+			yourself.
+]
+
+{ #category : #'instance creation' }
 IRInstruction class >> pushInstVar: index [
 
 	^ IRPushInstVar new 

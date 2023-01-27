@@ -766,14 +766,14 @@ FinderUI >> open [
 
 { #category : #private }
 FinderUI >> openPackageChooser [
-	(DialogItemsChooser
-		on: self
-		unselectedItems: self constructPackagesSet
-		selectedItems: (self constructPackagesSet: self packagesSelection)
-		selectedItemsSetterSelector: #collectFromPackages: 
-		title: 'Package Chooser'
-		unselectedItemsLabel: 'Unselected Packages' translated
-		selectedItemsLabel: 'Selected Packages' translated) open
+
+	(SpChooserPresenter
+		 sourceItems: self constructPackagesSet
+		 chosenItems: (self constructPackagesSet: self packagesSelection))
+		openDialog
+		title: 'Package Chooser';
+		okAction: [ :dialog |
+			self collectFromPackages: dialog presenter chosenItems ]
 ]
 
 { #category : #private }

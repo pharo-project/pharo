@@ -70,6 +70,12 @@ EncodedCharSet class >> initialize [
 	self allSubclassesDo: [:each | each initialize]
 ]
 
+{ #category : #testing }
+EncodedCharSet class >> isAbstract [
+
+	^ self == EncodedCharSet
+]
+
 { #category : #'accessing - displaying' }
 EncodedCharSet class >> isBreakableAt: index in: text [
 
@@ -118,12 +124,6 @@ EncodedCharSet class >> isUppercase: char [
 	| value |
 	value := char asciiValue.
 	^ 8r101 <= value and: [value <= 8r132].
-]
-
-{ #category : #'class methods' }
-EncodedCharSet class >> leadingChar [
-
-	self subclassResponsibility.
 ]
 
 { #category : #'class methods' }

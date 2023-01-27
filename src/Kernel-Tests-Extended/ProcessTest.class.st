@@ -16,51 +16,51 @@ ProcessTest >> expectedFailures [
 ]
 
 { #category : #running }
-ProcessTest >> setUp [ 
+ProcessTest >> setUp [
 	super setUp.
-	
+
 	self executionProcessMonitor disable
 ]
 
 { #category : #tests }
 ProcessTest >> testActiveProcessFromProcesor [
-	
+
 	| processFromProcessor activeProcess |
 	activeProcess := [ processFromProcessor := Processor activeProcess ] forkAt: Processor activePriority + 1.
-	
+
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
 { #category : #tests }
 ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
-	
+
 	| processFromProcessor activeProcess effectiveProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
 	activeProcess := [ processFromProcessor := Processor activeProcess ] newProcess.
-	activeProcess 
+	activeProcess
 		priority: Processor activePriority + 1;
 		effectiveProcess: effectiveProcess;
 		resume.
-	
+
 	self assert: processFromProcessor identicalTo: effectiveProcess
 ]
 
 { #category : #tests }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
-	#priority behavior reflects the processPreemptionYields setting - for false the active 
+	#priority behavior reflects the processPreemptionYields setting - for false the active
 	process gets to the front of the queue while for true (default) it goes to the end"
 
 	| val highPriority |
 	val := nil.
 	highPriority := 70.
-	
+
 	[
 		[ val := false ] forkAt: highPriority + 1.
 		[ val := true ] forkAt: highPriority.
 		Processor activeProcess priority: highPriority.
 	]	forkAt: highPriority + 2.
-	
+
 	self assert: val equals: Smalltalk vm processPreemptionYields
 ]
 
@@ -71,13 +71,13 @@ ProcessTest >> testChangingPriorityYieldsCurrentProcess [
 	val := 0.
 	highPriority := 70.
 
-	[ 
+	[
 		[ val := 1 ] forkAt: highPriority + 1.
-		
+
 		Processor activeProcess priority: highPriority.
-		val := 2 
+		val := 2
 	] forkAt: highPriority + 2.
-	
+
 	self assert: val equals: 2
 ]
 
@@ -89,13 +89,13 @@ ProcessTest >> testFork [
 	hasBlockRun := false.
 	block := [ hasBlockRun := true. checkAssert signal.].
 	return := block fork.
-	
+
 	"Returns immediately, forked block not yet run"
 	self deny: hasBlockRun.
-	
+
 	"Returns a process - Blue book specifies that it returns the block itself"
 	self assert: (return isKindOf: Process).
-	
+
 	"Forked process has been scheduled"
 	checkAssert wait.
 	self assert: hasBlockRun
@@ -153,7 +153,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoProcessWithArg [
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
 	interrupted := true.
-	process := [ :arg | 
+	process := [ :arg |
 	processArg := arg.
 	error signal.
 	interrupted := false ] newProcessWith: #(#arg).
@@ -203,18 +203,18 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoNotRunningProcess [
 	process := [ error signal ] newProcess.
 	process on: ZeroDivide do: [ :err | firstHandler := true ].
 	process on: Error do: [ :err | lastHandler := true ].
-	
+
 	error := ZeroDivide new.
 	process resume.
 	[process isTerminated] whileFalse: [ Processor yield ].
 	self assert: firstHandler.
 	self deny: lastHandler.
-	
+
 	firstHandler := lastHandler := false.
 	process := [ error signal ] newProcess.
 	process on: ZeroDivide do: [ :err | firstHandler := true ].
 	process on: Error do: [ :err | lastHandler := true ].
-	
+
 	error := Error new.
 	process resume.
 	[process isTerminated] whileFalse: [ Processor yield ].
@@ -227,26 +227,26 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 
 	| error process lastHandler firstHandler sema started |
 	DefaultExecutionEnvironment beActive.
-	started := firstHandler := lastHandler := false.	
-	sema := Semaphore new.
-	process := [started := true. sema wait. error signal ] fork.
-	[started] whileFalse: [ Processor yield ].
-	process on: ZeroDivide do: [ :err | firstHandler := true ].
-	process on: Error do: [ :err | lastHandler := true ].
-	
-	error := ZeroDivide new.
-	sema signal.
-	[process isTerminated] whileFalse: [ Processor yield ].
-	self assert: firstHandler.
-	self deny: lastHandler.
-	
 	started := firstHandler := lastHandler := false.
 	sema := Semaphore new.
 	process := [started := true. sema wait. error signal ] fork.
 	[started] whileFalse: [ Processor yield ].
 	process on: ZeroDivide do: [ :err | firstHandler := true ].
 	process on: Error do: [ :err | lastHandler := true ].
-	
+
+	error := ZeroDivide new.
+	sema signal.
+	[process isTerminated] whileFalse: [ Processor yield ].
+	self assert: firstHandler.
+	self deny: lastHandler.
+
+	started := firstHandler := lastHandler := false.
+	sema := Semaphore new.
+	process := [started := true. sema wait. error signal ] fork.
+	[started] whileFalse: [ Processor yield ].
+	process on: ZeroDivide do: [ :err | firstHandler := true ].
+	process on: Error do: [ :err | lastHandler := true ].
+
 	error := Error new.
 	sema signal.
 	[process isTerminated] whileFalse: [ Processor yield ].
@@ -288,48 +288,50 @@ ProcessTest >> testIsNotSuspendedWhenItIsTerminated [
 
 { #category : #tests }
 ProcessTest >> testIsNotTerminatedWhenItIsInsideLastTerminationMethod [
-	
+
 	| process processBody |
-	processBody := [ #test ].
+	"We do not use a constant block, it has no context when executing"
+	processBody := [ #test yourself].
 	process := processBody newProcess.
-	
+
 	[process step.
 	self deny: process isTerminated.
-	process suspendedContext isBottomContext] whileTrue. 
-	
+	process suspendedContext isBottomContext] whileTrue.
+
 	[process step.
-	process suspendedContext isBottomContext] whileFalse: [ 
+	process suspendedContext isBottomContext] whileFalse: [
 		self deny: process isTerminated ].
-	
+
 	[process step.
 	self deny: process isTerminated.
 	process suspendedContext isBottomContext ] whileTrue.
 	"Notice that stepping delegates terminateRealActive to terminateActive"
-	self assert: process suspendedContext selector equals: #terminateActive. 
+	self assert: process suspendedContext selector equals: #terminateActive.
 	self deny: process isTerminated
 ]
 
 { #category : #tests }
 ProcessTest >> testIsNotTerminatedWhenItIsJustStartedByEnteringMainBlock [
-	
+
 	| process processBody |
-	processBody := [ #test ].
+	"this test works only on fullblocks with home context (due to isBottomContext)"
+	processBody := [ #test yourself].
 	process := processBody newProcess.
-	
+
 	[process step.
-	self deny: process isTerminated] 
+	self deny: process isTerminated]
 		doWhileTrue: [ process suspendedContext isBottomContext ].
-		
+
 	self assert: process suspendedContext closure identicalTo: processBody.
 	self deny: process isTerminated
 ]
 
 { #category : #tests }
 ProcessTest >> testIsNotTerminatedWhenItIsNotStarted [
-	
+
 	| process |
 	process := [  ] newProcess.
-	
+
 	self deny: process isTerminated
 ]
 
@@ -348,21 +350,21 @@ ProcessTest >> testIsSuspendedWhenItIsNotStartedYet [
 
 { #category : #tests }
 ProcessTest >> testIsTerminatedAfterManualTermination [
-	
+
 	| process |
 	process := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
 	self deny: process isTerminated.
-	
+
 	process terminate.
 	self assert: process isTerminated
 ]
 
 { #category : #tests }
 ProcessTest >> testIsTerminatedAfterSelfTermination [
-	
+
 	| process |
 	process := [  ] forkAt: Processor activePriority + 1.
-	
+
 	self assert: process isTerminated
 ]
 
@@ -492,15 +494,15 @@ ProcessTest >> testNewProcess [
 	hasBlockRun := false.
 	block := [ hasBlockRun := true ].
 	return := block newProcess.
-	
+
 	"Returns immediately"
 	self deny: hasBlockRun.
-	
+
 	"Returns a process - Blue book specifies the block"
 	self assert: (return isKindOf: Process).
-	
+
 	"Forked process has not been scheduled"
-	self assert: return isSuspended.
+	self assert: return isSuspended
 ]
 
 { #category : #'tests - creation' }
@@ -514,32 +516,32 @@ ProcessTest >> testNewProcessWith [
 		hasBlockRun := true ].
 	passedArguments := #(1 2).
 	process := block newProcessWith: passedArguments.
-	
+
 	"Returns immediately"
 	self deny: hasBlockRun.
-	
+
 	self assert: (process isKindOf: Process).
-	
+
 	"Process has not been scheduled"
 	self assert: process isSuspended.
-	
+
 	process resume.
 	[process isTerminated] whileFalse: [ Processor yield ].
-	
+
 	"Each element in the collection argument was passed separately to the block"
-	self assert: { receivedArgument1. receivedArgument2 } equals: passedArguments.
+	self assert: { receivedArgument1. receivedArgument2 } equals: passedArguments
 ]
 
 { #category : #tests }
 ProcessTest >> testNormalProcessCompletionWithLeftEffectiveProcess [
-	
+
 	| effectiveProcess activeProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
 	activeProcess := [ Processor activeProcess suspend. ] forkAt: Processor activePriority + 1.
 	activeProcess effectiveProcess: effectiveProcess.
-	
+
 	activeProcess resume.
-	
+
 	self assert: activeProcess isTerminated.
 	self deny: effectiveProcess isTerminated.
 	effectiveProcess terminate
@@ -547,17 +549,17 @@ ProcessTest >> testNormalProcessCompletionWithLeftEffectiveProcess [
 
 { #category : #tests }
 ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
-	
+
 	| effectiveProcess activeProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
 	activeProcess := [:arg | Processor activeProcess suspend. ] newProcessWith: #(1).
-	activeProcess 
-		priority: Processor activePriority + 1; 
+	activeProcess
+		priority: Processor activePriority + 1;
 		resume.
 	activeProcess effectiveProcess: effectiveProcess.
-	
+
 	activeProcess resume.
-	
+
 	self assert: activeProcess isTerminated.
 	self deny: effectiveProcess isTerminated.
 	effectiveProcess terminate
@@ -565,24 +567,24 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 
 { #category : #tests }
 ProcessTest >> testRealActiveProcessFromProcesor [
-	
+
 	| processFromProcessor activeProcess |
 	activeProcess := [ processFromProcessor := Processor realActiveProcess ] forkAt: Processor activePriority + 1.
-	
+
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
 { #category : #tests }
 ProcessTest >> testRealActiveProcessFromProcesorShouldIgnoreInstalledEffectiveProcess [
-	
+
 	| processFromProcessor activeProcess effectiveProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
 	activeProcess := [ processFromProcessor := Processor realActiveProcess ] newProcess.
-	activeProcess 
+	activeProcess
 		priority: Processor activePriority + 1;
 		effectiveProcess: effectiveProcess;
 		resume.
-	
+
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
@@ -591,22 +593,22 @@ ProcessTest >> testSchedulingHigherPriorityServedFirst [
     "The first process to run will pass straight through the gate
     while the other waits for the assert to whichRan."
 
-	"Even though the low priority process is waiting longer, 
+	"Even though the low priority process is waiting longer,
 	the higher priority process should run first."
 
 	| gate checkAssert whichRan |
-	gate := Semaphore new signal. 
+	gate := Semaphore new signal.
 	checkAssert := Semaphore new.
-	
+
 	[ gate wait. whichRan := 11. checkAssert signal ] forkAt: 11.
 	[ gate wait. whichRan := 12. checkAssert signal ] forkAt: 12.
-	
+
 	checkAssert wait.
-	self assert: whichRan=12 description: 'Second scheduled but higher priority should run first'.	
-	gate signal. 
-	
+	self assert: whichRan=12 description: 'Second scheduled but higher priority should run first'.
+	gate signal.
+
 	checkAssert wait.
-	self assert: whichRan=11 description: 'First scheduled but lower priority should run after'.
+	self assert: whichRan=11 description: 'First scheduled but lower priority should run after'
 ]
 
 { #category : #tests }
@@ -617,18 +619,18 @@ ProcessTest >> testSchedulingSamePriorityFirstComeFirstServed [
 	"At the same priority process, the longer waiting process should run first."
 
 	| gate checkAssert whichRan |
-	gate := Semaphore new signal. 
+	gate := Semaphore new signal.
 	checkAssert := Semaphore new.
-		
+
 	[ gate wait. whichRan := 1. checkAssert signal ] fork.
 	[ gate wait. whichRan := 2. checkAssert signal ] fork.
-	
-	checkAssert wait.
-	self assert: whichRan=1 description: 'First scheduled process should run first'.
-	gate signal. 
 
 	checkAssert wait.
-	self assert: whichRan=2 description: 'Second scheduled process should run after'.
+	self assert: whichRan=1 description: 'First scheduled process should run first'.
+	gate signal.
+
+	checkAssert wait.
+	self assert: whichRan=2 description: 'Second scheduled process should run after'
 ]
 
 { #category : #'tests - termination' }
@@ -640,18 +642,18 @@ ProcessTest >> testTerminateActive [
 		block1HasRun := true.
 		Processor activeProcess terminate.
 		lastStatementEvaluated := true ] fork.
-	
+
 	p2 := [
 		block2HasRun := true.
 		Processor terminateActive.
 		lastStatementEvaluated := true ] fork.
-	
+
 	[p1 isTerminated & p2 isTerminated] whileFalse: [ Processor yield ].
-	
+
 	"Expressions following terminate are never executed"
 	self assert: block1HasRun.
 	self assert: block2HasRun.
-	self deny: lastStatementEvaluated.
+	self deny: lastStatementEvaluated
 ]
 
 { #category : #'tests - creation' }
@@ -667,7 +669,7 @@ ProcessTest >> testTerminateAnswersSelf [
 	"verify repeating #terminate still returns a terminated process"
 	process := process terminate.
 	self assert: (process isKindOf: Process).
-	self assert: process isTerminated.
+	self assert: process isTerminated
 ]
 
 { #category : #'tests - termination' }
@@ -677,9 +679,9 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
 	started := false.
-	process := [ 
-		[ 
-		[[started := true. 10 seconds wait] 
+	process := [
+		[
+		[[started := true. 10 seconds wait]
 			ensure: [ ensureFailure signal ]]
 				ensure: [ ensureCalled := true ].
 		] on: UnwindError do: [ :err | unwindError := err ]
@@ -699,11 +701,11 @@ ProcessTest >> testTerminationShouldProceedEnsureBlocks [
 	| ensureCalled process semaphore |
 	ensureCalled := false.
 	semaphore := Semaphore new.
-	process := [ 
+	process := [
 		[semaphore signal. [10 milliSeconds wait] repeat] ensure: [ ensureCalled := true ]
 	] fork.
 	semaphore wait.
-	
+
 	process terminate.
 	self assert: ensureCalled
 ]
@@ -719,11 +721,11 @@ ProcessTest >> testYield [
 	[ same2HasRun := true ] fork.
 
 	Processor yield.
-	
+
 	"All processes of same priority have been given a chance to execute"
 	self assert: same1HasRun.
 	self assert: same2HasRun.
-	self deny: lowerHasRun.
+	self deny: lowerHasRun
 ]
 
 { #category : #helpers }

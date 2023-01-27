@@ -50,10 +50,8 @@ EventManager class >> flushEvents [
 	EventManager actionMaps finalizeValues.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 EventManager class >> initialize [
-
-	"self initialize."
 	
 	SessionManager default registerSystemClassNamed: self name
 ]

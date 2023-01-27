@@ -66,7 +66,7 @@ ClyClassHierarchyScope >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^false ].
-	
+
 	^ localScopeClass = anObject localScopeClass
 ]
 
@@ -77,24 +77,24 @@ ClyClassHierarchyScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 
 { #category : #queries }
 ClyClassHierarchyScope >> allClassesRelatedTo: aClass do: aBlock [
-	"Any hierarchy is defined in terms of relationship between classes 
+	"Any hierarchy is defined in terms of relationship between classes
 	retrieved from meta level which are specified by local scope class
 	Hierarchy analyze are continue only when following condition is true:
 		(localClassScope metaLevelForHierarchyOf: each) = each
-	It ensures that at next iteration we will not move out of specified local class scope bounderies  
+	It ensures that at next iteration we will not move out of specified local class scope bounderies
 	It is important condition for complex cases when we are analyzing metaclasses.
 	For example Class allSubclasses will return almost all classes in system.
-	And depending on local scope we want all of them 
+	And depending on local scope we want all of them
 	or we want only actual subclasses which was defined by users.
 	So only with ClassScope as local scope we will see everything.
 	But concrete meta level scopes (instance side or class side) will see you only real classes
-	
+
 	Also any hierarchy scope should ignore obsolete classes"
 	| actualClass |
 	actualClass := localScopeClass metaLevelForHierarchyOf: aClass.
-	
-	self classesRelatedTo: actualClass do: [:each | 
-		((localScopeClass metaLevelForHierarchyOf: each) = each) ifTrue: [ 
+
+	self classesRelatedTo: actualClass do: [:each |
+		((localScopeClass metaLevelForHierarchyOf: each) = each) ifTrue: [
 			each isObsolete ifFalse: [ self metaLevelsOf: each do: aBlock].
 			self allClassesRelatedTo: each do: aBlock]]
 ]
@@ -108,16 +108,16 @@ ClyClassHierarchyScope >> asLocalClassScope [
 ClyClassHierarchyScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 	"I can not detect that removed class was in my hierarchy.
 	I can not detect that removed trait from class definition was in users hierarchy of some root trait.
-	For example when remove event is announced 
-	then affected class is still in the list of subclasses of superclass"		
-	
+	For example when remove event is announced
+	then affected class is still in the list of subclasses of superclass"
+
 	^(aSystemAnnouncement isKindOf: ClassAnnouncement) not
 ]
 
 { #category : #queries }
 ClyClassHierarchyScope >> classesDo: aBlock [
 
-	basisObjects do: [ :each | 
+	basisObjects do: [ :each |
 		self allClassesRelatedTo: each do: aBlock]
 ]
 
@@ -136,7 +136,7 @@ ClyClassHierarchyScope >> hash [
 { #category : #initialization }
 ClyClassHierarchyScope >> initialize [
 	super initialize.
-	
+
 	localScopeClass := ClyClassScope "By default we only look at own class meta level"
 ]
 
@@ -159,12 +159,12 @@ ClyClassHierarchyScope >> metaLevelsOf: aClass do: aBlock [
 { #category : #queries }
 ClyClassHierarchyScope >> methodsDo: aBlock [
 
-	self classesDo: [ :eachClass | 
+	self classesDo: [ :eachClass |
 		eachClass methods do: aBlock ]
 ]
 
 { #category : #converting }
-ClyClassHierarchyScope >> withMetaLevel: aScopeClass [ 
-	^self copy 
+ClyClassHierarchyScope >> withMetaLevel: aScopeClass [
+	^self copy
 		localScopeClass: aScopeClass
 ]

@@ -14,13 +14,21 @@ BlockClosureTest >> testBenchFor [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
+BlockClosureTest >> testBenchForException [
+
+	"benchFor: expects a duration. Check that the bencher does not go in an infinite loop if the wakeup thread fails."
+
+	self should: [ [ 100 factorial ] benchFor: 1 ] raise: Error
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testCannotReturn [
 
 	| block p |
 	p := [block := self blockWithNonLocalReturn: #result] fork.
 	[p isTerminated] whileFalse: [ 10 milliSeconds wait ].
- 
-	[ block value.	
+
+	[ block value.
 	self assert: false description: 'BlockCannotReturn should be signaled' ]
 		 on: BlockCannotReturn do: [ :err |
 			self assert: err result equals: #result.
@@ -45,8 +53,8 @@ BlockClosureTest >> testTallyInstructions [
 	| expected |
 	expected := Smalltalk compiler compilationContext
 		            optionCleanBlockClosure
-		            ifTrue: [ 25 ]
-		            ifFalse: [ 26 ].
+		            ifTrue: [ 26 ]
+		            ifFalse: [ 27 ].
 	self
 		assert: (Context tallyInstructions: aBlockContext) size
 		equals: expected

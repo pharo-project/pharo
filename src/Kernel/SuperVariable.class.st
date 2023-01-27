@@ -35,8 +35,8 @@ SuperVariable >> readInContext: aContext [
 
 { #category : #queries }
 SuperVariable >> usingMethods [
-	"as super is just a push Self, this detects real super sends, not accesses to super which 
+	"as super is just a push Self, this detects real super sends, not accesses to super which
 	should never happen"
-	^ environment allMethods select: [ :method | 
+	^ environment allMethods select: [ :method |
 		  method sendsToSuper ]
 ]

@@ -26,5 +26,5 @@ collection := self identityCollectionWithElementsCopyNotIdentical .
 element := collection anyOne.
 elementCopy := element copy.
 
-self assert: (collection occurrencesOf: elementCopy ) = 0.
+self assert: (collection occurrencesOf: elementCopy ) = 0
 ]

@@ -61,6 +61,105 @@ CollectionRootTest >> sizeCollection [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'tests - converting' }
+CollectionRootTest >> testAsMultilineString [
+
+	| expectedResult |
+	expectedResult := 'a
+b
+c'.
+
+	self
+		assert: #(a b c) asMultilineString equals: expectedResult;
+		assert: 'abc' asMultilineString equals: expectedResult
+]
+
+{ #category : #'tests - copying' }
+CollectionRootTest >> testCopyWithAll [
+
+	| col res |
+
+	self assert: ('Hello' copyWithAll: 'World') equals: 'HelloWorld'.
+
+	col := #( a b ).
+	res := col copyWithAll: #( c d ).
+
+	self
+		assert: res equals: #( a b c d );
+		deny: col identicalTo: res.
+
+	col := Set with: #a with: #b.
+	res := col copyWithAll: #( c d ).
+
+	self
+		assert: res size equals: 4;
+		assert: (res includes: #a);
+		assert: (res includes: #b);
+		assert: (res includes: #c);
+		assert: (res includes: #d);
+		deny: col identicalTo: res.
+
+	col := OrderedCollection with: #a with: #b.
+	res := col copyWithAll: #( c d ).
+	self
+		assert: res equals: (OrderedCollection with: #a with: #b with: #c with: #d);
+		deny: col identicalTo: res
+]
+
+{ #category : #'tests - copying' }
+CollectionRootTest >> testCopyWithoutFirst [
+
+	| col res |
+
+	self assert: ('HelloWorld' copyWithoutFirst: $o) equals: 'HellWorld'.
+
+	col := #( a b a c ).
+	res := col copyWithoutFirst: #b.
+
+	self
+		assert: res equals: #( a a c );
+		deny: col identicalTo: res.
+
+	col := Set with: #a with: #b with: #c.
+	res := col copyWithoutFirst: #a.
+
+	self
+		assert: res size equals: 2;
+		assert: (res includes: #b);
+		assert: (res includes: #c);
+		deny: col identicalTo: res
+]
+
+{ #category : #'tests - copying' }
+CollectionRootTest >> testCopyWithoutFirstOccuranceOf [
+
+	| col res |
+
+	self assert: ('HelloWorld' copyWithoutFirstOccurrenceOf: $o) equals: 'HellWorld'.
+
+	col := #( a b a c ).
+	res := col copyWithoutFirstOccurrenceOf: #a.
+
+	self
+		assert: res equals: #( b a c );
+		deny: col identicalTo: res.
+
+	col := #( a b a c ).
+	res := col copyWithoutFirstOccurrenceOf: #b.
+	self
+		assert: res equals: #( a a c );
+		deny: col identicalTo: res.
+
+	col := Set with: #a with: #b with: #c.
+	res := col copyWithoutFirstOccurrenceOf: #a.
+
+	self
+		assert: res size equals: 2;
+		assert: (res includes: #b);
+		assert: (res includes: #c);
+		deny: col identicalTo: res
+]
+
 { #category : #'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundIfNoneWhenNobodyIsFound [
 	| wasFound |
@@ -74,7 +173,7 @@ CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFound [
 	foundObject := nil.
 	wasFound := self collectionWithoutNilElements
 		detect: [ :each | each notNil ]
-		ifFound: [ :element | 
+		ifFound: [ :element |
 			foundObject := element.
 			true ]
 		ifNone: [ false ].
@@ -107,7 +206,7 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFound [
 	foundObject := nil.
 	self collectionWithoutNilElements
 		detect: [ :each | each notNil ]
-		ifFound: [ :element | 
+		ifFound: [ :element |
 			foundObject := element.
 			wasFound := true ].
 	self

@@ -20,13 +20,13 @@ Class {
 StdioStreamTest class >> manualStdinTest [
 	"This test can be run headless to manually to check actual stdin.
 	It reads the input and confirms that #atEnd answers as expected and the number of characters read.
-	
+
 	Example execution (from the shell prompt):
 
 		echo 'hello world' | pharo --headless Pharo.image eval 'StdioStreamTest manualStdinTest'
-		
+
 		pharo --headless Pharo.image eval 'StdioStreamTest manualStdinTest' < /proc/cpuinfo
-		
+
 		pharo --headless Pharo.image eval 'StdioStreamTest manualStdinTest'
 		# Type some text, enter and Ctrl-D"
 
@@ -51,13 +51,13 @@ StdioStreamTest class >> manualStdinTest [
 		cr; cr.
 	contents hexDumpOn: stdout max: 128.
 	stdout cr.
-	SmalltalkImage current snapshot: false andQuit: true.
+	SmalltalkImage current snapshot: false andQuit: true
 ]
 
 { #category : #accessing }
 StdioStreamTest class >> resources [
 
-	^{ StdioStreamTestResource }.
+	^{ StdioStreamTestResource }
 ]
 
 { #category : #accessing }
@@ -73,7 +73,7 @@ StdioStreamTest >> setUp [
 	Ensure the stream is in the expected state."
 
 	super setUp.
-	self resource stdioStream position: 0.
+	self resource stdioStream position: 0
 ]
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ StdioStreamTest >> testChangePosition [
 	"The shared stream should be put back to the start for each test"
 
 	| stream |
-	
+
 	stream := self stdioStream.
 	stream position: 5.
 	self assert: stream position equals: 5.
@@ -120,7 +120,7 @@ StdioStreamTest >> testPeek [
 { #category : #tests }
 StdioStreamTest >> testPosition [
 	"The shared stream should be put back to the start for each test"
-	
+
 	self assert: self stdioStream position equals: 0
 ]
 
@@ -140,6 +140,6 @@ StdioStreamTest >> testUpToEnd [
 	"Position stream (zero based)"
 	stream position: 5.
 	"Copy from contents (one based)"
-	self assert: stream upToEnd 
+	self assert: stream upToEnd
 		equals: (contents copyFrom: 6 to: contents size) asByteArray
 ]

@@ -78,8 +78,8 @@ AthensDemoMorph >> drawCarOn: aCanvas [
 
 	| p stroke wheel decorator |
 	"chasis"
-	p := aCanvas createPath: [:b |		
-			b 
+	p := aCanvas createPath: [:b |
+			b
 				moveTo: 0.3@0.3 ;
 				lineTo: 0.4@0;
 				curveVia: 0.1@0 to: 0.1@0.1;
@@ -89,42 +89,42 @@ AthensDemoMorph >> drawCarOn: aCanvas [
 				curveVia: -0.1@0 to: (0.1@0.1) negated;
 				lineTo: 0@0.2 negated ;
 				curveVia: 0@0.1 negated to: 0.1@0.1 negated ].
-		aCanvas	
+		aCanvas
 			setPaint: self coloredCarColor;
 			drawShape: p.
 		stroke := aCanvas setStrokePaint: self wheelColor.
 		stroke width: 0.01.
 		aCanvas draw.
-		
+
 		"wheels"
 		wheel := aCanvas createPath:[:b|
 			b
-				moveTo: 	0.3@0.3;		
+				moveTo: 	0.3@0.3;
 				cwArcTo: 0.15@0 angle: Float halfPi ;
-				moveTo: 	0.1@0;				
-				cwArcTo: 0.15@0 angle: Float halfPi ;					
-				moveTo: 	0.0@0.4;				
-				cwArcTo: 0.15 negated@0 angle: Float halfPi; 
-				moveTo: 	-0.1@0; 
+				moveTo: 	0.1@0;
+				cwArcTo: 0.15@0 angle: Float halfPi ;
+				moveTo: 	0.0@0.4;
+				cwArcTo: 0.15 negated@0 angle: Float halfPi;
+				moveTo: 	-0.1@0;
 				cwArcTo: 0.15 negated@0 angle: Float halfPi 	].
-		aCanvas	
+		aCanvas
 			setPaint: self wheelColor;
 			drawShape: wheel.
-		
+
 		"chasis decorator"
 		decorator  := aCanvas createPath:[:b|
 			b
-				moveTo: 	0.2@0.45;	
-				lineTo: 0.225@0 ;		
+				moveTo: 	0.2@0.45;
+				lineTo: 0.225@0 ;
 				cwArcTo: 0.15@0 angle: Float halfPi ;
-				lineTo: 	0.225@0;				
+				lineTo: 	0.225@0;
 				lineTo: 0@0.1 ;
 				lineTo: -0.225@ 0;
 				cwArcTo: -0.15@0 angle: Float halfPi ;
 				lineTo: -0.225@ 0	;
 				lineTo: 0@0.1 negated].
 		stroke := aCanvas setStrokePaint: self chasisDecoratorColor.
-		stroke width: 0.01.	
+		stroke width: 0.01.
 		aCanvas drawShape: decorator.
 		aCanvas setPaint: self chasisLineColor.
 		aCanvas draw
@@ -155,11 +155,11 @@ AthensDemoMorph >> figure10: aCanvas [
 	aCanvas paintTransform loadIdentity.
 	aCanvas paintTransform scaleBy: ((frame/100) sin abs) * 5.
 	aCanvas paintTransform rotateByDegrees: (frame/100) sin * 360.
-	
+
 	patternPaint := aCanvas setPaint: pharoLogo.
 	patternPaint setExtend: #Repeat.
 	aCanvas drawShape: ellipsePath.
-	
+
 	aCanvas setPaint: patternPaint.
 	patternPaint setExtend: #Reflect.
 	aCanvas drawShape: rectangle
@@ -174,7 +174,7 @@ AthensDemoMorph >> figure1: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure2: aCanvas [
-	| path |	
+	| path |
 	path := aCanvas createPath: [:builder |
 		builder
 			absolute;
@@ -195,7 +195,7 @@ AthensDemoMorph >> figure2: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure3: aCanvas [
-	| path |	
+	| path |
 	path := aCanvas createPath: [:builder |
 		builder
 			relative;
@@ -218,17 +218,17 @@ AthensDemoMorph >> figure3: aCanvas [
 { #category : #figures }
 AthensDemoMorph >> figure4: aCanvas [
 	| path stroke |
-	
+
 	path := self class roundedRectanglePathOn: aCanvas.
-	
+
 	aCanvas setShape: path.
-	
+
 	aCanvas setPaint: self carColor.
 	aCanvas draw.
-	
+
 	stroke := aCanvas setStrokePaint: Color black.
 	stroke width: 3.
-	
+
 	aCanvas draw
 ]
 
@@ -239,16 +239,16 @@ AthensDemoMorph >> figure5: aCanvas [
 
 	wheels := aCanvas createPath: [:builder |
 		builder
-			moveTo:  100@100;		
+			moveTo:  100@100;
 			cwArcTo: 60@0 angle: 90 degreesToRadians;
-			moveTo:  80@0;				
+			moveTo:  80@0;
 			cwArcTo: 60@0 angle: 90 degreesToRadians;
 			moveTo:  0.0@200;
 			cwArcTo: -60@0 angle: 90 degreesToRadians;
-			moveTo:  -80@0; 
+			moveTo:  -80@0;
 			cwArcTo: -60@0 angle: 90 degreesToRadians ].
 
-	aCanvas	
+	aCanvas
 		setPaint: self wheelColor;
 		drawShape: wheels
 ]
@@ -256,24 +256,24 @@ AthensDemoMorph >> figure5: aCanvas [
 { #category : #figures }
 AthensDemoMorph >> figure6: aCanvas [
 	| linearGradient |
-	
+
 	self figure5: aCanvas.
-	
-	linearGradient := 
+
+	linearGradient :=
 		aCanvas surface createLinearGradient: {
 			0 -> self coloredCarColor .
 			0.25 -> self coloredCarColor muchLighter.
 			0.5 -> Color white.
 			0.75 -> (self coloredCarColor muchLighter ).
-			1 -> (self coloredCarColor alpha: 0)	
+			1 -> (self coloredCarColor alpha: 0)
 		}
-		start:  0@100  
+		start:  0@100
 		stop: 0@300.
-	
+
 	aCanvas setShape: (self class roundedRectanglePathOn: aCanvas).
-	
+
 	aCanvas setPaint: linearGradient.
-	
+
 	aCanvas draw
 ]
 
@@ -289,9 +289,9 @@ AthensDemoMorph >> figure7: aCanvas [
 		pt scaleBy: self extent .
 		self drawCarOn: aCanvas.
 
-		pt scaleBy: 0.25@0.25. 
+		pt scaleBy: 0.25@0.25.
 		self drawCarOn: aCanvas.
-	
+
 		pt  translateBy: 2@0; rotateByDegrees: 35.
 		self drawCarOn: aCanvas ]
 ]
@@ -300,15 +300,15 @@ AthensDemoMorph >> figure7: aCanvas [
 AthensDemoMorph >> figure8: aCanvas [
 	| pt |
 	pt := aCanvas pathTransform.
-	pt restoreAfter:[	
+	pt restoreAfter:[
 		pt scaleBy: self extent.
 		self drawBackgroundOn: aCanvas.
 
 		pt scaleBy: (frame/100) sin abs.
 		self drawCarOn: aCanvas.
-		pt scaleBy: 0.25@0.2.5. 
+		pt scaleBy: 0.25@0.2.5.
 		self drawCarOn: aCanvas.
-	
+
 		pt  translateBy: 2@0; rotateByDegrees: 35.
 		self drawCarOn: aCanvas ]
 ]
@@ -329,8 +329,8 @@ AthensDemoMorph >> figure9: aCanvas [
 
 	aCanvas paintTransform loadIdentity.
 	aCanvas paintTransform scaleBy: ((frame/200) sin abs)*3.
-	
-	
+
+
 	patternPaint := aCanvas setPaint: esugBallon .
 	patternPaint setExtend: #None.
 	aCanvas draw
@@ -375,28 +375,28 @@ AthensDemoMorph >> initialize [
 AthensDemoMorph >> nextFigure [
 
 	current := current + 1.
-	
-	current > self figures size ifTrue: [ current := 1 ].
+
+	current > self figures size ifTrue: [ current := 1 ]
 ]
 
 { #category : #accessing }
 AthensDemoMorph >> prevFigure [
 
 	current := current - 1.
-	
-	current < 1 ifTrue: [ current := self figures size ].
+
+	current < 1 ifTrue: [ current := self figures size ]
 ]
 
 { #category : #drawing }
-AthensDemoMorph >> render [ 
+AthensDemoMorph >> render [
 
-	surface drawDuring: [:canvas | 
+	surface drawDuring: [:canvas |
 		surface clear.
 		canvas pathTransform loadIdentity.
 		canvas setPaint: Color lightGray;
 		drawShape: (0@0 corner: self extent).
 		self perform: (self figures at: current)  with: canvas
-	].
+	]
 ]
 
 { #category : #stepping }

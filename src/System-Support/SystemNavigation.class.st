@@ -40,8 +40,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 { #category : #query }
 SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
+	self allClassNamesStartingWith: aString do: aBlock caseSensitive: true
+]
+
+{ #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
 	self allClassesDo: [ :e |
-		(e name beginsWith: aString)
+		(e name beginsWith: aString caseSensitive: cs)
 			ifTrue: [ aBlock value: e name ] ]
 ]
 
@@ -107,6 +113,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 
 { #category : #query }
 SystemNavigation >> allMethods [
+	"all methods, including copies from Traits"
 	^ self environment allMethods
 ]
 
@@ -229,6 +236,14 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : #query }
+SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
+
+	Symbol allSymbolTablesDo: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allUnimplementedCalls [
 
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
@@ -305,6 +320,12 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 SystemNavigation >> isUnsentMessage: selector [
 	^ self allBehaviors
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
+]
+
+{ #category : #query }
+SystemNavigation >> methods [
+	"all methods, but without those installed by Traits"
+	^ self environment methods
 ]
 
 { #category : #'identifying obsoletes' }

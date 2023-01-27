@@ -31,7 +31,7 @@ GlyphForm >> asFormOfDepth: d [
 		copy: (self boundingBox)
 		from: 0@0 in: self
 		fillColor: nil rule: Form over.
-	newForm 
+	newForm
 		offset: offset;
 		advance:advance;
 		linearAdvance: linearAdvance.
@@ -70,7 +70,7 @@ GlyphForm >> withAlphaExtractedFromSubpixelRendering [
 		b := c blue.
 		a := c alpha.
 		a := ((r max: g) max: b) * a.
-		
+
 		Color r: r g: g b: b alpha: a
 	].
 

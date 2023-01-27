@@ -9,8 +9,19 @@ Class {
 
 { #category : #coverage }
 FloatTest >> classToBeTested [
-	
+
 	^ Float
+]
+
+{ #category : #'tests - arithmetic' }
+FloatTest >> testAbs [
+
+	self assert: Float infinity abs equals: Float infinity.
+	self assert: 1.0 abs equals: 1.0.
+	self assert: Float zero abs equals: Float zero.
+	self assert: Float negativeZero abs equals: Float zero.
+	self assert: -1.0 abs equals: 1.0.
+	self assert: Float negativeInfinity abs equals: Float infinity
 ]
 
 { #category : #tests }
@@ -26,7 +37,7 @@ FloatTest >> testAsScaledDecimal [
 		assert:
 		(ScaledDecimal newFromNumber: 9.999999999999999 scale: 15) asString
 		equals: '9.999999999999998s15'.
-		self assert: (ScaledDecimal  newFromNumber: 9.999999999999994 scale: 15) asString 
+		self assert: (ScaledDecimal  newFromNumber: 9.999999999999994 scale: 15) asString
 		equals: '9.999999999999995s15'
 ]
 
@@ -46,23 +57,23 @@ FloatTest >> testComparisonWhenPrimitiveFails [
 	self deny: 0.5 < (1/4).
 	self deny: 0.5 < (1/2).
 	self assert: 0.5 < (3/4).
-	
+
 	self deny: 0.5 <= (1/4).
 	self assert: 0.5 <= (1/2).
 	self assert: 0.5 <= (3/4).
-	
+
 	self assert: 0.5 > (1/4).
 	self deny: 0.5 > (1/2).
 	self deny: 0.5 > (3/4).
-	
+
 	self assert: 0.5 >= (1/4).
 	self assert: 0.5 >= (1/2).
 	self deny: 0.5 >= (3/4).
-	
+
 	self deny: 0.5 equals: (1/4).
 	self assert: 0.5 equals: (1/2).
 	self deny: 0.5 equals: (3/4).
-	
+
 	self assert: 0.5 ~= (1/4).
 	self deny: 0.5 ~= (1/2).
 	self assert: 0.5 ~= (3/4)
@@ -77,15 +88,15 @@ FloatTest >> testContinuedFractions [
 { #category : #tests }
 FloatTest >> testCopy [
 	"Elementary tests"
-	
+
 	self assert: 2.0 copy equals: 2.0.
 	self assert: -0.5 copy equals: -0.5.
-	
+
 	"Are exceptional Floats preserved by the copy ?"
 	self assert: Float nan copy isNaN.
 	self assert: Float infinity copy equals: Float infinity.
 	self assert: Float infinity negated copy equals: Float infinity negated.
-	
+
 	"Is the sign of zero preserved by the copy ?"
 	self assert: 0.0 copy hex equals: 0.0 hex.
 	self assert: Float negativeZero copy hex equals: Float negativeZero hex
@@ -109,7 +120,7 @@ FloatTest >> testCopySignTo [
                       self assert: (aPositiveSign copySignTo: aPositive) equals: aPositive].
               negatives do: [:aNegative |
                       self assert: (aPositiveSign copySignTo: aNegative) equals: aNegative negated].
-              
+
 				  self assert: (aPositiveSign copySignTo: zero) sign equals: 0.
               self assert: (aPositiveSign copySignTo: negz) sign equals: 0].
 
@@ -125,9 +136,9 @@ FloatTest >> testCopySignTo [
 { #category : #'tests - arithmetic' }
 FloatTest >> testDivide [
 
-	self assert: 1.5 / 2.0 equals: 0.75.	
+	self assert: 1.5 / 2.0 equals: 0.75.
 	self assert: 2.0 / 1 equals: 2.0.
-	
+
 	self should: [ 2.0 / 0 ] raise: ZeroDivide.
 	self should: [ 2.0 / 0.0 ] raise: ZeroDivide.
 	self should: [ 1.2 / Float negativeZero ] raise: ZeroDivide.
@@ -138,10 +149,10 @@ FloatTest >> testDivide [
 FloatTest >> testFloatPrintPolicy [
 	"It is hard to test printing Floats reliably, but this at least covers the code path"
 
-	| pi |	
+	| pi |
 	pi := FloatPrintPolicy value: InexactFloatPrintPolicy new during: [ Float pi printString ].
 	self assert: (pi beginsWith: '3.14159').
-	
+
 	pi := FloatPrintPolicy value: ExactFloatPrintPolicy new during: [ Float pi printString ].
 	self assert: (pi beginsWith: '3.14159')
 ]
@@ -151,15 +162,15 @@ FloatTest >> testFloatTruncated [
 	"(10 raisedTo: 16) asFloat has an exact representation (no round off error).
 	It should convert back to integer without loosing bits.
 	This is a no regression test on http://bugs.impara.de/view.php?id=3504"
-	
+
 	| x y int r |
 	int := 10 raisedTo: 16.
 	x := int asFloat.
 	y := (5 raisedTo: 16) asFloat timesTwoPower: 16.
 	self assert: x equals: y.
-	
+
 	self assert: x asInteger equals: int.
-	
+
 	"this one should be true for any float"
 	self assert: x asInteger equals: x asTrueFraction asInteger.
 
@@ -185,7 +196,7 @@ FloatTest >> testFractionAsFloatWithUnderflow [
 
 	| underflowPower |
 	underflowPower := Float emin - Float precision.
-	self assert: (2 raisedTo: underflowPower) asFloat equals: 0.0.	
+	self assert: (2 raisedTo: underflowPower) asFloat equals: 0.0.
 	self assert: (2 raisedTo: underflowPower) negated asFloat equals: 0.0.
 	self assert: (2 raisedTo: underflowPower) negated asFloat signBit = 1 description: 'a negative underflow should return a negative zero'
 ]
@@ -322,7 +333,7 @@ FloatTest >> testNaNCompare [
 	As a consequence, every arithmetic comparison involving a NaN SHOULD return false.
 	Except the is different test (~=).
 	This test does verify this rule"
-	
+
 	| compareSelectors theNaN anotherNaN comparand brokenMethods warningMessage |
 	self skip.
 	compareSelectors := #(#< #<= #> #>= #=).
@@ -340,13 +351,13 @@ FloatTest >> testNaNCompare [
 			(comp perform: op with: theNaN) ifTrue: [brokenMethods add: (comp class lookupSelector: op)]].
 		(theNaN ~= comp) ifFalse: [brokenMethods add: (theNaN class lookupSelector: #~=)].
 		(comp ~= theNaN) ifFalse: [brokenMethods add: (comp class lookupSelector: #~=)]].
-	
+
 "build a warning message to tell about all broken methods at once"
 	warningMessage := String streamContents: [:s |
 			s nextPutAll: 'According to IEEE 754 comparing with a NaN should always return false, except ~= that should return true.'; cr.
 			s nextPutAll: 'All these methods failed to do so. They are either broken or call a broken one'.
 			brokenMethods do: [:e | s cr; print: e methodClass; nextPutAll: '>>'; print: e selector]].
-		
+
 "Redo the tests so as to eventually open a debugger on one of the failures"
 	brokenMethods := Set new.
 	comparand do: [:comp2 |
@@ -354,7 +365,7 @@ FloatTest >> testNaNCompare [
 			self deny: (theNaN perform: op2 with: comp2) description: warningMessage.
 			self deny: (comp2 perform: op2 with: theNaN) description: warningMessage].
 		self assert: (theNaN ~= comp2) description: warningMessage.
-		self assert: (comp2 ~= theNaN) description: warningMessage].
+		self assert: (comp2 ~= theNaN) description: warningMessage]
 ]
 
 { #category : #'tests - NaN behavior' }
@@ -408,7 +419,7 @@ FloatTest >> testRaisedTo [
 FloatTest >> testReadFromManyDigits [
 	"A naive algorithm may interpret these representations as Infinity or NaN.
 	This is http://bugs.squeak.org/view.php?id=6982"
-	
+
 	| s1 s2 |
 	s1 := '1' , (String new: 321 withAll: $0) , '.0e-321'.
 	s2 := '0.' , (String new: 320 withAll: $0) , '1e321'.
@@ -426,18 +437,18 @@ FloatTest >> testReadingTooLargeExponents [
 	self assert: (Float readFrom: '7.5e3333') equals: Float infinity.
 	self assert: (Float readFrom: '7.5e-3333') equals: Float zero.
 	self assert: (Float readFrom: '-7.5e3333') equals: Float infinity negated.
-	self assert: (Float readFrom: '-7.5e-3333') equals: Float zero.
+	self assert: (Float readFrom: '-7.5e-3333') equals: Float zero
 ]
 
 { #category : #'tests - NaN behavior' }
 FloatTest >> testReciprocal [
 
-	self 
+	self
 		assert: 1.0 reciprocal equals: 1.0;
 		assert: 2.0 reciprocal equals: 0.5;
 		assert: -1.0 reciprocal equals: -1.0;
 		assert: -2.0 reciprocal equals: -0.5.
-		
+
 	self should: [ 0.0 reciprocal ] raise: ZeroDivide
 ]
 
@@ -450,7 +461,7 @@ FloatTest >> testRounded [
 	self assert: -1.9 rounded equals: -2.
 	self assert: -2.0 rounded equals: -2.
 	self assert: -2.1 rounded equals: -2.
-	
+
 	"In case of tie, round to upper magnitude"
 	self assert: 1.5 rounded equals: 2.
 	self assert: -1.5 rounded equals: -2
@@ -460,7 +471,7 @@ FloatTest >> testRounded [
 FloatTest >> testSetOfFloat [
 	"Classical disagreement between hash and = did lead to a bug.
 	 This is a non regression test from http://bugs.squeak.org/view.php?id=3360"
-	
+
 	| size3 size4 |
 	size3 := (Set new: 3) add: 3; add: 3.0; size.
 	size4 := (Set new: 4) add: 3; add: 3.0; size.
@@ -523,8 +534,8 @@ FloatTest >> testStoreOn [
 	| float |
 	float := -1.2.
 	self assert: (String streamContents: [ :s | float storeOn: s ]) equals: ' -1.2'.
-	
-	float := 1.2.	
+
+	float := 1.2.
 	self assert: (String streamContents: [ :s | float storeOn: s ]) equals: '1.2'
 ]
 
@@ -568,7 +579,7 @@ FloatTest >> testZero1 [
 { #category : #'tests - arithmetic' }
 FloatTest >> testZeroRaisedToNegativePower [
 	"this is a test related to http://bugs.squeak.org/view.php?id=6781"
-	
+
 	self should: [0.0 raisedTo: -1] raise: ZeroDivide.
 	self should: [0.0 raisedTo: -1.0] raise: ZeroDivide
 ]
@@ -576,6 +587,6 @@ FloatTest >> testZeroRaisedToNegativePower [
 { #category : #'tests - zero behavior' }
 FloatTest >> testZeroSignificandAsInteger [
 	"This is about http://bugs.squeak.org/view.php?id=6990"
-	
+
 	self assert: 0.0 significandAsInteger equals: 0
 ]
