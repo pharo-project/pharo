@@ -103,7 +103,6 @@ SystemSettingsPersistenceTest >> testDefaultImageDoesNotStoreAnySetting [
 	| nodesToStore |
 	"An image with all default values should not save any setting.
 	The settings only should be saved if changed from default value"
-"MockSettings foo."
 	Author
 		useAuthor: ''
 		during: [ 
