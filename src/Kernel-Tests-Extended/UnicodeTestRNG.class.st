@@ -52,7 +52,7 @@ UnicodeTestRNG >> randomCodePointBetween: lower and: upper [
 	span := max - lower + 1.
 	[
 		codePoint := (self generator next * span) floor + lower.
-		Unicode isNonCharacter: (Character codePoint: codePoint) 
+		Unicode isNonCharacter: (Character codePoint: codePoint)
 	] whileTrue.
 	^ codePoint
 ]
@@ -60,5 +60,5 @@ UnicodeTestRNG >> randomCodePointBetween: lower and: upper [
 { #category : #running }
 UnicodeTestRNG >> setUp [
 	super setUp.
-	generator := Random seed: 14159265.
+	generator := Random seed: 14159265
 ]

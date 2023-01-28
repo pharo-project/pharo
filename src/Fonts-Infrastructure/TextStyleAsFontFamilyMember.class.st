@@ -24,11 +24,11 @@ TextStyleAsFontFamilyMember >> emphasisCode [
 
 	| answer |
 	answer := 0.
-	(styleName includesSubstring: 'Italic') ifTrue: [ 
+	(styleName includesSubstring: 'Italic') ifTrue: [
 		answer := answer bitOr: LogicalFont squeakSlantItalic ].
-	(styleName includesSubstring: 'Condensed') ifTrue: [ 
+	(styleName includesSubstring: 'Condensed') ifTrue: [
 		answer := answer bitOr: LogicalFont squeakStretchCondensed ].
-	(styleName includesSubstring: 'Bold') ifTrue: [ 
+	(styleName includesSubstring: 'Bold') ifTrue: [
 		answer := answer bitOr: LogicalFont squeakWeightBold ].
 	^ answer
 ]

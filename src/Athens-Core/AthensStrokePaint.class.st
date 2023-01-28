@@ -109,9 +109,9 @@ AthensStrokePaint >> capSquare [
 
 { #category : #'setting - dashes' }
 AthensStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffset [
-	
+
 	'self dashes: #( "fill" 20  "gap" 10 "fill" 35 "gap" 30) offset: 0. '.
-	
+
 	self subclassResponsibility
 ]
 
@@ -156,8 +156,8 @@ AthensStrokePaint >> setDefaults [
 
 	"Set the default values for strokes"
 	width := 1.
-	self 
-		capButt; 
+	self
+		capButt;
 		joinBevel;
 		miterLimit: 4.0
 ]

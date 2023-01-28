@@ -635,7 +635,7 @@ ChangeSet >> changeRecorderFor: class [
 	cname := class isString
 		ifTrue: [ class ]
 		ifFalse: [ class isBehavior ifTrue: [class name] ifFalse: [ nil printString] ].
-	^ changeRecords at: cname ifAbsent: [ ^ changeRecords at: cname put: (ClassChangeRecord new initFor: cname) ]
+	^ changeRecords at: cname ifAbsentPut: [ ClassChangeRecord new initFor: cname ]
 ]
 
 { #category : #'class changes' }

@@ -68,7 +68,8 @@ RBCopyClassRefactoring >> copyClass [
 		addClass: className
 		superclass: aClass superclass
 		subclasses: #()
-		category: self category).
+		category: self category
+		comment: aClass comment).
 ]
 
 { #category : #copying }

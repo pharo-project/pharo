@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #factory }
-DTTestResultType class >> backgroundColor [
+DTTestResultType class >> backgroundColorStyle [
 	^ self subclassResponsibility
 ]
 

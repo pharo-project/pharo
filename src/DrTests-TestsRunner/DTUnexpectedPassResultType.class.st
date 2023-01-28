@@ -8,8 +8,9 @@ Class {
 }
 
 { #category : #factory }
-DTUnexpectedPassResultType class >> backgroundColor [
-	^ TestResult defaultColorBackGroundForUnexpectedPassTest
+DTUnexpectedPassResultType class >> backgroundColorStyle [
+
+	^ 'testUnexpectedPass'
 ]
 
 { #category : #accessing }

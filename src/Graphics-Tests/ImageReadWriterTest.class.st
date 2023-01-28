@@ -19,7 +19,7 @@ ImageReadWriterTest >> pharoLogoFormDepth8 [
 
 { #category : #accessing }
 ImageReadWriterTest >> pharoLogoFormNonTransparent [
-	^ self pharoLogoForm 
+	^ self pharoLogoForm
 		mapColor: Color transparent to: Color white;
 		yourself
 ]
@@ -59,21 +59,21 @@ ImageReadWriterTest >> testCanGetFormOutOfBase64EncodedStringImage [
 	| encodedImage form expextedFrom |
 	encodedImage := PolymorphSystemSettings pharoLogoContents.
 	expextedFrom := self pharoLogoForm.
-	
+
 	form := Form fromBase64String: encodedImage.
-	
+
 	self
-		assert: form width 
+		assert: form width
 		equals: expextedFrom width.
 	self
-		assert: form height 
+		assert: form height
 		equals: expextedFrom height.
 	self
-		assert: form depth 
+		assert: form depth
 		equals: expextedFrom depth.
 	self
 		assert: form bits
-		equals: self pharoLogoForm bits.
+		equals: self pharoLogoForm bits
 ]
 
 { #category : #tests }
@@ -114,18 +114,18 @@ ImageReadWriterTest >> testHasMagicNumber [
 	writerStream := ZnPositionableReadStream on: (ReadStream on: 'GIF89a this is some data').
 	failStream := ZnPositionableReadStream on: (ReadStream on: 'This is incorrect').
 	failTooShortStream := ZnPositionableReadStream on: (ReadStream on: 'GIF').
-	
+
 	"This one has the magic number at the current position"
 	reader := ImageReadWriter on: writerStream.
 	self assert: (reader hasMagicNumber: exampleNumber).
-	
+
 	"Does not have the magic number at the current position"
 	reader := ImageReadWriter on: failStream.
 	self assert: (reader hasMagicNumber: exampleNumber) equals: false.
-	
+
 	"The source stream is shorter than the magic number. Shouldn't error!"
 	reader := ImageReadWriter on: failTooShortStream.
-	self assert: (reader hasMagicNumber: exampleNumber) equals: false.
+	self assert: (reader hasMagicNumber: exampleNumber) equals: false
 ]
 
 { #category : #tests }

@@ -11,5 +11,5 @@ CoMethodVariablesFetcherTest >> setUp [
 	fetcher := CoMethodVariableFetcher new.
 	fetcher completionASTNode: self innerASTNode.
 	expectedElements := #(blockTemporary blockArgument methodTemporary methodArgument)
-		collect: [:e | NECLocalEntry contents: e node: nil ].
+		collect: [:e | NECLocalEntry contents: e node: nil ]
 ]

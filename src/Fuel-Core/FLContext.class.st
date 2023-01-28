@@ -60,7 +60,7 @@ FLContext >> handleObjectLimitExceeded [
 	FLObjectLimitExceededWarning signal
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FLContext >> initialize [
 	super initialize.
 	

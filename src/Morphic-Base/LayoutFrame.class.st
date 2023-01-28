@@ -5,12 +5,36 @@ Do not use fractions: fractionsOrNil offsets: offsetsOrNil or fractions: fractio
 
 If you are creating the rectangles representing the numbers you need, better use the accessors. For example like this.  
 
+```
 	(LayoutFrame identity
 			topOffset: topHeight;
 			bottomFraction: 0;
 			bottomOffset: self buttonsBarHeight;
 			leftOffset: -1;
 			rightOffset: 1)	
+```
+
+Here is an example so that you can play with all the parameters:
+
+```
+| m s frame |
+s := Morph new color: Color yellow.
+frame := LayoutFrame identity.
+frame leftFraction: 0.1.
+frame rightFraction: 0.9.
+frame bottomFraction: 0.9.
+frame bottomOffset: 30 negated.
+frame rightOffset: 20 negated.
+frame topOffset: 5 .
+frame leftOffset: 5 .
+m := Morph new
+        extent: 200@200;
+        color: Color lightGray;
+        layoutPolicy: ProportionalLayout new;
+        addMorph: s fullFrame: frame.
+m openInWorld
+```
+
 
 Use printOnForHelpingMigration: if you want to inspect the object.
 
@@ -39,6 +63,44 @@ Class {
 	],
 	#category : #'Morphic-Base-Layouts'
 }
+
+{ #category : #'instance creation' }
+LayoutFrame class >> example [
+	<script>
+	| m s frame |
+	s := Morph new color: Color yellow.
+	frame := self identity.
+	frame leftFraction: 0.1.
+	frame rightFraction: 0.9.
+	frame bottomFraction: 0.9.
+	frame bottomOffset: 30 negated.
+	frame rightOffset: 20 negated.
+	frame topOffset: 5 .
+	frame leftOffset: 5 .
+	m := Morph new
+        extent: 200@200;
+        color: Color lightGray;
+        layoutPolicy: ProportionalLayout new;
+        addMorph: s fullFrame: frame.
+	m openInWorld
+]
+
+{ #category : #'instance creation' }
+LayoutFrame class >> example2 [
+	<script>
+	| m s frame |
+	s := Morph new color: Color yellow.
+	frame := self identity.
+	frame leftFraction: 0.1.
+	frame rightFraction: 0.9.
+	frame bottomFraction: 0.9.
+	m := Morph new
+        extent: 200@200;
+        color: Color lightGray;
+        layoutPolicy: ProportionalLayout new;
+        addMorph: s fullFrame: frame.
+	m openInWorld
+]
 
 { #category : #'instance creation' }
 LayoutFrame class >> identity [

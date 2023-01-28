@@ -11,7 +11,7 @@ ClapMeaningsTest >> testArgFlagBasicMeaning [
 		add: (ClapPositional id: #bar).
 
 	match := flag match: #('--foo' 'whatever').
-	
+
 	self assert: match value.
 	self deny: (flag match: #()) value
 ]
@@ -51,7 +51,7 @@ ClapMeaningsTest >> testSimpleFlagBasicMeaning [
 	flag := ClapFlag id: #foo.
 
 	match := flag match: #('--foo').
-	
+
 	self assert: match value.
 	self deny: (flag match: #()) value
 ]

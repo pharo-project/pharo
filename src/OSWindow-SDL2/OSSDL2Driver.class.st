@@ -231,8 +231,7 @@ OSSDL2Driver >> initialize [
 "		initVideo;
 		initJoystick;
 		initGameController;
-"		initEverything.
-	self setupEventLoop.
+"		initEverything
 ]
 
 { #category : #'window creation and deletion' }
@@ -361,19 +360,24 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 
 { #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
+
 	EventLoopProcess ifNotNil: [ 
-		EventLoopProcess isTerminating ifFalse: [EventLoopProcess terminate. EventLoopProcess := nil] ].
-	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
-		[ self eventLoopProcessWithVMWindow ] 
-		forkAt: Processor lowIOPriority
-	] ifFalse: [ 
-		self class hasPlugin ifTrue: [ 
-			[ self eventLoopProcessWithPlugin ] 
-			forkAt: Processor lowIOPriority ]
+		EventLoopProcess isTerminating ifFalse: [ 
+			EventLoopProcess terminate. 
+			EventLoopProcess := nil ] ].
+	
+	EventLoopProcess := self class isVMDisplayUsingSDL2 
+		ifTrue: [ 
+			[ self eventLoopProcessWithVMWindow ] 
+			forkAt: Processor lowIOPriority ] 
 		ifFalse: [ 
-			[ self eventLoopProcessWithoutPlugin ] 
-			forkAt: Processor lowIOPriority ].
-	].
+			self class hasPlugin 
+				ifTrue: [ 
+					[ self eventLoopProcessWithPlugin ] 
+					forkAt: Processor lowIOPriority ]
+				ifFalse: [ 
+					[ self eventLoopProcessWithoutPlugin ] 
+					forkAt: Processor lowIOPriority ] ].
 
 	EventLoopProcess
 		name: 'SDL2 Event loop';
@@ -381,13 +385,29 @@ OSSDL2Driver >> setupEventLoop [
 ]
 
 { #category : #'system startup' }
-OSSDL2Driver >> shutDown [
+OSSDL2Driver >> shutDown: quitting [
 	"Reset WindowMap and JoystickMap when shuting down (otherwise there will be handlers 
 	 remaining on restart)"
 
-	WindowMap := nil.
-	JoystickMap := nil.
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
+	quitting ifTrue: [ 
+		WindowMap := nil.
+		JoystickMap := nil ].
+
+	self shutdownEventLoop
+]
+
+{ #category : #'events-processing' }
+OSSDL2Driver >> shutdownEventLoop [
+
+	EventLoopProcess ifNil: [ ^ self ].
+	EventLoopProcess terminate.
+	EventLoopProcess := nil
+]
+
+{ #category : #'system startup' }
+OSSDL2Driver >> startUp: resuming [
+
+	self setupEventLoop
 ]
 
 { #category : #'global events' }

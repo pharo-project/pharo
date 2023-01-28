@@ -16,7 +16,7 @@ FontSubstitutionDuringLoading class >> forFamilyName: aName pixelSize: aSize [
 	^(self new)
 		familyName: aName;
 		pixelSize: aSize;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -26,7 +26,7 @@ FontSubstitutionDuringLoading >> defaultAction [
 
 	^((familyName beginsWith: 'Comic')
 		ifTrue: [ TextStyle named: (StandardFonts buttonFont familyName) ]
-		ifFalse: [ TextStyle default ]) fontOfSize: pixelSize.
+		ifFalse: [ TextStyle default ]) fontOfSize: pixelSize
 ]
 
 { #category : #accessing }
@@ -64,5 +64,5 @@ FontSubstitutionDuringLoading >> printOn: aStream [
 		nextPutAll: familyName;
 		nextPut: $-;
 		print: pixelSize;
-		nextPut: $).
+		nextPut: $)
 ]

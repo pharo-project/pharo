@@ -28,7 +28,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyQueryResultBrowserAdapter class >> for: aQueryResult [
-	^self new 
+	^self new
 		actualResult: aQueryResult
 ]
 
@@ -56,10 +56,10 @@ ClyQueryResultBrowserAdapter >> buildingQuery [
 ClyQueryResultBrowserAdapter >> createUpdateWithItemsStartingAt: startPosition count: cacheSize [
 	"it is important for remote scenario to call new metadata and new cache by single message.
 	In this case all required properties of metadata and cache will be transferred in one request using update instance"
-	
+
 	| itemCache |
-	itemCache := ClyBrowserQueryCache 
-		filledBy: self 
+	itemCache := ClyBrowserQueryCache
+		filledBy: self
 		startingAt: startPosition
 		size: cacheSize.
 	^ClyBrowserQueryUpdate of: self withItems: itemCache
@@ -75,17 +75,17 @@ ClyQueryResultBrowserAdapter >> findItemsSimilarTo: sampleEnvironmentItems [
 	| rest found existingItem |
 	actualResult protectItemsWhile: [
 		rest := sampleEnvironmentItems as: OrderedCollection.
-		found := OrderedCollection new.	
+		found := OrderedCollection new.
 		actualResult items doWithIndex: [ :existing :index |
 			existingItem := existing asCalypsoBrowserItem.
 			rest
 				detect: [ :sample | sample isSimilarTo: existingItem]
-				ifFound: [ :sample | 
+				ifFound: [ :sample |
 					existingItem position: index.
 					existingItem prepareIn: self environment.
-					found add: existingItem. 
+					found add: existingItem.
 					rest remove: sample.
-					rest ifEmpty: [ ^found ] ]].	
+					rest ifEmpty: [ ^found ] ]].
 		^found]
 ]
 
@@ -96,11 +96,11 @@ ClyQueryResultBrowserAdapter >> findItemsWith: actualObjects [
 	If some object is absent in content then it will return nil in place of it.
 	All returned items will be resilved"
 	| found result foundIndex |
-	actualResult protectItemsWhile: [ 
+	actualResult protectItemsWhile: [
 		result := actualObjects collect: [ :eachObject |
-			foundIndex := actualResult items findFirst: [ :item | 
+			foundIndex := actualResult items findFirst: [ :item |
 				item calypsoEnvironmentType checkCalypsoItem: item isEqualTo: eachObject ].
-			foundIndex > 0 
+			foundIndex > 0
 				ifTrue: [ found := (actualResult itemAt: foundIndex) asCalypsoBrowserItem.
 					found position: foundIndex.
 					found prepareIn: self environment.
@@ -122,17 +122,17 @@ ClyQueryResultBrowserAdapter >> hasSubscriber: anObject [
 { #category : #queries }
 ClyQueryResultBrowserAdapter >> itemsStartingAt: startIndex count: size [
 
-	^self 
+	^self
 		wrapRawItems: (actualResult itemsStartingAt: startIndex count: size)
 		startingAt: startIndex
 ]
 
 { #category : #queries }
 ClyQueryResultBrowserAdapter >> itemsStartingWhere: conditionBlock count: size [
-	
+
 	actualResult protectItemsWhile: [
 		actualResult items doWithIndex: [ :each :i |
-			 (conditionBlock value: each asCalypsoBrowserItem) 
+			 (conditionBlock value: each asCalypsoBrowserItem)
 					ifTrue: [	^self itemsStartingAt: i count: size	]]
 	].
 
@@ -140,15 +140,15 @@ ClyQueryResultBrowserAdapter >> itemsStartingWhere: conditionBlock count: size [
 ]
 
 { #category : #queries }
-ClyQueryResultBrowserAdapter >> itemsWhere: conditionBlock [ 
+ClyQueryResultBrowserAdapter >> itemsWhere: conditionBlock [
 	| found item |
 	actualResult protectItemsWhile: [
 		found := OrderedCollection new.
-		actualResult items doWithIndex: [ :each :i | 
+		actualResult items doWithIndex: [ :each :i |
 			item := each asCalypsoBrowserItem.
-			(conditionBlock value: item)	ifTrue: [ 
+			(conditionBlock value: item)	ifTrue: [
 				item position: i.
-				item prepareIn: self environment.	
+				item prepareIn: self environment.
 				found add: item ] ].
 		^found]
 ]
@@ -179,7 +179,7 @@ ClyQueryResultBrowserAdapter >> subscribe: aBrowserQueryCursor [
 ]
 
 { #category : #'system changes' }
-ClyQueryResultBrowserAdapter >> unsubscribe: anObject [ 
+ClyQueryResultBrowserAdapter >> unsubscribe: anObject [
 	actualResult unsubscribe: anObject
 ]
 
@@ -188,7 +188,7 @@ ClyQueryResultBrowserAdapter >> wrapRawItems: objects startingAt: firstItemIndex
 
 	| result |
 	result := objects collect: [:each | each asCalypsoBrowserItem].
-	result doWithIndex: [ :each :i | 
+	result doWithIndex: [ :each :i |
 		each position: firstItemIndex + i - 1.
 		each prepareIn: self environment ].
 	^result

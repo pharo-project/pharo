@@ -16,7 +16,7 @@ CoStatisticsCompletionEngine >> closeMenu [
 	context ifNotNil: [
 		statistics logCancelEvent: (CoCompletionCancelledEvent new
 			typedToken: context completionToken;
-			contextClassName: (self contextClass 
+			contextClassName: (self contextClass
 					ifNotNil: [ :aClass | aClass name ]);
 			isDynamicContext: self isScripting;
 			yourself) ].
@@ -31,5 +31,5 @@ CoStatisticsCompletionEngine >> initialize [
 	completionBuilder := CoStatisticsASTHeuristicsResultSetBuilder new
 		statistics: statistics;
 		yourself.
-	contextClass := CoStatisticsCompletionContext.
+	contextClass := CoStatisticsCompletionContext
 ]

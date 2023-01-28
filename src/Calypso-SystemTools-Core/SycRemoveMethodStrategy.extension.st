@@ -5,11 +5,11 @@ SycRemoveMethodStrategy class >> createAllForBrowser: aBrowser [
 
 	| result |
 	result := SortedCollection sortBlock: #orderForBrowser ascending.
-	
-	self allSubclassesDo: [ :each | 
-		each hasSubclasses ifFalse: [ 
+
+	self allSubclassesDo: [ :each |
+		each hasSubclasses ifFalse: [
 			result add: (each newForBrowser: aBrowser) ]].
-	
+
 	^result
 ]
 

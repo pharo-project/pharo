@@ -21,20 +21,20 @@ ClyContextSelectionStrategyAnnotation class >> for: aBrowserClass selectionType:
 { #category : #query }
 ClyContextSelectionStrategyAnnotation class >> selectContextOf: aSelection for: aBrowser [
 
-	self activeInstancesInContext: aBrowser do: [ :strategy | 
-		(strategy shouldBeAppliedFor: aSelection) ifTrue: [ 
+	self activeInstancesInContext: aBrowser do: [ :strategy |
+		(strategy shouldBeAppliedFor: aSelection) ifTrue: [
 			^strategy createBrowserContextOf: aSelection for: aBrowser]].
-	
+
 	^ClyUnknownBrowserContext for: aBrowser
 ]
 
 { #category : #query }
 ClyContextSelectionStrategyAnnotation class >> selectContextOfSingleItem: aDataSourceItem for: aBrowser [
 
-	self activeInstancesInContext: aBrowser do: [ :strategy | 
-		(strategy shouldBeAppliedFor: aDataSourceItem) ifTrue: [ 
+	self activeInstancesInContext: aBrowser do: [ :strategy |
+		(strategy shouldBeAppliedFor: aDataSourceItem) ifTrue: [
 			^strategy createBrowserContextOfSingleItem: aDataSourceItem for: aBrowser]].
-	
+
 	^ClyUnknownBrowserContext for: aBrowser
 ]
 
@@ -53,11 +53,11 @@ ClyContextSelectionStrategyAnnotation >> createBrowserContextOfSingleItem: aData
 { #category : #printing }
 ClyContextSelectionStrategyAnnotation >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		nextPutAll: annotatedClass name.
-	targetItemType ifNotNil: [ 
+	targetItemType ifNotNil: [
 		aStream
 			nextPutAll: '; ';
 			nextPutAll: targetItemType name].
@@ -68,10 +68,10 @@ ClyContextSelectionStrategyAnnotation >> printOn: aStream [
 { #category : #testing }
 ClyContextSelectionStrategyAnnotation >> shouldBeAppliedFor: aSelectionOrItem [
 
-	targetItemType ifNil: [ 
-	"if no scope specified strategy will be applied to any selection independently from it kind"	
+	targetItemType ifNil: [
+	"if no scope specified strategy will be applied to any selection independently from it kind"
 		^true ].
-	
+
 	^aSelectionOrItem isBasedOnItemType: targetItemType
 ]
 

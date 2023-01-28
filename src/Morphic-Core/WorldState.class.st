@@ -126,9 +126,6 @@ WorldState class >> helpOn: aBuilder [
 		order: 99;
 		help: 'Some help tools on Pharo.';
 		with: [
-			(aBuilder group: #HelpBrowser)
-				order: 1;
-				withSeparatorAfter.
 			(aBuilder group: #PharoHelp)
 				order: 2;
 				withSeparatorAfter.
@@ -250,19 +247,6 @@ WorldState class >> saveSession [
 			snapshot: true
 			andQuit: false.
 	]
-]
-
-{ #category : #'world menu items' }
-WorldState class >> screenShotCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Screenshot)
-		parent: #System;
-		target: self currentWorld;
-		order: 99;
-		selector: #makeAScreenshot;
-		label: 'Screenshot';
-		help: 'Take a screenshot';
-		iconName: #smallScreenshot
 ]
 
 { #category : #settings }

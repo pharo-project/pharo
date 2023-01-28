@@ -8,7 +8,7 @@ Class {
 		'implementors',
 		'renameMap'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #support }

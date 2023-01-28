@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'accessorsRefactoring'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #transforming }
@@ -49,7 +49,7 @@ RBAbstractClassVariableRefactoring >> abstractInstanceReferences [
 RBAbstractClassVariableRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
-		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableRefactoring
+		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName asString
 				class: class

@@ -27,11 +27,9 @@ ReInvocationSequenceRule class >> checksNode [
 { #category : #examples }
 ReInvocationSequenceRule class >> exampleSequenceMethods [
 	<sampleInstance>
-	<gtExample>
-	<label: 'You should not do this. Instead subclass and call #add:… in the initialization method'>
-	
+
 	^ self new
-		add: #initiallize requiresPreSend: #(basicNew new);
+		add: #initialize requiresPreSend: #(basicNew new);
 		add: #(setAsFixed setAsNotFixed) requiresPostSend: #(add: addAll:);
 		add: #edges requiresPreSend: #nodes
 ]

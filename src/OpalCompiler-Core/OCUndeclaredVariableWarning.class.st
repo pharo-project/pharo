@@ -94,7 +94,7 @@ OCUndeclaredVariableWarning >> defineClass: className [
 	classSymbol := className asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
-	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: '' forClass: classSymbol.
+	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: systemCategory forClass: classSymbol.
 	classDefinition := UIManager default 
 		multiLineRequest: 'Edit class definition:'
 		initialAnswer: classDefinition

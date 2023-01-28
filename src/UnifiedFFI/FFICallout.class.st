@@ -391,9 +391,9 @@ FFICallout >> resolveUntypedArgument: anArgument [
 { #category : #accessing }
 FFICallout >> sender: aSenderContext [
 	| nArgs |
-	self requestor: aSenderContext compiledCode method methodClass.
-	nArgs := aSenderContext compiledCode method numArgs.
-	methodArgs := aSenderContext compiledCode method argumentNames.
+	self requestor: aSenderContext homeMethod methodClass.
+	nArgs := aSenderContext homeMethod numArgs.
+	methodArgs := aSenderContext homeMethod argumentNames.
 	self receiver: aSenderContext receiver.
 	self assert: (methodArgs size = nArgs).
 

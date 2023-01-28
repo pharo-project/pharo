@@ -42,3 +42,18 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	cm := ast compiledMethod.
 	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]
+
+{ #category : #tests }
+OCCompileWithFailureTest >> testParenthesis [
+	| result cm | 
+	result := UndefinedObject compiler
+    source: 'self assert: pragma( numArgs equals: 0.';
+    noPattern: true;
+    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+    requestor: self;
+    parse. 
+	self assert: result isDoIt.
+	self assert: result isFaulty.
+	cm := result compiledMethod.
+	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
+]

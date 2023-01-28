@@ -46,7 +46,7 @@ ClyQueryResultMetadata >> addProperty: aProperty [
 ]
 
 { #category : #accessing }
-ClyQueryResultMetadata >> getProperty: aPropertyClass [ 
+ClyQueryResultMetadata >> getProperty: aPropertyClass [
 
 	^properties detect: [ :each | each isKindOf: aPropertyClass ]
 ]
@@ -60,7 +60,7 @@ ClyQueryResultMetadata >> hasProperty: aPropertyClass [
 { #category : #initialization }
 ClyQueryResultMetadata >> initialize [
 	super initialize.
-	
+
 	properties := OrderedCollection new
 ]
 

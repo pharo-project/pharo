@@ -203,11 +203,8 @@ DAPackageRelationGraph >> clearPackages [
 
 { #category : #actions }
 DAPackageRelationGraph >> combineDependencies [
-	"Combine all dependencies with the same source and target into one composite
-	dependency."
-	self packages 
-		do: [ :each | self combineDependencies: each ]
-		displayingProgress: 'Combining Dependencies'
+	"Combine all dependencies with the same source and target into one composite dependency."
+	self packages do: [ :each | self combineDependencies: each ]
 ]
 
 { #category : #private }
@@ -411,10 +408,7 @@ DAPackageRelationGraph >> refreshPackageDependencies: aPackage [
 { #category : #actions }
 DAPackageRelationGraph >> removeInternalDependencies [
 	"Remove all dependencies from a package to itself"
-	
-	self includedPackages
-		do: [ :each | each removeAllInternal ]
-		displayingProgress: 'Removing internal Dependencies'
+	self includedPackages do: [ :each | each removeAllInternal ]
 ]
 
 { #category : #actions }

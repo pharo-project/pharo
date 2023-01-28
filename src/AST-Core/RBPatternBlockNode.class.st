@@ -16,20 +16,20 @@ Class {
 }
 
 { #category : #visiting }
-RBPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitPatternBlockNode: self
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [ 
+RBPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
 	| name index vars |
 	name := aString.
 	vars := aRBBlockNode allDefinedVariables.
 	index := 0.
-	[vars includes: name] whileTrue: 
+	[vars includes: name] whileTrue:
 			[index := index + 1.
 			name := name , index printString].
-	aRBBlockNode 
+	aRBBlockNode
 		arguments: (aRBBlockNode arguments copyWith: (RBVariableNode named: name))
 ]
 
@@ -42,38 +42,38 @@ RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> copyInContext: aDictionary [ 
+RBPatternBlockNode >> copyInContext: aDictionary [
 	^ self replacingBlock value: aDictionary
 ]
 
 { #category : #matching }
 RBPatternBlockNode >> createMatchingBlock [
 	| newBlock |
-	self arguments size > 2 
-		ifTrue: 
-			[self 
+	self arguments size > 2
+		ifTrue:
+			[self
 				error: 'Search blocks can only contain arguments for the node and matching dictionary'].
 	newBlock := RBBlockNode arguments: arguments body: body.
-	newBlock arguments isEmpty 
+	newBlock arguments isEmpty
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
-	newBlock arguments size = 1 
+	newBlock arguments size = 1
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	self replacePatternNodesIn: newBlock.
-	^newBlock evaluateForReceiver: self.
+	^newBlock evaluateForReceiver: self
 ]
 
 { #category : #matching }
 RBPatternBlockNode >> createReplacingBlock [
 	| newBlock |
-	self arguments size > 1 
-		ifTrue: 
-			[self 
+	self arguments size > 1
+		ifTrue:
+			[self
 				error: 'Replace blocks can only contain an argument for the matching dictionary'].
 	newBlock := RBBlockNode arguments: arguments body: body.
-	self arguments isEmpty 
+	self arguments isEmpty
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	self replacePatternNodesIn: newBlock.
-	^newBlock evaluateForReceiver: self.
+	^newBlock evaluateForReceiver: self
 ]
 
 { #category : #'testing - matching' }
@@ -82,16 +82,16 @@ RBPatternBlockNode >> isPatternNode [
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> lookupMatchFor: aString in: aDictionary [ 
+RBPatternBlockNode >> lookupMatchFor: aString in: aDictionary [
 	^aDictionary at: aString
-		ifAbsent: 
+		ifAbsent:
 			[| variableNode |
 			variableNode := RBPatternVariableNode named: aString.
 			aDictionary at: variableNode ifAbsent: [nil]]
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> match: aNode inContext: aDictionary [ 
+RBPatternBlockNode >> match: aNode inContext: aDictionary [
 	^self matchingBlock value: aNode value: aDictionary
 ]
 
@@ -101,12 +101,12 @@ RBPatternBlockNode >> matchingBlock [
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [ 
-	aRBBlockNode body nodesDo: 
-			[:each | 
-			(each isVariable and: [each isPatternNode]) 
-				ifTrue: 
-					[each 
+RBPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [
+	aRBBlockNode body nodesDo:
+			[:each |
+			(each isVariable and: [each isPatternNode])
+				ifTrue:
+					[each
 						replaceWith: (self constructLookupNodeFor: each name in: aRBBlockNode)]]
 ]
 

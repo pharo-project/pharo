@@ -63,5 +63,6 @@ CommentTestCase >> testIt [
 
 	| value |
 	value := self evaluate.
+	self assert: value isAssociation.
 	self assert: value key equals: value value
 ]

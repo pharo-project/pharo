@@ -14,7 +14,8 @@ Class {
 	#instVars : [
 		'category',
 		'superclass',
-		'subclasses'
+		'subclasses',
+		'comment'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -39,12 +40,33 @@ RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass
 		yourself
 ]
 
+{ #category : #'instance creation' }
+RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
+	^ self new
+		model: aRBSmalltalk;
+		addClass: aName
+			superclass: aClass
+			subclasses: aCollection
+			category: aSymbol
+			comment: aCommentString;
+		yourself
+]
+
 { #category : #initialization }
 RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
 	self className: aName.
 	superclass := self classObjectFor: aClass.
 	subclasses := aCollection collect: [:each | self classObjectFor: each].
 	category := aSymbol
+]
+
+{ #category : #initialization }
+RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
+	self className: aName.
+	superclass := self classObjectFor: aClass.
+	subclasses := aCollection collect: [:each | self classObjectFor: each].
+	category := aSymbol.
+	comment := aCommentString 
 ]
 
 { #category : #preconditions }
@@ -84,10 +106,13 @@ RBInsertClassRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBInsertClassRefactoring >> transform [
+
+	| classDefinitionString |
+	classDefinitionString := '<1p> %<%< #<2s> package: <3p>'
+		                         expandMacrosWith: superclass
+		                         with: className
+		                         with: category asString.
 	self model
-		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
-					expandMacrosWith: superclass
-					with: className
-					with: category asString);
+		defineClass: classDefinitionString withComment: comment;
 		reparentClasses: subclasses to: (self model classNamed: className asSymbol)
 ]

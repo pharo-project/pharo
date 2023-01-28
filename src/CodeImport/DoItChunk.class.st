@@ -25,15 +25,15 @@ DoItChunk >> description [
 
 { #category : #importing }
 DoItChunk >> importFor: requestor logSource: logSource [
-	
+
 	(contents beginsWith: '----') ifTrue: [ ^self ].
-	
+
 	SystemAnnouncer uniqueInstance announce: (DoItChunkImported new
-		contents: contents; 
+		contents: contents;
 		requestor: requestor;
 		logSource: logSource;
-		yourself). 
-	
+		yourself).
+
 	^Smalltalk compiler class new
 		requestor: requestor;
 		logged: logSource;

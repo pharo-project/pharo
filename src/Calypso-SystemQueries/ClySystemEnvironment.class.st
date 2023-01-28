@@ -62,7 +62,7 @@ ClySystemEnvironment >> allProcesses [
 { #category : #accessing }
 ClySystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 
-	
+
 	^ClySystemEnvironmentScope of: self in: aNavigationEnvironment named: name
 ]
 
@@ -102,11 +102,11 @@ ClySystemEnvironment >> classNamed: aString [
 ]
 
 { #category : #'class management' }
-ClySystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [ 
-	^globals 
+ClySystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
+	^globals
 		at: aString
-		ifPresent: [ :existing | 
-			existing isBehavior ifTrue: [ existing ] ifFalse: aBlockClosure] 
+		ifPresent: [ :existing |
+			existing isBehavior ifTrue: [ existing ] ifFalse: aBlockClosure]
 		ifAbsent: aBlockClosure
 ]
 
@@ -131,25 +131,25 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 	newClassName := self extractNameFrom: newClassDefinitionString.
 	((self
 		  isOverridingExistingClassWhenDefiningClassNamed: newClassName
-		  startingFrom: oldClass) and: [ 
-		 (self confirmToOverrideExistingClassNamed: newClassName) not ]) 
+		  startingFrom: oldClass) and: [
+		 (self confirmToOverrideExistingClassNamed: newClassName) not ])
 		ifTrue: [ ^ nil ].
 
 	(self isFluidDefinition: newClassDefinitionString)
-		ifTrue: [ 
+		ifTrue: [
 			ClassDefinitionPrinter showFluidClassDefinition: true.
 			^ self
 				  defineNewFluidClassOrTraitFrom: newClassDefinitionString
 				  notifying: aController
 				  startingFrom: oldClass ]
-		ifFalse: [ 
+		ifFalse: [
 			(self isTraitDefinition: newClassDefinitionString)
-				ifTrue: [ 
+				ifTrue: [
 					^ self
 						  defineTrait: newClassDefinitionString
 						  notifying: aController
 						  startingFrom: oldClass ]
-				ifFalse: [ 
+				ifFalse: [
 					(self isClassDefinition: newClassDefinitionString)
 						ifTrue: [
 							^ self
@@ -189,7 +189,7 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 	"Precondition: newClassDefinitionString is not a fluid class"
 
 	| newClass |
-	[ 
+	[
 	newClass := (self classCompilerFor: oldClass)
 		            requestor: aController;
 		            failBlock: [ ^ nil ];
@@ -213,7 +213,7 @@ ClySystemEnvironment >> defineNewFluidClassOrTraitFrom: newClassDefinitionString
 	"Precondition: newClassDefinitionString is a fluid class or trait"
 
 	| newClass |
-	[ 
+	[
 	newClass := (self classCompilerFor: oldClass)
 		            requestor: aController;
 		            logged: true;
@@ -246,18 +246,18 @@ ClySystemEnvironment >> extractNameFrom: aDefinitionString [
 
 	| defTokens keywdIx |
 	(self isFluidDefinition: aDefinitionString)
-		ifFalse: [ 
+		ifFalse: [
 			defTokens := aDefinitionString findTokens: Character separators.
 			(self isTraitDefinition: aDefinitionString)
-				ifFalse: [ 
+				ifFalse: [
 					keywdIx := defTokens findFirst: [ :x | x beginsWith: 'category' ].
 					keywdIx := defTokens findFirst: [ :x | '*subclass*' match: x ] ]
-				ifTrue: [ 
+				ifTrue: [
 					keywdIx := defTokens findFirst: [ :x | x = 'category' ].
 					keywdIx := defTokens findFirst: [ :x | x = 'named:' ] ].
 			^ (defTokens at: keywdIx + 1 ifAbsent: [ '' ]) copyWithoutAll:
 				  '#()' ]
-		ifTrue: [ 
+		ifTrue: [
 			defTokens := aDefinitionString findTokens:
 				             Character separators , '<#'.
 			^ defTokens at: 2 ifAbsent: [ '' ] ]
@@ -288,7 +288,7 @@ ClySystemEnvironment >> initialize [
 ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
 	| defTokens |
 	defTokens := newClassDefinitionString findTokens: Character separators.
-	^ (self class environment classNamed: defTokens first) isNotNil.
+	^ (self class environment classNamed: defTokens first) isNotNil
 ]
 
 { #category : #testing }
@@ -296,8 +296,8 @@ ClySystemEnvironment >> isFluidClassDefinition: classDefinitionString [
 
 	| splitted |
 	splitted := classDefinitionString splitOn: '<<'.
-	^ splitted size = 2 and: [ 
-		  splitted first trim ~= 'Trait' and: [ 
+	^ splitted size = 2 and: [
+		  splitted first trim ~= 'Trait' and: [
 			  '#*' match:
 				  (splitted second findTokens: Character separators) first ] ]
 ]
@@ -305,7 +305,7 @@ ClySystemEnvironment >> isFluidClassDefinition: classDefinitionString [
 { #category : #testing }
 ClySystemEnvironment >> isFluidDefinition: aDefinitionString [
 
-	^ (self isFluidClassDefinition: aDefinitionString) or: [ 
+	^ (self isFluidClassDefinition: aDefinitionString) or: [
 		  self isFluidTraitDefinition: aDefinitionString ]
 ]
 
@@ -314,8 +314,8 @@ ClySystemEnvironment >> isFluidTraitDefinition: traitDefinitionString [
 
 	| splitted |
 	splitted := traitDefinitionString splitOn: '<<'.
-	^ splitted size = 2 and: [ 
-		  splitted first trim = 'Trait' and: [ 
+	^ splitted size = 2 and: [
+		  splitted first trim = 'Trait' and: [
 			  '#*' match:
 				  (splitted second findTokens: Character separators) first ] ]
 ]
@@ -326,8 +326,8 @@ ClySystemEnvironment >> isOldTraitDefinition: traitDefinitionString [
 	| defTokens |
 	defTokens := traitDefinitionString findTokens:
 		             Character separators.
-	^ defTokens size >= 2 and: [ 
-		  (defTokens first = 'Trait' and: [ defTokens second = 'named:' ]) 
+	^ defTokens size >= 2 and: [
+		  (defTokens first = 'Trait' and: [ defTokens second = 'named:' ])
 			  or: [ defTokens second = 'classTrait' ] ]
 ]
 
@@ -336,15 +336,15 @@ ClySystemEnvironment >> isOverridingExistingClassWhenDefiningClassNamed: newClas
 
 	"Attempting to define new class over existing one when not looking at the original one in this browser..."
 
-	^ (oldClass isNil or: [ 
-		   oldClass instanceSide name asString ~= newClassName ]) and: [ 
+	^ (oldClass isNil or: [
+		   oldClass instanceSide name asString ~= newClassName ]) and: [
 		  self includesClassNamed: newClassName asSymbol ]
 ]
 
 { #category : #testing }
 ClySystemEnvironment >> isTraitDefinition: newClassDefinitionString [
 
-	^ (self isFluidTraitDefinition: newClassDefinitionString) or: [ 
+	^ (self isFluidTraitDefinition: newClassDefinitionString) or: [
 		  self isOldTraitDefinition: newClassDefinitionString ]
 ]
 
@@ -359,7 +359,7 @@ ClySystemEnvironment >> name: anObject [
 ]
 
 { #category : #'package management' }
-ClySystemEnvironment >> packageNamed: aString [ 
+ClySystemEnvironment >> packageNamed: aString [
 	^packageOrganizer packageNamed: aString
 ]
 
@@ -382,10 +382,10 @@ ClySystemEnvironment >> packages [
 ClySystemEnvironment >> printOn: aStream [
 	super printOn: aStream.
 	name ifNil: [ ^self ].
-	
+
 	aStream nextPut: $(.
 	aStream nextPutAll: name.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

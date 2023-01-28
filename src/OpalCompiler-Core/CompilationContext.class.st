@@ -110,6 +110,16 @@ CompilationContext class >> initialize [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter [
+	^ self readDefaultOption: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
+	^ self writeDefaultOption: #optionBlockClosureOptionalOuter value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionCleanBlockClosure [
 	^ self readDefaultOption: #optionCleanBlockClosure
 ]
@@ -127,6 +137,15 @@ CompilationContext class >> optionEmbeddAST [
 { #category : #'options - settings API' }
 CompilationContext class >> optionEmbeddAST: aBoolean [
 	^ self writeDefaultOption: #optionEmbeddAST value: aBoolean
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionConstantBlockClosure [
+	^ self readDefaultOption: #optionConstantBlockClosure
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionConstantBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -299,6 +318,8 @@ CompilationContext class >> optionsDescription [
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	(- optionEmbeddAST         'Embedd AST into CompiledMethod instead of storing in external ASTCache instance. This way the AST will be strongly bound to the method instread of weakly stored in the cache')
+	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
+	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
@@ -503,6 +524,11 @@ CompilationContext >> noPattern: anObject [
 ]
 
 { #category : #options }
+CompilationContext >> optionBlockClosureOptionalOuter [
+	^ options includes: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #options }
 CompilationContext >> optionCleanBlockClosure [
 	^ options includes: #optionCleanBlockClosure
 ]
@@ -510,6 +536,10 @@ CompilationContext >> optionCleanBlockClosure [
 { #category : #options }
 CompilationContext >> optionEmbeddAST [
 	^ options includes: #optionEmbeddAST
+
+{ #category : #options }
+CompilationContext >> optionConstantBlockClosure [
+	^ options includes: #optionConstantBlockClosure
 ]
 
 { #category : #options }

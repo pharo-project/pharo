@@ -27,7 +27,7 @@ AthensTransformTest >> testIdentity [
 	self assert: (transform transform: 1@2) equals: 1@2.
 	self assert: (transform transform: -3 @ -4) equals: -3 @ -4.
 	self assert: (transform transform: 1 @ -2) equals: 1 @ -2.
-	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5.
+	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5
 ]
 
 { #category : #tests }
@@ -63,7 +63,7 @@ AthensTransformTest >> testLoadAffineTransform [
 	self assert: (transform transform: 1@2) closeTo: -9@12.
 	self assert: (transform transform: -3 @ -4) closeTo: 21 @ 0.
 	self assert: (transform transform: 1 @ -2) closeTo: 11 @ 12.
-	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3.
+	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ AthensTransformTest >> testLoadIdentity [
 	self assert: (transform transform: 1@2) equals: 1@2.
 	self assert: (transform transform: -3 @ -4) equals: -3 @ -4.
 	self assert: (transform transform: 1 @ -2) equals: 1 @ -2.
-	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5.
+	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5
 ]
 
 { #category : #tests }
@@ -90,8 +90,8 @@ AthensTransformTest >> testRestoreAfter [
 		translateX: 1 Y: 9;
 		rotateByDegrees: 90;
 		scaleX: 3 Y: 5.
-		
-	transform restoreAfter: [ 
+
+	transform restoreAfter: [
 		transform
 			loadIdentity;
 			translateBy: 4 @ -3.
@@ -108,7 +108,7 @@ AthensTransformTest >> testRestoreAfter [
 	self assert: (transform transform: 1@2) closeTo: -9@12.
 	self assert: (transform transform: -3 @ -4) closeTo: 21 @ 0.
 	self assert: (transform transform: 1 @ -2) closeTo: 11 @ 12.
-	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3.
+	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3
 ]
 
 { #category : #tests }
@@ -130,7 +130,7 @@ AthensTransformTest >> testRotateByDegrees [
 	self assert: (transform transform: -3 @ -4) closeTo: 3 @ 4.
 	self assert: (transform transform: 1 @ -2) closeTo: -1 @ 2.
 	self assert: (transform transform: -2 @ -5) closeTo: 2 @ 5.
-		
+
 	transform rotateByDegrees: -90.
 	"Rotation: 180 - 90 = 90"
 	self assert: transform isAffineTransform.
@@ -138,7 +138,7 @@ AthensTransformTest >> testRotateByDegrees [
 	self assert: (transform transform: 1@2) closeTo: -2@1.
 	self assert: (transform transform: -3 @ -4) closeTo: 4 @ -3.
 	self assert: (transform transform: 1 @ -2) closeTo: 2 @ 1.
-	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2.
+	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2
 ]
 
 { #category : #tests }
@@ -160,7 +160,7 @@ AthensTransformTest >> testRotateByRadians [
 	self assert: (transform transform: -3 @ -4) closeTo: 3 @ 4.
 	self assert: (transform transform: 1 @ -2) closeTo: -1 @ 2.
 	self assert: (transform transform: -2 @ -5) closeTo: 2 @ 5.
-		
+
 	transform rotateByRadians: Float halfPi negated.
 	"Rotation: pi - pi/2 = pi/2"
 	self assert: transform isAffineTransform.
@@ -168,7 +168,7 @@ AthensTransformTest >> testRotateByRadians [
 	self assert: (transform transform: 1@2) closeTo: -2@1.
 	self assert: (transform transform: -3 @ -4) closeTo: 4 @ -3.
 	self assert: (transform transform: 1 @ -2) closeTo: 2 @ 1.
-	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2.
+	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2
 ]
 
 { #category : #tests }
@@ -190,14 +190,14 @@ AthensTransformTest >> testScaleBy [
 	self assert: (transform transform: -3 @ -4) equals: -9 @ -12.
 	self assert: (transform transform: 1 @ -2) equals: 3 @ -6.
 	self assert: (transform transform: -2 @ -5) equals: -6 	@ -15.
-		
+
 	transform scaleBy: -0.5.
 	self assert: transform isAffineTransform.
 	self assert: (transform transform: 0@0) closeTo: 0@0.
 	self assert: (transform transform: 1@2) closeTo: -1.5 @ -3.
 	self assert: (transform transform: -3 @ -4) closeTo: 4.5 @ 6.
 	self assert: (transform transform: 1 @ -2) closeTo: -1.5 @ 3.
-	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5.
+	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5
 ]
 
 { #category : #tests }
@@ -219,14 +219,14 @@ AthensTransformTest >> testScaleXY [
 	self assert: (transform transform: -3 @ -4) equals: -9 @ 12.
 	self assert: (transform transform: 1 @ -2) equals: 3 @ 6.
 	self assert: (transform transform: -2 @ -5) equals: -6 	@ 15.
-		
+
 	transform scaleX: -0.5 Y: 0.5.
 	self assert: transform isAffineTransform.
 	self assert: (transform transform: 0@0) closeTo: 0@0.
 	self assert: (transform transform: 1@2) closeTo: -1.5 @ -3.
 	self assert: (transform transform: -3 @ -4) closeTo: 4.5 @ 6.
 	self assert: (transform transform: 1 @ -2) closeTo: -1.5 @ 3.
-	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5.
+	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5
 ]
 
 { #category : #tests }
@@ -242,7 +242,7 @@ AthensTransformTest >> testTransform [
 	self assert: (transform transform: 1@2) closeTo: -9@12.
 	self assert: (transform transform: -3 @ -4) closeTo: 21 @ 0.
 	self assert: (transform transform: 1 @ -2) closeTo: 11 @ 12.
-	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3.
+	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3
 ]
 
 { #category : #tests }
@@ -254,12 +254,12 @@ AthensTransformTest >> testTransformRectangle [
 
 	transform translateX: 5 Y: 3.
 	self assert: (transform transformRectangle: (0@0 extent: 10@20)) closeTo: (5@3 extent: 10@20).
-	
+
 	transform scaleX: 4 Y: 3.
 	self assert: (transform transformRectangle: (0@0 extent: 10@20)) closeTo: (5@3 extent: 40@60).
-	
+
 	transform rotateByDegrees: 90.
-	self assert: (transform transformRectangle: (0@0 extent: 10@20)) closeTo: (-75@3 extent: 80@30).
+	self assert: (transform transformRectangle: (0@0 extent: 10@20)) closeTo: (-75@3 extent: 80@30)
 ]
 
 { #category : #tests }
@@ -275,7 +275,7 @@ AthensTransformTest >> testTransformXY [
 	self assert: (transform transformX: 1 Y: 2) closeTo: -9@12.
 	self assert: (transform transformX: -3 Y: -4) closeTo: 21 @ 0.
 	self assert: (transform transformX: 1 Y: -2) closeTo: 11 @ 12.
-	self assert: (transform transformX: -2 Y: -5) closeTo: 26 @ 3.
+	self assert: (transform transformX: -2 Y: -5) closeTo: 26 @ 3
 ]
 
 { #category : #tests }
@@ -297,7 +297,7 @@ AthensTransformTest >> testTranslate [
 	self assert: (transform transform: -3 @ -4) equals: 1 @ -7.
 	self assert: (transform transform: 1 @ -2) equals: 5 @ -5.
 	self assert: (transform transform: -2 @ -5) equals: 2 @ -8.
-		
+
 	transform translateBy: -3 @ 5.
 	"Translation: (4 @ -3) + (-3 @ 5) = 1@2 "
 	self assert: transform isAffineTransform.
@@ -305,7 +305,7 @@ AthensTransformTest >> testTranslate [
 	self assert: (transform transform: 1@2) equals: 2@4.
 	self assert: (transform transform: -3 @ -4) equals: -2 @ -2.
 	self assert: (transform transform: 1 @ -2) equals: 2 @ 0.
-	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3.
+	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
 { #category : #tests }
@@ -327,7 +327,7 @@ AthensTransformTest >> testTranslateBy [
 	self assert: (transform transform: -3 @ -4) equals: 1 @ -7.
 	self assert: (transform transform: 1 @ -2) equals: 5 @ -5.
 	self assert: (transform transform: -2 @ -5) equals: 2 @ -8.
-		
+
 	transform translateBy: -3 @ 5.
 	"Translation: (4 @ -3) + (-3 @ 5) = 1@2 "
 	self assert: transform isAffineTransform.
@@ -335,7 +335,7 @@ AthensTransformTest >> testTranslateBy [
 	self assert: (transform transform: 1@2) equals: 2@4.
 	self assert: (transform transform: -3 @ -4) equals: -2 @ -2.
 	self assert: (transform transform: 1 @ -2) equals: 2 @ 0.
-	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3.
+	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
 { #category : #tests }
@@ -357,7 +357,7 @@ AthensTransformTest >> testTranslateXY [
 	self assert: (transform transform: -3 @ -4) equals: 1 @ -7.
 	self assert: (transform transform: 1 @ -2) equals: 5 @ -5.
 	self assert: (transform transform: -2 @ -5) equals: 2 @ -8.
-		
+
 	transform translateX: -3 Y: 5.
 	"Translation: (4 @ -3) + (-3 @ 5) = 1@2 "
 	self assert: transform isAffineTransform.
@@ -365,7 +365,7 @@ AthensTransformTest >> testTranslateXY [
 	self assert: (transform transform: 1@2) equals: 2@4.
 	self assert: (transform transform: -3 @ -4) equals: -2 @ -2.
 	self assert: (transform transform: 1 @ -2) equals: 2 @ 0.
-	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3.
+	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
 { #category : #tests }

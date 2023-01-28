@@ -32,7 +32,7 @@ TPointAccess >> bounds [
 ]
 
 { #category : #accessing }
-TPointAccess >> defaultElement [ 
+TPointAccess >> defaultElement [
 
 	"Return the default element of the receiver"
 	^0@0

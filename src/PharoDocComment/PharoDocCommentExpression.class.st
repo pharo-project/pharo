@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
-		'node'
+		'node',
+		'cachedExpressionNode'
 	],
 	#category : #'PharoDocComment-Base'
 }
@@ -14,25 +15,56 @@ Class {
 { #category : #operation }
 PharoDocCommentExpression >> evaluate [
 
+	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
+
+	self isFaulty ifTrue: [ RuntimeSyntaxError signal ].
+
 	^ self methodClass compiler
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  evaluate: self expression
+		  evaluate: self source
 ]
 
 { #category : #accessing }
-PharoDocCommentExpression >> expression [
-	^ self source.
+PharoDocCommentExpression >> expressionNode [
+
+	cachedExpressionNode ifNil: [
+		cachedExpressionNode := self expressionNodeReal
+	].
+	^ cachedExpressionNode.
 ]
 
 { #category : #accessing }
-PharoDocCommentExpression >> expressionCode [
+PharoDocCommentExpression >> expressionNodeReal [
+
+	"Force the parsing of the expression node"
 
 	^ self methodClass compiler
 		  noPattern: true;
+		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  parse: self expression
+		  parse: self source
+]
+
+{ #category : #testing }
+PharoDocCommentExpression >> isFaulty [
+
+	"Check is the ast is OK and follows the 2 specific doccomments rules"
+
+	| cpt |
+	self expressionNode isFaulty ifTrue: [ ^ true ].
+
+	"There should be exactly only one triple > message send"
+	cpt := 0.
+	self expressionNode nodesDo: [ :n |
+		(n isMessage and: [ n selector == #>>> ]) ifTrue: [ cpt := cpt + 1 ]].
+	cpt ~= 1 ifTrue: [ ^ true ].
+
+	"`self expressionNode` is a RBDoItMethodNode. The last statement should be a return of a binop of >>>"
+	self expressionNode body statements last value selector ~= #>>> ifTrue: [ ^ true ].
+
+	^false
 ]
 
 { #category : #operation }
@@ -54,7 +86,7 @@ PharoDocCommentExpression >> node: anObject [
 PharoDocCommentExpression >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: '('.
-	aStream nextPutAll: self expression. 
+	aStream nextPutAll: self source. 
 	aStream nextPutAll: ')'
 ]
 

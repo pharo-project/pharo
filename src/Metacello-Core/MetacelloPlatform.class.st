@@ -18,7 +18,7 @@ MetacelloPlatform class >> current [
 	^ Current
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPlatform class >> initialize [
   "noop ... use #select"
 ]

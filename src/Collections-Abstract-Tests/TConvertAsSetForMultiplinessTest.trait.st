@@ -23,7 +23,7 @@ TConvertAsSetForMultiplinessTest >> testAsIdentitySetWithEqualsElements [
 	collection := self withEqualElements .
 	result := collection asIdentitySet.
 	collection do: [ :each | self assert: (result occurrencesOf: each) = 1 ].
-	self assert: result class = IdentitySet.
+	self assert: result class = IdentitySet
 ]
 
 { #category : #'tests - as set tests' }

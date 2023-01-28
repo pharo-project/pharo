@@ -38,12 +38,12 @@ PluginBasedJPEGReadWriter class >> putForm: aForm onFileNamed: fileName [
 ]
 
 { #category : #'image reading/writing' }
-PluginBasedJPEGReadWriter class >> putForm: aForm quality: quality progressiveJPEG: progressiveFlag onFileNamed: fileName [ 
+PluginBasedJPEGReadWriter class >> putForm: aForm quality: quality progressiveJPEG: progressiveFlag onFileNamed: fileName [
 	"Store the given Form as a JPEG file of the given name, overwriting any existing file of that name. Quality goes from 0 (low) to 100 (high), where -1 means default. If progressiveFlag is true, encode as a progressive JPEG."
 	| writer |
 	fileName asFileReference ensureDelete.
 	writer := self on: fileName asFileReference binaryWriteStream.
-	writer 
+	writer
 		nextPutImage: aForm
 		quality: quality
 		progressiveJPEG: progressiveFlag.
@@ -57,18 +57,18 @@ PluginBasedJPEGReadWriter class >> typicalFileExtensions [
 ]
 
 { #category : #'public access' }
-PluginBasedJPEGReadWriter >> compress: aForm quality: quality [ 
+PluginBasedJPEGReadWriter >> compress: aForm quality: quality [
 	"Encode the given Form and answer the compressed ByteArray. Quality goes from 0 (low) to 100 (high), where -1 means default."
 	| sourceForm jpegCompressStruct jpegErrorMgr2Struct buffer byteCount |
 	aForm unhibernate.
 	"odd width images of depth 16 give problems; avoid them."
-	sourceForm := aForm depth = 32 | (aForm width even & (aForm depth = 16)) 
+	sourceForm := aForm depth = 32 | (aForm width even & (aForm depth = 16))
 		ifTrue: [ aForm ]
 		ifFalse: [ aForm asFormOfDepth: 32 ].
 	jpegCompressStruct := ByteArray new: self primJPEGCompressStructSize.
 	jpegErrorMgr2Struct := ByteArray new: self primJPEGErrorMgr2StructSize.
 	buffer := ByteArray new: sourceForm width * sourceForm height + 1024.
-	byteCount := self 
+	byteCount := self
 		primJPEGWriteImage: jpegCompressStruct
 		onByteArray: buffer
 		form: sourceForm
@@ -76,18 +76,18 @@ PluginBasedJPEGReadWriter >> compress: aForm quality: quality [
 		progressiveJPEG: false
 		errorMgr: jpegErrorMgr2Struct.
 	byteCount = 0 ifTrue: [ self error: 'buffer too small for compressed data' ].
-	^ buffer 
+	^ buffer
 		copyFrom: 1
 		to: byteCount
 ]
 
 { #category : #'public access' }
-PluginBasedJPEGReadWriter >> imageExtent: aByteArray [ 
+PluginBasedJPEGReadWriter >> imageExtent: aByteArray [
 	"Answer the extent of the compressed image encoded in the given ByteArray."
 	| jpegDecompressStruct jpegErrorMgr2Struct w h |
 	jpegDecompressStruct := ByteArray new: self primJPEGDecompressStructSize.
 	jpegErrorMgr2Struct := ByteArray new: self primJPEGErrorMgr2StructSize.
-	self 
+	self
 		primJPEGReadHeader: jpegDecompressStruct
 		fromByteArray: aByteArray
 		errorMgr: jpegErrorMgr2Struct.
@@ -109,28 +109,28 @@ PluginBasedJPEGReadWriter >> nextImage [
 ]
 
 { #category : #'public access' }
-PluginBasedJPEGReadWriter >> nextImageSuggestedDepth: depth [ 
+PluginBasedJPEGReadWriter >> nextImageSuggestedDepth: depth [
 	"Decode and answer a Form of the given depth from my stream. Close the stream if it is a file stream. Possible depths are 16-bit and 32-bit."
 	| bytes width height form jpegDecompressStruct jpegErrorMgr2Struct depthToUse |
 	bytes := stream upToEnd.
 	stream close.
 	jpegDecompressStruct := ByteArray new: self primJPEGDecompressStructSize.
 	jpegErrorMgr2Struct := ByteArray new: self primJPEGErrorMgr2StructSize.
-	self 
+	self
 		primJPEGReadHeader: jpegDecompressStruct
 		fromByteArray: bytes
 		errorMgr: jpegErrorMgr2Struct.
 	width := self primImageWidth: jpegDecompressStruct.
 	height := self primImageHeight: jpegDecompressStruct.
 	"Odd width images of depth 16 gave problems. Avoid them (or check carefully!)"
-	depthToUse := depth = 32 | width odd 
+	depthToUse := depth = 32 | width odd
 		ifTrue: [ 32 ]
 		ifFalse: [ 16 ].
-	form := Form 
+	form := Form
 		extent: width @ height
 		depth: depthToUse.
 	(width = 0 or: [ height = 0 ]) ifTrue: [ ^ form ].
-	self 
+	self
 		primJPEGReadImage: jpegDecompressStruct
 		fromByteArray: bytes
 		onForm: form
@@ -147,18 +147,18 @@ PluginBasedJPEGReadWriter >> nextPutImage: aForm [
 ]
 
 { #category : #'public access' }
-PluginBasedJPEGReadWriter >> nextPutImage: aForm quality: quality progressiveJPEG: progressiveFlag [ 
+PluginBasedJPEGReadWriter >> nextPutImage: aForm quality: quality progressiveJPEG: progressiveFlag [
 	"Encode the given Form on my stream with the given settings. Quality goes from 0 (low) to 100 (high), where -1 means default. If progressiveFlag is true, encode as a progressive JPEG."
 	| sourceForm jpegCompressStruct jpegErrorMgr2Struct buffer byteCount |
 	aForm unhibernate.
 	"odd width images of depth 16 give problems; avoid them."
-	sourceForm := aForm depth = 32 | (aForm width even & (aForm depth = 16)) 
+	sourceForm := aForm depth = 32 | (aForm width even & (aForm depth = 16))
 		ifTrue: [ aForm ]
 		ifFalse: [ aForm asFormOfDepth: 32 ].
 	jpegCompressStruct := ByteArray new: self primJPEGCompressStructSize.
 	jpegErrorMgr2Struct := ByteArray new: self primJPEGErrorMgr2StructSize.
 	buffer := ByteArray new: sourceForm width * sourceForm height + 1024.
-	byteCount := self 
+	byteCount := self
 		primJPEGWriteImage: jpegCompressStruct
 		onByteArray: buffer
 		form: sourceForm
@@ -166,7 +166,7 @@ PluginBasedJPEGReadWriter >> nextPutImage: aForm quality: quality progressiveJPE
 		progressiveJPEG: progressiveFlag
 		errorMgr: jpegErrorMgr2Struct.
 	byteCount = 0 ifTrue: [ self error: 'buffer too small for compressed data' ].
-	stream 
+	stream
 		next: byteCount
 		putAll: buffer
 		startingAt: 1.
@@ -236,7 +236,7 @@ PluginBasedJPEGReadWriter >> primJPEGWriteImage: aJPEGCompressStruct onByteArray
 ]
 
 { #category : #'public access' }
-PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [ 
+PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [
 	"Uncompress an image from the given ByteArray into the given Form.
 	Fails if the given Form has the wrong dimensions or depth.
 	If aForm has depth 16, do ordered dithering."
@@ -244,7 +244,7 @@ PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [
 	aForm unhibernate.
 	jpegDecompressStruct := ByteArray new: self primJPEGDecompressStructSize.
 	jpegErrorMgr2Struct := ByteArray new: self primJPEGErrorMgr2StructSize.
-	self 
+	self
 		primJPEGReadHeader: jpegDecompressStruct
 		fromByteArray: aByteArray
 		errorMgr: jpegErrorMgr2Struct.
@@ -253,12 +253,12 @@ PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [
 	aForm width = w & (aForm height = h) ifFalse: [ ^ self error: 'form dimensions do not match' ].
 
 	"odd width images of depth 16 give problems; avoid them"
-	w odd 
-		ifTrue: 
+	w odd
+		ifTrue:
 			[ aForm depth = 32 ifFalse: [ ^ self error: 'must use depth 32 with odd width' ] ]
-		ifFalse: 
+		ifFalse:
 			[ aForm depth = 16 | (aForm depth = 32) ifFalse: [ ^ self error: 'must use depth 16 or 32' ] ].
-	self 
+	self
 		primJPEGReadImage: jpegDecompressStruct
 		fromByteArray: aByteArray
 		onForm: aForm
@@ -267,15 +267,15 @@ PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [
 ]
 
 { #category : #'public access' }
-PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm doDithering: ditherFlag [ 
-	"Uncompress an image from the given ByteArray into the given Form. 
+PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm doDithering: ditherFlag [
+	"Uncompress an image from the given ByteArray into the given Form.
 	Fails if the given Form has the wrong dimensions or depth.
 	If aForm has depth 16 and ditherFlag = true, do ordered dithering."
 	| jpegDecompressStruct jpegErrorMgr2Struct w h |
 	aForm unhibernate.
 	jpegDecompressStruct := ByteArray new: self primJPEGDecompressStructSize.
 	jpegErrorMgr2Struct := ByteArray new: self primJPEGErrorMgr2StructSize.
-	self 
+	self
 		primJPEGReadHeader: jpegDecompressStruct
 		fromByteArray: aByteArray
 		errorMgr: jpegErrorMgr2Struct.
@@ -284,12 +284,12 @@ PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm doDithering: dit
 	aForm width = w & (aForm height = h) ifFalse: [ ^ self error: 'form dimensions do not match' ].
 
 	"odd width images of depth 16 give problems; avoid them"
-	w odd 
-		ifTrue: 
+	w odd
+		ifTrue:
 			[ aForm depth = 32 ifFalse: [ ^ self error: 'must use depth 32 with odd width' ] ]
-		ifFalse: 
+		ifFalse:
 			[ aForm depth = 16 | (aForm depth = 32) ifFalse: [ ^ self error: 'must use depth 16 or 32' ] ].
-	self 
+	self
 		primJPEGReadImage: jpegDecompressStruct
 		fromByteArray: aByteArray
 		onForm: aForm

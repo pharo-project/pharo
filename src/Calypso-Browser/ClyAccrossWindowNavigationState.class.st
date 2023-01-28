@@ -36,19 +36,19 @@ Class {
 
 { #category : #'instance creation' }
 ClyAccrossWindowNavigationState class >> from: aBrowser [
-	^self new 
+	^self new
 		retrieveStateFrom: aBrowser
 ]
 
 { #category : #operations }
 ClyAccrossWindowNavigationState >> applyTo: aBrowser byUndo: undoExecuting [
 
-	(window isInWorld and: [(browserState isCurrentStateOf: window model) not]) 
+	(window isInWorld and: [(browserState isCurrentStateOf: window model) not])
 		ifTrue: [ ^self ].
-	
-	navigationHistory recordAcrossWindowNavigationFrom: aBrowser byUndo: undoExecuting. 
-	undoExecuting ifTrue: [ aBrowser close].	
-		
+
+	navigationHistory recordAcrossWindowNavigationFrom: aBrowser byUndo: undoExecuting.
+	undoExecuting ifTrue: [ aBrowser close].
+
 	self restoreBrowserWindow.
 	window model focusActiveTab
 ]
@@ -77,12 +77,12 @@ ClyAccrossWindowNavigationState >> browserState: anObject [
 ClyAccrossWindowNavigationState >> createBrowser [
 	| newBrowser |
 	newBrowser := browserState createBrowser.
-	
+
 	browserPlugins do: [:each | newBrowser addPlugin: each copy ].
 	newBrowser navigationEnvironment: navigationEnvironment.
 	newBrowser navigationHistory: navigationHistory.
 	browserState restoreStateOf: newBrowser.
-	
+
 	^newBrowser
 ]
 
@@ -114,19 +114,19 @@ ClyAccrossWindowNavigationState >> representsConcreteQuery [
 { #category : #private }
 ClyAccrossWindowNavigationState >> restoreBrowserWindow [
 	| newBrowser |
-	window isInWorld ifFalse: [ 
+	window isInWorld ifFalse: [
 		"Closed browser window is always cleaned from browser. Look at ClyBrowser>>windowIsClosing"
 		newBrowser := self createBrowser.
 		window addMorph: newBrowser frame: (0@0 extent: 1@1).
 		window model: newBrowser.
 		browserState applyTo: newBrowser].
-	windowGroup 
+	windowGroup
 		ifNil: [
-			window isInWorld 
+			window isInWorld
 				ifTrue: [ window comeToFront; activate]
 			 	ifFalse: [window openInWorld ] ]
-		ifNotNil: [ 
-			windowGroup isInWorld 
+		ifNotNil: [
+			windowGroup isInWorld
 				ifTrue: [ windowGroup window comeToFront ]
 				ifFalse: [ windowGroup window openInWorld ].
 			windowGroup activateWindow: window]

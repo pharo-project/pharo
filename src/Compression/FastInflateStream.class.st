@@ -22,9 +22,9 @@ Class {
 	#category : #'Compression-Streams'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FastInflateStream class >> initialize [
-	"FastInflateStream initialize"
+
 	| low high |
 
 	"Init literal/length map"
@@ -47,7 +47,7 @@ FastInflateStream class >> initialize [
 				mappedBy: LiteralLengthMap.
 	FixedDistTable := self basicNew
 				huffmanTableFrom: FixedDistCodes
-				mappedBy: DistanceMap.
+				mappedBy: DistanceMap
 ]
 
 { #category : #inflating }
@@ -83,14 +83,14 @@ FastInflateStream >> decompressBlock: llTable with: dTable [
 				bitPos := oldBitPos.
 				sourcePos := oldPos.
 				^self].
-			collection 
-					replaceFrom: readLimit+1 
+			collection
+					replaceFrom: readLimit+1
 					to: readLimit + length
-					with: collection 
+					with: collection
 					startingAt: readLimit - distance + 1.
 			readLimit := readLimit + length.
 		].
-	].
+	]
 ]
 
 { #category : #'huffman trees' }
@@ -100,7 +100,7 @@ FastInflateStream >> distanceMap [
 
 { #category : #'huffman trees' }
 FastInflateStream >> increment: value bits: nBits [
-	"Increment value in reverse bit order, e.g. 
+	"Increment value in reverse bit order, e.g.
 	for a 3 bit value count as follows:
 		000 / 100 / 010 / 110
 		001 / 101 / 011 / 111
@@ -111,7 +111,7 @@ FastInflateStream >> increment: value bits: nBits [
 	bit := 1 << (nBits - 1).
 	"If the currently tested bit is set then we need to
 	turn this bit off and test the next bit right to it"
-	[(result bitAnd: bit) = 0] whileFalse:[ 
+	[(result bitAnd: bit) = 0] whileFalse:[
 		"Turn off current bit"
 		result := result bitXor: bit.
 		"And continue testing the next bit"
@@ -128,7 +128,7 @@ FastInflateStream >> literalLengthMap [
 { #category : #'bit access' }
 FastInflateStream >> nextSingleBits: n [
 	"Fetch the bits all at once"
-	^self nextBits: n.
+	^self nextBits: n
 ]
 
 { #category : #inflating }
@@ -136,5 +136,5 @@ FastInflateStream >> processFixedBlock [
 	litTable := FixedLitTable.
 	distTable := FixedDistTable.
 	state := state bitOr: BlockProceedBit.
-	self proceedFixedBlock.
+	self proceedFixedBlock
 ]

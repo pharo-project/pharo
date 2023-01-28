@@ -20,14 +20,14 @@ Class {
 { #category : #activation }
 ClyInspectSelectionCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyBrowserContext
 ]
 
 { #category : #activation }
 ClyInspectSelectionCommand class >> browserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: PharoShortcuts current inspectItShortcut for: ClyBrowserContext
 ]
 
@@ -43,7 +43,7 @@ ClyInspectSelectionCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyInspectSelectionCommand >> execute [
-	selectedItems size = 1 
+	selectedItems size = 1
 		ifTrue: [ selectedItems first inspect ]
 		ifFalse: [ selectedItems inspect]
 ]
@@ -51,6 +51,6 @@ ClyInspectSelectionCommand >> execute [
 { #category : #execution }
 ClyInspectSelectionCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
-	
+
 	selectedItems := aBrowserContext selectedObjects
 ]

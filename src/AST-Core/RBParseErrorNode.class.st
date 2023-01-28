@@ -33,7 +33,7 @@ RBParseErrorNode class >> errorMessage: aString value: aValue at: aPosition [
 ]
 
 { #category : #comparing }
-RBParseErrorNode >> = anObject [ 
+RBParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	^anObject value = value and: [ anObject errorMessage = errorMessage ]
@@ -46,23 +46,13 @@ RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #accessing }
 RBParseErrorNode >> arguments [
-	
+
 	"A parse error node has no arguments"
 	^ #()
 ]
 
-{ #category : #converting }
-RBParseErrorNode >> asSyntaxErrorNotification [
-	^SyntaxErrorNotification new
-		setClass: self methodNode methodClass
-		code: self methodNode source
-		doitFlag: false
-		errorMessage: errorMessage
-		location: self start
-]
-
 { #category : #accessing }
-RBParseErrorNode >> binding: anOCTempVariable [ 
+RBParseErrorNode >> binding: anOCTempVariable [
 	"only for compatibility"
 ]
 
@@ -98,7 +88,7 @@ RBParseErrorNode >> isParseError [
 
 { #category : #testing }
 RBParseErrorNode >> isUnary [
-	
+
 	^ false
 ]
 
@@ -122,7 +112,7 @@ RBParseErrorNode >> selector [
 
 { #category : #accessing }
 RBParseErrorNode >> selectorParts [
-	
+
 	^ #()
 ]
 
@@ -148,7 +138,7 @@ RBParseErrorNode >> startWithoutParentheses [
 
 { #category : #accessing }
 RBParseErrorNode >> stop [
-	^ stop 
+	^ stop
 		ifNil: [start + value size - 1]
 		ifNotNil: [ stop ]
 ]
@@ -165,10 +155,10 @@ RBParseErrorNode >> stopWithoutParentheses [
 
 { #category : #evaluating }
 RBParseErrorNode >> value [
-	^value.
+	^value
 ]
 
 { #category : #accessing }
 RBParseErrorNode >> value: aString [
-	value := aString.
+	value := aString
 ]

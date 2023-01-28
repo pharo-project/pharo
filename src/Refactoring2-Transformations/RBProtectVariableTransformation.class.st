@@ -14,7 +14,7 @@ overriden from RBAddAccessorsForClassTransformation and RBRemoveDirectAccessToVa
 Class {
 	#name : #RBProtectVariableTransformation,
 	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #executing }

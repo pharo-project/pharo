@@ -4,7 +4,7 @@ Extension { #name : #CmdCommandActivator }
 CmdCommandActivator >> buildBrowserNotebookActions [
 
 	self canExecuteCommand ifFalse: [ ^ #() ].
-	
+
 	^ command buildBrowserNotebookActionsUsing: self
 ]
 
@@ -12,7 +12,7 @@ CmdCommandActivator >> buildBrowserNotebookActions [
 CmdCommandActivator >> buildBrowserTabActions [
 
 	self canExecuteCommand ifFalse: [ ^#() ].
-	
+
 	^command buildBrowserTabActionsUsing: self
 ]
 
@@ -20,12 +20,12 @@ CmdCommandActivator >> buildBrowserTabActions [
 CmdCommandActivator >> buildBrowserToolbar: toolbarMorph [
 
 	self canExecuteCommand ifFalse: [ ^self ].
-	
+
 	command addToolbarItemInto: toolbarMorph using: self
 ]
 
 { #category : #'*Calypso-Browser' }
-CmdCommandActivator >> decorateTableCell: anItemCellMorph [ 
+CmdCommandActivator >> decorateTableCell: anItemCellMorph [
 
 	command decorateTableCell: anItemCellMorph using: self
 ]

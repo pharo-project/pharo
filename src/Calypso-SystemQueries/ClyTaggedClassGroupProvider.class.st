@@ -12,13 +12,13 @@ Class {
 { #category : #'building groups' }
 ClyTaggedClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 	| classGroups group |
-	classGroups := Dictionary new.	
+	classGroups := Dictionary new.
 	aPackageScope packagesDo: [ :each |
-		each tagsForClasses do: [ :eachTag |	
+		each tagsForClasses do: [ :eachTag |
 			classGroups at: eachTag ifAbsentPut: [
-				group := ClyTaggedClassGroup 
+				group := ClyTaggedClassGroup
 					withClassesFrom: aPackageScope taggedBy: eachTag.
 				aBlock value: group.
-				group].				
+				group].
 	]]
 ]

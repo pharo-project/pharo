@@ -39,7 +39,7 @@ ClyVariableReferencesQueryTest >> targetVarName [
 ClyVariableReferencesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: self class >> #reference1OfVar1 in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope of: self class >> #referenceOfAnotherVar in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -51,8 +51,8 @@ ClyVariableReferencesQueryTest >> testForClassVariable [
 	classVar := ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock.
 	query := ClyVariableReferencesQuery of: classVar.
 	self queryFromScope: ClyClassScope of: ClyClass2FromP1Mock.
-	
-	self assert: resultItems size equals: 2.	
+
+	self assert: resultItems size equals: 2.
 	self assert: foundSelectors equals: #(instanceSideClassVar1Reader instanceSideClassVar1Writer)
 ]
 
@@ -63,7 +63,7 @@ ClyVariableReferencesQueryTest >> testForSharedClassVariable [
 	classVar := ClyClassVariable named: #DayNames definedIn: ChronologyConstants.
 	query := ClyVariableReferencesQuery of: classVar.
 	self queryFromScope: ClyBothMetaLevelClassScope of: Date.
-	
+
 	self assert: resultItems notEmpty
 ]
 
@@ -71,8 +71,8 @@ ClyVariableReferencesQueryTest >> testForSharedClassVariable [
 ClyVariableReferencesQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyClassScope of: self class.
-	
-	self assert: resultItems size equals: 2.	
+
+	self assert: resultItems size equals: 2.
 	self assert: foundSelectors equals: #(reference1OfVar1 reference2OfVar1)
 ]
 
@@ -88,7 +88,7 @@ ClyVariableReferencesQueryTest >> testFromMethodScope [
 ClyVariableReferencesQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: foundSelectors equals: #(reference1OfVar1 reference2OfVar1 #supeclassReferenceOfVar1)
 ]

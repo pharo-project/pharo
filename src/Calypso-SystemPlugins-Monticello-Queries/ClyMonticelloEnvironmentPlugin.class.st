@@ -20,9 +20,9 @@ ClyMonticelloEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackag
 
 	workingCopy := aPackage mcWorkingCopy.
 	workingCopy ifNil: [ ^self ].
-	
+
 	workingCopy modified ifTrue: [
-		anItem markWith: ClyDirtyPackageTag].
+		anItem markWith: ClyDirtyPackageTag]
 ]
 
 { #category : #controlling }

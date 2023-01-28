@@ -22,20 +22,20 @@ FFIConstantHandleTest >> getTimeReturnConstantHandle: t [
 
 { #category : #tests }
 FFIConstantHandleTest >> testCall [
+
 	| object time |
-	
 	object := FFIConstantHandle new.
 	time := self getTime: object.
-	self assert: time equals: object handle
+	self assert: time equals: object getHandle
 ]
 
 { #category : #tests }
 FFIConstantHandleTest >> testReturn [
+
 	| object time |
-	
 	TIME_T_PTR := FFIExternalValueHolder ofType: 'long'.
-	
+
 	object := TIME_T_PTR new value: 0.
 	time := self getTimeReturnConstantHandle: object.
-	self assert: time handle asInteger equals: object value asInteger
+	self assert: time getHandle asInteger equals: object value asInteger
 ]

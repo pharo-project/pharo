@@ -22,7 +22,7 @@ BaselineOfPharo class >> declareExternalProjects [
 	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo11'.	
 	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.	
 	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.	
-	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9j' 
+	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9L' 
 	 }
 ]
 
@@ -70,7 +70,7 @@ BaselineOfPharo class >> specRepository [
 	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfPharo >> baseline: spec [
 	<baseline>
 	| repository |
@@ -84,6 +84,8 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
 		
+		spec package: 'Deprecated11'.
+		
 		spec package: 'FluidClassBuilder'.
 		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
 	]
@@ -92,5 +94,5 @@ BaselineOfPharo >> baseline: spec [
 { #category : #baseline }
 BaselineOfPharo >> postload: loader package: packageSpec [
 
-	WelcomeHelp openForRelease
+	"Here we will do something for the release announce"
 ]

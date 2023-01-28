@@ -12,7 +12,8 @@ Class {
 
 { #category : #private }
 OmBlockFileStore >> blockForLocalNameAsInteger: anIndex [
-	
+
+	self checkIfMustRefresh.
 	blocks reverseDo: [:each | each firstLocalNameAsInteger <= anIndex ifTrue: [ ^each ] ].
 	^ self error: 'block not found'
 ]

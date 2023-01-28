@@ -7,6 +7,12 @@ Class {
 	#category : #'TestRunner-Core-SuitePreparators'
 }
 
+{ #category : #factory }
+AbstractSuitePreparator class >> anySuitePreparatorClass [
+
+	^ AnyEffectSuitePreparator
+]
+
 { #category : #applying }
 AbstractSuitePreparator class >> applyOn: testSuite [
 	"this method defined the process which will applied in a giving suite."
@@ -25,4 +31,10 @@ AbstractSuitePreparator class >> applyOnSuites: aCol [
 AbstractSuitePreparator class >> isAbstract [
 
 	^ self == AbstractSuitePreparator
+]
+
+{ #category : #factory }
+AbstractSuitePreparator class >> shuffleSuitePreparatorClass [
+
+	^ ShuffleSuitePreparator
 ]

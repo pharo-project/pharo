@@ -74,7 +74,7 @@ WordArray >> primAddArray: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) + (other at: i)
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -86,7 +86,7 @@ WordArray >> primAddScalar: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) + other.
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -98,7 +98,7 @@ WordArray >> primDivArray: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) / (other at: i)
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -110,7 +110,7 @@ WordArray >> primDivScalar: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) / other.
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -122,7 +122,7 @@ WordArray >> primMulArray: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) * (other at: i)
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -134,7 +134,7 @@ WordArray >> primMulScalar: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) * other.
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -146,7 +146,7 @@ WordArray >> primSubArray: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) - (other at: i)
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #'array arithmetic primitives' }
@@ -158,11 +158,11 @@ WordArray >> primSubScalar: rcvr and: other into: result [
 	1 to: rcvr size do: [:i |
 		result at: i put: (rcvr at: i) - other.
 	].
-	^ result.
+	^ result
 ]
 
 { #category : #accessing }
-WordArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+WordArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	<primitive: 105>
 	^super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
