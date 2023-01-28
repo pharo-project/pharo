@@ -52,7 +52,7 @@ ReCompactSourceCodeRule class >> initialize [
 { #category : #running }
 ReCompactSourceCodeRule >> basicCheck: aMethod [
 
-	^ ReMethodSourceCleaner isNecessaryToClean: aMethod allowFinalDot: self class criticizeFinalDotInMethodBody
+	^ ReMethodSourceCleaner isNecessaryToClean: aMethod allowFinalDot: self class criticizeFinalDotInMethodBody not
 ]
 
 { #category : #running }
@@ -75,7 +75,7 @@ ReCompactSourceCodeRule >> group [
 { #category : #accessing }
 ReCompactSourceCodeRule >> name [
 
-	^ 'Unnecessary separators or final dots found in method body'
+	^ 'Unnecessary characters found in method body'
 ]
 
 { #category : #testing }
