@@ -1,15 +1,4 @@
-"
-I implement the logic to do screenshots.
-I can do a full screenshot or an area of the screen selected by the user.
-I handle the user interaction to get the area to make the screenshot.
-
-The method #makeAScreenshot handles the menu option to make screen shots.
-"
-Class {
-	#name : #Screenshot,
-	#superclass : #Object,
-	#category : #'Morphic-Base'
-}
+Extension { #name : #Screenshot }
 
 { #category : #'*Morphic-Base' }
 Screenshot >> askRectangleFromUser [
