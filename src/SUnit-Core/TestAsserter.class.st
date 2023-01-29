@@ -51,12 +51,6 @@ TestAsserter class >> classForTestSuite [
 	^ TestSuite
 ]
 
-{ #category : #accessing }
-TestAsserter class >> defaultPrecisionsForCloseToComparison [
-	"This number comes from the one used in Float>>#closeTo: implementation."
-	^ 0.0001
-]
-
 { #category : #logging }
 TestAsserter class >> failureLog [
 	^Transcript
@@ -89,13 +83,12 @@ TestAsserter class >> suiteClass [
 { #category : #asserting }
 TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of
-	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
-	"
+	 the default precision"
 
 	self
 		assert: actualNumber
 		closeTo: expectedNumber
-		precision: self class defaultPrecisionsForCloseToComparison
+		precision: Float defaultComparisonPrecision
 ]
 
 { #category : #asserting }
@@ -338,9 +331,12 @@ TestAsserter >> deny: aBooleanOrBlock [
 { #category : #asserting }
 TestAsserter >> deny: actualNumber closeTo: expectedNumber [
 	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of
-	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
-	"
-	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
+	 the default precision"
+
+	self
+		deny: actualNumber
+		closeTo: expectedNumber
+		precision: Float defaultComparisonPrecision
 ]
 
 { #category : #asserting }

@@ -123,56 +123,173 @@ FloatTest >> testBinaryLiteralString [
 
 	self assert: 0.0 binaryLiteralString equals: '0.0'.
 	self assert: 0.0 negated binaryLiteralString equals: '-0.0'.
-	self assert: Float infinity binaryLiteralString equals: 'Float infinity'.
-	self assert: Float infinity negated binaryLiteralString equals: 'Float infinity negated'.
+	self
+		assert: Float infinity binaryLiteralString
+		equals: 'Float infinity'.
+	self
+		assert: Float infinity negated binaryLiteralString
+		equals: 'Float infinity negated'.
 	self assert: Float nan binaryLiteralString equals: 'Float nan'.
 
-	self assert: Float fminDenormalized binaryLiteralString equals: '2r0.0000000000000000000000000000000000000000000000000001e-1022'.
-	self assert: Float fminNormalized binaryLiteralString equals: '2r1.0000000000000000000000000000000000000000000000000000e-1022'.
-	self assert: (Float fminNormalized - Float fminDenormalized) binaryLiteralString equals: '2r0.1111111111111111111111111111111111111111111111111111e-1022'.
-	self assert: Float epsilon binaryLiteralString equals: '2r1.0000000000000000000000000000000000000000000000000000e-52'.
-	self assert: Float fmax binaryLiteralString equals: '2r1.1111111111111111111111111111111111111111111111111111e1023'.
+	self
+		assert: Float fminDenormalized binaryLiteralString
+		equals:
+		'2r0.0000000000000000000000000000000000000000000000000001e-1022'.
+	self
+		assert: Float fminNormalized binaryLiteralString
+		equals:
+		'2r1.0000000000000000000000000000000000000000000000000000e-1022'.
+	self
+		assert:
+		(Float fminNormalized - Float fminDenormalized) binaryLiteralString
+		equals:
+		'2r0.1111111111111111111111111111111111111111111111111111e-1022'.
+	self
+		assert: Float machineEpsilon binaryLiteralString
+		equals:
+		'2r1.0000000000000000000000000000000000000000000000000000e-52'.
+	self
+		assert: Float fmax binaryLiteralString
+		equals:
+		'2r1.1111111111111111111111111111111111111111111111111111e1023'.
 
-	self assert: Float fminDenormalized negated binaryLiteralString equals: '-2r0.0000000000000000000000000000000000000000000000000001e-1022'.
-	self assert: Float fminNormalized negated binaryLiteralString equals: '-2r1.0000000000000000000000000000000000000000000000000000e-1022'.
+	self
+		assert: Float fminDenormalized negated binaryLiteralString
+		equals:
+		'-2r0.0000000000000000000000000000000000000000000000000001e-1022'.
+	self
+		assert: Float fminNormalized negated binaryLiteralString
+		equals:
+		'-2r1.0000000000000000000000000000000000000000000000000000e-1022'.
 
-	self assert: 1.0 binaryLiteralString equals: '2r1.0000000000000000000000000000000000000000000000000000e0'.
-	self assert: (1.0 + Float epsilon) binaryLiteralString equals: '2r1.0000000000000000000000000000000000000000000000000001e0'.
-	self assert: (1.0 - (Float epsilon / 2)) binaryLiteralString equals: '2r1.1111111111111111111111111111111111111111111111111111e-1'.
-	self assert: 2.0 binaryLiteralString equals: '2r1.0000000000000000000000000000000000000000000000000000e1'.
+	self
+		assert: 1.0 binaryLiteralString
+		equals: '2r1.0000000000000000000000000000000000000000000000000000e0'.
+	self
+		assert: (1.0 + Float machineEpsilon) binaryLiteralString
+		equals: '2r1.0000000000000000000000000000000000000000000000000001e0'.
+	self
+		assert: (1.0 - (Float machineEpsilon / 2)) binaryLiteralString
+		equals:
+		'2r1.1111111111111111111111111111111111111111111111111111e-1'.
+	self
+		assert: 2.0 binaryLiteralString
+		equals: '2r1.0000000000000000000000000000000000000000000000000000e1'.
 
-	self assert: 0.1 binaryLiteralString equals: '2r1.1001100110011001100110011001100110011001100110011010e-4'.
-	self assert: 0.2 binaryLiteralString equals: '2r1.1001100110011001100110011001100110011001100110011010e-3'.
-	self assert: 0.3 binaryLiteralString equals: '2r1.0011001100110011001100110011001100110011001100110011e-2'.
-	self assert: (0.1 + 0.2) binaryLiteralString equals: '2r1.0011001100110011001100110011001100110011001100110100e-2'.
-	self assert: 0.5 binaryLiteralString equals: '2r1.0000000000000000000000000000000000000000000000000000e-1'.
+	self
+		assert: 0.1 binaryLiteralString
+		equals:
+		'2r1.1001100110011001100110011001100110011001100110011010e-4'.
+	self
+		assert: 0.2 binaryLiteralString
+		equals:
+		'2r1.1001100110011001100110011001100110011001100110011010e-3'.
+	self
+		assert: 0.3 binaryLiteralString
+		equals:
+		'2r1.0011001100110011001100110011001100110011001100110011e-2'.
+	self
+		assert: (0.1 + 0.2) binaryLiteralString
+		equals:
+		'2r1.0011001100110011001100110011001100110011001100110100e-2'.
+	self
+		assert: 0.5 binaryLiteralString
+		equals:
+		'2r1.0000000000000000000000000000000000000000000000000000e-1'.
 
-	self assert: 2r0.0000000000000000000000000000000000000000000000000001e-1022 binaryLiteralString equals: '2r0.0000000000000000000000000000000000000000000000000001e-1022'.
-	self assert: 2r0.0101010101010101010101010101010101010101010101010101e-1022 binaryLiteralString equals: '2r0.0101010101010101010101010101010101010101010101010101e-1022'.
-	self assert: 2r0.1010101010101010101010101010101010101010101010101010e-1022 binaryLiteralString equals: '2r0.1010101010101010101010101010101010101010101010101010e-1022'.
-	self assert: 2r0.1111111111111111111111111111111111111111111111111111e-1022 binaryLiteralString equals: '2r0.1111111111111111111111111111111111111111111111111111e-1022'.
-	self assert: 2r1.0101010101010101010101010101010101010101010101010101e-3 binaryLiteralString equals: '2r1.0101010101010101010101010101010101010101010101010101e-3'.
-	self assert: 2r1.1010101010101010101010101010101010101010101010101010e3 binaryLiteralString equals: '2r1.1010101010101010101010101010101010101010101010101010e3'.
-	self assert: 2r1.1111111111111111111111111111111111111111111111111111e1023 binaryLiteralString equals: '2r1.1111111111111111111111111111111111111111111111111111e1023'.
+	self
+		assert:
+			2r0.0000000000000000000000000000000000000000000000000001e-1022
+				binaryLiteralString
+		equals:
+		'2r0.0000000000000000000000000000000000000000000000000001e-1022'.
+	self
+		assert:
+			2r0.0101010101010101010101010101010101010101010101010101e-1022
+				binaryLiteralString
+		equals:
+		'2r0.0101010101010101010101010101010101010101010101010101e-1022'.
+	self
+		assert:
+			2r0.1010101010101010101010101010101010101010101010101010e-1022
+				binaryLiteralString
+		equals:
+		'2r0.1010101010101010101010101010101010101010101010101010e-1022'.
+	self
+		assert:
+			2r0.1111111111111111111111111111111111111111111111111111e-1022
+				binaryLiteralString
+		equals:
+		'2r0.1111111111111111111111111111111111111111111111111111e-1022'.
+	self
+		assert: 2r1.0101010101010101010101010101010101010101010101010101e-3
+				binaryLiteralString
+		equals:
+		'2r1.0101010101010101010101010101010101010101010101010101e-3'.
+	self
+		assert: 2r1.1010101010101010101010101010101010101010101010101010e3
+				binaryLiteralString
+		equals: '2r1.1010101010101010101010101010101010101010101010101010e3'.
+	self
+		assert:
+			2r1.1111111111111111111111111111111111111111111111111111e1023
+				binaryLiteralString
+		equals:
+		'2r1.1111111111111111111111111111111111111111111111111111e1023'.
 
-	self assert: -2r0.0000000000000000000000000000000000000000000000000001e-1022 binaryLiteralString equals: '-2r0.0000000000000000000000000000000000000000000000000001e-1022'.
-	self assert: -2r1.0000000000000000000000000000000000000000000000000000e-1022 binaryLiteralString equals: '-2r1.0000000000000000000000000000000000000000000000000000e-1022'.
-	self assert: -2r1.1111111111111111111111111111111111111111111111111111e1023 binaryLiteralString equals: '-2r1.1111111111111111111111111111111111111111111111111111e1023'.
+	self
+		assert:
+			-2r0.0000000000000000000000000000000000000000000000000001e-1022
+				binaryLiteralString
+		equals:
+		'-2r0.0000000000000000000000000000000000000000000000000001e-1022'.
+	self
+		assert:
+			-2r1.0000000000000000000000000000000000000000000000000000e-1022
+				binaryLiteralString
+		equals:
+		'-2r1.0000000000000000000000000000000000000000000000000000e-1022'.
+	self
+		assert:
+			-2r1.1111111111111111111111111111111111111111111111111111e1023
+				binaryLiteralString
+		equals:
+		'-2r1.1111111111111111111111111111111111111111111111111111e1023'.
 
-	self assert: (Float fromIEEE64Bit: 2r0111111111110000000000000000000000000000000000000000000000000001) binaryLiteralString equals: 'Float nan'.
-	self assert: (Float fromIEEE64Bit: 2r0111111111111111111111111111111111111111111111111111111111111111) binaryLiteralString equals: 'Float nan'.
-	self assert: (Float fromIEEE64Bit: 2r1111111111110000000000000000000000000000000000000000000000000001) binaryLiteralString equals: 'Float nan'.
-	self assert: (Float fromIEEE64Bit: 2r1111111111111111111111111111111111111111111111111111111111111111) binaryLiteralString equals: 'Float nan'
+	self
+		assert: (Float fromIEEE64Bit:
+				 2r0111111111110000000000000000000000000000000000000000000000000001)
+				binaryLiteralString
+		equals: 'Float nan'.
+	self
+		assert: (Float fromIEEE64Bit:
+				 2r0111111111111111111111111111111111111111111111111111111111111111)
+				binaryLiteralString
+		equals: 'Float nan'.
+	self
+		assert: (Float fromIEEE64Bit:
+				 2r1111111111110000000000000000000000000000000000000000000000000001)
+				binaryLiteralString
+		equals: 'Float nan'.
+	self
+		assert: (Float fromIEEE64Bit:
+				 2r1111111111111111111111111111111111111111111111111111111111111111)
+				binaryLiteralString
+		equals: 'Float nan'
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 FloatTest >> testCharacterization [
-
 	"Test the largest finite representable floating point value"
+
 	self assert: Float fmax successor equals: Float infinity.
 	self assert: Float infinity predecessor equals: Float fmax.
-	self assert: Float fmax negated predecessor equals: Float infinity negated.
-	self assert: Float infinity negated successor equals: Float fmax negated.
+	self
+		assert: Float fmax negated predecessor
+		equals: Float infinity negated.
+	self
+		assert: Float infinity negated successor
+		equals: Float fmax negated.
 
 	"Test the smallest positive representable floating point value"
 	self assert: Float fmin predecessor equals: 0.0.
@@ -181,27 +298,44 @@ FloatTest >> testCharacterization [
 	self assert: 0.0 predecessor equals: Float fmin negated.
 
 	"Test the relative precision"
-	self assert: Float one + Float epsilon > Float one.
-	self assert: Float one + Float epsilon equals: Float one successor.
-	self assert: Float one + (Float epsilon / Float radix) equals: Float one.
+	self assert: Float one + Float machineEpsilon > Float one.
+	self
+		assert: Float one + Float machineEpsilon
+		equals: Float one successor.
+	self
+		assert: Float one + (Float machineEpsilon / Float radix)
+		equals: Float one.
 
 	"Test maximum and minimum exponent"
 	self assert: Float fmax exponent equals: Float emax.
 	self assert: Float fminNormalized exponent equals: Float emin.
-	Float denormalized ifTrue: [
-		self assert: Float fminDenormalized exponent equals: (Float emin + 1 - Float precision)].
+	Float denormalized ifTrue: [ 
+		self
+			assert: Float fminDenormalized exponent
+			equals: Float emin + 1 - Float precision ].
 
 	"Alternative tests for maximum and minimum"
-	self assert: (Float radix - Float epsilon) * (Float radix raisedTo: Float emax) equals: Float fmax.
-	self assert: Float epsilon * (Float radix raisedTo: Float emin) equals: Float fmin.
+	self
+		assert: Float radix - Float machineEpsilon
+			* (Float radix raisedTo: Float emax)
+		equals: Float fmax.
+	self
+		assert: Float machineEpsilon * (Float radix raisedTo: Float emin)
+		equals: Float fmin.
 
 	"Test sucessors and predecessors"
 	self assert: Float one predecessor successor equals: Float one.
 	self assert: Float one successor predecessor equals: Float one.
-	self assert: Float one negated predecessor successor equals: Float one negated.
-	self assert: Float one negated successor predecessor equals: Float one negated.
+	self
+		assert: Float one negated predecessor successor
+		equals: Float one negated.
+	self
+		assert: Float one negated successor predecessor
+		equals: Float one negated.
 	self assert: Float infinity successor equals: Float infinity.
-	self assert: Float infinity negated predecessor equals: Float infinity negated.
+	self
+		assert: Float infinity negated predecessor
+		equals: Float infinity negated.
 	self assert: Float nan predecessor isNaN.
 	self assert: Float nan successor isNaN.
 
@@ -286,12 +420,14 @@ FloatTest >> testComparison [
 { #category : #'*Kernel-Tests-Extended' }
 FloatTest >> testDegreeCos [
 
-	45.0 degreeCos.	"Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
-	self assert: (45.0 degreeCos squared - 0.5) abs <= Float epsilon.
-	self assert: (60.0 degreeCos - 0.5) abs <= Float epsilon.
-	self assert: (120.0 degreeCos + 0.5) abs <= Float epsilon.
-	-360.0 to: 360.0 do: [ :i | self assert: (i degreeCos closeTo: i degreesToRadians cos) ].	"Following tests use strict equality which is a requested property of degreeCos"
-	-10.0 to: 10.0 do: [ :k |
+	45.0 degreeCos. "Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
+	self assert:
+		(45.0 degreeCos squared - 0.5) abs <= Float machineEpsilon.
+	self assert: (60.0 degreeCos - 0.5) abs <= Float machineEpsilon.
+	self assert: (120.0 degreeCos + 0.5) abs <= Float machineEpsilon.
+	-360.0 to: 360.0 do: [ :i | 
+	self assert: (i degreeCos closeTo: i degreesToRadians cos) ]. "Following tests use strict equality which is a requested property of degreeCos"
+	-10.0 to: 10.0 do: [ :k | 
 		self assert: (k * 360 + 90) degreeCos equals: 0.
 		self assert: (k * 360 - 90) degreeCos equals: 0.
 		self assert: (k * 360 + 180) degreeCos + 1 equals: 0.
@@ -309,12 +445,14 @@ FloatTest >> testDegreeCosForExceptionalValues [
 { #category : #'*Kernel-Tests-Extended' }
 FloatTest >> testDegreeSin [
 
-	45.0 degreeSin.	"Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
-	self assert: (45.0 degreeSin squared - 0.5) abs <= Float epsilon.
-	self assert: (30.0 degreeSin - 0.5) abs <= Float epsilon.
-	self assert: (-30.0 degreeSin + 0.5) abs <= Float epsilon.
-	-360.0 to: 360.0 do: [ :i | self assert: (i degreeSin closeTo: i degreesToRadians sin) ].	"Following tests use strict equality which is a requested property of degreeSin"
-	-10.0 to: 10.0 do: [ :k |
+	45.0 degreeSin. "Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
+	self assert:
+		(45.0 degreeSin squared - 0.5) abs <= Float machineEpsilon.
+	self assert: (30.0 degreeSin - 0.5) abs <= Float machineEpsilon.
+	self assert: (-30.0 degreeSin + 0.5) abs <= Float machineEpsilon.
+	-360.0 to: 360.0 do: [ :i | 
+	self assert: (i degreeSin closeTo: i degreesToRadians sin) ]. "Following tests use strict equality which is a requested property of degreeSin"
+	-10.0 to: 10.0 do: [ :k | 
 		self assert: (k * 360 + 90) degreeSin - 1 equals: 0.
 		self assert: (k * 360 - 90) degreeSin + 1 equals: 0.
 		self assert: (k * 360 + 180) degreeSin equals: 0.
@@ -372,14 +510,16 @@ FloatTest >> testFloorLog2 [
 	"Float internal representation of Float being in base 2, we expect (aFloat floorLog: 2) to be exact."
 
 	| aBitLess aBitMore |
-	aBitMore := 1 + Float epsilon.
-	aBitLess := 1 - Float epsilon.
-	Float emin + 1 to: Float emax - 1 do: [:exp |
+	aBitMore := 1 + Float machineEpsilon.
+	aBitLess := 1 - Float machineEpsilon.
+	Float emin + 1 to: Float emax - 1 do: [ :exp | 
 		| exactPowerOfTwo |
 		exactPowerOfTwo := 1.0 timesTwoPower: exp.
 		self assert: (exactPowerOfTwo floorLog: 2) equals: exp.
 		self assert: (exactPowerOfTwo * aBitMore floorLog: 2) equals: exp.
-		self assert: (exactPowerOfTwo * aBitLess floorLog: 2) equals: exp - 1]
+		self
+			assert: (exactPowerOfTwo * aBitLess floorLog: 2)
+			equals: exp - 1 ]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
