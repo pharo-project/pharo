@@ -8,6 +8,16 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestRenrakuTests class >> ruleLiteralArrayContainsSuspiciousTrueFalseOrNilRuleV1FalsePositive [
+	^ #(#(#(#RGMetaclassDefinition #(#'ManifestRenrakuTests class' #ManifestRenrakuTests)) #'2023-01-29T17:30:38.57322+01:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestRenrakuTests class >> ruleReCompactSourceCodeRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#ReMethodSourceCleanerTest #properMethodWithFinalDot #false)) #'2023-01-29T17:28:55.55396+01:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestRenrakuTests class >> ruleRefersToClassRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#ReMethodSourceCleanerTest)) #'2023-01-27T22:50:46.104645+01:00') )
 ]

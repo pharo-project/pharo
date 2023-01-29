@@ -9,6 +9,8 @@ Class {
 
 { #category : #'private - test data' }
 ReMethodSourceCleanerTest >> aleadyCleanedMethodStringKeepingDot [
+	"This method returns the method body of #dirtyMethodWithUnnecessarySpacesAndFinalDot with a final dot"
+
 	^'dirtyMethodWithUnnecessarySpacesAndFinalDot
 	"Do not format this method - it by intention should include unnecessary spaces and a final dot"
 
@@ -19,6 +21,8 @@ ReMethodSourceCleanerTest >> aleadyCleanedMethodStringKeepingDot [
 
 { #category : #'private - test data' }
 ReMethodSourceCleanerTest >> alreadyCleanedMethodString [
+	"This method returns the method body of #dirtyMethodWithUnnecessarySpacesAndFinalDot without a final dot"
+
 	^'dirtyMethodWithUnnecessarySpacesAndFinalDot
 	"Do not format this method - it by intention should include unnecessary spaces and a final dot"
 
@@ -38,14 +42,14 @@ ReMethodSourceCleanerTest >> dirtyMethodWithUnnecessarySpacesAndFinalDot [
 
 { #category : #'private - test data' }
 ReMethodSourceCleanerTest >> properMethodWithFinalDot [
-	"This is a method without any unnecessary separators in the method body but a final dot"
+	"Do not format this method - this is a method without any unnecessary separators in the method body but a final dot"
 
 	^ 3 + 4.
 ]
 
 { #category : #'private - test data' }
 ReMethodSourceCleanerTest >> properMethodWithoutFinalDot [
-	"This is a method without any unnecessary separators in the method body and without a final dot"
+	"Do not format this method - this is a method without any unnecessary separators in the method body and without a final dot"
 
 	^ 3 + 4
 ]
