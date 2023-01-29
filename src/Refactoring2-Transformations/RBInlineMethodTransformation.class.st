@@ -88,7 +88,7 @@ RBInlineMethodTransformation >> compileMethod [
 { #category : #adding }
 RBInlineMethodTransformation >> findSelectedMessage [
 
-	sourceParseTree := class parseTreeFor: sourceSelector.
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage
@@ -255,7 +255,7 @@ RBInlineMethodTransformation >> parseInlineMethod [
 						expandMacrosWith: class
 						with: self inlineSelector )
 			].
-	inlineParseTree := self classOfTheMethodToInline parseTreeFor: self inlineSelector.
+	inlineParseTree := self classOfTheMethodToInline parseTreeForSelector: self inlineSelector.
 	inlineParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	inlineParseTree lastIsReturn
 		ifFalse: [ inlineParseTree addSelfReturn ]

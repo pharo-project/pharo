@@ -52,7 +52,7 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self
 		assert:
-			(class parseTreeFor: #checkClass:)
+			(class parseTreeForSelector: #checkClass:)
 				equals:
 					(self
 						parseMethod:
@@ -60,7 +60,7 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 								^asdf value: aSmalllintContext value: result').
 	self
 		assert:
-			(class parseTreeFor: #initialize)
+			(class parseTreeForSelector: #initialize)
 				equals:
 					(self
 						parseMethod:
@@ -87,7 +87,7 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 	self assert: (class directlyDefinesInstanceVariable: 'var11').
 	self deny: (class directlyDefinesInstanceVariable: 'var1').
 	self
-		assert: (class parseTreeFor: #var1)
+		assert: (class parseTreeForSelector: #var1)
 		equals: (self parseMethod: 'var1 ^ var11').
 	class := refactoring model classNamed: #RBClassUsingSharedPoolForTestData.
 	self flag: 'TODO: for transformation'

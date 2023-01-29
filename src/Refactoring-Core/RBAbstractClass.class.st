@@ -185,7 +185,7 @@ RBAbstractClass >> canonicalArgumentName [
 RBAbstractClass >> checkSelector: aSelector using: aMatcher [ 
 
 	| parseTree |
-	parseTree := self parseTreeFor: aSelector.
+	parseTree := self parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^ aMatcher answer
 ]
@@ -250,7 +250,7 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 
 	| parseTree |
 
-	parseTree := self parseTreeFor: selector.
+	parseTree := self parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ self compileTree: searchReplacer tree ]
@@ -538,7 +538,17 @@ RBAbstractClass >> newMethods [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> parseTreeFor: aSelector [
+RBAbstractClass >> parseTreeFor: aSymbol [
+
+	self
+		deprecated: 'Use parseTreeForSelector: instead'
+		transformWith: '`@receiver parseTreeFor: `@argument'
+			-> '`@receiver parseTreeForSelector: `@argument'.
+	^ self parseTreeForSelector: aSymbol
+]
+
+{ #category : #'method accessing' }
+RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
 

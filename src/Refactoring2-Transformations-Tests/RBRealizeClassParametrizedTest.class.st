@@ -43,13 +43,13 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 	self proceedThroughWarning: [ 
 		self executeRefactoring: 
 			(self createRefactoringWithArguments:  { model . #RBFooLintRuleTestData}) ].
-	self assert: (class parseTreeFor: #isEmpty) equals: 
+	self assert: (class parseTreeForSelector: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
-	self assert: (class parseTreeFor: #problemCount) equals: 
+	self assert: (class parseTreeForSelector: #problemCount) equals: 
 	(self parseMethod: 'problemCount
 		self shouldBeImplemented').
-	self assert: (class parseTreeFor: #viewResults) equals: 
+	self assert: (class parseTreeForSelector: #viewResults) equals: 
 	(self parseMethod: 'viewResults
 		self shouldBeImplemented')
 ]
@@ -60,13 +60,13 @@ RBRealizeClassParametrizedTest >> testRealizeClass [
 	class := model classNamed: #RBFooLintRuleTestData.
 	self executeRefactoring: 
 		(self createRefactoringWithArguments:  { model . #RBFooLintRuleTestData }).
-	self assert: (class parseTreeFor: #isEmpty) equals: 
+	self assert: (class parseTreeForSelector: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
-	self assert: (class parseTreeFor: #problemCount) equals: 
+	self assert: (class parseTreeForSelector: #problemCount) equals: 
 	(self parseMethod: 'problemCount
 		self shouldBeImplemented').
-	self assert: (class parseTreeFor: #viewResults) equals: 
+	self assert: (class parseTreeForSelector: #viewResults) equals: 
 	(self parseMethod: 'viewResults
 		self shouldBeImplemented')
 ]
@@ -80,13 +80,13 @@ RBRealizeClassParametrizedTest >> testRealizeWithAbstractSubclass [
 		self executeRefactoring: 
 			(self createRefactoringWithArguments: { model . #RBFooLintRuleTestData }) ].
 	class := model classNamed: #RBFooLintRuleTestData.
-	self assert: (class parseTreeFor: #isEmpty) equals: 
+	self assert: (class parseTreeForSelector: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
-	self assert: (class parseTreeFor: #problemCount) equals: 
+	self assert: (class parseTreeForSelector: #problemCount) equals: 
 	(self parseMethod: 'problemCount
 		self shouldBeImplemented').
-	self assert: (class parseTreeFor: #viewResults) equals: 
+	self assert: (class parseTreeForSelector: #viewResults) equals: 
 	(self parseMethod: 'viewResults
 		self shouldBeImplemented')
 ]

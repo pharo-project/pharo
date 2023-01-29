@@ -1613,7 +1613,6 @@ package: ''UndefinedClasses-Experiment'.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 
-
 { #category : #utilities }
 RBScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
 	self assert: scannedToken isError.

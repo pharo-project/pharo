@@ -94,7 +94,7 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 		equals: #Object.
 
 	self
-		assert: ((aModel classNamed: #BarFTTest1) parseTreeFor: #foo)
+		assert: ((aModel classNamed: #BarFTTest1) parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo
 			^ BarFTTest2')
 ]

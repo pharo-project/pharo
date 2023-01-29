@@ -66,7 +66,7 @@ RBRemoveSubtreeTransformation >> preconditions [
 						ifNil: [ self refactoringError: 'Invalid source to extract - ' , sourceCode ].
 					(tree isSequence and: [ tree statements isEmpty ])
 						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
-					tree := ((self definingClass parseTreeFor: selector)
+					tree := ((self definingClass parseTreeForSelector: selector)
 						extractSubtreeWith: sourceCode)
 						ifNil: [ self
 								refactoringError: 'Could not extract code from method ' , selector ].
@@ -79,7 +79,7 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	| parseTree |
 	"execute in terms of nodes and not in parserewriter"
 	"suggest remove similar code here"
-	parseTree := self definingClass parseTreeFor: selector.
+	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	
 	"Halt now."

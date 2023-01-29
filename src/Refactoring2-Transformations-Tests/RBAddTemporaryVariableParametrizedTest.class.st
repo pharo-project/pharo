@@ -28,7 +28,7 @@ RBAddTemporaryVariableParametrizedTest >> testAddTemporaryRefactoring [
 	
 	class := refactoring model classNamed: #RBAddReturnStatementTransformationTest.
 	self assert: (class directlyDefinesMethod: #methodBefore).
-	self assert: (class parseTreeFor: #methodBefore) temporaries size equals: 2
+	self assert: (class parseTreeForSelector: #methodBefore) temporaries size equals: 2
 ]
 
 { #category : #'failure tests' }
