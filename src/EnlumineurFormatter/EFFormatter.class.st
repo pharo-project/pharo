@@ -1952,7 +1952,8 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 			self space.
 			self visitNode: arg ]
 		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode].
-	self newLines: 1
+	self newLine
+
 ]
 
 { #category : #utilities }
