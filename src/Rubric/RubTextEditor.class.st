@@ -2125,11 +2125,11 @@ RubTextEditor >> selectWordMark: mark point: point [
 	It selects the correct words between the original point and the selection cursor point"
 	mark < point ifTrue: [ 
 		mark2 := self previousWord: mark.
-		point2 := (self nextWord: point) - 1 ]
+		point2 := (self nextWord: (point + 1)) ]
 	ifFalse: [ 
 		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
 		mark2 := self nextWord: (mark>0 ifTrue:[mark] ifFalse:[1]).
-		point2 := (self previousWord: point)- 1  ].
+		point2 := (self previousWord: (point - 1)) ].
 	self selectMark: mark2 point: point2.
 ]
 
