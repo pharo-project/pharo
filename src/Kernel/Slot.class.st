@@ -132,15 +132,15 @@ Slot >> emitValue: aMethodBuilder [
 
 { #category : #private }
 Slot >> ensureInitalizeMethodExists: aClass [
+
 	(aClass includesSelector: #initialize) ifTrue: [ ^ self ].
 
-	Author
-		useAuthor: 'Generated'
-		during: [ aClass
-				compile:
-					'initialize
+	Author useAuthor: 'Generated' during: [
+		SystemAnnouncer uniqueInstance suspendAllWhile: [
+			aClass
+				compile: 'initialize
 	super initialize.'
-				classified: 'initialization' ]
+				classified: 'initialization' ] ]
 ]
 
 { #category : #private }

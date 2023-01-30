@@ -756,23 +756,24 @@ RPackageOrganizer >> register [
 { #category : #'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 
-	| cur |
-
-	cur := classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [ nil ].
-	cur
-		ifNil: [ classExtendingPackagesMapping at: aClass instanceSide name put: ( Set with: aPackage ) ]
-		ifNotNil: [ cur add: aPackage ]
+	self
+		registerExtendingPackage: aPackage
+		forClassName: aClass instanceSide name
 ]
 
 { #category : #'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClassName: aClassName [
 
-	| cur |
-
-	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [ nil ].
-	cur
-		ifNil: [ classExtendingPackagesMapping at: aClassName asSymbol put: ( Set with: aPackage ) ]
-		ifNotNil: [ cur add: aPackage ]
+	| extendingPackageForClass |
+	extendingPackageForClass := classExtendingPackagesMapping
+		                            at: aClassName asSymbol
+		                            ifAbsent: [ nil ].
+	extendingPackageForClass
+		ifNil: [
+			classExtendingPackagesMapping
+				at: aClassName asSymbol
+				put: (Set with: aPackage) ]
+		ifNotNil: [ extendingPackageForClass add: aPackage ]
 ]
 
 { #category : #'system integration' }
@@ -1007,12 +1008,11 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassRemovedActionFrom: ann [
 	"A class has been removed, we should update the package adequately."
-	
-	| class className |	
+
+	| class className |
 	class := ann classRemoved.
-	className  := class originalName.
-		
-	self fullyRemoveClassNamed: className.
+	className := class originalName.
+	self fullyRemoveClassNamed: className
 ]
 
 { #category : #'system integration' }
@@ -1218,24 +1218,23 @@ RPackageOrganizer >> unregister [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
-	| extendingPackageForClass |
-	
-	extendingPackageForClass := classExtendingPackagesMapping 
-		at: aClass instanceSide name 
-		ifAbsent: [ nil ].
-	extendingPackageForClass ifNotNil: [ 
-		extendingPackageForClass 
-			remove: aPackage 
-			ifAbsent: [] "not happy with this one" ]
+
+	self
+		unregisterExtendingPackage: aPackage
+		forClassName: aClass instanceSide name
 ]
 
 { #category : #'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClassName: aClassName [
 
-	| cur |
-
-	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [ nil ].
-	cur ifNotNil: [ cur remove: aPackage ifAbsent: [ "not happy with this one" ] ]
+	| extendingPackageForClass |
+	extendingPackageForClass := classExtendingPackagesMapping
+		                            at: aClassName asSymbol
+		                            ifAbsent: [ nil ].
+	extendingPackageForClass ifNotNil: [
+		extendingPackageForClass
+			remove: aPackage
+			ifAbsent: [ "not happy with this one" ] ]
 ]
 
 { #category : #'system integration' }
