@@ -746,10 +746,14 @@ RPackage >> importClass: aClass [
 	Pay attention that it will not import anything from the metaClass side"
 
 	self basicImportClass: aClass.
-	self basicImportClass: aClass classSide.	
-	self 
-		addClassDefinition:  aClass
-		toClassTag: (self toTagName: aClass category)
+	self basicImportClass: aClass classSide.
+	self
+		addClassDefinition: aClass
+		toClassTag: (self toTagName: aClass category).
+
+	"If we install a new class, chances are the slot initialization added methods to it before installation.
+	Thus, we need to package those methods too at this point."
+	aClass methods do: [ :e | self addMethod: e ]
 ]
 
 { #category : #private }
