@@ -244,17 +244,25 @@ SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
 ]
 
 { #category : #query }
-SystemNavigation >> allUnimplementedCalls [
+SystemNavigation >> allSentNotImplementedSelectors [
 
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
-	^ self allMethods select: [ :meth | 
+	^ self allMethods select: [ :method |
 		  | ignored |
-		  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
-			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-			             ifNil: [ #(  ) ].
-		  meth messages anySatisfy: [ :m | 
+		  ignored := method allIgnoredNotImplementedSelectors.
+
+		  method messages anySatisfy: [ :m |
 			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
+]
+
+{ #category : #query }
+SystemNavigation >> allUnimplementedCalls [
+	"call is not a good term here, these are selectors"
+	self
+		deprecated: 'Changed selector for coherency'
+		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentNotImplementedSelectors'.
+	^self allSentNotImplementedSelectors
 ]
 
 { #category : #query }

@@ -21,9 +21,14 @@ ReSentNotImplementedRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	| problemSends |
+	| ignored problemSends |
+
+	ignored := aMethod allIgnoredNotImplementedSelectors.
+
 	problemSends := aMethod sendNodes reject: [ :msgSend |
 		                msgSend selector isSelectorSymbol ].
+	problemSends := problemSends reject: [:each | ignored includes: each selector].
+
 	problemSends do: [ :msgSend |
 		aCriticBlock cull: (self
 				 createTrivialCritiqueOn: aMethod
