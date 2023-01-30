@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-ExampleRadioButtonModel class >> isDeprecated [ 
+ExampleRadioButtonModel class >> isDeprecated [
 	^ true
 ]

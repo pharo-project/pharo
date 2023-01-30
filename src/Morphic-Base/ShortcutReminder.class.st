@@ -41,9 +41,9 @@ ShortcutReminder class >> enabled: aBoolean [
 ]
 
 { #category : #settings }
-ShortcutReminder class >> settingsOn: aBuilder [ 
+ShortcutReminder class >> settingsOn: aBuilder [
 	<systemsettings>
-	(aBuilder setting: #'Shortcut Reminder') 
+	(aBuilder setting: #'Shortcut Reminder')
 		target: self;
 		parent: #appearance;
 		default: true;
@@ -55,10 +55,10 @@ ShortcutReminder class >> settingsOn: aBuilder [
 
 { #category : #display }
 ShortcutReminder class >> showShortcut: aShortcut [
-	
+
 	(aShortcut keyText isNil or: [ self enabled not ]) ifTrue: [ ^self ].
-	
-	self defaultReminder remind: aShortcut.
+
+	self defaultReminder remind: aShortcut
 ]
 
 { #category : #accessing }
@@ -78,24 +78,24 @@ ShortcutReminder >> createKeyTextMorph: aString [
 
 	| font |
 	font := ToggleWithSymbolMenuItemShortcut canBeUsed
-		ifTrue: [ LogicalFont 
-						familyName: 'Lucida Grande' 
+		ifTrue: [ LogicalFont
+						familyName: 'Lucida Grande'
 						pointSize: self pointSize * 2 ]
 		ifFalse: [ self keyTextFont ].
 
-	^(self fixKeyText: aString) asStringMorph 
+	^(self fixKeyText: aString) asStringMorph
 		font: font emphasis: 2;
 		color: textColor;
-		yourself.
+		yourself
 ]
 
 { #category : #'private - utilities' }
 ShortcutReminder >> createLabelMorph: aString [
 
-	^aString asStringMorph 
+	^aString asStringMorph
 		font: self labelFont emphasis: 0;
 		color: textColor;
-		yourself.
+		yourself
 ]
 
 { #category : #settings }
@@ -110,7 +110,7 @@ ShortcutReminder >> createResetCountButtonMorph [
 ]
 
 { #category : #'shortcut creation' }
-ShortcutReminder >> createShortcutMorphFor: aMenuItem [ 
+ShortcutReminder >> createShortcutMorphFor: aMenuItem [
 
 	^FadingMorph new
 		addMorphBack: (self createLabelMorph: aMenuItem contents);
@@ -129,38 +129,38 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		description: 'Select one of the positons available to specify where the shortcut notification morph will be shown';
 		default: #bottomLeft;
 		domainValues: self positions.
-		
-	(aBuilder pickOne: #textSize) 
+
+	(aBuilder pickOne: #textSize)
 		order: 2;
 		target: self;
 		label: 'Size of the reminder';
 		description: 'Set the size (small medium or large) of the reminder morph shown';
 		domainValues: self sizes.
-		
+
 	(aBuilder setting: #textColor)
 		order: 3;
 		target: self;
 		label: 'Text color';
 		default: self defaultTextColor.
-		
+
 	(aBuilder setting: #backgroundColor)
 		target: self;
 		label: 'Background color';
 		default: self defaultBackgroundColor.
-		
-	(aBuilder range: #limit) 
+
+	(aBuilder range: #limit)
 		order: 6;
-		target: self; 
+		target: self;
       label: 'Notification limit' ;
 		description: 'Set the limit of how many notifications per menu entry one should be reminded about. Setting the value to -1 means that it will allways remind you' ;
 		default: self defaultLimit;
 		range: (-1 to: 100).
-		
+
 	(aBuilder group: #'Reset count')
 		order: 7;
 		target: self;
 		label: 'Reset the reminder count';
-		dialog: [ self createResetCountButtonMorph ].
+		dialog: [ self createResetCountButtonMorph ]
 ]
 
 { #category : #defaults }
@@ -207,7 +207,7 @@ ShortcutReminder >> initialize [
 	size := #small.
 	position := #bottomLeft.
 	backgroundColor := self defaultBackgroundColor.
-	textColor := self defaultTextColor.
+	textColor := self defaultTextColor
 ]
 
 { #category : #private }
@@ -230,7 +230,7 @@ ShortcutReminder >> large [
 
 { #category : #accessing }
 ShortcutReminder >> limit [
-	
+
 	^limit
 ]
 
@@ -262,30 +262,28 @@ ShortcutReminder >> position [
 ShortcutReminder >> position: aSymbol [
 
 	(self positions includes: aSymbol) ifFalse: [ self error ].
-	
+
 	position := aSymbol
 ]
 
 { #category : #'shortcut creation' }
 ShortcutReminder >> positionShortcut: aMorph [
-	
+
 	| area |
-	
-	area := self currentWorld clearArea insetBy: 3. 
-	
-	aMorph 
+
+	area := self currentWorld clearArea insetBy: 3.
+
+	aMorph
 	cellPositioning: position;
-	fullBounds. 
+	fullBounds.
 	"the layout has to be computed before changing the position."
-	
+
 	"#position: setter makes sure that just these are possible, no need for #perform:"
 	position == #topLeft ifTrue: [^aMorph topLeft: (position value: area) ].
 	position == #topRight  ifTrue: [ ^aMorph topRight: (position value: area) ].
 	position == #center  ifTrue: [ ^aMorph center: (position value: area) ].
 	position == #bottomLeft  ifTrue: [ ^aMorph bottomLeft: (position value: area) ].
-	position == #bottomRight ifTrue: [ ^aMorph bottomRight: (position value: area) ].
-	
-	
+	position == #bottomRight ifTrue: [ ^aMorph bottomRight: (position value: area) ]
 ]
 
 { #category : #private }
@@ -295,39 +293,39 @@ ShortcutReminder >> positions [
 ]
 
 { #category : #'shortcut creation' }
-ShortcutReminder >> remind: aMenuItem [ 
+ShortcutReminder >> remind: aMenuItem [
 
 	| itemHash |
-	
+
 	itemHash := (aMenuItem contents hash + aMenuItem keyText hash) hashMultiply.
-	
+
 	(self wantsToShow: itemHash) ifFalse: [ ^self ].
-	
-	self 
+
+	self
 	show: aMenuItem;
-	updateCount: itemHash.
+	updateCount: itemHash
 ]
 
 { #category : #settings }
 ShortcutReminder >> resetCount [
 
-	countDict := Dictionary new.
+	countDict := Dictionary new
 ]
 
 { #category : #'shortcut creation' }
 ShortcutReminder >> show: aMenuItem [
 
 	| shortcutMorph |
-	
+
 	shortcutMorph := self createShortcutMorphFor: aMenuItem.
-	
+
 	self positionShortcut: shortcutMorph.
-	
-	shortcutMorph openInWorld.
+
+	shortcutMorph openInWorld
 ]
 
 { #category : #private }
-ShortcutReminder >> sizes [ 
+ShortcutReminder >> sizes [
 
 	^#(#small #medium #large)
 ]
@@ -360,24 +358,24 @@ ShortcutReminder >> textSize [
 ShortcutReminder >> textSize: aSymbol [
 
 	(self sizes includes: aSymbol) ifFalse: [ self error ].
-	
+
 	size := aSymbol
 ]
 
 { #category : #private }
 ShortcutReminder >> updateCount: aHashValue [
-	
+
 	| value |
-	
+
 	value := countDict at: aHashValue ifAbsent: [ 0 ].
-	
-	countDict at: aHashValue put: value + 1.
+
+	countDict at: aHashValue put: value + 1
 ]
 
 { #category : #queries }
 ShortcutReminder >> wantsToShow: aHashValue [
-	
-	^limit < 0 or: [ 
+
+	^limit < 0 or: [
 		(countDict at: aHashValue ifAbsent: [ 0 ]) < limit
 	]
 ]

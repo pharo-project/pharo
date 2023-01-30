@@ -16,14 +16,14 @@ Class {
 
 { #category : #'instance creation' }
 FTExampleMethodListDataSource class >> for: aClass [
-	^ self basicNew 
+	^ self basicNew
 		initializeClass: aClass;
 		yourself
 ]
 
 { #category : #accessing }
 FTExampleMethodListDataSource >> cellColumn: column row: rowIndex [
- 
+
 	^ FTCellMorph new
 		cellInset: 5;
 		addMorphBack: (self iconFor: rowIndex) asMorph;
@@ -52,15 +52,15 @@ FTExampleMethodListDataSource >> initializeClass: aClass [
 { #category : #accessing }
 FTExampleMethodListDataSource >> menuColumn: column row: rowIndex [
 	| menu method |
-	
-	rowIndex = 0 ifTrue: [ 
-		"I could answer a menu without selection, but in this case I will just answer nil, 
+
+	rowIndex = 0 ifTrue: [
+		"I could answer a menu without selection, but in this case I will just answer nil,
 		 which means 'no menu'"
 		^ nil ].
-	
+
 	method := (self elementAt: rowIndex) method.
 	menu := UIManager default newMenuIn: self table for: self.
-	menu add: ('Browse ', (method methodClass name), '>>#', method selector) 
+	menu add: ('Browse ', (method methodClass name), '>>#', method selector)
 		target: method
 		selector: #browse.
 	menu add: ('Inspect #', (method methodClass name), '>>#', method selector)
@@ -73,7 +73,7 @@ FTExampleMethodListDataSource >> menuColumn: column row: rowIndex [
 { #category : #accessing }
 FTExampleMethodListDataSource >> searchText: aString [
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
-	
+
 	self elements withIndexDo: [ :each :index |
 		( each name beginsWith: aString)
 			ifTrue: [ ^ { index } ] ].

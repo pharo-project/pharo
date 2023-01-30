@@ -34,8 +34,8 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 		yourself.
 
 	morph addMorph: subMorph.
-	
-	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds.
+
+	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds
 ]
 
 { #category : #'testing - geometry' }
@@ -212,7 +212,7 @@ MorphTest >> testIntoWorldTransferToNewGuy [
 
 { #category : #'testing - classification' }
 MorphTest >> testIsMorph [
-	self assert: (morph isMorph).
+	self assert: (morph isMorph)
 ]
 
 { #category : #'testing - initialization' }

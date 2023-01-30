@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 PanelMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self assureExtension.
@@ -21,13 +21,13 @@ PanelMorph >> adoptPaneColor: paneColor [
 { #category : #protocol }
 PanelMorph >> checkMorphsLeftOrTopFrom: splitter [
 	| index size |
-	
+
 	size := submorphs size.
 	index := submorphs identityIndexOf: splitter.
-	
+
 	index := index + 1.
-	
-	[ index <= size ] whileTrue: [ 
+
+	[ index <= size ] whileTrue: [
 		| submorph done |
 		submorph := submorphs at: index.
 		splitter addLeftOrTop: submorph.
@@ -40,12 +40,12 @@ PanelMorph >> checkMorphsLeftOrTopFrom: splitter [
 { #category : #protocol }
 PanelMorph >> checkMorphsLeftOrTopFrom: splitter size: size [
 	| index |
-	
+
 	index := submorphs identityIndexOf: splitter.
-	
+
 	index := index + 1.
-	
-	[ index <= size ] whileTrue: [ 
+
+	[ index <= size ] whileTrue: [
 		| submorph done |
 		submorph := submorphs at: index.
 		splitter addLeftOrTop: submorph.
@@ -58,10 +58,10 @@ PanelMorph >> checkMorphsLeftOrTopFrom: splitter size: size [
 { #category : #protocol }
 PanelMorph >> checkMorphsRightOrBottomFrom: splitter [
 	| index |
-	
+
 	index := submorphs identityIndexOf: splitter.
 	index := index - 1.
-	
+
 	[ index > 0 ] whileTrue: [ | submorph done |
 		submorph := submorphs at: index.
 		splitter addRightOrBottom: submorph.
@@ -72,7 +72,7 @@ PanelMorph >> checkMorphsRightOrBottomFrom: splitter [
 
 { #category : #protocol }
 PanelMorph >> checkSplitters [
-		
+
 	(self submorphsSatisfying: [ :e | e isKindOf: ProportionalSplitterMorph ])
 		do: [ :splitter |
 			self checkMorphsLeftOrTopFrom: splitter.
@@ -82,7 +82,7 @@ PanelMorph >> checkSplitters [
 { #category : #initialization }
 PanelMorph >> defaultBorderWidth [
 	"Answer the default border width for the receiver."
-	
+
 	^0
 ]
 
@@ -103,7 +103,7 @@ PanelMorph >> enabled: aBoolean [
 { #category : #'events-processing' }
 PanelMorph >> handleMouseOver: anEvent [
 	"System level event handling."
-	
+
 	super handleMouseOver: anEvent.
 	(self handlesMouseOver: anEvent) ifTrue:[
 		anEvent wasHandled: true.
@@ -152,7 +152,7 @@ PanelMorph >> newHSplitter [
 
 	^ ProportionalSplitterMorph new
 			beSplitsTopAndBottom;
-			setProperty: #model toValue: self.
+			setProperty: #model toValue: self
 ]
 
 { #category : #protocol }
@@ -164,8 +164,8 @@ PanelMorph >> newHSplitterAt: anIndex [
 	above := self submorphs at: index.
 	frame := above layoutFrame.
 	splitter := self newHSplitter.
-	splitter  layoutFrame:  ((frame leftFraction @ frame bottomFraction corner: frame rightFraction @ frame bottomFraction) asLayoutFrame 
-										bottomOffset: 4).			
+	splitter  layoutFrame:  ((frame leftFraction @ frame bottomFraction corner: frame rightFraction @ frame bottomFraction) asLayoutFrame
+										bottomOffset: 4).
 	self privateAddMorph: splitter atIndex: (size - anIndex + 2)
 ]
 
@@ -173,7 +173,7 @@ PanelMorph >> newHSplitterAt: anIndex [
 PanelMorph >> newVSplitter [
 
 	^ ProportionalSplitterMorph new
-			setProperty: #model toValue: self.
+			setProperty: #model toValue: self
 ]
 
 { #category : #protocol }
@@ -184,9 +184,9 @@ PanelMorph >> newVSplitterAt: anIndex [
 	index := size - anIndex + 2.
 	left := self submorphs at: index.
 	frame := left layoutFrame.
-	
+
 	splitter := self newVSplitter.
-	splitter 
+	splitter
 		layoutFrame: ((frame rightFraction @ frame topFraction corner: frame rightFraction @ frame bottomFraction) asLayoutFrame
 							 rightOffset: 4).
 
