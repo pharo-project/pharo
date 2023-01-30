@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBCreateAccessorsWithLazyInitializationForVariableRefactoring };
+		addCase: { #rbClass -> RBCreateLazyAccessorsForVariableTransformation };
 		addCase: { #rbClass -> RBAddVariableAccessorWithLazyInitializationTransformation };
 		yourself
 ]
@@ -42,10 +42,10 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingClas
 	refactoring := self createRefactoringWithArguments:
 		{ 'Name1' . RBLintRuleTestData . true . nil }.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class classSide parseTreeFor: #name1) 
+	self assert: (class classSide parseTreeForSelector: #name1) 
 		equals: (self parseMethod: 'name1 ^Name1').
 	self executeRefactoring: refactoring.
-	self assert: (class classSide parseTreeFor: #name1) 
+	self assert: (class classSide parseTreeForSelector: #name1) 
 		equals: (self parseMethod: 'name1 ^Name1 ifNil: [Name1 := nil]').
 ]
 
@@ -55,10 +55,10 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInst
 	refactoring := self createRefactoringWithArguments: 
 		{ 'name' . RBLintRuleTestData . false . nil }.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class parseTreeFor: #name) 
+	self assert: (class parseTreeForSelector: #name) 
 		equals: (self parseMethod: 'name ^name').
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #name) 
+	self assert: (class parseTreeForSelector: #name) 
 		equals: (self parseMethod: 'name ^name ifNil: [name := nil]').
 ]
 
@@ -70,9 +70,9 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVari
 	self executeRefactoring: ref.
 	class := ref model metaclassNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
-	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^Foo1 ifNil: [ Foo1 := ''someString'' ]').
-	self assert: (((class parseTreeFor: #foo1:) = (self parseMethod: 'foo1: anObject ^ Foo1 := anObject')) 
-		or: [ (class parseTreeFor: #foo1:) = (self parseMethod: 'foo1: anObject Foo1 := anObject') ])
+	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^Foo1 ifNil: [ Foo1 := ''someString'' ]').
+	self assert: (((class parseTreeForSelector: #foo1:) = (self parseMethod: 'foo1: anObject ^ Foo1 := anObject')) 
+		or: [ (class parseTreeForSelector: #foo1:) = (self parseMethod: 'foo1: anObject Foo1 := anObject') ])
 ]
 
 { #category : #tests }
@@ -83,8 +83,8 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewInstanceV
 	self executeRefactoring: ref.
 	class := ref model classNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
-	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^foo1 ifNil: [foo1 := 123]').
-	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
+	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^foo1 ifNil: [foo1 := 123]').
+	self assert: (class parseTreeForSelector: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
 { #category : #'failure tests' }

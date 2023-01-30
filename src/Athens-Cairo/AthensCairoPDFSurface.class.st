@@ -16,6 +16,6 @@ Class {
 AthensCairoPDFSurface class >> createExportingTo: fileName width: width height: height [
 	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create(
 			String fileName,
-			double width, 
+			double width,
 			double height) )
 ]

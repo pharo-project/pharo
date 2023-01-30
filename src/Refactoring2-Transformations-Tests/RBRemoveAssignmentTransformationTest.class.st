@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveAssignmentTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #utilities }
@@ -74,8 +74,8 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 	self assert: refactoring model changes changes size equals: 1.
 	
 	class := refactoring model classNamed: #RBRemoveAssignmentTransformationTest.
-	self assert: (class parseTreeFor: #methodBefore) body
-			equals: (class parseTreeFor: #methodAfter) body.
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body.
 ]
 
 { #category : #tests }
@@ -92,8 +92,8 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 1.
 	
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeFor: #methodBefore) body
-			equals: (class parseTreeFor: #methodAfter) body.
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body.
 ]
 
 { #category : #tests }

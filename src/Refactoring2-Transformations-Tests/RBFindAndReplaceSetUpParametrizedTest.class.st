@@ -1,7 +1,7 @@
 Class {
 	#name : #RBFindAndReplaceSetUpParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -31,16 +31,16 @@ RBFindAndReplaceSetUpParametrizedTest >> testReplaceSetUp [
 	class compile: 'setUp self someClasses. aString := ''Example''.'
 		classified: #(#accessing).
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #testExample1) 
+	self assert: (class parseTreeForSelector: #testExample1) 
 		equals: (self parseMethod: 'testExample1 
 		self assert: 4 > 5 equals: false').
-	self assert: (class parseTreeFor: #testExample2) 
+	self assert: (class parseTreeForSelector: #testExample2) 
 		equals: (self parseMethod: 'testExample2
 		self assert: true').
-	self assert: (class parseTreeFor: #testExample3) 
+	self assert: (class parseTreeForSelector: #testExample3) 
 		equals: (self parseMethod: 'testExample3
 		self deny: false').
-	self assert: (class parseTreeFor: #testExample4) 
+	self assert: (class parseTreeForSelector: #testExample4) 
 		equals: (self parseMethod: 'testExample4
 		self assert: true.
 		self deny: false').

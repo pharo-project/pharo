@@ -16,13 +16,13 @@ FileSystemPermission class >> default [
 ]
 
 { #category : #'instance creation' }
-FileSystemPermission class >> new [ 
+FileSystemPermission class >> new [
 	self error: 'Should not be called. Use #posixPermission: instead'
 ]
 
 { #category : #'instance creation' }
 FileSystemPermission class >> posixPermissions: aNumber [
-	^self basicNew 
+	^self basicNew
 		initialize: aNumber;
 		yourself
 ]
@@ -76,7 +76,7 @@ FileSystemPermission >> hash [
 { #category : #initialization }
 FileSystemPermission >> initialize: aNumber [
 	posixPermission := aNumber.
-	self initialize.
+	self initialize
 ]
 
 { #category : #testing }
@@ -131,7 +131,7 @@ FileSystemPermission >> posixPermission [
 
 { #category : #printing }
 FileSystemPermission >> printOn: aStream [
-	aStream 
+	aStream
 		"Owner"
 		nextPut: (self ownerRead ifTrue: [ $r ] ifFalse: [ $- ]);
 		nextPut: (self ownerWrite ifTrue: [ $w ] ifFalse: [ $- ]);

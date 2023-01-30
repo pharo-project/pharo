@@ -1,6 +1,6 @@
 Class {
 	#name : #DependencyTest,
-	#superclass : #UtilityTest,
+	#superclass : #MockTest,
 	#classInstVars : [
 		'data'
 	],

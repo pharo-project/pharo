@@ -27,7 +27,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethod [
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #name:)
+		self assert: (each parseTreeForSelector: #name:)
 			equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
@@ -42,21 +42,9 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodOnNonAbstractClass [
 { #category : #'failure tests' }
 RBPushDownMethodParametrizedTest >> testPushDownMethodSubclassesReferToSelector [
 	| refactoring |
-	model defineClass: 'Object subclass: #Superclass 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Superclass subclass: #Foo1 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Superclass subclass: #Foo2 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #Superclass package: #''Refactory-Test data'''.
+	model defineClass: 'Superclass << #Foo1 package: #''Refactory-Test data'''.
+	model defineClass: 'Superclass << #Foo2 package: #''Refactory-Test data'''.
 	(model classNamed: #Superclass) compile: 'yourself ^1' classified: #(#accessing).
 	(model classNamed: #Foo1) compile: 'method1 ^super yourself' classified: #(#accessing).
 	
@@ -70,7 +58,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodSubclassesReferToSelector 
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictionary [
 	| refactoring class parseTree |
-	parseTree := RBLintRuleTestData parseTreeFor: #junk.
+	parseTree := RBLintRuleTestData parseTreeForSelector: #junk.
 	refactoring := self createRefactoringWithArguments: 
 		{ #(#junk ) . RBLintRuleTestData }.
 	self executeRefactoring: refactoring asRefactoring.
@@ -78,7 +66,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictiona
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #junk) equals: parseTree.
+		self assert: (each parseTreeForSelector: #junk) equals: parseTree.
 		self assert: (each definesPoolDictionary: 'TextConstants' asSymbol) ]
 ]
 

@@ -140,10 +140,11 @@ AbstractWorldRenderer class >> priority [
 { #category : #'system startup' }
 AbstractWorldRenderer class >> shutDown: quitting [
 
+	MainWorldRenderer ifNotNil: [ :aRenderer | 
+		aRenderer shutDown: quitting ]. 
+	
 	quitting ifFalse: [ ^ self ].
-
-	[ MainWorldRenderer ifNotNil: [ :e | e deactivate ] ] ensure: [ 
-		MainWorldRenderer := nil ]
+	MainWorldRenderer := nil
 ]
 
 { #category : #profiling }
@@ -156,7 +157,9 @@ AbstractWorldRenderer class >> startProfilingRenderingTime [
 { #category : #'system startup' }
 AbstractWorldRenderer class >> startUp: isANewSession [
 
-	isANewSession ifTrue: [ MainWorldRenderer := nil ]
+	isANewSession ifTrue: [ MainWorldRenderer := nil ].
+	MainWorldRenderer ifNotNil: [ 
+		MainWorldRenderer startUp: isANewSession ]
 ]
 
 { #category : #profiling }
@@ -324,6 +327,17 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world defer: [Cursor normal show].
 		
 	world layoutChanged.
+]
+
+{ #category : #'system startup' }
+AbstractWorldRenderer >> shutDown: quitting [
+
+	quitting ifTrue: [ self deactivate ]
+]
+
+{ #category : #'system startup' }
+AbstractWorldRenderer >> startUp: resuming [ 
+
 ]
 
 { #category : #rendering }

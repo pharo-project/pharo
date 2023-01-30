@@ -67,8 +67,8 @@ IntegerTest >> testAsStringWithCommas [
 IntegerTest >> testBadBase [
 	"This used to get into an endless loop.
 	See Pharo #114"
-	
-	self should: [2 printStringBase: 1] raise: Error.
+
+	self should: [2 printStringBase: 1] raise: Error
 ]
 
 { #category : #'tests - bitLogic' }
@@ -77,7 +77,7 @@ IntegerTest >> testBitAnd [
 	self assert: (2r1100 bitAnd: 2r1010) equals: 2r1000.
 	self assert: (2r1100 & 2r1010) equals: 2r1000.
 	self assert: (-2 bitAnd: 16rFFFFFFFF) equals: 16rFFFFFFFE.
-	self assert: (-2 & 16rFFFFFFFF) equals: 16rFFFFFFFE.
+	self assert: (-2 & 16rFFFFFFFF) equals: 16rFFFFFFFE
 ]
 
 { #category : #'tests - bitLogic' }
@@ -93,14 +93,14 @@ IntegerTest >> testBitAt [
 
 	trials := #('2r10010011' '2r11100100' '2r10000000' '2r0000101011011001' '2r1000101011011001' '2r0101010101011000' '2r0010011110110010' '2r0010011000000000' '2r00100111101100101000101011011001' '2r01110010011110110010100110101101' '2r10101011101011001010000010110110' '2r10101000000000000000000000000000' '2r0010101110101001110010100000101101100010011110110010100010101100' '2r1010101110101100101000001011011000100111101100101000101011011001' '2r1010101110101000000000000000000000000000000000000000000000000000').
 	trials
-		do: [ :bitSequence | 
+		do: [ :bitSequence |
 			| aNumber |
 			aNumber := Number readFrom: bitSequence.
 			bitSequence2 := (bitSequence size - 2 to: 1 by: -1) inject: '2r' into: [ :string :i | string copyWith: (Character digitValue: (aNumber bitAt: i)) ].
 			self assert: bitSequence2 equals: bitSequence ].
 
 	trials
-		do: [ :bitSequence | 
+		do: [ :bitSequence |
 			| bitInvert |
 			bitInvert := -1 - (Number readFrom: bitSequence).
 			bitSequence2 := (bitSequence size - 2 to: 1 by: -1) inject: '2r' into: [ :string :i | string copyWith: (Character digitValue: 1 - (bitInvert bitAt: i)) ].
@@ -113,13 +113,13 @@ IntegerTest >> testBitClear [
 	self assert: (2r1111 bitClear: 2r1000) equals: 2r0111.
 	self assert: (2r1111 bitClear: 2r0100) equals: 2r1011.
 	self assert: (2r1111 bitClear: 2r0010) equals: 2r1101.
-	self assert: (2r1111 bitClear: 2r0001) equals: 2r1110.
+	self assert: (2r1111 bitClear: 2r0001) equals: 2r1110
 ]
 
 { #category : #'tests - bitLogic' }
-IntegerTest >> testBitLogic [  
+IntegerTest >> testBitLogic [
 	"This little suite of tests is designed to verify correct operation of most of Pharo's bit manipulation code, including two's complement representation of negative values.  It was written in a hurry and is probably lacking several important checks."
-	
+
 	| n |
 	"Shift 1 bit left then right and test for 1"
 	1 to: 100 do: [:i | self assert: ((1 bitShift: i) bitShift: i negated) equals: 1].
@@ -134,17 +134,17 @@ IntegerTest >> testBitLogic [
 	1 to: 100 do: [:i |  n := 1 bitShift: i. self assert: (n bitAnd: n negated) equals: n].
 
 	"Verify that n negated = (n complemented + 1) for single bits"
-	1 to: 100 do: [:i | 
-					n := 1 bitShift: i. 
+	1 to: 100 do: [:i |
+					n := 1 bitShift: i.
 					self assert: n negated equals: ((n bitXor: -1) + 1)].
 
 	"Verify that (n + n complemented) = -1 for single bits"
-	1 to: 100 do: [:i | 
+	1 to: 100 do: [:i |
 					n := 1 bitShift: i.
 					self assert: (n + (n bitXor: -1)) equals: -1].
 
 	"Verify that n negated = (n complemented +1) for single bits"
-	1 to: 100 do: [:i | 
+	1 to: 100 do: [:i |
 					n := 1 bitShift: i.
 					self assert: n negated equals: ((n bitXor: -1) + 1)]
 ]
@@ -155,10 +155,10 @@ IntegerTest >> testBitMask [
 	self assert: (2r11 allMask: 2r11).
 	self deny: (2r10 allMask: 2r11).
 	self deny: (2r01 allMask: 2r11).
-	
+
 	self assert: (2r10 anyMask: 2r11).
 	self assert: (2r01 anyMask: 2r11).
-	self deny: (2r00 anyMask: 2r11).
+	self deny: (2r00 anyMask: 2r11)
 ]
 
 { #category : #'tests - bitLogic' }
@@ -167,40 +167,40 @@ IntegerTest >> testBitShift [
 	self assert: 2r11 << 2 equals: 2r1100.
 	self assert: (2r11 bitShift: 2) equals: 2r1100.
 	self assert: 2r1011 >> 2 equals: 2r10.
-	self assert: (2r1011 bitShift: -2) equals: 2r10.
+	self assert: (2r1011 bitShift: -2) equals: 2r10
 ]
 
 { #category : #'tests - bitLogic' }
 IntegerTest >> testBitString [
-		
+
 	Smalltalk vm wordSize = 4
 		ifTrue: [
 			self assert: 2 bitString equals: '0000000000000000000000000000010'.
 			self assert: -1 bitString equals: '1111111111111111111111111111111'.
 			self assert: -2 bitString equals: '1111111111111111111111111111110'.
-			self assert: 2 bitStringLength equals: 31 ]. 
+			self assert: 2 bitStringLength equals: 31 ].
 	Smalltalk vm wordSize = 8
 		ifTrue: [
 			self assert: 2 bitString equals: '0000000000000000000000000000000000000000000000000000000000010'.
 			self assert: -1 bitString equals: '1111111111111111111111111111111111111111111111111111111111111'.
 			self assert: -2 bitString equals: '1111111111111111111111111111111111111111111111111111111111110'.
-			self assert: 2 bitStringLength equals: 61 ]. 
+			self assert: 2 bitStringLength equals: 61 ].
 	"32 minus 1 for immediate encoding = 31 = 30 for number + 1 for sign"
 	"64 minus 3 for immediate encoding = 61 = 60 for number + 1 for sign"
-	self assert: 2 bitStringLength equals: (SmallInteger maxVal highBit + 1).
+	self assert: 2 bitStringLength equals: (SmallInteger maxVal highBit + 1)
 ]
 
 { #category : #'tests - bitLogic' }
 IntegerTest >> testBitXor [
 
-	self assert: (2r1100 bitXor: 2r1010) equals: 2r0110.
+	self assert: (2r1100 bitXor: 2r1010) equals: 2r0110
 ]
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testCreationFromBytes1 [
-	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4: 
+	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4:
 	 reconstructs SmallInteger maxVal as an instance of SmallInteger."
-  
+
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
 	Smalltalk vm wordSize = 4 ifFalse: [ ^ self skip ].
 	maxSmallInt := SmallInteger maxVal.
@@ -217,7 +217,7 @@ IntegerTest >> testCreationFromBytes1 [
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testCreationFromBytes2 [
-	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4: 
+	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4:
 	 reconstructs (SmallInteger maxVal + 1) as an instance of LargePositiveInteger."
 
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
@@ -240,9 +240,9 @@ IntegerTest >> testCreationFromBytes2 [
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testCreationFromBytes3 [
-	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4: 
+	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4:
 	 reconstructs (SmallInteger maxVal - 1) as an instance of SmallInteger."
-	
+
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
 	Smalltalk vm wordSize = 4 ifFalse: [ ^ self skip ].
 	maxSmallInt := SmallInteger maxVal.
@@ -260,10 +260,10 @@ IntegerTest >> testCreationFromBytes3 [
 { #category : #'tests - arithmetic' }
 IntegerTest >> testCrossSumBase [
 
-	self assert: ((-20 to: 20) collect: [:each | each crossSumBase: 10]) asArray   
+	self assert: ((-20 to: 20) collect: [:each | each crossSumBase: 10]) asArray
 		  equals: #(2 10 9 8 7 6 5 4 3 2 1 9 8 7 6 5 4 3 2 1 0 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 10 2).
 
-	self assert: ((-20 to: 20) collect: [:each | each crossSumBase: 2]) asArray 
+	self assert: ((-20 to: 20) collect: [:each | each crossSumBase: 2]) asArray
 		  equals: #(2 3 2 2 1 4 3 3 2 3 2 2 1 3 2 2 1 2 1 1 0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2).
 
 	self should: [ 10 crossSumBase: 1 ] raise: AssertionFailure
@@ -271,7 +271,7 @@ IntegerTest >> testCrossSumBase [
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testDifferentBases [
- 
+
 	"| value |
 	2 to: 36 do: [:each|
 		value := 0.
@@ -357,7 +357,7 @@ IntegerTest >> testDifferentBases [
 	self assert: -33rWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -128983956064237823710866404905431464703849549412368.
 	self assert: -34rXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -11745843093701610854378775891116314824081102660800418.
 	self assert: -35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -1101553773143634726491620528194292510495517905608180485.
-	self assert: -36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -106300512100105327644605138221229898724869759421181854980.
+	self assert: -36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -106300512100105327644605138221229898724869759421181854980
 ]
 
 { #category : #'tests - other' }
@@ -374,13 +374,13 @@ IntegerTest >> testDigitSumOnNegative [
 
 { #category : #'tests - basic' }
 IntegerTest >> testEven [
-	
+
 	self deny: (1073741825 even).
-	self assert: (1073741824  even).
+	self assert: (1073741824  even)
 ]
 
 { #category : #'tests - bitLogic' }
-IntegerTest >> testFactorial [	
+IntegerTest >> testFactorial [
 	"Check some know values"
 	self assert: 0 factorial equals: 1.
 	self assert: 1 factorial equals: 1.
@@ -398,6 +398,14 @@ IntegerTest >> testHex [
 	self assert: 1234 hex equals: '16r4D2'
 ]
 
+{ #category : #'tests - printing' }
+IntegerTest >> testHexString [
+	self assert: 0 hexString equals: '16r0'.
+	self assert: 12 hexString equals: '16rC'.
+	self assert: 1234 hexString equals: '16r4D2'.
+	self assert: -1234 hexString equals: '-16r4D2'
+]
+
 { #category : #'tests - bitLogic' }
 IntegerTest >> testHighBit [
 	| suite |
@@ -409,7 +417,7 @@ IntegerTest >> testHighBit [
 	suite := suite , (suite collect: [ :e | e raisedTo: 20 ]).
 
 	suite
-		do: [ :anInteger | 
+		do: [ :anInteger |
 			| highBit shifted |
 			highBit := 0.
 			shifted := 1.
@@ -426,7 +434,7 @@ IntegerTest >> testHighBitOfMagnitude [
 	suite := suite , (suite collect: [ :e | e raisedTo: 20 ]).
 
 	suite
-		do: [ :anInteger | 
+		do: [ :anInteger |
 			| highBit shifted |
 			highBit := 0.
 			shifted := 1.
@@ -435,6 +443,21 @@ IntegerTest >> testHighBitOfMagnitude [
 					shifted := shifted bitShift: 1 ].
 			self assert: anInteger highBitOfMagnitude equals: highBit.
 			self assert: anInteger negated highBitOfMagnitude equals: highBit ]
+]
+
+{ #category : #'tests - other' }
+IntegerTest >> testHumanReadableSISizeString [
+	self assert: 1000 humanReadableSISizeString equals: '1.00 kB'.
+	self assert: 1024 humanReadableSISizeString equals: '1.02 kB'.
+
+	self assert: (1000 * 1000) humanReadableSISizeString equals: '1.00 MB'.
+	self assert: (1024 * 1024) humanReadableSISizeString equals: '1.05 MB'.
+
+	self assert: (1000 * 1000 * 1000) humanReadableSISizeString equals: '1.00 GB'.
+	self assert: (1024 * 1024 * 1024) humanReadableSISizeString equals: '1.07 GB'.
+
+	self assert: (1000 * 1000 * 1000 * 1000) humanReadableSISizeString equals: '1.00 TB'.
+	self assert: (1024 * 1024 * 1024 * 1024) humanReadableSISizeString equals: '1.10 TB'
 ]
 
 { #category : #'tests - printing' }
@@ -452,7 +475,7 @@ IntegerTest >> testIntegerHex [
 
 { #category : #'tests - printing' }
 IntegerTest >> testIntegerPadding [
- 
+
 	self assert: (1 printStringBase: 10 length: 0 padded: false) equals: '1'.
 	self assert: (1 printStringBase: 10 length: 1 padded: false) equals: '1'.
 	self assert: (1 printStringBase: 10 length: 2 padded: false) equals: ' 1'.
@@ -531,14 +554,14 @@ IntegerTest >> testIntegerReadsNotOkFromStream [
 	self should: [Integer readFrom: 'a23' readStream] raise: Error.
 	self should: [Integer readFrom: '-a23' readStream] raise: Error.
 	self should: [Integer readFrom: 'a3' readStream base: 8] raise: Error.
-	self should: [Integer readFrom: '-a3' readStream base: 8] raise: Error.
+	self should: [Integer readFrom: '-a3' readStream base: 8] raise: Error
 ]
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testIntegerReadsNotOkFromString [
 	self should: [Integer readFrom: 'aaa'] raise: Error.
 	self should: [Integer readFrom: '-aaa'] raise: Error.
-	self should: [Integer readFrom: 'a3' base: 8] raise: Error.
+	self should: [Integer readFrom: 'a3' base: 8] raise: Error
 ]
 
 { #category : #'tests - instance creation' }
@@ -560,7 +583,7 @@ IntegerTest >> testIntegerReadsOkFromString [
 ]
 
 { #category : #'tests - other' }
-IntegerTest >> testIsAbstract [ 
+IntegerTest >> testIsAbstract [
 
 	self assert: Integer isAbstract
 ]
@@ -568,7 +591,7 @@ IntegerTest >> testIsAbstract [
 { #category : #'tests - basic' }
 IntegerTest >> testIsInteger [
 
-	self assert: (0 isInteger).
+	self assert: (0 isInteger)
 ]
 
 { #category : #'tests - basic' }
@@ -596,7 +619,7 @@ IntegerTest >> testIsPowerOfTwoM6873 [
 	"This is a non regression test for http://bugs.squeak.org/view.php?id=6873"
 
 	self deny: ((1 to: 80) anySatisfy: [:n | (2 raisedTo: n) negated isPowerOfTwo])
-		description: 'A negative integer cannot be a power of two'.
+		description: 'A negative integer cannot be a power of two'
 ]
 
 { #category : #'tests - bitLogic' }
@@ -611,7 +634,7 @@ IntegerTest >> testLowBit [
 	suite := suite , (suite collect: [ :e | e raisedTo: 20 ]).
 
 	suite
-		do: [ :anInteger | 
+		do: [ :anInteger |
 			| lowBit |
 			lowBit := (anInteger respondsTo: #bitAt:)
 				ifTrue: [ (1 to: anInteger highBit) detect: [ :bitIndex | (anInteger bitAt: bitIndex) ~= 0 ] ifNone: [ 0 ] ]
@@ -622,7 +645,7 @@ IntegerTest >> testLowBit [
 
 { #category : #'tests - printing' }
 IntegerTest >> testNegativeIntegerPrinting [
- 
+
 
 	self assert: (-2 printStringBase: 2) equals: '-10'.
 	self assert: (-2 radix: 2) equals: '-10'.
@@ -798,12 +821,12 @@ IntegerTest >> testNegativeIntegerPrinting [
 	self assert: (-106300512100105327644605138221229898724869759421181854980 radix: 36) equals: '-ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
 	self assert: -106300512100105327644605138221229898724869759421181854980 printStringHex equals: '-455D441E55A37239AB4C303189576071AF5578FFCA80504'.
 	self assert: (-106300512100105327644605138221229898724869759421181854980 storeStringBase: 36) equals: '-36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -106300512100105327644605138221229898724869759421181854980 storeStringHex equals: '-16r455D441E55A37239AB4C303189576071AF5578FFCA80504'.
+	self assert: -106300512100105327644605138221229898724869759421181854980 storeStringHex equals: '-16r455D441E55A37239AB4C303189576071AF5578FFCA80504'
 ]
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testNew [
-	self should: [Integer new] raise: self defaultTestError.
+	self should: [Integer new] raise: self defaultTestError
 ]
 
 { #category : #'tests - other' }
@@ -814,8 +837,8 @@ IntegerTest >> testNotInstantiable [
 
 { #category : #'tests - printing' }
 IntegerTest >> testNumberOfDigits [
-	2 to: 32 do: [ :b | 
-		1 to: 1000 // b do: [ :n | 
+	2 to: 32 do: [ :b |
+		1 to: 1000 // b do: [ :n |
 			| bRaisedToN |
 			bRaisedToN := b raisedTo: n.
 			self assert: (bRaisedToN - 1 numberOfDigitsInBase: b) equals: n.
@@ -1008,7 +1031,7 @@ IntegerTest >> testPositiveIntegerPrinting [
 	self assert: (106300512100105327644605138221229898724869759421181854980 radix: 36) equals: 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
 	self assert: 106300512100105327644605138221229898724869759421181854980 printStringHex equals: '455D441E55A37239AB4C303189576071AF5578FFCA80504'.
 	self assert: (106300512100105327644605138221229898724869759421181854980 storeStringBase: 36) equals: '36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 106300512100105327644605138221229898724869759421181854980 storeStringHex equals: '16r455D441E55A37239AB4C303189576071AF5578FFCA80504'.
+	self assert: 106300512100105327644605138221229898724869759421181854980 storeStringHex equals: '16r455D441E55A37239AB4C303189576071AF5578FFCA80504'
 ]
 
 { #category : #'tests - printing' }
@@ -1022,8 +1045,8 @@ IntegerTest >> testPrintOnBaseShowRadix [
 { #category : #'tests - printing' }
 IntegerTest >> testPrintSeparatedByEverySignedOn [
 	| printer |
-	printer := [ :integer :printSigned | 
-		String streamContents: [ :stream | 
+	printer := [ :integer :printSigned |
+		String streamContents: [ :stream |
 			integer
 				printSeparatedBy: $.
 				every: 3
@@ -1037,8 +1060,8 @@ IntegerTest >> testPrintSeparatedByEverySignedOn [
 
 { #category : #'tests - printing' }
 IntegerTest >> testPrintStringBase [
-	2 to: 32 do: [ :b | 
-		1 to: 1000 // b do: [ :n | 
+	2 to: 32 do: [ :b |
+		1 to: 1000 // b do: [ :n |
 			| bRaisedToN |
 			bRaisedToN := b raisedTo: n.
 			self assert: (bRaisedToN - 1 printStringBase: b) equals: (String new: n withAll: (Character digitValue: b - 1)).
@@ -1063,7 +1086,7 @@ IntegerTest >> testRaisedToErrorConditions [
 	"
 
 	self should: [ -2 raisedTo: 1/4 ] raise: ArithmeticError.
-	self should: [ -2 raisedTo: 1.24 ] raise: ArithmeticError.
+	self should: [ -2 raisedTo: 1.24 ] raise: ArithmeticError
 ]
 
 { #category : #'tests - instance creation' }
@@ -1086,14 +1109,14 @@ IntegerTest >> testReadFrom [
 { #category : #'tests - instance creation' }
 IntegerTest >> testReadFromWithError [
 	"Ensure that a string that does not represent an integer raises an error."
-	
+
 	self should: [Integer readFrom: 'invalid'] raise: Error
 ]
 
 { #category : #'tests - arithmetic' }
 IntegerTest >> testReciprocalModulo [
-	1 to: 512 do: [ :a | 
-		a + 1 to: 512 do: [ :b | 
+	1 to: 512 do: [ :a |
+		a + 1 to: 512 do: [ :b |
 			| c |
 			(a gcd: b) = 1
 				ifTrue: [ c := a reciprocalModulo: b.
@@ -1103,7 +1126,7 @@ IntegerTest >> testReciprocalModulo [
 
 { #category : #'tests - rounding' }
 IntegerTest >> testRounding [
- 
+
 	self assert: (5 round: 2) equals: 5
 ]
 
@@ -1118,7 +1141,7 @@ IntegerTest >> testSlowFactorial [
 	self assert: 4 slowFactorial equals: 24.
 	self assert: 5 slowFactorial equals: 120.
 	self assert: 6 slowFactorial equals: 720.
-	
+
    "Compare fast implementarion with existing one for the first 1000 positive integers plus zero"
 	0 to: 1000 do: [ :idx | self assert: idx slowFactorial equals: idx factorial]
 ]
@@ -1127,12 +1150,12 @@ IntegerTest >> testSlowFactorial [
 IntegerTest >> testStoreOn [
 	| integer |
 	integer := 42.
-	
+
 	self assert: (String streamContents: [ :s | integer storeOn: s ]) equals: '42'.
-	
+
 	integer := -42.
-	
-	self assert: (String streamContents: [ :s | integer storeOn: s ]) equals: ' -42'.
+
+	self assert: (String streamContents: [ :s | integer storeOn: s ]) equals: ' -42'
 ]
 
 { #category : #'tests - instance creation' }
@@ -1152,15 +1175,15 @@ IntegerTest >> testStringAsNumber [
 { #category : #'tests - bitLogic' }
 IntegerTest >> testTwoComplementBitLogicWithCarry [
 	"This is non regression test for http://bugs.squeak.org/view.php?id=6874"
-	
+
 	"By property of two complement, following operation is:
 	...111110000 this is -16
 	...111101111 this is -16-1
 	...111100000 this is -32, the result of bitAnd: on two complement
-	
+
 	This test used to fail with n=31 39 47.... because of bug 6874"
-	
-	self assert: ((2 to: 80) allSatisfy: [:n | ((2 raisedTo: n) negated bitAnd: (2 raisedTo: n) negated - 1) = (2 raisedTo: n + 1) negated]).
+
+	self assert: ((2 to: 80) allSatisfy: [:n | ((2 raisedTo: n) negated bitAnd: (2 raisedTo: n) negated - 1) = (2 raisedTo: n + 1) negated])
 ]
 
 { #category : #'tests - bitLogic' }

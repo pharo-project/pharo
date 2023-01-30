@@ -12,7 +12,7 @@ Class {
 
 { #category : #coverage }
 WeakRegistryTest >> classToBeTested [
-	
+
 	^ WeakRegistry
 ]
 
@@ -51,7 +51,7 @@ WeakRegistryTest >> testFinalizationWithBadFinalizer [
 	" Test that if error occurs during finalization, the finalization process continues to run normally.
 
 		This test tests that if we adding a faulty finalizer to WeakArray's finalization dependants,
-		its not causing troubles to the finalization process.	
+		its not causing troubles to the finalization process.
 	"
 
 	| mock1 mock2 sema timedOut |
@@ -91,11 +91,11 @@ WeakRegistryTest >> testFinalizationWithMultipleFinalizersPerObject [
 { #category : #tests }
 WeakRegistryTest >> testFinalizationWithOnFork [
 	" Test that if error occurs during finalization, the finalization process continues to run normally.
-	
+
 	We addting two executors into weak registry:
 	 the faulty one, which causing an error
 	 and good one, which signals semaphore
-	
+
 	test shows that both finalizers are evaluated and error doesn't prevents a good finalizer from execution
 	"
 
@@ -198,7 +198,7 @@ WeakRegistryTest >> testRemovingDoesntLeak [
 
 { #category : #tests }
 WeakRegistryTest >> testVileFinalizer [
-	" this test checks that manipulation (or accessing) a weak registry 
+	" this test checks that manipulation (or accessing) a weak registry
 	does not lead to deadlocks when performed from within a #finalize implementation"
 
 	| reg villian proc locked |

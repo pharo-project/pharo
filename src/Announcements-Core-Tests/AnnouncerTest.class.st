@@ -38,16 +38,21 @@ AnnouncerTest >> testAccessingSubscribers [
 	| subscribers |
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
-	
-	announcer when: AnnouncementMockA do: [  ]."1"
-	announcer when: AnnouncementMockB do: [  ]."2"
+
+	"we do not use constant blocks here, instead use a clean block.
+
+	Using Constant blocks with announcements makes no senese, as they do nothing.
+
+   For Clean Blocks, we have to the Announcments API as they  require to access the receiver of the home context, for clean blocks this has to be fixed, see https://github.com/pharo-project/pharo/issues/11220"
+	announcer when: AnnouncementMockA do: [ nil yourself ]."1"
+	announcer when: AnnouncementMockB do: [ nil yourself ]."2"
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 2.
-	
+
 	subscribers do: [ :subscriber |	announcer unsubscribe: subscriber ].
-	
+
 	subscribers := announcer subscriptionsForClass: self class.
-	self assert: subscribers size equals: 0.
+	self assert: subscribers size equals: 0
 ]
 
 { #category : #tests }
@@ -65,13 +70,13 @@ AnnouncerTest >> testAnnounceInstance [
 { #category : #'tests - subscribing' }
 AnnouncerTest >> testAnnounceWorkWithinExceptionHandlerBlocks [
 	|  found |
-	
+
 	announcer when: Announcement do: [ found := true ].
-	
+
 	[ NotFound signal ]
 		on: NotFound
 		do: [ announcer announce: Announcement new ].
-		
+
 	self assert: found
 ]
 
@@ -79,7 +84,7 @@ AnnouncerTest >> testAnnounceWorkWithinExceptionHandlerBlocks [
 AnnouncerTest >> testAnnouncingReentrant [
 	"Test that it is safe to announce when handling announcement,
 	so announcer are reentrant"
- 
+
 	| bool ok |
 
 	ok := bool := false.
@@ -87,7 +92,7 @@ AnnouncerTest >> testAnnouncingReentrant [
 		bool ifFalse: [
 			bool := true.
 		announcer announce:  Announcement new. ]
-		ifTrue: [ ok := true ] 
+		ifTrue: [ ok := true ]
 	].
 
 	self should: [ announcer announce: Announcement new. ] notTakeMoreThan: 1 second.
@@ -96,9 +101,14 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 { #category : #'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
-	announcer when: AnnouncementMockA do: [  ].
+	"we do not use constant blocks here, instead use a clean block.
+
+	Using Constant blocks with announcements makes no senese, as they do nothing.
+
+   For Clean Blocks, we have to the Announcments API as they  require to access the receiver of the home context, for clean blocks this has to be fixed, see https://github.com/pharo-project/pharo/issues/11220"
+	announcer when: AnnouncementMockA do: [ nil yourself ].
 	self assert: (announcer handleSubscriberClass: self class).
-	self deny: (announcer handleSubscriberClass: AnnouncementMockA).
+	self deny: (announcer handleSubscriberClass: AnnouncementMockA)
 ]
 
 { #category : #tests }
@@ -115,10 +125,10 @@ AnnouncerTest >> testNoArgBlock [
 { #category : #tests }
 AnnouncerTest >> testPreparationAnnouncementDelivery [
 	| announcement |
-	
+
 	announcer when: AnnouncementMockC send: #value: to: [ :ann | #firstBlock ].
-	announcer when: AnnouncementMockC send: #value: to: [ :ann | #lastBlock ].	
-		
+	announcer when: AnnouncementMockC send: #value: to: [ :ann | #lastBlock ].
+
 	announcement := AnnouncementMockC new.
 	announcer announce: announcement.
 	self assert: announcement announcingCounter equals: 1.
@@ -133,9 +143,9 @@ AnnouncerTest >> testPreparationAnnouncementDeliveryWhenNoSubscriptions [
 
 	| instance |
 	announcer when: AnnouncementMockA send: #value: to: [ :ann | ].
-		
+
 	instance := announcer announce: AnnouncementMockC.
-	
+
 	self assert: instance announcingCounter equals: 0
 ]
 
@@ -194,11 +204,11 @@ AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 AnnouncerTest >> testSubscribeSend [
 	| announcement instance |
 	announcer when: AnnouncementMockA send: #value: to: [ :ann | announcement := ann ].
-		
+
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
-	
+
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB new.
 	self assert: announcement isNil
@@ -290,14 +300,14 @@ AnnouncerTest >> testSubscribeSubclass [
 AnnouncerTest >> testSubscribersForClass [
 	| subscribers mockA mockB |
 	self assert: announcer numberOfSubscriptions equals: 0.
-	
+
 	mockA := AnnouncerSubscriberMockA new.
 	mockA announcer: announcer.
 	mockB := AnnouncerSubscriberMockB new.
 	mockB announcer: announcer.
 	mockA registerEvents.
 	mockB registerEvents.
-	
+
 	self assert: announcer numberOfSubscriptions > 0.
 	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockA.
 	self assert: subscribers size equals: 2.
@@ -305,20 +315,20 @@ AnnouncerTest >> testSubscribersForClass [
 	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockB.
 	self assert: subscribers size equals: 1.
 	subscribers := announcer subscriptionsForClass: self class.
-	self assert: subscribers size equals: 0.
+	self assert: subscribers size equals: 0
 ]
 
 { #category : #tests }
 AnnouncerTest >> testSymbolIdentifier [
 	| passed |
 	passed := false.
-	
-	[announcer 
+
+	[announcer
 		when: #FOO send: #bar to: nil;
-		announce: #FOO ] 
-		on: MessageNotUnderstood 
+		announce: #FOO ]
+		on: MessageNotUnderstood
 		do: [ :ex | passed := (ex message selector = #bar). ].
-		
+
 	self assert: passed
 ]
 

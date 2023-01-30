@@ -1,7 +1,7 @@
 Class {
 	#name : #RBDeprecateClassParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -34,23 +34,14 @@ RBDeprecateClassParametrizedTest >> testMetaClassFailure [
 RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	| refactoring replacement deprecated user |
 
-	model defineClass: 'Object subclass: #ClassDeprecatorTestingClassReplacement 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #ClassDeprecatorTestingClassReplacement 
+		package: #''Refactory-Test data'''.
 
-	model defineClass: 'ClassDeprecatorTestingClassReplacement subclass: #ClassDeprecatorTestingClassDeprecated 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'ClassDeprecatorTestingClassReplacement << #ClassDeprecatorTestingClassDeprecated 
+		package: #''Refactory-Test data'''.
 	
-	model defineClass: 'ClassDeprecatorTestingClassDeprecated subclass: #ClassDeprecatorTestingClassDeprecatedUser 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'ClassDeprecatorTestingClassDeprecated << #ClassDeprecatorTestingClassDeprecatedUser 
+		package: #''Refactory-Test data'''.
 
 	replacement := model classNamed: #ClassDeprecatorTestingClassReplacement.
 	deprecated := model classNamed: #ClassDeprecatorTestingClassDeprecated.
@@ -75,10 +66,10 @@ RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	self assert: (model classNamed: #ClassDeprecatorTestingClassDeprecated) equals: deprecated.
 	self assert: (model classNamed: #ClassDeprecatorTestingClassDeprecatedUser) equals: user.
 
-	self assert: (user parseTreeFor: #foo)
+	self assert: (user parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo ^ClassDeprecatorTestingClassReplacement').
 		
-	self assert: (user parseTreeFor: #objectName) 
+	self assert: (user parseTreeForSelector: #objectName) 
 		equals: (self parseMethod: 'objectName ^#(ClassDeprecatorTestingClassReplacement)').
 
 	self assert: user superclass name 

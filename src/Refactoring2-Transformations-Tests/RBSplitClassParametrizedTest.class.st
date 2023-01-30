@@ -1,7 +1,7 @@
 Class {
 	#name : #RBSplitClassParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -53,10 +53,10 @@ RBSplitClassParametrizedTest >> testSplitClass [
 	self assertCollection: (aModel classNamed: #BlockClass) instanceVariableNames 
 			hasSameElements: #(#methodBlock #classBlock).
 			
-	self assert: ((aModel classNamed: #RBBasicLintRuleTestData) parseTreeFor: #checkClass:) 
+	self assert: ((aModel classNamed: #RBBasicLintRuleTestData) parseTreeForSelector: #checkClass:) 
 				equals: (self parseMethod: 'checkClass: aSmalllintContext 
 	^blocks classBlock value: aSmalllintContext value: result').
-	self assert: ((aModel classNamed: #RBBasicLintRuleTestData) parseTreeFor: #checkMethod:) 
+	self assert: ((aModel classNamed: #RBBasicLintRuleTestData) parseTreeForSelector: #checkMethod:) 
 				equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 	^blocks methodBlock value: aSmalllintContext value: result')
 ]

@@ -26,12 +26,12 @@ RBReplaceRule class >> isAbstract [
 ]
 
 { #category : #testing }
-RBReplaceRule >> canMatch: aProgramNode [ 
+RBReplaceRule >> canMatch: aProgramNode [
 	^verificationBlock value: aProgramNode
 ]
 
 { #category : #matching }
-RBReplaceRule >> foundMatchFor: aProgramNode [ 
+RBReplaceRule >> foundMatchFor: aProgramNode [
 	self subclassResponsibility
 ]
 
@@ -42,42 +42,42 @@ RBReplaceRule >> initialize [
 ]
 
 { #category : #matching }
-RBReplaceRule >> replace: aProgramNode with: newNode [ 
+RBReplaceRule >> replace: aProgramNode with: newNode [
 	aProgramNode replaceMethodSource: newNode
 ]
 
 { #category : #'private - searching' }
-RBReplaceRule >> searchFor: searchString replaceWith: replaceString [ 
+RBReplaceRule >> searchFor: searchString replaceWith: replaceString [
 
 	self subclassResponsibility
 ]
 
 { #category : #'private - searching' }
-RBReplaceRule >> searchFor: searchString replaceWith: replaceString when: aBlock [ 
+RBReplaceRule >> searchFor: searchString replaceWith: replaceString when: aBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : #'private - searching' }
-RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString [ 
+RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString [
 
 	self subclassResponsibility
 ]
 
 { #category : #'private - searching' }
-RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString when: aBlock [ 
+RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString when: aBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : #'private - searching' }
-RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceNode [ 
+RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceNode [
 
 	self subclassResponsibility
 ]
 
 { #category : #'private - searching' }
-RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock [ 
+RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock [
 
 	self subclassResponsibility
 ]

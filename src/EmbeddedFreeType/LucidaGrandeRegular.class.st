@@ -9,32 +9,32 @@ Class {
 }
 
 { #category : #testing }
-LucidaGrandeRegular class >> canBeInstalled [ 
+LucidaGrandeRegular class >> canBeInstalled [
 	"This font can be installed just in Macs *and* if font exists"
 	^ OSPlatform current isMacOS and: [ self fontReference exists ]
 ]
 
 { #category : #accessing }
 LucidaGrandeRegular class >> fontContents [
-	^ self fontReference 
+	^ self fontReference
 		binaryReadStreamDo: [ :stream | stream contents ]
 ]
 
 { #category : #accessing }
 LucidaGrandeRegular class >> fontDirectory [
-	"Lucida Grande comes in mac system, at that directory. 
+	"Lucida Grande comes in mac system, at that directory.
 	 Not happy with the hardcoding, but it should not change"
 	^ '/System/Library/Fonts' asFileReference
 ]
 
 { #category : #accessing }
-LucidaGrandeRegular class >> fontReference [ 
+LucidaGrandeRegular class >> fontReference [
 	^ self fontDirectory / self originalFileName
 ]
 
 { #category : #'class initialization' }
-LucidaGrandeRegular class >> initialize [ 
-	self canBeInstalled 
+LucidaGrandeRegular class >> initialize [
+	self canBeInstalled
 		ifTrue: [ EmbeddedFreeTypeFontInstaller registerFont: self ]
 ]
 

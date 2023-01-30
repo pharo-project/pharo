@@ -26,7 +26,7 @@ RGTraitTransformation >> defaultSubject [
 	^ RGUnresolvedValue recursive
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGTraitTransformation >> initialize [
 
 	super initialize.

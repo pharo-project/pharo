@@ -81,7 +81,7 @@ ZnLogEvent >> id [
 	^ id
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnLogEvent >> initialize [
 	super initialize.
 	timestamp := DateAndTime now.

@@ -165,7 +165,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorCode [
 	| ast ir newMethod |
 	method := OCOpalExamples >> #examplePrimitiveErrorCode.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 
 	newMethod := ir compiledMethod.
 	self assert: method primitive equals: newMethod primitive
@@ -176,7 +176,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorCodeModule [
 	| ast ir newMethod |
 	method := OCOpalExamples >> #examplePrimitiveErrorCodeModule.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 
 	newMethod := ir compiledMethod.
 
@@ -192,7 +192,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorModule [
 	| ast ir |
 	method := OCOpalExamples >> #examplePrimitiveErrorModule.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 	self assert: ir tempKeys equals: #(#errorCode)
 ]
 
@@ -204,7 +204,7 @@ OCASTTranslatorTest >> testExamplePrimitiveModuleError [
 	| ast ir |
 	method := OCOpalExamples >> #examplePrimitiveModuleError.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 	self assert: ir tempKeys equals: #(#errorCode)
 ]
 

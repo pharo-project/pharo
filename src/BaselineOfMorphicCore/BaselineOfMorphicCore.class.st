@@ -67,6 +67,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	Cursor initTarget.
 	EventManager initialize.
+	UserInputEvent initialize.
 
 	world := WorldMorph new.
 	world instVarNamed: #worldState put: WorldState new.

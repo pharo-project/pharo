@@ -6,7 +6,7 @@ I have no precondition.
 Class {
 	#name : #RBPrettyPrintCodeRefactoring,
 	#superclass : #RBRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #preconditions }
@@ -25,7 +25,7 @@ RBPrettyPrintCodeRefactoring >> transform [
 					(self model environment includesSelector: selector in: class realClass)
 						ifTrue: [ source := class sourceCodeFor: selector.
 							source
-								ifNotNil: [ tree := class parseTreeFor: selector.
+								ifNotNil: [ tree := class parseTreeForSelector: selector.
 									tree
 										ifNotNil: [ formatted := tree formattedCode.
 											(source ~= formatted

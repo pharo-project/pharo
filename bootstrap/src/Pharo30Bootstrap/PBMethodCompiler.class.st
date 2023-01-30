@@ -27,7 +27,7 @@ PBMethodCompiler >> builder: aBuilder [
 PBMethodCompiler >> createNewMethod: aMethodDefinition [
 
 "	| ownerClass |
-""	ownerClass := builder behaviorFrom: aMethodDefinition methodClass theNonMetaClass."
+""	ownerClass := builder behaviorFrom: aMethodDefinition methodClass instanceSide."
 "	aMethodDefinition methodClass isMeta ifTrue: [ ownerClass := ownerClass classSide ].
 "
 	| method timeToCompile |

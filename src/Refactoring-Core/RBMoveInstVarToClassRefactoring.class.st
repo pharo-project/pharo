@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'oldClass'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }

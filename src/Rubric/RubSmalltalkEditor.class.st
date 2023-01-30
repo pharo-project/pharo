@@ -251,19 +251,21 @@ RubSmalltalkEditor >> bindingOf: aString [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> browseClassFrom: aClassString [
+
 	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
 
 	| selectedClass |
 	"self lineSelectAndEmptyCheck: [ ^ self ]."
-	( aClassString isNil or: [ aClassString isEmpty ] )
-		ifTrue: [ textArea flash.
-			^ self ].
+	(aClassString isNil or: [ aClassString isEmpty ]) ifTrue: [ 
+		textArea flash.
+		^ self ].
 
 	selectedClass := self model systemNavigation
-		classFromPattern: aClassString
-		withCaption: 'choose a class to browse...'.
-	selectedClass ifNil: [ ^ self internalCallToImplementorsOf: aClassString ].
-	Smalltalk tools browser openOnClass: selectedClass
+		                 classFromPattern: aClassString
+		                 withCaption: 'choose a class to browse...'.
+	selectedClass ifNil: [ 
+		^ self internalCallToImplementorsOf: aClassString ].
+	self tools browser openOnClass: selectedClass
 ]
 
 { #category : #'editing keys' }
@@ -450,13 +452,14 @@ RubSmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext 
 
 	| process suspendedContext |
 	process := [ 
-	           aCompiledMethod
-		           valueWithReceiver: anObject
-		           arguments:
-		           (evalContext
-			            ifNil: [ #(  ) ]
-			            ifNotNil: [ { evalContext } ]) ] newProcess.
+		aCompiledMethod
+			valueWithReceiver: anObject
+			arguments: (aCompiledMethod numArgs = 0 
+				ifTrue: [ #() ] 
+				ifFalse: [ { evalContext } ] ) ]
+			newProcess.
 	suspendedContext := process suspendedContext.
+
 	(OupsDebugRequest newForContext: suspendedContext)
 		process: process;
 		compiledMethod: aCompiledMethod;
@@ -492,24 +495,6 @@ RubSmalltalkEditor >> debugSelection [
 	
 	self lineSelectAndEmptyCheck: [^self].
 	self debug: self selectionAsStream
-]
-
-{ #category : #'typing/selecting keys' }
-RubSmalltalkEditor >> displayIfFalse: aKeyboardEvent [
-	"Replace the current text selection with the text 'ifFalse:'--initiated by 
-	ctrl-f."
-
-	self addString: 'ifFalse:'.
-	^false
-]
-
-{ #category : #'typing/selecting keys' }
-RubSmalltalkEditor >> displayIfTrue: aKeyboardEvent [
-	"Replace the current text selection with the text 'ifTrue:'--initiated by 
-	ctrl-t."
-
-	self addString: 'ifTrue:'.
-	^false
 ]
 
 { #category : #'do-its' }
@@ -774,14 +759,16 @@ RubSmalltalkEditor >> inspectIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> internalCallToBrowse: aSelector [
+
 	"Launch a browser for the class indicated by the given selector. 
 	If multiple classes matching the selection exist, let the user choose among them."
+
 	| aClass |
-	aClass := self model systemNavigation 
-				classFromPattern: aSelector
-				withCaption: 'choose a class to browse...'.
-	aClass ifNil: [^ self].
-	Smalltalk tools browser openOnClass: aClass
+	aClass := self model systemNavigation
+		          classFromPattern: aSelector
+		          withCaption: 'choose a class to browse...'.
+	aClass ifNil: [ ^ self ].
+	self tools browser openOnClass: aClass
 ]
 
 { #category : #'menu messages' }
@@ -1195,7 +1182,6 @@ RubSmalltalkEditor >> tallyIt [
 RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
-	self lineSelectAndEmptyCheck: [ ^ self ].
 	self lineSelectAndEmptyCheck: [ ^ self ].
 	self tally: self selectionAsStream
 ]

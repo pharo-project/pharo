@@ -20,7 +20,7 @@ EpUnknownRefactoring class >> for: aRBRefactoring [
 { #category : #converting }
 EpUnknownRefactoring >> asRBRefactoring [
 	"The original refactoring cannot be recreated."
-	
+
 	^ self shouldNotImplement
 ]
 

@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyTextEditingMode class >> browserTool: aTextEditorTool [
-	^self new 
+	^self new
 		browserTool: aTextEditorTool
 ]
 
@@ -44,16 +44,11 @@ ClyTextEditingMode >> editorClass [
 	^ClyTextEditor
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ClyTextEditingMode >> initialize [
 	super initialize.
-	
-	isForScripting := false
-]
 
-{ #category : #accessing }
-ClyTextEditingMode >> isForScripting: anObject [
-	isForScripting := anObject
+	isForScripting := false
 ]
 
 { #category : #testing }

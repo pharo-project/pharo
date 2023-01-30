@@ -4,8 +4,14 @@ After building a TestSuite and before executing its tests, we would like to appl
 Class {
 	#name : #AbstractSuitePreparator,
 	#superclass : #Object,
-	#category : #'TestRunner-Core-Preparators'
+	#category : #'TestRunner-Core-SuitePreparators'
 }
+
+{ #category : #factory }
+AbstractSuitePreparator class >> anySuitePreparatorClass [
+
+	^ AnyEffectSuitePreparator
+]
 
 { #category : #applying }
 AbstractSuitePreparator class >> applyOn: testSuite [
@@ -25,4 +31,10 @@ AbstractSuitePreparator class >> applyOnSuites: aCol [
 AbstractSuitePreparator class >> isAbstract [
 
 	^ self == AbstractSuitePreparator
+]
+
+{ #category : #factory }
+AbstractSuitePreparator class >> shuffleSuitePreparatorClass [
+
+	^ ShuffleSuitePreparator
 ]

@@ -31,6 +31,12 @@ UnixPlatform >> family [
 	^#Unix
 ]
 
+{ #category : #'error handling' }
+UnixPlatform >> getErrorMessage: errnum [ 
+	
+	^ self ffiCall: #(char *strerror(int errnum)) module: #LibC
+]
+
 { #category : #testing }
 UnixPlatform >> isLinux [
 	"Some Linux versions return linux, some linux-gnu, ..."

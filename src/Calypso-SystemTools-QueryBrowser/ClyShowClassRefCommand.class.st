@@ -18,57 +18,57 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClyShowClassRefCommand class >> forClasses: classes by: aBrowser [ 
-	^(self for: classes) 
+ClyShowClassRefCommand class >> forClasses: classes by: aBrowser [
+	^(self for: classes)
 		browser: aBrowser
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $n meta for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
-	
+
 	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> queryBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> queryBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $c meta, $n meta for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
-	
+
 	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
@@ -98,6 +98,6 @@ ClyShowClassRefCommand >> execute [
 { #category : #execution }
 ClyShowClassRefCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]

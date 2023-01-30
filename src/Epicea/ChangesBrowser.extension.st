@@ -4,7 +4,7 @@ Extension { #name : #ChangesBrowser }
 ChangesBrowser >> asEpiceaEvent [
 
 	self flag: #pharoTodo. "This is a workaround for a problem found by RewriteTool"
-	(self changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ]) 
+	(self changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ])
 		ifFalse: [ ^ EpCompositeRefactoring withAll: #(  ) ].
 
 	^ self changes size > 1

@@ -4,11 +4,11 @@ Extension { #name : #DateAndTime }
 DateAndTime >> epiceaBrowsersAsString [
 
 	^ String streamContents: [ :stream |
-		stream 
+		stream
 			nextPutAll: self asDate epiceaBrowsersAsString;
 			nextPutAll: ', '.
-		self asTime 
+		self asTime
 			print24: false
-			showSeconds: false 
+			showSeconds: false
 			on: stream ]
 ]

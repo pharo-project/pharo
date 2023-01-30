@@ -34,9 +34,8 @@ OmBlock >> atLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentB
 	index := aString asInteger - self firstLocalNameAsInteger + 1.
 	
 	^ index > positions size
-		ifTrue: absentBlockClosure
-		ifFalse: [
-			presentBlockClosure value: (positions at: index) ]
+		ifTrue: [ absentBlockClosure value ]
+		ifFalse: [presentBlockClosure value: (positions at: index) ]
 ]
 
 { #category : #refreshing }

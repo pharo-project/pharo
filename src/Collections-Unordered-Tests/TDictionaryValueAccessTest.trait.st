@@ -93,7 +93,7 @@ TDictionaryValueAccessTest >> testAtIfPresent [
 		assert:
 			(collection
 				at: association key
-				ifPresent: [ :value | 
+				ifPresent: [ :value |
 					arg := value.
 					#present ]) = #present.
 	self assert: arg = association value.
@@ -120,7 +120,7 @@ TDictionaryValueAccessTest >> testAtIfPresentIfAbsent [
 		assert:
 			(collection
 				at: association key
-				ifPresent: [ :value | 
+				ifPresent: [ :value |
 					arg := value.
 					#present ]
 				ifAbsent: [ Error signal ]) = #present.
@@ -153,7 +153,7 @@ TDictionaryValueAccessTest >> testAtIfPresentIfAbsentPut [
 		assert:
 			(collection
 				at: association key
-				ifPresent: [ :value | 
+				ifPresent: [ :value |
 					arg := value.
 					#present ]
 				ifAbsentPut: [ Error signal ]) = #present.

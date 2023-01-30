@@ -68,7 +68,7 @@ RBRenamePackageRefactoring >> renameManifestClass [
 	manifest ifNotNil: [
 	refactoring := RBRenameClassRefactoring 
 		model: self model
-		rename: manifest
+		rename: manifest name
 		to: (self manifestClassNameFor: newName).
 	self performCompositeRefactoring: refactoring]
 ]

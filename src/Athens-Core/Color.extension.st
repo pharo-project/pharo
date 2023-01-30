@@ -4,17 +4,17 @@ Extension { #name : #Color }
 Color >> asAthensPaintOn: anAthensCanvas [
 
 	^ self
-	
+
 	"^ anAthensCanvas surface createSolidColorPaint: self"
 ]
 
 { #category : #'*Athens-Core' }
-Color >> asStrokePaintOn: aCanvas [ 
+Color >> asStrokePaintOn: aCanvas [
 	^ aCanvas surface createStrokePaintFor: self
 ]
 
 { #category : #'*Athens-Core' }
-Color >> athensFillPath: aPath on: aCanvas [ 
+Color >> athensFillPath: aPath on: aCanvas [
 	^ aCanvas surface fillPath: aPath withSolidColor:self
 ]
 

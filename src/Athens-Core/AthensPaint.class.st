@@ -26,11 +26,11 @@ AthensPaint >> asStrokePaintOn: aCanvas [
 ]
 
 { #category : #rendering }
-AthensPaint >> athensFillPath: aPath on: aCanvas [ 
+AthensPaint >> athensFillPath: aPath on: aCanvas [
 
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
-	
+
 	self subclassResponsibility
 ]
 
@@ -38,6 +38,6 @@ AthensPaint >> athensFillPath: aPath on: aCanvas [
 AthensPaint >> athensFillRectangle: aRectangle on: aCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
-	
+
 	self subclassResponsibility
 ]

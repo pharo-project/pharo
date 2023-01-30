@@ -89,7 +89,7 @@ OSSDL2BackendWindow >> clipboardText: aText [
 
 { #category : #'event handling' }
 OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifiers: modifiers [
-	| shift ctrl alt ralt gui |
+	| shift ctrl alt ralt gui numLock|
 	modifiers buttons button1: (mouseState bitAnd: SDL_BUTTON_LMASK) ~= 0.
 	modifiers buttons button2: (mouseState bitAnd: SDL_BUTTON_MMASK) ~= 0.
 	modifiers buttons button3: (mouseState bitAnd: SDL_BUTTON_RMASK) ~= 0.
@@ -101,11 +101,13 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 	alt := (modState bitAnd: KMOD_LALT) ~= 0.
 	ralt := (modState bitAnd: KMOD_RALT) ~= 0.
 	gui := (modState bitAnd: KMOD_GUI) ~= 0.
-
+	numLock := (modState bitAnd: KMOD_NUM) ~= 0.
+	
 	modifiers leftShift: shift; rightShift: shift;
 		leftCtrl: ctrl; rightCtrl: ctrl;
 		leftAlt: alt; rightAlt: ralt;
-		leftCmd: gui; rightCmd: gui
+		leftCmd: gui; rightCmd: gui;
+		numLock: numLock
 ]
 
 { #category : #private }
@@ -174,6 +176,75 @@ OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
 				             h: extent y
 				             hotX: offset x negated
 				             hotY: offset y negated ].
+]
+
+{ #category : #private }
+OSSDL2BackendWindow >> convertNumpadKeysOf: osEvent [ 
+
+	"The SDL input is too low level and does not translate values of numpad keys when NumLock is off. We need to do it manually. May not be compatible with non-standard key labels"
+
+	osEvent modifiers numLock ifTrue: [ ^ self ].
+
+	osEvent symbol = 1073741916 ifTrue: [ 
+		osEvent 
+			scanCode: 80;
+			symbol: 1073741904;	
+			character: Character arrowLeft ].
+
+	osEvent symbol = 1073741918 ifTrue: [ 
+		osEvent 
+			scanCode: 79;
+			symbol: 1073741903;	
+			character: Character arrowRight ].
+
+	osEvent symbol = 1073741920 ifTrue: [ 
+		osEvent 
+			scanCode: 82;
+			symbol: 1073741906;	
+			character: Character arrowUp ].
+
+	osEvent symbol = 1073741914 ifTrue: [ 
+		osEvent 
+			scanCode: 81;
+			symbol: 1073741905;	
+			character: Character arrowDown ].
+
+	osEvent symbol = 1073741915 ifTrue: [ 
+		osEvent 
+			scanCode: 91;
+			symbol: 1073741902;	
+			character: Character pageDown ].
+		
+	osEvent symbol = 1073741921 ifTrue: [ 
+		osEvent 
+			scanCode: 75;
+			symbol: 1073741899;	
+			character: Character pageUp ].
+
+	osEvent symbol = 1073741913 ifTrue: [ 
+		osEvent 
+			scanCode: 77;
+			symbol: 1073741901;	
+			character: Character end ].
+
+	osEvent symbol = 1073741919 ifTrue: [ 
+		osEvent 
+			scanCode: 74;
+			symbol: 1073741898;	
+			character: Character home ].
+		
+	osEvent symbol = 1073741922 ifTrue: [ 
+		osEvent 
+			scanCode: 73;
+			symbol: 1073741897;	
+			character: Character insert ].
+
+	osEvent symbol = 1073741923 ifTrue: [ 
+		osEvent 
+			scanCode: 76;
+			symbol: 127;	
+			character: Character delete ].
+
 ]
 
 { #category : #'event handling' }
@@ -605,7 +676,9 @@ OSSDL2BackendWindow >> visitKeyDownEvent: event [
 			position: self mousePosition;
 			character: (self mapSpecialCharacter: keysym sym).
 			
-	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
+	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.	
+	self convertNumpadKeysOf: osEvent.
+		
 	^ osEvent deliver
 ]
 
@@ -620,6 +693,8 @@ OSSDL2BackendWindow >> visitKeyUpEvent: event [
 			position: self mousePosition.
 			
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
+	self convertNumpadKeysOf: osEvent.
+
 	^ osEvent deliver
 ]
 

@@ -21,7 +21,7 @@ Class {
 { #category : #settings }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategy [
 
-	^ debuggerSelectionStrategy ifNil: [ 
+	^ debuggerSelectionStrategy ifNil: [
 		  debuggerSelectionStrategy := self defaultDebuggerSelectionStrategy ]
 ]
 
@@ -60,7 +60,7 @@ OupsDebuggerSelectionStrategy >> debuggers [
 ]
 
 { #category : #accessing }
-OupsDebuggerSelectionStrategy >> debuggers: aCollection [ 
+OupsDebuggerSelectionStrategy >> debuggers: aCollection [
 	debuggers := aCollection
 ]
 
@@ -75,7 +75,7 @@ OupsDebuggerSelectionStrategy >> handled [
 ]
 
 { #category : #accessing }
-OupsDebuggerSelectionStrategy >> hasErrors [ 
+OupsDebuggerSelectionStrategy >> hasErrors [
 	^error notNil
 ]
 

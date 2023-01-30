@@ -23,29 +23,29 @@ See [ 1 ] for details, copyrights etc.
 
 "
 	| inside testX testY i j size |
-	
+
 	inside := false.
-	
+
 	i := 1.
 	size := polygon size.
 	j := size.
 	testX := aPoint x.
 	testY := aPoint y.
-	
+
 	[ i <= size ] whileTrue: [  | pi pj |
 		pi := polygon at: i.
-		pj := polygon at: j. 
-	
-		(((pi y > testY) ~= (pj y > testY)) and: [ 
-			testX < 
+		pj := polygon at: j.
+
+		(((pi y > testY) ~= (pj y > testY)) and: [
+			testX <
 			(
 				pj x - pi x
-				* (testY - pi y) 
+				* (testY - pi y)
 				/ ( pj y - pi y )
-				+ pi x 
+				+ pi x
 			)
 			 ]) ifTrue: [ inside := inside not ].
-	
+
 		j := i.
 		i := i + 1.
 	 ].

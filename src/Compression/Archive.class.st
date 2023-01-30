@@ -59,8 +59,8 @@ Archive >> addTree: aFileReference relativeTo: relativePath match: aBlock [
 	matches
 		do: [ :entry | | newMember archiveFilePath |
 			archiveFilePath := entry asFileReference relativeTo: relativePath.
-			newMember := entry addArchiveMemberAs: archiveFilePath pathString in: self.  			
-			entry isDirectory 
+			newMember := entry addArchiveMemberAs: archiveFilePath pathString in: self.
+			entry isDirectory
 				ifTrue: [ self addTree: entry asFileReference relativeTo: relativePath match: aBlock ].
 	]
 ]
@@ -68,7 +68,7 @@ Archive >> addTree: aFileReference relativeTo: relativePath match: aBlock [
 { #category : #'archive operations' }
 Archive >> canWriteToFile: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
-	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not.
+	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not
 ]
 
 { #category : #'archive operations' }
@@ -100,9 +100,9 @@ Archive >> extractMember: aMemberOrName toFileNamed: aFileName [
 
 { #category : #'archive operations' }
 Archive >> extractMemberWithoutPath: aMemberOrName [
-	self 
+	self
 		extractMemberWithoutPath: aMemberOrName
-		inDirectory: FileSystem workingDirectory.
+		inDirectory: FileSystem workingDirectory
 ]
 
 { #category : #'archive operations' }
@@ -116,14 +116,14 @@ Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
 { #category : #initialization }
 Archive >> initialize [
 	super initialize.
-	members := OrderedCollection new.
+	members := OrderedCollection new
 ]
 
 { #category : #private }
 Archive >> member: aMemberOrName [
 	^(members includes: aMemberOrName)
 		ifTrue: [ aMemberOrName ]
-		ifFalse: [ self memberNamed: aMemberOrName ].
+		ifFalse: [ self memberNamed: aMemberOrName ]
 ]
 
 { #category : #private }
@@ -179,7 +179,7 @@ Archive >> setContentsOf: aMemberOrName to: aString [
 	oldMember := self member: aMemberOrName.
 	newMember := (self memberClass newFromString: aString named: oldMember fileName)
 		copyFrom: oldMember.
-	self replaceMember: oldMember with: newMember.
+	self replaceMember: oldMember with: newMember
 ]
 
 { #category : #'archive operations' }
@@ -193,7 +193,7 @@ Archive >> writeToFile: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
 	(self canWriteToFile: aFileReferenceOrFileName)
 		ifFalse: [ ^self error: (aFileReferenceOrFileName asString, ' is needed by one or more members in this archive') ].
-	
+
 	aFileReferenceOrFileName asFileReference
 		binaryWriteStreamDo: [ :stream | self writeTo: stream ]
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-DTPackagesCommand class >> isAbstract [ 
+DTPackagesCommand class >> isAbstract [
 
 	^ self name = #DTPackagesCommand
 ]

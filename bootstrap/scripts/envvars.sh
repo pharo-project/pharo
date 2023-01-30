@@ -18,14 +18,14 @@
 #
 if [ -z ${BUILD_NUMBER+x} ]
 then
-    echo "BUILD_NUMBER not specified, exiting"
-    exit 1
+    echo "BUILD_NUMBER not specified, defaulting to 0"
+    export BUILD_NUMBER=0
 fi
 
 if [ -z ${BOOTSTRAP_ARCH+x} ]
 then
-    echo "BOOTSTRAP_ARCH not specified, exiting"
-    exit 1
+    echo "BOOTSTRAP_ARCH not specified, defaulting to 64"
+    export BOOTSTRAP_ARCH=64
 fi
 
 if [ -z ${BOOTSTRAP_REPOSITORY+x} ]

@@ -15,7 +15,9 @@ RBTemporaryToInstanceVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBTemporaryToInstanceVariableParametrizedTest >> addClassHierarchy [
 	model 
-		defineClass: 'Foo subclass: #Foo1 instanceVariableNames: ''foo'' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+		defineClass: 'Foo << #Foo1 
+		slots: { #foo};
+		package: #''Refactory-Test data'''.
 	(model classNamed: #Foo)
 		compile: 'someMethod | foo | foo := 4. ^foo'
 		classified: #(#accessing).
@@ -67,7 +69,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> testTemporaryToInstanceVariable
 		{ RBLintRuleTestData . #displayName . 'nameStream'}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class parseTreeFor: #displayName) equals: (self parseMethod: 'displayName
+	self assert: (class parseTreeForSelector: #displayName) equals: (self parseMethod: 'displayName
 								nameStream := WriteStream on: (String new: 64).
 								nameStream
 									nextPutAll: self name;
@@ -88,5 +90,5 @@ RBTemporaryToInstanceVariableParametrizedTest >> testWhenHierarchyDefinesVariabl
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class definesInstanceVariable: 'foo').
 	self deny: ((model classNamed: #Foo1) directlyDefinesInstanceVariable: 'foo').
-	self assert: (class parseTreeFor: #someMethod) equals: (self parseMethod: 'someMethod foo := 4. ^ foo').
+	self assert: (class parseTreeForSelector: #someMethod) equals: (self parseMethod: 'someMethod foo := 4. ^ foo').
 ]

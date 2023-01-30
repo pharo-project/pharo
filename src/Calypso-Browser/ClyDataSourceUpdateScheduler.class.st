@@ -33,15 +33,15 @@ Class {
 { #category : #controlling }
 ClyDataSourceUpdateScheduler >> ensureRunning [
 	(process notNil and: [ process isTerminated not ]) ifTrue: [ ^self].
-	
-	process := [ self processQueue ] 
+
+	process := [ self processQueue ]
 		forkAt: Processor userBackgroundPriority + 1 named: 'Calypso update'
 ]
 
 { #category : #initialization }
 ClyDataSourceUpdateScheduler >> initialize [
 	super initialize.
-	
+
 	updateQueue := AtomicSharedQueue new
 ]
 
@@ -51,7 +51,7 @@ ClyDataSourceUpdateScheduler >> processQueue [
 	 [| available next |
         available := OrderedCollection with: updateQueue next.
         [ next := updateQueue nextOrNil ] whileNotNil: [ available add: next ].
-        self runUpdateFor: available.    
+        self runUpdateFor: available.
     ] repeat
 ]
 
@@ -65,6 +65,6 @@ ClyDataSourceUpdateScheduler >> register: aDataSource [
 { #category : #controlling }
 ClyDataSourceUpdateScheduler >> runUpdateFor: dataSources [
 
-	UIManager default defer: [ 
+	UIManager default defer: [
 		dataSources do: [ :each | each runUpdate ] ]
 ]

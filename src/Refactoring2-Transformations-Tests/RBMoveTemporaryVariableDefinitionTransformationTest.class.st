@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMoveTemporaryVariableDefinitionTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }
@@ -24,7 +24,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 							transform.
 		
 	class := transformation model classNamed: #RBDummyRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #moveDefinition)
+	self assert: (class parseTreeForSelector: #moveDefinition)
 		  equals: (self parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
@@ -49,7 +49,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 							asRefactoring transform.
 							
 	class := transformation model classNamed: #RBDummyRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #referencesConditionFor:)
+	self assert: (class parseTreeForSelector: #referencesConditionFor:)
 		  equals: (self parseMethod: 'referencesConditionFor: aClass 
 						| environment  |
 						^(RBCondition withBlock: 

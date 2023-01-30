@@ -150,7 +150,7 @@ STONTestDomainObject >> hash [
 								bitXor: (boolean hash bitXor: (float hash bitXor: (bytes hash bitXor: (integer hash bitXor: tags hash)))))))
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONTestDomainObject >> initialize [
 	created := modified := DateAndTime now.
 ]

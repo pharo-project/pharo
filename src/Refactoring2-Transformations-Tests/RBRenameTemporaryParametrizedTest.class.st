@@ -102,7 +102,7 @@ RBRenameTemporaryParametrizedTest >> testRenameArg [
 		'asdf' . #RBLintRuleTestData . #name: }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #name:) equals: (self parseMethod: 'name: asdf 
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #name:) equals: (self parseMethod: 'name: asdf 
 	name := asdf')
 ]
 
@@ -113,7 +113,7 @@ RBRenameTemporaryParametrizedTest >> testRenameTemporary [
 		'asdf' . #RBLintRuleTestData .#openEditor }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor) equals: (self parseMethod: 'openEditor
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #openEditor) equals: (self parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].

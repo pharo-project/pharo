@@ -135,12 +135,19 @@ ByteArray >> platformUnsignedLongAt: byteOffset put: value [
 
 { #category : #'*UnifiedFFI' }
 ByteArray >> readString [
-	^ (ExternalData fromHandle: self type: ExternalType string) readString
+	^ (ExternalData fromHandle: self type: ExternalType string) bytesFromCString
 ]
 
 { #category : #'*UnifiedFFI' }
 ByteArray >> readStringUTF8 [
-	^ (ExternalData fromHandle: self type: ExternalType string) readStringUTF8.
+
+	self 
+		deprecated: 'Please use #utf8StringFromCString instead' 
+		transformWith: '`@receiver readStringUTF8' 
+						-> '`@receiver utf8StringFromCString'.
+
+	^ (ExternalData fromHandle: self type: ExternalType string)
+		  utf8StringFromCString
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -169,6 +176,15 @@ ByteArray >> unpackHandleFromArity: arity [
 	arity > 1 ifTrue: [ ^ self error: 'Use ExternalAddress instead!' ].
 	^ self unsignedLongAt: 1
 
+]
+
+{ #category : #'*UnifiedFFI' }
+ByteArray >> utf8StringFromCString [
+
+	^ (ExternalData 
+			fromHandle: self 
+			type: ExternalType string)
+		utf8StringFromCString
 ]
 
 { #category : #'*UnifiedFFI' }

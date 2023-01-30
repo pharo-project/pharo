@@ -25,7 +25,7 @@ Class {
 		'newClassName',
 		'referenceVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -82,7 +82,7 @@ RBSplitClassTransformation >> abstractVariableReferences [
 RBSplitClassTransformation >> addClass [
 
 	transformations add: 
-		(RBAddClassTransformation 
+		(RBInsertClassTransformation 
 			model: self model 
 			addClass: newClassName 
 			superclass: #Object

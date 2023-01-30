@@ -36,10 +36,10 @@ ExceptionTester >> contents [
 
 	^( self log
 		inject: (String new: 80) writeStream
-		into: 
+		into:
 			[:result :item |
-			result 
-				cr; 
+			result
+				cr;
 				nextPutAll: item;
 				yourself] ) contents
 ]
@@ -172,7 +172,7 @@ ExceptionTester >> doubleResumeTest [
        MyResumableTestError signal.
        self doYetAnotherThing]
                on: MyResumableTestError
-               do: [:ex | ex resume].
+               do: [:ex | ex resume]
 ]
 
 { #category : #results }
@@ -219,7 +219,7 @@ ExceptionTester >> logTestResult: aString [
 
 	| index |
 	index := self suiteLog size.
-	self suiteLog 
+	self suiteLog
 		at: index
 		put: ((self suiteLog at: index), ' ', aString)
 ]
@@ -238,7 +238,7 @@ ExceptionTester >> methodWithNotification [
 
 { #category : #tests }
 ExceptionTester >> nonResumableFallOffTheEndHandler [
-	
+
 	[self doSomething.
 	MyTestError signal.
 	self doSomethingElse]
@@ -309,11 +309,11 @@ ExceptionTester >> runBasicTests [
 ExceptionTester >> runTest: aSelector [
 
 	| actualResult expectedResult |
-	[ self 
+	[ self
 		logTest: aSelector;
 		clearLog;
 		perform: aSelector ]
-			on: MyTestError do: 
+			on: MyTestError do:
 				[ :ex | self log: 'Unhandled Exception'.
 					ex return: nil ].
 
@@ -322,7 +322,7 @@ ExceptionTester >> runTest: aSelector [
 
 	actualResult = expectedResult
 		ifTrue: [self logTestResult: 'succeeded']
-		ifFalse: [self logTestResult: 'failed' ].
+		ifFalse: [self logTestResult: 'failed' ]
 ]
 
 { #category : #tests }
@@ -353,7 +353,7 @@ ExceptionTester >> simpleEnsureTest [
 	[self doSomething.
 	self doSomethingElse]
 		ensure:
-			[self doYetAnotherThing].
+			[self doYetAnotherThing]
 ]
 
 { #category : #results }
@@ -373,7 +373,7 @@ ExceptionTester >> simpleEnsureTestWithError [
 	MyTestError signal.
 	self doSomethingElse]
 		ensure:
-			[self doYetAnotherThing].
+			[self doYetAnotherThing]
 ]
 
 { #category : #results }
@@ -393,7 +393,7 @@ ExceptionTester >> simpleEnsureTestWithNotification [
 	self methodWithNotification.
 	self doSomethingElse]
 		ensure:
-			[self doYetAnotherThing].
+			[self doYetAnotherThing]
 ]
 
 { #category : #results }
@@ -413,7 +413,7 @@ ExceptionTester >> simpleEnsureTestWithUparrow [
 	true ifTrue: [^nil].
 	self doSomethingElse]
 		ensure:
-			[self doYetAnotherThing].
+			[self doYetAnotherThing]
 ]
 
 { #category : #results }
@@ -432,10 +432,10 @@ ExceptionTester >> simpleIsNestedTest [
 
 	[ self doSomething.
 	MyTestError signal.
-	self doSomethingElse 
+	self doSomethingElse
 	] on: MyTestError do: [ :exception |
 		"expecting to detect handler in #runTest:"
-		exception isNested 
+		exception isNested
 			ifTrue: [
 				self doYetAnotherThing.
 				exception resignalAs: MyTestNotification new ]]
@@ -456,7 +456,7 @@ ExceptionTester >> simpleNoTimeoutTest [
 
 	[ self doSomething ]
 		valueWithin: 1 day onTimeout:
-			[ self doSomethingElse ].
+			[ self doSomethingElse ]
 ]
 
 { #category : #results }
@@ -540,7 +540,7 @@ ExceptionTester >> simpleResumeTest [
 
 	"see if we can resume twice"
 
-	
+
 	[ | it |self doSomething.
 	it := MyResumableTestError signal.
 	it = 3 ifTrue: [self doSomethingElse].
@@ -665,7 +665,7 @@ ExceptionTester >> simpleTimeoutWithZeroDurationTest [
 
 	[ self doSomething ]
 		valueWithin: 0 seconds onTimeout:
-			[ self doSomethingElse ].
+			[ self doSomethingElse ]
 ]
 
 { #category : #results }

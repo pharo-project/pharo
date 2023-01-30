@@ -8,7 +8,7 @@ Color class >> colorPaletteForDepth: depth extent: chartExtent [
 
 	| basicHue x y startHue palette transHt vSteps transCaption grayWidth hSteps |
 	palette := Form extent: chartExtent depth: depth.
-	transCaption := 
+	transCaption :=
 		(Form extent: 34@9 depth: 1
 			fromArray: #(0 0 256 0 256 0 3808663859 2147483648 2491688266 2147483648 2491688266 0 2491688266 0 2466486578 0 0 0)
 			offset: 0@0).

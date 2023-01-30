@@ -6,23 +6,24 @@ Class {
 
 { #category : #running }
 ClyAllMethodCritiquesTest >> createQuery [
-	^ClyAllMethodCritiqueQuery from: self scopeWithCritiques
+
+	^ ClyAllMethodCritiqueQuery from: self scopeWithCritiques
 ]
 
 { #category : #tests }
 ClyAllMethodCritiquesTest >> testCheckIfEmpty [
-		
+
 	query scope: self scopeWithCritiques .
 	self deny: query checkEmptyResult.
-	
+
 	query scope: self scopeWithoutCritiques.
-	self assert: query checkEmptyResult.
+	self assert: query checkEmptyResult
 ]
 
 { #category : #tests }
 ClyAllMethodCritiquesTest >> testExecution [
 
 	self executeQuery.
-	
+
 	self assert: resultItems size equals: 1
 ]

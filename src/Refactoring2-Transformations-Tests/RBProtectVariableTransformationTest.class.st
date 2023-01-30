@@ -1,7 +1,7 @@
 Class {
 	#name : #RBProtectVariableTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #running }
@@ -22,17 +22,17 @@ RBProtectVariableTransformationTest >> testAccessorsAlreadyExist [
 		asRefactoring transform.
 	
 	class := model classNamed: #Foo.
-	self assert: (class parseTreeFor: #bar)
+	self assert: (class parseTreeForSelector: #bar)
 		equals: (self parseMethod: 'bar
 			"Add one to instVarName1"
 			self instVarName11: self instVarName11 + 1').
-	self assert: (class parseTreeFor: #instVarName11:) 
+	self assert: (class parseTreeForSelector: #instVarName11:) 
 		equals: (self parseMethod: 'instVarName11: anObject
 			instVarName1 := anObject').
-	self assert: (class parseTreeFor: #instVarName11) 
+	self assert: (class parseTreeForSelector: #instVarName11) 
 		equals: (self parseMethod: 'instVarName11 ^instVarName1').
 		
-	self assert: ((model classNamed: #Bar) parseTreeFor: #foo) 
+	self assert: ((model classNamed: #Bar) parseTreeForSelector: #foo) 
 		equals: (self parseMethod: 'foo
 			self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')
 ]
@@ -46,21 +46,21 @@ RBProtectVariableTransformationTest >> testClassVariable [
 						class: #RBTransformationRuleTestData)
 						asRefactoring transform.
 	
-	class := (refactoring model classNamed: #RBTransformationRuleTestData) theMetaClass.
-	self assert: (class parseTreeFor: #recursiveSelfRule)
+	class := (refactoring model classNamed: #RBTransformationRuleTestData) classSide.
+	self assert: (class parseTreeForSelector: #recursiveSelfRule)
 			equals: (self parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
-	self assert: (class parseTreeFor: #recursiveSelfRule:) 
+	self assert: (class parseTreeForSelector: #recursiveSelfRule:) 
 			equals: (self parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
 	
-	self assert: (class parseTreeFor: #nuke) 
+	self assert: (class parseTreeForSelector: #nuke) 
 			equals: (self parseMethod: 'nuke self recursiveSelfRule: nil').
-	self assert: (class parseTreeFor: #initializeAfterLoad1) 
+	self assert: (class parseTreeForSelector: #initializeAfterLoad1) 
 			equals: (self parseMethod: 'initializeAfterLoad1
 				self recursiveSelfRule: self parseTreeSearcher.
 				self recursiveSelfRule
 					addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 					-> [:aNode :answer | true]').
-	self assert: ((refactoring model classNamed: #RBTransformationRuleTestData) parseTreeFor: #checkMethod:) 
+	self assert: ((refactoring model classNamed: #RBTransformationRuleTestData) parseTreeForSelector: #checkMethod:) 
 			equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 				class := aSmalllintContext selectedClass.
 				(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
@@ -81,23 +81,23 @@ RBProtectVariableTransformationTest >> testClassVariableInModel [
 		class: #Foo)
 		asRefactoring transform.
 	
-	class := (model classNamed: #Foo) theMetaClass.
-	self assert: (class parseTreeFor: #classVarName1) 
+	class := (model classNamed: #Foo) classSide.
+	self assert: (class parseTreeForSelector: #classVarName1) 
 			equals: (self parseMethod: 'classVarName1 ^ClassVarName1').
-	self assert: (class parseTreeFor: #classVarName1:) 
+	self assert: (class parseTreeForSelector: #classVarName1:) 
 			equals: (self parseMethod: 'classVarName1: anObject ClassVarName1 := anObject').
 	
-	self assert: (class parseTreeFor: #foo)
+	self assert: (class parseTreeForSelector: #foo)
 			equals: (self parseMethod: 'foo
 				^self classVarName1: self classVarName1 * self classVarName1 * self classVarName1').
 					
-	self assert: (class theNonMetaClass parseTreeFor: #classVarName1)
+	self assert: (class instanceSide parseTreeForSelector: #classVarName1)
 			equals: (self parseMethod: 'classVarName1 ^self class classVarName1').
-	self assert: (class theNonMetaClass parseTreeFor: #classVarName1:) 
+	self assert: (class instanceSide parseTreeForSelector: #classVarName1:) 
 			equals: (self parseMethod: 'classVarName1: anObject
 				^self class classVarName1: anObject').
 				
-	"self assert: (class theNonMetaClass parseTreeFor: #asdf)
+	"self assert: (class instanceSide parseTreeFor: #asdf)
 			equals: (RBParser parseMethod: 'asdf
 				^self classVarName1: (self class classVarName1: self class classVarName1 + 1)').
 	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
@@ -122,12 +122,12 @@ RBProtectVariableTransformationTest >> testMetaclass [
 		class: class)
 		asRefactoring transform.
 				
-	self assert: (class parseTreeFor: #foo1) 
+	self assert: (class parseTreeForSelector: #foo1) 
 			equals: (self parseMethod: 'foo1 ^foo').
-	self assert: (class parseTreeFor: #foo:)
+	self assert: (class parseTreeForSelector: #foo:)
 			equals: (self parseMethod: 'foo: anObject foo := anObject').
 			
-	self assert: (class parseTreeFor: #zzz) 
+	self assert: (class parseTreeForSelector: #zzz) 
 			equals: (self parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')
 ]
 
@@ -150,13 +150,13 @@ RBProtectVariableTransformationTest >> testRefactoring [
 						asRefactoring transform.
 	
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
-	self assert: (class parseTreeFor: #builder) equals: (self parseMethod: 'builder ^builder').
-	self assert: (class parseTreeFor: #builder:) equals: (self parseMethod: 'builder: anObject
+	self assert: (class parseTreeForSelector: #builder) equals: (self parseMethod: 'builder ^builder').
+	self assert: (class parseTreeForSelector: #builder:) equals: (self parseMethod: 'builder: anObject
 	builder := anObject').
-	self assert: (class parseTreeFor: #viewResults) equals: (self parseMethod: 'viewResults
+	self assert: (class parseTreeForSelector: #viewResults) equals: (self parseMethod: 'viewResults
 		self builder inspect.
 		self resetResult').
-	self assert: (class parseTreeFor: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 	class := aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) 
 		ifTrue: 
@@ -181,7 +181,7 @@ RBProtectVariableTransformationTest >> testTransform [
 	self assert: (class directlyDefinesLocalMethod: #class1).
 	self assert: (class directlyDefinesLocalMethod: #class:).
 	
-	self assert: (class parseTreeFor: #superSends) equals: (self parseMethod: 
+	self assert: (class parseTreeForSelector: #superSends) equals: (self parseMethod: 
 	'superSends
 		| rule |
 		rule := RBParseTreeRewriter new.
@@ -194,7 +194,7 @@ RBProtectVariableTransformationTest >> testTransform [
 						-> ''self `@message: ``@args'').
 		self rewriteUsing: rule').
 	
-	self assert: (class parseTreeFor: #checkMethod:) equals: (self parseMethod:
+	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod:
 	'checkMethod: aSmalllintContext 
 		self class: aSmalllintContext selectedClass.
 		(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
@@ -267,14 +267,14 @@ RBProtectVariableTransformationTest >> testWithAssignment [
 						asRefactoring transform.
 	
 	class := model classNamed: #Foo.
-	self assert: (class parseTreeFor: #instVarName2:)
+	self assert: (class parseTreeForSelector: #instVarName2:)
 		equals: (self parseMethod: 'instVarName2: anObject instVarName2 := anObject').
-	self assert: (class parseTreeFor: #instVarName2) 
+	self assert: (class parseTreeForSelector: #instVarName2) 
 		equals: (self parseMethod: 'instVarName2 ^instVarName2').
 	
-	self assert: (class parseTreeFor: #foo)
+	self assert: (class parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo ^self instVarName2: 3').
-	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
+	self assert: ((model classNamed: #Bar) parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo
 			instVarName1 := instVarName1 + self instVarName2 + ClassVarName1')
 ]

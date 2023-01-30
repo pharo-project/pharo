@@ -8,7 +8,7 @@ Class {
 		'implementors',
 		'renameMap'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #support }
@@ -132,7 +132,7 @@ RBChangeMethodNameTransformation >> renameImplementors [
 		do: [ :each | 
 			| parseTree |
 
-			parseTree := each parseTreeFor: oldSelector.
+			parseTree := each parseTreeForSelector: oldSelector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse source code.' ].
 			self implementorsCanBePrimitives
 				ifFalse: [ parseTree isPrimitive

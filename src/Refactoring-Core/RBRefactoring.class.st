@@ -39,6 +39,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #displaying }
+RBRefactoring class >> basicMenuItemString [
+
+	^ self subclassResponsibility
+]
+
 { #category : #cleaning }
 RBRefactoring class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them so the block references the current method"
@@ -94,6 +100,21 @@ RBRefactoring class >> isAbstract [
 	^ self == RBRefactoring
 ]
 
+{ #category : #accessing }
+RBRefactoring class >> isTransformation [
+	"Tells if this refactoring is a refactoring or a transformation."
+
+	^ false
+]
+
+{ #category : #displaying }
+RBRefactoring class >> menuItemString [
+
+	^ (self isTransformation
+		   ifTrue: [ '(T) ' ]
+		   ifFalse: [ '' ]) , self basicMenuItemString
+]
+
 { #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
@@ -137,20 +158,22 @@ RBRefactoring >> changes [
 { #category : #support }
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
 	| parseTree |
-	parseTree := aRBClass parseTreeFor: aSelector.
+	parseTree := aRBClass parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
 ]
 
 { #category : #preconditions }
 RBRefactoring >> checkPreconditions [
+
 	| conditions block |
 	conditions := self preconditions.
-	conditions check
-		ifFalse: [ block := conditions errorBlock.
-			block
-				ifNotNil: [ self refactoringError: conditions errorString with: block ]
-				ifNil: [ self refactoringError: conditions errorString ] ]
+	conditions check ifTrue: [ ^ self ].
+	block := conditions errorBlock.
+	block
+		ifNotNil: [ 
+		self refactoringError: conditions errorString with: block ]
+		ifNil: [ self refactoringError: conditions errorString ]
 ]
 
 { #category : #private }
@@ -216,7 +239,7 @@ RBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [
 
 	| parseTree |
 
-	parseTree := aClass parseTreeFor: selector.
+	parseTree := aClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ aClass compileTree: searchReplacer tree ]
@@ -244,10 +267,9 @@ RBRefactoring >> defaultEnvironment [
 
 { #category : #transforming }
 RBRefactoring >> execute [
+
 	self primitiveExecute.
-	RBRefactoryChangeManager instance 
-		performChange: self changes; 
-		addUndoPointer: (RBRefactoryChangeManager nextCounter)
+	self performChanges
 ]
 
 { #category : #transforming }
@@ -289,6 +311,14 @@ RBRefactoring >> options [
 { #category : #accessing }
 RBRefactoring >> options: aDictionary [ 
 	options := aDictionary
+]
+
+{ #category : #transforming }
+RBRefactoring >> performChanges [
+
+	RBRefactoryChangeManager instance
+		performChange: self changes;
+		addUndoPointer: RBRefactoryChangeManager nextCounter
 ]
 
 { #category : #transforming }
@@ -359,7 +389,7 @@ RBRefactoring >> requestSelfArgumentName [
 ]
 
 { #category : #utilities }
-RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [ 
+RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |
@@ -367,14 +397,15 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	baseString at: 1 put: baseString first asLowercase.
 	newString := baseString.
 	hasParam := newString last = $:.
-	hasParam 
-		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
+	hasParam ifTrue: [ 
+		baseString := newString copyFrom: 1 to: newString size - 1 ].
 	i := 0.
-	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue: 
-			[i := i + 1.
-			newString := baseString , i printString 
-						, (hasParam ifTrue: [':'] ifFalse: [''])].
-	^newString asSymbol
+	[ aClass hierarchyDefinesMethod: newString asSymbol ] whileTrue: [ 
+		i := i + 1.
+		newString := baseString , i printString , (hasParam
+			              ifTrue: [ ':' ]
+			              ifFalse: [ '' ]) ].
+	^ newString asSymbol
 ]
 
 { #category : #private }

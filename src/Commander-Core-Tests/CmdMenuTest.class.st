@@ -7,11 +7,11 @@ Class {
 { #category : #tests }
 CmdMenuTest >> buildMenuInContext: aToolContext [
 	| menu |
-	menu := CmdMenu  
+	menu := CmdMenu
 		activatedBy: CmdMenuCommandActivationExample.
-	
+
 	menu buildInContext: aToolContext.
-	
+
 	^menu
 ]
 
@@ -22,10 +22,10 @@ CmdMenuTest >> testCommandItemShouldContainPreparedCommandInstance [
 	menu := self buildMenuInContext: context.
 	containingItems := menu itemsWithCommandLike: CmdCommandExampleInRootMenu.
 	self assert: containingItems last isCommandItem.
-	
+
 	command := containingItems last command.
 	self assert: command class equals: CmdCommandExampleInRootMenu.
-	self assert: command savedParametersContext equals: context.
+	self assert: command savedParametersContext equals: context
 ]
 
 { #category : #tests }
@@ -44,9 +44,9 @@ CmdMenuTest >> testWhenCommandShouldBeInDeepChildGroup [
 CmdMenuTest >> testWhenCommandShouldBeInMultipleGroups [
 	| menu containingGroups |
 	menu := self buildMenuInContext: CmdToolContextStub1 new.
-	
+
 	containingGroups := menu groupsWithCommandLike: CmdCommandExampleInMultipleMenuGroups.
-	self 
+	self
 		assert: (containingGroups collect: #class as: Set)
 		equals: {CmdMenuGroupExample1. CmdMenuGroupExample2. CmdRootMenuGroup } asSet
 ]
@@ -55,7 +55,7 @@ CmdMenuTest >> testWhenCommandShouldBeInMultipleGroups [
 CmdMenuTest >> testWhenCommandShouldBeInRootMenu [
 	| menu containingItems |
 	menu := self buildMenuInContext: CmdToolContextStub1 new.
-	
+
 	containingItems := menu groupsWithCommandLike: CmdCommandExampleInRootMenu.
 	self assert: containingItems size equals: 1. "group and commandItem"
 	self assert: containingItems first equals: menu rootGroup
@@ -65,6 +65,6 @@ CmdMenuTest >> testWhenCommandShouldBeInRootMenu [
 CmdMenuTest >> testWhenGivenContextIsUnused [
 	| menu |
 	menu := self buildMenuInContext: CmdUnusedToolContextStub new.
-	
+
 	self assert: menu rootGroup size equals: 0
 ]

@@ -90,24 +90,25 @@ OCUndeclaredVariableWarning >> defaultAction [
 OCUndeclaredVariableWarning >> defineClass: className [ 
 	"Prompts the user to define a new class."
 	
-	| classSymbol systemCategory classDefinition classBinding |
+	| classSymbol systemCategory classDefinition classBinding result |
 	classSymbol := className asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
-	classDefinition := 'Object subclass: #' , classSymbol , '
-		instanceVariableNames: '''' 
-		classVariableNames: ''''
-		category: ''' , systemCategory , ''''.
+	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: systemCategory forClass: classSymbol.
 	classDefinition := UIManager default 
 		multiLineRequest: 'Edit class definition:'
 		initialAnswer: classDefinition
-		answerHeight: 150.
+		answerHeight: 200.
 	(classDefinition isNil or: [ classDefinition isEmpty ])
 		ifTrue: [ ^ Abort signal ].
-	self class compiler
+	result := self class compiler
 		source: classDefinition;
 		logged: true;
 		evaluate.
+	"Because some class definition syntax the (fuild one) does not evaluate to a
+	class but a class builder, we must call `fluidInstall`.
+	(that is a noop on real classes)."
+	result fluidInstall.
 	classBinding := node owningScope lookupVar: className.
 	"make sure to recompile all methods referencing this class"
 	classBinding usingMethods do: [:method | method recompile].

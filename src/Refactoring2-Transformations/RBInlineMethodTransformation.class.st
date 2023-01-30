@@ -7,10 +7,10 @@ Class {
 		'sourceParseTree',
 		'sourceSelector',
 		'sourceMessage',
-		'inlineClass',
-		'checkOverridden'
+		'checkOverridden',
+		'classOfTheMethodToInline'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #'instance creation' }
@@ -54,18 +54,29 @@ RBInlineMethodTransformation >> checkOverridden [
 { #category : #adding }
 RBInlineMethodTransformation >> checkSuperMessages [
 
-	self inlineClass = class
+	self classOfTheMethodToInline = class
 		ifTrue: [ ^ self ].
-	self inlineClass superclass ifNil: [ ^ self ].
+	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
 	inlineParseTree superMessages
 		do: [ :each | 
-			( self inlineClass superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
+			( self classOfTheMethodToInline superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
 				ifFalse: [ self
 						refactoringError:
 							( 'Cannot inline method since it sends a super message <1s> that is overriden'
 								expandMacrosWith: each )
 					]
 			]
+]
+
+{ #category : #adding }
+RBInlineMethodTransformation >> classOfTheMethodToInline [
+
+	^ classOfTheMethodToInline
+		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = 'super'
+				ifTrue: [ class superclass ]
+				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
+			]
+		ifNotNil: [ classOfTheMethodToInline ]
 ]
 
 { #category : #adding }
@@ -77,7 +88,7 @@ RBInlineMethodTransformation >> compileMethod [
 { #category : #adding }
 RBInlineMethodTransformation >> findSelectedMessage [
 
-	sourceParseTree := class parseTreeFor: sourceSelector.
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage
@@ -113,17 +124,6 @@ RBInlineMethodTransformation >> inline: anInterval inMethod: aSelector forClass:
 	sourceSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	sourceInterval := anInterval
-]
-
-{ #category : #adding }
-RBInlineMethodTransformation >> inlineClass [
-
-	^ inlineClass
-		ifNil: [ inlineClass := ( sourceMessage receiver name = 'super'
-				ifTrue: [ class superclass ]
-				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
-			]
-		ifNotNil: [ inlineClass ]
 ]
 
 { #category : #adding }
@@ -248,20 +248,20 @@ RBInlineMethodTransformation >> normalizeReturns [
 { #category : #adding }
 RBInlineMethodTransformation >> parseInlineMethod [
 
-	self inlineClass
+	self classOfTheMethodToInline
 		ifNil: [ self
 				refactoringFailure:
 					( '<1p> or its superclasses don''t contain method <2s>'
 						expandMacrosWith: class
 						with: self inlineSelector )
 			].
-	inlineParseTree := self inlineClass parseTreeFor: self inlineSelector.
+	inlineParseTree := self classOfTheMethodToInline parseTreeForSelector: self inlineSelector.
 	inlineParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	inlineParseTree lastIsReturn
 		ifFalse: [ inlineParseTree addSelfReturn ]
 ]
 
-{ #category : #adding }
+{ #category : #preconditions }
 RBInlineMethodTransformation >> preconditions [
 	^(RBCondition definesSelector: sourceSelector in: class) 
 		& (RBCondition withBlock: 
@@ -271,7 +271,7 @@ RBInlineMethodTransformation >> preconditions [
 						ifTrue: 
 							[self 
 								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?' 
-										expandMacrosWith: self inlineClass
+										expandMacrosWith: self classOfTheMethodToInline
 										with: self inlineSelector)] ].
 					self parseInlineMethod.
 					self isPrimitive 

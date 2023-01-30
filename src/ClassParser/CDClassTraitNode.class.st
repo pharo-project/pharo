@@ -22,6 +22,6 @@ CDClassTraitNode >> name [
 ]
 
 { #category : #accessing }
-CDClassTraitNode >> name: aString [ 
+CDClassTraitNode >> name: aString [
 	name := aString
 ]

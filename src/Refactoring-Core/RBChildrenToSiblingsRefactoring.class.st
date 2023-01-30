@@ -27,7 +27,7 @@ Class {
 		'parent',
 		'subclasses'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
@@ -56,7 +56,7 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : #transforming }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self performCompositeRefactoring: (RBAddClassRefactoring 
+	self performCompositeRefactoring: (RBInsertClassRefactoring 
 				model: self model
 				addClass: className
 				superclass: parent superclass
@@ -80,7 +80,7 @@ RBChildrenToSiblingsRefactoring >> computeSubclassSupersOf: aClass [
 	aClass subclasses do: 
 			[:each | 
 			each selectors 
-				do: [:sel | selectors addAll: (each parseTreeFor: sel) superMessages]].
+				do: [:sel | selectors addAll: (each parseTreeForSelector: sel) superMessages]].
 	^selectors
 ]
 

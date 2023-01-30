@@ -50,7 +50,7 @@ TFCallbackSameProcessRunStrategy >> executeCallback: aCallbackInvocation on: aTF
 	process := self callbackProcess.
 		
 	"I will reuse the same process if it is not used already. Reentrant callbacks should fork a new process"
-	(process isSuspended and: [ process suspendedContext compiledCode method = (self class >> #waitForever) ])
+	(process isSuspended and: [ process suspendedContext homeMethod = (self class >> #waitForever) ])
 		ifFalse: [ ^ super executeCallback: aCallbackInvocation on: aTFRunner ].	
 
 	methodToUse := self class >> #doExecuteCallback:on:.

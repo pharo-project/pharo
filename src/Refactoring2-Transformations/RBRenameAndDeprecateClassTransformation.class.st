@@ -23,7 +23,7 @@ Class {
 		'className',
 		'newClassName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -49,7 +49,7 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [ 
 		transformations := OrderedCollection
-			with: (RBAddClassTransformation
+			with: (RBInsertClassTransformation
 						addClass: self tmpName
 						superclass: className asSymbol
 						subclasses: #()

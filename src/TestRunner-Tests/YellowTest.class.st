@@ -1,6 +1,6 @@
 Class {
 	#name : #YellowTest,
-	#superclass : #UtilityTest,
+	#superclass : #MockTest,
 	#category : #'TestRunner-Tests-Utilities-Test'
 }
 

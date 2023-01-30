@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveProtocolTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }

@@ -19,7 +19,7 @@ SmallFloat64 class >> basicNew: anInteger [
 ]
 
 { #category : #arithmetic }
-SmallFloat64 >> * aNumber [ 
+SmallFloat64 >> * aNumber [
 	"Primitive. Answer the result of multiplying the receiver by aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
 	whatIsAPrimitive."
@@ -29,7 +29,7 @@ SmallFloat64 >> * aNumber [
 ]
 
 { #category : #arithmetic }
-SmallFloat64 >> + aNumber [ 
+SmallFloat64 >> + aNumber [
 	"Primitive. Answer the sum of the receiver and aNumber. Essential.
 	Fail if the argument is not a Float. See Object documentation
 	whatIsAPrimitive."
@@ -39,7 +39,7 @@ SmallFloat64 >> + aNumber [
 ]
 
 { #category : #arithmetic }
-SmallFloat64 >> - aNumber [ 
+SmallFloat64 >> - aNumber [
 	"Primitive. Answer the difference between the receiver and aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
 	whatIsAPrimitive."
@@ -49,7 +49,7 @@ SmallFloat64 >> - aNumber [
 ]
 
 { #category : #arithmetic }
-SmallFloat64 >> / aNumber [ 
+SmallFloat64 >> / aNumber [
 	"Primitive. Answer the result of dividing receiver by aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
 	whatIsAPrimitive."
@@ -60,7 +60,7 @@ SmallFloat64 >> / aNumber [
 ]
 
 { #category : #comparing }
-SmallFloat64 >> < aNumber [ 
+SmallFloat64 >> < aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is less than the argument. Otherwise return false.
 	Fail if the argument is not a Float. Essential. See Object documentation
@@ -71,7 +71,7 @@ SmallFloat64 >> < aNumber [
 ]
 
 { #category : #comparing }
-SmallFloat64 >> <= aNumber [ 
+SmallFloat64 >> <= aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is less than or equal to the argument. Otherwise return
 	false. Fail if the argument is not a Float. Optional. See Object
@@ -82,7 +82,7 @@ SmallFloat64 >> <= aNumber [
 ]
 
 { #category : #comparing }
-SmallFloat64 >> = aNumber [ 
+SmallFloat64 >> = aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is equal to the argument. Otherwise return false.
 	Fail if the argument is not a Float. Essential. See Object documentation
@@ -94,7 +94,7 @@ SmallFloat64 >> = aNumber [
 ]
 
 { #category : #comparing }
-SmallFloat64 >> > aNumber [ 
+SmallFloat64 >> > aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is greater than the argument. Otherwise return false.
 	Fail if the argument is not a Float. Essential. See Object documentation
@@ -105,10 +105,10 @@ SmallFloat64 >> > aNumber [
 ]
 
 { #category : #comparing }
-SmallFloat64 >> >= aNumber [ 
+SmallFloat64 >> >= aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is greater than or equal to the argument. Otherwise return
-	false. Fail if the argument is not a Float. Optional. See Object documentation 
+	false. Fail if the argument is not a Float. Optional. See Object documentation
 	whatIsAPrimitive. "
 
 	<primitive: 546>
@@ -151,7 +151,7 @@ SmallFloat64 >> deepCopy [
 { #category : #'mathematical functions' }
 SmallFloat64 >> exp [
 	"Answer E raised to the receiver power.
-	 Optional. See Object documentation whatIsAPrimitive." 
+	 Optional. See Object documentation whatIsAPrimitive."
 
 	| base fract correction delta div |
 	<primitive: 559>
@@ -174,7 +174,7 @@ SmallFloat64 >> exp [
 	correction := 1.0 + fract.
 	delta := fract * fract / 2.0.
 	div := 2.0.
-	[delta > Epsilon] whileTrue: [
+	[delta > MathApproximationEpsilon] whileTrue: [
 		correction := correction + delta.
 		div := div + 1.0.
 		delta := delta * fract / div].
@@ -193,7 +193,7 @@ SmallFloat64 >> exponent [
 	<primitive: 553>
 	self >= 1.0 ifTrue: [^self floorLog: 2].
 	self > 0.0
-		ifTrue: 
+		ifTrue:
 			[positive := (1.0 / self) exponent.
 			self = (1.0 / (1.0 timesTwoPower: positive))
 				ifTrue: [^positive negated]
@@ -204,8 +204,8 @@ SmallFloat64 >> exponent [
 
 { #category : #'truncation and round off' }
 SmallFloat64 >> fractionPart [
-	"Primitive. Answer a Float whose value is the difference between the 
-	receiver and the receiver's asInteger value. Optional. See Object 
+	"Primitive. Answer a Float whose value is the difference between the
+	receiver and the receiver's asInteger value. Optional. See Object
 	documentation whatIsAPrimitive."
 
 	<primitive: 552>
@@ -255,7 +255,7 @@ SmallFloat64 >> ln [
 	div := 1.0.
 	pow := delta := sum := x.
 	x := x negated.  "x <= 0"
-	eps := Epsilon * (n abs + 1.0).
+	eps := MathApproximationEpsilon * (n abs + 1.0).
 	[delta > eps] whileTrue: [
 		"pass one: delta is positive"
 		div := div + 1.0.
@@ -287,7 +287,7 @@ SmallFloat64 >> shallowCopy [
 ]
 
 { #category : #'mathematical functions' }
-SmallFloat64 >> timesTwoPower: anInteger [ 
+SmallFloat64 >> timesTwoPower: anInteger [
 	"Primitive. Answer with the receiver multiplied by 2.0 raised
 	to the power of the argument.
 	Optional. See Object documentation whatIsAPrimitive."
@@ -302,9 +302,9 @@ SmallFloat64 >> timesTwoPower: anInteger [
 
 { #category : #'truncation and round off' }
 SmallFloat64 >> truncated [
-	"Answer with a SmallInteger equal to the value of the receiver without 
-	its fractional part. The primitive fails if the truncated value cannot be 
-	represented as a SmallInteger. In that case, the code below will compute 
+	"Answer with a SmallInteger equal to the value of the receiver without
+	its fractional part. The primitive fails if the truncated value cannot be
+	represented as a SmallInteger. In that case, the code below will compute
 	a LargeInteger truncated value.
 	Essential. See Object documentation whatIsAPrimitive. "
 
@@ -330,7 +330,7 @@ SmallFloat64 >> veryDeepCopyWith: deepCopier [
 ]
 
 { #category : #comparing }
-SmallFloat64 >> ~= aNumber [ 
+SmallFloat64 >> ~= aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is not equal to the argument. Otherwise return false.
 	Fail if the argument is not a Float. Optional. See Object documentation

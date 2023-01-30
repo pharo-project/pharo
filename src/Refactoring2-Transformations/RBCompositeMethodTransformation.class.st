@@ -5,7 +5,7 @@ Class {
 		'class',
 		'selector'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #accessing }
@@ -17,5 +17,5 @@ RBCompositeMethodTransformation >> definingClass [
 { #category : #accessing }
 RBCompositeMethodTransformation >> definingMethod [
 
-	^ self definingClass parseTreeFor: selector asSymbol
+	^ self definingClass parseTreeForSelector: selector asSymbol
 ]

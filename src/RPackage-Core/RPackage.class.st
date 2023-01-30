@@ -553,6 +553,11 @@ RPackage >> definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName [
 ]
 
 { #category : #accessing }
+RPackage >> definedOrExtendedClasses [
+	^ self definedClasses | self extendedClasses
+]
+
+{ #category : #accessing }
 RPackage >> definedSelectorsForClass: aClass [
 
 	^ aClass isMeta
@@ -928,8 +933,8 @@ RPackage >> isDeprecated [
 
 { #category : #testing }
 RPackage >> isEmpty [
-	self name = self class defaultPackageName ifTrue: [ ^false ].
-	^self classes isEmpty and: [ self extensionSelectors isEmpty]
+
+	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
 ]
 
 { #category : #'system compatibility' }
@@ -1463,7 +1468,6 @@ RPackage >> selectorsForClass: aClass [
 
 { #category : #'system compatibility' }
 RPackage >> systemCategories [
-	"(RPackageOrganizer default packageNamed: 'HelpSystem-Core' asSymbol) systemCategories"
 
 	^ self systemOrganization categories select: [:cat | self includesSystemCategory: cat]
 ]
@@ -1489,7 +1493,7 @@ RPackage >> tagsForClasses [
 
 { #category : #private }
 RPackage >> toTagName: aSymbol [
-	^ (aSymbol beginsWith: self name, '-')
+	^ (aSymbol beginsWith: self name asString, '-')
 		ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
 		ifFalse: [ aSymbol ]
 ]

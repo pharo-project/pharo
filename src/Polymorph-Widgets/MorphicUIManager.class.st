@@ -301,7 +301,7 @@ MorphicUIManager >> debugProcess: process context: context label: title fullView
 { #category : #'ui process' }
 MorphicUIManager >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
-	WorldState defer: aValuable
+	self currentWorld defer: aValuable
 ]
 
 { #category : #'ui requests' }

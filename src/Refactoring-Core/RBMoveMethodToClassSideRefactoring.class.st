@@ -44,7 +44,7 @@ Class {
 { #category : #refactoring }
 RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 
-	^ RBCreateAccessorsForVariableRefactoring
+	^ RBCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName
 				class: class
@@ -55,6 +55,19 @@ RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
 	aClass compile: rbMethod source classified: {protocol}.
+]
+
+{ #category : #preconditions }
+RBMoveMethodToClassSideRefactoring >> applicabilityConditions [
+
+	^ (RBCondition isMetaclass: class) not
+]
+
+{ #category : #preconditions }
+RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
+
+	^ (RBCondition definesSelector: method selector in: class classSide)
+		  not
 ]
 
 { #category : #checking }
@@ -70,7 +83,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |
 	sender := ''.
-	(method argumentNames size > 0) ifTrue: [ 
+	method argumentNames isNotEmpty ifTrue: [ 
 		(method selector keywords) with: (method argumentNames )do: [:a :b |
 		sender := sender, a, ' ', b, ' ']]
 	ifFalse: [ sender := method selector ].
@@ -111,7 +124,7 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 RBMoveMethodToClassSideRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: method selector.
+		ifNil: [ parseTree := class parseTreeForSelector: method selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 			].
 	^ parseTree
@@ -119,25 +132,26 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
-	^(RBCondition 
-		definesSelector: method selector 
-		in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
+
+	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
+
 	| rbMethod references |
-	rbMethod := (class methodFor: method selector).
-	references := class instanceVariableNames select: [:e | rbMethod refersToVariable: e].
-	references do: [ :e | |replacer accessorsRefactoring|
+	rbMethod := class methodFor: method selector.
+	references := class instanceVariableNames select: [ :e | 
+		              rbMethod refersToVariable: e ].
+	references do: [ :e | 
+		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
 		self performCompositeRefactoring: accessorsRefactoring.
-		replacer := self parseTreeRewriterClass 
-				variable: e
-				getter: accessorsRefactoring getterMethod
-				setter: accessorsRefactoring setterMethod.
-	   self convertMethod: method selector for: class using: replacer ].
+		replacer := self parseTreeRewriterClass
+			            variable: e
+			            getter: accessorsRefactoring getterMethodName
+			            setter: accessorsRefactoring setterMethodName.
+		self convertMethod: method selector for: class using: replacer ]
 ]
 
 { #category : #printing }

@@ -312,7 +312,7 @@ SocketStream >> growInBuffer [
 { #category : #testing }
 SocketStream >> ifStale: aBlock [
 	self isConnected
-		ifFalse: aBlock
+		ifFalse: [ aBlock value ]
 ]
 
 { #category : #configuration }

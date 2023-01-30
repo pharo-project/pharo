@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBCreateAccessorsForVariableRefactoring };
+		addCase: { #rbClass -> RBCreateAccessorsForVariableTransformation };
 		addCase: { #rbClass -> RBAddVariableAccessorTransformation };
 		yourself
 ]
@@ -53,8 +53,8 @@ RBAddVariableAccessorsParametrizedTest >> testNewClassVariableAccessors [
 	
 	class := refactoring model metaclassNamed: #RBLintRuleTestData.
 	self denyEmpty: refactoring changes changes.
-	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
-	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')
+	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
+	self assert: (class parseTreeForSelector: #foo1:) equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')
 ]
 
 { #category : #tests }
@@ -68,8 +68,8 @@ RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 	
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self denyEmpty: refactoring changes changes.
-	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
-	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
+	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
+	self assert: (class parseTreeForSelector: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
 { #category : #'failure tests' }

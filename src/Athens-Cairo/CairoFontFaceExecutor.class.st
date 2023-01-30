@@ -21,17 +21,17 @@ Class {
 }
 
 { #category : #finalization }
-CairoFontFaceExecutor >> finalize [ 
+CairoFontFaceExecutor >> finalize [
 	session = Smalltalk session ifFalse: [ ^ self ].
 	(resourceClass hasSharedResourceData: data) ifFalse: [ ^self reallyFinalize].
-	
+
 	UIManager default inform: 'Attempt to release a shared cairo_font_face.
 Please report this on pharo-dev mailing list'.
-	
+
 	[ "Regularly poll for the right moment to release the resource"
 	[20 seconds wait.
 	session = Smalltalk session and: [ resourceClass hasSharedResourceData: data ] ] whileTrue.
-	self reallyFinalize] forkAt: Processor userBackgroundPriority.
+	self reallyFinalize] forkAt: Processor userBackgroundPriority
 ]
 
 { #category : #accessing }
@@ -41,7 +41,7 @@ CairoFontFaceExecutor >> ftFace: aFace [
 ]
 
 { #category : #finalization }
-CairoFontFaceExecutor >> reallyFinalize [ 
+CairoFontFaceExecutor >> reallyFinalize [
 	ftFace := nil.
 	session = Smalltalk session ifFalse: [ ^ self ].
 	resourceClass finalizeResourceData: data

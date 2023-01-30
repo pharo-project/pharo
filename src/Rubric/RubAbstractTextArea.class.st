@@ -96,8 +96,10 @@ Class {
 		'mouseDownPoint',
 		'completionEngine',
 		'maxLength',
+		'grow',
 		'findReplaceService',
-		'editing'
+		'editing',
+		'hasDragDoubleClick'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -717,6 +719,17 @@ RubAbstractTextArea >> doubleClick: anEvent [
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> dragDoubleClick: event [
+	hasDragDoubleClick := true.
+	mouseDownPoint := event cursorPoint.
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> dragStart: event [
+
+]
+
 { #category : #composing }
 RubAbstractTextArea >> drawEmbeddedMorphs [
 	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
@@ -973,6 +986,20 @@ RubAbstractTextArea >> grabbedAllowed [
 	^ scrollPane isNil
 ]
 
+{ #category : #accessing }
+RubAbstractTextArea >> grow [
+	"Answer whether the area should grow horizontally."
+
+	^ grow
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> grow: aBool [
+	"Set whether the area should grow horizontally."
+
+	grow := aBool
+]
+
 { #category : #geometry }
 RubAbstractTextArea >> handleBoundsChange: aBlock [
 	| oldBounds |
@@ -991,6 +1018,10 @@ RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
 
 	editBlock value.
+	"Fit to width on edit"
+	grow ifTrue: [
+		self width: (1 max: self maxLineWidth + self margins left + self margins right)
+	].
 	self selectionChanged	"Note new selection"
 ]
 
@@ -1139,11 +1170,13 @@ RubAbstractTextArea >> highlightMessageSend [
 { #category : #initialization }
 RubAbstractTextArea >> initialize [
 	super initialize.
+	grow := false.
 	self compose.
 	self addCursor.
 	self plugFindReplace.
 	DefaultTextColor := self theme textColor.
-	editing := false
+	editing := false.
+	hasDragDoubleClick := false
 ]
 
 { #category : #keymapping }
@@ -1198,9 +1231,9 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 		ifTrue: [ 
 			self hasFocus: true.
 			editing := false.
-			self requestTextEditingAt:
-				((self cursor positionInWorld corner: self cursor positionInWorld) 
-					 translateBy: 0 @ (self font height + 4)) truncated.
+			self requestTextEditingAt: (self cursor positionInWorld corner:
+					 (self cursor positionInWorld translateBy:
+						  0 @ (self font height + 4))) truncated.
 			self showOverEditableTextCursor ]
 		ifFalse: [ 
 			self hasFocus: false.
@@ -1302,6 +1335,16 @@ RubAbstractTextArea >> maxLength: anInteger [
 	maxLength := anInteger max: 0
 ]
 
+{ #category : #measuring }
+RubAbstractTextArea >> maxLineWidth [
+	"Answers with the maximum approximate pixel width across all lines"
+	| w |
+	w := 0.
+	self string linesDo: [ :line | w := w max: (self font widthOfString: line) ].
+	"check this later, not really sure about this calculation"
+	^ w * 6 // 5
+]
+
 { #category : #accessing }
 RubAbstractTextArea >> menuAllowed [
 	^ menuAllowed ifNil: [ menuAllowed := self defaultMenuAllowed  ]
@@ -1368,20 +1411,14 @@ RubAbstractTextArea >> mouseDown: evt [
 	evt shiftPressed
 		ifTrue: [ ^ self mouseMove: evt ].
 	mouseDownPoint := evt cursorPoint.
-	(self hasFocus or: [ self editor hasSelection not ])
-		ifTrue:
-			[ | selectors |
-			self scrollPivot: evt hand position.
-			selectors := Array
-				with: #click:
-				with: #doubleClick:
-				with: nil
-				with: nil.
-			evt hand
-				waitForClicksOrDrag: self
-				event: evt
-				selectors: selectors
-				threshold: 5 ].
+	(self hasFocus or: [ self editor hasSelection not ]) ifTrue: [ 
+		self scrollPivot: evt hand position.
+		(evt hand mouseClickStateFor: self event: evt)
+			threshold: 5;
+			clickSelector: #click:;
+			doubleClickSelector: #doubleClick:;
+			dragSelector: #dragStart:;
+			dragDoubleClickSelector: #dragDoubleClick: ].
 	self hasKeyboardFocus
 		ifFalse: [ self takeKeyboardFocus ]
 ]
@@ -1402,23 +1439,34 @@ RubAbstractTextArea >> mouseLeave: evt [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseMove: evt [
+	
    self paragraph move: evt for: model controller: self editor.
 	evt redButtonPressed
 		ifFalse: [ ^ self ].
+	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
+	hasDragDoubleClick ifTrue: [
+		^ editor 
+			selectWordMark: (self paragraph characterBlockAtPoint: mouseDownPoint) stringIndex
+			point: (self paragraph characterBlockAtPoint: evt cursorPoint) stringIndex ].
+	
 	evt shiftPressed
 		ifTrue: [ self modifySelection: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
-		ifFalse: [ mouseDownPoint
-				ifNotNil: [ self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
-				ifNil: [ self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
+		ifFalse: [mouseDownPoint
+				ifNotNil: [ 
+					self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
+				ifNil: [  self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
+			
 	self editor storeSelectionInText.
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseUp: evt [
+	
 	self scrollPivot: nil.
 	(self boundsInWorld containsPoint: self currentHand position)
 		ifFalse: [ self hideOverEditableTextCursor ].
-	mouseDownPoint := nil
+	mouseDownPoint := nil.
+	hasDragDoubleClick := false
 ]
 
 { #category : #'accessing - cursor' }
@@ -1489,6 +1537,26 @@ RubAbstractTextArea >> openFindDialog [
 	self sharesFindReplace 
 		ifTrue: [ self announce: RubFindReplaceWindowRequired ]
 		ifFalse: [self flash]
+]
+
+{ #category : #menu }
+RubAbstractTextArea >> openMenu [
+	"Opens the menu at the cursor position"
+	self openMenu: false and: [ :menu |
+		menu invokeAt: self cursor positionInWorld in: self currentWorld
+	]
+]
+
+{ #category : #menu }
+RubAbstractTextArea >> openMenu: shiftKeyState and: aBlock [
+	"Opens the menu at the cursor position, executing the given block afterwards"
+	(self getMenu: shiftKeyState)
+		ifNotNil: [ :menu |
+			menu privateOwner: self.
+			menu setInvokingView: self editor.
+			aBlock value: menu.
+			self changed
+		]
 ]
 
 { #category : #'accessing - editor' }
@@ -2198,13 +2266,6 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	Check if required first!"
 	self wantsYellowButtonMenu
 		ifFalse: [ ^ false ].	
-	(self getMenu: shiftKeyState)
-		ifNotNil: [ :menu|
-			menu privateOwner: self.
-			menu setInvokingView: self editor.
-			menu invokeModal. 
-			self changed.
-			^ true].
-		
+	self openMenu: shiftKeyState and: #invokeModal.
 	^ true
 ]

@@ -12,7 +12,7 @@ Class {
 
 { #category : #coverage }
 ClassDescriptionTest >> classToBeTested [
-	
+
 	^ ClassDescription
 ]
 
@@ -33,21 +33,21 @@ ClassDescriptionTest >> testAllSlots [
 ClassDescriptionTest >> testDefinesSlotNamed [
 	self assert: (Point definesSlotNamed: #x).
 	self deny: (Point definesSlotNamed: #z).
-	
+
 	self assert: (ExampleForTest11 definesSlotNamed: #aSubclassVariable).
-	self deny: (ExampleForTest11 definesSlotNamed: #aSuperclassVariable).
+	self deny: (ExampleForTest11 definesSlotNamed: #aSuperclassVariable)
 ]
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testHasSlot [
 	self assert: (ExampleForTest11 hasSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable)).
-	self deny: (ExampleForTest11 definesSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable)).
+	self deny: (ExampleForTest11 definesSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable))
 ]
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testHasSlotNamed [
 	self assert: (Context hasSlotNamed: #sender).
-	self assert: (Context hasSlotNamed: #method).
+	self assert: (Context hasSlotNamed: #method)
 ]
 
 { #category : #tests }
@@ -65,7 +65,7 @@ ClassDescriptionTest >> testOrganization [
 
 	| aClassOrganizer |
 	aClassOrganizer := ClassDescription organization.
-	self assert: (aClassOrganizer isKindOf: ClassOrganization).
+	self assert: (aClassOrganizer isKindOf: ClassOrganization)
 ]
 
 { #category : #'tests - slots' }
@@ -86,14 +86,14 @@ ClassDescriptionTest >> testSlots [
 { #category : #tests }
 ClassDescriptionTest >> testWhichCategoryIncludesSelector [
 	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing - comment'.
-	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil.
+	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil
 ]
 
 { #category : #'tests - instance variables' }
 ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
 	self assert: (Point classThatDefinesInstVarNamed: 'x') equals: Point.
 	self assert: (Class classThatDefinesInstVarNamed: 'methodDict') equals: Behavior.
-	self assert: (Point classThatDefinesInstVarNamed: 'methodDict') equals: nil.
+	self assert: (Point classThatDefinesInstVarNamed: 'methodDict') equals: nil
 ]
 
 { #category : #'tests - instance variables' }
@@ -101,7 +101,7 @@ ClassDescriptionTest >> testwhichSelectorsAccess [
 	self assert: ((Point whichSelectorsAccess: #y) includes: #y).
 	self deny: ((Point whichSelectorsAccess: #y) includes: #x).
 	self assert: ((Point whichSelectorsAccess: #x) includes: #setX:setY:).
-	
+
 	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty)
 ]
 
@@ -109,7 +109,7 @@ ClassDescriptionTest >> testwhichSelectorsAccess [
 ClassDescriptionTest >> testwhichSelectorsRead [
 	self assert: ((Point whichSelectorsRead: #y) includes: #y).
 	self deny: ((Point whichSelectorsRead: #y) includes: #x).
-	
+
 	self assert: ((Point whichSelectorsRead: #doesNotExist) isEmpty)
 ]
 
@@ -117,6 +117,6 @@ ClassDescriptionTest >> testwhichSelectorsRead [
 ClassDescriptionTest >> testwhichSelectorsWrite [
 	self assert: ((Point whichSelectorsWrite: #x) includes: #setX:setY:).
 	self deny: ((Point whichSelectorsWrite: #x) includes: #x).
-	
-	self assert: ((Point whichSelectorsWrite: #doesNotExist) isEmpty).
+
+	self assert: ((Point whichSelectorsWrite: #doesNotExist) isEmpty)
 ]

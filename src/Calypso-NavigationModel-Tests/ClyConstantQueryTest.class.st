@@ -25,7 +25,7 @@ ClyConstantQueryTest >> testCheckingForEmptyResult [
 	empty := self createQuery: #().
 	notEmpty := self createQuery.
 	self assert: empty checkEmptyResult;
-		deny: notEmpty checkEmptyResult.
+		deny: notEmpty checkEmptyResult
 ]
 
 { #category : #tests }
@@ -57,6 +57,6 @@ ClyConstantQueryTest >> testConvertingToSemiAsyncQuery [
 ClyConstantQueryTest >> testExecution [
 
 	self executeQuery.
-	
+
 	self assert: resultItems asArray equals: query resultItems
 ]

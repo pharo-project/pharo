@@ -65,10 +65,11 @@ RBAbstractClass >> addInstanceVariable: aString [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> addMethod: aRBMethod [ 
+RBAbstractClass >> addMethod: aRBMethod [
+
 	self newMethods at: aRBMethod selector put: aRBMethod.
-	removedMethods notNil 
-		ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: []]
+	removedMethods ifNotNil: [ 
+		removedMethods remove: aRBMethod selector ifAbsent: [  ] ]
 ]
 
 { #category : #private }
@@ -184,7 +185,7 @@ RBAbstractClass >> canonicalArgumentName [
 RBAbstractClass >> checkSelector: aSelector using: aMatcher [ 
 
 	| parseTree |
-	parseTree := self parseTreeFor: aSelector.
+	parseTree := self parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^ aMatcher answer
 ]
@@ -249,7 +250,7 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 
 	| parseTree |
 
-	parseTree := self parseTreeFor: selector.
+	parseTree := self parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ self compileTree: searchReplacer tree ]
@@ -537,7 +538,17 @@ RBAbstractClass >> newMethods [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> parseTreeFor: aSelector [
+RBAbstractClass >> parseTreeFor: aSymbol [
+
+	self
+		deprecated: 'Use parseTreeForSelector: instead'
+		transformWith: '`@receiver parseTreeFor: `@argument'
+			-> '`@receiver parseTreeForSelector: `@argument'.
+	^ self parseTreeForSelector: aSymbol
+]
+
+{ #category : #'method accessing' }
+RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
 
@@ -749,12 +760,16 @@ RBAbstractClass >> superclassRedefines: aSelector [
 
 { #category : #'accessing - deprecated' }
 RBAbstractClass >> theMetaClass [
-	^ model metaclassNamed: self name
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass' 
+						-> '`@receiver classSide'.
+	^ self classSide
 ]
 
 { #category : #'accessing - deprecated' }
 RBAbstractClass >> theNonMetaClass [
-	^ model classNamed: self name
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass' 
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
 ]
 
 { #category : #'variable accessing' }

@@ -8,7 +8,7 @@ If the method implementation has some direct variable references, accessor for t
 Class {
 	#name : #RBInlineMethodFromComponentRefactoring,
 	#superclass : #RBInlineMethodRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #transforming }
@@ -17,7 +17,7 @@ RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 	refactoring := RBAbstractVariablesRefactoring 
 				model: self model
 				abstractVariablesIn: inlineParseTree
-				from: self inlineClass
+				from: self classOfTheMethodToInline
 				toAll: (Array with: class).
 	self performCompositeRefactoring: refactoring.
 	inlineParseTree := refactoring parseTree
@@ -64,9 +64,24 @@ RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 ]
 
 { #category : #transforming }
+RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
+
+	| imps |
+
+	classOfTheMethodToInline ifNotNil: [ ^ classOfTheMethodToInline ].
+	imps := ( self model allImplementorsOf: self inlineSelector ) asOrderedCollection.
+	imps size = 1
+		ifTrue: [ ^ classOfTheMethodToInline := imps first ].
+	imps ifEmpty: [ self refactoringFailure: 'Nobody defines a method named ' , self inlineSelector ].
+	classOfTheMethodToInline := self requestImplementorToInline: imps.
+	classOfTheMethodToInline ifNil: [ self refactoringFailure: 'No implementor selected' ].
+	^ classOfTheMethodToInline
+]
+
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 
-	sourceParseTree := class parseTreeFor: sourceSelector.
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage
@@ -77,42 +92,27 @@ RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ]
 ]
 
-{ #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> inlineClass [
-
-	| imps |
-
-	inlineClass ifNotNil: [ ^ inlineClass ].
-	imps := ( self model allImplementorsOf: self inlineSelector ) asOrderedCollection.
-	imps size = 1
-		ifTrue: [ ^ inlineClass := imps first ].
-	imps ifEmpty: [ self refactoringFailure: 'Nobody defines a method named ' , self inlineSelector ].
-	inlineClass := self requestImplementorToInline: imps.
-	inlineClass ifNil: [ self refactoringFailure: 'No implementor selected' ].
-	^ inlineClass
-]
-
-{ #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> inlineClassName [
-
-	^ self inlineClass instanceSide name
-]
-
 { #category : #testing }
 RBInlineMethodFromComponentRefactoring >> isOverridden [
 	| selector| 
 	selector := self inlineSelector.
-	self inlineClass allSubclassesDo: [:each | 
+	self classOfTheMethodToInline allSubclassesDo: [:each | 
 		(each directlyDefinesMethod: selector)
 			ifTrue: [ ^ true ]].
 	^ false
 ]
 
 { #category : #transforming }
+RBInlineMethodFromComponentRefactoring >> nameOfTheClassOfTheMethodToInline [
+
+	^ self classOfTheMethodToInline instanceSide name
+]
+
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 
 	| variableName index originalName nonMetaClass |
-	nonMetaClass := self inlineClassName.
+	nonMetaClass := self nameOfTheClassOfTheMethodToInline.
 	variableName := originalName := (nonMetaClass first isVowel
 		                                 ifTrue: [ 'an' ]
 		                                 ifFalse: [ 'a' ])

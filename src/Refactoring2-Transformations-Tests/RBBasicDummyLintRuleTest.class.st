@@ -7,7 +7,7 @@ Class {
 		'classBlock',
 		'anInstVar'
 	],
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #'possible bugs' }
@@ -122,7 +122,7 @@ RBBasicDummyLintRuleTest class >> classNameInSelector [
 			[:context :result | 
 			(context selectedClass isMetaclass and: 
 					[(context selector
-						indexOfSubCollection: context selectedClass theNonMetaClass name
+						indexOfSubCollection: context selectedClass instanceSide name
 						startingAt: 1) > 0])
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector
@@ -706,7 +706,7 @@ RBBasicDummyLintRuleTest class >> refersToClass [
 	detector classBlock: 
 			[:context :result | 
 			| sels className |
-			className := context selectedClass theNonMetaClass name.
+			className := context selectedClass instanceSide name.
 			sels := context selectedClass
 						whichSelectorsReferTo: (Smalltalk associationAt: className).
 			sels isEmpty ifFalse: 
@@ -1130,7 +1130,7 @@ RBBasicDummyLintRuleTest class >> variableAssignedLiteral [
 								searcher := self parseTreeSearcher.
 								searcher addSearch: (each , ' := ``@object')
 											-> [:aNode :answer | answer isNil and: [aNode value isLiteralNode]].
-								tree := defClass parseTreeFor: selector.
+								tree := defClass parseTreeForSelector: selector.
 								tree notNil ifTrue: 
 										[(searcher executeTree: tree initialAnswer: nil) == true
 											ifTrue: [result addInstVar: each for: context selectedClass]]]]].
@@ -1163,7 +1163,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 							== 1 
 							ifTrue: 
 								[| tree |
-								tree := defClass parseTreeFor: selector.
+								tree := defClass parseTreeForSelector: selector.
 								tree notNil 
 									ifTrue: 
 										[(RBReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree) 

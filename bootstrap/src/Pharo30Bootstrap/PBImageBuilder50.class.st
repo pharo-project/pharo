@@ -656,7 +656,7 @@ PBImageBuilder50 >> installExtensionMethodsOf: aPackageDefinition prefixed: aPre
 		compiledMethod := self methodBuilder createNewMethod:
 			                  methodDefinition.
 		behaviorMirror := bootstrapEnvironment at:
-			                  methodClass theNonMetaClass name.
+			                  methodClass instanceSide name.
 		methodClass isMeta ifTrue: [ 
 			behaviorMirror := behaviorMirror classSide ].
 
@@ -729,7 +729,7 @@ PBImageBuilder50 >> installMethodsInBehaviorMapping: aBehaviorMapping using: aMe
 	| newMethods theClass |
 	newMethods := (aMethodBuilder methodsFromDefinition: aBehaviorMapping) 
 		              sorted: [ :a :b | a selector < b selector ].
-	theClass := (self classNamed: aBehaviorMapping theNonMetaClass name)
+	theClass := (self classNamed: aBehaviorMapping instanceSide name)
 		            mirror.
 	aBehaviorMapping isMeta ifTrue: [ theClass := theClass classSide ].
 	newMethods doWithIndex: [ :method :index | 

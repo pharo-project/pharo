@@ -10,17 +10,22 @@ Class {
 { #category : #private }
 AbstractTool class >> protocolSuggestionsFor: aClass [
 
-	| allExistingProtocols interestingProtocols reject |
+	| classProtocols reject allExistingProtocols interestingProtocols |
+	classProtocols := aClass organization allCategories.
 	reject := Set new.
 	reject
-		addAll: aClass organization allCategories;
 		add: AllProtocol defaultName;
 		add: Protocol nullCategory;
 		add: Protocol unclassified.
-	allExistingProtocols := SystemNavigation default allExistingProtocolsFor: aClass isMeta not.
-	
-	interestingProtocols := allExistingProtocols reject: [ :e | reject includes: e ].
-	^ interestingProtocols asOrderedCollection sort: [ :a :b | a asLowercase < b asLowercase ].
+	allExistingProtocols := (SystemNavigation default 
+		                         allExistingProtocolsFor: aClass isMeta not) 
+		                        reject: [ :p | classProtocols includes: p ].
+	interestingProtocols := classProtocols
+	                        ,
+		                        (allExistingProtocols asOrderedCollection 
+			                         sort: [ :a :b | 
+			                         a asLowercase < b asLowercase ]).
+	^ interestingProtocols reject: [ :e | reject includes: e ]
 ]
 
 { #category : #method }

@@ -23,7 +23,7 @@ Class {
 	#category : #'Reflectivity-Installer'
 }
 
-{ #category : #initalize }
+{ #category : #initialization }
 PermaLink >> initialize [
 	isInstanceSpecific := false
 ]

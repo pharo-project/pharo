@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 AthensBalloonPath >> contours [
-	
+
 	^ contours
 ]
 
@@ -20,11 +20,11 @@ AthensBalloonPath >> contours [
 AthensBalloonPath >> contoursForFilling [
 	"Answer a collection of contours, ready for filling by balloon engine"
 
-	^ contours collect: [ :contour | 
+	^ contours collect: [ :contour |
 		  contour last = contour first
 			  ifTrue: [ contour asArray ]
-			  ifFalse: [ 
-				  contour , { 
+			  ifFalse: [
+				  contour , {
 					  contour last.
 					  contour last.
 					  contour first } ] ]
@@ -43,7 +43,7 @@ AthensBalloonPath >> convertFromBuilder: aBuilder [
 	| segment cContours |
 	segment := aBuilder pathStart.
 
-	[ segment notNil ] whileTrue: [ 
+	[ segment notNil ] whileTrue: [
 		segment visitWith: self.
 		segment := segment next ].
 
@@ -56,8 +56,8 @@ AthensBalloonPath >> convertFromBuilder: aBuilder [
 { #category : #private }
 AthensBalloonPath >> duplicateLastPoint [
 
-	contours last size < 2 ifFalse: [ 
-		"Duplicate last contour point" 
+	contours last size < 2 ifFalse: [
+		"Duplicate last contour point"
 		contours last add: contours last last ]
 ]
 
@@ -68,9 +68,9 @@ AthensBalloonPath >> numContours [
 ]
 
 { #category : #drawing }
-AthensBalloonPath >> paintFillsUsing: aPaint on: anAthensCanvas [ 	
+AthensBalloonPath >> paintFillsUsing: aPaint on: anAthensCanvas [
 	"This method is a part of rendering dispatch  Canvas->receiver->paint"
-	
+
 	^ aPaint athensFillPath: self on: anAthensCanvas
 ]
 
@@ -78,7 +78,7 @@ AthensBalloonPath >> paintFillsUsing: aPaint on: anAthensCanvas [
 AthensBalloonPath >> visitCloseSegment: closeSegment [
 	"See if its already closed"
 
-	contours last last = contours last first ifFalse: [ 
+	contours last last = contours last first ifFalse: [
 		contours last
 			add: contours last last;
 			add: closeSegment endPoint;

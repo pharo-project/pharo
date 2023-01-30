@@ -275,7 +275,7 @@ RGChunkImporter >> if: selectorParts in: ast includes: aSymbol do: aBlock [
 	aBlock value: (ast arguments at: index).
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGChunkImporter >> initialize [
 	super initialize.
 	environment := RGEnvironment new.
@@ -302,7 +302,7 @@ RGChunkImporter >> metaClassDefinition: string with: chgRec [
 	tokens := self scannedSource: string.
 	
 	theClass := self classNamed: tokens first.
-	theClass theMetaClass instanceVariables: (tokens fourth findTokens: ' ')
+	theClass classSide instanceVariables: (tokens fourth findTokens: ' ')
 ]
 
 { #category : #private }
@@ -312,7 +312,7 @@ RGChunkImporter >> metaTraitDefinition: string with: chgRec [
 	tokens := self scannedSource: string.
 	trait := environment ensureTraitNamed: tokens first.
 	
-"	trait theMetaClass definitionSource: string"
+"	trait classSide definitionSource: string"
 ]
 
 { #category : #private }
@@ -326,7 +326,7 @@ RGChunkImporter >> msgClassComment: string with: chgRec [
 	ifTrue:[
 		theClass := self classNamed: tokens first.
 		((tokens at: (tokens size - 1)) == #class
-		ifTrue: [ theClass theMetaClass ]
+		ifTrue: [ theClass classSide ]
 		ifFalse:[ theClass ]) comment: tokens last asString ]
 ]
 

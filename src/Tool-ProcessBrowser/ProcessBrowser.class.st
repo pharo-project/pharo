@@ -158,7 +158,7 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 		order: 3;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: self taskbarIcon
+		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
 { #category : #'process control' }
@@ -369,8 +369,11 @@ ProcessBrowser class >> wasProcessSuspendedByProcessBrowser: aProcess [
 
 { #category : #'stack list' }
 ProcessBrowser >> browseContext [
-	selectedContext ifNil: [ ^ self ]. 
-	Smalltalk tools browser openOnClass: self selectedClass selector: self selectedSelector
+
+	selectedContext ifNil: [ ^ self ].
+	self tools browser
+		openOnClass: self selectedClass
+		selector: self selectedSelector
 ]
 
 { #category : #views }
@@ -383,7 +386,7 @@ ProcessBrowser >> browsedEnvironment [
 ProcessBrowser >> build [
 	| window  scrolledText |
 	window := (SystemWindow labelled: 'later') model: self.
-	self deferredMessageRecipient: WorldState.
+	self deferredMessageRecipient: window currentWorld.
 	window
 		addMorph: ((PluggableListMorph
 				on: self
@@ -407,7 +410,7 @@ ProcessBrowser >> build [
 		
 	textModel setText: self methodText.
 	textModel clearUserEdits.
-	scrolledText := textModel newScrolledText beForSmalltalkCode; yourself.
+	scrolledText := textModel newScrolledText beForSmalltalkScripting; yourself.
 	window
 		addMorph:  scrolledText
 		frame: (0 @ 0.5 corner: 1 @ 1).
@@ -487,14 +490,16 @@ ProcessBrowser >> exploreContext [
 
 { #category : #'process actions' }
 ProcessBrowser >> explorePointers [
+
 	| saved |
 	selectedProcess ifNil: [ ^ self ].
 	saved := selectedProcess.
-	[ selectedProcess := nil.
-	(Smalltalk tools hasToolNamed: #pointerExplorer)
-		ifTrue: [ Smalltalk tools pointerExplorer openOn: saved ]
-		ifFalse: [ self inspectPointers ] ]
-		     ensure: [ selectedProcess := saved ]
+	[ 
+	selectedProcess := nil.
+	(self tools hasToolNamed: #pointerExplorer)
+		ifTrue: [ self tools pointerExplorer openOn: saved ]
+		ifFalse: [ self inspectPointers ] ] ensure: [ 
+		selectedProcess := saved ]
 ]
 
 { #category : #'process list' }
@@ -578,6 +583,11 @@ ProcessBrowser >> isAutoUpdating [
 { #category : #updating }
 ProcessBrowser >> isAutoUpdatingPaused [
 	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended ]
+]
+
+{ #category : #testing }
+ProcessBrowser >> isScripting [ 
+	^self doItContext belongsToDoIt
 ]
 
 { #category : #'process list' }
@@ -792,14 +802,18 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 
 { #category : #'stack list' }
 ProcessBrowser >> messageTally [
+
 	| secString secs |
-	secString := UIManager default request: 'Profile for how many seconds?' initialAnswer: '4'.
-	secString ifNil: [secString := String new].
+	secString := UIManager default
+		             request: 'Profile for how many seconds?'
+		             initialAnswer: '4'.
+	secString ifNil: [ secString := String new ].
 	secs := secString asNumber asInteger.
-	(secs isNil
-			or: [secs isZero])
-		ifTrue: [^ self].
-	[ Smalltalk tools timeProfiler spyOnProcess: selectedProcess forMilliseconds: secs * 1000 ] forkAt: selectedProcess priority + 1.
+	(secs isNil or: [ secs isZero ]) ifTrue: [ ^ self ].
+	[ 
+	self tools timeProfiler
+		spyOnProcess: selectedProcess
+		forMilliseconds: secs * 1000 ] forkAt: selectedProcess priority + 1
 ]
 
 { #category : #accessing }
@@ -1128,6 +1142,12 @@ ProcessBrowser >> toggleAutoUpdate [
 		ifTrue: [ self stopAutoUpdate ]
 		ifFalse: [ self startAutoUpdate ]
 
+]
+
+{ #category : #'stack list' }
+ProcessBrowser >> tools [
+
+	^ Smalltalk tools
 ]
 
 { #category : #'process list' }
