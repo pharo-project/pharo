@@ -20,10 +20,10 @@ NECCVariableEntry >> browse [
 NECCVariableEntry >> createDescription [
 	| clazz |
 	clazz := Smalltalk globals at: contents ifAbsent: [ nil ].
-	^ clazz 
+	^ clazz
 		ifNil: [ NECEntryDescription label: self label ]
-		ifNotNil: 
-			[ NECEntryDescription 
+		ifNotNil:
+			[ NECEntryDescription
 				label: self label
 				title: clazz printString
 				description: clazz comment ]
