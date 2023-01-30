@@ -1,6 +1,16 @@
 "
-Common superclass for User Interface themes. Provides methods for creating new morphs in a standard way, various ""services"" like a file dialog, message dialogs etc. and also methods for customising aspects of the appearance of various morphs.
+Common superclass for User Interface themes.
+Provides methods for creating new morphs in a standard way, various ""services"" like a file dialog, message dialogs etc. and also methods for customising aspects of the appearance of various morphs.
+
 Though conceptually abstract, no code is ""missing"". Subclasses, therefore, should override the aspects they wish to change.
+
+## Color Palette
+
+In the new implementation now I use a color palette to obtain the colors. This is because else I make thousands of unnecessary color allocations per minute. My color palette is responsible for the caching system.
+
+## How to create your own them
+
+If you wish to have another custom theme, you need to subclass me and only re-define my class side method `colorConfiguratorClass`. Also, you need to define your own color configurator class, see the common of the abstract class UIThemeColorConfigurator. This is the class that you need to return in `colorConfiguratorClass`.
 "
 Class {
 	#name : #UITheme,

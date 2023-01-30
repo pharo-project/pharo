@@ -1,3 +1,8 @@
+"
+I am a class that is in charge of return the colors for the UITheme. You need to subclass me to use me with a theme. For example PharoDarkTheme uses DarkThemeColorConfigurator.
+
+So, if you want to create your own theme, you need to subclass me and redefine my abstract methods. You can also override any method to change the colors.
+"
 Class {
 	#name : #UIThemeColorConfigurator,
 	#superclass : #Object,

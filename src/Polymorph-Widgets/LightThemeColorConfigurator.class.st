@@ -1,3 +1,6 @@
+"
+I am the color configurator that defined the colors for the pharo light theme
+"
 Class {
 	#name : #LightThemeColorConfigurator,
 	#superclass : #UIThemeColorConfigurator,

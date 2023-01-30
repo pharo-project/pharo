@@ -1,3 +1,6 @@
+"
+I am a color palette. I cache the colors that are returned by the color configurator in a dictionary.
+"
 Class {
 	#name : #UIThemePalette,
 	#superclass : #Object,
