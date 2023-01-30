@@ -28,11 +28,6 @@ OCMethodSemanticScope >> asDoItScope [
 ]
 
 { #category : #'code compilation' }
-OCMethodSemanticScope >> compileMethodFromASTBy: aCompiler [
-	^aCompiler compileMethodFromAST
-]
-
-{ #category : #'code compilation' }
 OCMethodSemanticScope >> parseASTBy: aParser [
 
 	^aParser parseMethod

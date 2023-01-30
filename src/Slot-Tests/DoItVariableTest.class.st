@@ -44,11 +44,10 @@ DoItVariableTest >> testDoItCompilation [
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.	
 	doIt := thisContext class compiler
-		source: 'temp + 2';
 		context: thisContext;
 		noPattern: true;
 		bindings: { var };
-		compile.
+		compile: 'temp + 2'.
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
 

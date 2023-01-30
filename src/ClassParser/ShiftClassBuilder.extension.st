@@ -34,6 +34,5 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 			self
 				traitComposition:
 					(self class compiler
-						source: traitDef originalNode formattedCode;
-							evaluate) ]
+						evaluate: traitDef originalNode formattedCode) ]
 ]

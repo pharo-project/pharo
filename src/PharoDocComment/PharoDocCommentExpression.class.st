@@ -20,11 +20,10 @@ PharoDocCommentExpression >> evaluate [
 	self isFaulty ifTrue: [ RuntimeSyntaxError signal ].
 
 	^ self methodClass compiler
-		  source: self source;
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  evaluate
+		  evaluate: self source
 ]
 
 { #category : #accessing }
@@ -42,11 +41,10 @@ PharoDocCommentExpression >> expressionNodeReal [
 	"Force the parsing of the expression node"
 
 	^ self methodClass compiler
-		  source: self source;
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  parse.
+		  parse: self source
 ]
 
 { #category : #testing }

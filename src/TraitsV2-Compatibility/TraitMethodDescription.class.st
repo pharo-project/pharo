@@ -93,10 +93,9 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 		stream cr; tab; nextPutAll: 'self '; nextPutAll: aSymbol].
 	
 	node := self class compiler
-		source: source;
 		class: self class;
 		failBlock: [];
-		parse.
+		parse: source.
 	^(node generateWithSource) selector: aSelector; yourself
 ]
 

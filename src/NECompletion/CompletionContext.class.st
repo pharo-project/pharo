@@ -123,10 +123,9 @@ CompletionContext >> node [
 { #category : #parsing }
 CompletionContext >> parseSource [
 	ast := class compiler
-		source: source;
 		noPattern: self isScripting;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse.
+		parse: source.
 	TypingVisitor new visitNode: ast
 ]
 

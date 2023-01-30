@@ -605,11 +605,10 @@ CompiledMethod >> isFaulty [
 	"fast pre-check: all methods with syntax errors reference this symbol"
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
 	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
-	ast := self methodClass compiler
-				source: self sourceCode;
+	ast := self methodClass compiler 
 				options: #(+ optionParseErrors);
-				parse.
-	^ ast isFaulty
+				parse: self sourceCode.
+	^ ast isFaulty.
 ]
 
 { #category : #testing }

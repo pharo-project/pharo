@@ -102,9 +102,8 @@ OCUndeclaredVariableWarning >> defineClass: className [
 	(classDefinition isNil or: [ classDefinition isEmpty ])
 		ifTrue: [ ^ Abort signal ].
 	result := self class compiler
-		source: classDefinition;
 		logged: true;
-		evaluate.
+		evaluate: classDefinition.
 	"Because some class definition syntax the (fuild one) does not evaluate to a
 	class but a class builder, we must call `fluidInstall`.
 	(that is a noop on real classes)."
@@ -133,9 +132,8 @@ OCUndeclaredVariableWarning >> defineTrait: traitName [
 	(traitDefinition isNil or: [ traitDefinition isEmpty ])
 		ifTrue: [ ^ Abort signal ].
 	self class compiler
-		source: traitDefinition;
 		logged: true;
-		evaluate.
+		evaluate: traitDefinition.
 	^ (node owningScope lookupVar: traitSymbol)
 		ifNil: [self error: 'should be not happen']
 ]

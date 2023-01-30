@@ -327,10 +327,10 @@ OCClosureCompilerTest >> doTestDebuggerTempAccessWith: one with: two [
 
 { #category : #running }
 OCClosureCompilerTest >> evaluate: aString in: aContext to: anObject [
-	^self class compiler source: aString;
+	^self class compiler 
 		context: aContext;
 		receiver: anObject;
-		evaluate
+		evaluate: aString
 ]
 
 { #category : #running }

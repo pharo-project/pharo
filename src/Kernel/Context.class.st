@@ -164,9 +164,8 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 	^ Context primitiveFailTokenFor: errorCode'.
 	method := Smalltalk compiler
 				class: UndefinedObject;
-				source: source;
-				compile.
-	TryNamedPrimitiveTemplateMethod := method copyWithSource: source
+				compile: source.
+	TryNamedPrimitiveTemplateMethod := method copyWithSource: source.
 ]
 
 { #category : #'instance creation' }

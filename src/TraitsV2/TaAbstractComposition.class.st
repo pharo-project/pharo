@@ -146,11 +146,10 @@ TaAbstractComposition >> compile: selector into: aClass [
 	trailer := method trailer.
 	
 	newMethod := aClass compiler
-				source: sourceCode;
 				class: aClass ;
 				failBlock: [^ false];
 				compiledMethodTrailer: trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
+				compile: sourceCode.   "Assume OK after proceed from SyntaxError"
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 

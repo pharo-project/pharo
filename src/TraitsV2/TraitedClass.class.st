@@ -287,11 +287,10 @@ TraitedClass >> recompile: selector from: oldClass [
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
 	newMethod := self compiler
-				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				failBlock: [^ self];
 				compiledMethodTrailer: method trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
+				compile: (oldClass sourceCodeAt: selector).   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	
 	method properties 

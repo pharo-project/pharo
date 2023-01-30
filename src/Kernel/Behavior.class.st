@@ -1534,11 +1534,10 @@ Behavior >> sourceMatchesBytecodeAt: selector [
 
 	method := self compiledMethodAt: selector.
 	newMethod := self compiler
-			source: (self sourceCodeAt: selector);
 			class: self;
 			failBlock: [^ false];
 			compiledMethodTrailer: method trailer;
-			compile.   "Assume OK after proceed from SyntaxError"
+			compile: (self sourceCodeAt: selector).   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!!'].
 	^ newMethod = method
 ]

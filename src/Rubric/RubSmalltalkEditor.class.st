@@ -311,24 +311,23 @@ RubSmalltalkEditor >> classNamesContainingIt [
 ]
 
 { #category : #'do-its' }
-RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
+RubSmalltalkEditor >> compile: aString for: anObject in: evalContext [
 	| methodClass |
 	methodClass := evalContext
 		ifNil: [ anObject class ]
 		ifNotNil: [ evalContext methodClass ].
 	^self class compiler
-		source: aStream;
 		class: methodClass;
 		context: evalContext;
 		requestor: self morph;
 		noPattern: true;
 		failBlock: [ ^ nil ];
-		compile
+		compile: aString
 ]
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	^ self compile: self selectionAsStream for: anObject in: evalContext
+	^ self compile: self selection for: anObject in: evalContext
 ]
 
 { #category : #'completion engine' }
@@ -433,13 +432,13 @@ RubSmalltalkEditor >> copySelection [
 ]
 
 { #category : #'do-its' }
-RubSmalltalkEditor >> debug: aStream [
+RubSmalltalkEditor >> debug: aString [
 	| method receiver context |
 	(self model respondsTo: #doItReceiver)
 		ifTrue: [ receiver := self model doItReceiver.
 			context := self model doItContext ]
 		ifFalse: [ receiver := context := nil ].
-	method := self compile: aStream for: receiver in: context.
+	method := self compile: aString for: receiver in: context.
 	method ifNil: [ ^self ].
 	method isReturnSpecial
 		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
@@ -494,7 +493,7 @@ RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 	
 	self lineSelectAndEmptyCheck: [^self].
-	self debug: self selectionAsStream
+	self debug: self selection
 ]
 
 { #category : #'do-its' }
@@ -518,7 +517,7 @@ RubSmalltalkEditor >> editingMode [
 ]
 
 { #category : #'do-its' }
-RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
+RubSmalltalkEditor >> evaluate: aString andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
 	(self model respondsTo: #doItReceiver) 
@@ -526,12 +525,11 @@ RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
 				ctxt := self model doItContext]
 		ifFalse: [ rcvr := ctxt := nil].
 	result := rcvr class compiler
-			source: aStream;
 			context: ctxt;
 			receiver: rcvr;
 			requestor: self morph  "don't set it to self.. The receiver can be destroyed as a result of evaluateSelection";
 			failBlock:  [self morph flash. ^ nil];
-			evaluate.		
+			evaluate: aString.		
 			
 	^ aBlock value: result
 ]
@@ -547,10 +545,9 @@ RubSmalltalkEditor >> evaluateSelection [
 RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
-
 	self lineSelectAndEmptyCheck: [^ ''].
 	^ self 
-		evaluate: self selectionForDoitAsStream 
+		evaluate: self selection asString
 		andDo: aBlock
 ]
 
@@ -700,7 +697,7 @@ RubSmalltalkEditor >> highlightEvaluateAndDo: aBlock [
 	
 	self highlightAndEmptyCheck: [ ^ '' ].
 	^ self 
-		evaluate: self highlightedTextAsStream
+		evaluate: self highlightedTextAsStream contents
 		andDo: [:result | aBlock value: result]
 ]
 
@@ -1149,7 +1146,7 @@ RubSmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 ]
 
 { #category : #'do-its' }
-RubSmalltalkEditor >> tally: aStream [
+RubSmalltalkEditor >> tally: aString [
 	"Treat the current selection as an expression; evaluate and tally it."
 	| receiver context v compiledMethod profiler |
 	(self model respondsTo: #doItReceiver) 
@@ -1158,7 +1155,7 @@ RubSmalltalkEditor >> tally: aStream [
 			context := self model doItContext]
 		ifFalse:
 			[receiver := context := nil].
-	compiledMethod := self compile: aStream for: receiver in: context.
+	compiledMethod := self compile: aString for: receiver in: context.
 	compiledMethod ifNil: [^ self].
 	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver arguments: #()].
 	profiler showResult: v.
@@ -1182,8 +1179,8 @@ RubSmalltalkEditor >> tallyIt [
 RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
-	self lineSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selectionAsStream
+	self lineSelectAndEmptyCheck: [ ^ self ].	
+	self tally: self selection
 ]
 
 { #category : #'completion engine' }
