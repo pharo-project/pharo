@@ -12,8 +12,8 @@ NetworkIPv6StringTest >> testCompressedZerosOnlyToString [
 	source := #[ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ].
 	expected := '::'.
 	result := NetNameResolver stringFromIPv6Address: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -24,8 +24,8 @@ NetworkIPv6StringTest >> testCompressedZerosOnlytoBytes [
 	source := '::'.
 	expected := #[ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ].
 	result := NetNameResolver addressFromIPv6String: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -36,8 +36,8 @@ NetworkIPv6StringTest >> testHeadCompressedZerosToBytes [
 	source := '::2001:db8'.
 	expected := #[ 0 0 0 0 0 0 0 0 0 0 0 0 32 1 13 184 ].
 	result := NetNameResolver addressFromIPv6String: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -50,8 +50,8 @@ NetworkIPv6StringTest >> testHeadCompressedZerosToString [
 	source := #[ 0 0 0 0 0 0 0 0 0 0 0 0 32 1 13 184 ].
 	expected := '::2001:db8'.
 	result := NetNameResolver stringFromIPv6Address: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -63,8 +63,8 @@ NetworkIPv6StringTest >> testMiddleCompressedZeroToBytes [
 	source := '2001:db8::1:0:0:1'.
 	expected := #[32 1 13 184 0 0 0 0 0 1 0 0 0 0 0 1].
 	result := NetNameResolver addressFromIPv6String: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -76,8 +76,8 @@ NetworkIPv6StringTest >> testMiddleCompressedZeroToString [
 	source := #[32 1 13 184 0 0 0 0 0 1 0 0 0 0 0 1].
 	expected := '2001:db8::1:0:0:1'.
 	result := NetNameResolver stringFromIPv6Address: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -88,8 +88,8 @@ NetworkIPv6StringTest >> testTailCompressedZerosToBytes [
 	source := 'db8:2001::'.
 	expected := #[ 13 184 32 1 0 0 0 0 0 0 0 0 0 0 0 0 ].
 	result := NetNameResolver addressFromIPv6String: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]
 
 { #category : #tests }
@@ -101,6 +101,6 @@ NetworkIPv6StringTest >> testTailCompressedZerosToString [
 	source := #[ 13 184 32 1 0 0 0 0 0 0 0 0 0 0 0 0 ].
 	expected := 'db8:2001::'.
 	result := NetNameResolver stringFromIPv6Address: source.
-	
-	self assert: expected equals: result.
+
+	self assert: expected equals: result
 ]

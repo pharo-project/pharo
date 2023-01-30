@@ -21,19 +21,19 @@ Class {
 { #category : #testing }
 UDPSocketEchoTest >> clientSend: message [
 	"Send message to the local UDP echo service and return the result"
-	
+
 	| socket |
 	socket := Socket newUDP.
-	^ [ 
+	^ [
 		socket sendUDPData: message toHost: self localhost port: self port.
-		self receiveUDPDataFrom: socket ] 
+		self receiveUDPDataFrom: socket ]
 			ensure: [ socket closeAndDestroy ]
 ]
 
 { #category : #accessing }
 UDPSocketEchoTest >> localhost [
 	"Return the host address where the UDP echo service runs, the local host address"
-	
+
 	^ NetNameResolver localHostAddress
 ]
 
@@ -49,7 +49,7 @@ UDPSocketEchoTest >> receiveUDPDataFrom: socket [
 	"Receive a UDP datagram from socket, return a 3-element array:
 	{ contents. source host address. source port }
 	We wait indefinitely for incoming data."
-	
+
 	| buffer result |
 	buffer := String new: 256.
 	socket waitForData.
@@ -60,24 +60,24 @@ UDPSocketEchoTest >> receiveUDPDataFrom: socket [
 { #category : #testing }
 UDPSocketEchoTest >> runServer [
 	"Run and return a local UDP echo server"
-	
+
 	^ self withUDPEchoServer: [ :process | process ]
 ]
 
 { #category : #testing }
 UDPSocketEchoTest >> testEcho [
 	| socket message result |
-	
+
 	socket := Socket newUDP.
-	[ 
+	[
 		self withUDPEchoServer: [ :process |
-			message := 'Testing ', 99 atRandom asString. 
+			message := 'Testing ', 99 atRandom asString.
 			socket sendUDPData: message toHost: self localhost port: self port.
 			result := self receiveUDPDataFrom: socket.
 			self assert: result first equals: message.
 			self assert: result second equals: self localhost.
 			self assert: result third equals: self port.
-			socket sendUDPData: #quit toHost: self localhost port: self port ]  
+			socket sendUDPData: #quit toHost: self localhost port: self port ]
 	] ensure: [ socket closeAndDestroy ]
 ]
 
@@ -85,17 +85,17 @@ UDPSocketEchoTest >> testEcho [
 UDPSocketEchoTest >> withUDPEchoServer: block [
 	"Run a local UDP echo server on localhost:port and execute block.
 	Optionally pass the new process to block. When quit is received, stop the server"
-	
+
 	| socket loop result process |
 	socket := Socket newUDP setPort: self port; yourself.
 	loop := true.
-	process := [ 
-		[ [ loop ] whileTrue: [ 
+	process := [
+		[ [ loop ] whileTrue: [
 			result := self receiveUDPDataFrom: socket.
 			"echo what we received to where it came from"
 			socket sendUDPData: result first toHost: result second port: result third.
 			result first asLowercase = #quit ifTrue: [ loop := false ] ] ]
-				ensure: [ socket closeAndDestroy ] ] 
+				ensure: [ socket closeAndDestroy ] ]
 					forkAt: Processor userBackgroundPriority named: 'UDP echo server'.
 	^ block cull: process
 ]
