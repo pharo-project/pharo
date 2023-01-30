@@ -201,6 +201,12 @@ UIThemePalette >> disabledColor [
 ]
 
 { #category : #colors }
+UIThemePalette >> disabledLabelColor [
+
+	^ paletteDictionary at: #disabledLabelColor ifAbsentPut: [ colorConfigurator disabledLabelColor ]
+]
+
+{ #category : #colors }
 UIThemePalette >> disabledTextColor [
 
 	^ paletteDictionary at: #disabledTextColor ifAbsentPut: [ colorConfigurator disabledTextColor ]

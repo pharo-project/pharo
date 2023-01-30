@@ -53,13 +53,13 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 
 	"Return the normal button borderStyle for the given button."
 
-	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) ifTrue: [ 
+	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) ifTrue: [
 		^ SimpleBorderStyle new
 			  width: 0;
 			  baseColor: Color transparent ].
 	^ SimpleBorderStyle new
 		  width: 1;
-		  baseColor: self buttonColor lighter
+		  baseColor: self buttonColor
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -149,16 +149,6 @@ PharoDarkTheme >> initialize [
 	super initialize.
 	self windowActiveDropShadowStyle: #diffuse.
 	self settings preferGradientFill: false.
-]
-
-{ #category : #'label-styles' }
-PharoDarkTheme >> labelDisabledColorFor: aLabel [
-
-	"Answer the color to use for a label when disabled."
-
-	^ aLabel owner ifNil: [ aLabel paneColor muchDarker ] ifNotNil: [ 
-		  aLabel owner color isTransparent ifTrue: [ aLabel owner paneColor muchLighter ]
-			  ifFalse: [ aLabel owner color muchLighter ] ]
 ]
 
 { #category : #accessing }

@@ -1847,6 +1847,12 @@ UITheme >> disabledItemStyle [
 	^#plain
 ]
 
+{ #category : #'basic-colors' }
+UITheme >> disabledLabelColor [
+
+	^ colorPalette disabledLabelColor
+]
+
 { #category : #'accessing - colors' }
 UITheme >> disabledTextColor [ 
 
@@ -2361,13 +2367,14 @@ UITheme >> labelAreaLayout [
 
 { #category : #'label-styles' }
 UITheme >> labelDisabledColorFor: aLabel [
-	"Answer the color to use for a label when disabled."
+	"^ aLabel owner ifNil: [ aLabel paneColor muchDarker ] ifNotNil: [
+	aLabel owner color isTransparent ifTrue: [ aLabel owner paneColor muchDarker ]
+	ifFalse: [ aLabel owner color muchDarker ] ]"
 
-	^aLabel owner
-		ifNil: [aLabel paneColor muchDarker]
-		ifNotNil: [aLabel owner color isTransparent
-					ifTrue: [aLabel owner paneColor muchDarker]
-					ifFalse: [aLabel owner color muchDarker]].
+	"This method was overriden in the dark theme with the difference that the colors were
+	converted using muchLighter"
+
+	^ self disabledLabelColor
 ]
 
 { #category : #defaults }

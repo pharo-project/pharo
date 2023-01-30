@@ -206,6 +206,15 @@ UIThemeColorConfigurator >> disabledColor [
 ]
 
 { #category : #colors }
+UIThemeColorConfigurator >> disabledLabelColor [
+
+	^ Color r: 0.4115347018572825
+		  g: 0.4115347018572825
+		  b: 0.4115347018572825
+		  alpha: 1.0
+]
+
+{ #category : #colors }
 UIThemeColorConfigurator >> disabledTextColor [
 
 	^ self disabledColor

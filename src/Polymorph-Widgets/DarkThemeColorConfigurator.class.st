@@ -119,6 +119,15 @@ DarkThemeColorConfigurator >> disabledColor [
 ]
 
 { #category : #colors }
+DarkThemeColorConfigurator >> disabledLabelColor [
+
+	^ Color r: 0.7673509286412512
+		  g: 0.7673509286412512
+		  b: 0.7673509286412512
+		  alpha: 0.7647058823529411
+]
+
+{ #category : #colors }
 DarkThemeColorConfigurator >> dropListNormalFillStyleFor: aDropList [
 
 	^ self backgroundColor
