@@ -8,9 +8,10 @@ Though conceptually abstract, no code is ""missing"". Subclasses, therefore, sho
 
 In the new implementation now I use a color palette to obtain the colors. This is because else I make thousands of unnecessary color allocations per minute. My color palette is responsible for the caching system.
 
-## How to create your own them
+## How to create your own theme
 
-If you wish to have another custom theme, you need to subclass me and only re-define my class side method `colorConfiguratorClass`. Also, you need to define your own color configurator class, see the common of the abstract class UIThemeColorConfigurator. This is the class that you need to return in `colorConfiguratorClass`.
+If you wish to have another custom theme, First you need to define your own color configurator class, see the comment of the abstract class UIThemeColorConfigurator. This is done by sublcassing UIThemeColorConfigurator and defining the missing abstract methods.
+Once you have your color configurator, you need to subclass Me and only re-define my class side method `colorConfiguratorClass` returning the class of your defined color configurator.
 "
 Class {
 	#name : #UITheme,
