@@ -18,7 +18,6 @@ Class {
 		'InvalidSocket',
 		'OtherEndClosed',
 		'Registry',
-		'RegistryThreshold',
 		'TCPSocketType',
 		'ThisEndClosed',
 		'UDPSocketType',
@@ -69,8 +68,6 @@ Socket class >> initialize [
 	Connected := 2.
 	OtherEndClosed := 3.
 	ThisEndClosed := 4.
-
-	RegistryThreshold := 100. "# of sockets"
 ]
 
 { #category : #'network initialization' }
@@ -307,18 +304,6 @@ Socket class >> register: anObject [
 Socket class >> registry [
 
 	^ Registry ifNil: [ Registry := FinalizationRegistry new ]
-]
-
-{ #category : #registry }
-Socket class >> registryThreshold [
-	"Return the registry threshold above which socket creation may fail due to too many already open sockets. If the threshold is reached, a full GC will be issued if the creation of a socket fails."
-	^RegistryThreshold
-]
-
-{ #category : #registry }
-Socket class >> registryThreshold: aNumber [
-	"Return the registry threshold above which socket creation may fail due to too many already open sockets. If the threshold is reached, a full GC will be issued if the creation of a socket fails."
-	RegistryThreshold := aNumber
 ]
 
 { #category : #tests }

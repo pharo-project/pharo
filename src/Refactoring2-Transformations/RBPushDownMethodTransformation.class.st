@@ -5,7 +5,7 @@ Class {
 		'selectors',
 		'classes'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated'
+	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }
 
 { #category : #api }

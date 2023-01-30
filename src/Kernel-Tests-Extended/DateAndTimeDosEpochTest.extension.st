@@ -3,7 +3,7 @@ Extension { #name : #DateAndTimeDosEpochTest }
 { #category : #'*Kernel-Tests-Extended' }
 DateAndTimeDosEpochTest >> testAsMonth [
 	self
-		assert: aDateAndTime asMonth 
+		assert: aDateAndTime asMonth
 		equals: (Month year: 1980 month: 'January')
 ]
 

@@ -76,6 +76,12 @@ TFRunner >> executeCallback: aCallbackInvocation [
 
 ]
 
+{ #category : #accessing }
+TFRunner >> forCallback [
+	
+	^ self
+]
+
 { #category : #errors }
 TFRunner >> handleExceptionDuring: aBlock [
 

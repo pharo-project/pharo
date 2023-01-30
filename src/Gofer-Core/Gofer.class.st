@@ -100,7 +100,7 @@ Gofer >> addPackage: aPackage [
 
 	self
 		deprecated: 'Use #package: instead'
-		transformWith: '`@receiver addPackage: `@arg' 
+		transformWith: '`@receiver addPackage: `@arg'
 						-> '`@receiver package: `@arg'.
 
 	self package: aPackage
@@ -109,7 +109,7 @@ Gofer >> addPackage: aPackage [
 { #category : #accessing }
 Gofer >> allResolved [
 	"Answer all sorted references within the configured repositories."
-	
+
 	| resolved |
 	resolved := OrderedCollection new.
 	self repositories
@@ -127,7 +127,7 @@ Gofer >> allResolvedIn: aRepository [
 
 { #category : #private }
 Gofer >> basicReferencesIn: aRepository [
-	^ [ aRepository goferReferences asSortedCollection asArray ] 
+	^ [ aRepository goferReferences asSortedCollection asArray ]
 		on: GoferRepositoryError
 		do: errorBlock
 ]
@@ -140,7 +140,7 @@ Gofer >> blueplane: aString [
 { #category : #operations }
 Gofer >> cleanup [
 	"Cleans the specified packages."
-	
+
 	^ self execute: GoferCleanup
 ]
 
@@ -162,7 +162,7 @@ Gofer >> commit: aString [
 Gofer >> configuration [
 	"Add a default Configuration package by using the repository name.
 	Assumes that there has been at least one repository set"
-	^ self configurationOf: self repositories last project capitalized.
+	^ self configurationOf: self repositories last project capitalized
 ]
 
 { #category : #references }
@@ -177,11 +177,11 @@ Gofer >> directory: aDirectoryOrString [
 
 	| repository |
 	repository := (aDirectoryOrString isString and: [ aDirectoryOrString endsWith: '*' ])
-		ifTrue: [ 
+		ifTrue: [
 			MCSubDirectoryRepository new
 				directory: aDirectoryOrString allButLast asFileReference;
 				yourself ]
-		ifFalse: [ 
+		ifFalse: [
 			(MCDirectoryRepository new)
 				directory:
 						(aDirectoryOrString isString
@@ -209,7 +209,7 @@ Gofer >> disableRepositoryErrors [
 Gofer >> enablePackageCache [
 	"Enable the use of the package-cache repository."
 
-	packageCacheRepository := MCCacheRepository uniqueInstance.
+	packageCacheRepository := MCCacheRepository uniqueInstance
 ]
 
 { #category : #'repositories - options' }
@@ -259,28 +259,28 @@ Gofer >> initialize [
 { #category : #operations }
 Gofer >> load [
 	"Load the specified packages into the image."
-	
+
 	^ self execute: GoferLoad
 ]
 
 { #category : #operations }
 Gofer >> loadBleedingEdge [
 	"Load the baseline of the previously specifed configuration."
-	
+
 	^ self loadVersion: #bleedingEdge
 ]
 
 { #category : #operations }
 Gofer >> loadDevelopment [
 	"Load the development version of the previously specifed configuration."
-	
+
 	^ self loadVersion: #development
 ]
 
 { #category : #operations }
 Gofer >> loadStable [
 	"Load the stable version of the previously specifed configuration."
-	
+
 	^ self loadVersion: #stable
 ]
 
@@ -294,14 +294,14 @@ Gofer >> loadVersion: anMetacelloVersionIdentifierSymbol [
 { #category : #operations }
 Gofer >> localChanges [
 	"Answer the changes between the base version and the working copy."
-	
+
 	^ self execute: GoferLocalChanges
 ]
 
 { #category : #operations }
 Gofer >> merge [
 	"Merge the specified packages into their working copies."
-	
+
 	^ self execute: GoferMerge
 ]
 
@@ -314,8 +314,8 @@ Gofer >> package: aString [
 
 { #category : #references }
 Gofer >> package: aString constraint: aOneArgumentBlock [
-	"Add the package aString to the receiver, but constraint the resulting versions further with aOneArgumentBlock. For details on the package, see #package:. The following example defines various constraints: 
-	
+	"Add the package aString to the receiver, but constraint the resulting versions further with aOneArgumentBlock. For details on the package, see #package:. The following example defines various constraints:
+
 		aGofer package: 'Magritte-Seaside' constraint: [ :version |
 			version author = 'lr'
 				and: [ version branch = 'trial'
@@ -355,14 +355,14 @@ Gofer >> references [
 { #category : #operations }
 Gofer >> reinitialize [
 	"Calls the class side initializers on all package code."
-	
+
 	^ self execute: GoferReinitialize
 ]
 
 { #category : #operations }
 Gofer >> remoteChanges [
 	"Display the changes between the working copy and the remote changes."
-	
+
 	^ self execute: GoferRemoteChanges
 ]
 
@@ -384,7 +384,7 @@ Gofer >> repositories [
 { #category : #repositories }
 Gofer >> repository: aRepository [
 	"Add aRepository to the repository configuration. If there is already a repository defined in the global configuration with that URL take this one instead."
-	
+
 	| repository |
 	repository := MCRepositoryGroup default repositories
 		detect: [ :each | each = aRepository ]
@@ -402,7 +402,7 @@ Gofer >> resolved [
 { #category : #operations }
 Gofer >> revert [
 	"Revert the specified packages to the currently loaded version."
-	
+
 	^ self execute: GoferRevert
 ]
 
@@ -429,14 +429,14 @@ Gofer >> squeaksource: aProjectName [
 { #category : #operations }
 Gofer >> unload [
 	"Unload the specified packages."
-	
+
 	^ self execute: GoferUnload
 ]
 
 { #category : #operations }
 Gofer >> update [
 	"Update the specified packages."
-	
+
 	^ self execute: GoferUpdate
 ]
 
@@ -451,13 +451,13 @@ Gofer >> url: anUrlString [
 Gofer >> url: urlString username: username password: passwordString [
 	"Add urlString as a repository for the following package operations."
 	| repository |
-	repository := MCRepository fromUrl: 
+	repository := MCRepository fromUrl:
 		(urlString asUrl
 			username: (username ifEmpty: [ nil ]);
 			password: (passwordString ifEmpty: [ nil ]);
 			yourself).
-	
-	self repository: repository.
+
+	self repository: repository
 ]
 
 { #category : #references }

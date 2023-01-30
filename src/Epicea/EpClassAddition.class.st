@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 EpClassAddition class >> class: aClass [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeClass: aClass;
 		yourself
 ]

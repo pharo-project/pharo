@@ -12,48 +12,56 @@ LargePositiveIntegerTest >> assertSqrtCorrectlyRoundedForExponent: exp [
 	"Requires exp > Float precision, so that f ulp/2 is integer"
 	{1.5. 1.25 squared. 2.0 predecessor} do: [:sf |
 		| f xe xp xm |
-		
+
 		f := sf timesTwoPower: exp.
-	
+
 		"make two integers around the pivot"
 		xe := f asInteger + (f ulp asInteger / 2).
 		xm := xe squared - 1.
 		xp := xe squared + 1.
 		self assert: xe squared sqrt equals: xe.
 		self assert: xe squared sqrt isInteger.
-	
+
 		"check rounding when result is near f squared"
 		self assert: xm sqrt equals: f.
 		self assert: xm sqrt isFloat.
 		self assert: xp sqrt equals: f successor.
 		self assert: xp sqrt isFloat.
-	
+
 		"same in the other direction"
 		xe := f asInteger - (f ulp asInteger / 2).
 		xm := xe squared - 1.
 		xp := xe squared + 1.
 		self assert: xe squared sqrt equals: xe.
 		self assert: xe squared sqrt isInteger.
-	
+
 		"check rounding when result is near f squared"
 		self assert: xm sqrt equals: f predecessor.
 		self assert: xm sqrt isFloat.
 		self assert: xp sqrt equals: f.
-		self assert: xp sqrt isFloat].
+		self assert: xp sqrt isFloat]
 ]
 
 { #category : #coverage }
 LargePositiveIntegerTest >> classToBeTested [
-	
+
 	^ LargePositiveInteger
+]
+
+{ #category : #'tests - arithmetic' }
+LargePositiveIntegerTest >> testAbs [
+
+	self
+		assert: (SmallInteger maxVal + 2) abs
+		equals: SmallInteger maxVal + 2
 ]
 
 { #category : #tests }
 LargePositiveIntegerTest >> testBitShift [
 
 	"Check bitShift from and back to SmallInts"
-	
-	1 to: 257 do: [:i | self should: [((i bitShift: i) bitShift: 0-i) == i]].
+
+	1 to: 257 do: [:i | self should: [((i bitShift: i) bitShift: 0-i) == i]]
 ]
 
 { #category : #tests }
@@ -163,7 +171,7 @@ LargePositiveIntegerTest >> testReplaceFromToWithStartingAt [
 
 { #category : #tests }
 LargePositiveIntegerTest >> testSqrt [
-	self assert: (SmallInteger maxVal + 1) sqrt equals: (SmallInteger maxVal + 1) asFloat sqrt.
+	self assert: (SmallInteger maxVal + 1) sqrt equals: (SmallInteger maxVal + 1) asFloat sqrt
 ]
 
 { #category : #'tests - printing' }

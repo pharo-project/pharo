@@ -9,7 +9,7 @@ Class {
 
 { #category : #coverage }
 FalseTest >> classToBeTested [
-	
+
 	^ False
 ]
 
@@ -17,13 +17,13 @@ FalseTest >> classToBeTested [
 FalseTest >> testAND [
 
 	self deny: (false & true).
-	self deny: (false & false).
+	self deny: (false & false)
 ]
 
 { #category : #'tests - controlling' }
 FalseTest >> testAnd [
 
-	self deny: (false and: ['alternativeBlock']).
+	self deny: (false and: ['alternativeBlock'])
 ]
 
 { #category : #'tests - converting' }
@@ -64,14 +64,14 @@ FalseTest >> testNew [
 { #category : #'tests - logical operations' }
 FalseTest >> testNot [
 
-	self assert: (false not).
+	self assert: (false not)
 ]
 
 { #category : #'tests - logical operations' }
 FalseTest >> testOR [
 
 	self assert: (false | true).
-	self deny: (false | false).
+	self deny: (false | false)
 ]
 
 { #category : #'tests - controlling' }

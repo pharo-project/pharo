@@ -7,7 +7,7 @@ Class >> asAnnotationContext [
 
 { #category : #'*ClassAnnotation' }
 Class >> classAnnotationAt: selector [
-	^self classAnnotations 
+	^self classAnnotations
 		detect: [ :each | each declarationSelector = selector ]
 ]
 

@@ -35,8 +35,9 @@ MenubarMorph class >> closeAll [
 		thenDo: [ :e | e delete ].
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 MenubarMorph class >> initialize [
+
 	self showMenubar: true.
 	self install.
 	self reset

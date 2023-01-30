@@ -34,13 +34,13 @@ Class {
 
 { #category : #'instance creation' }
 SimpleAnnotationContext class >> annotationUserClass: aClass [
-	^self new 
+	^self new
 		annotationUserClass: aClass
 ]
 
 { #category : #'instance creation' }
 SimpleAnnotationContext class >> of: anAnnotationUserClass [
-	^self new 
+	^self new
 		annotationUserClass: anAnnotationUserClass
 ]
 
@@ -67,11 +67,11 @@ SimpleAnnotationContext >> annotationUserClass: aClass [
 
 { #category : #testing }
 SimpleAnnotationContext >> describes: anAnnotationUser [
-	"Following indirection provides extra flexibility for the users 
+	"Following indirection provides extra flexibility for the users
 	to define special kind of simple application contexts
 	and in same time to be able use simple classes to declare annotations.
 	By default objects just performs isKindOf: check with my annotationUserClass"
-	
+
 	^anAnnotationUser representsSimpleAnnotationUser: annotationUserClass
 ]
 
@@ -85,8 +85,8 @@ SimpleAnnotationContext >> hash [
 { #category : #printing }
 SimpleAnnotationContext >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		nextPutAll: annotationUserClass name;
 		nextPut: $)

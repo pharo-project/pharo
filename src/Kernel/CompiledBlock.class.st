@@ -29,7 +29,7 @@ CompiledBlock >> endPC [
 { #category : #scanning }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
-	^ (InstructionStream on: self) scanFor: [:byte | 
+	^ (InstructionStream on: self) scanFor: [:byte |
 		 self encoderClass methodReturnBytecodes includes: byte]
 ]
 
@@ -44,8 +44,8 @@ CompiledBlock >> hasProperties [
 ]
 
 { #category : #properties }
-CompiledBlock >> hasProperty: aString [ 
-	
+CompiledBlock >> hasProperty: aString [
+
 	^ false
 ]
 
@@ -86,7 +86,7 @@ CompiledBlock >> isEmbeddedBlock [
 
 { #category : #testing }
 CompiledBlock >> isInstalled [
-	
+
 	^ self method isInstalled
 ]
 
@@ -141,11 +141,11 @@ CompiledBlock >> pcInOuter [
 	outer := self outerCode.
 	instructionStream := InstructionStream on: outer.
 	end := outer endPC.
-	[instructionStream pc <= end] whileTrue: 
+	[instructionStream pc <= end] whileTrue:
 		[ (self encoderClass isCreateFullBlock: self code: outer at: instructionStream pc)
 			ifTrue: [ ^ instructionStream pc ].
 			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].
-	"scan for clean block"	
+	"scan for clean block"
 	instructionStream := InstructionStream on: outer.
 	[instructionStream pc <= end] whileTrue: [
 			| literalOffset |
@@ -154,9 +154,9 @@ CompiledBlock >> pcInOuter [
 				| literal |
 				literal := (self outerCode literalAt: literalOffset + 1).
 				((literal isKindOf: CleanBlockClosure) and: [literal compiledBlock == self  ])ifTrue: [ ^ instructionStream pc ].  ].
-			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].	
-		
-	self error: 'block not installed in outer code'.
+			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].
+
+	self error: 'block not installed in outer code'
 ]
 
 { #category : #accessing }
@@ -164,10 +164,16 @@ CompiledBlock >> pragmas [
 	^ #()
 ]
 
+{ #category : #accessing }
+CompiledBlock >> primitive [
+	"for now we do not compile Quick CompiedBlocks, see IRBytecodeGenerator>>#compiledBlockWith:"
+	^0
+]
+
 { #category : #printing }
 CompiledBlock >> printOn: anStream [
-	
-	anStream 
+
+	anStream
 		nextPutAll: 'a CompiledBlock: ';
 		nextPutAll: self sourceNode sourceCode
 ]
@@ -178,8 +184,8 @@ CompiledBlock >> properties [
 ]
 
 { #category : #properties }
-CompiledBlock >> propertyAt: aString [ 
-	
+CompiledBlock >> propertyAt: aString [
+
 	^ nil
 ]
 
@@ -191,7 +197,7 @@ CompiledBlock >> sameLiteralsAs: method [
 	(numLits := self numLiterals) ~= method numLiterals
 		ifTrue: [ ^ false ].
 	"The last literal requires special checking instead of using #literalEqual:"
-	1 to: numLits - 1 do: [ :index | 
+	1 to: numLits - 1 do: [ :index |
 		literal1 := self literalAt: index.
 		literal2 := method literalAt: index.
 		(literal1 == literal2 or: [ literal1 literalEqual: literal2 ])

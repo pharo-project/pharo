@@ -20,7 +20,7 @@ Class {
 { #category : #'instance creation' }
 CharacterSetComplement class >> of: aCharacterSet [
 	"answer the complement of aCharacterSet"
-	
+
 	^ super new complement: aCharacterSet
 ]
 
@@ -28,15 +28,15 @@ CharacterSetComplement class >> of: aCharacterSet [
 CharacterSetComplement >> = anObject [
 	"Implementation note: we do not test if equal to a WideCharacterSet,
 	because it is unlikely that WideCharacterSet is as complete as self"
-	
+
 	^self class == anObject class and: [
 		absent = anObject complement ]
 ]
 
 { #category : #adding }
-CharacterSetComplement >> add: aCharacter [ 
+CharacterSetComplement >> add: aCharacter [
 	"a character is present if not absent, so adding a character is removing it from the absent"
-	
+
 	(absent includes: aCharacter)
 		ifTrue:
 			[byteArrayMapCache := nil.
@@ -54,16 +54,16 @@ CharacterSetComplement >> byteArrayMap [
 { #category : #converting }
 CharacterSetComplement >> complement [
 	"return a character set containing precisely the characters the receiver does not"
-	
+
 	^absent copy
 ]
 
 { #category : #initialization }
 CharacterSetComplement >> complement: aCharacterSet [
 	"initialize with the complement"
-	
+
 	byteArrayMapCache := nil.
-	absent := aCharacterSet.
+	absent := aCharacterSet
 ]
 
 { #category : #enumerating }
@@ -87,7 +87,7 @@ CharacterSetComplement >> findFirstInByteString: aByteString startingAt: startIn
 { #category : #testing }
 CharacterSetComplement >> hasWideCharacters [
 	"This is a guess that absent is not holding each and every possible wideCharacter..."
-	
+
 	^true
 ]
 
@@ -111,16 +111,16 @@ CharacterSetComplement >> postCopy [
 CharacterSetComplement >> printOn: aStream [
 	"Print a description of the complement rather than self.
 	Rationale: self would be too long to print."
-	
+
 	aStream nextPut: $(.
 	absent printOn: aStream.
-	aStream nextPut: $); space; nextPutAll: #complement.
+	aStream nextPut: $); space; nextPutAll: #complement
 ]
 
 { #category : #enumerating }
 CharacterSetComplement >> reject: aBlock [
 	"Implementation note: rejecting present is selecting absent"
-	
+
 	^(absent select: aBlock) complement
 ]
 
@@ -128,7 +128,7 @@ CharacterSetComplement >> reject: aBlock [
 CharacterSetComplement >> remove: aCharacter [
 	"This means aCharacter is now absent from myself.
 	It must be added to my absent."
-	
+
 	byteArrayMapCache := nil.
 	^absent add: aCharacter
 ]
@@ -147,7 +147,7 @@ CharacterSetComplement >> removeAll [
 { #category : #enumerating }
 CharacterSetComplement >> select: aBlock [
 	"Implementation note: selecting present is rejecting absent"
-	
+
 	^(absent reject: aBlock) complement
 ]
 
@@ -162,8 +162,8 @@ CharacterSetComplement >> size [
 { #category : #printing }
 CharacterSetComplement >> storeOn: aStream [
 	"Store a description of the elements of the complement rather than self."
-	
+
 	aStream nextPut: $(.
 	absent storeOn: aStream.
-	aStream nextPut: $); space; nextPutAll: #complement.
+	aStream nextPut: $); space; nextPutAll: #complement
 ]

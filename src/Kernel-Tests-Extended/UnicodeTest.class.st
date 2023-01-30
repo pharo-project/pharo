@@ -36,7 +36,7 @@ UnicodeTest >> aRandomSelectionOfCharactersDo: aBlock [
 { #category : #utilities }
 UnicodeTest >> aRandomSelectionOfCodePointsDo: aBlock [
 	0 to: 255 do: [ :cp | aBlock value: cp].
-	500 timesRepeat: [ aBlock value: (unicodeGenerator randomCodePointAtOrAbove: 256) ].
+	500 timesRepeat: [ aBlock value: (unicodeGenerator randomCodePointAtOrAbove: 256) ]
 ]
 
 { #category : #utilities }
@@ -44,7 +44,7 @@ UnicodeTest >> checkCorrespondanceOf: aSelector and: aCategoryTag [
 	| cat methodAnswer catFromTable |
 	cat := Unicode classPool at: aCategoryTag.
 	self
-		aRandomSelectionOfCodePointsDo: [ :cp | 
+		aRandomSelectionOfCodePointsDo: [ :cp |
 			methodAnswer := Unicode
 				perform: aSelector
 				with: (Character codePoint: cp).
@@ -66,7 +66,7 @@ UnicodeTest >> setUp [
 { #category : #'tests - categorization' }
 UnicodeTest >> testIsCasedLetter [
 	"The Cased letter category, LC, is empty"
-	self aRandomSelectionOfCharactersDo: [ :ch | 
+	self aRandomSelectionOfCharactersDo: [ :ch |
 		self deny: (Unicode isCasedLetter: ch) ]
 ]
 
@@ -129,7 +129,7 @@ UnicodeTest >> testIsInitialQuote [
 UnicodeTest >> testIsLetter [
 	| letterCategories methodAnswer catFromTable |
 	letterCategories := #(Ll Lm Lo Lt Lu) collect: [ :c | Unicode classPool at: c ].
-	self aRandomSelectionOfCodePointsDo: [ :cp | 
+	self aRandomSelectionOfCodePointsDo: [ :cp |
 			methodAnswer := Unicode isLetter: (Character codePoint: cp).
 			catFromTable := self unicodeCategoryTableLookup: cp.
 			self assert: methodAnswer equals: (letterCategories includes: catFromTable) ]
@@ -233,14 +233,14 @@ UnicodeTest >> testIsUppercase [
 { #category : #'tests - categorization' }
 UnicodeTest >> testNonCharacterNegative [
 	self aRandomSelectionOfCharactersDo: [  :ch |
-		self deny: (Unicode isNonCharacter: ch) 
+		self deny: (Unicode isNonCharacter: ch)
 	]
 ]
 
 { #category : #'tests - categorization' }
 UnicodeTest >> testNonCharacterPositive [
 	| nonCps |
-	nonCps := (16rFDD0 to: 16rFDEF) asSet. 
+	nonCps := (16rFDD0 to: 16rFDEF) asSet.
 	nonCps addAll: (16r0FFFE to: 16r10FFFE by: 16r10000).
 	nonCps addAll: (16r0FFFF to: 16r10FFFF by: 16r10000).
 	self assert: nonCps size equals: 66.		"defined that way by the standard"

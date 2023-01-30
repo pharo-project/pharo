@@ -37,10 +37,10 @@ EditorFindReplaceDialogWindow class >> finds [
 	^ Finds ifNil: [Finds := OrderedCollection new]
 ]
 
-{ #category : #initializing }
+{ #category : #'class initialization' }
 EditorFindReplaceDialogWindow class >> initialize [
-	"EditorFindReplaceDialogWindow initialize"
-	Singleton := nil.
+
+	Singleton := nil
 ]
 
 { #category : #accessing }

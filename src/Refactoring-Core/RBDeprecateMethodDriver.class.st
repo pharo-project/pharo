@@ -49,15 +49,22 @@ RBDeprecateMethodDriver >> execute [
 
 	| compositeChange |
 	compositeChange := [ 
-	           [ refactoring generateChanges ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err | 
-		           ^ RBRefactoringFailure signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err | 
-			           RBRefactoringWarning signal: err messageText.
-			           "If user answers no, error is being propagated."
-			           err resume ].
+	                   [ 
+	                   [ refactoring generateChanges ]
+		                   on: RBInputValidationFailedError
+		                   do: [ :err | 
+			                   methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
+			                   refactoring newSelector:
+				                   methodToReplaceDeprecatedMethod.
+									err resume ] ]
+		                   on: RBApplicabilityChecksFailedError
+		                   do: [ :err | 
+		                   ^ RBRefactoringFailure signal: err messageText ] ]
+		                   on: RBBreakingChangeChecksFailedWarning
+		                   do: [ :err | 
+			                   RBRefactoringWarning signal: err messageText.
+			                   "If user answers no, error is being propagated."
+			                   err resume ].
 
 	(RBRefactoringPreviewPresenter
 		 changes: compositeChange
@@ -70,11 +77,9 @@ RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 
 	| newSelector |
 	newSelector := UIManager default
-		               request: 'Method to replace ' , methodToDeprecate
+		               request: 'Method to replace ' , methodToDeprecate , '. The new selectors cannot be an empty string or same as the old selector.'
 		               initialAnswer: methodToDeprecate
 		               title: 'New selector'.
-	newSelector isEmptyOrNil | (newSelector = methodToDeprecate) ifTrue: [ 
-		RBRefactoringFailure signal: 'New selector should not be empty OR same as current selector.' ].
 	^ newSelector
 ]
 

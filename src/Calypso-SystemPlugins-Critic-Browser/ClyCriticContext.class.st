@@ -16,7 +16,7 @@ Class {
 { #category : #'selection strategy' }
 ClyCriticContext class >> selectionStrategy [
 	<classAnnotation>
-	
+
 	^ClyContextSelectionStrategyAnnotation for: ClyCriticDecorator
 ]
 
@@ -35,7 +35,7 @@ ClyCriticContext >> executeCommand: aCommand by: aCommandActivator [
 
 	aCommand isComplexRefactoring ifTrue: [
 		aCommand confirmRefactoringInContext: self by: aCommandActivator].
-	
+
 	aCommand execute
 ]
 

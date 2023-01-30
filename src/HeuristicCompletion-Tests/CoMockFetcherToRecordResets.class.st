@@ -14,14 +14,14 @@ CoMockFetcherToRecordResets >> entriesDo: aBlock [
 ]
 
 { #category : #initialization }
-CoMockFetcherToRecordResets >> initialize [ 
+CoMockFetcherToRecordResets >> initialize [
 
 	super initialize.
-	resetingCount := 0.
+	resetingCount := 0
 ]
 
 { #category : #initialization }
-CoMockFetcherToRecordResets >> reset [ 
+CoMockFetcherToRecordResets >> reset [
 
 	resetingCount := resetingCount + 1.
 	super reset
@@ -29,6 +29,6 @@ CoMockFetcherToRecordResets >> reset [
 
 { #category : #accessing }
 CoMockFetcherToRecordResets >> resetingCount [
-	
+
 	^ resetingCount
 ]

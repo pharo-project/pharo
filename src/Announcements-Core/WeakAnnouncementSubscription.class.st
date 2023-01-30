@@ -27,21 +27,21 @@ Class {
 
 { #category : #finalization }
 WeakAnnouncementSubscription class >> finalizationList [
-	
-	^ FinalizationList ifNil: [ FinalizationList := WeakFinalizationList new ].
+
+	^ FinalizationList ifNil: [ FinalizationList := WeakFinalizationList new ]
 ]
 
 { #category : #finalization }
 WeakAnnouncementSubscription class >> finalizeValues [
-	
+
 	| head |
-	
+
 	head := self finalizationList swapWithNil.
-	
-	[ head notNil ] whileTrue: [ 
+
+	[ head notNil ] whileTrue: [
 		head finalize.
 		head := head next
-	].
+	]
 ]
 
 { #category : #'instance creation' }
@@ -89,7 +89,7 @@ WeakAnnouncementSubscription >> deliver: anAnnouncement [
 	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
 
 	^ (self handlesAnnouncement: anAnnouncement ) ifTrue: [
-		[action cull: anAnnouncement cull: announcer] 
+		[action cull: anAnnouncement cull: announcer]
 			on: UnhandledError fork: [:ex | ex pass ]]
 ]
 
@@ -101,7 +101,7 @@ WeakAnnouncementSubscription >> finalizationRegistry [
 { #category : #finalization }
 WeakAnnouncementSubscription >> finalize [
 
-	announcer removeSubscription: self.
+	announcer removeSubscription: self
 ]
 
 { #category : #'error handling' }
@@ -121,7 +121,7 @@ WeakAnnouncementSubscription >> makeStrong [
 	| sub |
 	sub := self subscriber.
 	sub ifNil: [ ^ self error: 'Subscriber is nil, cannot make strong subscription' ].
-	
+
 	self unregister.
 
 	^ self becomeForward: (AnnouncementSubscription new
@@ -145,11 +145,11 @@ WeakAnnouncementSubscription >> next [
 WeakAnnouncementSubscription >> printOn: stream [
 
 	super printOn: stream.
-	
-	stream 
+
+	stream
 		nextPut: $(;
 		print: action;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #finalization }
@@ -182,5 +182,5 @@ WeakAnnouncementSubscription >> unregister [
 WeakAnnouncementSubscription >> valuable: aValuable [
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
-	self subscriber: aValuable receiver.
+	self subscriber: aValuable receiver
 ]

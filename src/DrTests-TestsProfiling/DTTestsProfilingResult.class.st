@@ -27,7 +27,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 					((self testResults
 						select:
 							[ :testCaseToTimeTaken | testCaseToTimeTaken testResult errors isNotEmpty ])
-						collect: [ :testCaseToTimeTaken | 
+						collect: [ :testCaseToTimeTaken |
 							DTTreeLeafNode new
 								content: testCaseToTimeTaken;
 								yourself ]);
@@ -38,7 +38,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 					((self testResults
 						select:
 							[ :testCaseToTimeTaken | testCaseToTimeTaken testResult failures isNotEmpty ])
-						collect: [ :testCaseToTimeTaken | 
+						collect: [ :testCaseToTimeTaken |
 							DTTreeLeafNode new
 								content: testCaseToTimeTaken;
 								yourself ]);
@@ -49,7 +49,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 					((self testResults
 						select:
 							[ :testCaseToTimeTaken | testCaseToTimeTaken testResult skipped isNotEmpty ])
-						collect: [ :testCaseToTimeTaken | 
+						collect: [ :testCaseToTimeTaken |
 							DTTreeLeafNode new
 								content: testCaseToTimeTaken;
 								yourself ]);
@@ -60,7 +60,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 					((self testResults
 						select:
 							[ :testProfilerResult | testProfilerResult testResult passed isNotEmpty ])
-						collect: [ :testCaseToTimeTaken | 
+						collect: [ :testCaseToTimeTaken |
 							DTTreeLeafNode new
 								content: testCaseToTimeTaken;
 								yourself ]);
@@ -85,7 +85,7 @@ DTTestsProfilingResult >> buildTreeNode [
 	"Returns a node with the sub-results aggregator initialized in a way that it sum the durations of sub results."
 
 	^ DTTreeNode new
-		subResultsAggregator: [ :subResults | 
+		subResultsAggregator: [ :subResults |
 			subResults
 				inject: 0 milliSecond
 				into: [ :totalDuration :dtTreeLeaf | totalDuration + dtTreeLeaf content duration ] ];

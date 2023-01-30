@@ -11,7 +11,7 @@ Class {
 { #category : #activation }
 ClyDebugTestCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $d meta for: self contextClass
 ]
 
@@ -26,7 +26,7 @@ ClyDebugTestCommand >> defaultMenuIcon [
 ]
 
 { #category : #accessing }
-ClyDebugTestCommand >> defaultMenuItemName [ 
+ClyDebugTestCommand >> defaultMenuItemName [
 	^'Debug tests'
 ]
 

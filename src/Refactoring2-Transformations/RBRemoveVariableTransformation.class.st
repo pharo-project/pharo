@@ -16,7 +16,7 @@ Preconditions:
 Class {
 	#name : #RBRemoveVariableTransformation,
 	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #preconditions }

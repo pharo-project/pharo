@@ -66,7 +66,7 @@ AthensCairoTransform >> primTransformX: x Y: y [
 
 { #category : #primitives }
 AthensCairoTransform >> primTranslateX: px Y: py [
-	
+
 	^ self ffiCall: #(
 		void cairo_translate (AthensCairoCanvas canvas,
                                                          double px,
@@ -81,7 +81,7 @@ AthensCairoTransform >> restore [
 { #category : #transformations }
 AthensCairoTransform >> restoreAfter: aBlock [
 	self save.
-	aBlock ensure:  [ self restore ].
+	aBlock ensure:  [ self restore ]
 ]
 
 { #category : #transformations }
@@ -109,14 +109,14 @@ AthensCairoTransform >> scaleBy: aScalarOrPoint [
 			self
 				scaleX: aScalarOrPoint x asFloat
 				Y: aScalarOrPoint y asFloat ]
-		ifFalse:[ 
+		ifFalse:[
 			double := aScalarOrPoint asFloat.
-			self scaleX: double Y: double ].
+			self scaleX: double Y: double ]
 ]
 
 { #category : #transformation }
 AthensCairoTransform >> scaleX: fx Y: fy [
-	
+
 	^ self primScaleX: fx asFloat Y: fy asFloat
 ]
 

@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : #EFFormatter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #RBAbstractFormatter,
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -275,6 +275,17 @@ EFFormatter class >> numberOfNewLinesAfterMethodSignature: anInteger [
 ]
 
 { #category : #accessing }
+EFFormatter class >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
+	^ DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignatureWithMethodComment
+]
+
+{ #category : #accessing }
+EFFormatter class >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
+	DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger.
+	self announceASettingChange
+]
+
+{ #category : #accessing }
 EFFormatter class >> numberOfNewLinesAfterTemporaries [
 	^ DefaultPrettyPrintContext numberOfNewLinesAfterTemporaries
 ]
@@ -376,6 +387,12 @@ EFFormatter class >> periodsAtEndOfBlock [
 { #category : #accessing }
 EFFormatter class >> periodsAtEndOfMethod [
 	^ DefaultPrettyPrintContext periodsAtEndOfMethod
+]
+
+{ #category : #priority }
+EFFormatter class >> priority [
+	
+	^ 10
 ]
 
 { #category : #accessing }
@@ -653,13 +670,29 @@ myMethod
 EFFormatter class >> settingsNewLinesAfterMethodSignature: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignature)
-		label: 'New lines after method signature';
+		label: 'New lines after method signature for method without a method comment';
 		default: 2;
-		description: 'To set the number of new lines directly after the method signature.
+		description: 'To set the number of new lines directly after the method signature for a method without a method comment.
 When numberOfNewLinesAfterMethodSignature is set to 2 new lines
 
 myMethod: arg
 
+	^ true
+'
+]
+
+{ #category : #settings }
+EFFormatter class >> settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder [
+
+	(aBuilder setting: #numberOfNewLinesAfterMethodSignatureWithMethodComment)
+		label: 'New lines after method signature for method with a method comment';
+		default: 1;
+		description: 'To set the number of new lines directly after the method signature for a method with a method comment.
+When numberOfNewLinesAfterMethodSignature is set to 1 new lines
+
+myMethod: arg
+	"myComment"
+	
 	^ true
 '
 ]
@@ -721,34 +754,37 @@ EFFormatter class >> settingsOn: aBuilder [
 		parent: #codeFormatters;
 		label: 'Enlumineur Pretty Printer';
 		description: 'Settings related to automatic code formatting';
-		with: [ self settingsMaxLineLength: aBuilder.
-			self settingsCommentCloseToStatement: aBuilder.
-			self settingsIndentStyle: aBuilder.
-			self settingsNumberOfSpacesInIndent: aBuilder.
-			self settingsIndentsForKeywords: aBuilder.
-			self settingsKeepBlockInMessage: aBuilder.
-			self settingsAlignBlockBrackets: aBuilder.
-			self settingsMethodSignatureOnMultipleLines: aBuilder.
-			self settingsOneLineMessages: aBuilder.
-			self settingsMultiLineMessages: aBuilder.
-			self settingsMinimumNewLinesBetweenStatements: aBuilder.
-			self settingsNewLineAfterCascade: aBuilder.
-			self settingsNewLineBeforeFirstCascade: aBuilder.
-			self settingsNewLineBeforeFirstKeyword: aBuilder.
-			self settingsNewLinesAfterMethodComment: aBuilder.
-			self settingsNewLinesAfterMethodSignature: aBuilder.
-			self settingsNewLinesAfterTemporaries: aBuilder.
-			self settingsNumberOfArgumentsForMultiLine: aBuilder.
-			self settingsPeriodsAtEndOfBlock: aBuilder.
-			self settingsPeriodsAtEndOfMethod: aBuilder.
-			self settingsRetainBlankLinesBeforeComments: aBuilder.
-			self settingsRetainBlankLinesBetweenStatements: aBuilder.
-			self settingsSelectorAndArgumentCombinedMaxSize: aBuilder.
-			self settingsSpacesAfterCaretSymbolInReturn: aBuilder.
-			self settingsSpacesInsideBlocks: aBuilder.
-			self settingsSpacesInsideParentheses: aBuilder.
-			self settingsSpacesInsideArray: aBuilder.
-			self settingsUseBasicCommentFormat: aBuilder]
+		with: [ 
+			self 
+				settingsMaxLineLength: aBuilder;
+				settingsCommentCloseToStatement: aBuilder;
+				settingsIndentStyle: aBuilder;
+				settingsNumberOfSpacesInIndent: aBuilder;
+				settingsIndentsForKeywords: aBuilder;
+				settingsKeepBlockInMessage: aBuilder;
+				settingsAlignBlockBrackets: aBuilder;
+				settingsMethodSignatureOnMultipleLines: aBuilder;
+				settingsOneLineMessages: aBuilder;
+				settingsMultiLineMessages: aBuilder;
+				settingsMinimumNewLinesBetweenStatements: aBuilder;
+				settingsNewLineAfterCascade: aBuilder;
+				settingsNewLineBeforeFirstCascade: aBuilder;
+				settingsNewLineBeforeFirstKeyword: aBuilder;
+				settingsNewLinesAfterMethodComment: aBuilder;
+				settingsNewLinesAfterMethodSignature: aBuilder;
+				settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder;
+				settingsNewLinesAfterTemporaries: aBuilder;
+				settingsNumberOfArgumentsForMultiLine: aBuilder;
+				settingsPeriodsAtEndOfBlock: aBuilder;
+				settingsPeriodsAtEndOfMethod: aBuilder;
+				settingsRetainBlankLinesBeforeComments: aBuilder;
+				settingsRetainBlankLinesBetweenStatements: aBuilder;
+				settingsSelectorAndArgumentCombinedMaxSize: aBuilder;
+				settingsSpacesAfterCaretSymbolInReturn: aBuilder;
+				settingsSpacesInsideBlocks: aBuilder;
+				settingsSpacesInsideParentheses: aBuilder;
+				settingsSpacesInsideArray: aBuilder;
+				settingsUseBasicCommentFormat: aBuilder]
 ]
 
 { #category : #settings }
@@ -1189,7 +1225,9 @@ EFFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround:
 			[ 
-			self newLines: self numberOfNewLinesAfterMethodSignature.
+			self newLines: (aMethodNode comments 
+									ifEmpty: [ self numberOfNewLinesAfterMethodSignature ] 
+			 						ifNotEmpty: [ self numberOfNewLinesAfterMethodSignatureWithMethodComment ]).
 			self formatMethodCommentFor: aMethodNode.
 			self formatPragmasFor: aMethodNode.
 			self visitNode: aMethodNode body ]
@@ -1774,6 +1812,16 @@ EFFormatter >> numberOfNewLinesAfterMethodSignature [
 { #category : #accessing }
 EFFormatter >> numberOfNewLinesAfterMethodSignature: anInteger [
 	context numberOfNewLinesAfterMethodSignature: anInteger
+]
+
+{ #category : #accessing }
+EFFormatter >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
+	^ context numberOfNewLinesAfterMethodSignatureWithMethodComment
+]
+
+{ #category : #accessing }
+EFFormatter >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
+	context numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger
 ]
 
 { #category : #accessing }

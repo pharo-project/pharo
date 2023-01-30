@@ -23,26 +23,26 @@ Class {
 
 { #category : #'class initialization' }
 CoStatistics class >> reset [
-	
+
 	UniqueInstance := nil
 ]
 
 { #category : #singleton }
 CoStatistics class >> uniqueInstance [
-	
-	^ UniqueInstance ifNil: [ 
+
+	^ UniqueInstance ifNil: [
 		UniqueInstance := self new ]
 ]
 
 { #category : #accessing }
 CoStatistics >> acceptedEntries [
-	
+
 	^ acceptedEntries
 ]
 
 { #category : #accessing }
 CoStatistics >> averageTypedCharacters [
-	
+
 	| count total |
 	count := 0.
 	total := 0.
@@ -50,7 +50,7 @@ CoStatistics >> averageTypedCharacters [
 		count := count + entries size.
 		total := total + (entries sum: [ :entry | entry numberOfTypedCharacter ]).
 	].
-	
+
 	^ count = 0
 		ifTrue: [ 0 ]
 		ifFalse: [ total / count ]
@@ -58,7 +58,7 @@ CoStatistics >> averageTypedCharacters [
 
 { #category : #accessing }
 CoStatistics >> averageTypedCharactersAt: anIndex [
-	
+
 	| count total entries |
 	count := total := 0.
 	entries := acceptedEntries at: anIndex ifAbsent: [ ^ 0 ].
@@ -70,21 +70,21 @@ CoStatistics >> averageTypedCharactersAt: anIndex [
 ]
 
 { #category : #accessing }
-CoStatistics >> entriesAtIndex: anInteger [ 
-	
+CoStatistics >> entriesAtIndex: anInteger [
+
 	^ acceptedEntries at: anInteger ifAbsentPut: [ CoEntryAcceptedEvent new ]
 ]
 
 { #category : #accessing }
 CoStatistics >> entriesGeneratedBy: aSource [
 
-	^ acceptedEntries sum: [ :entries | 
+	^ acceptedEntries sum: [ :entries |
 		entries count: [ :entry | entry source = aSource ] ]
 ]
 
 { #category : #querying }
-CoStatistics >> groupBy: aBlockClosure [ 
-	
+CoStatistics >> groupBy: aBlockClosure [
+
 	^ acceptedEntries gather: [ :entriesByIndex |
 		entriesByIndex select: aBlockClosure ]
 ]
@@ -99,7 +99,7 @@ CoStatistics >> initialize [
 
 { #category : #events }
 CoStatistics >> logAcceptEvent: anEntry [
-	
+
 	| entries |
 	entries := acceptedEntries at: anEntry index ifAbsentPut: [ OrderedCollection new ].
 	entries add: anEntry
@@ -117,25 +117,25 @@ CoStatistics >> logCancelCompletionFromTypedToken: typedToken inClass: aClassNam
 
 { #category : #events }
 CoStatistics >> logCancelEvent: aCancelEntry [
-	
-	cancelledCompletions add: aCancelEntry.
+
+	cancelledCompletions add: aCancelEntry
 ]
 
 { #category : #accessing }
 CoStatistics >> numberOfCancels [
-	
+
 	^ cancelledCompletions size
 ]
 
 { #category : #accessing }
-CoStatistics >> numberOfCancelsByClass: aClassName [ 
-	
+CoStatistics >> numberOfCancelsByClass: aClassName [
+
 	^ cancelledCompletions count: [ :e | e contextClassName = aClassName ]
 ]
 
 { #category : #accessing }
 CoStatistics >> numberOfCancelsByClassCompletions: cancelledCompletionsInClass [
-	
+
 	^ cancelledCompletionsInClass sum: [ :e |
 		e ifNil: [ 0 ] ifNotNil: [ e size ] ]
 ]

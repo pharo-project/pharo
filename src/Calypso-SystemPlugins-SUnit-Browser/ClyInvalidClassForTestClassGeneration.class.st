@@ -33,12 +33,12 @@ ClyInvalidClassForTestClassGeneration >> baseClass: anObject [
 { #category : #accessing }
 ClyInvalidClassForTestClassGeneration >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #printing }
-ClyInvalidClassForTestClassGeneration >> standardMessageText [	
+ClyInvalidClassForTestClassGeneration >> standardMessageText [
 	^ String streamContents: [ :stream |
 		stream print: self baseClass.
 		stream nextPutAll: ' is not a valid class to generate a test class' ]

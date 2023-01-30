@@ -42,7 +42,7 @@ HiSimpleRenderer >> addArrowInto: athensPathBuilder descending: aBoolean [
 		lineTo: (-1 * arrowSize) @ (-1 * c * arrowSize);
 		lineTo: ( 2 * arrowSize) @ 0;
 		lineTo: (-1 * arrowSize) @ (c * arrowSize);
-		absolute.
+		absolute
 ]
 
 { #category : #rendering }
@@ -69,7 +69,7 @@ HiSimpleRenderer >> addLinkFragmentFrom: topPoint to: bottomPoint intermediateY:
 
 { #category : #rendering }
 HiSimpleRenderer >> addLinkFragmentFromTopLeft: topPoint toBottomRight: bottomPoint intermediateY: intermediateY into: athensPathBuilder [
-	"	
+	"
 		 s
 		 \___
 		     \
@@ -86,7 +86,7 @@ HiSimpleRenderer >> addLinkFragmentFromTopLeft: topPoint toBottomRight: bottomPo
 
 { #category : #rendering }
 HiSimpleRenderer >> addLinkFragmentFromTopRight: topPoint toBottomLeft: bottomPoint intermediateY: intermediateY into: athensPathBuilder [
-	"	
+	"
 		     s
 		  ___/
 		 /
@@ -95,7 +95,7 @@ HiSimpleRenderer >> addLinkFragmentFromTopRight: topPoint toBottomLeft: bottomPo
 
 	| halfColumn |
 	halfColumn := cellWidth/2.
-	athensPathBuilder 
+	athensPathBuilder
 		cwArcTo:  (topPoint x    - halfColumn) @ intermediateY angle: self linkCurveAngle;
 		lineTo:   (bottomPoint x + halfColumn) @ intermediateY;
 		ccwArcTo: bottomPoint angle: self linkCurveAngle
@@ -115,7 +115,7 @@ HiSimpleRenderer >> arrowSize: aNumber [
 HiSimpleRenderer >> athensPathForAscendingLink: aHiLink on: athensCanvas [
 	"Answer the Athens path for a link that goes from bottom to top."
 
-	^ athensCanvas createPath: [ :athensPathBuilder | 
+	^ athensCanvas createPath: [ :athensPathBuilder |
 		| nodeConnectionYOffset fragmentStart |
 		nodeConnectionYOffset := self nodeBottomRelativeConnectionPoint.
 
@@ -127,7 +127,7 @@ HiSimpleRenderer >> athensPathForAscendingLink: aHiLink on: athensCanvas [
 		self addArrowInto: athensPathBuilder descending: false.
 
 		"Add all fragments except last (in reversed order)"
-		aHiLink intermediatePoints reverseDo: [ :rulerPoint | 
+		aHiLink intermediatePoints reverseDo: [ :rulerPoint |
 			| fragmentEnd offset |
 			fragmentEnd := self cellCenterFor: rulerPoint.
 			offset := fragmentStart x > fragmentEnd x
@@ -153,7 +153,7 @@ HiSimpleRenderer >> athensPathForAscendingLink: aHiLink on: athensCanvas [
 HiSimpleRenderer >> athensPathForDescendingLink: aHiLink on: athensCanvas [
 	"Answer the Athens path for a link that goes from top to bottom."
 
-	^ athensCanvas createPath: [ :athensPathBuilder | 
+	^ athensCanvas createPath: [ :athensPathBuilder |
 		| nodeConnectionYOffset fragmentStart |
 		nodeConnectionYOffset := self nodeBottomRelativeConnectionPoint.
 
@@ -192,7 +192,7 @@ HiSimpleRenderer >> athensPathForLink: aHiLink on: athensCanvas [
 	"Answer the Athens path for a link."
 
 	^ aHiLink isDescending
-		ifTrue: [ 
+		ifTrue: [
 			self
 				athensPathForDescendingLink: aHiLink
 				on: athensCanvas ]
@@ -209,7 +209,7 @@ HiSimpleRenderer >> athensPathForNodeOn: athensCanvas [
 	| nd pd |
 	pd := nodeRadio.
 	nd := -1 * nodeRadio.
-	^ athensCanvas createPath: [ :pathBuilder | 
+	^ athensCanvas createPath: [ :pathBuilder |
 		pathBuilder
 			absolute;
 			moveTo: nd @ 0;
@@ -228,7 +228,7 @@ HiSimpleRenderer >> cellCenterFor: aRulerPoint [
 { #category : #rendering }
 HiSimpleRenderer >> cellOriginFor: aRulerPoint [
 
-	^ ((aRulerPoint x - 1) * cellWidth) @ 
+	^ ((aRulerPoint x - 1) * cellWidth) @
 	  ((aRulerPoint y - 1) * rowHeight)
 ]
 
@@ -281,7 +281,7 @@ HiSimpleRenderer >> initialize [
 { #category : #accessing }
 HiSimpleRenderer >> linkColor: aColor [
 	self useUniformColorStrategy.
-	colorStrategy linkColor: aColor.
+	colorStrategy linkColor: aColor
 ]
 
 { #category : #rendering }
@@ -303,7 +303,7 @@ HiSimpleRenderer >> linkDashes [
 
 { #category : #accessing }
 HiSimpleRenderer >> linkDashes: anArrayOfFillGapPairs [
-	"Set how are the links dashed. 
+	"Set how are the links dashed.
 	See AthensStrokePaint>>dashes:offset: to understand the parameter."
 
 	linkDashes := anArrayOfFillGapPairs
@@ -322,10 +322,10 @@ HiSimpleRenderer >> linkWidth: aNumber [
 { #category : #API }
 HiSimpleRenderer >> newForm [
 	"Answer a new form, rendered with the current ruler and rowInterval."
-	
+
 	| athensSurface |
 	athensSurface := AthensCairoSurface extent: self formExtent.
-	
+
 	athensSurface drawDuring: [ :athensCanvas |
 		athensCanvas pathTransform translateBy: self initialTranslationInAthensCanvas.
 
@@ -382,12 +382,12 @@ HiSimpleRenderer >> nodeRadius: aNumber [
 HiSimpleRenderer >> renderLinks: links on: athensCanvas [
 
 	"Draw each link on the canvas."
-	links do: [ :each | 
+	links do: [ :each |
 
 		"Set the paint for this link."
 		(athensCanvas setStrokePaint: (colorStrategy colorForLink: each)) width: linkWidth.
 		athensCanvas paint joinMiter.
-	
+
 		"Draw it"
 		athensCanvas drawShape: (self athensPathForLink: each on: athensCanvas) ]
 ]
@@ -402,7 +402,7 @@ HiSimpleRenderer >> renderNodes: nodes on: athensCanvas [
 
 	athensCanvas paintMode restoreAfter: [
 		nodes do: [ :each |
-		
+
 			"Set the stroke for this node."
 			(athensCanvas setStrokePaint: (colorStrategy colorForNode: each)) width: nodeBorderWidth.
 
@@ -410,19 +410,19 @@ HiSimpleRenderer >> renderNodes: nodes on: athensCanvas [
 			athensCanvas pathTransform restoreAfter: [
 				athensCanvas pathTransform
 					translateBy: (self cellCenterFor: each rulerPoint).
-				athensCanvas drawShape: nodeAthensPath ] ] ].
+				athensCanvas drawShape: nodeAthensPath ] ] ]
 ]
 
 { #category : #rendering }
 HiSimpleRenderer >> renderOn: athensCanvas [
 	"Render all nodes and links that correspond to the previously selected rowsInterval in the athensCanvas."
-	
+
 	| links nodes |
 	nodes := rowsInterval collect: [:row | ruler nodeAtRow: row ].
 	links := rowsInterval flatCollect: [:row | ruler linksAtRow: row ] as: Set.
 
 	self renderLinks: links on: athensCanvas.
-	self renderNodes: nodes on: athensCanvas.
+	self renderNodes: nodes on: athensCanvas
 ]
 
 { #category : #accessing }
@@ -441,17 +441,17 @@ HiSimpleRenderer >> rowHeight: anInteger [
 { #category : #accessing }
 HiSimpleRenderer >> ruler: aHiRuler [
 	super ruler: aHiRuler.
-	colorStrategy ruler: ruler.
+	colorStrategy ruler: ruler
 ]
 
 { #category : #accessing }
 HiSimpleRenderer >> useUniformColorStrategy [
 	colorStrategy := HiUniformColorStrategy new.
-	colorStrategy ruler: ruler.
+	colorStrategy ruler: ruler
 ]
 
 { #category : #accessing }
 HiSimpleRenderer >> useWheelColorStrategy [
 	colorStrategy := HiWheelColorStrategy new.
-	colorStrategy ruler: ruler.
+	colorStrategy ruler: ruler
 ]

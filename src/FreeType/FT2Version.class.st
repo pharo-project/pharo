@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 FT2Version class >> current [
-	
+
 	^ FT2Library current libraryVersion
 ]
 
@@ -52,5 +52,5 @@ FT2Version >> patch: anObject [
 
 { #category : #printing }
 FT2Version >> printOn: aStream [
-	aStream print: major; nextPut: $.; print: minor; nextPut:$.; print: patch.
+	aStream print: major; nextPut: $.; print: minor; nextPut:$.; print: patch
 ]

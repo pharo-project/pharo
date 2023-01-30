@@ -34,26 +34,26 @@ AthensPaintMode >> add [
 { #category : #modes }
 AthensPaintMode >> atop [
 	"Set 'atop' painting mode "
-	
+
 	self notAvailable
 ]
 
 { #category : #capabilities }
 AthensPaintMode >> availableModes [
-	"Answer a collection of paint mode names, currently supported by backend. 
+	"Answer a collection of paint mode names, currently supported by backend.
 	Different backends may support different sets of paint modes.
-	
+
 	You may need to structure your code depending on modes available"
-	
+
 	^ #()
 ]
 
 { #category : #modes }
 AthensPaintMode >> clear [
 	"Set 'clear' drawing mode.
-	
+
 	Drawing under this mode will clear the surface under the shape boundaries"
-	
+
 	self notAvailable
 ]
 
@@ -81,33 +81,33 @@ AthensPaintMode >> default [
 { #category : #modes }
 AthensPaintMode >> dest [
 	"Set 'dest' drawing mode.
-	
+
 	Drawing under this mode will ignore the source, as if nothing drawn"
-	
+
 	self notAvailable
 ]
 
 { #category : #modes }
 AthensPaintMode >> destAtop [
-	
+
 	self notAvailable
 ]
 
 { #category : #modes }
 AthensPaintMode >> destIn [
-	
+
 	self notAvailable
 ]
 
 { #category : #modes }
 AthensPaintMode >> destOut [
-	
+
 	self notAvailable
 ]
 
 { #category : #modes }
 AthensPaintMode >> destOver [
-	
+
 	self notAvailable
 ]
 
@@ -169,16 +169,16 @@ AthensPaintMode >> notAvailable [
 { #category : #modes }
 AthensPaintMode >> out [
 	"Set 'out' painting mode "
-	
+
 	self notAvailable
 ]
 
 { #category : #modes }
 AthensPaintMode >> over [
 	"Set 'over' drawing mode. This is default paint mode.
-	
+
 	Drawing under this mode will blend source with destination color using source alpha component"
-	
+
 	self notAvailable
 ]
 
@@ -190,7 +190,7 @@ AthensPaintMode >> overlay [
 { #category : #convenience }
 AthensPaintMode >> restoreAfter: aBlock [
 	"Restore current paint mode after evaluating a block"
-	
+
 	self subclassResponsibility
 ]
 
@@ -212,9 +212,9 @@ AthensPaintMode >> softLight [
 { #category : #modes }
 AthensPaintMode >> source [
 	"Set 'source' drawing mode.
-	
+
 	Drawing under this mode will replace the content with incoming source under the shape boundaries"
-	
+
 	self notAvailable
 ]
 

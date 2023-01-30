@@ -98,14 +98,14 @@ Context class >> contextEnsure: block [
 
 	| ctxt chain |
 	ctxt := thisContext.
-	[chain := thisContext sender cut: ctxt. 
-		
+	[chain := thisContext sender cut: ctxt.
+
 		"As the jump will return to the current context inside the context ensure:
 		It is needed to emulate the return value of sending the message ensure:
-		If this is not done, the context will do an additional pop, affecting the temporary variables. 
+		If this is not done, the context will do an additional pop, affecting the temporary variables.
 		This is required because we are breaking a condition on Context >> jump.
 		The receiver of jump should be a Top context, in this case it is not. "
-		ctxt push: nil. 
+		ctxt push: nil.
 		ctxt jump] ensure: block.
 	"jump above will resume here without unwinding chain"
 	^ chain
@@ -117,20 +117,20 @@ Context class >> contextOn: exceptionClass do: block [
 
 	| ctxt chain |
 	ctxt := thisContext.
-	[chain := thisContext sender cut: ctxt. 
-	
+	[chain := thisContext sender cut: ctxt.
+
 		"As the jump will return to the current context inside the context on:do:
 		It is needed to emulate the return value of sending the message on:do:
-		If this is not done, the context will do an additional pop, affecting the temporary variables. 
+		If this is not done, the context will do an additional pop, affecting the temporary variables.
 		This is required because we are breaking a condition on Context >> jump.
 		The receiver of jump should be a Top context, in this case it is not. "
-		ctxt push:nil. 
+		ctxt push:nil.
 		ctxt jump] on: exceptionClass do: block.
 	"jump above will resume here without unwinding chain"
 	^ chain
 ]
 
-{ #category : #simulation }
+{ #category : #'class initialization' }
 Context class >> initialize [
 
 	"A unique object to be returned when a primitive fails during simulation"
@@ -144,21 +144,21 @@ Context class >> initializePrimitiveSimulators [
 	"extra primitive simulators can be registered by implementing
 	#registerPrimitiveSimulators method in class side of your class."
 	<ignoreUnimplementedCalls: #(#registerPrimitiveSimulators)>
-	
+
 	SpecialPrimitiveSimulators := Dictionary new.
 
 	Class allSubclassesDo: [:metaclass |
 		(metaclass includesSelector: #registerPrimitiveSimulators) ifTrue: [
 			metaclass instanceSide registerPrimitiveSimulators.
 			]
-		].
+		]
 ]
 
 { #category : #simulation }
 Context class >> initializeTryNamedPrimitiveTemplateMethod [
 	| source method |
 	source := 'tryNamedPrimitive
-	"This method is a template that the Smalltalk simulator uses to 
+	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
 	<primitive:'' module:'' error: errorCode>
 	^ Context primitiveFailTokenFor: errorCode'.
@@ -166,7 +166,7 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 				class: UndefinedObject;
 				source: source;
 				compile.
-	TryNamedPrimitiveTemplateMethod := method copyWithSource: source.
+	TryNamedPrimitiveTemplateMethod := method copyWithSource: source
 ]
 
 { #category : #'instance creation' }
@@ -206,7 +206,7 @@ Context class >> primitiveFailTokenFor: errorCode [
 ]
 
 { #category : #'instance creation' }
-Context class >> sender: s receiver: r method: m arguments: args [ 
+Context class >> sender: s receiver: r method: m arguments: args [
 	"Answer an instance of me with attributes set to the arguments."
 
 	^(self newForMethod: m) setSender: s receiver: r method: m arguments: args
@@ -233,18 +233,19 @@ Context class >> tryNamedPrimitiveTemplateMethod [
 ]
 
 { #category : #private }
-Context >> aboutToReturn: result through: firstUnwindContext [ 
+Context >> aboutToReturn: result through: firstUnwindContext [
+
 	"Called from VM when an unwindBlock is found between self and its home.
 	 Return to home's sender, executing unwind blocks on the way."
 
-	self methodReturnContext return: result through: firstUnwindContext
+	self home return: result through: firstUnwindContext
 ]
 
 { #category : #controlling }
-Context >> activateMethod: newMethod withArgs: args receiver: rcvr class: class [ 
+Context >> activateMethod: newMethod withArgs: args receiver: rcvr class: class [
 	"Answer a Context initialized with the arguments."
 
-	^Context 
+	^Context
 		sender: self
 		receiver: rcvr
 		method: newMethod
@@ -266,13 +267,13 @@ Context >> activateReturn: aContext value: value [
 Context >> activeHome [
 	"If executing closure, search senders for the activation of the original
 	 (outermost) method that (indirectly) created my closure (the closureHome).
-	 If the closureHome is not found on the sender chain answer nil."
+	 If the closureHome is not found on the sender chain answer nil.
+	This method does not use #home and thus works for any block without and outerContext"
 
-	| methodReturnContext |
+	| homeMethod |
 	self isBlockContext ifFalse: [^self].
-	self sender ifNil: [^nil].
-	methodReturnContext := self methodReturnContext.
-	^self sender findContextSuchThat: [:ctxt | ctxt = methodReturnContext]
+	homeMethod := self homeMethod.
+	^self findMethodContextSuchThat: [:ctxt | ctxt method == homeMethod]
 ]
 
 { #category : #accessing }
@@ -291,7 +292,7 @@ Context >> activeOuterContext [
 { #category : #accessing }
 Context >> arguments [
 	"returns the arguments of a message invocation"
-	
+
 	^(1 to: self numArgs) collect: [:i | self tempAt: i]
 ]
 
@@ -363,8 +364,8 @@ Context >> basicAt: index put: value [
 
 { #category : #accessing }
 Context >> basicSize [
-	"Primitive. Answer the number of indexable variables in the receiver. 
-	This value is the same as the largest legal subscript. Essential. Do not 
+	"Primitive. Answer the number of indexable variables in the receiver.
+	This value is the same as the largest legal subscript. Essential. Do not
 	override in any subclass. See Object documentation whatIsAPrimitive.  Override the default primitive to give latitude to
 	 the VM in context management."
 
@@ -375,13 +376,13 @@ Context >> basicSize [
 
 { #category : #testing }
 Context >> belongsToDoIt [
-	^self home method isDoIt
+	^self homeMethod isDoIt
 ]
 
 { #category : #'instruction decoding' }
-Context >> blockReturnConstant: value [ 
+Context >> blockReturnConstant: value [
 	"Simulate the interpreter's action when a ReturnConstantToCaller
-	bytecode is 
+	bytecode is
 	encountered in the receiver. This should only happen in a closure
 	activation. "
 	self assert: closureOrNil isClosure.
@@ -390,7 +391,7 @@ Context >> blockReturnConstant: value [
 
 { #category : #'instruction decoding' }
 Context >> blockReturnTop [
-	"Simulate the interpreter's action when a ReturnTopOfStackToCaller bytecode is 
+	"Simulate the interpreter's action when a ReturnTopOfStackToCaller bytecode is
 	 encountered in the receiver.  This should only happen in a closure activation."
 	[closureOrNil isClosure] assert.
 	^self return: self pop from: self
@@ -408,13 +409,13 @@ Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
 	^ (self exceptionClass handles: exception)
-		or: [ self nextHandlerContext canHandleSignal: exception ].
+		or: [ self nextHandlerContext canHandleSignal: exception ]
 ]
 
 { #category : #'private - exceptions' }
 Context >> cannotReturn: result [
 
-	closureOrNil ifNotNil: [ 
+	closureOrNil ifNotNil: [
 		^ BlockCannotReturn result: result from: self home ].
 	UIManager default
 		requestDebuggerOpeningNamed: 'computation has been terminated'
@@ -454,7 +455,7 @@ Context >> contextClass [
 ]
 
 { #category : #'debugger access' }
-Context >> contextStack [ 
+Context >> contextStack [
 	"Answer an Array of the contexts on the receiver's sender chain."
 
 	^self stackOfSize: 100000
@@ -496,7 +497,7 @@ Context >> cut: aContext [
 		context ifNil: [
 			aContext ifNotNil: [
 				self error: 'aContext not a sender' ]]].
-	callee privSender: nil.
+	callee privSender: nil
 ]
 
 { #category : #printing }
@@ -504,7 +505,7 @@ Context >> debugStack: stackSize on: aStream [
 	"print a condensed version of the stack up to stackSize on aStream"
 
 	(self stackOfSize: stackSize)
-		do: [ :item | 
+		do: [ :item |
 			item printDebugOn: aStream.
 			aStream cr ]
 ]
@@ -530,18 +531,18 @@ Context >> depthBelow: aContext [
 ]
 
 { #category : #'instruction decoding' }
-Context >> directedSuperSend: selector numArgs: numArgs [ 
-	
+Context >> directedSuperSend: selector numArgs: numArgs [
+
 	| lookupClass arguments currentReceiver |
 
 	lookupClass := self pop superclass.
-	
+
 	arguments := Array new: numArgs.
-	numArgs to: 1 by: -1 do: [ :i | 
+	numArgs to: 1 by: -1 do: [ :i |
 		arguments at: i put: self pop ].
 
 	currentReceiver := self pop.
-	
+
 	^ self send: selector to: currentReceiver with: arguments lookupIn: lookupClass
 ]
 
@@ -566,7 +567,7 @@ Context >> doPop [
 ]
 
 { #category : #private }
-Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: arguments [ 
+Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: arguments [
 	"Simulate a primitive method whose index is primitiveIndex.  The simulated receiver and
 	 arguments are given as arguments to this message. If successful, push result and return
 	 resuming context, else ^ {errCode, PrimitiveFailToken}. Any primitive which provokes
@@ -578,7 +579,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 	 process, etc.  Injudicious use results in the debugger not being able to debug
 	 interesting code, such as the debugger itself.  hence use primitive 19 with care :-)"
 	"SystemNavigation new browseAllSelect: [:m| m primitive = 19]"
-	"primitiveIndex = 19 ifTrue:	[ | debugSession | 
+	"primitiveIndex = 19 ifTrue:	[ | debugSession |
 			debugSession := Processor activeProcess newDebugSessionNamed: 'Code simulation error' startedAt: self.
 			Smalltalk tools debugger openOn: debugSession withFullView: true]."
 
@@ -589,10 +590,10 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			[^aReceiver simulateValueWithArguments: arguments caller: self].
 		 primitiveIndex = 206 ifTrue:						"BlockClosure>>valueWithArguments:"
 			[^aReceiver simulateValueWithArguments: arguments first caller: self]].
-	
+
 	((primitiveIndex between: 207 and: 209) "FullBlockClosure primitives"
-	  and: [(self objectClass: aReceiver) includesBehavior: FullBlockClosure]) ifTrue: 
-		[^primitiveIndex = 208 
+	  and: [(self objectClass: aReceiver) includesBehavior: FullBlockClosure]) ifTrue:
+		[^primitiveIndex = 208
 			ifTrue: [aReceiver simulateValueWithArguments: arguments first caller: self]
 			ifFalse: [aReceiver simulateValueWithArguments: arguments caller: self]].
 
@@ -601,17 +602,17 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 	primitiveIndex = 84 ifTrue: "afr 9/11/1998 19:50 & eem 8/18/2009 17:04" "Object>>perform:withArguments:"
 		[^self send: arguments first to: aReceiver with: (arguments at: 2) lookupIn: (self objectClass: aReceiver)].
 	primitiveIndex = 100 ifTrue: "eem 8/18/2009 16:57" "Object>>perform:withArguments:inSuperclass:"
-		[arguments size = 3 
+		[arguments size = 3
 			ifTrue: [ ^self send: arguments first to: aReceiver with: (arguments at: 2) lookupIn: (arguments at: 3)]
 			ifFalse: [ ^self send: (arguments at: 2) to: (arguments at: 1) with: (arguments at: 3) lookupIn: (arguments at: 4) ]
 		].
 
 	primitiveIndex = 88 ifTrue: ["Process>>suspend"
 		"Simulation of suspend primitive should do nothing (with receiver return) by two reasons:
-			- if by mistake the receiver is a simulating process itself 
+			- if by mistake the receiver is a simulating process itself
 				the suspend would stop it and the simulation would hang.
 				For example the debugger can hang during stepping over #suspend of real active process.
-			- suspend over already suspended process does nothing anyway. 
+			- suspend over already suspended process does nothing anyway.
 				For example debugger always steps over suspended process"
 		^self push: aReceiver ].
 
@@ -630,7 +631,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			ifFalse: [self push: value]].
 
 	primitiveIndex = 188 ifTrue: "eem 5/27/2008 11:10 Object>>withArgs:executeMethod:"
-		[arguments size = 2 
+		[arguments size = 2
 			ifTrue: "normal primitive"
 				[^Context
 					sender: self
@@ -669,29 +670,27 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 
 { #category : #private }
 Context >> endPC [
-	^closureOrNil
-		ifNil:	[self compiledCode endPC]
-		ifNotNil: [closureOrNil endPC]
+	^ self compiledCode endPC
 ]
 
 { #category : #'debugger access' }
 Context >> errorReportOn: stream [
-	"Write a detailed error report on the stack (above me) on a  
-	stream.  For both the error file, and emailing a bug report.   
+	"Write a detailed error report on the stack (above me) on a
+	stream.  For both the error file, and emailing a bug report.
 	Suppress any errors while getting printStrings.  Limit the length."
-	
+
 	| stackDepth aContext |
 	stream print: Date today; space; print: Time now; cr.
 	stream cr.
 	stream nextPutAll: 'VM: ';
 		nextPutAll: Smalltalk os name asString;
-		nextPutAll: ' - ';	
+		nextPutAll: ' - ';
 		nextPutAll: Smalltalk os subtype asString;
 		nextPutAll: ' - ';
 		nextPutAll: Smalltalk os version asString;
 		nextPutAll: ' - ';
 		nextPutAll: Smalltalk vm version asString;
-		cr.	
+		cr.
 	stream nextPutAll: 'Image: ';
 		nextPutAll:  SystemVersion current version asString;
 		nextPutAll: ' [';
@@ -699,40 +698,40 @@ Context >> errorReportOn: stream [
 		nextPutAll: ']';
 		cr.
 	stream cr.
-	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."	
-	stackDepth := 0.  
+	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
+	stackDepth := 0.
 	aContext := self.
-	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]] 
+	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
 		whileTrue: [
 			"variable values"
 			aContext printDetails: stream.
 			stream cr.
 			aContext := aContext sender ].
 	stream cr; nextPutAll: '--- The full stack ---'; cr.
-	aContext := self.	
+	aContext := self.
 	stackDepth := 0.
 	[ aContext == nil ] whileFalse:	[
-		stackDepth := stackDepth + 1.	
-		stackDepth = 40 ifTrue: [ stream nextPutAll: ' - - - - - - - - - - - - - - -  
+		stackDepth := stackDepth + 1.
+		stackDepth = 40 ifTrue: [ stream nextPutAll: ' - - - - - - - - - - - - - - -
 			- - - - - - - - - - - - - - - - - -'; cr ].
-		"just class>>selector"	
-		stream print: aContext; cr. 		
+		"just class>>selector"
+		stream print: aContext; cr.
 		stackDepth > 200 ifTrue: [
 			stream nextPutAll: '-- and more not shown --'.
 			^  self ].
-		aContext := aContext sender ].
+		aContext := aContext sender ]
 ]
 
 { #category : #'private - exceptions' }
 Context >> evaluateSignal: exception [
-	"The following primitive is just a marker used to find the evaluation context. 
+	"The following primitive is just a marker used to find the evaluation context.
 	See MethodContext>>#isHandlerOrSignalingContext. "
 
 	<primitive: 199>
 	<debuggerCompleteToSender>
 	| value |
 	exception privHandlerContext: self contextTag.
-	value := self exceptionHandlerBlock cull: exception.	
+	value := self exceptionHandlerBlock cull: exception.
 	"return from self if not otherwise directed in handle block"
 	self return: value
 ]
@@ -759,7 +758,7 @@ Context >> exceptionHandlerBlock [
 Context >> exceptionsToCaptureWhenStepping [
 
 	| exceptionsToCapture exceptionsSet |
-	exceptionsToCapture := Exception allSubclasses select: [ :c | 
+	exceptionsToCapture := Exception allSubclasses select: [ :c |
 		                       c captureIfSignalledWhenStepping ].
 	exceptionsSet := ExceptionSet new.
 	exceptionsToCapture do: [ :e | exceptionsSet add: e ].
@@ -783,7 +782,7 @@ Context >> findContextSuchThat: testBlock [
 	| context |
 	context := self.
 	[ context isNil ] whileFalse: [
-		(testBlock value: context) 
+		(testBlock value: context)
 			ifTrue: [ ^ context ].
 		context := context sender ].
 	^ nil
@@ -804,12 +803,12 @@ Context >> findMethodContextSuchThat: testBlock [
 
 { #category : #'private - exceptions' }
 Context >> findNextHandlerContext [
-	"Return the next handler marked context, returning nil if there is none.  
+	"Return the next handler marked context, returning nil if there is none.
 	Search starts with self and proceeds up to nil."
 	| context searchStartContext |
 	context := self findNextHandlerOrSignalingContext.
 	context ifNil: [ ^ nil ].
-	context isHandlerContext ifTrue: [ ^ context ].	
+	context isHandlerContext ifTrue: [ ^ context ].
 	"If it isn't a handler context, it must be a signaling context.
 	When we reach a signaling context we must skip over any handlers
 	that might be on the stack between the signaling context and the handler context for that signal"
@@ -819,13 +818,13 @@ Context >> findNextHandlerContext [
 
 { #category : #'private - exceptions' }
 Context >> findNextHandlerOrSignalingContext [
-	"Return the next handler/signaling marked context, answering nil if there is none. 
+	"Return the next handler/signaling marked context, answering nil if there is none.
 	Search starts with self and proceeds up to nil."
 
 	<primitive: 197>
 	| context |
 	context := self.
-	[ 
+	[
 	context isHandlerOrSignalingContext
 		ifTrue: [ ^ context ].
 	(context := context sender) == nil ] whileFalse.
@@ -858,7 +857,7 @@ Context >> handleSignal: exception [
 ]
 
 { #category : #testing }
-Context >> hasContext: aContext [ 
+Context >> hasContext: aContext [
 	"Answer whether aContext is me or one of my senders"
 
 	^ (self findContextSuchThat: [ :context | context == aContext ]) notNil
@@ -868,20 +867,31 @@ Context >> hasContext: aContext [
 Context >> hasInstVarRef [
 	"Answer whether the receiver references an instance variable."
 
-	^self compiledCode hasInstVarRef.
+	^self compiledCode hasInstVarRef
 ]
 
 { #category : #testing }
 Context >> hasMethodReturn [
-	^closureOrNil hasMethodReturn
+	self
+		deprecated: 'use #hasNonLocalReturn'
+		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
+	^self hasNonLocalReturn
 ]
 
 { #category : #testing }
-Context >> hasSender: context [ 
+Context >> hasNonLocalReturn [
+	"check if this context does a non-local return, do not recurse into nested blocks as they will have anohter context"
+	^ closureOrNil
+		  ifNil: [ false ]
+		  ifNotNil: [ :closure | closure compiledBlock hasMethodReturn ]
+]
+
+{ #category : #testing }
+Context >> hasSender: context [
 	"Answer whether the receiver is strictly above context on the stack."
 
 	| senderContext |
-	self == context 
+	self == context
 		ifTrue: [^false].
 	senderContext := sender.
 	[senderContext == nil]
@@ -912,7 +922,6 @@ Context >> homeMethod [
 	"Answer the method in which the receiver was defined, i.e. the context from which an ^-return ] should return from. Note: implemented to not need #home"
 
 	^ closureOrNil ifNil: [ self method ] ifNotNil: [ :closure | closure homeMethod ]
-	
 ]
 
 { #category : #private }
@@ -928,9 +937,9 @@ Context >> insertSender: aContext [
 
 { #category : #private }
 Context >> instVarAt: index put: value [
-	index = 3 
+	index = 3
 		ifTrue: [
-			self stackp: value. 
+			self stackp: value.
 			^ value].
 	^ super instVarAt: index put: value
 ]
@@ -959,21 +968,21 @@ Context >> isContext [
 { #category : #testing }
 Context >> isDead [
 	"Context is dead when
-	- it is self finished (returned to sender) 
+	- it is self finished (returned to sender)
 	- it is at the last instruction of process termination (it is unwinded and process is suspended)"
 
 	^ pc isNil or: [  self isEndOfProcessTermination ]
 ]
 
 { #category : #testing }
-Context >> isEndOfProcessTermination [ 
+Context >> isEndOfProcessTermination [
 	"The normal completion of any process always ends at Process>>doTerminationFromYourself method
 	(see #newProcess and #terminateRealActive).
-	The last instruction is the call to #suspend primitive method 
+	The last instruction is the call to #suspend primitive method
 	which finally removes the process from the scheduler.
-	This precise criteria of the terminated process is used here" 
+	This precise criteria of the terminated process is used here"
 	method selector == #doTerminationFromYourself ifFalse: [ ^false ].
-	method methodClass == Process ifFalse: [ ^false ].	
+	method methodClass == Process ifFalse: [ ^false ].
 	^pc = (self endPC - 1)
 ]
 
@@ -985,7 +994,7 @@ Context >> isExecutingBlock [
 
 { #category : #private }
 Context >> isFailToken: anObject [
-	^ (self objectClass: anObject) == Array 
+	^ (self objectClass: anObject) == Array
 			and: [ anObject size = 2 and: [(anObject at: 1) == PrimitiveFailToken]]
 ]
 
@@ -997,7 +1006,7 @@ Context >> isHandlerContext [
 
 { #category : #'private - exceptions' }
 Context >> isHandlerOrSignalingContext [
-	"Both BlockClosure>>on:do: (handler) and Context>>evaluateSignal: (signaling) 
+	"Both BlockClosure>>on:do: (handler) and Context>>evaluateSignal: (signaling)
 	are marked with primitive 199."
 	^method primitive = 199
 ]
@@ -1019,8 +1028,8 @@ Context >> isUnwindContext [
 Context >> jump [
 	"Abandon thisContext and resume self instead (using the same current process).  You may want to save thisContext's sender before calling this so you can jump back to it.
 	Self MUST BE a top context (ie. a suspended context or an abandoned context that was jumped out of).  A top context already has its return value on its stack (see Interpreter>>primitiveSuspend and other suspending primitives).
-	If self is not a top context is the responsibility of the caller to push something in the context. If this is not guarantee an error when accessing the values in the context is produced. Pay special attention to the implementation of Context class >> #contextOn: exceptionClass do: block and Context class >> #contextEnsure:. 
-	
+	If self is not a top context is the responsibility of the caller to push something in the context. If this is not guarantee an error when accessing the values in the context is produced. Pay special attention to the implementation of Context class >> #contextOn: exceptionClass do: block and Context class >> #contextEnsure:.
+
 	thisContext's sender is converted to a top context (by pushing a nil return value on its stack) so it can be jump back to."
 
 	| top |
@@ -1037,7 +1046,7 @@ Context >> jump [
 
 { #category : #'instruction decoding' }
 Context >> jump: distance if: condition withInterpreter: anInterpreter [
-	"Simulate the action of a 'conditional jump' bytecode whose offset is the 
+	"Simulate the action of a 'conditional jump' bytecode whose offset is the
 	argument, distance, and whose condition is the argument, condition."
 
 	| bool |
@@ -1053,11 +1062,11 @@ Context >> jump: distance if: condition withInterpreter: anInterpreter [
 
 { #category : #'instruction decoding' }
 Context >> jump: distance withInterpreter: anInterpreter [
-	"Simulate the action of a 'unconditional jump' bytecode whose offset is 
+	"Simulate the action of a 'unconditional jump' bytecode whose offset is
 	the argument, distance."
 
 	pc := pc + distance.
-	anInterpreter pc: pc.
+	anInterpreter pc: pc
 ]
 
 { #category : #'debugger access' }
@@ -1065,7 +1074,7 @@ Context >> longStack [
 	"Answer a String showing the top 100 contexts on my sender chain."
 
 	^ String streamContents: [ :stream |
-		(self stackOfSize: 100) do: [ :item | 
+		(self stackOfSize: 100) do: [ :item |
 			stream print: item; cr ]]
 ]
 
@@ -1073,17 +1082,17 @@ Context >> longStack [
 Context >> method [
 	"self
 		deprecated: 'Should use compiledCode since it can be CompiledMethod or a CompiledBlock'
-		transformWith: '`@receiver method' 
+		transformWith: '`@receiver method'
 						-> '`@receiver compiledCode'."
 
 	^method
 ]
 
 { #category : #'debugger access' }
-Context >> methodClass [ 
+Context >> methodClass [
 	"Answer the class in which the receiver's method was found."
-	
-	^self compiledCode methodClass ifNil:[self receiver class].
+
+	^self compiledCode methodClass ifNil:[self receiver class]
 ]
 
 { #category : #accessing }
@@ -1093,8 +1102,10 @@ Context >> methodNode [
 
 { #category : #accessing }
 Context >> methodReturnContext [
-
-	^ self home.
+	self
+		deprecated: 'Use #home instead'
+		transformWith: '`@receiver methodReturnContext' -> '`@receiver home'.
+	^ self home
 ]
 
 { #category : #'instruction decoding' }
@@ -1102,20 +1113,24 @@ Context >> methodReturnReceiver [
 	"Simulate the action of a 'return receiver' bytecode. This corresponds to
 	 the source expression '^self'."
 
-	^self return: self receiver from: self methodReturnContext
+	^self return: self receiver from: self home
 ]
 
 { #category : #'instruction decoding' }
 Context >> methodReturnTop [
+
 	"Simulate the action of a 'return top of stack' bytecode. This corresponds
 	 to source expressions like '^something'."
 
-	^self return: self pop from: self methodReturnContext
+	^ self return: self pop from: self home
 ]
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self homeMethod selector
+	self
+		deprecated: 'use #selector'
+		transformWith: '`@receiver methodSelector' -> '`@receiver selector'.
+	^ self selector
 ]
 
 { #category : #'private - exceptions' }
@@ -1142,7 +1157,7 @@ Context >> numTemps [
 ]
 
 { #category : #'mirror primitives' }
-Context >> object: anObject basicAt: index [ 
+Context >> object: anObject basicAt: index [
 	"Answer the value of an indexable element in the argument anObject without sending
 	 it a message. Fail if the argument index is not an Integer or is out of bounds, or if
 	 anObject is not indexable. This mimics the action of the VM when it indexes an object.
@@ -1157,8 +1172,8 @@ Context >> object: anObject basicAt: index [
 ]
 
 { #category : #'mirror primitives' }
-Context >> object: anObject basicAt: index put: value [ 
-	"Store the last argument 
+Context >> object: anObject basicAt: index put: value [
+	"Store the last argument
 	 value in the indexable element of the argument anObject indicated by index without sending
 	 anObject a message. Fail if the argument index is not an Integer or is out of bounds, or if
 	 anObject is not indexable, or if value is an inappropriate value for anObject's indexable slots.
@@ -1173,7 +1188,7 @@ Context >> object: anObject basicAt: index put: value [
 	index isNumber
 		ifTrue: [^self object: anObject basicAt: index asInteger put: value]
 		ifFalse: [self errorNonIntegerIndex].
-	anObject isReadOnlyObject 
+	anObject isReadOnlyObject
 		ifTrue: [ ^ (ModificationForbidden new
 				object: anObject;
 				fieldIndex: index;
@@ -1183,7 +1198,7 @@ Context >> object: anObject basicAt: index put: value [
 ]
 
 { #category : #'mirror primitives' }
-Context >> object: anObject eqeq: anOtherObject [ 
+Context >> object: anObject eqeq: anOtherObject [
 	"Answer whether the first and second arguments are the same object (have the
 	 same object pointer) without sending a message to the first argument.  This
 	 mimics the action of the VM when it compares two object pointers.  Used to
@@ -1196,8 +1211,8 @@ Context >> object: anObject eqeq: anOtherObject [
 
 { #category : #'mirror primitives' }
 Context >> object: anObject instVarAt: anIndex [
-	"Primitive. Answer a fixed variable in an object. The numbering of the 
-	 variables corresponds to the named instance variables. Fail if the index 
+	"Primitive. Answer a fixed variable in an object. The numbering of the
+	 variables corresponds to the named instance variables. Fail if the index
 	 is not an Integer or is not the index of a fixed variable. Essential for the
 	 debugger. See  Object documentation whatIsAPrimitive."
 
@@ -1207,7 +1222,7 @@ Context >> object: anObject instVarAt: anIndex [
 ]
 
 { #category : #'mirror primitives' }
-Context >> object: anObject instVarAt: anIndex put: aValue [ 
+Context >> object: anObject instVarAt: anIndex put: aValue [
 	"Primitive. Store a value into a fixed variable in the argument anObject.
 	 The numbering of the variables corresponds to the named instance
 	 variables.  Fail if the index is not an Integer or is not the index of a
@@ -1224,7 +1239,7 @@ Context >> object: anObject instVarAt: anIndex put: aValue [
 { #category : #'mirror primitives' }
 Context >> object: anObject perform: selector withArguments: argArray inClass: lookupClass [
 	"Send the selector, aSymbol, to anObject with arguments in argArray.
-	 Fail if the number of arguments expected by the selector 
+	 Fail if the number of arguments expected by the selector
 	 does not match the size of argArray, or if lookupClass
 	 cannot be found among the anObject's superclasses.
 	 Primitive. Essential for the debugger."
@@ -1262,25 +1277,25 @@ Context >> objectSize: anObject [
 { #category : #accessing }
 Context >> outerContext [
 	"Answer the context within which the receiver is nested."
-	
+
 	^closureOrNil ifNotNil:
 		[closureOrNil outerContext ifNil: ["if the outer is nil, this is a CleanBlock" self sender]]
 ]
 
 { #category : #accessing }
 Context >> outerMostContext [
-	^ self outerContext 
+	^ self outerContext
 		ifNil: [ self ]
 		ifNotNil: [ self outerContext ]
 ]
 
 { #category : #accessing }
-Context >> pc [ 
+Context >> pc [
 	^ pc
 ]
 
 { #category : #accessing }
-Context >> pc: anInteger [ 
+Context >> pc: anInteger [
 	pc := anInteger
 ]
 
@@ -1294,16 +1309,16 @@ Context >> pop [
 ]
 
 { #category : #'instruction decoding' }
-Context >> popIntoLiteralVariable: value [ 
-	"Simulate the action of bytecode that removes the top of the stack and 
+Context >> popIntoLiteralVariable: value [
+	"Simulate the action of bytecode that removes the top of the stack and
 	stores it into a literal variable of my method."
 
 	value value: self pop
 ]
 
 { #category : #'instruction decoding' }
-Context >> popIntoReceiverVariable: offset [ 
-	"Simulate the action of bytecode that removes the top of the stack and 
+Context >> popIntoReceiverVariable: offset [
+	"Simulate the action of bytecode that removes the top of the stack and
 	stores it into an instance variable of my receiver."
 
 	self object: self receiver instVarAt: offset + 1 put: self pop
@@ -1318,8 +1333,8 @@ Context >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 ]
 
 { #category : #'instruction decoding' }
-Context >> popIntoTemporaryVariable: offset [ 
-	"Simulate the action of bytecode that removes the top of the stack and 
+Context >> popIntoTemporaryVariable: offset [
+	"Simulate the action of bytecode that removes the top of the stack and
 	stores it into one of my temporary variables."
 
 	self at: offset + 1 put: self pop
@@ -1338,31 +1353,31 @@ Context >> print: anObject on: aStream [
 ]
 
 { #category : #printing }
-Context >> printDebugOn: aStream [	
+Context >> printDebugOn: aStream [
 	"print a condensed for of the stack.
 		For methods simply print Class >> selector
 		For blocks only print the first line"
 	| blockSource blockSourceSize |
-	
+
 	self printOn: aStream.
 	self outerContext ifNil: [ ^ self ].
 	"print the block..."
-	aStream 
+	aStream
 		nextPutAll: ' in Block: '.
-	
+
 	blockSource := [closureOrNil printStringLimitedTo: 50] on:Exception do: ['Cannot print the closure'].
 	blockSourceSize := blockSource size.
 	blockSource := blockSource copyUpTo: Character cr.
-	
+
 	aStream nextPutAll: blockSource.
 	blockSource size < blockSourceSize
-		ifTrue: [ aStream nextPutAll: '...' ].
+		ifTrue: [ aStream nextPutAll: '...' ]
 ]
 
 { #category : #printing }
 Context >> printDebugStackOn: aStream [
 
-	"Print the debug stack from the context on my sender chain. 
+	"Print the debug stack from the context on my sender chain.
 	To avoid defining an arbitrary amount of elements in the stack, I use the SmallInteger >> maxVal 	constant."
 
 	^ self debugStack: SmallInteger maxVal on: aStream
@@ -1388,7 +1403,7 @@ Context >> printDetails: stream [
 		tab;
 		nextPutAll: 'Arguments and temporary variables: ';
 		cr.
-	string := [ 
+	string := [
 	          (self tempsAndValuesLimitedTo: 80 indent: 2)
 		          padRightTo: 1
 		          with: $x ] on: Exception do:  [ errorMessage ].
@@ -1400,28 +1415,28 @@ Context >> printDetails: stream [
 		nextPutAll: 'Receiver''s instance variables: ';
 		cr.
 	receiver class allInstVarNames isEmpty
-		ifTrue: [ 
+		ifTrue: [
 			stream nextPutAll:
 				([ receiver printStringLimitedTo: 90 ] on: Exception do:  [ errorMessage ]) ]
-		ifFalse: [ 
-			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] 
+		ifFalse: [
+			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ]
 				on: Exception do:  [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 
 { #category : #printing }
 Context >> printOn: aStream [
-	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue: 
+	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue:
 		[ | selector |
 			selector := self selector.
-			aStream 
+			aStream
 			 print: closureOrNil;
 			 nextPutAll: ' in ';
 			 nextPutAll: self methodClass name;
 			 nextPutAll: '>>';
 			 nextPutAll: selector.
 			 ^self].
-	
+
 	self outerContext
 		ifNil:
 			[ | selector class mclass |
@@ -1443,7 +1458,7 @@ Context >> printOn: aStream [
 					[ aStream space.
 					(self tempAt: 1) selector printOn: aStream ] ]
 		ifNotNil:
-			[ :outerContext | 
+			[ :outerContext |
 			[closureOrNil printOn: aStream] on:Exception do: [aStream nextPutAll: 'Error printing the compiledBlock'].
 			aStream nextPutAll: ' in '.
 			outerContext printOn: aStream ]
@@ -1467,9 +1482,9 @@ Context >> privRefresh [
 ]
 
 { #category : #initialization }
-Context >> privRefreshWith: aCompiledMethod [ 
-	"Reinitialize the receiver as though it had been for a different method. 
-	 Used by a Debugger when one of the methods to which it refers is 
+Context >> privRefreshWith: aCompiledMethod [
+	"Reinitialize the receiver as though it had been for a different method.
+	 Used by a Debugger when one of the methods to which it refers is
 	 recompiled."
 
 	aCompiledMethod isCompiledMethod ifFalse:
@@ -1481,13 +1496,13 @@ Context >> privRefreshWith: aCompiledMethod [
 ]
 
 { #category : #private }
-Context >> privSender: aContext [ 
+Context >> privSender: aContext [
 
 	sender := aContext
 ]
 
 { #category : #controlling }
-Context >> push: value [ 
+Context >> push: value [
 	"Push value on the receiver's stack."
 
 	self stackp: stackp + 1.
@@ -1496,7 +1511,7 @@ Context >> push: value [
 
 { #category : #'instruction decoding' }
 Context >> pushActiveContext [
-	"Simulate the action of bytecode that pushes the the active context on the 
+	"Simulate the action of bytecode that pushes the the active context on the
 	top of its own stack."
 
 	self push: self
@@ -1504,7 +1519,7 @@ Context >> pushActiveContext [
 
 { #category : #'instruction decoding' }
 Context >> pushActiveProcess [
-	"Simulate the action of bytecode that pushes the the active Process on the 
+	"Simulate the action of bytecode that pushes the the active Process on the
 	top of its own stack."
 
 	self push: Processor activeProcess
@@ -1519,7 +1534,7 @@ Context >> pushArgs: arguments from: senderContext [
 		ifNil: [self error: 'context needs a closure!']
 		ifNotNil: [
 			"See BlockClosure>>asContextWithSender:"
-			 stackp ~= (closureOrNil numArgs + closureOrNil numCopiedValues) 
+			 stackp ~= (closureOrNil numArgs + closureOrNil numCopiedValues)
 				ifTrue: [ self error: 'stack pointer is incorrect!' ]].
 
 	1 to: closureOrNil numArgs do: [:i |
@@ -1533,7 +1548,7 @@ Context >> pushClosureTemps: numTemps [
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushConsArrayWithElements: numElements [ 
+Context >> pushConsArrayWithElements: numElements [
 	| array |
 	array := Array new: numElements.
 	numElements to: 1 by: -1 do: [ :i |
@@ -1542,8 +1557,8 @@ Context >> pushConsArrayWithElements: numElements [
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushConstant: value [ 
-	"Simulate the action of bytecode that pushes the constant, value, on the 
+Context >> pushConstant: value [
+	"Simulate the action of bytecode that pushes the constant, value, on the
 	top of the stack."
 
 	self push: value
@@ -1553,7 +1568,7 @@ Context >> pushConstant: value [
 Context >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: onStack ignoreOuterContext: ignore [
 	| copiedValues cls |
 	copiedValues := (1 to: numCopied) collect: [ :i | self pop ].
-	self push: (cls := (FullBlockClosure new: numCopied) 
+	self push: (cls := (FullBlockClosure new: numCopied)
 		outerContext: (ignore ifFalse: [self]);
 		receiver: (onStack ifTrue: [ self pop ] ifFalse: [ receiver ]);
 		numArgs: compiledBlock numArgs;
@@ -1564,30 +1579,30 @@ Context >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: 
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushLiteralVariable: value [ 
-	"Simulate the action of bytecode that pushes the contents of the literal 
+Context >> pushLiteralVariable: value [
+	"Simulate the action of bytecode that pushes the contents of the literal
 	variable whose index is the argument, index, on the top of the stack."
 
 	self push: value value
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushNewArrayOfSize: arraySize [ 
+Context >> pushNewArrayOfSize: arraySize [
 	self push: (Array new: arraySize)
 ]
 
 { #category : #'instruction decoding' }
 Context >> pushReceiver [
-	"Simulate the action of bytecode that pushes the active context's receiver 
+	"Simulate the action of bytecode that pushes the active context's receiver
 	on the top of the stack."
 
 	self push: self receiver
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushReceiverVariable: offset [ 
-	"Simulate the action of bytecode that pushes the contents of the receiver's 
-	instance variable whose index is the argument, index, on the top of the 
+Context >> pushReceiverVariable: offset [
+	"Simulate the action of bytecode that pushes the contents of the receiver's
+	instance variable whose index is the argument, index, on the top of the
 	stack."
 
 	self push: (self object: self receiver instVarAt: offset + 1)
@@ -1601,9 +1616,9 @@ Context >> pushRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushTemporaryVariable: offset [ 
-	"Simulate the action of bytecode that pushes the contents of the 
-	temporary variable whose index is the argument, index, on the top of 
+Context >> pushTemporaryVariable: offset [
+	"Simulate the action of bytecode that pushes the contents of the
+	temporary variable whose index is the argument, index, on the top of
 	the stack."
 
 	self push: (self at: offset + 1)
@@ -1618,7 +1633,7 @@ Context >> quickMethodPrimitiveBytecodeSize [
 ]
 
 { #category : #accessing }
-Context >> receiver [ 
+Context >> receiver [
 
 	^receiver
 ]
@@ -1631,15 +1646,15 @@ Context >> receiver: anObject [
 
 { #category : #'debugger access' }
 Context >> release [
-	"Remove information from the receiver and all of the contexts on its 
+	"Remove information from the receiver and all of the contexts on its
 	sender chain in order to break circularities."
 
 	self releaseTo: nil
 ]
 
 { #category : #'debugger access' }
-Context >> releaseTo: caller [ 
-	"Remove information from the receiver and the contexts on its sender 
+Context >> releaseTo: caller [
+	"Remove information from the receiver and the contexts on its sender
 	chain up to caller in order to break circularities."
 
 	| contex senderContext |
@@ -1671,7 +1686,7 @@ Context >> resume [
 { #category : #controlling }
 Context >> resume: value [
 	"Unwind thisContext to self and resume with value as result of last send.  Execute unwind blocks when unwinding.  ASSUMES self is a sender of thisContext"
-	
+
 	self resume: value through: (thisContext findNextUnwindContextUpTo: self)
 ]
 
@@ -1682,11 +1697,11 @@ Context >> resume: value through: firstUnwindContext [
 	 ASSUMES self is a sender of thisContext."
 
 	| context unwindBlock |
-	self isDead 
+	self isDead
 		ifTrue: [ self cannotReturn: value to: self ].
 	"note: nil value of firstUnwindContext is sent by #return:from: to invoke fresh search for first unwind context"
 	context := firstUnwindContext ifNil: [thisContext findNextUnwindContextUpTo: self].
-	[ context isNil ] whileFalse: [	
+	[ context isNil ] whileFalse: [
 		context unwindComplete ifNil:[
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
@@ -1699,8 +1714,8 @@ Context >> resume: value through: firstUnwindContext [
 
 { #category : #controlling }
 Context >> resumeEvaluating: aBlock [
-	"Unwind thisContext to self and resume with aBlock value as result of last send.  
-	Execute unwind blocks when unwinding.  
+	"Unwind thisContext to self and resume with aBlock value as result of last send.
+	Execute unwind blocks when unwinding.
 	ASSUMES self is a sender of thisContext"
 	| context unwindBlock |
 	self isDead ifTrue: [self cannotReturn: aBlock value to: self].
@@ -1708,7 +1723,7 @@ Context >> resumeEvaluating: aBlock [
 	[
 		context := context findNextUnwindContextUpTo: self.
 		context isNil
-	] whileFalse: [	
+	] whileFalse: [
 		context unwindComplete ifNil:[
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
@@ -1743,7 +1758,7 @@ Context >> return: value from: aSender [
 	newTop := aSender sender.
 	context := self findNextUnwindContextUpTo: newTop.
 	(context notNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
-		"Here the return happens inside the unwind block like in following example: 
+		"Here the return happens inside the unwind block like in following example:
 				[ #test ] ensure: [ ^ #returnFromUnwindBlock ]
 		In such cases #findNextUnwindContextUpTo: returns the corresponding #ensure context
 		because it is always a sender of unwind block.
@@ -1768,7 +1783,7 @@ Context >> return: value through: firstUnwindContext [
 ]
 
 { #category : #controlling }
-Context >> runUntilErrorOrReturnFrom: aSender [ 
+Context >> runUntilErrorOrReturnFrom: aSender [
 	"ASSUMES aSender is a sender of self.  Execute self's stack until aSender returns or an unhandled exception is raised.  Return a pair containing the new top context and a possibly nil exception.  The exception is not nil if it was raised before aSender returned and it was not handled.  The exception is returned rather than openning the debugger, giving the caller the choice of how to handle it."
 	"Self is run by jumping directly to it (the active process abandons thisContext and executes self).  However, before jumping to self we insert an ensure block under aSender that jumps back to thisContext when evaluated.  We also insert an exception handler under aSender that jumps back to thisContext when an unhandled exception is raised.  In either case, the inserted ensure and exception handler are removed once control jumps back to thisContext."
 
@@ -1801,14 +1816,14 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 		"Error was raised, remove inserted above contexts then return signaler context"
 		aSender terminateTo: context sender.  "remove above ensure and handler contexts"
 		{topContext. error}
-	].
+	]
 ]
 
 { #category : #'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
 
-	^self compiledCode selector ifNil: [self compiledCode defaultSelector].
+	^self compiledCode selector ifNil: [self compiledCode defaultSelector]
 ]
 
 { #category : #controlling }
@@ -1839,32 +1854,32 @@ Context >> send: selector to: rcvr with: arguments lookupIn: lookupClass [
 { #category : #controlling }
 Context >> send: selector to: aReceiver with: arguments super: superFlag [
 
-	"Simulate the action of sending a message with selector, selector, and 
-	arguments, args, to receiver. The argument, superFlag, tells whether the 
+	"Simulate the action of sending a message with selector, selector, and
+	arguments, args, to receiver. The argument, superFlag, tells whether the
 	receiver of the message was specified with 'super' in the source method."
 
 	| class aMethod value context |
 	class := superFlag
-		         ifTrue: [ 
+		         ifTrue: [
 			         (self compiledCode literalAt:
 				          self compiledCode numLiterals) value superclass ]
 		         ifFalse: [ self objectClass: aReceiver ].
 	aMethod := class lookupSelector: selector.
-	aMethod == nil ifTrue: [ 
+	aMethod == nil ifTrue: [
 		^ self
 			  send: #doesNotUnderstand:
 			  to: aReceiver
 			  with:
 			  (Array with: (Message selector: selector arguments: arguments))
 			  super: superFlag ].
-	aMethod isCompiledMethod ifFalse: [ 
+	aMethod isCompiledMethod ifFalse: [
 		^ self
 			  send: #run:with:in:
 			  to: aMethod
 			  with: (Array with: selector with: arguments with: aReceiver)
 			  super: superFlag ].
 
-	(aMethod isRealPrimitive or:[self stepIntoQuickMethod not]) ifTrue: [ 
+	(aMethod isRealPrimitive or:[self stepIntoQuickMethod not]) ifTrue: [
 		value := self
 			         tryPrimitiveFor: aMethod
 			         receiver: aReceiver
@@ -1872,18 +1887,18 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 		"primitive runs without failure?"
 		(self isFailToken: value) ifFalse: [ ^ value ] ].
 
-	(selector == #doesNotUnderstand: and: [ 
-		 (class canUnderstand: #doesNotUnderstand:) not ]) ifTrue: [ 
+	(selector == #doesNotUnderstand: and: [
+		 (class canUnderstand: #doesNotUnderstand:) not ]) ifTrue: [
 		^ self error:
 			  'Simulated message ' , (arguments at: 1) selector
 			  , ' not understood' ].
 
-	(selector == #terminateRealActive and: [ aReceiver == Processor ]) ifTrue: [ 
-		"We should never simulate #terminateRealActive as it will terminate a simulating process 
+	(selector == #terminateRealActive and: [ aReceiver == Processor ]) ifTrue: [
+		"We should never simulate #terminateRealActive as it will terminate a simulating process
 		(UI process of debugger) instead of the actual process under simulation.
-		Therefore the simulation always delegates this method to the public one 
+		Therefore the simulation always delegates this method to the public one
 		which explicitly supports the simulation with effective process logic.
-		Notice that #terminateRealActive is a process completion method 
+		Notice that #terminateRealActive is a process completion method
 		and normally users do not step over it"
 		^self send: #terminateActive to: aReceiver with: arguments super: superFlag
 	].
@@ -1894,7 +1909,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 		           withArgs: arguments
 		           receiver: aReceiver
 		           class: class.
-		
+
 	"The quick method contains 3 bytecodes:
 	- primitive 264 or 256: a 3 bytecode primitive (initialPC)
 	- a push of a value (endPC - 1)
@@ -1903,10 +1918,10 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	We have to fix the PC so that the next executed bytecode is the push.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
 	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + self quickMethodPrimitiveBytecodeSize].
-	
+
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp"
-	(context compiledCode at: context pc) = 129 ifTrue: [ 
+	(context compiledCode at: context pc) = 129 ifTrue: [
 		context at: context stackPtr put: value last ].
 	^ context
 ]
@@ -1921,13 +1936,13 @@ Context >> sender [
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
-	| spec |	
-	spec := toMethod literalAt: 1.	
-	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.
+	| spec |
+	spec := toMethod literalAt: 1.
+	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1
 ]
 
 { #category : #private }
-Context >> setSender: newSender receiver: newReceiver method: newMethod arguments: arguments [ 
+Context >> setSender: newSender receiver: newReceiver method: newMethod arguments: arguments [
 	"Create the receiver's initial state."
 
 	sender := newSender.
@@ -1936,7 +1951,7 @@ Context >> setSender: newSender receiver: newReceiver method: newMethod argument
 	closureOrNil := nil.
 	pc := method initialPC.
 	self stackp: method numTemps.
-	1 to: arguments size do: [ :i | 
+	1 to: arguments size do: [ :i |
 		self at: i put: (arguments at: i)]
 ]
 
@@ -1983,13 +1998,13 @@ Context >> singleRelease [
 		1 to: stackp do: [ :i |
 			self at: i put: nil ]].
 	sender := nil.
-	pc := nil.
+	pc := nil
 ]
 
 { #category : #accessing }
 Context >> size [
-	"Primitive. Answer the number of indexable variables in the receiver. 
-	This value is the same as the largest legal subscript. Essential. See Object 
+	"Primitive. Answer the number of indexable variables in the receiver.
+	This value is the same as the largest legal subscript. Essential. See Object
 	documentation whatIsAPrimitive.  Override the default primitive to give latitude to
 	 the VM in context management."
 
@@ -2000,18 +2015,18 @@ Context >> size [
 
 { #category : #'debugger access' }
 Context >> sourceCode [
-	^self compiledCode sourceCode.
+	^self compiledCode sourceCode
 ]
 
 { #category : #'debugger access' }
-Context >> stack [ 
+Context >> stack [
 	"Answer an Array of the contexts on the receiver's sender chain."
 
 	^self stackOfSize: 9999
 ]
 
 { #category : #'debugger access' }
-Context >> stackOfSize: limit [ 
+Context >> stackOfSize: limit [
 	"Answer an OrderedCollection of the top 'limit' contexts
 	 on the receiver's sender chain."
 
@@ -2025,7 +2040,7 @@ Context >> stackOfSize: limit [
 ]
 
 { #category : #private }
-Context >> stackPtr [  
+Context >> stackPtr [
 	"For use only by the SystemTracer and the Debugger, Inspectors etc"
 	^ stackp
 ]
@@ -2059,7 +2074,7 @@ Context >> startpc [
 
 { #category : #controlling }
 Context >> step [
-	"Simulate the execution of the receiver's next bytecode. Answer the 
+	"Simulate the execution of the receiver's next bytecode. Answer the
 	context that would be the active context after this bytecode."
 	| stream result |
 	stream := InstructionStream on: method pc: pc.
@@ -2079,7 +2094,7 @@ Context >> stepToCallee [
 
 { #category : #controlling }
 Context >> stepUntilSomethingOnStack [
-	"Simulate the execution of bytecodes until either sending a message or 
+	"Simulate the execution of bytecodes until either sending a message or
 	returning a value to the receiver (that is, until switching contexts)."
 
 	| context |
@@ -2093,16 +2108,16 @@ Context >> stepUntilSomethingOnStack [
 ]
 
 { #category : #'instruction decoding' }
-Context >> storeIntoLiteralVariable: value [ 
-	"Simulate the action of bytecode that stores the top of the stack into a 
+Context >> storeIntoLiteralVariable: value [
+	"Simulate the action of bytecode that stores the top of the stack into a
 	literal variable of my method."
 
 	value value: self top
 ]
 
 { #category : #'instruction decoding' }
-Context >> storeIntoReceiverVariable: offset [ 
-	"Simulate the action of bytecode that stores the top of the stack into an 
+Context >> storeIntoReceiverVariable: offset [
+	"Simulate the action of bytecode that stores the top of the stack into an
 	instance variable of my receiver."
 
 	self object: self receiver instVarAt: offset + 1 put: self top
@@ -2117,8 +2132,8 @@ Context >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 ]
 
 { #category : #'instruction decoding' }
-Context >> storeIntoTemporaryVariable: offset [ 
-	"Simulate the action of bytecode that stores the top of the stack into one 
+Context >> storeIntoTemporaryVariable: offset [
+	"Simulate the action of bytecode that stores the top of the stack into one
 	of my temporary variables."
 
 	self at: offset + 1 put: self top
@@ -2131,8 +2146,8 @@ Context >> swapReceiver: newReceiver [
 ]
 
 { #category : #'debugger access' }
-Context >> swapSender: coroutine [ 
-	"Replace the receiver's sender with coroutine and answer the receiver's 
+Context >> swapSender: coroutine [
+	"Replace the receiver's sender with coroutine and answer the receiver's
 	previous sender. For use in coroutining."
 
 	| oldSender |
@@ -2142,8 +2157,8 @@ Context >> swapSender: coroutine [
 ]
 
 { #category : #accessing }
-Context >> tempAt: index [ 
-	"Answer the value of the temporary variable whose index is the 
+Context >> tempAt: index [
+	"Answer the value of the temporary variable whose index is the
 	 argument, index.  Primitive. Assumes receiver is indexable. Answer the
 	 value of an indexable element in the receiver. Fail if the argument index
 	 is not an Integer or is out of bounds. Essential. See Object documentation
@@ -2155,8 +2170,8 @@ Context >> tempAt: index [
 ]
 
 { #category : #accessing }
-Context >> tempAt: index put: value [ 
-	"Store the argument, value, as the temporary variable whose index is the 
+Context >> tempAt: index put: value [
+	"Store the argument, value, as the temporary variable whose index is the
 	 argument, index.  Primitive. Assumes receiver is indexable. Answer the
 	 value of an indexable element in the receiver. Fail if the argument index
 	 is not an Integer or is out of bounds. Essential. See Object documentation
@@ -2172,7 +2187,7 @@ Context >> terminate [
 	"Make myself unresumable."
 
 	sender := nil.
-	pc := nil.
+	pc := nil
 ]
 
 { #category : #controlling }
@@ -2205,28 +2220,28 @@ Context >> tryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: argumen
 		 not with the external primitive itself.  -1 indicates a generic failure (where
 		 errorCode should be nil) but errorCode = nil means primitive 218 is not implemented.  So
 		 interpret -1 to mean the external primitive failed with a nil error code."
-		errorCode isInteger 
+		errorCode isInteger
 			ifTrue: [
 				errorCode = -1
 					ifTrue: [ errorCode := nil ]
 					ifFalse: [ self primitiveFailed ]].
 				^  self class primitiveFailTokenFor: errorCode ].
 	"Assume a nil error code implies the primitive is not implemented and fall back on the old code."
-	
+
 	"The primitive doesn't exist or there was an error. Hence, we follow another solution without the primitive"
-	^ self 
+	^ self
 		withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod
 		for: aReceiver
 		withArgs: arguments
 ]
 
 { #category : #private }
-Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [ 
+Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 	"If this method has a primitive index, then run the primitive and return its result.
 	Otherwise (and also if the primitive fails) return PrimitiveFailToken,
 	as an indication that the method should be activated and run as bytecodes."
 	| primIndex |
-	(primIndex := aMethod primitive) = 0 
+	(primIndex := aMethod primitive) = 0
 		ifTrue: [ ^ self class primitiveFailToken ].
 	^ self doPrimitive: primIndex method: aMethod receiver: aReceiver args: arguments
 ]
@@ -2256,8 +2271,8 @@ Context >> unwindForTermination [
 	| unwindContext unwindBlock |
 	unwindContext := self.
 	[ unwindContext := unwindContext findNextUnwindContextUpTo: nil.
-	unwindContext isNil ] whileFalse: [ 
-		unwindContext unwindComplete ifNil: [ 
+	unwindContext isNil ] whileFalse: [
+		unwindContext unwindComplete ifNil: [
 			"N.B. Unlike Context>>unwindTo: we do not set complete (tempAt: 2) to true."
 			unwindBlock := unwindContext unwindBlock.
 			self terminateTo: unwindContext.
@@ -2274,14 +2289,14 @@ Context >> unwindTo: aContext [
 		(context unwindComplete) ifNil: [
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
-			unwindBlock value ]].
+			unwindBlock value ]]
 ]
 
 { #category : #private }
 Context >> withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: arguments [
-"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns. 
+"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
 
-Now, what is the problem with the Debugger? The problem is that if the primitive fail, we don't want that the VM directly executes all the remaining bytecodes of the method. Instead, we would like to go step by step witht he Debugger, just as happens with normal methods. 
+Now, what is the problem with the Debugger? The problem is that if the primitive fail, we don't want that the VM directly executes all the remaining bytecodes of the method. Instead, we would like to go step by step witht he Debugger, just as happens with normal methods.
 
 To solve the mentioned problem, we use the following trick: We have the orignal compiled method (the one that has a primitive invocation), the receiver and the arguments. So the idea is to use a template compiled method that ONLY contains the primitive declaration (it doesn't include all the smalltalk code after the primitive). #tryNamedPrimitiveTemplateMethod answers such a template method which looks like:
 
@@ -2291,16 +2306,16 @@ tryNamedPrimitive
 
 Since this method does not change its bytecodes for every invocation, we can reuse it for all methods with primitives. There are only 2 things we have to change in the template: the number of arguments and the primitive declaration (to use the correct primitive name and module name).
 
-Then what we do is to run that compiled method with the receiver and arguments we have. The result is that we will be invoking almost the same original method but a slighly different version that does not have the smalltalk part after the primitive and that in contrast sends #primitiveFailToken. If this method invocation does not fail, then the Debugger continues debugging the sender of the primitive method. In this case, the step in is the same as step over. If the primitive fails, then the debugger continues executing the smalltalk part after the primitive method. In this case, step in is a real step in."	
+Then what we do is to run that compiled method with the receiver and arguments we have. The result is that we will be invoking almost the same original method but a slighly different version that does not have the smalltalk part after the primitive and that in contrast sends #primitiveFailToken. If this method invocation does not fail, then the Debugger continues debugging the sender of the primitive method. In this case, the step in is the same as step over. If the primitive fails, then the debugger continues executing the smalltalk part after the primitive method. In this case, step in is a real step in."
 	| theMethod  |
-	arguments size > 8 
+	arguments size > 8
 		ifTrue: [ ^ self class primitiveFailToken ].
 	theMethod := self class tryNamedPrimitiveTemplateMethod.
 	theMethod prepareForSimulationWith: arguments size.
-	theMethod == nil 
+	theMethod == nil
 		ifTrue: [ ^ self class primitiveFailToken ].
 	self setNamedPrimitiveInformationFrom: aCompiledMethod toMethod: theMethod.
 	theMethod flushCache.
-	
+
 	^ theMethod valueWithReceiver: aReceiver arguments: arguments
 ]

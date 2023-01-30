@@ -14,12 +14,12 @@ Class {
 
 { #category : #requirements }
 ByteArrayTest >> collectionWith5Elements [
-	
+
 	^ collectionWith5Elements
 ]
 
-{ #category : #requirements }
-ByteArrayTest >> setUp [ 
+{ #category : #running }
+ByteArrayTest >> setUp [
 
 	super setUp.
 	collectionWith5Elements := #[1 2 3 5 4]
@@ -33,7 +33,7 @@ ByteArrayTest >> testBooleanAt [
 	self assert: (#[1] booleanAt: 1).
 	self assert: (#[255 2 3] booleanAt: 1).
 	self deny: (#[0 25] booleanAt: 1).
-	self assert: (#[255] booleanAt: 1).
+	self assert: (#[255] booleanAt: 1)
 ]
 
 { #category : #tests }
@@ -42,7 +42,7 @@ ByteArrayTest >> testFallbackReplaceFromToWithForString [
 	testString := 'Test string'.
 	stringByteSize := 'Test string' byteSize.
 	byteArray := ByteArray new: stringByteSize.
-	
+
 	self
 		shouldnt: [
 			byteArray
@@ -60,7 +60,7 @@ ByteArrayTest >> testFallbackReplaceFromToWithForWideString [
 	testString := 'Test string' asWideString.
 	stringByteSize := 'Test string' byteSize.
 	byteArray := ByteArray new: stringByteSize.
-	
+
 	self
 		shouldnt: [
 			byteArray
@@ -74,9 +74,9 @@ ByteArrayTest >> testFallbackReplaceFromToWithForWideString [
 
 { #category : #tests }
 ByteArrayTest >> testFourthByteArraysReturnTheCorrectValues [
-	
+
 	self assert: (#[16r3F 16r80 0 0]  floatAt:1 bigEndian: true) equals: 1.0.
-	self assert: (#[16rC0 0 0 0]  floatAt:1 bigEndian: true) equals: -2.0.
+	self assert: (#[16rC0 0 0 0]  floatAt:1 bigEndian: true) equals: -2.0
 ]
 
 { #category : #tests }
@@ -118,5 +118,5 @@ ByteArrayTest >> testindexOfStartingAt [
 	|array|
 	array := #[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0].
 	self assert: (array indexOf: 1 startingAt: 10) equals: 12.
-	self assert: (array indexOf: 17 startingAt: 10) equals: 0.
+	self assert: (array indexOf: 17 startingAt: 10) equals: 0
 ]

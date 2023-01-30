@@ -35,6 +35,6 @@ ThisContextVariable >> readInContext: aContext [
 
 { #category : #queries }
 ThisContextVariable >> usingMethods [
-	^ environment allMethods select: [ :method | 
+	^ environment allMethods select: [ :method |
 		  method readsThisContext ]
 ]

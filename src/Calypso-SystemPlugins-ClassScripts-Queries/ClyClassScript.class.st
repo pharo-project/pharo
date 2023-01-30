@@ -52,17 +52,17 @@ ClyClassScript class >> canBeProvidedByMethod: aMethod [
 
 { #category : #'instance creation' }
 ClyClassScript class >> createFrom: aMethod [
-	^self new 
+	^self new
 		implementorMethod: aMethod
 ]
 
 { #category : #'script detection' }
 ClyClassScript class >> detectInMethod: aMethod ifAbsent: absentBlock [
-	
 
-	self allSubclassesDo: [ :each | 
+
+	self allSubclassesDo: [ :each |
 		((each canBeProvidedByMethod: aMethod)
-			and: [each isImplementedByMethod: aMethod]) 
+			and: [each isImplementedByMethod: aMethod])
 				ifTrue: [ ^ each createFrom: aMethod ]].
 	^ absentBlock value
 ]
@@ -71,7 +71,7 @@ ClyClassScript class >> detectInMethod: aMethod ifAbsent: absentBlock [
 ClyClassScript class >> isImplementedByMethod: aMethod [
 	"Subclasses should override it.
 	The method is not abstract to not corrupt browser if new script is not completelly implemented"
-	
+
 	^ false
 ]
 
@@ -83,7 +83,7 @@ ClyClassScript >> description [
 { #category : #execution }
 ClyClassScript >> executeOn: aClass [
 	"Execute the corresponding method of the argument."
-	
+
 	^ aClass instanceSide perform: implementorMethod selector
 ]
 
@@ -94,7 +94,7 @@ ClyClassScript >> iconName [
 
 { #category : #accessing }
 ClyClassScript >> implementorClass [
-	^ implementorMethod origin
+	^ implementorMethod methodClass
 ]
 
 { #category : #accessing }
@@ -103,8 +103,8 @@ ClyClassScript >> implementorMethod [
 ]
 
 { #category : #accessing }
-ClyClassScript >> implementorMethod: anObject [
-	implementorMethod := anObject
+ClyClassScript >> implementorMethod: aCompiledMethod [
+	implementorMethod := aCompiledMethod
 ]
 
 { #category : #accessing }
@@ -114,6 +114,6 @@ ClyClassScript >> implementorSelector [
 
 { #category : #testing }
 ClyClassScript >> isImplementedByClass: aClass [
-	
+
 	^ aClass instanceSide respondsTo: self implementorSelector
 ]

@@ -286,12 +286,12 @@ FBDDecompilerTest >> testCaseOf3 [
 
 { #category : #tests }
 FBDDecompilerTest >> testCaseOf4 [
-	self checkCorrectDecompilation: #exampleCaseOf4.
+	self checkCorrectDecompilation: #exampleCaseOf4
 ]
 
 { #category : #tests }
 FBDDecompilerTest >> testCaseOf5 [
-	self checkCorrectDecompilation: #exampleCaseOf5.
+	self checkCorrectDecompilation: #exampleCaseOf5
 ]
 
 { #category : #tests }
