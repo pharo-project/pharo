@@ -420,15 +420,15 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackageMapping [
 	"test that when we rename a class, the classPackage dictionary of the organizer is updated with the new name, so that we can access the package when specifying the new name"
 
-	| XPackage class |
+	| xPackage class |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
+	xPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' inCategory: 'XXXXX'.
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: (self organizer packageOfClassNamed: 'RPackageNewStubClass' asSymbol) equals: XPackage.
-	self assert: (self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) equals: nil
+	self assert: (self organizer packageOfClassNamed: 'RPackageNewStubClass' asSymbol) equals: xPackage.
+	self assert: (self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) equals: RPackage organizer defineUnpackagedClassesPackage
 ]
 
 { #category : #'tests - operations on protocols' }

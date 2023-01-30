@@ -177,13 +177,12 @@ T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 	t2 removeFromSystem.
 
 	self assert: (RPackageOrganizer default packageOfClassNamed: #T1) equals: self packageUnderTest.
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) isNil.
-	
-	t1 removeFromSystem.
-	
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T1) isNil.
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) isNil.
+	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) isDefault.
 
+	t1 removeFromSystem.
+
+	self assert: (RPackageOrganizer default packageOfClassNamed: #T1) isDefault.
+	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) isDefault
 ]
 
 { #category : #tests }

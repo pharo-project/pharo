@@ -231,6 +231,11 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 		packageForProtocol: aMethodInAnObsoleteBehavior protocol
 		inClass: aMethodInAnObsoleteBehavior methodClass) name.
 
+	"If the protocol is unpackaged, this method seems to have been in the class.
+	It's not an extension method."
+	packageName = RPackage defaultPackageName
+		ifTrue: [ packageName := aSymbol ].
+
 	self addEvent:
 		(EpMethodRemoval method:
 			(aMethodInAnObsoleteBehavior asEpiceaRingDefinition
