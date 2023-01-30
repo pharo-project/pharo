@@ -186,7 +186,7 @@ ClyQueryResult >> = anObject [
 { #category : #accessing }
 ClyQueryResult >> addMetaProperty: aProperty [
 	"I allow to annotate result about its internal items. For example SUnit plugin annotate method query result with summary about test runs"
-	
+
 	self metadata addProperty: aProperty
 ]
 
@@ -240,11 +240,11 @@ ClyQueryResult >> cancelRebuild [
 
 { #category : #initialization }
 ClyQueryResult >> collectMetadata [
-	self protectAccessWhile: [ 
+	self protectAccessWhile: [
 		metadata ifNotNil: [ ^self ].
 
 		metadata := ClyQueryResultMetadata new.
-		environment pluginsDo: [:each | 
+		environment pluginsDo: [:each |
 			buildingQuery collectMetadataOf: self by: each	]
 	]
 ]
@@ -273,10 +273,10 @@ ClyQueryResult >> fillWith: queriedObjects [
 ClyQueryResult >> forceLazyRebuild [
 	"This method allows reset result cache without observers notification.
 	It can be suitable for some queries to not force observers update after changes
-	but instead allow them update items manually. 
+	but instead allow them update items manually.
 	After this method is called observers will be updated only when they will try access items again"
-	
-	self protectAccessWhile: [ 	
+
+	self protectAccessWhile: [
 		needsRebuild := true.
 		items := nil]
 ]
@@ -285,7 +285,7 @@ ClyQueryResult >> forceLazyRebuild [
 ClyQueryResult >> forceRebuild [
 
 	self forceLazyRebuild.
-	
+
 	self notifyObservers
 ]
 
@@ -297,7 +297,7 @@ ClyQueryResult >> getMetaProperty: aPropertyClass [
 { #category : #'system changes' }
 ClyQueryResult >> handleSystemChange: aSystemAnnouncement [
 	needsRebuild ifTrue: [ ^self ].
-	aSystemAnnouncement shouldBeConsideredByCalypsoEnvironment ifFalse: [ ^self ]. "some system events can happen in wrong system state or be just obsolete. This little hook allows skip such events"	
+	aSystemAnnouncement shouldBeConsideredByCalypsoEnvironment ifFalse: [ ^self ]. "some system events can happen in wrong system state or be just obsolete. This little hook allows skip such events"
 
 	self protectAccessWhile: [
 		(buildingQuery isResult: self affectedBy: aSystemAnnouncement)
@@ -305,14 +305,14 @@ ClyQueryResult >> handleSystemChange: aSystemAnnouncement [
 ]
 
 { #category : #'system changes' }
-ClyQueryResult >> handleSystemChange: aSystemAnnouncement byProcessingList: allProcessingResults [ 
-	needsRebuild ifTrue: [ ^allProcessingResults remove: self ]. 
-	aSystemAnnouncement shouldBeConsideredByCalypsoEnvironment 
+ClyQueryResult >> handleSystemChange: aSystemAnnouncement byProcessingList: allProcessingResults [
+	needsRebuild ifTrue: [ ^allProcessingResults remove: self ].
+	aSystemAnnouncement shouldBeConsideredByCalypsoEnvironment
 		ifFalse: [ ^allProcessingResults remove: self ]. "some system events can happen in wrong system state or be just obsolete. This little hook allows skip such events"
-	accessGuard 
+	accessGuard
 		tryEnterCritical: [self handleSystemChange: aSystemAnnouncement]
 		ifLocked: [ ^self ].
-		
+
 	allProcessingResults remove: self
 ]
 
@@ -326,7 +326,7 @@ ClyQueryResult >> hasMetaProperty: aPropertyClass [
 ClyQueryResult >> hasSubscriber: anObject [
 
 	announcer ifNil: [ ^false].
-	
+
 	^announcer hasSubscriber: anObject
 ]
 
@@ -387,7 +387,7 @@ ClyQueryResult >> itemsChanged [
 { #category : #queries }
 ClyQueryResult >> itemsStartingAt: startIndex count: size [
 
-	^self protectItemsWhile: [	
+	^self protectItemsWhile: [
 		items copyFrom: startIndex to: (startIndex + size - 1 min: items size)]
 ]
 
@@ -401,8 +401,8 @@ ClyQueryResult >> itemsStartingWhere: conditionBlock count: size [
 ]
 
 { #category : #queries }
-ClyQueryResult >> itemsWhere: conditionBlock [	
-	^self protectItemsWhile: [ 
+ClyQueryResult >> itemsWhere: conditionBlock [
+	^self protectItemsWhile: [
 		items select: conditionBlock]
 ]
 
@@ -430,7 +430,7 @@ ClyQueryResult >> notifyChanges [
 { #category : #'system changes' }
 ClyQueryResult >> notifyObservers [
 
-	announcer ifNil: [ ^self ].	
+	announcer ifNil: [ ^self ].
 	environment announceChangesOf: self
 ]
 
@@ -440,15 +440,15 @@ ClyQueryResult >> openBrowserCursorFor: anItemObserver [
 	| cursor |
 	cursor := ClyBrowserQueryCursor for: self adoptForBrowser.
 	cursor openFor: anItemObserver.
-	^cursor.
+	^cursor
 ]
 
 { #category : #initialization }
 ClyQueryResult >> prepareNewFor: aQuery in: aNavigationEnvironment [
-	^self copy 
+	^self copy
 		environment: aNavigationEnvironment;
 		buildingQuery: aQuery;
-		beProtected.
+		beProtected
 ]
 
 { #category : #private }
@@ -462,7 +462,7 @@ ClyQueryResult >> protectAccessWhile: aBlock [
 { #category : #private }
 ClyQueryResult >> protectItemsWhile: aBlock [
 
-	^self protectAccessWhile: [ 
+	^self protectAccessWhile: [
 		self rebuildIfNeeded.
 		aBlock value
 	]
@@ -482,8 +482,8 @@ ClyQueryResult >> rawItemsDo: aBlock [
 { #category : #accessing }
 ClyQueryResult >> rawItemsOf: itemTypeClass do: aBlock [
 
-	^self rawItemsDo: [:each | 
-		each calypsoEnvironmentType = itemTypeClass ifTrue: [ 
+	^self rawItemsDo: [:each |
+		each calypsoEnvironmentType = itemTypeClass ifTrue: [
 			aBlock value: each ]
 	]
 ]
@@ -498,11 +498,11 @@ ClyQueryResult >> rebuild [
 { #category : #building }
 ClyQueryResult >> rebuildIfNeeded [
 	self protectAccessWhile: [
-		
-		needsRebuild ifTrue: [ 
+
+		needsRebuild ifTrue: [
 			needsRebuild := false.
 			self rebuild]
-		
+
 	]
 ]
 
@@ -525,7 +525,7 @@ ClyQueryResult >> size [
 ClyQueryResult >> subscribe: anObject [
 
 	announcer ifNil: [ announcer := Announcer new].
-	
+
 	announcer when: ClyEnvironmentChanged send: #itemsChanged to: anObject
 ]
 

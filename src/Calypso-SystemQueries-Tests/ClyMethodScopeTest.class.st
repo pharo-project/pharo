@@ -31,8 +31,8 @@ ClyMethodScopeTest >> singleBasisSample [
 { #category : #tests }
 ClyMethodScopeTest >> testMethodsEnumeration [
 	scope := ClyMethodScope ofAll: {self class >> #method1. self class >> #method2}.
-		
+
 	scope methodsDo: [ :each | result add: each ].
-	
+
 	self assertCollection: result asArray hasSameElements: scope basisObjects
 ]

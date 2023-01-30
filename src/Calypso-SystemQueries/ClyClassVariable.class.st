@@ -15,7 +15,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyClassVariable class >> named: aSymbol definedIn: aClass [
-	^self 
+	^self
 		on: (aClass classVariableNamed: aSymbol)
 		definedIn: aClass
 ]
@@ -28,33 +28,33 @@ ClyClassVariable class >> queryClass [
 { #category : #accessing }
 ClyClassVariable >> detectDefiningClassFrom: anUserClass [
 
-	self detectDefiningClassFrom: anUserClass ifAbsent: [ 
+	self detectDefiningClassFrom: anUserClass ifAbsent: [
 		self error: 'Cant find the class defining variable' ]
 ]
 
 { #category : #accessing }
 ClyClassVariable >> detectDefiningClassFrom: anUserClass ifAbsent: aBlock [
 
-	(anUserClass instanceSide classVariables includes: actualVariable) ifTrue: [ 
+	(anUserClass instanceSide classVariables includes: actualVariable) ifTrue: [
 		definingClass := anUserClass instanceSide.
 		^self].
-	
+
 	anUserClass instanceSide sharedPools do: [ :each |
 		self detectDefiningClassFrom: each ifAbsent: [].
 		definingClass ifNotNil: [ ^self ] ].
-	
+
 	anUserClass isRootInEnvironment ifTrue: [ ^aBlock value ].
-	
+
 	self detectDefiningClassFrom: anUserClass superclass ifAbsent: aBlock
 ]
 
 { #category : #testing }
 ClyClassVariable >> isAccessibleFrom: aClass [
 
-	(aClass instanceSide withAllSuperclasses anySatisfy: [ :c | 
+	(aClass instanceSide withAllSuperclasses anySatisfy: [ :c |
 		 c includesSharedPoolNamed: definingClass name ]) ifTrue: [ ^ true ].
 
-	^ aClass instanceSide = definingClass or: [ 
+	^ aClass instanceSide = definingClass or: [
 		  aClass instanceSide inheritsFrom: definingClass ]
 ]
 

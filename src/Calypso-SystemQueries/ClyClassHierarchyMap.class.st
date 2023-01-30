@@ -47,14 +47,14 @@ Class {
 
 { #category : #'instance creation' }
 ClyClassHierarchyMap class >> for: aClassHierarchy of: classes [
-	^self new 
+	^self new
 		hierarchy: aClassHierarchy;
 		classes: classes
 ]
 
 { #category : #private }
 ClyClassHierarchyMap >> addActualChild: childClass to: parentClass [
- 
+
 	| children |
 	children := parentMap at: parentClass ifAbsentPut: [	self containerForChildren].
 	children add: childClass.
@@ -63,8 +63,8 @@ ClyClassHierarchyMap >> addActualChild: childClass to: parentClass [
 
 { #category : #accessing }
 ClyClassHierarchyMap >> addChild: childClass to: parentClass [
- 
-	hierarchy isInverse 
+
+	hierarchy isInverse
 		ifTrue: [ self addActualChild: parentClass to: childClass ]
 		ifFalse: [ self addActualChild: childClass to: parentClass ]
 ]
@@ -75,7 +75,7 @@ ClyClassHierarchyMap >> allChildrenOf: aClass depth: currentDepth do: blockWithC
 	| children childDepth |
 	children := parentMap at: aClass ifAbsent: [ ^self ].
 	childDepth := currentDepth + 1.
-	children do: [:eachChild | 
+	children do: [:eachChild |
 		blockWithClass value: eachChild value: childDepth.
 		self allChildrenOf: eachChild depth: childDepth do: blockWithClass]
 ]
@@ -85,17 +85,17 @@ ClyClassHierarchyMap >> allChildrenOf: aClass do: blockWithClass [
 
 	| children |
 	children := parentMap at: aClass ifAbsent: [ ^self ].
-	children do: [:eachChild | 
+	children do: [:eachChild |
 		blockWithClass value: eachChild.
 		self allChildrenOf: eachChild do: blockWithClass]
 ]
 
 { #category : #building }
 ClyClassHierarchyMap >> build [
-	
+
 	roots := IdentitySet withAll: classes.
 	parentMap := IdentityDictionary new.
-	
+
 	classes do: [ :each |	hierarchy buildParentMap: self for: each]
 ]
 
@@ -121,16 +121,16 @@ ClyClassHierarchyMap >> containerForChildren [
 
 { #category : #accessing }
 ClyClassHierarchyMap >> doInOrder: blockWithClass [
-	
-	self rootsDo: [ :root | 
+
+	self rootsDo: [ :root |
 		blockWithClass value: root.
 		self allChildrenOf: root do: blockWithClass ]
 ]
 
 { #category : #accessing }
 ClyClassHierarchyMap >> doInOrderWithDepth: blockWithClassAndDepth [
-	
-	self rootsDo: [ :root | 
+
+	self rootsDo: [ :root |
 		blockWithClassAndDepth value: root value: 0.
 		self allChildrenOf: root depth: 0 do: blockWithClassAndDepth ]
 ]
@@ -153,7 +153,7 @@ ClyClassHierarchyMap >> includesClass: aClass [
 { #category : #initialization }
 ClyClassHierarchyMap >> initialize [
 	super initialize.
-	parentMap := IdentityDictionary new.
+	parentMap := IdentityDictionary new
 ]
 
 { #category : #accessing }
@@ -164,7 +164,7 @@ ClyClassHierarchyMap >> roots [
 { #category : #accessing }
 ClyClassHierarchyMap >> rootsDo: aBlock [
 
-	self containerForChildren 
+	self containerForChildren
 		addAll: roots;
 		do: aBlock
 ]

@@ -5,72 +5,72 @@ I use Iceberg if it is repository of package.
 Otherwise I use Komitter.
 "
 Class {
-	#name : #ClyCommitMCPackageCommand,
+	#name : #ClyCommitPackageCommand,
 	#superclass : #SycPackageCommand,
 	#category : #'Calypso-SystemPlugins-Monticello-Browser'
 }
 
 { #category : #testing }
-ClyCommitMCPackageCommand class >> canBeExecutedInContext: aToolContext [
+ClyCommitPackageCommand class >> canBeExecutedInContext: aToolContext [
 	"if no packages are selected then command will commit all changes in image"
 	^true
 ]
 
 { #category : #activation }
-ClyCommitMCPackageCommand class >> fullBrowserMenuActivation [
+ClyCommitPackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
 ]
 
 { #category : #activation }
-ClyCommitMCPackageCommand class >> fullBrowserShortcutActivation [
+ClyCommitPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
 ]
 
 { #category : #accessing }
-ClyCommitMCPackageCommand >> defaultMenuIconName [
+ClyCommitPackageCommand >> defaultMenuIconName [
 	^#monticelloPackage
 ]
 
 { #category : #accessing }
-ClyCommitMCPackageCommand >> defaultMenuItemName [
+ClyCommitPackageCommand >> defaultMenuItemName [
 	^'Commit'
 ]
 
 { #category : #execution }
-ClyCommitMCPackageCommand >> execute [
+ClyCommitPackageCommand >> execute [
 
 	| repoBrowser commitBrowser repos targetRepo |
 	repoBrowser := self class environment
 		               at: #IceTipRepositoriesBrowser
-		               ifAbsent: [ 
+		               ifAbsent: [
 		               ^ self inform: 'Iceberg 0.7 and higher is required' ].
 	commitBrowser := self class environment
 		                 at: #IceTipCommitBrowser
-		                 ifAbsent: [ 
+		                 ifAbsent: [
 		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
 	packages ifEmpty: [ ^ repoBrowser new open ].
-	repos := IceRepository registry select: [ :repo | 
-		         packages anySatisfy: [ :each | 
+	repos := IceRepository registry select: [ :repo |
+		         packages anySatisfy: [ :each |
 			         repo includesPackageNamed: each name ] ].
-	repos ifEmpty: [ 
+	repos ifEmpty: [
 		^ self inform: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1
 		              ifTrue: [ repos first ]
-		              ifFalse: [ 
+		              ifFalse: [
 			              UIManager default
 				              chooseFrom: (repos collect: [ :each | each name ])
 				              values: repos
 				              title: 'Choose repository' ].
 	targetRepo ifNil: [ ^ self ].
-	(targetRepo isMissing or: [ 
-		 targetRepo isCodeMissing or: [ 
-			 targetRepo workingCopy isDetached or: [ 
-				 targetRepo head isDetached or: [ 
-					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [ 
+	(targetRepo isMissing or: [
+		 targetRepo isCodeMissing or: [
+			 targetRepo workingCopy isDetached or: [
+				 targetRepo head isDetached or: [
+					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [
 		UIManager default
 			alert:
 				'The ' , targetRepo name

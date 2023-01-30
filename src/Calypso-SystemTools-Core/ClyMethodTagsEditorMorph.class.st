@@ -26,19 +26,19 @@ ClyMethodTagsEditorMorph >> acceptTags [
 ClyMethodTagsEditorMorph >> build [
 	self hResizing: #rigid.
 	self width: 120.
-	textMorph := self theme 
-		newTextEntryIn: self 
-		for: self 
-		get: #printMethodTags 
-		set: #setNewMethodTags: 
-		class: nil 
-		getEnabled: nil 
+	textMorph := self theme
+		newTextEntryIn: self
+		for: self
+		get: #printMethodTags
+		set: #setNewMethodTags:
+		class: nil
+		getEnabled: nil
 		help: 'input tags which should be applied to current method'.
-	textMorph 
+	textMorph
 		hResizing: #spaceFill;
 		acceptOnFocusChange: false;
 		ghostText: 'as yet unclassified'.
-	
+
 	self addMorph: textMorph
 ]
 
@@ -53,6 +53,6 @@ ClyMethodTagsEditorMorph >> setNewMethodTags: tagsString [
 
 	| tags |
 	tags := (',' split: tagsString) collect: #trimBoth as: Array.
-	
+
 	ownerTool methodTags: (tags reject: #isEmpty)
 ]

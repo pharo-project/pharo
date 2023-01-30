@@ -79,7 +79,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveMessageInsideBlock [
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring .
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) equals: (self parseMethod: 'caller1
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller1
 	| anObject |
 	anObject := 5.
 	self called: anObject + 1
@@ -110,7 +110,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded2Message [
 		self setupInlineExpressionFor: refactoring toReturn: false.
 		self executeRefactoring: refactoring ].
 	transformedMethod := ((refactoring model classNamed: #RBRefactoryTestDataApp) 
-	parseTreeFor: #inlineMethod).
+	parseTreeForSelector: #inlineMethod).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]
 
@@ -154,7 +154,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring ].
 	transformedMethod := ((refactoring model classNamed: #RBRefactoryTestDataApp) 
-	parseTreeFor: #referencesConditionFor:).
+	parseTreeForSelector: #referencesConditionFor:).
 	self assert: (transformedMethod = afterRefactoring1 or: [transformedMethod = afterRefactoring2])
 ]
 
@@ -170,7 +170,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	
 	self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: methodName) 
 		equals: (self parseMethod: 'called: anObject on: aBlock 
 			Transcript show: anObject printString.
 			aBlock value')
@@ -193,6 +193,6 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSimpleSenderOfMessage [
 			#RBRefactoryTestDataApp}.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring .
-	transformedMethod := ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) .
+	transformedMethod := ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: methodName) .
 	self assert: (transformedMethod = afterRefactoring1 or: [transformedMethod = afterRefactoring2 ])
 ]

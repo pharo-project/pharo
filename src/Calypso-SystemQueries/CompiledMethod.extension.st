@@ -8,8 +8,8 @@ CompiledMethod >> calypsoEnvironmentType [
 { #category : #'*Calypso-SystemQueries' }
 CompiledMethod >> isBigLiteralMethod [
 
-	^ self isLiteralMethod 
-		and: [ self literals anySatisfy: [ :literal | 
+	^ self isLiteralMethod
+		and: [ self literals anySatisfy: [ :literal |
 				literal class isVariable and: [ literal size > 500 ] ] ]
 ]
 

@@ -2436,6 +2436,12 @@ RubTextEditor >> theme [
 	^ UITheme current
 ]
 
+{ #category : #'menu messages' }
+RubTextEditor >> tools [
+
+	^ Smalltalk tools
+]
+
 { #category : #accessing }
 RubTextEditor >> totalTextHeight [
 

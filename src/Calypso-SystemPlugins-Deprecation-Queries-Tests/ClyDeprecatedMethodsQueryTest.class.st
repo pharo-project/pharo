@@ -15,7 +15,7 @@ ClyDeprecatedMethodsQueryTest >> testCheckIfEmpty [
 		of: (ClyClassWithDeprecatedMethods >> #deprecatedMethod1)
 		in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithDeprecatedMethods >> #notDeprecatedMethod)
 		in: environment).
@@ -26,10 +26,10 @@ ClyDeprecatedMethodsQueryTest >> testCheckIfEmpty [
 ClyDeprecatedMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClassWithDeprecatedMethods >> #deprecatedMethod1. 
+		ClyClassWithDeprecatedMethods >> #deprecatedMethod1.
 		ClyClassWithDeprecatedMethods >> #deprecatedMethod2.
 		ClyClassWithDeprecatedMethods >> #notDeprecatedMethod}.
-	
+
 	self assert: foundSelectors sorted asArray equals: #(deprecatedMethod1 deprecatedMethod2)
 ]
 

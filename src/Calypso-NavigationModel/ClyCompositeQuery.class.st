@@ -40,8 +40,8 @@ Class {
 { #category : #'instance creation' }
 ClyCompositeQuery class >> with: subqueries [
 	subqueries ifEmpty: [ ^ClyUnknownQuery instance ].
-	
-	^self new 
+
+	^self new
 		subqueries: subqueries
 ]
 
@@ -88,7 +88,7 @@ ClyCompositeQuery >> executesQuery: aTypedQueryClass [
 { #category : #execution }
 ClyCompositeQuery >> fixStateBeforeExecution [
 	super fixStateBeforeExecution.
-	
+
 	subqueries do: [ :each | each fixStateBeforeExecution ]
 ]
 
@@ -102,7 +102,7 @@ ClyCompositeQuery >> hash [
 { #category : #'system changes' }
 ClyCompositeQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
-	^subqueries anySatisfy: [ :each | 
+	^subqueries anySatisfy: [ :each |
 			each isResult: aQueryResult affectedBy: aSystemAnnouncement ]
 ]
 
@@ -112,7 +112,7 @@ ClyCompositeQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	descriptions := subqueries collect: [:each | each description] as: Set.
-	descriptions do: [:each | 
+	descriptions do: [:each |
 		aStream nextPutAll: each; nextPutAll: ', '].
 	aStream skip: -2 "composite can not be empty"
 ]
@@ -131,7 +131,7 @@ ClyCompositeQuery >> retrievesItem: anObject [
 
 { #category : #testing }
 ClyCompositeQuery >> retrievesItemsOfType: itemTypeClass [
-	
+
 	^subqueries anySatisfy: [ :each | each retrievesItemsOfType: itemTypeClass ]
 ]
 
@@ -144,7 +144,7 @@ ClyCompositeQuery >> subqueries [
 ClyCompositeQuery >> subqueries: aCollection [
 	| subscopes |
 	aCollection ifEmpty: [ ^self error: 'Composite query must have at least one subquery' ].
-	
+
 	subqueries := aCollection asSet.
 	subscopes := subqueries collect: [:each | each scope].
 	scope := ClyCompositeScope on: subscopes.

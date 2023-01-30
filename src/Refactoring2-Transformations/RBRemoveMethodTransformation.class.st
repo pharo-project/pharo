@@ -113,7 +113,7 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 
 	(self justSendsSuper: selector) ifTrue: [ ^ self ]
 		ifFalse: [ (self superclassEquivalentlyDefines: selector)
-			ifTrue: [ (self definingClass parseTreeFor: selector) superMessages
+			ifTrue: [ (self definingClass parseTreeForSelector: selector) superMessages
 				ifNotEmpty: [ self 
 						refactoringError: ('Although <1s> is equivalent to a superclass method,<n>
 							it contains a super send so it might modify behavior.'
@@ -125,7 +125,7 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 	| matcher parseTree superclass |
 	matcher := self parseTreeSearcherClass justSendsSuper.
-	parseTree := self definingClass parseTreeFor: aSelector.
+	parseTree := self definingClass parseTreeForSelector: aSelector.
 	(matcher executeTree: parseTree initialAnswer: false)
 		ifFalse: [ ^ false ].
 	parseTree lastIsReturn
@@ -134,7 +134,7 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 	superclass := self definingClass superclass
 		whichClassIncludesSelector: aSelector.
 	superclass ifNil: [ ^ true ].
-	parseTree := superclass parseTreeFor: aSelector.
+	parseTree := superclass parseTreeForSelector: aSelector.
 	matcher := self parseTreeSearcherClass new.
 	matcher
 		matches: '^``@object'
@@ -188,8 +188,8 @@ RBRemoveMethodTransformation >> superclassEquivalentlyDefines: aSelector [
 	| superTree myTree |
 
 	self definingClass superclass ifNil: [ ^ false ].
-	superTree := self definingClass superclass parseTreeFor: aSelector.
-	myTree := self definingClass parseTreeFor: aSelector.
+	superTree := self definingClass superclass parseTreeForSelector: aSelector.
+	myTree := self definingClass parseTreeForSelector: aSelector.
 	( superTree isNil or: [ myTree isNil ] )
 		ifTrue: [ ^ false ].
 	^ superTree equalTo: myTree exceptForVariables: #()

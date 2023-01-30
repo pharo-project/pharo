@@ -236,7 +236,16 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : #query }
+SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
+
+	Symbol allSymbolTablesDo: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allSentNotImplementedSelectors [
+
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
 	^ self allMethods select: [ :method |

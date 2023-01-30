@@ -34,12 +34,13 @@ Class {
 	#name : #Float,
 	#superclass : #Number,
 	#classVars : [
+		'DefaultComparisonPrecision',
 		'E',
-		'Epsilon',
 		'Halfpi',
 		'Infinity',
 		'Ln10',
 		'Ln2',
+		'MathApproximationEpsilon',
 		'MaxVal',
 		'MaxValLn',
 		'MinValLogBase2',
@@ -63,6 +64,12 @@ Float class >> basicNew [
 { #category : #'instance creation' }
 Float class >> basicNew: anInteger [
 	^BoxedFloat64 basicNew: 2
+]
+
+{ #category : #constants }
+Float class >> defaultComparisonPrecision [
+
+	^ DefaultComparisonPrecision
 ]
 
 { #category : #constants }
@@ -189,7 +196,12 @@ Float class >> initialize [
 	Sqrt2 := 1.41421356237309504880168872420969808.
 	E := 2.718281828459045235360287471353.
 
-	Epsilon := 0.000000000001.  "Defines precision of mathematical functions"
+	"Defines precision of approximated mathematical functions such as trigonometric functions.
+	Use a small enough epsilon value to make approximations as good as possible."
+	MathApproximationEpsilon := 0.000000000001.
+	
+	"Default precision used for comparing two float numbers"
+	DefaultComparisonPrecision := 0.0001.
 
 	MaxVal := 1.7976931348623157e308.
 	MaxValLn := 709.782712893384.

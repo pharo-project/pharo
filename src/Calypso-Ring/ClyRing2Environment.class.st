@@ -39,21 +39,21 @@ Class {
 { #category : #'instance creation' }
 ClyRing2Environment class >> on: anRGEvironment [
 
-	^ self new 
+	^ self new
 		environment: anRGEvironment;
-		yourself.
+		yourself
 ]
 
 { #category : #converting }
 ClyRing2Environment >> asGlobalScopeIn: aNavigationEnvironment [
 
-	
+
 	^ClySystemEnvironmentScope of: self in: aNavigationEnvironment named: name
 ]
 
 { #category : #binding }
 ClyRing2Environment >> bindingOf: aSymbol [
-	
+
 	^ environment bindingOf: aSymbol
 ]
 
@@ -64,13 +64,13 @@ ClyRing2Environment >> classes [
 
 { #category : #initialization }
 ClyRing2Environment >> compileANewClassFrom: aString notifying: aController startingFrom: aClass [
-	
+
 	| importer |
-	
+
 	importer := RGChunkImporter new.
 	importer environment: self environment.
 	importer fileInFrom: (aString, '!') readStream.
-	
+
 	^ aClass
 ]
 
@@ -106,7 +106,7 @@ ClyRing2Environment >> includesClassNamed: aSymbol [
 ClyRing2Environment >> initialize [
 
 	super initialize.
-	
+
 	environment := RGEnvironment new.
 	projectManager := ClyProjectManagerRegistry new
 ]

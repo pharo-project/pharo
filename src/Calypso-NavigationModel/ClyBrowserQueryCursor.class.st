@@ -79,7 +79,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserQueryCursor class >> for: aBrowserQueryResult [
-	^self new 
+	^self new
 		queryResult: aBrowserQueryResult
 ]
 
@@ -98,7 +98,7 @@ ClyBrowserQueryCursor >> cleanCache [
 ClyBrowserQueryCursor >> close [
 
 	queryResult unsubscribe: itemObserver.
-	itemObserver := nil.	
+	itemObserver := nil.
 	^ClyClosedBrowserCursor instance
 ]
 
@@ -110,15 +110,15 @@ ClyBrowserQueryCursor >> currentItem [
 { #category : #queries }
 ClyBrowserQueryCursor >> findItemsSimilarTo: sampleBrowserItems [
 
-	^cache 
+	^cache
 		findItemsWith: (sampleBrowserItems collect: [:each | each actualObject])
-		forAbsentDo: [ 
+		forAbsentDo: [
 			^queryResult findItemsSimilarTo: sampleBrowserItems]
 ]
 
 { #category : #queries }
 ClyBrowserQueryCursor >> findItemsWhere: conditionBlock [
-	
+
 	^queryResult itemsWhere: conditionBlock
 ]
 
@@ -128,8 +128,8 @@ ClyBrowserQueryCursor >> findItemsWith: actualObjects [
 	Result will be in same order as given actualObjects array.
 	If some object is absent in content then it will return nil in place of it.
 	We always try to find items in cache and then ask content for it"
-	
-	^cache findItemsWith: actualObjects forAbsentDo: [ 
+
+	^cache findItemsWith: actualObjects forAbsentDo: [
 		^queryResult findItemsWith: actualObjects]
 ]
 
@@ -171,28 +171,28 @@ ClyBrowserQueryCursor >> metadata [
 
 { #category : #navigation }
 ClyBrowserQueryCursor >> moveTo: newPosition [
-	
-	position := newPosition.	
+
+	position := newPosition.
 	cache loadItemOf: queryResult at: position
 ]
 
 { #category : #navigation }
-ClyBrowserQueryCursor >> moveToItemWhich: conditionBlock [ 
+ClyBrowserQueryCursor >> moveToItemWhich: conditionBlock [
 	| itemsFound |
-	cache 
-		findItemWhich: conditionBlock 
+	cache
+		findItemWhich: conditionBlock
 		ifExists: [ :cached | position := cached position. ^true ].
-	
+
 	itemsFound := cache loadItemsOf: queryResult startingWhere: conditionBlock.
 	itemsFound ifFalse: [ ^false  ].
-	
+
 	position := cache startPosition.
 	^true
 ]
 
 { #category : #navigation }
 ClyBrowserQueryCursor >> moveToNext [
-	
+
 	self moveTo: position + 1
 ]
 
@@ -227,7 +227,7 @@ ClyBrowserQueryCursor >> position: anObject [
 ]
 
 { #category : #printing }
-ClyBrowserQueryCursor >> printOn: aStream [ 
+ClyBrowserQueryCursor >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	queryResult buildingQuery printOn: aStream.

@@ -16,8 +16,8 @@ ClySystemSearchDialogContext >> selectedClassItems [
 
 { #category : #private }
 ClySystemSearchDialogContext >> selectedItemsOfType: itemTypeClass [
-	
-	^selectedItems select: [ :each | 
+
+	^selectedItems select: [ :each |
 		each isBasedOnItemType: itemTypeClass ]
 ]
 

@@ -29,19 +29,19 @@ Class {
 }
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> build [	
+ClyMethodTagsAndPackageEditorMorph >> build [
 	self buildResetButton.
 	self addMorphBack: resetButton.
-	
+
 	self buildEditButton.
 	self addMorphBack: editButton.
-	
+
 	self buildLabel.
 	self addMorphBack: label.
-	
+
 	self buildExtensionCheckBoxButton.
 	self addMorphBack: extensionCheckbox.
-	
+
 	self update
 ]
 
@@ -58,12 +58,12 @@ ClyMethodTagsAndPackageEditorMorph >> buildEditButton [
 
 { #category : #building }
 ClyMethodTagsAndPackageEditorMorph >> buildExtensionCheckBoxButton [
-	extensionCheckbox := self theme 
-		newCheckboxIn: self 
-		for: self 
-		getSelected: #isExtensionActive 
+	extensionCheckbox := self theme
+		newCheckboxIn: self
+		for: self
+		getSelected: #isExtensionActive
 		setSelected: #toggleExtension
-		getEnabled: nil 
+		getEnabled: nil
 		label: 'extension'
 		help: 'toggle check box to choose/reset package of method'.
 	extensionCheckbox
@@ -95,7 +95,7 @@ ClyMethodTagsAndPackageEditorMorph >> buildResetButton [
 
 { #category : #initialization }
 ClyMethodTagsAndPackageEditorMorph >> initialize [
-	super initialize.	
+	super initialize.
 	self cellInset: 2@2
 ]
 
@@ -109,7 +109,7 @@ ClyMethodTagsAndPackageEditorMorph >> isExtensionActive [
 ClyMethodTagsAndPackageEditorMorph >> openEditor [
 
 	self requestChangeBy: [
-		self isExtensionActive 
+		self isExtensionActive
 			ifTrue: [ self requestPackage]
 			ifFalse: [ self requestTag ]
 	]
@@ -124,7 +124,7 @@ ClyMethodTagsAndPackageEditorMorph >> ownerTool: anObject [
 { #category : #printing }
 ClyMethodTagsAndPackageEditorMorph >> printMethodTags [
 
-	^ownerTool methodTags 
+	^ownerTool methodTags
 		ifEmpty: [ 'as yet unclassified' asText makeAllColor: Color red ]
 		ifNotEmpty: [ :tags | tags joinUsing: ', ' ]
 ]
@@ -132,16 +132,16 @@ ClyMethodTagsAndPackageEditorMorph >> printMethodTags [
 { #category : #printing }
 ClyMethodTagsAndPackageEditorMorph >> printMethodTagsOrPackage [
 
-	^self isExtensionActive 
+	^self isExtensionActive
 		ifTrue: [ ownerTool extendingPackage name]
 		ifFalse: [ self printMethodTags ]
 ]
 
 { #category : #operations }
 ClyMethodTagsAndPackageEditorMorph >> requestChangeBy: aBlock [
-	
+
 	aBlock on: CmdCommandAborted do: [ :err ].
-	
+
 	self update
 ]
 
@@ -150,7 +150,7 @@ ClyMethodTagsAndPackageEditorMorph >> requestPackage [
 
 	| extendingPackage |
 	extendingPackage := ownerTool context requestSinglePackage: 'Choose package for method'.
-		
+
 	ownerTool extendingPackage: extendingPackage
 ]
 
@@ -158,13 +158,13 @@ ClyMethodTagsAndPackageEditorMorph >> requestPackage [
 ClyMethodTagsAndPackageEditorMorph >> requestTag [
 
 	| selectedTag existingTag |
-	existingTag := ownerTool methodTags 
+	existingTag := ownerTool methodTags
 		ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ].
 
 	selectedTag := self ownerTool context
 		requestSingleMethodTag: 'New protocol name' suggesting: existingTag.
 	selectedTag = existingTag ifTrue: [ ^CmdCommandAborted signal ].
-	
+
 	ownerTool methodTags: { selectedTag asSymbol }
 ]
 
@@ -177,8 +177,8 @@ ClyMethodTagsAndPackageEditorMorph >> resetTagsAndPackage [
 { #category : #operations }
 ClyMethodTagsAndPackageEditorMorph >> toggleExtension [
 
-	self requestChangeBy: [ 
-		self isExtensionActive 
+	self requestChangeBy: [
+		self isExtensionActive
 			ifTrue: [ self requestTag ]
 			ifFalse: [ self requestPackage]
 	]
@@ -188,7 +188,7 @@ ClyMethodTagsAndPackageEditorMorph >> toggleExtension [
 ClyMethodTagsAndPackageEditorMorph >> update [
 	label color: label defaultColor.
 	label contents: self printMethodTagsOrPackage.
-	self isExtensionActive 
+	self isExtensionActive
 		ifTrue: [ editButton helpText: 'Choose package for method']
 		ifFalse: [ editButton helpText: 'Classify method']
 ]

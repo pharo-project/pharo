@@ -194,6 +194,6 @@ NumberTest >> testRounded [
 
 	self assert: 0 rounded equals: 0.
 	self assert: 1 rounded equals: 1.
-	self assert: (1/2) rounded equals: 1.
-	self assert: ((1/2) - Float epsilon) rounded equals: 0
+	self assert: (1 / 2) rounded equals: 1.
+	self assert: (1 / 2 - Float machineEpsilon) rounded equals: 0
 ]

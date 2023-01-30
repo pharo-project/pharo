@@ -117,7 +117,7 @@ RBCreateCascadeRefactoring >> findStatementNodes [
 RBCreateCascadeRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
+		ifNil: [ parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
 			].
 	^ parseTree

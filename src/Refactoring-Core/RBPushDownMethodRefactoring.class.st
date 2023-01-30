@@ -78,7 +78,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 	protocols := class protocolsFor: aSelector.
 	refactoring := RBExpandReferencedPoolsRefactoring
 		               model: self model
-		               forMethod: (class parseTreeFor: aSelector)
+		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
 	self performCompositeRefactoring: refactoring.

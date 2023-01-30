@@ -118,7 +118,7 @@ Float >> asIEEE64BitWord [
 Float >> closeTo: num [
  	"Tell whether the receiver and arguments are close from each."
 	
-	^ self closeTo: num precision: 0.0001
+	^ self closeTo: num precision: DefaultComparisonPrecision
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -164,9 +164,11 @@ Float >> degreesToRadians [
 
 { #category : #'*Math-Operations-Extensions' }
 Float class >> epsilon [
-	"Answer difference between 1.0 and previous representable value"
-	
-	^1.0 timesTwoPower: 1 - self precision
+
+	self
+		deprecated: 'Use machineEpsilon instead'
+		transformWith: '`@receiver epsilon' -> '`@receiver machineEpsilon'.
+	^ self machineEpsilon
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -211,6 +213,18 @@ Float >> log [
 	"Answer the base 10 logarithm of the receiver."
 
 	^ self ln / Ln10
+]
+
+{ #category : #'*Math-Operations-Extensions' }
+Float class >> machineEpsilon [
+	"Answer the machine epsilon or macheps, defined by wikipedia asCalypsoItemContext 
+	https://en.wikipedia.org/wiki/Machine_epsilon
+	
+	*an upper bound on the relative approximation error due to rounding in floating point arithmetic*
+	
+	Compute it as the difference between 1.0 and previous representable value"
+	
+	^1.0 timesTwoPower: 1 - self precision
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -327,5 +341,5 @@ Float >> ulp [
 	exponent := self exponent.
 	^exponent < self class emin
 		ifTrue: [Float fminDenormalized]
- 		ifFalse: [Float epsilon timesTwoPower: exponent]
+ 		ifFalse: [Float machineEpsilon timesTwoPower: exponent]
 ]

@@ -25,7 +25,7 @@ RBPrettyPrintCodeRefactoring >> transform [
 					(self model environment includesSelector: selector in: class realClass)
 						ifTrue: [ source := class sourceCodeFor: selector.
 							source
-								ifNotNil: [ tree := class parseTreeFor: selector.
+								ifNotNil: [ tree := class parseTreeForSelector: selector.
 									tree
 										ifNotNil: [ formatted := tree formattedCode.
 											(source ~= formatted

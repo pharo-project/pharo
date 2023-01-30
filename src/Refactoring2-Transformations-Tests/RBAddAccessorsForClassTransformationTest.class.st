@@ -13,9 +13,9 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 	self assert: refactoring model changes changes size equals: 4.
 	
 	class := refactoring model classNamed: #RBVariableTransformation.
-	self assert: (class parseTreeFor: #variableName)
+	self assert: (class parseTreeForSelector: #variableName)
 		  equals: (self parseMethod: 'variableName ^variableName').
-	self assert: (class parseTreeFor: #variableName:)
+	self assert: (class parseTreeForSelector: #variableName:)
 		  equals: (self parseMethod: 'variableName: anObject variableName := anObject')
 ]
 
@@ -28,8 +28,8 @@ RBAddAccessorsForClassTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 2.
 	
 	class := transformation model classNamed: self changeMock name asSymbol.
-	self assert: (class parseTreeFor: #instVar)
+	self assert: (class parseTreeForSelector: #instVar)
 		  equals: (self parseMethod: 'instVar ^instVar').
-	self assert: (class parseTreeFor: #instVar:)
+	self assert: (class parseTreeForSelector: #instVar:)
 		  equals: (self parseMethod: 'instVar: anObject instVar := anObject')
 ]

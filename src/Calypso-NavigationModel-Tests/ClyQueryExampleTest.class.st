@@ -14,9 +14,9 @@ ClyQueryExampleTest >> testConvertingWithNewScopeWhenThereIsExtraQueryParameter 
 	| newScope convertedQuery |
 	query extraParameter: #testParameter.
 	newScope := ClyExample2Scope of: #someBasis in: environment.
-	
+
 	convertedQuery := query withScope: newScope.
-	
+
 	self assert: convertedQuery extraParameter equals: #testParameter
 ]
 
@@ -25,8 +25,8 @@ ClyQueryExampleTest >> testCreationUnifiedInstanceWhenThereIsExtraScopeParameter
 
 	| unifiedInstance |
 	query extraParameter: #testParameter.
-	
+
 	unifiedInstance := query asUnifiedInstance.
-	
+
 	self assert: unifiedInstance extraParameter equals: #testParameter
 ]

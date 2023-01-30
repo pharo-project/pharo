@@ -12,9 +12,9 @@ Class {
 ClyVarDefinitionMethodGroup class >> withMethodsFrom: aClassScope referencedAny: aVariableClass definedIn: definingClass [
 
 	| variableQuery |
-	variableQuery := aVariableClass queryClass 
+	variableQuery := aVariableClass queryClass
 		from: (aClassScope asScope: ClyClassScope of: definingClass).
-	^self 
-		named: definingClass name 
+	^self
+		named: definingClass name
 		on: (ClyVariableReferencesQuery from: aClassScope toVariablesFrom: variableQuery)
 ]

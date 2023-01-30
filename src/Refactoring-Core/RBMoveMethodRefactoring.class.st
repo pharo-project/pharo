@@ -83,7 +83,7 @@ RBMoveMethodRefactoring >> addSelfReturn [
 { #category : #private }
 RBMoveMethodRefactoring >> buildParseTree [
 
-	parseTree := ( class parseTreeFor: selector ) copy.
+	parseTree := ( class parseTreeForSelector: selector ) copy.
 	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 ]
 
@@ -149,7 +149,7 @@ RBMoveMethodRefactoring >> compileDelegatorMethod [
 					                  ifFalse: [ RBVariableNode named: each ] ]).
 	self hasOnlySelfReturns ifFalse: [ delegatorNode := RBReturnNode value: delegatorNode ].
 	statementNode := RBSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
-	(tree := class parseTreeFor: selector) body: statementNode.
+	(tree := class parseTreeForSelector: selector) body: statementNode.
 	class compileTree: tree
 ]
 

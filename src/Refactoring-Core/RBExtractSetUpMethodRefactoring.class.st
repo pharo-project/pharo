@@ -116,7 +116,7 @@ RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
 { #category : #transforming }
 RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 	| node |
-	node := class parseTreeFor: selector.
+	node := class parseTreeForSelector: selector.
 	^ node statements ifEmpty: [ node body start ]
 		ifNotEmpty: [ node statements first start ]
 ]
