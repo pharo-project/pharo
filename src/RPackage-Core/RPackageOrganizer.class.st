@@ -1133,13 +1133,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	destinationPackage := (self
 		                       hasPackageForProtocol: newProtocol
 		                       inClass: method methodClass)
-		                      ifTrue: [ 
+		                      ifTrue: [
 		                      self
 			                      packageForProtocol: newProtocol
 			                      inClass: method methodClass ]
-		                      ifFalse: [ 
+		                      ifFalse: [
 			                      (newProtocol beginsWith: '*')
-				                      ifTrue: [ 
+				                      ifTrue: [
 					                      self ensureExistAndRegisterPackageNamed:
 						                      newProtocol allButFirst capitalized ]
 				                      ifFalse: [ method methodClass package ] ].
@@ -1147,14 +1147,16 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	methodPackage := (self
 		                  hasPackageForProtocol: oldProtocol
 		                  inClass: method methodClass)
-		                 ifTrue: [ 
+		                 ifTrue: [
 		                 self
 			                 packageForProtocol: oldProtocol
 			                 inClass: method methodClass ]
 		                 ifFalse: [ method methodClass package ].
 
-	methodPackage = destinationPackage ifFalse: [ 
-		(methodPackage methods includes: method) ifTrue: [ 
+	methodPackage = destinationPackage ifFalse: [
+		(methodPackage
+			 includesSelector: method selector
+			 ofClassName: method methodClass name) ifTrue: [
 			methodPackage removeMethod: method ].
 
 		destinationPackage addMethod: method.
