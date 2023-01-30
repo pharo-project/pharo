@@ -314,6 +314,20 @@ NumberParserTest >> testFloatmin [
 ]
 
 { #category : #'tests - Integer' }
+NumberParserTest >> testIntegerParseUnderscore [
+
+	self assert: (NumberParser parse: '1234') equals: 1234.
+	self assert: (NumberParser parse: '1_234') equals: 1234.
+	self assert: (NumberParser parse: '__1__2__3__4__') equals: 1234.
+	self should: [NumberParser parse: '__'] raise: Error.
+
+	self assert: (NumberParser parse: '16r1234_5678') equals: 16r12345678.
+
+	self assert: (NumberParser parse: '123_456_789.123_456_789') equals: 123456789.123456789.
+
+]
+
+{ #category : #'tests - Integer' }
 NumberParserTest >> testIntegerReadFrom [
 	"Ensure remaining characters in a stream are not lost when parsing an integer."
 	| rs i s |
