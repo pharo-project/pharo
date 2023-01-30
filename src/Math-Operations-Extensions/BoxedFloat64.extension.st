@@ -58,7 +58,7 @@ BoxedFloat64 >> sin [
 
 { #category : #'*Math-Operations-Extensions' }
 BoxedFloat64 >> sqrt [
-	"Answer the square root of the receiver. 
+	"Answer the square root of the receiver.
 	 Optional. See Object documentation whatIsAPrimitive."
 
 	<primitive: 55>
