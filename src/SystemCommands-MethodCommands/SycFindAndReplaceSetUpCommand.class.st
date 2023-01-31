@@ -13,7 +13,7 @@ Class {
 { #category : #executing }
 SycFindAndReplaceSetUpCommand >> executeRefactoring [
 	| refactoring |
-	refactoring := RBFindAndReplaceSetUpRefactoring 
+	refactoring := RBFindAndReplaceSetUpTransformation
 		model: model
 		of: method origin
 		inWholeHierarchy: self searchInTheWholeHierarchy.

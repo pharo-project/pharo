@@ -21,10 +21,10 @@ SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
 SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 ]
 
-{ #category : #testing }
+{ #category : #execution }
 SycFindAndReplaceMethodCommand >> createRefactoring [
 
-	^ RBFindAndReplaceRefactoring
+	^ RBFindAndReplaceTransformation
 		model: model
 		find: originalMessage selector
 		of: originalMessage contextUser origin
