@@ -9,7 +9,8 @@ Class {
 		'completionEngine'
 	],
 	#classVars : [
-		'CompletionEngineClass'
+		'CompletionEngineClass',
+		'NotificationStrategyClass'
 	],
 	#category : #'Rubric-Editing-Code'
 }
@@ -125,6 +126,32 @@ RubSmalltalkEditor class >> completionEngineClass: anEngine [
 RubSmalltalkEditor class >> noCompletion [
 
 	CompletionEngineClass := nil
+]
+
+{ #category : #'as yet unclassified' }
+RubSmalltalkEditor class >> notificationStrategyClass [
+
+	^ NotificationStrategyClass
+]
+
+{ #category : #'as yet unclassified' }
+RubSmalltalkEditor class >> notificationStrategyClass: aStrategy [
+
+	NotificationStrategyClass := aStrategy
+]
+
+{ #category : #settings }
+RubSmalltalkEditor class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder pickOne: #notificationStrategyClass)
+		parent: #Rubric;
+		target: self;
+		label: 'Compilation notification strategy';
+		domainValues: RubNotificationStrategy allSubclasses ;
+		default: RubInformStrategy;
+		description: 'How the editor deal with notificication fromg the compiler (e.g. compilation error).'
+
 ]
 
 { #category : #'completion engine' }
@@ -734,7 +761,7 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 { #category : #initialization }
 RubSmalltalkEditor >> initialize [
 	super initialize.
-	notificationStrategy := RubTextInsertionStrategy new editor: self
+	notificationStrategy := NotificationStrategyClass new editor: self.
 ]
 
 { #category : #keymapping }
