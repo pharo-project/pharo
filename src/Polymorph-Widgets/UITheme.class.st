@@ -4,9 +4,9 @@ Provides methods for creating new morphs in a standard way, various ""services""
 
 Though conceptually abstract, no code is ""missing"". Subclasses, therefore, should override the aspects they wish to change.
 
-## Color Palette
+## Architecture
 
-In the new implementation now I use a color palette to obtain the colors. This is because else I make thousands of unnecessary color allocations per minute. My color palette is responsible for the caching system.
+In the new implementation now I have a color palette. My color palette is the one responsible for caching the colors to avoid re-allocations. The colors are defined in the UIThemeColorConfigurator class. Each theme, dark and light, have their own color configurator subclass. The palette obtains the colors from there and then caches them using a Dictionary.
 
 ## How to create your own theme
 
