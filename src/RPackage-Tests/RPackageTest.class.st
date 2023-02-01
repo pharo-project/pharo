@@ -101,14 +101,11 @@ RPackageTest >> testAnonymousClassAndSelector [
 
 	| ghost method uPackage |
 	ghost := Object newAnonymousSubclass.
-	uPackage := self organizer packageNamed: #_UnpackagedPackage.
+	uPackage := self organizer defaultPackage.
 	method := ghost compiler compile: 'rpackagetest'.
 	ghost addSelector: #rpackagetest withMethod: method.
-
-	"Preconditions: the package has the ghost class"
 	self deny: (uPackage includesDefinedSelector: #rpackagetest ofClass: ghost).
 	self assert: (self organizer packageOfClassNamed: ghost name) isDefault.
-
 	ghost organization classify: #rpackagetest under: '*rpackagetest'
 ]
 

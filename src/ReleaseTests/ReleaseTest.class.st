@@ -502,7 +502,7 @@ ReleaseTest >> testUnknownProcesses [
 ReleaseTest >> testUnpackagedClasses [
 	| unpackagedClasses |
 	unpackagedClasses := Smalltalk allClassesAndTraits select: [:each | 
-		(RPackageOrganizer default packageOf: each) packageName = RPackage defaultPackageName ].
+		(RPackageOrganizer default packageOf: each) isDefault ].
 	self 
 		assert: unpackagedClasses isEmpty 
 		description: (String streamContents: [ :s|
@@ -515,7 +515,7 @@ ReleaseTest >> testUnpackagedClasses [
 { #category : #'tests - rpackage' }
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 	| unpackagePackage |
-	unpackagePackage := RPackageOrganizer default packageNamed: RPackage defaultPackageName.
+	unpackagePackage := RPackageOrganizer default defaultPackage.
 	"The unpackage package should not have any defined class or extended classes"
 	self assertEmpty: unpackagePackage classes
 ]

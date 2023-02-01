@@ -349,6 +349,14 @@ RPackageOrganizer >> debuggingName: aString [
 ]
 
 { #category : #initialization }
+RPackageOrganizer >> defaultPackage [
+
+	"Return the default package for code where no packaging was specified.
+	Define a default package if it does not exist"
+	^ self defineUnpackagedClassesPackage
+]
+
+{ #category : #initialization }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
 	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName
 ]
@@ -723,8 +731,7 @@ RPackageOrganizer >> packageOfClassNamed: aName [
 
 	^ classPackageMapping
 		  at: aName asSymbol
-		  ifAbsent: [ 
-		  self packageNamed: self packageClass defaultPackageName ]
+		  ifAbsent: [ self defaultPackage ]
 ]
 
 { #category : #accessing }
