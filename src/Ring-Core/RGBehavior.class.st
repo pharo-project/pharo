@@ -409,7 +409,7 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self.
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 RGBehavior >> definitionString [
 	"Answer a <String> with the receiver's definition accordingly to its strategy"
 
@@ -494,7 +494,8 @@ RGBehavior >> includesSelector: aString [
 
 { #category : #'testing - class hierarchy' }
 RGBehavior >> inheritsFrom: aClass [
-	"Answer whether the argument, aClass, is on the receiver's superclass chain."
+	"Answer whether the argument, aClass, is on the receiver's superclass
+	chain."
 
 	| aSuperclass |
 	aSuperclass := self superclass.
