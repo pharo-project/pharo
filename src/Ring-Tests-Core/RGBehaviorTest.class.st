@@ -57,6 +57,13 @@ RGBehaviorTest >> testBehaviorWithProtocols [
 ]
 
 { #category : #tests }
+RGBehaviorTest >> testInheritsFromUnresolved [
+
+	self deny: (RGBehavior new inheritsFrom: RGClass unresolved).
+
+]
+
+{ #category : #tests }
 RGBehaviorTest >> testOldDefinition [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.

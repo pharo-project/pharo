@@ -28,6 +28,12 @@ RGUnresolvedValue >> default: anObject [
 ]
 
 { #category : #testing }
+RGUnresolvedValue >> hasResolvedName [
+
+	^ false
+]
+
+{ #category : #testing }
 RGUnresolvedValue >> isRGUnresolvedValue [
 
 	^ true
