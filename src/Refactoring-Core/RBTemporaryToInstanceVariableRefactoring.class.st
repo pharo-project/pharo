@@ -95,7 +95,7 @@ RBTemporaryToInstanceVariableRefactoring class >> model: aRBSmalltalk class: aCl
 { #category : #preconditions }
 RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [
 	| parseTree |
-	parseTree := class parseTreeFor: selector.
+	parseTree := class parseTreeForSelector: selector.
 	(parseTree allTemporaryVariables includes: temporaryVariableName) 
 		ifFalse: 
 			[self refactoringFailure: temporaryVariableName 

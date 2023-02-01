@@ -70,7 +70,7 @@ BaselineOfPharo class >> specRepository [
 	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfPharo >> baseline: spec [
 	<baseline>
 	| repository |
@@ -83,6 +83,8 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'IDE' with: [spec repository: repository].
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
+		
+		spec package: 'Deprecated11'.
 		
 		spec package: 'FluidClassBuilder'.
 		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].

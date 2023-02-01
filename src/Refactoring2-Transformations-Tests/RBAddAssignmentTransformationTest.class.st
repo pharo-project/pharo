@@ -56,8 +56,8 @@ RBAddAssignmentTransformationTest >> testRefactoring [
 	
 	class := refactoring model classNamed: #RBAddAssignmentTransformationTest.
 	self assert: (class directlyDefinesMethod: #methodBefore).
-	self assert: (class parseTreeFor: #methodBefore) body statements size equals: 2.
-	self assert: (class parseTreeFor: #methodBefore) body statements last value sourceCode equals: '1 asString'
+	self assert: (class parseTreeForSelector: #methodBefore) body statements size equals: 2.
+	self assert: (class parseTreeForSelector: #methodBefore) body statements last value sourceCode equals: '1 asString'
 ]
 
 { #category : #tests }
@@ -74,8 +74,8 @@ RBAddAssignmentTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 1.
 	
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeFor: #methodBefore) body
-			equals: (class parseTreeFor: #methodAfter) body.
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body.
 ]
 
 { #category : #tests }

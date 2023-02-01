@@ -128,7 +128,7 @@ RBCondition class >> definesSelector: aSelector in: aClass [
 RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMethod [
 	^self new
 		block: [(aClass directlyDefinesMethod: aSelector)
-			ifTrue: [ (aClass parseTreeFor: aSelector) ~= rbMethod parseTree ]
+			ifTrue: [ (aClass parseTreeForSelector: aSelector) ~= rbMethod parseTree ]
 			ifFalse: [ false ]
 			]
 		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString
@@ -382,7 +382,7 @@ RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock 
 						ifFalse: 
 							[| parseTree |
 							method := class methodFor: each.
-							parseTree := class parseTreeFor: each.
+							parseTree := class parseTreeForSelector: each.
 							parseTree notNil ifTrue: [searcher executeTree: parseTree]]]].
 	^nil
 ]
@@ -412,7 +412,7 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 					   (each selectors
 						    detect: [ :sel | 
 							    | tree |
-							    tree := each parseTreeFor: sel.
+							    tree := each parseTreeForSelector: sel.
 							    tree notNil and: [ tree superMessages includes: aSelector ] ]
 						    ifNone: [ nil ]) notNil ]
 				   ifNone: [ nil ]) notNil ]

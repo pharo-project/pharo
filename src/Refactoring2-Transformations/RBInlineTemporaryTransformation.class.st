@@ -97,7 +97,7 @@ RBInlineTemporaryTransformation >> storeOn: aStream [
 { #category : #preconditions }
 RBInlineTemporaryTransformation >> verifySelectedInterval [
 
-	sourceTree := class parseTreeFor: selector.
+	sourceTree := class parseTreeForSelector: selector.
 	sourceTree ifNil: [ self refactoringFailure: 'Could not parse source' ].
 	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
 	assignmentNode isAssignment

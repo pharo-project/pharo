@@ -81,7 +81,7 @@ RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 
-	sourceParseTree := class parseTreeFor: sourceSelector.
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage

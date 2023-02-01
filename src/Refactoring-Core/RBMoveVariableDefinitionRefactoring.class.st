@@ -90,7 +90,7 @@ RBMoveVariableDefinitionRefactoring >> preconditions [
 						ifFalse: 
 							[self 
 								refactoringFailure: name , ' does not seem to be a valid variable name.'].
-					parseTree := class parseTreeFor: selector.
+					parseTree := class parseTreeForSelector: selector.
 					self checkParseTree.
 					true])
 ]

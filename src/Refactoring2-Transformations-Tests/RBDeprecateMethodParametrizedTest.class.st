@@ -30,7 +30,7 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumbe
 	self executeRefactoring: refactoring .
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
-		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
+		assert: ((class parseTreeForSelector: oldSelector ) statements anySatisfy: 
 			[ :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ]).
 ]
 
@@ -47,7 +47,7 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 	self executeRefactoring: refactoring .
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
-		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
+		assert: ((class parseTreeForSelector: oldSelector ) statements anySatisfy: 
 			[ :e | e isMessage and: [ e selector = #deprecated:on:in: ] ]).
 ]
 

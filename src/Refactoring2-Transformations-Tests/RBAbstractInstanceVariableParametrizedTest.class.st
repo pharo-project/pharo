@@ -27,12 +27,12 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractInstanceVariable [
 		{ 'name' . #RBLintRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class parseTreeFor: #name) equals: (self parseMethod: 'name ^name').
-	self assert: (class parseTreeFor: #name:) equals: (self parseMethod: 'name: aString
+	self assert: (class parseTreeForSelector: #name) equals: (self parseMethod: 'name ^name').
+	self assert: (class parseTreeForSelector: #name:) equals: (self parseMethod: 'name: aString
 	name := aString').
-	self assert: (class parseTreeFor: #initialize) equals: (self parseMethod: 'initialize
+	self assert: (class parseTreeForSelector: #initialize) equals: (self parseMethod: 'initialize
 	self name: ''''').
-	self assert: (class parseTreeFor: #printOn:) equals: (self parseMethod: 'printOn: aStream
+	self assert: (class parseTreeForSelector: #printOn:) equals: (self parseMethod: 'printOn: aStream
 	self name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: self name ]')
 ]
 

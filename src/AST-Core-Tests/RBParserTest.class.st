@@ -325,8 +325,8 @@ RBParserTest >> testComparingTrees [
 	self exampleClasses do: [ :class |
 		class selectors do: [ :selector |
 			self
-				compare: (class parseTreeFor: selector)
-				to: (class parseTreeFor: selector) ] ]
+				compare: (class parseTreeForSelector: selector)
+				to: (class parseTreeForSelector: selector) ] ]
 ]
 
 { #category : #tests }
@@ -339,7 +339,7 @@ RBParserTest >> testCopy [
 
 	self exampleClasses do: [ :class |
 		class selectors do: [ :each |
-			tree := class parseTreeFor: each.
+			tree := class parseTreeForSelector: each.
 			self compare: tree to: tree copy ] ]
 ]
 
@@ -353,7 +353,7 @@ RBParserTest >> testCopyInContext [
 
 	self exampleClasses do: [ :class |
 		class selectors do: [ :each |
-			tree := class parseTreeFor: each.
+			tree := class parseTreeForSelector: each.
 			self compare: tree to: (tree copyInContext: Dictionary new) ] ]
 ]
 
@@ -475,7 +475,7 @@ RBParserTest >> testEqualToWithMapping [
 
 	self exampleClasses do: [ :class |
 		class selectors do: [ :each |
-			tree := class parseTreeFor: each.
+			tree := class parseTreeForSelector: each.
 			self assert: (tree equalTo: tree withMapping: Dictionary new) ] ]
 ]
 
@@ -552,8 +552,8 @@ RBParserTest >> testFormatter [
 	self exampleClasses do: [ :class |
 		class selectors do: [ :selector |
 		self
-			compare: (class parseTreeFor: selector)
-			to: (self parserClass parseMethod: (class parseTreeFor: selector) printString) ] ]
+			compare: (class parseTreeForSelector: selector)
+			to: (self parserClass parseMethod: (class parseTreeForSelector: selector) printString) ] ]
 ]
 
 { #category : #'garbage tests' }
@@ -966,7 +966,7 @@ RBParserTest >> testMatchInContext [
 
 	self exampleClasses do: [ :class |
 		class selectors do: [ :each |
-			tree := class parseTreeFor: each.
+			tree := class parseTreeForSelector: each.
 			self assert: (tree match: tree inContext: Dictionary new) ] ]
 ]
 
@@ -1675,7 +1675,7 @@ RBParserTest >> testPragmas [
 
 { #category : #'tests - parsing' }
 RBParserTest >> testPrimitives [
-	self assert: (Object parseTreeFor: #basicAt:) isPrimitive.
+	self assert: (Object parseTreeForSelector: #basicAt:) isPrimitive.
 	#(('foo ^true' false ) ('foo <some: #tag> ^true' false ) (' foo <some: #tag> <primitive: 123> ^true' true ) )
 			do: [:each | self assert: (self parserClass parseMethod: each first) isPrimitive equals: each last]
 ]

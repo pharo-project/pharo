@@ -142,7 +142,7 @@ RBTransformation >> convertMethod: selector for: aClass using: searchReplacer [
 	change is made then compile it into the changeBuilder."
 
 	| parseTree |
-	parseTree := aClass parseTreeFor: selector.
+	parseTree := aClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ aClass compileTree: searchReplacer tree ]

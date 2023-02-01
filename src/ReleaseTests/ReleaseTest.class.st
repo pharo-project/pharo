@@ -322,6 +322,14 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 				print: methods ] ]
 ]
 
+{ #category : #'tests - methods' }
+ReleaseTest >> testNoSentNotImplementedSelectors [
+	"There is a long term cleanup to fix 'selectors send but not implemented'.
+	 This test makes sure that we do not introduce new cases until we are down to zero"
+
+	self assert: SystemNavigation default allSentNotImplementedSelectors size < 315
+]
+
 { #category : #'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
@@ -344,14 +352,6 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	self 
 		assert: remaining isEmpty 
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
-]
-
-{ #category : #'tests - methods' }
-ReleaseTest >> testNoUnimplementedCalls [
-	"There is a long term cleanup to fix 'selectors send but not implemented'.
-	 This test makes sure that we do not introduce new cases until we are down to zero"
-
-	self assert: SystemNavigation default allUnimplementedCalls size < 315
 ]
 
 { #category : #tests }

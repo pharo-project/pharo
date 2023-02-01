@@ -231,10 +231,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 		packageForProtocol: aMethodInAnObsoleteBehavior protocol
 		inClass: aMethodInAnObsoleteBehavior methodClass) name.
 
-	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
-	packageName = RPackage defaultPackageName
-		ifTrue: [ packageName := aSymbol ].
-
 	self addEvent:
 		(EpMethodRemoval method:
 			(aMethodInAnObsoleteBehavior asEpiceaRingDefinition

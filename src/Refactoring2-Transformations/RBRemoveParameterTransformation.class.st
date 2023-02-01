@@ -45,7 +45,7 @@ RBRemoveParameterTransformation >> getNewSelector [
 	| tree |
 	(class directlyDefinesMethod: oldSelector)
 		ifFalse: [ self refactoringFailure: 'Method doesn''t exist' ].
-	tree := class parseTreeFor: oldSelector.
+	tree := class parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
 	argument ifNil:[ self refactoringFailure: 'This method does not have an argument' ].
 	parameterIndex := tree argumentNames indexOf: argument ifAbsent: [ self refactoringFailure: 'Select a parameter!!' ].
@@ -58,7 +58,7 @@ RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 
 	| tree |
 
-	tree := each parseTreeFor: oldSelector.
+	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]

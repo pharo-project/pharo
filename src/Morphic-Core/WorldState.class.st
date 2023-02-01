@@ -249,19 +249,6 @@ WorldState class >> saveSession [
 	]
 ]
 
-{ #category : #'world menu items' }
-WorldState class >> screenShotCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Screenshot)
-		parent: #System;
-		target: self currentWorld;
-		order: 99;
-		selector: #makeAScreenshot;
-		label: 'Screenshot';
-		help: 'Take a screenshot';
-		iconName: #smallScreenshot
-]
-
 { #category : #settings }
 WorldState class >> serverMode [
 	^ ServerMode ifNil: [ServerMode := false]

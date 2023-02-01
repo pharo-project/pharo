@@ -59,13 +59,13 @@ RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 	| definingClass pushUpParseTree |
 	definingClass := targetSuperclass whoDefinesMethod: aSelector.
 	definingClass ifNil: [^self].
-	pushUpParseTree := class parseTreeFor: aSelector.
+	pushUpParseTree := class parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: 
 			[:each | 
 			each selectors do: 
 					[:sel | 
 					| parseTree |
-					parseTree := each parseTreeFor: sel.
+					parseTree := each parseTreeForSelector: sel.
 					(parseTree notNil and: 
 							[(parseTree superMessages includes: aSelector) 
 								and: [definingClass == (each whoDefinesMethod: aSelector)]]) 
@@ -121,7 +121,7 @@ RBPullUpMethodTransformation >> checkSiblingSuperSendsFrom: aRBClass [
 	aRBClass selectors do: 
 			[:each | 
 			| tree |
-			tree := aRBClass parseTreeFor: each.
+			tree := aRBClass parseTreeForSelector: each.
 			tree ifNotNil: 
 					[tree superMessages do: 
 							[:aSelector | 
@@ -150,7 +150,7 @@ RBPullUpMethodTransformation >> checkSuperSendsFromPushedUpMethods [
 	selectors do: 
 			[:each | 
 			| parseTree |
-			parseTree := class parseTreeFor: each.
+			parseTree := class parseTreeForSelector: each.
 			parseTree superMessages 
 				detect: [:sup | targetSuperclass directlyDefinesMethod: sup]
 				ifFound: 
@@ -174,8 +174,8 @@ RBPullUpMethodTransformation >> checkSuperclass [
 	overrideSelectors := overrideSelectors
 		reject: [ :each | 
 			| myTree superTree |
-			myTree := class parseTreeFor: each.
-			superTree := targetSuperclass parseTreeFor: each.
+			myTree := class parseTreeForSelector: each.
+			superTree := targetSuperclass parseTreeForSelector: each.
 			superTree equalTo: myTree exceptForVariables: #() ].
 	overrideSelectors ifEmpty: [ ^ self ].
 	targetSuperclass isAbstract
@@ -201,7 +201,7 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 	subclasses := targetSuperclass subclasses 
 				reject: [:each | each directlyDefinesMethod: aSelector].
 	subclasses ifEmpty: [^ {  } ].
-	(superclassDefiner parseTreeFor: aSelector) superMessages 
+	(superclassDefiner parseTreeForSelector: aSelector) superMessages 
 		detect: [:each | superclassDefiner directlyDefinesMethod: each]
 		ifFound: 
 			[self 
@@ -213,7 +213,7 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 				, aSelector, '?'.
 	refactoring := RBExpandReferencedPoolsTransformation
 				model: self model
-				forMethod: (superclassDefiner parseTreeFor: aSelector)
+				forMethod: (superclassDefiner parseTreeForSelector: aSelector)
 				fromClass: superclassDefiner
 				toClasses: subclasses.
 	^ Array with: refactoring
@@ -250,7 +250,7 @@ RBPullUpMethodTransformation >> pullUp: aSelector [
 	source ifNil: [self refactoringFailure: 'Source for method not available'].
 	refactoring := RBExpandReferencedPoolsTransformation
 				model: self model
-				forMethod: (class parseTreeFor: aSelector)
+				forMethod: (class parseTreeForSelector: aSelector)
 				fromClass: class
 				toClasses: (Array with: targetSuperclass).
 	^ Array 
@@ -300,11 +300,11 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 		model: self model 
 		with: [ :rbModel | 
 			| tree |
-			tree := targetSuperclass parseTreeFor: aSelector.
+			tree := targetSuperclass parseTreeForSelector: aSelector.
 			targetSuperclass allSubclasses collect: 
 			[:aClass | 
 			((aClass directlyDefinesMethod: aSelector) and: 
-					[(tree equalTo: (aClass parseTreeFor: aSelector) exceptForVariables: #()) 
+					[(tree equalTo: (aClass parseTreeForSelector: aSelector) exceptForVariables: #()) 
 						and: [(aClass superclass whoDefinesMethod: aSelector) == targetSuperclass]]) 
 				ifTrue: 
 					[removeDuplicates 

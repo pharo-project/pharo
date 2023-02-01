@@ -100,7 +100,7 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 			[:each | 
 			(self superclassEquivalentlyDefines: each) 
 				ifTrue: 
-					[(class parseTreeFor: each) superMessages isEmpty 
+					[(class parseTreeForSelector: each) superMessages isEmpty 
 						ifFalse: [superMessages add: each]]
 				ifFalse: [nonSupers add: each]].
 	nonSupers isEmpty & superMessages isEmpty ifTrue: [^self].
@@ -114,7 +114,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 	| matcher parseTree superclass |
 
 	matcher := self parseTreeSearcherClass justSendsSuper.
-	parseTree := class parseTreeFor: aSelector.
+	parseTree := class parseTreeForSelector: aSelector.
 	( matcher executeTree: parseTree initialAnswer: false )
 		ifFalse: [ ^ false ].
 	parseTree lastIsReturn
@@ -122,7 +122,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 	superclass := class superclass whichClassIncludesSelector: aSelector.
 	superclass ifNil: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
 								 delete it since it would be an error anyway."
-	parseTree := superclass parseTreeFor: aSelector.
+	parseTree := superclass parseTreeForSelector: aSelector.
 	matcher := self parseTreeSearcher.
 	matcher
 		matches: '^``@object'
@@ -170,8 +170,8 @@ RBRemoveMethodRefactoring >> superclassEquivalentlyDefines: aSelector [
 	| superTree myTree |
 
 	class superclass ifNil: [ ^ false ].
-	superTree := class superclass parseTreeFor: aSelector.
-	myTree := class parseTreeFor: aSelector.
+	superTree := class superclass parseTreeForSelector: aSelector.
+	myTree := class parseTreeForSelector: aSelector.
 	( superTree isNil or: [ myTree isNil ] )
 		ifTrue: [ ^ false ].
 	^ superTree equalTo: myTree exceptForVariables: #()

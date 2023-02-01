@@ -58,15 +58,19 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
-	| violating classSideInitializeMethods |
+	| violating classSideInitializeMethods todo |
 	violating := OrderedCollection new.
 	classSideInitializeMethods := OrderedCollection new.
-	
+
 	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide ]) ifTrue: [ classSideInitializeMethods add: m ]]].
-	
+
 	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
-	
-	self assert: violating size <= 7 description: 'Class side #initialize methods should be in "class initialization" method category'
+
+	todo := #(#LGitDiffHunk #IceMetacelloPharoPlatform #TonelFileSystemUtils #MicHTTPResourceReference #IceTipInteractiveCredentialsProvider).
+
+	violating := violating reject: [ :each | todo includes: each methodClass instanceSide name  ].
+
+	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
 
 { #category : #'tests - object' }

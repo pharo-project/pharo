@@ -30,7 +30,7 @@ RBAddMethodParametrizedTest >> testAddMethod [
 	
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) 
-			parseTreeFor: #printString1) 
+			parseTreeForSelector: #printString1) 
 		equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
@@ -59,7 +59,7 @@ RBAddMethodParametrizedTest >> testModelAddMethod [
 				class . 
 				#(#accessing)}.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #printString1) 
+	self assert: (class parseTreeForSelector: #printString1) 
 		  equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
