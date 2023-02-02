@@ -201,7 +201,11 @@ RPackageOrganizer >> addMethod: method [
 	to do that, we first have to look if the method is an extension from an external package:"
 
 	| rPackage protocol |
+	
 	protocol := method protocol ifNil: [ Error signal: 'Should not happen' ].
+	
+	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
+	(method methodClass package name = RPackage defaultPackageName) ifTrue: [ ^ self ].
 	
 	rPackage := (self hasPackageForProtocol: protocol inClass: method methodClass)
 		ifTrue: [ self packageForProtocol: protocol inClass: method methodClass ]
@@ -390,13 +394,14 @@ RPackageOrganizer >> extendingPackagesOfClassNamed: aName [
 
 { #category : #'system integration' }
 RPackageOrganizer >> fullyRemoveClassNamed: className [
-	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
-
-	| rPackage |
+	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "	
+	| rPackage |	
+		
 	rPackage := self packageOfClassNamed: className.
+	rPackage ifNil: [ ^ self ].
 	rPackage removeClassNamed: className.
-	(self extendingPackagesOfClassNamed: className) do: [ :each | 
-		each removeAllMethodsFromClassNamed: className ]
+	(self extendingPackagesOfClassNamed: className)
+		do: [:each | each removeAllMethodsFromClassNamed: className. ].
 ]
 
 { #category : #'package - access from class' }
@@ -580,34 +585,32 @@ RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClass: aCla
 RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClassNamed: aClassNameSymbol [
 	"this implementation is slower
 		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-
 	| classPackage |
+	
 	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	(classPackage
-		 includesSelector: aSelector
-		 ofClassName: aClassNameSymbol) ifTrue: [ ^ classPackage ].
-
-	^ (self extendingPackagesOfClassNamed: aClassNameSymbol)
-		  detect: [ :p | 
-		  p includesSelector: aSelector ofClassName: aClassNameSymbol ]
-		  ifNone: [ nil ]
+	classPackage ifNil: [ ^ nil ].
+	(classPackage includesSelector: aSelector ofClassName: aClassNameSymbol)
+		ifTrue: [ ^classPackage ].
+		
+	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
+		detect: [ :p | p includesSelector: aSelector ofClassName: aClassNameSymbol ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
 RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inMetaclassNamed: aClassNameSymbol [
 	"this implementation is slower
 		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-
 	| classPackage |
+	
 	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	(classPackage
-		 includesSelector: aSelector
-		 ofMetaclassName: aClassNameSymbol) ifTrue: [ ^ classPackage ].
-
-	^ (self extendingPackagesOfClassNamed: aClassNameSymbol)
-		  detect: [ :p | 
-			  p includesSelector: aSelector ofMetaclassName: aClassNameSymbol ]
-		  ifNone: [ nil ]
+	classPackage ifNil: [ ^ nil ].
+	(classPackage includesSelector: aSelector ofMetaclassName: aClassNameSymbol)
+		ifTrue: [ ^classPackage ].
+		
+	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
+		detect: [ :p | p includesSelector: aSelector ofMetaclassName: aClassNameSymbol ]
+		ifNone: [ nil ]
 ]
 
 { #category : #'system integration' }
@@ -715,16 +718,16 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : #'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ self packageOfClassNamed: aClass instanceSide originalName
+	^ classPackageMapping 
+		at: aClass instanceSide originalName
+		ifAbsent: [self packageNamed: self packageClass defaultPackageName]
 ]
 
 { #category : #'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
-	^ classPackageMapping
-		  at: aName asSymbol
-		  ifAbsent: [ 
-		  self packageNamed: self packageClass defaultPackageName ]
+	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
+	^ classPackageMapping at: aName asSymbol ifAbsent: [nil]
 ]
 
 { #category : #accessing }
@@ -1116,53 +1119,45 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		-maybe from an extending package to a classic category
 		- maybe from a classic category to another classic category.
 	Get out of here if my organizer has no package for the class! (Anonymous classes)"
-
+		
 	| oldProtocol newProtocol method methodPackage destinationPackage |
+
 	method := ann method.
 	method ifNil: [ ^ self ].
-	method origin = ann methodClass ifFalse: [ ^ self ].
+	method origin = ann methodClass ifFalse: [ ^ self].
+	(self packageOfClassNamed: ann methodClass instanceSide name) ifNil: [ ^ self ].
 
-
-	newProtocol := ann newProtocol.
+	newProtocol := ann  newProtocol.
 	newProtocol ifNil: [ ^ self ].
 
 	oldProtocol := ann oldProtocol ifNil: [ '' ].
-
+	
+	methodPackage := method packageFromOrganizer: self.
 	newProtocol asLowercase = oldProtocol asLowercase ifTrue: [ ^ self ].
+		
+	destinationPackage := (self hasPackageForProtocol: newProtocol inClass: method methodClass)
+		ifTrue: [ 
+			self packageForProtocol: newProtocol inClass: method methodClass ]
+		ifFalse: [ 
+			(newProtocol beginsWith: '*')
+				ifTrue: [ self ensureExistAndRegisterPackageNamed: newProtocol allButFirst capitalized ]
+				ifFalse: [ method methodClass package ] ].
+			
+	methodPackage := (self hasPackageForProtocol: oldProtocol inClass: method methodClass)
+		ifTrue: [ self packageForProtocol: oldProtocol inClass: method methodClass ]
+		ifFalse: [ method methodClass package ].
 
-	destinationPackage := (self
-		                       hasPackageForProtocol: newProtocol
-		                       inClass: method methodClass)
-		                      ifTrue: [ 
-		                      self
-			                      packageForProtocol: newProtocol
-			                      inClass: method methodClass ]
-		                      ifFalse: [ 
-			                      (newProtocol beginsWith: '*')
-				                      ifTrue: [ 
-					                      self ensureExistAndRegisterPackageNamed:
-						                      newProtocol allButFirst capitalized ]
-				                      ifFalse: [ method methodClass package ] ].
-
-	methodPackage := (self
-		                  hasPackageForProtocol: oldProtocol
-		                  inClass: method methodClass)
-		                 ifTrue: [ 
-		                 self
-			                 packageForProtocol: oldProtocol
-			                 inClass: method methodClass ]
-		                 ifFalse: [ method methodClass package ].
-
-	methodPackage = destinationPackage ifFalse: [ 
-		(methodPackage methods includes: method) ifTrue: [ 
-			methodPackage removeMethod: method ].
-
-		destinationPackage addMethod: method.
-
-		SystemAnnouncer uniqueInstance
-			methodRepackaged: method
-			from: methodPackage
-			to: destinationPackage ]
+	methodPackage = destinationPackage
+		ifFalse: [
+			(methodPackage methods includes: method) 
+				ifTrue: [ methodPackage removeMethod: method ].
+			
+			destinationPackage addMethod: method.
+			
+			SystemAnnouncer uniqueInstance
+				methodRepackaged: method
+				from: methodPackage
+				to: destinationPackage ]
 ]
 
 { #category : #'system integration' }
