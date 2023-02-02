@@ -60,7 +60,7 @@ UUID class >> fromString: aString [
 
 	| uuid |
 	aString size ~= 36 ifTrue: [ self error: 'a UUID should be 36 characters' ].
-	uuid := self nilUUID. 
+	uuid := self nilUUID.
 	uuid readFrom: aString readStream.
 	^ uuid
 ]
@@ -68,9 +68,9 @@ UUID class >> fromString: aString [
 { #category : #'instance creation' }
 UUID class >> new [
 	"Create and return a new UUID"
-	
+
 	"self new"
-	
+
 	^ (self new: 16)
 ]
 
@@ -78,49 +78,49 @@ UUID class >> new [
 UUID class >> new: aSize [
 
 	(aSize == 16) ifFalse: [ self error: 'Wrong UUID size' ].
-	
+
 	^ super new: aSize
 ]
 
 { #category : #'instance creation' }
 UUID class >> nilUUID [
 	"Return a empty un-initialized UUID, with all zero values, 00000000-0000-0000-0000-000000000000"
-	
+
 	"self nilUUID"
-	
+
 	"Must call basicNew: here because I have a non-trivial initialize method."
 
 	^ self basicNew: 16
 ]
 
 { #category : #comparing }
-UUID >> < aMagnitude [ 
+UUID >> < aMagnitude [
 	"Answer whether the receiver is less than the argument."
 
-	(self size = aMagnitude size) ifFalse: [ 
+	(self size = aMagnitude size) ifFalse: [
 		^ self size < aMagnitude size ].
 	1 to: self size do: [:i |
 		(self at: i) = (aMagnitude at: i) ifFalse: [
-			^ (self at: i) < (aMagnitude at: i) ]].			
-	^false.
+			^ (self at: i) < (aMagnitude at: i) ]].
+	^false
 ]
 
 { #category : #comparing }
-UUID >> <= aMagnitude [ 
+UUID >> <= aMagnitude [
 	"Answer whether the receiver is less than or equal to the argument."
 
 	^(self > aMagnitude) not
 ]
 
 { #category : #comparing }
-UUID >> > aMagnitude [ 
+UUID >> > aMagnitude [
 	"Answer whether the receiver is greater than the argument."
 
 	^aMagnitude < self
 ]
 
 { #category : #comparing }
-UUID >> >= aMagnitude [ 
+UUID >> >= aMagnitude [
 	"Answer whether the receiver is greater than or equal to the argument."
 
 	^(self < aMagnitude) not
@@ -129,7 +129,7 @@ UUID >> >= aMagnitude [
 { #category : #converting }
 UUID >> asString [
 	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
-	
+
 	^ self printString
 ]
 
@@ -155,7 +155,7 @@ UUID >> initialize [
 { #category : #testing }
 UUID >> isNilUUID [
 	"Return true when I am equal to the nilUUID, 00000000-0000-0000-0000-000000000000, false otherwise"
-	
+
 	^ self allSatisfy: [ :each | each isZero ]
 ]
 
@@ -178,15 +178,15 @@ UUID >> printOn: aStream [
 UUID >> printString [
 	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
 
-	^ String 
-		new: 36 
+	^ String
+		new: 36
 		streamContents: [ :stringStream | self printOn: stringStream ]
 ]
 
 { #category : #initialization }
 UUID >> readFrom: aStream [
 	"Read my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) from aStream"
-	
+
 	1 to: 4 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
 	5 to: 6 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
