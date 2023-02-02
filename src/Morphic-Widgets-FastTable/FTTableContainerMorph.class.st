@@ -430,6 +430,13 @@ FTTableContainerMorph >> table [
 	^ self owner
 ]
 
+{ #category : #theme }
+FTTableContainerMorph >> themeChanged [
+	"reset rows color to follow the new theme if needed"
+	rowColors ifNotNil: [ self alternateRowsColor ].
+	super themeChanged
+]
+
 { #category : #updating }
 FTTableContainerMorph >> updateAllRows [
 
