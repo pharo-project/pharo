@@ -128,13 +128,13 @@ RubSmalltalkEditor class >> noCompletion [
 	CompletionEngineClass := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #notification }
 RubSmalltalkEditor class >> notificationStrategyClass [
 
 	^ NotificationStrategyClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #notification }
 RubSmalltalkEditor class >> notificationStrategyClass: aStrategy [
 
 	NotificationStrategyClass := aStrategy
@@ -955,18 +955,18 @@ RubSmalltalkEditor >> nextTokenFrom: start direction: dir [
 	^ loc
 ]
 
-{ #category : #accessing }
+{ #category : #notification }
 RubSmalltalkEditor >> notificationStrategy [
 	^ notificationStrategy
 ]
 
-{ #category : #accessing }
+{ #category : #notification }
 RubSmalltalkEditor >> notificationStrategy: aStrategy [
 	notificationStrategy := aStrategy.
 	aStrategy editor: self
 ]
 
-{ #category : #'new selection' }
+{ #category : #notification }
 RubSmalltalkEditor >> notify: aString at: anInteger in: aStream [ 
 	^ self notificationStrategy 
 		notify: aString 
