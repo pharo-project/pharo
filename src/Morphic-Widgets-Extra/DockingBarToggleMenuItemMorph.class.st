@@ -42,7 +42,7 @@ DockingBarToggleMenuItemMorph >> deselectTimeOut: evt [
 	"Deselect timout. Now really deselect"
 
 	owner selectedItem == self
-		ifTrue: [ 
+		ifTrue: [
 			evt hand releaseMouseFocus: owner.
 			owner selectItem: nil event: evt ]
 ]
@@ -79,8 +79,8 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 { #category : #'private - drawing' }
 DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
-	
-	|markerRect| 
+
+	|markerRect|
 	markerRect := aRectangle topRight + (aForm width negated @ (aRectangle height - aForm height // 2)) extent: aForm extent.
 	markerRect translateBy: -4@1.
 	self drawIcon: aForm on: aCanvas in: markerRect
@@ -90,7 +90,7 @@ DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRecta
 DockingBarToggleMenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
 
-	(evt shiftPressed and: [self isEditable ]) 
+	(evt shiftPressed and: [self isEditable ])
 		ifTrue: [ ^ super mouseDown: evt ].  "enable label editing"
 
 	isSelected
@@ -109,24 +109,24 @@ DockingBarToggleMenuItemMorph >> mouseEnter: evt [
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]].
 	(owner selectedItem notNil
 				and: [owner selectedItem ~~ self])
-			ifTrue: [owner selectItem: self event: evt.].
+			ifTrue: [owner selectItem: self event: evt.]
 ]
 
 { #category : #accessing }
 DockingBarToggleMenuItemMorph >> mouseUp: evt [
 	"Handle a mouse up event. Menu items get activated when the mouse is over them. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifFalse: [^self].
-	
+
 	self contentString ifNotNil:[
 		self contents: self contentString withMarkers: true inverse: true.
 		self refreshWorld.
 		(Delay forMilliseconds: 200) wait].
 	owner rootMenu selectItem: nil event: evt.
-	self invokeWithEvent: evt.
+	self invokeWithEvent: evt
 ]
 
 { #category : #accessing }
-DockingBarToggleMenuItemMorph >> noteNewOwner: aMorph [ 
+DockingBarToggleMenuItemMorph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
 
@@ -135,7 +135,7 @@ DockingBarToggleMenuItemMorph >> noteNewOwner: aMorph [
 
 { #category : #accessing }
 DockingBarToggleMenuItemMorph >> ownerChanged [
-	"The receiver's owner, some kind of a pasteup, has changed its 
+	"The receiver's owner, some kind of a pasteup, has changed its
 	layout."
 	super ownerChanged.
 	self updateLayoutInDockingBar
@@ -160,21 +160,21 @@ DockingBarToggleMenuItemMorph >> roundedCorners [
 { #category : #accessing }
 DockingBarToggleMenuItemMorph >> selectionBorderStyle [
 	"Answer the border style to use with the receiver is the selected element."
-	
+
 	^ self theme menuItemInDockingBarSelectedBorderStyleFor: self
 ]
 
 { #category : #private }
 DockingBarToggleMenuItemMorph >> selectionFillStyle [
 	"Answer the fill style to use with the receiver is the selected element."
-	
+
 	^self theme menuItemInDockingBarSelectedFillStyleFor: self
 ]
 
 { #category : #accessing }
 DockingBarToggleMenuItemMorph >> stringBoundsToUse [
 	"Answer the bounds to use when drawing the item text."
-	
+
 	^self bounds left: self left + 4
 ]
 

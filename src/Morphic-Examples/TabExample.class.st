@@ -117,7 +117,7 @@ TabExample >> storedListTab [
 
 { #category : #private }
 TabExample >> tabs [
-	
+
 	^ OrderedCollection new
 		add: self storedListTab;
 		add: self freshListTab;

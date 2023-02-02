@@ -30,9 +30,9 @@ Class {
 
 { #category : #'instance creation' }
 TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesInteger paddingWidth: padWidthInteger [
-	"Answer an instance of me with the arguments as the start, stop points, 
+	"Answer an instance of me with the arguments as the start, stop points,
 	number of spaces in the line, and width of the padding."
-	
+
 	| line |
 	line := self new firstIndex: startInteger lastIndex: stopInteger.
 	^ line internalSpaces: spacesInteger paddingWidth: padWidthInteger
@@ -42,9 +42,9 @@ TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesIn
 TextLine >> = line [
 
 	^ self species = line species
-		  ifTrue: [ 
-			  ((firstIndex = line first and: [ lastIndex = line last ]) and: [ 
-				   internalSpaces = line internalSpaces ]) and: [ 
+		  ifTrue: [
+			  ((firstIndex = line first and: [ lastIndex = line last ]) and: [
+				   internalSpaces = line internalSpaces ]) and: [
 				  paddingWidth = line paddingWidth ] ]
 		  ifFalse: [ false ]
 ]
@@ -95,7 +95,7 @@ TextLine >> internalSpaces [
 ]
 
 { #category : #accessing }
-TextLine >> internalSpaces: spacesInteger [ 
+TextLine >> internalSpaces: spacesInteger [
 	"Set the number of spaces in the line to be spacesInteger."
 
 	internalSpaces := spacesInteger
@@ -122,7 +122,7 @@ TextLine >> justifiedPadFor: spaceIndex [
 
 { #category : #scanning }
 TextLine >> justifiedTabDeltaFor: spaceIndex [
-	"Compute the delta for a tab in a line of justified text, so tab falls 
+	"Compute the delta for a tab in a line of justified text, so tab falls
 	somewhere plausible when line is justified."
 
 	| pad extraPad |
@@ -198,7 +198,7 @@ TextLine >> paddingWidth [
 ]
 
 { #category : #accessing }
-TextLine >> paddingWidth: padWidthInteger [ 
+TextLine >> paddingWidth: padWidthInteger [
 	"Set the amount of space to be added to the font to be padWidthInteger."
 
 	paddingWidth := padWidthInteger
@@ -250,7 +250,7 @@ TextLine >> setRight: x [
 ]
 
 { #category : #updating }
-TextLine >> slide: delta [ 
+TextLine >> slide: delta [
 	"Change the starting and stopping points of the line by delta."
 
 	firstIndex := firstIndex + delta.
@@ -269,7 +269,7 @@ TextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 ]
 
 { #category : #accessing }
-TextLine >> stop: stopInteger [ 
+TextLine >> stop: stopInteger [
 	"Set the stopping point in the string of the line to be stopInteger."
 
 	lastIndex := stopInteger

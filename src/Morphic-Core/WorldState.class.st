@@ -38,7 +38,7 @@ Class {
 { #category : #accessing }
 WorldState class >> MinCycleLapse: milliseconds [
 	"set the minimum amount of time that may transpire between two calls to doOneCycle"
-	MinCycleLapse := milliseconds ifNotNil: [ milliseconds rounded ].
+	MinCycleLapse := milliseconds ifNotNil: [ milliseconds rounded ]
 ]
 
 { #category : #'testing os' }
@@ -60,7 +60,7 @@ WorldState class >> debugShowDamage: aBoolean [
 { #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword [
 	"For compatibility with settings"
-	
+
 	^ self discoveredMenuPragmaKeyword
 ]
 
@@ -106,7 +106,7 @@ WorldState class >> doInterCycleWait [
 			expectedEndTime - newCycleTime min: (lapse*2).
 		].
 	waitTime > 0 ifTrue: [ (Delay forMilliseconds: waitTime) wait ].
-	LastCycleTime := newCycleTime.
+	LastCycleTime := newCycleTime
 ]
 
 { #category : #settings }
@@ -141,7 +141,6 @@ WorldState class >> initialize [
 	"WorldState initialize"
 
 	MinCycleLapse := 16.		"allows 60 frames per second..."
-
 ]
 
 { #category : #'drawing cycle' }
@@ -198,7 +197,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 						help: 'Save the current image on disk, and quit Pharo.';
 						order: 3;
 						iconName: #smallQuit.
-					aBuilder	withSeparatorAfter ]. 
+					aBuilder	withSeparatorAfter ].
 				(aBuilder item: #Quit)
 					target: self;
 					selector: #quitSession;
@@ -210,15 +209,15 @@ WorldState class >> pharoItemsOn: aBuilder [
 { #category : #'world menu items' }
 WorldState class >> quitSession [
 	| response |
-	response := UIManager default 
-						confirm: 'Save changes before quitting?' 
-						trueChoice: 'Save' 
-						falseChoice: 'Discard' 
+	response := UIManager default
+						confirm: 'Save changes before quitting?'
+						trueChoice: 'Save'
+						falseChoice: 'Discard'
 						cancelChoice: 'Cancel'
-						default: nil. 
+						default: nil.
 	response ifNil: [ ^self ].
-	response 
-		ifTrue: [Smalltalk snapshot: true andQuit: true] 
+	response
+		ifTrue: [Smalltalk snapshot: true andQuit: true]
 		ifFalse: [Smalltalk snapshot: false andQuit: true]
 ]
 
@@ -234,7 +233,7 @@ WorldState class >> saveAs [
 	| reference |
 	reference := UIManager default
 		chooseForSaveFileReference: 'Save Image as?'
-		extensions: #('image') 
+		extensions: #('image')
 		path: Smalltalk imageFile nextVersion.
 
 	reference ifNotNil: [ Smalltalk saveAs: reference parent / (reference basenameWithoutExtension: 'image') ]
@@ -295,7 +294,7 @@ WorldState class >> worldStateDebuggingSettingsOn: aBuilder [
 		label: 'World state';
 		parent: #debugging;
 		description: 'World state debugging settings';
-		with: [ 
+		with: [
 			(aBuilder setting: #debugShowDamage)
 				label: 'Flash damaged morphic region';
 				target: WorldState;
@@ -318,7 +317,7 @@ WorldState >> activeHand: aHand [
 WorldState >> addHand: aHandMorph [
 	"Add the given hand to the list of hands for this world."
 
-	hands := (hands copyWithout: aHandMorph) copyWith: aHandMorph.
+	hands := (hands copyWithout: aHandMorph) copyWith: aHandMorph
 ]
 
 { #category : #alarms }
@@ -326,7 +325,7 @@ WorldState >> adjustAlarmTimes: nowTime [
 	"Adjust the alarm times after some clock weirdness (such as roll-over, image-startup etc)"
 	| deltaTime |
 	deltaTime := nowTime - lastAlarmTime.
-	self alarms do:[:alarm| alarm scheduledTime: alarm scheduledTime + deltaTime].
+	self alarms do:[:alarm| alarm scheduledTime: alarm scheduledTime + deltaTime]
 ]
 
 { #category : #stepping }
@@ -335,7 +334,7 @@ WorldState >> adjustWakeupTimes: now [
 	| deltaTime |
 	deltaTime := now - lastStepTime.
 	stepList do:[:entry| entry scheduledTime: entry scheduledTime + deltaTime].
-	lastStepTime := now.
+	lastStepTime := now
 ]
 
 { #category : #stepping }
@@ -350,7 +349,7 @@ WorldState >> adjustWakeupTimesIfNecessary [
 
 { #category : #alarms }
 WorldState >> alarmSortBlock [
-	^[ :alarm1 :alarm2 | 
+	^[ :alarm1 :alarm2 |
 		alarm1 scheduledTime < alarm2 scheduledTime.
 	]
 ]
@@ -365,8 +364,8 @@ WorldState >> alarms [
 WorldState >> checkIfUpdateNeeded [
 
 	damageRecorder updateIsNeeded ifTrue: [ ^true ].
-		
-	hands do: [:h | 
+
+	hands do: [:h |
 		(h hasChanged and: [h needsToBeDrawn]) ifTrue: [^true]].
 	^false  "display is already up-to-date"
 ]
@@ -395,13 +394,13 @@ WorldState >> cleanseStepListForWorld: aWorld [
 
 	self alarms copy do:[:entry|
 		morphToStep := entry receiver.
-		(morphToStep isMorph and:[morphToStep world == aWorld]) 
-			ifFalse:[self removeAlarm: entry selector for: entry receiver]].
+		(morphToStep isMorph and:[morphToStep world == aWorld])
+			ifFalse:[self removeAlarm: entry selector for: entry receiver]]
 ]
 
 { #category : #'object filein' }
 WorldState >> convertAlarms [
-	
+
 	alarms ifNotNil: [alarms sortBlock: self alarmSortBlock].	"ensure cleaner block"
 ]
 
@@ -423,7 +422,7 @@ WorldState >> damageRecorder [
 
 { #category : #'deferred message' }
 WorldState >> defer: aValuable [
-	
+
 	"aValuable will be executed in the next UI rendering cycle"
 	self deferredUIMessages nextPut: aValuable
 ]
@@ -469,7 +468,7 @@ WorldState >> displayWorldSafely: aWorld [
 		[
 			errCtx := errCtx sender.
 			"Search the sender chain to find the morph causing the problem"
-			[errCtx notNil and:[(errCtx receiver isMorph) not]] 
+			[errCtx notNil and:[(errCtx receiver isMorph) not]]
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
 			errCtx ifNil:[^self handleFatalDrawingError: err description].
@@ -481,7 +480,7 @@ WorldState >> displayWorldSafely: aWorld [
 		errMorph setProperty: #errorOnDraw toValue: true.
 		"Install the old error handler, so we can re-raise the error"
 		err signal.
-	].
+	]
 ]
 
 { #category : #canvas }
@@ -508,11 +507,11 @@ WorldState >> doOneCycleFor: aWorld [
 	self activeHand: self hands first.
 
 	aWorld runStepMethods.		"there are currently some variations here"
-	self displayWorldSafely: aWorld.
+	self displayWorldSafely: aWorld
 ]
 
 { #category : #'update cycle' }
-WorldState >> drawWorld: aWorld submorphs: submorphs invalidAreasOn: aCanvas [ 
+WorldState >> drawWorld: aWorld submorphs: submorphs invalidAreasOn: aCanvas [
 	"Redraw the damaged areas of the given canvas and clear the damage list. Return a collection of the areas that
 were redrawn."
 
@@ -525,11 +524,11 @@ were redrawn."
 	morphs := OrderedCollection new: n * 2.
 	rects := OrderedCollection new: n * 2.
 	validList := OrderedCollection new: n * 2.
-	rectList do: 
-			[:dirtyRect | 
+	rectList do:
+			[:dirtyRect |
 			dirtyRect allAreasOutsideList: validList
-				do: 
-					[:r | | mm rect i c remnantIntersects remnants rectToFill | 
+				do:
+					[:r | | mm rect i c remnantIntersects remnants rectToFill |
 					"Experimental top-down drawing --
 			Traverses top to bottom, stopping if the entire area is filled.
 			If only a single rectangle remains, then continue with the reduced rectangle."
@@ -537,12 +536,12 @@ were redrawn."
 					rectToFill := r.
 					remnants := OrderedCollection with: r.
 					i := 1.
-					[remnants isEmpty or: [i > n]] whileFalse: 
+					[remnants isEmpty or: [i > n]] whileFalse:
 							[mm := submorphs at: i.
-							((remnantIntersects := remnants select: [:each | (mm fullBounds intersects: each)]) notEmpty and: [mm visible]) 
-								ifTrue: 
+							((remnantIntersects := remnants select: [:each | (mm fullBounds intersects: each)]) notEmpty and: [mm visible])
+								ifTrue:
 									[morphs addLast: mm.
-									
+
 									rects addLast: (Rectangle merging: (remnantIntersects collect: [:each | mm fullBounds intersect: each])).
 									remnants removeAll: remnantIntersects.
 									remnantIntersects do: [:eachIntersect | remnants addAll: (mm areasRemainingToFill: eachIntersect)].
@@ -550,10 +549,10 @@ were redrawn."
 									remnants isEmpty ifTrue: [rectToFill := nil]].
 							i := i + 1].
 					"Now paint from bottom to top, but using the reduced rectangles."
-					rectToFill 
+					rectToFill
 						ifNotNil: [aWorld drawOn: (c := aCanvas copyClipRect: rectToFill)].
-					[morphs isEmpty] whileFalse: 
-							[(rect := rects removeLast) == rectToFill 
+					[morphs isEmpty] whileFalse:
+							[(rect := rects removeLast) == rectToFill
 								ifFalse: [c := aCanvas copyClipRect: (rectToFill := rect)].
 							c fullDrawMorph: morphs removeLast].
 					morphs reset.
@@ -565,7 +564,7 @@ were redrawn."
 { #category : #'worldmenu building' }
 WorldState >> fallbackMenuOn: menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
-	
+
 	menu addTitle: 'Fallback menu'.
 	menu commandKeyHandler: self.
 	menu addLine.
@@ -579,12 +578,12 @@ WorldState >> fallbackMenuOn: menu [
 	menu add: 'Save as...'
 		target: self class
 		selector: #saveAs.
-	menu add: 'Save and quit' 
+	menu add: 'Save and quit'
 		target: self class
 		selector: #saveAndQuit.
-	menu add: 'Quit' 
+	menu add: 'Quit'
 		target: self class
-		selector: #quitSession.
+		selector: #quitSession
 ]
 
 { #category : #'update cycle' }
@@ -615,7 +614,7 @@ WorldState >> handsReverseDo: aBlock [
 ]
 
 { #category : #accessing }
-WorldState >> icon: aForm [ 
+WorldState >> icon: aForm [
 
 	worldRenderer icon: aForm
 ]
@@ -628,13 +627,13 @@ WorldState >> initialize [
 	damageRecorder:= DamageRecorder new.
 	stepList := Heap sortBlock: self stepListSortBlock.
 	lastStepTime := 0.
-	lastAlarmTime := 0.
+	lastAlarmTime := 0
 ]
 
 { #category : #canvas }
 WorldState >> invalidate [
 	self worldRenderer invalidate.
-	damageRecorder 
+	damageRecorder
 		ifNil: [damageRecorder := DamageRecorder new]
 		ifNotNil: [damageRecorder doFullRepaint]
 ]
@@ -671,7 +670,7 @@ WorldState >> isStepping: aMorph selector: aSelector [
 
 { #category : #stepping }
 WorldState >> listOfSteppingMorphs [
-	^stepList collect:[:entry| entry receiver].
+	^stepList collect:[:entry| entry receiver]
 ]
 
 { #category : #hands }
@@ -707,7 +706,7 @@ WorldState >> removeHand: aHandMorph [
 
 	(hands includes: aHandMorph) ifFalse: [^self].
 	hands := hands copyWithout: aHandMorph.
-	activeHand == aHandMorph ifTrue: [activeHand := nil].
+	activeHand == aHandMorph ifTrue: [activeHand := nil]
 ]
 
 { #category : #canvas }
@@ -717,7 +716,7 @@ WorldState >> resetDamageRecorder [
 ]
 
 { #category : #stepping }
-WorldState >> runLocalStepMethodsIn: aWorld [ 
+WorldState >> runLocalStepMethodsIn: aWorld [
 	"Run morph 'step' methods (LOCAL TO THIS WORLD) whose time has come. Purge any morphs that are no longer in this world.
 	ar 3/13/1999: Remove buggy morphs from the step list so that they don't raise repeated errors."
 
@@ -726,20 +725,20 @@ WorldState >> runLocalStepMethodsIn: aWorld [
 	priorWorld := ActiveWorld.
 	ActiveWorld := aWorld.
 	self triggerAlarmsBefore: now.
-	stepList isEmpty 
-		ifTrue: 
+	stepList isEmpty
+		ifTrue:
 			[ActiveWorld := priorWorld.
 			^self].
-	(now < lastStepTime or: [now - lastStepTime > 5000]) 
+	(now < lastStepTime or: [now - lastStepTime > 5000])
 		ifTrue: [self adjustWakeupTimes: now].	"clock slipped"
-	[stepList isEmpty not and: [stepList first scheduledTime < now]] 
-		whileTrue: 
+	[stepList isEmpty not and: [stepList first scheduledTime < now]]
+		whileTrue:
 			[lastStepMessage := stepList removeFirst.
 			morphToStep := lastStepMessage receiver.
-			(morphToStep shouldGetStepsFrom: aWorld) 
-				ifTrue: 
+			(morphToStep shouldGetStepsFrom: aWorld)
+				ifTrue:
 					[lastStepMessage value: now.
-					lastStepMessage ifNotNil: 
+					lastStepMessage ifNotNil:
 							[stepTime := lastStepMessage stepTime ifNil: [morphToStep stepTime].
 							lastStepMessage scheduledTime: now + (stepTime max: 1).
 							stepList add: lastStepMessage]].
@@ -751,7 +750,7 @@ WorldState >> runLocalStepMethodsIn: aWorld [
 { #category : #stepping }
 WorldState >> runStepMethodsIn: aWorld [
 	"Perform periodic activity inbetween event cycles"
-	
+
 	| queue nextInQueue|
 	"If available dispatch some deferred UI Message"
 	queue := self deferredUIMessages.
@@ -759,7 +758,7 @@ WorldState >> runStepMethodsIn: aWorld [
 		whileFalse: [ nextInQueue value].
 	self runLocalStepMethodsIn: aWorld.
 	"The multi-threaded global Transcript needs to be updated periodically and synchronously with the UI."
-	Transcript stepGlobal.
+	Transcript stepGlobal
 ]
 
 { #category : #hands }
@@ -782,7 +781,7 @@ WorldState >> stepListSize [
 
 { #category : #stepping }
 WorldState >> stepListSortBlock [
-	^[ :stepMsg1 :stepMsg2 | 
+	^[ :stepMsg1 :stepMsg2 |
 		stepMsg1 scheduledTime <= stepMsg2 scheduledTime
 	]
 ]
@@ -792,7 +791,7 @@ WorldState >> stopStepping: aMorph [
 	"Remove the given morph from the step list."
 	lastStepMessage ifNotNil:[
 		(lastStepMessage receiver == aMorph) ifTrue:[lastStepMessage := nil]].
-	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph]).
+	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph])
 ]
 
 { #category : #stepping }
@@ -801,7 +800,7 @@ WorldState >> stopStepping: aMorph selector: aSelector [
 	lastStepMessage ifNotNil:[
 		(lastStepMessage receiver == aMorph and:[lastStepMessage selector == aSelector])
 			ifTrue:[lastStepMessage := nil]].
-	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph and:[stepMsg selector == aSelector]]).
+	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph and:[stepMsg selector == aSelector]])
 ]
 
 { #category : #alarms }
@@ -814,20 +813,20 @@ WorldState >> triggerAlarmsBefore: nowTime [
 	pending := self alarms.
 	[pending isEmpty not and:[pending first scheduledTime < nowTime]]
 		whileTrue:[pending removeFirst value: nowTime].
-	lastAlarmTime := nowTime.
+	lastAlarmTime := nowTime
 ]
 
 { #category : #events }
 WorldState >> updateToNewResolution: originalEvent [
 
-	"We need to reset the render if the resolution changes. 
+	"We need to reset the render if the resolution changes.
 	If we don't do this the image seems blocked but as it does not refresh the window"
 
 	self doFullRepaint.
-	
+
 	self worldRenderer updateToNewResolution.
-	
-	self worldRenderer checkForNewScreenSize.
+
+	self worldRenderer checkForNewScreenSize
 ]
 
 { #category : #canvas }

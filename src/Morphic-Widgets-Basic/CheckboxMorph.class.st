@@ -25,7 +25,7 @@ CheckboxMorph class >> on: anObject selected: getSelectionSel changeSelected: se
 	the given selectors as the interface."
 
 	^self new
-		on: anObject 
+		on: anObject
 		selected: getSelectionSel
 		changeSelected: setSelectionSel
 ]
@@ -33,14 +33,14 @@ CheckboxMorph class >> on: anObject selected: getSelectionSel changeSelected: se
 { #category : #protocol }
 CheckboxMorph >> beCheckbox [
 	"Change the button to be a checkbox."
-	
+
 	self buttonMorph beCheckbox
 ]
 
 { #category : #protocol }
 CheckboxMorph >> beRadioButton [
 	"Change the button to be a radio button."
-	
+
 	self buttonMorph beRadioButton
 ]
 
@@ -75,12 +75,12 @@ CheckboxMorph >> buttonMouseDown: evt [
 { #category : #protocol }
 CheckboxMorph >> disable [
 	"Disable the receiver."
-	
+
 	self enabled: false
 ]
 
 { #category : #drawing }
-CheckboxMorph >> drawSubmorphsOn: aCanvas [ 
+CheckboxMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front.
 	Draw the focus here since we are using inset bounds
 	for the focus rectangle."
@@ -92,7 +92,7 @@ CheckboxMorph >> drawSubmorphsOn: aCanvas [
 { #category : #protocol }
 CheckboxMorph >> enable [
 	"Enable the receiver."
-	
+
 	self enabled: true
 ]
 
@@ -152,7 +152,7 @@ CheckboxMorph >> getLabelSelector [
 CheckboxMorph >> getLabelSelector: anObject [
 
 	getLabelSelector := anObject.
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #accessing }
@@ -173,7 +173,7 @@ CheckboxMorph >> getStateSelector: anObject [
 { #category : #'event handling' }
 CheckboxMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
-	
+
 	^true
 ]
 
@@ -182,9 +182,9 @@ CheckboxMorph >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
-	
+
 	labelClickable := true.
-	
+
 	self
 		borderWidth: 2; "space for focus"
 		borderColor: Color transparent;
@@ -215,15 +215,15 @@ CheckboxMorph >> isSelected [
 ]
 
 { #category : #'event handling' }
-CheckboxMorph >> keyDown: event [ 
+CheckboxMorph >> keyDown: event [
 	"Process keys navigation and space to toggle."
-	
+
 	(self navigationKey: event) ifTrue: [^true].
 	^ false
 ]
 
 { #category : #'event handling' }
-CheckboxMorph >> keyStroke: event [ 
+CheckboxMorph >> keyStroke: event [
 	"Process keys navigation and space to toggle."
 	event keyCharacter = Character space
 		ifTrue: [self toggleSelected]
@@ -233,7 +233,7 @@ CheckboxMorph >> keyStroke: event [
 CheckboxMorph >> keyboardFocusChange: aBoolean [
 	"The message is sent to a morph when its keyboard focus changes.
 	Update for focus feedback."
-	
+
 	super keyboardFocusChange: aBoolean.
 	self focusChanged
 ]
@@ -258,15 +258,15 @@ CheckboxMorph >> label: aStringOrMorph [
 { #category : #protocol }
 CheckboxMorph >> labelClickable: aBoolean [
 
-	labelClickable := aBoolean.
+	labelClickable := aBoolean
 ]
 
 { #category : #'event handling' }
 CheckboxMorph >> labelClicked [
 
 	labelClickable ifTrue: [ self toggleSelected ].
-	
-	self doAnnounce: (LabelClicked source: self stateChanged: labelClickable).
+
+	self doAnnounce: (LabelClicked source: self stateChanged: labelClickable)
 ]
 
 { #category : #accessing }
@@ -284,7 +284,7 @@ CheckboxMorph >> labelMorph: aMorph [
 	labelMorph := aMorph.
 	labelMorph color: (self theme checkboxButtonLabelNormalFillStyleFor: self label: labelMorph).
 	self addMorphBack: aMorph.
-	self enabled: self enabled.
+	self enabled: self enabled
 ]
 
 { #category : #drawing }
@@ -366,14 +366,14 @@ CheckboxMorph >> toggleSelected [
 		ifTrue: [self model perform: self setStateSelector].
 	self setStateSelector numArgs = 1
 		ifTrue: [	self model perform: self setStateSelector with: self isSelected not].
-	self updateSelection.
+	self updateSelection
 ]
 
 { #category : #updating }
-CheckboxMorph >> update: aParameter [ 
+CheckboxMorph >> update: aParameter [
 	"Refer to the comment in View|update:."
 
-	aParameter == self getStateSelector ifTrue: 
+	aParameter == self getStateSelector ifTrue:
 		[self updateSelection.
 		^ self].
 	aParameter == self getEnabledSelector ifTrue:
@@ -382,10 +382,10 @@ CheckboxMorph >> update: aParameter [
 	aParameter == self getLabelSelector ifTrue:
 		[self updateLabel.
 		^ self].
-	
+
 	aParameter isArray ifFalse: [ ^ self ].
 	aParameter size == 2 ifFalse: [ ^ self ].
-	
+
 	aParameter first = #labelClickable: ifTrue: [ self labelClickable: aParameter second ].
 	aParameter first = #label: ifTrue: [ self label: aParameter second ]
 ]

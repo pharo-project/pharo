@@ -14,11 +14,11 @@ Class {
 MenubarItemMorph >> drawIconOn: aCanvas [
 	| iconForm x y |
 	self hasIcon ifFalse: [ ^ self ].
-	
+
 	iconForm := self iconForm.
 	x := (self menuStringBounds left - iconForm width - 5 ).
 	y := (self top + ((self height - iconForm height) // 2)).
-	
+
 	aCanvas translucentImage: iconForm at: x @ y
 ]
 

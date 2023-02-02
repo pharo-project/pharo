@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-FTSimpleSelection class >> isDeprecated [ 
+FTSimpleSelection class >> isDeprecated [
 	^ true
 ]

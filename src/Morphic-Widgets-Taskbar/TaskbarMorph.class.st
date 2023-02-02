@@ -32,7 +32,7 @@ TaskbarMorph class >> maximumButtons [
 TaskbarMorph class >> maximumButtons: anInteger [
 	(anInteger isKindOf: Integer) ifFalse: [ ^ self ].
 	anInteger > 0 ifFalse: [ ^ self ].
-	MaximumButtons := anInteger.
+	MaximumButtons := anInteger
 ]
 
 { #category : #setting }
@@ -43,8 +43,8 @@ TaskbarMorph class >> maximumButtonsDefault [
 { #category : #'class initialization' }
 TaskbarMorph class >> reset [
 	<script>
-	"Remove the taskbar and add a new one." 
-	
+	"Remove the taskbar and add a new one."
+
 	(self currentWorld submorphs select: [:m | m isKindOf: self])
 		do: [:tb | tb delete].
 	self currentWorld createTaskbarIfNecessary
@@ -66,7 +66,7 @@ TaskbarMorph class >> showTaskbar: aBoolean [
 TaskbarMorph class >> showTaskbarPreferenceChanged [
 	"Add or remove the taskbar as appropriate.
 	Delegate to the current World."
-	
+
 	self currentWorld showWorldTaskbar:  self showTaskbar
 ]
 
@@ -106,7 +106,7 @@ TaskbarMorph class >> taskbarSettingOn: aBuilder [
 TaskbarMorph >> buttonForMorph: aMorph [
 	"Answer the button corresonding to the given
 	morph or nil if none."
-	
+
 	|index|
 	index := (self orderedTasks collect: [:t | t morph]) indexOf: aMorph.
 	^index = 0 ifTrue: [nil] ifFalse: [self submorphs at: index ifAbsent: []]
@@ -115,17 +115,17 @@ TaskbarMorph >> buttonForMorph: aMorph [
 { #category : #taskbar }
 TaskbarMorph >> canMoveLeft: task [
 
- ^ ((self orderedTasks first morph) ~= task).
+ ^ ((self orderedTasks first morph) ~= task)
 ]
 
 { #category : #taskbar }
 TaskbarMorph >> canMoveRight: task [
 
- ^ ((self orderedTasks last morph) ~= task).
+ ^ ((self orderedTasks last morph) ~= task)
 ]
 
 { #category : #drawing }
-TaskbarMorph >> clipSubmorphs [ 
+TaskbarMorph >> clipSubmorphs [
 
 	^ true
 ]
@@ -139,21 +139,21 @@ TaskbarMorph >> displayExtentChanged [
 { #category : #'private - accessing' }
 TaskbarMorph >> edgeToAdhereTo [
 	"Must implement. Answer #bottom."
-	
+
 	^#bottom
 ]
 
 { #category : #'event handling' }
 TaskbarMorph >> handlesMouseDown: evt [
 	"Best to say we will to avoid being grabbed."
-	
+
 	^true
 ]
 
 { #category : #taskbar }
 TaskbarMorph >> indicateModalChildForMorph: aMorph [
 	"Flash the button corresonding to the given morph ."
-	
+
 	(self buttonForMorph: aMorph) ifNotNil: [:b |
 		b indicateModalChild]
 ]
@@ -197,7 +197,7 @@ TaskbarMorph >> initializeLayout [
 { #category : #initialization }
 TaskbarMorph >> intoWorld: aWorld [
 	"Stick to the bottom left now."
-	
+
 	self
 		setToAdhereToEdge: #bottomLeft;
 		updateBounds.
@@ -207,28 +207,28 @@ TaskbarMorph >> intoWorld: aWorld [
 { #category : #testing }
 TaskbarMorph >> isAdheringToBottom [
 	"Must implement. Answer true."
-	
+
 	^true
 ]
 
 { #category : #testing }
 TaskbarMorph >> isAdheringToLeft [
 	"Must implement. Answer false."
-	
+
 	^false
 ]
 
 { #category : #testing }
 TaskbarMorph >> isAdheringToRight [
 	"Must implement. Answer false."
-	
+
 	^false
 ]
 
 { #category : #testing }
 TaskbarMorph >> isAdheringToTop [
 	"Must implement. Answer false."
-	
+
 	^false
 ]
 
@@ -255,9 +255,9 @@ TaskbarMorph >> minimumExtent [
 
 { #category : #'wiw support' }
 TaskbarMorph >> morphicLayerNumber [
-	"Helpful for ensuring some morphs always appear in front of or 
+	"Helpful for ensuring some morphs always appear in front of or
 	behind others. Smaller numbers are in front"
-	
+
 	^11
 ]
 
@@ -295,7 +295,7 @@ TaskbarMorph >> ownerChanged [
 	"The receiver's owner has changed its layout.
 	Since this method is called synchronously in the
 	ui, delete the receiver if there are any excpetions."
-	
+
 	self owner ifNil: [^self].
 	[self updateBounds.
 	self updateTasks]
@@ -315,7 +315,7 @@ TaskbarMorph >> preferredButtonCornerStyle [
 { #category : #recategorized }
 TaskbarMorph >> rejectsEvent: anEvent [
 	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
-	
+
 	^ super rejectsEvent: anEvent
 ]
 
@@ -392,7 +392,7 @@ TaskbarMorph >> updateOrderedTasksFrom: tasksThatShouldBeUpdated [
 	| deadTasks |
 	deadTasks := OrderedCollection new.
 	self orderedTasks
-		do: [ :aTaskbarTask | 
+		do: [ :aTaskbarTask |
 			tasksThatShouldBeUpdated
 				detect:
 					[ :aTaskThatShouldBeUpdated | aTaskThatShouldBeUpdated morph = aTaskbarTask morph ]
@@ -400,7 +400,7 @@ TaskbarMorph >> updateOrderedTasksFrom: tasksThatShouldBeUpdated [
 				ifNone: [ deadTasks add: aTaskbarTask ] ].
 	(deadTasks isEmpty and: [ tasksThatShouldBeUpdated isEmpty ])
 		ifTrue: [ ^ self ].
-	self orderedTasks: (self orderedTasks 
+	self orderedTasks: (self orderedTasks
 		removeAll: deadTasks;
 		addAll: tasksThatShouldBeUpdated;
 		yourself)
@@ -409,12 +409,12 @@ TaskbarMorph >> updateOrderedTasksFrom: tasksThatShouldBeUpdated [
 { #category : #private }
 TaskbarMorph >> updateTaskButtons [
 	"Make buttons for the ordered tasks."
-	
+
 	| oldButtons size |
 	oldButtons := self submorphs copy.
 	self removeAllMorphs.
 	self defer: [oldButtons do: [:b | b model: nil]]. "release dependency after event handling"
-	
+
 	size := self orderedTasks size.
 	(self orderedTasks copyFrom: ( size - self class maximumButtons + 1 max: 1 ) to: size) do: [:t | | button |
 		button := t taskbarButtonFor: self.
@@ -437,10 +437,10 @@ TaskbarMorph >> updateTasks [
 	(newTasks isEmpty and: [ deadTasks isEmpty ])
 		ifTrue: [ ^ self ].	"no changes"
 	newTasks copy
-		do: [ :t | 
+		do: [ :t |
 			self orderedTasks
 				detect: [ :ot | ot morph = t morph ]
-				ifFound: [ :ot | 
+				ifFound: [ :ot |
 					self orderedTasks replaceAll: ot with: t.
 					deadTasks remove: ot.
 					newTasks remove: t ] ].	"replace in order any changed tasks."
@@ -456,7 +456,7 @@ TaskbarMorph >> updateTasks [
 TaskbarMorph >> wantsToBeTopmost [
 	"Answer if the receiver want to be one of the topmost
 	objects in its owner."
-	
+
 	^ true
 ]
 
@@ -464,8 +464,8 @@ TaskbarMorph >> wantsToBeTopmost [
 TaskbarMorph >> worldMorphs [
 	"Answer the world's submorphs plus those in hand.
 	Nasty case since hand removes the morph before dropping"
-	
-	^self world submorphs, 
+
+	^self world submorphs,
 		((self tasks
 			select: [:t | t morph owner = self world activeHand])
 				collect: [:t | t morph])

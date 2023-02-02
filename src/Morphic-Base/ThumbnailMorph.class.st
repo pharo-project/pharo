@@ -50,7 +50,7 @@ ThumbnailMorph class >> recursionReset [
 during a thumbnail being drawn.  Do this just once in a while when no
 drawOn: is being called.  tk 9/8/97"
 
-	RecursionDepth := 0.
+	RecursionDepth := 0
 ]
 
 { #category : #'what to view' }
@@ -58,12 +58,12 @@ ThumbnailMorph >> actualViewee [
 	"Return the actual morph to be viewed, or nil if there isn't an appropriate morph to view."
 
 	| aMorph actualViewee |
-	aMorph := self morphToView ifNil: [^ nil]. 
+	aMorph := self morphToView ifNil: [^ nil].
 	aMorph isInWorld ifFalse: [^ nil].
 	actualViewee := viewSelector ifNil: [aMorph] ifNotNil: [objectToView perform: viewSelector].
-	actualViewee = 0 ifTrue: [^ nil].  
+	actualViewee = 0 ifTrue: [^ nil].
 	actualViewee ifNil: [actualViewee := objectToView].
-	(actualViewee isMorph and: 
+	(actualViewee isMorph and:
 		[actualViewee isFlexMorph and: [actualViewee submorphs size = 1]])
 			ifTrue: [actualViewee := actualViewee firstSubmorph].
 	^ actualViewee
@@ -92,7 +92,7 @@ ThumbnailMorph >> drawForForm: aForm on: aCanvas [
 	viewedObjectBox := aForm boundingBox.
 	scale :=  self scaleFor: viewedObjectBox in: self innerBounds.
 	interimCanvas := Display defaultCanvasClass extent: viewedObjectBox extent depth: aCanvas depth.
-	interimCanvas translateBy: viewedObjectBox topLeft negated 
+	interimCanvas translateBy: viewedObjectBox topLeft negated
 				during: [:tempCanvas | tempCanvas drawImage: aForm at: 0@0].
 	shrunkForm := interimCanvas form magnify: interimCanvas form boundingBox by: scale smoothing: 1.
 	lastFormShown := shrunkForm.
@@ -101,37 +101,37 @@ ThumbnailMorph >> drawForForm: aForm on: aCanvas [
 ]
 
 { #category : #display }
-ThumbnailMorph >> drawMeOn: aCanvas [ 
+ThumbnailMorph >> drawMeOn: aCanvas [
 	"Draw a small view of a morph in another place.  Guard against infinite recursion if that morph has a thumbnail of itself inside.  Now also works if the thing to draw is a plain Form rather than a morph."
 
 	| viewedMorphBox scale c shrunkForm aWorld aFormOrMorph  |
 	super drawOn: aCanvas.
-	((aFormOrMorph := self formOrMorphToView) isForm) 
+	((aFormOrMorph := self formOrMorphToView) isForm)
 		ifTrue: [^self drawForForm: aFormOrMorph on: aCanvas].
-	(((aFormOrMorph notNil and: [(aWorld := aFormOrMorph world) notNil]) 
-		and: [aWorld ~~ aFormOrMorph or: [lastFormShown isNil]]) 
-			and: [RecursionDepth + 1 < RecursionMax]) 
-			ifTrue: 
+	(((aFormOrMorph notNil and: [(aWorld := aFormOrMorph world) notNil])
+		and: [aWorld ~~ aFormOrMorph or: [lastFormShown isNil]])
+			and: [RecursionDepth + 1 < RecursionMax])
+			ifTrue:
 				[RecursionDepth := RecursionDepth + 1.
 				viewedMorphBox := aFormOrMorph fullBounds.
 			scale :=  self scaleFor: viewedMorphBox in: self innerBounds.
 				c := Display defaultCanvasClass extent: viewedMorphBox extent
 							depth: aCanvas depth.
 				c translateBy: viewedMorphBox topLeft negated
-					during: 
-						[:tempCanvas | 
+					during:
+						[:tempCanvas |
 						"recursion happens here"
 						tempCanvas fullDrawMorph: aFormOrMorph].
-				shrunkForm := c form 
+				shrunkForm := c form
 							magnify: c form boundingBox
 							by: scale
 							smoothing: 1.
 				lastFormShown := shrunkForm.
 				RecursionDepth := RecursionDepth - 1]
-			ifFalse: 
+			ifFalse:
 				["This branch used if we've recurred, or if the thumbnail views a World that's already been rendered once, or if the referent is not in a world at the moment"
 				lastFormShown ifNotNil: [shrunkForm := lastFormShown]].
-	shrunkForm ifNotNil: 
+	shrunkForm ifNotNil:
 			[aCanvas paintImage: shrunkForm
 				at: self center - shrunkForm boundingBox center]
 ]
@@ -143,7 +143,7 @@ ThumbnailMorph >> drawOn: aCanvas [
 	time := Time millisecondClockValue.
 	self drawMeOn: aCanvas.
 	drawTime := Time millisecondClockValue - time.
-	drawTime < 0 ifTrue:[drawTime := nil].
+	drawTime < 0 ifTrue:[drawTime := nil]
 ]
 
 { #category : #'what to view' }
@@ -154,7 +154,7 @@ ThumbnailMorph >> formOrMorphToView [
 	(objectToView isForm) ifTrue: [^objectToView].
 	actualViewee := viewSelector ifNil: [objectToView]
 				ifNotNil: [objectToView perform: viewSelector].
-	^actualViewee = 0 
+	^actualViewee = 0
 		ifTrue: [nil]
 		ifFalse: [actualViewee]
 ]
@@ -177,7 +177,7 @@ ThumbnailMorph >> getSelector: aSelector [
 ThumbnailMorph >> initialize [
 	"Initialize the receiver, obeying a #nominalExtent property if I have one"
 	| anExtent |
-	
+
 	super initialize.
 	anExtent := self valueOfProperty: #nominalExtent ifAbsent: [25@25].
 	self extent: anExtent
@@ -220,7 +220,7 @@ ThumbnailMorph >> putSelector [
 { #category : #caching }
 ThumbnailMorph >> releaseCachedState [
 	super releaseCachedState.
-	lastSketchForm := lastFormShown := nil.
+	lastSketchForm := lastFormShown := nil
 ]
 
 { #category : #display }
@@ -251,14 +251,14 @@ ThumbnailMorph >> step [
 	| viewee |
 	viewee := self actualViewee.
 	viewee ifNil: [ self stopStepping. ^self ].
-	self changed.
+	self changed
 ]
 
 { #category : #stepping }
-ThumbnailMorph >> stepTime [ 
+ThumbnailMorph >> stepTime [
 	"Adjust my step time to the time it takes drawing my referent"
 	drawTime ifNil:[^ 250].
-	^(20 * drawTime) max: 250.
+	^(20 * drawTime) max: 250
 ]
 
 { #category : #accessing }
@@ -273,7 +273,7 @@ ThumbnailMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
 super veryDeepFixupWith: deepCopier.
-objectToView := deepCopier references at: objectToView ifAbsent: [objectToView].
+objectToView := deepCopier references at: objectToView ifAbsent: [objectToView]
 ]
 
 { #category : #copying }
@@ -285,5 +285,5 @@ super veryDeepInner: deepCopier.
 viewSelector := viewSelector veryDeepCopyWith: deepCopier.
 lastSketchForm := lastSketchForm veryDeepCopyWith: deepCopier.
 lastFormShown := lastFormShown veryDeepCopyWith: deepCopier.
-drawTime := drawTime veryDeepCopyWith: deepCopier.
+drawTime := drawTime veryDeepCopyWith: deepCopier
 ]
