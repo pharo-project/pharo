@@ -1,30 +1,6 @@
-"
-I implement the logic to do screenshots.
-I can do a full screenshot or an area of the screen selected by the user.
-I handle the user interaction to get the area to make the screenshot.
+Extension { #name : #Screenshot }
 
-The method #makeAScreenshot handles the menu option to make screen shots.
-"
-Class {
-	#name : #Screenshot,
-	#superclass : #Object,
-	#category : #'Morphic-Core'
-}
-
-{ #category : #'world menu items' }
-Screenshot class >> screenShotCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Screenshot)
-		parent: #System;
-		target: self new;
-		order: 99;
-		selector: #makeAScreenshot;
-		label: 'Screenshot';
-		help: 'Take a screenshot';
-		iconName: #smallScreenshotIcon
-]
-
-{ #category : #'user interface' }
+{ #category : #'*Morphic-Base' }
 Screenshot >> askRectangleFromUser [
 	"Answer an instance of Rectangle that is determined by having the user 
 	designate the top left and bottom right corners. The gridding for user 
@@ -33,13 +9,13 @@ Screenshot >> askRectangleFromUser [
 	^ self askRectangleFromUserWithGrid: 1 @ 1
 ]
 
-{ #category : #'user interface' }
+{ #category : #'*Morphic-Base' }
 Screenshot >> askRectangleFromUserWithGrid: gridPoint [ 
 
 	^ self askRectangleFromUserWithGrid: gridPoint inWorld: self currentWorld
 ]
 
-{ #category : #'user interface' }
+{ #category : #'*Morphic-Base' }
 Screenshot >> askRectangleFromUserWithGrid: gridPoint inWorld: aWorld [
 
 	"Answer a Rectangle that is determined by having the user 
@@ -67,48 +43,41 @@ Screenshot >> askRectangleFromUserWithGrid: gridPoint inWorld: aWorld [
 
 ]
 
-{ #category : #operations }
-Screenshot >> formScreenshotFromUserSelection [
-	
-	^ self formScreenshotFromUserSelection: 1 @ 1
-]
-
-{ #category : #operations }
-Screenshot >> formScreenshotFromUserSelection: initialPoint [
-	
-	| rect |
-	
-	rect := self askRectangleFromUserWithGrid: initialPoint.
-	^ Form fromDisplay: (rect origin extent: (rect extent max: initialPoint))
-]
-
-{ #category : #operations }
+{ #category : #'*Morphic-Base' }
 Screenshot >> makeAScreenshot [
+
 	| filePrefix |
 	filePrefix := 'PharoScreenshot'.
 	(UIManager default
-		chooseFrom: {'The entire world' translated . 'A selected area' translated}
-		values: #(#world #area)
-		message: 'What do you want to shoot? (File will be saved in image directory)' translated
-		title: 'Make a screenshot')
-		ifNotNil: [ :choice | 
-			| form name |
-			form := choice = #world ifTrue: [ self currentWorld imageForm ] ifFalse: [ Screenshot new formScreenshotFromUserSelection ].
-			name := (FileSystem workingDirectory / filePrefix , 'png') nextVersion.
-			PNGReadWriter putForm: form onFileNamed: (FileSystem workingDirectory / filePrefix , 'png') nextVersion.
-			UIManager default
-				inform:
-					(String
-						streamContents: [ :s | 
-							s
-								nextPutAll: 'Screenshot saved under ';
-								nextPutAll: name fullName;
-								cr;
-								nextPutAll: 'Click to open location' ])
-				actionOnClick: [ name openInOSFileBrowser ] ]
+		 chooseFrom: { 
+				 'The entire world' translated.
+				 'A selected area' translated }
+		 values: #( #world #area )
+		 message:
+			 'What do you want to shoot? (File will be saved in image directory)'
+				 translated
+		 title: 'Make a screenshot') ifNotNil: [ :choice | 
+		| form name |
+		form := choice = #world
+			        ifTrue: [ self currentWorld imageForm ]
+			        ifFalse: [ Screenshot new formScreenshotFromUserSelection ].
+		name := (FileSystem workingDirectory / filePrefix , 'png')
+			        nextVersion.
+		PNGReadWriter
+			putForm: form
+			onFileNamed:
+			(FileSystem workingDirectory / filePrefix , 'png') nextVersion.
+		UIManager default
+			inform: (String streamContents: [ :s | 
+					 s
+						 nextPutAll: 'Screenshot saved under ';
+						 nextPutAll: name fullName;
+						 cr;
+						 nextPutAll: 'Click to open location' ])
+			actionOnClick: [ name openInOSFileBrowser ] ]
 ]
 
-{ #category : #'user interface' }
+{ #category : #'*Morphic-Base' }
 Screenshot >> waitUserSelectionOriginRectangle: originRect transformBlock: newRectBlock inWorld: aWorld [
 
 	| hand buttonNow buttonStart rect selectionMorph newRect |
