@@ -72,17 +72,6 @@ TimeProfiler class >> fullReportMenuOn: aBuilder [
 ]
 
 { #category : #'world menu' }
-TimeProfiler class >> menuCommandOn: aBuilder [ 
-	<worldMenu>
-	(aBuilder item: #'Time Profiler')
-		parent: #Profiling;  
-		order: 1;
-		icon: (aBuilder iconNamed: self taskbarIconName);
-		help: 'Profile the execution of a piece of code and navigate into the result.';
-		action: [TimeProfiler new open]
-]
-
-{ #category : #'world menu' }
 TimeProfiler class >> menuProfilingOn: aBuilder [
 	<worldMenu>
 

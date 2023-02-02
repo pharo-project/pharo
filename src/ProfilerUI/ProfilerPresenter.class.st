@@ -22,10 +22,10 @@ ProfilerPresenter class >> defaultLayout [
 ]
 
 { #category : #examples }
-ProfilerPresenter class >> menuCommandOn: aBuilder [ 
+ProfilerPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'Andreas & Time Profiler')
-		parent: #Profiling;  
+	(aBuilder item: #'Profiler')
+		parent: #Profiling;
 		order: 1;
 		icon: (self iconNamed: #smallProfile);
 		help: 'Profile the execution of a piece of code using different profilers, and navigate into the result.';
