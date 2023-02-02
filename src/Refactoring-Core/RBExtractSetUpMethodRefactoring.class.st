@@ -123,14 +123,14 @@ RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 
 { #category : #transforming }
 RBExtractSetUpMethodRefactoring >> transform [
+
 	| existingSelector |
 	existingSelector := self existingSelector.
 	self nameNewMethod: #setUp.
-	existingSelector ifNil: 
-		[ self renameAllParameters.
+	existingSelector ifNil: [
+		self renameAllParameters.
 		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
-		class compile: extractedParseTree newSource
-			withAttributesFrom: (class methodFor: selector)].
+		class compile: extractedParseTree newSource classified: #running ].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
 ]

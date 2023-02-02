@@ -208,13 +208,13 @@ RBAbstractClass >> compile: aString [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> compile: aString classified: aSymbolCollection [ 
+RBAbstractClass >> compile: aString classified: aSymbolCollection [
 	| change method |
-	change := model 
+	change := model
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := modelFactory rbMethod 
+	method := modelFactory rbMethod
 				for: self
 				source: aString
 				selector: change selector.
@@ -223,18 +223,9 @@ RBAbstractClass >> compile: aString classified: aSymbolCollection [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [ 
-	| change method |
-	change := model 
-		compile: aString
-		in: self
-		classified: aRBMethod protocols.
-	method := modelFactory rbMethod  
-		for: self
-		source: aString
-		selector: change selector.
-	self addMethod: method.
-	^ change
+RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
+
+	self compile: aString classified: aRBMethod protocols
 ]
 
 { #category : #'method accessing' }
