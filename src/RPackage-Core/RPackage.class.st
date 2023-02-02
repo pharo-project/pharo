@@ -933,8 +933,8 @@ RPackage >> isDeprecated [
 
 { #category : #testing }
 RPackage >> isEmpty [
-
-	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
+	self name = self class defaultPackageName ifTrue: [ ^false ].
+	^self classes isEmpty and: [ self extensionSelectors isEmpty]
 ]
 
 { #category : #'system compatibility' }
