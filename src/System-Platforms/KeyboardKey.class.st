@@ -1085,6 +1085,12 @@ KeyboardKey class >> macOSVirtualKeyTable [
 	^MacosVirtualKeyTable
 ]
 
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> menu [
+
+	^ self named: #MENU
+]
+
 { #category : #'accessing - keys - modifiers' }
 KeyboardKey class >> metaLeft [
 	^ self named: #META_L
@@ -1093,12 +1099,6 @@ KeyboardKey class >> metaLeft [
 { #category : #'accessing - keys - modifiers' }
 KeyboardKey class >> metaRight [
 	^ self named: #META_R
-]
-
-{ #category : #'accessing - keys - special' }
-KeyboardKey class >> menu [
-
-	^ self named: #MENU
 ]
 
 { #category : #'accessing - keys - symbols' }
