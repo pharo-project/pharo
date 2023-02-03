@@ -659,6 +659,12 @@ SettingBrowser >> rootNodes [
 ]
 
 { #category : #accessing }
+SettingBrowser >> rootNodes: aCollection [
+
+	roots := aCollection
+]
+
+{ #category : #accessing }
 SettingBrowser >> searchedText [
 	^ searchedText ifNil: [searchedText := '']
 ]
