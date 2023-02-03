@@ -17,8 +17,7 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'refactorings',
-		'methods',
-		'model'
+		'methods'
 	],
 	#category : #'Refactoring-UI'
 }

@@ -17,8 +17,7 @@ Class {
 		'methodToDeprecate',
 		'methodToReplaceDeprecatedMethod',
 		'refactoring',
-		'scopes',
-		'model'
+		'scopes'
 	],
 	#category : #'Refactoring-UI'
 }
