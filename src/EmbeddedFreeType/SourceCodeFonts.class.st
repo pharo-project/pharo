@@ -47,6 +47,55 @@ SourceCodeFonts class >> setSourceCodeFonts: pointSize [
 		codeFont: (LogicalFont familyName: self fontName pointSize: pointSize)
 ]
 
+{ #category : #accessing }
+SourceCodeFonts class >> sizeHuge [
+
+	<styleName: #huge>
+	^ 22
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeLarge [
+
+	<styleName: #large>
+	^ 16
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeMedium [
+
+	<styleName: #medium>
+	^ 13
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeSmall [
+
+	<styleName: #small>
+	^ 10
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeSuperTiny [
+
+	<styleName: #superTiny>
+	^ 5
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeTiny [
+
+	<styleName: #tiny>
+	^ 8
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeVeryLarge [
+
+	<styleName: #veryLarge>
+	^ 18
+]
+
 { #category : #notes }
 SourceCodeFonts >> seeClassSide [
 ]
