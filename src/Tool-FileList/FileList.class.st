@@ -1692,9 +1692,7 @@ FileList >> viewContentsInWorkspace [
 
 	| aString |
 	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
-	Smalltalk tools workspace
-		openContents: aString
-		label: 'Workspace from ' , self reference basename
+	Smalltalk tools workspace openContents: aString
 ]
 
 { #category : #'volume list and pattern' }
