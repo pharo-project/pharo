@@ -15,7 +15,7 @@ Class {
 { #category : #actions }
 AbstractResizerMorph >> adoptPaneColor: paneColor [
 	"Just get the resizer fill style for the theme."
-	
+
 	paneColor ifNil: [^super adoptPaneColor: paneColor].
 	self fillStyle: (self theme resizerGripNormalFillStyleFor: self)
 ]
@@ -77,14 +77,14 @@ AbstractResizerMorph >> mouseLeave: anEvent [
 
 	anEvent hand showTemporaryCursor: nil.
 	self setDefaultColors.
-	self shouldInvalidateOnMouseTransition ifTrue: [self changed]. 
+	self shouldInvalidateOnMouseTransition ifTrue: [self changed].
 	"avoid unnecessary invalidation"
 ]
 
 { #category : #'event handling' }
 AbstractResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary."
-	
+
 	(self bounds containsPoint: anEvent cursorPoint) ifFalse: [
 		anEvent hand showTemporaryCursor: nil.
 		self
@@ -115,7 +115,7 @@ AbstractResizerMorph >> setInverseColors [
 { #category : #testing }
 AbstractResizerMorph >> shouldDraw [
 	"Answer whether the resizer should be drawn."
-	
+
 	^self fillStyle isTransparent not
 ]
 
@@ -123,6 +123,6 @@ AbstractResizerMorph >> shouldDraw [
 AbstractResizerMorph >> shouldInvalidateOnMouseTransition [
 	"Answer whether the resizer should be invalidated
 	when the mouse enters or leaves."
-	
+
 	^false
 ]

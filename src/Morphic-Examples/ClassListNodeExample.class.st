@@ -14,7 +14,7 @@ ClassListNodeExample >> browseItem [
 
 { #category : #menu }
 ClassListNodeExample >> classButton [
-	^ (self theme 
+	^ (self theme
 		newButtonIn: self
 		for: self
 		getState: nil
@@ -65,17 +65,17 @@ ClassListNodeExample >> keyStroke: anEvent from: aTreeMorph [
 ]
 
 { #category : #accessing }
-ClassListNodeExample >> menu: menu shifted: b [ 
+ClassListNodeExample >> menu: menu shifted: b [
 	menu
-		add: 'Browse (b)' 
+		add: 'Browse (b)'
 		target: self
 		selector: #browseItem.
 	menu
-		add: 'Inspect (i)' 
+		add: 'Inspect (i)'
 		target: self
 		selector: #inspectItem.
 	menu
-		add: 'Explore (I)' 
+		add: 'Explore (I)'
 		target: self
-		selector: #exploreItem.
+		selector: #exploreItem
 ]

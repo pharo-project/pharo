@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-RaisedBorder class >> isDeprecated [ 
+RaisedBorder class >> isDeprecated [
 	^ true
 ]

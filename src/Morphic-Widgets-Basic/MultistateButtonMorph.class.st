@@ -101,14 +101,14 @@ MultistateButtonMorph >> activeEnabledOverUpFillStyle: aFillStyle [
 
 { #category : #adding }
 MultistateButtonMorph >> addUpAction: aValuable [
-	
+
 	upAction := aValuable
 ]
 
 { #category : #updating }
 MultistateButtonMorph >> changed [
 	"Update the fillStyle here."
-	
+
 	self assureExtension.
 	extension fillStyle: self fillStyleToUse.
 	color := self fillStyle asColor.
@@ -148,7 +148,7 @@ MultistateButtonMorph >> enabled: anObject [
 { #category : #geometry }
 MultistateButtonMorph >> extent: aPoint [
 	"Center the fill style origin."
-	
+
 	|delta|
 	self bounds extent = aPoint ifTrue: [^self].
 	delta := aPoint - self extent // 2.
@@ -177,7 +177,7 @@ MultistateButtonMorph >> fillStyleToUse [
 { #category : #'visual properties' }
 MultistateButtonMorph >> fillStyles [
 	"Answer all the fill styles"
-	
+
 	|styles|
 	styles := OrderedCollection new.
 	self stateMap do: [:actives |
@@ -190,7 +190,7 @@ MultistateButtonMorph >> fillStyles [
 { #category : #'event handling' }
 MultistateButtonMorph >> handlesMouseDown: evt [
 	"Yes."
-	
+
 	^true
 ]
 
@@ -205,7 +205,7 @@ MultistateButtonMorph >> handlesMouseOver: anEvent [
 { #category : #'event handling' }
 MultistateButtonMorph >> handlesMouseOverDragging: evt [
 	"Yes, for other states."
-	
+
 	^true
 ]
 
@@ -228,12 +228,12 @@ MultistateButtonMorph >> labelGraphic: anObject [
 ]
 
 { #category : #'event handling' }
-MultistateButtonMorph >> mouseDown: evt [ 
+MultistateButtonMorph >> mouseDown: evt [
 	"Handle a mouse down event."
-	
+
 	super mouseDown: evt.
 	self enabled ifFalse: [^self].
-	self down: true.
+	self down: true
 ]
 
 { #category : #'event handling' }
@@ -269,14 +269,14 @@ MultistateButtonMorph >> mouseLeaveDragging: evt [
 ]
 
 { #category : #'event handling' }
-MultistateButtonMorph >> mouseUp: evt [ 
+MultistateButtonMorph >> mouseUp: evt [
 	"Handle a mouse up event."
-	
+
 	super mouseUp: evt.
 	self enabled ifFalse: [^self].
 	self down: false.
-	
-	(self containsPoint: evt cursorPoint) ifTrue: [ 
+
+	(self containsPoint: evt cursorPoint) ifTrue: [
 		upAction value.
 	]
 ]
@@ -363,7 +363,7 @@ MultistateButtonMorph >> passiveEnabledOverUpFillStyle: aFillStyle [
 { #category : #recategorized }
 MultistateButtonMorph >> privateMoveBy: delta [
 	"Adjust all the fill styles"
-	
+
 	super privateMoveBy: delta.
 	(self fillStyles copyWithout: self fillStyle) do: [:fs | fs isOrientedFill ifTrue: [fs origin: fs origin + delta]]
 ]
