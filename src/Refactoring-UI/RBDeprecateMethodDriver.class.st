@@ -65,7 +65,7 @@ RBDeprecateMethodDriver >> execute [
 			                   "If user answers no, error is being propagated."
 			                   err resume ].
 
-	(RBRefactoringPreviewPresenter
+	(StRefactoringPreviewPresenter
 		 changes: compositeChange
 		 inEnvironment: model
 		 scopes: scopes) open
