@@ -19,17 +19,17 @@ then you can send the `execute` message that will execute the refactoring.
 Class {
 	#name : #RBDriver,
 	#superclass : #Object,
-	#category : #'Refactoring-Core-UI'
+	#category : #'Refactoring-UI'
 }
 
 { #category : #testing }
 RBDriver class >> isAbstract [
-		
+
 	^ self == RBDriver
 ]
 
 { #category : #execution }
 RBDriver >> execute [
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]

@@ -20,7 +20,7 @@ Class {
 		'buttonOk',
 		'buttonCancel'
 	],
-	#category : #'Refactoring-Core-UI'
+	#category : #'Refactoring-UI'
 }
 
 { #category : #'instance creation' }
@@ -39,11 +39,11 @@ RBRefactoringPreviewPresenter class >> title [
 { #category : #action }
 RBRefactoringPreviewPresenter >> accept [
 
-	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [ 
+	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
 		UIManager default inform: 'No changes to apply.'.
 		self closeWindow ].
-	[ 
-	selectedChanges do: [ :change | 
+	[
+	selectedChanges do: [ :change |
 			RBRefactoryChangeManager instance
 				performChange: change;
 				addUndoPointer: RBRefactoryChangeManager nextCounter ] ] asJob
@@ -93,10 +93,10 @@ RBRefactoringPreviewPresenter >> columns [
 RBRefactoringPreviewPresenter >> connectPresenters [
 
 	super connectPresenters.
-	table whenSelectionChangedDo: [ :selection | 
-		selection selectedItem ifNotNil: [ 
+	table whenSelectionChangedDo: [ :selection |
+		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
-	
+
 	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges ].
 
 	buttonCancel action: [ self closeWindow ].
@@ -181,7 +181,7 @@ RBRefactoringPreviewPresenter >> updateActiveScope [
 { #category : #update }
 RBRefactoringPreviewPresenter >> updateChanges [
 
-	changesInScope := changes select: [ :change | 
+	changesInScope := changes select: [ :change |
 		                  activeScope includesClass: change changeClass ].
 	selectedChanges := OrderedCollection withAll: changesInScope
 ]
