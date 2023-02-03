@@ -469,16 +469,18 @@ TestRunner >> errorTestSuites [
 
 { #category : #actions }
 TestRunner >> excludeClassesNotUnderTestFrom: methods [
+	"this is used by the code coverage tool to allow to exclude classes"
+	<ignoreNotImplementedSelectors: #(classNamesNotUnderTest)>
 	classesSelected
-		do: [ :class | 
+		do: [ :class |
 			(class class includesSelector: #classNamesNotUnderTest)
-				ifTrue: [ 
+				ifTrue: [
 					class classNamesNotUnderTest
-						do: [ :className | 
+						do: [ :className |
 							| theClass |
 							theClass := Smalltalk globals classNamed: className.
 							theClass
-								ifNotNil: [ 
+								ifNotNil: [
 									theClass methods do: [ :each | methods remove: each  ifAbsent: [  ] ].
 									theClass class methods do: [ :each | methods remove: each  ifAbsent: [  ] ] ] ] ] ]
 ]
