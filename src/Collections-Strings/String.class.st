@@ -98,6 +98,7 @@ Class {
 		'CSSeparators',
 		'CaseInsensitiveOrder',
 		'CaseSensitiveOrder',
+		'InitialHash',
 		'LowercasingTable',
 		'Tokenish',
 		'TypeTable',
@@ -226,6 +227,12 @@ String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 	^0
 ]
 
+{ #category : #accessing }
+String class >> initialHash [
+
+	^ InitialHash
+]
+
 { #category : #'class initialization' }
 String class >> initialize [
 
@@ -238,6 +245,7 @@ String class >> initialize [
 	UppercasingTable := self newUppercasingTable.
 	Tokenish := self newTokenish.
 	CSLineEnders := self newCSLineEnders.
+	InitialHash := ByteString hash.
 
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
@@ -1726,7 +1734,7 @@ String >> hash [
 	"ar 4/10/2005: I had to change this to use ByteString hash as initial
 	hash in order to avoid having to rehash everything and yet compute
 	the same hash for ByteString and WideString."
-	^ self class stringHash: self initialHash: ByteString hash
+	^ self class stringHash: self initialHash: self class initialHash
 ]
 
 { #category : #comparing }
