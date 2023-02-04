@@ -24,8 +24,8 @@ OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 	 ^ total'
 		withTemps: #('total')
 		withBlock: '[ total := total  + 1. total > 5 ifTrue: [ ^ total ] ]'.
-	
-	self assert: result equals: 6.
+
+	self assert: result equals: 6
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -39,12 +39,12 @@ OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 	{argument} repeat.
 	 ^ total'
 		withTemps: #('total')
-		withBlock: '[ | tempInBlock | 
+		withBlock: '[ | tempInBlock |
 			tempInBlock := total.
 			total := tempInBlock + 1.
 			total > 5 ifTrue: [ ^ total ] ]'.
-	
-	self assert: result equals: 6.
+
+	self assert: result equals: 6
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -58,9 +58,9 @@ OCASTRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 	5 timesRepeat: {argument}.
 	 ^ total'
 		withTemps: #('total')
-		withBlock: '[ | tempInBlock | 
+		withBlock: '[ | tempInBlock |
 			tempInBlock := total.
 			total := total + tempInBlock ]'.
-	
-	self assert: result equals: 2 ** 5.
+
+	self assert: result equals: 2 ** 5
 ]
