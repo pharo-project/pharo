@@ -4,20 +4,20 @@ I am a regex refactoring renaming protocol names.
 See comment of superclass for a nice script to be adapated to package names.
 "
 Class {
-	#name : #RBProtocolRegexRefactoring,
+	#name : #RBProtocolRegexTransformation,
 	#superclass : #RBRegexRefactoring,
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : #'Refactoring-Core-Transformation-Unused'
 }
 
 { #category : #transforming }
-RBProtocolRegexRefactoring >> transform [
+RBProtocolRegexTransformation >> transform [
 
 	| original replacement |
 
 	self model
-		allClassesDo: [ :class | 
+		allClassesDo: [ :class |
 			class selectors
-				do: [ :selector | 
+				do: [ :selector |
 					original := ( class realClass whichCategoryIncludesSelector: selector ) asString.
 					original
 						ifNotNil: [ replacement := self execute: original.
