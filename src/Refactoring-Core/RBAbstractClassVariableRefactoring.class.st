@@ -15,31 +15,31 @@ Class {
 }
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> abstractClassReferences [
+RBAbstractClassVariableRefactoring >> abstractClassSideReferences [
 	| replacer |
-	replacer := self parseTreeRewriterClass  
+	replacer := self parseTreeRewriterClass
 		variable: variableName
 		getter: self accessorsRefactoring getterMethod
 		setter: self accessorsRefactoring setterMethod.
-	self 
+	self
 		convertClasses: class classSide withAllSubclasses
-		select: 
-			[ :aClass | 
-			(aClass whichSelectorsReferToClassVariable: variableName) reject: 
-				[ :each | 
-				aClass == class classSide and: 
+		select:
+			[ :aClass |
+			(aClass whichSelectorsReferToClassVariable: variableName) reject:
+				[ :each |
+				aClass == class classSide and:
 					[ each == self accessorsRefactoring getterMethod or: [ each == self accessorsRefactoring setterMethod ] ] ] ]
 		using: replacer
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> abstractInstanceReferences [
+RBAbstractClassVariableRefactoring >> abstractInstanceSideReferences [
 	| replacer |
-	replacer := self parseTreeRewriterClass 
+	replacer := self parseTreeRewriterClass
 		variable: variableName
 		getter: 'class ' , self accessorsRefactoring getterMethod
 		setter: 'class ' , self accessorsRefactoring setterMethod.
-	self 
+	self
 		convertClasses: class withAllSubclasses
 		select: [ :aClass | aClass whichSelectorsReferToClassVariable: variableName ]
 		using: replacer
@@ -75,6 +75,6 @@ RBAbstractClassVariableRefactoring >> preconditions [
 { #category : #transforming }
 RBAbstractClassVariableRefactoring >> transform [
 	self createAccessors.
-	self abstractInstanceReferences.
-	self abstractClassReferences
+	self abstractInstanceSideReferences.
+	self abstractClassSideReferences
 ]
