@@ -27,5 +27,4 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 SycMoveMethodsToClassSideCommand >> execute [
 
 	(RBMoveMethodsToClassSideDriver model: model methods: methods) execute
-
 ]
