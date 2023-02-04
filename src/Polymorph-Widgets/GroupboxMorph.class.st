@@ -22,7 +22,7 @@ GroupboxMorph >> addContentMorph: aMorph [
 { #category : #accessing }
 GroupboxMorph >> adoptPaneColor: paneColor [
 	"Pass on to the content morph."
-	
+
 	|c|
 	paneColor ifNil: [^super adoptPaneColor: paneColor].
 	c := self theme subgroupColorFrom: paneColor.
@@ -37,7 +37,7 @@ GroupboxMorph >> adoptPaneColor: paneColor [
 { #category : #'geometry testing' }
 GroupboxMorph >> containsPoint: aPoint [
 	"Override here to check the label and content instead."
-	
+
 	^(super containsPoint: aPoint) and: [
 		(self labelMorph containsPoint: aPoint) or: [
 		self contentMorph containsPoint: aPoint]]
@@ -46,7 +46,7 @@ GroupboxMorph >> containsPoint: aPoint [
 { #category : #accessing }
 GroupboxMorph >> contentFromModel [
 	"Answer content from the model."
-	
+
 	^self getContentSelector ifNotNil: [:s |
 		self model ifNotNil: [:m | m perform: s]]
 ]
@@ -167,7 +167,7 @@ GroupboxMorph >> newContentMorph [
 	|p|
 	p := PanelMorph new
 		roundedCorners: self roundedCorners;
-		changeTableLayout; 
+		changeTableLayout;
 		layoutInset: 4;
 		cellInset: 8;
 		vResizing: #spaceFill;
@@ -218,7 +218,7 @@ GroupboxMorph >> roundedCorners: anArray [
 { #category : #accessing }
 GroupboxMorph >> selectedTab [
 	"Answer the label morph for compatibility with TabPanelBorder."
-	
+
 	^self labelMorph owner
 		ifNotNil: [self labelMorph]
 ]
@@ -226,7 +226,7 @@ GroupboxMorph >> selectedTab [
 { #category : #updating }
 GroupboxMorph >> update: aSymbol [
 	"Replace the content if appropriate."
-	
+
 	super update: aSymbol.
 	aSymbol = self getContentSelector ifTrue: [
 		self contentFromModel ifNotNil: [:c | self replaceContentMorph: c]]
