@@ -37,7 +37,7 @@ SDL2TouchGestureExample >> createEventHandler [
 { #category : #drawing }
 SDL2TouchGestureExample >> drawCircle [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas pathTransform translateBy: circleCenter.
 			canvas
 				setPaint:
@@ -59,7 +59,7 @@ SDL2TouchGestureExample >> endScroll: anEvent [
 { #category : #drawing }
 SDL2TouchGestureExample >> generateCircleOfSize: anInteger [
 	^ renderer athensSurface
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: anInteger negated @ 0;
@@ -78,7 +78,7 @@ SDL2TouchGestureExample >> initialize [
 
 { #category : #'manage pinch' }
 SDL2TouchGestureExample >> pinch: anEvent [
-	circleSize := circleSize + (anEvent dDist * (self defaultExtent distanceTo: 0@0)).
+	circleSize := circleSize + (anEvent dDist * (self defaultExtent distanceTo: 0@0))
 ]
 
 { #category : #drawing }

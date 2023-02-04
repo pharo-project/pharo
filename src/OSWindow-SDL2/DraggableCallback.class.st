@@ -20,7 +20,7 @@ DraggableCallback class >> fnSpec [
 
 { #category : #'instance creation' }
 DraggableCallback class >> on: aBlock [
-	^ self 
+	^ self
 		signature: self fnSpec
 		block: aBlock
 ]

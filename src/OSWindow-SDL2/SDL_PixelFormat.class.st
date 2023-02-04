@@ -247,7 +247,7 @@ SDL_PixelFormat >> next [
 { #category : #'accessing - structure variables' }
 SDL_PixelFormat >> next: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_NEXT put: anObject getHandle.
+	handle pointerAt: OFFSET_NEXT put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -283,7 +283,7 @@ SDL_PixelFormat >> palette [
 { #category : #'accessing - structure variables' }
 SDL_PixelFormat >> palette: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_PALETTE put: anObject getHandle.
+	handle pointerAt: OFFSET_PALETTE put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
