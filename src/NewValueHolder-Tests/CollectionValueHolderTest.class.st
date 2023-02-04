@@ -24,7 +24,7 @@ CollectionValueHolderTest >> setUp [
 CollectionValueHolderTest >> testAddMany [
 	empty
 		whenAddedDo:
-			[ :addedValue :ann | 
+			[ :addedValue :ann |
 			fired := true.
 			self assert: addedValue equals: #(1 2).
 			self assert: (ann isMemberOf: ValueAdded) ].
@@ -36,7 +36,7 @@ CollectionValueHolderTest >> testAddMany [
 CollectionValueHolderTest >> testAddOne [
 	empty
 		whenAddedDo:
-			[ :addedValue :ann | 
+			[ :addedValue :ann |
 			fired := true.
 			self assert: addedValue equals: 1.
 			self assert: (ann isMemberOf: ValueAdded) ].
@@ -48,7 +48,7 @@ CollectionValueHolderTest >> testAddOne [
 CollectionValueHolderTest >> testChangeAddMany [
 	empty
 		whenChangedDo:
-			[ :col :changed | 
+			[ :col :changed |
 			fired := true.
 			self assert: col asArray equals: #(1 2 3).
 			self assert: changed equals: #(1 2 3) ].
@@ -60,7 +60,7 @@ CollectionValueHolderTest >> testChangeAddMany [
 CollectionValueHolderTest >> testChangeAddOne [
 	empty
 		whenChangedDo:
-			[ :col :changed | 
+			[ :col :changed |
 			fired := true.
 			self assert: col asArray equals: #(1).
 			self assert: changed equals: 1 ].
@@ -72,7 +72,7 @@ CollectionValueHolderTest >> testChangeAddOne [
 CollectionValueHolderTest >> testChangeRemoveMany [
 	withItems
 		whenChangedDo:
-			[ :col :changed | 
+			[ :col :changed |
 			fired := true.
 			self assert: col asArray equals: #(2).
 			self assert: changed equals: #(1 3) ].
@@ -84,7 +84,7 @@ CollectionValueHolderTest >> testChangeRemoveMany [
 CollectionValueHolderTest >> testChangeRemoveOne [
 	withItems
 		whenChangedDo:
-			[ :col :changed | 
+			[ :col :changed |
 			fired := true.
 			self assert: col asArray equals: #(2 3).
 			self assert: changed equals: 1 ].
@@ -96,7 +96,7 @@ CollectionValueHolderTest >> testChangeRemoveOne [
 CollectionValueHolderTest >> testRemoveMany [
 	withItems
 		whenRemovedDo:
-			[ :removedValue :ann | 
+			[ :removedValue :ann |
 			fired := true.
 			self assert: withItems asArray equals: #(2).
 			self assert: removedValue equals: #(1 3).
@@ -109,7 +109,7 @@ CollectionValueHolderTest >> testRemoveMany [
 CollectionValueHolderTest >> testRemoveOne [
 	withItems
 		whenRemovedDo:
-			[ :removedValue :ann | 
+			[ :removedValue :ann |
 			fired := true.
 			self assert: withItems asArray equals: #(2 3).
 			self assert: removedValue equals: 1.
