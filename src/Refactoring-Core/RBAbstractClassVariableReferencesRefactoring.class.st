@@ -6,7 +6,7 @@ I create new accessor methods for the variables and replace every read and write
 
 "
 Class {
-	#name : #RBAbstractClassVariableRefactoring,
+	#name : #RBAbstractClassVariableReferencesRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
 		'accessorsRefactoring'
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> abstractClassSideReferences [
+RBAbstractClassVariableReferencesRefactoring >> abstractClassSideReferences [
 	| replacer |
 	replacer := self parseTreeRewriterClass
 		variable: variableName
@@ -33,7 +33,7 @@ RBAbstractClassVariableRefactoring >> abstractClassSideReferences [
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> abstractInstanceSideReferences [
+RBAbstractClassVariableReferencesRefactoring >> abstractInstanceSideReferences [
 	| replacer |
 	replacer := self parseTreeRewriterClass
 		variable: variableName
@@ -46,7 +46,7 @@ RBAbstractClassVariableRefactoring >> abstractInstanceSideReferences [
 ]
 
 { #category : #'private - accessing' }
-RBAbstractClassVariableRefactoring >> accessorsRefactoring [
+RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
 		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableTransformation
@@ -59,21 +59,21 @@ RBAbstractClassVariableRefactoring >> accessorsRefactoring [
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> createAccessors [
+RBAbstractClassVariableReferencesRefactoring >> createAccessors [
 	self performCompositeRefactoring: self accessorsRefactoring
 ]
 
 { #category : #preconditions }
-RBAbstractClassVariableRefactoring >> preconditions [
-	^(RBCondition isMetaclass: class) not 
-		& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class) 
-			& ((RBCondition withBlock: 
-						[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not]) 
+RBAbstractClassVariableReferencesRefactoring >> preconditions [
+	^(RBCondition isMetaclass: class) not
+		& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
+			& ((RBCondition withBlock:
+						[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not])
 					errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> transform [
+RBAbstractClassVariableReferencesRefactoring >> transform [
 	self createAccessors.
 	self abstractInstanceSideReferences.
 	self abstractClassSideReferences
