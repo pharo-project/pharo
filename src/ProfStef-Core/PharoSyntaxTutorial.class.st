@@ -10,8 +10,8 @@ Class {
 { #category : #lessons }
 PharoSyntaxTutorial >> basicTypesArray [
 	^ Lesson
-title: 'Basic types: Array' 
-lesson: 
+title: 'Basic types: Array'
+lesson:
 '"Literal arrays are created at parse time and are read-only:"
 
 #(1 2 3).
@@ -33,8 +33,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> basicTypesCharacters [
 	^ Lesson
-title: 'Basic types: Characters' 
-lesson: 
+title: 'Basic types: Characters'
+lesson:
 '"A Character can be instantiated using $ operator:"
 
 $A.
@@ -57,8 +57,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> basicTypesDynamicArray [
 	^ Lesson
-title: 'Basic types: Dynamic Array' 
-lesson: 
+title: 'Basic types: Dynamic Array'
+lesson:
 '"Dynamic Arrays are created at execution time:"
 
 { (2+3) . (6*6) }.
@@ -71,9 +71,9 @@ lesson:
 { #category : #lessons }
 PharoSyntaxTutorial >> basicTypesNumbers [
 	^ Lesson
-title: 'Basic types: Numbers' 
-lesson: 
-'"You now know how to execute Pharo code. 
+title: 'Basic types: Numbers'
+lesson:
+'"You now know how to execute Pharo code.
 
 Now let''s talk about basic objects.
 
@@ -104,8 +104,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> basicTypesString [
 	^ Lesson
-title: 'Basic types: Strings' 
-lesson: 
+title: 'Basic types: Strings'
+lesson:
 '"A String is a collection of characters. Use single quotes to create a String object. Print these expressions:"
 
 ''ProfStef''.
@@ -114,7 +114,7 @@ lesson:
 
 ''abc'' asUppercase.
 
-''Hello World'' reverse. 
+''Hello World'' reverse.
 
 "You can access each character using at: message"
 
@@ -130,9 +130,9 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> basicTypesSymbol [
 	^ Lesson
-title: 'Basic types: Symbols' 
-lesson: 
-'"A Symbol is a String which is guaranteed to be globally unique. 
+title: 'Basic types: Symbols'
+lesson:
+'"A Symbol is a String which is guaranteed to be globally unique.
 
 There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' String objects.
 
@@ -152,8 +152,8 @@ There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' St
 { #category : #lessons }
 PharoSyntaxTutorial >> blocks [
 	^ Lesson
-title: 'Blocks' 
-lesson: 
+title: 'Blocks'
+lesson:
 '"Cascade is cool! Let''s talk about blocks.
 
 Blocks are anonymous methods that can be stored into variables and executed on demand.
@@ -184,8 +184,8 @@ Here is a block that adds 2 to its argument (its argument is named x):"
 { #category : #lessons }
 PharoSyntaxTutorial >> blocksAssignation [
 	^ Lesson
-title: 'Block assignation' 
-lesson: 
+title: 'Block assignation'
+lesson:
 '"Blocks can be assigned to a variable then executed later.
 
 Note that |b| is the declaration of a variable named ''b'' and that '':='' assigns a value to a variable.
@@ -202,8 +202,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> conditionals [
 	^ Lesson
-title: 'Conditionals' 
-lesson: 
+title: 'Conditionals'
+lesson:
 '"Conditionals are just messages sent to Boolean objects"
 
 1 < 2
@@ -216,18 +216,18 @@ Try this:"
 
 Transcript open.
 
-3 > 10 
+3 > 10
 	ifTrue: [Transcript show: ''Maybe there''''s a bug ....'']
 	ifFalse: [Transcript show: ''No: 3 is less than 10''].
 
-3 = 3 ifTrue: [ProfStef next].'.
+3 = 3 ifTrue: [ProfStef next].'
 ]
 
 { #category : #lessons }
 PharoSyntaxTutorial >> debugger [
 	^ Lesson
-title: 'Debugger' 
-lesson: '"The Debugger may be the most famous tool of Smalltalk environments. It will open as soon as an unmanaged Exception occurs. 
+title: 'Debugger'
+lesson: '"The Debugger may be the most famous tool of Smalltalk environments. It will open as soon as an unmanaged Exception occurs.
 
 The following code will open the debugger on the message stack, select PharoSyntaxTutorial>>divideTwoByZero".
 
@@ -244,20 +244,20 @@ PharoSyntaxTutorial >> divideTwoByZero [
 	- Right-click and select 'Accept' to compile the new version of the method
 	- click the button 'Proceed' to continue execution."
 
-	ProfStef next.
+	ProfStef next
 ]
 
 { #category : #lessons }
-PharoSyntaxTutorial >> doingVSPrinting [ 
+PharoSyntaxTutorial >> doingVSPrinting [
 	^ Lesson
-title: 'Doing' 
-lesson: 
+title: 'Doing'
+lesson:
 '"Cool! (I like to say Cooool :) ). You''ve just executed a Pharo expression. More precisely, you sent the message ''next'' to ProfStef class (it''s me!).
 
-Note you can run this tutorial again by evaluating: ''ProfStef go''. 
+Note you can run this tutorial again by evaluating: ''ProfStef go''.
 ''ProfStef previous'' returns to the previous lesson.
 
-You can also Do it using the keyboard shortcut ''Ctrl + D'' (or ''Cmd + D'' on MacOS). 
+You can also Do it using the keyboard shortcut ''Ctrl + D'' (or ''Cmd + D'' on MacOS).
 
 Try to evaluate these expressions:"
 
@@ -273,9 +273,9 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> inspecting [
 	^ Lesson
-title: 'Inspecting' 
-lesson: 
-'"Now you''re a Do it and Print it master! Let''s talk about inspecting. It''s a Do it which opens an Inspector on the result of evaluating the expression you''ve selected. 
+title: 'Inspecting'
+lesson:
+'"Now you''re a Do it and Print it master! Let''s talk about inspecting. It''s a Do it which opens an Inspector on the result of evaluating the expression you''ve selected.
 The Inspector is a tool that allows you to have a look inside an object.
 
 For example, select the text below, open the menu and click on ''Inspect it'':"
@@ -298,8 +298,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> instantiation [
 	^ Lesson
-title: 'Instantiation' 
-lesson: 
+title: 'Instantiation'
+lesson:
 '"Objects are instances of their class. Usually, we send the message #new to a class for creating an instance of this class.
 
 The message #allInstances sent to a class answers an Array with all instances of this class.
@@ -320,10 +320,10 @@ SimpleButtonMorph allInstances size.
 
 "Let''s play with it:"
 
-SimpleButtonMorph allInstances last 
+SimpleButtonMorph allInstances last
 	label: ''ProfStef is cooooool !'';
 	color: Color cyan.
-	
+
 "Let''s delete it and ask the system to clean the memory:"
 
 SimpleButtonMorph allInstances last delete.
@@ -334,7 +334,7 @@ SimpleButtonMorph allInstances size.
 
 SimpleButtonMorph new
 	label: ''Go to next lesson'';
-	target: [ProfStef next. 
+	target: [ProfStef next.
 			   SimpleButtonMorph allInstances last delete];
 	actionSelector: #value;
 	openCenteredInWorld.'
@@ -343,8 +343,8 @@ SimpleButtonMorph new
 { #category : #lessons }
 PharoSyntaxTutorial >> iterators [
 	^ Lesson
-title: 'Iterators' 
-lesson: 
+title: 'Iterators'
+lesson:
 '"The message do: is sent to a collection of objects (Array, Set, OrderedCollection), evaluating the block for each element.
 
 Here we want to print all the numbers on the Transcript (a console)"
@@ -364,7 +364,7 @@ Here we want to print all the numbers on the Transcript (a console)"
 
 #(11 38 3 -2 10) reject: [:each | each > 10].
 
-#(11 38 3 -2 10) 
+#(11 38 3 -2 10)
      do: [:each | Transcript show: each printString]
      separatedBy: [Transcript show: ''.''].
 
@@ -374,8 +374,8 @@ ProfStef allInstances do: [:aPharoTutorial | aPharoTutorial next].'
 { #category : #lessons }
 PharoSyntaxTutorial >> loops [
 	^ Lesson
-title: 'Loops' 
-lesson: 
+title: 'Loops'
+lesson:
 '"Loops are high-level collection iterators, implemented as regular methods."
 
 "Basic loops:
@@ -396,7 +396,7 @@ lesson:
 PharoSyntaxTutorial >> mathematicalPrecedence [
 	^ Lesson
 title: 'Mathematical precedence'
-lesson: 
+lesson:
 '"Traditional precedence rules from mathematics do not apply in Pharo."
 
 2 * 10 + 2.
@@ -421,8 +421,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxBinary [
 	^ Lesson
-title: 'Message syntax: Binary messages' 
-lesson: 
+title: 'Message syntax: Binary messages'
+lesson:
 '"Binary messages have the following form:
     anObject + anotherObject"
 
@@ -450,8 +450,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxCascade [
 	^ Lesson
-title: 'Message syntax: Cascade' 
-lesson: 
+title: 'Message syntax: Cascade'
+lesson:
 '"; is the cascade operator. It''s useful to send message to the SAME receiver.
 
 Open a Transcript (console):"
@@ -466,40 +466,40 @@ Transcript cr.
 
 "is equivalent to:"
 
-Transcript 
+Transcript
 	   show: ''hello'';
 	   show: ''Pharo'' ;
 	   cr.
 
 "Try to go to the next lesson with a cascade of two ''next'' messages:"
 
-ProfStef'.
+ProfStef'
 ]
 
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxCascadeShouldNotBeHere [
 	^ Lesson
-title: 'Lost?' 
-lesson: 
-'"Hey, you should not be here!! 
+title: 'Lost?'
+lesson:
+'"Hey, you should not be here!!
 
 Go back and use a cascade!"
 
-ProfStef previous.'.
+ProfStef previous.'
 ]
 
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxExecutionOrder [
 	^ Lesson
-title: 'Message syntax: Execution order' 
-lesson: 
+title: 'Message syntax: Execution order'
+lesson:
 '"Unary messages are executed first, then binary messages and finally keyword messages:
     Unary > Binary > Keywords"
 
 2 + 3 squared.
 
 2 raisedTo: 3 + 2.
-  
+
 (0@0) class.
 
 0@0 corner: 100@200.
@@ -517,7 +517,7 @@ ProfStef next.'
 PharoSyntaxTutorial >> messageSyntaxExecutionOrderParentheses [
 	^ Lesson
 title: 'Message syntax: Parentheses'
-lesson: 
+lesson:
 '"Use parentheses to change order of evaluation"
 
 (2 + 3) squared.
@@ -532,8 +532,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxKeyword [
 	^ Lesson
-title: 'Message syntax: Keyword messages' 
-lesson: 
+title: 'Message syntax: Keyword messages'
+lesson:
 '"Keyword messages are messages with arguments. They have the following form:
     anObject akey: anotherObject akey2: anotherObject2"
 
@@ -551,19 +551,19 @@ Color
 	r:1
 	g:1
 	b:0.
-	
+
 ProfStef perform: #next.'
 ]
 
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxUnary [
 	^ Lesson
-title: 'Message syntax: Unary messages' 
-lesson: 
+title: 'Message syntax: Unary messages'
+lesson:
 '"Messages are sent to objects. There are three types of message: unary, binary and keyword.
 
 Unary messages have the following form:
-    anObject aMessage 
+    anObject aMessage
 
 You''ve already sent unary messages. For example:"
 
@@ -585,8 +585,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> pharoEnvironment [
 	^ Lesson
-title: 'Pharo environment' 
-lesson: 
+title: 'Pharo environment'
+lesson:
 '"Pharo is full of objects. There are windows, text, numbers, dates, colors, points and much more. You can interact with objects in a much more direct way than is possible with other programming languages.
 
 Every object understands the message ''inspect''. As a result, you get an Inspector window that shows details about the object."
@@ -605,10 +605,10 @@ ProfStef next.'
 ]
 
 { #category : #lessons }
-PharoSyntaxTutorial >> printing [ 
+PharoSyntaxTutorial >> printing [
 	^ Lesson
-title: 'Printing' 
-lesson: 
+title: 'Printing'
+lesson:
 '"Now you''re a Do it master! Let''s talk about printing. It''s a Do it which prints the result next to the expression you''ve selected.
 For example, select the text below, open the menu and click on ''Print it'':"
 
@@ -632,8 +632,8 @@ ProfStef next.'
 { #category : #lessons }
 PharoSyntaxTutorial >> reflection [
 	^ Lesson
-title: 'Reflection' 
-lesson: 
+title: 'Reflection'
+lesson:
 '"You can inspect and change the system at runtime.
 
 Take a look at method #ifFalse:ifTrue: source code of class True:"
@@ -661,8 +661,8 @@ ProfStef goToNextLesson.'
 { #category : #lessons }
 PharoSyntaxTutorial >> reflectionContinued [
 	^ Lesson
-title: 'Reflection continued' 
-lesson: 
+title: 'Reflection continued'
+lesson:
 '"So cool, isn''t it? Before going further, let''s remove this method:"
 
 ProfStef respondsTo: #goToNextLesson.
@@ -679,11 +679,11 @@ ProfStef default executeMethod: (ProfStef lookupSelector:#next).'
 { #category : #lessons }
 PharoSyntaxTutorial >> theEnd [
 	^ Lesson
-title: 'Tutorial done!' 
-lesson: 
-'"This tutorial is done. Enjoy programming with Pharo. 
+title: 'Tutorial done!'
+lesson:
+'"This tutorial is done. Enjoy programming with Pharo.
 
-Don''t forget to read ''Pharo By Example'' found here:  
+Don''t forget to read ''Pharo By Example'' found here:
 
 	https://books.pharo.org/updated-pharo-by-example
 
@@ -744,8 +744,8 @@ theEnd
 { #category : #lessons }
 PharoSyntaxTutorial >> welcome [
 	^ Lesson
-title: 'Welcome' 
-lesson: 
+title: 'Welcome'
+lesson:
 '"Hello! I''m Professor Stef.
 
 You must want me to help you learn Pharo.

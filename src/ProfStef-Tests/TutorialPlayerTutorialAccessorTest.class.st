@@ -11,7 +11,7 @@ Class {
 TutorialPlayerTutorialAccessorTest >> testDefaultsToSmalltalkSyntaxTutorial [
 	| player |
 	player := TutorialPlayer new.
-	self assert: (player tutorial isKindOf: PharoSyntaxTutorial).
+	self assert: (player tutorial isKindOf: PharoSyntaxTutorial)
 ]
 
 { #category : #tests }
@@ -19,5 +19,5 @@ TutorialPlayerTutorialAccessorTest >> testWithMockTutorial [
 	| mockTutorial player |
 	mockTutorial := MockTutorial new.
 	player := TutorialPlayer new tutorial: mockTutorial; yourself.
-	self assert: player tutorial equals: mockTutorial.
+	self assert: player tutorial equals: mockTutorial
 ]

@@ -9,21 +9,21 @@ Class {
 
 { #category : #lesson }
 MockTutorial >> firstLesson [
-	^ Lesson title: 'first' lesson: 'First lesson'.
+	^ Lesson title: 'first' lesson: 'First lesson'
 ]
 
 { #category : #lesson }
 MockTutorial >> secondLesson [
-	^ Lesson title: 'second' lesson: 'Second lesson'.
+	^ Lesson title: 'second' lesson: 'Second lesson'
 ]
 
 { #category : #lesson }
 MockTutorial >> thirdLesson [
-	^ Lesson title: 'third' lesson: 'Third lesson'.
+	^ Lesson title: 'third' lesson: 'Third lesson'
 ]
 
 { #category : #tutorial }
-MockTutorial >> tutorial [ 
+MockTutorial >> tutorial [
 	^ #(
 firstLesson
 secondLesson
