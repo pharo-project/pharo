@@ -5983,6 +5983,12 @@ Morph >> stepAt: millisecondClockValue [
 	self step
 ]
 
+{ #category : #'stepping and presenter' }
+Morph >> stepTime [
+
+	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
+]
+
 { #category : #menus }
 Morph >> stickinessString [
 	"Answer the string to be shown in a menu to represent the stickiness status"

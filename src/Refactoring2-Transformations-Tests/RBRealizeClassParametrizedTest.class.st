@@ -4,10 +4,9 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBRealizeClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRealizeClassRefactoring };
 		addCase: { #rbClass -> RBRealizeClassTransformation };
 		yourself
 ]
