@@ -54,13 +54,13 @@ RBTest >> testExample4
 ```
 "
 Class {
-	#name : #RBFindAndReplaceSetUpRefactoring,
-	#superclass : #RBFindAndReplaceRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : #RBFindAndReplaceSetUpTransformation,
+	#superclass : #RBFindAndReplaceTransformation,
+	#category : #'Refactoring-Core-Transformation-Simple'
 }
 
 { #category : #'instance creation' }
-RBFindAndReplaceSetUpRefactoring class >> model: aModel of: aClass inWholeHierarchy: aBoolean [
+RBFindAndReplaceSetUpTransformation class >> model: aModel of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		model: aModel;
 		of: aClass
@@ -69,7 +69,7 @@ RBFindAndReplaceSetUpRefactoring class >> model: aModel of: aClass inWholeHierar
 ]
 
 { #category : #'instance creation' }
-RBFindAndReplaceSetUpRefactoring class >> of: aClass inWholeHierarchy: aBoolean [
+RBFindAndReplaceSetUpTransformation class >> of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		of: aClass
 		inWholeHierarchy: aBoolean;
@@ -77,19 +77,19 @@ RBFindAndReplaceSetUpRefactoring class >> of: aClass inWholeHierarchy: aBoolean 
 ]
 
 { #category : #accessing }
-RBFindAndReplaceSetUpRefactoring >> extractMethodRefactoring [
+RBFindAndReplaceSetUpTransformation >> extractMethodRefactoring [
 	^ RBExtractSetUpMethodRefactoring new
-			setOption: #useExistingMethod 
-			toUse:  [ :ref :aSelector | 
+			setOption: #useExistingMethod
+			toUse:  [ :ref :aSelector |
 				true];
-			setOption: #extractAssignment 
-			toUse:  [ :ref :aSelector | 
+			setOption: #extractAssignment
+			toUse:  [ :ref :aSelector |
 				true];
 			yourself
 ]
 
 { #category : #accessing }
-RBFindAndReplaceSetUpRefactoring >> methodNode [ 
+RBFindAndReplaceSetUpTransformation >> methodNode [
 	| node |
 	node := super methodNode.
 	node body removeNode: (RBParser parseExpression: 'super setUp.').
@@ -97,9 +97,9 @@ RBFindAndReplaceSetUpRefactoring >> methodNode [
 ]
 
 { #category : #accessing }
-RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
+RBFindAndReplaceSetUpTransformation >> nodesOf: methodNode [
 	| combinations limit |
-	
+
 	combinations := super nodesOf: methodNode.
 	^ combinations ifEmpty: [ combinations ]
 		ifNotEmpty: [ limit :=  methodNode body statements first start.
@@ -107,18 +107,18 @@ RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
 ]
 
 { #category : #'instance creation' }
-RBFindAndReplaceSetUpRefactoring >> of: aClass inWholeHierarchy: aBoolean [
+RBFindAndReplaceSetUpTransformation >> of: aClass inWholeHierarchy: aBoolean [
 	class := self classObjectFor: aClass.
 	selector := #setUp.
-	replacesAllHierarchy := aBoolean.
+	replacesAllHierarchy := aBoolean
 ]
 
 { #category : #preconditions }
-RBFindAndReplaceSetUpRefactoring >> selectorsFor: cls [
+RBFindAndReplaceSetUpTransformation >> selectorsFor: cls [
 	^ (cls selectors select: [:e | e isTestSelector]) copyWithout: selector
 ]
 
 { #category : #accessing }
-RBFindAndReplaceSetUpRefactoring >> startLimitOf: sourceCode [
+RBFindAndReplaceSetUpTransformation >> startLimitOf: sourceCode [
 	^ ((self parserClass parseMethod: sourceCode) body statements first start)
 ]

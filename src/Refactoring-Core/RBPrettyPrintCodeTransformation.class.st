@@ -4,24 +4,24 @@ I am a refactoring for reformat the source code of all methods in this environme
 I have no precondition.
 "
 Class {
-	#name : #RBPrettyPrintCodeRefactoring,
+	#name : #RBPrettyPrintCodeTransformation,
 	#superclass : #RBRefactoring,
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : #'Refactoring-Core-Transformation-Unused'
 }
 
 { #category : #preconditions }
-RBPrettyPrintCodeRefactoring >> preconditions [
+RBPrettyPrintCodeTransformation >> preconditions [
 
 	^ self emptyCondition
 ]
 
 { #category : #transforming }
-RBPrettyPrintCodeRefactoring >> transform [
+RBPrettyPrintCodeTransformation >> transform [
 	| source tree formatted |
 	self model
-		allClassesDo: [ :class | 
+		allClassesDo: [ :class |
 			class selectors
-				do: [ :selector | 
+				do: [ :selector |
 					(self model environment includesSelector: selector in: class realClass)
 						ifTrue: [ source := class sourceCodeFor: selector.
 							source
