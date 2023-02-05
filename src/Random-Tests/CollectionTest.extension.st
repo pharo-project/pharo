@@ -8,10 +8,10 @@ CollectionTest >> testAtRandomWeighting [
 
 	"Fixed randomness"
 	random := Random seed: 42.
-	
-	"Collect results"	
+
+	"Collect results"
 	hits := Bag new.
-	1000 timesRepeat: [ 
+	1000 timesRepeat: [
 		hits add: (collection atRandom: random weighting: [ :x | x ])
 	].
 
@@ -31,7 +31,7 @@ CollectionTest >> testAtRandomWeightingEmpty [
 	"Fixed randomness"
 	random := Random seed: 42.
 
-	self should: [  collection atRandom: random weighting: [ :x | x ] ] raise: Error. 	
+	self should: [  collection atRandom: random weighting: [ :x | x ] ] raise: Error.
 ]
 
 { #category : #'*Random-Tests' }
@@ -42,17 +42,16 @@ CollectionTest >> testAtRandomWeightingMultiple [
 
 	"Fixed randomness"
 	random := Random seed: 42.
-	
-	"Collect results"	
+
+	"Collect results"
 	hits := Bag new.
-	1000 timesRepeat: [ 
+	1000 timesRepeat: [
 		hits add: (collection atRandom: random weighting: [ :x | x ])
 	].
 
 	self assert: (hits occurrencesOf: 0) equals: 0. "exactly 0%"
 	self assert: (hits occurrencesOf: 1) equals: 488. "approx 50%"
 	self assert: (hits occurrencesOf: 5) equals: 512. "approx 50%"
-
 ]
 
 { #category : #'*Random-Tests' }
@@ -64,5 +63,5 @@ CollectionTest >> testAtRandomWeightingNegative [
 	"Fixed randomness"
 	random := Random seed: 42.
 
-	self should: [  collection atRandom: random weighting: [ :x | x ] ] raise: Error. 	
+	self should: [  collection atRandom: random weighting: [ :x | x ] ] raise: Error.
 ]
