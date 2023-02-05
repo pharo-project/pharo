@@ -511,7 +511,7 @@ ClyBrowserToolMorph >> rebuildStatusBar [
 { #category : #controlling }
 ClyBrowserToolMorph >> removeFromBrowser [
 
-	containerTab delete
+	containerTab owner removePage: containerTab
 ]
 
 { #category : #initialization }
