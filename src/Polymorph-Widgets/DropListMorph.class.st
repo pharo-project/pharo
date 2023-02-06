@@ -29,7 +29,7 @@ DropListMorph class >> on: anObject list: getListSel selected: getSelectionSel c
 	the given selectors as the interface."
 
 	^self new
-		on: anObject 
+		on: anObject
 		list: getListSel
 		selected: getSelectionSel
 		changeSelected: setSelectionSel
@@ -42,7 +42,7 @@ DropListMorph class >> on: anObject list: getListSel selected: getSelectionSel c
 
 	^self new
 		useSelectionIndex: useIndex;
-		on: anObject 
+		on: anObject
 		list: getListSel
 		selected: getSelectionSel
 		changeSelected: setSelectionSel
@@ -51,7 +51,7 @@ DropListMorph class >> on: anObject list: getListSel selected: getSelectionSel c
 { #category : #accessing }
 DropListMorph >> adoptPaneColor: paneColor [
 	"Pass on to the list morph and border too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self fillStyle: self fillStyleToUse.
@@ -80,7 +80,7 @@ DropListMorph >> allowKeyboardFocus: aBoolean [
 { #category : #private }
 DropListMorph >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
-	
+
 	^self enabled
 		ifTrue: [self theme dropListNormalBorderStyleFor: self]
 		ifFalse: [self theme dropListDisabledBorderStyleFor: self]
@@ -89,14 +89,14 @@ DropListMorph >> borderStyleToUse [
 { #category : #private }
 DropListMorph >> buttonExtent [
 	"Answer based on theme and preferences."
-	
+
 	^self buttonWidth @ self buttonHeight
 ]
 
 { #category : #private }
 DropListMorph >> buttonHeight [
 	"Answer based on theme."
-	
+
 	^self theme buttonMinHeight
 ]
 
@@ -124,7 +124,7 @@ DropListMorph >> buttonMorph: anObject [
 { #category : #private }
 DropListMorph >> buttonWidth [
 	"Answer based on scrollbar size."
-	
+
 	^ (self theme scrollbarThickness + 3)
 		max: self theme dropListControlButtonWidth
 ]
@@ -169,12 +169,12 @@ DropListMorph >> defaultContents [
 { #category : #protocol }
 DropListMorph >> disable [
 	"Disable the receiver."
-	
+
 	self enabled: false
 ]
 
 { #category : #drawing }
-DropListMorph >> drawSubmorphsOn: aCanvas [ 
+DropListMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front.
 	Draw the focus here since we are using inset bounds
 	for the focus rectangle."
@@ -187,7 +187,7 @@ DropListMorph >> drawSubmorphsOn: aCanvas [
 { #category : #protocol }
 DropListMorph >> enable [
 	"Enable the receiver."
-	
+
 	self enabled: true
 ]
 
@@ -214,7 +214,7 @@ DropListMorph >> enabled: anObject [
 { #category : #geometry }
 DropListMorph >> extent: newExtent [
 	"Update the gradient."
-	
+
 	super extent: newExtent.
 	(self fillStyle notNil and: [self fillStyle isSolidFill not])
 		ifTrue: [self fillStyle: self fillStyleToUse]
@@ -223,7 +223,7 @@ DropListMorph >> extent: newExtent [
 { #category : #private }
 DropListMorph >> fillStyleToUse [
 	"Answer the fillStyle that should be used for the receiver."
-	
+
 	^self enabled
 		ifTrue: [self theme dropListNormalFillStyleFor: self]
 		ifFalse: [self theme dropListDisabledFillStyleFor: self]
@@ -328,7 +328,7 @@ DropListMorph >> ghostText: aStringOrText [
 { #category : #'event handling' }
 DropListMorph >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event."
-	
+
 	^true
 ]
 
@@ -376,10 +376,10 @@ DropListMorph >> initialize [
 
 { #category : #'event handling' }
 DropListMorph >> keyDown: event [
-	
+
 	event keyCharacter = Character escape ifTrue: [ self hideList ].
 	(self navigationKey: event) ifTrue: [^self].
-	
+
 	event keyCharacter == Character cr
 		ifTrue: [ ^ self listSelectionIndex: self listSelectionIndex ].
 
@@ -391,13 +391,13 @@ DropListMorph >> keyStroke: event [
 	"Pass on to the list."
 	| indexToSelect |
 	indexToSelect := self listMorph keyStroke: event.
-	
+
 	"If the returned value is not an integer, do not handle it"
 	indexToSelect isInteger ifFalse: [ ^ self ].
-	
+
 	"If nothing found, do nothing"
 	indexToSelect == 0 ifTrue: [ ^ self ].
-	
+
 	self listSelectionIndex: indexToSelect
 ]
 
@@ -463,10 +463,10 @@ DropListMorph >> listMorph: anObject [
 	"Set the value of listMorph"
 
 	listMorph := anObject.
-	anObject 
-			on: #keyStroke 
-			send: #keyStroke: 
-			to: self.
+	anObject
+			on: #keyStroke
+			send: #keyStroke:
+			to: self
 ]
 
 { #category : #private }
@@ -488,7 +488,7 @@ DropListMorph >> listMouseDown: evt [
 { #category : #drawing }
 DropListMorph >> listPaneColor: paneColor [
 	"Set the pane color for the list."
-	
+
 	self listMorph ifNil: [^self].
 	self listMorph
 		adoptPaneColor: paneColor;
@@ -514,7 +514,7 @@ DropListMorph >> listSelectionIndex: anInteger [
 		changed: #listSelectionIndex;
 		updateContents;
 		triggerEvent: #selectionIndex with: anInteger.
-	self model ifNotNil: [:m | 
+	self model ifNotNil: [:m |
 		self setIndexSelector ifNotNil: [:s |
 			self useSelectionIndex
 				ifTrue: [m perform: s with: anInteger]
@@ -546,12 +546,12 @@ DropListMorph >> newButtonMorph [
 		label: #buttonLabel)
 			roundedCorners: #(3 4);
 			getEnabledSelector: #enabled;
-			label: self buttonLabel; 
+			label: self buttonLabel;
 			vResizing: #spaceFill;
 			hResizing: #rigid;
 			extent: self buttonExtent;
 			setProperty: #wantsKeyboardFocusNavigation toValue: false;
-			cornerStyle: self cornerStyle.
+			cornerStyle: self cornerStyle
 ]
 
 { #category : #drawing }
@@ -738,7 +738,7 @@ DropListMorph >> takesKeyboardFocus [
 { #category : #updating }
 DropListMorph >> themeChanged [
 	"Update the selection colour."
-	
+
 	self color: self defaultColor.
 	self selectionColor ifNotNil: [
 		self selectionColor: self theme selectionColor].
@@ -748,14 +748,14 @@ DropListMorph >> themeChanged [
 	self buttonMorph label: self buttonLabel.
 	self updateContentColor: nil.
 	self listMorph themeChanged.
-	super themeChanged.
+	super themeChanged
 ]
 
 { #category : #updating }
-DropListMorph >> update: aSymbol [ 
+DropListMorph >> update: aSymbol [
 	"Refer to the comment in View|update:."
 
-	aSymbol == getListSelector ifTrue: 
+	aSymbol == getListSelector ifTrue:
 		[self updateList.
 		^ self].
 	aSymbol == getIndexSelector ifTrue:
@@ -763,13 +763,13 @@ DropListMorph >> update: aSymbol [
 		^ self].
 	aSymbol == getEnabledSelector ifTrue:
 		[self updateEnabled.
-		^ self].
+		^ self]
 ]
 
 { #category : #updating }
 DropListMorph >> updateContentColor: paneColor [
 	"Change the content text color."
-	
+
 	self enabled
 		ifTrue: [self contentMorph textColor: self theme textColor ]
 		ifFalse: [self contentMorph textColor: self theme disabledColor ]
@@ -879,23 +879,23 @@ DropListMorph >> wrapItem: anItem index: index [
 
 	^ wrapSelector
 		ifNil: [ anItem asString ]
-		ifNotNil: [ 
+		ifNotNil: [
 			wrapSelector numArgs = 0
 				ifTrue: [ anItem perform: wrapSelector ]
-				ifFalse: [ self model 
-								perform: wrapSelector 
+				ifFalse: [ self model
+								perform: wrapSelector
 								withEnoughArguments: {anItem. index. self.} ]]
 ]
 
 { #category : #wrapping }
 DropListMorph >> wrapSelector [
-	
+
 	^ wrapSelector
 ]
 
 { #category : #wrapping }
 DropListMorph >> wrapSelector: aSymbol [
-	
+
 	wrapSelector := aSymbol.
 
 	self updateList.
