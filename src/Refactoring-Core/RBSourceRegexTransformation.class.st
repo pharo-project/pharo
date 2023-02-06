@@ -4,34 +4,34 @@ I am a regex refactoring replacing method sources.
 See comment of superclass for a nice script to be adapated to method sources.
 "
 Class {
-	#name : #RBSourceRegexRefactoring,
+	#name : #RBSourceRegexTransformation,
 	#superclass : #RBRegexRefactoring,
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : #'Refactoring-Core-Transformation-Unused'
 }
 
 { #category : #private }
-RBSourceRegexRefactoring >> parseMethod: aString [
+RBSourceRegexTransformation >> parseMethod: aString [
 	^ [ self parserClass parseMethod: aString ]
 		on: Error
 		do: [ :err | nil ]
 ]
 
 { #category : #private }
-RBSourceRegexRefactoring >> parseSelector: aSelector [
+RBSourceRegexTransformation >> parseSelector: aSelector [
 	^ [ self parserClass parseMethodPattern: aSelector ]
 		on: Error
 		do: [ nil ]
 ]
 
 { #category : #transforming }
-RBSourceRegexRefactoring >> transform [
+RBSourceRegexTransformation >> transform [
 
 	| original replacement protocols |
 
 	self model
-		allClassesDo: [ :class | 
+		allClassesDo: [ :class |
 			class selectors
-				do: [ :selector | 
+				do: [ :selector |
 					original := class sourceCodeFor: selector.
 					replacement := self execute: original.
 					replacement = original

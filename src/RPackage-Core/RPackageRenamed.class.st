@@ -14,7 +14,7 @@ Class {
 { #category : #'instance creation' }
 RPackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
 
-	^ (self to: aPackage) 
+	^ (self to: aPackage)
 		oldName: aSymbol;
 		newName: anotherSymbol;
 		yourself

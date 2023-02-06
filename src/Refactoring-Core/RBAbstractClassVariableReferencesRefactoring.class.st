@@ -6,7 +6,7 @@ I create new accessor methods for the variables and replace every read and write
 
 "
 Class {
-	#name : #RBAbstractClassVariableRefactoring,
+	#name : #RBAbstractClassVariableReferencesRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
 		'accessorsRefactoring'
@@ -15,38 +15,38 @@ Class {
 }
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> abstractClassReferences [
+RBAbstractClassVariableReferencesRefactoring >> abstractClassSideReferences [
 	| replacer |
-	replacer := self parseTreeRewriterClass  
+	replacer := self parseTreeRewriterClass
 		variable: variableName
 		getter: self accessorsRefactoring getterMethod
 		setter: self accessorsRefactoring setterMethod.
-	self 
+	self
 		convertClasses: class classSide withAllSubclasses
-		select: 
-			[ :aClass | 
-			(aClass whichSelectorsReferToClassVariable: variableName) reject: 
-				[ :each | 
-				aClass == class classSide and: 
+		select:
+			[ :aClass |
+			(aClass whichSelectorsReferToClassVariable: variableName) reject:
+				[ :each |
+				aClass == class classSide and:
 					[ each == self accessorsRefactoring getterMethod or: [ each == self accessorsRefactoring setterMethod ] ] ] ]
 		using: replacer
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> abstractInstanceReferences [
+RBAbstractClassVariableReferencesRefactoring >> abstractInstanceSideReferences [
 	| replacer |
-	replacer := self parseTreeRewriterClass 
+	replacer := self parseTreeRewriterClass
 		variable: variableName
 		getter: 'class ' , self accessorsRefactoring getterMethod
 		setter: 'class ' , self accessorsRefactoring setterMethod.
-	self 
+	self
 		convertClasses: class withAllSubclasses
 		select: [ :aClass | aClass whichSelectorsReferToClassVariable: variableName ]
 		using: replacer
 ]
 
 { #category : #'private - accessing' }
-RBAbstractClassVariableRefactoring >> accessorsRefactoring [
+RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
 		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableTransformation
@@ -59,22 +59,22 @@ RBAbstractClassVariableRefactoring >> accessorsRefactoring [
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> createAccessors [
+RBAbstractClassVariableReferencesRefactoring >> createAccessors [
 	self performCompositeRefactoring: self accessorsRefactoring
 ]
 
 { #category : #preconditions }
-RBAbstractClassVariableRefactoring >> preconditions [
-	^(RBCondition isMetaclass: class) not 
-		& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class) 
-			& ((RBCondition withBlock: 
-						[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not]) 
+RBAbstractClassVariableReferencesRefactoring >> preconditions [
+	^(RBCondition isMetaclass: class) not
+		& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
+			& ((RBCondition withBlock:
+						[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not])
 					errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableRefactoring >> transform [
+RBAbstractClassVariableReferencesRefactoring >> transform [
 	self createAccessors.
-	self abstractInstanceReferences.
-	self abstractClassReferences
+	self abstractInstanceSideReferences.
+	self abstractClassSideReferences
 ]

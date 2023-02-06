@@ -4,7 +4,7 @@ I am a refactoring for moving the definition of a variable to the block/scope wh
 For a method temporary variable declared but not initialized in the method scope and only used within a block, the definition can be moved to the block using this variable.
 "
 Class {
-	#name : #RBMoveVariableDefinitionRefactoring,
+	#name : #RBMoveVariableDefinitionToSmallestValidScopeTransformation,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'selector',
@@ -14,11 +14,11 @@ Class {
 		'blockNodes',
 		'definingNode'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : #'Refactoring-Core-Transformation-Unused'
 }
 
 { #category : #'instance creation' }
-RBMoveVariableDefinitionRefactoring class >> bindTight: anInterval in: aClass selector: aSelector [ 
+RBMoveVariableDefinitionToSmallestValidScopeTransformation class >> bindTight: anInterval in: aClass selector: aSelector [
 	^ self new
 		class: aClass
 		selector: aSelector
@@ -26,7 +26,7 @@ RBMoveVariableDefinitionRefactoring class >> bindTight: anInterval in: aClass se
 ]
 
 { #category : #'instance creation' }
-RBMoveVariableDefinitionRefactoring class >> model: aRBSmalltalk bindTight: anInterval in: aClass selector: aSelector [ 
+RBMoveVariableDefinitionToSmallestValidScopeTransformation class >> model: aRBSmalltalk bindTight: anInterval in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		class: aClass
@@ -36,22 +36,22 @@ RBMoveVariableDefinitionRefactoring class >> model: aRBSmalltalk bindTight: anIn
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> checkNodes: sequenceNodes [ 
-	(sequenceNodes 
-		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]) 
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkNodes: sequenceNodes [
+	(sequenceNodes
+		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each])
 		ifTrue: [^false].
-	sequenceNodes do: 
-			[:each | 
-			(self usesDirectly: each body) 
+	sequenceNodes do:
+			[:each |
+			(self usesDirectly: each body)
 				ifTrue: [blockNodes add: each]
-				ifFalse: 
-					[(self checkNodes: (self subblocksIn: each body)) 
+				ifFalse:
+					[(self checkNodes: (self subblocksIn: each body))
 						ifFalse: [blockNodes add: each]]].
 	^true
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> checkParseTree [
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkParseTree [
 
 	| node |
 
@@ -69,26 +69,26 @@ RBMoveVariableDefinitionRefactoring >> checkParseTree [
 ]
 
 { #category : #initialization }
-RBMoveVariableDefinitionRefactoring >> class: aClass selector: aSelector interval: anInterval [ 
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> class: aClass selector: aSelector interval: anInterval [
 	interval := anInterval.
 	class := self classObjectFor: aClass.
 	selector := aSelector
 ]
 
 { #category : #preconditions }
-RBMoveVariableDefinitionRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition withBlock: 
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> preconditions [
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
 					[| methodSource |
-					interval first <= interval last 
+					interval first <= interval last
 						ifFalse: [self refactoringFailure: 'You must select a variable name'].
 					methodSource := class sourceCodeFor: selector.
-					methodSource size >= interval last 
+					methodSource size >= interval last
 						ifFalse: [self refactoringFailure: 'Invalid range for variable'].
 					name := methodSource copyFrom: interval first to: interval last.
-					(self checkInstanceVariableName: name in: class) 
-						ifFalse: 
-							[self 
+					(self checkInstanceVariableName: name in: class)
+						ifFalse:
+							[self
 								refactoringFailure: name , ' does not seem to be a valid variable name.'].
 					parseTree := class parseTreeForSelector: selector.
 					self checkParseTree.
@@ -96,7 +96,7 @@ RBMoveVariableDefinitionRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBMoveVariableDefinitionRefactoring >> storeOn: aStream [ 
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' bindTight: '.
@@ -110,12 +110,12 @@ RBMoveVariableDefinitionRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> subblocksIn: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			(aNode references: name)
 				ifTrue: [ answer add: aNode ].
 			answer ].
@@ -125,14 +125,14 @@ RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> transform [
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> transform [
 	definingNode removeTemporaryNamed: name.
 	blockNodes do: [:each | each body addTemporaryNamed: name].
 	class compileTree: parseTree
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> usesDirectly: aParseTree [
+RBMoveVariableDefinitionToSmallestValidScopeTransformation >> usesDirectly: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
 	searcher
