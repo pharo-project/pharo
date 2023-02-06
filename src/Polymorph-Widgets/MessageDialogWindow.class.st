@@ -48,7 +48,7 @@ MessageDialogWindow >> iconMorph: anObject [
 MessageDialogWindow >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/4 the display width."
-	
+
 	|ext|
 	ext := super initialExtent.
 	self textMorph width > (Display width - 50) ifTrue: [
@@ -69,13 +69,13 @@ MessageDialogWindow >> initialize [
 { #category : #private }
 MessageDialogWindow >> lineLengths [
 
-	^ self textLines collect: [ :line | self textFont widthOfString: line ].
+	^ self textLines collect: [ :line | self textFont widthOfString: line ]
 ]
 
 { #category : #accessing }
 MessageDialogWindow >> minimumWidth [
-	
-	^ (self lineLengths max + 100) min: Display width.
+
+	^ (self lineLengths max + 100) min: Display width
 ]
 
 { #category : #actions }
@@ -97,7 +97,7 @@ MessageDialogWindow >> newContentMorph [
 { #category : #private }
 MessageDialogWindow >> newIconMorph [
 	"Answer an icon for the receiver."
-	
+
 	^ImageMorph new form: self icon
 ]
 
@@ -116,7 +116,7 @@ MessageDialogWindow >> playOpenSound [
 { #category : #accessing }
 MessageDialogWindow >> text: aStringOrText [
 	"Set the text."
-	
+
 	|t|
 	t := aStringOrText isString
 		ifTrue: [aStringOrText asText addAttribute: (TextFontReference toFont: self textFont); yourself]
@@ -130,14 +130,14 @@ MessageDialogWindow >> text: aStringOrText [
 { #category : #accessing }
 MessageDialogWindow >> textFont [
 	"Answer the text font."
-	
+
 	^textFont
 ]
 
 { #category : #accessing }
 MessageDialogWindow >> textFont: aFont [
 	"Set the text font."
-	
+
 	textFont :=  aFont.
 	self textMorph ifNotNil: [:m | m font: aFont]
 ]
@@ -145,7 +145,7 @@ MessageDialogWindow >> textFont: aFont [
 { #category : #private }
 MessageDialogWindow >> textLines [
 
-	^ self textMorph text asString lines.
+	^ self textMorph text asString lines
 ]
 
 { #category : #accessing }

@@ -35,20 +35,20 @@ SharedRandom class >> initialize [
 { #category : #initialization }
 SharedRandom >> initialize [
 	super initialize.
-	mutex := Semaphore forMutualExclusion.
+	mutex := Semaphore forMutualExclusion
 ]
 
 { #category : #accessing }
 SharedRandom >> next [
-	^ 	mutex critical: [ super privateNextValue ].
+	^ 	mutex critical: [ super privateNextValue ]
 ]
 
 { #category : #accessing }
 SharedRandom >> next: anInteger into: anArray [
-    ^ mutex critical: [ super next: anInteger into: anArray ].
+    ^ mutex critical: [ super next: anInteger into: anArray ]
 ]
 
 { #category : #accessing }
 SharedRandom >> nextInteger: anInteger [
-    ^ mutex critical: [ super nextInteger: anInteger ].
+    ^ mutex critical: [ super nextInteger: anInteger ]
 ]

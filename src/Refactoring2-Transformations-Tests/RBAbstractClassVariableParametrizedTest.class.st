@@ -4,10 +4,10 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBAbstractClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBAbstractClassVariableRefactoring .
+		addCase: { #rbClass -> RBAbstractClassVariableReferencesRefactoring .
 					  #constructor -> #variable:class: };
 		addCase: { #rbClass -> RBRemoveDirectAccessToVariableTransformation .
 					  #constructor -> #classVariable:class: };

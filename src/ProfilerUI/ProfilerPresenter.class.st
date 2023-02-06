@@ -14,7 +14,7 @@ Class {
 
 { #category : #layout }
 ProfilerPresenter class >> defaultLayout [
-	^ SpPanedLayout newTopToBottom 
+	^ SpPanedLayout newTopToBottom
 		  positionOfSlider: 20 percent;
 		  add: #inputPresenter;
 		  add: #resultsPresenter;
@@ -81,18 +81,16 @@ ProfilerPresenter >> presenterTitle [
 
 { #category : #subscription }
 ProfilerPresenter >> subscribe [
-	
+
 	resultsPresenter subscribeOnProfilingAnnouncements.
 	inputPresenter subscribeOnProfilingAnnouncements
-	
 ]
 
 { #category : #subscription }
 ProfilerPresenter >> unsubscribe [
-	
+
 	resultsPresenter unsubscribeFromProfilingAnnouncements.
-	inputPresenter unsubscribeFromProfilingAnnouncements.
-	
+	inputPresenter unsubscribeFromProfilingAnnouncements
 ]
 
 { #category : #accessing }

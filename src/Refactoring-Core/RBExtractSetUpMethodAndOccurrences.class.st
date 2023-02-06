@@ -66,7 +66,7 @@ RBExtractSetUpMethodAndOccurrences >> extractMethodClass [
 
 { #category : #transforming }
 RBExtractSetUpMethodAndOccurrences >> findOccurrencesClass [
-	^ RBFindAndReplaceSetUpRefactoring
+	^ RBFindAndReplaceSetUpTransformation
 ]
 
 { #category : #transforming }
