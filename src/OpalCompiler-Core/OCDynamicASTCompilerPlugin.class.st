@@ -25,7 +25,7 @@ OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock [
 
 	^ self new
 		transformBlock: aBlock;
-		yourself 
+		yourself
 ]
 
 { #category : #'instance creation' }

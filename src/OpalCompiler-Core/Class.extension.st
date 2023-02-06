@@ -9,7 +9,7 @@ Class >> classSideCompiler [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Class >> classSideCompilerClass [ 
+Class >> classSideCompilerClass [
 	"Redefine this method if you want to customize the compiler class for class-side methods"
 	^ Smalltalk compilerClass
 ]

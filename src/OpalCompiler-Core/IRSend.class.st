@@ -18,7 +18,7 @@ IRSend >> accept: aVisitor [
 
 { #category : #testing }
 IRSend >> isSend [
-	^true.
+	^true
 ]
 
 { #category : #testing }

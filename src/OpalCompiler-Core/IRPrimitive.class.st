@@ -33,10 +33,10 @@ IRPrimitive class >> null [
 IRPrimitive >> initializeFrom: aPragmaNode [
 
 	primitiveNum := 0.
-	spec := Array 
+	spec := Array
 		with: (aPragmaNode arguments second) name
 		with: (aPragmaNode arguments first) name
-		with: 0 with: 0.
+		with: 0 with: 0
 ]
 
 { #category : #accessing }
@@ -66,19 +66,19 @@ IRPrimitive >> printPrimitiveOn: aStream [
 	primIndex = 0
 		ifTrue: [ ^ self ].
 	primIndex = 120
-		ifTrue: [ 
+		ifTrue: [
 			"External call spec"
 			^ aStream print: spec ].
 	aStream nextPutAll: '<primitive: '.
 	primIndex = 117
-		ifTrue: [ 
+		ifTrue: [
 			primDecl := spec.
 			aStream
 				nextPut: $';
 				nextPutAll: primDecl second;
 				nextPut: $'.
 			primDecl first
-				ifNotNil: [ 
+				ifNotNil: [
 					aStream
 						nextPutAll: ' module: ';
 						nextPut: $';
