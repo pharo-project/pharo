@@ -306,7 +306,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart rest |
 	"Try to correctly replace the current token in the word.
 	The code editor should be able to do it by himself"
 	wordEnd := self editor nextWord: self editor caret.
@@ -315,7 +315,13 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		selectInvisiblyFrom: wordStart
 		to: wordEnd - 1.
 	old := self editor selection.
-	self editor replaceSelectionWith: aString.
+
+	self editor
+		selectInvisiblyFrom: wordEnd
+		to: wordEnd - 1.
+
+	rest := aString asString copyFrom: old size + 1 to: aString size.
+	self editor replaceSelectionWith: rest.
 
 	offset := NECPreferences spaceAfterCompletion
 		ifTrue: [ 1 ]
