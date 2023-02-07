@@ -298,12 +298,6 @@ SettingBrowser class >> viewAllSettings [
 	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
 ]
 
-{ #category : #'help system' }
-SettingBrowser class >> wikiStyleHelp [
-	<wikiStyleHelp: #'The setting browser'>
-	^ self comment
-]
-
 { #category : #menu }
 SettingBrowser >> about [
 	self inform: 'Here you can browse, query and change all system settings' translated
