@@ -75,11 +75,6 @@ RottenTestsSet >> rottenTests [
 ]
 
 { #category : #accessing }
-RottenTestsSet >> testsRunCount [
-	^ testsRunCount
-]
-
-{ #category : #accessing }
 RottenTestsSet >> testsRunCount: anObject [
 	testsRunCount := anObject
 ]
