@@ -2,7 +2,7 @@
 I am a Warning raised to the user if the list of manually resolved dependencies contains a package that does not exist in the system.
 "
 Class {
-	#name : #DAUnkownManuallyResolvedPackage,
+	#name : #DAUnknownManuallyResolvedPackage,
 	#superclass : #Warning,
 	#instVars : [
 		'package'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #signalling }
-DAUnkownManuallyResolvedPackage class >> signalOn: aPackageName [
+DAUnknownManuallyResolvedPackage class >> signalOn: aPackageName [
 
 	^ self new
 		  package: aPackageName;
@@ -19,19 +19,19 @@ DAUnkownManuallyResolvedPackage class >> signalOn: aPackageName [
 ]
 
 { #category : #accessing }
-DAUnkownManuallyResolvedPackage >> messageText [
+DAUnknownManuallyResolvedPackage >> messageText [
 	^ messageText
 		ifNil: [ package , ' dependency declared in the package Manifest as manuallyResolvedDependencies not detected in the system!' ]
 ]
 
 { #category : #accessing }
-DAUnkownManuallyResolvedPackage >> package [
+DAUnknownManuallyResolvedPackage >> package [
 
 	^ package
 ]
 
 { #category : #accessing }
-DAUnkownManuallyResolvedPackage >> package: anObject [
+DAUnknownManuallyResolvedPackage >> package: anObject [
 
 	package := anObject
 ]
