@@ -61,27 +61,8 @@ ChangeSet class >> assuredChangeSetNamed: aName [
 	"Answer a change set of the given name.  If one already exists, answer that, else create a new one and answer it."
 
 	^ (self named: aName)
-		ifNotNil: [:existing | existing]
-		ifNil: [self basicNewChangeSet: aName]
-]
-
-{ #category : #enumerating }
-ChangeSet class >> basicNewChangeSet: newName [
-
-	| newSet |
-	newName ifNil: [^ nil].
-	(self named: newName) ifNotNil:
-		[self inform: 'Sorry that name is already used'.
-		^ nil].
-	newSet := self basicNewNamed: newName.
-	AllChangeSets add: newSet.
-	^ newSet
-]
-
-{ #category : #'instance creation' }
-ChangeSet class >> basicNewNamed: aName [
-
-	^ (self basicNew name: aName) initialize
+		  ifNotNil: [ :existing | existing ]
+		  ifNil: [ self newChangeSet: aName ]
 ]
 
 { #category : #enumerating }
@@ -301,7 +282,7 @@ ChangeSet class >> new [
 	"All current changeSets must be registered in the AllChangeSets collection.
 	Due to a quirk of history, this is maintained as class variable of ChangeSorter."
 
-	^ self basicNewChangeSet: self defaultName
+	^ self newChangeSet: self defaultName
 ]
 
 { #category : #services }
@@ -311,25 +292,24 @@ ChangeSet class >> newChangeSet [
 	of not ok, else return the actual changeset."
 
 	| newName newSet |
-	newName := UIManager default
-		request: 'Please name the new change set:'
-		initialAnswer: self defaultName.
-	newName isEmptyOrNil ifTrue:
-		[^ nil].
-	newSet := self basicNewChangeSet: newName.
-	newSet ifNotNil:
-		[self  newChanges: newSet].
+	newName := UIManager default request: 'Please name the new change set:' initialAnswer: self defaultName.
+	newName isEmptyOrNil ifTrue: [ ^ nil ].
+	newSet := self newChangeSet: newName.
+	newSet ifNotNil: [ self newChanges: newSet ].
 	^ newSet
 ]
 
 { #category : #services }
-ChangeSet class >> newChangeSet: aName [
-	"Makes a new change set called aName, add author full name to try to
-	ensure a unique change set name."
+ChangeSet class >> newChangeSet: newName [
 
-	| newName |
-	newName := aName , '.' , Author fullName.
-	^ self basicNewChangeSet: newName
+	| newSet |
+	newName ifNil: [ ^ nil ].
+	(self named: newName) ifNotNil: [
+		self inform: 'Sorry that name is already used'.
+		^ nil ].
+	newSet := self newNamed: newName.
+	AllChangeSets add: newSet.
+	^ newSet
 ]
 
 { #category : #'current changeset' }
@@ -376,13 +356,18 @@ ChangeSet class >> newChangesFromStream: aStream named: aName [
 	| oldChanges newName newSet |
 	oldChanges := self current.
 	newName := aName withoutPeriodSuffix.
-	newSet := self basicNewChangeSet: newName.
+	newSet := self newChangeSet: newName.
 	[
-	newSet ifNotNil: [ 
+	newSet ifNotNil: [
 		self newChanges: newSet.
-		CodeImporter evaluateReadStream: aStream ]
-	] ensure: [ self newChanges: oldChanges ].
+		CodeImporter evaluateReadStream: aStream ] ] ensure: [ self newChanges: oldChanges ].
 	^ newSet
+]
+
+{ #category : #'instance creation' }
+ChangeSet class >> newNamed: aName [
+
+	^ (self basicNew name: aName) initialize
 ]
 
 { #category : #enumerating }
@@ -1310,14 +1295,25 @@ ChangeSet >> preambleString: aString [
 ChangeSet >> preambleTemplate [
 	"Answer a string that will form the default contents for a change set's preamble.
 	Just a first stab at what the content should be."
+
 	<script: 'ChangeSet current preambleTemplate inspect'>
-	
-	^ String streamContents: [:strm |
-		strm nextPutAll: '"Change Set:'.  "NOTE: fileIn recognizes preambles by this string."
-		strm tab;tab; nextPutAll: self name.
-		strm cr; nextPutAll: 'Date:'; tab; tab; tab; nextPutAll: Date today printString.
-		strm cr; nextPutAll: 'Author:'; tab; tab; tab; nextPutAll:  Author fullName.
-		strm cr; cr; nextPutAll: '<your descriptive text goes here>"']
+	^ String streamContents: [ :strm |
+		  strm nextPutAll: '"Change Set:'. "NOTE: fileIn recognizes preambles by this string."
+		  strm
+			  tab;
+			  tab;
+			  nextPutAll: self name.
+		  strm
+			  cr;
+			  nextPutAll: 'Date:';
+			  tab;
+			  tab;
+			  tab;
+			  nextPutAll: Date today printString.
+		  strm
+			  cr;
+			  cr;
+			  nextPutAll: '<your descriptive text goes here>"' ]
 ]
 
 { #category : #printing }
