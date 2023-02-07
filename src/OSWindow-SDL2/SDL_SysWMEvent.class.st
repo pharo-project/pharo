@@ -24,7 +24,7 @@ SDL_SysWMEvent class >> eventType [
 { #category : #'field description' }
 SDL_SysWMEvent class >> fieldsDesc [
 	"
-		self rebuildFieldAccessors 
+		self rebuildFieldAccessors
 	"
 
 	^ #(
@@ -39,7 +39,7 @@ SDL_SysWMEvent >> accept: aVisitor [
 
 	self isWindows ifFalse: [ ^ nil ].
 	self windowsMessage isDisplayChanged ifFalse: [ ^ nil ].
-	
+
 	^ aVisitor visitSystemWindowEvent: self
 ]
 
@@ -51,7 +51,7 @@ SDL_SysWMEvent >> eventType [
 
 { #category : #testing }
 SDL_SysWMEvent >> isWindows [
-	
+
 	^ self msg isWindows
 ]
 
@@ -64,16 +64,16 @@ SDL_SysWMEvent >> msg [
 { #category : #'accessing - structure variables' }
 SDL_SysWMEvent >> msg: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_MSG put: anObject getHandle.
+	handle pointerAt: OFFSET_MSG put: anObject getHandle
 ]
 
 { #category : #printing }
 SDL_SysWMEvent >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $:;
-		print: self msg.
+		print: self msg
 ]
 
 { #category : #'accessing - structure variables' }
@@ -103,13 +103,13 @@ SDL_SysWMEvent >> type: anObject [
 { #category : #accessing }
 SDL_SysWMEvent >> windowID [
 
-	self isWindows 
+	self isWindows
 		ifFalse: [ ^ nil ].
 	self windowsMessage isDisplayChanged ifFalse: [ ^ nil ].
 
-	^ windowId ifNil: [ 
+	^ windowId ifNil: [
 		  OSSDL2Driver allWindows
-			  detect: [ :w | 
+			  detect: [ :w |
 			  w platformSpecificHandle window getHandle = self windowsMessage hwnd getHandle ]
 			  ifFound: [ :w | ^ windowId := w windowId ]
 			  ifNone: [ ^ nil ] ]
@@ -117,6 +117,6 @@ SDL_SysWMEvent >> windowID [
 
 { #category : #accessing }
 SDL_SysWMEvent >> windowsMessage [
-	
+
 	^ self msg windowsMessage
 ]

@@ -102,13 +102,13 @@ OSBackendWindow >> newGenericRenderer [
 
 { #category : #accessing }
 OSBackendWindow >> osWindow [
-	
+
 	^ osWindow
 ]
 
 { #category : #accessing }
 OSBackendWindow >> osWindow: anObject [
-	
+
 	osWindow := anObject
 ]
 
@@ -129,7 +129,7 @@ OSBackendWindow >> position: newPosition [
 
 { #category : #accessing }
 OSBackendWindow >> prepareExternalResourceForAutoRelease [
-	"This hook will allow just create handlers to prepate their external resources for being 
+	"This hook will allow just create handlers to prepate their external resources for being
 	 releases by the GC (if needed). By default, do nothing."
 ]
 
@@ -139,13 +139,13 @@ OSBackendWindow >> releaseMouse [
 
 { #category : #accessing }
 OSBackendWindow >> renderer [
-	
+
 	^ renderer
 ]
 
 { #category : #accessing }
 OSBackendWindow >> renderer: anObject [
-	
+
 	renderer := anObject
 ]
 
