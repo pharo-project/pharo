@@ -192,17 +192,6 @@ Class {
 	#category : #'System-Settings-Browser'
 }
 
-{ #category : #'private helpers' }
-SettingBrowser class >> allSettingsState [
-	"
-	Workspace openContents: self allSettingsState label: 'Current Setting assignments' 
-	"
-	| declList |
-	declList := (self currentNodeList select: [ :node | node item hasValue])
-		collect: [ :node | node item ].
-	^ String streamContents: [:s | declList do: [:d | d settingStoreOn: s] ]
-]
-
 { #category : #opening }
 SettingBrowser class >> browse: aCollectionOfKeywords [
 	"open a SettingBrowser view which is able to browse all settings 
@@ -290,12 +279,6 @@ SettingBrowser class >> settingsKeywords [
 { #category : #icons }
 SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
-]
-
-{ #category : #'private helpers' }
-SettingBrowser class >> viewAllSettings [
-	"self viewAllSettings"
-	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
 ]
 
 { #category : #'help system' }
