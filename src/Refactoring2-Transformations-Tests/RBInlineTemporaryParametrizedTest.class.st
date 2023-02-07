@@ -13,7 +13,7 @@ RBInlineTemporaryParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBInlineTemporaryParametrizedTest >> constructor [ 
+RBInlineTemporaryParametrizedTest >> constructor [
 	^ #inline:from:in:
 ]
 
@@ -22,7 +22,7 @@ RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
 		{ (24 to: 72) . #inlineMethod . RBRefactoryTestDataApp }.
-	
+
 	self executeRefactoring: refactoring.
 
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMethod) equals: (self parseMethod: 'inlineMethod

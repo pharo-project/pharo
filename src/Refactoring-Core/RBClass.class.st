@@ -23,14 +23,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBClass class >> existingNamed: aSymbol [ 
+RBClass class >> existingNamed: aSymbol [
 	^(self named: aSymbol)
 		realName: aSymbol;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBClass class >> existingNamed: aSymbol model: aRBNamespace [ 
+RBClass class >> existingNamed: aSymbol model: aRBNamespace [
 	^ (self named: aSymbol)
 		model: aRBNamespace;
 		realName: aSymbol;
@@ -50,14 +50,14 @@ RBClass class >> named: aSymbol [
 ]
 
 { #category : #'variable accessing' }
-RBClass >> addClassVariable: aString [ 
+RBClass >> addClassVariable: aString [
 	self privateClassVariableNames add: aString asSymbol.
 	model addClassVariable: aString to: self.
 	self classPool at: aString put: nil
 ]
 
 { #category : #'variable accessing' }
-RBClass >> addPoolDictionary: aString [ 
+RBClass >> addPoolDictionary: aString [
 	self privatePoolDictionaryNames add: aString asSymbol.
 	model addPool: aString to: self
 ]
@@ -101,7 +101,7 @@ RBClass >> category [
 ]
 
 { #category : #accessing }
-RBClass >> category: aSymbol [ 
+RBClass >> category: aSymbol [
 	category := aSymbol
 ]
 
@@ -116,8 +116,8 @@ RBClass >> classVariableNames [
 ]
 
 { #category : #accessing }
-RBClass >> classVariableNames: aCollectionOfStrings [ 
-	classVariableNames := (aCollectionOfStrings 
+RBClass >> classVariableNames: aCollectionOfStrings [
+	classVariableNames := (aCollectionOfStrings
 				collect: [:each | self classPool at: each asSymbol put: nil.
 					each asSymbol]) asOrderedCollection
 ]
@@ -141,7 +141,7 @@ RBClass >> comment: aString [
 RBClass >> definitionString [
 	^ String
 		streamContents:
-			[ :definitionStream | 
+			[ :definitionStream |
 			definitionStream
 				nextPutAll: self superclass printString;
 				nextPutAll: ' subclass: #';
@@ -150,7 +150,7 @@ RBClass >> definitionString [
 					'
 	instanceVariableNames: '''.
 			self instanceVariableNames
-				do: [ :each | 
+				do: [ :each |
 					definitionStream
 						nextPutAll: each;
 						nextPut: $  ].
@@ -159,7 +159,7 @@ RBClass >> definitionString [
 					'''
 	classVariableNames: '''.
 			self classVariableNames
-				do: [ :each | 
+				do: [ :each |
 					definitionStream
 						nextPutAll: each;
 						nextPut: $  ].
@@ -168,7 +168,7 @@ RBClass >> definitionString [
 					'''
 	poolDictionaries: '''.
 			self sharedPoolNames
-				do: [ :each | 
+				do: [ :each |
 					definitionStream
 						nextPutAll: each;
 						nextPut: $  ].
@@ -187,7 +187,7 @@ RBClass >> directlyDefinesClassVariable: aString [
 ]
 
 { #category : #testing }
-RBClass >> directlyDefinesPoolDictionary: aString [ 
+RBClass >> directlyDefinesPoolDictionary: aString [
 	^self sharedPoolNames includes: aString asSymbol
 ]
 
@@ -211,14 +211,14 @@ RBClass >> isMeta [
 
 { #category : #testing }
 RBClass >> isSharedPool [
-	
+
 	^ (self allSuperclasses collect:  [:each | each name]) includes: #SharedPool
 ]
 
 { #category : #querying }
 RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
- 
-	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | 			
+
+	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod |
 			|modelClass|
 			modelClass := self model classNamed: aMethod methodClass name.
 			modelClass methodFor: aMethod selector
@@ -232,33 +232,33 @@ RBClass >> poolDictionaryNames [
 ]
 
 { #category : #accessing }
-RBClass >> poolDictionaryNames: aCollectionOfStrings [ 
+RBClass >> poolDictionaryNames: aCollectionOfStrings [
 	poolDictionaryNames := (aCollectionOfStrings collect: [:each | each asSymbol]) asOrderedCollection
 ]
 
 { #category : #private }
 RBClass >> privateClassVariableNames [
-	(self isDefined and: [classVariableNames isNil]) 
+	(self isDefined and: [classVariableNames isNil])
 		ifTrue: [self classVariableNames: self realClass classVarNames].
 	^classVariableNames
 ]
 
 { #category : #private }
 RBClass >> privatePoolDictionaryNames [
-	(self isDefined and: [poolDictionaryNames isNil]) 
-		ifTrue: 
-			[self poolDictionaryNames: (self realClass sharedPools 
+	(self isDefined and: [poolDictionaryNames isNil])
+		ifTrue:
+			[self poolDictionaryNames: (self realClass sharedPools
 						collect: [:each | self realClass environment keyAtValue: each])].
 	^poolDictionaryNames
 ]
 
 { #category : #initialization }
-RBClass >> realName: aSymbol [ 
+RBClass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol)
 ]
 
 { #category : #'variable accessing' }
-RBClass >> removeClassVariable: aString [ 
+RBClass >> removeClassVariable: aString [
 	self privateClassVariableNames remove: aString asSymbol.
 	model removeClassVariable: aString from: self
 ]
@@ -270,7 +270,7 @@ RBClass >> removeClassVariable: aString ifAbsent: aBlock [
 ]
 
 { #category : #'variable accessing' }
-RBClass >> removePoolDictionary: aString [ 
+RBClass >> removePoolDictionary: aString [
 	self privatePoolDictionaryNames remove: aString asSymbol
 ]
 
@@ -281,12 +281,12 @@ RBClass >> removeProtocolNamed: aString [
 ]
 
 { #category : #'variable accessing' }
-RBClass >> renameClassVariable: oldName to: newName around: aBlock [ 
-	self privateClassVariableNames 
+RBClass >> renameClassVariable: oldName to: newName around: aBlock [
+	self privateClassVariableNames
 		at: (self privateClassVariableNames indexOf: oldName asSymbol)
 		put: newName asSymbol.
 	^ self model
-		performChange: (changeFactory  
+		performChange: (changeFactory
 								renameClassVariable: oldName
 								to: newName
 								in: self)

@@ -12,7 +12,7 @@ RBFindAndReplaceSetUpParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBFindAndReplaceSetUpParametrizedTest >> constructor [ 
+RBFindAndReplaceSetUpParametrizedTest >> constructor [
 	^ #of:inWholeHierarchy:
 ]
 
@@ -31,17 +31,17 @@ RBFindAndReplaceSetUpParametrizedTest >> testReplaceSetUp [
 	class compile: 'setUp self someClasses. aString := ''Example''.'
 		classified: #(#accessing).
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #testExample1) 
-		equals: (self parseMethod: 'testExample1 
+	self assert: (class parseTreeForSelector: #testExample1)
+		equals: (self parseMethod: 'testExample1
 		self assert: 4 > 5 equals: false').
-	self assert: (class parseTreeForSelector: #testExample2) 
+	self assert: (class parseTreeForSelector: #testExample2)
 		equals: (self parseMethod: 'testExample2
 		self assert: true').
-	self assert: (class parseTreeForSelector: #testExample3) 
+	self assert: (class parseTreeForSelector: #testExample3)
 		equals: (self parseMethod: 'testExample3
 		self deny: false').
-	self assert: (class parseTreeForSelector: #testExample4) 
+	self assert: (class parseTreeForSelector: #testExample4)
 		equals: (self parseMethod: 'testExample4
 		self assert: true.
-		self deny: false').
+		self deny: false')
 ]

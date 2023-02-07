@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 RBProtocolEnvironment class >> class: aClass protocols: aCollection [
-	^ self 
+	^ self
 		onEnvironment: self default
 		class: aClass
 		protocols: aCollection
@@ -60,8 +60,8 @@ RBProtocolEnvironment >> defaultLabel [
 	stream := String new writeStream.
 	stream nextPutAll: class name;
 		nextPut: $>.
-	protocols do: 
-			[:each | 
+	protocols do:
+			[:each |
 			stream nextPutAll: each;
 				nextPut: $ ].
 	^stream contents
@@ -106,9 +106,9 @@ RBProtocolEnvironment >> includesProtocol: aProtocol in: aClass [
 ]
 
 { #category : #testing }
-RBProtocolEnvironment >> includesSelector: aSelector in: aClass [ 
-	^(super includesSelector: aSelector in: aClass) and: 
-			[protocols 
+RBProtocolEnvironment >> includesSelector: aSelector in: aClass [
+	^(super includesSelector: aSelector in: aClass) and:
+			[protocols
 				includes: (environment whichProtocolIncludes: aSelector in: aClass)]
 ]
 
@@ -147,7 +147,7 @@ RBProtocolEnvironment >> removeProtocol: aSymbol [
 ]
 
 { #category : #printing }
-RBProtocolEnvironment >> storeOn: aStream [ 
+RBProtocolEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.
 	aStream

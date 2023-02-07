@@ -21,11 +21,11 @@ RBMakeClassAbstractTransformation class >> basicMenuItemString [
 { #category : #'instance creation' }
 RBMakeClassAbstractTransformation class >> class: targetClass [
 
-	^ self new class: targetClass 
+	^ self new class: targetClass
 ]
 
 { #category : #testing }
-RBMakeClassAbstractTransformation class >> isTransformation [ 
+RBMakeClassAbstractTransformation class >> isTransformation [
 
 	^ true
 ]
@@ -38,7 +38,7 @@ RBMakeClassAbstractTransformation >> class: class [
 
 { #category : #preconditions }
 RBMakeClassAbstractTransformation >> preconditions [
-	
+
 	^ (RBCondition isAbstractClass: targetClass) not
 ]
 

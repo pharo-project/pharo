@@ -12,21 +12,21 @@ RBDeprecateClassParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBDeprecateClassParametrizedTest >> constructor [ 
+RBDeprecateClassParametrizedTest >> constructor [
 	^ #deprecate:in:
 ]
 
 { #category : #'failure tests' }
 RBDeprecateClassParametrizedTest >> testBadName [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ RBLintRuleTestData . self objectClassVariable }).
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ RBLintRuleTestData . #'Ob ject' })
 ]
 
 { #category : #'failure tests' }
 RBDeprecateClassParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ self class class . #Foo })
 ]
 
@@ -34,13 +34,13 @@ RBDeprecateClassParametrizedTest >> testMetaClassFailure [
 RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	| refactoring replacement deprecated user |
 
-	model defineClass: 'Object << #ClassDeprecatorTestingClassReplacement 
+	model defineClass: 'Object << #ClassDeprecatorTestingClassReplacement
 		package: #''Refactory-Test data'''.
 
-	model defineClass: 'ClassDeprecatorTestingClassReplacement << #ClassDeprecatorTestingClassDeprecated 
+	model defineClass: 'ClassDeprecatorTestingClassReplacement << #ClassDeprecatorTestingClassDeprecated
 		package: #''Refactory-Test data'''.
-	
-	model defineClass: 'ClassDeprecatorTestingClassDeprecated << #ClassDeprecatorTestingClassDeprecatedUser 
+
+	model defineClass: 'ClassDeprecatorTestingClassDeprecated << #ClassDeprecatorTestingClassDeprecatedUser
 		package: #''Refactory-Test data'''.
 
 	replacement := model classNamed: #ClassDeprecatorTestingClassReplacement.
@@ -52,11 +52,11 @@ RBDeprecateClassParametrizedTest >> testModelRenameClass [
 		compile: 'objectName ^#(ClassDeprecatorTestingClassDeprecated)' classified: #(#accessing).
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { deprecated . #ClassDeprecatorTestingClassReplacement }.
-	
+
 	"because of RB limitations we cannot detect extensions in the test properly so we skip this operation"
-	refactoring shouldCopyExtensions: false.	
-	refactoring shouldRemoveExtensions: false.	
-		
+	refactoring shouldCopyExtensions: false.
+	refactoring shouldRemoveExtensions: false.
+
 	self executeRefactoring: refactoring.
 	self assert: (model includesClassNamed: #ClassDeprecatorTestingClassReplacement).
 	self assert: (model includesClassNamed: #ClassDeprecatorTestingClassDeprecated).
@@ -68,10 +68,10 @@ RBDeprecateClassParametrizedTest >> testModelRenameClass [
 
 	self assert: (user parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo ^ClassDeprecatorTestingClassReplacement').
-		
-	self assert: (user parseTreeForSelector: #objectName) 
+
+	self assert: (user parseTreeForSelector: #objectName)
 		equals: (self parseMethod: 'objectName ^#(ClassDeprecatorTestingClassReplacement)').
 
-	self assert: user superclass name 
+	self assert: user superclass name
 		equals: #ClassDeprecatorTestingClassReplacement
 ]
