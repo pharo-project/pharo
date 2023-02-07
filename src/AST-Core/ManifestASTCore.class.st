@@ -9,7 +9,7 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestASTCore class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract')
+	^ #(#'Collections-Abstract' 'Foo')
 ]
 
 { #category : #'meta data' }

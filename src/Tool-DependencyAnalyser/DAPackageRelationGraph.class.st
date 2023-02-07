@@ -71,10 +71,10 @@ DAPackageRelationGraph >> addMessageSendDependencies: aPackage [
 		initializeWith: aPackage;
 		yourself).
 
-	analyser manuallyResolvedDependencies do: 
+	analyser manuallyResolvedDependencies do:
 		[ :packageName |
-		(analyser missingMethodsImplementedIn: packageName) 
-			ifEmpty: [ PotentialOutDatedDependencyWarning signalDependency: packageName on: aPackage packageName ]
+		(analyser missingMethodsImplementedIn: packageName)
+			ifEmpty: [ DAPotentialOutDatedDependencyWarning signalDependency: packageName on: aPackage packageName ]
 			ifNotEmpty: 	[ :implementedMethods |
 				aPackage add: ((DAMessageSendDependency from: aPackage to: (self daPackageWith: packageName))
 					implementedMethods: implementedMethods;
