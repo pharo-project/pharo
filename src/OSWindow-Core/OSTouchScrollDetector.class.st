@@ -26,7 +26,7 @@ OSTouchScrollDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 	(aBuilder setting: #minDistanceBeforeDetection)
 		target: self;
 		label: 'Minimal fingers distance crossed (%)';
-		default: 0.05;		
+		default: 0.05;
 		description:
 				'The distance, in percentage of the screen, that both fingers needs to travel before event detection';
 		parent: #scrollGesture
@@ -122,7 +122,7 @@ OSTouchScrollDetector >> eventClassMoveGesture [
 OSTouchScrollDetector >> initialize [
 	super initialize.
 	persistentDirection := self class persistentDirection.
-	directionAtBeginning := 0@0.
+	directionAtBeginning := 0@0
 ]
 
 { #category : #preconditions }

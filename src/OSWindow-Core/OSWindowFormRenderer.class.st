@@ -27,13 +27,13 @@ OSWindowFormRenderer >> drawDuring: aBlock [
 
 { #category : #accessing }
 OSWindowFormRenderer >> form [
-	
+
 	^ form
 ]
 
 { #category : #accessing }
 OSWindowFormRenderer >> form: anObject [
-	
+
 	form := anObject
 ]
 
@@ -55,5 +55,5 @@ OSWindowFormRenderer >> pixelExtent [
 { #category : #'morphic integration' }
 OSWindowFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 	"Force all the damage rects to the screen."
-	allDamage do: [ :r| self updateRectangle: r ].
+	allDamage do: [ :r| self updateRectangle: r ]
 ]

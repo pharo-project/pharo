@@ -18,12 +18,12 @@ OSUnknownEvent >> accept: aVisitor [
 
 { #category : #accessing }
 OSUnknownEvent >> data [
-	
+
 	^ data
 ]
 
 { #category : #accessing }
 OSUnknownEvent >> data: anObject [
-	
+
 	data := anObject
 ]
