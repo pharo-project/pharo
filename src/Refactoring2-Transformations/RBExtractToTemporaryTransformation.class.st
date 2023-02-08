@@ -105,7 +105,7 @@ RBExtractToTemporaryTransformation >> parseTree [
 
 	parseTree
 		ifNil: [ 
-			parseTree := class parseTreeFor: selector.
+			parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 		].
 	^ parseTree

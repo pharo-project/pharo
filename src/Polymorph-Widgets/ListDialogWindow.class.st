@@ -38,7 +38,7 @@ ListDialogWindow class >> searchList [
 { #category : #protocol }
 ListDialogWindow >> accept: anItem [
 	self answer: anItem.
-	self ok.
+	self ok
 ]
 
 { #category : #accessing }
@@ -121,7 +121,7 @@ ListDialogWindow >> buildSearchMorph [
 			acceptSelector: #searchAccept:;
 			updateSelector: #searchUpdate:;
 			searchList: self class searchList;
-			yourself.
+			yourself
 ]
 
 { #category : #actions }
@@ -172,30 +172,30 @@ ListDialogWindow >> doubleClickOk [
 ListDialogWindow >> getList: aSymbolOrBlockWithOneArgument [
 	aSymbolOrBlockWithOneArgument isBlock
 		ifTrue: [ listBlock := aSymbolOrBlockWithOneArgument. ^ self updateList ].
-	aSymbolOrBlockWithOneArgument isSymbol 
-		ifTrue: [ 
+	aSymbolOrBlockWithOneArgument isSymbol
+		ifTrue: [
 			listBlock := [ :regex| model perform: aSymbolOrBlockWithOneArgument with: regex].
 			^ self updateList].
-	Error signal: 'invalid argument'.
+	Error signal: 'invalid argument'
 ]
 
 { #category : #'focus handling' }
 ListDialogWindow >> giveFocusToList [
 	list ifEmpty: [ ^ self giveFocusToSearch].
-	
+
 	self listIndex: (( listIndex max: 1 ) min: list size).
-	listMorph takeKeyboardFocus.
+	listMorph takeKeyboardFocus
 ]
 
 { #category : #'focus handling' }
 ListDialogWindow >> giveFocusToSearch [
-	searchMorph takeKeyboardFocus.
+	searchMorph takeKeyboardFocus
 ]
 
 { #category : #'open/close' }
 ListDialogWindow >> initialAnswer: aString [
 
-	searchMorph content: aString.
+	searchMorph content: aString
 ]
 
 { #category : #'open/close' }
@@ -205,7 +205,7 @@ ListDialogWindow >> initialExtent [
 
 { #category : #protocol }
 ListDialogWindow >> initialFilter: aString [
-	searchMorph content: aString.
+	searchMorph content: aString
 ]
 
 { #category : #initialization }
@@ -219,8 +219,8 @@ ListDialogWindow >> initialize [
 	browseBlock :=  [:tmp | tmp browse ].
 	pattern := '.' asRegexIgnoringCase.
 	acceptNewEntry := false.
-	
-	super initialize.
+
+	super initialize
 ]
 
 { #category : #'morphic protocol' }
@@ -230,7 +230,7 @@ ListDialogWindow >> list [
 
 { #category : #'row management' }
 ListDialogWindow >> listChanged [
-	self changed: #list.
+	self changed: #list
 ]
 
 { #category : #'morphic protocol' }
@@ -242,36 +242,36 @@ ListDialogWindow >> listIndex [
 ListDialogWindow >> listIndex: aNumber [
 	listIndex := aNumber.
 	self answer: (list at: listIndex ifAbsent: [ nil ]).
-	self changed: #listIndex.
+	self changed: #listIndex
 ]
 
 { #category : #events }
 ListDialogWindow >> listKeystroke: event [
-	event keyCharacter = Character arrowUp 
+	event keyCharacter = Character arrowUp
 		ifTrue: [ ^ self listKeystrokeUp ].
-		
-	event keyCharacter = Character arrowDown 
-		ifTrue: [ ^ self listKeystrokeDown ].
+
+	event keyCharacter = Character arrowDown
+		ifTrue: [ ^ self listKeystrokeDown ]
 ]
 
 { #category : #events }
 ListDialogWindow >> listKeystrokeDown [
 	listIndex = list size
-		ifTrue: [ 
+		ifTrue: [
 			self listIndex: 0.
 			self giveFocusToSearch.
 			^ true].
-	^ false.
+	^ false
 ]
 
 { #category : #events }
 ListDialogWindow >> listKeystrokeUp [
-	listIndex = 1 
-		ifTrue: [ 
+	listIndex = 1
+		ifTrue: [
 			self listIndex: 0.
 			self giveFocusToSearch.
 			^ true].
-	^ false.
+	^ false
 ]
 
 { #category : #actions }
@@ -288,7 +288,7 @@ ListDialogWindow >> newContentMorph [
 	panel layoutPolicy: ProportionalLayout new;
 		layoutInset: 0;
 		hResizing: #spaceFill;
-		vResizing: #spaceFill.					
+		vResizing: #spaceFill.
 	panel addMorph: self buildListMorph
 			fullFrame: (LayoutFrame identity bottomOffset: -33).
 	panel addMorph: self buildSearchMorph
@@ -304,12 +304,12 @@ ListDialogWindow >> no [
 { #category : #actions }
 ListDialogWindow >> ok [
 
-	(acceptNewEntry and: [ list isEmpty ]) ifTrue: [ 
+	(acceptNewEntry and: [ list isEmpty ]) ifTrue: [
 		self answer: self searchString ].
-	
+
 	self answer ifNil: [ self searchAccept: self searchString ].
-	
-	self 
+
+	self
 		cancelled: false;
 		delete
 ]
@@ -320,7 +320,7 @@ ListDialogWindow >> searchAccept: aString [
 	list detect: [ :item | (self displayItem: item) = aString ] ifFound: [ :item | ^ self accept: item ].
 	acceptNewEntry
 		ifTrue: [ ^ self accept: aString ]
-		ifFalse: [ 
+		ifFalse: [
 			list size = 1
 				ifTrue: [ ^ self accept: list first ] ].
 	list ifNotEmpty: [ ^ self giveFocusToList ]
@@ -328,14 +328,14 @@ ListDialogWindow >> searchAccept: aString [
 
 { #category : #events }
 ListDialogWindow >> searchKeystroke: event [
-	
+
 	searchMorph content ifNil: [ ^ false ].
-	
+
 	(event keyCharacter = Character arrowDown )
 		ifTrue: [ ^ self searchKeystrokeDown ].
-		
+
 	(event keyCharacter = Character arrowUp)
-		ifTrue: [ ^ self searchKeystrokeUp ].
+		ifTrue: [ ^ self searchKeystrokeUp ]
 ]
 
 { #category : #events }
@@ -345,7 +345,7 @@ ListDialogWindow >> searchKeystrokeDown [
 	((interval last == searchMorph content size)
 	and: [ interval last < interval first ])
 		ifFalse: [ ^ false ].
-		
+
 	self giveFocusToList.
 	^ true
 ]
@@ -354,7 +354,7 @@ ListDialogWindow >> searchKeystrokeDown [
 ListDialogWindow >> searchKeystrokeUp [
 	(searchMorph selectionInterval last == 0)
 		ifFalse: [ ^ false ].
-		
+
 	self listIndex: list size.
 	self giveFocusToList.
 	^ true
@@ -369,11 +369,11 @@ ListDialogWindow >> searchString [
 ListDialogWindow >> searchUpdate: aString [
 
 	pattern := '.' asRegexIgnoringCase.
-	
+
 	aString isEmptyOrNil ifFalse: [
 		pattern := [aString asRegexIgnoringCase] on: RegexSyntaxError do: [ aString ]].
-	
-	self updateList.
+
+	self updateList
 ]
 
 { #category : #'button behavior' }
@@ -385,19 +385,19 @@ ListDialogWindow >> state [
 { #category : #'morphic protocol' }
 ListDialogWindow >> updateList [
 	"update the displayed list in a separate thread to avoid UI blocking"
-	
+
 	"if there is already a background thread running for the new list discard it"
 	listCreationProcess ifNotNil: [
 		listCreationProcess terminate].
-	
+
 	"no pattern given => empty list"
 	pattern ifNil: [ ^ list :=#() ].
-	
+
 	"fork off a possibly costly list calculation"
 	listCreationProcess := [
 		list := listBlock value: pattern.
 		"make sure the ui is updated in a synchronized manner"
-		self defer: [self listChanged]] fork.
+		self defer: [self listChanged]] fork
 ]
 
 { #category : #private }

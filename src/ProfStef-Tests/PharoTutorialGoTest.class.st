@@ -17,20 +17,20 @@ PharoTutorialGoTest >> tearDown [
 PharoTutorialGoTest >> testGoOnMockTutorial [
 	| displayedText expected |
 	ProfStef goOn: MockTutorial.
-	
+
 	displayedText := ProfStef default lessonView text.
 	expected := MockTutorial new firstLesson lesson.
- 	self assert: displayedText equals: expected.
+ 	self assert: displayedText equals: expected
 ]
 
 { #category : #tests }
 PharoTutorialGoTest >> testGoOpenSmalltalkSyntaxTutorial [
 	| displayedText expected |
 	ProfStef go.
-	
+
 	displayedText := ProfStef default lessonView text.
 	expected := PharoSyntaxTutorial new welcome lesson.
- 	self assert: displayedText equals: expected.
+ 	self assert: displayedText equals: expected
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ PharoTutorialGoTest >> testGoTwiceShowLessonViewIfNotVisible [
 	firstLessonView := ProfStef default lessonView.
 	firstLessonView close.
 	ProfStef goOn: PharoSyntaxTutorial.
-	self assert:  (self currentWorld systemWindows includes:  firstLessonView window).
+	self assert:  (self currentWorld systemWindows includes:  firstLessonView window)
 ]
 
 { #category : #tests }

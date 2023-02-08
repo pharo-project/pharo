@@ -21,7 +21,7 @@ MailMessageTest >> testAttachment [
 		yourself.
 	theFilename := 'testfile.txt'.
 	(File named: theFilename)
-		writeStreamDo: [ :stream | 
+		writeStreamDo: [ :stream |
 			stream
 				nextPutAll: 'This is the text of the mail attachment to be generated' ].
 	theMailMessage
@@ -66,7 +66,7 @@ ZA==
 MailMessageTest >> testCreateFromString [
 
 	| text message |
-	text := 
+	text :=
 'Date: Tue, 20 Feb 2001 13:52:53 +0300
 From: mdr@scn.rg (Me Ru)
 Subject: RE: Windows 2000 on your laptop
@@ -83,7 +83,7 @@ Mike
 
 	message := MailMessage fromRfc822: text.
 
-	self 
+	self
 		assert: message text equals: text;
 		assert: message subject equals: 'RE: Windows 2000 on your laptop';
 		assert: message from equals: 'mdr@scn.rg (Me Ru)';
@@ -96,27 +96,27 @@ Mike
 { #category : #tests }
 MailMessageTest >> testMultiPartAlternative [
 	| m txt html  part1 part2 |
-	
+
 	txt := 'This is plain text.'.
 	html :=  '<html><head></head><body>This is html.</body></html>'.
-	
+
 	m := MailMessage empty
-	 		addAlternativePart: txt contentType: 'text/plain'; 
+	 		addAlternativePart: txt contentType: 'text/plain';
 	 		addAlternativePart: html contentType: 'text/html';
 			yourself.
 
-	self 
-		assert: ((m fields at: 'content-type') at: 1) mainValue asLowercase equals: 'multipart/alternative'; 
+	self
+		assert: ((m fields at: 'content-type') at: 1) mainValue asLowercase equals: 'multipart/alternative';
 		assert: m parts size equals: 2.
 
 	part1 := m parts at: 1.
 	part2 := m parts at: 2.
 
-	self 
+	self
 		assert: ((part1 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/plain';
 		assert: part1 body content equals: txt.
-	
-	self 
+
+	self
 		assert: ((part2 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/html';
 		assert: part2 body content equals: html
 ]
@@ -124,27 +124,27 @@ MailMessageTest >> testMultiPartAlternative [
 { #category : #tests }
 MailMessageTest >> testMultiPartMixed [
 	| m txt html  part1 part2 |
-	
+
 	txt := 'This is plain text.'.
 	html :=  '<html><head></head><body>This is html.</body></html>'.
-	
+
 	m := MailMessage empty
-			addMixedPart: txt contentType: 'text/plain'; 
+			addMixedPart: txt contentType: 'text/plain';
 			addMixedPart: html contentType: 'text/html';
 			yourself.
 
-	self 
-		assert: ((m fields at: 'content-type') at: 1) mainValue asLowercase equals: 'multipart/mixed'; 
+	self
+		assert: ((m fields at: 'content-type') at: 1) mainValue asLowercase equals: 'multipart/mixed';
 		assert: m parts size equals: 2.
 
 	part1 := m parts at: 1.
 	part2 := m parts at: 2.
 
-	self 
+	self
 		assert: ((part1 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/plain';
 		assert: part1 body content equals: txt.
-	
-	self 
+
+	self
 		assert: ((part2 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/html';
 		assert: part2 body content equals: html
 ]
@@ -154,10 +154,10 @@ MailMessageTest >> testRecipientList [
 
 	| message |
 	message := MailMessage fromRfc822: 'To: pharo-project@lists.gforge.inria.fr, pharo-users@lists.gforge.inria.fr'.
-	
-	self 
+
+	self
 		assert: message recipientList size equals: 2;
-		assert: message recipientList first equals: 'pharo-project@lists.gforge.inria.fr';	
+		assert: message recipientList first equals: 'pharo-project@lists.gforge.inria.fr';
 		assert: message recipientList second equals: 'pharo-users@lists.gforge.inria.fr'
 ]
 
@@ -170,7 +170,7 @@ MailMessageTest >> testSimpleCreate [
 		to: { 'pharo-project@lists.gforge.inria.fr'. 'pharo-users@lists.gforge.inria.fr' }
 		about: 'Great Progress'
 		asFollows: 'Pharo is getting so cool!'.
-	
+
 	self assert: (message text matchesRegex: 'Date\: [[:alpha:]]+, \d+ [[:alpha:]]+ \d+ \d\d\:\d\d\:\d\d [-+]\d\d\d\d
 From\: community@world.st
 To\: pharo-project@lists.gforge.inria.fr, pharo-users@lists.gforge.inria.fr

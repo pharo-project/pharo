@@ -48,9 +48,9 @@ OCSemanticError >> node: aNode [
 
 { #category : #'error handling' }
 OCSemanticError >> notify: aString at: location [
-	^self requestor 
+	^self requestor
 		ifNil: [SyntaxErrorNotification
-					inClass: self methodClass 
+					inClass: self methodClass
 					withCode: self methodNode source
 					doitFlag: false
 					errorMessage: aString

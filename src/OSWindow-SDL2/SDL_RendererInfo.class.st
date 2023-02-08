@@ -106,7 +106,7 @@ SDL_RendererInfo >> name [
 { #category : #'accessing - structure variables' }
 SDL_RendererInfo >> name: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_NAME put: anObject getHandle.
+	handle pointerAt: OFFSET_NAME put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }

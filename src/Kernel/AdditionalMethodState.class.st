@@ -58,7 +58,7 @@ AdditionalMethodState >> analogousCodeTo: aMethodProperties [
 { #category : #accessing }
 AdditionalMethodState >> at: aKey [
 	"Answer the property value or pragma associated with aKey."
-	
+
 	^self at: aKey ifAbsent: [self error: 'not found']
 ]
 
@@ -215,7 +215,7 @@ AdditionalMethodState >> keysAndValuesDo: aBlock [
 { #category : #accessing }
 AdditionalMethodState >> method [
 
-	^method.
+	^method
 ]
 
 { #category : #decompiling }
@@ -239,17 +239,17 @@ AdditionalMethodState >> postCopy [
 { #category : #accessing }
 AdditionalMethodState >> pragmas [
 	"Return the Pragma objects. Properties are stored as Associations"
-	^ Array new: self basicSize streamContents: [ :pragmaStream | 
-		  1 to: self basicSize do: [ :i | 
+	^ Array new: self basicSize streamContents: [ :pragmaStream |
+		  1 to: self basicSize do: [ :i |
 			  | propertyOrPragma "<Association|Pragma>" |
-			  (propertyOrPragma := self basicAt: i) isAssociation ifFalse: [ 
+			  (propertyOrPragma := self basicAt: i) isAssociation ifFalse: [
 				  pragmaStream nextPut: propertyOrPragma ] ] ]
 ]
 
 { #category : #enumerating }
 AdditionalMethodState >> pragmasDo: aBlock [
-	
-	1 to: self basicSize do: [ :i | 
+
+	1 to: self basicSize do: [ :i |
 		| propertyOrPragma	"<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
 		propertyOrPragma isAssociation
@@ -277,8 +277,8 @@ AdditionalMethodState >> properties [
 { #category : #properties }
 AdditionalMethodState >> propertyAt: aKey [
 	"Answer the property value associated with aKey."
-	
-	^ self propertyAt: aKey ifAbsent: [ self error: 'Property not found' ].
+
+	^ self propertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
 { #category : #properties }
@@ -307,7 +307,7 @@ AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 { #category : #'properties-compatibility' }
 AdditionalMethodState >> propertyValueAt: aKey [
 	"use the version without ..Value, this methid is retained for compatibility"
-	
+
 	^ self propertyAt: aKey
 ]
 
@@ -320,14 +320,14 @@ AdditionalMethodState >> propertyValueAt: aKey ifAbsent: aBlock [
 { #category : #properties }
 AdditionalMethodState >> removeKey: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."
-	
-	^ self removeKey: aKey ifAbsent: [ self error: 'Property not found' ].
+
+	^ self removeKey: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
 { #category : #accessing }
 AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 	"Remove the property with aKey. Answer the value or, if aKey isn't found, answer the result of evaluating aBlock."
-	
+
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
@@ -352,7 +352,7 @@ AdditionalMethodState >> selector: aSymbol [
 { #category : #accessing }
 AdditionalMethodState >> setMethod: aMethod [
 	method := aMethod.
-	1 to: self basicSize do: [ :i | 
+	1 to: self basicSize do: [ :i |
 		| propertyOrPragma	"<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) isAssociation
 			ifFalse: [ propertyOrPragma method: aMethod ] ]

@@ -17,7 +17,7 @@ Class {
 DelayMicrosecondTickerSimulation >> initialize [
 	super initialize.
 	vmSimTheTimerSemaphore := Semaphore new.
-	vmSimNow := 0.
+	vmSimNow := 0
 ]
 
 { #category : #'api-system' }
@@ -26,15 +26,15 @@ DelayMicrosecondTickerSimulation >> nowTick [
 ]
 
 { #category : #'private - primitives' }
-DelayMicrosecondTickerSimulation >> primSignal: sempahore atUTCMicroseconds: nextTick [ 
+DelayMicrosecondTickerSimulation >> primSignal: sempahore atUTCMicroseconds: nextTick [
 	"This is a simulation of the primitive, working hand-in-hand with #simulate_vmMilliseconds:"
-	(sempahore isKindOf: Semaphore) ifTrue: [ 
+	(sempahore isKindOf: Semaphore) ifTrue: [
 		vmSimTheTimerSemaphore := sempahore.
 		vmSimNextWakeupTick := nextTick ].
-	(sempahore = nil) ifTrue: [ 
+	(sempahore = nil) ifTrue: [
 		vmSimTheTimerSemaphore := nil.
-		vmSimNextWakeupTick := 0] 
-	
+		vmSimNextWakeupTick := 0]
+
 "Extract from VM code...
 StackInterpreterPrimitives >> primitiveSignalAtUTCMicroseconds
 	...Cause the time semaphore, if one has been registered, to be
@@ -62,17 +62,17 @@ StackInterpreterPrimitives >> primitiveSignalAtUTCMicroseconds
 ]
 
 { #category : #'api-system' }
-DelayMicrosecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [ 
-	
-	vmSimNextWakeupTick ~= 0 ifTrue: [ 
+DelayMicrosecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [
+
+	vmSimNextWakeupTick ~= 0 ifTrue: [
 		vmSimNow := milliseconds * 1000.
-		vmSimNow >= vmSimNextWakeupTick ifTrue: [ 
-			vmSimNextWakeupTick := 0. 
+		vmSimNow >= vmSimNextWakeupTick ifTrue: [
+			vmSimNextWakeupTick := 0.
 			vmSimTheTimerSemaphore signal.
 			].
  		].
 
-"Extract from VM code... 
+"Extract from VM code...
 StackInterpreter>>checkForEventsMayContextSwitch:
 	nextWakeupUsecs ~= 0 ifTrue:
 		[now >= nextWakeupUsecs ifTrue:

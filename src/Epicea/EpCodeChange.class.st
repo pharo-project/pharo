@@ -14,7 +14,7 @@ EpCodeChange >> affectedPackageName [
 ]
 
 { #category : #testing }
-EpCodeChange >> doesOverride: aCodeChange [ 
+EpCodeChange >> doesOverride: aCodeChange [
 
 	^ self subclassResponsibility
 ]

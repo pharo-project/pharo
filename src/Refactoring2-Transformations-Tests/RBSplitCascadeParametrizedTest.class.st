@@ -43,7 +43,7 @@ RBSplitCascadeParametrizedTest >> testSplitCascadeRefactoring [
 	
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBSplitCascadeParametrizedTest) parseTreeFor: #methodWithCascades) equals: (self parseMethod: 'methodWithCascades
+	self assert: ((refactoring model classNamed: #RBSplitCascadeParametrizedTest) parseTreeForSelector: #methodWithCascades) equals: (self parseMethod: 'methodWithCascades
 	| a receiver |
 	receiver := Object new.
 	receiver initialize.

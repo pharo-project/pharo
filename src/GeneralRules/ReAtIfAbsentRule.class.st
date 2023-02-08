@@ -12,7 +12,7 @@ Class {
 { #category : #accessing }
 ReAtIfAbsentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'AtIfAbsentRule'
 ]
 
@@ -25,8 +25,8 @@ ReAtIfAbsentRule >> group [
 ReAtIfAbsentRule >> initialize [
 	super initialize.
 	self
-		replace: '``@dictionary at: ``@key 
-					ifAbsent: [| `@temps | 
+		replace: '``@dictionary at: ``@key
+					ifAbsent: [| `@temps |
 							``@.Statements1.
 							``@dictionary at: ``@key put: ``@object.
 							``@.Statements2.

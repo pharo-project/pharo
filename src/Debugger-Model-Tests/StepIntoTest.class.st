@@ -6,17 +6,17 @@ Class {
 
 { #category : #helper }
 StepIntoTest >> callQuickMethodWithoutReturningItsResult [
-	self quickMethod.
+	self quickMethod
 ]
 
 { #category : #helper }
 StepIntoTest >> quickMethod [
-	^1.
+	^1
 ]
 
 { #category : #helper }
 StepIntoTest >> returnQuickMethodResult [
-	^ self quickMethod.
+	^ self quickMethod
 ]
 
 { #category : #helper }
@@ -28,7 +28,7 @@ StepIntoTest >> stepA1 [
 StepIntoTest >> testStepIntoDeadContext [
 	self settingUpSessionAndProcessAndContextForBlock: [ self returnQuickMethodResult ].
 	"we step till the block returns"
-	session stepInto. 
+	session stepInto.
 	session stepInto.
 	session stepInto.
 	session stepInto.
@@ -41,7 +41,7 @@ StepIntoTest >> testStepIntoDeadContext [
 StepIntoTest >> testStepIntoMethodCallShouldActivateIt [
 	"Stepping into a method call should create a context for it at the top of the context stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
-	[session interruptedContext method == (self class>>#stepA1)] 
+	[session interruptedContext method == (self class>>#stepA1)]
 		whileFalse: [ session stepInto ].
 
 	self
@@ -53,7 +53,7 @@ StepIntoTest >> testStepIntoMethodCallShouldActivateIt [
 StepIntoTest >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackEmpty [
 	"Stepping into a quick method whose result is not used should leave the value stack empty"
 	self settingUpSessionAndProcessAndContextForBlock: [ self callQuickMethodWithoutReturningItsResult].
-	[session interruptedContext method == (self class>>#callQuickMethodWithoutReturningItsResult)] 
+	[session interruptedContext method == (self class>>#callQuickMethodWithoutReturningItsResult)]
 		whileFalse: [ session stepInto ].
 
 	session stepInto.
@@ -62,14 +62,14 @@ StepIntoTest >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackEm
 		equals: self class >> #callQuickMethodWithoutReturningItsResult.
 	self
 		assert: process suspendedContext size
-		equals: 0.
+		equals: 0
 ]
 
 { #category : #tests }
 StepIntoTest >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheStack [
 	"Stepping into a call to a quick method whose result is used should push its return value to the stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self returnQuickMethodResult].
-	[session interruptedContext method == (self class>>#returnQuickMethodResult)] 
+	[session interruptedContext method == (self class>>#returnQuickMethodResult)]
 		whileFalse: [ session stepInto ].
 
 	session stepInto.
@@ -78,11 +78,11 @@ StepIntoTest >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheSta
 		equals: self class >> #returnQuickMethodResult.
 	self
 		assert: process suspendedContext top
-		equals: 1.
+		equals: 1
 ]
 
 { #category : #tests }
-StepIntoTest >> testStepIntoUntilTermination [ 
+StepIntoTest >> testStepIntoUntilTermination [
 	"Stepping until termination."
 	self settingUpSessionAndProcessAndContextForBlock: [ 1+2 ].
 

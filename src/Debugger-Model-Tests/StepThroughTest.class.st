@@ -7,7 +7,7 @@ Class {
 { #category : #helper }
 StepThroughTest >> evalBlockThenReturnOne: aBlock [
 	aBlock value.
-	^1.
+	^1
 ]
 
 { #category : #helper }
@@ -23,7 +23,7 @@ StepThroughTest >> stepA2 [
 { #category : #helper }
 StepThroughTest >> stepB1 [
 	self stepB2.
-	self stepB3.
+	self stepB3
 ]
 
 { #category : #helper }
@@ -61,7 +61,7 @@ StepThroughTest >> testStepThrough [
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
-	self assert: node selector equals: #stepA2.
+	self assert: node selector equals: #stepA2
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	| node |
 
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
-	[session interruptedContext method == (self class>>#stepB1)] 
+	[session interruptedContext method == (self class>>#stepB1)]
 		whileFalse: [ session stepInto ].
 
 	"Reached node 'self stepB2' of method stepB1"
@@ -82,10 +82,10 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepB3.
-	
+
 	"Set up the debugged execution again"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
-	[session interruptedContext method == (self class>>#stepB1)] 
+	[session interruptedContext method == (self class>>#stepB1)]
 		whileFalse: [ session stepInto ].
 
 	"Reached node 'self stepB2' of method stepB1"
@@ -95,11 +95,11 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	node := self class>>#stepB1 sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
-	self assert: node selector equals: #stepB3.
+	self assert: node selector equals: #stepB3
 ]
 
 { #category : #tests }
-StepThroughTest >> testStepThroughUntilTermination [ 
+StepThroughTest >> testStepThroughUntilTermination [
 	"Stepping over a message node brings the execution to the next node in the same method."
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 

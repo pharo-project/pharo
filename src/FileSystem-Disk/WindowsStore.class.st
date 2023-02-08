@@ -33,7 +33,7 @@ WindowsStore class >> readOnlyVariant [
 ]
 
 { #category : #accessing }
-WindowsStore class >> separator [ 
+WindowsStore class >> separator [
 	^ $\
 ]
 
@@ -56,19 +56,19 @@ WindowsStore >> changeTimeOf: aPath [
 { #category : #public }
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
-	
+
 	| fName badChars |
 	fName := super checkName: aFileName fixErrors: fixing.
 	badChars := (#( $: $< $> $| $/ $\ $? $* $"), ((0 to: 31) collect: [:n | n asCharacter])) asSet.
-	
+
 	(fName includesAnyOf: badChars)
 		ifFalse: [^ fName].
-	
+
 	fixing ifFalse: [^self error: 'filename contains invalid characters'].
-	
+
 	^ fName collect:
-		[:char | (badChars includes: char) 
-				ifTrue: [$#] 
+		[:char | (badChars includes: char)
+				ifTrue: [$#]
 				ifFalse: [char]]
 ]
 
@@ -102,7 +102,7 @@ WindowsStore >> directoryAt: aPath nodesDo: aBlock [
 
 	mask := File primLogicalDrives.
 	0 to: 25 do: [ :i |
-		(mask bitAnd: (1 bitShift: i)) ~= 0 ifTrue: [ 
+		(mask bitAnd: (1 bitShift: i)) ~= 0 ifTrue: [
 			drive := String with: (Character value: ($A asciiValue + i)) with: $:.
 			node := Array
 				with: drive
@@ -173,8 +173,8 @@ WindowsStore >> isHidden: aPath attributes: statAttributesArray [
 	statAttributesArray is optional and may be supplied for performance.  It is the result of File>>fileAttributes:mask: or nil"
 
 	| attributesArray |
-	
-	attributesArray := statAttributesArray ifNil: 
+
+	attributesArray := statAttributesArray ifNil:
 		[ File fileAttributes: (self stringFromPath: aPath) mask: 1 ].
 
 	^(attributesArray at: 13) anyMask: 16r2
@@ -234,17 +234,17 @@ WindowsStore >> pathFromString: aString [
 	| normalized pathClass pathElements |
 	normalized := aString copy replaceAll: UnixStore delimiter with: self delimiter.
 	pathElements := self delimiter split: normalized.
-	
-	
+
+
 	pathClass := (normalized beginsWith: '\\')
 		ifTrue: [ UNCNetworkPath ]
-		ifFalse: [  
+		ifFalse: [
 			(Path isAbsoluteWindowsPath: normalized)
 				ifTrue: [ (normalized = self delimiter asString) ifTrue: [ pathElements := { ':' } ].
 					AbsolutePath ]
 				ifFalse: [ self stripDrive: pathElements.
 					RelativePath ]].
-			
+
 	^pathClass withAll: pathElements
 ]
 
@@ -284,7 +284,7 @@ WindowsStore >> printPath: aPath on: aStream [
 WindowsStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
 	aPath isRoot ifTrue: [ ^self rootEntry size ].
-	^super sizeOf: aPath.
+	^super sizeOf: aPath
 ]
 
 { #category : #converting }
@@ -296,5 +296,5 @@ WindowsStore >> stripDrive: pathElements [
 WindowsStore >> uidOf: aPath [
 	"Return the uid of the File described by aPath"
 	aPath isRoot ifTrue: [ ^self rootEntry uid ].
-	^super uidOf: aPath.
+	^super uidOf: aPath
 ]

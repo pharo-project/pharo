@@ -70,7 +70,7 @@ RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 { #category : #transforming }
 RBExtractMethodAndOccurrences >> findOccurrencesClass [
 
-	^ RBFindAndReplaceRefactoring
+	^ RBFindAndReplaceTransformation
 ]
 
 { #category : #transforming }

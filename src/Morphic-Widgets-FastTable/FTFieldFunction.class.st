@@ -100,6 +100,6 @@ FTFieldFunction >> showWidget [
 
 { #category : #updating }
 FTFieldFunction >> textUpdated: anAnnouncement [
-	
+
 	"do nothing by default"
 ]

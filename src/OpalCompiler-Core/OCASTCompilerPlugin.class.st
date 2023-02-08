@@ -29,12 +29,12 @@ Class {
 OCASTCompilerPlugin class >> defaultPriority [
 	"Use a high priority by default (a priority of 0 would be used by Reflectivity to be the last)"
 
-	^ 100 
+	^ 100
 ]
 
 { #category : #testing }
 OCASTCompilerPlugin class >> isAbstract [
-		
+
 	^ self == OCASTCompilerPlugin
 ]
 

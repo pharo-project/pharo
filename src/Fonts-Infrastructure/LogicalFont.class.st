@@ -52,13 +52,13 @@ LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyN
 	"^(self all collect:[:each | each]) asArray"
 
 	^ self all
-		  detect: [ :each | 
-			  each familyName = familyName and: [ 
-				  each fallbackFamilyNames = fallbackFamilyNames and: [ 
-					  each pointSize = pointSize and: [ 
-						  each weightValue = weight and: [ 
+		  detect: [ :each |
+			  each familyName = familyName and: [
+				  each fallbackFamilyNames = fallbackFamilyNames and: [
+					  each pointSize = pointSize and: [
+						  each weightValue = weight and: [
 							  each stretchValue = stretch and: [ each slantValue = slant ] ] ] ] ] ]
-		  ifNone: [ 
+		  ifNone: [
 			  self new
 				  familyName: familyName;
 				  fallbackFamilyNames: fallbackFamilyNames;
@@ -510,7 +510,7 @@ LogicalFont >> descentKern [
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 [ 
+LogicalFont >> displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 [
 	^self realFont displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3
 ]
 
@@ -520,12 +520,12 @@ LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: s
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7 [ 
+LogicalFont >> displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7 [
 	^self realFont displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayUnderlineOn: aGrafPort from: aPoint to: aPoint3 [ 
+LogicalFont >> displayUnderlineOn: aGrafPort from: aPoint to: aPoint3 [
 	^self realFont displayUnderlineOn: aGrafPort from: aPoint to: aPoint3
 ]
 
@@ -542,7 +542,7 @@ LogicalFont >> emphasis [
 
 { #category : #emphasis }
 LogicalFont >> emphasis: code [
-	
+
 	^self emphasized: code
 ]
 
@@ -569,7 +569,7 @@ LogicalFont >> emphasized: code [
 		ifTrue: [ ^ self ].
 	(weightValue ~= newWeight and: [ slantValue ~= newSlant ])
 		ifTrue: [ boldItalicDerivative ifNotNil: [ ^ boldItalicDerivative ] ]
-		ifFalse: [ 
+		ifFalse: [
 			weightValue ~= newWeight
 				ifTrue: [ boldDerivative ifNotNil: [ ^ boldDerivative ] ].
 			slantValue ~= newSlant
@@ -637,16 +637,16 @@ LogicalFont >> findRealFont [
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> fontArray [
-	| real | 
+	| real |
 	real := self realFont.
-	^real isFontSet 
-		ifTrue: [real fontArray] 
+	^real isFontSet
+		ifTrue: [real fontArray]
 		ifFalse: [{self}]
 ]
 
 { #category : #accessing }
 LogicalFont >> forceBold [
-	weightValue := (self weightValue max: 700).
+	weightValue := (self weightValue max: 700)
 ]
 
 { #category : #accessing }
@@ -657,28 +657,28 @@ LogicalFont >> forceItalicOrOblique [
 { #category : #accessing }
 LogicalFont >> forceNotBold [
 	"anything other than bold (700) is not changed.
-	we only remove boldness that can be put back with 
+	we only remove boldness that can be put back with
 	a TextAttribute bold."
-	
-	self weightValue = 700 
-		ifTrue:[weightValue := 400].
+
+	self weightValue = 700
+		ifTrue:[weightValue := 400]
 ]
 
 { #category : #accessing }
 LogicalFont >> forceNotItalic [
 	"leave oblique style in place"
-	slantValue = 1 ifTrue:[slantValue := 0].
+	slantValue = 1 ifTrue:[slantValue := 0]
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> hasDistinctGlyphsForAll: asciiString [
-	
+
 	^self realFont hasDistinctGlyphsForAll: asciiString
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> hasGlyphsForAll: asciiString [
-	
+
 	^self realFont hasGlyphsForAll: asciiString
 ]
 
@@ -696,7 +696,7 @@ LogicalFont >> height [
 LogicalFont >> initialize: aFont [
 
 	familyName := aFont familyName.
-	emphasis := aFont emphasis.
+	emphasis := aFont emphasis
 ]
 
 { #category : #'forwarded to realFont' }
@@ -734,16 +734,16 @@ LogicalFont >> isRegular [
 LogicalFont >> isSubPixelPositioned [
 	"Answer true if the receiver is currently using subpixel positioned
 	glyphs, false otherwise. This affects how padded space sizes are calculated
-	when composing text. 
+	when composing text.
 	Currently, only FreeTypeFonts are subPixelPositioned, and only when not
 	Hinted"
-	
+
 	^self realFont isSubPixelPositioned
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> isSymbolFont [
-	
+
 	^self realFont isSymbolFont
 ]
 
@@ -839,23 +839,23 @@ LogicalFont >> slantValue: anObject [
 { #category : #printing }
 LogicalFont >> storeOn: aStream [
 
-	aStream 
+	aStream
 		nextPutAll: 'LogicalFont';
 		nextPutAll: '
-		familyName: '; 
+		familyName: ';
 		print: self familyName  ;
 		nextPutAll: '
-		pointSize: '; 
+		pointSize: ';
 		print: self pointSize ;
 		nextPutAll: '
-		stretchValue: '; 
+		stretchValue: ';
 		print: self stretchValue ;
 		nextPutAll: '
-		weightValue: '; 
+		weightValue: ';
 		print: self weightValue ;
 		nextPutAll: '
-		slantValue: '; 
-		print: self slantValue.
+		slantValue: ';
+		print: self slantValue
 ]
 
 { #category : #accessing }

@@ -56,7 +56,7 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
 	self
-		assert: (class classSide parseTreeFor: #initializeAfterLoad1)
+		assert: (class classSide parseTreeForSelector: #initializeAfterLoad1)
 		equals:
 			(self
 				parseMethod:
@@ -66,14 +66,14 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 											-> [:aNode :answer | true]').
 	self
-		assert: (class classSide parseTreeFor: #nuke)
+		assert: (class classSide parseTreeForSelector: #nuke)
 		equals:
 			(self
 				parseMethod:
 					'nuke
 								RSR := nil').
 	self
-		assert: (class parseTreeFor: #checkMethod:)
+		assert: (class parseTreeForSelector: #checkMethod:)
 		equals:
 			(self
 				parseMethod:
@@ -101,8 +101,8 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVarInSharedPool [
 	class := refactoring model classNamed: #RBSharedPoolForTestData.
 	userClass := refactoring model classNamed: #RBClassUsingSharedPoolForTestData.
 	
-	self assert: (class parseTreeFor: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').	
-	self assert: (class parseTreeFor: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').	
+	self assert: (class parseTreeForSelector: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').	
+	self assert: (class parseTreeForSelector: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').	
 		self flag: 'TODO : fix in tranform class'
 "	self assert: (userClass parseTreeFor: #msg3) equals: (self parseMethod: 'msg3 ^ VarOne').	"
 ]

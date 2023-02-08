@@ -29,7 +29,7 @@ ClySystemScope >> description [
 
 { #category : #initialization }
 ClySystemScope >> prepareBasisFrom: aCollection [
-	aCollection size = 1 ifFalse: [ 
+	aCollection size = 1 ifFalse: [
 		self error: 'System scope should be created on single basis' ].
 
 	^aCollection

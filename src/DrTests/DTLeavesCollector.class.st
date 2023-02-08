@@ -22,7 +22,7 @@ DTLeavesCollector class >> collectLeavesOf: aDTTreeNode [
 { #category : #initialization }
 DTLeavesCollector >> initialize [
 	super initialize.
-	leaves := OrderedCollection new.
+	leaves := OrderedCollection new
 ]
 
 { #category : #accessing }

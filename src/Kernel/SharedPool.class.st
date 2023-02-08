@@ -52,7 +52,7 @@ SharedPool class >> localBindingOf: varName [
 	binding ifNotNil:[^binding].
 
 	"Next look in shared pools."
-	self sharedPools do:[:pool | 
+	self sharedPools do:[:pool |
 		binding := pool bindingOf: aSymbol.
 		binding ifNotNil:[^binding].
 	].

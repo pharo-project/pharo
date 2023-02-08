@@ -17,20 +17,20 @@ Class {
 }
 
 { #category : #'instance creation' }
-TaskListMorph class >> from: aKeyboardEvent [ 
+TaskListMorph class >> from: aKeyboardEvent [
 
 	| instance |
 	instance := self new.
 	aKeyboardEvent shiftPressed
 		ifTrue: [ instance selectNextTask ]
 		ifFalse: [ instance selectPreviousTask ].
-	^ instance.
+	^ instance
 ]
 
 { #category : #testing }
 TaskListMorph class >> isNavigationEvent: aKeyboardEvent [
 
-	^ aKeyboardEvent asKeyCombination = Character tab alt or: [ aKeyboardEvent asKeyCombination = Character tab alt shift ].
+	^ aKeyboardEvent asKeyCombination = Character tab alt or: [ aKeyboardEvent asKeyCombination = Character tab alt shift ]
 ]
 
 { #category : #settings }
@@ -45,20 +45,20 @@ TaskListMorph class >> keepOpen: aBoolean [
 
 { #category : #settings }
 TaskListMorph class >> taskListSettingOn: aBuilder [
-	<systemsettings> 
+	<systemsettings>
 	(aBuilder setting: #keepTaskListOpen)
 		label: 'Keep task list open';
 		description: 'Whether the tasklist is closed (and the selected window activated) when the command key is released';
 		default: false;
 		parent: #morphic;
 		selector: #keepOpen;
-		target: self.
+		target: self
 ]
 
 { #category : #private }
 TaskListMorph >> activeTask [
 	"Answer the active task"
-	
+
 	^self tasks detect: [:t | t isActive] ifNone: []
 ]
 
@@ -97,7 +97,7 @@ TaskListMorph >> doOpenInWorld: aWorld [
 { #category : #running }
 TaskListMorph >> done [
 	"Close the tasklist and make the active task current."
-	
+
 	self delete.
 	self activeTask ifNotNil: [ :t | t activate ]
 ]
@@ -105,7 +105,7 @@ TaskListMorph >> done [
 { #category : #'event handling' }
 TaskListMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
-	
+
 	^true
 ]
 
@@ -149,7 +149,7 @@ TaskListMorph >> initializeLayout [
 { #category : #initialization }
 TaskListMorph >> initializeTasks [
 	"Set up the current tasks."
-	
+
 	self tasks: ((self currentWorld submorphs
 		collect: [:m | m taskbarTask])
 		select: [:m | m notNil]) asOrderedCollection
@@ -173,7 +173,7 @@ TaskListMorph >> newPreviewMorph [
 	^ Morph new
 		color: Color transparent;
 		extent: self defaultPreviewExtent;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -188,13 +188,13 @@ TaskListMorph >> newTasksMorph [
 		color: Color transparent;
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
-		yourself.
+		yourself
 ]
 
 { #category : #'open/close' }
 TaskListMorph >> openInWorld: aWorld [
 
-	super openInWorld: aWorld.	
+	super openInWorld: aWorld.
 	self wantsKeyboardFocus
 		ifTrue: [self takeKeyboardFocus]
 ]
@@ -230,7 +230,7 @@ TaskListMorph >> preview: anObject [
 { #category : #cycling }
 TaskListMorph >> selectNextTask [
 	"Make the next task active."
-	
+
 	self selectTask: (self tasks
 		after: self activeTask
 		ifAbsent: [self tasks isEmpty
@@ -240,7 +240,7 @@ TaskListMorph >> selectNextTask [
 { #category : #cycling }
 TaskListMorph >> selectPreviousTask [
 	"Make the previous task active."
-	
+
 	self selectTask: (self tasks
 		before: self activeTask
 		ifAbsent: [self tasks isEmpty
@@ -250,7 +250,7 @@ TaskListMorph >> selectPreviousTask [
 { #category : #private }
 TaskListMorph >> selectTask: aTask [
 	"Make the given task active and update the buttons."
-	
+
 	self tasks do: [:t | t state: #restored].
 	aTask ifNotNil: [ aTask state: #active ].
 	self updateButtonsAndPreview
@@ -282,7 +282,7 @@ TaskListMorph >> takesKeyboardFocus [
 TaskListMorph >> taskClicked: aTask [
 	"A button for a task has been pressed.
 	Close after selecting."
-	
+
 	self selectTask: aTask.
 	self done
 ]
@@ -318,21 +318,21 @@ TaskListMorph >> tasks: anObject [
 { #category : #private }
 TaskListMorph >> updateButtonsAndPreview [
 	"Update the buttons and the preview.."
-	
+
 	self
 		updateTaskButtons;
 		updatePreview.
-	self world ifNotNil: 
+	self world ifNotNil:
 		[self center: self world center]
 ]
 
 { #category : #private }
 TaskListMorph >> updatePreview [
 	"Update the preview.."
-	
+
 	self preview removeAllMorphs.
-	self preview addMorphCentered: ( 
-		self activeTask 
+	self preview addMorphCentered: (
+		self activeTask
 				ifNil: [ 'No tasks...' asMorph	]
 				ifNotNil: [:t | t morph taskThumbnailOfSize: self preview extent])
 ]
@@ -340,8 +340,8 @@ TaskListMorph >> updatePreview [
 { #category : #private }
 TaskListMorph >> updateTaskButtons [
 	"Make buttons for the ordered tasks."
-	
-	
+
+
 	self taskList removeAllMorphs.
 	self tasks do: [:t | | button |
 		button := t taskListButtonFor: self.

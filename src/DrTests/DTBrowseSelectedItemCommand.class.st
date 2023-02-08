@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #defaults }
-DTBrowseSelectedItemCommand class >> defaultName [ 
+DTBrowseSelectedItemCommand class >> defaultName [
 	"Return the default name of the command"
-	
+
 	^ 'Browse'
 ]
 

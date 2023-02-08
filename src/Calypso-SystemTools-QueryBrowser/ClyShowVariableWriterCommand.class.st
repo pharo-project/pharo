@@ -20,21 +20,21 @@ Class {
 { #category : #activation }
 ClyShowVariableWriterCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2001 for: ClyFullBrowserVariableContext
 ]
 
 { #category : #activation }
 ClyShowVariableWriterCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $m meta for: ClyFullBrowserVariableContext
 ]
 
 { #category : #activation }
 ClyShowVariableWriterCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
@@ -45,13 +45,13 @@ ClyShowVariableWriterCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyShowVariableWriterCommand >> execute [
-	
+
 	browser spawnQueryBrowserOn: (ClyVariableWritersQuery ofAny: variables)
 ]
 
 { #category : #execution }
 ClyShowVariableWriterCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]

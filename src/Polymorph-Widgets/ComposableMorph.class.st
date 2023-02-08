@@ -12,14 +12,14 @@ Class {
 { #category : #initialization }
 ComposableMorph >> defaultBorderColor [
 	"Answer the default border color/fill style for the receiver"
-	
+
 	^#inset
 ]
 
 { #category : #initialization }
 ComposableMorph >> defaultBorderWidth [
 	"Answer the default border width for the receiver."
-	
+
 	^ 1
 ]
 

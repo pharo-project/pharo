@@ -19,11 +19,11 @@ OmStoreTest class >> isAbstract [
 ]
 
 { #category : #running }
-OmStoreTest >> beforeAndAfterFlushStore: aBlock [ 
+OmStoreTest >> beforeAndAfterFlushStore: aBlock [
 
 	aBlock value.
 	store flush. "Reason: It's worth testing again, after flush."
-	aBlock value.
+	aBlock value
 ]
 
 { #category : #resources }
@@ -35,9 +35,9 @@ OmStoreTest >> directoryForTests [
 { #category : #running }
 OmStoreTest >> setUp [
 	super setUp.
-	
+
 	store := self setUpStore.
-	otherStore := self setUpOtherStore.
+	otherStore := self setUpOtherStore
 ]
 
 { #category : #resources }
@@ -52,7 +52,7 @@ OmStoreTest >> setUpStore [
 
 { #category : #running }
 OmStoreTest >> tearDown [
-	
+
 	store flush.
 	otherStore flush.
 	super tearDown
@@ -66,12 +66,12 @@ OmStoreTest >> testEntries [
 { #category : #tests }
 OmStoreTest >> testEntriesCount [
 	self assert: store entriesCount equals: 0.
-	
+
 	store newEntry: (OmEntry content: 42).
 	store newEntry: (OmEntry content: 43).
-	
+
 	self beforeAndAfterFlushStore: [
-		self assert: store entriesCount equals: 2 ].
+		self assert: store entriesCount equals: 2 ]
 ]
 
 { #category : #tests }
@@ -80,7 +80,7 @@ OmStoreTest >> testEntriesDo [
 
 	self beforeAndAfterFlushStore: [
 		| contents |
-		contents := Array streamContents: [ :stream | 
+		contents := Array streamContents: [ :stream |
 			store entriesDo: [ :entry | stream nextPut: entry content ] ].
 
 		self assert: contents equals: (1 to: 7) asArray ]
@@ -90,16 +90,16 @@ OmStoreTest >> testEntriesDo [
 OmStoreTest >> testEntryForAbsentEntry [
 	| isPresent isAbsent |
 	anEntry := OmEntry content: 42.
-	
+
 	store newEntry: anEntry.
 
 	self beforeAndAfterFlushStore: [
 		isPresent := false.
-		isAbsent := false.	
+		isAbsent := false.
 
-		otherStore 
+		otherStore
 			entryFor: (store referenceTo: anEntry)
-			ifPresent: [ :e | isPresent := true ] 
+			ifPresent: [ :e | isPresent := true ]
 			ifAbsent: [ isAbsent := true ].
 
 		self deny: isPresent.
@@ -112,11 +112,11 @@ OmStoreTest >> testEntryForNullReference [
 
 	self beforeAndAfterFlushStore: [
 		isPresent := false.
-		isAbsent := false.	
+		isAbsent := false.
 
-		otherStore 
+		otherStore
 			entryFor: OmNullReference uniqueInstance
-			ifPresent: [ :e | isPresent := true ] 
+			ifPresent: [ :e | isPresent := true ]
 			ifAbsent: [ isAbsent := true ].
 
 		self deny: isPresent.
@@ -127,16 +127,16 @@ OmStoreTest >> testEntryForNullReference [
 OmStoreTest >> testEntryForPresentEntry [
 	| isPresent isAbsent |
 	anEntry := OmEntry content: 42.
-	
+
 	store newEntry: anEntry.
 
 	self beforeAndAfterFlushStore: [
 		isPresent := false.
-		isAbsent := false.	
+		isAbsent := false.
 
-		store 
+		store
 			entryFor: (store referenceTo: anEntry)
-			ifPresent: [ :e | isPresent := true ] 
+			ifPresent: [ :e | isPresent := true ]
 			ifAbsent: [ isAbsent := true ].
 
 		self assert: isPresent.
@@ -151,12 +151,12 @@ OmStoreTest >> testEntryReferences [
 
 	entryReferences := store entryReferences.
 	entries := store entries.
-	
-	entryReferences withIndexDo: [:each :index |	
+
+	entryReferences withIndexDo: [:each :index |
 		store
 			entryFor: each
-			ifPresent: [:entry | 
-				self assert: entry equals: (entries at: index) 
+			ifPresent: [:entry |
+				self assert: entry equals: (entries at: index)
 				"They must have the same order" ]
 			ifAbsent: [ self fail ] ].
 
@@ -170,12 +170,12 @@ OmStoreTest >> testFirstEntryIfAbsent [
 	absent := false.
 	store firstEntryIfAbsent: [ absent := true ].
 	self assert: absent.
-	
+
 	store newEntry: (OmEntry content: 42).
 	store newEntry: (OmEntry content: 43).
-	
+
 	self beforeAndAfterFlushStore: [
-		self 
+		self
 			assert: (store firstEntryIfAbsent: [ self fail ])
 			equals: store entries first ]
 ]
@@ -195,13 +195,13 @@ OmStoreTest >> testHeadReference [
 { #category : #tests }
 OmStoreTest >> testHeadReferenceForEmptyStore [
 
-	self assert: store headReference equals: OmNullReference uniqueInstance.
+	self assert: store headReference equals: OmNullReference uniqueInstance
 ]
 
 { #category : #tests }
 OmStoreTest >> testMultipleEntries [
 	1 to: 7 do: [ :each | store newEntry: (OmEntry content: each) ].
-	
+
 	self beforeAndAfterFlushStore: [
 		self
 			assert: (store entries collect: #content as: Set)
@@ -211,11 +211,11 @@ OmStoreTest >> testMultipleEntries [
 { #category : #tests }
 OmStoreTest >> testNewEntry [
 	anEntry := OmEntry content: 42.
-	
+
 	store newEntry: anEntry.
-	
+
 	self beforeAndAfterFlushStore: [
-		self 
+		self
 			assert: (store entries collect: #content as: Array)
 			equals: #(42) ]
 ]
@@ -223,9 +223,9 @@ OmStoreTest >> testNewEntry [
 { #category : #tests }
 OmStoreTest >> testReferenceTo [
 	anEntry := OmEntry content: 42.
-	
+
 	store newEntry: anEntry.
-	
+
 	self beforeAndAfterFlushStore: [
 		aReference := store referenceTo: anEntry.
 
@@ -243,12 +243,12 @@ OmStoreTest >> testRefreshEmpty [
 { #category : #tests }
 OmStoreTest >> testRefreshNotEmpty [
 	anEntry := OmEntry content: 42.
-	
+
 	store newEntry: anEntry.
-	
+
 	store refresh.
-	
-	self 
+
+	self
 		assert: (store entries collect: #content as: Array)
 		equals: #(42)
 ]
@@ -259,6 +259,6 @@ OmStoreTest >> testWritingFileReference [
 	anEntry := OmEntry content: 42.
 	store newEntry: anEntry.
 	store flush.
-	
-	self assert: store writingFileReference isFile.
+
+	self assert: store writingFileReference isFile
 ]

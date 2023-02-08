@@ -6,7 +6,7 @@ Class {
 
 { #category : #helpers }
 FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
-	
+
 	^ aClass expandedDefinitionStringFor: (FluidClassDefinitionPrinter for: aClass)
 ]
 
@@ -25,7 +25,7 @@ FluidClassDefinitionPrinterTest >> setUp [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testArray [
 
-	self 
+	self
 		assert: (self forClass: Array)
 		equals: 'ArrayedCollection << #Array
 	layout: VariableLayout;
@@ -77,8 +77,8 @@ FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDis
 	ClassDefinitionPrinter showFluidClassDefinition: false.
 	self assert: MockWithComplexSlot needsSlotClassDefinition.
 
-	self 
-		assert: (self forClass: MockWithComplexSlot) 
+	self
+		assert: (self forClass: MockWithComplexSlot)
 		equals: 'Object << #MockWithComplexSlot
 	slots: { #aComplexSlot => ObservableSlot };
 	tag: ''Fluid'';
@@ -88,8 +88,8 @@ FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDis
 { #category : #'tests - template' }
 FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 
-	self 
-		assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel') 
+	self
+		assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel')
 		equals:  'Object << #MyClass
 	slots: {};
 	sharedVariables: {};
@@ -99,7 +99,7 @@ FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 { #category : #'tests - complex slots' }
 FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	"Fluid definition support complex slots."
-	
+
 	self assert: (self forClass: MockWithComplexSlot) equals: 'Object << #MockWithComplexSlot
 	slots: { #aComplexSlot => ObservableSlot };
 	tag: ''Fluid'';
@@ -147,7 +147,7 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 
-	self 
+	self
 		assert: (self expandedForClass: EncoderForSistaV1)
 		equals:   'BytecodeEncoder << #EncoderForSistaV1
 	layout: FixedLayout;
@@ -162,8 +162,8 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedPoint [
 
-	self 
-		assert: (self expandedForClass: Point) 
+	self
+		assert: (self expandedForClass: Point)
 		equals: 'Object << #Point
 	layout: FixedLayout;
 	traits: {};
@@ -187,8 +187,8 @@ FluidClassDefinitionPrinterTest >> testExpandedPointClass [
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedProtoObject [
 
-	self 
-		assert: (self expandedForClass: ProtoObject)  
+	self
+		assert: (self expandedForClass: ProtoObject)
 		equals: 'nil << #ProtoObject
 	layout: FixedLayout;
 	traits: {};
@@ -202,8 +202,8 @@ FluidClassDefinitionPrinterTest >> testExpandedProtoObject [
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedProtoObjectClass [
 
-	self 
-		assert: (self expandedForClass: ProtoObject class)  
+	self
+		assert: (self expandedForClass: ProtoObject class)
 		equals: 'Class class << ProtoObject class
 	traits: {};
 	slots: {}'
@@ -212,8 +212,8 @@ FluidClassDefinitionPrinterTest >> testExpandedProtoObjectClass [
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedTime [
 
-	self 
-		assert: (self expandedForClass: Time)  
+	self
+		assert: (self expandedForClass: Time)
 		equals: 'Magnitude << #Time
 	layout: FixedLayout;
 	traits: {};
@@ -227,8 +227,8 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 { #category : #'tests - template' }
 FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 
-	self 
-		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel') 
+	self
+		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel')
 		equals:  'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
@@ -241,7 +241,7 @@ FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 
 { #category : #'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testMetaclass [
-	
+
 	self assert: (self forClass: Metaclass) equals: 'ClassDescription << #Metaclass
 	slots: { #thisClass };
 	tag: ''Classes'';
@@ -250,14 +250,14 @@ FluidClassDefinitionPrinterTest >> testMetaclass [
 
 { #category : #'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testMetaclassClass [
-	
-	self assert: (self forClass: Metaclass class) equals: 
+
+	self assert: (self forClass: Metaclass class) equals:
  'ClassDescription class << Metaclass class'
 ]
 
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testPoint [
-	
+
 	self assert: (self forClass: Point) equals: 'Object << #Point
 	slots: { #x . #y };
 	tag: ''BasicObjects'';
@@ -282,7 +282,7 @@ FluidClassDefinitionPrinterTest >> testPointMinimalInformation [
 
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObject [
-	
+
 	self assert: (self forClass: ProtoObject) equals: 'nil << #ProtoObject
 	tag: ''Objects'';
 	package: ''Kernel'''
@@ -290,13 +290,13 @@ FluidClassDefinitionPrinterTest >> testProtoObject [
 
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObjectClass [
-	
+
 	self assert: (self forClass: ProtoObject class) equals: 'Class class << ProtoObject class'
 ]
 
 { #category : #'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testSystemAnnouncerClass [
-	
+
 	self assert: (self forClass: SystemAnnouncer class) equals: 'Announcer class << SystemAnnouncer class
 	slots: { #announcer }'
 ]

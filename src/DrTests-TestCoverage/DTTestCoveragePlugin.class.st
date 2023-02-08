@@ -40,12 +40,12 @@ DTTestCoveragePlugin >> allowMultipleSelectionInSecondList [
 { #category : #api }
 DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 
-	methods := aDTpluginConfiguration items flatCollect: [ :p | 
-		           p methods reject: [ :meth | 
+	methods := aDTpluginConfiguration items flatCollect: [ :p |
+		           p methods reject: [ :meth |
 			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
 	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
-	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [ 
-		               :p | p classes ].
+	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [
+		               :p | p classes ]
 ]
 
 { #category : #accessing }
@@ -90,9 +90,9 @@ DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
 { #category : #api }
 DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
 
-	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
 		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ].
-	[ aTestSuite run: aResult ] ensure: [ 
+	[ aTestSuite run: aResult ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
@@ -103,7 +103,7 @@ DTTestCoveragePlugin >> runTestSuites: testSuites [
 	CurrentExecutionEnvironment
 		runTestsBy: [ testSuites
 				do: [ :testSuite | self runSuite: testSuite withResult: result ]
-				displayingProgress: 'Running Tests' ].
+				displayingProgress: 'Running Tests' ]
 ]
 
 { #category : #accessing }
@@ -133,9 +133,9 @@ DTTestCoveragePlugin >> suiteFor: classesSelected [
 
 	"Return the suite for all the selected test case classes"
 
-	^ TestSuite new in: [ :suite | 
-		  classesSelected do: [ :each | 
-			  each isAbstract ifFalse: [ 
+	^ TestSuite new in: [ :suite |
+		  classesSelected do: [ :each |
+			  each isAbstract ifFalse: [
 				  each isTestCase ifTrue: [ each addToSuiteFromSelectors: suite ] ] ].
 		  suite name: 'Test' ]
 ]

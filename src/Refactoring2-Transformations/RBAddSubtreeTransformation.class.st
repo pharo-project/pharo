@@ -22,7 +22,7 @@ Class {
 		'interval',
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -86,7 +86,7 @@ RBAddSubtreeTransformation >> preconditions [
 { #category : #executing }
 RBAddSubtreeTransformation >> privateTransform [
 	| parseTree newNode |
-	parseTree := self definingClass parseTreeFor: selector.
+	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	newNode := self parserClass
 		parseExpression: sourceCode

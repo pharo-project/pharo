@@ -22,16 +22,16 @@ Message class >> selector: aSymbol [
 ]
 
 { #category : #'instance creation' }
-Message class >> selector: aSymbol argument: anObject [ 
-	"Answer an instance of me whose selector is aSymbol and single 
+Message class >> selector: aSymbol argument: anObject [
+	"Answer an instance of me whose selector is aSymbol and single
 	argument is anObject."
 
 	^self new setSelector: aSymbol arguments: { anObject }
 ]
 
 { #category : #'instance creation' }
-Message class >> selector: aSymbol arguments: anArray [ 
-	"Answer an instance of me with selector, aSymbol, and arguments, 
+Message class >> selector: aSymbol arguments: anArray [
+	"Answer an instance of me with selector, aSymbol, and arguments,
 	anArray."
 
 	^self new setSelector: aSymbol arguments: anArray
@@ -106,7 +106,7 @@ Message >> printOn: stream [
 		arg printOn: stream.
 		stream space.
 	].
-	stream skip: -1.
+	stream skip: -1
 ]
 
 { #category : #accessing }
@@ -142,7 +142,7 @@ Message >> sentTo: receiver [
 { #category : #private }
 Message >> setSelector: aSymbol [
 
-	selector := aSymbol.
+	selector := aSymbol
 ]
 
 { #category : #private }
@@ -153,7 +153,7 @@ Message >> setSelector: aSymbol arguments: anArray [
 ]
 
 { #category : #printing }
-Message >> storeOn: aStream [ 
+Message >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 
 	aStream nextPut: $(;

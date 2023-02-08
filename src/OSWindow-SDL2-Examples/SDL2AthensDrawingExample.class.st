@@ -25,7 +25,7 @@ SDL2AthensDrawingExample >> clearStrokes [
 { #category : #drawing }
 SDL2AthensDrawingExample >> clearSurface [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas
 				setPaint: Color white;
 				drawShape: (0 @ 0 extent: window extent) ]
@@ -33,13 +33,13 @@ SDL2AthensDrawingExample >> clearSurface [
 
 { #category : #factory }
 SDL2AthensDrawingExample >> createEventHandler [
-	^ OSWindowAthensDrawingExampleEventHandler new 
+	^ OSWindowAthensDrawingExampleEventHandler new
 			athensExample: self
 ]
 
 { #category : #'managing strokes' }
 SDL2AthensDrawingExample >> endStroke [
-	currentStroke := OrderedCollection new.
+	currentStroke := OrderedCollection new
 ]
 
 { #category : #initialization }
@@ -59,15 +59,15 @@ SDL2AthensDrawingExample >> redraw [
 	self clearSurface.
 	strokes
 		do:
-			[ :stroke | 
+			[ :stroke |
 			| path |
 			path := renderer athensSurface
-				createPath: [ :builder | 
+				createPath: [ :builder |
 					builder
 						absolute;
 						moveTo: stroke first.
 					stroke do: [ :point | builder lineTo: point ] ].
-			renderer drawDuring: [ :canvas | 
+			renderer drawDuring: [ :canvas |
 					canvas
 						setStrokePaint: Color black;
 						setShape: path;

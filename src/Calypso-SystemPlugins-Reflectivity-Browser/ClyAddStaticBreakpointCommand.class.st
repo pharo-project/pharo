@@ -10,7 +10,7 @@ Class {
 { #category : #activation }
 ClyAddStaticBreakpointCommand class >> methodEditorLeftBarClickActivation [
 	<classAnnotation>
-	
+
 	^CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
 ]
 
@@ -20,6 +20,6 @@ ClyAddStaticBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 ]
 
 { #category : #accessing }
-ClyAddStaticBreakpointCommand >> defaultMenuItemName [ 
+ClyAddStaticBreakpointCommand >> defaultMenuItemName [
 	^'Break on  ', sourceNode displaySourceCode
 ]

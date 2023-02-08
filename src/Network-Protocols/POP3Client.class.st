@@ -35,7 +35,7 @@ POP3Client class >> example [
 		messages add: (ps retrieveMessage: messageNr) ]]
 		ensure: [ps close].
 
-	messages inspect.
+	messages inspect
 ]
 
 { #category : #accessing }
@@ -55,13 +55,13 @@ then form a string of the form
 	<1896.697170952@dbc.mtview.ca.us>USERPASSWORD
 and then send only the MD5 hash of that to the server.  Thus the password never hits the wire"
 
-	[ 
+	[
 	| hash timestamp |
 	"Look for a timestamp in the response we received from the server"
 	timestamp := self lastResponse findTokens: '<>' includes: '@'.
 	timestamp ifNil: [ (POP3LoginError protocolInstance: self) signal: 'APOP not supported.' ].
 	(Smalltalk globals includesKey: #MD5)
-		ifTrue: [ 
+		ifTrue: [
 			hash := ((Smalltalk globals at: #MD5) hashMessage: '<' , timestamp , '>' , self password) storeStringHex asLowercase.	"trim starting 16r and zero pad it to 32 characters if needed"
 			hash := hash padLeftTo: 32 with: $0 ]
 		ifFalse: [ (POP3LoginError protocolInstance: self) signal: 'APOP (MD5) not supported.' ].
@@ -69,7 +69,7 @@ and then send only the MD5 hash of that to the server.  Thus the password never 
 	self checkResponse.
 	self logProgress: self lastResponse ]
 		on: ProtocolClientError
-		do: [ :ex | 
+		do: [ :ex |
 			self close.
 			(LoginFailedException protocolInstance: self) signal: 'Login failed.' ]
 ]
@@ -182,7 +182,7 @@ POP3Client >> quit [
 	"QUIT <CRLF>"
 
 	self sendCommand: 'QUIT'.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #'private - testing' }

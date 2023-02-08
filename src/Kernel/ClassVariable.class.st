@@ -35,17 +35,23 @@ ClassVariable >> definingClass: anObject [
 ]
 
 { #category : #printing }
-ClassVariable >> definitionString [
+ClassVariable >> definitionOn: aStream [
 	"non special globals are defined by the symbol"
-	^ self needsFullDefinition
-		ifTrue: [ super definitionString ]
-		ifFalse: [ self name printString ]
+	^self needsFullDefinition
+		ifTrue: [ super definitionOn: aStream ]
+		ifFalse: [ self name printOn: aStream ]
+]
+
+{ #category : #printing }
+ClassVariable >> definitionString [
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ String streamContents: [:s | self definitionOn: s]
 ]
 
 { #category : #'code generation' }
 ClassVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeIntoLiteralVariable: self.
+	methodBuilder storeIntoLiteralVariable: self
 ]
 
 { #category : #'code generation' }
@@ -99,13 +105,22 @@ ClassVariable >> possiblyUsingClasses [
 	classes := self definingClass withAllSubclasses.
 
 	"For pool variables we need to add the poolUsers and it's subclasses"
-	self isPoolVariable ifTrue: [ 
+	self isPoolVariable ifTrue: [
 		classes addAll:
 			(self definingClass poolUsers flatCollect: [ :each | each withAllSubclasses ]) ].
 
 	"we can access from both the class and the metaclass"
 	classes addAll: (classes collect: [ :class | class class ]).
 	^ classes
+]
+
+{ #category : #printing }
+ClassVariable >> printOn: aStream [
+	"Every subclass that adds state must redefine either this method or #definitionString"
+	aStream
+		store: self name;
+		nextPutAll: ' => ';
+		nextPutAll: self class name
 ]
 
 { #category : #queries }

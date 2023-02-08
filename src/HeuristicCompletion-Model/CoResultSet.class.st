@@ -22,7 +22,7 @@ Class {
 
 { #category : #'instance creation' }
 CoResultSet class >> fetcher: aFetcher [
-	
+
 	^ self new
 		fetcher: aFetcher;
 		yourself
@@ -30,7 +30,7 @@ CoResultSet class >> fetcher: aFetcher [
 
 { #category : #'instance creation' }
 CoResultSet class >> onContext: aCompletionContext fetcher: aFetcher [
-	
+
 	^ self new
 		fetcher: aFetcher;
 		yourself
@@ -38,20 +38,20 @@ CoResultSet class >> onContext: aCompletionContext fetcher: aFetcher [
 
 { #category : #accessing }
 CoResultSet >> completionToken [
-	
+
 	^ filter completionString
 ]
 
 { #category : #enumerating }
 CoResultSet >> ensureResults: aSize [
-	
+
 	results size >= aSize ifTrue: [ ^ self ].
-	self fetch: aSize - results size.
+	self fetch: aSize - results size
 ]
 
 { #category : #fetching }
-CoResultSet >> fetch: anInteger [ 
-	
+CoResultSet >> fetch: anInteger [
+
 	| newResults |
 	newResults := fetcher next: anInteger.
 	results addAll: newResults
@@ -59,7 +59,7 @@ CoResultSet >> fetch: anInteger [
 
 { #category : #fetching }
 CoResultSet >> fetchAll [
-	
+
 	results addAll: fetcher upToEnd
 ]
 
@@ -84,21 +84,21 @@ CoResultSet >> filter [
 CoResultSet >> filter: anObject [
 
 	filter := anObject.
-	fetcher filter: filter.
+	fetcher filter: filter
 ]
 
 { #category : #enumerating }
 CoResultSet >> first [
-	
+
 	self ensureResults: 1.
 	^ results first
 ]
 
 { #category : #accessing }
-CoResultSet >> first: anInteger [ 
+CoResultSet >> first: anInteger [
 
-	self ensureResults: anInteger.	
-	
+	self ensureResults: anInteger.
+
 	results size > anInteger
 		ifTrue: [ ^ results first: anInteger ].
 	^ results
@@ -106,7 +106,7 @@ CoResultSet >> first: anInteger [
 
 { #category : #testing }
 CoResultSet >> hasMoreElements [
-	
+
 	^ fetcher atEnd not
 ]
 
@@ -120,7 +120,7 @@ CoResultSet >> initialize [
 
 { #category : #testing }
 CoResultSet >> notEmpty [
-	
+
 	^ results notEmpty or: [ fetcher atEnd not ]
 ]
 
@@ -138,17 +138,17 @@ CoResultSet >> replaceFilterWith: newFilter [
 		ifFalse: [
 			"Smaller filter, reset results and filter"
 			fetcher := fetcher unnarrowFilter: newFilter narrowKey: newFilter completionString ].
-		
-	results := OrderedCollection new.		
+
+	results := OrderedCollection new.
 	filter := newFilter
 ]
 
 { #category : #'api-filtering' }
 CoResultSet >> resetFilter [
-	
+
 	results removeAll.
 	fetcher reset.
-	fetcher filter: CoFilter empty.
+	fetcher filter: CoFilter empty
 ]
 
 { #category : #accessing }

@@ -42,14 +42,14 @@ KMTarget >> morph: aMorph [
 ]
 
 { #category : #iterating }
-KMTarget >> nextForKmChain: aKMDispatchChain [ 
+KMTarget >> nextForKmChain: aKMDispatchChain [
 	^self ownerTarget
 ]
 
 { #category : #accessing }
 KMTarget >> ownerTarget [
 	morph owner ifNil: [ ^nil ].
-	^morph owner kmDispatcher target.
+	^morph owner kmDispatcher target
 ]
 
 { #category : #accessing }

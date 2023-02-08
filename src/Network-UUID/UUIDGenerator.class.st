@@ -63,7 +63,7 @@ Class {
 UUIDGenerator class >> default [
 	"Return the default UUID generator.
 	Sharing an instance is more efficient and correct."
-	
+
 	^ Default ifNil: [ Default := self new ]
 ]
 
@@ -76,25 +76,25 @@ UUIDGenerator class >> initialize [
 { #category : #accessing }
 UUIDGenerator class >> next [
 	"Return a UUID using the shared generator"
-	
+
 	"self next"
-	
+
 	"[ UUIDGenerator next ] bench"
-	
+
 	^ self default next
 ]
 
 { #category : #'system startup' }
 UUIDGenerator class >> startUp [
 	"Whenever the image comes up, reset so that a new node ID is computed."
-	
+
 	Default := nil
 ]
 
 { #category : #private }
 UUIDGenerator >> clockOn: stream [
 	"Write 8 bytes from the microsecond clock to stream"
-	
+
 	| microseconds |
 	microseconds := Time microsecondClockValue.
 	1 to: 8 do: [ :each |
@@ -104,7 +104,7 @@ UUIDGenerator >> clockOn: stream [
 { #category : #private }
 UUIDGenerator >> computeNodeIdentifier [
 	"Compute and return a 'node identifier', a 16 element byte array that should be unique to this image, vm, invocation, network, machine combination"
-	
+
 	| nodeData |
 	nodeData := String streamContents: [ :out |
 		Smalltalk at: #NetNameResolver ifPresent: [ :netNameResolver |
@@ -123,7 +123,7 @@ UUIDGenerator >> initialize [
 	super initialize.
 	random := Random new.
 	"This prior usage of a Semaphore has been exchanged because there are reports that
-	the Semaphore did not work in concurrent situations. So the Mutex adds some extra 
+	the Semaphore did not work in concurrent situations. So the Mutex adds some extra
 	bits here for usage in multi threaded environments"
 	lock := Mutex new.
 	node := self computeNodeIdentifier.
@@ -133,7 +133,7 @@ UUIDGenerator >> initialize [
 { #category : #accessing }
 UUIDGenerator >> next [
 	"Return the next UUID, see my class comment"
-	
+
 	| uuid |
 	uuid := UUID nilUUID.
 	self placeFields: uuid.
@@ -143,7 +143,7 @@ UUIDGenerator >> next [
 { #category : #private }
 UUIDGenerator >> nextCounter16 [
 	"Return the next 16-bit counter value with safe overflow"
-	
+
 	counter := (counter + 1) \\ 16r10000.
 	^ counter
 ]
@@ -158,9 +158,9 @@ UUIDGenerator >> nextRandom16 [
 { #category : #private }
 UUIDGenerator >> placeFields: uuid [
 	"Fill the fields of uuid, effectively generating a new UUID in place, see my class comment"
-	
+
 	| byteStream |
-	lock critical: [ 
+	lock critical: [
 		byteStream := uuid writeStream.
 		self clockOn: byteStream.
 		byteStream
@@ -173,14 +173,14 @@ UUIDGenerator >> placeFields: uuid [
 { #category : #accessing }
 UUIDGenerator >> randomGenerator [
 	"Return the random generator that I use"
-	
+
 	^ random
 ]
 
 { #category : #private }
 UUIDGenerator >> setVariantAndVersion: uuid [
 	"Set the version (top four most significant bits) to 0, an undefined version in RFC 4122"
-	
+
 	uuid at: 7 put: ((uuid at: 7) bitAnd: 2r1111).
 	"Set the variant (top two most significant bits) to '10', the RFC 4122 variant"
 	uuid at: 9 put: (((uuid at: 9) bitAnd: 2r111111) bitOr: 2r10000000)

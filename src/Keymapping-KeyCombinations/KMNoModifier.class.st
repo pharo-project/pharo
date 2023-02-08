@@ -11,5 +11,5 @@ Class {
 KMNoModifier >> initialize [
 	super initialize.
 	identifier := #''.
-	name := ''.
+	name := ''
 ]

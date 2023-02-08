@@ -36,7 +36,7 @@ HEPackage class >> formatVersion [
 
 { #category : #adding }
 HEPackage >> addClass: anExportedClass [
-	classes add: anExportedClass.
+	classes add: anExportedClass
 ]
 
 { #category : #accessing }
@@ -65,7 +65,7 @@ HEPackage >> initialize [
 	classes := OrderedCollection new.
 	traits := OrderedCollection new.
 
-	extensionMethods := OrderedCollection new.
+	extensionMethods := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -88,17 +88,16 @@ HEPackage >> printOn: aStream [
 
 { #category : #reading }
 HEPackage >> readClassFrom: aReader [
-	classes add: (HEClass readFrom: aReader).
-	
+	classes add: (HEClass readFrom: aReader)
 ]
 
 { #category : #reading }
 HEPackage >> readFrom: aReader [
 	| numberOfTraits numberOfClasses numberOfExtensionMethods |
 	version := aReader readInt32.
-	
+
 	version = self class formatVersion ifFalse:[self error:'Invalid Hermes file version, expecting: ' , self class formatVersion asString , ' but was: ' , version asString].
-	
+
 	packageName := aReader readByteSymbol.
 
 	numberOfTraits := aReader readInt32.
@@ -108,7 +107,7 @@ HEPackage >> readFrom: aReader [
 	1 to: numberOfClasses do: [ :idx | classes add: (HEClass readFrom: aReader)].
 
 	numberOfExtensionMethods := aReader readInt32.
-	1 to: numberOfExtensionMethods do: [ :idx | extensionMethods add: (HEMethod readFrom: aReader) ]  
+	1 to: numberOfExtensionMethods do: [ :idx | extensionMethods add: (HEMethod readFrom: aReader) ]
 ]
 
 { #category : #accessing }

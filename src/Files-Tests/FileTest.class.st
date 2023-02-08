@@ -28,7 +28,7 @@ FileTest >> testCheckExistenceOfNonExistingFileDoesNotThrowException [
 
 	| file |
 	file := File named: 'asd.txt'.
-	[file checkDoesNotExist] 
+	[file checkDoesNotExist]
 		on: FileAlreadyExistsException
 		do: [ :ex | self assert: false description: 'File should not exist!' ]
 ]
@@ -40,7 +40,7 @@ FileTest >> testFileDelete [
 	file := File named: 'asd.txt'.
 	file writeStream close.
 	file delete.
-	self deny: file exists.
+	self deny: file exists
 ]
 
 { #category : #tests }
@@ -88,7 +88,7 @@ FileTest >> testOpeningFileSetsPositionAtBeginning [
 	| file |
 	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 	file := (File named: 'asd.txt') openForWrite.
-	[self assert: file position equals: 0 
+	[self assert: file position equals: 0
 		] ensure: [ file ifNotNil: [ file close ] ]
 ]
 

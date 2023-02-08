@@ -57,10 +57,10 @@ PluggableMenuSpec >> addList: aList [
 	"Add the given items to this menu, where each item is a pair (<string> <actionSelector>).  If an element of the list is simply the symobl $-, add a line to the receiver. The optional third element of each entry, if present, provides balloon help."
 
 	aList
-		do: [ :tuple | 
+		do: [ :tuple |
 			tuple == #-
 				ifTrue: [ self addSeparator ]
-				ifFalse: [ 
+				ifFalse: [
 					| item |
 					item := self
 								add: tuple first
@@ -100,7 +100,7 @@ PluggableMenuSpec >> label [
 
 { #category : #accessing }
 PluggableMenuSpec >> label: aString [
-	label := aString.
+	label := aString
 ]
 
 { #category : #accessing }
@@ -109,7 +109,7 @@ PluggableMenuSpec >> model [
 ]
 
 { #category : #accessing }
-PluggableMenuSpec >> model: anObject [ 
+PluggableMenuSpec >> model: anObject [
 	model := anObject
 ]
 

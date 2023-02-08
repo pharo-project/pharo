@@ -184,6 +184,6 @@ RBSearchTest >> testAllSearches [
 			class selectors
 				do: [ :sel | 
 					currentSelector := sel.
-					searches do: [ :each | each executeTree: (class parseTreeFor: sel) initialAnswer: each answer ] ] ].
+					searches do: [ :each | each executeTree: (class parseTreeForSelector: sel) initialAnswer: each answer ] ] ].
 	classSearches do: [ :searches | searches do: [ :each | self assertEmpty: each answer ] ]
 ]

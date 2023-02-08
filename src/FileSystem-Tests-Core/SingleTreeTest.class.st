@@ -16,12 +16,12 @@ SingleTreeTest class >> isAbstract [
 ]
 
 { #category : #running }
-SingleTreeTest >> createDirectory: aString [ 
+SingleTreeTest >> createDirectory: aString [
 	filesystem createDirectory: (filesystem pathFromString: aString)
 ]
 
 { #category : #running }
-SingleTreeTest >> createFile: aString [ 
+SingleTreeTest >> createFile: aString [
 	filesystem store createFile: (filesystem pathFromString: aString)
 ]
 

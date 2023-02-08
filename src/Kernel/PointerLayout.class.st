@@ -34,23 +34,23 @@ PointerLayout >> allVisibleSlots [
 
 { #category : #validation }
 PointerLayout >> checkInheritedSlots [
-	
-	self host superclass 
+
+	self host superclass
 		ifNil: [ ^ self ].
 	self host classLayout
 		ifNil: [ ^ self ].
-		
-	self 
+
+	self
 		assert: (self host superclass classLayout size <= self host classLayout size)
 		description: [ (self host name, ' does not inherit all slots from ', self host superclass name) ].
-	
+
 	"check that the we have the same slots at the same indices as in the superclass"
 	self host superclass classLayout allSlots withIndexDo: [ :slot :index|
 		| localSlot |
 		localSlot := (self host classLayout allSlots at: index).
-		self 
+		self
 			assert: slot = localSlot
-			description: [ 'Slot "', localSlot name, '" index at position ', index asString, ' conflicts with slot "', slot name, '" in ', self host superclass asString ]].
+			description: [ 'Slot "', localSlot name, '" index at position ', index asString, ' conflicts with slot "', slot name, '" in ', self host superclass asString ]]
 ]
 
 { #category : #validation }
@@ -67,7 +67,7 @@ PointerLayout >> checkParentScopes [
 	parentScope := self slotScope parentScope.
 	self host superclass ifNil: [ ^ self ].
 	superclassScope := self host superclass classLayout slotScope.
-	self 
+	self
 		assert: parentScope = superclassScope
 		description: 'Parent slot scope is out of sync'
 ]
@@ -75,7 +75,7 @@ PointerLayout >> checkParentScopes [
 { #category : #validation }
 PointerLayout >> checkSanity [
 	super checkSanity.
-	self 
+	self
 		checkSlotNames;
 		checkSlotIndices
 ]
@@ -97,7 +97,7 @@ PointerLayout >> checkSlotNames [
 		current := slots removeLast.
 		slots do: [ :other |
 			other name = current name
-				ifTrue: [ 
+				ifTrue: [
 					DuplicatedSlotName new
 						oldSlot: current;
 						newSlot: other;
@@ -106,8 +106,8 @@ PointerLayout >> checkSlotNames [
 ]
 
 { #category : #api }
-PointerLayout >> definesSlotNamed: aString [ 
-	^self resolveSlot: aString ifFound: [ true ] ifNone: [ false ].
+PointerLayout >> definesSlotNamed: aString [
+	^self resolveSlot: aString ifFound: [ true ] ifNone: [ false ]
 ]
 
 { #category : #extending }
@@ -146,7 +146,7 @@ PointerLayout >> fieldSize [
 { #category : #testing }
 PointerLayout >> hasBindingThatBeginsWith: aString [
 	"Answer true if there is a Slot that begins with aString, false otherwise"
-	
+
 	^ self slotScope hasBindingThatBeginsWith: aString
 ]
 
@@ -198,12 +198,12 @@ PointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
 ]
 
 { #category : #testing }
-PointerLayout >> size [ 
+PointerLayout >> size [
 	^ slotScope fieldSize
 ]
 
 { #category : #api }
-PointerLayout >> slotNamed: aName [ 
+PointerLayout >> slotNamed: aName [
 	^self resolveSlot: aName asSymbol
 ]
 

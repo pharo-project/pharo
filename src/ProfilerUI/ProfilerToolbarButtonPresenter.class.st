@@ -36,7 +36,7 @@ ProfilerToolbarButtonPresenter >> selectedObject [
 ]
 
 { #category : #accessing }
-ProfilerToolbarButtonPresenter >> selectedObject: aTallyModel [ 
+ProfilerToolbarButtonPresenter >> selectedObject: aTallyModel [
 
 	selectedObject := aTallyModel
 ]

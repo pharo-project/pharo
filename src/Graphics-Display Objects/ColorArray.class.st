@@ -20,5 +20,5 @@ ColorArray >> at: index [
 
 { #category : #accessing }
 ColorArray >> at: index put: aColor [
-	^super at: index put: (aColor pixelWordForDepth: 32).
+	^super at: index put: (aColor pixelWordForDepth: 32)
 ]

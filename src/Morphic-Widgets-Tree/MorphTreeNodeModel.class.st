@@ -15,7 +15,7 @@ Class {
 { #category : #dependents }
 MorphTreeNodeModel >> addDependent: aDependent [
 	"Ensure to only have one dependent at every moment"
-	
+
 	dependents := #().
 	super addDependent: aDependent
 ]
@@ -81,8 +81,8 @@ MorphTreeNodeModel >> isPartialMatch [
 	| result |
 
 	result := false.
-	
-	self contents do: [:each | 
+
+	self contents do: [:each |
 		(each selected or: [ each isPartialMatch ]) ifTrue: [ result := true ] ].
 
 	^ result
@@ -125,11 +125,11 @@ MorphTreeNodeModel >> parentNode: aNode [
 
 { #category : #accessing }
 MorphTreeNodeModel >> path [
-	^ self pathIn: OrderedCollection new.
+	^ self pathIn: OrderedCollection new
 ]
 
 { #category : #accessing }
-MorphTreeNodeModel >> pathIn: aCollection [ 
+MorphTreeNodeModel >> pathIn: aCollection [
 	self parentNode
 		ifNotNil: [(aCollection includes: self parentNode)
 		ifFalse: [self parentNode pathIn: aCollection]].

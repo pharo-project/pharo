@@ -16,8 +16,8 @@ FileException class >> fileName: aFileName [
 ]
 
 { #category : #'instance creation' }
-FileException class >> signalOnFile: aFile [ 
-	
+FileException class >> signalOnFile: aFile [
+
 	(self fileName: aFile basename) signal
 ]
 

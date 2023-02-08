@@ -10,7 +10,7 @@ CompletionContextTest class >> shouldInheritSelectors [
 ]
 
 { #category : #private }
-CompletionContextTest >> createContextFor: aString at: anInteger [ 
+CompletionContextTest >> createContextFor: aString at: anInteger [
 	^ CompletionContext
 		engine: CompletionEngine new
 		class: NECTestClass
@@ -23,15 +23,15 @@ CompletionContextTest >> testReceiverArgument [
 	| text context |
 	text := 'testIt: aRectangle
 	aRectangle printS'.
-	context := self 
+	context := self
 		createContextFor: text
 		at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #printString).
 	self assert: context title equals: ''.
-	
+
 	text := 'testIt: rect
 	rect is'.
-	context := self 
+	context := self
 		createContextFor: text
 		at: text size.
 	self assert: context title equals: ''
@@ -42,7 +42,7 @@ CompletionContextTest >> testReceiverClassVar [
 	| text context |
 	text := 'testIt
 	ClassAnnotation so'.
-	context := self 
+	context := self
 		createContextFor: text
 		at: text size.
 	self assert: context title equals: 'ClassAnnotation class'
@@ -50,53 +50,53 @@ CompletionContextTest >> testReceiverClassVar [
 
 { #category : #tests }
 CompletionContextTest >> testReceiverConstant [
-	| text context |	
+	| text context |
 	text := 'testIt
 	''test'' pre'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #prefixMatchesRegex:).
-	
+
 	text := 'testIt
 	true ifTr'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #ifTrue:ifFalse:).
-	
+
 	text := 'testIt
 	false  "this is it"
 		xo'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #xor:).
-	
+
 	text := 'testIt
-	a := [ :test | test * test ] 
+	a := [ :test | test * test ]
 		as'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: #contents) includes: #asMinimalRepresentation).
-	
+
 	text := 'testIt
 	$c as'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #asciiValue).
-	
+
 	text := 'testIt
 	#gaga un'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #uncapitalized).
-	
+
 	text := 'testIt
 	#( 1 2 3) as'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #asByteArray).
-	
+
 	text:='testIt
 	2r1.1e2 ba'.
 	context := self createContextFor: text at: text size.
 	self assert: ((context entries collect: [:each | each contents]) includes: #basicIdentityHash).
-	
+
 	text:='testIt
 	23s32 as'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: [:each | each contents]) includes: #asFraction).
+	self assert: ((context entries collect: [:each | each contents]) includes: #asFraction)
 ]
 
 { #category : #tests }
@@ -105,7 +105,7 @@ CompletionContextTest >> testReceiverGlobal [
 	text := 'testIt
 	Dictionary n'.
 	context := self createContextFor: text at: text size.
-	self assert: context title equals: 'Dictionary class'.
+	self assert: context title equals: 'Dictionary class'
 ]
 
 { #category : #tests }
@@ -114,7 +114,7 @@ CompletionContextTest >> testReceiverGlobalVarNew [
 	text := 'testIt
 	Dictionary new fl'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: [:each | each contents]) includes: #flatCollect:).
+	self assert: ((context entries collect: [:each | each contents]) includes: #flatCollect:)
 ]
 
 { #category : #tests }
@@ -126,18 +126,18 @@ CompletionContextTest >> testReceiverTemp [
 	b nextPutA'.
 	context := self createContextFor: text at: text size.
 	self assert: context title equals: ''.
-	
+
 	text := 'testIt
 	| b |
 	b := Stream.
 	b nextPutA'.
 	context := self createContextFor: text at: text size.
 	self assert: context title equals: 'Stream class'.
-	
+
 	text := 'testIt: aStream
 	aStream nextPut'.
 	context := self createContextFor: text at: text size.
-	self assert: context title equals: ''.
+	self assert: context title equals: ''
 ]
 
 { #category : #tests }

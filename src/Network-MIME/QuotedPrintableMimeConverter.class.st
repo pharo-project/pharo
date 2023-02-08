@@ -57,12 +57,12 @@ QuotedPrintableMimeConverter >> mimeDecode [
 					ifFalse: [
 						Character codePoint: char digitValue * 16 + mimeStream next digitValue ] ]
 			ifFalse: [ char ]).
-		outChar notNil 
-			ifTrue: [ 
+		outChar notNil
+			ifTrue: [
 				(outChar = Character lf) & (previousChar = Character cr)
 					ifTrue: [ dataStream nextPutAll: newline ]
-					ifFalse: [ 
-						(outChar = Character cr) | (outChar = Character lf) 
+					ifFalse: [
+						(outChar = Character cr) | (outChar = Character lf)
 							ifFalse: [ dataStream nextPut: outChar ] ].
 				previousChar := outChar ] ]
 ]
@@ -99,6 +99,6 @@ QuotedPrintableMimeConverter >> mimeEncode [
 QuotedPrintableMimeConverter >> newline: string [
 	"Set another newline convention, like CRLF or LF that I should use.
 	By default I use CR."
-	
+
 	newline := string
 ]

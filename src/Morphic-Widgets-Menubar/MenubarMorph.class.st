@@ -32,7 +32,7 @@ MenubarMorph class >> closeAll [
 
 	self currentWorld submorphs
 		select: [ :e | e isKindOf: MenubarMorph ]
-		thenDo: [ :e | e delete ].
+		thenDo: [ :e | e delete ]
 ]
 
 { #category : #'class initialization' }
@@ -49,7 +49,7 @@ MenubarMorph class >> install [
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAnnouncement
-		send: #methodAnnouncementReceived: to: self.
+		send: #methodAnnouncementReceived: to: self
 ]
 
 { #category : #setting }
@@ -73,12 +73,12 @@ MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 { #category : #'instance creation' }
 MenubarMorph class >> open [
 	<script>
-	
+
 	self showMenubar ifFalse: [ ^ self ].
 
 	self new
 		menuBarItems: self currentWorld worldState menuBuilder menuSpec items;
-		open.
+		open
 ]
 
 { #category : #'class initialization' }
@@ -86,7 +86,7 @@ MenubarMorph class >> reset [
 
 	<script>
 	self closeAll.
-	self open.
+	self open
 ]
 
 { #category : #accessing }
@@ -144,14 +144,14 @@ MenubarMorph >> menuBarItems: anObject [
 
 { #category : #construction }
 MenubarMorph >> newMenuItem [
-	
+
 	^ MenubarItemMorph new
 ]
 
 { #category : #accessing }
 MenubarMorph >> open [
 	self menuBarItems
-		do: [ :each | 
+		do: [ :each |
 			self
 				add: each label
 				icon: each icon
@@ -169,7 +169,7 @@ MenubarMorph >> open [
 { #category : #recategorized }
 MenubarMorph >> rejectsEvent: anEvent [
 	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
-	
+
 	^ super rejectsEvent: anEvent
 ]
 
@@ -186,6 +186,6 @@ MenubarMorph >> wantsGradientByDefault [
 { #category : #accessing }
 MenubarMorph >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu."
-	
+
 	^false
 ]

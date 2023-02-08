@@ -37,6 +37,6 @@ RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractAddsIsAbstractMethod
 	
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: testClass name) classSide 
-			parseTreeFor: #isAbstract) 
+			parseTreeForSelector: #isAbstract) 
 		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
 ]
