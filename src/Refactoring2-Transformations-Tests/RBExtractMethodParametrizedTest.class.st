@@ -77,7 +77,7 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatMovesTemporaryVariable [
 { #category : #tests }
 RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsArgument [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (145 to: 343) . #checkMethod: . RBTransformationRuleTestData }.
+	refactoring := self createRefactoringWithArguments: { (143 to: 340) . #checkMethod: . RBTransformationRuleTestData }.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
@@ -116,7 +116,7 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsTemporaryVariable [
 { #category : #tests }
 RBExtractMethodParametrizedTest >> testExtractMethodToSuperclass [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (145 to: 343) . #checkMethod: . RBTransformationRuleTestData }.
+	refactoring := self createRefactoringWithArguments: { (143 to: 340) . #checkMethod: . RBTransformationRuleTestData }.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData.
 	self executeRefactoring: refactoring.

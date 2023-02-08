@@ -35,7 +35,7 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadMethodName [
 { #category : #tests }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
-	refactoring := self createRefactoringWithArguments: { (17 to: 56) . #testExample1 . RBTest }.
+	refactoring := self createRefactoringWithArguments: { (15 to: 54) . #testExample1 . RBTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTest.

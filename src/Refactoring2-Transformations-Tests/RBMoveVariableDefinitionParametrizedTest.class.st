@@ -46,7 +46,7 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (48 to: 58) . RBRefactoryTestDataApp . #referencesConditionFor: }.
+		{ (47 to: 57) . RBRefactoryTestDataApp . #referencesConditionFor: }.
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
 								| environment  |

@@ -227,7 +227,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 
 	| refactoring class |
 	refactoring := (RBExtractMethodTransformation
-		extract: (self sourceCodeAt: (145 to: 343)
+		extract: (self sourceCodeAt: (143 to: 340)
 					 forMethod: #checkMethod: in: RBTransformationRuleTestData)
 		from: #checkMethod:
 		to: #foo:

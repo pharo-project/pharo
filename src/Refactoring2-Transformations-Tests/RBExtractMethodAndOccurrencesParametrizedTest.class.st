@@ -66,7 +66,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	refactoring := self createRefactoringWithModel: model
-		andArguments: { (282 to: 302) . #myMethod . class }.
+		andArguments: { (281 to: 301) . #myMethod . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.
