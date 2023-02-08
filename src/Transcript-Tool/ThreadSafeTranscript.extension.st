@@ -1,6 +1,28 @@
 Extension { #name : #ThreadSafeTranscript }
 
 { #category : #'*Transcript-Tool' }
+ThreadSafeTranscript class >> ensureOpen [
+	"Open a Transcript only if not opened yet. If it is already open, bring it as top window."
+
+	<script>
+	^ self new ensureOpen
+]
+
+{ #category : #'*Transcript-Tool' }
+ThreadSafeTranscript >> ensureOpen [
+
+	<script: 'self new ensureOpen'>
+	^ (self currentWorld windowsSatisfying: [ :w | w label = self title ]) ifEmpty: [ self open ] ifNotEmpty: [ :ws |
+		  | window |
+		  window := ws first.
+		  "If the window is minimized, maximize it. Else, be sure it has the focus."
+		  window isMinimized
+			  ifTrue: [ window restore ]
+			  ifFalse: [ window activate ].
+		  window ]
+]
+
+{ #category : #'*Transcript-Tool' }
 ThreadSafeTranscript >> interactionModel [
 	^ self
 

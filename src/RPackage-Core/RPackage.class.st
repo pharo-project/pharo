@@ -90,24 +90,6 @@ RPackage class >> defaultPackageName [
 	^ #'_UnpackagedPackage'
 ]
 
-{ #category : #help }
-RPackage class >> help [
-	<wikiStyleHelp: 'RPackage'>
-	|stream|
-	stream := String new writeStream.
-	stream
-		nextPut: $!;
-		nextPutAll: self name asString;
-		cr;
-		nextPutAll: self comment;
-		cr;
-		nextPut: $!;
-		nextPutAll: self packageOrganizerClass name asString;
-		cr;
-		nextPutAll: self packageOrganizerClass comment.
-	^stream contents
-]
-
 { #category : #'class initialization' }
 RPackage class >> initialize [
 	"Ensure the organizer will be the RPackageOrganizer default"
