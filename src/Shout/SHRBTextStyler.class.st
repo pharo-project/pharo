@@ -14,8 +14,7 @@ Class {
 		'font',
 		'isForWorkspace',
 		'pixelHeight',
-		'workspace',
-		'plugins'
+		'workspace'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -837,12 +836,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(pragmaBinary 							(cyan muchDarker)) 
 			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
 			(module 								(cyan muchDarker) bold))
-]
-
-{ #category : #private }
-SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
-
-	self plugins add: aPlugin
 ]
 
 { #category : #formatting }
