@@ -53,7 +53,7 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementIn
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryInsideBlock [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (133 to: 141) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp }.
+		{ (130 to: 138) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp }.
 	self executeRefactoring: refactoring.
 
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #noMoveDefinition) equals: (self parseMethod: 'noMoveDefinition

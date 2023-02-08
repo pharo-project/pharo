@@ -33,7 +33,7 @@ RBInlineMethodParametrizedTest >> testBadInterval [
 RBInlineMethodParametrizedTest >> testInlineMethod [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (455 to: 504) .#sentNotImplementedInApplication . RBBasicLintRuleTestData class }.
+		{ (451 to: 500) .#sentNotImplementedInApplication . RBBasicLintRuleTestData class }.
 
 	self executeRefactoring: refactoring.
 

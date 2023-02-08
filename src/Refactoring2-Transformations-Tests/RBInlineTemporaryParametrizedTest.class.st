@@ -41,7 +41,7 @@ RBInlineTemporaryParametrizedTest >> testInlineTemporaryBadInterval [
 { #category : #'failure tests' }
 RBInlineTemporaryParametrizedTest >> testInlineTemporaryMutlipleAssignment [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ (60 to: 83) . #moveDefinition . RBRefactoryTestDataApp })
+		{ (58 to: 81) . #moveDefinition . RBRefactoryTestDataApp })
 ]
 
 { #category : #'failure tests' }
