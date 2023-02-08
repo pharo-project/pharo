@@ -59,7 +59,7 @@ RBGenerateEqualHashTransformation class >> className: aClass variables: anArray 
 ]
 
 { #category : #testing }
-RBGenerateEqualHashTransformation class >> isTransformation [ 
+RBGenerateEqualHashTransformation class >> isTransformation [
 
 	^ true
 ]
@@ -93,7 +93,7 @@ RBGenerateEqualHashTransformation >> compileEqual [
 		self class = anObject class ifFalse: [ ^ false ]'.
 	statement := nil.
 	variables reversed
-		do: [ :each | 
+		do: [ :each |
 			| accessor |
 			accessor := self accessorForVariable: each.
 			comparison := RBMessageNode
@@ -130,7 +130,7 @@ RBGenerateEqualHashTransformation >> compileHash [
 		"Answer an integer value that is related to the identity of the receiver."'.
 	statement := nil.
 	variables reversed
-		do: [ :each | 
+		do: [ :each |
 			hash := RBMessageNode
 				receiver: (RBVariableNode named: each)
 				selector: #hash.
@@ -152,7 +152,7 @@ RBGenerateEqualHashTransformation >> preconditions [
 
 	^ variables
 		  inject: self emptyCondition
-		  into: [ :condition :variable | 
+		  into: [ :condition :variable |
 			  condition
 			  &
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]

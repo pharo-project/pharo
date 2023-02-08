@@ -13,14 +13,14 @@ RBExtractToTemporaryParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractToTemporaryParametrizedTest >> constructor [ 
+RBExtractToTemporaryParametrizedTest >> constructor [
 	^ #extract:to:from:in:
 ]
 
 { #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testBadInterval [
 	self shouldFail:
-		(self createRefactoringWithArguments: 
+		(self createRefactoringWithArguments:
 			{ (24 to: 30) . 'asdf' . #testMethod . RBRefactoryTestDataApp }).
 	self shouldFail:
 		(self createRefactoringWithArguments:
@@ -33,7 +33,7 @@ RBExtractToTemporaryParametrizedTest >> testBadInterval [
 { #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testBadName [
 	self shouldFail:
-		(self createRefactoringWithArguments: 
+		(self createRefactoringWithArguments:
 			{ (14 to: 23) . 'a sdf' . #testMethod . RBRefactoryTestDataApp })
 ]
 
@@ -58,17 +58,17 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryInsideBlock [
 
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #noMoveDefinition) equals: (self parseMethod: 'noMoveDefinition
 	| temp |
-	^(self collect: 
-			[:each | 
+	^(self collect:
+			[:each |
 			temp := each printString.
-			temp , temp]) 
+			temp , temp])
 		select: [:each | | asdf | asdf := each size. temp := asdf + temp]')
 ]
 
 { #category : #tests }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ (73 to: 77) . 'temp' . #demoMethodWithDuplicates . RBRefactoryTestDataApp }.
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #demoMethodWithDuplicates) equals: (self parseMethod: 'demoMethodWithDuplicates
@@ -85,13 +85,13 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 { #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testNoValidNameOfTemp [
 	self shouldFail:
-		(self createRefactoringWithArguments: 
+		(self createRefactoringWithArguments:
 			{ (51 to: 60) . 'collection' . #modifiesCollection . RBRefactoryTestDataApp })
 ]
 
 { #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testNonExistantSelector [
-	self shouldFail: 
+	self shouldFail:
 		( self createRefactoringWithArguments:
 			{ (14 to: 23) . 'asdf' . #checkClass1: . RBRefactoryTestDataApp })
 ]

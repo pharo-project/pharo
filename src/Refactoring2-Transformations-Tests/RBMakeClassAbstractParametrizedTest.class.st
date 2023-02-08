@@ -18,25 +18,25 @@ RBMakeClassAbstractParametrizedTest class >> testParameters [
 RBMakeClassAbstractParametrizedTest >> setUp [
 	super setUp.
 	model := self abstractVariableTestData.
-	
+
 	testClass := RBBasicLintRuleTestData.
-	testClass class removeSelector: #isAbstract.
+	testClass class removeSelector: #isAbstract
 ]
 
 { #category : #running }
-RBMakeClassAbstractParametrizedTest >> tearDown [ 
+RBMakeClassAbstractParametrizedTest >> tearDown [
 
 	testClass class removeSelector: #isAbstract.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
 RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractAddsIsAbstractMethodToClassSide [
 	| refactoring |
 	refactoring := rbClass class: testClass.
-	
+
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: testClass name) classSide 
-			parseTreeForSelector: #isAbstract) 
+	self assert: ((refactoring model classNamed: testClass name) classSide
+			parseTreeForSelector: #isAbstract)
 		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
 ]

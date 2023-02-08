@@ -21,12 +21,12 @@ RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: class
 										<< '	^ ';
 										<< classRefName ])
 		in: className asSymbol
-		withProtocols: { #accessing }) 
+		withProtocols: { #accessing })
 			asRefactoring execute
 ]
 
 { #category : #accessing }
-RBCopyPackageParametrizedTest >> constructor [ 
+RBCopyPackageParametrizedTest >> constructor [
 	^ #copyPackage:in:
 ]
 
