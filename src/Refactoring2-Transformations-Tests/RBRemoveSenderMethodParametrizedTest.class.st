@@ -72,7 +72,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveMessageInsideBlock [
 	| refactoring methodName |
 	methodName := ('caller', '1') asSymbol.
 	refactoring := self createRefactoringWithArguments:
-		{ { (	90 to: 105) .#printString } .
+		{ { (	88 to: 104) .#printString } .
 			methodName .
 			#RBRefactoryTestDataApp }.
 

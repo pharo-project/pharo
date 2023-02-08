@@ -176,7 +176,7 @@ RBInlineMethodParametrizedTest >> testInlineMethodForSuperSend [
 	(model classNamed: #RBRenameVariableChange)
 		removeMethod: #executeNotifying:.
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ (102 to: 131) . #executeNotifying: . (model classNamed: #RBRenameInstanceVariableChange) }.
+		{ (101 to: 130) . #executeNotifying: . (model classNamed: #RBRenameInstanceVariableChange) }.
 	self executeRefactoring: refactoring.
 
 	self
