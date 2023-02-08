@@ -148,7 +148,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 		  yourself'.
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			{{(	64 to: 461) . #errorBlock:}.
+			{{(	63 to: 460) . #errorBlock:}.
 				#referencesConditionFor: .
 				#RBRefactoryTestDataApp}.
 	self setupInlineExpressionFor: refactoring toReturn: false.
@@ -164,7 +164,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 	methodName := ('called:', 'on:') asSymbol.
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			{{(	31 to: 75) . #cr}.
+			{{(	30 to: 74) . #cr}.
 			methodName .
 			#RBRefactoryTestDataApp}.
 	self setupInlineExpressionFor: refactoring toReturn: false.
