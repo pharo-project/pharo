@@ -120,7 +120,8 @@ Object class >> howToModifyPrimitives [
 
 { #category : #'class initialization' }
 Object class >> initialize [
-	"Object initialize"
+	"Upon loading a class, this selector is not looked up.
+	If you want a class to be initialized upon loading, this class should define the selector #intialize explicitly"
 	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
