@@ -668,10 +668,10 @@ FileSystem >> open: aResolvable writable: aBoolean [
 	that path using the specified access mode."
 
 	| path |
-	path := self resolve: aResolvable.
-	^ store handleClass
-		open: (FileReference fileSystem: self path: path)
-		writable: aBoolean
+	path := aResolvable isAbsolute
+		        ifTrue: [ aResolvable ]
+		        ifFalse: [ self resolve: aResolvable ].
+	^ store handleClass open: (FileReference fileSystem: self path: path) writable: aBoolean
 ]
 
 { #category : #private }
