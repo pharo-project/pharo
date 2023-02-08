@@ -78,8 +78,13 @@ DAMessageSendAnalyzer >> missingMethods [
 
 { #category : #computing }
 DAMessageSendAnalyzer >> missingMethodsImplementedIn: aPackageName [
-	^ (RPackageOrganizer default packageNamed: aPackageName) selectors
-		intersection: self missingMethods
+
+	| rPackage |
+	rPackage := RPackageOrganizer default packageNamed: aPackageName ifAbsent: [
+		            DAUnknownManuallyResolvedPackage signalOn: aPackageName.
+		            ^ self missingMethods ].
+
+	^ rPackage selectors intersection: self missingMethods
 ]
 
 { #category : #computing }

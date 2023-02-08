@@ -25,7 +25,7 @@ SDL_AudioSpec class >> fieldsDesc [
 	"
 	^#(
 	 int freq;
-	
+
 	 SDL_AudioFormat format;
 	 Uint8 channels;
 	 Uint8 silence;
@@ -48,7 +48,7 @@ SDL_AudioSpec >> callback [
 { #category : #'accessing - structure variables' }
 SDL_AudioSpec >> callback: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_CALLBACK put: anObject getHandle.
+	handle pointerAt: OFFSET_CALLBACK put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -144,5 +144,5 @@ SDL_AudioSpec >> userdata [
 { #category : #'accessing - structure variables' }
 SDL_AudioSpec >> userdata: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_USERDATA put: anObject getHandle.
+	handle pointerAt: OFFSET_USERDATA put: anObject getHandle
 ]

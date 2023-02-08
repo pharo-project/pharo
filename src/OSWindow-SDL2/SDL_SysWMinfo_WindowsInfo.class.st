@@ -40,7 +40,7 @@ SDL_SysWMinfo_WindowsInfo >> hdc [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsInfo >> hdc: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_HDC put: anObject getHandle.
+	handle pointerAt: OFFSET_HDC put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -52,5 +52,5 @@ SDL_SysWMinfo_WindowsInfo >> window [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsInfo >> window: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
+	handle pointerAt: OFFSET_WINDOW put: anObject getHandle
 ]

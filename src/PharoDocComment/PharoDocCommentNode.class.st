@@ -56,8 +56,8 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		target: self;
 		default: true;
 		description:
-			'Allow styled and executable example expressions within method comments. 
-		Example: 
+			'Allow styled and executable example expressions within method comments.
+		Example:
 		"3+4 >>> 7."';
 		label: 'Pharo doc comments';
 		parent: #codeBrowsing
@@ -85,7 +85,7 @@ PharoDocCommentNode >> expression: anObject [
 PharoDocCommentNode >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: '(';
 		nextPutAll: self expression source;
 		nextPutAll: ')'

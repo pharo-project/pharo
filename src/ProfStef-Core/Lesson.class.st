@@ -15,7 +15,7 @@ Class {
 
 { #category : #'instance creation' }
 Lesson class >> title: aStringForTitle lesson: aStringForLesson [
-	^ self new title: aStringForTitle; lesson: aStringForLesson; yourself.
+	^ self new title: aStringForTitle; lesson: aStringForLesson; yourself
 ]
 
 { #category : #accessing }
@@ -30,11 +30,11 @@ Lesson >> lesson: aString [
 
 { #category : #printing }
 Lesson >> printOn: aStream [
-	super printOn: aStream.  
-	aStream 
+	super printOn: aStream.
+	aStream
 		nextPutAll: '(';
 		nextPutAll: self title;
-		nextPutAll: ')'.
+		nextPutAll: ')'
 ]
 
 { #category : #accessing }

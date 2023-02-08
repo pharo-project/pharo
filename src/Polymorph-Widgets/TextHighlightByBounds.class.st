@@ -101,7 +101,7 @@ TextHighlightByBounds >> containsPoint: aPoint in: rect [
 	r := self bounds ifNil: [^ false ].
 	r := self fillWidth
 		ifTrue: [rect left @ r top corner: (rect right @ r bottom)]
-		ifFalse: [r]. 
+		ifFalse: [r].
 	^r containsPoint: aPoint
 ]
 
@@ -121,7 +121,7 @@ TextHighlightByBounds >> drawOn: aCanvas in: rect offset: o [
 	self color isTransparent
 		ifFalse: [ aCanvas fillRectangle: r color: self color ].
 	(self borderWidth > 0 and: [ self borderColor isTransparent not ])
-		ifTrue: [ 
+		ifTrue: [
 			(self borderSides includes: #top)
 				ifTrue: [ aCanvas fillRectangle: (r withHeight: self borderWidth) color: self borderColor ].
 			(self borderSides includes: #right)
@@ -184,13 +184,13 @@ TextHighlightByBounds >> lineRange: anObject [
 { #category : #accessing }
 TextHighlightByBounds >> position [
 	"Answer the bounds top left."
-	
+
 	^self bounds topLeft
 ]
 
 { #category : #accessing }
 TextHighlightByBounds >> position: aPoint [
 	"Set the bounds top left."
-	
+
 	self bounds: (aPoint extent: self bounds extent)
 ]

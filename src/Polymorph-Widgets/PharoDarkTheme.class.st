@@ -53,7 +53,7 @@ PharoDarkTheme class >> lightSelectionColor [
 
 { #category : #settings }
 PharoDarkTheme class >> setPreferredPreferences [
-	"NECPreferences 
+	"NECPreferences
 		expandPrefixes: true;
 		popupShowWithShortcut: Character tab asShortcut."
 ]
@@ -80,7 +80,7 @@ PharoDarkTheme >> balloonBackgroundColor [
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> borderColor [ 
+PharoDarkTheme >> borderColor [
 	^ Color darkGray darker darker darker
 ]
 
@@ -108,13 +108,13 @@ PharoDarkTheme >> buttonDisabledFillStyleFor: aButton [
 { #category : #'border-styles - buttons' }
 PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
-	
-	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) 
-		ifTrue: [ 
-			^ SimpleBorderStyle new 
-				width: 0; 
+
+	(aButton valueOfProperty: #noBorder ifAbsent: [ false ])
+		ifTrue: [
+			^ SimpleBorderStyle new
+				width: 0;
 				baseColor: Color transparent ].
-	
+
 	^ SimpleBorderStyle new
 		width: 1;
 		baseColor: self buttonColor lighter
@@ -123,8 +123,8 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
-	
-	(aButton valueOfProperty: #noFill ifAbsent: [false]) 
+
+	(aButton valueOfProperty: #noFill ifAbsent: [false])
 		ifTrue: [ ^ SolidFillStyle color: Color transparent ].
 	^ SolidFillStyle color: self buttonColor
 ]
@@ -132,7 +132,7 @@ PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
-	
+
 	^ SolidFillStyle color: self selectionColor
 ]
 
@@ -149,17 +149,17 @@ PharoDarkTheme >> classExtensionColor [
 { #category : #configure }
 PharoDarkTheme >> configureMorphTreeMorph: aMorph [
 	aMorph preferedPaneColor: self backgroundColor.
-	aMorph 
+	aMorph
 		rowColorForEven: self backgroundColor
-		odd: self backgroundColor.
+		odd: self backgroundColor
 ]
 
 { #category : #configure }
-PharoDarkTheme >> configurePluggableTextMorph: textMorph [ 
-	textMorph 	
+PharoDarkTheme >> configurePluggableTextMorph: textMorph [
+	textMorph
 		color: self backgroundColor;
 		textColor: self textColor;
-		borderWidth: 1.
+		borderWidth: 1
 ]
 
 { #category : #configure }
@@ -171,8 +171,8 @@ PharoDarkTheme >> configureSystemWindow: aWindow [
 ]
 
 { #category : #configure }
-PharoDarkTheme >> configureTextMorph: textMorph [ 
-	textMorph 
+PharoDarkTheme >> configureTextMorph: textMorph [
+	textMorph
 		color: self textColor
 ]
 
@@ -180,7 +180,7 @@ PharoDarkTheme >> configureTextMorph: textMorph [
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorderStyle new 
+	aStyle := SimpleBorderStyle new
 					color: self borderColor;
 					width: 1.
 	aWindow borderStyle: aStyle
@@ -190,16 +190,16 @@ PharoDarkTheme >> configureWindowBorderFor: aWindow [
 PharoDarkTheme >> controlButtonNormalFillStyleFor: aButton [
 	"Return the normal control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self buttonNormalFillStyleFor: aButton
 ]
 
 { #category : #'accessing - colors' }
 PharoDarkTheme >> dangerTextColor [
-	^ Color 
-		r: 239	
-		g: 83	
-		b: 80	
+	^ Color
+		r: 239
+		g: 83
+		b: 80
 		range: 255
 ]
 
@@ -212,40 +212,40 @@ PharoDarkTheme >> desktopColor [
 { #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffAdditionalLineBackgroundColor [
 	"Answer the color used to highlight additional text lines in a diff view."
-	
+
 	^ Color r: 0.0 g: 0.76 b: 0.0 alpha: 0.2
 ]
 
 { #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffEdgeColor [
 	"Answer the color used to show the border of the changes."
-	
+
 	^ Color white alpha: 0.5
 ]
 
 { #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffModificatedLineBackgroundColor [
 	"Answer the color used to highlight changed text lines in a diff view."
-	
+
 	^ Color gray alpha: 0.2
 ]
 
 { #category : #'basic-colors - diffs' }
 PharoDarkTheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to highlight removed text lines in a diff view."
-	
+
 	^ Color r: 0.84 g: 0.0 b: 0.0 alpha: 0.2
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> disabledColor [ 
+PharoDarkTheme >> disabledColor [
 	^ Color gray lighter
 ]
 
 { #category : #'fill-styles' }
 PharoDarkTheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
-	
+
 	^ self backgroundColor
 ]
 
@@ -261,12 +261,12 @@ PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 PharoDarkTheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
-	
+
 	^ self backgroundColor
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> enabledColor [ 
+PharoDarkTheme >> enabledColor [
 	^ self textColor
 ]
 
@@ -280,7 +280,7 @@ PharoDarkTheme >> initialize [
 
 	super initialize.
 	self windowActiveDropShadowStyle: #diffuse.
-	self settings preferGradientFill: false.
+	self settings preferGradientFill: false
 ]
 
 { #category : #'label-styles' }
@@ -307,14 +307,14 @@ PharoDarkTheme >> lightBackgroundColor [
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> lineNumberColor [ 
+PharoDarkTheme >> lineNumberColor [
 	^ Color gray lighter lighter
 ]
 
 { #category : #'fill-styles' }
 PharoDarkTheme >> listNormalFillStyleFor: aList [
 	"Return the normal fillStyle for the given list."
-	
+
 	^ self backgroundColor
 ]
 
@@ -342,7 +342,7 @@ PharoDarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> mouseOverColor [ 
+PharoDarkTheme >> mouseOverColor [
 	^ self lightBackgroundColor
 ]
 
@@ -354,21 +354,21 @@ PharoDarkTheme >> newRadioMarkerForm [
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> scrollbarColor [ 
+PharoDarkTheme >> scrollbarColor [
 	^ self buttonColor
 ]
 
 { #category : #'border-styles - scrollbars' }
 PharoDarkTheme >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
-	
-	^ SolidFillStyle color: self backgroundColor lighter.
+
+	^ SolidFillStyle color: self backgroundColor lighter
 ]
 
 { #category : #'border-styles - scrollbars' }
 PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
-	
+
 	^ self buttonSelectedFillStyleFor: aScrollbar
 ]
 
@@ -395,12 +395,12 @@ PharoDarkTheme >> shStyleTableName [
 
 { #category : #'fill-styles' }
 PharoDarkTheme >> sliderNormalFillStyleFor: aSlider [
-	
+
 	^ self backgroundColor
 ]
 
 { #category : #'accessing - colors' }
-PharoDarkTheme >> spotlightWindowColor [ 
+PharoDarkTheme >> spotlightWindowColor [
 	^ self windowColor
 ]
 

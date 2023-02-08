@@ -4,10 +4,10 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBFindAndReplaceSetUpParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBFindAndReplaceSetUpRefactoring };
+		addCase: { #rbClass -> RBFindAndReplaceSetUpTransformation };
 		yourself
 ]
 
