@@ -23,30 +23,30 @@ Class {
 
 { #category : #private }
 ClyTableDecorationStrategyAnnotation class >> createContainerForRegistry [
-	"Decoration with more priority should override applied changes of table row 
+	"Decoration with more priority should override applied changes of table row
 	which was produced by less prioritized decorations.
 	It can be done if most prioritized decorator will be applied on the table at last order.
 	Here we revert annotation enumeration logic by managing registry in opposite order
 	according to described idea"
-	
+
 	^SortedCollection sortBlock: #priority ascending
 ]
 
 { #category : #accessing }
 ClyTableDecorationStrategyAnnotation >> annotatedClass: aTableDecoratorClass [
 	super annotatedClass: aTableDecoratorClass.
-	
+
 	priority := aTableDecoratorClass priority
 ]
 
 { #category : #decoration }
-ClyTableDecorationStrategyAnnotation >> decorateMainTableCell: anItemCellMorph inContext: itemContext [ 
+ClyTableDecorationStrategyAnnotation >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	annotatedClass decorateMainTableCell: anItemCellMorph inContext: itemContext
 ]
 
 { #category : #decoration }
-ClyTableDecorationStrategyAnnotation >> decorateTableCell: anItemCellMorph inContext: itemContext [ 
+ClyTableDecorationStrategyAnnotation >> decorateTableCell: anItemCellMorph inContext: itemContext [
 
 	annotatedClass decorateTableCell: anItemCellMorph inContext: itemContext
 ]
@@ -65,8 +65,8 @@ ClyTableDecorationStrategyAnnotation >> isForbidden [
 { #category : #printing }
 ClyTableDecorationStrategyAnnotation >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		nextPutAll: (annotatedClass ifNil: [ 'detached' ] ifNotNil: [ annotatedClass name]);
 		nextPutAll: '; ';

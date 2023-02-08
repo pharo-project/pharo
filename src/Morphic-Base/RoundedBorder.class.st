@@ -9,6 +9,6 @@ Class {
 }
 
 { #category : #testing }
-RoundedBorder class >> isDeprecated [ 
+RoundedBorder class >> isDeprecated [
 	^ true
 ]

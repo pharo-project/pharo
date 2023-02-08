@@ -23,8 +23,8 @@ Class {
 { #category : #accessing }
 CmdMenuItem >> actualParentGroup [
 	parentGroup isRoot ifTrue: [ ^parentGroup ].
-	
-	^parentGroup isInlined 
+
+	^parentGroup isInlined
 		ifTrue: [ parentGroup actualParentGroup ]
 		ifFalse: [ parentGroup]
 ]
@@ -102,7 +102,7 @@ CmdMenuItem >> parentGroup: anObject [
 
 { #category : #accessing }
 CmdMenuItem >> pathToRoot [
-	^parentGroup 
+	^parentGroup
 		ifNil: [ ^#() ]
 		ifNotNil: [ parentGroup pathToRoot, {parentGroup} ]
 ]

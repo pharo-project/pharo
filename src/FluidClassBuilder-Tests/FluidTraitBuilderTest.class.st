@@ -29,8 +29,8 @@ FluidTraitBuilderTest >> setUp [
 { #category : #running }
 FluidTraitBuilderTest >> tearDown [
 
-	self class environment 
-		at: #TTestTrait 
+	self class environment
+		at: #TTestTrait
 		ifPresent: [ :cl | cl removeFromSystem  ].
 	super tearDown
 ]
@@ -43,7 +43,7 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 					slots: { #x . #y };
 					package: 'FakedCore'.
 	trait := builder build.
-	
+
 	self assert: trait name equals: #TPoint2.
 	self assert: trait slots size equals: 2
 ]
@@ -61,12 +61,12 @@ FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	| instBuilder newTrait |
 	instBuilder := (Trait << #TTestTrait
 		package: 'Mock').
-		
+
 	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder. 
+	the problem is that category and tag are lost by the class builder.
 	Hence we cannot test for real."
 	newTrait := instBuilder install.
-	
+
 	self assert: newTrait name equals: #TTestTrait.
 	self assert: newTrait slotNames equals: #().
 	self assert: newTrait traitComposition equals: {} asTraitComposition.
@@ -84,12 +84,12 @@ FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 		traits: {TViewModelMock};
 		tag: 'lala';
 		package: 'Mock').
-		
+
 	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder. 
+	the problem is that category and tag are lost by the class builder.
 	Hence we cannot test for real."
 	newTrait := instBuilder install.
-	
+
 	self assert: newTrait name equals: #TTestTrait.
 	self assert: newTrait slotNames equals: #(a b c).
 	self assert: newTrait traitComposition equals: {TViewModelMock} asTraitComposition.
@@ -105,12 +105,12 @@ FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingIn
 	instBuilder := (Trait << #TTestTrait
 		classSlots: #(AAA);
 		package: 'Mock').
-		
+
 	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder. 
+	the problem is that category and tag are lost by the class builder.
 	Hence we cannot test for real."
 	newTrait := instBuilder install.
-	
+
 	instBuilder := (Trait << #TTestTrait
 		slots: #(aaa);
 		package: 'Mock').
@@ -127,13 +127,13 @@ FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 	instBuilder := (Trait << #TTestTrait
 		slots: #(aaa);
 		package: 'Mock').
-		
+
 	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder. 
+	the problem is that category and tag are lost by the class builder.
 	Hence we cannot test for real."
 	newTrait := instBuilder install.
-	
-	classBuilder := (Trait << newTrait classTrait 
+
+	classBuilder := (Trait << newTrait classTrait
 		slots: #(AAA);
 		package: 'Mock').
 
@@ -166,7 +166,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |
 	self removeTestArtifactsFromSystem.
-	[ 
+	[
 	builder := self class compilerClass new
 		           evaluate: 'Trait << #TMyClass
 	traits: {};
@@ -175,9 +175,9 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 	package: ''MyPackage'''.
 	shiftClassBuilder := builder shiftClassBuilder.
 	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
-	
+
 	installedClass := self class environment at: #TMyClass ifAbsent: [self fail].
-	         
+
 	self assert: installedClass name equals: #TMyClass.
 	self assert: installedClass isFixed.
 	self assert: installedClass slots isEmpty.
@@ -190,15 +190,15 @@ FluidTraitBuilderTest >> testInstallSimplePoint2 [
 
 	[ | trait |
 	self assert: (self class environment at: #TPoint2 ifAbsent: [ true ]).
-	
+
 	builder := Trait << #TPoint2
 					slots: { #x . #y };
 					package: 'FakedCore'.
 	builder install.
-	trait := self class environment at: #TPoint2. 
+	trait := self class environment at: #TPoint2.
 	self assert: trait name equals: #TPoint2.
-	self assert: trait slots size equals: 2 ] ensure: [  
-			self class environment removeKey: #TPoint2 ifAbsent: [self fail]. 
+	self assert: trait slots size equals: 2 ] ensure: [
+			self class environment removeKey: #TPoint2 ifAbsent: [self fail].
 			self assert: (self class environment at: #TPoint2 ifAbsent: [ true ])]
 ]
 
@@ -208,9 +208,9 @@ FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 	| trait |
 	builder := Trait << #TPoint3
 						package: 'Fake'.
-						
+
 	trait := builder build.
-	
+
 	self assert: trait name equals: #TPoint3.
 	self assert: trait package packageName equals: '_UnpackagedPackage'
 ]

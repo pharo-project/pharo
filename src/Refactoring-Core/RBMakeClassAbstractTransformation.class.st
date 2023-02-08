@@ -1,3 +1,8 @@
+"
+I am a transformation that turns class into abstract class.
+
+I am responsible for adding class side method `isAbstract` to the selected class.
+"
 Class {
 	#name : #RBMakeClassAbstractTransformation,
 	#superclass : #RBClassRefactoring,

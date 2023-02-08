@@ -5,23 +5,43 @@ Class {
 	#name : #ReMethodSourceCleaner,
 	#superclass : #Object,
 	#instVars : [
-		'sourceLines'
+		'sourceLines',
+		'keepFinalDot'
+	],
+	#classVars : [
+		'KeepFinalDotInMethodBody'
 	],
 	#category : #'Renraku-Utility'
 }
 
-{ #category : #testing }
-ReMethodSourceCleaner class >> ableToClean: aCompiledMethod [
-
-	^ (self clean: aCompiledMethod sourceCode) size ~= aCompiledMethod sourceCode size
-]
-
 { #category : #cleaning }
 ReMethodSourceCleaner class >> clean: aString [
 
-	^(self forSource: aString)
-		clean;
-		contents
+	^ (self forSource: aString)
+		  clean;
+		  contents
+]
+
+{ #category : #cleaning }
+ReMethodSourceCleaner class >> clean: aString keepFinalDot: aBoolean [
+
+	^ (self forSource: aString)
+			keepFinalDot: aBoolean;
+		   clean;
+		   contents
+]
+
+{ #category : #settings }
+ReMethodSourceCleaner class >> compactSourceCodeCleanupSettingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder setting: #keepFinalDotInMethodBody)
+		order: 16;
+		label: 'Keep final dot dot in method body when critique is autofixed';
+		description: 'Define if the system keeps an unnecessary final dot at the end of a method body when critique on it is automatically resolved';
+		parent: #qualityAssistant;
+		default: false;
+		target: self
 ]
 
 { #category : #'instance creation' }
@@ -30,6 +50,28 @@ ReMethodSourceCleaner class >> forSource: aString [
 	^ self new
 		initFromSource: aString;
 		yourself
+]
+
+{ #category : #testing }
+ReMethodSourceCleaner class >> isNecessaryToClean: aCompiledMethod allowFinalDot: aBoolean [
+	"Return true if the receiver finds out that it is necessary to clean the source code of the
+	 given method (which means cleaned source code would have different size than original method)"
+
+	| source |
+	source := aCompiledMethod sourceCode.
+	^ (self clean: source keepFinalDot: aBoolean) size ~= aCompiledMethod sourceCode size
+]
+
+{ #category : #'settings - accessing' }
+ReMethodSourceCleaner class >> keepFinalDotInMethodBody [
+
+	^ KeepFinalDotInMethodBody ifNil: [ KeepFinalDotInMethodBody := false ]
+]
+
+{ #category : #'settings - accessing' }
+ReMethodSourceCleaner class >> keepFinalDotInMethodBody: aBoolean [
+
+	KeepFinalDotInMethodBody := aBoolean
 ]
 
 { #category : #utilities }
@@ -71,10 +113,30 @@ ReMethodSourceCleaner >> initFromSource: aString [
 		               yourself
 ]
 
+{ #category : #initialization }
+ReMethodSourceCleaner >> initialize [
+
+	super initialize.
+	self keepFinalDot: self class keepFinalDotInMethodBody
+]
+
+{ #category : #accessing }
+ReMethodSourceCleaner >> keepFinalDot [
+
+	^ keepFinalDot
+]
+
+{ #category : #accessing }
+ReMethodSourceCleaner >> keepFinalDot: aBoolean [
+
+	keepFinalDot := aBoolean
+]
+
 { #category : #'private - operating' }
 ReMethodSourceCleaner >> removeTrailingDot [
 
-	 sourceLines last removeTrailingDot
+	self keepFinalDot ifTrue: [ ^ self ].
+	sourceLines last removeTrailingDot
 ]
 
 { #category : #'private - operating' }

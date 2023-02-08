@@ -17,14 +17,14 @@ BinaryFileStreamTest >> fileStreamForFileNamed: fileName [
 BinaryFileStreamTest >> killTestFile [
 
 	(File named: 'testFile') exists
-		ifTrue: [ (File named: 'testFile') delete ].
+		ifTrue: [ (File named: 'testFile') delete ]
 ]
 
 { #category : #running }
 BinaryFileStreamTest >> setUp [
 
 	super setUp.
-	self killTestFile.
+	self killTestFile
 ]
 
 { #category : #running }
@@ -34,12 +34,12 @@ BinaryFileStreamTest >> tearDown [
 	"We must ensure that files are collected before running other tests.
 	In windows, we cannot open the same file twice."
 	3 timesRepeat: [ Smalltalk garbageCollect ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #testing }
 BinaryFileStreamTest >> testEmptyFileIsAtEnd [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: file atEnd
@@ -47,7 +47,7 @@ BinaryFileStreamTest >> testEmptyFileIsAtEnd [
 
 { #category : #testing }
 BinaryFileStreamTest >> testFileWithSomeBytesSizeIsNotZero [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
@@ -60,7 +60,7 @@ BinaryFileStreamTest >> testFileWithSomeBytesSizeIsNotZero [
 
 { #category : #testing }
 BinaryFileStreamTest >> testFullFileIsAtEnd [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
@@ -77,14 +77,14 @@ BinaryFileStreamTest >> testOpenFile [
 
 { #category : #testing }
 BinaryFileStreamTest >> testPeekDoesNotAdvanceTheStream [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
 	file nextPut: 2.
 	file nextPut: 3.
 	file close.
-	
+
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: file position equals: 0.
 	self assert: file peek equals: file peek.
@@ -93,12 +93,12 @@ BinaryFileStreamTest >> testPeekDoesNotAdvanceTheStream [
 
 { #category : #testing }
 BinaryFileStreamTest >> testReadFullFileIsAtEnd [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
 	file close.
-	
+
 	file := self fileStreamForFileNamed: 'testFile'.
 	file next.
 	self assert: file atEnd
@@ -106,36 +106,36 @@ BinaryFileStreamTest >> testReadFullFileIsAtEnd [
 
 { #category : #testing }
 BinaryFileStreamTest >> testReadLessThanAvailableYieldsJustRead [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
 	file nextPut: 2.
 	file nextPut: 3.
 	file close.
-	
+
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: (file next:2) equals: #[1 2]
 ]
 
 { #category : #testing }
 BinaryFileStreamTest >> testReadMoreThanAvailableYieldsOnlyAvailable [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: (file next:2) equals: #[].
-	
+
 	"then we put one element and we close it"
 	file nextPut: 1.
 	file close.
-	
+
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: (file next:2) equals: #[1]
 ]
 
 { #category : #testing }
 BinaryFileStreamTest >> testReadMultipleBytes [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
@@ -148,7 +148,7 @@ BinaryFileStreamTest >> testReadMultipleBytes [
 
 { #category : #testing }
 BinaryFileStreamTest >> testReadWhenNothingAvailableYieldsNil [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: file next equals: nil
@@ -156,14 +156,14 @@ BinaryFileStreamTest >> testReadWhenNothingAvailableYieldsNil [
 
 { #category : #testing }
 BinaryFileStreamTest >> testSkipLecture [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
 	file nextPut: 2.
 	file nextPut: 3.
 	file close.
-	
+
 	file := self fileStreamForFileNamed: 'testFile'.
 	file skip: 2.
 	self assert: file next equals: 3
@@ -171,7 +171,7 @@ BinaryFileStreamTest >> testSkipLecture [
 
 { #category : #testing }
 BinaryFileStreamTest >> testWriteFromStartingAtCount [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file writeFrom: #[1 2 3] startingAt: 2 count: 2.
@@ -179,12 +179,12 @@ BinaryFileStreamTest >> testWriteFromStartingAtCount [
 
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: file next equals: 2.
-	self assert: file next equals: 3.
+	self assert: file next equals: 3
 ]
 
 { #category : #testing }
 BinaryFileStreamTest >> testWriteMultipleBytes [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPutAll: #[1 2].
@@ -197,7 +197,7 @@ BinaryFileStreamTest >> testWriteMultipleBytes [
 
 { #category : #testing }
 BinaryFileStreamTest >> testWriteReadInt [
-	
+
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
@@ -209,7 +209,7 @@ BinaryFileStreamTest >> testWriteReadInt [
 
 { #category : #testing }
 BinaryFileStreamTest >> testWriteToClosedFileFails [
-	
+
 	| fileStream |
 	fileStream := self fileStreamForFileNamed: 'testFile'.
 	fileStream close.

@@ -17,8 +17,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClyNotebookPageRecycler class >> on: toolList [ 
-	
+ClyNotebookPageRecycler class >> on: toolList [
+
 	^ self new
 		tools: toolList;
 		yourself
@@ -26,16 +26,15 @@ ClyNotebookPageRecycler class >> on: toolList [
 
 { #category : #'instance creation' }
 ClyNotebookPageRecycler class >> on: toolList contexts: aListOfClyBrowserContext [
-	
+
 	^ (self on: toolList)
 		setTargetedToolsForContexts: aListOfClyBrowserContext;
 		yourself
-
 ]
 
 { #category : #private }
 ClyNotebookPageRecycler >> activationStrategiesFor: aClyBrowserContext [
-	
+
 	^ ClyTabActivationStrategyAnnotation activeInstancesInContext: aClyBrowserContext
 ]
 
@@ -44,65 +43,63 @@ ClyNotebookPageRecycler >> ensureMatched [
 
 	isMatched ifTrue: [ ^ self ].
 	self matchTools.
-	isMatched := true.
-
+	isMatched := true
 ]
 
 { #category : #private }
 ClyNotebookPageRecycler >> matchTools [
-	
+
 	self targetedTools do: [ :targetTool | targetTool match: tools ]
 ]
 
 { #category : #initialization }
 ClyNotebookPageRecycler >> setTargetedToolsForContexts: aListOfClyBrowserContext [
-	
-	targetedTools := aListOfClyBrowserContext flatCollect: [ :aClyBrowserContext | 
-			self targetedToolsFor: aClyBrowserContext ].
-	isMatched := false.
 
+	targetedTools := aListOfClyBrowserContext flatCollect: [ :aClyBrowserContext |
+			self targetedToolsFor: aClyBrowserContext ].
+	isMatched := false
 ]
 
 { #category : #accessing }
 ClyNotebookPageRecycler >> targetedTools [
-	
+
 	^ targetedTools
 ]
 
 { #category : #private }
 ClyNotebookPageRecycler >> targetedToolsFor: aClyBrowserContext [
-	
+
 	^ (self activationStrategiesFor: aClyBrowserContext)
 		collect: [ :strategy | ClyTargetTool forActivation: strategy context: aClyBrowserContext]
 ]
 
 { #category : #accessing }
-ClyNotebookPageRecycler >> tools: toolList [ 
-	
-	tools := toolList.
+ClyNotebookPageRecycler >> tools: toolList [
+
+	tools := toolList
 ]
 
 { #category : #querying }
 ClyNotebookPageRecycler >> toolsToInstall [
-	
+
 	self ensureMatched.
 
-	^ self targetedTools 
+	^ self targetedTools
 		reject: [ :tool | tool isMatched ]
 ]
 
 { #category : #accessing }
 ClyNotebookPageRecycler >> toolsToKeep [
-	
+
 	self ensureMatched.
 
-	^ self targetedTools 
+	^ self targetedTools
 		select: [ :tool | tool isMatched ]
 		thenCollect: [ :tool | tool matchedTool ]
 ]
 
 { #category : #querying }
 ClyNotebookPageRecycler >> toolsToRemove [
-	
+
 	^ tools difference: self toolsToKeep
 ]

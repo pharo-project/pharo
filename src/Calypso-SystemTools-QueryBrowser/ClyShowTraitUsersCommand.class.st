@@ -10,7 +10,7 @@ Class {
 { #category : #activation }
 ClyShowTraitUsersCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserClassContext
 ]
 
@@ -34,7 +34,7 @@ ClyShowTraitUsersCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyShowTraitUsersCommand >> execute [
 
-	classes first isTrait ifTrue: [ 
+	classes first isTrait ifTrue: [
 		browser spawnQueryBrowserOn: (ClyConstantQuery
 				 returning: classes first traitUsers
 				 as: (ClySortedQueryResult using: ClySortByNameFunction ascending)) ]
@@ -43,6 +43,6 @@ ClyShowTraitUsersCommand >> execute [
 { #category : #execution }
 ClyShowTraitUsersCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]

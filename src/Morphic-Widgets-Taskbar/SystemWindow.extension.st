@@ -3,23 +3,23 @@ Extension { #name : #SystemWindow }
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> basicTaskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
-	
+
 	^super taskThumbnailOfSize: thumbExtent
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> canBeMovedToLeft [
-	
-	
+
+
 	self worldTaskbar ifNil: [ ^ false ].
-	^ self worldTaskbar canMoveLeft: self.
+	^ self worldTaskbar canMoveLeft: self
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> canBeMovedToRight [
 
 	self worldTaskbar ifNil: [ ^ false ].
-	^ self worldTaskbar canMoveRight: self.
+	^ self worldTaskbar canMoveRight: self
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
@@ -32,7 +32,7 @@ SystemWindow >> isTaskbarPresent [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> minimizeAfterGeneratingThumbnail [
 	"Minimize the window after thumbnail generation."
-	
+
 	self isMinimized ifTrue: [^self].
 	isCollapsed := true.
 	paneMorphs
@@ -45,12 +45,12 @@ SystemWindow >> minimizeAfterGeneratingThumbnail [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> restoreBeforeGeneratingThumbnail [
 	"Restore the window without activating unlocking or stepping."
-	
+
 	self isMinimized ifFalse: [^self].
 	isCollapsed := false.
 	self show.
 	self setBoundsWithFlex: fullFrame.
-	paneMorphs reverseDo: [:m | 
+	paneMorphs reverseDo: [:m |
 		self addMorph: m].
 	self layoutChanged
 ]
@@ -58,7 +58,7 @@ SystemWindow >> restoreBeforeGeneratingThumbnail [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
-	
+
 	|min thumb|
 	min := self isMinimized
 		ifTrue: [self restoreBeforeGeneratingThumbnail.
@@ -126,9 +126,9 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
 	| menu theme submenu  moveSubmenu |
-	theme :=  self theme.	
+	theme :=  self theme.
 	menu := theme newMenuIn: self for: self.
-	
+
 	menu
 		addToggle: 'Restore' translated
 		target: self
@@ -138,7 +138,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	menu lastItem
 		icon: self theme windowMaximizeForm;
 		font: theme menuFont.
-		
+
 	menu
 		addToggle: 'Minimize' translated
 		target: self
@@ -148,7 +148,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	menu lastItem
 		icon: self theme windowMinimizeForm;
 		font: theme menuFont.
-		
+
 	menu
 		addToggle: 'Maximize' translated
 		target: self
@@ -158,7 +158,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	menu lastItem
 		icon: self theme windowMaximizeForm;
 		font: theme menuFont.
-		
+
 	menu addLine.
 
 	moveSubmenu := theme newMenuIn: self for: self.
@@ -179,7 +179,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #canBeMovedToRight.
 	menu addLine.
-	
+
 	submenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Close all'
@@ -238,18 +238,18 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllLikeThis [
 
-	(self confirm: 'Do you really want to close all windows like this ?') ifFalse: [ 
+	(self confirm: 'Do you really want to close all windows like this ?') ifFalse: [
 		^ self ].
-	(SystemWindow allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ].
+	(SystemWindow allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ]
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToLeft [
 
-	(self confirm: 'Do you really want to close all windows to left ?') 
+	(self confirm: 'Do you really want to close all windows to left ?')
 		ifFalse: [ ^ self ].
-	self worldTaskbar ifNotNil: [ :worldTaskbar | 
-		worldTaskbar orderedTasks copy do: [ :task | 
+	self worldTaskbar ifNotNil: [ :worldTaskbar |
+		worldTaskbar orderedTasks copy do: [ :task |
 			task morph == self ifTrue: [ ^ self ].
 			task morph delete ] ]
 ]
@@ -258,11 +258,11 @@ SystemWindow >> taskbarCloseAllToLeft [
 SystemWindow >> taskbarCloseAllToRight [
 
 	| wasFound |
-	(self confirm: 'Do you really want to close all windows to right ?') 
+	(self confirm: 'Do you really want to close all windows to right ?')
 		ifFalse: [ ^ self ].
 	wasFound := false.
-	self worldTaskbar ifNotNil: [ :worldTaskbar | 
-		worldTaskbar orderedTasks copy do: [ :task | 
+	self worldTaskbar ifNotNil: [ :worldTaskbar |
+		worldTaskbar orderedTasks copy do: [ :task |
 			wasFound
 				ifTrue: [ task morph delete ]
 				ifFalse: [ wasFound := task morph == self ] ] ]
@@ -271,10 +271,10 @@ SystemWindow >> taskbarCloseAllToRight [
 { #category : #'*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllWindows [
 
-	(self confirm: 'Do you really want to close all windows ?') ifFalse: [ 
+	(self confirm: 'Do you really want to close all windows ?') ifFalse: [
 		^ self ].
 
-	self worldTaskbar ifNotNil: [ :worldTaskbar | 
+	self worldTaskbar ifNotNil: [ :worldTaskbar |
 		worldTaskbar tasks do: [ :task | task morph delete ] ]
 ]
 
@@ -310,7 +310,7 @@ SystemWindow >> taskbarTask [
 		state: self taskbarState
 		icon: (self iconNamed: self taskbarIconName)
 		label: self taskbarLabel.
-	^taskbarTask.
+	^taskbarTask
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }
@@ -326,9 +326,9 @@ SystemWindow >> taskbarThumbnailExtent [
 SystemWindow >> worldTaskbar [
 	"Answer the world taskbar or nil if none."
 
-	^self world ifNotNil: [ :world | 
-		world 
-		submorphThat: [ :morph | morph isTaskbar ] 
+	^self world ifNotNil: [ :world |
+		world
+		submorphThat: [ :morph | morph isTaskbar ]
 		ifNone: [ nil ]
 	]
 ]

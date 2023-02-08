@@ -477,7 +477,7 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 { #category : #'class initialization' }
 BalloonEngineConstants class >> initialize [
 
-	self 
+	self
 		initStateConstants;
 		initWorkBufferConstants;
 		initPrimitiveConstants;

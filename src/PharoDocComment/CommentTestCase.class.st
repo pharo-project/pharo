@@ -28,7 +28,7 @@ CommentTestCase class >> testSelectors [
 CommentTestCase >> docCommentNode: aDocComment [
 
 	docCommentNode := aDocComment.
-	testSelector := #testIt.
+	testSelector := #testIt
 ]
 
 { #category : #accessing }
@@ -39,7 +39,7 @@ CommentTestCase >> drTestsBrowse [
 { #category : #'public access' }
 CommentTestCase >> evaluate [
 
-	^ docCommentNode expression evaluate.
+	^ docCommentNode expression evaluate
 ]
 
 { #category : #accessing }

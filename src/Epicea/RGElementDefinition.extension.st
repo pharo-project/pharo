@@ -11,5 +11,5 @@ RGElementDefinition >> asEpiceaRingDefinition [
 { #category : #'*Epicea-Ring' }
 RGElementDefinition >> epiceaCleanUp [
 
-	parent := nil.
+	parent := nil
 ]

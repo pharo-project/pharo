@@ -30,7 +30,7 @@ Class {
 CmdKMDispatcher class >> attachedTo: aMorph [
 
 	| dispatcher |
-	aMorph valueOfProperty: #kmDispatcher ifPresentDo: [:existing | 
+	aMorph valueOfProperty: #kmDispatcher ifPresentDo: [:existing |
 		(existing isKindOf: self) ifTrue: [^existing]].
 	dispatcher := CmdKMDispatcher target: aMorph.
 	aMorph initializeShortcuts: dispatcher.
@@ -62,10 +62,10 @@ CmdKMDispatcher >> dispatch: anEventBuffer [
 
 	| context executed |
 	context := self commandProvider createCommandContext.
-	
-	CmdShortcutActivation visibleInstancesInContext: context do: [ :shortcut | 
+
+	CmdShortcutActivation visibleInstancesInContext: context do: [ :shortcut |
 		executed := shortcut tryExecuteCommandInContext: context byEvents: anEventBuffer.
 		executed ifTrue: [ ^self ] ].
-	
+
 	super dispatch: anEventBuffer
 ]

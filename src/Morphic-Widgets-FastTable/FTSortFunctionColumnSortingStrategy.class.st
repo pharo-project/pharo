@@ -46,6 +46,6 @@ FTSortFunctionColumnSortingStrategy >> sortFunction [
 ]
 
 { #category : #accessing }
-FTSortFunctionColumnSortingStrategy >> sortFunction: aString [ 
+FTSortFunctionColumnSortingStrategy >> sortFunction: aString [
 	sortFunction := aString
 ]

@@ -702,7 +702,7 @@ Dictionary >> keysAndValuesDo: aBlock [
 	```
 	d := Dictionary withAll: #(4 5 9 6 76).
 	a := OrderedCollection new.
-	d keysAndValuesDo: [ :k :v | a add: v. a add: k ]. ""an OrderedCollection(75 5 8 3 3 1 5 4 4 2)""
+	d keysAndValuesDo: [ :k :v | a add: v. a add: k ]. a ""(76 5 9 3 4 1 6 4 5 2)""
 	```
 	"
 

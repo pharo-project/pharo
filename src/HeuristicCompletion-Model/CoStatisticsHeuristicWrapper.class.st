@@ -35,7 +35,7 @@ CoStatisticsHeuristicWrapper >> buildFetcherFor: aNode inContext: aContext [
 
 { #category : #testing }
 CoStatisticsHeuristicWrapper >> isStatisticsHeuristicWrapper [
-	
+
 	^ true
 ]
 

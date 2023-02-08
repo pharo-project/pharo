@@ -57,7 +57,7 @@ TransformMorph >> clipSubmorphs [
 	"Answer true since we do!
 	This avoids the senseless over-invalidation
 	with lists etc."
-	
+
 	^true
 ]
 
@@ -86,12 +86,12 @@ TransformMorph >> defaultColor [
 { #category : #accessing }
 TransformMorph >> extent: aPoint [
 	"Changed to not cause layoutChanged on the receiver."
-	
+
 	bounds extent = aPoint ifTrue: [^ self].
 	self changed.
 	bounds := (bounds topLeft extent: aPoint) rounded.
 	super layoutChanged. "skip submorph bounds recalculation"
-	self changed.
+	self changed
 ]
 
 { #category : #layout }
@@ -115,7 +115,7 @@ TransformMorph >> grabTransform [
 TransformMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
-	
+
 	smoothing := 1.
 	transform := MorphicTransform identity
 ]
@@ -125,7 +125,7 @@ TransformMorph >> invalidRect: damageRect from: aMorph [
 	"Translate damage reports from submorphs by the scrollOffset."
 	aMorph == self
 		ifTrue:[super invalidRect: damageRect from: self]
-		ifFalse:[super invalidRect: (((transform localBoundsToGlobal: damageRect) intersect: bounds ifNone: [ ^ self ] ) expandBy: 1) from: self].
+		ifFalse:[super invalidRect: (((transform localBoundsToGlobal: damageRect) intersect: bounds ifNone: [ ^ self ] ) expandBy: 1) from: self]
 ]
 
 { #category : #geometry }
@@ -145,7 +145,7 @@ TransformMorph >> localSubmorphBounds [
 		self submorphsDo:[:m |
 			localBounds ifNil: [localBounds := m fullBounds]
 						ifNotNil: [localBounds := localBounds quickMerge: m fullBounds]].
-	].	
+	].
 
 	^ localBounds
 ]
@@ -184,7 +184,7 @@ TransformMorph >> numberOfItemsPotentiallyInView [
 ]
 
 { #category : #geometry }
-TransformMorph >> numberOfItemsPotentiallyInViewWith: listSize [ 
+TransformMorph >> numberOfItemsPotentiallyInViewWith: listSize [
 	"This is a refactoring for numberOfItemsPotentiallyInView because in some cases the numberOfSubmorhps
 	needs to be passed from the outside. "
 	| height |
@@ -210,7 +210,7 @@ TransformMorph >> privateFullMoveBy: delta [
 	"Private! Relocate me, but not my subMorphs."
 
 	self privateMoveBy: delta.
-	transform :=  (transform asMorphicTransform) withOffset: (transform offset - delta).
+	transform :=  (transform asMorphicTransform) withOffset: (transform offset - delta)
 ]
 
 { #category : #accessing }
@@ -224,7 +224,7 @@ TransformMorph >> scale: newScale [
 	self changed.
 	transform := transform withScale: newScale.
 	self layoutChanged.
-	self changed.
+	self changed
 ]
 
 { #category : #accessing }
@@ -260,7 +260,7 @@ TransformMorph >> smoothingOn [
 { #category : #layout }
 TransformMorph >> submorphBounds [
 	"Answer, in owner coordinates, the bounds of my visible submorphs, or my bounds"
-	^ (self localVisibleSubmorphBounds ifNotNil: [ :box |transform localBoundsToGlobal: box ] ifNil: [ self bounds ]) truncated.
+	^ (self localVisibleSubmorphBounds ifNotNil: [ :box |transform localBoundsToGlobal: box ] ifNil: [ self bounds ]) truncated
 ]
 
 { #category : #accessing }
@@ -270,11 +270,11 @@ TransformMorph >> transform [
 
 { #category : #accessing }
 TransformMorph >> transform: aTransform [
-	transform := aTransform.
+	transform := aTransform
 ]
 
 { #category : #'event handling' }
-TransformMorph >> transformFrom: uberMorph [ 
+TransformMorph >> transformFrom: uberMorph [
 	"Return a transform to map coorinates of uberMorph, a morph above me in my owner chain, into the coordinates of my submorphs."
 
 	(self == uberMorph or: [owner isNil]) ifTrue: [^transform].

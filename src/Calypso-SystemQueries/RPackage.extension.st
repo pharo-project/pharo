@@ -21,14 +21,14 @@ RPackage class >> defaultSortFunctionForCalypso [
 { #category : #'*Calypso-SystemQueries' }
 RPackage >> definesOverridesOf: aMethod [
 
-	aMethod origin isInstanceSide 
-		ifTrue: [  
+	aMethod origin isInstanceSide
+		ifTrue: [
 			(self definesOverridesOf: aMethod in: classDefinedSelectors) ifTrue: [^true].
 			(self definesOverridesOf: aMethod in: classExtensionSelectors) ifTrue: [^true]]
-		ifFalse: [ 
+		ifFalse: [
 			(self definesOverridesOfClassSide: aMethod in: metaclassDefinedSelectors) ifTrue: [^true].
 			(self definesOverridesOfClassSide: aMethod in: metaclassExtensionSelectors) ifTrue: [^true]].
-	
+
 	^false
 ]
 
@@ -38,9 +38,9 @@ RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
 	| methodClass selector |
 	methodClass := aMethod origin.
 	selector := aMethod selector.
-	
+
 	classAndSelectors keysAndValuesDo: [ :className :selectors |
-		((selectors includes: selector) 
+		((selectors includes: selector)
 			and: [ (Smalltalk globals classNamed: className) inheritsFrom: methodClass ])
 				ifTrue: [ ^true ] ].
 	^false
@@ -52,9 +52,9 @@ RPackage >> definesOverridesOfClassSide: aMethod in: classAndSelectors [
 	| methodClass selector |
 	methodClass := aMethod origin.
 	selector := aMethod selector.
-	
+
 	classAndSelectors keysAndValuesDo: [ :className :selectors |
-		((selectors includes: selector) 
+		((selectors includes: selector)
 			and: [ (Smalltalk globals classNamed: className) classSide inheritsFrom: methodClass ])
 				ifTrue: [ ^true ] ].
 	^false
@@ -72,7 +72,7 @@ RPackage >> isAboutPackage: aPackage [
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> itemsSortOrderForCalypso [ 
+RPackage class >> itemsSortOrderForCalypso [
 	^10
 ]
 
@@ -86,6 +86,6 @@ RPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironmen
 RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 	^{
 		ClyAllClassesQuery from: ClyPackageScope ofAll: packages in: aNavigationEnvironment.
-		ClyAllClassesQuery from: ClyPackageExtensionScope ofAll: packages in: aNavigationEnvironment 
+		ClyAllClassesQuery from: ClyPackageExtensionScope ofAll: packages in: aNavigationEnvironment
 	}
 ]

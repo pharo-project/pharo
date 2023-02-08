@@ -9,5 +9,5 @@ Class {
 
 { #category : #visitor }
 OSTouchActionPointerDownEvent >> accept: aVisitor [
-	^aVisitor visitTouchPointerDownEvent: self.
+	^aVisitor visitTouchPointerDownEvent: self
 ]

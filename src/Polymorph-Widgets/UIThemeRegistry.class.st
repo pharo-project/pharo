@@ -13,6 +13,6 @@ UIThemeRegistry class >> icons [
 ]
 
 { #category : #accessing }
-UIThemeRegistry class >> theme [ 
+UIThemeRegistry class >> theme [
 	^ UITheme current
 ]

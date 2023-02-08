@@ -28,7 +28,7 @@ IRRemoteArray >> index: anIndex [
 
 { #category : #enumerating }
 IRRemoteArray >> indexOf: anInteger [
-	^anInteger + 1.
+	^anInteger + 1
 ]
 
 { #category : #accessing }

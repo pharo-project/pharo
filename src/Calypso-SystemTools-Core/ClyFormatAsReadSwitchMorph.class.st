@@ -17,7 +17,7 @@ Class {
 
 { #category : #formatting }
 ClyFormatAsReadSwitchMorph >> formatAsYouRead [
-	 
+
 	^ RBProgramNode formatterClass formatAsYouReadPolicy
 ]
 
@@ -29,8 +29,8 @@ ClyFormatAsReadSwitchMorph >> formatAsYouReadLabel [
 { #category : #initialization }
 ClyFormatAsReadSwitchMorph >> initialize [
 	super initialize.
-	
-	checkbox := CheckboxMorph 
+
+	checkbox := CheckboxMorph
 		on: self selected: #formatAsYouRead changeSelected: #toggle.
 	checkbox
 		getLabelSelector: #formatAsYouReadLabel;
@@ -47,11 +47,11 @@ ClyFormatAsReadSwitchMorph >> toggle [
 	| formatter isDirty |
 	formatter := RBProgramNode formatterClass.
 	formatter formatAsYouReadPolicy
-		ifTrue: [ 
-			formatter formatAsYouReadPolicy: false. 
+		ifTrue: [
+			formatter formatAsYouReadPolicy: false.
 			textMorph model canDiscardEdits
 				ifTrue: [ textMorph model cancelEdits ] ]
-		ifFalse: [ 
+		ifFalse: [
 			formatter formatAsYouReadPolicy: true.
 			isDirty := textMorph hasUnacceptedEdits.
 			textMorph model	formatSourceCodeInView.

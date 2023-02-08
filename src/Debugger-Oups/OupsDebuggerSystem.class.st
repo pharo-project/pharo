@@ -62,7 +62,7 @@ OupsDebuggerSystem >> handleWarningDebugRequest: aWarningDebugRequest [
 
 	"A WarningDebugRequest has been submitted. Ask what to do to the default UIManager. Typically, the UIManager will call back my #openDebuggerOnRequest: method to open a debugger"
 
-	[ 
+	[
 	self defaultUIManager handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: self]
 		on: Error
 		do: [ self signalDebuggerError: aWarningDebugRequest ]
@@ -93,7 +93,7 @@ OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 
 	"Schedule the debugger opening in a deferred UI message to address redraw problems after opening a debugger e.g. from the testrunner."
 	debuggerOpeningStrategy := self debuggerSelectionStrategy.
-	self defaultUIManager defer: [ 
+	self defaultUIManager defer: [
 		debuggerOpeningStrategy openDebuggerForSession:
 			aDebugRequest debugSession ].
 	self suspendDebuggedProcess: aDebugRequest
@@ -105,7 +105,7 @@ OupsDebuggerSystem >> performPreDebugActionsIn: aDebugRequest [
 	"Get the preDebug actions stored in aDebugRequest. Applies them to the debugSession held by aDebugRequest"
 
 	aDebugRequest computePreDebugActions.
-	aDebugRequest preDebugActions do: [ :preDebugAction | 
+	aDebugRequest preDebugActions do: [ :preDebugAction |
 		preDebugAction value: aDebugRequest debugSession ]
 ]
 
@@ -128,7 +128,7 @@ OupsDebuggerSystem >> spawnNewUIProcess [
 
 	"See comment of spawnNewUIProcessIfNecessary:"
 
-	DefaultExecutionEnvironment beActiveDuring: [ 
+	DefaultExecutionEnvironment beActiveDuring: [
 		self defaultUIManager spawnNewProcess ]
 ]
 
@@ -137,7 +137,7 @@ OupsDebuggerSystem >> spawnNewUIProcessIfNecessary: aDebugRequest [
 
 	"If aDebugRequest is about debugging the UI process, we must create a new UI process to take its place. Because the debugged process will be suspended at some point, and suspending the UI process means freezing the UI of the image"
 
-	aDebugRequest debugSession isAboutUIProcess ifTrue: [ 
+	aDebugRequest debugSession isAboutUIProcess ifTrue: [
 		self spawnNewUIProcess ]
 ]
 

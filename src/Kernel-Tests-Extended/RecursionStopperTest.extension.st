@@ -4,6 +4,6 @@ Extension { #name : #RecursionStopperTest }
 RecursionStopperTest >> testThreadSafe [
 
 	self should: [ self threadSafe ] notTakeMoreThanMilliseconds: 10.
-	
-	self assert: fork isNil.
+
+	self assert: fork isNil
 ]

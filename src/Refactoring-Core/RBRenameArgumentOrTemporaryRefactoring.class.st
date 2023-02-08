@@ -90,7 +90,7 @@ RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [
 { #category : #tranforming }
 RBRenameArgumentOrTemporaryRefactoring >> transform [
 	| definingNode variableNode |
-	parseTree := class parseTreeFor: selector.
+	parseTree := class parseTreeForSelector: selector.
 	variableNode := self whichVariableNode: parseTree inInterval: interval name: oldName.
 	(variableNode isNil or: [ variableNode isVariable not ])
 		ifTrue: [ self refactoringFailure: oldName asString , ' isn''t a valid variable' ].

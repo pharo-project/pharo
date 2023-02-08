@@ -63,8 +63,8 @@ RBReplaceSubtreeTransformationTest >> testRefactoring [
 	
 	class := transformation model classNamed: #RBRemoveMethodTransformation.
 	self assert: (class directlyDefinesMethod: #selector:from:).
-	self assert: (class parseTreeFor: #selector:from:) body statements size equals: 2.
-	self assert: (class parseTreeFor: #selector:from:) body statements last isReturn.
+	self assert: (class parseTreeForSelector: #selector:from:) body statements size equals: 2.
+	self assert: (class parseTreeForSelector: #selector:from:) body statements last isReturn.
 ]
 
 { #category : #tests }
@@ -82,9 +82,9 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 	
 	class := transformation model classNamed: self changeMock name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
-	self assert: (class parseTreeFor: #one) body statements size equals: 1.
-	self assert: (class parseTreeFor: #one) body statements first isReturn.
-	self assert: (class parseTreeFor: #one) body statements first value value equals: 123
+	self assert: (class parseTreeForSelector: #one) body statements size equals: 1.
+	self assert: (class parseTreeForSelector: #one) body statements first isReturn.
+	self assert: (class parseTreeForSelector: #one) body statements first value value equals: 123
 ]
 
 { #category : #tests }
@@ -92,8 +92,8 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 
 	| transformation class |
 	transformation := (RBReplaceSubtreeTransformation
-		replace: 'self assert: (class parseTreeFor: #selector:from:) body statements size equals: 2'
-		to: 'self assert: (class parseTreeFor: #selector:from:) body statements size = 2'
+		replace: 'self assert: (class parseTreeForSelector:  #selector:from:) body statements size equals: 2'
+		to: 'self assert: (class parseTreeForSelector:  #selector:from:) body statements size = 2'
 		inMethod: #testRefactoring
 		inClass: #RBReplaceSubtreeTransformationTest)
 		asRefactoring transform. 
@@ -102,7 +102,7 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 	
 	class := transformation model classNamed: #RBReplaceSubtreeTransformationTest.
 	self assert: (class directlyDefinesMethod: #testRefactoring).
-	self assert: (class parseTreeFor: #testRefactoring) body statements size equals: 6.
-	self assert: ((((class parseTreeFor: #testRefactoring) body statements at: 5) sourceCode withBlanksCondensed copyReplaceAll: String cr with: ' ')
-		includesSubstring: 'assert: (class parseTreeFor: #selector:from:) body statements size = 2').
+	self assert: (class parseTreeForSelector: #testRefactoring) body statements size equals: 6.
+	self assert: ((((class parseTreeForSelector: #testRefactoring) body statements at: 5) sourceCode withBlanksCondensed copyReplaceAll: String cr with: ' ')
+		includesSubstring: 'assert: (class parseTreeForSelector: #selector:from:) body statements size = 2')
 ]

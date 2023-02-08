@@ -15,7 +15,7 @@ OmSTONEntryReader >> entryPositionsDo: aBlock [
 
 	[ self
 		nextEntryPositionIfFound: [:position |
-			aBlock value: position. true ] 
+			aBlock value: position. true ]
 		ifNone: [ false ]
 	] whileTrue
 ]
@@ -27,15 +27,15 @@ OmSTONEntryReader >> entryPositionsReverseDo: aBlock [
 	token := 'OmEntry {'.
 	stream setToEnd.
 
-	[	[ 	found := stream backUpTo: token. 
-			stream skip: token size negated. ] 
+	[	[ 	found := stream backUpTo: token.
+			stream skip: token size negated. ]
 				doWhileTrue: [ found and: [ stream peek = $\ ] ].
 
 		found ifFalse: [ ^self ].
 
 		stream skip: token size negated.
 		aBlock value: stream position.
-			
+
 	] doWhileTrue: true
 ]
 
@@ -44,11 +44,11 @@ OmSTONEntryReader >> entryPositionsUpTo: endPosition [
 
 	| positions |
 	positions := OrderedCollection new.
-	
+
 	self entryPositionsDo: [ :position |
 		position > endPosition ifTrue: [ ^positions ].
 		positions add: position ].
-	
+
 	^ positions
 ]
 
@@ -71,8 +71,8 @@ OmSTONEntryReader >> nextEntryPositionIfFound: foundBlock ifNone: noneBlock [
 
 	[ [ stream upToAll: token ]
 		on: ZnInvalidUTF8
-		do: [ :exception | 
-			"Workaround: positioned block in middle of multibyte utf8 char 
+		do: [ :exception |
+			"Workaround: positioned block in middle of multibyte utf8 char
 			   => skip a byte then try again"
 			stream next.
 			exception retry ].
@@ -85,7 +85,7 @@ OmSTONEntryReader >> nextEntryPositionIfFound: foundBlock ifNone: noneBlock [
 { #category : #accessing }
 OmSTONEntryReader >> stonReader [
 
-	^ reader ifNil: [ 
+	^ reader ifNil: [
 		reader := STON reader
 			allowComplexMapKeys: true;
 			yourself ]
@@ -95,5 +95,5 @@ OmSTONEntryReader >> stonReader [
 OmSTONEntryReader >> stream: aReadStream [
 
 	super stream: aReadStream.
-	self stonReader on: stream.
+	self stonReader on: stream
 ]

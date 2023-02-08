@@ -124,8 +124,8 @@ RBScanner class >> new [
 ]
 
 { #category : #'instance creation' }
-RBScanner class >> on: aStream [
-	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens. Reader may consider scanTokens: as a better way to use the class."
+RBScanner class >> on: aStream [ 
+	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens."
 	"((RBScanner on: 'Pharo (, { exist ]' readStream) next;  next) value >>> $("
 
 	| scanner |
@@ -159,13 +159,6 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 	| scanner |
 	scanner := self on: aStringOrStream readStream.
 	^ scanner contents
-]
-
-{ #category : #'public api' }
-RBScanner class >> scanTokens: aStringOrStream [
-	"Return the tokens (and not the scanner token objects)."
-
-	^ (self scanTokenObjects: aStringOrStream) collect: [ :t | t value ]
 ]
 
 { #category : #testing }

@@ -9,7 +9,7 @@ Class {
 
 { #category : #coverage }
 LargeNegativeIntegerTest >> classToBeTested [
-	
+
 	^ LargeNegativeInteger
 ]
 
@@ -130,7 +130,7 @@ LargeNegativeIntegerTest >> testSqrt [
 LargeNegativeIntegerTest >> testStoreOn [
 	| integer |
 	integer := SmallInteger minVal - 1.
-	
+
 	"Store on adds a space before a negative number to avoid mistaking it with a - message"
 	self
 		assert: integer class equals: LargeNegativeInteger;

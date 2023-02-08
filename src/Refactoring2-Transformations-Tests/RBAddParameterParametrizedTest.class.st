@@ -39,12 +39,12 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	refactoring renameMap: (Array with: ((RBArgumentName name: 'aBlock') newName: 'aBlock1')).
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
+	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
 							Transcript
 								show: anObject printString;
 								cr.
 								aBlock1 value').
-	self assert: (class parseTreeFor: #caller) equals: (self parseMethod: 'caller
+	self assert: (class parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
 							| anObject |
 							anObject := 5.
 							self 
@@ -63,12 +63,12 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 		{oldSelector . RBRefactoryTestDataApp . newSelector . #(1 -1 2) . { newArg }}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
+	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
 							Transcript
 								show: anObject printString;
 								cr.
 								aBlock value').
-	self assert: (class parseTreeFor: #caller) equals: (self parseMethod: 'caller
+	self assert: (class parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
 							| anObject |
 							anObject := 5.
 							self 
@@ -89,11 +89,11 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
-		assert: (class parseTreeFor: newSelector)
+		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
 	self
-		assert: (class parseTreeFor: #callFoo)
+		assert: (class parseTreeForSelector: #callFoo)
 		equals: (self parseMethod:
 				 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
 	self deny: (class directlyDefinesMethod: oldSelector)
@@ -111,11 +111,11 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesModelGlobal [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
-		assert: (class parseTreeFor: newSelector)
+		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
 	self
-		assert: (class parseTreeFor: #callFoo)
+		assert: (class parseTreeForSelector: #callFoo)
 		equals:
 		(self parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
 	self deny: (class directlyDefinesMethod: oldSelector)
@@ -133,11 +133,11 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesSelf [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
-		assert: (class parseTreeFor: newSelector)
+		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
 								^self class + anObject').
 	self
-		assert: (class parseTreeFor: #callFoo)
+		assert: (class parseTreeForSelector: #callFoo)
 		equals:
 		(self parseMethod:
 			 'callFoo ^self testFoo: 5 bar: (self printString)').
@@ -157,11 +157,11 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
-		assert: (class parseTreeFor: newSelector)
+		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testColl: aColl foo: anObject string: aString
 								^self class + anObject').
 	self
-		assert: (class parseTreeFor: #callFoo)
+		assert: (class parseTreeForSelector: #callFoo)
 		equals: (self parseMethod:
 				 'callFoo ^self testColl: (OrderedCollection new: 5) foo: 5 string: ''string''').
 	self deny: (class directlyDefinesMethod: oldSelector)

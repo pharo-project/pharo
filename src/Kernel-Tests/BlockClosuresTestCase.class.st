@@ -45,14 +45,14 @@ The Jensen device was something for clever minds. I remember an artice written b
 { #category : #examples }
 BlockClosuresTestCase >> constructCannotReturnBlockInDeadFrame [
 
-	^ [:arg | ^arg].
+	^ [:arg | ^arg]
 ]
 
 { #category : #examples }
 BlockClosuresTestCase >> constructFibonacciBlockInDeadFrame [
 
 	| fib |
-	fib := [:val | 
+	fib := [:val |
 		(val <= 0) ifTrue: [self error: 'not a natural number'].
 		(val <= 2) ifTrue: [1]
 		     ifFalse: [(fib value: (val - 1)) + (fib value: (val - 2))]].
@@ -62,16 +62,16 @@ BlockClosuresTestCase >> constructFibonacciBlockInDeadFrame [
 { #category : #examples }
 BlockClosuresTestCase >> constructFibonacciBlockWithBlockArgumentInDeadFrame [
 
-	^ [:val :blk | 
+	^ [:val :blk |
 		(val <= 0) ifTrue: [self error: 'not a natural number'].
 		(val <= 2) ifTrue: [1]
-		    ifFalse: [(blk value: (val - 1) value: blk) + (blk value: (val - 2) value: blk)]].
+		    ifFalse: [(blk value: (val - 1) value: blk) + (blk value: (val - 2) value: blk)]]
 ]
 
 { #category : #examples }
 BlockClosuresTestCase >> constructSharedClosureEnvironmentInDeadFrame [
 
-	|array result| 
+	|array result|
 	result := 10.
 	array := Array new: 2.
 	array at: 1 put: [:arg | result := arg].
@@ -99,7 +99,7 @@ BlockClosuresTestCase >> continuationExample1: aCollection [
                                                       ifFalse: [nil])
                     ].
              ].
- 
+
 
  collector := [:valueWithContinuation |  | oc |
                  oc := OrderedCollection new.
@@ -124,7 +124,7 @@ continuation
  1. the next collection element
  2. a so-called continuation, which is either nil or a block
     that can return the next value with continuation.
-    
+
 To collect all elements of a value with continuation stream,
 use the collector block. "
 ]
@@ -150,12 +150,12 @@ BlockClosuresTestCase >> continuationExample2: aCollection [
                                                       ifFalse: [nil])
                     ].
              ].
- 
-  processor := 
+
+  processor :=
             [:valueWithContinuation :activity | | localBlock |
                 localBlock :=
                  [ | current |
-                   current := valueWithContinuation value. 
+                   current := valueWithContinuation value.
                    Array with: (activity value: current first)
                          with: (current last notNil ifTrue: [localBlock])].
                localBlock
@@ -172,7 +172,7 @@ BlockClosuresTestCase >> continuationExample2: aCollection [
                ].
 
   ^collector value: (processor value: (stream value: aCollection)
-                                           value: [:x | x * x]).
+                                           value: [:x | x * x])
 ]
 
 { #category : #examples }
@@ -198,12 +198,12 @@ BlockClosuresTestCase >> continuationExample3: aCollection [
                                                       ifFalse: [nil])
                     ].
              ].
- 
-  processor := 
+
+  processor :=
             [:valueWithContinuation :activity | | localBlock |
                 localBlock :=
                  [ | current |
-                   current := valueWithContinuation value. 
+                   current := valueWithContinuation value.
                    Array with: (activity value: current first)
                          with: (current last notNil ifTrue: [localBlock])].
                localBlock
@@ -221,7 +221,7 @@ BlockClosuresTestCase >> continuationExample3: aCollection [
 
   ^collector value: (processor value: (processor value: (stream value: aCollection)
                                                                      value: [:x | x * x])
-                                            value: [:x | x - 10]).
+                                            value: [:x | x - 10])
 ]
 
 { #category : #examples }
@@ -256,7 +256,7 @@ BlockClosuresTestCase >> example2: anInteger [
    factorial :=
        [:x :dumper :trace2 |  | localDumper |
           localDumper := [ :collection |
-                             collection add: x. 
+                             collection add: x.
                              dumper value: collection.].
             x = 1 ifTrue:
                     [localDumper value: trace2.
@@ -284,7 +284,7 @@ BlockClosuresTestCase >> gpsExample1: aCollection [
                cnt := 1.
                sum first value: 0.
                [idx first value: cnt.
-                sum first value: (sum last value + exp last value). 
+                sum first value: (sum last value + exp last value).
                 cnt := cnt + 1.
                 cnt <= aCollection size] whileTrue: [   ].
               sum last value
@@ -302,7 +302,7 @@ BlockClosuresTestCase >> gpsExample1: aCollection [
 { #category : #'jensen device examples' }
 BlockClosuresTestCase >> gpsExample2: aCollection [
 
-   " BlockClosuresTestCase new 
+   " BlockClosuresTestCase new
        gpsExample2: #(#(1 2 3 4 5) #(6 7 8 9 10) #(11 12 13 14 15) #(16 17 18 19 20) #(21 22 23 24 25))"
 
     | js i j |
@@ -313,7 +313,7 @@ BlockClosuresTestCase >> gpsExample2: aCollection [
                idx first value: 1.
                [idx last value <= n last value]
                  whileTrue:
-                   [sum :=  sum  + a last value. 
+                   [sum :=  sum  + a last value.
                     idx first value:  idx last value + 1.].
               sum
              ].
@@ -342,7 +342,7 @@ BlockClosuresTestCase >> nestedLoopsExample: arrays [
    dynamically nest loops. Better solutions than this one
    were proposed, but this one is a beautiful test for
    recursive block usage. "
- 
+
   | result sizeOfResult streams block |
 
 
@@ -366,16 +366,16 @@ block :=
 		   [:i | tupel at: i put: (allStreams at: i) peek].
 			 r addLast: tupel shallowCopy]
 	 ifFalse:  [innerBlock value: myIdx + 1].
-	(allStreams at: myIdx) next.     
+	(allStreams at: myIdx) next.
 	(allStreams at: myIdx) atEnd
-      ] 
+      ]
        whileFalse: [].
      (allStreams at: myIdx) reset.
     ].
     innerBlock value: 1.
-   r   
+   r
   ].
- block value: result 
+ block value: result
          value: (Array new: streams size) " this is a buffer "
          value: streams.
 
@@ -387,7 +387,7 @@ BlockClosuresTestCase >> testCannotReturn [
 
 	| blk |
 	blk := self constructCannotReturnBlockInDeadFrame.
-	self 
+	self
 		should: [blk value: 1]
 		raise: Exception
 ]
@@ -451,7 +451,7 @@ BlockClosuresTestCase >> testNestedLoopsExample1 [
 { #category : #tests }
 BlockClosuresTestCase >> testReentrantBlock [
 	| fib |
-	fib := [ :val | 
+	fib := [ :val |
 	val <= 0 ifTrue: [ self error: 'not a natural number' ].
 	val <= 2 ifTrue: [ 1 ] ifFalse: [ (fib value: val - 1) + (fib value: val - 2) ] ].
 

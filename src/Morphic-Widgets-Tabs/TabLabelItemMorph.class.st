@@ -22,7 +22,7 @@ TabLabelItemMorph class >> tab: tab [
 ]
 
 { #category : #drawing }
-TabLabelItemMorph >> clipSubmorphs [ 
+TabLabelItemMorph >> clipSubmorphs [
 
 	^ true
 ]
@@ -36,18 +36,18 @@ TabLabelItemMorph >> clippingBounds [
 { #category : #'private - drawing' }
 TabLabelItemMorph >> computeSubmorphsToDraw [
 
-	owner width < tab showIconTreshold 
-		ifTrue: [ 
+	owner width < tab showIconTreshold
+		ifTrue: [
 			(storedIcon isNil and: [ icon notNil ]) ifTrue: [
 				storedIcon := icon.
 				self removeMorph: icon ].
 			^ { morph } ].
-		
-	storedIcon 
-		ifNotNil: [ 
+
+	storedIcon
+		ifNotNil: [
 			self addMorphFront: storedIcon.
 			storedIcon := nil ].
-		
+
 	^ self submorphs
 ]
 
@@ -58,11 +58,11 @@ TabLabelItemMorph >> drawSubmorphsOn: aCanvas [
 	| drawBlock submorphsToDraw |
 	submorphs isEmpty
 		ifTrue: [ ^ self ].
-	
+
 	submorphsToDraw := self computeSubmorphsToDraw.
-	
+
 	drawBlock := [ :canvas | submorphsToDraw do: [ :m | canvas fullDrawMorph: m ] ].
-	
+
 	self clipSubmorphs
 		ifTrue: [ aCanvas clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone: [ ^ self ]) during: drawBlock ]
 		ifFalse: [ drawBlock value: aCanvas ]
@@ -72,14 +72,14 @@ TabLabelItemMorph >> drawSubmorphsOn: aCanvas [
 TabLabelItemMorph >> icon: anObject [
 
 	icon ifNotNil: [ self removeMorph: icon ].
-	
+
 	icon := anObject.
 	icon ifNotNil: [ 	self addMorphFront: icon ]
 ]
 
 { #category : #accessing }
 TabLabelItemMorph >> tab: anObject [
-	
+
 	tab := anObject
 ]
 

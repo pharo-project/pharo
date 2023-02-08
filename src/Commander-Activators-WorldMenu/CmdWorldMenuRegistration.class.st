@@ -30,12 +30,12 @@ CmdWorldMenuRegistration class >> enableWorldShortcuts [
 
 { #category : #'class initialization' }
 CmdWorldMenuRegistration class >> initialize [
-	
+
 	self enableWorldShortcuts
 ]
 
 { #category : #'world menu' }
-CmdWorldMenuRegistration class >> registerMenuOn: aBuilder [ 
+CmdWorldMenuRegistration class >> registerMenuOn: aBuilder [
 	<worldMenu>
 
 	CmdContextMenuActivation

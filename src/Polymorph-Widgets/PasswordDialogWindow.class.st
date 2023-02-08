@@ -55,7 +55,7 @@ PasswordDialogWindow >> newTextEditorMorph [
 
 { #category : #private }
 PasswordDialogWindow >> showPassword [
-	
+
 	^ showPassword ifNil: [ showPassword := false ]
 ]
 
@@ -71,11 +71,11 @@ PasswordDialogWindow >> showPassword: aBoolean [
 { #category : #private }
 PasswordDialogWindow >> showPasswordButton [
 
-	^ (CheckboxMorph 
-			on: self 
+	^ (CheckboxMorph
+			on: self
 			selected: #showPassword
 			changeSelected: #showPassword:)
 			label: 'Show password';
 			labelClickable: true;
-			height: 25.
+			height: 25
 ]

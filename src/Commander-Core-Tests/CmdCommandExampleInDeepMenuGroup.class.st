@@ -7,6 +7,6 @@ Class {
 { #category : #activation }
 CmdCommandExampleInDeepMenuGroup class >> menuActivationExample [
 	<classAnnotation>
-	
+
 	^CmdMenuCommandActivationExample byItemOf: CmdDeepChildMenuGroupStub for: CmdToolContextStub2
 ]

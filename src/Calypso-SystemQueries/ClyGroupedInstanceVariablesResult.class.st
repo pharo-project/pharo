@@ -15,13 +15,13 @@ ClyGroupedInstanceVariablesResult >> addClassVariableGroup [
 
 	| variableQuery methodQuery group |
 	variableQuery := ClyAllClassVariablesQuery from: self queryScope.
-	methodQuery := ClyVariableReferencesQuery 
+	methodQuery := ClyVariableReferencesQuery
 		from: self queryScope asLocalClassScope
 		toVariablesFrom: variableQuery.
-	
-	group := ClyMethodGroup 
-		named: 'Class variables' priority: 9 
-		on: methodQuery 
+
+	group := ClyMethodGroup
+		named: 'Class variables' priority: 9
+		on: methodQuery
 		withSubgroupsFrom: (variableQuery withResult: (ClyGroupedClassVariablesResult withHierarchy: hierarchy)).
 	items add: group asCalypsoBrowserItem
 ]
@@ -30,14 +30,14 @@ ClyGroupedInstanceVariablesResult >> addClassVariableGroup [
 ClyGroupedInstanceVariablesResult >> addInheritedMethodGroup [
 
 	| group |
-	group := ClyAllMethodGroup withMethodsInheritedFrom: self queryScope. 
+	group := ClyAllMethodGroup withMethodsInheritedFrom: self queryScope.
 	items add: group asCalypsoBrowserItem
 ]
 
 { #category : #building }
 ClyGroupedInstanceVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
 	self addInheritedMethodGroup.
-	
+
 	varsPerTypeAndDefiningClass at: ClyClassVariable ifPresent: [:classVarsPerClass |
 		self addClassVariableGroup].
 	varsPerTypeAndDefiningClass at: ClyInstanceVariable ifPresent: [:instVarsPerClass |

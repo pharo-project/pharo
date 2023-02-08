@@ -12,7 +12,7 @@ ClyAllClassesQueryTest >> createQuery [
 { #category : #tests }
 ClyAllClassesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: ClyClass1FromP1Mock in: environment).
-	
+
 	self deny: query checkEmptyResult
 ]
 

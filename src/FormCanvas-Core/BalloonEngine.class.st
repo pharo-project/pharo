@@ -85,7 +85,7 @@ BalloonEngine class >> printBezierStats [
 	self
 		trace:
 			(String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					stream
 						cr;
 						nextPutAll: 'Bezier statistics:';
@@ -136,7 +136,7 @@ BalloonEngine class >> printStats [
 	BalloonEngine resetStats'>
 	| string |
 	string := String
-		streamContents: [ :aStream | 
+		streamContents: [ :aStream |
 			aStream
 				cr;
 				nextPutAll: '/************** BalloonEngine statistics ****************/'.
@@ -204,20 +204,20 @@ BalloonEngine class >> recycleBuffer: balloonBuffer [
 		buffer := BufferCache at: 1.
 		(buffer isNil or:[buffer size < balloonBuffer size] )
 			ifTrue:[BufferCache at: 1 put: balloonBuffer].
-	].
+	]
 ]
 
 { #category : #profiling }
 BalloonEngine class >> resetBezierStats [
 	<script>
-	BezierStats := WordArray new: 4.
+	BezierStats := WordArray new: 4
 ]
 
 { #category : #profiling }
 BalloonEngine class >> resetStats [
 	<script>
 	Times := WordArray new: 10.
-	Counts := WordArray new: 10.
+	Counts := WordArray new: 10
 ]
 
 { #category : #accessing }
@@ -227,7 +227,7 @@ BalloonEngine >> aaLevel [
 
 { #category : #accessing }
 BalloonEngine >> aaLevel: anInteger [
-	aaLevel := (anInteger min: 4) max: 1.
+	aaLevel := (anInteger min: 4) max: 1
 ]
 
 { #category : #accessing }
@@ -250,11 +250,11 @@ BalloonEngine >> bitBlt: aBitBlt [
 	bitBlt ifNil: [^self].
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
-	bitBlt 
+	bitBlt
 		sourceForm: (Form extent: span size @ 1 depth: 32 bits: span);
 		sourceRect: (0@0 extent: 1@span size);
 		colorMap: (Color colorMapIfNeededFrom: 32 to: bitBlt destForm depth);
-		combinationRule: (bitBlt destForm depth >= 8 ifTrue:[34] ifFalse:[Form paint]).
+		combinationRule: (bitBlt destForm depth >= 8 ifTrue:[34] ifFalse:[Form paint])
 ]
 
 { #category : #copying }
@@ -299,7 +299,7 @@ BalloonEngine >> colorTransform: aColorTransform [
 { #category : #copying }
 BalloonEngine >> copyBits [
 	(bitBlt notNil and:[bitBlt destForm notNil]) ifTrue:[bitBlt destForm unhibernate].
-	self copyLoopFaster.
+	self copyLoopFaster
 ]
 
 { #category : #copying }
@@ -317,7 +317,7 @@ BalloonEngine >> copyLoopFaster [
 	].
 	self primGetTimes: Times.
 	self primGetCounts: Counts.
-	self primGetBezierStats: BezierStats.
+	self primGetBezierStats: BezierStats
 ]
 
 { #category : #copying }
@@ -335,7 +335,7 @@ BalloonEngine >> copyLoopFastest [
 	].
 	self primGetTimes: Times.
 	self primGetCounts: Counts.
-	self primGetBezierStats: BezierStats.
+	self primGetBezierStats: BezierStats
 ]
 
 { #category : #accessing }
@@ -345,7 +345,7 @@ BalloonEngine >> deferred [
 
 { #category : #accessing }
 BalloonEngine >> deferred: aBoolean [
-	deferred := aBoolean.
+	deferred := aBoolean
 ]
 
 { #category : #accessing }
@@ -356,7 +356,7 @@ BalloonEngine >> destOffset [
 { #category : #accessing }
 BalloonEngine >> destOffset: aPoint [
 	destOffset := aPoint asIntegerPoint.
-	bitBlt destX: aPoint x; destY: aPoint y.
+	bitBlt destX: aPoint x; destY: aPoint y
 ]
 
 { #category : #drawing }
@@ -366,12 +366,12 @@ BalloonEngine >> drawOval: rect fill: fillStyle borderWidth: borderWidth borderC
 	self edgeTransform: aMatrix.
 	self resetIfNeeded.
 	fills := self registerFill: fillStyle and: borderColor.
-	self primAddOvalFrom: rect origin 
+	self primAddOvalFrom: rect origin
 			to: rect corner
 			fillIndex: (fills at: 1)
 			borderWidth: borderWidth
 			borderColor: (fills at: 2).
-	self postFlushIfNeeded.
+	self postFlushIfNeeded
 ]
 
 { #category : #drawing }
@@ -396,12 +396,12 @@ BalloonEngine >> drawRectangle: rect fill: fillStyle borderWidth: borderWidth bo
 	self edgeTransform: aMatrix.
 	self resetIfNeeded.
 	fills := self registerFill: fillStyle and: borderColor.
-	self primAddRectFrom: rect origin 
+	self primAddRectFrom: rect origin
 			to: rect corner
 			fillIndex: (fills at: 1)
 			borderWidth: borderWidth
 			borderColor: (fills at: 2).
-	self postFlushIfNeeded.
+	self postFlushIfNeeded
 ]
 
 { #category : #accessing }
@@ -411,7 +411,7 @@ BalloonEngine >> edgeTransform [
 
 { #category : #accessing }
 BalloonEngine >> edgeTransform: aTransform [
-	edgeTransform := aTransform.
+	edgeTransform := aTransform
 ]
 
 { #category : #initialize }
@@ -419,7 +419,7 @@ BalloonEngine >> flush [
 	"Force all pending primitives onscreen"
 	workBuffer ifNil:[^self].
 	self copyBits.
-	self release.
+	self release
 ]
 
 { #category : #initialization }
@@ -444,7 +444,7 @@ BalloonEngine >> postFlushIfNeeded [
 	workBuffer ifNil:[^self].
 	(deferred not or:[postFlushNeeded]) ifTrue:[
 		self copyBits.
-		self release].
+		self release]
 ]
 
 { #category : #'primitives - incremental' }
@@ -479,10 +479,10 @@ BalloonEngine >> primAddBitmapFill: form colormap: cmap tile: tileFlag from: ori
 BalloonEngine >> primAddGradientFill: colorRamp from: origin along: direction normal: normal radial: isRadial [
 	<primitive: 'primitiveAddGradientFill' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
-		^self primAddGradientFill: colorRamp 
-				from: origin 
-				along: direction 
-				normal: normal 
+		^self primAddGradientFill: colorRamp
+				from: origin
+				along: direction
+				normal: normal
 				radial: isRadial
 	].
 	^self primitiveFailed
@@ -673,7 +673,7 @@ BalloonEngine >> registerFill: aFillStyle [
 	"Register the given fill style."
 	| theForm |
 	aFillStyle ifNil:[^0].
-	aFillStyle isSolidFill 
+	aFillStyle isSolidFill
 		ifTrue:[^aFillStyle scaledPixelValue32].
 
 	aFillStyle isGradientFill ifTrue:[
@@ -715,7 +715,7 @@ BalloonEngine >> registerFills: fills [
 	index := 1.
 	[index <= fills size] whileTrue:[
 		fillIndex := self registerFill: (fills at: index).
-		fillIndex == nil 
+		fillIndex == nil
 			ifTrue:[index := 1] "Need to start over"
 			ifFalse:[fillIndexList at: index put: fillIndex.
 					index := index+1]
@@ -728,7 +728,7 @@ BalloonEngine >> release [
 	self class recycleBuffer: workBuffer.
 	workBuffer := nil.
 	self releaseActionMap. "we are not sure if we need it"
-	super release.
+	super release
 ]
 
 { #category : #initialization }
@@ -740,7 +740,7 @@ BalloonEngine >> reset [
 	self primSetClipRect: clipRect.
 	self primSetEdgeTransform: edgeTransform.
 	self primSetColorTransform: colorTransform.
-	forms := #().
+	forms := #()
 ]
 
 { #category : #initialize }
@@ -749,5 +749,5 @@ BalloonEngine >> resetIfNeeded [
 	self primSetEdgeTransform: edgeTransform.
 	self primSetColorTransform: colorTransform.
 	self primSetDepth: self primGetDepth + 1.
-	postFlushNeeded := false.
+	postFlushNeeded := false
 ]

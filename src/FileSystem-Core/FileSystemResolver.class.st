@@ -71,8 +71,8 @@ FileSystemResolver >> resolve: aSymbol [
 FileSystemResolver >> resolveString: aString [
 	| fs |
 	fs := FileSystem disk.
-	^ FileReference 
-		fileSystem: fs 
+	^ FileReference
+		fileSystem: fs
 		path: (fs pathFromString: aString)
 ]
 

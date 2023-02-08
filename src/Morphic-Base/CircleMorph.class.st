@@ -26,7 +26,7 @@ CircleMorph class >> example [
 { #category : #examples }
 CircleMorph class >> exampleBadExtent [
 	"Note: even when vertical vs. horizontal extent is given different it remains a circle"
-	
+
 	CircleMorph new
 		extent: 100 @ 50;
 		color: Color red;
@@ -125,7 +125,7 @@ CircleMorph >> rotationCenter: aPointOrNil [
 	"Set the new rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
 
 	| newRef box |
-	aPointOrNil ifNotNil: [ 
+	aPointOrNil ifNotNil: [
 		box := self bounds.
 		newRef := box origin + (aPointOrNil * box extent).
 		self setRotationCenterFrom: newRef ]

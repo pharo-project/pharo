@@ -24,12 +24,12 @@ OmSTONEntryWriter >> newSTONWriter [
 ]
 
 { #category : #writing }
-OmSTONEntryWriter >> on: aStream nextEntryPut: anEntry [ 
+OmSTONEntryWriter >> on: aStream nextEntryPut: anEntry [
 
 	OmCurrentGlobalName
 		value: store globalName
 		during: [
-			writer 
+			writer
 				reset;
 				on: aStream;
 				nextPut: anEntry.

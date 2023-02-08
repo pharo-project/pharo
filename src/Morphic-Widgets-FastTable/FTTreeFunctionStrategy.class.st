@@ -107,7 +107,7 @@ FTTreeFunctionStrategy >> realSearch [
 
 { #category : #action }
 FTTreeFunctionStrategy >> search [
-	^ self optionalOperations 
+	^ self optionalOperations
 		ifNotNil: [ :res | res ]
 		ifNil: [ self realSearch]
 ]

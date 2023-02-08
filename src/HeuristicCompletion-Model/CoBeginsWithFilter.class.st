@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [ 
+CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [
 
-	aBoolean ifTrue: [ 
+	aBoolean ifTrue: [
 		^ CoCaseSensitiveBeginsWithFilter new
 			completionString: aString;
-			yourself ] 
-		ifFalse: [ 
+			yourself ]
+		ifFalse: [
 		^ CoCaseInsensitiveBeginsWithFilter new
 			completionString: aString;
 			yourself	]

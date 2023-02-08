@@ -158,7 +158,7 @@ RBRefactoring >> changes [
 { #category : #support }
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
 	| parseTree |
-	parseTree := aRBClass parseTreeFor: aSelector.
+	parseTree := aRBClass parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
 ]
@@ -239,7 +239,7 @@ RBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [
 
 	| parseTree |
 
-	parseTree := aClass parseTreeFor: selector.
+	parseTree := aClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ aClass compileTree: searchReplacer tree ]

@@ -22,12 +22,12 @@ HECompiledBlock class >> tag [
 HECompiledBlock >> asLiteralIn: anEnvironment [
 
 	| containingBlockOrMethod newBlock literalSpace previousBlock|
-	
+
 	previousBlock := anEnvironment newBlock.
 	containingBlockOrMethod := previousBlock ifNil: [ anEnvironment newMethod ].
-	
+
 	newBlock := CompiledBlock newMethod: bytecode size header: (self headerFor: anEnvironment).
-	
+
 	anEnvironment newBlock: newBlock.
 
 	literals
@@ -66,7 +66,7 @@ HECompiledBlock >> headerFor: anEnvironment [
 	| encoderClass|
 	"When a method is deserialized its header should be recalculated"
 	encoderClass := anEnvironment classNamed: encoderClassName.
-	
+
 	^ (CompiledMethod headerFlagForEncoder: encoderClass) + (numArgs bitShift: 24) + (numTemps bitShift: 18) + literals size + (hasPrimitive bitShift: 16)
 ]
 

@@ -37,7 +37,7 @@ JobProgressMorph >> changed [
 	| msRefreshRate isTimeForRefresh |
 	msRefreshRate := 60 "roughly 16 times per second".
 	isTimeForRefresh := Time millisecondClockValue - self lastRefresh >= msRefreshRate.
-	(self isInWorld and: [ isTimeForRefresh ]) ifTrue: [ 
+	(self isInWorld and: [ isTimeForRefresh ]) ifTrue: [
 		super changed ]
 ]
 
@@ -103,12 +103,12 @@ JobProgressMorph >> initialize [
 JobProgressMorph >> initializeJob: aJob [
 
 	super initialize.
-	
+
 	lock := Semaphore forMutualExclusion.
 	job := aJob.
 	hasResult := false.
 	lastRefresh := 0.
-	
+
 	self
 		color: Color transparent;
 		layoutPolicy: TableLayout new;
@@ -117,15 +117,15 @@ JobProgressMorph >> initializeJob: aJob [
 		listCentering: #center;
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap.
-		
-	labelMorph := StringMorph 
-		contents: job title 
+
+	labelMorph := StringMorph
+		contents: job title
 		font: StandardFonts defaultFont.
 	bar := JobProgressBarMorph new.
-	bar 
+	bar
 		on: #mouseUp send: #debug to: self;
 		hResizing: #spaceFill.
-	self updateLayout.
+	self updateLayout
 ]
 
 { #category : #accessing }
@@ -143,21 +143,21 @@ JobProgressMorph >> label [
 { #category : #API }
 JobProgressMorph >> label: aString [
 
-	self label isEmpty ifTrue: [ 
-		aString isEmptyOrNil 
+	self label isEmpty ifTrue: [
+		aString isEmptyOrNil
 			ifTrue: [ ^self ].
 		self removeAllMorphs.
 		self labelMorph contents: aString.
 		self updateLayout.
 		self changed: #width ].
-	
+
 	self labelMorph contents = aString
-		ifFalse: [ 
+		ifFalse: [
 			self labelMorph contents: aString.
-			aString isEmptyOrNil 
+			aString isEmptyOrNil
 				ifTrue: [ self removeMorph: self labelMorph ].
 			self changed: #width ].
-		
+
 	self changed: #width
 ]
 
@@ -175,7 +175,7 @@ JobProgressMorph >> lastRefresh [
 
 { #category : #private }
 JobProgressMorph >> max: aNumber [
- 
+
 	endValue := aNumber
 ]
 
@@ -188,7 +188,7 @@ JobProgressMorph >> progress [
 { #category : #API }
 JobProgressMorph >> progress: aNormalizedNumber [
 
-	bar progress = aNormalizedNumber ifFalse: [ 
+	bar progress = aNormalizedNumber ifFalse: [
 		bar progress: aNormalizedNumber.
 		self changed: #progressValue ]
 ]
@@ -209,7 +209,7 @@ JobProgressMorph >> result [
 { #category : #private }
 JobProgressMorph >> result: anObject [
 
-	lock critical: [ 
+	lock critical: [
 		hasResult := true.
 		result := anObject ]
 ]
@@ -222,7 +222,7 @@ JobProgressMorph >> start: aNumber [
 
 { #category : #private }
 JobProgressMorph >> startAt: aNumber [
- 
+
 	startValue := aNumber
 ]
 

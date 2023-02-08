@@ -130,13 +130,12 @@ DoubleLinkedListTest >> testNewFromCollection [
 
 	|d|
 	d := DoubleLinkedList newFrom: #(a b c).
-		
+
 	self assert: d firstLink value equals: #a.
 	self assert: d lastLink value equals: #c.
 
 	self assert: d firstLink nextLink value equals: #b.
-	self assert: d lastLink previousLink value equals: #b.
-	
+	self assert: d lastLink previousLink value equals: #b
 ]
 
 { #category : #tests }

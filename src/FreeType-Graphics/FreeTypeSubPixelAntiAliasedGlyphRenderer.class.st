@@ -19,10 +19,10 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer class >> initialize [
 { #category : #rendering }
 FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
 	"aGlyphForm should be 3x stretched 8 bit GlyphForm"
-	| w h s answer rowstart bytes word littleEndian shift v a colorVal i 
-	  prevG prevB r g b nextR nextG  filters rfilter gfilter bfilter  
+	| w h s answer rowstart bytes word littleEndian shift v a colorVal i
+	  prevG prevB r g b nextR nextG  filters rfilter gfilter bfilter
 	balR balG balB |
-	
+
 	"correctionFactor := 0.0 ."
 	filters := FreeTypeSettings current subPixelFilters.
 	rfilter := filters at: 1.
@@ -32,21 +32,21 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
 	w := aGlyphForm width.
 	h := aGlyphForm height.
 	answer := aGlyphForm class extent: ((aGlyphForm width / 3) ceiling + 2)@h depth: 32.
-	answer 
+	answer
 		offset: (aGlyphForm offset x / 3) rounded@(aGlyphForm offset y);
 		advance: (aGlyphForm advance / 3) rounded;
-		linearAdvance: aGlyphForm linearAdvance.	
+		linearAdvance: aGlyphForm linearAdvance.
 	s := w + 3 >> 2.
 	littleEndian := aGlyphForm isLittleEndian.
 	0 to: h - 1 do: [:y |
 		rowstart := (y * s)+1.
 		prevG := prevB :=0.
-		0 to: w - 1 by: 3 do:[:x | 
+		0 to: w - 1 by: 3 do:[:x |
 			0 to: 2 do:[:subpixelindex |
 				i := x + subpixelindex.
 				word := bytes at: rowstart + (i//4).
-				shift := -8* (littleEndian 
-					ifTrue:[i bitAnd: 3] 
+				shift := -8* (littleEndian
+					ifTrue:[i bitAnd: 3]
 					ifFalse:[3-(i bitAnd: 3)]).
 				v := (word bitShift: shift) bitAnd: 16rFF.
 				subpixelindex = 0 ifTrue:[r := v].
@@ -58,13 +58,13 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
 					0 to: 1 do:[:subpixelindex |
 						i := x + 3 + subpixelindex.
 						word := bytes at: rowstart + (i//4).
-						shift := -8* (littleEndian 
-							ifTrue:[i bitAnd: 3] 
+						shift := -8* (littleEndian
+							ifTrue:[i bitAnd: 3]
 							ifFalse:[3-(i bitAnd: 3)]).
 						v := (word bitShift: shift) bitAnd: 16rFF.
 						subpixelindex = 0 ifTrue:[nextR := v].
 						subpixelindex = 1 ifTrue:[nextG := v]]].
-			"balance r g b"	
+			"balance r g b"
 			balR := (prevG*(rfilter at: 1))+
 				(prevB*(rfilter at: 2))+
 				(r*(rfilter at: 3))+
@@ -85,11 +85,11 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
 			balG := balG + ((luminance - balG)*correctionFactor).
 			balB := balB + ((luminance - balB)*correctionFactor)."
 			balR := balR  truncated.
-			balR < 0 ifTrue:[balR := 0] ifFalse:[balR > 255 ifTrue:[balR := 255]].	
+			balR < 0 ifTrue:[balR := 0] ifFalse:[balR > 255 ifTrue:[balR := 255]].
 			balG := balG  truncated.
-			balG < 0 ifTrue:[balG := 0] ifFalse:[balG > 255 ifTrue:[balG := 255]].		
+			balG < 0 ifTrue:[balG := 0] ifFalse:[balG > 255 ifTrue:[balG := 255]].
 			balB := balB  truncated.
-			balB < 0 ifTrue:[balB := 0] ifFalse:[balB > 255 ifTrue:[balB := 255]].	 
+			balB < 0 ifTrue:[balB := 0] ifFalse:[balB > 255 ifTrue:[balB := 255]].
 			a := balR + balG + balB > 0 ifTrue:[16rFF] ifFalse:[0].
 			colorVal := balB + (balG bitShift: 8) +  (balR bitShift: 16) + (a bitShift: 24).
 			answer bits integerAt: (y*answer width)+(x//3+1) put: colorVal.
@@ -123,14 +123,14 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 	[ | hintingFlags flags |face := aFreeTypeFont face.
 	face setPixelWidth: em height: em.
 	hintingFlags := FreeTypeSettings current hintingFlags.
-	flags :=  LoadNoBitmap bitOr:( LoadIgnoreTransform bitOr: hintingFlags). 
-	face loadCharacter:charCode flags: flags. 
-	] on: FT2Error, PrimitiveFailed do:[:e | 
+	flags :=  LoadNoBitmap bitOr:( LoadIgnoreTransform bitOr: hintingFlags).
+	face loadCharacter:charCode flags: flags.
+	] on: FT2Error, PrimitiveFailed do:[:e |
 		^(GlyphForm extent: 0@0 depth: depth)
 			advance: 0@0;
 			linearAdvance: 0@0;
 			offset:0@0;
-			yourself]. 
+			yourself].
 	glyph := face glyph.
 	slant := aFreeTypeFont simulatedItalicSlant.
 	synthBoldStrength := aFreeTypeFont simulatedBoldStrength.
@@ -142,11 +142,11 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 	extraWidth := extraWidth + boldExtra.
 	sub > 0 ifTrue:[ extraWidth := extraWidth + 3].
 	extraHeight := boldExtra.
-	form := GlyphForm 
-		extent: ((glyph width + extraWidth "+ 6" + 1 + 2)*scaleX)@(glyph height +extraHeight + 1)  
+	form := GlyphForm
+		extent: ((glyph width + extraWidth "+ 6" + 1 + 2)*scaleX)@(glyph height +extraHeight + 1)
 		depth: depth.
 	s := (glyph height-glyph hBearingY)  * slant.
-	s := s sign * (s abs ceiling). 
+	s := s sign * (s abs ceiling).
 	offsetX := (glyph hBearingX negated + s + (boldExtra // 2) + 1) * scaleX .
 	offsetY := glyph height - glyph hBearingY + (boldExtra//2).
 	face translateOutlineBy: (offsetX+(sub*scaleX/64))@offsetY.
@@ -167,19 +167,19 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> subGlyphOf: aCharacter colorValue: a
 	| form |
 	monoBoolean
 		ifFalse:[
-			form := self 
-				renderStretchedGlyph: aCharacter 
-				depth: 8 
-				subpixelPosition: sub 
-				font: aFreeTypeFont. 
+			form := self
+				renderStretchedGlyph: aCharacter
+				depth: 8
+				subpixelPosition: sub
+				font: aFreeTypeFont.
 			form := self filter: form]
 		ifTrue:[
-			form := self 
-				renderGlyph: aCharacter 
-				depth: 1 
-				subpixelPosition: sub 
+			form := self
+				renderGlyph: aCharacter
+				depth: 1
+				subpixelPosition: sub
 				font: aFreeTypeFont.
-			form := self fixBytesForMono: form.					
+			form := self fixBytesForMono: form.
 			form := form asFormOfDepth: 32].
 	^form
 ]

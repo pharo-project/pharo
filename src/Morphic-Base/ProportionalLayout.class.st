@@ -15,7 +15,7 @@ ProportionalLayout >> isProportionalLayout [
 { #category : #layout }
 ProportionalLayout >> layout: aMorph in: newBounds [
 	"Compute the layout for the given morph based on the new bounds"
-	aMorph submorphsDo:[:m| m layoutProportionallyIn: newBounds].
+	aMorph submorphsDo:[:m| m layoutProportionallyIn: newBounds]
 ]
 
 { #category : #layout }

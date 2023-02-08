@@ -20,7 +20,7 @@ CoFetcherDecorator class >> isAbstract [
 
 { #category : #accessing }
 CoFetcherDecorator >> decoree: anotherFetcher [
-	
+
 	decoree := anotherFetcher
 ]
 
@@ -35,5 +35,5 @@ CoFetcherDecorator >> filter: aFilter [
 CoFetcherDecorator >> reset [
 
 	super reset.
-	decoree reset.
+	decoree reset
 ]

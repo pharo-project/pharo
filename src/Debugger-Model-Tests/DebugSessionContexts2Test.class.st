@@ -25,7 +25,7 @@ DebugSessionContexts2Test >> setUp [
 	MyHalt signal ] fork.
 	"The line under is a bit dirty. It is to make sure that the debugged process has suspended itself before it is being examined by the test methods."
 	[process isSuspended] whileFalse: [ 100 milliSeconds wait. ].
-	session := self class debugSession.
+	session := self class debugSession
 ]
 
 { #category : #tests }
@@ -59,11 +59,11 @@ DebugSessionContexts2Test >> testInterruptedContext [
 	expectedMethod isBlock ifTrue: [ expectedMethod := expectedMethod compiledBlock ].
 
 
-	self assert: (session interruptedContext method) equals: expectedMethod.
+	self assert: (session interruptedContext method) equals: expectedMethod
 ]
 
 { #category : #tests }
 DebugSessionContexts2Test >> testSuspendedContext [
 	"Checks that the suspendedContext of the interruptedProcess of a DebugSession is the last context the execution was at when its process was suspended."
-	self assert: (session interruptedProcess suspendedContext method) equals: MyHalt>>#defaultAction.
+	self assert: (session interruptedProcess suspendedContext method) equals: MyHalt>>#defaultAction
 ]

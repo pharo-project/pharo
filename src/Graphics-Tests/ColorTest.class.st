@@ -67,22 +67,22 @@ ColorTest >> testAsHexString [
 	table := #('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F').
 
 	table
-		do: [ :each | 
+		do: [ :each |
 			aColorString := each , each , '0000'.
 			self assert: ((Color fromHexString: aColorString) asHexString sameAs: aColorString) ].
 
 	table
-		do: [ :each | 
+		do: [ :each |
 			aColorString := '00' , each , each , '00'.
 			self assert: ((Color fromHexString: aColorString) asHexString sameAs: aColorString) ].
 
 	table
-		do: [ :each | 
+		do: [ :each |
 			aColorString := '0000' , each , each.
 			self assert: ((Color fromHexString: aColorString) asHexString sameAs: aColorString) ].
 
 	table
-		do: [ :each | 
+		do: [ :each |
 			aColorString := each , each , each , each , each , each.
 			self assert: ((Color fromHexString: aColorString) asHexString sameAs: aColorString) ]
 ]
@@ -93,14 +93,14 @@ ColorTest >> testColorFrom [
 	self assert: ((Color colorFrom: #(1.0 0.5 0.0)) asHexString sameAs: 'ff8000').
 	self assert: ((Color colorFrom: (Color white)) asHexString sameAs: 'ffffff').
 	self assert: ((Color colorFrom: '#FF8800') asHexString sameAs: 'ff8800').
-	self assert: ((Color colorFrom: '#222222') asHexString sameAs: '222222').
+	self assert: ((Color colorFrom: '#222222') asHexString sameAs: '222222')
 ]
 
 { #category : #tests }
 ColorTest >> testFromHexString [
 
 	| color |
-	
+
 	color := Color fromHexString: 'FFFFFF'.
 	self assert: color equals: Color white.
 
@@ -127,10 +127,10 @@ ColorTest >> testFromString [
 		assert: ((Color fromString: 'inexistent color') asHexString sameAs: 'ffffff'); "should return white"
 		assert: ((Color fromString: 'XXXXXX') asHexString sameAs: 'ffffff'); "not alphanumeric"
 		assert: ((Color fromString: '00000000') asHexString sameAs: 'ffffff'). "too many digits"
-		
+
 	self
 		assert: (Color fromString: 'DARKGRAY') = Color darkGray description: 'Color can be specified with a case insensitive color name';
-		assert: (Color fromString: '#blue') = Color blue description: 'Color can be specified with a leading literal sharp'.
+		assert: (Color fromString: '#blue') = Color blue description: 'Color can be specified with a leading literal sharp'
 ]
 
 { #category : #'tests - multiply' }
@@ -143,7 +143,7 @@ ColorTest >> testMultiplyByArray [
 
 	self assert: (0.075 - newColor red) abs < tolerance.
 	self assert: (1 - newColor green) abs < tolerance.
-	self assert: (0.75 - newColor blue) abs < tolerance.
+	self assert: (0.75 - newColor blue) abs < tolerance
 ]
 
 { #category : #'tests - multiply' }
@@ -156,7 +156,7 @@ ColorTest >> testMultiplyByArrayIdentityTransform [
 
 	self assert: (1 - newColor red) abs < tolerance.
 	self assert: (1 - newColor green) abs < tolerance.
-	self assert: (0.5 - newColor blue) abs < tolerance.
+	self assert: (0.5 - newColor blue) abs < tolerance
 ]
 
 { #category : #'tests - multiply' }
@@ -169,5 +169,5 @@ ColorTest >> testMultiplyByNumber [
 
 	self assert: (1 - newColor red) abs < tolerance.
 	self assert: (1 - newColor green) abs < tolerance.
-	self assert: (0.5 - newColor blue) abs < tolerance.
+	self assert: (0.5 - newColor blue) abs < tolerance
 ]

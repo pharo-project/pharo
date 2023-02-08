@@ -17,7 +17,7 @@ Class {
 { #category : #accessing }
 DTCommentToTestResult >> buildTreeForUI [
 	<dtCommentToTestResultTreeNamed: 'Grouped by type of result' order: 1>
-	
+
 	^ DTTreeNode new
 		subResults: {
 			(DTTreeNode new
@@ -28,7 +28,7 @@ DTCommentToTestResult >> buildTreeForUI [
 				yourself).
 			(DTTreeNode new
 				name: 'Failures';
-				subResults: (self testResults failures 
+				subResults: (self testResults failures
 					collect:  [:each | each asResultForDrTest]
 					as: OrderedCollection);
 				startExpanded;

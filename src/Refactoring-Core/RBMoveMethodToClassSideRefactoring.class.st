@@ -124,7 +124,7 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 RBMoveMethodToClassSideRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: method selector.
+		ifNil: [ parseTree := class parseTreeForSelector: method selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 			].
 	^ parseTree

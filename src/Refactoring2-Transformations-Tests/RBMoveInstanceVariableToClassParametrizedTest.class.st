@@ -4,10 +4,9 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBMoveInstanceVariableToClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveInstVarToClassRefactoring };
 		addCase: { #rbClass -> RBMoveInstanceVariableToClassTransformation };
 		yourself
 ]

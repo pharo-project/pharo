@@ -15,23 +15,23 @@ ReMissingSubclassResponsibilityRule class >> checksClass [
 { #category : #accessing }
 ReMissingSubclassResponsibilityRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'MissingSubclassResponsibilityRule'
 ]
 
 { #category : #enumerating }
 ReMissingSubclassResponsibilityRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-	
+
 	| subs |
 	subs := aClass subclasses.
-	(subs size > 1) ifTrue: 
+	(subs size > 1) ifTrue:
 		[ | sels noSuperSels |
 		sels := Bag new.
 		subs do: [ :each | sels addAll: each selectors ].
-		noSuperSels := sels asSet select: [ :each | 
+		noSuperSels := sels asSet select: [ :each |
 			((sels occurrencesOf: each) == subs size and: [
 			(aClass canUnderstand: each) not ]) ].
-		noSuperSels ifNotEmpty: [ 
+		noSuperSels ifNotEmpty: [
 			noSuperSels collect: [ :selector |
 				(ReMissingMethodCritique
 					for: aClass
@@ -42,7 +42,7 @@ ReMissingSubclassResponsibilityRule >> check: aClass forCritiquesDo: aCritiqueBl
 					yourself ]
 				thenDo: [ :critic |
 					aCritiqueBlock cull: critic ].
-				^ self ] ].
+				^ self ] ]
 ]
 
 { #category : #accessing }

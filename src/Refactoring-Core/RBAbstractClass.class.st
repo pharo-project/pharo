@@ -185,7 +185,7 @@ RBAbstractClass >> canonicalArgumentName [
 RBAbstractClass >> checkSelector: aSelector using: aMatcher [ 
 
 	| parseTree |
-	parseTree := self parseTreeFor: aSelector.
+	parseTree := self parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^ aMatcher answer
 ]
@@ -208,13 +208,13 @@ RBAbstractClass >> compile: aString [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> compile: aString classified: aSymbolCollection [ 
+RBAbstractClass >> compile: aString classified: aSymbolCollection [
 	| change method |
-	change := model 
+	change := model
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := modelFactory rbMethod 
+	method := modelFactory rbMethod
 				for: self
 				source: aString
 				selector: change selector.
@@ -223,18 +223,9 @@ RBAbstractClass >> compile: aString classified: aSymbolCollection [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [ 
-	| change method |
-	change := model 
-		compile: aString
-		in: self
-		classified: aRBMethod protocols.
-	method := modelFactory rbMethod  
-		for: self
-		source: aString
-		selector: change selector.
-	self addMethod: method.
-	^ change
+RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
+
+	self compile: aString classified: aRBMethod protocols
 ]
 
 { #category : #'method accessing' }
@@ -250,7 +241,7 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 
 	| parseTree |
 
-	parseTree := self parseTreeFor: selector.
+	parseTree := self parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ self compileTree: searchReplacer tree ]
@@ -538,7 +529,17 @@ RBAbstractClass >> newMethods [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> parseTreeFor: aSelector [
+RBAbstractClass >> parseTreeFor: aSymbol [
+
+	self
+		deprecated: 'Use parseTreeForSelector: instead'
+		transformWith: '`@receiver parseTreeFor: `@argument'
+			-> '`@receiver parseTreeForSelector: `@argument'.
+	^ self parseTreeForSelector: aSymbol
+]
+
+{ #category : #'method accessing' }
+RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
 

@@ -11,16 +11,16 @@ Class {
 { #category : #initialization }
 FTExampleMethodListGeneratorDataSource >> elementAt: anIndex [
 
-	^ self 
-		elementAt: anIndex 
+	^ self
+		elementAt: anIndex
 		ifAbsent: [ self error: 'Index not found' ]
 ]
 
 { #category : #initialization }
 FTExampleMethodListGeneratorDataSource >> elementAt: index ifAbsent: aBlock [
 
-	[ elements size < index ] 
-	whileTrue: [ 
+	[ elements size < index ]
+	whileTrue: [
 		generator atEnd ifTrue: [ ^ aBlock value ].
 		elements add: generator next.
 		generator atEnd ifTrue: [ size := elements size ] ].
@@ -36,15 +36,15 @@ FTExampleMethodListGeneratorDataSource >> hasElementAt: index [
 
 { #category : #initialization }
 FTExampleMethodListGeneratorDataSource >> initializeClass: aClass [
-	
+
 	self initialize.
 	"Just a big number"
-	size := 10000. 
+	size := 10000.
 	"where we are going to place the elements"
-	elements := OrderedCollection new. 
+	elements := OrderedCollection new.
 	"the generator"
 	generator := Generator on: [ :g |
-		(aClass selectors sorted: [ :a :b | a < b ]) 
+		(aClass selectors sorted: [ :a :b | a < b ])
 			do: [ :each | g yield: (FTExampleMethodModel method: aClass>>each) ] ]
 ]
 
