@@ -62,7 +62,7 @@ DAPackageTest >> testDependenciesFrom [
 	[ aRelationGraph
 		computeStaticDependencies: aPackage;
 		combineDependencies: aPackage ]
-		on: PotentialOutDatedDependencyWarning
+		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | ex resume "ignore" ].
 	self
 		assert:
@@ -129,7 +129,7 @@ DAPackageTest >> testReferenceDependenciesFrom [
 	[ aRelationGraph
 		computeStaticDependencies: aPackage;
 		combineDependencies: aPackage ]
-	on: PotentialOutDatedDependencyWarning
+	on: DAPotentialOutDatedDependencyWarning
 	do: [ :ex | ex resume "ignore" ].
 	self
 		assert:

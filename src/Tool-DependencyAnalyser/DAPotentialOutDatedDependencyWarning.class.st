@@ -2,7 +2,7 @@
 Warning signaled when a dependency manually declared has no match in potential dependencies.
 "
 Class {
-	#name : #PotentialOutDatedDependencyWarning,
+	#name : #DAPotentialOutDatedDependencyWarning,
 	#superclass : #Warning,
 	#instVars : [
 		'package',
@@ -12,43 +12,43 @@ Class {
 }
 
 { #category : #signaling }
-PotentialOutDatedDependencyWarning class >> signalDependency: dependencyName on: aPackageName [
-	^ self basicNew 
+DAPotentialOutDatedDependencyWarning class >> signalDependency: dependencyName on: aPackageName [
+	^ self basicNew
 		initializeWithDependency: dependencyName on: aPackageName;
 		signal;
 		yourself
 ]
 
 { #category : #comparing }
-PotentialOutDatedDependencyWarning >> = anObject [
+DAPotentialOutDatedDependencyWarning >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	^ (package == anObject package) and: [ dependency == anObject dependency ]
 ]
 
 { #category : #accessing }
-PotentialOutDatedDependencyWarning >> dependency [
+DAPotentialOutDatedDependencyWarning >> dependency [
 	^ dependency
 ]
 
 { #category : #comparing }
-PotentialOutDatedDependencyWarning >> hash [
+DAPotentialOutDatedDependencyWarning >> hash [
 	^ package hash bitXor: dependency hash
 ]
 
 { #category : #initialization }
-PotentialOutDatedDependencyWarning >> initializeWithDependency: aDependencyName on: aPackageName [ 
+DAPotentialOutDatedDependencyWarning >> initializeWithDependency: aDependencyName on: aPackageName [
 	dependency := aDependencyName.
 	package := aPackageName
 ]
 
 { #category : #accessing }
-PotentialOutDatedDependencyWarning >> messageText [
-	^ messageText 
+DAPotentialOutDatedDependencyWarning >> messageText [
+	^ messageText
 		ifNil: [ package , ': ' , dependency , ' dependency declared in the package Manifest as manuallyResolvedDependencies not detected as a dependency!' ]
 ]
 
 { #category : #accessing }
-PotentialOutDatedDependencyWarning >> package [
+DAPotentialOutDatedDependencyWarning >> package [
 	^ package
 ]
