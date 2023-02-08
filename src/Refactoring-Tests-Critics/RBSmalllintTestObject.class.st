@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'temporaryVariable'
 	],
-	#category : #'Refactoring-Tests-Critics'
+	#category : #'Refactoring-Tests-Critics-Base'
 }
 
 { #category : #'accessing - good' }
@@ -295,12 +295,12 @@ RBSmalllintTestObject >> multiplePeriodsTerminatingAssignmentStatement [
 	strings
 		add: 'one';
 		add: 'two'.
-	^ strings
+	^ strings.
 ]
 
 { #category : #methods }
 RBSmalllintTestObject >> multiplePeriodsTerminatingStatement [
-	^ self
+	^ self..
 ]
 
 { #category : #methods }
