@@ -281,10 +281,10 @@ SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
 ]
 
-{ #category : #'help system' }
-SettingBrowser class >> wikiStyleHelp [
-	<wikiStyleHelp: #'The setting browser'>
-	^ self comment
+{ #category : #'private helpers' }
+SettingBrowser class >> viewAllSettings [
+	"self viewAllSettings"
+	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
 ]
 
 { #category : #menu }
