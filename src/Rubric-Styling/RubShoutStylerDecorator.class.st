@@ -149,12 +149,12 @@ RubShoutStylerDecorator >> styler [
 	"The styler responsible for highlighting text in the receiver"
 
 	^ styler ifNil: [
-		styler := self model selectedClassOrMetaClass
-			ifNotNil: [ :aClass |
-				aClass syntaxHighlighter
+		styler := (self model notNil and: [  self model selectedClassOrMetaClass notNil ])
+			ifTrue: [
+				self model selectedClassOrMetaClass syntaxHighlighter
 					view: self;
 					yourself ]
-			ifNil: [ self defaultStyler ] ]
+			ifFalse: [ self defaultStyler ] ]
 ]
 
 { #category : #accessing }
