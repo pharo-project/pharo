@@ -20,43 +20,43 @@ Class {
 { #category : #activation }
 ClySwitchQueryScopeCommand class >> queryBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
 ClySwitchQueryScopeCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
-	
+
 	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup order: -5 for: ClyQueryBrowserContext
 ]
 
 { #category : #'instance creation' }
 ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser;
 		queryScope: anEnvironmentScope
 ]
 
 { #category : #'activation - toolbar support' }
 ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
-	
+
 	| compoBox |
 	compoBox := ClyScopeCompoBoxMorph for: browser.
-	
+
 	toolbarMorph addNewItem: compoBox
 ]
 
 { #category : #accessing }
 ClySwitchQueryScopeCommand >> defaultMenuItemName [
 	queryScope ifNil: [ ^'Switch scope' ].
-	
+
 	^'Switch scope to ', queryScope description
 ]
 
 { #category : #accessing }
 ClySwitchQueryScopeCommand >> defaultToolbarItemName [
-	
+
 	^queryScope description
 ]
 
@@ -68,7 +68,7 @@ ClySwitchQueryScopeCommand >> execute [
 { #category : #'activation - context menu' }
 ClySwitchQueryScopeCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	| concreteScopeCommand switchActivator |
-	
+
 	browser allNavigationScopes do: [ :newScope |
 		concreteScopeCommand := self class toScope: newScope in: browser.
 		switchActivator := aCommandActivator newForCommand: concreteScopeCommand.

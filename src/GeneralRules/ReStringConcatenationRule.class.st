@@ -26,7 +26,7 @@ Class {
 { #category : #accessing }
 ReStringConcatenationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'StringConcatenationRule'
 ]
 
@@ -34,12 +34,12 @@ ReStringConcatenationRule class >> uniqueIdentifierName [
 ReStringConcatenationRule >> afterCheck: aNode mappings: mappingDict [
 	(self performsConcatenation: (mappingDict at: '``@argument'))
 		ifTrue: [ ^ true ].
-		
+
 	(mappingDict
 		at: '``@argument2'
 		ifPresent: [ :arg2 |
 			^ self performsConcatenation: arg2 ]).
-		
+
 	^ false
 ]
 
@@ -52,13 +52,13 @@ ReStringConcatenationRule >> group [
 ReStringConcatenationRule >> initialize [
 	super initialize.
 	self  matchesAny: #(
-		'``@collection do: ``@argument' 
-		'``@collection do: ``@argument separatedBy: ``@argument2' 
-		'``@start to: ``@stop do: ``@argument' 
-		'``@collection detect: ``@argument' 
-		'``@collection detect: ``@argument ifNone: ``@argument2' 
+		'``@collection do: ``@argument'
+		'``@collection do: ``@argument separatedBy: ``@argument2'
+		'``@start to: ``@stop do: ``@argument'
+		'``@collection detect: ``@argument'
+		'``@collection detect: ``@argument ifNone: ``@argument2'
 		'``@collection select: ``@argument'
-		'``@collection reject: ``@argument' 
+		'``@collection reject: ``@argument'
 		'``@collection inject: ``@value into: ``@argument'
 		'``@collection anySatisfy: ``@argument'
 		'``@collection allSatisfy: ``@argument'
@@ -75,9 +75,9 @@ ReStringConcatenationRule >> performsConcatenation: aNode [
 
 	aNode isBlock ifFalse: [ ^ false ].
 	aNode nodesDo: [ :node |
-		(node isMessage and: [ 
-		node selector = #, ]) ifTrue: [ 
+		(node isMessage and: [
+		node selector = #, ]) ifTrue: [
 			^ true ] ].
-	
+
 	^ false
 ]

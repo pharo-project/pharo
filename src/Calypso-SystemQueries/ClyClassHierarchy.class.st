@@ -114,19 +114,19 @@ ClyClassHierarchy class >> buildInverseFrom: classes sortedBy: aSortFunction [
 
 { #category : #'instance creation' }
 ClyClassHierarchy class >> inverse [
-	^self new 
+	^self new
 		inverse: true
 ]
 
 { #category : #'instance creation' }
 ClyClassHierarchy class >> new [
-	^super new 
+	^super new
 		sortFunction: ClySortByNameFunction ascending
 ]
 
 { #category : #'instance creation' }
 ClyClassHierarchy class >> sortedBy: aSortFunction [
-	^super new 
+	^super new
 		sortFunction: aSortFunction
 ]
 
@@ -191,7 +191,7 @@ ClyClassHierarchy >> inverse: aBoolean [
 
 { #category : #converting }
 ClyClassHierarchy >> inverted [
-	^self copy 
+	^self copy
 		inverse: inverse not
 ]
 
@@ -203,7 +203,7 @@ ClyClassHierarchy >> isInverse [
 { #category : #printing }
 ClyClassHierarchy >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	inverse ifTrue: [ aStream nextPutAll: '(inverse)']
 ]
 
@@ -219,6 +219,6 @@ ClyClassHierarchy >> sortFunction: anObject [
 
 { #category : #converting }
 ClyClassHierarchy >> sortedBy: aSortFunction [
-	^self copy 
+	^self copy
 		sortFunction: aSortFunction
 ]

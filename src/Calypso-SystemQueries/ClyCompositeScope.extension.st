@@ -31,13 +31,13 @@ ClyCompositeScope >> asLocalClassScope [
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asRBEnvironment [
 	| env |
-	subscopes do: [:each | 
+	subscopes do: [:each |
 		env := env ifNil: [ each asRBEnvironment ] ifNotNil: [ env | each asRBEnvironment ]].
 	^env
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-ClyCompositeScope >> classesDo: aBlock [ 
+ClyCompositeScope >> classesDo: aBlock [
 	subscopes do: [ :each | each classesDo: aBlock]
 ]
 
@@ -45,19 +45,19 @@ ClyCompositeScope >> classesDo: aBlock [
 ClyCompositeScope >> collectAllClasses [
 	| result |
 	result := IdentitySet new.
-	
+
 	subscopes do: [ :scope | scope classesDo: [:each | result add: each ]].
-	
+
 	^result
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-ClyCompositeScope >> packagesDo: aBlock [ 
+ClyCompositeScope >> packagesDo: aBlock [
 	subscopes do: [ :each | each packagesDo: aBlock]
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-ClyCompositeScope >> withMetaLevel: aScopeClass [ 
+ClyCompositeScope >> withMetaLevel: aScopeClass [
 	| newSubscopes |
 	newSubscopes := subscopes collect: [ :each | each withMetaLevel: aScopeClass ].
 	^ClyCompositeScope on: newSubscopes in: environment named: name

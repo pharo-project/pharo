@@ -49,13 +49,12 @@ ProfilerModel >> announceSelectionChanged: aTallyModel [
 
 { #category : #'event handling' }
 ProfilerModel >> browseItem [
-	self selectedNode ifNotNil: [:current | current browseItem ].
-
+	self selectedNode ifNotNil: [:current | current browseItem ]
 ]
 
 { #category : #constants }
 ProfilerModel >> doItSelectorsPath [
-	
+
 	^ profiler doItSelectorsPath
 ]
 
@@ -71,7 +70,7 @@ ProfilerModel >> hideNodesUnder: aNumber [
 ]
 
 { #category : #initialization }
-ProfilerModel >> initialize [ 
+ProfilerModel >> initialize [
 	super initialize.
 	showLeavesOnly := false.
 	showNodeThreshold := 0
@@ -83,7 +82,7 @@ ProfilerModel >> isProfiling [
 ]
 
 { #category : #'event handling' }
-ProfilerModel >> keyDown: aKeyboardEvent from: aMorphTreeListManager [ 
+ProfilerModel >> keyDown: aKeyboardEvent from: aMorphTreeListManager [
 	self selectedNode ifNotNil: [:current | current keyDown: aKeyboardEvent from: aMorphTreeListManager ]
 ]
 
@@ -91,8 +90,8 @@ ProfilerModel >> keyDown: aKeyboardEvent from: aMorphTreeListManager [
 ProfilerModel >> leaveItems [
 	| res  |
 	res := OrderedCollection new.
-	self tallyRoot 
-		ifNotNil: [ 
+	self tallyRoot
+		ifNotNil: [
 			| dict |
 			dict := IdentityDictionary new: 100.
 			self tallyRoot leavesInto: dict fromSender: nil.
@@ -110,11 +109,11 @@ ProfilerModel >> leaveItemsOver: perCent [
 ]
 
 { #category : #accessing }
-ProfilerModel >> menu: menu shifted: b [ 
+ProfilerModel >> menu: menu shifted: b [
 	"Set up the menu to apply to the receiver's, honoring the #shifted boolean"
-	
-	self selectedNode 
-		ifNotNil: [ :current | 
+
+	self selectedNode
+		ifNotNil: [ :current |
 			current menu: menu shifted: b.
 			menu addLine.
 			(menu
@@ -123,11 +122,11 @@ ProfilerModel >> menu: menu shifted: b [
 				selector: #expandAllFromNode:
 				argument: current) icon: (self iconNamed: #windowMenuInactive).
 			menu addLine.
-			(menu 
+			(menu
 				add: 'Show as root'
 				target: self
 				selector: #setTallyRoot:
-				argument: current) 
+				argument: current)
 				icon: (self iconNamed: #glamorousRedo) ].
 	^ menu
 ]
@@ -143,7 +142,7 @@ ProfilerModel >> profileBlock: aBlock [
 	"Fork is used to get a more clean execution results tree"
 	[self announceProfilingStarted.
 	self startProfiling.
-	aBlock ensure: [ 
+	aBlock ensure: [
 		self stopProfiling.
 		self announceProfilingFinished ]] fork
 ]
@@ -154,7 +153,7 @@ ProfilerModel >> profileCode: someCode notifying: requestor [
 	| compiledMethod |
 	self isProfiling ifTrue: [ profiler stopProfiling ].
 	profiler := self newProfiler.
-	
+
 	compiledMethod := Smalltalk compiler
 		                  source: (self doItSourceCodeFrom: someCode);
 		                  context: nil;
@@ -177,7 +176,7 @@ ProfilerModel >> profilerClass: aClass [
 
 { #category : #reporting }
 ProfilerModel >> report [
-	
+
 	^ profiler report
 ]
 
@@ -189,7 +188,7 @@ ProfilerModel >> rootItem [
 { #category : #accessing }
 ProfilerModel >> rootItems [
 	self tallyRoot ifNil: [ ^#() ].
-	
+
 	^ showLeavesOnly
 		  ifTrue: [ self leaveItemsOver: showNodeThreshold ]
 		  ifFalse: [ {self tallyRoot asTallyModel
@@ -221,10 +220,10 @@ ProfilerModel >> rootTallyItemsOver: perCent [
 	| minTally |
 	self tallyRoot ifNil: [ ^ #() ].
 	minTally := (perCent asFloat / 100 * self tallyRoot tally) rounded.
-	
-	^ (self tallyRoot sonsOver: minTally) 
+
+	^ (self tallyRoot sonsOver: minTally)
 		ifEmpty: [ #() ]
-		ifNotEmpty: [:sons | sons asOrderedCollection sort reverse ] 
+		ifNotEmpty: [:sons | sons asOrderedCollection sort reverse ]
 ]
 
 { #category : #'private - running' }
@@ -261,7 +260,7 @@ ProfilerModel >> showNodeThreshold [
 
 { #category : #profiling }
 ProfilerModel >> startProfiling [
-	
+
 	isProfiling := true.
 	tallyRoot := nil.
 	profiler startProfiling

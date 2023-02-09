@@ -44,7 +44,7 @@ Class {
 	#instVars : [
 		'newSelector'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }

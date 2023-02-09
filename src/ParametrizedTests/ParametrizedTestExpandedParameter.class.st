@@ -45,7 +45,7 @@ ParametrizedTestExpandedParameter >> hash [
 
 { #category : #accessing }
 ParametrizedTestExpandedParameter >> key [
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]
 
 { #category : #printing }
@@ -74,6 +74,6 @@ ParametrizedTestExpandedParameter >> valuable [
 ]
 
 { #category : #accessing }
-ParametrizedTestExpandedParameter >> valuable: aValuable [ 
+ParametrizedTestExpandedParameter >> valuable: aValuable [
 	valuable := aValuable
 ]

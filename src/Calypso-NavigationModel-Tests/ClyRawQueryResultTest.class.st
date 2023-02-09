@@ -13,7 +13,7 @@ ClyRawQueryResultTest >> createQueryResult [
 ClyRawQueryResultTest >> testFillingWithItems [
 
 	queryResult fillWith: #(1 2 3).
-	
+
 	self assert: queryResult items asArray equals: #(1 2 3)
 ]
 
@@ -22,7 +22,7 @@ ClyRawQueryResultTest >> testFillingWithItemsTwice [
 
 	queryResult fillWith: #(1 2 3).
 	queryResult fillWith: #(4 5 6).
-	
+
 	self assert: queryResult items asArray equals: #(1 2 3 4 5 6)
 ]
 
@@ -33,7 +33,7 @@ ClyRawQueryResultTest >> testGettingAllItems [
 	queryResult fillWith: #(1 2 3).
 
 	actual := queryResult allItems.
-	
+
 	self assert: actual asArray equals: #(1 2 3)
 ]
 
@@ -44,7 +44,7 @@ ClyRawQueryResultTest >> testGettingAllItemsSatisfyingCondition [
 	queryResult fillWith: #(1 2 3 4 5 6).
 
 	actual := queryResult itemsWhere: [:each | each between: 2 and: 4].
-	
+
 	self assert: actual asArray equals: #(2 3 4)
 ]
 
@@ -55,7 +55,7 @@ ClyRawQueryResultTest >> testGettingItemsStartingAtGivenPosition [
 	queryResult fillWith: #(1 2 3 4 5 6).
 
 	actual := queryResult itemsStartingAt: 3 count: 2.
-	
+
 	self assert: actual asArray equals: #(3 4)
 ]
 
@@ -66,6 +66,6 @@ ClyRawQueryResultTest >> testGettingItemsStartingWhereConditionIsValid [
 	queryResult fillWith: #(1 2 3 4 5 6).
 
 	actual := queryResult itemsStartingWhere: [:each | each > 3] count: 2.
-	
+
 	self assert: actual asArray equals: #(4 5)
 ]

@@ -12,9 +12,9 @@ Class {
 { #category : #decoration }
 ClyCommandBasedTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
-	ClyTableIconCommandActivation 
-		activateAllInContext: itemContext 
-		by: [:commandActivator | 
+	ClyTableIconCommandActivation
+		activateAllInContext: itemContext
+		by: [:commandActivator |
 			commandActivator decorateTableCell: anItemCellMorph ]
 ]
 
@@ -25,7 +25,7 @@ ClyCommandBasedTableDecorator class >> decorateTableCell: anItemCellMorph of: aD
 { #category : #decoration }
 ClyCommandBasedTableDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyBrowserContext
 ]
 

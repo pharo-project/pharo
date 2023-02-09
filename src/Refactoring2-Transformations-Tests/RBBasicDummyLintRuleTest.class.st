@@ -1130,7 +1130,7 @@ RBBasicDummyLintRuleTest class >> variableAssignedLiteral [
 								searcher := self parseTreeSearcher.
 								searcher addSearch: (each , ' := ``@object')
 											-> [:aNode :answer | answer isNil and: [aNode value isLiteralNode]].
-								tree := defClass parseTreeFor: selector.
+								tree := defClass parseTreeForSelector: selector.
 								tree notNil ifTrue: 
 										[(searcher executeTree: tree initialAnswer: nil) == true
 											ifTrue: [result addInstVar: each for: context selectedClass]]]]].
@@ -1163,7 +1163,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 							== 1 
 							ifTrue: 
 								[| tree |
-								tree := defClass parseTreeFor: selector.
+								tree := defClass parseTreeForSelector: selector.
 								tree notNil 
 									ifTrue: 
 										[(RBReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree) 

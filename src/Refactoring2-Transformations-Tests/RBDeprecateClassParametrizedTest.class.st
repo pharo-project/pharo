@@ -66,10 +66,10 @@ RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	self assert: (model classNamed: #ClassDeprecatorTestingClassDeprecated) equals: deprecated.
 	self assert: (model classNamed: #ClassDeprecatorTestingClassDeprecatedUser) equals: user.
 
-	self assert: (user parseTreeFor: #foo)
+	self assert: (user parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo ^ClassDeprecatorTestingClassReplacement').
 		
-	self assert: (user parseTreeFor: #objectName) 
+	self assert: (user parseTreeForSelector: #objectName) 
 		equals: (self parseMethod: 'objectName ^#(ClassDeprecatorTestingClassReplacement)').
 
 	self assert: user superclass name 

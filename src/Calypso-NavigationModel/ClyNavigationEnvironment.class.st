@@ -131,8 +131,8 @@ Class {
 { #category : #default }
 ClyNavigationEnvironment class >> defaultOver: aSystem [
 	defaultGlobalEnvironments ifNil: [ defaultGlobalEnvironments := IdentityDictionary new ].
-	
-	^defaultGlobalEnvironments at: aSystem ifAbsentPut: [ 
+
+	^defaultGlobalEnvironments at: aSystem ifAbsentPut: [
 		(ClyNavigationEnvironment over: aSystem)
 			setUpAvailablePlugins;
 			attachToSystem ]
@@ -141,15 +141,15 @@ ClyNavigationEnvironment class >> defaultOver: aSystem [
 { #category : #default }
 ClyNavigationEnvironment class >> installNewPlugin: anEnvironmentPluginClass [
 	defaultGlobalEnvironments ifNil: [ ^self ].
-	
-	defaultGlobalEnvironments do: [ :each | 
+
+	defaultGlobalEnvironments do: [ :each |
 		(anEnvironmentPluginClass isAutoActivatedOn: each)
 			ifTrue: [ each addPlugin: anEnvironmentPluginClass new]]
 ]
 
 { #category : #'instance creation' }
 ClyNavigationEnvironment class >> over: aSystem [
-	^self new 
+	^self new
 		system: aSystem
 ]
 
@@ -165,19 +165,19 @@ ClyNavigationEnvironment class >> reset [
 { #category : #accessing }
 ClyNavigationEnvironment >> addPlugin: anEnvironmentPlugin [
 	plugins detect: [ :each | each class = anEnvironmentPlugin class ] ifFound: [ ^self ].
-	
+
 	anEnvironmentPlugin environment: self.
 	plugins add: anEnvironmentPlugin
 ]
 
 { #category : #'system changes' }
 ClyNavigationEnvironment >> announceChangesOf: aQueryResult [
-	
+
 	updateStrategy announceChangesOf: aQueryResult
 ]
 
 { #category : #converting }
-ClyNavigationEnvironment >> asRBEnvironment [ 
+ClyNavigationEnvironment >> asRBEnvironment [
 	^ self system environment
 ]
 
@@ -196,7 +196,7 @@ ClyNavigationEnvironment >> cachedResultOf: aQuery [
 { #category : #cleaning }
 ClyNavigationEnvironment >> cleanGarbageInCache [
 
-	accessGuard critical: [ 
+	accessGuard critical: [
 		queryCache clyCleanGarbage]
 ]
 
@@ -223,11 +223,11 @@ ClyNavigationEnvironment >> handleSystemChange: aSystemAnnouncement [
 	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
 	todoSize := 0.
 	[[todoSize = todoList size] whileFalse: [
-		todoSize := todoList size.  
+		todoSize := todoList size.
 		todoList asArray do: [ :eachResult |
-			(todoList includes: eachResult) ifTrue: [  
+			(todoList includes: eachResult) ifTrue: [
 				eachResult handleSystemChange: aSystemAnnouncement byProcessingList: todoList]]].
-	todoList notEmpty] whileTrue: [ 
+	todoList notEmpty] whileTrue: [
 		anyResult := todoList anyOne.
 		anyResult handleSystemChange: aSystemAnnouncement.
 		todoList remove: anyResult]
@@ -236,7 +236,7 @@ ClyNavigationEnvironment >> handleSystemChange: aSystemAnnouncement [
 { #category : #initialization }
 ClyNavigationEnvironment >> initialize [
 	super initialize.
-	
+
 	accessGuard := Mutex new.
 	updateGuard := Mutex new.
 	plugins := OrderedCollection new.
@@ -248,7 +248,7 @@ ClyNavigationEnvironment >> initialize [
 ClyNavigationEnvironment >> isQueryEmpty: aQuery [
 	| result |
 	result := queryCache at: aQuery ifAbsent: [ nil ].	"cache is weak dict where ifAbsentPut: not works"
-	result ifNotNil: [ 
+	result ifNotNil: [
 		result isBuilt ifTrue: [ ^result isEmpty ]].
 	^ aQuery checkEmptyResult
 ]
@@ -269,13 +269,13 @@ ClyNavigationEnvironment >> query: aQuery [
 	| result |
 	self cleanGarbageInCache.
 	result := queryCache at: aQuery ifAbsent: [nil]. "cache is weak dict where ifAbsentPut: not works"
-	result ifNil: [  
+	result ifNil: [
 		result := aQuery prepareNewResult.
 		aQuery fixStateBeforeExecution.
-		"We should ensure that state of query will not be modified after execution 
+		"We should ensure that state of query will not be modified after execution
 		because it is the key in cache.
 		So aQuery is supposed to become readonly object together with required internal state"
-		accessGuard critical: [ queryCache at: aQuery put: result]].	
+		accessGuard critical: [ queryCache at: aQuery put: result]].
 	result rebuildIfNeeded.
 	^result
 ]
@@ -286,7 +286,7 @@ ClyNavigationEnvironment >> queryCache [
 ]
 
 { #category : #queries }
-ClyNavigationEnvironment >> querySystemFor: aTypedQuery [ 
+ClyNavigationEnvironment >> querySystemFor: aTypedQuery [
 	aTypedQuery bindTo: self systemScope in: self.
 	^aTypedQuery execute
 ]
@@ -294,7 +294,7 @@ ClyNavigationEnvironment >> querySystemFor: aTypedQuery [
 { #category : #initialization }
 ClyNavigationEnvironment >> setUpAvailablePlugins [
 
-	ClyEnvironmentPlugin allSubclasses 
+	ClyEnvironmentPlugin allSubclasses
 		select: [ :each | each isAutoActivatedOn: self ]
 		thenDo: [ :each | self addPlugin: each new ]
 ]
@@ -313,7 +313,7 @@ ClyNavigationEnvironment >> system: anObject [
 ClyNavigationEnvironment >> systemChanged: aSystemAnnouncement [
 
 	self updateUsing: ClyFullEnvironmentUpdateStrategy new by: [
-		self handleSystemChange: aSystemAnnouncement 
+		self handleSystemChange: aSystemAnnouncement
 	]
 ]
 
@@ -338,9 +338,9 @@ ClyNavigationEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 					updateStrategy := oldStrategy.
 					updateGuard := Mutex new.
 					err pass]
-			] ensure: [ 
-				updateStrategy == newUpdateStrategy ifTrue: [ 
-					"In case of error another process can set up new strategy. 
+			] ensure: [
+				updateStrategy == newUpdateStrategy ifTrue: [
+					"In case of error another process can set up new strategy.
 					This condition will avoid possible collision"
 					updateStrategy := oldStrategy ]]]
 	] ensure: [ newUpdateStrategy publishCollectedChanges]

@@ -27,18 +27,18 @@ ProfilerResultsPresenter >> doItNode [
 	| selectorsPath doItNode |
 	selectorsPath := viewModel doItSelectorsPath.
 	doItNode := nil.
-	treeTable expandAllSuchThat: [ :item | 
+	treeTable expandAllSuchThat: [ :item |
 		| bool |
-		bool := (selectorsPath indexOf: item methodName) == 1 and: [ 
+		bool := (selectorsPath indexOf: item methodName) == 1 and: [
 			        item hasContents ].
-		bool ifTrue: [ 
+		bool ifTrue: [
 			doItNode := item.
 			selectorsPath := selectorsPath allButFirst ].
 		bool ].
-	(doItNode isNil or: [ 
-		 doItNode methodName ~= viewModel doItSelectorsPath last ]) ifTrue: [ 
+	(doItNode isNil or: [
+		 doItNode methodName ~= viewModel doItSelectorsPath last ]) ifTrue: [
 		^ nil ].
-	
+
 	^ doItNode
 ]
 
@@ -46,15 +46,15 @@ ProfilerResultsPresenter >> doItNode [
 ProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
-	UIManager default defer: [ 
+	UIManager default defer: [
 		self enabled: true.
 
-		viewModel showLeavesOnly ifFalse: [ 
+		viewModel showLeavesOnly ifFalse: [
 			"select do it node and expand tree"
 			doItNode := self doItNode.
 			doItNode
 				ifNil: [ 	self inform: 'The excecution time was too short! No measurements taken' ]
-				ifNotNil: [ 
+				ifNotNil: [
 					treeTable selectPath: doItNode path scrollToSelection: true.
 					viewModel setTallyRoot: doItNode ]
 		].
@@ -72,18 +72,18 @@ ProfilerResultsPresenter >> handleProfilingStarted [
 ProfilerResultsPresenter >> handleSelectionChanged [
 	| navButton node |
 	node := treeTable selectedItem.
-	
+
 	node
-		ifNil: [ 
+		ifNil: [
 			browseButton disable.
 			showAsRootButton disable.
 			codePresenter methodOrBlock: nil ]
-		ifNotNil: [ 
+		ifNotNil: [
 			browseButton enable.
 			showAsRootButton enable.
 			codePresenter methodOrBlock: node methodOrBlock.
 			 ].
-	
+
 	navButton := navigationToolbar selectedItem.
 	navButton ifNil: [ ^ self ].
 	navButton selectedObject: node
@@ -103,15 +103,15 @@ ProfilerResultsPresenter >> handleTreeRootChanged: event [
 
 	nodeToSelect := navigationToolbar selectedItem
 		                ifNil: [ event item ]
-		                ifNotNil: [ :btn | 
+		                ifNotNil: [ :btn |
 		                btn selectedObject ifNil: [ event item ] ].
 
 	pathToSelect := viewModel showLeavesOnly
 		                ifTrue: [ nodeToSelect path ]
 		                ifFalse: [ nodeToSelect relativePath ].
 
-	viewModel showLeavesOnly ifFalse: [ 
-		treeTable expandAllSuchThat: [ :node | 
+	viewModel showLeavesOnly ifFalse: [
+		treeTable expandAllSuchThat: [ :node |
 			node weightToRoot asFloat closeTo: 100.0 ].
 		treeTable expandPath: pathToSelect ].
 
@@ -126,24 +126,24 @@ ProfilerResultsPresenter >> initializeActions [
 		to: self.
 
 	"Report"
-	reportButton action: [ 
+	reportButton action: [
 		UIManager default edit: viewModel report label: 'Profiling Report' ].
 	"Configuration section actions"
-	collapseAllButton action: [ 
+	collapseAllButton action: [
 		treeTable collapseAll.
 		treeTable takeKeyboardFocus ].
 
-	expandAllButton action: [ 
+	expandAllButton action: [
 		treeTable expandAll.
 		treeTable takeKeyboardFocus ].
 
-	thresholdExpandInput whenTextChangedDo: [ :text | 
+	thresholdExpandInput whenTextChangedDo: [ :text |
 		text asInteger ifNotNil: [ treeTable expandNodesOver: text asNumber ] ].
 
-	thresholdFilterInput whenTextChangedDo: [ :text | 
+	thresholdFilterInput whenTextChangedDo: [ :text |
 		text asInteger ifNotNil: [ treeTable hideNodesUnder: text asNumber ] ].
 
-	treeDropList whenSelectedItemChangedDo: [ :item | 
+	treeDropList whenSelectedItemChangedDo: [ :item |
 		viewModel showLeavesOnly: item value ]
 ]
 
@@ -164,7 +164,7 @@ ProfilerResultsPresenter >> initializePresenters [
 					  add: (codePresenter := self newProfilerCode);
 					  add: (SpBoxLayout newLeftToRight
 							   add: (reportButton := self newReportButton)
-							   withConstraints: [ :constraints | 
+							   withConstraints: [ :constraints |
 								   constraints
 									   bePlacedAtStart;
 									   fill: true;
@@ -222,18 +222,18 @@ ProfilerResultsPresenter >> newConfigurationSectionLayout [
 { #category : #'private - factory' }
 ProfilerResultsPresenter >> newProfilerCode [
 
-	^ self instantiate: ProfilerCodePresenter 
+	^ self instantiate: ProfilerCodePresenter
 ]
 
 { #category : #'private - factory' }
 ProfilerResultsPresenter >> newProfilerNumberInput [
-	^ self instantiate: ProfilerNumberInput 
+	^ self instantiate: ProfilerNumberInput
 ]
 
 { #category : #'private - factory' }
 ProfilerResultsPresenter >> newProfilerToolbar [
 
-	^ self instantiate: ProfilerToolbarPresenter 
+	^ self instantiate: ProfilerToolbarPresenter
 ]
 
 { #category : #'private - factory' }
@@ -284,7 +284,7 @@ ProfilerResultsPresenter >> newThresholdFilterInput [
 { #category : #'private - factory' }
 ProfilerResultsPresenter >> newTreeVisualizationDropList [
 	| items |
-	items := { 
+	items := {
 		         ('Full tree' -> false).
 		         ('Leaves only' -> true) }.
 
@@ -295,7 +295,7 @@ ProfilerResultsPresenter >> newTreeVisualizationDropList [
 				                 ifTrue: [ items at: 2 ]
 				                 ifFalse: [ items at: 1 ]);
 		                display: [ :assoc | assoc key ];
-		                yourself.
+		                yourself
 ]
 
 { #category : #'accessing - model' }

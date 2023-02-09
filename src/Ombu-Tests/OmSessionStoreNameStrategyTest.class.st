@@ -21,7 +21,7 @@ OmSessionStoreNameStrategyTest class >> isAbstract [
 OmSessionStoreNameStrategyTest >> createFileWith: aName [
 
 	self directory ensureCreateDirectory.
-	(OmFileStore fileReferenceForStoreNamed: aName inDirectory: self directory) 
+	(OmFileStore fileReferenceForStoreNamed: aName inDirectory: self directory)
 		writeStreamDo: [ :stream | stream print: 'stub contents' ]
 ]
 
@@ -34,7 +34,7 @@ OmSessionStoreNameStrategyTest >> directory [
 { #category : #private }
 OmSessionStoreNameStrategyTest >> fileReferenceWith: aName [
 
-	^ OmFileStore 
+	^ OmFileStore
 		fileReferenceForStoreNamed: aName
 		inDirectory: self directory
 ]
@@ -49,7 +49,7 @@ OmSessionStoreNameStrategyTest >> setUp [
 { #category : #initialization }
 OmSessionStoreNameStrategyTest >> strategyClass [
 
-	^ self class environment classNamed: 
+	^ self class environment classNamed:
 		(self class name allButLast: 4) "corresponding to the word Test"
 ]
 
@@ -75,7 +75,7 @@ OmSessionStoreNameStrategyTest >> testWithExistingFile [
 OmSessionStoreNameStrategyTest >> testWithNotExistingFile [
 
 	name := strategy nextTo: 'inexistent' in: self directory.
-	
+
 	self assert: name isString.
 	self deny: (self fileReferenceWith: name) exists
 ]

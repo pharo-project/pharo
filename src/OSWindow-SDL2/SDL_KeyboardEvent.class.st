@@ -74,8 +74,8 @@ SDL_KeyboardEvent >> padding3: anObject [
 SDL_KeyboardEvent >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream print: { self timestamp. self keysym. self type. self windowID. self state }.
+
+	aStream print: { self timestamp. self keysym. self type. self windowID. self state }
 ]
 
 { #category : #'accessing - structure variables' }

@@ -43,7 +43,7 @@ ByteSymbol >> asOctetString [
 ]
 
 { #category : #accessing }
-ByteSymbol >> at: index [ 
+ByteSymbol >> at: index [
 	"Primitive. Answer the Character stored in the field of the receiver
 	indexed by the argument. Fail if the index argument is not an Integer or
 	is out of bounds. Essential. See Object documentation whatIsAPrimitive."
@@ -59,7 +59,7 @@ ByteSymbol >> byteAt: index [
 ]
 
 { #category : #accessing }
-ByteSymbol >> byteAt: anInteger put: anObject [ 
+ByteSymbol >> byteAt: anInteger put: anObject [
 	"You cannot modify the receiver."
 	^ self modificationForbiddenFor: #byteAt:put: index: anInteger value: anObject
 ]
@@ -67,6 +67,35 @@ ByteSymbol >> byteAt: anInteger put: anObject [
 { #category : #accessing }
 ByteSymbol >> byteSize [
 	^self size
+]
+
+{ #category : #comparing }
+ByteSymbol >> compareWith: anotherString [
+	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
+
+	<primitive: 158>
+	^ self compareWith: anotherString collated: AsciiOrder
+]
+
+{ #category : #comparing }
+ByteSymbol >> compareWith: anotherString collated: order [
+	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
+
+	<primitive: 158>
+	| len1 len2 c1 c2 |
+	len1 := self size.
+	len2 := anotherString size.
+	1 to: (len1 min: len2) do: [ :i |
+		c1 := order at: (self basicAt: i) + 1.
+		c2 := order at: (anotherString basicAt: i) + 1.
+		c1 = c2 ifFalse: [
+			^ c1 < c2
+				  ifTrue: [ -1 ]
+				  ifFalse: [ 1 ] ] ].
+	len1 = len2 ifTrue: [ ^ 0 ].
+	^ len1 < len2
+		  ifTrue: [ -1 ]
+		  ifFalse: [ 1 ]
 ]
 
 { #category : #comparing }
@@ -105,10 +134,10 @@ ByteSymbol >> isByteString [
 
 { #category : #testing }
 ByteSymbol >> isOctetString [
-	"Answer whether the receiver can be represented as a byte string. 
-	This is different from asking whether the receiver *is* a ByteString 
+	"Answer whether the receiver can be represented as a byte string.
+	This is different from asking whether the receiver *is* a ByteString
 	(i.e., #isByteString)"
-	^ true.
+	^ true
 ]
 
 { #category : #private }
@@ -119,14 +148,14 @@ ByteSymbol >> privateAt: index put: aCharacter [
 	whatIsAPrimitive."
 
 	<primitive: 64>
-	aCharacter isCharacter 
+	aCharacter isCharacter
 		ifFalse:[^self errorImproperStore].
 	index isInteger
 		ifTrue: [ (index between: 1 and: self size)
 				ifFalse: [ self errorSubscriptBounds: index] ]
 		ifFalse: [self errorNonIntegerIndex].
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
+	self isReadOnlyObject
+		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ]
 ]
 
 { #category : #accessing }
@@ -137,7 +166,7 @@ ByteSymbol >> species [
 
 { #category : #private }
 ByteSymbol >> string: aString [
-	1 to: aString size do: [:j | 
+	1 to: aString size do: [:j |
 		self privateAt: j put: (aString at: j)].
 	^self
 ]

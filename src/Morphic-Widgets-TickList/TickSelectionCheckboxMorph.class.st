@@ -26,7 +26,7 @@ TickSelectionCheckboxMorph >> newButtonMorph [
 		actionSelector: #toggleSelected;
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap.
-		
+
 	instance index: index.
 	^ instance
 ]

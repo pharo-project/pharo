@@ -22,7 +22,7 @@ ClyExtensionLastSortedClassesTest >> testComparisonToSimilarResultButWithWithDif
 ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 
 	queryResult := ClyExtensionLastSortedClassResult hierarchical.
-	
+
 	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClassesResult
 ]
 
@@ -30,7 +30,7 @@ ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 
 	queryResult := ClyExtensionLastSortedClassResult simple.
-	
+
 	self assert: queryResult baseQueryResult class equals: ClySortedQueryResult
 ]
 
@@ -38,10 +38,10 @@ ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClassResult hierarchical prepareNewFor: query in: environment..
-	
+
 	queryResult buildWith: {
 		ClySubclassLOfClass0FromPExtendedByP1Mock. ClySubclassN1OfClass1FromP1Mock.  ClyClass1FromP1Mock}.
-	
+
 	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassN1OfClass1FromP1Mock. 1.
 		 ClySubclassLOfClass0FromPExtendedByP1Mock. 0}.
 	self assert: (items last isMarkedWith: ClyExtendedClassTag).
@@ -56,7 +56,7 @@ ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 
 	queryResult buildWith: {
 		ClySubclassLOfClass0FromPExtendedByP1Mock. ClySubclassN1OfClass1FromP1Mock.  ClyClass1FromP1Mock}.
-	
+
 	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassN1OfClass1FromP1Mock. 0.
 		 ClySubclassLOfClass0FromPExtendedByP1Mock. 0}.
 	self assert: (items last isMarkedWith: ClyExtendedClassTag).
@@ -68,10 +68,10 @@ ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 ClyExtensionLastSortedClassesTest >> testFillingWithExtendedClassSide [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClassResult simple prepareNewFor: query in: environment.
-	
+
 	queryResult buildWith: {
 		ClySubclassLOfClass0FromPExtendedByP1Mock class. ClyClass2FromP1Mock.  ClyClass1FromP1Mock}.
-	
+
 	self assertItems: {ClyClass1FromP1Mock. 0. ClyClass2FromP1Mock. 0.
 		 ClySubclassLOfClass0FromPExtendedByP1Mock class. 0}.
 	self assert: (items last isMarkedWith: ClyExtendedClassTag)

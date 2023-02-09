@@ -15,8 +15,8 @@ PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
 
 { #category : #'*Polymorph-Widgets' }
 PasteUpMorph >> navigationKey: aKeyboardEvent [
-	
-	^ self taskList handleEvent: aKeyboardEvent.
+
+	^ self taskList handleEvent: aKeyboardEvent
 ]
 
 { #category : #'*Polymorph-Widgets' }

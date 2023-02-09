@@ -1613,25 +1613,6 @@ package: ''UndefinedClasses-Experiment'.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 
-{ #category : #'tests - Creation api' }
-RBScannerTest >> testScanTokens1 [
-	| inp exp |
-	inp := 'Object subclass: #NameOfSubclass'.
-	exp := {'Object'.
-	'subclass:'.
-	#NameOfSubclass asString}.
-	self assert: (self scannerClass scanTokens: inp) equals: exp
-]
-
-{ #category : #'tests - Creation api' }
-RBScannerTest >> testScanTokens2 [
-	| inp exp |
-	inp := 'classVariableNames: '''' "ha ha"
-package: ''UndefinedClasses-Experiment'.
-	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
-	self assert: (self scannerClass scanTokens: inp) equals: exp
-]
-
 { #category : #utilities }
 RBScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
 	self assert: scannedToken isError.

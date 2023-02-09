@@ -10,7 +10,7 @@ Morph >> adoptPaneColor [
 { #category : #'*Polymorph-Widgets' }
 Morph >> boundsWithinCorners [
  	"Changed to be more realistic..."
-	
+
 	^self bounds insetBy: 2
 ]
 
@@ -25,7 +25,7 @@ Morph >> drawKeyboardFocusOn: aCanvas [
 { #category : #'*Polymorph-Widgets' }
 Morph >> expandFullBoundsForDropShadow: aRectangle [
 	"Return an expanded rectangle for an eventual drop shadow."
-	
+
 	^(aRectangle expandBy: self shadowMargins)
 		quickMerge: aRectangle
 ]
@@ -41,7 +41,7 @@ Morph >> focusBounds [
 Morph >> focusChanged [
 	"Report that the area occupied by the morph's focus indicator should be redrawn.
 	Optimized for border-only (no fill)."
-	
+
 	|rects fm|
 	fm := self focusIndicatorMorph.
 	fm fillStyle isTransparent
@@ -77,7 +77,7 @@ Morph >> focusIndicatorMorph [
 Morph >> hasKeyboardFocus [
 	"Answer whether the receiver has keyboard focus."
 
-	^((self world ifNil: [^false]) 
+	^((self world ifNil: [^false])
 		activeHand ifNil: [^false])  keyboardFocus = self
 ]
 
@@ -94,7 +94,7 @@ Morph >> lastSubmorphRecursive [
 Morph >> layoutInBounds: cellBounds [
 	"Layout specific. Apply the given bounds to the receiver after being layed out in its owner."
 	| box aSymbol |
-	
+
 	cellBounds = self bounds ifTrue:[^self]. "already up to date. Fixed here to use bounds rather than fullBounds for the check."
 	cellBounds extent = self bounds extent "nice fit. Fixed here to use bounds rather than fullBounds for the check."
 		ifTrue:[^self position: cellBounds origin].
@@ -104,7 +104,7 @@ Morph >> layoutInBounds: cellBounds [
 	self vResizing == #shrinkWrap
 		ifTrue:[box := box origin extent: box width @ self minExtent y].
 	"match #spaceFill constraints"
-	self hResizing == #spaceFill 
+	self hResizing == #spaceFill
 		ifTrue:[box := box origin extent: cellBounds width @ box height].
 	self vResizing == #spaceFill
 		ifTrue:[box := box origin extent: box width @ cellBounds height].
@@ -112,7 +112,7 @@ Morph >> layoutInBounds: cellBounds [
 	aSymbol := (owner ifNil:[self]) cellPositioning.
 	box := box align: (box perform: aSymbol) with: (cellBounds perform: aSymbol).
 	"and install new bounds"
-	self bounds: box.
+	self bounds: box
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -124,30 +124,30 @@ Morph >> minExtent [
 	| layout minExtent extra hFit vFit |
 	hFit := self hResizing.
 	vFit := self vResizing.
-	(hFit == #rigid and: [vFit == #rigid]) 
-		ifTrue: 
+	(hFit == #rigid and: [vFit == #rigid])
+		ifTrue:
 			["The receiver will not adjust to parents layout by growing or shrinking,
 		which means that an accurate layout defines the minimum size."
 
 			^self fullBounds extent max: self minWidth @ self minHeight].
 
 	"An exception -- a receiver with #shrinkWrap constraints but no children is being treated #rigid (the equivalent to a #spaceFill receiver in a non-layouting owner)"
-	self hasSubmorphs 
-		ifFalse: 
+	self hasSubmorphs
+		ifFalse:
 			[hFit == #shrinkWrap ifTrue: [hFit := #rigid].
 			vFit == #shrinkWrap ifTrue: [vFit := #rigid]].
 	layout := self layoutPolicy.
-	layout 
+	layout
 		ifNil: [minExtent := 0 @ 0]
 		ifNotNil: [minExtent := layout minExtentOf: self in: self layoutBounds].
-	hFit == #rigid 
+	hFit == #rigid
 		ifTrue: [minExtent := self fullBounds extent x @ minExtent y]
-		ifFalse: 
+		ifFalse:
 			[extra := self bounds width - self layoutBounds width.
 			minExtent := (minExtent x + extra) @ minExtent y].
-	minExtent := vFit == #rigid 
+	minExtent := vFit == #rigid
 				ifTrue: [minExtent x @ self fullBounds extent y]
-				ifFalse: 
+				ifFalse:
 					[extra := self bounds height - self layoutBounds height.
 					minExtent x @ (minExtent y + extra)].
 	minExtent := minExtent max: self minWidth @ self minHeight.
@@ -157,15 +157,15 @@ Morph >> minExtent [
 { #category : #'*Polymorph-Widgets' }
 Morph >> myDependents [
 	"Improved performance dependents."
-	
+
 	^ (self valueOfProperty: #myDependents) ifNil: [ #() ]
 ]
 
 { #category : #'*Polymorph-Widgets' }
 Morph >> myDependents: aCollectionOrNil [
 	"Improved performance dependents."
-	
-	aCollectionOrNil 
+
+	aCollectionOrNil
 		ifNil: [self removeProperty: #myDependents]
 		ifNotNil: [self setProperty: #myDependents toValue: aCollectionOrNil]
 ]
@@ -190,22 +190,22 @@ Morph >> navigateFocusForward [
 Morph >> navigationKey: event [
 	"Check for tab key activity and change focus as appropriate.
 	Check for menu key to do popup."
-	
+
 	(event key = KeyboardKey escape and: [
 			event anyModifierKeyPressed]) ifTrue: [
 		^ self yellowButtonActivity: false ].
-	
+
 	self window ifNotNil: [:win |
 		(win handlesKeyDown: event) ifTrue: [
 			(win keyDown: event) ifTrue: [^true]]].
-	
+
 	^false
 ]
 
 { #category : #'*Polymorph-Widgets' }
 Morph >> optimalExtent [
 	"Answer the submorphBounds extent plus twice our border width."
-	
+
 	^self submorphBounds extent + (self borderWidth * 2)
 ]
 
@@ -359,11 +359,11 @@ Morph >> toggleVisibleAndRaise [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-Morph >> visible: aBoolean [ 
+Morph >> visible: aBoolean [
 	"set the 'visible' attribute of the receiver to aBoolean.
 	Must update owner layout since its full bounds may depend
 	on the receiver extending beyond its bounds."
-	
+
 	(extension isNil and:[aBoolean]) ifTrue: [^ self].
 	self visible == aBoolean ifTrue: [^ self].
 	self assureExtension visible: aBoolean.

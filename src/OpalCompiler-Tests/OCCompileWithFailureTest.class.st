@@ -18,14 +18,14 @@ OCCompileWithFailureTest >> notify: aMessage at: positon in: object [
 
 { #category : #tests }
 OCCompileWithFailureTest >> testEmptyBlockArg [
-	| result | 
+	| result |
 	"parse [:] in parse error mode, this results in arg vars with an empty string as a name"
 	result := UndefinedObject compiler
     source: '^[ :]';
     noPattern: true;
     options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
     requestor: self;
-    parse. 
+    parse.
 	self assert: result isDoIt.
 	self assert: result statements first isReturn
 ]
@@ -37,23 +37,23 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 				source: 'method 3+';
 				options: #(+ optionParseErrors);
 				parse.
-	
+
 	self assert: ast isMethod.
 	self assert: ast isFaulty.
-	
+
 	cm := ast compiledMethod.
 	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]
 
 { #category : #tests }
 OCCompileWithFailureTest >> testParenthesis [
-	| result cm | 
+	| result cm |
 	result := UndefinedObject compiler
     source: 'self assert: pragma( numArgs equals: 0.';
     noPattern: true;
     options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
     requestor: self;
-    parse. 
+    parse.
 	self assert: result isDoIt.
 	self assert: result isFaulty.
 	cm := result compiledMethod.

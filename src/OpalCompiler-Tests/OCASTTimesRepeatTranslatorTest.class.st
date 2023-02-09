@@ -24,8 +24,8 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatExecutesBlock [
 	 ^ total'
 		withTemps: #('total')
 		withBlock: '[ total := total  + total ]'.
-	
-	self assert: result equals: 2 ** 5.
+
+	self assert: result equals: 2 ** 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -38,7 +38,7 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatReturnsReceiver [
 	{definition}.
 	^ 5 timesRepeat: {argument}'
 		withBlock: '[ 1+2 ]'.
-	
+
 	self assert: result equals: 5
 ]
 
@@ -56,8 +56,8 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithCalculatedArguments [
 	 ^ total'
 		withTemps: #('times' 'total')
 		withBlock: '[ total := total + total ]'.
-	
-	self assert: result equals: 2 ** 5.
+
+	self assert: result equals: 2 ** 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -71,11 +71,11 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 	5 timesRepeat: {argument}.
 	 ^ total'
 		withTemps: #('total')
-		withBlock: '[ | tempInBlock | 
+		withBlock: '[ | tempInBlock |
 			tempInBlock := total.
 			total := total + tempInBlock ]'.
-	
-	self assert: result equals: 2 ** 5.
+
+	self assert: result equals: 2 ** 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -92,6 +92,6 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithTempOutsideBlock [
 		withBlock: '[
 			tempOutsideBlock := total.
 			total := total + tempOutsideBlock ]'.
-	
-	self assert: result equals: 2 ** 5.
+
+	self assert: result equals: 2 ** 5
 ]

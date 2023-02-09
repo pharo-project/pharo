@@ -50,17 +50,19 @@ IntegerTest >> testBigReceiverInexactSqrt [
 IntegerTest >> testBitOr [
 
 	self assert: (2r0101 | 2r1010) equals: 2r1111.
-	self assert: (2r0101 bitOr: 2r1010) equals: 2r1111.
+	self assert: (2r0101 bitOr: 2r1010) equals: 2r1111
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 IntegerTest >> testDegreeCos [
 
-	45 degreeCos.	"Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
-	self assert: (45 degreeCos squared - (1 / 2)) abs <= Float epsilon.
-	self assert: (60 degreeCos - (1 / 2)) abs <= Float epsilon.
-	self assert: (120 degreeCos + (1 / 2)) abs <= Float epsilon.
-	-360 to: 360 do: [ :i | self assert: (i degreeCos closeTo: i degreesToRadians cos) ].	"Following tests use strict equality which is a requested property of degreeCos"
+	45 degreeCos. "Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
+	self assert:
+		(45 degreeCos squared - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (60 degreeCos - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (120 degreeCos + (1 / 2)) abs <= Float machineEpsilon.
+	-360 to: 360 do: [ :i | 
+	self assert: (i degreeCos closeTo: i degreesToRadians cos) ]. "Following tests use strict equality which is a requested property of degreeCos"
 	-10 to: 10 do: [ :k | 
 		self assert: (k * 360 + 90) degreeCos equals: 0.
 		self assert: (k * 360 - 90) degreeCos equals: 0.
@@ -71,11 +73,13 @@ IntegerTest >> testDegreeCos [
 { #category : #'*Kernel-Tests-Extended' }
 IntegerTest >> testDegreeSin [
 
-	45 degreeSin.	"Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
-	self assert: (45 degreeSin squared - (1 / 2)) abs <= Float epsilon.
-	self assert: (30 degreeSin - (1 / 2)) abs <= Float epsilon.
-	self assert: (-30 degreeSin + (1 / 2)) abs <= Float epsilon.
-	-360 to: 360 do: [ :i | self assert: (i degreeSin closeTo: i degreesToRadians sin) ].	"Following tests use strict equality which is a requested property of degreeSin"
+	45 degreeSin. "Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
+	self assert:
+		(45 degreeSin squared - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (30 degreeSin - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (-30 degreeSin + (1 / 2)) abs <= Float machineEpsilon.
+	-360 to: 360 do: [ :i | 
+	self assert: (i degreeSin closeTo: i degreesToRadians sin) ]. "Following tests use strict equality which is a requested property of degreeSin"
 	-10 to: 10 do: [ :k | 
 		self assert: (k * 360 + 90) degreeSin - 1 equals: 0.
 		self assert: (k * 360 - 90) degreeSin + 1 equals: 0.
@@ -93,7 +97,7 @@ IntegerTest >> testDigitsAccess [
 
 	self assert: (42 decimalDigitAt: 2) equals: 4.
 	self assert: (42 decimalDigitAt: 1) equals: 2.
-	
+
 	self assert: (42 decimalDigitLength) equals: 2.
 	self assert: (0 decimalDigitLength) equals: 1.
 	self assert: (100000000000 decimalDigitLength) equals: 12. "large integer"
@@ -102,7 +106,7 @@ IntegerTest >> testDigitsAccess [
 	self assert: (255 lastDigit) equals: 255.
 	self assert: (256 lastDigit) equals: 1.
 	self assert: ((256*256-1) lastDigit) equals: 255.
-	self assert: ((256*256) lastDigit) equals: 1.
+	self assert: ((256*256) lastDigit) equals: 1
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -153,7 +157,7 @@ IntegerTest >> testExactRaisedTo [
 
 		"No exact result => Float result"
 		self assert: ((i raisedTo: 3) +1 raisedTo: 5/3) isFloat.
-		self assert: ((i negated raisedTo: 3) -1 raisedTo: 5/3) isFloat ].
+		self assert: ((i negated raisedTo: 3) -1 raisedTo: 5/3) isFloat ]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -216,10 +220,10 @@ IntegerTest >> testIsPrime2 [
 	"The following tests should return 'true'"
 	#(17 78901 104729 15485863 2038074743) do: [ :each |
 		self assert: each isPrime ].
-	
+
 	"The following tests should return 'false' (first 5 are Carmichael integers)"
 	#(561 2821 6601 10585 15841 256 29996224275831) do: [ :each |
-		self deny: each isPrime ].
+		self deny: each isPrime ]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -239,10 +243,10 @@ IntegerTest >> testIsProbablyPrime [
 	"The following tests should return 'true'"
 	#(17 78901 104729 15485863 2038074743 29996224275833) do: [ :each |
 		self assert: each isProbablyPrime ].
-	
+
 	"The following tests should return 'false' (first 5 are Carmichael integers)"
 	#(561 2821 6601 10585 15841 256 29996224275831) do: [ :each |
-		self deny: each isProbablyPrime ].
+		self deny: each isProbablyPrime ]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -437,7 +441,7 @@ IntegerTest >> testNthRootErrorConditions [
 	"
 
 	self should: [ -2 nthRoot: 1/4 ] raise: ArithmeticError.
-	self should: [ -2 nthRoot: 1.24 ] raise: ArithmeticError.
+	self should: [ -2 nthRoot: 1.24 ] raise: ArithmeticError
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -456,12 +460,12 @@ IntegerTest >> testNthRootTruncated [
 	self assert: (tooBigToBeAFloat nthRootTruncated: 100) equals: 1 << 20.
 	self assert: (tooBigToBeAFloat + 1 nthRootTruncated: 100) equals: 1 << 20.
 	self assert: (tooBigToBeAFloat - 1 nthRootTruncated: 100) equals: 1 << 20 - 1.
-	
+
 	large := -3 raisedTo: 255.
 	self assert: (large nthRootTruncated: 17) equals: (-3 raisedTo: 15).
 	self assert: (large + 11 nthRootTruncated: 17) equals: (-3 raisedTo: 15) + 1.
 	self assert: (large - 11 nthRootTruncated: 17) equals: (-3 raisedTo: 15).
-	
+
 	2 to: 10 do: [:thePower |
 		1 to: 10000 do: [:n |
 			| theTruncatedRoot |

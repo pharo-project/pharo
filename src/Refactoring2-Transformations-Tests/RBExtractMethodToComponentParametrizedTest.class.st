@@ -47,7 +47,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 
 	self
-		assert: (class parseTreeFor: #openEditor)
+		assert: (class parseTreeForSelector: #openEditor)
 		equals:
 			(self
 				parseMethod:
@@ -56,7 +56,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 								rules := self failedRules.
 								^rules foo: self').
 	self
-		assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:)
+		assert: ((refactoring model classNamed: #Collection) parseTreeForSelector: #foo:)
 		equals:
 			(self
 				parseMethod:
@@ -78,9 +78,9 @@ RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 
-	self assert: (class parseTreeFor: #copyDictionary:) equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
+	self assert: (class parseTreeForSelector: #copyDictionary:) equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
 	self
-		assert: ((refactoring model classNamed: #Dictionary) parseTreeFor: #copyWithAssociations)
+		assert: ((refactoring model classNamed: #Dictionary) parseTreeForSelector: #copyWithAssociations)
 		equals:
 			(self
 				parseMethod:

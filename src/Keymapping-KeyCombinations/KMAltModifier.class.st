@@ -16,7 +16,7 @@ KMAltModifier >> eventCode [
 KMAltModifier >> initialize [
 	super initialize.
 	identifier := #a.
-	name := 'Alt'.
+	name := 'Alt'
 ]
 
 { #category : #matching }

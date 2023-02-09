@@ -4,10 +4,10 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBMoveVariableDefinitionParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveVariableDefinitionRefactoring };
+		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeTransformation };
 		yourself
 ]
 
@@ -29,7 +29,7 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 		{ (19 to: 22) . RBRefactoryTestDataApp . #moveDefinition }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #moveDefinition) equals: (self parseMethod: 'moveDefinition
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #moveDefinition) equals: (self parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
 										| temp |
@@ -48,7 +48,7 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsARe
 	refactoring := self createRefactoringWithArguments:
 		{ (48 to: 58) . RBRefactoryTestDataApp . #referencesConditionFor: }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
 								^(RBCondition withBlock: 
 										[| association |association := Smalltalk globals associationAt: aClass name

@@ -27,14 +27,14 @@ ZipStringMember >> contents: aString [
 	contents := aString.
 	compressedSize := uncompressedSize := aString size.
 	"set the file date to now"
-	self modifiedAt: DateAndTime now.
+	self modifiedAt: DateAndTime now
 ]
 
 { #category : #initialization }
 ZipStringMember >> initialize [
 	super initialize.
 	self contents: ''.
-	compressionMethod := desiredCompressionMethod := CompressionStored.
+	compressionMethod := desiredCompressionMethod := CompressionStored
 ]
 
 { #category : #private }

@@ -74,7 +74,7 @@ FileSystemStore >> basicIsSymlink: aNode [
 
 { #category : #abstract }
 FileSystemStore >> basicIsWritable: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is 
+	"Used to decide whether the low-level representation (node / entry) from the store is
 	a writable file or can be changed."
 	self subclassResponsibility
 ]
@@ -108,7 +108,7 @@ FileSystemStore >> basicSizeOf: aNode [
 FileSystemStore >> checkExists: aPath [
 
 	(self exists: aPath) ifFalse:
-		[ FileDoesNotExistException signalWith: aPath ].
+		[ FileDoesNotExistException signalWith: aPath ]
 ]
 
 { #category : #public }
@@ -125,26 +125,26 @@ FileSystemStore >> close [
 FileSystemStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPresent: presentBlock fileSystem: aFilesystem [
 
 	| buffer out in |
-	
+
 	in := nil.
 	out := nil.
 	buffer := nil.
 	[
 		in := aFilesystem binaryReadStreamOn: sourcePath.
 		in ifNil: [ ^ absentBlock value ].
-		
+
 		(self exists: destinationPath)
 			ifTrue: [ "cannot overwrite destination"
 				^ presentBlock value ].
-			
+
 		out := aFilesystem binaryWriteStreamOn: destinationPath.
 		buffer := ByteArray new: 1024.
-		
+
 		[ in atEnd ]
-			whileFalse: [ 
+			whileFalse: [
 				buffer := in nextInto: buffer.
 				out nextPutAll: buffer ]]
-	ensure: [ 
+	ensure: [
 		in ifNotNil: [ in close ].
 		out ifNotNil: [ out close ]]
 ]
@@ -157,10 +157,10 @@ FileSystemStore >> createDirectory: aPath [
 { #category : #public }
 FileSystemStore >> creationTimeOf: aPath [
 	"Return the date of creation of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicCreationTimeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ].
+	^ self
+		nodeAt: aPath
+		ifPresent: [ :entry | self basicCreationTimeOf: entry ]
+		ifAbsent: [ self signalFileDoesNotExist: aPath ]
 ]
 
 { #category : #accessing }
@@ -186,47 +186,47 @@ FileSystemStore >> deviceIdOf: aPath [
 
 { #category : #public }
 FileSystemStore >> directoryAt: aPath  directoryNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
+	^ self
+		directoryAt: aPath
 		nodesDo: [ :entry|
-			(self basicIsDirectory: entry) 
-				ifTrue: [ aBlock value: entry ]].
+			(self basicIsDirectory: entry)
+				ifTrue: [ aBlock value: entry ]]
 ]
 
 { #category : #public }
 FileSystemStore >> directoryAt: aPath fileNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
+	^ self
+		directoryAt: aPath
 		nodesDo: [ :entry|
-			(self basicIsDirectory: entry) 
-				ifFalse: [ aBlock value: entry ]].
+			(self basicIsDirectory: entry)
+				ifFalse: [ aBlock value: entry ]]
 ]
 
 { #category : #public }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock directoryNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
-		ifAbsent: absentBlock 
+	^ self
+		directoryAt: aPath
+		ifAbsent: absentBlock
 		nodesDo: [ :entry|
-			(self basicIsDirectory: entry) 
-				ifTrue: [ aBlock value: entry ]].
+			(self basicIsDirectory: entry)
+				ifTrue: [ aBlock value: entry ]]
 ]
 
 { #category : #public }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock fileNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
-		ifAbsent: absentBlock 
+	^ self
+		directoryAt: aPath
+		ifAbsent: absentBlock
 		nodesDo: [ :entry|
-			(self basicIsDirectory: entry) 
-				ifFalse: [ aBlock value: entry ]].
+			(self basicIsDirectory: entry)
+				ifFalse: [ aBlock value: entry ]]
 ]
 
 { #category : #public }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 	^ self
 		nodeAt: aPath
-		ifPresent: [ :entry | 
+		ifPresent: [ :entry |
 			(self basicIsDirectory: entry)
 				ifTrue: [ self basicEntry: entry path: aPath nodesDo: aBlock ]
 				ifFalse: [ DirectoryDoesNotExist signalWith: aPath ] ]
@@ -237,7 +237,7 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 FileSystemStore >> directoryAt: aPath nodesDo: aBlock [
 	^ self
 		nodeAt: aPath
-		ifPresent: [ :entry | 
+		ifPresent: [ :entry |
 			(self basicIsDirectory: entry)
 				ifTrue: [ self basicEntry: entry path: aPath nodesDo: aBlock ]
 				ifFalse: [ DirectoryDoesNotExist signalWith: aPath ] ]
@@ -267,10 +267,10 @@ FileSystemStore >> entryFromNode: node path: path for: aFileystem [
 
 { #category : #public }
 FileSystemStore >> exists: aPath [
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ true ] 
-		ifAbsent: [ ^ false ].
+	self
+		nodeAt: aPath
+		ifPresent: [ :entry | ^ true ]
+		ifAbsent: [ ^ false ]
 ]
 
 { #category : #private }
@@ -310,10 +310,10 @@ FileSystemStore >> isCharacter: aPath [
 { #category : #public }
 FileSystemStore >> isDirectory: aPath [
 	aPath isRoot ifTrue: [ ^ true ].
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsDirectory: entry ] 
-		ifAbsent: [ ^ false ].
+	self
+		nodeAt: aPath
+		ifPresent: [ :entry | ^ self basicIsDirectory: entry ]
+		ifAbsent: [ ^ false ]
 ]
 
 { #category : #testing }
@@ -330,9 +330,9 @@ FileSystemStore >> isFIFO: aPath [
 { #category : #public }
 FileSystemStore >> isFile: aPath [
 	"slow solution for big directories! "
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsFile: entry ] 
+	^ self
+		nodeAt: aPath
+		ifPresent: [ :entry | ^ self basicIsFile: entry ]
 		ifAbsent: [ ^ false ]
 ]
 
@@ -356,32 +356,32 @@ FileSystemStore >> isSocket: aPath [
 { #category : #public }
 FileSystemStore >> isSymlink: aPath [
 	aPath isRoot ifTrue: [ ^ true ].
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsSymlink: entry ] 
-		ifAbsent: [ ^ false ].
+	self
+		nodeAt: aPath
+		ifPresent: [ :entry | ^ self basicIsSymlink: entry ]
+		ifAbsent: [ ^ false ]
 ]
 
 { #category : #public }
 FileSystemStore >> isWritable: aPath [
-	self nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsWritable: entry ] 
-		ifAbsent: [ ^ false ].
+	self nodeAt: aPath
+		ifPresent: [ :entry | ^ self basicIsWritable: entry ]
+		ifAbsent: [ ^ false ]
 ]
 
 { #category : #public }
 FileSystemStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicModificationTimeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ].
+	^ self
+		nodeAt: aPath
+		ifPresent: [ :entry | self basicModificationTimeOf: entry ]
+		ifAbsent: [ self signalFileDoesNotExist: aPath ]
 ]
 
 { #category : #public }
 FileSystemStore >> nodeAt: aPath [
-	^ self 
-		nodeAt: aPath 
+	^ self
+		nodeAt: aPath
 		ifPresent: [ :node| node ]
 		ifAbsent: [ NotFound signalFor: aPath in: self ]
 ]
@@ -405,21 +405,21 @@ FileSystemStore >> open [
 { #category : #converting }
 FileSystemStore >> pathFromString: aString [
 	"Use the unix convention by default, since many filesystems are based on it."
-	
+
 	^ Path from: aString delimiter: self delimiter
 ]
 
 { #category : #public }
 FileSystemStore >> permissions: aPath [
-	self nodeAt: aPath 
-		ifPresent: [ :entry | ^ FileSystemPermission posixPermissions: (self basicPosixPermissions: entry) ] 
-		ifAbsent: [ ^ FileSystemPermission default ].
+	self nodeAt: aPath
+		ifPresent: [ :entry | ^ FileSystemPermission posixPermissions: (self basicPosixPermissions: entry) ]
+		ifAbsent: [ ^ FileSystemPermission default ]
 ]
 
 { #category : #converting }
 FileSystemStore >> printPath: aPath on: out [
 	"Use the unix convention by default, since it's the most common."
-	
+
 	aPath isAbsolute ifTrue: [ out nextPut: self delimiter ].
 	^ aPath printOn: out delimiter: self delimiter
 ]
@@ -432,7 +432,7 @@ FileSystemStore >> rename: sourcePath ifAbsent: absentBlock to: destinationPath 
 	(self exists: sourcePath) ifFalse: [ ^ absentBlock value ].
 	result := self rename: sourcePath to: destinationPath.
 	result ifNil: [ self primitiveFailed ].
-	^ self.
+	^ self
 ]
 
 { #category : #abstract }
@@ -470,15 +470,15 @@ FileSystemStore >> signalFileExists: aPath [
 { #category : #public }
 FileSystemStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicSizeOf: entry ] 
+	^ self
+		nodeAt: aPath
+		ifPresent: [ :entry | self basicSizeOf: entry ]
 		ifAbsent: [ self signalFileDoesNotExist: aPath ]
 ]
 
 { #category : #converting }
 FileSystemStore >> stringFromPath: aPath [
-	^ String streamContents: [ :out | 
+	^ String streamContents: [ :out |
 		self printPath: aPath on: out ]
 ]
 

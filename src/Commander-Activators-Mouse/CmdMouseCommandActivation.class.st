@@ -72,28 +72,28 @@ CmdMouseCommandActivation class >> byYellowButtonWith: aKMModifier for: aCommand
 { #category : #'morphs setup' }
 CmdMouseCommandActivation class >> enableInMorph: aMorph withCommandsFrom: someObjectWithCommandContext [
 
-	aMorph 
-		on: self morphicEventType 
+	aMorph
+		on: self morphicEventType
 		send: #handleMouseUsing:event:from: to: self withValue: someObjectWithCommandContext
 ]
 
 { #category : #'command execition' }
 CmdMouseCommandActivation class >> executeCommandInContext: aToolContext [
 
-	self activateAllInContext: aToolContext by: [:activator | 
+	self activateAllInContext: aToolContext by: [:activator |
 		activator executeCommand.
 		^true ].
 	^false
 ]
 
 { #category : #'morphs setup' }
-CmdMouseCommandActivation class >> handleMouseUsing: someObjectWithCommandContext event: anEvent from: sourceMorph [ 
+CmdMouseCommandActivation class >> handleMouseUsing: someObjectWithCommandContext event: anEvent from: sourceMorph [
 	| targetContext |
-	targetContext := someObjectWithCommandContext 
+	targetContext := someObjectWithCommandContext
 		createCommandContextForCursorAt: anEvent cursorPoint.
-	
+
 	self executeCommandInContext: targetContext.
-	
+
 	anEvent wasHandled: false
 ]
 
@@ -111,26 +111,26 @@ CmdMouseCommandActivation class >> with: aKMModifier for: aCommandUser [
 
 { #category : #initialization }
 CmdMouseCommandActivation >> beBlueButton [
-	
+
 	whichButton := MouseEvent blueButton
 ]
 
 { #category : #initialization }
 CmdMouseCommandActivation >> beRedButton [
-	
+
 	whichButton := MouseEvent redButton
 ]
 
 { #category : #initialization }
 CmdMouseCommandActivation >> beYellowButton [
-	
+
 	whichButton := MouseEvent yellowButton
 ]
 
 { #category : #initialization }
 CmdMouseCommandActivation >> initialize [
 	super initialize.
-	
+
 	self beRedButton
 ]
 
@@ -175,26 +175,26 @@ CmdMouseCommandActivation >> keyboardModifier: anObject [
 CmdMouseCommandActivation >> matchesEvent: aMouseEvent [
 	(aMouseEvent respondsTo: #whichButton) ifFalse: [ ^false ].
 	aMouseEvent fixStateForClickAndModifierIssue.
-	
+
 	(keyboardModifier isNil and: [ "shift is somehow ignored by first check logic"
 		aMouseEvent anyModifierKeyPressed | aMouseEvent shiftPressed]) ifTrue: [ ^false ].
-	
+
 	(keyboardModifier notNil and: [ (keyboardModifier matchesEvent: aMouseEvent) not ])
 		ifTrue: [ ^false ].
-	
+
 	^aMouseEvent whichButton anyMask: whichButton
 ]
 
 { #category : #printing }
 CmdMouseCommandActivation >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	aStream nextPutAll: self printWhichButton.
-	keyboardModifier ifNotNil: [ 
+	keyboardModifier ifNotNil: [
 		aStream nextPutAll: ' '.
 		keyboardModifier printOn: aStream ].
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #printing }
@@ -203,7 +203,7 @@ CmdMouseCommandActivation >> printWhichButton [
 	self isRedButton ifTrue:[ ^'red' ].
 	self isYellowButton ifTrue:[ ^'yellow'].
 	self isBlueButton ifTrue:[ 'blue'].
-	
+
 	^'uknown button'
 ]
 

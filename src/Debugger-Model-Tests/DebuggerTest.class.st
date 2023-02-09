@@ -16,7 +16,7 @@ Class {
 { #category : #utilities }
 DebuggerTest >> inspectCurrentNode: aDebugSession [
 	context := aDebugSession interruptedContext.
-	(context method sourceNodeForPC: context pc) inspect.
+	(context method sourceNodeForPC: context pc) inspect
 ]
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ DebuggerTest >> setUp [
 	super setUp.
 	context := nil.
 	process := nil.
-	session := nil.
+	session := nil
 ]
 
 { #category : #utilities }
@@ -41,7 +41,7 @@ DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	process step.
 
 	context := process suspendedContext.
-	session := process newDebugSessionNamed: 'test session' startedAt: context.
+	session := process newDebugSessionNamed: 'test session' startedAt: context
 ]
 
 { #category : #utilities }
@@ -52,5 +52,5 @@ DebuggerTest >> settingUpSessionAndProcessAndContextForCleanBlock: aBlock [
 	"process step."
 
 	context := process suspendedContext.
-	session := process newDebugSessionNamed: 'test session' startedAt: context.
+	session := process newDebugSessionNamed: 'test session' startedAt: context
 ]

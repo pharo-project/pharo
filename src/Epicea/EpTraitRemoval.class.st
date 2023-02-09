@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 EpTraitRemoval class >> trait: aTrait [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeWithTrait: aTrait;
 		yourself
 ]
@@ -40,7 +40,7 @@ EpTraitRemoval >> behaviorAffectedName [
 EpTraitRemoval >> initializeWithTrait: aTrait [
 
 	self initialize.
-	trait := aTrait asEpiceaRingDefinition.
+	trait := aTrait asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

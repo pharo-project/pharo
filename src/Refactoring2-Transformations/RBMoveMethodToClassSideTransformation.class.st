@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'parseTree'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #refactoring }
@@ -79,7 +79,7 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 RBMoveMethodToClassSideTransformation >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: method selector.
+		ifNil: [ parseTree := class parseTreeForSelector: method selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 			].
 	^ parseTree

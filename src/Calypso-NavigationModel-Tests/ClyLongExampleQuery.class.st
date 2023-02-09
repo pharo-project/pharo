@@ -15,7 +15,7 @@ ClyLongExampleQuery class >> resultItemsType [
 { #category : #execution }
 ClyLongExampleQuery >> buildResult: aQueryResult [
 	executionSemaphore wait.
-	
+
 	super buildResult: aQueryResult
 ]
 

@@ -26,7 +26,7 @@ Class {
 ClyDesiredSelection >> checkItemsOfCurrentSelection: currentSelection [
 	| newItems |
 	isSameAsCurrent := false.
-	newItems := currentSelection items.	
+	newItems := currentSelection items.
 
 	newItems size = items size ifFalse: [ ^self].
 	newItems do: [ :eachNewItem | items do: [ :eachMyItem |
@@ -53,26 +53,26 @@ ClyDesiredSelection >> isSameAsCurrent: anObject [
 
 { #category : #controlling }
 ClyDesiredSelection >> restoreCurrentSelection: currentSelection [
-	"We should signal selection change only when previous selection was different 
+	"We should signal selection change only when previous selection was different
 	and new given data source has no same items.
 	We don't want trigger changes when selection was not changed in fact"
 	| wasSameAsCurrent newItems currentSelectionIsChanged |
 	wasSameAsCurrent := isSameAsCurrent.
 	self checkItemsOfCurrentSelection: currentSelection.
-	newItems := isSameAsCurrent 
+	newItems := isSameAsCurrent
 		ifTrue: [ currentSelection items]
 		ifFalse: [ currentSelection rootDataSource findItemsSimilarTo: items].
-		
+
 	currentSelectionIsChanged := (wasSameAsCurrent & isSameAsCurrent) not.
-	currentSelection 
-		restoreDesiredSelectionWith: newItems 
+	currentSelection
+		restoreDesiredSelectionWith: newItems
 		silently: currentSelectionIsChanged not.
 	^currentSelectionIsChanged
 ]
 
 { #category : #controlling }
 ClyDesiredSelection >> restoreCurrentSelectionAfterUpdate: currentSelection [
-	"We should signal selection change only when previous selection was different 
+	"We should signal selection change only when previous selection was different
 	and new given data source has no same items.
 	We don't want trigger changes when selection was not changed in fact
 	DIFFERENCE from basic #restoreCurrentSelection::
@@ -83,13 +83,13 @@ ClyDesiredSelection >> restoreCurrentSelectionAfterUpdate: currentSelection [
 	| wasSameAsCurrent newItems currentSelectionIsChanged |
 	wasSameAsCurrent := isSameAsCurrent.
 	self checkItemsOfCurrentSelection: currentSelection.
-	newItems := isSameAsCurrent 
+	newItems := isSameAsCurrent
 		ifTrue: [ currentSelection items]
 		ifFalse: [ currentSelection rootDataSource findItemsWith: self actualObjects].
-		
+
 	currentSelectionIsChanged := (wasSameAsCurrent & isSameAsCurrent) not.
-	currentSelection 
-		restoreDesiredSelectionWith: newItems 
+	currentSelection
+		restoreDesiredSelectionWith: newItems
 		silently: currentSelectionIsChanged not.
 	^currentSelectionIsChanged
 ]
@@ -102,7 +102,7 @@ ClyDesiredSelection >> updateItemsWhichBelongsTo: aDataSource [
 	| relatedItems updatedItems |
 	relatedItems := items select: [ :each | each belongsToDataSource: aDataSource].
 	updatedItems := aDataSource itemCursor findItemsWith: (relatedItems collect: [:each | each actualObject]).
-	relatedItems with: updatedItems do: [ :myItem :updatedBrowserItem | 
+	relatedItems with: updatedItems do: [ :myItem :updatedBrowserItem |
 		updatedBrowserItem ifNotNil: [ myItem updateItemWith: updatedBrowserItem ]].
 	^false
 ]

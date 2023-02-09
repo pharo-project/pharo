@@ -155,21 +155,21 @@ ImageCleaner >> createLiteralTable [
 	literalTable := OCLiteralSet new.
 	self literalsDo: [ :literal :method | literalTable add: literal.
 		"we add all the contentents of the arrays recursively, too"
-		literal isArray ifTrue: [ 
-			literal recursiveDo: [ :each | 
-				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]]) 
+		literal isArray ifTrue: [
+			literal recursiveDo: [ :each |
+				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]])
 					ifTrue: [ literalTable add: each ] ] ] ].
 
 	"we need to go over all array and unify. As we have all flattend arrays in the literalTable, we need to only have to iterate it"
 	arrays := literalTable select: [ :each | each isArray ].
 	arrays do: [ :array |
 			array beWritableObject.
-			array copy do: [ :arrayValue | 
+			array copy do: [ :arrayValue |
 				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
 				[array
-					at: (array indexOf: arrayValue)
+					at: (array identityIndexOf: arrayValue)
 					put: (literalTable like: arrayValue)]].
-			array beReadOnlyObject ].
+			array beReadOnlyObject ]
 ]
 
 { #category : #'literal sharing' }

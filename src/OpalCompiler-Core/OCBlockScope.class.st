@@ -29,7 +29,7 @@ OCBlockScope >> isInsideOptimizedLoop [
 
 { #category : #testing }
 OCBlockScope >> isOptimized [
-	
+
 	^ false
 ]
 

@@ -65,7 +65,7 @@ LongMessageDialogWindow >> newTextMorph [
 { #category : #accessing }
 LongMessageDialogWindow >> text: aStringOrText [
 	"Set the text."
-	
+
 	|t|
 	t := aStringOrText isString
 		ifTrue: [aStringOrText asText addAttribute: (TextFontReference toFont: self textFont); yourself]

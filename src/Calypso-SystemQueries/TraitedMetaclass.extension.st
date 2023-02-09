@@ -6,15 +6,15 @@ TraitedMetaclass >> tagsForAllMethods [
 
 	| allProtocols selectors |
 
-	allProtocols := self organization protocols 
+	allProtocols := self organization protocols
 		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 
 	selectors := self visibleMethods collect: [ :each | each selector ].
 
 	^ allProtocols
-		select: [ :protocol | 
-			protocol methodSelectors 
-				ifEmpty: [ true ] 
+		select: [ :protocol |
+			protocol methodSelectors
+				ifEmpty: [ true ]
 				ifNotEmpty: [ :methods | methods anySatisfy: [ :method | selectors includes: method ] ] ]
 		thenCollect: #name
 ]

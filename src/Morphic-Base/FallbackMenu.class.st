@@ -18,30 +18,30 @@ Class {
 
 { #category : #'instance creation' }
 FallbackMenu class >> when: aPragmaMenuBuilder fails: anObject [
-	
+
 	^ self new
 			builder: aPragmaMenuBuilder;
 			client: anObject;
-			menu.
+			menu
 ]
 
 { #category : #private }
 FallbackMenu >> builder: aPragmaMenuBuilder [
 
-	builder := aPragmaMenuBuilder.
+	builder := aPragmaMenuBuilder
 ]
 
 { #category : #private }
 FallbackMenu >> client: anObject [
 
-	client := anObject.
+	client := anObject
 ]
 
 { #category : #'menu actions' }
 FallbackMenu >> debug [
 
 	"If we don't reset the builder after debugging, the fallback menu does not appear anymore"
-	[ builder menuSpec asMenuMorph ] ensure: [ builder reset ].
+	[ builder menuSpec asMenuMorph ] ensure: [ builder reset ]
 ]
 
 { #category : #private }
@@ -50,12 +50,12 @@ FallbackMenu >> fallbackMenuExplanations [
 	| workspace wsBindings |
 	wsBindings := Dictionary newFrom: { #menu-> self }.
 	workspace := Smalltalk tools workspace
-		openContents: '"Something is wrong with this menu. 
+		openContents: '"Something is wrong with this menu.
 To investigate just debug following expression:"
 menu debug'.
 	workspace
 		label: 'Fallback menu explanations';
-		setBindings: wsBindings.
+		setBindings: wsBindings
 ]
 
 { #category : #private }

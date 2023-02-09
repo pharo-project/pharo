@@ -14,14 +14,14 @@ Class {
 SmalllintManifestCheckerTest >> cleaningResources [
 	testingEnvironment
 		at: #ManifestManifestResourcesTests
-		ifPresent: [ :cl | 
+		ifPresent: [ :cl |
 			cl
 				removeFromChanges;
 				removeFromSystem ]
 ]
 
 { #category : #private }
-SmalllintManifestCheckerTest >> package [ 
+SmalllintManifestCheckerTest >> package [
 	MCWorkingCopy managersForClass: MFClassA  do: [:p | ^ p packageSet packages first].
 	" should be equivalent to RPackageOrganizer default packageNamed: #'Manifest-Resources-Tests' "
 ]
@@ -46,7 +46,7 @@ SmalllintManifestCheckerTest >> setUp [
 
 { #category : #running }
 SmalllintManifestCheckerTest >> tearDown [
-	
+
 	self cleaningResources.
 	super tearDown
 ]
@@ -67,16 +67,16 @@ SmalllintManifestCheckerTest >> testCriticsOf [
 ]
 
 { #category : #tests }
-SmalllintManifestCheckerTest >> testIsFalsePositive [ 
+SmalllintManifestCheckerTest >> testIsFalsePositive [
 
 	| rule |
 	rule  := ReRuleManager visibleRuleClasses collect: [:cl | cl new].
 	checker
 		rule: rule;
 		environment: self package asEnvironment;
-		run.  	
+		run.
 	self assert: (checker isFalsePositive:  (MFClassB>>#method3) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
-	self deny: (checker isFalsePositive:  (MFClassA>>#method) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
+	self deny: (checker isFalsePositive:  (MFClassA>>#method) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1)
 ]
 
 { #category : #tests }
@@ -88,9 +88,9 @@ SmalllintManifestCheckerTest >> testIsToDo [
 		rule: rule;
 		environment: self package asEnvironment;
 		run.
-	
+
 	self assert: (checker isToDo:  (MFClassB>>#method3) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
-	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
+	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1)
 ]
 
 { #category : #tests }
@@ -102,9 +102,9 @@ SmalllintManifestCheckerTest >> testToDoOf [
 		rule: rule;
 		environment: self package asEnvironment;
 		run.
-		
+
 	self assert: (( checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each sourceAnchor entity = (MFClassB>>#method3)]).
 	self deny: (( checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
-		each  sourceAnchor entity = (MFClassB>>#method2)]).
+		each  sourceAnchor entity = (MFClassB>>#method2)])
 ]

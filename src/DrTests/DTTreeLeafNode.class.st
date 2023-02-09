@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-DTTreeLeafNode class >> content: aRottenTest [ 
+DTTreeLeafNode class >> content: aRottenTest [
 	^ self new
 		content: aRottenTest;
 		yourself

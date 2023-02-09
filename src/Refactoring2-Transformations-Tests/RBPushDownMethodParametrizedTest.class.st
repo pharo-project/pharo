@@ -27,7 +27,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethod [
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #name:)
+		self assert: (each parseTreeForSelector: #name:)
 			equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
@@ -58,7 +58,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodSubclassesReferToSelector 
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictionary [
 	| refactoring class parseTree |
-	parseTree := RBLintRuleTestData parseTreeFor: #junk.
+	parseTree := RBLintRuleTestData parseTreeForSelector: #junk.
 	refactoring := self createRefactoringWithArguments: 
 		{ #(#junk ) . RBLintRuleTestData }.
 	self executeRefactoring: refactoring asRefactoring.
@@ -66,7 +66,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictiona
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #junk) equals: parseTree.
+		self assert: (each parseTreeForSelector: #junk) equals: parseTree.
 		self assert: (each definesPoolDictionary: 'TextConstants' asSymbol) ]
 ]
 

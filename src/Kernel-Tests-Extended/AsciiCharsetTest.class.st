@@ -19,7 +19,7 @@ AsciiCharsetTest >> testIsCasedLetter [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isCasedLetter: ch) equals: (charset isCasedLetter: ch) ]
@@ -31,7 +31,7 @@ AsciiCharsetTest >> testIsClosePunctuation [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -46,7 +46,7 @@ AsciiCharsetTest >> testIsConnectorPunctuation [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isConnectorPunctuation: ch) equals: (charset isConnectorPunctuation: ch) ]
@@ -59,7 +59,7 @@ AsciiCharsetTest >> testIsControlOther [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isControlOther: ch) equals: (charset isControlOther: ch) ]
@@ -72,7 +72,7 @@ AsciiCharsetTest >> testIsCurrencySymbol [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isCurrencySymbol: ch) equals: (charset isCurrencySymbol: ch) ]
@@ -85,7 +85,7 @@ AsciiCharsetTest >> testIsDashPunctuation [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isDashPunctuation: ch) equals: (charset isDashPunctuation: ch) ]
@@ -98,7 +98,7 @@ AsciiCharsetTest >> testIsDecimalDigit [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isDecimalDigit: ch) equals: (charset isDecimalDigit: ch) ]
@@ -111,7 +111,7 @@ AsciiCharsetTest >> testIsDigit [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isDigit: ch) equals: (charset isDigit: ch) ]
@@ -124,7 +124,7 @@ AsciiCharsetTest >> testIsEnclosingMark [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isEnclosingMark: ch) equals: (charset isEnclosingMark: ch) ]
@@ -137,7 +137,7 @@ AsciiCharsetTest >> testIsFinalQuote [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isFinalQuote: ch) equals: (charset isFinalQuote: ch) ]
@@ -150,7 +150,7 @@ AsciiCharsetTest >> testIsFormatOther [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isFormatOther: ch) equals: (charset isFormatOther: ch) ]
@@ -163,7 +163,7 @@ AsciiCharsetTest >> testIsInitialQuote [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isInitialQuote: ch) equals: (charset isInitialQuote: ch) ]
@@ -176,7 +176,7 @@ AsciiCharsetTest >> testIsLetter [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isLetter: ch) equals: (charset isLetter: ch) ]
@@ -189,7 +189,7 @@ AsciiCharsetTest >> testIsLetterModifier [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isLetterModifier: ch) equals: (charset isLetterModifier: ch) ]
@@ -202,7 +202,7 @@ AsciiCharsetTest >> testIsLetterNumber [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isLetterNumber: ch) equals: (charset isLetterNumber: ch) ]
@@ -215,7 +215,7 @@ AsciiCharsetTest >> testIsLineSeparator [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isLineSeparator: ch) equals: (charset isLineSeparator: ch) ]
@@ -228,7 +228,7 @@ AsciiCharsetTest >> testIsLowercase [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isLowercase: ch) equals: (charset isLowercase: ch) ]
@@ -241,7 +241,7 @@ AsciiCharsetTest >> testIsMathSymbol [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isMathSymbol: ch) equals: (charset isMathSymbol: ch) ]
@@ -254,7 +254,7 @@ AsciiCharsetTest >> testIsModifierSymbol [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self assert: (Unicode isModifierSymbol: ch) equals: (charset isModifierSymbol: ch) ]
@@ -266,7 +266,7 @@ AsciiCharsetTest >> testIsNonspacingMark [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -280,7 +280,7 @@ AsciiCharsetTest >> testIsOpenPunctuation [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -294,7 +294,7 @@ AsciiCharsetTest >> testIsOtherLetter [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -308,7 +308,7 @@ AsciiCharsetTest >> testIsOtherNumber [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -322,7 +322,7 @@ AsciiCharsetTest >> testIsOtherPunctuation [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -336,7 +336,7 @@ AsciiCharsetTest >> testIsOtherSymbol [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -350,7 +350,7 @@ AsciiCharsetTest >> testIsParagraphSeparator [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -364,7 +364,7 @@ AsciiCharsetTest >> testIsPrivateOther [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -378,7 +378,7 @@ AsciiCharsetTest >> testIsSpaceSeparator [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -392,7 +392,7 @@ AsciiCharsetTest >> testIsSpacingCombiningMark [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -406,7 +406,7 @@ AsciiCharsetTest >> testIsSurrogateOther [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -420,7 +420,7 @@ AsciiCharsetTest >> testIsTitlecaseLetter [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self
@@ -434,7 +434,7 @@ AsciiCharsetTest >> testIsUppercase [
 
 	| charset |
 	charset := self classUnderTest.
-	0 to: charset maxValue do: [ :asciiValue | 
+	0 to: charset maxValue do: [ :asciiValue |
 		| ch |
 		ch := Character value: asciiValue.
 		self

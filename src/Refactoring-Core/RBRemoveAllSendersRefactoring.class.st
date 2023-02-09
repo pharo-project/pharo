@@ -83,7 +83,7 @@ RBRemoveAllSendersRefactoring >> removeSelfSenders [
 	flag := false.
 	(self model allReferencesTo: selector) do: [ :e | | node index |
 		index := 1.
-		[ node := self selfSendIn: (e methodClass parseTreeFor: e selector). node size < index ] 
+		[ node := self selfSendIn: (e methodClass parseTreeForSelector: e selector). node size < index ] 
 			whileFalse: [ 
 				self onError: [ self removeMethod: e of: (node at: index) ]
 					do: [ flag ifFalse: [ flag := true.

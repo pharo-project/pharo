@@ -105,7 +105,7 @@ SDL_TextInputEvent >> strlen [
 	| len |
 	len := 0.
 	12 to: 12 + 32 - 1 do:
-		[ :i | 
+		[ :i |
 		(self getHandle unsignedByteAt: i + 1) = 0
 			ifTrue: [ ^ len ].
 		len := len + 1 ].

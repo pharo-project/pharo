@@ -49,7 +49,7 @@ MailAddressParser >> finishAddress [
 
 	addresses addFirst: address.
 
-	curAddrTokens := nil.
+	curAddrTokens := nil
 ]
 
 { #category : #parsing }
@@ -57,13 +57,13 @@ MailAddressParser >> grabAddressWithRoute [
 	"grab an address of the form 'Descriptive Text <real.address@c.d.e>"
 
 	| name |
-	
+
 	self startNewAddress.
 
 	tokens removeLast.	"remove the >"
 
 	"grab until we see a $<"
-	[ 
+	[
 		tokens isEmpty ifTrue: [
 			self error: '<> are not matched' ].
 		tokens last type = $<
@@ -72,7 +72,7 @@ MailAddressParser >> grabAddressWithRoute [
 	tokens removeLast.  "remove the <"
 	self finishAddress.
 	name := self grabName.
-	storeNames ifTrue: [addresses addFirst: {name . addresses removeFirst}].
+	storeNames ifTrue: [addresses addFirst: {name . addresses removeFirst}]
 ]
 
 { #category : #parsing }
@@ -82,14 +82,14 @@ MailAddressParser >> grabAddresses [
 	"remove comments"
 	tokens removeAllSuchThat: [:t | t type == #Comment].
 	"grab one address or address group each time through this loop"
-	[ 
+	[
 		"remove commas"
 		[
 			tokens isEmpty not and: [ tokens last type = $, ]
 		] whileTrue: [ tokens removeLast ].
 
 		"check whether any tokens are left"
-		tokens isEmpty 
+		tokens isEmpty
 	] whileFalse: [
 		token := tokens last.
 
@@ -98,7 +98,7 @@ MailAddressParser >> grabAddresses [
 
 		token type = $> ifTrue: [
 			self grabAddressWithRoute ]
-		ifFalse: [ 
+		ifFalse: [
 			(#(Atom DomainLiteral QuotedString) includes: token type)  ifTrue: [
 				self grabBasicAddress ]
 		ifFalse: [
@@ -113,11 +113,11 @@ MailAddressParser >> grabAddresses [
 
 { #category : #parsing }
 MailAddressParser >> grabAddressesAndNames [
-	
+
 	storeNames := true.
 	self grabAddresses.
 	addresses := addresses collect: [:a |
-		a isString 
+		a isString
 			ifTrue: [{'' . a}]
 			ifFalse: [a] ].
 	^ addresses
@@ -129,8 +129,8 @@ MailAddressParser >> grabBasicAddress [
 	self startNewAddress.
 	"grab either the domain if specified, or the domain if not"
 	self addToAddress.
-	[tokens isEmpty not and: [ tokens last type = $.] ] 
-		whileTrue: 
+	[tokens isEmpty not and: [ tokens last type = $.] ]
+		whileTrue:
 			["add name-dot pairs of tokens"
 			self addToAddress.
 			(#(Atom QuotedString ) includes: tokens last type)
@@ -139,7 +139,7 @@ MailAddressParser >> grabBasicAddress [
 	(tokens isEmpty or: [tokens last type ~= $@])
 		ifTrue: ["no domain specified"
 			self finishAddress]
-		ifFalse: 
+		ifFalse:
 			["that was the domain.  check that no QuotedString's slipped in"
 			curAddrTokens do: [:tok | tok type = #QuotedString ifTrue: [self error: 'quote marks are not allowed within a domain name (' , tok text , ')']].
 			"add the @ sign"
@@ -150,7 +150,7 @@ MailAddressParser >> grabBasicAddress [
 			self addToAddress.
 			"add word-dot pairs if there are any"
 			[tokens isEmpty not and: [tokens last type = $.]]
-				whileTrue: 
+				whileTrue:
 					[self addToAddress.
 					(tokens isEmpty not and: [#(Atom QuotedString ) includes: tokens last type])
 						ifTrue: [self addToAddress]].
@@ -166,7 +166,7 @@ MailAddressParser >> grabGroupAddress [
 	tokens removeLast.
 
 	"grab one address each time through this loop"
-	[ 
+	[
 		"remove commas"
 		[
 			tokens isEmpty not and: [ tokens last type = $, ]
@@ -182,7 +182,7 @@ MailAddressParser >> grabGroupAddress [
 
 		tokens last type = $> ifTrue: [
 			self grabAddressWithRoute ]
-		ifFalse: [ 
+		ifFalse: [
 			(#(Atom DomainLiteral QuotedString) includes: tokens last type)  ifTrue: [
 				self grabBasicAddress ]
 		ifFalse: [
@@ -191,7 +191,7 @@ MailAddressParser >> grabGroupAddress [
 
 	tokens removeLast.   "remove the :"
 
-	self removePhrase.
+	self removePhrase
 ]
 
 { #category : #parsing }
@@ -199,7 +199,7 @@ MailAddressParser >> grabName [
 
 	| name |
 	name := ''.
-	[tokens notEmpty and: [#(Atom QuotedString $. $@) includes: (tokens last type) ]] 
+	[tokens notEmpty and: [#(Atom QuotedString $. $@) includes: (tokens last type) ]]
 		whileTrue: [ name := ' ' join: {tokens removeLast text copyWithoutAll: '"'. name} ].
 	^ name trimBoth
 ]
@@ -208,7 +208,7 @@ MailAddressParser >> grabName [
 MailAddressParser >> initialize: tokenList [
 	tokens := tokenList asOrderedCollection copy.
 	addresses := OrderedCollection new.
-	storeNames := false.
+	storeNames := false
 ]
 
 { #category : #parsing }
@@ -218,7 +218,7 @@ MailAddressParser >> removePhrase [
 	[
 		tokens isNotEmpty and: [
 			#(Atom QuotedString $. $@) includes: (tokens last type) ]
-	] whileTrue: [ tokens removeLast ].
+	] whileTrue: [ tokens removeLast ]
 ]
 
 { #category : #'building address list' }

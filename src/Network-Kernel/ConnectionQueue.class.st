@@ -41,7 +41,7 @@ ConnectionQueue >> destroy [
 		socket destroy.
 		socket := nil].
 	connections do: [:s | s destroy].
-	connections := OrderedCollection new.
+	connections := OrderedCollection new
 ]
 
 { #category : #public }
@@ -77,7 +77,7 @@ ConnectionQueue >> getConnectionOrNilLenient [
 			]
 		].
 		result
-	].
+	]
 ]
 
 { #category : #private }
@@ -91,7 +91,7 @@ ConnectionQueue >> initPortNumber: anInteger queueLength: queueLength [
 	socket := nil.
 	process := [self listenLoop] newProcess.
 	process priority: Processor highIOPriority.
-	process resume.
+	process resume
 ]
 
 { #category : #public }
@@ -104,7 +104,7 @@ ConnectionQueue >> listenLoop [
 	"Private! This loop is run in a separate process. It will establish up to maxQueueLength connections on the given port."
 	"Details: When out of sockets or queue is full, retry more frequently, since a socket may become available, space may open in the queue, or a previously queued connection may be aborted by the client, making it available for a fresh connection."
 	"Note: If the machine is disconnected from the network while the server is running, the currently waiting socket will go from 'isWaitingForConnection' to 'unconnected', and attempts to create new sockets will fail. When this happens, delete the broken socket and keep trying to create a socket in case the network connection is re-established. Connecting and disconnecting was tested under PPP on Mac system 8.1. It is not if this will work on other platforms.
-	
+
 	Fixed to not accept the connection if the queue is full (gvc)."
 
 
@@ -133,7 +133,7 @@ ConnectionQueue >> listenLoop [
 			accessSema critical: [connections addLast: newConnection].
 			newConnection := nil.
 			self changed].
-		self pruneStaleConnections].
+		self pruneStaleConnections]
 ]
 
 { #category : #private }
@@ -161,7 +161,7 @@ ConnectionQueue >> oldStyleListenLoop [
 							ifFalse: [
 								socket isWaitingForConnection
 									ifFalse: [socket destroy. socket := nil]]]].  "broken socket; start over"
-		self pruneStaleConnections].
+		self pruneStaleConnections]
 ]
 
 { #category : #private }
@@ -176,5 +176,5 @@ ConnectionQueue >> pruneStaleConnections [
 				s destroy.
 				foundStaleConnection := true]].
 		foundStaleConnection ifTrue: [
-			connections := connections select: [:s | s isValid]]].
+			connections := connections select: [:s | s isValid]]]
 ]

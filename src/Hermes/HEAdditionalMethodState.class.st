@@ -21,7 +21,7 @@ Class {
 
 { #category : #accessing }
 HEAdditionalMethodState class >> tag [
-	^ 1.
+	^ 1
 ]
 
 { #category : #converting }
@@ -40,8 +40,7 @@ HEAdditionalMethodState >> asLiteralIn: env [
 HEAdditionalMethodState >> doReadFrom: aReader [
 	method := HEExportedLiteral readFrom: aReader.
 	selector := HEExportedLiteral readFrom: aReader.
-	value := HEExportedLiteral readFrom: aReader.
-
+	value := HEExportedLiteral readFrom: aReader
 ]
 
 { #category : #accessing }

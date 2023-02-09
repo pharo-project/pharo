@@ -48,14 +48,14 @@ SDL2Types class >> initialize [
 	Uint64 := #uint64.
 	Int64 := #int64.
 	Sint64 := #int64.
-	
+
 	SDL_Keycode := Sint32.
 	SDL_Keymod := Uint32.
 	SDL_Scancode := Uint32.
 	SDL_BlendMode := Uint32.
 	SDL_BlendFactor := Uint32.
 	SDL_BlendOperation := Uint32.
-	
+
 	SDL_GLattr := #int.
 	SDL_AudioDeviceID := #uint32.
 	SDL_AudioFormat := #uint16.

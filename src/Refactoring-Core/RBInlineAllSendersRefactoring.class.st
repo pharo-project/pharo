@@ -76,14 +76,14 @@ RBInlineAllSendersRefactoring >> initializePatternFor: aClass [
 RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSelector [ 
 	| messagesToInline previousCountOfMessages rbMethod |
 	previousCountOfMessages := 4294967295.	"Some really large number > # of initial self sends."
-	rbMethod := aClass parseTreeFor: aSelector.
+	rbMethod := aClass parseTreeForSelector: aSelector.
 	rbMethod ifNil: [ ^ self ].
-	[ messagesToInline := self numberOfSelfSendsIn: (aClass parseTreeFor: aSelector).
+	[ messagesToInline := self numberOfSelfSendsIn: (aClass parseTreeForSelector: aSelector).
 	messagesToInline > 0 and: [previousCountOfMessages > messagesToInline]] 
 			whileTrue: 
 				[| node |
 				previousCountOfMessages := messagesToInline.
-				node := self selfSendIn: (aClass parseTreeFor: aSelector).
+				node := self selfSendIn: (aClass parseTreeForSelector: aSelector).
 				self onError: 
 						[self performCompositeRefactoring: ((RBInlineMethodRefactoring
 									model: self model

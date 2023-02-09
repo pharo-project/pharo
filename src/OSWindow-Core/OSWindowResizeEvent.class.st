@@ -27,8 +27,8 @@ OSWindowResizeEvent >> height [
 ]
 
 { #category : #accessing }
-OSWindowResizeEvent >> height: anInteger [ 
-	height := anInteger.
+OSWindowResizeEvent >> height: anInteger [
+	height := anInteger
 ]
 
 { #category : #accessing }
@@ -37,6 +37,6 @@ OSWindowResizeEvent >> width [
 ]
 
 { #category : #accessing }
-OSWindowResizeEvent >> width: anInteger [ 
-	width := anInteger.
+OSWindowResizeEvent >> width: anInteger [
+	width := anInteger
 ]

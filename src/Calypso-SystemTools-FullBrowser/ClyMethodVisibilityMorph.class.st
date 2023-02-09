@@ -21,7 +21,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyMethodVisibilityMorph class >> for: aBrowser level: aMethodVisibilityLevel [
-	^self new 
+	^self new
 		browser: aBrowser;
 		visibilityLevel: aMethodVisibilityLevel
 ]
@@ -40,15 +40,15 @@ ClyMethodVisibilityMorph >> browser: anObject [
 ClyMethodVisibilityMorph >> build [
 
 	| checkBox |
-	checkBox := CheckboxMorph 
+	checkBox := CheckboxMorph
 		on: self selected: #isMethodsVisible changeSelected: #showInheritedMethods:.
 	checkBox
 		borderWidth: 0;
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap.
-	checkBox labelMorph delete.	
+	checkBox labelMorph delete.
 
-	self addMorph: checkBox.
+	self addMorph: checkBox
 ]
 
 { #category : #initialization }
@@ -59,12 +59,12 @@ ClyMethodVisibilityMorph >> initialize [
 	self vResizing: #shrinkWrap.
 	self hResizing: #shrinkWrap.
 	self minWidth: 0.
-	self minHeight: 0.
+	self minHeight: 0
 ]
 
 { #category : #testing }
 ClyMethodVisibilityMorph >> isMethodsVisible [
-	
+
 	^visibilityLevel isActive
 ]
 
@@ -73,9 +73,9 @@ ClyMethodVisibilityMorph >> showInheritedMethods: aBoolean [
 
 	| newScope |
 	self isMethodsVisible == aBoolean ifTrue: [ ^self ].
-	
+
 	newScope := visibilityLevel toggleScope.
-	newScope isBasedOnEmptyBasis ifFalse: [ 
+	newScope isBasedOnEmptyBasis ifFalse: [
 		browser restrictMethodVisibilityBy: newScope]
 ]
 
