@@ -9,7 +9,7 @@ Class {
 
 { #category : #keymapping }
 QuestionWithoutCancelDialogWindow >> closeWindowAction [
-	
+
 	self escapePressed
 ]
 

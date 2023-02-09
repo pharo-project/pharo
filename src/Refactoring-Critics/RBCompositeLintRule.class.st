@@ -56,7 +56,7 @@ RBCompositeLintRule class >> rulesGroupedFor: aRuleClass [
 			addLast: each ].
 	rules := SortedCollection sortBlock: [ :a :b | a name <= b name ].
 	groups keysAndValuesDo: [ :group :elements |
-		rules addLast: (RBCompositeLintRule 
+		rules addLast: (RBCompositeLintRule
 			rules: elements asArray
 			name: group) ].
 	^ rules asArray
@@ -70,14 +70,14 @@ RBCompositeLintRule class >> transformations [
 { #category : #accessing }
 RBCompositeLintRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'CompositeLintRule'
 ]
 
 { #category : #running }
 RBCompositeLintRule >> basicCheck: anEntity [
 	"this has to be rewritten in a smarter way, when the complete implementation with critics will be ready".
-	
+
 	^ (self leaves select: [ :rule | rule class perform: (
 		anEntity isCompiledMethod
 			ifTrue: [ #checksMethod ]
@@ -91,17 +91,17 @@ RBCompositeLintRule >> changes [
 ]
 
 { #category : #running }
-RBCompositeLintRule >> checkClass: aClass [ 
+RBCompositeLintRule >> checkClass: aClass [
 	rules do: [ :each | each checkClass: aClass ]
 ]
 
 { #category : #running }
-RBCompositeLintRule >> checkMethod: aMethod [ 
+RBCompositeLintRule >> checkMethod: aMethod [
 	rules do: [ :each | each checkMethod: aMethod ]
 ]
 
 { #category : #running }
-RBCompositeLintRule >> checkPackage: aPackage [ 
+RBCompositeLintRule >> checkPackage: aPackage [
 	rules do: [ :each | each checkPackage: aPackage ]
 ]
 
@@ -147,7 +147,7 @@ RBCompositeLintRule >> removeRule: aRule [
 	(rules anySatisfy: [ :rule | rule name = aRule name] )
 		ifTrue: [rules := rules reject:  [ :rule | rule name = aRule name]]
 		 ifFalse: [rules do: [ :rule |
-				rule isComposite 
+				rule isComposite
 					ifTrue: [rule removeRule: aRule]]]
 ]
 
@@ -168,8 +168,8 @@ RBCompositeLintRule >> rules: aCollection [
 
 { #category : #'adding-removing' }
 RBCompositeLintRule >> sort: aBlock [
-	
+
 	rules first isComposite
-		ifTrue: [ rules do: [ :rule | rule sort: aBlock ]] 
+		ifTrue: [ rules do: [ :rule | rule sort: aBlock ]]
 		ifFalse: [ self rules: (rules sort: aBlock) ]
 ]

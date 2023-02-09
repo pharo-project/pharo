@@ -50,7 +50,7 @@ Class {
 
 { #category : #'intance creation' }
 RBDeprecateMethodRefactoring class >> deprecateMethod: aSelector in: aClass using: newSelector [
-	^ self new 
+	^ self new
 		deprecateMethod: aSelector
 			in: aClass
 			using: newSelector;
@@ -77,8 +77,8 @@ RBDeprecateMethodRefactoring >> applicabilityConditions [
 RBDeprecateMethodRefactoring >> breakingChangeConditions [
 
 	^ (RBCondition canUnderstand: newSelector in: class) & (RBCondition
-		   withBlock: [ 
-			   oldSelector numArgs = newSelector numArgs or: [ 
+		   withBlock: [
+			   oldSelector numArgs = newSelector numArgs or: [
 				   newSelector numArgs = 0 ] ]
 		   errorString:
 		   'The new selectors should have the same number of arguments as the old one, or not have them at all')
@@ -87,9 +87,9 @@ RBDeprecateMethodRefactoring >> breakingChangeConditions [
 { #category : #transforming }
 RBDeprecateMethodRefactoring >> callDeprecationMethod [
 
-	^ 'self 
+	^ 'self
 		deprecated: ''Use ' , newSelector storeString , ' instead''
-		on: 	''' , Date today asString , ''' 
+		on: 	''' , Date today asString , '''
 		in: ''' , SystemVersion current imageVersionString , ''''
 ]
 
@@ -97,19 +97,19 @@ RBDeprecateMethodRefactoring >> callDeprecationMethod [
 RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
-	class := self classObjectFor: aClass.
+	class := self classObjectFor: aClass
 ]
 
 { #category : #execution }
 RBDeprecateMethodRefactoring >> generateChanges [
 
-	[ self inputValidation check ] whileFalse: [ 
+	[ self inputValidation check ] whileFalse: [
 		RBInputValidationFailedError signal:
 			self inputValidation errorString ].
-	self applicabilityConditions check ifFalse: [ 
+	self applicabilityConditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [ 
+	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
 
@@ -121,8 +121,8 @@ RBDeprecateMethodRefactoring >> generateChanges [
 RBDeprecateMethodRefactoring >> inputValidation [
 
 	^ (RBCondition
-		   withBlock: [ 
-			   newSelector isEmptyOrNil  or: [ 
+		   withBlock: [
+			   newSelector isEmptyOrNil  or: [
 				   newSelector = oldSelector ]]
 		   errorString:
 		   'The new selectors cannot be an empty string or same as the old selector.') not
@@ -141,7 +141,7 @@ RBDeprecateMethodRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBDeprecateMethodRefactoring >> storeOn: aStream [ 
+RBDeprecateMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

@@ -23,12 +23,12 @@ Class {
 
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> initalizeRefactorings [
-	
-	classNames do: 
-			[:each | 
+
+	classNames do:
+			[:each |
 			| class |
 			class := self model classNamed: each.
-			self pushDownMethodsOf: class. 
+			self pushDownMethodsOf: class.
 			self pushDownInstVarsOf: class.
 			self pushDownClassVarsOf: class]
 ]
@@ -41,10 +41,10 @@ RBRemoveClassKeepingSubclassesRefactoring >> initialize [
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> preconditions [
 
-	^ classNames inject: self emptyCondition into: [ :sum :each | 
+	^ classNames inject: self emptyCondition into: [ :sum :each |
 		  | aClassOrTrait |
 		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [ 
+		  aClassOrTrait ifNil: [
 			  self refactoringFailure: 'No such class or trait' ].
 		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
 		   & (self preconditionHasNoReferences: each)
@@ -55,7 +55,7 @@ RBRemoveClassKeepingSubclassesRefactoring >> preconditions [
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> pushDownClassVarsOf: class [
 	class realClass classVariables do: [ :e |
-		refactorings add: (RBPushDownClassVariableRefactoring 
+		refactorings add: (RBPushDownClassVariableRefactoring
 		variable: e key
 		class: class).
 	]
@@ -64,7 +64,7 @@ RBRemoveClassKeepingSubclassesRefactoring >> pushDownClassVarsOf: class [
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> pushDownInstVarsOf: class [
 	class realClass instVarNames
-		do: [ :e | 
+		do: [ :e |
 			refactorings
 				add:
 					(RBPushDownInstanceVariableRefactoring

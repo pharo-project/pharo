@@ -20,7 +20,7 @@ Class {
 { #category : #private }
 DADependencyChecker >> buildPackageRelationGraphFor: aPackageName [
 	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName }) build ]
-		on: PotentialOutDatedDependencyWarning 
+		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | report addWarning: ex. ex resume ]
 ]
 
@@ -134,9 +134,9 @@ DADependencyChecker >> transitiveDependenciesOf: aPackageName [
 ]
 
 { #category : #accessing }
-DADependencyChecker >> unresolvedDependenciesOf: aPackageName [ 
+DADependencyChecker >> unresolvedDependenciesOf: aPackageName [
 	^ [ (DAMessageSendAnalyzer on: aPackageName) missingMethodsWithPotentialMatchAfterManuallyResolvedDependenciesAddition
 		reject: #isEmpty ]
-		on: PotentialOutDatedDependencyWarning
+		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | ex resume ]
 ]

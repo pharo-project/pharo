@@ -5,13 +5,13 @@ RBParseTreeRewriter class >> buildMessageSendWith: aSelector and: argsAndValues 
 
 	^ String streamContents: [ :string |
 		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
-		
+
 		string nextPutAll: 'self '.
 		argsAndValues
-			ifEmpty: [ string nextPutAll: aSelector asString ] 
-			ifNotEmpty: [ 
+			ifEmpty: [ string nextPutAll: aSelector asString ]
+			ifNotEmpty: [
 				aSelector keywords with: argsAndValues associations
-					do: [ :key :arg | 
+					do: [ :key :arg |
 						string nextPutAll: key asString; nextPut: $ .
 						string nextPutAll: (argsAndValues at: arg key).
 						string nextPut: $ ] ] ]
@@ -25,7 +25,7 @@ RBParseTreeRewriter class >> mapArguments: arguments toValues: values in: aTree 
 		ifTrue: [
 			| argsAndValues |
 			argsAndValues := OrderedCollection new.
-			arguments with: values do: [ :arg :val | 
+			arguments with: values do: [ :arg :val |
 				argsAndValues add: (arg name asString -> val value storeString) ].
 			argsAndValues ]
 		"open browser"
@@ -44,10 +44,10 @@ RBParseTreeRewriter class >> replaceCode: subtree byMessageSendTo: aMethod in: a
 	argsAndValues := self mapArguments: aMethod ast arguments
 								toValues: (subtree allChildren select: #isLiteralNode)
 								in: subtree.
-	newSourceCode := self buildMessageSendWith: aMethod selector 
+	newSourceCode := self buildMessageSendWith: aMethod selector
 			and: argsAndValues asDictionary
 			needsReturn: subtree isReturn.
-		
+
 	^ RBReplaceSubtreeTransformation
 		replace: subtree sourceCode
 		to: newSourceCode
@@ -60,19 +60,19 @@ RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTre
 
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
-	tree isSequence 
+	tree isSequence
 		ifFalse: [tree := RBSequenceNode statements: (Array with: tree)].
 	tree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
 	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
 	tree lastIsReturn ifTrue: [replaceStmt := '| `@temps | `@.S1. ^' , newCode].
-		
+
 	replaceStmt := '| `@temps | `@.S1. ' , newCode.
 	(tree statements last = aParseTree body statements last)
-		ifFalse: 
+		ifFalse:
 			[tree addNode: (RBPatternVariableNode named: '`@.S2').
 			replaceStmt := replaceStmt, '. `@.S2'].
-	
-	^self 
+
+	^self
 		replace: tree formattedCode
 		with: replaceStmt
 		in: aParseTree

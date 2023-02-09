@@ -19,20 +19,20 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
 	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
 	(model metaclassNamed: #SomeClass) addInstanceVariable: 'foo'.
 	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
-	(model metaclassNamed: #Subclass) 
+	(model metaclassNamed: #Subclass)
 		compile: 'foo ^foo'
 		classified: #(#accessing).
-	self executeRefactoring: (self createRefactoringWithModel: model 
+	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: {'foo' . #'SomeClass class'}).
-	self 
+	self
 		deny: ((model metaclassNamed: #SomeClass) directlyDefinesVariable: 'foo').
-	self 
+	self
 		assert: ((model metaclassNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclasses [
-	model defineClass: 'Object << #SomeClass 
+	model defineClass: 'Object << #SomeClass
 		slots: { #foo } ;
 		package: #''Refactory-Test data'''.
 	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
@@ -40,7 +40,7 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclas
 	model defineClass: 'SomeClass << #AnotherSubclass package: #''Refactory-Test data'''.
 	(model classNamed: #AnotherSubclass) compile: 'bar ^foo'
 		classified: #(#accessing).
-	self executeRefactoring: (self createRefactoringWithModel: model 
+	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: {'foo' . #SomeClass}).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo').
@@ -49,12 +49,12 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclas
 
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
-	model defineClass: 'Object << #SomeClass 
-		slots: { #foo} ;  
+	model defineClass: 'Object << #SomeClass
+		slots: { #foo} ;
 		package: #''Refactory-Test data'''.
 	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
-	
-	self executeRefactoring: (self createRefactoringWithModel: model 
+
+	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: {'foo' . #SomeClass}).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')
@@ -62,16 +62,16 @@ RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
 
 { #category : #'failure tests' }
 RBPushDownInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: 
+	self shouldFail:
 		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData})
 ]
 
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{'foo1' . #RBLintRuleTestData}.
 	self executeRefactoring: refactoring.
-	(refactoring model classNamed: #RBLintRuleTestData) subclasses do: 
+	(refactoring model classNamed: #RBLintRuleTestData) subclasses do:
 		[ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
 ]

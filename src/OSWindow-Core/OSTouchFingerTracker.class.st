@@ -66,9 +66,9 @@ OSTouchFingerTracker >> distanceFromLineFormedByFinger: aFingerTracker [
 	| otherLast |
 	otherLast := aFingerTracker lastPosition.
 
-	^ lastPosition distanceTo: 
-		(lastPosition nearestPointAlongLineFrom: 
-			otherLast + aFingerTracker delta 
+	^ lastPosition distanceTo:
+		(lastPosition nearestPointAlongLineFrom:
+			otherLast + aFingerTracker delta
 		to:
 			otherLast)
 ]
@@ -97,12 +97,12 @@ OSTouchFingerTracker >> firstPosition [
 OSTouchFingerTracker >> firstPosition: anObject [
 	move removeAll.
 	firstPosition := anObject.
-	self addToMove: firstPosition.
+	self addToMove: firstPosition
 ]
 
 { #category : #initialization }
 OSTouchFingerTracker >> initialize [
-	move := OrderedCollection new.
+	move := OrderedCollection new
 ]
 
 { #category : #calculating }
@@ -158,7 +158,7 @@ OSTouchFingerTracker >> totalDistanceTravelled [
 	previous := firstPosition.
 	sum := 0.
 	move
-		do: [ :position | 
+		do: [ :position |
 			sum := sum + position distanceTo: firstPosition.
 			previous := position ].
 	^ sum

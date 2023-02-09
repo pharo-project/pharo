@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #defaults }
-SemanticVariableIconStyler >> borderColor [ 
+SemanticVariableIconStyler >> borderColor [
 	^nil
 ]
 
@@ -21,7 +21,7 @@ SemanticVariableIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 SemanticVariableIconStyler >> iconLabel: aNode [
-	^ aNode name printString, ' is not a known variable '.
+	^ aNode name printString, ' is not a known variable '
 ]
 
 { #category : #hooks }

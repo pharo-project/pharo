@@ -90,7 +90,7 @@ MetaLinkInstaller >> collectAnonymousAstsFor: aNode [
 	methodClass := methodNode methodClass.
 	methods := anonSubclassesBuilder compiledMethodsOfSelector: selector inAnonSubClassesOf: methodClass.
 	^ methods
-		collect: [ :method | 
+		collect: [ :method |
 			| anonMethodNode |
 			anonMethodNode := method ast.
 			aNode isMethod
@@ -138,7 +138,7 @@ MetaLinkInstaller >> initialize [
 	linksRegistry := MetaLinkRegistry new.
 	linkToNodesMapper := MetaLinkNodesMapper new.
 	superJumpLinks := OrderedCollection new.
-	
+
 	SystemAnnouncer uniqueInstance weak when: MethodModified send: #methodChanged: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #methodRemoved: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodAdded send: #methodAdded: to: self
@@ -147,7 +147,7 @@ MetaLinkInstaller >> initialize [
 { #category : #installation }
 MetaLinkInstaller >> install: aMetaLink onNode: aNode forObject: anObject [
 	| anonClass ast |
-	
+
 	linksRegistry addMetaLink: aMetaLink forObject: anObject.
 	anonClass := anonSubclassesBuilder anonymousClassForObject: anObject.
 	ast := self astFromNode: aNode forObject: anObject inClass: anonClass.
@@ -163,13 +163,13 @@ MetaLinkInstaller >> installPermaLink: aPermaLink onVariable: aVariable [
 
 { #category : #lookup }
 MetaLinkInstaller >> installSuperJumpLinksInMethodNode: node [
-	"Installs a metalink wich provokes a super jump: 
-	when sending a message to super in an anonymous class, 
+	"Installs a metalink wich provokes a super jump:
+	when sending a message to super in an anonymous class,
 	instead of starting the lookup in the super class (wich is the original class of the object),
 	the lookup is started in the super super class (which is the intented superclass)."
 
 	(node allChildren select: [ :n | n isSuperVariable ])
-		do: [ :superNode | 
+		do: [ :superNode |
 			| messageSendNode superSuperClass link |
 			messageSendNode := superNode parent.
 			superSuperClass := node methodClass superclass superclass.
@@ -186,12 +186,12 @@ MetaLinkInstaller >> installSuperJumpLinksInMethodNode: node [
 MetaLinkInstaller >> linkAllFromNode: aNode into: copyNode [
 	"If aNode is the original ast node from which a copy was made - namely copyNode,
 	and if this node has links, we need to add them to copyNode."
-	
+
 	aNode hasMetaLinks
 		ifTrue: [	aNode links do: [ :link | copyNode linkIfAbsent: link ] ].
-		
+
 	aNode allChildren
-		do: [ :c | 
+		do: [ :c |
 			c hasMetaLinks
 				ifTrue: [ | node |
 					node := self findSubNode: c in: copyNode.
@@ -220,7 +220,7 @@ MetaLinkInstaller >> methodChanged: aMethodChanged [
 	methodClass := aMethodChanged oldMethod methodClass.
 	self removePermaLinksNodesReferencesFor: methodNode.
 	methodClass isAnonymous
-		ifTrue: [ ^ self ].	
+		ifTrue: [ ^ self ].
 	self removeAllAnonymousNodesIn: methodNode fromAnonSubclassesOf: methodClass.
 	self reinstallPermaLinksForMethod: aMethodChanged newMethod
 ]
@@ -241,12 +241,12 @@ MetaLinkInstaller >> methodRemoved: aMethodRemoved [
 { #category : #permalinks }
 MetaLinkInstaller >> nodesForPermaLink: permalink toBeInstalledIn: method [
 	"Looking for nodes from method where to install the permalink.
-	That means that each of these nodes has no links, 
+	That means that each of these nodes has no links,
 	or that the link hosted by permalink is not present in their link set."
 	| slotOrVar persistenceType nodes |
 	slotOrVar := permalink slotOrVariable.
 	persistenceType := permalink persistenceType.
-	nodes := (slotOrVar accessingNodesFor: persistenceType) asIdentitySet 
+	nodes := (slotOrVar accessingNodesFor: persistenceType) asIdentitySet
 					select: [ :node | node methodNode method = method ].
 	^ nodes select: [ :node | node hasMetaLinks not or: [ (node links includes: permalink link) not ] ]
 ]
@@ -275,7 +275,7 @@ MetaLinkInstaller >> recursiveRemoveMethodNode: methodNode fromPermaLinks: perma
 	"Remove nodes from the link tied to permalink.
 	These nodes can be any node in methodNode's children (itself included).
 	Doesn't care if the link doesn't know the node, as we have no way of knowing."
-	
+
 	permalink link nodes remove: methodNode ifAbsent: [  ].
 	methodNode allChildren do: [ :node | permalink link nodes remove: node ifAbsent: [  ] ]
 ]
@@ -285,9 +285,9 @@ MetaLinkInstaller >> registerAndInstallPermaLink: aPermaLink forTarget: aSlotOrV
 	| nodes |
 	(linksRegistry canReinstallPermaLink: aPermaLink)
 		ifFalse: [ ^ self ].
-		
+
 	linksRegistry registerPermaLink: aPermaLink.
-	
+
 	nodes := (aSlotOrVar accessingNodesFor: aPermaLink persistenceType) asIdentitySet.
 	aPermaLink targetObjectOrClass link: aPermaLink link toNodes: nodes
 ]
@@ -309,7 +309,7 @@ MetaLinkInstaller >> reinstallPermaLinksForMethod: method [
 	| permalinks |
 	permalinks := linksRegistry permaLinksForMethod: method.
 	permalinks
-		do: [ :permalink | 
+		do: [ :permalink |
 			| nodes |
 			nodes := self nodesForPermaLink: permalink toBeInstalledIn: method.
 			nodes do: [ :node | self reinstallPermaLink: permalink onNode: node ] ]
@@ -325,13 +325,13 @@ MetaLinkInstaller >> removeAllAnonymousNodesIn: methodNode fromAnonSubclassesOf:
 	selector := methodNode selector.
 	anonClassesWithSelector := anonSubclassesBuilder allSubclassesOf: aClass withSelector: selector.
 	anonClassesWithSelector
-		do: [ :c | 
+		do: [ :c |
 			| object anonMethodNode anonNodes |
 			object := anonSubclassesBuilder soleInstanceOf: c.
 			anonMethodNode := (c >> selector) ast.
 
 			"Getting all nodes in the method with links,
-			they are instance specific because located 
+			they are instance specific because located
 			in the sole instance of a anonymous class"
 			anonNodes := anonMethodNode allChildren select: [ :n | n hasMetaLinks ].
 
@@ -341,7 +341,7 @@ MetaLinkInstaller >> removeAllAnonymousNodesIn: methodNode fromAnonSubclassesOf:
 			"We remove links from the anonymous method node if any"
 			anonMethodNode hasMetaLinks
 				ifTrue: [ anonMethodNode links do: [ :link | self uninstall: link fromNode: anonMethodNode forObject: object ]. anonMethodNode links removeAll ] ].
-	
+
 	"Method nodes are implicetely removed from anonymous subclasses,
 	and object are silently moved back to their original class
 	if no instance-specific links do exist for them"
@@ -367,7 +367,7 @@ MetaLinkInstaller >> removePermaLinksNodesReferencesFor: aMethodNode [
 	anonClasses := anonSubclassesBuilder allSubclassesOf: class withSelector: selector.
 	permalinks := self findPermaLinksForSelector: selector inClass: class.
 	permalinks
-		do: [ :permalink | 
+		do: [ :permalink |
 			| methodNodes |
 			methodNodes := IdentitySet with: aMethodNode.
 			permalink isInstanceSpecific
@@ -380,7 +380,7 @@ MetaLinkInstaller >> removeSuperJumpsFor: methodNode [
 	| nodesWithLinks |
 	nodesWithLinks := methodNode allChildren select: [ :c | c hasMetaLinks ].
 	superJumpLinks
-		do: [ :link | 
+		do: [ :link |
 			(nodesWithLinks anySatisfy: [ :node | node links includes: link ])
 				ifTrue: [ link uninstall ] ]
 ]
@@ -401,9 +401,9 @@ MetaLinkInstaller >> uninstallFromAllAnonymousNodes: aMetaLink [
 	(linksRegistry isLinkObjectSpecific: aMetaLink) ifFalse:[^self].
 	objectsForLink := linksRegistry objectsForLink: aMetaLink.
 	objectsForLink
-		do: [ :object | 
+		do: [ :object |
 			aMetaLink nodes
-				do: [ :node | 
+				do: [ :node |
 					(linkToNodesMapper isNode: node ownedBy: object)
 						ifTrue: [ self uninstall: aMetaLink fromNode: node forObject: object ] ] ]
 ]
@@ -411,7 +411,7 @@ MetaLinkInstaller >> uninstallFromAllAnonymousNodes: aMetaLink [
 { #category : #nodes }
 MetaLinkInstaller >> uninstallNode: aNode forObject: anObject [
 	self removeNode: aNode forObject: anObject.
-	(linkToNodesMapper findNodesForObject: anObject) 
+	(linkToNodesMapper findNodesForObject: anObject)
 		ifEmpty: [ anonSubclassesBuilder migrateObjectToOriginalClass: anObject ]
 ]
 

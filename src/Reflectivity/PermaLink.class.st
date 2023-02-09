@@ -59,7 +59,7 @@ PermaLink >> persistenceType: anObject [
 ]
 
 { #category : #accessing }
-PermaLink >> slotOrVarClass [ 
+PermaLink >> slotOrVarClass [
 	^ slotOrVarClass nonAnonymousClass
 ]
 

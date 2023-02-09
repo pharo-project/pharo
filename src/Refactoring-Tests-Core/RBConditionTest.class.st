@@ -66,7 +66,7 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported [
 		            errorString: 'The true case'.
 	composition := falseCase & trueCase.
 	self deny: composition check.
-	self assert: composition errorString equals: 'The false case'.
+	self assert: composition errorString equals: 'The false case'
 ]
 
 { #category : #tests }

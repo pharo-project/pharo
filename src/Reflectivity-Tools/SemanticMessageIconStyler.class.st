@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #defaults }
-SemanticMessageIconStyler >> borderColor [ 
+SemanticMessageIconStyler >> borderColor [
 	^Color red
 ]
 
@@ -21,7 +21,7 @@ SemanticMessageIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 SemanticMessageIconStyler >> iconLabel: aNode [
-	^ aNode selector value asString, ' is not a recognized method '.
+	^ aNode selector value asString, ' is not a recognized method '
 ]
 
 { #category : #hooks }

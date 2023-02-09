@@ -69,7 +69,7 @@ RBRemoveMethodTransformation >> checkBrowseAllOccurrences: anCollectionOfOccurre
 				('Possible call to the <2p> selectors in <1p> methods.<n>Browse references?'
 					expandMacrosWith: callers size
 					with: methods size)
-				with: [ 
+				with: [
 					| env |
 					env := RBSelectorEnvironment new.
 					callers do: [ :d | env addMethod: d method ].
@@ -101,7 +101,7 @@ RBRemoveMethodTransformation >> checkReferences [
 
 	self model
 		  allReferencesTo: selector
-		  do: [ :aRBMethod | 
+		  do: [ :aRBMethod |
 				(selector = aRBMethod selector)
 				ifFalse: [ occurrences add: selector -> aRBMethod ] ].
 	occurrences ifEmpty: [ ^ self ].
@@ -114,7 +114,7 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 	(self justSendsSuper: selector) ifTrue: [ ^ self ]
 		ifFalse: [ (self superclassEquivalentlyDefines: selector)
 			ifTrue: [ (self definingClass parseTreeForSelector: selector) superMessages
-				ifNotEmpty: [ self 
+				ifNotEmpty: [ self
 						refactoringError: ('Although <1s> is equivalent to a superclass method,<n>
 							it contains a super send so it might modify behavior.'
 							expandMacrosWith: selector ) ] ]
@@ -129,7 +129,7 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 	(matcher executeTree: parseTree initialAnswer: false)
 		ifFalse: [ ^ false ].
 	parseTree lastIsReturn
-		ifTrue: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
+		ifTrue: [ ^ true ].	"Since there isn't a superclass that implements the message, we can
 	 delete it since it would be an error anyway."
 	superclass := self definingClass superclass
 		whichClassIncludesSelector: aSelector.
@@ -138,13 +138,13 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 	matcher := self parseTreeSearcherClass new.
 	matcher
 		matches: '^``@object'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				add: aNode value;
 				yourself ].
 	matcher executeTree: parseTree initialAnswer: Set new.
 	^ matcher answer
-		allSatisfy: [ :each | "^ (matcher answer 
+		allSatisfy: [ :each | "^ (matcher answer
 		detect: [:each | (each isVariable and: [each name = 'self']) not]
 		ifNone: [nil]) isNil" each isVariable and: [ each name = 'self' ] ]
 ]
@@ -152,7 +152,7 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 { #category : #preconditions }
 RBRemoveMethodTransformation >> preconditions [
 
-	^ (RBCondition definesSelector: selector in: self definingClass) 
+	^ (RBCondition definesSelector: selector in: self definingClass)
 		& (RBCondition withBlock: [ self checkSuperMethods. true ])
 ]
 
@@ -170,7 +170,7 @@ RBRemoveMethodTransformation >> selector: aSelector from: aClassName [
 ]
 
 { #category : #printing }
-RBRemoveMethodTransformation >> storeOn: aStream [ 
+RBRemoveMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

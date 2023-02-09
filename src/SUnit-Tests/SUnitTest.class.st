@@ -499,12 +499,19 @@ SUnitTest >> testHangedTestDueToFailedChildProcess [
 
 { #category : #testing }
 SUnitTest >> testIgnoreDeprecationWarnings [
-	| oldRaiseWarning |
+	| oldRaiseWarning oldShowWarning reachedHere |
+	"save old state to recover it later"
 	oldRaiseWarning := Deprecation raiseWarning.
+	oldShowWarning :=  Deprecation showWarning.
+	reachedHere := false.
 	[ Deprecation raiseWarning: false.
+	  Deprecation showWarning: false.
 	self deprecatedMessage.
-	self assert: true ]
-		ensure: [ Deprecation raiseWarning: oldRaiseWarning ]
+	reachedHere := true.
+	self assert: true. ]
+		ensure: [ Deprecation raiseWarning: oldRaiseWarning. Deprecation showWarning: oldRaiseWarning ].
+	"we reached reachedHere".
+	self assert: reachedHere
 ]
 
 { #category : #testing }

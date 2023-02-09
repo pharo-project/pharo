@@ -33,7 +33,7 @@ RBMethodNameEditor >> add [
 	| newArguments |
 	newArguments := self argumentList.
 	newArguments add: ('arg', (newArguments size + 1) asString).
-	
+
 	self methodName arguments: newArguments.
 	self update
 ]
@@ -41,7 +41,7 @@ RBMethodNameEditor >> add [
 { #category : #grips }
 RBMethodNameEditor >> addEdgeGrips [
 	"Should add these to the front!"
-	
+
 	| l r lh |
 	lh := self labelHeight.
 	l  := WindowEdgeGripMorph new target: self; position: self position; edgeName: #left.
@@ -88,7 +88,7 @@ RBMethodNameEditor >> cancel [
 RBMethodNameEditor >> defaultFocusMorph [
 	"Answer the morph that should have the keyboard
 	focus by default when the dialog is opened."
-	
+
 	^ selectorField
 		ifNil: [ super defaultFocusMorph ]
 ]
@@ -143,14 +143,14 @@ RBMethodNameEditor >> newContentMorph [
 
 	^ labelGroup := (self newRow: {
 		self newLabelGroup: {
-			'Selector:' -> (selectorField := 
+			'Selector:' -> (selectorField :=
 			(self newTextEntryFor: self getText: #selector setText: #selector: help: nil)
 				autoAccept: true;
 				on: #keyStroke send: #value:value:
 				to: [:key :morph | key keyCharacter = Character cr ifTrue: [ self ok. true]. false];
 				hResizing: #spaceFill;
 				yourself).
-				
+
 			'Arguments:' -> (self newRow: {
 				(self newColumn: {
 					self newButtonFor: self action: #add label: '+'  help: nil.
@@ -161,7 +161,7 @@ RBMethodNameEditor >> newContentMorph [
 					changeSelected: #argumentIndex: help: nil)
 					hResizing: #spaceFill;
 					yourself. }).
-					
+
 			'Preview:' -> (labelMorph := self newLabel: self methodName printString) } } )
  		minWidth: 400;
 		hResizing: #spaceFill;
@@ -179,7 +179,7 @@ RBMethodNameEditor >> remove [
 	| newArguments |
 	newArguments := self argumentList.
 	newArguments removeAt: self argumentIndex.
-	
+
 	self methodName arguments: newArguments.
 	self update
 ]

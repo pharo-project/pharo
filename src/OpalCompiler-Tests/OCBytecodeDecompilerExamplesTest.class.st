@@ -451,15 +451,15 @@ OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 { #category : #'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	| ir method newMethod instance |
-	
+
 	method := (OCOpalExamples>>#exampleThisContext) parseTree generate.
-	
+
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
-	
+
 	instance := OCOpalExamples new.
 	newMethod valueWithReceiver: instance arguments: #().
-	
+
 	self assert: instance result isContext
 ]
 
@@ -551,7 +551,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileModificationAfterNotInlined) parseTree generate.
-	
+
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 

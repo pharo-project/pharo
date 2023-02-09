@@ -28,20 +28,20 @@ RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection fr
 
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
-	 (aClass realClass includesSelector: selector) ifTrue: [ 
-		 [self performCompositeRefactoring: (RBRemoveMethodRefactoring 
+	 (aClass realClass includesSelector: selector) ifTrue: [
+		 [self performCompositeRefactoring: (RBRemoveMethodRefactoring
 									model: self model
 									removeMethods: { selector }
 									from: aClass) ]
-		on: RBRefactoringError 
-			do: [ :ex | ( self confirm: 
+		on: RBRefactoringError
+			do: [ :ex | ( self confirm:
 				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
 				ifTrue:[ ex resume ] ] ]
 ]
 
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> deleteSelectorInSubclasses [
-	class withAllSubclasses do: 
+	class withAllSubclasses do:
 		[ :each | each implements: selectors ]
 ]
 
@@ -57,18 +57,18 @@ RBRemoveHierarchyMethodRefactoring >> deleteSelectors [
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> preconditions [
 
-	^ selectors inject: self emptyCondition into: [ :cond :selector | 
+	^ selectors inject: self emptyCondition into: [ :cond :selector |
 		  cond & (RBCondition definesSelector: selector in: class) ]
 ]
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring >> removeMethods: selectorCollection from: aClass [ 
+RBRemoveHierarchyMethodRefactoring >> removeMethods: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection
 ]
 
 { #category : #printing }
-RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [ 
+RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeMethods: '.
@@ -79,6 +79,6 @@ RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> transform [ 
+RBRemoveHierarchyMethodRefactoring >> transform [
 	self deleteSelectors
 ]

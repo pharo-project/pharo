@@ -340,7 +340,7 @@ SHRBTextStyler class >> defaultStyleTable [
 { #category : #styles }
 SHRBTextStyler class >> formatIncompleteIdentifiers [
 
-	^ formatIncompleteIdentifiers ifNil: [ formatIncompleteIdentifiers := true ]
+	^ formatIncompleteIdentifiers ifNil: [ formatIncompleteIdentifiers := false ]
 ]
 
 { #category : #styles }
@@ -399,7 +399,7 @@ SHRBTextStyler class >> settingsOn: aBuilder [
 	
 	(aBuilder setting: #formatIncompleteIdentifiers) 
 		target: self;
-		default: true;
+		default: false;
 		order: 1;
 		label: 'Format Incomplete Identifiers';
 		parentName: #'Syntax Highlighting';

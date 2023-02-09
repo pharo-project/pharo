@@ -26,7 +26,7 @@ TutorialPlayer >> first [
 { #category : #navigating }
 TutorialPlayer >> last [
 	"Go to the last lesson of the current tutorial and return it."
-		
+
 	tutorialPosition := self size.
 	^ self currentLesson
 ]
@@ -68,13 +68,13 @@ TutorialPlayer >> tutorial: aTutorialInstance [
 { #category : #accessing }
 TutorialPlayer >> tutorialPosition [
 	^ tutorialPosition
-		ifNil: [ 
+		ifNil: [
 			self rewind.
 			tutorialPosition ]
 ]
 
 { #category : #accessing }
-TutorialPlayer >> tutorialPosition: aTutorialPosition [ 
+TutorialPlayer >> tutorialPosition: aTutorialPosition [
 
 	tutorialPosition := aTutorialPosition
 ]

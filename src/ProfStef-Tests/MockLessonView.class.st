@@ -24,13 +24,13 @@ MockLessonView >> lesson [
 { #category : #gui }
 MockLessonView >> showLesson: aLesson withTitle: aString [
 	lesson := aLesson.
-	title := aString.
+	title := aString
 ]
 
 { #category : #gui }
 MockLessonView >> showTutorialNode: aTutorialNode [
 	lesson:= aTutorialNode lessonInstance.
-	title := aTutorialNode title.
+	title := aTutorialNode title
 ]
 
 { #category : #accessing }
