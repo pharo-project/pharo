@@ -54,11 +54,11 @@ PaginatedMorphTreeModel >> pageSize: anIntegerOrNil [
 PaginatedMorphTreeModel >> rootNodes [
 	| computedRootNodes |
 	computedRootNodes := super rootNodes.
-	self defaultChunkSize 
+	self defaultChunkSize
 		ifNotNil: [computedRootNodes size > self defaultChunkSize
 			ifTrue: [self chunkSize: self defaultChunkSize]]
 		ifNil: [
-			self defaultPageSize 
+			self defaultPageSize
 				ifNotNil: [computedRootNodes size > self defaultPageSize
 					ifTrue: [self pageSize: self defaultPageSize]]].
 	^ computedRootNodes
@@ -66,7 +66,7 @@ PaginatedMorphTreeModel >> rootNodes [
 
 { #category : #'pager managing' }
 PaginatedMorphTreeModel >> setPageSize: anIntegerOrNil [
-	pageSize := anIntegerOrNil.
+	pageSize := anIntegerOrNil
 ]
 
 { #category : #accessing }

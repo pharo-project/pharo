@@ -126,7 +126,7 @@ ChangeRecord >> fileOutOn: aFileStream [
 	aFileStream cr
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 ChangeRecord >> isMetaClassChange [
 	^meta
 ]

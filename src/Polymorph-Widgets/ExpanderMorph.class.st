@@ -33,14 +33,14 @@ ExpanderMorph >> addedMorph: aMorph [
 ExpanderMorph >> announce: anAnnouncement [
 	"see Announcements packages.
 	No need to announce if no subscribers."
-	
+
 	announcer ifNotNil: [announcer announce: anAnnouncement]
 ]
 
 { #category : #accessing }
 ExpanderMorph >> announcer [
 	"Answer the receiver's announcer, creating if required."
-	
+
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
@@ -65,14 +65,14 @@ ExpanderMorph >> defaultTitleMorph [
 { #category : #accessing }
 ExpanderMorph >> expanded [
 	"Answer whether the title is expanded."
-	
+
 	^self titleMorph expanded
 ]
 
 { #category : #accessing }
 ExpanderMorph >> expanded: aBoolean [
 	"Set whether the title is expanded."
-	
+
 	self titleMorph expanded: aBoolean
 ]
 
@@ -89,9 +89,9 @@ ExpanderMorph >> fixLayout [
 
 	self owner ifNil: [ ^ self ].
 	self owner
-		allMorphsDo: [ :m | 
+		allMorphsDo: [ :m |
 			(m respondsTo: #resetExtent)
-				ifTrue: [ 
+				ifTrue: [
 					self defer: (MessageSend receiver: m selector: #resetExtent).
 					self defer: (MessageSend receiver: m selector: #setScrollDeltas) ].
 			(m isKindOf: self class)

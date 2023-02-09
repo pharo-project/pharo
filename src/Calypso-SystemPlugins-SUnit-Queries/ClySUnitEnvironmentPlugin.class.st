@@ -16,7 +16,7 @@ Class {
 { #category : #controlling }
 ClySUnitEnvironmentPlugin >> attachToSystem [
 
-	TestCase historyAnnouncer 
+	TestCase historyAnnouncer
 		weak when: TestSuiteEnded send: #testRan: to: self
 ]
 
@@ -24,16 +24,16 @@ ClySUnitEnvironmentPlugin >> attachToSystem [
 ClySUnitEnvironmentPlugin >> collectMetadataOfMethods: aQueryResult [
 	| property |
 	property := 	ClyTestResultProperty new.
-		
-	aQueryResult rawItemsOf: ClyMethod do: [ :method | 
-		(method isTestMethod and: [ method methodClass isAbstract not ]) ifTrue: [ 
+
+	aQueryResult rawItemsOf: ClyMethod do: [ :method |
+		(method isTestMethod and: [ method methodClass isAbstract not ]) ifTrue: [
 			property accumulateTestMethod: method]].
-	
+
 	property allCount > 0 ifTrue: [ aQueryResult addMetaProperty: property ]
 ]
 
 { #category : #'method groups' }
-ClySUnitEnvironmentPlugin >> collectMethodGroupProviders [ 
+ClySUnitEnvironmentPlugin >> collectMethodGroupProviders [
 
 	^{ClyFailedTestGroupProvider new. ClyExpectedFailureMethodGroupProvider new}
 ]
@@ -42,7 +42,7 @@ ClySUnitEnvironmentPlugin >> collectMethodGroupProviders [
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 
 	(aClass isTestCase not or: [aClass isAbstract]) ifTrue: [ ^self ].
-	
+
 	anItem addProperty: (ClyTestResultProperty ofTestCase: aClass)
 ]
 
@@ -55,20 +55,20 @@ ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGro
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	(self isTestMethod: aMethod) ifFalse: [ ^self ].
-	
+
 	anItem addProperty: (ClyTestResultProperty ofMethod: aMethod)
 ]
 
 { #category : #'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 	"this can be slow and proper implementation will require recomputing for every test run
-	which slow down running of big test suite. 
+	which slow down running of big test suite.
 	So for package and class group we only detect that it has tests"
 
-	(aPackage classes anySatisfy: [:testCase | 
+	(aPackage classes anySatisfy: [:testCase |
 		testCase isTestCase and: [testCase isAbstract not]])
 		ifFalse: [ ^self ].
-		
+
 	anItem addProperty: ClyTestResultProperty new
 ]
 
@@ -80,30 +80,30 @@ ClySUnitEnvironmentPlugin >> detachFromSystem [
 
 { #category : #'item decoration' }
 ClySUnitEnvironmentPlugin >> isTestClass: aClass [
-	
-	^aClass isTestCase or: [ 
-		"Following logic is to detect tests from traits but without explicit dependency. 
+
+	^aClass isTestCase or: [
+		"Following logic is to detect tests from traits but without explicit dependency.
 		So we think that traits are test classes if they are used in test cases"
 		aClass users anySatisfy: [ :eachUser | self isTestClass: eachUser ] ]
 ]
 
 { #category : #'item decoration' }
 ClySUnitEnvironmentPlugin >> isTestMethod: aMethod [
-	
+
 	aMethod numArgs isZero ifFalse: [ ^ false ].
 	"unary selectors starting with 'should' are supposed to be treated as test methods too"
 	((aMethod selector beginsWith: 'test') or: [ aMethod selector beginsWith: 'should' ])
 		ifFalse: [ ^ false ].
-	
+
 	^self isTestClass: aMethod methodClass
 ]
 
 { #category : #controlling }
 ClySUnitEnvironmentPlugin >> testRan: aTestSuiteEnded [
 	| event |
-	
-	"testResult actually returns the TestCase class ran"	
+
+	"testResult actually returns the TestCase class ran"
 	event := ClyTestCaseRan testCase: aTestSuiteEnded testResult.
-	
+
 	environment systemChanged: event
 ]

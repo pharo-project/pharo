@@ -25,9 +25,11 @@ TFSameThreadRunner >> doInitialize [
 ]
 
 { #category : #executing }
-TFSameThreadRunner >> invokeFunction: aTFExternalFunction withArguments: aCollection [ 
+TFSameThreadRunner >> invokeFunction: function withArguments: aCollection [ 
 
-	^ (	TFSameThreadCall forFunction: aTFExternalFunction) executeOn: self withArguments: aCollection
+	function validate.	
+	^ self primitivePerformWorkerCall: function withArguments: aCollection 
+	
 ]
 
 { #category : #private }
@@ -39,9 +41,9 @@ TFSameThreadRunner >> primitiveGetRunnerAddress [
 ]
 
 { #category : #private }
-TFSameThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder withReturnHolder: aReturnHolder usingSemaphore: anInteger [ 
+TFSameThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder [ 
 
-	<primitive: 'primitiveSameThreadCallout'>
+	<primitive: 'primitiveSameThreadCallout' error: ec>
 
 	self primitiveFailed 	
 ]

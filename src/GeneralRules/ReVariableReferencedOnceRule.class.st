@@ -15,13 +15,13 @@ ReVariableReferencedOnceRule class >> checksClass [
 { #category : #accessing }
 ReVariableReferencedOnceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'VariableReferencedOnceRule'
 ]
 
 { #category : #running }
 ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
-		aClass slots do: [ :slot | 
+		aClass slots do: [ :slot |
 		  | usingMethods |
 		  usingMethods := slot usingMethods.
 		  usingMethods size = 1 ifFalse:  [ ^ self ].

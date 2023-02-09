@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'variableName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -70,14 +70,14 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	modifiedNode := (methodTree allChildren select: [:each | each isSequence])
 						detect: [ :sequence | sequence defines: variableName ]
 						ifNone: [ nil ].
-	
+
 	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
 
 	class compileTree: methodTree
 ]
 
 { #category : #printing }
-RBRemoveTemporaryVariableTransformation >> storeOn: aStream [ 
+RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

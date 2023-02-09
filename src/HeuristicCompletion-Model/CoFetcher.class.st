@@ -47,7 +47,7 @@ Class {
 }
 
 { #category : #composing }
-CoFetcher >> , anotherFetcher [ 
+CoFetcher >> , anotherFetcher [
 
 	^ CoFetcherSequence new
 		add: self;
@@ -63,13 +63,13 @@ CoFetcher >> acceptsEntry: entry [
 
 { #category : #testing }
 CoFetcher >> atEnd [
-	
+
 	^ self generator atEnd
 ]
 
 { #category : #composing }
-CoFetcher >> collect: aBlockClosure [ 
-	
+CoFetcher >> collect: aBlockClosure [
+
 	^ CoMappingFetcher new
 		decoree: self;
 		collectBlock: aBlockClosure;
@@ -79,59 +79,59 @@ CoFetcher >> collect: aBlockClosure [
 { #category : #enumerating }
 CoFetcher >> entriesDo: aBlock [
 	"Key method for subclasses to define their semantics."
-	
+
 	^ self subclassResponsibility
 ]
 
 { #category : #resetting }
 CoFetcher >> filter: newFilter [
-	
+
 	(newFilter isMoreNarrowThan: filter)
 		ifFalse: [ self reset ].
-		
-	filter := newFilter.
+
+	filter := newFilter
 ]
 
 { #category : #private }
 CoFetcher >> generator [
-	^ generator ifNil: [ 
-		generator := Generator on: [ :g | 
-			self entriesDo: [ :entry | 
+	^ generator ifNil: [
+		generator := Generator on: [ :g |
+			self entriesDo: [ :entry |
 				(self acceptsEntry: entry)
 					ifTrue: [ g yield: entry ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 CoFetcher >> initialize [
 	super initialize.
-	
+
 	filter := CoFilter empty
 ]
 
 { #category : #testing }
 CoFetcher >> isEmptyCompletionFetcher [
-	
+
 	^ false
 ]
 
 { #category : #composing }
 CoFetcher >> narrowFilter: aFilter narrowKey: aKey [
-	
+
 	self filter: aFilter
 ]
 
 { #category : #fetching }
 CoFetcher >> next [
-	
+
 	^ self generator next
 ]
 
 { #category : #fetching }
-CoFetcher >> next: anInteger [ 
-	
+CoFetcher >> next: anInteger [
+
 	^ Array new: anInteger streamContents: [ :stream | | total last |
 		total := 0.
-		[ (last := self next) ifNotNil: [ :each | 
+		[ (last := self next) ifNotNil: [ :each |
 			stream nextPut: each.
 			total := total + 1 ] ]
 			doWhileTrue: [ total < anInteger and: [ last notNil ] ] ]
@@ -139,7 +139,7 @@ CoFetcher >> next: anInteger [
 
 { #category : #resetting }
 CoFetcher >> reset [
-	
+
 	generator := nil
 ]
 
@@ -151,7 +151,7 @@ CoFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 
 { #category : #enumerating }
 CoFetcher >> upToEnd [
-	
+
 	^ self generator upToEnd
 ]
 

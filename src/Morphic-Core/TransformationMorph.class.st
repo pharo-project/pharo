@@ -18,11 +18,11 @@ TransformationMorph class >> example1 [
 	transformationMorph := TransformationMorph new asFlexOf: stringMorph.
 	transformationMorph angle: Float pi / 2.
 	transformationMorph position: 5@5.
-	transformationMorph openInWorld.
+	transformationMorph openInWorld
 ]
 
 { #category : #private }
-TransformationMorph >> adjustAfter: changeBlock [ 
+TransformationMorph >> adjustAfter: changeBlock [
 	"Cause this morph to remain cetered where it was before, and
 	choose appropriate smoothing, after a change of scale or rotation."
 
@@ -48,7 +48,7 @@ TransformationMorph >> asFlexOf: aMorph [
 TransformationMorph >> chooseSmoothing [
 	"Choose appropriate smoothing, after a change of scale or rotation."
 
-	smoothing := (self scale < 1.0 or: [self angle ~= (self angle roundTo: Float pi / 2.0)]) 
+	smoothing := (self scale < 1.0 or: [self angle ~= (self angle roundTo: Float pi / 2.0)])
 		ifTrue: [ 2]
 		ifFalse: [1]
 ]
@@ -60,7 +60,7 @@ TransformationMorph >> computeBounds [
 					(Rectangle merging:
 						(self submorphs collect: [:m | m fullBounds]))) truncated
 				expandBy: 1].
-	fullBounds := bounds.
+	fullBounds := bounds
 ]
 
 { #category : #'geometry - etoy' }
@@ -78,18 +78,18 @@ TransformationMorph >> drawOn: aCanvas [
 TransformationMorph >> embeddedWindowOrNil [
 
 	"answer nil for common morphs, yourself from system windows and first submorph for transformation morphs"
-	
-	| s | 
-	
-	(self submorphs size = 1) ifTrue: [ 
+
+	| s |
+
+	(self submorphs size = 1) ifTrue: [
 		s := self firstSubmorph.
 		s isSystemWindow ifTrue: [ ^ s ] ].
-	^ nil.
+	^ nil
 ]
 
 { #category : #geometry }
 TransformationMorph >> extent: newExtent [
-	
+
 	self adjustAfter:
 		[ | scaleFactor |scaleFactor := (self scale * newExtent r / self fullBounds extent r) max: 0.1.
 		self scale: (scaleFactor detentBy: 0.1 atMultiplesOf: 1.0 snap: false)]
@@ -97,10 +97,10 @@ TransformationMorph >> extent: newExtent [
 
 { #category : #accessing }
 TransformationMorph >> forwardDirection [
-	"Return the rendee's forward direction. 
+	"Return the rendee's forward direction.
 	If I have no rendee then return 0.0 degrees "
 	| rendee |
-	^ ( rendee := self renderedMorph) == self  
+	^ ( rendee := self renderedMorph) == self
 		ifTrue: [0.0 ]
 		ifFalse: [^ rendee forwardDirection]
 ]
@@ -108,7 +108,7 @@ TransformationMorph >> forwardDirection [
 { #category : #'dropping/grabbing' }
 TransformationMorph >> grabTransform [
 	"Return the transform for the receiver which should be applied during grabbing"
-	self renderedMorph isWorldMorph 
+	self renderedMorph isWorldMorph
 		ifTrue:[^owner ifNil:[IdentityTransform new] ifNotNil:[owner grabTransform]].
 	^owner ifNil:[self transform] ifNotNil:[owner grabTransform composedWithLocal: self transform]
 ]
@@ -123,7 +123,7 @@ TransformationMorph >> hasNoScaleOrRotation [
 TransformationMorph >> heading [
 	"End recusion when necessary."
 	| rendee |
-	^ (rendee := self renderedMorph) == self 
+	^ (rendee := self renderedMorph) == self
 		ifTrue: [ 0.0 ]
 		ifFalse: [rendee heading]
 ]
@@ -162,9 +162,9 @@ TransformationMorph >> prepareForScaling [
 ]
 
 { #category : #printing }
-TransformationMorph >> printOn: aStream [ 
+TransformationMorph >> printOn: aStream [
 	super printOn: aStream.
-	submorphs isEmpty 
+	submorphs isEmpty
 		ifTrue: [aStream nextPutAll: ' with no transformee!']
 		ifFalse: [aStream nextPutAll: ' on ' ; print: submorphs first ]
 ]
@@ -193,7 +193,7 @@ TransformationMorph >> removeFlexShell [
 	submorphs isEmpty ifTrue: [ ^ self delete ].
 	aPosition := (owner submorphIndexOf: self) ifNil: [ 1 ].
 	unflexed := self firstSubmorph.
-	self submorphs do: [ :m | 
+	self submorphs do: [ :m |
 		m position: self center - (m extent // 2).
 		owner addMorph: m asElementNumber: aPosition ].
 	oldHalo ifNotNil: [ oldHalo setTarget: unflexed ].
@@ -251,7 +251,7 @@ TransformationMorph >> scaleToMatch: aPoint [
 	scaleFactor := scaleFactor < 1.0
 		ifTrue: [scaleFactor detentBy: 0.05 atMultiplesOf: 0.25 snap: false]
 		ifFalse: [scaleFactor detentBy: 0.1 atMultiplesOf: 0.5 snap: false].
-	self adjustAfter:[self scale: ((scaleFactor min: 8.0) max: 0.1)].
+	self adjustAfter:[self scale: ((scaleFactor min: 8.0) max: 0.1)]
 ]
 
 { #category : #'geometry - etoy' }
@@ -261,7 +261,7 @@ TransformationMorph >> setDirectionFrom: aPoint [
 	inner == self ifTrue:[^self].
 	delta := (inner transformFromWorld globalPointToLocal: aPoint) - inner referencePosition.
 	degrees := delta degrees + 90.0.
-	self forwardDirection: (degrees \\ 360) rounded.
+	self forwardDirection: (degrees \\ 360) rounded
 ]
 
 { #category : #testing }
@@ -271,7 +271,7 @@ TransformationMorph >> stepTime [
 	| rendered |
 	rendered := self renderedMorph.
 	rendered = self ifTrue: [^super stepTime].	"Hack to avoid infinite recursion"
-	^rendered stepTime.
+	^rendered stepTime
 ]
 
 { #category : #geometry }
@@ -279,7 +279,7 @@ TransformationMorph >> transformedBy: aTransform [
 	self changed.
 	self transform: (self transform composedWithGlobal: aTransform).
 	self computeBounds.
-	self changed.
+	self changed
 ]
 
 { #category : #'geometry - etoy' }

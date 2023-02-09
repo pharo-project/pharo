@@ -12,12 +12,13 @@ EFMethodExpressionTest >> basicCommentFormatConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: true;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		indentExtraSpaces: 0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: true;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -28,15 +29,16 @@ EFMethodExpressionTest >> basicConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: false;
-		maxLineLength: 50;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -47,29 +49,30 @@ EFMethodExpressionTest >> bigMethodeConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements: false;
-		useBasicCommentFormat: false;
-		maxLineLength: 50;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		indentsForKeywords: 1;
-		keepBlockInMessage: true;
-		retainBlankLinesBetweenStatements: false;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		newLineBeforeFirstCascade: true;
-		newLineAfterCascade: true;
-		numberOfArgumentsForMultiLine: 4;
-		numberOfNewLinesAfterTemporaries: 1;
-		numberOfSpacesInsideBlock: 0;
-		lineUpBlockBrackets: true;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		newLineBeforeFirstKeyword:true;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  indentsForKeywords: 1;
+		  keepBlockInMessage: true;
+		  retainBlankLinesBetweenStatements: false;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  newLineBeforeFirstCascade: true;
+		  newLineAfterCascade: true;
+		  numberOfArgumentsForMultiLine: 4;
+		  numberOfNewLinesAfterTemporaries: 1;
+		  numberOfSpacesInsideBlock: 0;
+		  lineUpBlockBrackets: true;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  newLineBeforeFirstKeyword: true;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -80,22 +83,23 @@ EFMethodExpressionTest >> cascadeConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: false;
-		maxLineLength: 50;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		newLineBeforeFirstCascade:true;
-		newLineAfterCascade:true;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:10;
-		keepBlockInMessage:true;
-		retainBlankLinesBetweenStatements:false;
-		numberOfNewLinesAfterMethodSignature:1;
-		minimumNewLinesBetweenStatements: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  newLineBeforeFirstCascade: true;
+		  newLineAfterCascade: true;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 10;
+		  keepBlockInMessage: true;
+		  retainBlankLinesBetweenStatements: false;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  minimumNewLinesBetweenStatements: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -106,15 +110,16 @@ EFMethodExpressionTest >> newLineBetweenTopCommentsConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: false;
-		maxLineLength: 50;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -125,12 +130,13 @@ EFMethodExpressionTest >> noNewLineBetweenTopCommentsConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: true;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 0;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: true;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 0;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -141,12 +147,13 @@ EFMethodExpressionTest >> noNewLinesAfterCommentConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: true;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: true;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -157,13 +164,14 @@ EFMethodExpressionTest >> notBasicCommentFormatConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: false;
-		maxLineLength: 50;	
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -174,13 +182,14 @@ EFMethodExpressionTest >> oneNewLineAfterCommentConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat:false;
-		maxLineLength:50;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 2;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  numberOfNewLinesAfterMethodSignature: 1;
+  		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1; 
+		  numberOfNewLinesAfterMethodComment: 2;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -203,10 +212,11 @@ EFMethodExpressionTest >> signatureConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		numberOfNewLinesAfterMethodSignature: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -217,11 +227,12 @@ EFMethodExpressionTest >> signatureNotOnMultipleLinesConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		methodSignatureOnMultipleLines: false;
-		numberOfNewLinesAfterMethodSignature: 1;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  methodSignatureOnMultipleLines: false;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -232,12 +243,13 @@ EFMethodExpressionTest >> signatureOnMultipleLinesConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		methodSignatureOnMultipleLines: true;
-		selectorAndArgumentCombinedMaxSize: 2;
-		numberOfNewLinesAfterMethodSignature: 0;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  methodSignatureOnMultipleLines: true;
+		  selectorAndArgumentCombinedMaxSize: 2;
+		  numberOfNewLinesAfterMethodSignature: 0;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 0;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #configurations }
@@ -248,16 +260,17 @@ EFMethodExpressionTest >> spaceIndentConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInIndent: 10; "pay attention since there are dependency."
-		indentStyle: #space;
-		formatCommentCloseToStatements:false;
-		useBasicCommentFormat: false;
-		maxLineLength: 50;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		numberOfNewLinesAfterMethodSignature: 1;
-		numberOfNewLinesAfterMethodComment: 1;
-		indentExtraSpaces:0
+		  numberOfSpacesInIndent: 10;
+		  "pay attention since there are dependency."indentStyle: #space;
+		  formatCommentCloseToStatements: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  numberOfNewLinesAfterMethodSignature: 1;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
+		  numberOfNewLinesAfterMethodComment: 1;
+		  indentExtraSpaces: 0
 ]
 
 { #category : #tests }
@@ -322,7 +335,7 @@ EFMethodExpressionTest >> testBigMethod [
 	<pragma>
 	| tmp |
 	tmp := 1.
-	tmp to: 10 do: [:i | 
+	tmp to: 10 do: [:i |
 		Transcript
 			show: i;
 			cr;
@@ -394,7 +407,7 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 	source := self formatter format: expr.
 	self assert: source equals:
 'aMethod
-	1 to: 10 do: [:i | 
+	1 to: 10 do: [:i |
 		Transcript
 			show: i;
 			cr;
@@ -591,8 +604,9 @@ EFMethodExpressionTest >> twoNewLinesAfterSignatureConfiguration [
 			BIPrettyPrinterContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false;
-		numberOfNewLinesAfterMethodSignature: 3;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  numberOfNewLinesAfterMethodSignature: 3;
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 3;
+		  indentExtraSpaces: 0
 ]

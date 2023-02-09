@@ -15,20 +15,20 @@ Class {
 		'statementNodes',
 		'transformedNode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
 RBCreateCascadeRefactoring class >> combine: anInterval from: aSelector in: aClass [
-	^ self new 
+	^ self new
 		combine: anInterval from: aSelector in: aClass;
 		yourself
 ]
 
 { #category : #'instance creation' }
 RBCreateCascadeRefactoring class >> model: aNamespace combine: anInterval from: aSelector in: aClass [
-	^ self new 
-		model: aNamespace; 
+	^ self new
+		model: aNamespace;
 		combine: anInterval from: aSelector in: aClass;
 		yourself
 ]
@@ -78,7 +78,7 @@ RBCreateCascadeRefactoring >> findReceiverNode [
 	"Find the sequence to be combined."
 
 	| receiverNodes |
-	receiverNodes := statementNodes 
+	receiverNodes := statementNodes
 		collect: [ :each | each receiver ].
 	receiverNodes asSet size = 1
 		ifFalse: [ self refactoringError: 'All statements must have the same receiver' ].
@@ -117,7 +117,7 @@ RBCreateCascadeRefactoring >> findStatementNodes [
 RBCreateCascadeRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
+		ifNil: [ parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
 			].
 	^ parseTree
@@ -125,7 +125,7 @@ RBCreateCascadeRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBCreateCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [ 
+	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
 		self findSequenceNode; findStatementNodes; findReceiverNode.
 		true ])
 ]

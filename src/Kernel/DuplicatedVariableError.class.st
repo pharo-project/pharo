@@ -12,15 +12,16 @@ Class {
 }
 
 { #category : #signalling }
-DuplicatedVariableError class >> signalWith: existingVariable [ 
-	^self new 
+DuplicatedVariableError class >> signalWith: existingVariable [
+	^self new
 		variable: existingVariable;
 		signal: existingVariable name , ' is defined in ', existingVariable definingClass printString
 ]
 
 { #category : #testing }
 DuplicatedVariableError >> isResumable [
-        ^true
+
+	^ true
 ]
 
 { #category : #accessing }

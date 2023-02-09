@@ -1,7 +1,7 @@
 Class {
 	#name : #RBExtractMethodAndOccurrencesParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -12,14 +12,14 @@ RBExtractMethodAndOccurrencesParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractMethodAndOccurrencesParametrizedTest >> constructor [ 
+RBExtractMethodAndOccurrencesParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
 { #category : #running }
-RBExtractMethodAndOccurrencesParametrizedTest >> setUp [ 
+RBExtractMethodAndOccurrencesParametrizedTest >> setUp [
 	super setUp.
-	model := self extractMethodTestData.
+	model := self extractMethodTestData
 ]
 
 { #category : #'failure tests' }
@@ -39,14 +39,14 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #stringArg:streamArg:.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #stringArg:streamArg:) equals: (self parseMethod: 'stringArg: string streamArg: nameStream
+	self assert: (class parseTreeForSelector: #stringArg:streamArg:) equals: (self parseMethod: 'stringArg: string streamArg: nameStream
 
 	nameStream
 		nextPutAll: string;
 		nextPutAll: '' (''.
 	self problemCount printOn: nameStream.
 	nameStream nextPut: $)').
-	self assert: (class parseTreeFor: #displayName) equals: (self parseMethod: 'displayName
+	self assert: (class parseTreeForSelector: #displayName) equals: (self parseMethod: 'displayName
 
 	| nameStream string |
 	string := self name.
@@ -54,11 +54,11 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 	self stringArg: string streamArg: nameStream.
 	^ nameStream contents').
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeFor: #anotherMethod) equals: (self parseMethod: 'anotherMethod
+	self assert: (class parseTreeForSelector: #anotherMethod) equals: (self parseMethod: 'anotherMethod
 
 	| aStream |
 	aStream := WriteStream on: (String new: 128).
-	self stringArg: ''dfgdf'' streamArg: aStream').
+	self stringArg: ''dfgdf'' streamArg: aStream')
 ]
 
 { #category : #tests }
@@ -66,17 +66,17 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	refactoring := self createRefactoringWithModel: model
-		andArguments: { (282 to: 302) . #myMethod . class }.
+		andArguments: { (281 to: 301) . #myMethod . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #extractedMethod) equals: (self parseMethod: 'extractedMethod
+	self assert: (class parseTreeForSelector: #extractedMethod) equals: (self parseMethod: 'extractedMethod
 	^ currentChar isLetter.').
-	self assert: (class parseTreeFor: #myMethod) equals: (self parseMethod: 'myMethod
+	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: 'myMethod
 
 	| token |
 	token := (String new: 100) writeStream.
-	[ self extractedMethod ] whileTrue: [ 
+	[ self extractedMethod ] whileTrue: [
 		token nextPut: currentChar.
 		self methodWithArg: self extractedMethod.
 		self bar ].
@@ -87,11 +87,11 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	token := self extractedMethod example.
 	^ token contents').
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeFor: #exampleMethod) equals: (self parseMethod: 'exampleMethod
+	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: 'exampleMethod
 
 	^ self extractedMethod not').
 	class := model classNamed: #MyClassC.
-	self assert: (class parseTreeFor: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
+	self assert: (class parseTreeForSelector: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
 
 	(self extractedMethod and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
 	^ nil')

@@ -22,7 +22,7 @@ UnixResolverTest >> testXdgParseUserDirLineDocuments [
 	stream := '"$HOME/Documents"' readStream.
 	path := resolver xdgParseUserDirLine: stream.
 	relativePath := path relativeTo: resolver home.
-	self assert: relativePath pathString equals: 'Documents'.
+	self assert: relativePath pathString equals: 'Documents'
 ]
 
 { #category : #tests }
@@ -33,5 +33,5 @@ UnixResolverTest >> testXdgParseUserDirLineNotRoot [
 
 	stream := '"$HOME/"' readStream.
 	path := resolver xdgParseUserDirLine: stream.
-	self deny: path isRoot.
+	self deny: path isRoot
 ]

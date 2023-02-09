@@ -13,12 +13,12 @@ Class {
 { #category : #building }
 ClyClassBindingsResult >> fillWith: classes [
 	items := classes collect: [ :each |
-		each isVariableBinding 
-			ifTrue: [ each ] 
-			ifFalse: [ 
-				each isObsolete 
-					ifTrue: [ GlobalVariable 
-						key: (each name allButFirst: 'AnObsolete' size) asSymbol 
+		each isVariableBinding
+			ifTrue: [ each ]
+			ifFalse: [
+				each isObsolete
+					ifTrue: [ GlobalVariable
+						key: (each name allButFirst: 'AnObsolete' size) asSymbol
 						value: each]
 					ifFalse: [ each instanceSide binding ]]]
 ]

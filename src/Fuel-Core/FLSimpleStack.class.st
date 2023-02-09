@@ -23,7 +23,6 @@ FLSimpleStack class >> hintSize [
 
 { #category : #'instance creation' }
 FLSimpleStack class >> new [
-	
 	^ self new: self hintSize
 ]
 
@@ -62,6 +61,11 @@ FLSimpleStack >> isEmpty [
 ]
 
 { #category : #removing }
+FLSimpleStack >> peek [
+	^ array at: slotIndex - 1
+]
+
+{ #category : #removing }
 FLSimpleStack >> pop [
 	"Returns the first element and remove it from the stack."
 
@@ -85,4 +89,9 @@ FLSimpleStack >> push: anObject [
 	array size = slotIndex ifTrue: [ self grow ].
 	slotIndex := slotIndex + 1.
 	^ anObject.
+]
+
+{ #category : #accessing }
+FLSimpleStack >> size [
+	^ slotIndex - 1
 ]

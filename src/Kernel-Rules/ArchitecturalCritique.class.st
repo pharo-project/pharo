@@ -9,7 +9,7 @@ Class {
 
 { #category : #actions }
 ArchitecturalCritique >> actions [
-	^ super actions copyWith: 
+	^ super actions copyWith:
 		(RePropertyAction new
 			icon: (self iconNamed: #smallWindow);
 			description: 'Open dependency analyzer';

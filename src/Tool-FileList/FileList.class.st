@@ -47,11 +47,11 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString;
@@ -60,38 +60,38 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Undo' translated)
 		keyText: 'z';
 		selector: #undo;
-		iconName: #smallUndoIcon;
+		iconName: #smallUndo;
 		withSeparatorAfter.
 		
 	(aBuilder item: #'Copy' translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	(aBuilder item: #'Cut' translated)
 		keyText: 'x';
 		selector: #cut;
-		iconName: #smallCutIcon.
+		iconName: #smallCut.
 	(aBuilder item: #'Paste' translated)
 		keyText: 'v';
 		selector: #paste;
-		iconName: #smallPasteIcon.
+		iconName: #smallPaste.
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
-		iconName: #smallPasteIcon;
+		iconName: #smallPaste;
 		withSeparatorAfter .
 		
 	(aBuilder item: #'Do it' translated)
 		keyText: 'd';
 		selector: #doIt;
-		iconName: #smallDoItIcon.
+		iconName: #smallDoIt.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
-		iconName: #smallPrintItIcon.
+		iconName: #smallPrintIt.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
-		iconName: #smallInspectItIcon.
+		iconName: #smallInspectIt.
 	(aBuilder item: #'FileIn selection' translated)
 		keyText: 'G';
 		selector: #fileItIn;
@@ -100,11 +100,11 @@ FileList class >> contentMenu: aBuilder [
 	(aBuilder item: #'Accept' translated)
 		keyText: 's';
 		selector: #accept;
-		iconName: #smallOkIcon.
+		iconName: #smallOk.
 	(aBuilder item: #'Cancel' translated)
 		keyText: 'l';
 		selector: #cancel;
-		iconName: #smallCancelIcon;
+		iconName: #smallCancel;
 		withSeparatorAfter.
 
 ]
@@ -131,7 +131,7 @@ FileList class >> menuCommandOn: aBuilder [
 		order: 2;
 		action: [ self open ];
 		help: 'Browse the files present on your system.';
-		icon: self taskbarIcon
+		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
 { #category : #'morphic ui' }
@@ -252,7 +252,7 @@ FileList class >> suffixOf: aName [
 FileList class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallOpenIcon
+	^#smallOpen
 ]
 
 { #category : #'drag\'n\'drop' }
@@ -1692,9 +1692,7 @@ FileList >> viewContentsInWorkspace [
 
 	| aString |
 	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
-	Smalltalk tools workspace
-		openContents: aString
-		label: 'Workspace from ' , self reference basename
+	Smalltalk tools workspace openContents: aString
 ]
 
 { #category : #'volume list and pattern' }

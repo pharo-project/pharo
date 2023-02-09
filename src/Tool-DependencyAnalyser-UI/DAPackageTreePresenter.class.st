@@ -153,7 +153,7 @@ DAPackageTreePresenter >> openTreeFor: namesOfSelected [
 		          roots: (namesOfSelected collect: [ :name | 
 					           DAClassToDependencyNode new
 						           content: name;
-						           package: (relationGraph pdPackageFrom: name) ]);
+						           package: (relationGraph packageForClass: name) ]);
 		          children: [ :node | node buildChildren ];
 		          display: [ :node | node label ];
 		          displayIcon: [ :node | node icon ];

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBChildrenToSiblingsParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -12,7 +12,7 @@ RBChildrenToSiblingsParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBChildrenToSiblingsParametrizedTest >> constructor [ 
+RBChildrenToSiblingsParametrizedTest >> constructor [
 	^ #name:class:subclasses:
 ]
 
@@ -24,37 +24,37 @@ RBChildrenToSiblingsParametrizedTest >> setUp [
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testBadName [
-	
-	self shouldFail: (self createRefactoringWithArguments: 
-		{#'Obje ct' . RBLintRuleTestData . (Array 
+
+	self shouldFail: (self createRefactoringWithArguments:
+		{#'Obje ct' . RBLintRuleTestData . (Array
 					with: RBBasicLintRuleTestData
 					with: RBCompositeLintRuleTestData)})
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testExistingName [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Object . RBLintRuleTestData . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Object . RBLintRuleTestData . (Array
 						with: RBBasicLintRuleTestData
 						with: RBCompositeLintRuleTestData) }).
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Processor . RBLintRuleTestData . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Processor . RBLintRuleTestData . (Array
 						with: RBBasicLintRuleTestData
 						with: RBCompositeLintRuleTestData) })
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testInvalidSubclass [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Foo .  RBAbstractRefactoringTest . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Foo .  RBAbstractRefactoringTest . (Array
 					with: RBBasicLintRuleTestData
 					with: RBCompositeLintRuleTestData)})
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Foo . RBLintRuleTestData class . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Foo . RBLintRuleTestData class . (Array
 					with: RBBasicLintRuleTestData class
 					with: RBCompositeLintRuleTestData class)})
 ]
@@ -64,7 +64,7 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 	| refactoring class subclass superclass |
 	class := model classNamed: #ConcreteSuperclass.
 	subclass := model classNamed: #ConcreteSubclass.
-	refactoring := self createRefactoringWithModel: model andArguments: 
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ #AbstractSuperclass . class . (Array with: subclass)}.
 	self executeRefactoring: refactoring.
 	superclass := refactoring model classNamed: #AbstractSuperclass.
@@ -72,10 +72,10 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 	self assert: class classSide superclass equals: superclass classSide.
 	self assert: subclass superclass equals: superclass.
 	self assert: subclass classSide superclass equals: superclass classSide.
-	self assert: (superclass parseTreeFor: #same) equals: (self parseMethod: 'same ^self initialize isKindOf: AbstractSuperclass').
-	self assert: (superclass parseTreeFor: #different) equals: (self parseMethod: 'different self subclassResponsibility').
+	self assert: (superclass parseTreeForSelector: #same) equals: (self parseMethod: 'same ^self initialize isKindOf: AbstractSuperclass').
+	self assert: (superclass parseTreeForSelector: #different) equals: (self parseMethod: 'different self subclassResponsibility').
 	self
-		assert: (superclass parseTreeFor: #initialize)
+		assert: (superclass parseTreeForSelector: #initialize)
 		equals:
 			(self
 				parseMethod:
@@ -87,21 +87,21 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName2').
 	self assert: (superclass classSide directlyDefinesInstanceVariable: 'classInstVarName1').
 	self
-		assert: (superclass classSide parseTreeFor: #foo)
+		assert: (superclass classSide parseTreeForSelector: #foo)
 		equals:
 			(self
 				parseMethod:
 					'foo
 							^classInstVarName1 + ClassVarName1 + ClassVarName2').
 	self
-		assert: (superclass classSide parseTreeFor: #new)
+		assert: (superclass classSide parseTreeForSelector: #new)
 		equals:
 			(self
 				parseMethod:
 					'new
 							^super new initialize').
 	self
-		assert: (superclass classSide parseTreeFor: #bar)
+		assert: (superclass classSide parseTreeForSelector: #bar)
 		equals:
 			(self
 				parseMethod:
@@ -116,14 +116,14 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 	self deny: (class directlyDefinesMethod: #initialize).
 	self deny: (class classSide directlyDefinesMethod: #new).
 	self
-		assert: (class parseTreeFor: #different)
+		assert: (class parseTreeForSelector: #different)
 		equals:
 			(self
 				parseMethod:
 					'different
 							^instVarName1 + instVarName2').
 	self
-		assert: (class classSide parseTreeFor: #bar)
+		assert: (class classSide parseTreeForSelector: #bar)
 		equals:
 			(self
 				parseMethod:

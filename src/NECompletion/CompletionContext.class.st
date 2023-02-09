@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-CompletionContext class >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
+CompletionContext class >> engine: aCompletionEngine class: aClass source: aString position: anInteger [
 	^ self new
 		engine: aCompletionEngine
 		class: aClass
@@ -57,12 +57,12 @@ CompletionContext >> engine [
 ]
 
 { #category : #'initialize-release' }
-CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
-	class := aClass. 
+CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [
+	class := aClass.
 	source := aString.
 	position := anInteger.
 	engine := aCompletionEngine.
-	sorter := self class sorterClass new context: self.	
+	sorter := self class sorterClass new context: self.
 	self parseSource.
 	node := ast nodeForOffset: position.
 	completionToken := node completionToken: position
@@ -94,14 +94,14 @@ CompletionContext >> initEntries [
 ]
 
 { #category : #parsing }
-CompletionContext >> isWorkspace [
+CompletionContext >> isScripting [
 	^ engine notNil and: [ engine isScripting ]
 ]
 
 { #category : #accessing }
 CompletionContext >> message [
-	^self hasEntries 
-		ifFalse: ['no completions found'] 
+	^self hasEntries
+		ifFalse: ['no completions found']
 		ifTrue: [nil]
 ]
 
@@ -124,7 +124,7 @@ CompletionContext >> node [
 CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
-		noPattern: self isWorkspace;
+		noPattern: self isScripting;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	TypingVisitor new visitNode: ast
@@ -132,7 +132,7 @@ CompletionContext >> parseSource [
 
 { #category : #replacement }
 CompletionContext >> replaceTokenInEditorWith: aString [
-	
+
 	engine replaceTokenInEditorWith: aString
 ]
 

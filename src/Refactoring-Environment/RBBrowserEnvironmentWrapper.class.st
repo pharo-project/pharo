@@ -19,7 +19,7 @@ RBBrowserEnvironmentWrapper class >> new [
 ]
 
 { #category : #'instance creation' }
-RBBrowserEnvironmentWrapper class >> onEnvironment: anEnvironment [ 
+RBBrowserEnvironmentWrapper class >> onEnvironment: anEnvironment [
 	^(self basicNew)
 		initialize;
 		onEnvironment: anEnvironment;
@@ -52,14 +52,15 @@ RBBrowserEnvironmentWrapper >> description [
 { #category : #description }
 RBBrowserEnvironmentWrapper >> descriptionBasis [
 
-	^ String streamContents: [ :s | | basis |
-		basis := self basisObjects.
-		basis ifEmpty: [ ^ self ]
-			ifNotEmpty: [ s nextPutAll: ': ' ].
-		basis do: [ :each |
-			self printBasisObject: each on: s.
-			s nextPutAll: ', '].
-	s skip: -2]
+	| basis |
+ 	basis := self basisObjects.
+ 	basis ifEmpty: [ ^ '' ].
+ 	^ String streamContents: [ :s |
+ 		  s nextPutAll: ': '.
+ 		  basis do: [ :each |
+ 			  self printBasisObject: each on: s.
+ 			  s nextPutAll: ', ' ].
+ 		  s skip: -2 ]
 ]
 
 { #category : #private }
@@ -78,7 +79,7 @@ RBBrowserEnvironmentWrapper >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBBrowserEnvironmentWrapper >> includesPackage: aRPackage [ 
+RBBrowserEnvironmentWrapper >> includesPackage: aRPackage [
 	^ self packages includes: aRPackage
 ]
 
@@ -139,7 +140,7 @@ RBBrowserEnvironmentWrapper >> rootEnvironment [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [ 
+RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [
 	| interval |
 	interval := super selectionIntervalFor: aString.
 	^interval ifNotNil: [interval]
@@ -147,7 +148,7 @@ RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [
 ]
 
 { #category : #printing }
-RBBrowserEnvironmentWrapper >> storeOn: aStream [ 
+RBBrowserEnvironmentWrapper >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';
 		nextPutAll: self class name;

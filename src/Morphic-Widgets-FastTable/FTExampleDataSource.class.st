@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-FTExampleDataSource >> cellColumn: column row: rowIndex [ 
+FTExampleDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		color: (self colorFor: rowIndex);
 		cellInset: 5;
@@ -34,25 +34,25 @@ FTExampleDataSource >> iconFor: index [
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
 		ifTrue: [ class hasPassedTest
-				ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+				ifTrue: [ ^ self iconNamed: #testGreen ].
 			class hasFailedTest
-				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+				ifTrue: [ ^ self iconNamed: #testYellow ].
 			class hasErrorTest
-				ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
+				ifTrue: [ ^ self iconNamed: #testRed ].
+			^ self iconNamed: #testNotRun ].
 	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
 		ifTrue: [ class hasPassedTest
-				ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+				ifTrue: [ ^ self iconNamed: #testGreen].
 			class hasFailedTest
-				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+				ifTrue: [ ^ self iconNamed: #testYellow].
 			class hasErrorTest
-				ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
+				ifTrue: [ ^ self iconNamed: #testRed ].
+			^ self iconNamed: #testNotRun ].
 	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
-	^ class systemIcon
+		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
+	^ self iconNamed: class systemIconName
 ]

@@ -9,7 +9,7 @@ Class {
 
 { #category : #binding }
 OCDoitTest >> bindingOf: aSelector [
-	^(aSelector == #requestorVarForTesting) 
+	^(aSelector == #requestorVarForTesting)
 		ifTrue: [WorkspaceVariable key: aSelector value: 5 ]
 		ifFalse:  [nil]
 ]
@@ -20,7 +20,7 @@ OCDoitTest >> hasBindingOf: aSelector [
 ]
 
 { #category : #'interactive error protocol' }
-OCDoitTest >> notify: aString at: anInteger in: aString3 [ 
+OCDoitTest >> notify: aString at: anInteger in: aString3 [
 	"we ignore"
 ]
 
@@ -28,12 +28,12 @@ OCDoitTest >> notify: aString at: anInteger in: aString3 [
 OCDoitTest >> testDoItContextReadGlobal [
 	"we can read a global from a doit when executing against a context"
 
-	|  value |	
+	|  value |
 	value := OpalCompiler new
 		source: 'Object';
 		context: thisContext;
 		evaluate.
-		
+
 	self assert: value equals: Object
 ]
 
@@ -48,9 +48,9 @@ OCDoitTest >> testDoItContextReadIvar [
 		          source: 'ivarForTesting';
 		          noPattern: true;
 		          context: thisContext;
-		          compileDoit.
+		          compile.
 
-	value := method valueWithReceiver: self arguments: { thisContext }.
+	value := method valueWithReceiver: self arguments: #().
 	self assert: value equals: #someValue
 ]
 
@@ -59,23 +59,50 @@ OCDoitTest >> testDoItContextReadTemp [
 	| tempForTesting value |
 	"we can read this temp from a doit when executing against thisContext"
 	tempForTesting := #someValue.
-	
+
 	value := OpalCompiler new
 		source: 'tempForTesting';
 		context: thisContext;
 		evaluate.
-		
+
 	self assert: value equals: #someValue
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItExtraBindings [
+	"We can use extra bindings in a DoIt"
+
+	| result |
+	result := OpalCompiler new
+		bindings: {  #binding -> 1};
+		evaluate: 'binding'.
+	self assert: result equals: 1
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItHalt [
+
+	self should: [OpalCompiler new
+			evaluate: 'self halt'] raise: Halt
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItHaltBinding [
+	"We can evaluate with a halt and extra bindings"
+
+	self should: [OpalCompiler new
+			bindings: {#binding -> 1 };
+			evaluate: 'self halt'] raise: Halt
 ]
 
 { #category : #tests }
 OCDoitTest >> testDoItRequestorEvalError [
 	| value |
-	value  := OpalCompiler new 
+	value  := OpalCompiler new
 	requestor: self;
 	evaluate: '1('.
 
-	self assert: value isNil.
+	self assert: value isNil
 ]
 
 { #category : #tests }
@@ -88,7 +115,7 @@ OCDoitTest >> testDoItRequestorReadRequestorVar [
 		          noPattern: true;
 		          requestor: self;
 		          evaluate.
-		
+
 	self assert: value equals: 5
 ]
 
@@ -102,20 +129,21 @@ OCDoitTest >> testDoItRequestorShadow [
 		          noPattern: true;
 		          requestor: self;
 		          evaluate.
-		
+
 	self assert: value equals: nil
 ]
 
 { #category : #tests }
 OCDoitTest >> testDoitContextCheckClass [
 	"if we create a parse tree for a doit in a context, the class should be correctly set"
-	
-	| ast |
-	ast := OpalCompiler new
+
+	| ast method |
+	method := OpalCompiler new
 		source: 'tempForTesting';
 		noPattern: true;
 		context: thisContext;
-		parseDoIt.
-	"we expect that the class is set to the class of the context, which is self class"		
+		compile.
+	ast := method ast.
+	"we expect that the class is set to the class of the context, which is self class"
 	self assert: ast methodClass equals: self class
 ]

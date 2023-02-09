@@ -30,7 +30,7 @@ N.B: Users that redefine the FFI API (like TLGitCalloutTrait >> call:options:) a
 "
 Class {
 	#name : #FFICompilerPlugin,
-	#superclass : #OCCompilerASTPlugin,
+	#superclass : #OCStaticASTCompilerPlugin,
 	#classVars : [
 		'FFICalloutSelectors'
 	],
@@ -89,10 +89,10 @@ FFICompilerPlugin class >> uninstall [
 { #category : #'private - accessing' }
 FFICompilerPlugin >> ffiCalloutSelectors [
 
-	^self class ffiCalloutSelectors
+	^ self class ffiCalloutSelectors
 ]
 
-{ #category : #api }
+{ #category : #'private - transforming' }
 FFICompilerPlugin >> transform [
 	"While plugin is used to compile every method we can use it for two purposes:
 		- collect all ffiCallout selectors like ffiCall:, nbCall:
@@ -101,7 +101,7 @@ FFICompilerPlugin >> transform [
 	 
 	ast ensureCachedArgumentNames.
 	ast methodPropertyAt: #isFFIMethod put: true.
-	^ast
+	^ ast
 ]
 
 { #category : #api }

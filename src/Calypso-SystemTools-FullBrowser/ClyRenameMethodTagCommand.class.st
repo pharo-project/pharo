@@ -27,14 +27,14 @@ ClyRenameMethodTagCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClyRenameMethodTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #activation }
 ClyRenameMethodTagCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
 ]
 
@@ -51,7 +51,7 @@ ClyRenameMethodTagCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyRenameMethodTagCommand >> execute [
-	
+
 	methodGroup renameMethodTagTo: newName asSymbol
 ]
 
@@ -78,9 +78,9 @@ ClyRenameMethodTagCommand >> newName: anObject [
 { #category : #execution }
 ClyRenameMethodTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	methodGroup := aToolContext lastSelectedMethodGroup.
-	newName := aToolContext 
+	newName := aToolContext
 		requestSingleMethodTag: 'New name of protocol' suggesting: methodGroup name.
 	newName = methodGroup name ifTrue: [ CmdCommandAborted signal ]
 ]

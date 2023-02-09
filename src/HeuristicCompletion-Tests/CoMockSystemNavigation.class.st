@@ -19,6 +19,14 @@ CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 			ifTrue: [ aBlock value: e ] ]
 ]
 
+{ #category : #query }
+CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
+	globals do: [ :e |
+		(aString isEmpty or: [ e beginsWith: aString caseSensitive: cs ])
+			ifTrue: [ aBlock value: e ] ]
+]
+
 { #category : #accessing }
 CoMockSystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 

@@ -8,7 +8,8 @@ Class {
 	#superclass : #IRInstruction,
 	#instVars : [
 		'compiledBlock',
-		'copiedValues'
+		'copiedValues',
+		'outerContextNeeded'
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }
@@ -43,8 +44,20 @@ IRPushFullClosure >> indexForVarNamed: aName [
 	^ sourceNode ir indexForVarNamed: aName
 ]
 
-{ #category : #scoping }
-IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [ 
+{ #category : #accessing }
+IRPushFullClosure >> outerContextNeeded [
 
-	self copiedValues at: index put: aRemote.
+	^ outerContextNeeded ifNil: [ true ]
+]
+
+{ #category : #accessing }
+IRPushFullClosure >> outerContextNeeded: anObject [
+
+	outerContextNeeded := anObject
+]
+
+{ #category : #scoping }
+IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [
+
+	self copiedValues at: index put: aRemote
 ]

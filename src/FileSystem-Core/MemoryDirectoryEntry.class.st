@@ -70,11 +70,11 @@ MemoryDirectoryEntry >> modificationTime [
 MemoryDirectoryEntry >> posixPermissions [
 	"Answer the receivers posix permissions.
 	The memory file system doesn't have any access controls"
-	
+
 	^8r777
 ]
 
 { #category : #accessing }
-MemoryDirectoryEntry >> size [ 
+MemoryDirectoryEntry >> size [
 	^reference size
 ]

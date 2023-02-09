@@ -25,7 +25,7 @@ ClyMethodEditorCommand class >> canBeExecutedInClassEditor: aTool [
 
 { #category : #testing }
 ClyMethodEditorCommand class >> canBeExecutedInCodeMethodEditor: aTool [
-	
+
 	^ true
 ]
 
@@ -49,7 +49,7 @@ ClyMethodEditorCommand class >> isAbstract [
 { #category : #activation }
 ClyMethodEditorCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation for: ClyTextEditorContext
 ]
 
@@ -66,6 +66,6 @@ ClyMethodEditorCommand >> methodEditor: anObject [
 { #category : #execution }
 ClyMethodEditorCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	methodEditor := aToolContext tool
 ]

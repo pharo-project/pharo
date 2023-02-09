@@ -1,7 +1,7 @@
 Class {
 	#name : #RBExtractSetUpMethodParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -12,13 +12,13 @@ RBExtractSetUpMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractSetUpMethodParametrizedTest >> constructor [ 
+RBExtractSetUpMethodParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
 { #category : #'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testBadClass [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (78 to: 197) . #displayName . RBLintRuleTestData })
 ]
 
@@ -35,9 +35,9 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUp [
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBDataTest.
 
-	self assert: (class parseTreeFor: #testExample) equals: (self parseMethod: 'testExample
+	self assert: (class parseTreeForSelector: #testExample) equals: (self parseMethod: 'testExample
 	self assert: true').
-	self assert: (class parseTreeFor: #setUp) equals: (self parseMethod: 'setUp
+	self assert: (class parseTreeForSelector: #setUp) equals: (self parseMethod: 'setUp
 	super setUp.
 	self someMethod')
 ]
@@ -48,20 +48,20 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVar
 	refactoring := self createRefactoringWithArguments: { (36 to: 77) . #testExample1 . RBDataTest }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBDataTest.
-	self assert: (class instanceVariableNames includes: #aString). 
-	self assert: (class parseTreeFor: #testExample1) equals: (self parseMethod: 'testExample1
+	self assert: (class instanceVariableNames includes: #aString).
+	self assert: (class parseTreeForSelector: #testExample1) equals: (self parseMethod: 'testExample1
 	| aNumber |
 	aNumber := 4.
 	self assert: aString isNotEmpty.
 	self deny: (aString , aNumber asString) isEmpty.
 	self assert: true').
-	self assert: (class parseTreeFor: #testExample2) equals: (self parseMethod: 'testExample2
+	self assert: (class parseTreeForSelector: #testExample2) equals: (self parseMethod: 'testExample2
 	| aNumber |
 	aString := ''sa''.
 	self someMethod.
 	aNumber := 4.
 	self assert: aString isNotEmpty.').
-	self assert: (class parseTreeFor: #setUp) equals: (self parseMethod: 'setUp
+	self assert: (class parseTreeForSelector: #setUp) equals: (self parseMethod: 'setUp
 	super setUp.
 	aString := ''Some string''.
 	self someMethod.')
@@ -73,18 +73,18 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 	refactoring := self createRefactoringWithArguments: { (36 to: 93) . #testExample1 . RBDataTest }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBDataTest.
-	self assert: (class instanceVariableNames includes: #aString). 
-	self assert: (class instanceVariableNames includes: #aNumber). 
-	self assert: (class parseTreeFor: #testExample1) equals: (self parseMethod: 'testExample1
+	self assert: (class instanceVariableNames includes: #aString).
+	self assert: (class instanceVariableNames includes: #aNumber).
+	self assert: (class parseTreeForSelector: #testExample1) equals: (self parseMethod: 'testExample1
 	self assert: aString isNotEmpty.
 	self deny: (aString , aNumber asString) isEmpty.
 	self assert: true').
-	self assert: (class parseTreeFor: #testExample2) equals: (self parseMethod: 'testExample2
+	self assert: (class parseTreeForSelector: #testExample2) equals: (self parseMethod: 'testExample2
 	aString := ''sa''.
 	self someMethod.
 	aNumber := 4.
 	self assert: aString isNotEmpty.').
-	self assert: (class parseTreeFor: #setUp) equals: (self parseMethod: 'setUp
+	self assert: (class parseTreeForSelector: #setUp) equals: (self parseMethod: 'setUp
 	super setUp.
 	aString := ''Some string''.
 	self someMethod.
@@ -94,7 +94,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 { #category : #'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWhenIsNotFirstsSentences [
 
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (63 to: 77) . #testExample1 . RBDataTest })
 ]
 
@@ -106,5 +106,5 @@ RBExtractSetUpMethodParametrizedTest >> testModelExistingSetUpMethod [
 	class compile: 'setUp #setUp'
 		classified: #(#accessing).
 	self shouldFail: ( self createRefactoringWithModel: model
-		andArguments: { (14 to: 29) . #testExample . RBDataTest }).
+		andArguments: { (14 to: 29) . #testExample . RBDataTest })
 ]

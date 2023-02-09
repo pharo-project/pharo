@@ -40,7 +40,7 @@ SycExtractTempCommand >> asRefactorings [
 
 { #category : #accessing }
 SycExtractTempCommand >> defaultMenuIconName [ 
-	^ ##smallUpdateIcon
+	^ ##smallUpdate
 ]
 
 { #category : #accessing }

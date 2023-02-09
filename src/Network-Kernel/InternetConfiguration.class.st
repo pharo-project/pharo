@@ -16,7 +16,7 @@ Class {
 { #category : #'HTTP Proxy' }
 InternetConfiguration class >> configureHttpProxy [
 
-	self useHTTPProxy 
+	self useHTTPProxy
 		ifTrue: [ self setHttpProxy ]
 		ifFalse: [ NetworkSystemSettings useHTTPProxy: false ]
 ]
@@ -163,7 +163,7 @@ InternetConfiguration class >> getMailAccount [
 ]
 
 { #category : #lookups }
-InternetConfiguration class >> getMailPassword [ 
+InternetConfiguration class >> getMailPassword [
 	"Return the mail account Password "
 	"InternetConfiguration getMailPassword "
 
@@ -282,7 +282,7 @@ InternetConfiguration class >> getWhoisHost [
 	^self primitiveGetStringKeyedBy: 'WhoisHost'
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 InternetConfiguration class >> initialize [
 	SessionManager default
 		registerNetworkClassNamed: self name
@@ -297,7 +297,7 @@ InternetConfiguration class >> primitiveGetMacintoshFileTypeAndCreatorFrom: aFil
 { #category : #'system primitives' }
 InternetConfiguration class >> primitiveGetStringKeyedBy: aKey [
 	<primitive: 'primitiveGetStringKeyedBy' module: 'InternetConfigPlugin'>
-	^String new.
+	^String new
 ]
 
 { #category : #'HTTP Proxy' }
@@ -341,7 +341,7 @@ InternetConfiguration class >> useGopherProxy [
 InternetConfiguration class >> useHTTPProxy [
 	"Return true if UseHTTPProxy"
 	<script: 'self useHTTPProxy inspect'>
-	
+
 	^(self primitiveGetStringKeyedBy: 'UseHTTPProxy') = '1'
 ]
 

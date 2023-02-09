@@ -25,11 +25,6 @@ OCCompilerExceptionsTest >> compiling: sourceCode shouldRaise: exceptionClass [
 ]
 
 { #category : #compiling }
-OCCompilerExceptionsTest >> interactive [ 
-	^ true
-]
-
-{ #category : #compiling }
 OCCompilerExceptionsTest >> removeGeneratedMethods [
 
 	self class removeProtocol: 'generated'
@@ -52,7 +47,7 @@ OCCompilerExceptionsTest >> selectionInterval [
 OCCompilerExceptionsTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
-	SmalltalkImage compilerClass: OpalCompiler.
+	SmalltalkImage compilerClass: OpalCompiler
 ]
 
 { #category : #running }

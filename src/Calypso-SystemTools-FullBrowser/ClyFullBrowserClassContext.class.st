@@ -10,7 +10,7 @@ Class {
 { #category : #'selection strategy' }
 ClyFullBrowserClassContext class >> selectionStrategy [
 	<classAnnotation>
-	
+
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClass
 ]
 

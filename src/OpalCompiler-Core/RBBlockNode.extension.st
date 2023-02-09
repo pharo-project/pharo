@@ -6,6 +6,12 @@ RBBlockNode >> bcToASTCache [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBBlockNode >> firstPcForNode: aNode [
+
+	^ self bcToASTCache firstBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir [
 	"if the ir is not yet set, generate the IR for the whole method, it fills the property here"
 	self propertyAt: #ir ifAbsent: [ self methodNode generateIR  ].
@@ -15,7 +21,7 @@ RBBlockNode >> ir [
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir: aIRMethodNode [
 
-	^ self propertyAt: #ir put: aIRMethodNode.
+	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -26,7 +32,6 @@ RBBlockNode >> irInstruction [
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isClean [
 	"a block is clean if it has no escaping vars, has no non local return and its children are clean"
-	self isInlined ifTrue: [ ^ false ].
 	self scope hasEscapingVars ifTrue: [ ^ false ].
 	self hasBlockReturn ifTrue: [ ^ false ].
 	^ super isClean
@@ -55,9 +60,27 @@ RBBlockNode >> isInlinedLoop [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBBlockNode >> lastPcForNode: aNode [
+
+	^ self bcToASTCache lastBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> owningScope [
 
 	^ self scope ifNil: ["inlined" ^ parent owningScope]
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> pcsForNode: aNode [
+
+	^ self bcToASTCache pcsForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> resetBcToASTCache [
+
+	bcToASTCache := nil
 ]
 
 { #category : #'*OpalCompiler-Core' }

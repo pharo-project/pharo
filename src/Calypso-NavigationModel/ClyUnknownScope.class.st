@@ -26,7 +26,7 @@ ClyUnknownScope class >> reset [
 ]
 
 { #category : #queries }
-ClyUnknownScope >> adoptQuery: aQuery [ 
+ClyUnknownScope >> adoptQuery: aQuery [
 	^aQuery
 ]
 
@@ -44,7 +44,7 @@ ClyUnknownScope >> asUnifiedInstance [
 { #category : #initialization }
 ClyUnknownScope >> initialize [
 	super initialize.
-	
+
 	basisObjects := #()
 ]
 
@@ -64,6 +64,6 @@ ClyUnknownScope >> supportsQuery: aQuery [
 ]
 
 { #category : #converting }
-ClyUnknownScope >> withNewBasisObjects: aCollection [ 
+ClyUnknownScope >> withNewBasisObjects: aCollection [
 	^self
 ]

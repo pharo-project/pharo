@@ -50,13 +50,13 @@ CoCompletionEngine >> doItRequestor [
 CoCompletionEngine >> initialize [
 
 	super initialize.
-	contextClass := CoCompletionContext.
+	contextClass := CoCompletionContext
 ]
 
 { #category : #accessing }
 CoCompletionEngine >> variableBindingNames [
 
-	^ self doItRequestor 
+	^ self doItRequestor
 		ifNil: [ #() ]
 		ifNotNil: [ :requestor | requestor model variableBindings keys ]
 ]

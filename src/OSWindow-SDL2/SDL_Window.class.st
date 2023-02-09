@@ -19,12 +19,12 @@ SDL_Window class >> destroyWindow: handle [
 { #category : #finalization }
 SDL_Window class >> finalizeResourceData: aTuple [
 	| handle windowId |
-	
+
 	handle := aTuple first.
 	handle isNull ifTrue: [ ^ self ].
 
 	windowId := aTuple second.
-	OSSDL2Driver current unregisterWindowWithId: windowId.	
+	OSSDL2Driver current unregisterWindowWithId: windowId.
 	self destroyWindow: handle.
 	handle beNull
 ]
@@ -42,7 +42,7 @@ SDL_Window >> createDefaultRenderer [
 { #category : #rendering }
 SDL_Window >> createRenderer: driverIndex flags: flags [
 
-	^ (self primCreateRenderer: driverIndex flags: flags) initialize.
+	^ (self primCreateRenderer: driverIndex flags: flags) initialize
 ]
 
 { #category : #initialize }
@@ -156,6 +156,12 @@ SDL_Window >> setPositionX: x y: y [
 { #category : #accessing }
 SDL_Window >> setSizeW: w h: h [
 	^ self ffiCall: #( void SDL_SetWindowSize ( self , int w , int h ) )
+]
+
+{ #category : #'text input' }
+SDL_Window >> setTextInputRectangle: aSDL2Rectangle [
+
+	^ self ffiCall: #(void SDL_SetTextInputRect(SDL_Rect* aSDL2Rectangle))
 ]
 
 { #category : #'window management' }

@@ -17,19 +17,21 @@ Class {
 
 { #category : #testing }
 RBLiteralNode class >> isAbstract [
-		
+
 	^ self == RBLiteralNode
 ]
 
 { #category : #'instance creation' }
-RBLiteralNode class >> value: aValue [ 
-	^((aValue class == Array or: [aValue class == ByteArray]) 
+RBLiteralNode class >> value: aValue [
+	"we check here for Array and ByteArray explicitly, as subclasses should use RBLiteralNode.
+	using #isByteArray would be inherited by subclasses"
+	^((aValue class == Array or: [aValue class == ByteArray])
 		ifTrue: [RBLiteralArrayNode]
 		ifFalse: [RBLiteralValueNode]) value: aValue
 ]
 
 { #category : #comparing }
-RBLiteralNode >> = anObject [ 
+RBLiteralNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	^self class = anObject class
 ]
@@ -50,7 +52,7 @@ RBLiteralNode >> initialize [
 	super initialize.
 
 	start := 0.
-	stop := 0.
+	stop := 0
 ]
 
 { #category : #testing }
@@ -74,16 +76,16 @@ RBLiteralNode >> precedence [
 ]
 
 { #category : #'private - replacing' }
-RBLiteralNode >> replaceSourceFrom: aNode [ 
-	self addReplacement: (RBStringReplacement 
+RBLiteralNode >> replaceSourceFrom: aNode [
+	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self formattedCode)
 ]
 
 { #category : #'private - replacing' }
-RBLiteralNode >> replaceSourceWith: aNode [ 
-	self addReplacement: (RBStringReplacement 
+RBLiteralNode >> replaceSourceWith: aNode [
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)

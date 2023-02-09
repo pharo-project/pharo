@@ -35,9 +35,9 @@ ZeroDivide >> dividend: argument [
 	dividend := argument
 ]
 
-{ #category : #exceptiondescription }
+{ #category : #testing }
 ZeroDivide >> isResumable [
 	"Determine whether an exception is resumable."
 
-	^true
+	^ true
 ]

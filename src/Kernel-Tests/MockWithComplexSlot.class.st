@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialization }
 MockWithComplexSlot >> initialize [
-	
+
 	self class initializeSlots: self.
-	super initialize.
+	super initialize
 ]

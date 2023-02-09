@@ -53,7 +53,7 @@ BorderStyle >> = aBorderStyle [
 	^self species = aBorderStyle species
 		and:[self style == aBorderStyle style
 		and:[self width = aBorderStyle width
-		and:[self color = aBorderStyle color]]].
+		and:[self color = aBorderStyle color]]]
 ]
 
 { #category : #accessing }
@@ -104,20 +104,20 @@ BorderStyle >> frameOval: aRectangle on: aCanvas [
 BorderStyle >> framePolygon: vertices on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 	self framePolyline: vertices on: aCanvas.
-	self drawLineFrom: vertices last to: vertices first on: aCanvas.
+	self drawLineFrom: vertices last to: vertices first on: aCanvas
 ]
 
 { #category : #drawing }
-BorderStyle >> framePolyline: vertices on: aCanvas [ 
+BorderStyle >> framePolyline: vertices on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 
 	| prev next |
 	prev := vertices first.
 	2 to: vertices size
-		do: 
-			[:i | 
+		do:
+			[:i |
 			next := vertices at: i.
-			self 
+			self
 				drawLineFrom: prev
 				to: next
 				on: aCanvas.

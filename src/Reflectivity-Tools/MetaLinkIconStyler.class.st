@@ -19,7 +19,7 @@ MetaLinkIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 MetaLinkIconStyler >> iconFor: aNode [
-	^ self iconNamed: #smallDebugIcon
+	^ self iconNamed: #smallDebug
 ]
 
 { #category : #defaults }
@@ -30,6 +30,6 @@ MetaLinkIconStyler >> iconLabel: aNode [
 { #category : #testing }
 MetaLinkIconStyler >> shouldStyleNode: aNode [
 
-	^ aNode hasMetaLinks and: [ 
+	^ aNode hasMetaLinks and: [
 		  aNode links anySatisfy: [ :link | link hasOption: #optionStyler ] ]
 ]

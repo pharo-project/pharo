@@ -18,7 +18,7 @@ EpSessionEvent class >> imageName: anImageName [
 ]
 
 { #category : #'instance creation' }
-EpSessionEvent class >> new [ 
+EpSessionEvent class >> new [
 	^ self imageName: Smalltalk image imagePath
 ]
 
@@ -30,6 +30,6 @@ EpSessionEvent >> imageName [
 { #category : #initialization }
 EpSessionEvent >> initializeWith: anImageName [
 	self initialize.
-	
+
 	imageName := anImageName
 ]

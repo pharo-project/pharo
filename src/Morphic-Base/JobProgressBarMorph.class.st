@@ -28,14 +28,14 @@ JobProgressBarMorph class >> example [
 ]
 
 { #category : #settings }
-JobProgressBarMorph class >> interruptionSetting: aBuilder [ 
+JobProgressBarMorph class >> interruptionSetting: aBuilder [
 	<systemsettings>
-	
-	(aBuilder setting: #isInterruptible) 
+
+	(aBuilder setting: #isInterruptible)
 		label: 'Make progress bar interruptible';
 		default: true;
 		description: 'When enabled, add a button to progress bars to interrupt the action when clicked.';
-		parent: #progress; 
+		parent: #progress;
 		target: self;
 		order: 1
 ]
@@ -57,7 +57,7 @@ JobProgressBarMorph >> addInterruptionButton [
 
 	self isInterruptible ifFalse: [ ^ self ].
 
-	self addMorphBack: (self iconNamed: #stopIcon) asMorph
+	self addMorphBack: (self iconNamed: #stop) asMorph
 ]
 
 { #category : #accessing }
@@ -88,8 +88,8 @@ JobProgressBarMorph >> initialize [
 		listCentering: #center;
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap.
-		
-	self 
+
+	self
 		addMorphBack: progressBar;
 		addInterruptionButton
 ]

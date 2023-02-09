@@ -20,7 +20,7 @@ Class {
 		'oldCategory',
 		'category'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -69,7 +69,7 @@ RBMoveClassTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBMoveClassTransformation >> storeOn: aStream [ 
+RBMoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

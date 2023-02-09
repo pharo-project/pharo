@@ -22,15 +22,15 @@ ClyRemoveWatchCommand class >> contextMenuOrder [
 ClyRemoveWatchCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
-	^ SycAdvancedDebuggingMenuActivation 
+	^ SycAdvancedDebuggingMenuActivation
 			byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyRemoveWatchCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
-	^SycAdvancedDebuggingMenuActivation 
+
+	^SycAdvancedDebuggingMenuActivation
 		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 

@@ -75,7 +75,6 @@ HashTableSizes class >> basicAtLeast: lowerLimit [
 { #category : #'class initialization' }
 HashTableSizes class >> initialize [
 	"Throw away any previously-cached sizes, then compute and cache the sizes."
-	"self initialize"
 
 	sizes := nil.
 	self sizes.
@@ -94,7 +93,7 @@ HashTableSizes class >> numValuesPerPower [
 	"Answer the number of values that should be available in the cached table of primes
 	for each power-of-two range. A larger number allows closer sizing for pre-sized collections,
 	but results in a larger table that takes longer to search."
-	
+
 	^5 "Chosen so there will be fewer than 128 primes in the sizes table"
 ]
 
@@ -152,10 +151,10 @@ HashTableSizes >> computeSizes [
 	| logInterval |
 	logInterval := 0.5 / self numValuesPerPower.
 	2 + logInterval to: 30 by: 2 * logInterval do:
-			[ :exp | 
+			[ :exp |
 			(self goodPrimeForExp: exp)
 				ifNotNil:
-					[ :prime | 
+					[ :prime |
 					goodPrimes last ~~ prime
 						ifTrue: [ goodPrimes add: prime ] ] ].
 	^ goodPrimes asArray
@@ -164,10 +163,10 @@ HashTableSizes >> computeSizes [
 { #category : #private }
 HashTableSizes >> firstCandidateForExp: exp [
 	"Answer the smallest odd integer greater 2**exp."
-	
+
 	| n |
 	n := (2 raisedTo: exp) rounded.
-	^n odd 
+	^n odd
 		ifTrue: [n]
 		ifFalse: [n + 1]
 ]
@@ -197,12 +196,12 @@ HashTableSizes >> goodPrimeForExp: exp [
 HashTableSizes >> initialize [
 	"Can't use any hashed collections, if sizes is being initialized might get infinite recursion"
 
-	goodPrimes := OrderedCollection new.	
+	goodPrimes := OrderedCollection new.
 	"Must contain a value less than any prime to avoid extra work in binary search"
 	goodPrimes add: 0.
 	valuesNotToDivide := OrderedCollection new.
 	1 to: 8 do:
-			[ :k | 
+			[ :k |
 			| n |
 			n := 256 raisedToInteger: k.
 			-32 to: 32 do: [ :a | valuesNotToDivide add: n + a ] ].
@@ -212,17 +211,17 @@ HashTableSizes >> initialize [
 { #category : #private }
 HashTableSizes >> limitForExp: exp [
 	"Answer the largest integer that isn't too close to the next higher power of 2 than exp."
-	
+
 	| expLimit |
 	expLimit := exp ceiling - (0.5 / self numValuesPerPower).
-	^(2 raisedTo: expLimit) rounded.
+	^(2 raisedTo: expLimit) rounded
 ]
 
 { #category : #private }
 HashTableSizes >> numValuesPerPower [
 	"Answer the number of values that should be available in the cached table of primes
 	for each power-of-two range."
-	
+
 	^self class numValuesPerPower
 ]
 
@@ -233,8 +232,8 @@ HashTableSizes >> primeAlmostFactorsOf: anInteger [
 	| factors |
 	factors := OrderedCollection new.
 	anInteger even ifTrue: [factors add: 2].
-	3 to: anInteger // 2 + 2 by: 2 do: [:i | 
-		(i isPrime and: [| remainder | 
+	3 to: anInteger // 2 + 2 by: 2 do: [:i |
+		(i isPrime and: [| remainder |
 						remainder := anInteger \\ i.
 						remainder <= 1 or: [remainder = (i - 1)]])
 			ifTrue: [factors add: i]].

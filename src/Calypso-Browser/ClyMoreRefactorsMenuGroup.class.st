@@ -10,9 +10,9 @@ Class {
 { #category : #accessing }
 ClyMoreRefactorsMenuGroup >> buildContextMenu: aMenu [
 	aMenu addLine.
-	
+
 	super buildContextMenu: aMenu.
-	aMenu addLine.
+	aMenu addLine
 ]
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 { #category : #layout }
 DockingBarMenuLineMorph >> minHeight [
 	"Answer the receiver's minHeight"
-	
+
 	^owner isVertical
 				ifTrue: [ self theme menuBorderWidth ]
 				ifFalse: [10]
@@ -27,7 +27,7 @@ DockingBarMenuLineMorph >> minWidth [
 ]
 
 { #category : #'submorphs - accessing' }
-DockingBarMenuLineMorph >> noteNewOwner: aMorph [ 
+DockingBarMenuLineMorph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
 	self updateLayoutInDockingBar

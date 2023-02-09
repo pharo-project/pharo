@@ -15,4 +15,5 @@ You see there are plenty of opportunities to learn while improve Pharo
 To propose a bug fix or enhancement is easy and relatively well documented. 
 The following website contains a clear description of the change:
 	[http://pharo.org/contribute-propose-fix](http://pharo.org/contribute-propose-fix) 
+A tutorial is available at	[https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo](https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo)
  

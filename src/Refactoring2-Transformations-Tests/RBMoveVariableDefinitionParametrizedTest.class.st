@@ -1,18 +1,18 @@
 Class {
 	#name : #RBMoveVariableDefinitionParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBMoveVariableDefinitionParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveVariableDefinitionRefactoring };
+		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeTransformation };
 		yourself
 ]
 
 { #category : #accessing }
-RBMoveVariableDefinitionParametrizedTest >> constructor [ 
+RBMoveVariableDefinitionParametrizedTest >> constructor [
 	^ #bindTight:in:selector:
 ]
 
@@ -25,18 +25,18 @@ RBMoveVariableDefinitionParametrizedTest >> testInvalidSelector [
 { #category : #tests }
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ (19 to: 22) . RBRefactoryTestDataApp . #moveDefinition }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #moveDefinition) equals: (self parseMethod: 'moveDefinition
-								^(self collect: 
-										[:each | 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #moveDefinition) equals: (self parseMethod: 'moveDefinition
+								^(self collect:
+										[:each |
 										| temp |
 										temp := each printString.
-										temp , temp]) 
-									select: 
-										[:each | 
+										temp , temp])
+									select:
+										[:each |
 										| temp |
 										temp := each size.
 										temp odd]')
@@ -46,14 +46,14 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (48 to: 58) . RBRefactoryTestDataApp . #referencesConditionFor: }.
+		{ (47 to: 57) . RBRefactoryTestDataApp . #referencesConditionFor: }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
 								| environment  |
-								^(RBCondition withBlock: 
+								^(RBCondition withBlock:
 										[| association |association := Smalltalk globals associationAt: aClass name
 													ifAbsent: [self refactoringError: ''Could not find class''].
-										environment := (self environment referencesTo: association) 
+										environment := (self environment referencesTo: association)
 													| (self environment referencesTo: aClass name).
 										environment isEmpty])
 									errorMacro: aClass , '' is referenced.<n>Browse references?'';

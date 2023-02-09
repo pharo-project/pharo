@@ -218,7 +218,7 @@ RGEnvironmentQueryInterface >> resetBehaviorsDictionary [
 
 { #category : #classes }
 RGEnvironmentQueryInterface >> traitNamed: traitName [
-	"Retrieves an RGTrait object. The traitName could be theMetaClass name"
+	"Retrieves an RGTrait object. The traitName could be classSide name"
 	| trait |
 	
 	^(trait:= self classOrTraitNamed: traitName) isTrait

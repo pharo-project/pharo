@@ -57,29 +57,18 @@ TimeProfiler class >> fullReportMenuOn: aBuilder [
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		iconNamed: #smallFindIcon.
+		iconNamed: #smallFind.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon
-]
-
-{ #category : #'world menu' }
-TimeProfiler class >> menuCommandOn: aBuilder [ 
-	<worldMenu>
-	(aBuilder item: #'Time Profiler')
-		parent: #Profiling;  
-		order: 1;
-		icon: self taskbarIcon;
-		help: 'Profile the execution of a piece of code and navigate into the result.';
-		action: [TimeProfiler new open]
+		iconName: #smallCopy
 ]
 
 { #category : #'world menu' }
@@ -155,7 +144,7 @@ TimeProfiler class >> spyOnProcess: aProcess forMilliseconds: msecDuration [
 
 { #category : #icons }
 TimeProfiler class >> taskbarIconName [
-	^#smallProfileIcon
+	^#smallProfile
 ]
 
 { #category : #actions }
@@ -713,7 +702,7 @@ TimeProfiler >> toolBarOn: aWindow [
 						newRowIn: self
 						for:
 							{(AlphaImageMorph new
-								image: (self iconNamed: #smallDoItIcon)).
+								image: (self iconNamed: #smallDoIt)).
 							(uiTheme buttonLabelForText: 'Profile it' translated)});
 				yourself).
 			aWindow newToolSpacer.

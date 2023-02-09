@@ -31,7 +31,7 @@ TFStringType >> allocatedStrings [
 { #category : #writing }
 TFStringType >> callbackReadValue: anExternalAddress [
 
-	^ (self readValue: anExternalAddress) readStringUTF8
+	^ (self readValue: anExternalAddress) utf8StringFromCString
 ]
 
 { #category : #marshalling }
@@ -51,7 +51,7 @@ TFStringType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argume
 { #category : #marshalling }
 TFStringType >> emitMarshallFromPrimitive: anIRBuilder [ 
 
-	anIRBuilder send: #readStringUTF8
+	anIRBuilder send: #utf8StringFromCString
 ]
 
 { #category : #marshalling }

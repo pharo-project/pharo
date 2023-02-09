@@ -115,7 +115,7 @@ CmdCommand class >> defaultMenuIconName [
 
 { #category : #accessing }
 CmdCommand class >> defaultMenuItemName [
-	"It should be defined on instance side. 
+	"It should be defined on instance side.
 	But for compatibility default instance side method delegates to class side"
 	^self name
 ]
@@ -131,7 +131,7 @@ CmdCommand >> applyResultInContext: aToolContext [
 
 { #category : #converting }
 CmdCommand >> asCommandActivator [
-	^CmdCommandActivator new 
+	^CmdCommandActivator new
 		command: self;
 		context: CmdNullToolContext new;
 		activationStrategy: (CmdManualActivationStrategy withAnnotatedClass: self class)
@@ -139,16 +139,16 @@ CmdCommand >> asCommandActivator [
 
 { #category : #accessing }
 CmdCommand >> defaultMenuIcon [
-	"By default the result is nil which is not really nice 
+	"By default the result is nil which is not really nice
 	but it is already expected by many tools.	So it is easy to allow nil.
 	For simple cases users should implement class side method #defaultMenuIconName"
-	^self defaultMenuIconName ifNotNil: [ :iconName | 
+	^self defaultMenuIconName ifNotNil: [ :iconName |
 		Smalltalk ui iconNamed: iconName ]
 ]
 
 { #category : #accessing }
 CmdCommand >> defaultMenuIconName [
-	"For compatibility it delegates actual logic to class side. But it should be just 
+	"For compatibility it delegates actual logic to class side. But it should be just
 		^nil
 	Not really nice to return nil. But it is already expected by many tools.
 	So it is easy to allow nil.
@@ -161,15 +161,15 @@ CmdCommand >> defaultMenuIconName [
 { #category : #accessing }
 CmdCommand >> defaultMenuItemName [
 	"For compatibility default instance side method delegates to class side.
-	But normally it should just return 
+	But normally it should just return
 		self class name"
-	
+
 	^self class defaultMenuItemName
 ]
 
 { #category : #accessing }
 CmdCommand >> description [
-	"By default the result is nil which is not really nice 
+	"By default the result is nil which is not really nice
 	but it is already expected by many tools. So it is easy to allow nil"
 	^nil
 ]
@@ -190,8 +190,8 @@ CmdCommand >> readParametersFromContext: aToolContext [
 { #category : #accessing }
 CmdCommand >> secureMenuIcon [
 	"In case when icon should be mandatory property of command
-	users should call this method. It ensure Form instance 
+	users should call this method. It ensure Form instance
 	which will indicate missing icon as a problem"
-	
+
 	^self defaultMenuIcon ifNil: [ Smalltalk ui iconNamed: #error ]
 ]

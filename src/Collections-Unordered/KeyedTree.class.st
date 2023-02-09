@@ -94,7 +94,7 @@ KeyedTree >> formattedTextWithDescriptions: aKeyedTree [
 	"Answer a string or text representing the receiver with indentation and, possibly, markup.
 	Descriptions of each item are taken from the given tree with
 	the same key structure as the receiver."
-	
+
 	|str|
 	str := String new writeStream.
 	self putFormattedTextOn: str withDescriptions: aKeyedTree level: 0 indentString: '  '.
@@ -105,10 +105,10 @@ KeyedTree >> formattedTextWithDescriptions: aKeyedTree [
 KeyedTree >> merge: aKeyedTree [
 	"Merge the given tree into the receiver, overwriting or extending elements as needed."
 
-	aKeyedTree keysAndValuesDo: [ :k :v | 
+	aKeyedTree keysAndValuesDo: [ :k :v |
 			| subtree |
 			(v isKindOf: KeyedTree)
-				ifTrue: [ 
+				ifTrue: [
 					subtree := self at: k ifAbsentPut: [ v species new ].
 					(subtree isKindOf: KeyedTree)
 						ifFalse: [ subtree := self at: k put: v species new ].
@@ -123,7 +123,7 @@ KeyedTree >> postCopy [
 	Copy any subtrees too!"
 
 	array := array
-		collect: [ :assoc | 
+		collect: [ :assoc |
 			assoc
 				ifNotNil: [ Association
 						key: assoc key
@@ -137,7 +137,7 @@ KeyedTree >> postCopy [
 KeyedTree >> putFormattedTextOn: aStream level: indentLevel indentString: aString [
 	"Place a description of the receiver on the given stream with the given indentation level."
 
-	
+
 	(self keys asSortedCollection: self sortBlock) do: [:k | | v |
 		indentLevel timesRepeat: [aStream nextPutAll: aString].
 		aStream nextPutAll: k printString.
@@ -155,7 +155,7 @@ KeyedTree >> putFormattedTextOn: aStream level: indentLevel indentString: aStrin
 KeyedTree >> putFormattedTextOn: aStream withDescriptions: aKeyedTree level: indentLevel indentString: aString [
 	"Place a print of the receiver and associated description on the given stream with the given indentation level."
 
-	
+
 	(self keys asSortedCollection: self sortBlock) do: [:k | | v |
 		indentLevel timesRepeat: [aStream nextPutAll: aString].
 		aStream nextPutAll: k printString.

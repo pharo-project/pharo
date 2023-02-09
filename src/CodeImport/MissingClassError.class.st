@@ -36,7 +36,7 @@ MissingClassError class >> className: aString [
 { #category : #actions }
 MissingClassError >> asResumable [
 	"When sent to the receiver, this one turns into a resumable exception allowing for example to define missing class on the fly."
-	resumable := true.
+	resumable := true
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ MissingClassError >> className: aString [
 { #category : #actions }
 MissingClassError >> defineClass [
 
-	self class classInstaller make: [ :aBuilder | 
+	self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: className asSymbol;
 			superclassName: self superclassName;

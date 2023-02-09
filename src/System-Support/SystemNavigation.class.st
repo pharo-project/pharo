@@ -40,8 +40,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 { #category : #query }
 SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
+	self allClassNamesStartingWith: aString do: aBlock caseSensitive: true
+]
+
+{ #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
 	self allClassesDo: [ :e |
-		(e name beginsWith: aString)
+		(e name beginsWith: aString caseSensitive: cs)
 			ifTrue: [ aBlock value: e name ] ]
 ]
 
@@ -107,6 +113,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 
 { #category : #query }
 SystemNavigation >> allMethods [
+	"all methods, including copies from Traits"
 	^ self environment allMethods
 ]
 
@@ -229,17 +236,33 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : #query }
-SystemNavigation >> allUnimplementedCalls [
+SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
+
+	Symbol allSymbolTablesDo: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
+{ #category : #query }
+SystemNavigation >> allSentNotImplementedSelectors [
 
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
-	^ self allMethods select: [ :meth | 
+	^ self allMethods select: [ :method |
 		  | ignored |
-		  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
-			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-			             ifNil: [ #(  ) ].
-		  meth messages anySatisfy: [ :m | 
+		  ignored := method allIgnoredNotImplementedSelectors.
+
+		  method messages anySatisfy: [ :m |
 			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
+]
+
+{ #category : #query }
+SystemNavigation >> allUnimplementedCalls [
+	"call is not a good term here, these are selectors"
+	self
+		deprecated: 'Changed selector for coherency'
+		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentNotImplementedSelectors'.
+	^self allSentNotImplementedSelectors
 ]
 
 { #category : #query }
@@ -305,6 +328,12 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 SystemNavigation >> isUnsentMessage: selector [
 	^ self allBehaviors
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
+]
+
+{ #category : #query }
+SystemNavigation >> methods [
+	"all methods, but without those installed by Traits"
+	^ self environment methods
 ]
 
 { #category : #'identifying obsoletes' }

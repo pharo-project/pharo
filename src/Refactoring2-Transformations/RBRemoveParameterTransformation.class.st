@@ -5,11 +5,11 @@ Class {
 		'parameterIndex',
 		'argument'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #'instance creation' }
-RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		removeParameter: aString
@@ -20,9 +20,9 @@ RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aS
 
 { #category : #'instance creation' }
 RBRemoveParameterTransformation class >> removeParameter: aString in: aClass selector: aSelector [
-	^ self new 
-		removeParameter: aString 
-		in: aClass 
+	^ self new
+		removeParameter: aString
+		in: aClass
 		selector: aSelector
 ]
 
@@ -45,7 +45,7 @@ RBRemoveParameterTransformation >> getNewSelector [
 	| tree |
 	(class directlyDefinesMethod: oldSelector)
 		ifFalse: [ self refactoringFailure: 'Method doesn''t exist' ].
-	tree := class parseTreeFor: oldSelector.
+	tree := class parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
 	argument ifNil:[ self refactoringFailure: 'This method does not have an argument' ].
 	parameterIndex := tree argumentNames indexOf: argument ifAbsent: [ self refactoringFailure: 'Select a parameter!!' ].
@@ -58,7 +58,7 @@ RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 
 	| tree |
 
-	tree := each parseTreeFor: oldSelector.
+	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
@@ -69,22 +69,22 @@ RBRemoveParameterTransformation >> myConditions [
 	imps := self model allImplementorsOf: oldSelector.
 	self getNewSelector.
 	^imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into: 
-			[:cond :each | 
-			cond 
+		into:
+			[:cond :each |
+			cond
 				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	argument := aString
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> storeOn: aStream [ 
+RBRemoveParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

@@ -78,8 +78,13 @@ DAMessageSendAnalyzer >> missingMethods [
 
 { #category : #computing }
 DAMessageSendAnalyzer >> missingMethodsImplementedIn: aPackageName [
-	^ (RPackageOrganizer default packageNamed: aPackageName) selectors
-		intersection: self missingMethods
+
+	| rPackage |
+	rPackage := RPackageOrganizer default packageNamed: aPackageName ifAbsent: [
+		            DAUnknownManuallyResolvedPackage signalOn: aPackageName.
+		            ^ self missingMethods ].
+
+	^ rPackage selectors intersection: self missingMethods
 ]
 
 { #category : #computing }
@@ -130,7 +135,11 @@ DAMessageSendAnalyzer >> possibleDeadCode [
 
 { #category : #accessing }
 DAMessageSendAnalyzer >> rPackage [
-	^ packageAnalysis rPackageSet packages detect: [ :each | each packageName = self packageName ]
+	"Answer a <RPackage> matching the receiver's package name. If we are browsing an unloaded package, then answer a virtual RPackage so the message send analyzer could preserve its behavior with loaded packages in #manuallyResolvedDependencies"
+
+	^ packageAnalysis rPackageSet packages
+		ifNotEmpty: [ : rPackages | rPackages detect: [ :each | each packageName = self packageName ] ]
+		ifEmpty: [ RPackage named: 'Virtual' , self packageName ]
 ]
 
 { #category : #computing }

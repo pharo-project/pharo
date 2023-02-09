@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'className'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -36,7 +36,7 @@ RBDeprecateClassTransformation class >> model: aRBModel class: aClassName [
 { #category : #executing }
 RBDeprecateClassTransformation >> buildTransformations [
 
-	^ transformations ifNil: [ 
+	^ transformations ifNil: [
 		transformations := OrderedCollection
 			with: (RBAddMethodTransformation
 					sourceCode: (String streamContents: [ :code | code
@@ -50,7 +50,7 @@ RBDeprecateClassTransformation >> buildTransformations [
 					in: (className, ' class') asSymbol
 					withProtocols: {#deprecation})
 			with: (RBAddMethodTransformation
-					sourceCode: (String streamContents: [ :code | code 
+					sourceCode: (String streamContents: [ :code | code
 						nextPutAll: 'deprecated';
 						nextPutAll: String cr;
 						nextPutAll: String tab;
@@ -77,7 +77,7 @@ RBDeprecateClassTransformation >> class: aClassName [
 ]
 
 { #category : #printing }
-RBDeprecateClassTransformation >> storeOn: aStream [ 
+RBDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

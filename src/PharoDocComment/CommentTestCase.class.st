@@ -25,15 +25,10 @@ CommentTestCase class >> testSelectors [
 ]
 
 { #category : #accessing }
-CommentTestCase >> currentValue [
-	^ docCommentNode expression evaluate
-]
-
-{ #category : #accessing }
 CommentTestCase >> docCommentNode: aDocComment [
 
 	docCommentNode := aDocComment.
-	testSelector := #testIt.
+	testSelector := #testIt
 ]
 
 { #category : #accessing }
@@ -41,9 +36,10 @@ CommentTestCase >> drTestsBrowse [
  	docCommentNode browse
 ]
 
-{ #category : #accessing }
-CommentTestCase >> expectedValue [
-	^ docCommentNode result evaluate
+{ #category : #'public access' }
+CommentTestCase >> evaluate [
+
+	^ docCommentNode expression evaluate
 ]
 
 { #category : #accessing }
@@ -64,5 +60,9 @@ CommentTestCase >> printString [
 
 { #category : #tests }
 CommentTestCase >> testIt [
-	self assert: self expectedValue equals: self currentValue
+
+	| value |
+	value := self evaluate.
+	self assert: value isAssociation.
+	self assert: value key equals: value value
 ]

@@ -76,7 +76,7 @@ FileDirectoryWrapper >> icon [
 		ifTrue: [ Smalltalk ui icons smallRemoteOpenIcon]
 		ifFalse: [Smalltalk ui icons smallOpenIcon]"
 
-	^ self iconNamed: #smallOpenIcon
+	^ self iconNamed: #smallOpen
 ]
 
 { #category : #accessing }

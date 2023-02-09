@@ -17,7 +17,7 @@ Error class >> captureIfSignalledWhenStepping [
 	^self == Error
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 Error >> isResumable [
 	"Determine whether an exception is resumable."
 

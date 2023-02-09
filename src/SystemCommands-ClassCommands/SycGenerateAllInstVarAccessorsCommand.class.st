@@ -11,11 +11,12 @@ Class {
 SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 
 	| refactorings |
-	refactorings := classes flatCollect: [:eachClass |
+	refactorings := classes flatCollect: [ :eachClass |
 		eachClass	 slots collect: [:var | 
-			var createRefactoring: RBCreateAccessorsForVariableRefactoring for: eachClass]].
-	refactorings do: [ :each | 
-		each classVariable: false].
+				|accesorRefactoring|
+			accesorRefactoring :=  RBAddVariableAccessorTransformation instanceVariable: var name class:  eachClass .
+			accesorRefactoring asRefactoring
+			]].
 	^refactorings
 ]
 

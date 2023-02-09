@@ -2,7 +2,7 @@ Extension { #name : #RGMethod }
 
 { #category : #'*Calypso-Ring' }
 RGMethod >> astForStylingInCalypso [
-	"this method simplified remote method styling. 
+	"this method simplified remote method styling.
 	Remote proxy will redefine it by building AST on client side"
 	^self ast
 ]
@@ -18,7 +18,7 @@ RGMethod >> hasPragmaNamed: aSymbol [
 ]
 
 { #category : #'*Calypso-Ring' }
-RGMethod >> hasSelector: aSelector [ 
+RGMethod >> hasSelector: aSelector [
 	"Answers true if the method refers to the selector"
 	(self selector = aSelector) ifTrue: [ ^ true ].
 	^ self sendsSelector: aSelector
@@ -43,7 +43,7 @@ RGMethod >> isDefinedInPackage: aPackage [
 ]
 
 { #category : #'*Calypso-Ring' }
-RGMethod >> isInstalled [ 
+RGMethod >> isInstalled [
 	^ true
 ]
 
@@ -72,16 +72,16 @@ RGMethod >> pragmas [
 ]
 
 { #category : #'*Calypso-Ring' }
-RGMethod >> readsRef: literalAssociation [ 
+RGMethod >> readsRef: literalAssociation [
 	"Answer whether the receiver loads the argument."
-	^ self ast allChildren anySatisfy: [:each | 
+	^ self ast allChildren anySatisfy: [:each |
 		each isVariable and: [ each name = literalAssociation key ]]
-	
-	"self ast nodesDo: [ :node | 
+
+	"self ast nodesDo: [ :node |
 		node isVariable and: [
-			node parent isAssignment not and: [  
+			node parent isAssignment not and: [
 				(node binding =  literalAssociation)
-					 		ifTrue: [^true]]]]. 
+					 		ifTrue: [^true]]]].
 	^false"
 ]
 
@@ -99,7 +99,7 @@ RGMethod >> sendNodes [
 ]
 
 { #category : #'*Calypso-Ring' }
-RGMethod >> sendsSelector: aSymbol [ 	
+RGMethod >> sendsSelector: aSymbol [
 	"Answer whether the method sends a particular selector"
 	^ self messages includes: aSymbol
 ]
@@ -110,25 +110,25 @@ RGMethod >> variableNodes [
 ]
 
 { #category : #'*Calypso-Ring' }
-RGMethod >> writesRef: literalAssociation [ 
+RGMethod >> writesRef: literalAssociation [
 	"Answer whether the receiver stores into the argument."
-	self ast nodesDo: [ :node | 
+	self ast nodesDo: [ :node |
 		node isVariable and: [
-			node parent isAssignment and: [  
-				(node parent variable = node) and: [  
+			node parent isAssignment and: [
+				(node parent variable = node) and: [
 					(node binding =  literalAssociation)
-					 		ifTrue: [^true]]]]]. 
+					 		ifTrue: [^true]]]]].
 	^false
 ]
 
 { #category : #'*Calypso-Ring' }
 RGMethod >> writesSlot: aSlot [
-	self ast nodesDo: [ :node | 
+	self ast nodesDo: [ :node |
 		node isVariable and: [
-			node parent isAssignment and: [  
-				(node parent variable = node) and: [  
+			node parent isAssignment and: [
+				(node parent variable = node) and: [
 					node isInstanceVariable and: [
 						(node binding ==  aSlot)
-					 		ifTrue: [^true]]]]]]. 
+					 		ifTrue: [^true]]]]]].
 	^false
 ]

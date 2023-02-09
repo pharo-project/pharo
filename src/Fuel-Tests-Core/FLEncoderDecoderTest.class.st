@@ -25,14 +25,13 @@ FLEncoderDecoderTest >> setUp [
 	super setUp.
 	
 	stream := ReadWriteStream on: ByteArray new.
-	encoder := FLEncoder
-		on: stream
-		globalEnvironment: self class environment.
+	FLSerializer new
+		streamFactory: [ stream ];
+		useDuring: [ encoder := FLEncoder new ].
 	
-	decoder := FLDecoder
-		on: stream
-		migrations: #()
-		globalEnvironment: self class environment
+	FLMaterializer new
+		streamFactory: [ stream ];
+		useDuring: [ decoder := FLDecoder new ]
 ]
 
 { #category : #tests }

@@ -226,7 +226,7 @@ FFIFunctionParserTest >> testParseFunction2 [
 			sender: sender."
 		method1 := builder generateMethodFromSpec: functionSpec1.
 		method2 := builder generateMethodFromSpec: functionSpec2.
-		self assert: method1 bytecode equals: method2 bytecode.
+		self assert: method1 bytecodes equals: method2 bytecodes.
 		self assert: (method1 literals allButFirst: 2) equals: (method1 literals allButFirst: 2)].
 
 ]

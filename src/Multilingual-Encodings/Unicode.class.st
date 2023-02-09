@@ -386,27 +386,27 @@ Unicode class >> charFromUnicode: uniCode [
 { #category : #'class methods' }
 Unicode class >> compoundTextFinalChar [
 
-	self shouldNotImplement.
+	self shouldNotImplement
 ]
 
 { #category : #'class methods' }
 Unicode class >> compoundTextSequence [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #'class methods' }
 Unicode class >> digitValueOf: char [
 	"Answer 0-9 if the receiver is $0-$9, 10-35 if it is $A-$Z, and < 0
 	otherwise. This is used to parse literal numbers of radix 2-36."
-	
+
 	| value |
 	value := char charCode.
-	value <= $9 asciiValue 
+	value <= $9 asciiValue
 		ifTrue: [^value - $0 asciiValue].
-	value >= $A asciiValue 
+	value >= $A asciiValue
 		ifTrue: [ value <= $Z asciiValue ifTrue: [^value - $A asciiValue + 10].
-				(value >= $a asciiValue and: [value <= $z asciiValue]) 
+				(value >= $a asciiValue and: [value <= $z asciiValue])
 					ifTrue: [^value - $a asciiValue + 10]].
 
 	value > (DecimalProperty size - 1) ifTrue: [^ -1].
@@ -416,42 +416,42 @@ Unicode class >> digitValueOf: char [
 { #category : #'class methods' }
 Unicode class >> generalCategory [
 
-	^ GeneralCategory.
+	^ GeneralCategory
 ]
 
 { #category : #'class methods' }
 Unicode class >> generalCategoryComment [
 "
-Lu Letter, Uppercase 
-Ll Letter, Lowercase 
-Lt Letter, Titlecase 
-Lm Letter, Modifier 
-Lo Letter, Other 
-Mn Mark, Non-Spacing 
-Mc Mark, Spacing Combining 
-Me Mark, Enclosing 
-Nd Number, Decimal 
-Nl Number, Letter 
-No Number, Other 
-Pc Punctuation, Connector 
-Pd Punctuation, Dash 
-Ps Punctuation, Open 
-Pe Punctuation, Close 
-Pi Punctuation, Initial quote (may behave like Ps or Pe depending on usage) 
-Pf Punctuation, Final quote (may behave like Ps or Pe depending on usage) 
-Po Punctuation, Other 
-Sm Symbol, Math 
-Sc Symbol, Currency 
-Sk Symbol, Modifier 
-So Symbol, Other 
-Zs Separator, Space 
-Zl Separator, Line 
-Zp Separator, Paragraph 
-Cc Other, Control 
-Cf Other, Format 
-Cs Other, Surrogate 
-Co Other, Private Use 
-Cn Other, Not Assigned (no characters in the file have this property) 
+Lu Letter, Uppercase
+Ll Letter, Lowercase
+Lt Letter, Titlecase
+Lm Letter, Modifier
+Lo Letter, Other
+Mn Mark, Non-Spacing
+Mc Mark, Spacing Combining
+Me Mark, Enclosing
+Nd Number, Decimal
+Nl Number, Letter
+No Number, Other
+Pc Punctuation, Connector
+Pd Punctuation, Dash
+Ps Punctuation, Open
+Pe Punctuation, Close
+Pi Punctuation, Initial quote (may behave like Ps or Pe depending on usage)
+Pf Punctuation, Final quote (may behave like Ps or Pe depending on usage)
+Po Punctuation, Other
+Sm Symbol, Math
+Sc Symbol, Currency
+Sk Symbol, Modifier
+So Symbol, Other
+Zs Separator, Space
+Zl Separator, Line
+Zp Separator, Paragraph
+Cc Other, Control
+Cf Other, Format
+Cs Other, Surrogate
+Co Other, Private Use
+Cn Other, Not Assigned (no characters in the file have this property)
 "
 ]
 
@@ -460,18 +460,18 @@ Unicode class >> initialize [
 	"This class should be initialized using the textual unicode definitions that can be found in
 	http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
 	http://www.unicode.org/Public/UNIDATA/CaseFolding.txt
-	
+
 	To do that, this class posesses the class side methods:
 	#parseCaseMappingFrom:
 	#parseUnicodeDataFrom:
-	
+
 	The initialization order is:
 	1) tag constants
 	2) unicode data
 	3) case mappings
 	"
 	"If you are in a full image, you can try the following Zinc scripts to download the file automatically:
-	
+
 	UIManager default informUserDuring: [ :bar| | result |
             bar label: 'Downloading Unicode data'.
             (result := ZnEasy get: 'http://www.unicode.org/Public/UNIDATA/UnicodeData.txt') isSuccess
@@ -486,16 +486,16 @@ Unicode class >> initialize [
 		bar label: 'Updating Case Mappings'.
 		self parseCaseMappingFrom: result contents readStream ].
 	"
-	
+
 	EncodedCharSet declareEncodedCharSet: self atIndex: 0+1.
-	EncodedCharSet declareEncodedCharSet: self atIndex: 256.
+	EncodedCharSet declareEncodedCharSet: self atIndex: 256
 ]
 
 { #category : #'class initialization' }
 Unicode class >> initializeTagConstants [
 	" Unicode initializeTagConstants "
 	(self classPool keys
-		select: [:sym | sym size = 2 
+		select: [:sym | sym size = 2
 						and: [sym first isUppercase and: [sym last isLowercase]]]) asSortedCollection
 		inject: 1
 		into: [:index :sym | sym = #Cn
@@ -521,7 +521,7 @@ Unicode class >> isCasedLetter: char [
 { #category : #'class methods' }
 Unicode class >> isCharset [
 
-	^ false.
+	^ false
 ]
 
 { #category : #'character classification' }
@@ -535,7 +535,7 @@ Unicode class >> isConnectorPunctuation: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isControlOther: char [ 
+Unicode class >> isControlOther: char [
 	^ self is: char inCategory: Cc
 ]
 
@@ -561,7 +561,7 @@ Unicode class >> isDigit: char [
 
 { #category : #'character classification' }
 Unicode class >> isEnclosingMark: char [
-	
+
 	^ self is: char inCategory: Me
 ]
 
@@ -571,7 +571,7 @@ Unicode class >> isFinalQuote: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isFormatOther: char [ 
+Unicode class >> isFormatOther: char [
 	^ self is: char inCategory: Cf
 ]
 
@@ -590,7 +590,7 @@ Unicode class >> isLetter: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isLetterModifier: char [ 
+Unicode class >> isLetterModifier: char [
 	| index |
 	index := char charCode + 1.
 	index > GeneralCategory size
@@ -609,7 +609,7 @@ Unicode class >> isLineSeparator: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isLowercase: char [ 
+Unicode class >> isLowercase: char [
 	| index |
 	index := char charCode + 1.
 	index > GeneralCategory size
@@ -643,7 +643,7 @@ Unicode class >> isOpenPunctuation: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isOtherLetter: char [ 
+Unicode class >> isOtherLetter: char [
 	| index |
 	index := char charCode + 1.
 	index > GeneralCategory size
@@ -687,7 +687,7 @@ Unicode class >> isSpacingCombiningMark: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isSurrogateOther: char [ 
+Unicode class >> isSurrogateOther: char [
 	| index |
 	index := char charCode + 1.
 	index > (GeneralCategory size)
@@ -696,7 +696,7 @@ Unicode class >> isSurrogateOther: char [
 ]
 
 { #category : #'character classification' }
-Unicode class >> isTitlecaseLetter: char [ 
+Unicode class >> isTitlecaseLetter: char [
 	| index |
 	index := char charCode + 1.
 	index > GeneralCategory size
@@ -707,20 +707,20 @@ Unicode class >> isTitlecaseLetter: char [
 { #category : #testing }
 Unicode class >> isTraditionalChinese: code [
 
-	^ false.
+	^ false
 ]
 
 { #category : #testing }
 Unicode class >> isUnifiedKanji: code [
 	^ ((((code between: 16r2E80 and: 16rA4CF)
 		or: [ code between: 16rF900 and: 16rFAFF ])
-			or: [ code between: 16rFE30 and: 16rFE4F ]) 
+			or: [ code between: 16rFE30 and: 16rFE4F ])
 				or: [ code between: 16rFF00 and: 16rFFEF ])
 					or: [ code between: 16r20000 and: 16r2FA1F ]
 ]
 
 { #category : #'character classification' }
-Unicode class >> isUppercase: char [ 
+Unicode class >> isUppercase: char [
 	| index |
 	index := char charCode + 1.
 	index > GeneralCategory size
@@ -730,6 +730,7 @@ Unicode class >> isUppercase: char [
 
 { #category : #'class methods' }
 Unicode class >> leadingChar [
+	self deprecated: 'not supported anymore' on: '6 September 2022' in: 'Pharo11'.
 	^ 0
 ]
 
@@ -759,24 +760,24 @@ Unicode class >> parseCaseMappingFrom: stream [
 	ToUpper := IdentityDictionary new: 2048.
 	ToLower := IdentityDictionary new: 2048.
 	[ stream atEnd ]
-		whileFalse: [ 
+		whileFalse: [
 			| fields line srcCode dstCode |
 			line := stream nextLine copyUpTo: $#.
 			fields := line trimBoth findTokens: $;.
 			(fields size > 2 and: [ #('C' 'S') includes: (fields at: 2) trimBoth ])
-				ifTrue: [ 
+				ifTrue: [
 					srcCode := Integer readFrom: (fields at: 1) trimBoth base: 16.
 					dstCode := Integer readFrom: (fields at: 3) trimBoth base: 16.
 					ToCasefold at: srcCode put: dstCode ] ].
 	ToCasefold
-		keysAndValuesDo: [ :k :v | 
+		keysAndValuesDo: [ :k :v |
 			(self isUppercase: (self value: k))
-				ifTrue: [ 
+				ifTrue: [
 					"In most cases, uppercase letter are folded to lower case"
 					ToUpper at: v ifAbsentPut: k.
 					ToLower at: k ifAbsentPut: v ].
 			(self isLowercase: (self value: k))
-				ifTrue: [ 
+				ifTrue: [
 					"In a few cases, two lower case letters are folded to the same lower case.
 				We must find an upper case letter folded to the same letter"
 					ToCasefold keys
@@ -821,14 +822,14 @@ Unicode class >> parseUnicodeDataFrom: stream [
 		].
 	].
 	GeneralCategory zapDefaultOnlyEntries.
-	DecimalProperty zapDefaultOnlyEntries.
+	DecimalProperty zapDefaultOnlyEntries
 ]
 
 { #category : #casing }
 Unicode class >> toCasefold: aWideString [
 	"Transform a Wide String into fold case.
 	This is to enable case insensitive conversion."
-	
+
 	^aWideString collect: [:e |
 		(ToCasefold at: e charCode ifAbsent: [nil])
 			ifNil: [e]
@@ -840,7 +841,7 @@ Unicode class >> toLowercase: aCharacter [
 	"Transform a Wide String into lowercase.
 	This does not handle special cases where number of characters could change.
 	The algorithm would work for ByteString, however it's far from the most efficient."
-	
+
 	(ToLower at: aCharacter charCode ifAbsent: [ ^ aCharacter ])
 			ifNotNil: [:low | ^ self value: low ]
 ]
@@ -850,7 +851,7 @@ Unicode class >> toLowercaseString: aWideString [
 	"Transform a Wide String into lowercase.
 	This does not handle special cases where number of characters could change.
 	The algorithm would work for ByteString, however it's far from the most efficient."
-	
+
 	^aWideString collect: [:e |
 		(ToLower at: e charCode ifAbsent: [nil])
 			ifNil: [e]
@@ -862,7 +863,7 @@ Unicode class >> toUppercase: aCharacter [
 	"Transform a Wide String into uppercase.
 	This does not handle special cases where number of characters could change.
 	The algorithm would work for ByteString, however it's far from the most efficient."
-	
+
 	(ToUpper at: aCharacter charCode ifAbsent: [ ^ aCharacter ])
 			ifNotNil: [:up | ^ self value: up]
 ]
@@ -872,7 +873,7 @@ Unicode class >> toUppercaseString: aWideString [
 	"Transform a Wide String into uppercase.
 	This does not handle special cases where number of characters could change.
 	The algorithm would work for ByteString, however it's far from the most efficient."
-	
+
 	^aWideString collect: [:e |
 		(ToUpper at: e charCode ifAbsent: [nil])
 			ifNil: [e]

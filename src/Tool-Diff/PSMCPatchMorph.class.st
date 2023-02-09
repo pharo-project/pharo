@@ -155,7 +155,7 @@ PSMCPatchMorph >> changesMenu: m [
 	| menu |
 	menu := self newMenu
 		addTitle: 'Changes'
-		icon: (self iconNamed: #smallCopyIcon).
+		icon: (self iconNamed: #smallCopy).
 	menu
 		addToggle: 'Browse class...' translated
 		target: self
@@ -164,7 +164,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionHasActualClass.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallWindowIcon);
+		icon: (self iconNamed: #smallWindow);
 		keyText: 'Cmd+b'.
 	menu addLine.
 	menu
@@ -195,7 +195,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionIsMethodChange.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallDoItIcon);
+		icon: (self iconNamed: #smallDoIt);
 		keyText: 'Cmd+m'.
 	menu
 		addToggle: 'Install incoming version' translated
@@ -205,7 +205,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionIsMethodChange.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallUpdateIcon).
+		icon: (self iconNamed: #smallUpdate).
 	menu
 		addToggle: 'Revert change' translated
 		target: self
@@ -213,7 +213,7 @@ PSMCPatchMorph >> changesMenu: m [
 		getStateSelector: nil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallCancelIcon).
+		icon: (self iconNamed: #smallCancel).
 	menu
 		add: 'Expand All' translated
 		target: self model
@@ -277,7 +277,8 @@ PSMCPatchMorph >> newChangeTreeMorph [
 		list: #changes
 		selected: #selectedChangeWrapper
 		changeSelected: #selectedChangeWrapper:)
-		getMenuSelector: #changesMenu:
+		getMenuSelector: #changesMenu:;
+		keystrokeActionSelector: #changeTreeKey:
 ]
 
 { #category : #private }

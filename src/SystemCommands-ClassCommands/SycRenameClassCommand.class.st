@@ -29,7 +29,7 @@ SycRenameClassCommand >> defaultMenuItemName [
 SycRenameClassCommand >> execute [
 	
 	| refactoring |
-	refactoring := RBRenameClassRefactoring
+	refactoring := RBRenameClassTransformation
 		rename: targetClass name
 		to: newName.
 	refactoring execute
@@ -47,10 +47,14 @@ SycRenameClassCommand >> newName: anObject [
 
 { #category : #execution }
 SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
-	
-	newName := UIManager default 
-		request: 'New name of the class' initialAnswer: targetClass name title: 'Rename a class'.
-		
-	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [ CmdCommandAborted signal]
+
+	newName := UIManager default
+		           request: 'New name of the class'
+		           initialAnswer: targetClass name
+		           title: 'Rename a class'.
+
+	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [ 
+		CmdCommandAborted signal ]
 ]

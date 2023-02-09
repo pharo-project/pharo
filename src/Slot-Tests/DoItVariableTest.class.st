@@ -49,7 +49,7 @@ DoItVariableTest >> testDoItCompilation [
 		noPattern: true;
 		bindings: { var };
 		compile.
-	self assert: (doIt valueWithReceiver: self arguments: {thisContext}) equals: 102
+	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
 
 { #category : #tests }

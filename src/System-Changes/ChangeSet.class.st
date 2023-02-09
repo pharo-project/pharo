@@ -635,7 +635,7 @@ ChangeSet >> changeRecorderFor: class [
 	cname := class isString
 		ifTrue: [ class ]
 		ifFalse: [ class isBehavior ifTrue: [class name] ifFalse: [ nil printString] ].
-	^ changeRecords at: cname ifAbsent: [ ^ changeRecords at: cname put: (ClassChangeRecord new initFor: cname) ]
+	^ changeRecords at: cname ifAbsentPut: [ ClassChangeRecord new initFor: cname ]
 ]
 
 { #category : #'class changes' }
@@ -1071,7 +1071,7 @@ ChangeSet >> isEmpty [
 	^ changeRecords isEmptyOrNil
 ]
 
-{ #category : #initialization }
+{ #category : #testing }
 ChangeSet >> isMoribund [
 	"Answer whether the receiver is obsolete and about to die; part of an effort to get such guys cleared out from the change sorter."
 

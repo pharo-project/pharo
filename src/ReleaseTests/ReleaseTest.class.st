@@ -322,6 +322,14 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 				print: methods ] ]
 ]
 
+{ #category : #'tests - methods' }
+ReleaseTest >> testNoSentNotImplementedSelectors [
+	"There is a long term cleanup to fix 'selectors send but not implemented'.
+	 This test makes sure that we do not introduce new cases until we are down to zero"
+
+	self assert: SystemNavigation default allSentNotImplementedSelectors size < 315
+]
+
 { #category : #'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
@@ -419,7 +427,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
-	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache FT2Handle) 
+	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache) 
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]

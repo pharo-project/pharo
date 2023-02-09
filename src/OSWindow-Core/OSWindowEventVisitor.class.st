@@ -11,7 +11,7 @@ Class {
 { #category : #events }
 OSWindowEventVisitor >> handleEvent: anEvent [
 	anEvent accept: self.
-	
+
 	"By default we perform the event default action after visiting the event. Other event handlers may decide to never perform this default action, or defer it into a separate Pharo process (to avoid race conditions) by overriding this method."
 	anEvent performDefaultAction
 ]
@@ -62,6 +62,10 @@ OSWindowEventVisitor >> visitMouseMoveEvent: anEvent [
 
 { #category : #visiting }
 OSWindowEventVisitor >> visitMouseWheelEvent: anEvent [
+]
+
+{ #category : #visiting }
+OSWindowEventVisitor >> visitTextEditingEvent: anEvent [
 ]
 
 { #category : #visiting }

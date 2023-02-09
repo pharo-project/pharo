@@ -192,17 +192,6 @@ Class {
 	#category : #'System-Settings-Browser'
 }
 
-{ #category : #'private helpers' }
-SettingBrowser class >> allSettingsState [
-	"
-	Workspace openContents: self allSettingsState label: 'Current Setting assignments' 
-	"
-	| declList |
-	declList := (self currentNodeList select: [ :node | node item hasValue])
-		collect: [ :node | node item ].
-	^ String streamContents: [:s | declList do: [:d | d settingStoreOn: s] ]
-]
-
 { #category : #opening }
 SettingBrowser class >> browse: aCollectionOfKeywords [
 	"open a SettingBrowser view which is able to browse all settings 
@@ -245,7 +234,7 @@ SettingBrowser class >> menuCommandOn: aBuilder [
 	(aBuilder item: #Settings)
 		parent: #Pharo;
 		order: 1;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
 		help: 'Opens a SystemSettingBrowser which allows you to alter many system settings.';
@@ -289,19 +278,13 @@ SettingBrowser class >> settingsKeywords [
 
 { #category : #icons }
 SettingBrowser class >> taskbarIconName [
-	^#smallConfigurationIcon
+	^#smallConfiguration
 ]
 
 { #category : #'private helpers' }
 SettingBrowser class >> viewAllSettings [
 	"self viewAllSettings"
 	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
-]
-
-{ #category : #'help system' }
-SettingBrowser class >> wikiStyleHelp [
-	<wikiStyleHelp: #'The setting browser'>
-	^ self comment
 ]
 
 { #category : #menu }
@@ -656,6 +639,12 @@ SettingBrowser >> release [
 { #category : #accessing }
 SettingBrowser >> rootNodes [
 	^ roots ifNil: [roots := self treeHolder settingTreeRoots]
+]
+
+{ #category : #accessing }
+SettingBrowser >> rootNodes: aCollection [
+
+	roots := aCollection
 ]
 
 { #category : #accessing }

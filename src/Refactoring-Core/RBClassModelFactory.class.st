@@ -20,43 +20,43 @@ Class {
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbClass [
- 
+
 	^ RBclass ifNil: [ RBclass := RBClass ]
 ]
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbMetaclass [
- 
+
 	^ RBmetaclass ifNil: [ RBmetaclass := RBMetaclass ]
 ]
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbMethod [
- 
+
 	^ RBmethod ifNil: [ RBmethod := RBMethod ]
 ]
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbNamespace [
- 
+
 	^ RBnamespace ifNil: [ RBnamespace := RBNamespace ]
 ]
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbPackage [
- 
+
 	^ RBpackage ifNil: [ RBpackage := RBPackage ]
 ]
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbTrait [
- 
+
 	^ RBtrait ifNil: [ RBtrait := RBTrait ]
 ]
 
 { #category : #'factory access' }
 RBClassModelFactory class >> rbTraitMetaclass [
- 
+
 	^ RBtraitMetaclass ifNil: [ RBtraitMetaclass := RBTraitedMetaclass ]
 ]
 
@@ -80,13 +80,13 @@ RBClassModelFactory class >> setRBMethod: aClass [
 
 { #category : #'factory customisation' }
 RBClassModelFactory class >> setRBNamespace: aClass [
- 
+
 	RBnamespace := aClass
 ]
 
 { #category : #'factory customisation' }
 RBClassModelFactory class >> setRBPackage: aClass [
- 
+
 	RBpackage := aClass
 ]
 
@@ -103,7 +103,7 @@ RBClassModelFactory class >> setRBTraitMetaclass: aClass [
 ]
 
 { #category : #'factory access' }
-RBClassModelFactory >> rbClass [ 
+RBClassModelFactory >> rbClass [
 
 	^ self class rbClass
 ]

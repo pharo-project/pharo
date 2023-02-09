@@ -64,69 +64,69 @@ PluggableButtonMorphExample >> action [
 { #category : #building }
 PluggableButtonMorphExample >> buildButton [
 	^ PluggableButtonMorph
-		on: self 
+		on: self
 		getState: nil
-		action:  #action 
-		label: #label 
-		menu: nil.
+		action:  #action
+		label: #label
+		menu: nil
 ]
 
 { #category : #building }
 PluggableButtonMorphExample >> buildButtonNoLabel [
 	^ PluggableButtonMorph
-		on: self 
-		getState: nil 
-		action:  #action 
-		label: nil 
+		on: self
+		getState: nil
+		action:  #action
+		label: nil
 		icon: #icon
-		menu: nil.
+		menu: nil
 ]
 
 { #category : #building }
 PluggableButtonMorphExample >> buildButtonWithIcon [
 	^ PluggableButtonMorph
-		on: self 
-		getState: nil 
-		action:  #action 
-		label: #label 
+		on: self
+		getState: nil
+		action:  #action
+		label: #label
 		icon: #icon
-		menu: nil.
+		menu: nil
 ]
 
 { #category : #building }
 PluggableButtonMorphExample >> buildButtonWithIconBottom [
 	^ (PluggableButtonMorph
-		on: self 
-		getState: nil 
-		action:  #action 
-		label: #label 
+		on: self
+		getState: nil
+		action:  #action
+		label: #label
 		icon: #icon
 		menu: nil)
-		beIconBottom.
+		beIconBottom
 ]
 
 { #category : #building }
 PluggableButtonMorphExample >> buildButtonWithIconRight [
 	^ (PluggableButtonMorph
-		on: self 
-		getState: nil 
-		action:  #action 
-		label: #label 
+		on: self
+		getState: nil
+		action:  #action
+		label: #label
 		icon: #icon
 		menu: nil)
-		beIconRight.
+		beIconRight
 ]
 
 { #category : #building }
 PluggableButtonMorphExample >> buildButtonWithIconTop [
 	^ (PluggableButtonMorph
-		on: self 
-		getState: nil 
-		action:  #action 
-		label: #label 
+		on: self
+		getState: nil
+		action:  #action
+		label: #label
 		icon: #icon
 		menu: nil)
-		beIconTop.
+		beIconTop
 ]
 
 { #category : #accessing }
@@ -144,7 +144,7 @@ PluggableButtonMorphExample >> initialize [
 	super initialize.
 	label := 'Test label'.
 	state := #on.
-	icon := self iconNamed: #smallOkIcon
+	icon := self iconNamed: #smallOk
 ]
 
 { #category : #accessing }

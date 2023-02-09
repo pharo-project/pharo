@@ -53,7 +53,7 @@ RBAbstractSelectionPresenter >> initializeDropList [
 	dropList := self newDropList.
 	dropList
 		display: [ :scope | scope name ];
-		displayIcon: [ :e | e systemIcon ]
+		displayIcon: [ :each | (self iconNamed: each systemIconName) ]
 ]
 
 { #category : #initialization }

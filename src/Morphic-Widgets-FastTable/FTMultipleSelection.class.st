@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-FTMultipleSelection class >> isDeprecated [ 
+FTMultipleSelection class >> isDeprecated [
 	^ true
 ]

@@ -11,13 +11,13 @@ Class {
 ProceedDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #'event handling' }
 ProceedDialogWindow >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
-	
+
 	(super handlesKeyboard: evt) ifTrue: [^true].
 	^evt keyCharacter = $y or: [
 		evt keyCharacter = $n]
@@ -27,7 +27,7 @@ ProceedDialogWindow >> handlesKeyboard: evt [
 ProceedDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #questionIcon
+	^ self iconNamed: #question
 ]
 
 { #category : #'event handling' }

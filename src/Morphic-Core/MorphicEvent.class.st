@@ -85,6 +85,17 @@ MorphicEvent >> isMove [
 ]
 
 { #category : #testing }
+MorphicEvent >> isTextEditionEvent [
+	^false
+]
+
+{ #category : #testing }
+MorphicEvent >> isTextInputEvent [
+
+	^ false
+]
+
+{ #category : #testing }
 MorphicEvent >> isWindowEvent [
 	^false
 ]
@@ -114,7 +125,7 @@ MorphicEvent >> setHand: aHand [
 
 { #category : #private }
 MorphicEvent >> setTimeStamp: stamp [
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #accessing }

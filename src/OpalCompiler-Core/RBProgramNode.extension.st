@@ -1,29 +1,21 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoit [
-	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
-	| methodNode |
-	
-	methodNode := RBMethodNode 
-		selector: #DoIt
-		body: self asSequenceNode transformLastToReturn.
-	methodNode source: methodNode formattedCode.
-	^methodNode
+RBProgramNode >> asDoItForContext: aContext [
+	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
+
+	^ self asDoit semanticScope:
+		  (OCContextualDoItSemanticScope targetingContext: aContext)
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoitForContext: aContext [
-	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
+RBProgramNode >> asDoit [
+	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
 	| methodNode |
-	
-	methodNode := RBMethodNode 
-		selector: #DoItIn:
-		arguments: { RBVariableNode named: 'ThisContext' } 
+
+	methodNode := RBMethodNode
+		selector: #DoIt
 		body: self asSequenceNode transformLastToReturn.
-	
-	methodNode methodClass: aContext receiver class.
-	methodNode rewriteTempsForContext: aContext.
 	methodNode source: methodNode formattedCode.
 	^methodNode
 ]
@@ -36,7 +28,7 @@ RBProgramNode >> asSequenceNode [
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
-	^ self methodNode doSemanticAnalysis.
+	^ self methodNode doSemanticAnalysis
 ]
 
 { #category : #'*OpalCompiler-Core' }

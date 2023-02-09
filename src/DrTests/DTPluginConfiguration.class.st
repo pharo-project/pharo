@@ -24,7 +24,7 @@ DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollection
 	^ self new
 		items: aCollectionOfClasses;
 		packagesSelected: aCollectionOfPackages;
-		yourself.
+		yourself
 ]
 
 { #category : #converting }

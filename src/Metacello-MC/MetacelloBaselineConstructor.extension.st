@@ -1,6 +1,6 @@
 Extension { #name : #MetacelloBaselineConstructor }
 
-{ #category : #'*metacello-mc-accessing' }
+{ #category : #'*Metacello-MC' }
 MetacelloBaselineConstructor >> projectClass [
     ^ MetacelloMCBaselineProject
 ]

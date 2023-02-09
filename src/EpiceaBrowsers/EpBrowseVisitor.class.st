@@ -12,8 +12,8 @@ Class {
 { #category : #visitor }
 EpBrowseVisitor >> visitBehaviorChange: aChange [
 
-	self 
-		behaviorNamed: aChange behaviorAffectedName 
+	self
+		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: #browse
 ]
 
@@ -27,25 +27,25 @@ EpBrowseVisitor >> visitCategoryChange: aChange [
 			tag categoryName = aChange categoryName
 		]
 		ifFound: [ :tag | Smalltalk tools browser openOnPackage: tag ]
-		ifNone: [ self inform: 'Category ' , aChange categoryName , ' not found.' ].
+		ifNone: [ self inform: 'Category ' , aChange categoryName , ' not found.' ]
 ]
 
 { #category : #visitor }
 EpBrowseVisitor >> visitCodeChange: aChange [
-	^ self error: 'Should not be reached'.
+	^ self error: 'Should not be reached'
 ]
 
 { #category : #visitor }
 EpBrowseVisitor >> visitMethodChange: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior | 
-			behavior 
-				compiledMethodAt: aChange methodAffectedSelector 
-				ifPresent: #browse 
-				ifAbsent: [ 
-					self inform: 
+		ifPresent: [ :behavior |
+			behavior
+				compiledMethodAt: aChange methodAffectedSelector
+				ifPresent: #browse
+				ifAbsent: [
+					self inform:
 						'Cannot find ', behavior asString, '>>', aChange methodAffectedSelector.
-					behavior browse ] ].
+					behavior browse ] ]
 ]

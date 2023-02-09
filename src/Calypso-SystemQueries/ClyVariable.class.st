@@ -37,7 +37,7 @@ ClyVariable class >> defaultSortFunctionForCalypso [
 ]
 
 { #category : #sorting }
-ClyVariable class >> itemsSortOrderForCalypso [ 
+ClyVariable class >> itemsSortOrderForCalypso [
 	^1.2
 ]
 
@@ -48,14 +48,14 @@ ClyVariable class >> named: aSymbol definedIn: aClass [
 
 { #category : #'instance creation' }
 ClyVariable class >> on: aVariableOrSlot definedIn: aClass [
-	^self new 
+	^self new
 		actualVariable: aVariableOrSlot;
 		definingClass: aClass
 ]
 
 { #category : #'instance creation' }
 ClyVariable class >> on: aVariableOrSlot visibleFrom: aClass [
-	^self new 
+	^self new
 		actualVariable: aVariableOrSlot;
 		detectDefiningClassFrom: aClass
 ]
@@ -117,9 +117,9 @@ ClyVariable >> hash [
 
 { #category : #testing }
 ClyVariable >> isAccessedIn: aMethod [
-	
+
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-		
+
 	^actualVariable isAccessedIn: aMethod
 ]
 
@@ -141,17 +141,17 @@ ClyVariable >> isLive [
 
 { #category : #testing }
 ClyVariable >> isReadIn: aMethod [
-	
+
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-	
+
 	^actualVariable isReadIn: aMethod
 ]
 
 { #category : #testing }
 ClyVariable >> isWrittenIn: aMethod [
-	
+
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-		
+
 	^actualVariable isWrittenIn: aMethod
 ]
 
@@ -180,7 +180,7 @@ ClyVariable >> printAsConstantQueryItem [
 { #category : #printing }
 ClyVariable >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self name;
 		nextPut: $)

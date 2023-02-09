@@ -11,13 +11,13 @@ Class {
 { #category : #testing }
 ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
-	
+
 	^aCriticContext lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
 ]
 
 { #category : #initialization }
 ClyFixCritiqueCommand >> defaultMenuIconName [
-	^#repairIcon
+	^#repair
 ]
 
 { #category : #'table decoration' }

@@ -3,7 +3,23 @@ I am a refactoring condition combining two other conditions by a boolean AND.
 
 I am created by sending the binary message #& to another condition (left) with another condition (right) as its argument.
 
-Checking this conditions holds true, if my left and my right condition is true. 
+Checking this condition holds true, if my left and my right condition is true.
+Note that the first failing condition stops the condition evaluation. See testCheckFailEarlyAndDoesNotCoverEveryConditions
+
+### Implementation
+
+The following method is key as it shows that as soon as a check fails the second one is not checked.
+```
+check
+
+	left check ifFalse: [ 
+		failed := #leftFailed.
+		^ false ].
+	right check ifFalse: [ 
+		failed := #rightFailed.
+		^ false ].
+	^ true
+```
 "
 Class {
 	#name : #RBConjunctiveCondition,
@@ -19,21 +35,21 @@ Class {
 { #category : #checking }
 RBConjunctiveCondition >> check [
 	left check
-		ifFalse: 
+		ifFalse:
 			[failed := #leftFailed.
 			^false].
 	right check
-		ifFalse: 
+		ifFalse:
 			[failed := #rightFailed.
 			^false].
 	^true
 ]
 
 { #category : #private }
-RBConjunctiveCondition >> errorBlockFor: aBoolean [ 
+RBConjunctiveCondition >> errorBlockFor: aBoolean [
 	^aBoolean
 		ifTrue: [nil]
-		ifFalse: 
+		ifFalse:
 			[failed = #leftFailed ifTrue: [left errorBlock] ifFalse: [right errorBlock]]
 ]
 
@@ -44,14 +60,14 @@ RBConjunctiveCondition >> errorMacro [
 ]
 
 { #category : #private }
-RBConjunctiveCondition >> errorStringFor: aBoolean [ 
-	^aBoolean
-		ifTrue: [self neitherFailed]
-		ifFalse: [self perform: failed]
+RBConjunctiveCondition >> errorStringFor: aBoolean [
+	^ aBoolean
+		  ifTrue: [ self neitherFailed ]
+		  ifFalse: [ self perform: failed ]
 ]
 
 { #category : #initialization }
-RBConjunctiveCondition >> left: aCondition right: aCondition2 [ 
+RBConjunctiveCondition >> left: aCondition right: aCondition2 [
 	left := aCondition.
 	right := aCondition2.
 	failed := #unknownFailed
@@ -73,8 +89,8 @@ RBConjunctiveCondition >> neitherFailed [
 ]
 
 { #category : #printing }
-RBConjunctiveCondition >> printOn: aStream [ 
-	aStream 
+RBConjunctiveCondition >> printOn: aStream [
+	aStream
 		print: left;
 		nextPutAll: ' & ';
 		print: right

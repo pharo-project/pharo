@@ -948,9 +948,18 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 			ifFalse: [ #undefinedKeyword ]
 ]
 
+{ #category : #initialization }
+SHRBTextStyler >> initialize [ 
+	super initialize.
+	
+	isForWorkspace := false
+]
+
 { #category : #accessing }
-SHRBTextStyler >> isForWorkspace [
-	^ isForWorkspace ifNil: [ workspace notNil ]
+SHRBTextStyler >> isForWorkspace [  
+	^workspace 
+		ifNil: [ isForWorkspace ]
+		ifNotNil: [ workspace isScripting ]
 ]
 
 { #category : #accessing }
@@ -1216,10 +1225,10 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
-	style := #keyword.
 	
-	(Symbol findInternedSelector: aMessageNode selector asString)
-		ifNil:[ style := self formatIncompleteSelector: aMessageNode ].
+	style := aMessageNode selector isSelectorSymbol 
+		ifTrue: [ #keyword ]
+		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 		
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
@@ -1349,6 +1358,5 @@ SHRBTextStyler >> visitVariableNode: aVariableNode [
 
 { #category : #accessing }
 SHRBTextStyler >> workspace: aWorkspace [ 
-	workspace := aWorkspace.
-	isForWorkspace ifNil: [ isForWorkspace := true ]
+	workspace := aWorkspace
 ]

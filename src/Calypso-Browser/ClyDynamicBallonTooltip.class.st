@@ -16,14 +16,14 @@ Class {
 
 { #category : #'instance creation' }
 ClyDynamicBallonTooltip class >> from: aBlock [
-	^self new 
+	^self new
 		block: aBlock
 ]
 
 { #category : #'instance creation' }
 ClyDynamicBallonTooltip class >> from: aBlock installInto: aMorph [
 	^(self from: aBlock)
-		installInto: aMorph; 
+		installInto: aMorph;
 		yourself
 ]
 

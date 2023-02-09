@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-AboutDialogWindow class >> open [ 
+AboutDialogWindow class >> open [
 	<script>
-	
-	^(self new) 
+
+	^(self new)
 		open;
 		yourself
 ]
@@ -23,11 +23,11 @@ AboutDialogWindow class >> openForPharo [
 	text := Smalltalk systemInformationString withCRs.
 	width := 0.
 	text
-		linesDo: [ :l | 
+		linesDo: [ :l |
 			width := width
 				max: (self theme textFont widthOfStringOrText: l) ].
 	dialog := self new entryText: text.
-	dialog iconMorph image: (self iconNamed: #pharoIcon).
+	dialog iconMorph image: (self iconNamed: #pharo).
 	dialog title: 'About Pharo'.
 	dialog open.
 	dialog textMorph

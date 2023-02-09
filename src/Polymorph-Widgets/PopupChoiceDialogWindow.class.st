@@ -27,7 +27,7 @@ PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
 		labels: aList;
 		lines: (lines ifNil: [#()]);
 		model: aList.
-	"World may be not the best choice because a window may want to be in controlaList 
+	"World may be not the best choice because a window may want to be in controlaList
 	this point should be investigated based on UIManager default modalMorph"
 	^pd openModal choice
 ]
@@ -36,7 +36,7 @@ PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
 PopupChoiceDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #actions }
@@ -121,12 +121,12 @@ PopupChoiceDialogWindow >> filter [
 { #category : #accessing }
 PopupChoiceDialogWindow >> filter: aString [
 	"Set the value of filter, used to match the valid choices."
-	
+
 
 	filter := aString.
 
 	"As this method is called during the update of the list,
-	and the list is updated after filtering it. 
+	and the list is updated after filtering it.
 	We have to ensure that the list is not updating and generating a recursive call"
 	updatingFilter ifFalse: [
 		updatingFilter := true.
@@ -135,7 +135,7 @@ PopupChoiceDialogWindow >> filter: aString [
 	self filterMorph ifNil: [^self].
 	(self choiceMenus ifNil: [^self]) do: [:embeddedMenu |
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
-	self choiceMenus do: [:embeddedMenu | 
+	self choiceMenus do: [:embeddedMenu |
 		embeddedMenu selectMatch: self filter asLowercase]
 ]
 
@@ -157,7 +157,7 @@ PopupChoiceDialogWindow >> filterMorph: anObject [
 PopupChoiceDialogWindow >> handlesKeyboard: evt [
 	"True when either the filter morph doesn't have the focus and the key
 	is a text key or backspace or no menus have the focus and is up or down arrow."
-	
+
 	^ true
 ]
 
@@ -176,11 +176,11 @@ PopupChoiceDialogWindow >> initialize [
 { #category : #'event handling' }
 PopupChoiceDialogWindow >> keyDown: anEvent [
 	"Look for a matching item?"
-	
+
 	(super keyDown: anEvent)
 		ifTrue: [ ^ true ].
-	
-	(anEvent key = KeyboardKey enter or: [anEvent key = KeyboardKey keypadEnter]) 
+
+	(anEvent key = KeyboardKey enter or: [anEvent key = KeyboardKey keypadEnter])
 		ifTrue: [ ^self processEnter: anEvent ].
 	anEvent key = KeyboardKey backspace
 		ifTrue: [
@@ -198,7 +198,7 @@ PopupChoiceDialogWindow >> keyDown: anEvent [
 PopupChoiceDialogWindow >> keyStroke: anEvent [
 	"Look for a matching item?"
 	(super keyStroke: anEvent) ifTrue: [^true].
-	anEvent keyCharacter = Character space 
+	anEvent keyCharacter = Character space
 		ifTrue: [ ^self processEnter: anEvent ].
 	self filter: self filter, anEvent keyCharacter asString.
 	^true
@@ -336,7 +336,7 @@ PopupChoiceDialogWindow >> newMenuWith: morphs [
 
 { #category : #'event handling' }
 PopupChoiceDialogWindow >> processEnter: anEvent [
-	self choiceMenus do: [:embeddedMenu | 
+	self choiceMenus do: [:embeddedMenu |
 		embeddedMenu selectedItem ifNotNil: [:item |
 			item invokeWithEvent: anEvent.
 			^true ] ].
@@ -365,7 +365,7 @@ PopupChoiceDialogWindow >> selectFirstEnabledItem [
 	found := false.
 	(self choiceMenus ifNil: [^self]) do: [:embeddedMenu |
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
-	self choiceMenus do: [:embeddedMenu | 
+	self choiceMenus do: [:embeddedMenu |
 		(embeddedMenu selectMatch: self filter)
 			ifNotNil: [:menuItem |
 				found ifFalse: [
@@ -382,7 +382,7 @@ PopupChoiceDialogWindow >> selectLastEnabledItem [
 	found := false.
 	(self choiceMenus ifNil: [^self]) do: [:embeddedMenu |
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
-	self choiceMenus reverseDo: [:embeddedMenu | 
+	self choiceMenus reverseDo: [:embeddedMenu |
 		(embeddedMenu selectLastMatch: self filter)
 			ifNotNil: [:menuItem |
 				found ifFalse: [

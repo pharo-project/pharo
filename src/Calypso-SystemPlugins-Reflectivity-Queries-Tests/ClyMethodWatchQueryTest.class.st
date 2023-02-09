@@ -34,14 +34,14 @@ ClyMethodWatchQueryTest >> methodWithoutWatch [
 { #category : #running }
 ClyMethodWatchQueryTest >> setUp [
 	super setUp.
-	
+
 	installedWatchpoints := OrderedCollection new
 ]
 
 { #category : #running }
 ClyMethodWatchQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
+
 	environment addPlugin: ClyReflectiveEnvironmentPlugin new
 ]
 
@@ -49,17 +49,17 @@ ClyMethodWatchQueryTest >> setUpEnvironment [
 ClyMethodWatchQueryTest >> tearDown [
 	installedWatchpoints do: [ :each | each uninstall ].
 	installedWatchpoints removeAll.
-	
+
 	super tearDown
 ]
 
 { #category : #tests }
 ClyMethodWatchQueryTest >> testCheckIfEmpty [
 	self installWatchInto: #methodWithWatch.
-	query scope: (ClyMethodScope 
+	query scope: (ClyMethodScope
 		of: (self class >> #methodWithWatch) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithBreakpointsMock >> #methodWithoutBreakpoints) in: environment).
 	self assert: query checkEmptyResult
@@ -73,9 +73,9 @@ ClyMethodWatchQueryTest >> testDecoratingMethodWithExecutionCounter [
 	self installWatchInto: #methodWithWatch.
 	method := self class >> #methodWithWatch.
 	methodItem := method asCalypsoBrowserItem.
-		
+
 	plugin decorateBrowserItem: methodItem ofMethod: method.
-	
+
 	self assert: (methodItem isMarkedWith: ClyMethodWithWatchTag)
 ]
 
@@ -83,9 +83,9 @@ ClyMethodWatchQueryTest >> testDecoratingMethodWithExecutionCounter [
 ClyMethodWatchQueryTest >> testFromTwoMethods [
 	self installWatchInto: #methodWithWatch.
 	self queryFromScope: ClyMethodScope ofAll: {
-		self class >> #methodWithWatch. 
+		self class >> #methodWithWatch.
 		self class >> #methodWithoutWatch}.
-	
+
 	self assert: foundSelectors sorted asArray equals: #(#methodWithWatch)
 ]
 

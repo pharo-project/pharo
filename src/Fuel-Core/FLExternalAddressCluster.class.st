@@ -1,3 +1,6 @@
+"
+I am a specialized cluster for ExternalAddress (FFI).
+"
 Class {
 	#name : #FLExternalAddressCluster,
 	#superclass : #FLByteObjectCluster,

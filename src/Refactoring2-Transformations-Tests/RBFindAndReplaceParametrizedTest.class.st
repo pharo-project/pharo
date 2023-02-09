@@ -1,25 +1,25 @@
 Class {
 	#name : #RBFindAndReplaceParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBFindAndReplaceParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBFindAndReplaceRefactoring };
+		addCase: { #rbClass -> RBFindAndReplaceTransformation };
 		yourself
 ]
 
 { #category : #accessing }
-RBFindAndReplaceParametrizedTest >> constructor [ 
+RBFindAndReplaceParametrizedTest >> constructor [
 	^ #find:of:inWholeHierarchy:
 ]
 
 { #category : #running }
-RBFindAndReplaceParametrizedTest >> setUp [ 
+RBFindAndReplaceParametrizedTest >> setUp [
 	super setUp.
-	model := self extractMethodTestData.
+	model := self extractMethodTestData
 ]
 
 { #category : #'failure tests' }
@@ -34,35 +34,35 @@ RBFindAndReplaceParametrizedTest >> testBadSelector [
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesFailureInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
-	(model classNamed: #MyClassB) 
+	(model classNamed: #MyClassB)
 		compile: 'simpleMethod
 			^ nil'
 		classified: #(#accessing).
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #simpleMethod . class . true }.
-	self shouldFail: refactoring.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
 	refactoring := self createRefactoringWithModel: model
 		andArguments: {#simpleMethod . class . false }.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #myMethod) equals: (self parseMethod: 'myMethod
+	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: 'myMethod
 
 	| token |
 	token := (String new: 100) writeStream.
-	[ self simpleMethod ] whileTrue: [ 
+	[ self simpleMethod ] whileTrue: [
 		token nextPut: currentChar.
 		self methodWithArg: self simpleMethod.
 		self bar ].
@@ -73,11 +73,11 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	token := self simpleMethod example.
 	^ token contents').
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeFor: #exampleMethod) equals: (self parseMethod: 'exampleMethod
+	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: 'exampleMethod
 
 	^ currentChar isLetter not').
 	class := model classNamed: #MyClassC.
-	self assert: (class parseTreeFor: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
+	self assert: (class parseTreeForSelector: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
 
 	(currentChar isLetter and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
 	^ nil')
@@ -87,18 +87,18 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #simpleMethod . class . true }.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #myMethod) equals: (self parseMethod: 'myMethod
+	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: 'myMethod
 
 	| token |
 	token := (String new: 100) writeStream.
-	[ self simpleMethod ] whileTrue: [ 
+	[ self simpleMethod ] whileTrue: [
 		token nextPut: currentChar.
 		self methodWithArg: self simpleMethod.
 		self bar ].
@@ -109,11 +109,11 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	token := self simpleMethod example.
 	^ token contents').
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeFor: #exampleMethod) equals: (self parseMethod: 'exampleMethod
+	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: 'exampleMethod
 
 	^ self simpleMethod not').
 	class := model classNamed: #MyClassC.
-	self assert: (class parseTreeFor: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
+	self assert: (class parseTreeForSelector: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
 
 	(self simpleMethod and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
 	^ nil')
@@ -123,7 +123,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesWithArgInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
@@ -131,6 +131,6 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesWithArgInHierarchy [
 		andArguments: { #methodWithArg:andArg: . class . true }.
 	self executeRefactoring: refactoring.
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeFor: #dummyMethod) equals: (self parseMethod: 
+	self assert: (class parseTreeForSelector: #dummyMethod) equals: (self parseMethod:
 	'dummyMethod self methodWithArg: 3 andArg: self someMethod')
 ]

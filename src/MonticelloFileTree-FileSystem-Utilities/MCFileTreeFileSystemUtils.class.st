@@ -59,9 +59,8 @@ MCFileTreeFileSystemUtils class >> filePathExists: filePath relativeTo: aDirecto
     ^ (aDirectory resolveString: filePath) isFile
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCFileTreeFileSystemUtils class >> initialize [
-    "self initialize"
 
     self install
 ]

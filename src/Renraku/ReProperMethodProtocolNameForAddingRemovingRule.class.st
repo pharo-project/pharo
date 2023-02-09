@@ -10,5 +10,5 @@ Class {
 { #category : #idioms }
 ReProperMethodProtocolNameForAddingRemovingRule class >> protocolIdiom [
 
-	^self use: 'adding-removing' insteadOf: #('adding/removing')
+	^self use: #'adding-removing' insteadOf: #(#'adding/removing')
 ]

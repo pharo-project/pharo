@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFEntityReification class >> entities [
-	^{RBProgramNode. Variable}.
+	^{RBProgramNode. Variable}
 ]
 
 { #category : #'plugin interface' }
@@ -19,7 +19,7 @@ RFEntityReification class >> key [
 
 { #category : #generate }
 RFEntityReification >> genForInstanceVariableSlot [
-	
+
 	^RBLiteralNode value: entity
 ]
 
@@ -31,6 +31,6 @@ RFEntityReification >> genForLiteralVariable [
 
 { #category : #generate }
 RFEntityReification >> genForRBProgramNode [
-	
+
 	^RBLiteralNode value: entity
 ]

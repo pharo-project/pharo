@@ -31,7 +31,7 @@ Class {
 { #category : #signalling }
 InstanceVariableNotFound class >> signalFor: aString [
 	"Create and signal a NoInstanceVariableNAmed exception for aString in the default receiver."
-	
+
 	^ self new
 		instVarName: aString;
 		signal
@@ -50,7 +50,7 @@ InstanceVariableNotFound >> instVarName: anObject [
 { #category : #accessing }
 InstanceVariableNotFound >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
@@ -59,7 +59,7 @@ InstanceVariableNotFound >> standardMessageText [
 	"Generate a standard textual description"
 
 	^ String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			stream nextPutAll: self instVarName.
 			stream nextPutAll: ' not found in '.
 			stream print: self signaler ]

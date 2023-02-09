@@ -17,21 +17,21 @@ ReInstVarInSubclassesRule class >> checksClass [
 { #category : #accessing }
 ReInstVarInSubclassesRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'InstVarInSubclassesRule'
 ]
 
 { #category : #running }
 ReInstVarInSubclassesRule >> check: aClass forCritiquesDo: aCritiqueBlock [
- 
+
 	| subs sels |
 	subs := aClass subclasses.
 	subs size > 1 ifFalse: [ ^ self ].
 
 	sels := subs flatCollect: #instVarNames as: Bag.
-	
+
 	sels asSet
-		select: [ :sel | 
+		select: [ :sel |
 			(sels occurrencesOf: sel) == subs size ]
 		thenDo: [ :sel | aCritiqueBlock cull: (
 			(self critiqueFor: aClass)

@@ -30,11 +30,11 @@ ASTEvaluationTest >> testEvaluateForContext [
 
 	"thisContext is not the thisContext of this method though... it is the context of the evaluating doit"
 	node := RBVariableNode thisContextNode.
-	self deny: (node evaluateForContext: thisContext) equals: thisContext.	
+	self deny: (node evaluateForContext: thisContext) equals: thisContext.
 
 	"reading ivars works, too"
 	node := RBVariableNode named: 'testSelector'.
-	self assert: (node evaluateForContext: thisContext) equals: #testEvaluateForContext.
+	self assert: (node evaluateForContext: thisContext) equals: #testEvaluateForContext
 ]
 
 { #category : #tests }
@@ -46,5 +46,5 @@ ASTEvaluationTest >> testEvaluateForReceiver [
 	node := RBVariableNode selfNode.
 	self assert: (node evaluateForReceiver: receiver) equals: receiver.
 	node := RBVariableNode superNode.
-	self assert: (node evaluateForReceiver: receiver) equals: receiver.
+	self assert: (node evaluateForReceiver: receiver) equals: receiver
 ]

@@ -15,9 +15,9 @@ RBCombinatorVisitor >> combinations [
 	^ combinations
 ]
 
-{ #category : #visiting }
+{ #category : #initialization }
 RBCombinatorVisitor >> initialize [
-	combinations := OrderedCollection new.
+	combinations := OrderedCollection new
 ]
 
 { #category : #visiting }

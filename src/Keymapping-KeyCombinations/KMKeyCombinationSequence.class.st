@@ -5,7 +5,9 @@ In order to have a match between me and a user's key presses, all user events mu
 
 To create a sequence of key combinations use the #, message. Like for example:
 
+```
 $a command , $b shift
+```
 "
 Class {
 	#name : #KMKeyCombinationSequence,
@@ -25,16 +27,16 @@ KMKeyCombinationSequence class >> first: aShortcut next: anotherShortcut [
 ]
 
 { #category : #combining }
-KMKeyCombinationSequence >> + aCharacter [ 
+KMKeyCombinationSequence >> + aCharacter [
 	| last |
 	last := self sequence last.
 	self sequence removeLast.
-	self addShortcut: last + aCharacter.
+	self addShortcut: last + aCharacter
 ]
 
 { #category : #combining }
 KMKeyCombinationSequence >> , aShortcut [
-	self addShortcut: aShortcut asKeyCombination.
+	self addShortcut: aShortcut asKeyCombination
 ]
 
 { #category : #comparing }
@@ -43,8 +45,8 @@ KMKeyCombinationSequence >> = aShortcut [
 ]
 
 { #category : #printing }
-KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [ 
-	
+KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [
+
 	^ aKMShortcutPrinter visitCombinationShortcut: self
 ]
 
@@ -54,8 +56,8 @@ KMKeyCombinationSequence >> addShortcut: aShortcut [
 ]
 
 { #category : #matching }
-KMKeyCombinationSequence >> beginsWith: aShortcut [ 
-	
+KMKeyCombinationSequence >> beginsWith: aShortcut [
+
 	^ self sequence first = aShortcut
 ]
 
@@ -69,6 +71,12 @@ KMKeyCombinationSequence >> hash [
 	^ shortcuts hash
 ]
 
+{ #category : #private }
+KMKeyCombinationSequence >> haveShortcutsSameModifier [
+
+	^ (shortcuts collect: [ :s | s modifier ] as: Set) size = 1
+]
+
 { #category : #matching }
 KMKeyCombinationSequence >> matches: anEventBuffer [
 	|maxIndex|
@@ -76,7 +84,7 @@ KMKeyCombinationSequence >> matches: anEventBuffer [
 	1 to: maxIndex do: [:index|
 		((shortcuts at: index) = (anEventBuffer at: index) asKeyCombination)
 			ifFalse: [ ^ false]].
-	^ true.
+	^ true
 ]
 
 { #category : #accessing }
@@ -88,23 +96,39 @@ KMKeyCombinationSequence >> next: aShortcut [
 KMKeyCombinationSequence >> platformModifier [
 
 	self sequence do: [ :each | ^ each platformModifier ].
-	
+
 	^ nil
 ]
 
 { #category : #printing }
 KMKeyCombinationSequence >> prettyPrintOn: aStream [
 
-	shortcuts 
+	shortcuts
 		do: [ :e | e prettyPrintOn: aStream ]
 		separatedBy: [ aStream << ' + ' ]
 ]
 
 { #category : #printing }
 KMKeyCombinationSequence >> printOn: aStream [
-	shortcuts 
-		do: [ :shortcut| shortcut printOn: aStream]
-		separatedBy: [ aStream nextPutAll: ' , '].
+
+	self haveShortcutsSameModifier
+		ifTrue: [ self printSequenceWithSameModifierOn: aStream ]
+		ifFalse: [
+			shortcuts
+				do: [ :shortcut | shortcut printOn: aStream ]
+				separatedBy: [ aStream nextPutAll: ' + ' ] ]
+]
+
+{ #category : #private }
+KMKeyCombinationSequence >> printSequenceWithSameModifierOn: aStream [
+
+	aStream
+		nextPutAll: shortcuts first modifier name;
+		nextPutAll: ' + ('.
+	shortcuts
+		do: [ :s | aStream nextPutAll: s key name ]
+		separatedBy: [ aStream nextPutAll: ' , ' ].
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

@@ -16,10 +16,10 @@ OSWindowAnimated >> destroy [
 { #category : #initialization }
 OSWindowAnimated >> initWithAttributes: attributes eventHandler: anEventHandle [
 	super initWithAttributes: attributes eventHandler: anEventHandle.
-	self registerWindow.
+	self registerWindow
 ]
 
 { #category : #private }
 OSWindowAnimated >> registerWindow [
-	OSWindowRenderThread createdWindow: self.
+	OSWindowRenderThread createdWindow: self
 ]

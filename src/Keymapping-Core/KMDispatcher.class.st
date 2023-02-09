@@ -41,26 +41,26 @@ KMDispatcher >> attachCategory: aCategory [
 
 { #category : #building }
 KMDispatcher >> attachCategory: aCategoryName onProperty: aProperty [
-	self targets add: (KMCategoryBinding 
-						target: [ morph perform: aProperty ] 
-						morph: morph 
+	self targets add: (KMCategoryBinding
+						target: [ morph perform: aProperty ]
+						morph: morph
 						category: (KMRepository default categoryForName: aCategoryName) )
 ]
 
 { #category : #building }
 KMDispatcher >> attachCategory: aCategory targetting: anObject [
-	
+
 	|  category categoryTarget |
 	category := aCategory asKmCategoryIn: KMRepository default.
 	categoryTarget := category bindToObject: anObject andMorph: morph.
-	self targets add: categoryTarget.
+	self targets add: categoryTarget
 ]
 
 { #category : #building }
 KMDispatcher >> bindKeyCombination: aShortcut toAction: anAction [
-	self directKeymaps 
+	self directKeymaps
 		addKeymapEntry: (KMKeymap
-			shortcut: aShortcut 
+			shortcut: aShortcut
 			action: anAction)
 ]
 
@@ -73,7 +73,7 @@ KMDispatcher >> buffer [
 KMDispatcher >> completeMatch: aKeymapEntry buffer: aBuffer [
 	KMLog logCompleteMatchBetween: morph and: aKeymapEntry.
 	KMBuffer uniqueInstance completeMatch.
-	self announcer announce: (KMCompleteMatch event: currentEvent from: self).
+	self announcer announce: (KMCompleteMatch event: currentEvent from: self)
 ]
 
 { #category : #building }
@@ -104,10 +104,10 @@ KMDispatcher >> directKeymaps [
 { #category : #dispatching }
 KMDispatcher >> dispatch: anEventBuffer [
 
-	self keymapObservers do: [ :aTarget | 
+	self keymapObservers do: [ :aTarget |
 		"nice hack to stop in the first listener"
-		aTarget 
-			verifyMatchWith: anEventBuffer 
+		aTarget
+			verifyMatchWith: anEventBuffer
 			notifying: self
 			thenDoing: [ ^self ] ].
 	self noMatch
@@ -116,10 +116,10 @@ KMDispatcher >> dispatch: anEventBuffer [
 { #category : #dispatching }
 KMDispatcher >> dispatch: anEventBuffer inCategories: categories [
 
-	(self keymapObserversForCategories: categories) do: [ :aTarget | 
+	(self keymapObserversForCategories: categories) do: [ :aTarget |
 		"nice hack to stop in the first listener"
-		aTarget 
-			verifyMatchWith: anEventBuffer 
+		aTarget
+			verifyMatchWith: anEventBuffer
 			notifying: self
 			thenDoing: [ ^self ] ].
 	self noMatch
@@ -134,11 +134,11 @@ KMDispatcher >> dispatchKeystroke: aKeyEvent [
 	KMBuffer uniqueInstance addEvent: aKeyEvent.
 
 	chain := KMDispatchChain from: (KMGlobalDispatcher new dispatcher: self; yourself) andDispatcher: self.
-	chain dispatch: aKeyEvent.
+	chain dispatch: aKeyEvent
 ]
 
 { #category : #testing }
-KMDispatcher >> includesKeymapCategory: aCategoryName [ 
+KMDispatcher >> includesKeymapCategory: aCategoryName [
 
 	^self includesKeymapCategory: aCategoryName targetting: morph
 ]
@@ -146,7 +146,7 @@ KMDispatcher >> includesKeymapCategory: aCategoryName [
 { #category : #testing }
 KMDispatcher >> includesKeymapCategory: aCategoryName targetting: anObject [
 
-	^self targets anySatisfy: [ :tgt | 
+	^self targets anySatisfy: [ :tgt |
 		tgt target = anObject and: [ tgt category name = aCategoryName ] ]
 ]
 
@@ -167,10 +167,10 @@ KMDispatcher >> keymapObservers [
 { #category : #dispatching }
 KMDispatcher >> keymapObserversForCategories: categories [
 
-	^categories collect: [ :cat | KMCategoryBinding 
-									target: target realTarget 
-									morph: target morph 
-									category: cat ].
+	^categories collect: [ :cat | KMCategoryBinding
+									target: target realTarget
+									morph: target morph
+									category: cat ]
 ]
 
 { #category : #match }
@@ -183,12 +183,12 @@ KMDispatcher >> partialMatch [
 	KMBuffer uniqueInstance partialMatch.
 	event := KMBuffer uniqueInstance currentEvent.
 	event isKeyboard not ifTrue: [ event := nil ].
-	self announcer announce: (KMPartialMatch event: event from: self).
+	self announcer announce: (KMPartialMatch event: event from: self)
 ]
 
 { #category : #dispatching }
 KMDispatcher >> perInstanceTarget [
-	^KMCategoryBinding target: morph morph: morph category: self directKeymaps.
+	^KMCategoryBinding target: morph morph: morph category: self directKeymaps
 ]
 
 { #category : #building }
@@ -196,15 +196,15 @@ KMDispatcher >> removeKeyCombination: aShortcut [
 	| keymap removalTarget |
 
 	removalTarget := self directKeymaps.
-	
+
 	keymap := self keymapForShortcut: aShortcut.
-	keymap ifNil: [ 
-		self targets do: [ :e | (e keymapForShortcut: aShortcut) 
-			ifNotNil: [ :s | 
+	keymap ifNil: [
+		self targets do: [ :e | (e keymapForShortcut: aShortcut)
+			ifNotNil: [ :s |
 				removalTarget := e category.
 				keymap := s ] ] ].
 	keymap ifNil: [ ^ self ].
-	
+
 	removalTarget removeKeymapEntry: keymap
 ]
 

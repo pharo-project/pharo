@@ -27,7 +27,7 @@ ZipWriteStreamTest >> testEmptyStrings [
 { #category : #tests }
 ZipWriteStreamTest >> testZipped [
 	| compressed |
-	
+
 	compressed := 'hello' zipped.
 	self assert: compressed unzipped equals: 'hello'
 ]

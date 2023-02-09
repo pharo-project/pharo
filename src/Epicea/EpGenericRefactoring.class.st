@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #testing }
-EpGenericRefactoring class >> canAccept: aRBRefactoring [ 
+EpGenericRefactoring class >> canAccept: aRBRefactoring [
 
 	^ (aRBRefactoring class whichClassIncludesSelector: #storeOn:) ~= Object
 ]

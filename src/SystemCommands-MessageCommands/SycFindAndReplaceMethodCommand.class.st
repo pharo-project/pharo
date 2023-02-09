@@ -14,17 +14,17 @@ SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #accessing }
 SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 ]
 
-{ #category : #testing }
+{ #category : #execution }
 SycFindAndReplaceMethodCommand >> createRefactoring [
 
-	^ RBFindAndReplaceRefactoring
+	^ RBFindAndReplaceTransformation
 		model: model
 		find: originalMessage selector
 		of: originalMessage contextUser origin

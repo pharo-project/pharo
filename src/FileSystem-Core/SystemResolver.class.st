@@ -23,7 +23,7 @@ SystemResolver class >> defaultLocalDirectoryName [
 
 { #category : #settings }
 SystemResolver class >> settingsOn: aBuilder [
-	<systemsettings>  
+	<systemsettings>
 
 	(aBuilder setting: #userLocalDirectory)
 		parent: #pharoSystem;
@@ -31,7 +31,7 @@ SystemResolver class >> settingsOn: aBuilder [
 		target: self;
 		default: self defaultLocalDirectory;
 		description: 'The path of a directory where Pharo will store local files' ;
-		label: 'Local directory'.
+		label: 'Local directory'
 ]
 
 { #category : #accessing }
@@ -42,7 +42,7 @@ SystemResolver class >> userLocalDirectory [
 
 { #category : #accessing }
 SystemResolver class >> userLocalDirectory: aFileReferenceOrPathName [
-	|aDirReference| 
+	|aDirReference|
 	aDirReference := aFileReferenceOrPathName asFileReference.
 	aDirReference isDirectory ifTrue: [UserLocalDirectory := aDirReference ]
 ]
@@ -66,9 +66,9 @@ SystemResolver >> imageDirectory [
 ]
 
 { #category : #origins }
-SystemResolver >> localDirectory [ 
+SystemResolver >> localDirectory [
 	<origin>
-	^ self class userLocalDirectory 
+	^ self class userLocalDirectory
 		ifNil: [ (self imageDirectory / self class defaultLocalDirectoryName) ensureCreateDirectory ]
 ]
 

@@ -465,34 +465,34 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
-		iconName: #smallUndoIcon;
+		iconName: #smallUndo;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	(aBuilder item: #Cut translated)
 		keyText: 'x';
 		selector: #cut;
-		iconName: #smallCutIcon.
+		iconName: #smallCut.
 	(aBuilder item: #Paste translated)
 		keyText: 'v';
 		selector: #paste;
-		iconName: #smallPasteIcon.
+		iconName: #smallPaste.
 	(aBuilder item: #'Paste recent' translated)
 		selector: #pasteRecent;
-		iconName: #smallCopyIcon;
+		iconName: #smallCopy;
 		withSeparatorAfter.
 	(aBuilder item: #'Set font...' translated)
 		keyText: 'k';
@@ -506,11 +506,11 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #Accept translated)
 		keyText: 's';
 		selector: #accept;
-		iconName: #smallOkIcon.
+		iconName: #smallOk.
 	(aBuilder item: #Cancel translated)
 		keyText: 'l';
 		selector: #cancel;
-		iconName: #smallCancelIcon
+		iconName: #smallCancel
 ]
 
 { #category : #'menu declaration' }
@@ -713,7 +713,7 @@ TextEditor >> backspace: aKeyboardEvent [
 	"Backspace over the last character."
 	| result startIndex |
 	self closeTypeIn.
-	result := aKeyboardEvent shiftPressed 
+	result := aKeyboardEvent controlKeyPressed 
 		ifTrue: [self backWord: aKeyboardEvent keyCharacter]
 		ifFalse: [self hasSelection
 			ifTrue: [self replaceSelectionWith: self nullText]
@@ -1763,7 +1763,7 @@ TextEditor >> forwardDelete: aKeyboardEvent [
 		ifFalse: [	| idx1 idx2 |
 				idx1 := self startIndex min: self stopIndex.
 				idx2 := self stopIndex max: self startIndex.
-				aKeyboardEvent shiftPressed
+				aKeyboardEvent controlKeyPressed
 					ifTrue: [idx2 := (self nextWord: idx1)]
 					ifFalse: [idx2 := idx2 + 1].
 				self selectInvisiblyFrom: idx1 to: idx2 - 1].

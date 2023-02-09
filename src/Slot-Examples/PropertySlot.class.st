@@ -1,5 +1,5 @@
 "
-I am a Slot that does not allocate one field for each slot. Instead, all PropertySlots of the whole hierarchy are allocated in a dictionary that is stored in an invisible slot (see PropertyBaseSlot)
+I am a Slot that does not allocate one field for each slot. Instead, all PropertySlots of the whole hierarchy are allocated in a dictionary that is stored in an invisible slot (see BaseSlot)
 
 Keep in mind:
 - I am slower than instance variables

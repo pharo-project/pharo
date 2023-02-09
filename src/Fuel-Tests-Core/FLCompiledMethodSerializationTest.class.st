@@ -11,7 +11,7 @@ Class {
 { #category : #running }
 FLCompiledMethodSerializationTest >> setUp [
 	super setUp.
-	theClass := self newClass class
+	theClass := self classFactory silentlyNewClass class
 ]
 
 { #category : #tests }
@@ -94,12 +94,11 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self
-		newSubclassOf: Object 
-		instanceVariableNames: '' 
-		classVariableNames: 'A'.
+	aClassWithVariable := self classFactory silentlyNewClassWithClassVariableNames: 'A'.
 
-	aClassWithVariable compileSilently: 'm1 A:= 3'.
+	self classFactory
+		silentlyCompile: 'm1 A:= 3'
+		in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #m1.
 	aClassWithVariable classVarNamed: #A put: 7. 
 	
@@ -112,12 +111,11 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self
-		newSubclassOf: Object 
-		instanceVariableNames: '' 
-		classVariableNames: 'A'.
+	aClassWithVariable := self classFactory silentlyNewClassWithClassVariableNames: 'A'.
 
-	aClassWithVariable compileSilently: 'DoIt A:= 3'.
+	self classFactory
+		silentlyCompile: 'DoIt A:= 3'
+		in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #DoIt.
 	aClassWithVariable classVarNamed: #A put: 7. 
 	
@@ -153,9 +151,10 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 
 { #category : #helpers }
 FLCompiledMethodSerializationTest >> useDoIt [
-	theClass 
-		duringTestCompileSilently: 'm  ^ 42'
-		storeSource: false.
+	self classFactory 
+		silentlyCompile: 'm  ^ 42'
+		in: theClass
+		storingSource: false.
 	theCompiledMethod := theClass methodNamed: #m.
 	theClass methodDict
 		at: #DoIt
@@ -164,17 +163,19 @@ FLCompiledMethodSerializationTest >> useDoIt [
 
 { #category : #helpers }
 FLCompiledMethodSerializationTest >> useInstalled [
-	theClass 
-		duringTestCompileSilently: 'm  ^ 42'
-		storeSource: true.
+	self classFactory
+		silentlyCompile: 'm  ^ 42'
+		in: theClass
+		storingSource: true.
 	theCompiledMethod := theClass methodNamed: #m
 ]
 
 { #category : #helpers }
 FLCompiledMethodSerializationTest >> useNotInstalled [
-	theClass 
-		duringTestCompileSilently: 'm  ^ 42'
-		storeSource: false.
+	self classFactory
+		silentlyCompile: 'm  ^ 42'
+		in: theClass
+		storingSource: false.
 	theCompiledMethod := theClass methodNamed: #m.
 	theClass methodDict removeKey: #m
 ]
