@@ -19,6 +19,12 @@ StdReporter >> currentTest [
 	^ currentTest ifNil: [ currentTest := 1 ]
 ]
 
+{ #category : #accessing }
+StdReporter >> defaultOutputDriver [
+
+	^ VTermOutputDriver
+]
+
 { #category : #processing }
 StdReporter >> incrementCurrentTest [
 
@@ -115,11 +121,11 @@ StdReporter >> reportSuite: aTestSuite runBlock: aBlock [
 { #category : #accessing }
 StdReporter >> stderr [
 
-	^ stderr ifNil: [ stderr := VTermOutputDriver stderr ]
+	^ stderr ifNil: [ stderr := self defaultOutputDriver stderr ]
 ]
 
 { #category : #accessing }
 StdReporter >> stdout [
 
-	^ stdout ifNil: [ stdout := VTermOutputDriver stdout ]
+	^ stdout ifNil: [ stdout := self defaultOutputDriver stdout ]
 ]

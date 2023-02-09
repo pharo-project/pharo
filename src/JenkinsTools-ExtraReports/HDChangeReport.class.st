@@ -3,7 +3,7 @@ A change report
 "
 Class {
 	#name : #HDChangeReport,
-	#superclass : #HDReport,
+	#superclass : #Object,
 	#instVars : [
 		'gofer'
 	],

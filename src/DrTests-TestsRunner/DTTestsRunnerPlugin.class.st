@@ -80,6 +80,16 @@ DTTestsRunnerPlugin >> label: aString forSuite: aTestSuite [
 		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ]
 ]
 
+{ #category : #private }
+DTTestsRunnerPlugin >> notifyAboutRunningTest: aTestSuite [
+
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
+		self flag: #TODO. "Dirty"
+		testAnnouncement test class = TestSuite ifTrue: [ 
+			self announceStatusChanged:
+				('Running test {1}.' format: { testAnnouncement test name }) ] ]
+]
+
 { #category : #accessing }
 DTTestsRunnerPlugin >> pragmaForResultTrees [
 	^ #'dtTestRunnerResultTreeNamed:order:'
@@ -108,6 +118,12 @@ DTTestsRunnerPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the results list.' translated
 ]
 
+{ #category : #running }
+DTTestsRunnerPlugin >> run: aTestSuite [
+
+	^ NewTestRunner run: aTestSuite
+]
+
 { #category : #api }
 DTTestsRunnerPlugin >> runForConfiguration: aDTpluginConfiguration [
 	| results |
@@ -120,18 +136,15 @@ DTTestsRunnerPlugin >> runForConfiguration: aDTpluginConfiguration [
 { #category : #private }
 DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
 
-	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
-		self flag: #TODO. "Dirty"
-		testAnnouncement test class = TestSuite ifTrue: [
-			self announceStatusChanged:
-				('Running test {1}.' format: { testAnnouncement test name }) ] ].
-	[ aResult mergeWith: (aTestSuite run) ] ensure: [
+	self notifyAboutRunningTest: aTestSuite.
+
+	[ aResult + (self run: aTestSuite) ] ensure: [ 
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
 { #category : #private }
 DTTestsRunnerPlugin >> runTestSuites: testSuites [
-
+	
 	| result |
 	result := TestAsserter classForTestResult new.
 	CurrentExecutionEnvironment runTestsBy: [
@@ -140,7 +153,7 @@ DTTestsRunnerPlugin >> runTestSuites: testSuites [
 				| specificResult |
 				specificResult := testSuite resultClass new.
 				self runSuite: testSuite withResult: specificResult.
-				result mergeWith: specificResult ]
+				result + specificResult. ]
 			displayingProgress: 'Running Tests' ].
 	^ result
 ]

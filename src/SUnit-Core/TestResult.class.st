@@ -153,6 +153,24 @@ TestResult class >> warning [
 	^Deprecation
 ]
 
+{ #category : #acessing }
+TestResult >> actualErrors [
+
+	^ errors
+]
+
+{ #category : #acessing }
+TestResult >> actualFailures [
+
+	^ failures
+]
+
+{ #category : #accessing }
+TestResult >> actualPassed [
+
+	^ passed
+]
+
 { #category : #adding }
 TestResult >> addError: aTestCase [
 	"We cannot use self errors as that incorporates test expectations and so does not return the stored collection."

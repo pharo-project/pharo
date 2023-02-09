@@ -27,3 +27,11 @@ StdReporterTest >> testCurrentTestIsOneInitialy [
 
 	self assert: reporter currentTest equals: 1
 ]
+
+{ #category : #tests }
+StdReporterTest >> testOutputDriver [
+
+	self
+		assert: reporter defaultOutputDriver
+		equals: VTermOutputDriver
+]

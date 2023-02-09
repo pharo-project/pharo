@@ -48,8 +48,9 @@ ClyRunTestsFromMethodsCommand >> readParametersFromContext: aToolContext [
 { #category : #execution }
 ClyRunTestsFromMethodsCommand >> runTest: testSelector of: testClass [
 
-	| testResult |
-	testResult := testClass debug: testSelector.
+	| testResult runner |
+	runner := self testRunnerClass new switchToDebugMode.
+	testResult := runner run: (testClass selector: testSelector).
 
 	self
 		notifyUserAboutResults: testResult
