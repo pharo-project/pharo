@@ -13,6 +13,7 @@ CompiledBlockTest >> testLiteralEqual [
 
 	| value |
 	value := 0.
+	"Do not use #to:do: because it is optimized and will prevent us of testing the behavior we want."
 	(1 to: 10) do: [self assert: value equals: 0].
 	value := 1.
 	(1 to: 10) do: [self assert: value equals: 0].'.
