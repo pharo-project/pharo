@@ -79,5 +79,5 @@ CoverageDemoTest >> testCoverageMethod [
 
 	self deny: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted.
+	self assert: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted
 ]

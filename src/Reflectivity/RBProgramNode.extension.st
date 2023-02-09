@@ -19,12 +19,12 @@ RBProgramNode >> afterLinks [
 RBProgramNode >> allAfterAreWeak [
 	self hasMetalink ifFalse: [^false].
 	self isMessage ifFalse:  [^false]. "only sends are weak"
-	^self afterLinks allSatisfy: [ :link | link hasOption: #optionWeakAfter ].
+	^self afterLinks allSatisfy: [ :link | link hasOption: #optionWeakAfter ]
 ]
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> availableReifications [
-	^RFReification subclasses 
+	^RFReification subclasses
 		select: [ :e | e entities includesAny: self class withAllSuperclasses ]
 		thenCollect: #key
 ]
@@ -49,12 +49,12 @@ RBProgramNode >> clearReflectivityAnnotations [
 	self removeProperty: #preambles ifAbsent: [ ].
 	self removeProperty: #beforeHooks ifAbsent: [ ].
 	self removeProperty: #afterHooks ifAbsent: [ ].
-	self removeProperty: #insteadHooks ifAbsent: [ ].
+	self removeProperty: #insteadHooks ifAbsent: [ ]
 ]
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> counter [
-	
+
 	self hasExecutionCounter ifFalse:[^nil].
 	^(self beforeLinks detect: [ :link | link metaObject class = ExecutionCounter]) metaObject
 ]
@@ -71,14 +71,14 @@ RBProgramNode >> hasBreakpoint [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> hasExecutionCounter [
-	
+
 	self hasMetalinkBefore ifFalse: [ ^false ].
 	^self beforeLinks anySatisfy: [ :link | link metaObject class = ExecutionCounter ]
 ]
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> hasLinks [
-	self 
+	self
 		deprecated: 'use #hasMetaLinks'
 		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
 	^self hasMetaLinks
@@ -119,7 +119,7 @@ RBProgramNode >> hasMetalinkInstead [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> hasWatch [
-	
+
 	self hasMetalinkAfter ifFalse: [ ^false ].
 	^self afterLinks anySatisfy: [ :link | link metaObject class = Watch ]
 ]
@@ -136,7 +136,7 @@ RBProgramNode >> insteadLinks [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> invalidate [
-	self methodNode method invalidate.
+	self methodNode method invalidate
 ]
 
 { #category : #'*Reflectivity' }
@@ -167,7 +167,7 @@ RBProgramNode >> link: aMetaLink forObject: anObject [
 RBProgramNode >> linkIfAbsent: metalink [
 	"Per-object check only.
 	Links and nodes are stored in IdentitySet so there is already a guarantee that there will be no duplicates. However putting a link already existing for a given node will retrigger method compilation.
-	This check is used by MetaLinkInstaller only to avoid multiple and recursive reinstallation of links on nodes." 
+	This check is used by MetaLinkInstaller only to avoid multiple and recursive reinstallation of links on nodes."
 	(self hasMetaLinks and: [ self links includes: metalink ])
 		ifTrue: [ ^ self ].
 	self link: metalink
@@ -229,7 +229,7 @@ RBProgramNode >> variableValueInContext: aContext [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> watch [
-	
+
 	self hasWatch ifFalse:[^nil].
 	^(self afterLinks detect: [ :link | link metaObject class = Watch ]) metaObject
 ]
