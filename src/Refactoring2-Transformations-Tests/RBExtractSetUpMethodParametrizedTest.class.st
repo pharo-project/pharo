@@ -12,13 +12,13 @@ RBExtractSetUpMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractSetUpMethodParametrizedTest >> constructor [ 
+RBExtractSetUpMethodParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
 { #category : #'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testBadClass [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (78 to: 197) . #displayName . RBLintRuleTestData })
 ]
 
@@ -48,7 +48,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVar
 	refactoring := self createRefactoringWithArguments: { (36 to: 77) . #testExample1 . RBDataTest }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBDataTest.
-	self assert: (class instanceVariableNames includes: #aString). 
+	self assert: (class instanceVariableNames includes: #aString).
 	self assert: (class parseTreeForSelector: #testExample1) equals: (self parseMethod: 'testExample1
 	| aNumber |
 	aNumber := 4.
@@ -73,8 +73,8 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 	refactoring := self createRefactoringWithArguments: { (36 to: 93) . #testExample1 . RBDataTest }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBDataTest.
-	self assert: (class instanceVariableNames includes: #aString). 
-	self assert: (class instanceVariableNames includes: #aNumber). 
+	self assert: (class instanceVariableNames includes: #aString).
+	self assert: (class instanceVariableNames includes: #aNumber).
 	self assert: (class parseTreeForSelector: #testExample1) equals: (self parseMethod: 'testExample1
 	self assert: aString isNotEmpty.
 	self deny: (aString , aNumber asString) isEmpty.
@@ -94,7 +94,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 { #category : #'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWhenIsNotFirstsSentences [
 
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (63 to: 77) . #testExample1 . RBDataTest })
 ]
 
@@ -106,5 +106,5 @@ RBExtractSetUpMethodParametrizedTest >> testModelExistingSetUpMethod [
 	class compile: 'setUp #setUp'
 		classified: #(#accessing).
 	self shouldFail: ( self createRefactoringWithModel: model
-		andArguments: { (14 to: 29) . #testExample . RBDataTest }).
+		andArguments: { (14 to: 29) . #testExample . RBDataTest })
 ]

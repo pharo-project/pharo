@@ -12,7 +12,7 @@ RBChildrenToSiblingsParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBChildrenToSiblingsParametrizedTest >> constructor [ 
+RBChildrenToSiblingsParametrizedTest >> constructor [
 	^ #name:class:subclasses:
 ]
 
@@ -24,37 +24,37 @@ RBChildrenToSiblingsParametrizedTest >> setUp [
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testBadName [
-	
-	self shouldFail: (self createRefactoringWithArguments: 
-		{#'Obje ct' . RBLintRuleTestData . (Array 
+
+	self shouldFail: (self createRefactoringWithArguments:
+		{#'Obje ct' . RBLintRuleTestData . (Array
 					with: RBBasicLintRuleTestData
 					with: RBCompositeLintRuleTestData)})
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testExistingName [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Object . RBLintRuleTestData . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Object . RBLintRuleTestData . (Array
 						with: RBBasicLintRuleTestData
 						with: RBCompositeLintRuleTestData) }).
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Processor . RBLintRuleTestData . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Processor . RBLintRuleTestData . (Array
 						with: RBBasicLintRuleTestData
 						with: RBCompositeLintRuleTestData) })
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testInvalidSubclass [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Foo .  RBAbstractRefactoringTest . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Foo .  RBAbstractRefactoringTest . (Array
 					with: RBBasicLintRuleTestData
 					with: RBCompositeLintRuleTestData)})
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Foo . RBLintRuleTestData class . (Array 
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Foo . RBLintRuleTestData class . (Array
 					with: RBBasicLintRuleTestData class
 					with: RBCompositeLintRuleTestData class)})
 ]
@@ -64,7 +64,7 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 	| refactoring class subclass superclass |
 	class := model classNamed: #ConcreteSuperclass.
 	subclass := model classNamed: #ConcreteSubclass.
-	refactoring := self createRefactoringWithModel: model andArguments: 
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ #AbstractSuperclass . class . (Array with: subclass)}.
 	self executeRefactoring: refactoring.
 	superclass := refactoring model classNamed: #AbstractSuperclass.

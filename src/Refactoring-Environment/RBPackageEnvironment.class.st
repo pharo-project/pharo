@@ -22,9 +22,9 @@ RBPackageEnvironment class >> defaultName [
 
 { #category : #'instance creation' }
 RBPackageEnvironment class >> onEnvironment: anEnvironment packageNames: aCollection [
-	^ self 
+	^ self
 		onEnvironment: anEnvironment
-		packages: (aCollection collect: [ :each | 
+		packages: (aCollection collect: [ :each |
 			RPackageOrganizer default packageNamed: each ])
 ]
 
@@ -47,14 +47,14 @@ RBPackageEnvironment class >> packageName: aName [
 
 { #category : #'instance creation' }
 RBPackageEnvironment class >> packageNames: aCollection [
-	^ self 
+	^ self
 		onEnvironment: self default
 		packageNames: aCollection
 ]
 
 { #category : #'instance creation' }
 RBPackageEnvironment class >> packages: aCollection [
-	^ self 
+	^ self
 		onEnvironment: self default
 		packages: aCollection
 ]
@@ -113,16 +113,16 @@ RBPackageEnvironment >> definesClass: aClass [
 
 { #category : #testing }
 RBPackageEnvironment >> includesCategory: aCategory [
-	^ (super includesCategory: aCategory) and: [ 
-		self packages anySatisfy: [ :package | 
+	^ (super includesCategory: aCategory) and: [
+		self packages anySatisfy: [ :package |
 			package includesSystemCategory: aCategory ] ]
 ]
 
 { #category : #testing }
 RBPackageEnvironment >> includesClass: aClass [
-	^ (super includesClass: aClass) and: [ 
-		self packages anySatisfy: [ :package | 
-			(package includesClass: aClass) or: [ 
+	^ (super includesClass: aClass) and: [
+		self packages anySatisfy: [ :package |
+			(package includesClass: aClass) or: [
 			(package extensionCategoriesForClass: aClass) notEmpty ]]]
 ]
 
@@ -133,8 +133,8 @@ RBPackageEnvironment >> includesProtocol: aProtocol in: aClass [
 
 { #category : #testing }
 RBPackageEnvironment >> includesSelector: aSelector in: aClass [
-	^ (environment includesSelector: aSelector in: aClass) 
-		and: [ self packages anySatisfy: [ :package | 
+	^ (environment includesSelector: aSelector in: aClass)
+		and: [ self packages anySatisfy: [ :package |
 				package includesSelector: aSelector ofClass: aClass ] ]
 ]
 
@@ -183,7 +183,7 @@ RBPackageEnvironment >> removePackage: aSymbol [
 ]
 
 { #category : #printing }
-RBPackageEnvironment >> storeOn: aStream [ 
+RBPackageEnvironment >> storeOn: aStream [
 	aStream nextPut: $(; nextPutAll: self class name; nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.
 	aStream nextPutAll: ' packageNames: '.

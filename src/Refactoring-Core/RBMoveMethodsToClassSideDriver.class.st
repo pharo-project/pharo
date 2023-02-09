@@ -26,14 +26,14 @@ Class {
 { #category : #'instance creation' }
 RBMoveMethodsToClassSideDriver class >> model: aNamespace methods: aCollectionOfMethods [
 
-	^ self new model: aNamespace methods: aCollectionOfMethods 
+	^ self new model: aNamespace methods: aCollectionOfMethods
 ]
 
 { #category : #preconditions }
 RBMoveMethodsToClassSideDriver >> checkApplicability [
 
 	| checks |
-	checks := self refactorings collect: [ :each | 
+	checks := self refactorings collect: [ :each |
 		          each applicabilityConditions check ].
 	^ checks reduce: [ :a :b | a & b ]
 ]
@@ -42,9 +42,9 @@ RBMoveMethodsToClassSideDriver >> checkApplicability [
 RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
 
 	| checks |
-	checks := self refactorings collect: [ :each | 
+	checks := self refactorings collect: [ :each |
 		          each breakingChangeConditions check ].
-	
+
 	^ checks reduce: [ :a :b | a & b ]
 ]
 
@@ -54,9 +54,9 @@ RBMoveMethodsToClassSideDriver >> confirmBreakingChanges [
 	| errorStrings |
 	errorStrings := self refactorings
 		                reject: [ :each | each breakingChangeConditions check ]
-		                thenCollect: [ :each | 
+		                thenCollect: [ :each |
 		                each breakingChangeConditions errorString ].
-	errorStrings := String streamContents: [ :stream | 
+	errorStrings := String streamContents: [ :stream |
 		                errorStrings
 			                do: [ :str | stream << str ]
 			                separatedBy: [ stream << String cr ] ].
@@ -69,7 +69,7 @@ RBMoveMethodsToClassSideDriver >> confirmBreakingChanges [
 RBMoveMethodsToClassSideDriver >> execute [
 
 	self checkApplicability ifFalse: [ self refactoringError ].
-	self checkBreakingChanges ifFalse: [ "Open warning dialog. It throws an error if user answers No." 
+	self checkBreakingChanges ifFalse: [ "Open warning dialog. It throws an error if user answers No."
 		self confirmBreakingChanges ].
 	self executeRefactorings
 ]
@@ -77,7 +77,7 @@ RBMoveMethodsToClassSideDriver >> execute [
 { #category : #execution }
 RBMoveMethodsToClassSideDriver >> executeRefactorings [
 
-	refactorings do: [ :each | 
+	refactorings do: [ :each |
 		each transform.
 		each performChanges ]
 ]
@@ -85,7 +85,7 @@ RBMoveMethodsToClassSideDriver >> executeRefactorings [
 { #category : #accessing }
 RBMoveMethodsToClassSideDriver >> generateRefactorings [
 
-	refactorings := methods collect: [ :each | 
+	refactorings := methods collect: [ :each |
 		                RBMoveMethodToClassSideRefactoring
 			                model: model
 			                method: each
@@ -94,9 +94,9 @@ RBMoveMethodsToClassSideDriver >> generateRefactorings [
 ]
 
 { #category : #initialization }
-RBMoveMethodsToClassSideDriver >> model: aNamespace methods: aCollection [ 
+RBMoveMethodsToClassSideDriver >> model: aNamespace methods: aCollection [
 	model := aNamespace.
-	methods := aCollection 
+	methods := aCollection
 ]
 
 { #category : #error }
@@ -105,9 +105,9 @@ RBMoveMethodsToClassSideDriver >> refactoringError [
 	| errorStrings |
 	errorStrings := self refactorings
 		                reject: [ :each | each applicabilityConditions check ]
-		                thenCollect: [ :each | 
+		                thenCollect: [ :each |
 		                each applicabilityConditions errorString ].
-	errorStrings := String streamContents: [ :stream | 
+	errorStrings := String streamContents: [ :stream |
 		                errorStrings
 			                do: [ :str | stream << str ]
 			                separatedBy: [ stream << String cr ] ].
