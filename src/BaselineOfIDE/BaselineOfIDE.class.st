@@ -174,6 +174,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Keymapping' with: [ spec repository: repository; loads: 'tests' ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec baseline: 'Equals' with: [ spec repository: repository ].
 		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'tests' ].
 		spec package: 'STON-Extensions'. 
 		
