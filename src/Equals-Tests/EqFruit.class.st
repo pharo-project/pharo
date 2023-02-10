@@ -34,13 +34,6 @@ EqFruit >> color [
 	^self subclassResponsibility
 ]
 
-{ #category : #comparing }
-EqFruit >> hash [
-	^self valuesToCompareForEquality inject: self species hash into: [:hash :comparisonValue|
-		(hash bitXor: comparisonValue hash) hashMultiply]
-
-]
-
 { #category : #'initialize - release' }
 EqFruit >> initialize [
 	super initialize.

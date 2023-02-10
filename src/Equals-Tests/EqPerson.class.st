@@ -38,13 +38,6 @@ EqPerson >> age: anObject [
 	age := anObject
 ]
 
-{ #category : #comparing }
-EqPerson >> hash [
-	^self valuesToCompareForEquality inject: self species hash into: [:hash :comparisonValue|
-		(hash bitXor: comparisonValue hash) hashMultiply]
-
-]
-
 { #category : #accessing }
 EqPerson >> name [
 	^ name
