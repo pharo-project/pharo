@@ -20,18 +20,12 @@ EqPerson class >> instVarNamesForEqualityComparison [
 	^#(age)
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 EqPerson class >> name: aString age: positiveInt [
 	^self new
 		name: aString;
 		age: positiveInt;
 		yourself
-]
-
-{ #category : #comparing }
-EqPerson >> = anObject [ 
-	self species = anObject species ifFalse: [^false].
-	^self valuesToCompareForEquality = anObject valuesToCompareForEquality
 ]
 
 { #category : #accessing }

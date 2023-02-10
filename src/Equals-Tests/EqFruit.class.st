@@ -14,12 +14,6 @@ Class {
 	#category : #'Equals-Tests'
 }
 
-{ #category : #comparing }
-EqFruit >> = anObject [ 
-	self species = anObject species ifFalse: [^false].
-	^self valuesToCompareForEquality = anObject valuesToCompareForEquality
-]
-
 { #category : #staging }
 EqFruit >> beRipe [
 	stage := #ripe
