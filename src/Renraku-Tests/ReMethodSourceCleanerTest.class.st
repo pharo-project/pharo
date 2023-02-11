@@ -44,7 +44,7 @@ ReMethodSourceCleanerTest >> dirtyMethodWithUnnecessarySpacesAndFinalDot [
 ReMethodSourceCleanerTest >> properMethodWithFinalDot [
 	"Do not format this method - this is a method without any unnecessary separators in the method body but a final dot"
 
-	^ 3 + 4
+	^ 3 + 4.
 ]
 
 { #category : #'private - test data' }
