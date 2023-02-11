@@ -11,10 +11,10 @@ Class {
 SUnitTestsCounterTest >> testCountTestsInSUnitVisitorTestsPackage [
 	| visitor |
 	visitor := SUnitTestsCounter new.
-	
+
 	self assert: visitor count equals: 0.
-	
+
 	visitor visit: self class.
-	
+
 	self assert: visitor count equals: self class testSelectors size
 ]
