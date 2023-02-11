@@ -30,8 +30,8 @@ RGComment >> author [
 RGComment >> author: aString [
 
 	self backend forBehavior setClassCommentAuthorFor: self to: aString.
-	
-	self announcer behaviorCommentModified: self parent.
+
+	self announcer behaviorCommentModified: self parent
 ]
 
 { #category : #'accessing - backend' }
@@ -44,8 +44,8 @@ RGComment >> content [
 RGComment >> content: aString [
 
 	self backend forBehavior setClassCommentContentFor: self to: aString.
-	
-	self announcer behaviorCommentModified: self parent.
+
+	self announcer behaviorCommentModified: self parent
 ]
 
 { #category : #'default model values' }
@@ -74,7 +74,7 @@ RGComment >> defaultTime [
 
 { #category : #accessing }
 RGComment >> fullName [
-	
+
 	^ (self parent name, ' comment') asSymbol
 ]
 
@@ -82,20 +82,20 @@ RGComment >> fullName [
 RGComment >> initialize [
 
 	super initialize.
-	
-	content := self unresolvedValue: self defaultContent.	
-	author := self unresolvedValue: self defaultAuthor.	
-	time := self unresolvedValue: self defaultTime.
+
+	content := self unresolvedValue: self defaultContent.
+	author := self unresolvedValue: self defaultAuthor.
+	time := self unresolvedValue: self defaultTime
 ]
 
 { #category : #initialization }
 RGComment >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	content := self unresolvedValue: self defaultContent.	
-	author := self unresolvedValue: self defaultAuthor.	
-	time := self unresolvedValue: self defaultTime.
+
+	content := self unresolvedValue: self defaultContent.
+	author := self unresolvedValue: self defaultAuthor.
+	time := self unresolvedValue: self defaultTime
 ]
 
 { #category : #testing }
@@ -114,14 +114,14 @@ RGComment >> isEmptyOrNil [
 RGComment >> makeResolved [
 
 	super makeResolved.
-	
+
 	content := self content markAsRingResolved.
 	author := self author markAsRingResolved.
-	time := self time markAsRingResolved.
+	time := self time markAsRingResolved
 ]
 
 { #category : #printing }
-RGComment >> printOn: aStream [ 
+RGComment >> printOn: aStream [
 
 	self parent name ifNotNil: [
 		aStream nextPutAll: self parent name;
@@ -156,10 +156,10 @@ RGComment >> pvtContent: aString [
 { #category : #'private - backend interface' }
 RGComment >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#content -> content. 
-		#author -> author. 
-		#time -> time. 
+	^ super pvtResolvableProperties, {
+		#content -> content.
+		#author -> author.
+		#time -> time.
 	}
 ]
 
@@ -191,6 +191,6 @@ RGComment >> time [
 RGComment >> time: aDateAndTime [
 
 	self backend forBehavior setClassCommentTimeFor: self to: aDateAndTime.
-	
-	self announcer behaviorCommentModified: self parent.
+
+	self announcer behaviorCommentModified: self parent
 ]

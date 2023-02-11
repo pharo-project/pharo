@@ -17,5 +17,5 @@ MCClassTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		traitDef classTrait: def.
 		def traitComposition: (self traitCompositionFrom: self classTraitComposition parent: def).
 		traitDef category: self category. "makes no sense for metaclass trait"
-		def].
+		def]
 ]
