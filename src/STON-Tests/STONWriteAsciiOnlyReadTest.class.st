@@ -7,8 +7,8 @@ Class {
 { #category : #private }
 STONWriteAsciiOnlyReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream; 
+		STON writer
+			on: stream;
 			asciiOnly: true;
 			nextPut: anObject ]
 ]
@@ -16,8 +16,8 @@ STONWriteAsciiOnlyReadTest >> serialize: anObject [
 { #category : #private }
 STONWriteAsciiOnlyReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
-		STON jsonWriter 
-			on: stream; 
+		STON jsonWriter
+			on: stream;
 			asciiOnly: true;
 			nextPut: anObject ]
 ]

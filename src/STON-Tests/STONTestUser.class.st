@@ -21,7 +21,7 @@ Class {
 { #category : #'instance creation' }
 STONTestUser class >> dummy [
 	"self dummy"
-	
+
 	| username password |
 	username := String streamContents: [ :stream |
 		stream << 'user'; print: 999 atRandom; << '@company'; print: 99 atRandom; << '.com' ].
@@ -67,7 +67,7 @@ STONTestUser >> hash [
 ]
 
 { #category : #initialization }
-STONTestUser >> initialize [ 
+STONTestUser >> initialize [
 	super initialize.
 	enabled := true
 ]
