@@ -66,7 +66,7 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 
 	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
 
-	todo := #(#LGitDiffHunk #IceMetacelloPharoPlatform #TonelFileSystemUtils #MicHTTPResourceReference #IceTipInteractiveCredentialsProvider).
+	todo := #(#LGitDiffHunk #TonelFileSystemUtils #MicHTTPResourceReference).
 
 	violating := violating reject: [ :each | todo includes: each methodClass instanceSide name  ].
 
@@ -135,7 +135,7 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 
 	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
 
-	self assert: violating size <= 9 description: 'Instance side #initialize methods should be in "initialization" method category'
+	self assert: violating size <= 4 description: 'Instance side #initialize methods should be in "initialization" method category'
 ]
 
 { #category : #tests }
