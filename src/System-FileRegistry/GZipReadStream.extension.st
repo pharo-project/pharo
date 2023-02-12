@@ -18,8 +18,8 @@ GZipReadStream class >> fileReaderServicesForFile: fullName suffix: suffix [
 { #category : #'*System-FileRegistry' }
 GZipReadStream class >> serviceDecompressToFile [
 
-	^ FileModifyingSimpleServiceEntry 
-				provider: self 
+	^ FileModifyingSimpleServiceEntry
+				provider: self
 				label: 'Decompress to file'
 				selector: #saveContents:
 				description: 'Decompress to file'
@@ -29,8 +29,8 @@ GZipReadStream class >> serviceDecompressToFile [
 GZipReadStream class >> serviceFileIn [
 	"Answer a service for filing in an entire file"
 
-	^ SimpleServiceEntry 
-		provider: self 
+	^ SimpleServiceEntry
+		provider: self
 		label: 'FileIn entire file'
 		selector: #fileIn:
 		description: 'File in the entire decompressed contents of the file, which is expected to contain Smalltalk code in fileout ("chunk") format'
@@ -40,8 +40,8 @@ GZipReadStream class >> serviceFileIn [
 { #category : #'*System-FileRegistry' }
 GZipReadStream class >> serviceViewDecompress [
 
-	^ SimpleServiceEntry 
-				provider: self 
+	^ SimpleServiceEntry
+				provider: self
 				label: 'View decompressed'
 				selector: #viewContents:
 				description: 'View decompressed'
@@ -50,7 +50,7 @@ GZipReadStream class >> serviceViewDecompress [
 { #category : #'*System-FileRegistry' }
 GZipReadStream class >> services [
 
-	^ Array 
+	^ Array
 		with: self serviceViewDecompress
 		with: self serviceDecompressToFile
 ]
