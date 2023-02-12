@@ -25,29 +25,29 @@ FFIExternalType class >> externalType [
 FFIExternalType class >> externalTypeAlignment [
 	"Answer a number of bytes, which takes a value of given type
 	(not a pointer to it)"
-	self subclassResponsibility 	
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 FFIExternalType class >> externalTypeSize [
 	"Answer a number of bytes, which takes a value of given type
 	(not a pointer to it)"
-	self subclassResponsibility 	
+	self subclassResponsibility
 ]
 
 { #category : #private }
 FFIExternalType class >> naturalPointerArity [
-	"Indicates 'natural' pointer artity of type (atomic types are zero while any kind of 
+	"Indicates 'natural' pointer artity of type (atomic types are zero while any kind of
 	 pointer/reference/etc. is one)"
 	^ 0
 ]
 
 { #category : #'instance creation' }
 FFIExternalType class >> newBuffer [
-	"This method is used to provide convencience buffer accessor to types. 
-	 This is useful when you need to pass a reference to an argument to take the value later. 
-	 For example: 
-	
+	"This method is used to provide convencience buffer accessor to types.
+	 This is useful when you need to pass a reference to an argument to take the value later.
+	 For example:
+
   void getDimensions(double *width, double *height) {
     *width = 2.0;
     *height = 3.0;
@@ -91,7 +91,6 @@ FFIExternalType class >> pointerSize [
 { #category : #public }
 FFIExternalType class >> resolveType: aTypeName [
 	^ FFICallout new resolveType: aTypeName
-	
 ]
 
 { #category : #public }
@@ -102,7 +101,7 @@ FFIExternalType class >> sizeOf: aTypeName [
 { #category : #'emitting code' }
 FFIExternalType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
 	self loader
-		emitArgument: aBuilder 
+		emitArgument: aBuilder
 		context: aContext
 ]
 
@@ -124,18 +123,18 @@ FFIExternalType >> callbackReturnOn: callbackContext for: anObject [
 
 { #category : #callbacks }
 FFIExternalType >> callbackValueFor: anObject at: index [
-	"This is the value for a callback. 
-	 The callback parameters came from an external adress who can be treated as a ByteArray, so it 
+	"This is the value for a callback.
+	 The callback parameters came from an external adress who can be treated as a ByteArray, so it
 	 works the same as an FFIExternalArray (at least for now)"
 	^ self handle: anObject at: index
 ]
 
 { #category : #accessing }
 FFIExternalType >> defaultReturnOnError [
-	"In case of a callback error, the image will try to show a debugger and that will most ot the 
-	 time crashes the VM (because it will break the process and will let a C function waiting and 
-	 and in incorrect state). 
-	 To prevent that, we use #on:fork:return: (look for senders) and, while forking the error to 
+	"In case of a callback error, the image will try to show a debugger and that will most ot the
+	 time crashes the VM (because it will break the process and will let a C function waiting and
+	 and in incorrect state).
+	 To prevent that, we use #on:fork:return: (look for senders) and, while forking the error to
 	 allow user to debug his error, we also return a 'default' value, that may be also wrong."
 
 	^ self subclassResponsibility
@@ -144,7 +143,7 @@ FFIExternalType >> defaultReturnOnError [
 { #category : #'emitting code' }
 FFIExternalType >> emitArgument: aBuilder context: aContext inCallout: aCallout [
 	self basicEmitArgument: aBuilder context: aContext inCallout: aCallout.
-	self needsArityPacking 
+	self needsArityPacking
 		ifTrue: [ self  emitPointerArityRoll: aBuilder context: aContext ]
 ]
 
@@ -155,30 +154,30 @@ FFIExternalType >> emitFlatStructureLayoutFieldInto: flatStructureLayout [
 
 { #category : #'emitting code' }
 FFIExternalType >> emitPointerArityRoll: aBuilder context: aContext [
-	self loader 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
+	self loader
+		emitPointerArityPack: aBuilder
+		context: aContext
 		arity: self pointerArity
 ]
 
 { #category : #'emitting code' }
-FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [ 
-	^ aBuilder returnTop	
+FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
+	^ aBuilder returnTop
 ]
 
 { #category : #'emitting code' }
 FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
-	
-	^ self emitReturn: aBuilder resultTempVar: resultVar context: aContext 
+
+	^ self emitReturn: aBuilder resultTempVar: resultVar context: aContext
 ]
 
 { #category : #'emitting code' }
 FFIExternalType >> emitReturnArgument: builder context: aContext [
-	"Some times functions need some post-process (for example, to unpack pointers). 
-	 This call MUST exit with result value in top of the stack (otherwise it will 
+	"Some times functions need some post-process (for example, to unpack pointers).
+	 This call MUST exit with result value in top of the stack (otherwise it will
 	interfere with emitReturn:resultTempVar:context:"
-	self loader 
-		emitPointerArityUnpack: builder 
+	self loader
+		emitPointerArityUnpack: builder
 		type: self
 		context: aContext
 ]
@@ -200,13 +199,13 @@ FFIExternalType >> externalTypeSize [
 
 { #category : #accessing }
 FFIExternalType >> externalTypeWithArity [
-	^ self pointerArity > 0 
+	^ self pointerArity > 0
 		ifTrue: [ self externalType asPointerType ]
 		ifFalse: [ self externalType ]
 ]
 
 { #category : #'accessing - array' }
-FFIExternalType >> handle: aHandle at: index [ 
+FFIExternalType >> handle: aHandle at: index [
 	self isPointer ifTrue: [ ^ aHandle pointerAt: index ].
 	^ self basicHandle: aHandle at: index
 ]
@@ -262,29 +261,29 @@ FFIExternalType >> loader: aLoader [
 
 { #category : #testing }
 FFIExternalType >> needsArityPacking [
-	"Regular types needs to be ''rolled'' if they are passed as pointers to its calling functions. 
-	 For example, executing consecutivelly this (simplified) two functions: 
+	"Regular types needs to be ''rolled'' if they are passed as pointers to its calling functions.
+	 For example, executing consecutivelly this (simplified) two functions:
 	 [[[
 	 	time := self ffiCall: #(time_t time(time_t* t) ). ""this will answer a long.""
-	 	self ffiCall: #(tm* localtime(time_t* time) ) ""this requires a pointer to time."" 
+	 	self ffiCall: #(tm* localtime(time_t* time) ) ""this requires a pointer to time.""
 	 ]]]
-	 This mechanism allows UnifiedFFI to perform the roll of this pointers for you (it performs 
-	 the equivallent of ==&time== in C). 
-	
-	 For packing/unpacking logic, arity needs to be bigger than inherent type arity. 
-	 Means that if I have a type that is naturally a pointer (for example an ExternalAddress, who 
-	 is a 'void*'), it will have a natural arity of 1, then I pack if arity is bigger. 
+	 This mechanism allows UnifiedFFI to perform the roll of this pointers for you (it performs
+	 the equivallent of ==&time== in C).
+
+	 For packing/unpacking logic, arity needs to be bigger than inherent type arity.
+	 Means that if I have a type that is naturally a pointer (for example an ExternalAddress, who
+	 is a 'void*'), it will have a natural arity of 1, then I pack if arity is bigger.
 	 Other cases could need to be rolled when pointer arity is diffrent."
 	^ self pointerArity > self class naturalPointerArity
 ]
 
 { #category : #testing }
 FFIExternalType >> needsArityUnpacking [
-	"Simple types do not need ''unpacking'' because they can not used as buffers (to receive values 
+	"Simple types do not need ''unpacking'' because they can not used as buffers (to receive values
 	 from C functions).
 	 For instance, in case you have functions with the form:
-	 [[[ 
-		self ffiCall: #(void getPoint( double *x, double *y)) 
+	 [[[
+		self ffiCall: #(void getPoint( double *x, double *y))
 	 ]]]
 	 you cannot use instances of Float (since they are immutable in Pharo)... in that case you will
 	 need to use an FFIExternalValueHolder."
@@ -293,8 +292,8 @@ FFIExternalType >> needsArityUnpacking [
 
 { #category : #'instance creation' }
 FFIExternalType >> newBuffer [
-	"as its counterpart on class-side (newBuffer), this method get a memory segment that can be translated to C function as reference (to take later it's value). 
-	For example:  
+	"as its counterpart on class-side (newBuffer), this method get a memory segment that can be translated to C function as reference (to take later it's value).
+	For example:
 
   ffi_getDimensions__width: width height: height
     ^ #( (void getDimensions( double *width, double *height) )
@@ -319,8 +318,8 @@ FFIExternalType >> offsetReadFieldAt: offsetVariableName [
 
 { #category : #'emitting code' }
 FFIExternalType >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	^ self externalTypeWithArity 
-		offsetWriteFieldAt: offsetVariableName 
+	^ self externalTypeWithArity
+		offsetWriteFieldAt: offsetVariableName
 		with: valueName
 ]
 
@@ -336,7 +335,7 @@ FFIExternalType >> pointerArity [
 
 { #category : #accessing }
 FFIExternalType >> pointerArity: additionalArity [
-	pointerArity := pointerArity + additionalArity.
+	pointerArity := pointerArity + additionalArity
 ]
 
 { #category : #accessing }
@@ -381,15 +380,14 @@ FFIExternalType >> typeSize [
 
 { #category : #testing }
 FFIExternalType >> validateAfterParse: typeAndArityTuple [
-	"After parse an argument or return, some times I need to validate arity is correct. 
-	 This usually is ok, but since UFFI has types who do not have sense if they are not referenced as 
+	"After parse an argument or return, some times I need to validate arity is correct.
+	 This usually is ok, but since UFFI has types who do not have sense if they are not referenced as
 	 pointer (check my overrides), I act as an ''after parse'' validation."
-
 ]
 
 { #category : #'emitting code' }
 FFIExternalType >> writeFieldAt: byteOffset with: valueName [
-	^ self externalTypeWithArity 
-		writeFieldAt: byteOffset 
+	^ self externalTypeWithArity
+		writeFieldAt: byteOffset
 		with: valueName
 ]

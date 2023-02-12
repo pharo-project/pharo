@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIBit class >> externalType [ 
+FFIBit class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalLongType
 ]
 
@@ -19,7 +19,7 @@ FFIBit >> basicHandle: aHandle at: index [
 ]
 
 { #category : #private }
-FFIBit >> basicHandle: aHandle at: index put: value [ 
+FFIBit >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformBitAt: index put: value
 ]
 
@@ -30,10 +30,10 @@ FFIBit >> emitSelector [
 
 { #category : #'private - emitting code' }
 FFIBit >> offsetPointerReadFieldAt: offsetVariableName [
-	^ '^ExternalData 
+	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
 		type: FFIArchitecture forCurrentArchitecture externalBitType asPointerType'
-	format: { 
+	format: {
 		self emitSelector.
 		offsetVariableName }
 ]

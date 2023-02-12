@@ -22,28 +22,27 @@ FFIInstVarArgument >> argName: anObject [
 
 { #category : #'emitting code' }
 FFIInstVarArgument >> emitArgument: aBuilder context: aContext [
-	aBuilder pushInstVar: (aContext methodClass instVarIndexFor: self argName).
+	aBuilder pushInstVar: (aContext methodClass instVarIndexFor: self argName)
 ]
 
 { #category : #'emitting code' }
 FFIInstVarArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	"If argument is an object, I need to send value of instVar aName instead it self"
-	aBuilder 
+	aBuilder
 		pushInstVar: (aContext methodClass instVarIndexFor: self argName);
-		pushLiteral: (objectClass 
-			instVarIndexFor: aName 
+		pushLiteral: (objectClass
+			instVarIndexFor: aName
 			ifAbsent: [ self error: 'No ', aName, ' instVar' ]);
 		send: #instVarAt:
 ]
 
 { #category : #'private - emitting code' }
 FFIInstVarArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
-	aBuilder 
+	aBuilder
 		pushInstVar: (aContext methodClass instVarIndexFor: self argName);
-		pushLiteral: (objectClass 
-			instVarIndexFor: aName 
-			ifAbsent: [ self error: 'No ', aName, ' instVar' ]).
-
+		pushLiteral: (objectClass
+			instVarIndexFor: aName
+			ifAbsent: [ self error: 'No ', aName, ' instVar' ])
 ]
 
 { #category : #private }

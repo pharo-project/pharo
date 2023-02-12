@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #emitting }
-FFILegacyStringEncodingStrategy >> emitIRForFunctionArgument: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [ 
+FFILegacyStringEncodingStrategy >> emitIRForFunctionArgument: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [
 
 	aFFICharacterType loader
 		emitArgument: anIRBuilder

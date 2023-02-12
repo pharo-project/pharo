@@ -18,8 +18,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-FFICalloutMethodBuilder class >> calloutAPI: aCalloutAPI [ 
-	^ self basicNew 
+FFICalloutMethodBuilder class >> calloutAPI: aCalloutAPI [
+	^ self basicNew
 		initializeCalloutAPI: aCalloutAPI;
 		yourself
 ]
@@ -36,7 +36,7 @@ FFICalloutMethodBuilder >> argumentNames [
 ]
 
 { #category : #building }
-FFICalloutMethodBuilder >> build: aBlock [ 
+FFICalloutMethodBuilder >> build: aBlock [
 	aBlock value: self.
 	^ self generate
 ]
@@ -70,16 +70,16 @@ FFICalloutMethodBuilder >> createFFICallout [
 { #category : #'private - factory' }
 FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #compatibility }
 FFICalloutMethodBuilder >> extractLibrary [
 	"Obtain the library to use"
 	| ffiLibrary |
-	
-	ffiLibrary := library ifNil: [sender receiver ffiLibrary].	
-	ffiLibrary := ffiLibrary isClass 
+
+	ffiLibrary := library ifNil: [sender receiver ffiLibrary].
+	ffiLibrary := ffiLibrary isClass
 		ifFalse: [ ffiLibrary asFFILibrary ]
 		ifTrue: [ ffiLibrary uniqueInstance ].
 
@@ -132,7 +132,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	ffiLibrary := self extractLibrary.
 
 	ir := IRBuilder buildIR: [ :builder | | r |
-		
+
 		"Copy the properties of the old method"
 		sender methodProperties
 			ifNotNil: [ properties := sender methodProperties copy.
@@ -141,8 +141,8 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 
 		builder
 			numArgs: self argumentNames size;
-			addTemps: (self argumentNames copyWith: #result).		
-		
+			addTemps: (self argumentNames copyWith: #result).
+
 		ffiLibrary preMethodBuildContext: sender builder: builder spec: functionSpec.
 		r := self generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary.
 		ffiLibrary postMethodBuildContext: sender builder: builder spec: functionSpec.
@@ -154,8 +154,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 FFICalloutMethodBuilder >> initialize [
 	super initialize.
 	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new].
-	fixedArgumentCount := 0.
-		
+	fixedArgumentCount := 0
 ]
 
 { #category : #initialization }
@@ -171,7 +170,7 @@ FFICalloutMethodBuilder >> library [
 
 { #category : #accessing }
 FFICalloutMethodBuilder >> library: aLibrary [
-	"A module can be a string with a path to the library or a reference to a class who is child 
+	"A module can be a string with a path to the library or a reference to a class who is child
 	 of FFILibrary.
 	 Example: 'libc' or LibC"
 	library := aLibrary
@@ -179,7 +178,7 @@ FFICalloutMethodBuilder >> library: aLibrary [
 
 { #category : #accessing }
 FFICalloutMethodBuilder >> libraryName [
-	"Answer the module name, who can come from a string with the path to the module or a 
+	"Answer the module name, who can come from a string with the path to the module or a
 	 reference to a class who is child of FFILibrary"
 	self library ifNil: [ ^ nil ].
 	^ self library asFFILibrary libraryName
@@ -192,13 +191,13 @@ FFICalloutMethodBuilder >> method [
 
 { #category : #accessing }
 FFICalloutMethodBuilder >> methodTrailer [
-	
+
 	^ self method trailer
 ]
 
 { #category : #private }
 FFICalloutMethodBuilder >> parseSignature: aSignature [
-	^ FFIFunctionParser new  
+	^ FFIFunctionParser new
 		requestor: self requestor;
 		parseNamedFunction: aSignature
 ]
@@ -209,7 +208,7 @@ FFICalloutMethodBuilder >> requestor [
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilder >> requestor: anObject [ 
+FFICalloutMethodBuilder >> requestor: anObject [
 	"The object who made the request for FFI.
 	 By default, NBFFICallout (check #requestor)"
 	requestor := anObject

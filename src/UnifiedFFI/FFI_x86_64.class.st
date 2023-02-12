@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-FFI_x86_64 class >> isAbstract [ 
+FFI_x86_64 class >> isAbstract [
 
 	^self name = #FFI_x86_64
 ]
