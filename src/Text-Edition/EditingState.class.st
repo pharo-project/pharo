@@ -74,7 +74,7 @@ EditingState >> emphasisHere [
 ]
 
 { #category : #accessing }
-EditingState >> emphasisHere: aListOfTextAttribute [ 
+EditingState >> emphasisHere: aListOfTextAttribute [
 	emphasisHere := aListOfTextAttribute
 				ifNotNil: [:l | l reject: [:a | TextSelectionColor = a class]]
 ]
@@ -88,7 +88,7 @@ EditingState >> exploreUndoManager: aKeyboardEvent [
 { #category : #events }
 EditingState >> focused: aBoolean from: aTextMorph [
 	(aBoolean and: [aTextMorph sharesFindReplace])
-		ifTrue: [[(EditorFindReplaceDialogWindow on: aTextMorph) comeToFront] on: Error do: []].
+		ifTrue: [[(EditorFindReplaceDialogWindow on: aTextMorph) comeToFront] on: Error do: []]
 ]
 
 { #category : #events }
@@ -98,7 +98,6 @@ EditingState >> handlesKeyboard: evt from: aTextMorph [
 
 { #category : #events }
 EditingState >> keystroke: aKeyboardEvent from: aTextMorph [
-
 ]
 
 { #category : #accessing }
@@ -125,7 +124,6 @@ EditingState >> markBlock: aCharacterBlock [
 EditingState >> mouseDown: anEvent from: aTextMorph [
 	self mouseDownInterval: aTextMorph editor selectionInterval.
 	self focused: true from: aTextMorph
-
 ]
 
 { #category : #accessing }
@@ -145,8 +143,7 @@ EditingState >> pointBlock [
 
 { #category : #accessing }
 EditingState >> pointBlock: aCharacterBlock [
-	pointBlock := aCharacterBlock.
-
+	pointBlock := aCharacterBlock
 ]
 
 { #category : #accessing }
@@ -159,8 +156,7 @@ EditingState >> previousInterval [
 EditingState >> previousInterval: anInterval selection: aSelection [
 
 	previousInterval := anInterval.
-	previousSelection := aSelection.
-
+	previousSelection := aSelection
 ]
 
 { #category : #accessing }
@@ -171,12 +167,12 @@ EditingState >> previousSelection [
 
 { #category : #'undo - redo' }
 EditingState >> redo [
-	^ self undoManager redo 
+	^ self undoManager redo
 ]
 
 { #category : #'undo - redo' }
 EditingState >> redoArray: doArray undoArray: undoArray [
-	self undoManager isPlugged 
+	self undoManager isPlugged
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
 ]
 
@@ -192,14 +188,13 @@ EditingState >> startOfTyping: anIntegerIndex [
 
 { #category : #'undo - redo' }
 EditingState >> undo [
-	^ self undoManager undo 
+	^ self undoManager undo
 ]
 
 { #category : #accessing }
 EditingState >> undoManager [
 
-	^ undoManager ifNil: [ undoManager := HistoryIterator new].
-
+	^ undoManager ifNil: [ undoManager := HistoryIterator new]
 ]
 
 { #category : #accessing }
