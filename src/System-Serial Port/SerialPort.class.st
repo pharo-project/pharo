@@ -35,8 +35,8 @@ SerialPort >> baudRate: anInteger [
 { #category : #'open/close' }
 SerialPort >> close [
 	"Close the serial port. Do nothing if the port is not open."
-	
-	port ifNotNil: [port isString 
+
+	port ifNotNil: [port isString
 					ifTrue: [self primClosePortByName: port]
  					ifFalse: [self primClosePort: port]].
 	port := nil
@@ -198,7 +198,7 @@ SerialPort >> primOpenPort: portNumber baudRate: baud stopBitsType: stop
 ]
 
 { #category : #primitives }
-SerialPort >> primOpenPortByName: portName baudRate: baud stopBitsType: stop parityType: parity dataBits: numDataBits inFlowControlType: inFlowCtrl outFlowControlType: outFlowCtrl xOnByte: xOn xOffByte: xOff [ 
+SerialPort >> primOpenPortByName: portName baudRate: baud stopBitsType: stop parityType: parity dataBits: numDataBits inFlowControlType: inFlowCtrl outFlowControlType: outFlowCtrl xOnByte: xOn xOffByte: xOff [
 	<primitive: 'primitiveSerialPortOpenByName' module:'SerialPlugin'>
 	^ nil"(DNS)"
 ]
@@ -211,7 +211,7 @@ SerialPort >> primReadPort: portNumber into: byteArray startingAt: startIndex co
 ]
 
 { #category : #primitives }
-SerialPort >> primReadPortByName: portName into: byteArray startingAt: startIndex count: count [ 
+SerialPort >> primReadPortByName: portName into: byteArray startingAt: startIndex count: count [
 	<primitive: 'primitiveSerialPortReadByName' module:'SerialPlugin'>
 	self primitiveFailed
 ]
@@ -220,11 +220,11 @@ SerialPort >> primReadPortByName: portName into: byteArray startingAt: startInde
 SerialPort >> primWritePort: portNumber from: byteArray startingAt: startIndex count: count [
 
 	<primitive: 'primitiveSerialPortWrite' module: 'SerialPlugin'>
-	self primitiveFailed.
+	self primitiveFailed
 ]
 
 { #category : #primitives }
-SerialPort >> primWritePortByName: portName from: byteArray startingAt: startIndex count: count [ 
+SerialPort >> primWritePortByName: portName from: byteArray startingAt: startIndex count: count [
 	<primitive: 'primitiveSerialPortWriteByName' module:'SerialPlugin'>
 	self primitiveFailed
 ]
@@ -246,7 +246,7 @@ SerialPort >> printOn: aStream [
 { #category : #'input/output' }
 SerialPort >> readByteArray [
 	"Answer a ByteArray read from this serial port. Answer an empty ByteArray if no data is available. The port must be open. "
-	
+
 	| buf count |
 	buf := ByteArray new: 1000.
 	count := port isString
@@ -286,7 +286,7 @@ SerialPort >> readString [
 	String if no data is available. The port must be open."
 	| buf count |
 	buf := String new: 1000.
-	count := port isString 
+	count := port isString
 				ifTrue: [ self
 							primReadPortByName: port
 							into: buf
