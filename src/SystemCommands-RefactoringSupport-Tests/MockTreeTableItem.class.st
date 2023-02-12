@@ -32,7 +32,7 @@ MockTreeTableItem >> hash [
 
 { #category : #accessing }
 MockTreeTableItem >> name [
-	^ self title.
+	^ self title
 ]
 
 { #category : #accessing }
