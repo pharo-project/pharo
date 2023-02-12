@@ -15,7 +15,7 @@ Class {
 { #category : #'accessing - defaults' }
 DiffJoinMorph class >> splitterWidth [
 	"Answer the width of splitter to use for dif joins."
-	
+
 	^7
 ]
 
@@ -41,7 +41,7 @@ DiffJoinMorph >> defaultColor [
 { #category : #drawing }
 DiffJoinMorph >> drawOn: aCanvas [
 	"Draw the indicators for the mappings."
-	
+
 	super drawOn: aCanvas.
 	aCanvas translateBy: self topLeft clippingTo: self clippingBounds during: [:c |
 		self mappings do: [:j | j drawOn: c]]
@@ -51,7 +51,7 @@ DiffJoinMorph >> drawOn: aCanvas [
 DiffJoinMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the indicators for the mappings."
 
-	super drawOnAthensCanvas: anAthensCanvas. 
+	super drawOnAthensCanvas: anAthensCanvas.
 	(anAthensCanvas asCanvasWrapper ) translateBy: self topLeft clippingTo: self clippingBounds during: [:c |
 		self mappings do: [:j | j drawOn: c]]
 ]
@@ -75,7 +75,7 @@ DiffJoinMorph >> dstOffset: anInteger [
 { #category : #geometry }
 DiffJoinMorph >> extent: aPoint [
 	"Update the shapes of the joins."
-	
+
 	super extent: aPoint.
 	self updateMappings
 ]
@@ -94,7 +94,7 @@ DiffJoinMorph >> initialize [
 { #category : #layout }
 DiffJoinMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver."
-	
+
 	super layoutBounds: aRectangle.
 	self updateMappings
 ]
@@ -121,7 +121,7 @@ DiffJoinMorph >> mouseDown: evt [
 
 	self mappings
 		detect: [ :j | j containsPoint: evt position - self topLeft ]
-		ifFound: [ :cj | 
+		ifFound: [ :cj |
 			cj clicked.
 			self triggerEvent: #joinClicked ].
 	super mouseDown: evt
@@ -146,7 +146,7 @@ DiffJoinMorph >> srcOffset: anInteger [
 { #category : #'private - updating' }
 DiffJoinMorph >> updateMappings [
 	"Update the shapes of the joins."
-	
+
 	self mappings do: [:j |
 		j width: self width]
 ]
