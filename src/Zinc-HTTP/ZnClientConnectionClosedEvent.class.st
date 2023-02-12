@@ -35,12 +35,12 @@ ZnClientConnectionClosedEvent >> port: anObject [
 ZnClientConnectionClosedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
 	stream << ' Connection Closed '.
-	address 
-		ifNil: [ 
+	address
+		ifNil: [
 			stream print: address ]
-		ifNotNil: [ 
-			address 
-				do: [ :each | stream print: each ] 
+		ifNotNil: [
+			address
+				do: [ :each | stream print: each ]
 				separatedBy: [ stream nextPut: $. ] ].
 	stream nextPut: $:; print: port
 ]

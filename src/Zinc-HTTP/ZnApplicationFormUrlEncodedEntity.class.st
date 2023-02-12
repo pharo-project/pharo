@@ -17,14 +17,14 @@ Class {
 
 { #category : #testing }
 ZnApplicationFormUrlEncodedEntity class >> designatedMimeType [
-	^ ZnMimeType applicationFormUrlEncoded 
+	^ ZnMimeType applicationFormUrlEncoded
 ]
 
 { #category : #'instance creation' }
 ZnApplicationFormUrlEncodedEntity class >> withAll: keyedCollection [
 	^ self new
 		addAll: keyedCollection;
-		yourself 
+		yourself
 ]
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ ZnApplicationFormUrlEncodedEntity >> addAll: keyedCollection [
 
 	self invalidateRepresentation.
 	self fields addAllMulti: keyedCollection.
-	^ keyedCollection 
+	^ keyedCollection
 ]
 
 { #category : #accessing }
@@ -65,7 +65,7 @@ ZnApplicationFormUrlEncodedEntity >> at: key put: value [
 
 { #category : #private }
 ZnApplicationFormUrlEncodedEntity >> computeRepresentation [
-	representation := ByteArray streamContents: [ :stream | 
+	representation := ByteArray streamContents: [ :stream |
 		self writeRepresentationOn: (ZnBivalentWriteStream on: stream) ].
 	contentLength := representation size
 ]
@@ -101,7 +101,7 @@ ZnApplicationFormUrlEncodedEntity >> includesField: field [
 ZnApplicationFormUrlEncodedEntity >> initialize [
 	super initialize.
 	fields := ZnMultiValueDictionary new.
-	self contentType: self class designatedMimeType 
+	self contentType: self class designatedMimeType
 ]
 
 { #category : #private }
@@ -150,11 +150,11 @@ ZnApplicationFormUrlEncodedEntity >> writeRepresentationOn: stream [
 	self contentType charSet
 		ifNotNil: [:charSet|
 			ZnResourceMetaUtils
-				writeQueryFields: self fields 
+				writeQueryFields: self fields
 				withEncoder: (ZnCharacterEncoder newForEncoding: charSet)
-				on: stream] 
-		ifNil: [ 
-			ZnResourceMetaUtils 
-				writeQueryFields: self fields 
+				on: stream]
+		ifNil: [
+			ZnResourceMetaUtils
+				writeQueryFields: self fields
 				on: stream ]
 ]

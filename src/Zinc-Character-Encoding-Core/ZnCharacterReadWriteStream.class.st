@@ -21,13 +21,13 @@ ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> atEnd [
-	
+
 	^ readStream atEnd
 ]
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> close [
-	
+
 	writeStream close
 ]
 
@@ -43,7 +43,7 @@ ZnCharacterReadWriteStream >> collectionSpecies [
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> cr [
-	
+
 	writeStream cr
 ]
 
@@ -55,19 +55,19 @@ ZnCharacterReadWriteStream >> flush [
 
 { #category : #testing }
 ZnCharacterReadWriteStream >> isReadOnly [
-	
+
 	^ false
 ]
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> next [
-	
+
 	^ readStream next
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> next: anInteger [ 
-	
+ZnCharacterReadWriteStream >> next: anInteger [
+
 	^ readStream next: anInteger
 ]
 
@@ -93,7 +93,7 @@ ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> peek [
-	
+
 	^ readStream peek
 ]
 
@@ -104,8 +104,8 @@ ZnCharacterReadWriteStream >> position [
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> position: anInteger [ 
-	
+ZnCharacterReadWriteStream >> position: anInteger [
+
 	readStream position: anInteger
 ]
 
@@ -134,14 +134,14 @@ ZnCharacterReadWriteStream >> size [
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> skip: anInteger [ 
-	
+ZnCharacterReadWriteStream >> skip: anInteger [
+
 	readStream skip: anInteger
 ]
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> space [
-	
+
 	writeStream space
 ]
 
@@ -154,7 +154,7 @@ ZnCharacterReadWriteStream >> tab [
 { #category : #accessing }
 ZnCharacterReadWriteStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
-	
+
 	^ self collectionSpecies streamContents: [ :out |
 		| partialMatch pattern matched |
 		partialMatch := (self collectionSpecies new: aCollection size) writeStream.
@@ -177,6 +177,6 @@ ZnCharacterReadWriteStream >> upToAll: aCollection [
 
 { #category : #accessing }
 ZnCharacterReadWriteStream >> upToEnd [
-	
+
 	^ readStream upToEnd
 ]

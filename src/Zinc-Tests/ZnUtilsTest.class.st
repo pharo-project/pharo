@@ -152,14 +152,14 @@ ZnUtilsTest >> testStreamingBinary [
 { #category : #testing }
 ZnUtilsTest >> testStreamingBinaryWithoutSize [
 	| data in out |
-	data := ByteArray streamContents: [ :stream | 
+	data := ByteArray streamContents: [ :stream |
 		1 to: 10000 do: [ :each |
 			stream nextPut: #(1 2 3) atRandom ] ].
 	in := data readStream.
 	out := WriteStream on: (ByteArray new: data size).
 	ZnUtils streamFrom: in to: out.
 	self assert: in atEnd.
-	self assert: out contents equals: data 
+	self assert: out contents equals: data
 ]
 
 { #category : #testing }
@@ -176,12 +176,12 @@ ZnUtilsTest >> testStreamingNonBinary [
 { #category : #testing }
 ZnUtilsTest >> testStreamingNonBinaryWithoutSize [
 	| data in out |
-	data := String streamContents: [ :stream | 
-		1 to: 10000 do: [ :each | 
+	data := String streamContents: [ :stream |
+		1 to: 10000 do: [ :each |
 			stream nextPut: 'abc' atRandom ] ].
 	in := data readStream.
 	out := WriteStream on: (String new: data size).
 	ZnUtils streamFrom: in to: out.
 	self assert: in atEnd.
-	self assert: out contents equals: data 
+	self assert: out contents equals: data
 ]

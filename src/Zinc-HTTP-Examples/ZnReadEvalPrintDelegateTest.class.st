@@ -30,12 +30,12 @@ ZnReadEvalPrintDelegateTest >> testReadEvalPrint [
 ZnReadEvalPrintDelegateTest >> withServerDo: block [
 	| server |
 	server := ZnServer on: self port.
-	[ 
+	[
 		server start.
-		self 
+		self
 			assert: server isRunning & server isListening
 			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		block cull: server 
+		block cull: server
 	]
 		ensure: [ server stop ]
 ]

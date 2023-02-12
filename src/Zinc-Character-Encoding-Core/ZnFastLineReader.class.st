@@ -15,7 +15,7 @@ Class {
 
 { #category : #'instance creation' }
 ZnFastLineReader class >> on: characterReadStream [
-	^ self new 
+	^ self new
 		on: characterReadStream;
 		yourself
 ]
@@ -56,32 +56,32 @@ ZnFastLineReader >> linesDo: block [
 { #category : #accessing }
 ZnFastLineReader >> nextLine [
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
-	
+
 	self atEnd ifTrue: [ ^ nil ].
 	^ self streamContents: [ :out | | eol char |
 		eol := false.
-		[ eol ] whileFalse: [ 
+		[ eol ] whileFalse: [
 			char := readStream next.
 			(char isNil or: [ char == lf ])
 				ifTrue: [ eol := true ]
-				ifFalse: [ 
-					char == cr 
+				ifFalse: [
+					char == cr
 						ifTrue: [ eol := true. readStream peekFor: lf ]
 						ifFalse: [  out nextPut: char ] ] ] ]
 ]
 
 { #category : #initialize }
 ZnFastLineReader >> on: characterReadStream [
-	readStream := characterReadStream 
+	readStream := characterReadStream
 ]
 
 { #category : #private }
 ZnFastLineReader >> streamContents: block [
 	"Like readStream collectionSpecies streamContents: block
 	but reusing the underlying buffer for improved efficiency"
-	
-	bufferStream 
-		ifNil: [ 
+
+	bufferStream
+		ifNil: [
 			bufferStream := (readStream collectionSpecies new: 32) writeStream ].
 	bufferStream reset.
 	block value: bufferStream.
