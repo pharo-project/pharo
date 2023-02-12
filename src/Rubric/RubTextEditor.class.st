@@ -1601,8 +1601,7 @@ RubTextEditor >> nextWord: position [
 	position >= size ifTrue: [ ^ size ].
 
 	index := position.
-	index := index - 1.
-	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
+	initialIsAlphaNumeric := self isWordCharacterAt: (index - 1) in: string.
 
 	[(index < size) 
 		and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]]

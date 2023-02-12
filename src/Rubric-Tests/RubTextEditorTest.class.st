@@ -10,7 +10,7 @@ Class {
 	#category : #'Rubric-Tests-Editing-Core'
 }
 
-{ #category : #test }
+{ #category : #running }
 RubTextEditorTest >> setUp [
 
 	super setUp.
@@ -19,7 +19,7 @@ RubTextEditorTest >> setUp [
 	editor addString: 'Lorem ipsum dolor sit amet'.
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RubTextEditorTest >> testNextWord [
 
 	| textSize |
@@ -38,7 +38,7 @@ RubTextEditorTest >> testNextWord [
 	self assert: (editor nextWord: 999) equals: textSize. "Out of range"
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RubTextEditorTest >> testPreviousWord [
 
 	| textSize |
@@ -54,7 +54,7 @@ RubTextEditorTest >> testPreviousWord [
 	self assert: (editor previousWord: 999) equals: (textSize). "Out of range"
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RubTextEditorTest >> testSelectWordMarkPoint [
 
 	| textSize |
