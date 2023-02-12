@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #private }
-DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile [ 
+DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile [
 	^ self new oldRelationGraph: (FLMaterializer new
 		filePath: aSerializeFile;
 		materializeRoot)
@@ -121,23 +121,23 @@ DAPackageRelationGraphDiff >> dependentPackagesDiffUnderteminate [
 { #category : #initialization }
 DAPackageRelationGraphDiff >> initialize [
 	packagesDiff := OrderedCollection new.
-	dependentPackagesDiff := OrderedCollection new.
+	dependentPackagesDiff := OrderedCollection new
 ]
 
 { #category : #searching }
 DAPackageRelationGraphDiff >> lookUpForNewDependentPackages: newDependentPackages with: oldDependentPackages from: aPackage [
-	
+
 	| newDependent |
 	newDependent := newDependentPackages reject: [ :package | oldDependentPackages includes: package ].
-	newDependent do: [ :each | self addNewDependentPackage: each from: aPackage ].
+	newDependent do: [ :each | self addNewDependentPackage: each from: aPackage ]
 ]
 
 { #category : #searching }
 DAPackageRelationGraphDiff >> lookUpForNewPackages [
-			
+
 	| newPackages |
 	newPackages := newRelationGraph seenPackages reject: [ :package | oldRelationGraph includesSeenPackage: package ].
-	newPackages do: [ :each | self addNewPackage: each ].
+	newPackages do: [ :each | self addNewPackage: each ]
 ]
 
 { #category : #searching }
@@ -145,13 +145,13 @@ DAPackageRelationGraphDiff >> lookUpForRemovedDependentPackages: oldDependentPac
 
 	| removed |
 	removed := oldDependentPackages reject: [ :package | newDependentPackages includes: package ].
-	removed do: [ :each | self addRemovedDependentPackage: each from: aPackage ].
+	removed do: [ :each | self addRemovedDependentPackage: each from: aPackage ]
 ]
 
 { #category : #searching }
 DAPackageRelationGraphDiff >> lookUpForRemovedPackages [
 	| old |
-	old := oldRelationGraph seenPackages reject: [ :each |  newRelationGraph includesSeenPackage: each ].	
+	old := oldRelationGraph seenPackages reject: [ :each |  newRelationGraph includesSeenPackage: each ].
 	old do: [ :each |
 		self addRemovedPackage: each
 		 ]
@@ -162,10 +162,9 @@ DAPackageRelationGraphDiff >> lookUpForUndeterminateDependentPackagesFrom: paren
 	| oldDependentPackages undeterminates |
 	oldDependentPackages := (oldRelationGraph packageAt: parent packageName) dependentPackages.
 	undeterminates := oldDependentPackages reject: [ :package | self removedDependentPackagesIncludes: package from: parent ].
-	
-	
-	undeterminates do: [ :each | self addUndeterminateDependentPackage: each from: parent ].
 
+
+	undeterminates do: [ :each | self addUndeterminateDependentPackage: each from: parent ]
 ]
 
 { #category : #searching }
@@ -177,10 +176,9 @@ DAPackageRelationGraphDiff >> lookUpForUndeterminatePackages [
 
 { #category : #searching }
 DAPackageRelationGraphDiff >> make [
-	self 
-		makePackagesDiff;	
+	self
+		makePackagesDiff;
 		makeDependentPackagesDiff
-		
 ]
 
 { #category : #searching }
@@ -194,20 +192,19 @@ DAPackageRelationGraphDiff >> makeDependentPackagesDiff [
 	self packagesDiffUnderteminate do: [ :item |
 			self makeDependentPackagesDiffOn: item content.
 		 ]
-	
 ]
 
 { #category : #searching }
 DAPackageRelationGraphDiff >> makeDependentPackagesDiffOn: aPackage [
-	
+
 	| oldDependentPackages newDependentPackages  |
-	
+
 	oldDependentPackages := (oldRelationGraph packageAt: aPackage packageName) dependentPackages.
 	newDependentPackages := (newRelationGraph packageAt: aPackage packageName) dependentPackages.
-	
+
 	self lookUpForRemovedDependentPackages: oldDependentPackages with: newDependentPackages from: aPackage.
 	self lookUpForNewDependentPackages: newDependentPackages with: oldDependentPackages from: aPackage.
-	self lookUpForUndeterminateDependentPackagesFrom: aPackage.
+	self lookUpForUndeterminateDependentPackagesFrom: aPackage
 ]
 
 { #category : #searching }
@@ -217,7 +214,7 @@ DAPackageRelationGraphDiff >> makePackagesDiff [
 	self
 		lookUpForRemovedPackages;
 		lookUpForNewPackages;
-		 lookUpForUndeterminatePackages.
+		 lookUpForUndeterminatePackages
 ]
 
 { #category : #accessing }
@@ -299,5 +296,4 @@ DAPackageRelationGraphDiff >> removedPackagesIncludes: seenPackage [
 	^ self packagesDiffRemoved detect: [ :each | each content = seenPackage ]
 			ifFound: [ true ]
 			ifNone: [ false ]
-
 ]
