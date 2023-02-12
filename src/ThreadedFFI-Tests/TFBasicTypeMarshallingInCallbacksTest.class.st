@@ -9,7 +9,7 @@ TFBasicTypeMarshallingInCallbacksTest >> assertCharType: aType named: name [
 
 	| callbackGotValue |
 	callbackGotValue := self call: name type: aType value: $A asInteger.
-	self assert: callbackGotValue equals: $A.
+	self assert: callbackGotValue equals: $A
 ]
 
 { #category : #tests }
@@ -17,7 +17,7 @@ TFBasicTypeMarshallingInCallbacksTest >> assertIntType: aType named: name value:
 
 	| callbackGotValue |
 	callbackGotValue := self call: name type: aType value: aValue.
-	self assert: callbackGotValue equals: aValue.
+	self assert: callbackGotValue equals: aValue
 ]
 
 { #category : #tests }
@@ -37,9 +37,9 @@ TFBasicTypeMarshallingInCallbacksTest >> call: typeName type: type value: aValue
 
 	| callback fun received |
 
-	callback := TFCallback 
-		forCallback: [ :a | received := a. ] 
-		parameters: { type } 
+	callback := TFCallback
+		forCallback: [ :a | received := a. ]
+		parameters: { type }
 		returnType: TFBasicType void
 		runner: runner.
 

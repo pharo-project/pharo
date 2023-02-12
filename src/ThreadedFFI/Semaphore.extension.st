@@ -2,7 +2,7 @@ Extension { #name : #Semaphore }
 
 { #category : #'*ThreadedFFI' }
 Semaphore >> signalAll [
- 
-	[ self isEmpty ] 
+
+	[ self isEmpty ]
 	whileFalse: [ self signal ]
 ]
