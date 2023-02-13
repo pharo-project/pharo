@@ -43,7 +43,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectl
 
 	| originalSearch narrowedResults selectors |
 	
-	"using the array intead of the set leads to the test failung
+	"using the array intead of the set leads to the test failing randomly
 	du to duplicate first entry in narrowedResults"
 	selectors := Symbol selectorTable asArray asSet.
 
