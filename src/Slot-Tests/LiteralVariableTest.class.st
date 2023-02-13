@@ -23,7 +23,7 @@ LiteralVariableTest >> testIsVariableBinding [
 
 	| var1 |
 	var1 := LiteralVariable key: #var1 value: #value1.
-	
+
 	self assert: var1 isVariableBinding
 ]
 
@@ -33,7 +33,7 @@ LiteralVariableTest >> testLiteralEquality [
 	| var1 var2 |
 	var1 := LiteralVariable key: #var1 value: #value1.
 	self assert: (var1 literalEqual: var1).
-	
+
 	var2 := LiteralVariable key: #var1 value: #value1.
-	self deny: (var1 literalEqual: var2).
+	self deny: (var1 literalEqual: var2)
 ]

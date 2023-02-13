@@ -6,13 +6,13 @@ Class {
 
 { #category : #tests }
 SlotClassVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
-	| class1 |	
-	
-	class1 := self make: [ :builder | 
+	| class1 |
+
+	class1 := self make: [ :builder |
 		builder
 			name: self aClassName;
 			superclass: Object ].
-		
+
 	class1 class addSlot: (AccessorInstanceVariableSlot named: #foo).
 
 	self assert: (class1 class canUnderstand: #foo).
@@ -22,20 +22,20 @@ SlotClassVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
 { #category : #tests }
 SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclass [
 	"Issue: 13028"
-	| class1 class2 |	
-	
-	class1 := self make: [ :builder | 
+	| class1 class2 |
+
+	class1 := self make: [ :builder |
 		builder
 			name: self aClassName;
 			superclass: Object ].
-	
-	class2 := self make: [ :builder | 
+
+	class2 := self make: [ :builder |
 		builder
 			name: self anotherClassName;
 			superclass: class1 ].
-	
+
 	self assert: class1 subclasses equals: { class2 }.
-	class2 := self make: [ :builder | 
+	class2 := self make: [ :builder |
 		builder
 			name: self anotherClassName;
 			superclass: class1;
@@ -45,20 +45,20 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 
 { #category : #tests }
 SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
-	| class1 |	
-	
-	class1 := self make: [ :builder | 
+	| class1 |
+
+	class1 := self make: [ :builder |
 		builder
 			name: self aClassName;
 			superclass: Object ].
-		
+
 	class1 class addSlot: (AccessorInstanceVariableSlot named: #Foo).
 
 	self assert: class1 class slots size equals: 1.
 	self assert: (class1 class slots at:1) name equals: #Foo.
 	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot.
-	
-	class1 := self make: [ :builder | 
+
+	class1 := self make: [ :builder |
 		builder
 			name: self aClassName;
 			superclass: Object ].
@@ -70,13 +70,13 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 
 { #category : #tests }
 SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
-	| class1 |	
-	
-	class1 := self make: [ :builder | 
+	| class1 |
+
+	class1 := self make: [ :builder |
 		builder
 			name: self aClassName;
 			superclass: Object ].
-		
+
 	class1 addSlot: WriteOnceSlot new.
 
 	self assert: class1 slots size equals: 1.
@@ -89,9 +89,9 @@ SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 
 { #category : #tests }
 SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHierarchy [
-	| class1 class2 |	
-	
-	class1 := self make: [ :builder | 
+	| class1 class2 |
+
+	class1 := self make: [ :builder |
 		builder
 			name: self aClassName;
 			superclass: Object;
@@ -103,11 +103,11 @@ SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHie
 	self assert: class1 slots size equals: 1.
 	self assert: ((class1 >> #initialize) hasLiteral: #initializeSlots:).
 
-	class2 := self make: [ :builder | 
+	class2 := self make: [ :builder |
 		builder
 			name: self anotherClassName;
 			superclass: class1;
-			slots: { 
+			slots: {
 				WriteOnceSlot new
 					name: #bar;
 					yourself } ].
