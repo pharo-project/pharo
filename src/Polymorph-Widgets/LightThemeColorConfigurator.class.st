@@ -50,12 +50,6 @@ LightThemeColorConfigurator >> lightBaseColor [
 ]
 
 { #category : #colors }
-LightThemeColorConfigurator >> lightSelectionColor [
-
-	^ Color r: 175 g: 213 b: 250 range: 255
-]
-
-{ #category : #colors }
 LightThemeColorConfigurator >> veryLightSelectionColor [
 
 	^ self lightSelectionColor muchLighter

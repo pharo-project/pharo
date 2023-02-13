@@ -306,7 +306,7 @@ UIThemeColorConfigurator >> lightColorFor: aButton [
 { #category : #colors }
 UIThemeColorConfigurator >> lightSelectionColor [
 
-	^ self subclassResponsibility
+	^ Color r: 175 g: 213 b: 250 range: 255
 ]
 
 { #category : #colors }
@@ -555,24 +555,6 @@ UIThemeColorConfigurator >> taskbarItemLabelColorForExpanded: anObject [
 UIThemeColorConfigurator >> taskbarMinimizedButtonColorFor: anObject [
 
 	^ Color transparent
-]
-
-{ #category : #colors }
-UIThemeColorConfigurator >> testColorError [
-
-	^ Color red darker darker
-]
-
-{ #category : #colors }
-UIThemeColorConfigurator >> testColorFailure [
-
-	^ Color yellow darker darker darker
-]
-
-{ #category : #colors }
-UIThemeColorConfigurator >> testColorPassing [
-
-	^ Color green darker darker
 ]
 
 { #category : #colors }

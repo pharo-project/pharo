@@ -173,12 +173,6 @@ DarkThemeColorConfigurator >> lightBaseColor [
 ]
 
 { #category : #colors }
-DarkThemeColorConfigurator >> lightSelectionColor [
-
-	^ Color r: 175 g: 213 b: 250 range: 255
-]
-
-{ #category : #colors }
 DarkThemeColorConfigurator >> lineNumberColor [
 
 	^ Color gray lighter lighter
@@ -286,24 +280,6 @@ DarkThemeColorConfigurator >> taskbarItemLabelColorForCollapsed: aButton [
 DarkThemeColorConfigurator >> taskbarItemLabelColorForExpanded: aButton [
 
 	^ Color white
-]
-
-{ #category : #colors }
-DarkThemeColorConfigurator >> testColorError [
-
-	^ Color red darker darker darker
-]
-
-{ #category : #colors }
-DarkThemeColorConfigurator >> testColorFailure [
-
-	^ Color yellow muchDarker lighter lighter
-]
-
-{ #category : #colors }
-DarkThemeColorConfigurator >> testColorPassing [
-
-	^ Color green muchDarker lighter
 ]
 
 { #category : #colors }

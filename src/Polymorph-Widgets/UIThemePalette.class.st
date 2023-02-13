@@ -542,24 +542,6 @@ UIThemePalette >> taskbarMinimizedButtonColorFor: anObject [
 ]
 
 { #category : #colors }
-UIThemePalette >> testColorError [
-
-	^ paletteDictionary at: #testColorError ifAbsentPut: [ colorConfigurator testColorError ]
-]
-
-{ #category : #colors }
-UIThemePalette >> testColorFailure [
-
-	^ paletteDictionary at: #testColorFailure ifAbsentPut: [ colorConfigurator testColorFailure ]
-]
-
-{ #category : #colors }
-UIThemePalette >> testColorPassing [
-
-	^ paletteDictionary at: #testColorPassing ifAbsentPut: [ colorConfigurator testColorPassing ]
-]
-
-{ #category : #colors }
 UIThemePalette >> textColor [
 
 	^ paletteDictionary at: #textColor ifAbsentPut: [ colorConfigurator textColor ]

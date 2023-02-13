@@ -37,14 +37,6 @@ PharoDarkTheme >> buttonDisabledBorderStyleFor: aButton [
 	^ BorderStyle width: 0 color: Color transparent
 ]
 
-{ #category : #'fill-styles - buttons' }
-PharoDarkTheme >> buttonDisabledFillStyleFor: aButton [
-
-	"Return the disabled button fillStyle for the given color."
-
-	^ SolidFillStyle color: Color transparent
-]
-
 { #category : #'border-styles - buttons' }
 PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 
@@ -75,40 +67,6 @@ PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 
 	^ SolidFillStyle color: self selectionColor
-]
-
-{ #category : #configure }
-PharoDarkTheme >> configureMorphTreeMorph: aMorph [
-
-	aMorph preferedPaneColor: self backgroundColor.
-	aMorph rowColorForEven: self backgroundColor odd: self backgroundColor
-]
-
-{ #category : #configure }
-PharoDarkTheme >> configurePluggableTextMorph: textMorph [
-
-	textMorph
-		color: self backgroundColor;
-		textColor: self textColor;
-		borderWidth: 1
-]
-
-{ #category : #configure }
-PharoDarkTheme >> configureScrollPane: aMorph [
-
-	
-]
-
-{ #category : #configure }
-PharoDarkTheme >> configureSystemWindow: aWindow [
-
-	
-]
-
-{ #category : #configure }
-PharoDarkTheme >> configureTextMorph: textMorph [
-
-	textMorph color: self textColor
 ]
 
 { #category : #'border-styles' }
@@ -152,14 +110,6 @@ PharoDarkTheme >> initialize [
 PharoDarkTheme >> menuBorderWidth [
 
 	^ self borderWidth * self displayScaleFactor
-]
-
-{ #category : #accessing }
-PharoDarkTheme >> newRadioMarkerForm [
-
-	"Answer a new checkbox marker form."
-
-	^ Form extent: 12 @ 12 depth: 32
 ]
 
 { #category : #'fill-styles - scrollbars' }
@@ -249,12 +199,6 @@ PharoDarkTheme >> taskbarItemSelectedBorderStyleFor: aButton [
 PharoDarkTheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
 
 	^ self taskbarItemMouseOverBorderStyleFor: aButton
-]
-
-{ #category : #'fill-styles - taskbar' }
-PharoDarkTheme >> taskbarItemSelectedDisaledFillStyleFor: aButton [
-
-	^ self taskbarItemSelectedFillStyleFor: aButton
 ]
 
 { #category : #'fill-styles - taskbar' }

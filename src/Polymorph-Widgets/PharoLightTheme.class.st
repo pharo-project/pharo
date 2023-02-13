@@ -145,22 +145,6 @@ PharoLightTheme class >> themeName [
 	^ 'Pharo Light'
 ]
 
-{ #category : #'fill-styles - buttons' }
-PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
-	"Return the disabled button fillStyle for the given color."
-
-	^ BorderStyle
-		width: 0
-		color: Color transparent
-]
-
-{ #category : #'fill-styles - buttons' }
-PharoLightTheme >> buttonDisabledFillStyleFor: aButton [
-	"Return the disabled button fillStyle for the given color."
-
-	^ SolidFillStyle color: Color transparent
-]
-
 { #category : #'border-styles - buttons' }
 PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
@@ -195,23 +179,12 @@ PharoLightTheme >> initialize [
 	settings preferGradientFill: false
 ]
 
-{ #category : #forms }
-PharoLightTheme >> newRadioMarkerForm [
-	"Answer a new checkbox marker form."
-
-	^Form extent: 12@12 depth: 32
-]
-
 { #category : #'fill-styles - scrollbars' }
 PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar thumb fillStyle for the given scrollbar."
-		"Return the normal scrollbar fillStyle for the given scrollbar."
+	"Return the normal scrollbar fillStyle for the given scrollbar."
+	"^ SolidFillStyle color: Color lightGray lighter."
 
-	"^ (self glamorousNormalFillStyleWithBaseColor: aScrollbar paneColor for:  aScrollbar height: aScrollbar height)
-		direction: (aScrollbar bounds isWide
-			ifTrue: [0 @ aScrollbar height]
-			ifFalse: [aScrollbar width @ 0])"
-"	^ SolidFillStyle color: Color lightGray lighter."
 	^ self selectedFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
@@ -225,7 +198,7 @@ PharoLightTheme >> taskbarItemDisabledBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles - taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 	"Return the disabled taskbar item fillStyle for the given color."
 
