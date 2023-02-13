@@ -25,7 +25,7 @@ ReExceptionStrategy class >> current: aStrategy [
 { #category : #settings }
 ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder pickOne: #current)
 		label: 'Exception handling strategy';
 		target: self;
@@ -41,17 +41,17 @@ ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 ReExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 	"do something with anException that occured during anEntity validation.
 	in case you want to produce a new renraku property evaluate aBlock with it"
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #settings }
 ReExceptionStrategy class >> settingDescription [
-	
+
 	^ String streamContents: [ :stream |
 		stream nextPutAll: 'The selected strategy defines how to handle exceptions that occur during a renraku validation of an entity.'.
 		stream cr.
-		
+
 		self allSubclassesDo: [ :cls |
 			stream
 				cr;
