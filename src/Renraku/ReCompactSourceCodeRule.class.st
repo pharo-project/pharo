@@ -83,3 +83,9 @@ ReCompactSourceCodeRule >> providesChange [
 
 	^ true
 ]
+
+{ #category : #accessing }
+ReCompactSourceCodeRule >> severity [
+
+	^ #information
+]
