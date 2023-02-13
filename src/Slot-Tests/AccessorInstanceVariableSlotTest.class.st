@@ -23,7 +23,7 @@ AccessorInstanceVariableSlotTest >> testAccessorInstanceVariableSlot [
 	self assert: (slot read: object) equals: 5.
 	object slot1: 10.
 	self assert: object slot1 equals: 10.
-	
+
 	"did we create accessors?"
 	self assert: (aClass includesSelector: #slot1).
 	self assert: (aClass includesSelector: #slot1:)
