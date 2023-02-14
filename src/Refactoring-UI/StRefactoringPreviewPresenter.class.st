@@ -113,14 +113,9 @@ StRefactoringPreviewPresenter >> defaultLayout [
 		                add: scopeDropList;
 		                yourself.
 	actionsLayout := SpBoxLayout newLeftToRight
-		                 addLast: buttonOk
-		                 expand: false
-		                 fill: true
-		                 padding: 5;
-		                 addLast: buttonCancel
-		                 expand: false
-		                 fill: true
-		                 padding: 5;
+		                 spacing: 5;
+		                 addLast: buttonOk expand: false fill: true;
+		                 addLast: buttonCancel expand: false fill: true;
 		                 yourself.
 
 	^ self layout: (SpBoxLayout newTopToBottom
