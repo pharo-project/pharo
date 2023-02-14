@@ -64,6 +64,24 @@ DurationTest >> testAsDuration [
 ]
 
 { #category : #tests }
+DurationTest >> testAsMicroseconds [
+
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: (Duration seconds: 1) asMicroseconds equals: 1000000.
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: aDuration asMicroseconds equals: 93784000000.
+	self assert: (Duration microSeconds: 3775) asSeconds equals: 0.
+	self assert: (Duration microSeconds: 3775000) asSeconds equals: 3.
+	self assert: (Duration microSeconds: 3775) nanoSeconds equals: 3775000.
+	self assert: (Duration microSeconds: -3775) asSeconds equals: 0.
+	self assert: (Duration microSeconds: -3775000) asSeconds equals: -3.
+	self assert: (Duration microSeconds: -3775000) nanoSeconds equals: -775000000.
+	"but"
+	self assert: (Duration microSeconds: -3775000) asNanoSeconds equals: -3775000000
+]
+
+{ #category : #tests }
 DurationTest >> testAsMilliSecond [
 	self
 		assert: 1 milliSecond equals: (1 / 1000) second;
