@@ -103,8 +103,8 @@ StRefactoringPreviewPresenter >> connectPresenters [
 	buttonOk action: [ self accept ]
 ]
 
-{ #category : #initialization }
-StRefactoringPreviewPresenter >> initializeLayout [
+{ #category : #layout }
+StRefactoringPreviewPresenter >> defaultLayout [
 
 	| scopesLayout actionsLayout |
 	scopesLayout := SpBoxLayout newLeftToRight
@@ -124,16 +124,16 @@ StRefactoringPreviewPresenter >> initializeLayout [
 		                 padding: 5;
 		                 yourself.
 
-	self layout: (SpBoxLayout newTopToBottom
-			 add: (SpBoxLayout newTopToBottom
-					  add: scopesLayout
-					  withConstraints:
-						  [ :constraints | constraints height: 30 ] yourself;
-					  add: table;
-					  add: diffPresenter;
-					  yourself);
-			 add: actionsLayout expand: false;
-			 yourself)
+	^ self layout: (SpBoxLayout newTopToBottom
+			   add: (SpBoxLayout newTopToBottom
+					    add: scopesLayout
+					    withConstraints:
+						    [ :constraints | constraints height: 30 ] yourself;
+					    add: table;
+					    add: diffPresenter;
+					    yourself);
+			   add: actionsLayout expand: false;
+			   yourself)
 ]
 
 { #category : #initialization }
@@ -160,8 +160,7 @@ StRefactoringPreviewPresenter >> initializePresenters [
 		                icon: (self iconNamed: #smallCancel).
 	self focusOrder
 		add: buttonOk;
-		add: buttonCancel.
-	self initializeLayout
+		add: buttonCancel
 ]
 
 { #category : #initialization }
