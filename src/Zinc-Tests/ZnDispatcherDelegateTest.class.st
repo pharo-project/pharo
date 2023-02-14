@@ -1,6 +1,6 @@
 Class {
 	#name : #ZnDispatcherDelegateTest,
-	#superclass : #TestCase,
+	#superclass : #ZnAbstractServerTest,
 	#category : #'Zinc-Tests'
 }
 
@@ -26,19 +26,4 @@ ZnDispatcherDelegateTest >> testDispatcherDelegate [
 		self assert: client response status equals: 200.
 		
 		client close ]
-]
-
-{ #category : #private }
-ZnDispatcherDelegateTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		self assert: server isRunning & server isListening.
-		block cull: server
-	] 
-		ensure: [ server stop ]
 ]

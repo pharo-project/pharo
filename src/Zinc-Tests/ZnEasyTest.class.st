@@ -1,6 +1,6 @@
 Class {
 	#name : #ZnEasyTest,
-	#superclass : #TestCase,
+	#superclass : #ZnAbstractServerTest,
 	#category : #'Zinc-Tests'
 }
 
@@ -133,19 +133,4 @@ ZnEasyTest >> testTimeout [
 					during: [ ZnEasy get: (server localUrl addPathSegment: 'echo'; queryAt: 'delay' put: '2'; yourself) ] ] 
 			raise: ConnectionTimedOut ]
 	
-]
-
-{ #category : #private }
-ZnEasyTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		self assert: server isRunning & server isListening.
-		block cull: server
-	] 
-		ensure: [ server stop ]
 ]

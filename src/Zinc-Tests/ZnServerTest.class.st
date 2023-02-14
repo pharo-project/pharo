@@ -1,6 +1,6 @@
 Class {
 	#name : #ZnServerTest,
-	#superclass : #TestCase,
+	#superclass : #ZnAbstractServerTest,
 	#category : #'Zinc-Tests'
 }
 
@@ -76,11 +76,6 @@ ZnServerTest >> assertTooManyHeaders: serverUrl [
 { #category : #accessing }
 ZnServerTest >> entitySizeLimit [
 	^ 1024
-]
-
-{ #category : #private }
-ZnServerTest >> port [
-	^ 1700 + 32 atRandom
 ]
 
 { #category : #private }
@@ -620,18 +615,4 @@ ZnServerTest >> usingClassicSocketStreamsOnWindowsDo: block [
 		ifTrue: [ ZnNetworkingUtils default socketStreamClass: SocketStream ].
 	block
 		ensure: [ ZnNetworkingUtils default socketStreamClass: originalSocketStreamClass ]
-]
-
-{ #category : #private }
-ZnServerTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: self port.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		block cull: server 
-	]
-		ensure: [ server stop ]
 ]

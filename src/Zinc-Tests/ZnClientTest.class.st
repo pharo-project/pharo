@@ -1,6 +1,6 @@
 Class {
 	#name : #ZnClientTest,
-	#superclass : #TestCase,
+	#superclass : #ZnAbstractServerTest,
 	#category : #'Zinc-Tests'
 }
 
@@ -962,18 +962,4 @@ ZnClientTest >> testUsernamePasswordTwice [
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'Zinc').
 		client close ]
-]
-
-{ #category : #private }
-ZnClientTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		block cull: server
-	] 
-		ensure: [ server stop ]
 ]
