@@ -92,7 +92,6 @@ StRefactoringPreviewPresenter >> columns [
 { #category : #initialization }
 StRefactoringPreviewPresenter >> connectPresenters [
 
-	super connectPresenters.
 	table whenSelectionChangedDo: [ :selection |
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
