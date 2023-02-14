@@ -17,7 +17,7 @@ MethodRepackaged class >> methodRepackaged: aMethod oldPackage: oldPackage newPa
 			method: aMethod;
 			oldPackage: oldPackage;
 			newPackage: newPackage;
-			yourself.
+			yourself
 ]
 
 { #category : #testing }
@@ -44,31 +44,31 @@ MethodRepackaged >> affectsPackage: aPackage [
 
 { #category : #accessing }
 MethodRepackaged >> methodRepackaged [
-	
+
 	^ method
 ]
 
 { #category : #accessing }
 MethodRepackaged >> newPackage [
-	
+
 	^ newPackage
 ]
 
 { #category : #accessing }
 MethodRepackaged >> newPackage: anObject [
-	
+
 	newPackage := anObject
 ]
 
 { #category : #accessing }
 MethodRepackaged >> oldPackage [
-	
+
 	^ oldPackage
 ]
 
 { #category : #accessing }
 MethodRepackaged >> oldPackage: anObject [
-	
+
 	oldPackage := anObject
 ]
 

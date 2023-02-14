@@ -15,13 +15,13 @@ ToOneRelationSlot >> isToOneSlot [
 
 { #category : #internal }
 ToOneRelationSlot >> updateOld: oldValue new: newValue in: anObject [
-	newValue 
+	newValue
 		ifNotNil: [ self checkValue: newValue ].
 	self hasInverse
 		ifFalse: [ ^ newValue ].
-	oldValue 
+	oldValue
 		ifNotNil: [ self removeAssociationFrom: anObject to: oldValue ].
-	newValue 
+	newValue
 		ifNotNil: [ self addAssociationFrom: anObject to: newValue ].
 	^newValue
 ]
