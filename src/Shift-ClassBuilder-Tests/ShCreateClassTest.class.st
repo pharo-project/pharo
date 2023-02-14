@@ -18,7 +18,7 @@ ShCreateClassTest >> testClassWithClassSlots [
 	self
 		validateSlots:
 			{#anSlot => InstanceVariableSlot}.
-			
+
 	self
 		validateClassSlots:
 			{#aClassSlot => InstanceVariableSlot.}
@@ -63,7 +63,7 @@ ShCreateClassTest >> testClassWithSlots [
 ShCreateClassTest >> testEmptyClass [
 	builder name: #SHTestEmptyClass.
 	result := builder build.
-	
+
 	self validateResult.
 	self validateSuperclass: Object
 ]
