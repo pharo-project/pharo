@@ -17,12 +17,12 @@ ShMetaclassChanged >> announceChanges [
 { #category : #accessing }
 ShMetaclassChanged >> builder: anObject [
 	super builder: anObject.
-	oldClass := builder oldClass copyForAnnouncement.
+	oldClass := builder oldClass copyForAnnouncement
 ]
 
 { #category : #propagating }
 ShMetaclassChanged >> hasChangeClassSideShape [
-	^ true.
+	^ true
 ]
 
 { #category : #propagating }

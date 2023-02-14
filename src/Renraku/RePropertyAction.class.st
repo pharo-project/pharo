@@ -47,7 +47,7 @@ RePropertyAction >> description: anObject [
 ]
 
 { #category : #accessing }
-RePropertyAction >> icon [ 
+RePropertyAction >> icon [
 	^ icon
 ]
 
@@ -57,8 +57,8 @@ RePropertyAction >> icon: anObject [
 ]
 
 { #category : #initialization }
-RePropertyAction >> initialize [ 
-	
+RePropertyAction >> initialize [
+
 	icon := (Form extent: 16@16 depth: 32) fillColor: Color green.
 	description := ''.
 	action := [ :critic :entity | ]

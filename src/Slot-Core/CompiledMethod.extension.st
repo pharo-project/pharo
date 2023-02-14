@@ -15,6 +15,6 @@ CompiledMethod >> temporaryVariableNamed: aName [
 CompiledMethod >> temporaryVariables [
 	"on the level of compiledMethod, temps include the arguments"
 	self flag: #TODO. "we need to revist temps vs args"
-	^(self sourceNode arguments collect: [ :each | each binding ]), 
+	^(self sourceNode arguments collect: [ :each | each binding ]),
 		(self sourceNode temporaries collect: [ :each | each binding ])
 ]
