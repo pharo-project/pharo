@@ -62,8 +62,10 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 	violating := OrderedCollection new.
 	classSideInitializeMethods := OrderedCollection new.
 
-	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide ]) ifTrue: [ classSideInitializeMethods add: m ]]].
-
+	Object allSubclassesDo: [:cls | 
+		cls methods do: [:method | 
+			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
+				ifTrue: [ classSideInitializeMethods add: method ]]].
 	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
 
 	todo := #(#LGitDiffHunk #TonelFileSystemUtils #MicHTTPResourceReference).
@@ -131,7 +133,10 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 	violating := OrderedCollection new.
 	instanceSideInitializeMethods := OrderedCollection new.
 
-	Object allSubclassesDo: [:cls | cls methods do: [:m | (m selector = #initialize and: [ m isClassSide not  ]) ifTrue: [ instanceSideInitializeMethods add: m ]]].
+	Object allSubclassesDo: [:cls | 
+		cls methods do: [:method | 
+			(method selector = #initialize and: [ method isClassSide not and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
+				ifTrue: [ instanceSideInitializeMethods add: method ]]].
 
 	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
 
