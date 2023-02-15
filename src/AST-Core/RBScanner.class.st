@@ -535,15 +535,23 @@ RBScanner >> scanName [
 
 { #category : #'private - scanning' }
 RBScanner >> scanNumber [
-	| start number stop string |
+	| start number stop string gotError |
 	start := stream position.
 	stream position: start - 1.
-	number := [NumberParser parse: stream] on: Error do: [:err | self scannerError: err messageText].
+	gotError := nil.
+	number := NumberParser parse: stream onError: [ :message | gotError := message ].
 	stop := stream position.
 	stream position: start - 1.
 	string := stream next: stop - start + 1.
 	stream position: stop.
 	self step.
+	gotError ifNotNil: [
+	^ RBErrorToken
+		value: string
+		start: tokenStart
+		cause: gotError
+		location: stop
+		].
 	^RBNumberLiteralToken
 		value: number
 		start: start
