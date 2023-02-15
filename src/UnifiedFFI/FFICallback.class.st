@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #converting }
-FFICallback class >> asExternalTypeOn: generator [ 
+FFICallback class >> asExternalTypeOn: generator [
 	^ FFICallbackType objectClass: self
 ]
 
@@ -32,7 +32,7 @@ FFICallback class >> exampleCqsort [
 	| cb rand values orig sort |
 
 	rand := Random new.
-	
+
 	values := FFIExternalArray externalNewType: 'double' size: 100.
 	1 to: 100 do: [ :i| values at: i put: rand next ].
 	orig := (1 to: 100) collect: [:i| values at: i] as: Array.
@@ -43,17 +43,17 @@ FFICallback class >> exampleCqsort [
 		self primQsort: values with: 100 with: values type typeSize with: cb.
 		sort := values asArray ]
 	ensure: [ values free ].
-	
+
 	^orig -> sort
 ]
 
 { #category : #'instance creation' }
-FFICallback class >> forAddress: address [ 
-	"Reconstructs a callback from an address (an integer). 
-	 This is useful for reading callbacks from a structure. 
-	 WARNING: 
+FFICallback class >> forAddress: address [
+	"Reconstructs a callback from an address (an integer).
+	 This is useful for reading callbacks from a structure.
+	 WARNING:
 		Of course, the callback needs to exist before :)
-		And the callback needs to be created with FFICallback (not plain Alien callbacks), then 
+		And the callback needs to be created with FFICallback (not plain Alien callbacks), then
 		we can be sure block in fact contains the FFICallback instance"
 	^ FFIBackend current lookupCallbackByAddress: address
 ]
@@ -61,7 +61,7 @@ FFICallback class >> forAddress: address [
 { #category : #'private - primitives' }
 FFICallback class >> primQsort: array with: count with: size with: compare [
 	self
-		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 
+		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare))
 		module: LibC
 ]
 
@@ -73,8 +73,7 @@ FFICallback class >> signature: aSignature block: aBlock [
 { #category : #accessing }
 FFICallback >> backendCallback [
 	"declare the backend callback"
-	^ backendCallback ifNil: [ backendCallback := self calloutAPIClass newCallbackBackendFor: self ].
-
+	^ backendCallback ifNil: [ backendCallback := self calloutAPIClass newCallbackBackendFor: self ]
 ]
 
 { #category : #accessing }
@@ -101,9 +100,9 @@ FFICallback >> ffiBindingOf: aName [
 
 { #category : #private }
 FFICallback >> ffiInstVarArgument: argName generator: generator [
-	"Load the instance variable with given name. 
-	 It will be ignored anyway in a callback" 
-	^ FFIInstVarArgument new 
+	"Load the instance variable with given name.
+	 It will be ignored anyway in a callback"
+	^ FFIInstVarArgument new
 		argName: argName;
 		yourself
 ]
@@ -131,13 +130,13 @@ FFICallback >> getHandle [
 ]
 
 { #category : #invoking }
-FFICallback >> invokeAsFunctionWithArguments: aCollection [ 
+FFICallback >> invokeAsFunctionWithArguments: aCollection [
 
 	^ self backendCallback invokeAsFunctionWithArguments: aCollection
 ]
 
 { #category : #private }
-FFICallback >> newParser [ 
+FFICallback >> newParser [
 	^ FFIFunctionParser new
 		requestor: (FFICallout new
 			requestor: self;
@@ -149,7 +148,6 @@ FFICallback >> newParser [
 FFICallback >> returnOnError [
 
 	^ functionSpec returnType defaultReturnOnError
-
 ]
 
 { #category : #private }
@@ -164,8 +162,7 @@ FFICallback >> signature: signature block: aBlock [
 	parser := self newParser.
 	functionSpec := parser parseAnonymousFunction: signature.
 	functionSpec resolveUsing: parser requestor.
-	block := aBlock.
-
+	block := aBlock
 ]
 
 { #category : #accessing }
@@ -182,7 +179,7 @@ FFICallback >> valueWithArguments: args [
 
 	^ [ block valueWithArguments: args ]
 		on: Error
-		fork: [ :e | 
+		fork: [ :e |
 			self shouldDebugExceptions ifTrue: [ e debug ] ]
-		return: [ self returnOnError ].
+		return: [ self returnOnError ]
 ]

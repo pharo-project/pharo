@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 FFIStrictResolutionMode >> isStrict [
-	
+
 	^ true
 ]
 

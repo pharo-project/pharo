@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIUInt32 class >> externalType [ 
+FFIUInt32 class >> externalType [
 	^ ExternalType ulong
 ]
 

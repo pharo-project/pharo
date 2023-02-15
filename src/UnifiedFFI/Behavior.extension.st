@@ -9,10 +9,10 @@ Behavior >> ffiBindingOf: aName [
 
 { #category : #'*UnifiedFFI' }
 Behavior >> ffiInstVarArgument: argName generator: generator [
-	"Load the instance variable with given name" 
+	"Load the instance variable with given name"
 
 	(self allInstVarNames includes: argName) ifFalse: [ ^ nil ].
-	^ FFIInstVarArgument new 
+	^ FFIInstVarArgument new
 		argName: argName;
 		yourself
 ]

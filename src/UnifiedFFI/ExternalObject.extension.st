@@ -7,6 +7,6 @@ ExternalObject >> autoRelease [
 ]
 
 { #category : #'*UnifiedFFI' }
-ExternalObject >> pointer [ 
+ExternalObject >> pointer [
 	^ self getHandle pointer
 ]
