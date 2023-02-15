@@ -527,7 +527,7 @@ RBScanner >> scanLiteralString [
 			value: string
 			start: tokenStart
 			cause: 'Unmatched '' in string literal.'
-			location: stream position].
+			location: stream position + 1].
 
 	 self step = $'] whileTrue: [
 		buffer nextPutAll: string; nextPut: $'.

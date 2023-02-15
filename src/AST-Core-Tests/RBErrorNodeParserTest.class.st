@@ -261,7 +261,7 @@ RBErrorNodeParserTest >> testFaultyStringLiteral [
 	self assert: node selector equals: #','.
 	self assert: node arguments first isParseError.
 	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
-	self assert: node arguments first sourceInterval equals: (7 to: 10).
+	self assert: node arguments first sourceInterval equals: (7 to: 11).
 	self assert: node arguments first formattedCode equals: '''bar'.
 	self assert: node formattedCode equals: '''foo'' , ''bar'.
 ]
@@ -277,7 +277,7 @@ RBErrorNodeParserTest >> testFaultyStringLiteral2 [
 	self assert: node selector equals: #','.
 	self assert: node arguments first isParseError.
 	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
-	self assert: node arguments first sourceInterval equals: (7 to: 7).
+	self assert: node arguments first sourceInterval equals: (7 to: 8).
 	self assert: node arguments first formattedCode equals: ''''.
 	self assert: node formattedCode equals: '''foo'' , '''.
 ]
