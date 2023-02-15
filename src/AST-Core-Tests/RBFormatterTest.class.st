@@ -72,20 +72,153 @@ RBFormatterTest >> testLiteralDynamicArray [
 
 { #category : #tests }
 RBFormatterTest >> testParseError [
-	| inputSource errorNode |
-	"parse error nodes should have the faulty code"
-	inputSource := ')'.
-   errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
-]
+	| inputSources inputSource expectedResult errorNode isok |
+	"parse error nodes should have the faulty code.
+	The list contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure)."
+	inputSources := {
+		"Random alone special character (lone opening or closing charactee are managed in the following sections)"
+		'#'.
+		'$'.
+		':' -> ''. "FIXME"
 
-{ #category : #tests }
-RBFormatterTest >> testParseError2 [
-	| inputSource errorNode |
-	"parse error nodes should have the faulty code"
-	inputSource := '( 1 + 2'.
-   errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
+		"Bad compound"
+		'( 1 + 2'.
+		'#( 1 + 2'.
+		'[ 1 + 2'.
+		'#[ 1 2'.
+		'{ 1 + 2'.
+		' 1 + 2)'.
+		' 1 + 2]'.
+		' 1 + 2}'.
+
+		'( '. "I dont know why a space here, but it is OK I guess"
+		'#('.
+		'['.
+		'#['.
+		'{'.
+
+		"Bad sequence. The first expression is considered unfinished."
+		'1 2' -> ' 1.<r>2'.
+		'1 foo 2' -> ' 1 foo.<r>2'.
+		'(1)2' -> ' 1.<r>2'.
+		'1(2)' -> ' 1.<r>2'.
+		'(1)(2)' -> ' 1.<r>2'.
+		'#hello#world' -> ' #hello.<r>#world'.
+		'$h$w' -> ' $h.<r>$w'.
+		'[1][2]' -> ' [ 1 ].<r>[ 2 ]'.
+		'{1}{2}' -> ' { 1 }.<r>{ 2 }'.
+		'#(1)#(2)' -> ' #( 1 ).<r>#( 2 )'.
+		'#[1]#[2]' -> ' #[ 1 ].<r>#[ 2 ]'.
+
+		"Bad temporary variable declarations"
+		'|'.
+		'| a b'.
+		'| 1' -> '|' "FIXME, where is 1?".
+		"Note that the | character is also a binary operator, so a missing opening | become a binary call with a missing argument (see bellow)"
+		'a | '.
+
+		"Bad block parameters"
+		'[:a b]' -> '[ :a : | b ]'. "FIXME"
+		'[:a 1]' -> '[ :a : | 1 ]'. "FIXME"
+		'[|]' -> '[ |'. "FIXME (where is the closing bracket)"
+
+		"Missing receiver or argument in message sends.
+		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
+		"binary"
+		' + '.
+		'1 + '.
+		' + 2'.
+		"keywords"
+		' hello: '.
+		'1 hello: '.
+		' hello: 2'.
+		' goodby:  my: '.
+		'1 goodby:  my: '.
+		'1 goodby: 2 my: '.
+		' goodby: 2 my: '.
+		' goodby:  my: 3'.
+		'1 goodby:  my: 3'.
+		' goodby: 2 my: 3'.
+
+		"Bad assignments"
+		"FIXME, `:=` without variable is badly parsed."
+		'a := '.
+		':=' -> ''. "?"
+		':=2' -> ' .<r>2'. "??"
+		'1:=2' -> ' 1.<r> .<r>2'. "???"
+
+		"Bad cascades"
+		"FIXME: the formater is currently broken on some cases (message send to nil)"
+		"';'"
+		"'1;'."
+		'1 foo;' -> '1<r><t>foo;<r><t>'.
+		'1 foo;2' -> '1<r><t>foo;<r><t>'. "FIXME"
+		"';;'."
+
+		"Bad returns"
+		'^ '.
+		'1+^2' -> ' 1 + .<r>^ 2'.
+		'1 foo: ^2' -> ' 1 foo: .<r>^ 2'.
+		'(^1)' -> ' ( .<r> ^ 1)'. "FIXME WTF"
+		'^^1' -> ' ^ .<r>^ 1' "FIXME, same spirit".
+		'{ ^ 1 }' -> {#isok->true}. "I did not expect this one to be legal"
+		'#(^1)' -> {#isok->true. #format->'#( #''^'' 1 )'}. "Obviously..."
+		'#[^1]' -> '#[  1 ]' "FIXME, where '^' went?".
+
+		"Bad string literal"
+		"Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
+		'''hello'.
+		'''hello''''world'.
+		''''.
+
+		"Bad symbol literal"
+		'#1' -> ' #.<r>1'. "Become a bad sequence"
+		'##' -> '#'. "errr. ok?"
+		"Note: if quotes, same thing than strings"
+		'#''hello' -> '''hello'. "FIXME # is dropped"
+		'#''hello''''world' -> '''hello''''world'. "Same"
+		'#''' -> ''''. "Same"
+
+		"Bad numeric literal"
+		"Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
+		'2r'.
+		'2rx' -> '2r x'. "a bad number followed by a unary message send"
+		'2r3' -> ' 2r.<r>3'. "a bad number followed by a number, causing a case of unfinished sequence"
+		'0r'.
+		'000rx' -> '000r x'.
+		'000r1' -> ' 000r.<r>1'.
+		'3r12345' -> ' 3r12.<r>345'.
+
+		"These ones are correct, the number parser is very prermisive (except for radix, see above)"
+		'1.' -> { #isok->true. #format->'1' }.
+		'1.1.1' -> { #isok->true. #format->'1.1.<r>1' }.
+		'1a' -> { #isok->true. #format->'1 a' }.
+		'1a1a1' -> { #isok->true. #format->'1 a1a1' }.
+		'1e' -> { #isok->true. #format->'1 e' }.
+		'1e1e1' -> { #isok->true. #format->'1e1 e1' }.
+		'1s' -> { #isok->true. #format->'1s' }. "ScaledDecimal is a thing (!) that have literals (!!) inconsistent with '1e' (!!!)"
+		'1s1s1' -> { #isok->true. #format->'1s1 s1' }.
+		'10r89abcd' -> { #isok->true. #format->'10r89 abcd' }.
+		'12r89abcd' -> { #isok->true. #format->'12r89ab cd' }.
+		'36r1halt' -> { #isok->true }. "ahah"
+		}.
+	inputSources do: [ :each |
+		isok := false.
+		each isAssociation ifTrue: [
+			inputSource := expectedResult := each key expandMacros.
+			each value isArray ifTrue: [
+				| dict |
+				dict := each value asDictionary.
+				dict at: #isok ifPresent: [ :v | isok := v ].
+				dict at: #format ifPresent: [ :v | expectedResult := v expandMacros ].
+			] ifFalse: [
+				expectedResult := each value expandMacros
+			]
+		] ifFalse: [
+			inputSource := expectedResult := each expandMacros ].
+	   errorNode := self parseFaultyExpression: inputSource.
+		self assert: errorNode isFaulty equals: isok not.
+		self assert: errorNode formattedCode equals: expectedResult ]
 ]
 
 { #category : #tests }
