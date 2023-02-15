@@ -112,6 +112,12 @@ NumberParser >> allowPlusSignInExponent [
 { #category : #error }
 NumberParser >> expected: aString [
 
+	"This method handle errors on bad syntactically formated numbers.
+
+	Most of the time, the longest valid numeric is parsed and returned.
+	Therefore format errors on numbers are rare (arbitrary) occurences (see callers).
+	If the first character of a stream is a digit (or a minus followed by a digit), these occurences are even more rare."
+
 	| errorString |
 
 	errorString := aString , ' expected'.
