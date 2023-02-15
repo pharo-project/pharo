@@ -516,9 +516,8 @@ RBScanner >> scanLiteralString [
 	"The current character is the first one after the starting quote"
 
 	| start string |
-	start := stream position.
-
-	[string := stream upTo: $'.
+	[start := stream position.
+	string := stream upTo: $'.
 	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
 		"the peek logic here is because #upTo: does not tell if given char was found.
 		So if the stream did not move of if the last char is not a quote, then we have a problem."
@@ -528,7 +527,7 @@ RBScanner >> scanLiteralString [
 			value: string
 			start: tokenStart
 			cause: 'Unmatched '' in string literal.'
-			location: stream position ].
+			location: stream position].
 
 	 self step = $'] whileTrue: [
 		buffer nextPutAll: string; nextPut: $'.

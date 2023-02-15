@@ -170,6 +170,7 @@ RBFormatterTest >> testParseError [
 		'''hello'.
 		'''hello''''world'.
 		''''.
+		'''hello'''''. "unclosed string that ends with an escaped quote"
 
 		"Bad symbol literal"
 		'#1' -> ' #.<r>1'. "Become a bad sequence"
@@ -178,9 +179,11 @@ RBFormatterTest >> testParseError [
 		'#''hello'.
 		'#''hello''''world'.
 		'#'''.
+		'#''hello'''''.
 		'###''hello'.
 		'###''hello''''world'.
 		'###'''.
+		'###''hello'''''.
 
 		"Bad numeric literal"
 		"Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
