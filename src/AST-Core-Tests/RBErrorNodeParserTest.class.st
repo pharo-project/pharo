@@ -222,32 +222,32 @@ RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContin
 RBErrorNodeParserTest >> testFaultyNumericLiteral [
 
 	| node |
-	node := self parserClass parseFaultyExpression: '000r+12'.
+	node := self parserClass parseFaultyExpression: '000r'.
 
 	self assert: node isFaulty.
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
 	self assert: node receiver sourceInterval equals: (1 to: 4).
 	self assert: node receiver errorMessage equals: 'an integer greater than 1 as valid radix expected'.
-	self assert: node selector equals: #+.
-	self assert: node receiver formattedCode equals: '000r'.
-	self assert: node formattedCode equals: '000r + 12'
+	self assert: node selector equals: #r.
+	self assert: node receiver formattedCode equals: '000'.
+	self assert: node formattedCode equals: '000 r'
 ]
 
 { #category : #tests }
 RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
 
 	| node |
-	node := self parserClass parseFaultyExpression: '2r+12'.
+	node := self parserClass parseFaultyExpression: '2rx'.
 
 	self assert: node isFaulty.
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
-	self assert: node receiver sourceInterval equals: (1 to: 2).
+	self assert: node receiver sourceInterval equals: (1 to: 3).
 	self assert: node receiver errorMessage equals: 'a digit between 0 and 1 expected'.
-	self assert: node selector equals: #+.
+	self assert: node selector equals: #x.
 	self assert: node receiver formattedCode equals: '2r'.
-	self assert: node formattedCode equals: '2r + 12'
+	self assert: node formattedCode equals: '2r x'
 ]
 
 { #category : #tests }
