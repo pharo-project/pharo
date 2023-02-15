@@ -175,9 +175,12 @@ RBFormatterTest >> testParseError [
 		'#1' -> ' #.<r>1'. "Become a bad sequence"
 		'##' -> '#'. "errr. ok?"
 		"Note: if quotes, same thing than strings"
-		'#''hello' -> '''hello'. "FIXME # is dropped"
-		'#''hello''''world' -> '''hello''''world'. "Same"
-		'#''' -> ''''. "Same"
+		'#''hello'.
+		'#''hello''''world'.
+		'#'''.
+		'###''hello'.
+		'###''hello''''world'.
+		'###'''.
 
 		"Bad numeric literal"
 		"Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"

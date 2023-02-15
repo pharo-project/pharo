@@ -791,7 +791,7 @@ RBScannerTest >> testNextLiteralBeginningWithApostropheThrowsError [
 	scanner := self buildScannerForText: '#'''.
 	token := scanner next.
 	self assert: token isError.
-	self assert: token value equals: #''''.
+	self assert: token value equals: #'#'''.
 	self assert: token cause equals: 'Unmatched '' in string literal.'
 ]
 
