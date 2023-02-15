@@ -554,12 +554,16 @@ RBParser >> parseErrorNode: aMessageString [
 	| errorPosition|
 	currentToken isError
 		ifTrue: [ | errorNode|
+					 "The current token is an error, consume it and use its content for the error node."
 				    errorNode := RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: currentToken start.
+					 errorNode stop: currentToken location.
 					 self step.
 					 ^errorNode].
+	"The current token is not an error but is unexpected. Maybe something is missing?
+	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
 	errorPosition := self errorPosition.
 	(errorPosition = 0) ifTrue: [ errorPosition := self errorPosition].
-	^ RBParseErrorNode errorMessage: aMessageString value: currentToken value asString at: errorPosition
+	^ RBParseErrorNode errorMessage: aMessageString value: '' asString at: errorPosition
 ]
 
 { #category : #parsing }
