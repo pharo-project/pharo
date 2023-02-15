@@ -1020,6 +1020,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 					start: node start
 					stop: currentToken stop
 					errorMessage: 'Missing opener for closer: ', currentToken value asString.
+				node valueAfter: currentToken value asString.
 				self step ].
 
 	"Next we should have the end of the statement
