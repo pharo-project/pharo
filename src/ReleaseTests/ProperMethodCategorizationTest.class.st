@@ -12,9 +12,9 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 
 	| violating |
 	violating := OrderedCollection new.
-	aClass allSubclassesDo: [:cls | cls methods do: [:m |
-			(m selector = selector and: [ m protocol ~= protocol ])
-				ifTrue: [ violating add: m -> m protocol ] ] ].
+	aClass allSubclassesDo: [:cls | cls methods do: [:method |
+			(method selector = selector and: [ method protocol ~= protocol ])
+				ifTrue: [ violating add: method -> method protocol ] ] ].
 	self
 		assert: violating isEmpty
 		description: ('Violations: {1}.
@@ -28,10 +28,10 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 
 	| violating |
 	violating := OrderedCollection new.
-	aClass allSubclassesDo: [:cls | cls methods do: [:m |
-			(m selector = selector
-				and: [ (protocols includes: m protocol) not ])
-					ifTrue: [ violating add: m -> m protocol ] ] ].
+	aClass allSubclassesDo: [:cls | cls methods do: [:method |
+			(method selector = selector
+				and: [ (protocols includes: method protocol) not ])
+					ifTrue: [ violating add: method -> method protocol ] ] ].
 	self
 		assert: violating isEmpty
 		description: ('Violations are: {1}.
@@ -40,10 +40,10 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 ]
 
 { #category : #utilities }
-ProperMethodCategorizationTest >> explanationFrom: aCol [
+ProperMethodCategorizationTest >> explanationFrom: violations [
 
 	^ (String streamContents: [:str |
-				aCol do: [:p | p key printOn: str]
+				violations do: [:association | association key printOn: str]
 					separatedBy: [ str nextPutAll: ' ,'] ])
 ]
 
@@ -135,7 +135,9 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 
 	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
 
-	self assert: violating size <= 4 description: 'Instance side #initialize methods should be in "initialization" method category'
+	self 
+		assert: violating size <= 4 
+		description: 'Instance side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
 
 { #category : #tests }
@@ -164,7 +166,7 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 			((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [
 				violations add: each -> cat ] ] ].
 
-	self assert: violations isEmpty
+	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ', violations asString
 ]
 
 { #category : #tests }
@@ -192,7 +194,9 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 		             class protocols includes: #'utils' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 4
+	self 
+		assert: violating size <= 4
+		description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
 ]
 
 { #category : #'tests - object' }
