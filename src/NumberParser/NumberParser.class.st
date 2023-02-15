@@ -312,7 +312,7 @@ NumberParser >> nextNumber [
 		ifTrue: ["<base>r<integer>"
 			(base := integerPart) < 2
 				ifTrue: [
-					"Note, the faulty $r is consumed and is part or the invalid number."
+					sourceStream skip: -1. "Note, the faulty $r is not consumed and is not part or the invalid number."
 					^ self expected: 'an integer greater than 1 as valid radix'].
 			self peekSignIsMinus
 				ifTrue: [neg := neg not].
