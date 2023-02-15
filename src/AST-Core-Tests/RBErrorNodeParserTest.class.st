@@ -5,6 +5,44 @@ Class {
 }
 
 { #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '12 +'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first sourceInterval equals: (5 to: 4).
+	self assert: node arguments first errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node receiver isFaulty.
+	self assert: node receiver value equals: 12.
+	self assert: node arguments first formattedCode equals: ''.
+	self assert: node formattedCode equals: '12 + '
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
+
+	| node0 node |
+	node0 := self parserClass parseFaultyExpression: '[12 +]'.
+	node := node0 body statements first.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first sourceInterval equals: (6 to: 5).
+	self assert: node arguments first errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node receiver isFaulty.
+	self assert: node receiver value equals: 12.
+	self assert: node arguments first formattedCode equals: ''.
+	self assert: node formattedCode equals: '12 + '.
+	self assert: node0 formattedCode equals: '[ 12 +  ]'
+]
+
+{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrectMessage [
 
 	| node |
@@ -13,6 +51,44 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrect
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
 	self assert: node selector equals: #+
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '+ 12'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node receiver isParseError.
+	self assert: node receiver sourceInterval equals: (1 to: 0).
+	self assert: node receiver errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node arguments first isFaulty.
+	self assert: node arguments first value equals: 12.
+	self assert: node receiver formattedCode equals: ''.
+	self assert: node formattedCode equals: ' + 12'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
+
+	| node0 node |
+	node0 := self parserClass parseFaultyExpression: '[+ 12]'.
+	node := node0 body statements first.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node receiver isParseError.
+	self assert: node receiver sourceInterval equals: (2 to: 1).
+	self assert: node receiver errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node arguments first isFaulty.
+	self assert: node arguments first value equals: 12.
+	self assert: node receiver formattedCode equals: ''.
+	self assert: node formattedCode equals: ' + 12'.
+	self assert: node0 formattedCode equals: '[  + 12 ]'
 ]
 
 { #category : #tests }
