@@ -14,12 +14,12 @@ NonInteractiveTranscriptTest >> testAppend [
 	log ensureDelete.
 	transcript := NonInteractiveTranscript onFileNamed: log basename.
 	transcript
-		show: 'One'; cr; 
-		show: 'Two'; cr; 
+		show: 'One'; cr;
+		show: 'Two'; cr;
 		close.
 	transcript := NonInteractiveTranscript onFileNamed: log basename.
 	transcript
-		show: 'Three'; cr; 
+		show: 'Three'; cr;
 		close.
 	self assert: log contents lines equals: #('One' 'Two' 'Three').
 	log ensureDelete
@@ -32,9 +32,9 @@ NonInteractiveTranscriptTest >> testSimple [
 	log ensureDelete.
 	transcript := NonInteractiveTranscript onFileNamed: log basename.
 	transcript
-		show: 'One'; cr; 
-		show: 'Two'; cr; 
-		show: 'Three'; cr; 
+		show: 'One'; cr;
+		show: 'Two'; cr;
+		show: 'Three'; cr;
 		close.
 	self assert: log contents lines equals: #('One' 'Two' 'Three').
 	log ensureDelete

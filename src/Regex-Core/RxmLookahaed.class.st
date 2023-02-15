@@ -23,7 +23,7 @@ RxmLookahaed class >> with: aPiece [
 { #category : #initialization }
 RxmLookahaed >> initialize [
 	super initialize.
-	positive := true.
+	positive := true
 ]
 
 { #category : #accessing }
@@ -45,12 +45,12 @@ RxmLookahaed >> matchAgainst: aMatcher [
 	original := aMatcher currentState.
 	result := lookahead matchAgainst: aMatcher.
 	aMatcher restoreState: original.
-	^ result not 
+	^ result not
 		and: [ next matchAgainst: aMatcher ]
 ]
 
 { #category : #building }
 RxmLookahaed >> terminateWith: aNode [
 	lookahead terminateWith: aNode.
-	super terminateWith: aNode.
+	super terminateWith: aNode
 ]

@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 UnixDynamicLoader class >> isAvailable [
-	^ Smalltalk os isUnix 
+	^ Smalltalk os isUnix
 		or: [ Smalltalk os isMacOS ]
 ]
 
@@ -20,7 +20,7 @@ UnixDynamicLoader >> lastError [
 
 { #category : #misc }
 UnixDynamicLoader >> loadLibrary: path [
-	^ self loadLibrary: path flag: 0 
+	^ self loadLibrary: path flag: 0
 ]
 
 { #category : #misc }
@@ -31,5 +31,4 @@ UnixDynamicLoader >> loadLibrary: filename flag: flag [
 { #category : #misc }
 UnixDynamicLoader >> loadSymbolFrom: handle name: symbol [
 	^ self ffiCall: #(void *dlsym(void *handle, String symbol))
-
 ]

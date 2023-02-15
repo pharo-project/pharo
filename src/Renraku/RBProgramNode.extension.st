@@ -7,7 +7,7 @@ RBProgramNode >> banChecksForValidation [
 	self methodNode ifNotNil: [ :mNode |
 		mNode compiledMethod ifNotNil: [ :method |
 			^ method banChecksForValidation ] ].
-	
+
 	^ #()
 ]
 
@@ -18,7 +18,7 @@ RBProgramNode >> banLevelCandidates [
 	self methodNode ifNotNil: [ :mNode |
 		mNode compiledMethod ifNotNil: [ :method |
 			^ method banLevelCandidates ] ].
-	
+
 	^ #()
 ]
 
@@ -28,11 +28,11 @@ RBProgramNode >> critiques [
 ]
 
 { #category : #'*Renraku' }
-RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [ 
+RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [
 	| context |
-	
+
 	context := SmallDictionary new.
-	
+
 	(self match: aNode inContext: context)
 		ifTrue: [ aBlock cull: context ]
 		ifFalse: anAlternativeBlock
@@ -46,8 +46,8 @@ RBProgramNode >> nodeAtTraversalIndex: anIndex [
 	self nodesDo: [ :n |
 		index := index + 1.
 		index = anIndex ifTrue: [ ^ n ] ].
-	
-	NotFound signal.
+
+	NotFound signal
 ]
 
 { #category : #'*Renraku' }
@@ -59,7 +59,7 @@ RBProgramNode >> package [
 ]
 
 { #category : #'*Renraku' }
-RBProgramNode >> suitableRulesFrom: aReRuleManager [ 
+RBProgramNode >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager nodeRules
 ]
 
@@ -71,6 +71,6 @@ RBProgramNode >> traversalIndexOf: aNode [
 	self nodesDo: [ :n |
 		index := index + 1.
 		n == aNode ifTrue: [ ^ index ] ].
-	
-	^ -1.
+
+	^ -1
 ]

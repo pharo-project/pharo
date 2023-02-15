@@ -30,33 +30,33 @@ Class {
 }
 
 { #category : #'instance creation' }
-RelationSlot class >> named: aSymbol inverse: anInverseSymbol inClass: aTargetClassOrSymbol [ 
+RelationSlot class >> named: aSymbol inverse: anInverseSymbol inClass: aTargetClassOrSymbol [
 
 	^(super named: aSymbol) inverse: anInverseSymbol inClass: aTargetClassOrSymbol
 ]
 
 { #category : #comparing }
-RelationSlot >> = anObject [ 
+RelationSlot >> = anObject [
 
-	^super = anObject and: [ 
-		self targetClassName = anObject targetClassName and: [ 
+	^super = anObject and: [
+		self targetClassName = anObject targetClassName and: [
 			inverseName = anObject inverseName ] ]
 ]
 
 { #category : #internal }
 RelationSlot >> addAssociationFrom: ownerObject to: otherObject [
-	"A new reference from <ownerObject> to <otherObject> is created. Here we update the other 
+	"A new reference from <ownerObject> to <otherObject> is created. Here we update the other
 	side of the association. If the other side is a ToOne association this means that an other
 	association may have to be removed first."
 
 	self inverseSlot isToOneSlot
-		ifTrue: [ 
+		ifTrue: [
 			| oldObject |
 			oldObject := inverseSlot read: otherObject.
 			oldObject notNil
 				ifTrue: [ inverseSlot removeAssociationFrom: otherObject to: oldObject ].
 			inverseSlot writeInverse: ownerObject to: otherObject ]
-		ifFalse: [ 
+		ifFalse: [
 			(inverseSlot read: otherObject) inverseAdd: ownerObject ]
 ]
 
@@ -69,7 +69,7 @@ RelationSlot >> checkValue: aValue [
 
 { #category : #'code generation' }
 RelationSlot >> emitStore: aMethodBuilder [
-	"This bytecode does the following: 
+	"This bytecode does the following:
 		self updateOld: (self read: anObject) new: newValue in: anObject.
 		super write: newValue to: anObject
 	"
@@ -96,15 +96,15 @@ RelationSlot >> hasInverse [
 { #category : #comparing }
 RelationSlot >> hasSameDefinitionAs: otherSlot [
 	"need to implement as superclass implements it"
-	^ (super hasSameDefinitionAs: otherSlot) 
-		and: [ self targetClassName = otherSlot targetClassName 
+	^ (super hasSameDefinitionAs: otherSlot)
+		and: [ self targetClassName = otherSlot targetClassName
 		and: [ inverseName = otherSlot inverseName ] ]
 ]
 
 { #category : #comparing }
 RelationSlot >> hash [
-	^ ((self species hash bitXor: self name hash) 
-			bitXor: (self index ifNil: [ 0 ])) 
+	^ ((self species hash bitXor: self name hash)
+			bitXor: (self index ifNil: [ 0 ]))
 				bitXor: self targetClassName hash
 ]
 
@@ -144,19 +144,19 @@ RelationSlot >> linkUp [
 	inverseSlot := self targetClass slotNamed: inverseName.
 	(inverseSlot isKindOf: RelationSlot)
 		ifFalse: [ self error: 'Invalid association: ... ' ].
-		
+
 	inverseSlot inverseName = self name
-		ifFalse: [ self error: 'Invalid association: inverse names do not match' ].
+		ifFalse: [ self error: 'Invalid association: inverse names do not match' ]
 ]
 
 { #category : #printing }
 RelationSlot >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name.
-	self hasInverse 
-		ifTrue: [ 
+	self hasInverse
+		ifTrue: [
 			aStream
 				nextPutAll: ' inverse: ';
 				store: inverseName ].
@@ -167,9 +167,9 @@ RelationSlot >> printOn: aStream [
 
 { #category : #internal }
 RelationSlot >> removeAssociationFrom: ownerObject to: otherObject [
-	"A reference from <ownerObject> to <otherObject> is removed. Here we update the other 
+	"A reference from <ownerObject> to <otherObject> is removed. Here we update the other
 	side of the association. If the other side is a ToOne association set the value to nil,
-	for ToMany associations remove <ownerObject> from the collection." 
+	for ToMany associations remove <ownerObject> from the collection."
 
 	self inverseSlot isToOneSlot
 		ifTrue: [ inverseSlot writeInverse: nil to: otherObject ]
@@ -180,10 +180,10 @@ RelationSlot >> removeAssociationFrom: ownerObject to: otherObject [
 RelationSlot >> targetClass [
 
 	targetClass isSymbol
-		ifTrue: [ 
-			targetClass := Smalltalk globals at: targetClass 
+		ifTrue: [
+			targetClass := Smalltalk globals at: targetClass
 				ifAbsent: [ self error: 'Cannot find class ', targetClass printString ] ].
-	
+
 	^targetClass
 ]
 

@@ -14,7 +14,7 @@ FFIConstantHandleType class >> naturalPointerArity [
 
 { #category : #'emitting code' }
 FFIConstantHandleType >> emitReturnArgument: builder context: aContext [
-	self loader 
+	self loader
 		emitHandleArityUnpack: builder
 		type: self
 		context: aContext
@@ -28,7 +28,7 @@ FFIConstantHandleType >> externalType [
 ]
 
 { #category : #accessing }
-FFIConstantHandleType >> externalTypeSize [ 
+FFIConstantHandleType >> externalTypeSize [
 	^ self externalType byteSize
 ]
 
@@ -47,18 +47,17 @@ FFIConstantHandleType >> offsetReadFieldAt: offsetVariableName [
 { #category : #'emitting code' }
 FFIConstantHandleType >> offsetReadHandleAt: offsetVariableName [
 	^ String streamContents:[ :stream|
-		stream 
+		stream
 			nextPutAll:'^';
 			print: self objectClass;
 			nextPutAll:' fromInteger: (handle ', self externalType atomicSelector,' ';
 			nextPutAll: offsetVariableName;
-			nextPutAll:')' ].
-
+			nextPutAll:')' ]
 ]
 
 { #category : #'emitting code' }
 FFIConstantHandleType >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream << 'handle ' << self externalType atomicSelector << ' ' << offsetVariableName << ' put: anObject value' ]
 ]
 
@@ -72,17 +71,16 @@ FFIConstantHandleType >> readFieldAt: byteOffset [
 { #category : #'emitting code' }
 FFIConstantHandleType >> readHandleAt: byteOffset [
 	^ String streamContents:[ :stream|
-		stream 
+		stream
 			nextPutAll:'^';
 			print: self objectClass;
 			nextPutAll:' fromInteger: (handle ', self externalType atomicSelector,' ';
 			print: byteOffset;
-			nextPutAll:')' ].
-
+			nextPutAll:')' ]
 ]
 
 { #category : #'emitting code' }
 FFIConstantHandleType >> writeFieldAt: byteOffset with: valueName [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream << 'handle ' << self externalType atomicSelector << ' ' << byteOffset asString << ' put: anObject value' ]
 ]

@@ -62,7 +62,7 @@ SpaceTallyResult >> itemsForThreshold: threshold [
 		ifTrue: [ ^ self items ].
 	totalInstSpace := self totalInstSpace.
 	^(self items
-		select: [ :s | 
+		select: [ :s |
 			s instanceCount >= threshold
 				or: [ s spaceForInstances > (totalInstSpace // 500) ] ])
 		asSortedCollection: [ :s :s2 | s spaceForInstances > s2 spaceForInstances ]
