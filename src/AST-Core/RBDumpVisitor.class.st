@@ -106,8 +106,9 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	stream
 		nextPutAll: ') value: ';
 		nextPutAll: anEnglobingErrorNode value printString;
-		nextPutAll: ') valueAfter: ';
-		nextPutAll: anEnglobingErrorNode valueAfter printString
+		nextPutAll: '; valueAfter: ';
+		nextPutAll: anEnglobingErrorNode valueAfter printString;
+		nextPutAll: '; yourself'
 ]
 
 { #category : #visiting }
