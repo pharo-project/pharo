@@ -106,6 +106,30 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 ]
 
 { #category : #tests }
+RBErrorNodeParserTest >> testFaultyBlockUnclosed [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '[1+2'.
+
+	self assert: node isEnglobingError.
+	self assert: node isBlockError.
+	self assert: node errorMessage equals: ''']'' expected'.
+	self assert: node formattedCode equals: '[ 1 + 2'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '1+2]'.
+
+	self assert: node isEnglobingError.
+	self assert: node isUnfinishedStatement.
+	self assert: node errorMessage equals: 'Missing opener for closer: ]'.
+	self assert: node formattedCode equals: ' 1 + 2]'
+]
+
+{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyCascade [
 
 	| node |
