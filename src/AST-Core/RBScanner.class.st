@@ -318,6 +318,21 @@ RBScanner >> previousStepPosition [
 ]
 
 { #category : #'private - scanning' }
+RBScanner >> scanBackFrom: start [
+	"Return the verbatim content from the `start` position until the current position.
+	 The starting and current character are both included.
+	 The stream status (inclutiong its position) is preserved"
+
+	| len string stop |
+	stop := stream position.
+	len := stop - start + 1.
+	stream position: start - 1.
+	string := stream next: len.
+	stream position: stop.
+	^ string
+]
+
+{ #category : #'private - scanning' }
 RBScanner >> scanBinary: aClass [
 	"This method isn't supposed to be used in a public context as it accepts any kind of RBValueToken.
 	 The only 2 tokens supposed to be used are RBLiteralToken and RBBinarySelectorToken."
@@ -500,25 +515,21 @@ RBScanner >> scanLiteralCharacter [
 RBScanner >> scanLiteralString [
 	"The current character is the first one after the starting quote"
 
-	| start stop string |
-	start := stream position. ""
-	
+	| start string |
+	start := stream position.
+
 	[string := stream upTo: $'.
 	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
 		"the peek logic here is because #upTo: does not tell if given char was found.
 		So if the stream did not move of if the last char is not a quote, then we have a problem."
+		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		self step. "to handle eof"
-		stop := stream position.
-		stream position: start - 1. "because we include the starting quote"
-		string := stream next: stop - start + 1.
-		stream position: stop.
-
 		^ RBErrorToken
 			value: string
 			start: tokenStart
 			cause: 'Unmatched '' in string literal.'
 			location: stream position ].
-	 
+
 	 self step = $'] whileTrue: [
 		buffer nextPutAll: string; nextPut: $'.
 		string := ''].
