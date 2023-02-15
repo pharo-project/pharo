@@ -118,16 +118,16 @@ StRefactoringPreviewPresenter >> defaultLayout [
 		                 addLast: buttonCancel expand: false fill: true;
 		                 yourself.
 
-	^ self layout: (SpBoxLayout newTopToBottom
-			   add: (SpBoxLayout newTopToBottom
-					    add: scopesLayout
-					    withConstraints:
-						    [ :constraints | constraints height: 30 ] yourself;
-					    add: table;
-					    add: diffPresenter;
-					    yourself);
-			   add: actionsLayout expand: false;
-			   yourself)
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newTopToBottom
+				   add: scopesLayout
+				   withConstraints:
+					   [ :constraints | constraints height: 30 ] yourself;
+				   add: table;
+				   add: diffPresenter;
+				   yourself);
+		  add: actionsLayout expand: false;
+		  yourself
 ]
 
 { #category : #initialization }
