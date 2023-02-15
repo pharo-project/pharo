@@ -190,9 +190,9 @@ RBFormatterTest >> testParseError [
 		'2r'.
 		'2rx' -> '2r x'. "a bad number followed by a unary message send"
 		'2r3' -> ' 2r.<r>3'. "a bad number followed by a number, causing a case of unfinished sequence"
-		'0r'.
-		'000rx' -> '000r x'.
-		'000r1' -> ' 000r.<r>1'.
+		'0r' -> '0 r'.
+		'000rx' -> '000 rx'.
+		'000r1' -> '000 r1'.
 		'3r12345' -> ' 3r12.<r>345'.
 
 		"These ones are correct, the number parser is very prermisive (except for radix, see above)"

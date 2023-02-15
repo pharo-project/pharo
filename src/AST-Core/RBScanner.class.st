@@ -567,7 +567,7 @@ RBScanner >> scanNumber [
 		value: string
 		start: tokenStart
 		cause: gotError
-		location: stop
+		location: stop+1
 		].
 	^RBNumberLiteralToken
 		value: number
