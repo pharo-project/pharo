@@ -603,6 +603,7 @@ RBScanner >> scanStringSymbol [
 	"Only supposed to be used when encountering an apostrophe."
 	| literalToken |
 	literalToken := self scanLiteralString.
+	literalToken isError ifTrue: [ ^ literalToken. ].
 	literalToken value: literalToken value asSymbol.
 	^literalToken
 ]
