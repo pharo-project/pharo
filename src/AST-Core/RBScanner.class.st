@@ -498,19 +498,28 @@ RBScanner >> scanLiteralCharacter [
 
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralString [
-	"String can contain anything, even faulty code."
-	| string |
-	[stream atEnd ifTrue: [
-		self step. "to handle eof"
-		^ self scanError: 'Unmatched '' in string literal.'].
-	string := stream upTo: $'.
-	stream peekBack = $' ifFalse: [
-		"the peek logic here is because #upTo: does not tell if given char was found"
-		buffer nextPutAll: string.
-		self step. "to handle eof"
-		^ self scanError: 'Unmatched '' in string literal.'].
+	"The current character is the first one after the starting quote"
 
-	self step = $'] whileTrue: [
+	| start stop string |
+	start := stream position. ""
+	
+	[string := stream upTo: $'.
+	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
+		"the peek logic here is because #upTo: does not tell if given char was found.
+		So if the stream did not move of if the last char is not a quote, then we have a problem."
+		self step. "to handle eof"
+		stop := stream position.
+		stream position: start - 1. "because we include the starting quote"
+		string := stream next: stop - start + 1.
+		stream position: stop.
+
+		^ RBErrorToken
+			value: string
+			start: tokenStart
+			cause: 'Unmatched '' in string literal.'
+			location: stream position ].
+	 
+	 self step = $'] whileTrue: [
 		buffer nextPutAll: string; nextPut: $'.
 		string := ''].
 
