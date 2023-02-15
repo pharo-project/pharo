@@ -28,9 +28,9 @@ PharoLightTheme class >> isAbstract [
 PharoLightTheme class >> setPreferredShoutColors [
 	"self setPreferredShoutColors"
 
-	SHRBTextStyler styleTable: 
+	SHRBTextStyler styleTable:
 		#(
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -39,10 +39,10 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(#'$' 									(red muchDarker))
 			(character 								(red muchDarker))
 			(integer 								(red muchDarker))
-			(number 								(red muchDarker)) 
+			(number 								(red muchDarker))
 			(#- 										(red muchDarker))
-			(symbol 								(magenta muchDarker)) 
-			(stringSymbol 							(magenta muchDarker)) 
+			(symbol 								(magenta muchDarker))
+			(stringSymbol 							(magenta muchDarker))
 			(literalArray 							(magenta muchDarker))
 			(string 									(magenta muchDarker) normal)
 			(unfinishedString 						red normal)
@@ -50,17 +50,17 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(ansiAssignment 						nil)
 			(literal 									nil italic)
 			(keyword 								(black))
-			(binary 									(black)) 
+			(binary 									(black))
 			(unary 									(black))
 			(incompleteKeyword 					red)
-			(incompleteBinary 						red) 
+			(incompleteBinary 						red)
 			(incompleteUnary 						red )
 			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
+			(undefinedBinary 						red)
+			(undefinedUnary 						red)
 			(patternKeyword 						nil bold)
 			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(patternUnary 							nil bold)
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
 			(#true 									(red muchDarker))
@@ -68,7 +68,7 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
-			(patternArg 							(blue muchDarker)) 
+			(patternArg 							(blue muchDarker))
 			(methodArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
@@ -105,7 +105,7 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(blockStart6 							(magenta darker))
 			(blockEnd6 								(magenta darker))
 			(blockStart7 							blue)
-			(blockEnd7 								blue) 
+			(blockEnd7 								blue)
 			(arrayStart 								black)
 			(arrayEnd 								black)
 			(arrayStart1 							black)
@@ -124,7 +124,7 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(primitive 								(green muchDarker))
 			(pragmaKeyword 						(green muchDarker))
 			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker)) 
+			(pragmaBinary 							(green muchDarker))
 			(externalFunctionCallingConvention 	(green muchDarker) bold)
 			(module 								(green muchDarker) bold)
 			(blockTempVar 						(blue muchDarker))
@@ -150,9 +150,9 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
 	| outerColor |
-	(aButton valueOfProperty: #noBorder ifAbsent: [false]) 
-		ifTrue: [ ^ SimpleBorderStyle new 
-							width: 0; 
+	(aButton valueOfProperty: #noBorder ifAbsent: [false])
+		ifTrue: [ ^ SimpleBorderStyle new
+							width: 0;
 							baseColor: Color transparent ].
 	outerColor := self darkBaseColorFor: aButton.
 	^ SimpleBorderStyle new
@@ -164,7 +164,7 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 PharoLightTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorderStyle new 
+	aStyle := SimpleBorderStyle new
 					color: (Color lightGray);
 					width: 1.
 	aWindow borderStyle: aStyle

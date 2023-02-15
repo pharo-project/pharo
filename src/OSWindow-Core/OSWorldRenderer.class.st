@@ -21,7 +21,7 @@ OSWorldRenderer class >> isApplicableFor: aWorld [
 ]
 
 { #category : #accessing }
-OSWorldRenderer class >> priority [ 
+OSWorldRenderer class >> priority [
 
 	^ 2
 ]
@@ -29,7 +29,7 @@ OSWorldRenderer class >> priority [
 { #category : #accessing }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
-	osWindow ifNotNil: [ 
+	osWindow ifNotNil: [
 		osWindow
 			setMouseCursor: aCursor
 			mask: maskForm
@@ -45,13 +45,13 @@ OSWorldRenderer >> actualScreenSize [
 OSWorldRenderer >> checkForNewScreenSize [
 	| windowRenderer |
 
-	"Under certain circunstances, it may happen that renderer is still being 
-	 created when the UI process call this method. In that case, we need to 
+	"Under certain circunstances, it may happen that renderer is still being
+	 created when the UI process call this method. In that case, we need to
 	 skip the check. "
 	windowRenderer := self osWindowRenderer.
 	windowRenderer ifNil: [ ^ self ].
 
-	(display isNil or: [ display extent = self actualScreenSize ]) 
+	(display isNil or: [ display extent = self actualScreenSize ])
 		ifTrue: [ ^ self ].
 
 	display := Form extent: self actualScreenSize depth: 32.
@@ -78,11 +78,25 @@ OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 	^ (aPosition / self screenScaleFactor) rounded
 ]
 
+{ #category : #screenshot }
+OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
+
+	aForm
+		copyBits: (aRectangle origin extent: aForm extent)
+		from: display
+		at: 0 @ 0
+		clippingBox: aForm boundingBox
+		rule: Form over
+		fillColor: nil.
+
+	^ aForm
+]
+
 { #category : #private }
 OSWorldRenderer >> deactivate [
 
 	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
-	display := nil.
+	display := nil
 ]
 
 { #category : #operations }
@@ -94,7 +108,7 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 { #category : #private }
 OSWorldRenderer >> doActivate [
 	| attributes initialExtent |
-	
+
 	initialExtent := world worldState realWindowExtent ifNil: [976@665].
 
 	attributes := OSWindowAttributes new.
@@ -110,17 +124,17 @@ OSWorldRenderer >> doActivate [
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
-	
+
 	driver afterMainPharoWindowCreated: osWindow.
-	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.	
+	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
 	driver startUp: true.
-		
-	osWindow focus. 
-	
+
+	osWindow focus.
+
 	world worldState doFullRepaint.
 	world displayWorld.
-	
-	OSWindowClipboard new beDefault.
+
+	OSWindowClipboard new beDefault
 ]
 
 { #category : #operations }
@@ -129,7 +143,7 @@ OSWorldRenderer >> drawDuring: aBlock [
 	self isProfilingRenderingTime ifTrue: [ ^ self drawWhileProfilingRenderingTimeDuring: aBlock ].
 	self osWindowRenderer deferUpdatesWhile: [
 		self osWindowRenderer drawDuring: aBlock
-	].
+	]
 ]
 
 { #category : #profiling }
@@ -140,7 +154,7 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 			self osWindowRenderer drawDuring: [ :canvas |
 				| frameCanvasRenderingTime displayRectangle |
 				frameCanvasRenderingTime := [ aBlock value: canvas ] timeToRunWithoutGC.
-					
+
 				measurements := {
 					'Content' -> frameCanvasRenderingTime
 				}.
@@ -149,7 +163,7 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 						'Previous frame' -> previousFrameRenderingTime.
 					}
 				].
-				
+
 				displayRectangle := (0@0 extent: 250@40).
 				canvas
 					fillRectangle: displayRectangle color: Color white.
@@ -158,12 +172,12 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 					line := self formatRenderingTimeMeasurement: each.
 					canvas drawString: line at: 10@(10*index) font: nil color: Color black.
 				].
-				
+
 				self osWindowRenderer updateRectangle: displayRectangle.
 			]
 		]
 	] timeToRunWithoutGC.
-	
+
 	self logRenderingTimeMeasurements: measurements
 ]
 
@@ -186,7 +200,7 @@ OSWorldRenderer >> handleOSWindowCloseEvent: event [
 ]
 
 { #category : #accessing }
-OSWorldRenderer >> icon: aForm [ 
+OSWorldRenderer >> icon: aForm [
 
 	osWindow icon: aForm
 ]
@@ -202,7 +216,7 @@ OSWorldRenderer >> initialize [
 OSWorldRenderer >> osWindowRenderer [
 
 	osWindow ifNil: [ ^ nil ].
-	^ osWindow renderer ifNil: [ 
+	^ osWindow renderer ifNil: [
 		  osWindow newFormRenderer: display.
 		  osWindow renderer ]
 ]
@@ -216,13 +230,13 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 
 { #category : #events }
 OSWorldRenderer >> requestStopTextEditing [
-	
+
 	osWindow stopTextInput
 ]
 
 { #category : #events }
-OSWorldRenderer >> requestTextEditingAt: aRectangle [ 
-	
+OSWorldRenderer >> requestTextEditingAt: aRectangle [
+
 	osWindow startTextInputAtRectangle: aRectangle
 ]
 
@@ -236,16 +250,15 @@ OSWorldRenderer >> screenScaleFactor [
 OSWorldRenderer >> shutDown: quitting [
 
 	super shutDown: quitting.
-	driver ifNotNil: [ 
-		driver shutDown: quitting ]	
-	
+	driver ifNotNil: [
+		driver shutDown: quitting ]
 ]
 
 { #category : #'system startup' }
 OSWorldRenderer >> startUp: resuming [
 
 	super startUp: resuming.
-	driver ifNotNil: [ 
+	driver ifNotNil: [
 		driver startUp: resuming ]
 ]
 
@@ -253,7 +266,7 @@ OSWorldRenderer >> startUp: resuming [
 OSWorldRenderer >> updateDamage: allDamage [
 
 	"quickly copy altered rects of canvas to Display:"
-	self osWindowRenderer updateAreas: allDamage immediate: false.
+	self osWindowRenderer updateAreas: allDamage immediate: false
 ]
 
 { #category : #events }
@@ -273,7 +286,7 @@ OSWorldRenderer >> updateWindowTitle [
 
 { #category : #accessing }
 OSWorldRenderer >> window [
-	
+
 	^ osWindow
 ]
 

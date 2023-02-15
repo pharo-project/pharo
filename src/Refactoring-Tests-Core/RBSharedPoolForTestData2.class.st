@@ -6,11 +6,11 @@ Class {
 
 { #category : #'tests - perform' }
 RBSharedPoolForTestData2 >> msg4 [
-	
+
 	^ Var1
 ]
 
 { #category : #'tests - perform' }
-RBSharedPoolForTestData2 >> reference [ 	
+RBSharedPoolForTestData2 >> reference [
 	^ RBRemoveClassParametrizedTest
 ]

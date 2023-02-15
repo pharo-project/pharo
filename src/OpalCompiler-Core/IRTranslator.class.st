@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 IRTranslator class >> context: aCompilationContext trailer: aCompiledMethodTrailer [
-	^self basicNew 
+	^self basicNew
 		initialize;
 		compilationContext: aCompilationContext;
 		trailer: aCompiledMethodTrailer
@@ -36,7 +36,7 @@ IRTranslator >> compilationContext [
 IRTranslator >> compilationContext: aContext [
 	compilationContext := aContext.
 	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass.
-	gen compilationContext: aContext.
+	gen compilationContext: aContext
 ]
 
 { #category : #results }
@@ -56,20 +56,20 @@ IRTranslator >> compiledMethodWith: aTrailer [
 ]
 
 { #category : #private }
-IRTranslator >> currentScope [ 
+IRTranslator >> currentScope [
 	^currentScope top
 ]
 
 { #category : #initialization }
 IRTranslator >> initialize [
 	currentScope := Stack new.
-	tempVectorStack := Stack new.
+	tempVectorStack := Stack new
 ]
 
 { #category : #private }
 IRTranslator >> label: seqNum [
 
-	gen label: seqNum.
+	gen label: seqNum
 ]
 
 { #category : #private }
@@ -88,14 +88,14 @@ IRTranslator >> pushOuterVectors: scope [
 	| scopesWithVector sc |
 	scopesWithVector := OrderedCollection new.
 	sc := scope.
-	[ sc outerScope isNil or: [ sc outerScope isBehavior ] ] whileFalse: [ 
+	[ sc outerScope isNil or: [ sc outerScope isBehavior ] ] whileFalse: [
 		sc := sc outerScope.
 		sc hasTempVector ifTrue: [ scopesWithVector add: sc ] ].
 	scopesWithVector reverseDo: [ :scopeWithVector |
-		tempVectorStack push: (IRInstruction 
+		tempVectorStack push: (IRInstruction
 			createTempVectorNamed: scopeWithVector tempVectorName
 			withVars: scopeWithVector tempVectorVarNames)].
-	gen inBlock: true.
+	gen inBlock: true
 ]
 
 { #category : #private }
@@ -119,7 +119,7 @@ IRTranslator >> visitBlockReturnTop: blockReturnTop [
 { #category : #visiting }
 IRTranslator >> visitInstruction: instr [
 	gen mapBytesTo: instr.
-	self visitNode: instr.
+	self visitNode: instr
 ]
 
 { #category : #visiting }
@@ -131,9 +131,9 @@ IRTranslator >> visitJump: jump [
 { #category : #visiting }
 IRTranslator >> visitJumpIf: jumpIf [
 
-	gen 
-		if: jumpIf boolean 
-		goto: jumpIf destination orderNumber 
+	gen
+		if: jumpIf boolean
+		goto: jumpIf destination orderNumber
 		otherwise: jumpIf otherwise orderNumber
 ]
 
@@ -191,8 +191,8 @@ IRTranslator >> visitPopIntoTemp: tmp [
 { #category : #visiting }
 IRTranslator >> visitPushArray: array [
 
-	array cons 
-		ifTrue: [  
+	array cons
+		ifTrue: [
 			gen pushConsArray: array size ]
 		ifFalse: [
 			gen pushNewArray: array size ]
@@ -200,14 +200,14 @@ IRTranslator >> visitPushArray: array [
 
 { #category : #visiting }
 IRTranslator >> visitPushDup: dup [
-	
+
 	gen pushDup
 ]
 
 { #category : #visiting }
 IRTranslator >> visitPushFullClosure: fullBlock [
 
-	fullBlock copiedValues do: [:name | 	
+	fullBlock copiedValues do: [:name |
 		gen pushTemp: (self currentScope indexForVarNamed: name)].
 	gen mapBytesTo: fullBlock.
 	gen pushFullBlockClosure: fullBlock
@@ -215,7 +215,7 @@ IRTranslator >> visitPushFullClosure: fullBlock [
 
 { #category : #visiting }
 IRTranslator >> visitPushInstVar: instVar [
-	
+
 	gen pushInstVar: instVar index
 ]
 
@@ -266,7 +266,7 @@ IRTranslator >> visitPushThisProcess: pushThisProcess [
 
 { #category : #visiting }
 IRTranslator >> visitReturn: ret [
-	
+
 	gen returnTop
 ]
 
@@ -305,7 +305,7 @@ IRTranslator >> visitSequence: instructionSequence [
 { #category : #visiting }
 IRTranslator >> visitSequences:  irSequences [
 	irSequences withIndexDo: [ :seq :i | seq orderNumber: i].
-	self visitNodes: irSequences.
+	self visitNodes: irSequences
 ]
 
 { #category : #visiting }
@@ -340,6 +340,6 @@ IRTranslator >> visitStoreTemp: tmp [
 IRTranslator >> visitTempVector: tempVector [
 
 	tempVectorStack push: tempVector.
-	gen pushNewArray: tempVector vars size. 
+	gen pushNewArray: tempVector vars size.
 	gen storePopTemp: (self currentScope indexForVarNamed: tempVector name)
 ]

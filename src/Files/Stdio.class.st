@@ -83,9 +83,9 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 
 	streamIndex := #(stdin stdout stderr) identityIndexOf: moniker.
 	handle := File stdioHandles at: streamIndex.
-	(handle isNil or: [ (File fileDescriptorIsAvailable: streamIndex-1) not ]) ifTrue: [ 
+	(handle isNil or: [ (File fileDescriptorIsAvailable: streamIndex-1) not ]) ifTrue: [
 		"On windows, create a file for stdio, error on other platforms"
-		Smalltalk os isWindows 
+		Smalltalk os isWindows
 			ifTrue: [ ^ self createStdioFileFor: moniker ]
 			ifFalse: [ self error: moniker , ' is unavailable' ] ].
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
@@ -94,7 +94,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 { #category : #'system startup' }
 Stdio class >> startUp: resuming [
 
-	resuming ifTrue: [ self cleanStdioHandles ].
+	resuming ifTrue: [ self cleanStdioHandles ]
 ]
 
 { #category : #accessing }
@@ -105,13 +105,13 @@ Stdio class >> stderr [
 { #category : #accessing }
 Stdio class >> stdin [
 
-	^ Stdin ifNil: [ Stdin := self standardIOStreamNamed: #stdin forWrite: false ].
+	^ Stdin ifNil: [ Stdin := self standardIOStreamNamed: #stdin forWrite: false ]
 ]
 
 { #category : #accessing }
 Stdio class >> stdout [
 
-	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
+	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ]
 ]
 
 { #category : #stdio }

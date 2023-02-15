@@ -7,9 +7,9 @@ Variable >> analyzeRead: aVariableNode by: aSemanticAnalyzer [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Variable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [ 
+Variable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [
 
 	self isReservedVariable ifTrue: [ aSemanticAnalyzer storeIntoReservedVariable: aVariableNode ].
-	
+
 	self isWritable ifFalse: [ aSemanticAnalyzer storeIntoReadOnlyVariable: aVariableNode ]
 ]

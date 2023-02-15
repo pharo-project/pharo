@@ -31,12 +31,12 @@ ReRuleManager class >> availableRuleGroups [
 ]
 
 { #category : #'event subscriptions' }
-ReRuleManager class >> classAddedOrRemoved: aClassAddedAnnouncement [ 
+ReRuleManager class >> classAddedOrRemoved: aClassAddedAnnouncement [
 	| class |
 	class := aClassAddedAnnouncement classAffected.
 
-	((class inheritsFrom: RBLintRule) or: [ 
-	  class inheritsFrom: ReAbstractRule ]) 
+	((class inheritsFrom: RBLintRule) or: [
+	  class inheritsFrom: ReAbstractRule ])
 		ifTrue: [ self reset ]
 ]
 
@@ -50,7 +50,7 @@ ReRuleManager class >> cleanUp [
 ReRuleManager class >> critiqueBanned: aReCritiqueBanned [
 	| baner |
 	baner := aReCritiqueBanned entityBanLevel.
-	
+
 	baner class = RPackage
 		ifTrue: [ self removeManagerFor: baner ]
 ]
@@ -63,7 +63,7 @@ ReRuleManager class >> default [
 { #category : #helpers }
 ReRuleManager class >> defaultRules [
 	^ self visibleRuleClasses
-			select: [ :ruleClass | ruleClass enabled ] 
+			select: [ :ruleClass | ruleClass enabled ]
 			thenCollect: [:ruleClass | ruleClass new]
 ]
 
@@ -74,7 +74,7 @@ ReRuleManager class >> initialize [
 ]
 
 { #category : #'instance creation' }
-ReRuleManager class >> managerFor: aCodeEntity [ 
+ReRuleManager class >> managerFor: aCodeEntity [
 	^ self managers
 		at: aCodeEntity package
 		ifAbsentPut: [ self newManagerForPackage: aCodeEntity package ]
@@ -86,18 +86,18 @@ ReRuleManager class >> managers [
 ]
 
 { #category : #'instance creation' }
-ReRuleManager class >> newManagerForPackage: aRPackage [ 
+ReRuleManager class >> newManagerForPackage: aRPackage [
 	| builder manifest defaultRules rules |
 	aRPackage ifNil: [ ^ self default ].
 	builder := TheManifestBuilder new.
 	manifest := builder manifestOf: aRPackage.
 	manifest ifNil: [ ^ self default ].
-	
+
 	defaultRules := self defaultRules.
 	"remove rules banned for the package"
 	rules := defaultRules reject: [ :rule |
 		builder bansRule: rule for: aRPackage ].
-	(rules size = defaultRules size and: [ 
+	(rules size = defaultRules size and: [
 	 manifest forcedRules isEmpty ])
 		ifTrue: [ ^ self default ].
 	"add rules forced for the packages"
@@ -108,7 +108,7 @@ ReRuleManager class >> newManagerForPackage: aRPackage [
 ]
 
 { #category : #'instance creation' }
-ReRuleManager class >> newWithRules: aCollection [ 
+ReRuleManager class >> newWithRules: aCollection [
 	^ self basicNew
 		initializeRules: aCollection;
 		yourself
@@ -118,7 +118,7 @@ ReRuleManager class >> newWithRules: aCollection [
 ReRuleManager class >> removeManagerFor: anRPackage [
 
 	self managers
-		removeKey: anRPackage 
+		removeKey: anRPackage
 		ifAbsent: [  ]
 ]
 
@@ -126,7 +126,7 @@ ReRuleManager class >> removeManagerFor: anRPackage [
 ReRuleManager class >> reset [
 	<script>
 	managers := nil.
-	default := nil.
+	default := nil
 ]
 
 { #category : #utilities }
@@ -137,7 +137,7 @@ ReRuleManager class >> resetWithInform [
 ]
 
 { #category : #accessing }
-ReRuleManager class >> ruleProfileSettingsOn: aBuilder [ 
+ReRuleManager class >> ruleProfileSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #rulesProfile)
 		order: 1;
@@ -146,7 +146,7 @@ ReRuleManager class >> ruleProfileSettingsOn: aBuilder [
 		parent: #qualityAssistant;
 		target: self;
 		default: #setDefaultProfile;
-		domainValues: {'Default' translated -> #setDefaultProfile . 
+		domainValues: {'Default' translated -> #setDefaultProfile .
 							'Beginner' translated -> #setBeginnerProfile }
 ]
 
@@ -157,16 +157,16 @@ ReRuleManager class >> ruleToggleGroupID [
 ]
 
 { #category : #settings }
-ReRuleManager class >> ruleToggleSettingsOn: aBuilder [ 
+ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: self ruleToggleGroupID)
 		order: 1;
 		label: 'Toggle rules to run';
 		description: 'Select which rules do you want to see in the live feedback';
 		parent: #qualityAssistant;
-		with: [ 
+		with: [
 			(self visibleRuleClasses sorted: [ :a :b | a name < b name ])
-				do: [ :rule | 
+				do: [ :rule |
 					| inst |
 					inst := rule new.
 					(aBuilder setting: rule enabledSettingID)
@@ -208,11 +208,11 @@ ReRuleManager class >> setDefaultProfile [
 ReRuleManager class >> subscribe [
 	<systemEventRegistration>
 	self unsubscribe.
-	
+
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAdded   send: #classAddedOrRemoved: to: self;
 		when: ClassRemoved send: #classAddedOrRemoved: to: self.
-		
+
 	ReSystemAnnouncer uniqueInstance weak
 		when: ReCritiqueBanned
 		send: #critiqueBanned:
@@ -271,7 +271,7 @@ ReRuleManager >> methodRules [
 
 { #category : #accessing }
 ReRuleManager >> nodeRules [
-	
+
 	^ self allRules select: [ :rule | rule class checksNode ]
 ]
 

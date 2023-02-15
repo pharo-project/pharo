@@ -17,9 +17,9 @@ Class {
 
 { #category : #'instance creation' }
 FTColumnResizerMorph class >> container: aTableContainerMorph left: aColumn right: otherColumn [
-	^ self basicNew 
-		initializeContainer: aTableContainerMorph 
-			left: aColumn 
+	^ self basicNew
+		initializeContainer: aTableContainerMorph
+			left: aColumn
 			right: otherColumn;
 		yourself
 ]
@@ -42,7 +42,7 @@ FTColumnResizerMorph >> canResizeColumn [
 { #category : #'submorphs - add/remove' }
 FTColumnResizerMorph >> delete [
 	super delete.
-	self release.
+	self release
 ]
 
 { #category : #drawing }
@@ -61,7 +61,7 @@ FTColumnResizerMorph >> initializeContainer: aTableContainerMorph left: aColumn 
 ]
 
 { #category : #'event handling' }
-FTColumnResizerMorph >> mouseDown: anEvent [ 
+FTColumnResizerMorph >> mouseDown: anEvent [
 	"A mouse button has been pressed.
 	Update the color for feedback and store the mouse
 	position and relative offset to the receiver."
@@ -77,7 +77,7 @@ FTColumnResizerMorph >> mouseDown: anEvent [
 { #category : #'event handling' }
 FTColumnResizerMorph >> mouseEnter: anEvent [
 	self canResizeColumn ifFalse: [^ self].
-	(owner notNil and: [owner bounds containsPoint: anEvent position]) 
+	(owner notNil and: [owner bounds containsPoint: anEvent position])
 		ifTrue: [super mouseEnter: anEvent]
 ]
 
@@ -88,7 +88,7 @@ FTColumnResizerMorph >> mouseLeave: anEvent [
 ]
 
 { #category : #'event handling' }
-FTColumnResizerMorph >> mouseMove: anEvent [ 
+FTColumnResizerMorph >> mouseMove: anEvent [
 	self canResizeColumn ifFalse: [^ self].
 	anEvent hand temporaryCursor ifNil: [^ self].
 	traceMorph ifNil: [
@@ -102,7 +102,7 @@ FTColumnResizerMorph >> mouseMove: anEvent [
 { #category : #'Polymorph-Widgets' }
 FTColumnResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
-	
+
 	self canResizeColumn ifFalse: [^ self].
 	(self bounds containsPoint: anEvent cursorPoint)
 		ifFalse: [anEvent hand showTemporaryCursor: nil].
@@ -130,7 +130,7 @@ FTColumnResizerMorph >> release [
 	oldColor := nil.
 	container := nil.
 	self releaseActionMap. "we are not sure if we need it"
-	super release.
+	super release
 ]
 
 { #category : #actions }
@@ -162,23 +162,23 @@ FTColumnResizerMorph >> themeChanged [
 ]
 
 { #category : #'event handling' }
-FTColumnResizerMorph >> updateFromEvent: anEvent [ 
+FTColumnResizerMorph >> updateFromEvent: anEvent [
 	"Update the splitter and attached morph positions from
 	the mouse event.
 	Take into account the mouse down offset."
 	| delta |
-	
+
 	delta := (anEvent cursorPoint - lastMouse first) x.
-	"if positive, delta cannot be bigger than right width (plus a variation) 
+	"if positive, delta cannot be bigger than right width (plus a variation)
 	 to prevent column overlap."
 	(delta > 0 and: [ delta > (rightColumn width - (self width) - 5) ])
 		ifTrue: [ delta := rightColumn width - (self width) - 5 ].
-	"if negative, -delta cannot be bigger than left width (plus a variation) 
+	"if negative, -delta cannot be bigger than left width (plus a variation)
 	 to prevent column overlap."
 	(delta < 0 and: [ delta negated > (leftColumn width - (self width) - 5) ])
 		ifTrue: [ delta := (leftColumn width - (self width) - 5) negated ].
 
 	leftColumn column width: (leftColumn column width ifNil: [ leftColumn width ]) + delta.
-	rightColumn column width: (rightColumn column width ifNil: [ rightColumn width ]) - delta.	
+	rightColumn column width: (rightColumn column width ifNil: [ rightColumn width ]) - delta.
 	container changed
 ]

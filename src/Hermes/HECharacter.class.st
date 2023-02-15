@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 HECharacter class >> tag [
-	^ 5.
+	^ 5
 ]
 
 { #category : #converting }
@@ -22,5 +22,5 @@ HECharacter >> asLiteralIn: env [
 
 { #category : #accessing }
 HECharacter >> value: aValue [
-	value := aValue asString.
+	value := aValue asString
 ]

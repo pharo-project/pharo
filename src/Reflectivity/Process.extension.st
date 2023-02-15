@@ -3,7 +3,7 @@ Extension { #name : #Process }
 { #category : #'*Reflectivity' }
 Process >> isActive: n [
 	<metaLinkOptions: #( + optionDisabledLink)>
-	^level = n or: [ level == nil ].
+	^level = n or: [ level == nil ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -32,7 +32,7 @@ Process >> shiftLevelDown [
 	level ifNil: [ level := 0 ].
 	(level rfIsEqual: 0) ifTrue: [ ^level ].
 	(level rfIsEqual: 1) ifTrue: [ ^level := 0 ].
-	level := level rfMinus: 1.
+	level := level rfMinus: 1
 ]
 
 { #category : #'*Reflectivity' }

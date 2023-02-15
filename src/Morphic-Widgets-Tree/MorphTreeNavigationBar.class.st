@@ -12,6 +12,6 @@ Class {
 }
 
 { #category : #testing }
-MorphTreeNavigationBar class >> isDeprecated [ 
+MorphTreeNavigationBar class >> isDeprecated [
 	^ true
 ]

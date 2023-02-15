@@ -13,10 +13,11 @@ CompiledBlockTest >> testLiteralEqual [
 
 	| value |
 	value := 0.
-	10 timesRepeat: [self assert: value equals: 0].
+	"Do not use #to:do: because it is optimized and will prevent us of testing the behavior we want."
+	(1 to: 10) do: [self assert: value equals: 0].
 	value := 1.
-	10 timesRepeat: [self assert: value equals: 0].'.
-	
+	(1 to: 10) do: [self assert: value equals: 0].'.
+
 	compiledBlocks := methodToTest literals select: [ :each | each isCompiledBlock ].
 	self assert: compiledBlocks size equals: 2.
 	self deny: (compiledBlocks first literalEqual: compiledBlocks second).
@@ -30,13 +31,13 @@ CompiledBlockTest >> testPcInOuter [
 
 	| value |
 	value := 0.
-	10 timesRepeat: [self assert: value equals: 0].
+	"Do not use #to:do: because it is optimized and will prevent us of testing the behavior we want."
+	(1 to: 10) do: [self assert: value equals: 0].
 	value := 1.
-	10 timesRepeat: [self assert: value equals: 0].'.
-	
+	(1 to: 10) do: [self assert: value equals: 0].'.
+
 	compiledBlocks := methodToTest literals select: [ :each | each isCompiledBlock ].
 	self assert: compiledBlocks size equals: 2.
 	"we should find different pcs for the blocks in the outer method"
 	self deny: compiledBlocks first pcInOuter equals: compiledBlocks second pcInOuter
-
 ]

@@ -51,7 +51,7 @@ ClassVariable >> definitionString [
 { #category : #'code generation' }
 ClassVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeIntoLiteralVariable: self.
+	methodBuilder storeIntoLiteralVariable: self
 ]
 
 { #category : #'code generation' }
@@ -105,7 +105,7 @@ ClassVariable >> possiblyUsingClasses [
 	classes := self definingClass withAllSubclasses.
 
 	"For pool variables we need to add the poolUsers and it's subclasses"
-	self isPoolVariable ifTrue: [ 
+	self isPoolVariable ifTrue: [
 		classes addAll:
 			(self definingClass poolUsers flatCollect: [ :each | each withAllSubclasses ]) ].
 

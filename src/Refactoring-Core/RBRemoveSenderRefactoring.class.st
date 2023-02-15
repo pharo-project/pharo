@@ -47,7 +47,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMethod: aSelector forClass: aClass [ 
+RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMethod: aSelector forClass: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		remove: anInterval
@@ -57,8 +57,8 @@ RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMeth
 ]
 
 { #category : #'instance creation' }
-RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forClass: aClass [ 
-	^ self new 
+RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forClass: aClass [
+	^ self new
 		remove: anInterval
 		inMethod: aSelector
 		forClass: aClass
@@ -68,7 +68,7 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 RBRemoveSenderRefactoring >> findSelectedMessage [
 	super findSelectedMessage.
 	sourceMessage isDirectlyUsed
-		ifTrue: [ self refactoringFailure: 'The sender is directly used' ].
+		ifTrue: [ self refactoringFailure: 'The sender is directly used' ]
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 
 	| aSymbol |
 	aSymbol := sourceMessage selector.
-	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode 
+	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode
 		selector:  aSymbol
 		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | RBVariableNode named: 'arg', e asString ])
 		body: ( RBSequenceNode statements: #())]
@@ -90,29 +90,29 @@ RBRemoveSenderRefactoring >> nameOfTheClassOfTheMethodToInline [
 
 { #category : #preconditions }
 RBRemoveSenderRefactoring >> preconditions [
-	^ (RBCondition withBlock: [class ifNil: 
+	^ (RBCondition withBlock: [class ifNil:
 			[self refactoringError: 'Invalid class name']. true]) &
-	(RBCondition definesSelector: sourceSelector in: class) 
-		& (RBCondition withBlock: 
+	(RBCondition definesSelector: sourceSelector in: class)
+		& (RBCondition withBlock:
 					[self findSelectedMessage.
 					"self parseInlineMethod."
 					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not]) 
-						ifFalse: 
-							[self 
+					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
+						ifFalse:
+							[self
 								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
 					true])
 ]
 
 { #category : #removing }
-RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aClass [ 
+RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aClass [
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
 	sourceInterval := anInterval
 ]
 
 { #category : #printing }
-RBRemoveSenderRefactoring >> storeOn: aStream [ 
+RBRemoveSenderRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' remove: '.

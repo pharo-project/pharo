@@ -61,9 +61,9 @@ StringMorph class >> editableStringMorph: aBoolean [
 { #category : #examples }
 StringMorph class >> exampleBoldAndItalic [
 	<sampleInstance>
-	
+
 	| font |
-	font := LogicalFont familyName: StandardFonts defaultFont familyName pointSize: 42. 
+	font := LogicalFont familyName: StandardFonts defaultFont familyName pointSize: 42.
 	^ (self contents: 'This is a StringMorph with emphasis bold and italic' font: font emphasis: TextEmphasis bold)
 			addEmphasis: TextEmphasis italic;
 			position: 100@100;
@@ -75,8 +75,8 @@ StringMorph class >> exampleBoldAndItalic [
 StringMorph class >> exampleFullEmphaisedString [
 	<sampleInstance>
 	| font |
-	font := LogicalFont familyName: StandardFonts defaultFont familyName pointSize: 42. 
-	^ (self contents: 'This is a StringMorph with emphasis 2r11111' font: font emphasis: 2r11111) 
+	font := LogicalFont familyName: StandardFonts defaultFont familyName pointSize: 42.
+	^ (self contents: 'This is a StringMorph with emphasis 2r11111' font: font emphasis: 2r11111)
 			position: 100@100;
 			backgroundColor: Color orange;
 			openInWorld
@@ -86,7 +86,7 @@ StringMorph class >> exampleFullEmphaisedString [
 StringMorph class >> exampleManyStringMorphs [
 	"Return a morph with lots of strings for testing display speed."
 	<sampleInstance>
-	
+
 	| c |
 	c := AlignmentMorph newColumn.
 	self class environment organization categories do:
@@ -112,7 +112,7 @@ StringMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
 	aCustomMenu add: 'change font' selector: #changeFont.
-	aCustomMenu add: 'change emphasis' selector: #changeEmphasis.
+	aCustomMenu add: 'change emphasis' selector: #changeEmphasis
 ]
 
 { #category : #accessing }
@@ -128,7 +128,7 @@ StringMorph >> areasRemainingToFill: aRectangle [
 
 { #category : #accessing }
 StringMorph >> backgroundColor [
-	
+
 	^backgroundColor
 ]
 
@@ -161,10 +161,10 @@ StringMorph >> cancelEdits [
 StringMorph >> changeEmphasis [
 
 	| reply |
-	reply := UIManager default 
-				chooseFrom: (self emphasisChoices collect: [:t | t translated]) 
+	reply := UIManager default
+				chooseFrom: (self emphasisChoices collect: [:t | t translated])
 				values: self emphasisChoices.
-	reply ifNotNil: [ self emphasis: (TextEmphasis perform: reply) emphasisCode ].
+	reply ifNotNil: [ self emphasis: (TextEmphasis perform: reply) emphasisCode ]
 ]
 
 { #category : #accessing }
@@ -174,7 +174,7 @@ StringMorph >> contents [
 ]
 
 { #category : #accessing }
-StringMorph >> contents: newContents [ 
+StringMorph >> contents: newContents [
 	self privateSetContents: newContents.
 	self fitContents
 ]
@@ -212,23 +212,23 @@ StringMorph >> drawDropShadowOn: aCanvas [
 	bnd := self bounds translateBy: self shadowOffset.
 	gap := self layoutInset.
 	bnd := (bnd topLeft + gap) corner: (bnd bottomRight + gap).
-	aCanvas drawString: contents in: bnd font: self fontToUse color: self shadowColor.
+	aCanvas drawString: contents in: bnd font: self fontToUse color: self shadowColor
 ]
 
 { #category : #drawing }
 StringMorph >> drawOn: aCanvas [
-	
+
 	aCanvas
-	
-		fillRectangle: self bounds 
+
+		fillRectangle: self bounds
 		fillStyle: self backgroundColor;
-		
-		drawString: self contents 
-		in: self stringBounds 
-		font: self fontToUse 
+
+		drawString: self contents
+		in: self stringBounds
+		font: self fontToUse
 		color: self stringColor
 		underline: (emphasis bitAnd: 2r100) ~~ 0
-		underlineColor: self underlineColor 
+		underlineColor: self underlineColor
 		strikethrough: (emphasis bitAnd: 2r10000) ~~ 0
 		strikethroughColor: self strikethroughColor
 ]
@@ -247,21 +247,21 @@ StringMorph >> editorProvider: aValuable [
 StringMorph >> emphasis: aCodeOrTextEmphasis [
 	"Set my emphasis to aCodeOrTextEmphasis, which is either a TextEmphasis object,
 	or a numeric code that is treated as a bitmask.   In the case of a TextEmphasis,
-	sending the message value will return the code number.  
-	
+	sending the message value will return the code number.
+
 	The bits have the following significance (see also the class comment for TextEmphasis)
-	
+
 	bit 			attribute
-	2r1	 (1) 		bold 
-	2r10 (2)	 	italic 
-	2r100 (4) 	underlined 
-	2r1000	 (8) 	narrow 
-	2r10000	 (16) 	strikethrough 
-			
-	examples: 
-		2r0 -> plain.  
-		2r1 -> bold. 
-		2r11 -> bold + italic.  
+	2r1	 (1) 		bold
+	2r10 (2)	 	italic
+	2r100 (4) 	underlined
+	2r1000	 (8) 	narrow
+	2r10000	 (16) 	strikethrough
+
+	examples:
+		2r0 -> plain.
+		2r1 -> bold.
+		2r11 -> bold + italic.
 		2r1101 -> bold + underlined + strikethrough.
 	etc...
 	"
@@ -273,14 +273,14 @@ StringMorph >> emphasis: aCodeOrTextEmphasis [
 { #category : #menu }
 StringMorph >> emphasisChoices [
 	"Returns the emphasis selectors that are sent to a TextEmphasis."
-	
+
 	^ #(normal bold italic narrow underlined struckOut)
 ]
 
 { #category : #accessing }
 StringMorph >> enabled: aBoolean [
 
-	aBoolean 
+	aBoolean
 		ifTrue: [ self color: self defaultColor ]
 		ifFalse: [ self color: self theme disabledTextColor ]
 ]
@@ -302,7 +302,7 @@ StringMorph >> font [
 ]
 
 { #category : #printing }
-StringMorph >> font: aFont [ 
+StringMorph >> font: aFont [
 	"Set the font my text will use. The emphasis remains unchanged."
 
 	font := aFont.
@@ -323,7 +323,7 @@ in inspector say,
 { #category : #accessing }
 StringMorph >> fontName: fontName size: fontSize [
 
-	^ self font: (StrikeFont familyName: fontName size: fontSize) 
+	^ self font: (StrikeFont familyName: fontName size: fontSize)
 			emphasis: 0
 ]
 
@@ -348,7 +348,7 @@ StringMorph >> fullBounds [
 StringMorph >> handlesMouseDown: evt [
 	"If the shift key is pressed then yes.
 	As normal if StringMorph class>> editableStringMorph  returns false."
-	
+
 	^ (self isEditable: evt)
 		ifTrue: [true]
 		ifFalse: [super handlesMouseDown: evt]
@@ -369,8 +369,8 @@ StringMorph >> heightToDisplayInList: aList [
 StringMorph >> imageForm: depth forRectangle: rect [
 	| canvas |
 	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
-	
-	backgroundColor isTransparent ifTrue: [ 
+
+	backgroundColor isTransparent ifTrue: [
 		canvas form fillColor: self theme backgroundColor.
 	].
 	canvas translateBy: rect topLeft negated
@@ -379,9 +379,9 @@ StringMorph >> imageForm: depth forRectangle: rect [
 ]
 
 { #category : #initialization }
-StringMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [ 
+StringMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 	super initialize.
-	
+
 	font := aFont.
 	emphasis := emphasisCode.
 	hasFocus := false.
@@ -414,14 +414,14 @@ StringMorph >> isEditable [
 StringMorph >> isEditable: evt [
 	"If the shift key is pressed then yes.
 	As normal if StringMorph class>> editableStringMorph  returns false."
-	
+
 	^(self isEditable and: [evt shiftPressed])
 ]
 
 { #category : #testing }
 StringMorph >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
-	
+
 	^ true
 ]
 
@@ -442,7 +442,7 @@ StringMorph >> lostFocusWithoutAccepting [
 { #category : #accessing }
 StringMorph >> measureContents [
 	"Round up in case fractional."
-	
+
 	| f |
 	f := self fontToUse.
 	^((((f widthOfString: contents) max: self minimumWidth)  @ f height) + (self layoutInset * 2)) ceiling
@@ -451,7 +451,7 @@ StringMorph >> measureContents [
 { #category : #accessing }
 StringMorph >> minHeight [
 	"Answer the minimum height of the receiver."
-	
+
 	^self fontToUse height max: super minHeight
 ]
 
@@ -469,7 +469,7 @@ StringMorph >> mouseDown: evt [
 
 	(self isEditable: evt)
 		ifTrue: [self launchEditor: evt]
-		ifFalse: [super mouseDown: evt].
+		ifFalse: [super mouseDown: evt]
 ]
 
 { #category : #accessing }
@@ -483,11 +483,11 @@ StringMorph >> paneColor [
 StringMorph >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream print: contents.
+	aStream print: contents
 ]
 
 { #category : #private }
-StringMorph >> privateSetContents: newContents [ 
+StringMorph >> privateSetContents: newContents [
 	| scanner |
 	contents := newContents isText
 				ifTrue: [scanner := StringMorphAttributeScanner new initializeFromStringMorph: self.
@@ -500,14 +500,14 @@ StringMorph >> privateSetContents: newContents [
 				ifFalse: [contents = newContents
 						ifTrue: [^ self].
 					"no substantive change"
-					newContents].
+					newContents]
 ]
 
 { #category : #'*Morphic-Base-MorphTreeWidget' }
 StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 	| hasIcon |
 	hasIcon := (aColumn container iconBlock value: aNode) notNil.
-	(aColumn isFirstColumn and: [hasIcon]) 
+	(aColumn isFirstColumn and: [hasIcon])
 		ifTrue: [^ super rowMorphForNode: aNode inColumn: aColumn].
 	self layoutInset: aColumn container columnInset @ aColumn container rowInset.
 	self fitContents.
@@ -517,7 +517,7 @@ StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 { #category : #accessing }
 StringMorph >> setWidth: width [
 	"Round up in case fractional."
-	
+
 	self extent: (width @ (font ifNil: [TextStyle defaultFont]) height) ceiling
 ]
 
@@ -531,10 +531,10 @@ StringMorph >> strikethroughColor [
 StringMorph >> stringBounds [
 
 	| bnd gap |
-	
+
 	bnd := self bounds.
 	gap := self layoutInset.
-	
+
 	^ (bnd topLeft + gap) corner: (bnd bottomRight + gap)
 ]
 

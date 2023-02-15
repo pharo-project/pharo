@@ -31,7 +31,7 @@ Class {
 { #category : #accessing }
 ReNotEliminationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'NotEliminationRule'
 ]
 
@@ -76,6 +76,6 @@ ReNotEliminationRule >> name [
 ]
 
 { #category : #accessing }
-ReNotEliminationRule >> rationale [  
+ReNotEliminationRule >> rationale [
 	^ 'Eliminate unnecessary not''s in relation of conditionals'
 ]

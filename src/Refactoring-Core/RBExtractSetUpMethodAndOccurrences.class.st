@@ -66,11 +66,11 @@ RBExtractSetUpMethodAndOccurrences >> extractMethodClass [
 
 { #category : #transforming }
 RBExtractSetUpMethodAndOccurrences >> findOccurrencesClass [
-	^ RBFindAndReplaceSetUpRefactoring
+	^ RBFindAndReplaceSetUpTransformation
 ]
 
 { #category : #transforming }
-RBExtractSetUpMethodAndOccurrences >> transform [ 
+RBExtractSetUpMethodAndOccurrences >> transform [
 	self extractMethod.
 	self findOccurrencesOf: #setUp
 ]

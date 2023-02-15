@@ -11,13 +11,13 @@ Class {
 PharoBootstrapRuleTest >> setUp [
 	super setUp.
 	checkerBackup := PharoBootstrapRule
-		classVarNamed: 'DependencyChecker'.
+		classVarNamed: 'DependencyChecker'
 ]
 
 { #category : #running }
 PharoBootstrapRuleTest >> tearDown [
 	PharoBootstrapRule
-		classVarNamed: 'DependencyChecker' 
+		classVarNamed: 'DependencyChecker'
 		put: checkerBackup.
 	super tearDown
 ]
@@ -48,8 +48,8 @@ PharoBootstrapRuleTest >> testRuleDoesNotFailIfNoNewExternalDependency [
 PharoBootstrapRuleTest >> testRuleFailsIfAnyNewExternalDependencyFound [
 	| rule packageUnderTest critiques |
 	rule := PharoBootstrapRule new.
-	rule class 
-		classVarNamed: 'DependencyChecker' 
+	rule class
+		classVarNamed: 'DependencyChecker'
 		put: PharoBootstrapAnalyzerStubWithNewDependency.
 	packageUnderTest := RPackage named: #Kernel.
 

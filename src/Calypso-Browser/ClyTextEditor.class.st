@@ -16,7 +16,7 @@ ClyTextEditor class >> contextMenuOn: aBuilder [
 	| context |
 	(aBuilder model editingMode isKindOf: ClyTextEditingMode)
 		ifFalse: [ ^self ].
-		
+
 	context := aBuilder model browserTool createCommandContext.
 	CmdContextMenuActivation registerContextMenuOn: aBuilder inContext: context
 ]
@@ -39,13 +39,13 @@ ClyTextEditor >> cancel [
 
 { #category : #operations }
 ClyTextEditor >> printIt [
-	"Treat the current text selection as an expression; evaluate it. Insert the 
-	description of the result of evaluation after the selection and then make 
+	"Treat the current text selection as an expression; evaluate it. Insert the
+	description of the result of evaluation after the selection and then make
 	this description the new text selection."
 
 	| printString |
 	self
-		evaluateSelectionAndDo: [ :result | 
+		evaluateSelectionAndDo: [ :result |
 			printString := [ result asScriptResultStringInCalypso ]
 				on: Error
 				do: [ '<error in printString: try ''Inspect it'' to debug>' ].
@@ -57,6 +57,6 @@ ClyTextEditor >> undo [
 
 	super undo.
 
-	self editingState undoManager hasPrevious ifFalse: [ 
+	self editingState undoManager hasPrevious ifFalse: [
 		self browserTool changesCancelled]
 ]

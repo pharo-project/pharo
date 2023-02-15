@@ -10,14 +10,14 @@ Class {
 { #category : #accessing }
 ReSuperSendsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'SuperSendsRule'
 ]
 
 { #category : #hooks }
 ReSuperSendsRule >> afterCheck: aNode mappings: mappingDict [
 
-	^aNode methodNode methodClass withAllSubclasses noneSatisfy: [: class | 
+	^aNode methodNode methodClass withAllSubclasses noneSatisfy: [: class |
 		class includesSelector: aNode selector ]
 ]
 
@@ -29,8 +29,8 @@ ReSuperSendsRule >> group [
 { #category : #initialization }
 ReSuperSendsRule >> initialize [
 	super initialize.
-	self 
-		replace: 'super `@message: ``@args' 
+	self
+		replace: 'super `@message: ``@args'
 		with: 'self `@message: ``@args'
 ]
 

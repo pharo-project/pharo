@@ -50,8 +50,7 @@ UserInputEvent class >> initialize [
 { #category : #initialization }
 UserInputEvent class >> shiftKeyMask [
 
-	^ SHIFT_KEY_MASK 
-
+	^ SHIFT_KEY_MASK
 ]
 
 { #category : #'modifier state' }
@@ -107,7 +106,7 @@ UserInputEvent >> controlKeyPressed [
 UserInputEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
 	handler := anEvent handler.
-	wasHandled := anEvent wasHandled.
+	wasHandled := anEvent wasHandled
 ]
 
 { #category : #accessing }
@@ -148,7 +147,7 @@ UserInputEvent >> position [
 UserInputEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
 	handler := nil.
-	wasHandled := false.
+	wasHandled := false
 ]
 
 { #category : #private }
@@ -166,7 +165,7 @@ UserInputEvent >> shiftPressed [
 { #category : #transforming }
 UserInputEvent >> transformBy: aMorphicTransform [
 	"Transform the receiver into a local coordinate system."
-	position :=  aMorphicTransform globalPointToLocal: position.
+	position :=  aMorphicTransform globalPointToLocal: position
 ]
 
 { #category : #transforming }
@@ -178,7 +177,7 @@ UserInputEvent >> transformedBy: aMorphicTransform [
 { #category : #transforming }
 UserInputEvent >> translateBy: delta [
 	"add delta to cursorPoint, and return the new event"
-	position := position + delta.
+	position := position + delta
 ]
 
 { #category : #transforming }
@@ -201,5 +200,5 @@ UserInputEvent >> wasHandled [
 
 { #category : #accessing }
 UserInputEvent >> wasHandled: aBool [
-	wasHandled := aBool.
+	wasHandled := aBool
 ]

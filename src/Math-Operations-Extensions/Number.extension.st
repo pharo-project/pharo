@@ -1,27 +1,27 @@
 Extension { #name : #Number }
 
 { #category : #'*Math-Operations-Extensions' }
-Number >> % aNumber [ 
-	"modulo. Remainder defined in terms of //. Answer a Number with the 
+Number >> % aNumber [
+	"modulo. Remainder defined in terms of //. Answer a Number with the
 	same sign as aNumber."
-	
+
 	"9 % 4 >>> 1"
 	"-9 % 4 >>> 3"
 	"9 % -4 >>> -3"
-	
-	
+
+
 	^ self \\ aNumber
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Number >> ** exponent [ 
+Number >> ** exponent [
 	" A shortcut method for raisedTo: "
-	
+
 	"2 ** 8 >>> 256"
 	"8 ** 2 >>> 64"
 	"2 ** (1/12) >>> 1.0594630943592953"
 	"2 ** -1 >>> (1/2)"
-	
+
 	^ self raisedTo: exponent
 ]
 
@@ -40,8 +40,8 @@ Number >> adaptToPoint: rcvr andSend: selector [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Number >> arcCos [ 
-	"The receiver is the cosine of an angle. Answer the angle measured in 
+Number >> arcCos [
+	"The receiver is the cosine of an angle. Answer the angle measured in
 	radians."
 
 	^self asFloat arcCos
@@ -49,7 +49,7 @@ Number >> arcCos [
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> arcSin [
-	"The receiver is the sine of an angle. Answer the angle measured in 
+	"The receiver is the sine of an angle. Answer the angle measured in
 	radians."
 
 	^self asFloat arcSin
@@ -57,7 +57,7 @@ Number >> arcSin [
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> arcTan [
-	"The receiver is the tangent of an angle. Answer the angle measured in 
+	"The receiver is the tangent of an angle. Answer the angle measured in
 	radians."
 
 	^self asFloat arcTan
@@ -65,7 +65,7 @@ Number >> arcTan [
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> arcTan: denominator [
-	"The receiver is the tangent of an angle. Answer the angle measured in 
+	"The receiver is the tangent of an angle. Answer the angle measured in
 	radians."
 
 	^ self asFloat arcTan: denominator
@@ -97,20 +97,20 @@ Number >> cos [
 { #category : #'*Math-Operations-Extensions' }
 Number >> degreeCos [
 	"Answer the cosine of the receiver taken as an angle in degrees."
-	
+
 	^ (90 - (180 + self \\ 360 - 180) abs) degreesToRadians sin
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> degreeSin [
 	"Answer the sine of the receiver taken as an angle in degrees."
-	
+
 	^(90 - self) degreeCos
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> degreesToRadians [
-	"The receiver is assumed to represent degrees. Answer the conversion to 
+	"The receiver is assumed to represent degrees. Answer the conversion to
 	radians."
 
 	^self asFloat degreesToRadians
@@ -157,7 +157,7 @@ Number >> log [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Number >> log: aNumber [ 
+Number >> log: aNumber [
 	"Answer the log base aNumber of the receiver."
 
 	^self ln / aNumber ln
@@ -185,9 +185,9 @@ Number >> percent [
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> radiansToDegrees [
-	"The receiver is assumed to represent radians. Answer the conversion to 
+	"The receiver is assumed to represent radians. Answer the conversion to
 	degrees."
-	
+
 	"Float pi radiansToDegrees >>> 180.0"
 
 	^self asFloat radiansToDegrees
@@ -223,7 +223,7 @@ Number >> strictlyPositive [
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> tan [
-	"The receiver represents an angle measured in radians. Answer its 
+	"The receiver represents an angle measured in radians. Answer its
 	tangent."
 
 	^self asFloat tan

@@ -23,7 +23,7 @@ Class {
 
 { #category : #'instance creation' }
 FTFilter class >> pattern: aString [
-	^self new 
+	^self new
 		pattern: aString
 ]
 

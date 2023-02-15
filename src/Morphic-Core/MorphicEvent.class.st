@@ -125,7 +125,7 @@ MorphicEvent >> setHand: aHand [
 
 { #category : #private }
 MorphicEvent >> setTimeStamp: stamp [
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #accessing }

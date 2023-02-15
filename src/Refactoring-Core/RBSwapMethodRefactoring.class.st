@@ -15,7 +15,7 @@ Class {
 
 { #category : #'instance creation' }
 RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: aClass [
-	^ self new 
+	^ self new
 		model: aRBSmalltalk;
 		swapMethod: aSelector in: aClass;
 		yourself
@@ -44,9 +44,9 @@ RBSwapMethodRefactoring >> preconditions [
 ]
 
 { #category : #initialization }
-RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [ 
+RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [
 	class := self classObjectFor: aClass.
-	target := self classObjectFor: (class isMeta 
+	target := self classObjectFor: (class isMeta
 			ifTrue: [ class instanceSide ]
 			ifFalse: [ class classSide ]).
 	selector := aSelector

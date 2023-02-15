@@ -20,8 +20,8 @@ OCTargetCompilerParser >> parsePrimitiveValueLiteral [
 	value := token value.
 	value == #dontReturnThis ifTrue: [ value := #expectedReturn ].
 
-	^self literalValueNodeClass 
-		value: value 
+	^self literalValueNodeClass
+		value: value
 		start: token start
 		stop: token stop
 		source: token source

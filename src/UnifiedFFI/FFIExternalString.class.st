@@ -21,11 +21,11 @@ FFIExternalString class >> externalTypeAlignment [
 { #category : #private }
 FFIExternalString >> basicHandle: aHandle at: index [
 	| data |
-	data := ExternalData 
-		fromHandle: (aHandle pointerAt: index) 
+	data := ExternalData
+		fromHandle: (aHandle pointerAt: index)
 		type: ExternalType string.
 	data isNull ifTrue: [ ^ nil ].
-	^ data fromCString
+	^ data bytesFromCString utf8Decoded
 ]
 
 { #category : #private }
@@ -45,8 +45,8 @@ FFIExternalString >> externalTypeSize [
 ]
 
 { #category : #callbacks }
-FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [ 
-	
+FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [
+
 	aFFICallbackArgumentReader extractExternalString: self
 ]
 

@@ -21,11 +21,8 @@ EpLostChangesDetector class >> enabled: aBoolean [
 	enabled := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 EpLostChangesDetector class >> initialize [
-	"
-	self initialize
-	"
 	SessionManager default registerToolClassNamed: self name
 ]
 

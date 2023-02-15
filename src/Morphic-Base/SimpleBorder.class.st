@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-SimpleBorder class >> isDeprecated [ 
+SimpleBorder class >> isDeprecated [
 	^ true
 ]

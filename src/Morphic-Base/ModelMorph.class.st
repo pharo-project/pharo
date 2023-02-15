@@ -71,7 +71,7 @@ ModelMorph >> keyboardFocusOnMouseDown [
 ]
 
 { #category : #accessing }
-ModelMorph >> model [ 
+ModelMorph >> model [
 	^ model
 ]
 
@@ -81,7 +81,7 @@ ModelMorph >> model: anObject [
 
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
-	model := anObject.
+	model := anObject
 ]
 
 { #category : #settings }

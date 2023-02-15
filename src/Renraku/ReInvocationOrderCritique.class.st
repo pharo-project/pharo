@@ -19,7 +19,7 @@ ReInvocationOrderCritique class >> withAnchor: anAnchor by: aRule method: aStrin
 		  sourceAnchor: anAnchor
 		        method: aString
 		     condition: aCondition;
-		
+
 		yourself
 ]
 

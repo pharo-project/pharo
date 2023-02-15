@@ -13,14 +13,14 @@ Class {
 
 { #category : #'instance creation' }
 OmEntry class >> content: anObject [
-	^ self basicNew 
+	^ self basicNew
 		initializeWithContent: anObject;
 		yourself
 ]
 
 { #category : #comparing }
 OmEntry >> = other [
-	^ other species = self species and: [ 
+	^ other species = self species and: [
 		other content = self content ]
 ]
 
@@ -30,7 +30,7 @@ OmEntry >> content [
 ]
 
 { #category : #accessing }
-OmEntry >> content: anObject [ 
+OmEntry >> content: anObject [
 	content := anObject
 ]
 
@@ -43,7 +43,7 @@ OmEntry >> hash [
 OmEntry >> initializeWithContent: anObject [
 	self initialize.
 	content := anObject.
-	tags := Dictionary new.
+	tags := Dictionary new
 ]
 
 { #category : #testing }
@@ -56,7 +56,7 @@ OmEntry >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	content printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

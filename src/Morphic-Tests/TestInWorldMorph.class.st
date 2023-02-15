@@ -14,14 +14,14 @@ Class {
 { #category : #initialization }
 TestInWorldMorph >> initialize [
 	super initialize.
-	outOfWorldCount := intoWorldCount := 0.
+	outOfWorldCount := intoWorldCount := 0
 ]
 
 { #category : #accessing }
 TestInWorldMorph >> intoWorld: aWorld [
 	aWorld ifNil:[^self].
 	super intoWorld: aWorld.
-	intoWorldCount := intoWorldCount + 1.
+	intoWorldCount := intoWorldCount + 1
 ]
 
 { #category : #accessing }
@@ -33,7 +33,7 @@ TestInWorldMorph >> intoWorldCount [
 TestInWorldMorph >> outOfWorld: aWorld [
 	aWorld ifNil:[^self].
 	super outOfWorld: aWorld.
-	outOfWorldCount := outOfWorldCount + 1.
+	outOfWorldCount := outOfWorldCount + 1
 ]
 
 { #category : #accessing }

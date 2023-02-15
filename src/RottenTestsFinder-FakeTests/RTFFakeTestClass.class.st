@@ -28,7 +28,7 @@ RTFFakeTestClass >> testCallingSuperHelper [
 RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
 
 	self assert: false.
-	
+
 	self assert: true
 ]
 

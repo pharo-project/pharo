@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-FTExampleDataSource >> cellColumn: column row: rowIndex [ 
+FTExampleDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		color: (self colorFor: rowIndex);
 		cellInset: 5;

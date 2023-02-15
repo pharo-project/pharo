@@ -10,11 +10,11 @@ Class {
 { #category : #'morphs setup' }
 CmdClickActivation class >> enableInMorph: aMorph withCommandsFrom: someObjectWithCommandContext [
 	super enableInMorph: aMorph withCommandsFrom: someObjectWithCommandContext.
-	
-	"Following subscribtion is requried because morphic does not generate mouse click 
+
+	"Following subscribtion is requried because morphic does not generate mouse click
 	when right mouse (yellow) was clicked. In that case mouse up is triggered"
-	
-	aMorph 
+
+	aMorph
 		on: #mouseUp
 		send: #handleYellowMouseClickUsing:event:from: to: self withValue: someObjectWithCommandContext
 ]
@@ -23,7 +23,7 @@ CmdClickActivation class >> enableInMorph: aMorph withCommandsFrom: someObjectWi
 CmdClickActivation class >> handleYellowMouseClickUsing: someObjectWithCommandContext event: anEvent from: sourceMorph [
 
 	anEvent yellowButtonChanged ifFalse: [ ^ self ].
-	
+
 	^self handleMouseUsing: someObjectWithCommandContext event: anEvent from: sourceMorph
 ]
 

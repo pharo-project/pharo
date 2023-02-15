@@ -17,7 +17,7 @@ PaMatrix3ExampleTest class >> testParameters [
 		forSelector: #option1 addOptions: #(a b c);
 		forSelector: #option2 addOptions: {[1].[2].[3]};
 		forSelector: #option3 addOptions: #(x y z);
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }

@@ -25,7 +25,7 @@ Class {
 { #category : #'script detection' }
 ClyExampleScript class >> isImplementedByMethod: aMethod [
 	(aMethod hasPragmaNamed: #sampleInstance) ifTrue: [ ^ false ].
-	^ (aMethod selector beginsWith: 'example') 
+	^ (aMethod selector beginsWith: 'example')
 		 or: [ aMethod hasPragmaNamed: #example ]
 ]
 

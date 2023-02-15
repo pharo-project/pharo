@@ -25,13 +25,13 @@ Class {
 
 { #category : #'method visibility' }
 ClySubclassHierarchy class >> hierarchyForMethodVisibility [
-	^hierarchyForMethodVisibility ifNil: [ 
+	^hierarchyForMethodVisibility ifNil: [
 		hierarchyForMethodVisibility := self inverse]
 ]
 
 { #category : #'variable hierarchy' }
 ClySubclassHierarchy class >> hierarchyForVariables [
-	^hierarchyForVariables ifNil: [ 
+	^hierarchyForVariables ifNil: [
 		hierarchyForVariables := self new]
 ]
 
@@ -65,7 +65,7 @@ ClySubclassHierarchy class >> isDefaultHierarchyForVariables [
 
 { #category : #'variable hierarchy' }
 ClySubclassHierarchy class >> isDefaultHierarchyForVariables: aBool [
-	self isDefaultHierarchyForVariables = aBool 
+	self isDefaultHierarchyForVariables = aBool
 		ifFalse: [ self invertVariableHierarchy ]
 ]
 
@@ -93,7 +93,7 @@ ClySubclassHierarchy class >> settingsOn: aBuilder [
 		target: self.
 	(aBuilder setting: #isDefaultHierarchyForMethodVisibility)
 		parent: #Calypso;
-		default: false;		
+		default: true;
 		label: 'Show method visibility classes in standard hierarchical order?';
 		description: 'If true, FullBrowser will show "inherited method" expanded classes in the order from superclass to subclass';
 		target: self
@@ -104,8 +104,8 @@ ClySubclassHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 
 	| eachClass superclass |
 	eachClass := aClass.
-	[eachClass isRootInEnvironment] whileFalse: [ 
-		superclass := eachClass superclass.	
+	[eachClass isRootInEnvironment] whileFalse: [
+		superclass := eachClass superclass.
 		(aHierarchyMap includesClass: superclass) ifTrue: [
 			^aHierarchyMap addChild: aClass to: superclass].
 		eachClass := superclass]

@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'messageHeuristic',
 		'methodNodeHeuristic',
-		'variablesHeuristic'
+		'variablesHeuristic',
+		'symbolsHeuristic'
 	],
 	#category : #'HeuristicCompletion-Model-SystemIntegration'
 }
@@ -47,6 +48,13 @@ CoASTHeuristicsResultSetBuilder >> newHeuristicBuilder [
 ]
 
 { #category : #heuristics }
+CoASTHeuristicsResultSetBuilder >> symbolsHeuristic [
+	^ symbolsHeuristic ifNil: [ symbolsHeuristic := self newHeuristicBuilder
+		add: CoLiteralSymbolHeuristic new;
+		build ]
+]
+
+{ #category : #heuristics }
 CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 	^ variablesHeuristic ifNil: [ variablesHeuristic := self newHeuristicBuilder
 		add: CoLocalScopeVariablesHeuristic new;
@@ -57,8 +65,16 @@ CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 ]
 
 { #category : #visiting }
-CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [
+CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 
+	^ self
+		configureFetcherForNode: aNode
+		usingHeuristicAvoidingRepetitions: self symbolsHeuristic
+]
+
+{ #category : #visiting }
+CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [ 
+	
 	^ self
 		configureFetcherForNode: aRBMessageNode
 		usingHeuristicAvoidingRepetitions: self messageHeuristic

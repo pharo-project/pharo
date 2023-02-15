@@ -12,7 +12,7 @@ PharoDocCommentTest >> testAssociation [
 
 	|association|
 	association := 3 + 4 >>> 7.
-	self 
+	self
 		assert: association key equals: 7;
 		assert: association value equals: 7
 ]
@@ -25,7 +25,7 @@ PharoDocCommentTest >> testExpression [
 	self assert: node expression source equals: '3 + 4 >>> 7'.
 	self assert: node expression isFaulty not.
 	self assert: node expression evaluate equals: 7->7.
-	(CommentTestCase for: node) testIt.
+	(CommentTestCase for: node) testIt
 ]
 
 { #category : #tests }
@@ -45,7 +45,7 @@ PharoDocCommentTest >> testExpressionNoAssociation [
 PharoDocCommentTest >> testExpressionNoAssociation2 [
 
 	"This one is syntaxically valid, but does not return an association at runtime."
-	
+
 	"true ifTrue: [^ 7]. 1 >>> 1"
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
@@ -64,7 +64,7 @@ PharoDocCommentTest >> testExpressionReferencingSelf [
 	node := thisContext method ast pharoDocCommentNodes first.
 	self assert: node expression isFaulty not.
 	self assert: node expression evaluate equals: self class -> self class.
-	(CommentTestCase for: node) testIt.
+	(CommentTestCase for: node) testIt
 ]
 
 { #category : #tests }
@@ -91,7 +91,7 @@ PharoDocCommentTest >> testExpressionSyntaxError [
 PharoDocCommentTest >> testExpressionZero [
 
 	"This one feels like a doc comment but there is no real triple > message send in the AST."
-	
+
 	"#( 1 >>> 1 )"
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
@@ -108,7 +108,7 @@ PharoDocCommentTest >> testMultipleDocComments [
 	espression := thisContext method ast pharoDocCommentNodes first expression.
 	self assert: espression evaluate equals: 7->7.
 	espression := thisContext method ast pharoDocCommentNodes second expression.
-	self assert: espression evaluate equals: 3->3.
+	self assert: espression evaluate equals: 3->3
 ]
 
 { #category : #tests }

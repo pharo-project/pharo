@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : #EFFormatter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #RBAbstractFormatter,
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -387,6 +387,12 @@ EFFormatter class >> periodsAtEndOfBlock [
 { #category : #accessing }
 EFFormatter class >> periodsAtEndOfMethod [
 	^ DefaultPrettyPrintContext periodsAtEndOfMethod
+]
+
+{ #category : #priority }
+EFFormatter class >> priority [
+	
+	^ 10
 ]
 
 { #category : #accessing }
@@ -1032,6 +1038,13 @@ EFFormatter >> characterSeparatorMethodSignatureFor: aMethodNode [
 			ifFalse: [ self space ]
 ]
 
+{ #category : #private }
+EFFormatter >> cleanSpacesAtTheEnd [
+
+	[ codeStream peekLast = Character space ] whileTrue: [
+		codeStream back ]
+]
+
 { #category : #accessing }
 EFFormatter >> codeStream [
 	^ codeStream
@@ -1145,23 +1158,23 @@ EFFormatter >> formatBlock2: aBlockNode [
 
 { #category : #'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
- 	" see formatBlock2: for a possible alternate and faster definition."
-	
+	" see formatBlock2: for a possible alternate and faster definition."
+
 	| isMultiline |
 	isMultiline := self willBeMultiline: aBlockNode body.
-  
+
 	codeStream nextPutAll: self spacesInsideBlocksString.
-	
+
 	self formatBlockArgumentsFor: aBlockNode.
 	self formatBlockCommentFor: aBlockNode.
-	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ]) 
-		and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ]) 
-			ifTrue: [ self newLine ].
-  
+	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
+		 and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
+		ifTrue: [ self newLine ].
+
 	self visitSequenceNode: aBlockNode body.
-	
-	(self lineUpBlockBrackets and: [ isMultiline ]) 
-		ifTrue: [ self newLine ] 
+
+	(self lineUpBlockBrackets and: [ isMultiline ])
+		ifTrue: [ self newLine ]
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
 ]
 
@@ -1170,19 +1183,16 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 	| onAnotherLine args |
 	args := aBlockNode arguments.
-	args isEmpty
-		ifTrue: [ ^ self ].
-	onAnotherLine := self areArgumentsTooLong: args. 
-	args
-		do: [ :each | 
-			onAnotherLine ifTrue: [self newLine ].
-			codeStream nextPut: $:.
-			self visitVariableNode: each.
-			self formatCommentCloseToStatements
-				ifTrue:
-					[ self spaceAndFormatComments: each ].
-			self space ].
-	codeStream nextPutAll: '| '.
+	args isEmpty ifTrue: [ ^ self ].
+	onAnotherLine := self areArgumentsTooLong: args.
+	args do: [ :each |
+		onAnotherLine ifTrue: [ self newLine ].
+		codeStream nextPut: $:.
+		self visitVariableNode: each.
+		self formatCommentCloseToStatements ifTrue: [
+			self spaceAndFormatComments: each ].
+		self space ].
+	codeStream nextPutAll: '| '
 ]
 
 { #category : #'private - formatting' }
@@ -1483,7 +1493,7 @@ EFFormatter >> initialize [
 { #category : #initialization }
 EFFormatter >> initializeCodeStream [
 
-  codeStream := WriteStream on: (String new: 256)
+  codeStream := ReadWriteStream on: (String new: 256)
 ]
 
 { #category : #initialization }
@@ -1747,9 +1757,8 @@ EFFormatter >> newLineBeforeFirstKeyword: aBoolean [
 { #category : #private }
 EFFormatter >> newLines: anInteger [
 	"Add a number of new lines and in addition store the position of the latest new lines in the stream so that latter we can compute the current line length."
-	
-	anInteger + self indentString size = 0
-		ifTrue: [ codeStream space ].
+
+	anInteger > 0 ifTrue: [ self cleanSpacesAtTheEnd ].
 	anInteger timesRepeat: [ codeStream cr ].
 	lineStart := codeStream position.
 	self indentTimesRepeat: self indent
@@ -1933,7 +1942,7 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 	codeStream nextPutAll: selectors first.
 	self space.
 	self visitNode: arguments first.
-	codeStream nextPut: Character cr.
+	self newLine.
 	self
 		with: selectors allButFirst
 		and: arguments allButFirst
@@ -1943,7 +1952,8 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 			self space.
 			self visitNode: arg ]
 		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode].
-	self newLines: 1
+	self newLine
+
 ]
 
 { #category : #utilities }

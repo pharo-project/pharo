@@ -252,6 +252,13 @@ EpMonitor >> categoryAdded: aCategoryAdded [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> categoryRegistered: aCategoryAdded [
+
+	self handleAnyErrorDuring: [
+			self addEvent: (EpCategoryRegistration named: aCategoryAdded package name) ]
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
 
 	self handleAnyErrorDuring:[
@@ -514,6 +521,15 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> packageRenamed: aCategoryRenamed [
+
+	self handleAnyErrorDuring: [
+		self addEvent: (EpCategoryRename
+			oldName: aCategoryRenamed oldName
+			newName: aCategoryRenamed newName) ]
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> protocolAdded: aProtocolAdded [
 
 	self handleAnyErrorDuring: [
@@ -575,6 +591,8 @@ EpMonitor >> subscribeToSystemAnnouncer [
 	{	CategoryAdded -> #categoryAdded:.
 		CategoryRemoved -> #categoryRemoved:.
 		CategoryRenamed -> #categoryRenamed:.
+		RPackageRegistered -> #categoryRegistered:.
+		RPackageRenamed -> #packageRenamed:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
 		MethodAdded -> #methodAdded:.

@@ -70,8 +70,8 @@ RxMatchOptimizer >> determineTestMethod [
 	(conditions includes: #any) ifTrue: [^nil].
 	testers := OrderedCollection new: 5.
 	#(#prefixTester #nonPrefixTester #conditionTester #methodPredicateTester #nonMethodPredicateTester #predicateTester #nonPredicateTester)
-		do: 
-			[:selector | 
+		do:
+			[:selector |
 			| tester |
 			tester := self perform: selector.
 			tester notNil ifTrue: [testers add: tester]].
@@ -82,10 +82,10 @@ RxMatchOptimizer >> determineTestMethod [
 ]
 
 { #category : #initialization }
-RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [ 
+RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [
 	"Set `testMethod' variable to a can-match predicate block:
 	two-argument block which accepts a lookahead character
-	and a matcher (presumably built from aRegex) and answers 
+	and a matcher (presumably built from aRegex) and answers
 	a boolean indicating whether a match could start at the given
 	lookahead. "
 
@@ -98,7 +98,7 @@ RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [
 	predicates := Set new: 3.
 	nonPredicates := Set new: 3.
 	lookarounds := Set new: 3.
-	aRegex dispatchTo: self.	"If the whole expression is nullable, 
+	aRegex dispatchTo: self.	"If the whole expression is nullable,
 		end-of-line is an implicit can-match condition!"
 	aRegex isNullable ifTrue: [conditions add: #atEndOfLine].
 	testBlock := self determineTestMethod
@@ -110,14 +110,14 @@ RxMatchOptimizer >> methodPredicateTester [
 	methodPredicates isEmpty ifTrue: [^nil].
 	p := self optimizeSet: methodPredicates.	"also allows copying closures"
 	^p size = 1
-		ifTrue: 
+		ifTrue:
 			["might be a pretty common case"
 			selector := p first.
-			[:char :matcher | 
+			[:char :matcher |
 			RxParser doHandlingMessageNotUnderstood:
 				[char perform: selector]]]
-		ifFalse: 
-			[[:char :m | 
+		ifFalse:
+			[[:char :m |
 			RxParser doHandlingMessageNotUnderstood:
 				[p contains: [:sel | char perform: sel]]]]
 ]
@@ -128,13 +128,13 @@ RxMatchOptimizer >> nonMethodPredicateTester [
 	nonMethodPredicates isEmpty ifTrue: [^nil].
 	p := self optimizeSet: nonMethodPredicates.	"also allows copying closures"
 	^p size = 1
-		ifTrue: 
+		ifTrue:
 			[selector := p first.
-			[:char :matcher | 
+			[:char :matcher |
 			RxParser doHandlingMessageNotUnderstood:
 				[(char perform: selector) not]]]
-		ifFalse: 
-			[[:char :m | 
+		ifFalse:
+			[[:char :m |
 			RxParser doHandlingMessageNotUnderstood:
 				[p contains: [:sel | (char perform: sel) not]]]]
 ]
@@ -146,10 +146,10 @@ RxMatchOptimizer >> nonPredicateTester [
 	nonPredicates isEmpty ifTrue: [^nil].
 	p := self optimizeSet: nonPredicates.	"also allows copying closures"
 	^p size = 1
-		ifTrue: 
+		ifTrue:
 			[pred := p first.
 			[:char :matcher | (pred value: char) not]]
-		ifFalse: 
+		ifFalse:
 			[[:char :m | p contains: [:some | (some value: char) not]]]
 ]
 
@@ -160,7 +160,7 @@ RxMatchOptimizer >> nonPrefixTester [
 	nonPrefixes isEmpty ifTrue: [^nil].
 	np := self optimizeSet: nonPrefixes. "also allows copying closures"
 	^np size = 1 "might be be pretty common case"
-		ifTrue: 
+		ifTrue:
 			[nonPrefixChar := np first.
 			[:char :matcher | char ~= nonPrefixChar]]
 		ifFalse: [[:char : matcher | (np includes: char) not]]
@@ -184,10 +184,10 @@ RxMatchOptimizer >> predicateTester [
 	^p size = 1
 		ifTrue: [
 			pred := p first.
-			[:char :matcher | 
+			[:char :matcher |
 				pred value: char ]]
 		ifFalse: [
-			[:char :matcher | 
+			[:char :matcher |
 				p contains: [:some | some value: char ]]]
 ]
 
@@ -199,7 +199,7 @@ RxMatchOptimizer >> prefixTester [
 	p := self optimizeSet: prefixes. "also allows copying closures"
 	ignoreCase ifTrue: [p := p collect: [:each | each asUppercase]].
 	^p size = 1 "might be a pretty common case"
-		ifTrue: 
+		ifTrue:
 			[prefixChar := p first.
 			ignoreCase
 				ifTrue: [[:char :matcher | char sameAs: prefixChar]]
@@ -243,13 +243,13 @@ RxMatchOptimizer >> syntaxBranch: branchNode [
 ]
 
 { #category : #'double dispatch' }
-RxMatchOptimizer >> syntaxCharSet: charSetNode [ 
+RxMatchOptimizer >> syntaxCharSet: charSetNode [
 	"All these (or none of these) characters is the prefix."
 
 	charSetNode isNegated
 		ifTrue: [nonPrefixes addAll: (charSetNode enumerableSetIgnoringCase: ignoreCase)]
 		ifFalse: [prefixes addAll: (charSetNode enumerableSetIgnoringCase: ignoreCase)].
-	charSetNode hasPredicates ifTrue: 
+	charSetNode hasPredicates ifTrue:
 			[charSetNode isNegated
 				ifTrue: [nonPredicates addAll: charSetNode predicates]
 				ifFalse: [predicates addAll: charSetNode predicates]]
@@ -281,14 +281,14 @@ RxMatchOptimizer >> syntaxEpsilon [
 ]
 
 { #category : #'double dispatch' }
-RxMatchOptimizer >> syntaxLookaround: lookaroundNode [ 
+RxMatchOptimizer >> syntaxLookaround: lookaroundNode [
 
-	
+
 	lookarounds add: lookaroundNode
 ]
 
 { #category : #'double dispatch' }
-RxMatchOptimizer >> syntaxMessagePredicate: messagePredicateNode [ 
+RxMatchOptimizer >> syntaxMessagePredicate: messagePredicateNode [
 	messagePredicateNode negated
 		ifTrue: [nonMethodPredicates add: messagePredicateNode selector]
 		ifFalse: [methodPredicates add: messagePredicateNode selector]
@@ -308,7 +308,7 @@ RxMatchOptimizer >> syntaxPiece: pieceNode [
 ]
 
 { #category : #'double dispatch' }
-RxMatchOptimizer >> syntaxPredicate: predicateNode [ 
+RxMatchOptimizer >> syntaxPredicate: predicateNode [
 
 	predicates add: predicateNode predicate
 ]

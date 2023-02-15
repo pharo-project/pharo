@@ -21,8 +21,8 @@ Class {
 { #category : #'private - contents' }
 TabManagerMorph >> addLastTabContents: aTab among: size delta: delta [
 	| process |
-	
-	process := aTab retrieveMorph: [ :contents | 
+
+	process := aTab retrieveMorph: [ :contents |
 		contents ifNil: [ TabWithNoContentsMorph signalTab: aTab ].
 		contentsWrapper
 			addMorph: contents
@@ -32,26 +32,26 @@ TabManagerMorph >> addLastTabContents: aTab among: size delta: delta [
 					leftOffset: 2;
 					rightFraction: 1).
 		"contents takeKeyboardFocus" "it should be managed better and not stale focus from another active windows/widgets. It should only forse focus on content when user focused on tabs but it is not clean how to detect it"].
-	
+
 	process ifNotNil: [ processes add: process ]
 ]
 
 { #category : #private }
 TabManagerMorph >> addMorphs [
 
-	self 
+	self
 		addMorph: toolbar
 		fullFrame: (LayoutFrame identity
 			bottomFraction: 0;
 			bottomOffset: TabMorph defaultHeight + (2* self displayScaleFactor);
 			yourself).
-			
-	self 
+
+	self
 		addMorph: container
 		fullFrame: (LayoutFrame identity
 			topOffset: TabMorph defaultHeight + 2;
 			yourself).
-			
+
 	container
 		addMorph: contentsWrapper
 		fullFrame:
@@ -60,18 +60,18 @@ TabManagerMorph >> addMorphs [
 				rightOffset: -1;
 				bottomOffset: -1;
 				leftOffset: 2;
-				yourself).
+				yourself)
 ]
 
 { #category : #'private - contents' }
 TabManagerMorph >> addSplitterOn: tabs delta: delta [
 	| leftProcess rightProcess |
-	tabs overlappingPairsWithIndexDo: [ :left :right :index | 
-		leftProcess := left retrieveMorph: [ :leftContents | 
+	tabs overlappingPairsWithIndexDo: [ :left :right :index |
+		leftProcess := left retrieveMorph: [ :leftContents |
 			leftContents ifNil: [ TabWithNoContentsMorph signalTab: left ].
 			rightProcess := right retrieveMorph: [ :rightContents || splitter |
 				rightContents ifNil: [ TabWithNoContentsMorph signalTab: right ].
-				
+
 				splitter := ProportionalSplitterMorph new
 					addLeftOrTop: leftContents;
 					addRightOrBottom: rightContents;
@@ -85,9 +85,9 @@ TabManagerMorph >> addSplitterOn: tabs delta: delta [
 							rightFraction: index * delta;
 							leftOffset: -2;
 							rightOffset: 2) ] ] ].
-				
+
 	leftProcess ifNotNil: [ processes add: leftProcess ].
-	rightProcess ifNotNil: [ processes add: rightProcess ].
+	rightProcess ifNotNil: [ processes add: rightProcess ]
 ]
 
 { #category : #protocol }
@@ -100,7 +100,7 @@ TabManagerMorph >> addTabContents: tab at: index delta: delta [
 	| process |
 	process := tab
 		retrieveMorph:
-			[ :contents | 
+			[ :contents |
 			| leftOffset |
 			contents ifNil: [ TabWithNoContentsMorph signalTab: tab ].
 			leftOffset := index = 1
@@ -120,7 +120,7 @@ TabManagerMorph >> addTabContents: tab at: index delta: delta [
 { #category : #accessing }
 TabManagerMorph >> adoptPaneColor: aColor [
 	"Prevent submorphs to be polluted by window color"
-	
+
 	self color: aColor
 ]
 
@@ -142,16 +142,16 @@ TabManagerMorph >> canBeClosed [
 
 { #category : #private }
 TabManagerMorph >> cleanProcesses [
-	
+
 	processes do: [ :each | each terminate ].
-	processes removeAll.
+	processes removeAll
 ]
 
 { #category : #protocol }
 TabManagerMorph >> close [
 
 	self canBeClosed ifFalse: [ ^ self ].
-	self delete.
+	self delete
 ]
 
 { #category : #protocol }
@@ -166,15 +166,15 @@ TabManagerMorph >> containerColor [
 
 { #category : #protocol }
 TabManagerMorph >> delete [
-	
+
 	super delete.
 	self triggerEvent: #tabManagerDeleted with: self
 ]
 
 { #category : #'private - actions' }
 TabManagerMorph >> deleteSelectedTabs [
-	toolbar selectedTab 
-		ifNotNil: [ toolbar deleteSelectedTabs ] 
+	toolbar selectedTab
+		ifNotNil: [ toolbar deleteSelectedTabs ]
 		ifNil: [ self owner takeKeyboardFocus ]
 ]
 
@@ -219,17 +219,17 @@ TabManagerMorph >> initialize [
 	processes := OrderedCollection new.
 	self registerBarActions.
 	self registerShortcuts.
-	
+
 	container := Morph new
 		color: self containerColor;
 		changeProportionalLayout;
 		yourself.
-		
+
 	contentsWrapper := Morph new
 		color: self containerColor;
 		changeProportionalLayout;
 		yourself.
-		
+
 	self changeProportionalLayout.
 	self addMorphs
 ]
@@ -254,8 +254,8 @@ TabManagerMorph >> model: aModel [
 
 { #category : #initialization }
 TabManagerMorph >> registerBarActions [
-	
-	toolbar 
+
+	toolbar
 		when: #tabSelected send: #tabSelected: to: self;
 		when: #barDeleted send: #barDeleted: to: self;
 		when: #tabsChanged send: #tabsChanged to: self;
@@ -269,15 +269,15 @@ TabManagerMorph >> registerBarActions [
 { #category : #initialization }
 TabManagerMorph >> registerShortcuts [
 
-	self 
+	self
 		bindKeyCombination: $] meta shift toAction: [ self selectNext ];
 		bindKeyCombination: $[ meta shift toAction: [ self selectPrevious ];
 		bindKeyCombination: $w command toAction: [ self deleteSelectedTabs ];
 		bindKeyCombination: $w command shift toAction: [ self closeAllTabs ].
-		
+
 	1 to: 9 do: [ :index |
 		self bindKeyCombination: index asString first meta toAction: [ self selectTabAt: index ] ].
-	
+
 	self bindKeyCombination: $0 meta toAction: [ self selectLastTab ]
 ]
 
@@ -302,7 +302,7 @@ TabManagerMorph >> selectPrevious [
 { #category : #'private - actions' }
 TabManagerMorph >> selectTabAt: index [
 
-	toolbar selectTabAt: index ifAbsent: [].
+	toolbar selectTabAt: index ifAbsent: []
 ]
 
 { #category : #protocol }
@@ -317,11 +317,11 @@ TabManagerMorph >> setMultipleContents [
 
 	contentsWrapper removeAllMorphs.
 	self cleanProcesses.
-	
+
 	tabs := toolbar orderedSelectedTabs.
 	size := tabs size.
 	delta := 1 / size.
-	
+
 	tabs allButLast keysAndValuesDo: [ :index :tab | self addTabContents: tab at: index delta: delta ].
 	self addLastTabContents: tabs last among: size delta: delta.
 	self addSplitterOn: tabs delta: delta
@@ -330,7 +330,7 @@ TabManagerMorph >> setMultipleContents [
 { #category : #private }
 TabManagerMorph >> setTabContentFrom: aTab [
 	| process |
-	
+
 	contentsWrapper removeAllMorphs.
 	self cleanProcesses.
 
@@ -339,7 +339,7 @@ TabManagerMorph >> setTabContentFrom: aTab [
 		contentsWrapper addMorph: contents fullFrame: LayoutFrame identity.
 		"contents takeKeyboardFocus" "it should be managed better and not stale focus from another active windows/widgets. It should only forse focus on content when user focused on tabs but it is not clean how to detect it"
 	].
-	process ifNotNil: [ processes add: process ].
+	process ifNotNil: [ processes add: process ]
 ]
 
 { #category : #compatbility }
@@ -356,7 +356,7 @@ TabManagerMorph >> tabAddedToSelection: aTab [
 { #category : #'private - actions' }
 TabManagerMorph >> tabEmptyContents: aTab [
 	"My bar already filtered the tab, so here I am sure the tab is the selected tab"
-	
+
 	contentsWrapper removeAllMorphs
 ]
 
@@ -401,7 +401,7 @@ TabManagerMorph >> tabsChanged [
 TabManagerMorph >> themeChanged [
 	super themeChanged.
 	toolbar themeChanged.
-	
+
 	container
 		color: self theme lightBaseColor;
 		changed.

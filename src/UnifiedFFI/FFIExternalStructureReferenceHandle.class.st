@@ -31,7 +31,7 @@ Class {
 
 { #category : #'instance creation' }
 FFIExternalStructureReferenceHandle class >> handle: aHandle offset: aNumber [
-	^ self basicNew 
+	^ self basicNew
 		initializeHandle: aHandle offset: aNumber;
 		yourself
 ]
@@ -54,7 +54,7 @@ FFIExternalStructureReferenceHandle >> asExternalPointer [
 
 { #category : #compatibility }
 FFIExternalStructureReferenceHandle >> beNull [
-	"this is referenced so this operation does not has sense. 
+	"this is referenced so this operation does not has sense.
 	 Included to provide polymophism"
 ]
 
@@ -95,7 +95,7 @@ FFIExternalStructureReferenceHandle >> floatAt: byteOffset put: value [
 
 { #category : #compatibility }
 FFIExternalStructureReferenceHandle >> free [
-	"this is referenced so this operation does not has sense. 
+	"this is referenced so this operation does not has sense.
 	 Included to provide polymophism"
 ]
 
@@ -143,12 +143,12 @@ FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset put: value [
 ]
 
 { #category : #accessing }
-FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset [ 
+FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset [
 	^ handle platformSizeTAt: startOffset + byteOffset
 ]
 
 { #category : #accessing }
-FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset put: aValue [ 
+FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset put: aValue [
 	^ handle platformSizeTAt: startOffset + byteOffset put: aValue
 ]
 
@@ -178,7 +178,7 @@ FFIExternalStructureReferenceHandle >> referenceStructAt: byteOffset length: len
 ]
 
 { #category : #accessing }
-FFIExternalStructureReferenceHandle >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+FFIExternalStructureReferenceHandle >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	^ handle replaceFrom: start + startOffset to: stop + startOffset with: replacement startingAt: repStart
 ]
 
@@ -242,7 +242,7 @@ FFIExternalStructureReferenceHandle >> structAt: byteOffset put: value length: l
 	"Store a structure of the given length starting at the indicated byte offset."
 	1 to: length do:[:i|
 		self unsignedByteAt: byteOffset+i-1 put: (value unsignedByteAt: i)].
-	^value	
+	^value
 ]
 
 { #category : #accessing }

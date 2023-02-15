@@ -16,7 +16,7 @@ ReUnconditionalRecursionRule class >> checksMethod [
 { #category : #accessing }
 ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'UnconditionalRecursionRule'
 ]
 

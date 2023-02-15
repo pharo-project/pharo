@@ -40,7 +40,7 @@ ClyClassScope class >> metaLevelForHierarchyOf: aClass [
 { #category : #'meta level' }
 ClyClassScope class >> metaLevelsOf: aClass do: aBlock [
 	"By default meta level of class is class itself"
-	
+
 	aBlock value: aClass
 ]
 

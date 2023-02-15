@@ -33,7 +33,7 @@ ConstantBlockClosure class >> numArgs: numArgs literal: aLiteral [
 		[2]->[ ConstantBlockClosure2Arg ].
 		[3]->[ ConstantBlockClosure3Arg ]
 	} otherwise: [self error: 'shoud not be called with more than 3 args'].
-	^ classToUse new 
+	^ classToUse new
 		numArgs: numArgs;
 		literal: aLiteral
 ]

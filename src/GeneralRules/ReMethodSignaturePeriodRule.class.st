@@ -18,7 +18,7 @@ ReMethodSignaturePeriodRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| firstLine hasDot |
 	firstLine := aMethod sourceCode lines first.
 	hasDot := firstLine trimRight last == $..
-	hasDot ifTrue: [ 
+	hasDot ifTrue: [
 		aCriticBlock cull: (ReTrivialCritique
 				 withAnchor: (ReIntervalSourceAnchor
 						  entity: aMethod

@@ -41,7 +41,7 @@ QSystemTally >> asArray [
 			s nextPut: link.
 			link := link nextLink.
 		].
-	].
+	]
 ]
 
 { #category : #converting }
@@ -69,7 +69,7 @@ QSystemTally >> bumpBy: count [
 QSystemTally >> class: aClass method: aCompiledMethod [
 	class := aClass.
 	method := aCompiledMethod.
-	tally := 0.
+	tally := 0
 ]
 
 { #category : #copying }
@@ -79,7 +79,7 @@ QSystemTally >> copyWithTally: hitCount [
 
 { #category : #report }
 QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent time: totalTime [
-	| threshold |  
+	| threshold |
 	isExact ifFalse: [threshold := (perCent asFloat / 100 * tally) rounded].
 	aStream nextPutAll: '**Tree**'; cr.
 	self treePrintOn: aStream
@@ -94,7 +94,7 @@ QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent ti
 	self leavesPrintOn: aStream
 		tallyExact: isExact
 		orThreshold: threshold
-		time: totalTime.
+		time: totalTime
 ]
 
 { #category : #report }
@@ -136,11 +136,11 @@ QSystemTally >> leavesPrintOn: aStream tallyExact: isExact orThreshold: threshol
 	| dict |
 	dict := IdentityDictionary new: 100.
 	self leavesInto: dict fromSender: nil.
-	isExact 
+	isExact
 		ifTrue: [
 			(self asSortedCollection: dict) do: [ :node |
 				node printOn: aStream total: tally totalTime: nil tallyExact: isExact.
-				node printSenderCountsOn: aStream ] ] 
+				node printSenderCountsOn: aStream ] ]
 		ifFalse:[
 			((self asSortedCollection: dict)
 				select: [ :node | node tally > threshold ]) do: [ :node |
@@ -181,11 +181,11 @@ QSystemTally >> primitives: anInteger [
 { #category : #printing }
 QSystemTally >> printOn: aStream [
 	aStream print: class; nextPutAll: '>>'; print: (method ifNotNil:[method selector]).
-	aStream nextPutAll: ' -- '; print: tally.
+	aStream nextPutAll: ' -- '; print: tally
 ]
 
 { #category : #report }
-QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: isExact [ 
+QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: isExact [
 	| className myTally aClass percentage |
 	isExact ifTrue:[
 		myTally := tally.
@@ -203,13 +203,13 @@ QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 		aClass := method methodClass.
 		className := aClass name contractTo: self maxClassNameSize.
 		aStream nextPutAll: class name;
-				nextPutAll: (aClass = class 
+				nextPutAll: (aClass = class
 							ifTrue: ['  ']
 							ifFalse: [' [' , aClass name , ']  ']);
 				nextPutAll: (method selector
 							contractTo: self maxClassPlusSelectorSize - className size);
 				cr.
-	].
+	]
 ]
 
 { #category : #report }
@@ -217,7 +217,7 @@ QSystemTally >> sonsOver: threshold [
 	"Answer the sons with tallys over the given threshold"
 	"threshold is a number "
 	receivers ifNil: [ ^ #() ].
-	^ receivers asArray select: [ :son | son tally > threshold ].
+	^ receivers asArray select: [ :son | son tally > threshold ]
 ]
 
 { #category : #accessing }
@@ -258,7 +258,7 @@ QSystemTally >> tallyPath: context by: count [
 	aMethod := context method.
 	aTally := receivers.
 	[ aTally isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			aTally method == aMethod
 				ifTrue: [ ^ aTally bumpBy: count ].
 			aTally := aTally nextLink ].
@@ -292,7 +292,7 @@ QSystemTally >> treePrintOn: aStream tabs: tabs thisTab: myTab total: total tota
 	sons notEmpty
 		ifTrue: [ tabs addLast: myTab.
 			sons := self asSortedCollection: sons.
-			1 to: sons size do: [ :i | 
+			1 to: sons size do: [ :i |
 				sonTab := i < sons size
 					ifTrue: [ '  |' ]
 					ifFalse: [ '  ' ].

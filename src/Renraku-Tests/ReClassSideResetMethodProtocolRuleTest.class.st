@@ -21,7 +21,7 @@ ReClassSideResetMethodProtocolRuleTest >> setUp [
 ReClassSideResetMethodProtocolRuleTest >> tearDown [
 
 	testClass removeFromSystem.
-	
+
 	super tearDown
 ]
 
@@ -49,11 +49,11 @@ ReClassSideResetMethodProtocolRuleTest >> testIgnoredMethodWrongProtocol [
 	| method critiques |
 	testClass class compile: 'resetIrrelevant
 	^ self' classified: 'class warfare'.
-	
+
 	method := (testClass class methodNamed: #resetIrrelevant).
-	
+
 	critiques := ReClassSideResetMethodProtocolRule new check: method.
-	self assert: critiques isEmpty.
+	self assert: critiques isEmpty
 ]
 
 { #category : #running }
@@ -62,9 +62,9 @@ ReClassSideResetMethodProtocolRuleTest >> testRightMethodRightProtocol [
 	| method critiques |
 	testClass class compile: 'reset
 	^ self' classified: 'class initialization'.
-	
+
 	method := (testClass class methodNamed: #reset).
-	
+
 	critiques := ReClassSideResetMethodProtocolRule new check: method.
 	self assert: critiques isEmpty
 ]

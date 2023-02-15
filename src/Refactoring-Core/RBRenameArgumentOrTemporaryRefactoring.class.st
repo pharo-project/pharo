@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [ 
+RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		class: aClass
@@ -31,7 +31,7 @@ RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTempor
 ]
 
 { #category : #'instance creation' }
-RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [ 
+RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
 	^ self new
 		class: aClass
 		selector: aSelector
@@ -40,7 +40,7 @@ RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval 
 ]
 
 { #category : #initialization }
-RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [ 
+RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	interval := anInterval.
@@ -71,7 +71,7 @@ RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 ]
 
 { #category : #printing }
-RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [ 
+RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' renameTemporaryFrom: '.
@@ -90,7 +90,7 @@ RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [
 { #category : #tranforming }
 RBRenameArgumentOrTemporaryRefactoring >> transform [
 	| definingNode variableNode |
-	parseTree := class parseTreeFor: selector.
+	parseTree := class parseTreeForSelector: selector.
 	variableNode := self whichVariableNode: parseTree inInterval: interval name: oldName.
 	(variableNode isNil or: [ variableNode isVariable not ])
 		ifTrue: [ self refactoringFailure: oldName asString , ' isn''t a valid variable' ].

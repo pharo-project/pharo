@@ -39,21 +39,21 @@ ClyAllMethodGroupsQuery class >> resultItemsType [
 ]
 
 { #category : #execution }
-ClyAllMethodGroupsQuery >> buildResult: aQueryResult [ 
+ClyAllMethodGroupsQuery >> buildResult: aQueryResult [
 
 	| groups |
 	groups := OrderedCollection new.
-	
+
 	scope methodGroupsDo: [:group | groups add: group].
-	
+
 	aQueryResult fillWith: groups
 ]
 
 { #category : #execution }
 ClyAllMethodGroupsQuery >> checkEmptyResult [
-	
+
 	scope methodGroupsDo: [ :each | ^false].
-	
+
 	^true
 ]
 
@@ -70,11 +70,11 @@ ClyAllMethodGroupsQuery >> description [
 
 { #category : #'system changes' }
 ClyAllMethodGroupsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	| asyncGroups |
 	(scope includesMethodGroupsAffectedBy: aSystemAnnouncement) ifTrue: [ ^true ].
-	
-	(aSystemAnnouncement isKindOf: ClyAsyncQueryIsDone) ifTrue: [ 
+
+	(aSystemAnnouncement isKindOf: ClyAsyncQueryIsDone) ifTrue: [
 		asyncGroups := aQueryResult items select: [ :each | each isKindOf: ClyAsyncMethodGroup ].
 		(asyncGroups anySatisfy: [ :each | each asyncQueryResult == aSystemAnnouncement queryResult])
 			ifTrue: [ ^true ]
@@ -89,6 +89,6 @@ ClyAllMethodGroupsQuery >> shortName [
 ]
 
 { #category : #converting }
-ClyAllMethodGroupsQuery >> withMetaLevelScope: aScopeClass [ 
+ClyAllMethodGroupsQuery >> withMetaLevelScope: aScopeClass [
 	^self withScope: (scope withMetaLevel: aScopeClass)
 ]

@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 ValueWithinFixTest >> testValueWithinNonLocalReturnFixReal [
 	"The real test for the fix is just as obscure as the original problem"
-	
+
 	| startTime |
 	self valueWithinNonLocalReturn.
 	startTime := Time millisecondClockValue.
@@ -20,7 +20,7 @@ ValueWithinFixTest >> testValueWithinNonLocalReturnFixReal [
 		which will in turn cut this invokation short."
 		deltaTime := Time millisecondClockValue - startTime.
 		self deny: deltaTime < 90.
-	].
+	]
 ]
 
 { #category : #tests }
@@ -39,7 +39,7 @@ ValueWithinFixTest >> testValueWithinTimingBasic [
 		[1000 milliSeconds asDelay wait]
 			valueWithin: 100 milliSeconds onTimeout: []
 	] durationToRun.
-	self assert: time < 1000 milliSeconds.
+	self assert: time < 1000 milliSeconds
 ]
 
 { #category : #tests }
@@ -52,7 +52,7 @@ ValueWithinFixTest >> testValueWithinTimingNestedInner [
 				valueWithin: 100 milliSeconds onTimeout: []
 		] valueWithin: 500 milliSeconds onTimeout: []
 	] durationToRun.
-	self assert: time < 500 milliSeconds.
+	self assert: time < 500 milliSeconds
 ]
 
 { #category : #tests }
@@ -67,7 +67,7 @@ ValueWithinFixTest >> testValueWithinTimingNestedOuter [
 		] valueWithin: 150 milliSeconds onTimeout: []
 	] durationToRun.
 	self assert: time > 100 milliSeconds.
-	self assert: time < 5000 milliSeconds.
+	self assert: time < 5000 milliSeconds
 ]
 
 { #category : #tests }
@@ -79,11 +79,11 @@ ValueWithinFixTest >> testValueWithinTimingRepeat [
 			[500 milliSeconds asDelay wait]
 				valueWithin: 100 milliSeconds onTimeout: []]
 	] durationToRun.
-	self assert: time < 500 milliSeconds.
+	self assert: time < 500 milliSeconds
 ]
 
 { #category : #tests }
 ValueWithinFixTest >> valueWithinNonLocalReturn [
 	"Do a non-local return from a valueWithin: block"
-	[^self] valueWithin: 20 milliSeconds onTimeout:[].
+	[^self] valueWithin: 20 milliSeconds onTimeout:[]
 ]

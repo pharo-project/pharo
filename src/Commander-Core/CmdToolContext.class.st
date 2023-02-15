@@ -41,7 +41,7 @@ Class {
 
 { #category : #'instance creation' }
 CmdToolContext class >> for: aTool [
-	^self new 
+	^self new
 		tool: aTool
 ]
 
@@ -97,7 +97,7 @@ CmdToolContext >> requestSingleMethodTag: queryTitle suggesting: suggestedTag [
 	| knownTags ui selectedTag |
 	knownTags := (SystemNavigation default allExistingProtocolsFor: true)
 		reject: [ :each | each beginsWith: '*' ].
-	knownTags := knownTags asSortedCollection: [ :a :b | a asLowercase < b asLowercase ].	
+	knownTags := knownTags asSortedCollection: [ :a :b | a asLowercase < b asLowercase ].
 	ui := ListDialogWindow new
 		getList: [ :r | knownTags select: [ :e | r search: e ] ];
 		displayBlock: [ :e | e ];
@@ -108,7 +108,7 @@ CmdToolContext >> requestSingleMethodTag: queryTitle suggesting: suggestedTag [
 	ui defaultFocusMorph contentMorph selectAll.
 	selectedTag := ui chooseFromOwner: tool.
 	selectedTag isEmptyOrNil ifTrue: [ CmdCommandAborted signal].
-	(selectedTag beginsWith: '*') ifTrue: [ 
+	(selectedTag beginsWith: '*') ifTrue: [
 		self inform: 'Star is forbidden for protocol name. You can specify package in method editor using status bar checkbox'.
 		^CmdCommandAborted signal].
 

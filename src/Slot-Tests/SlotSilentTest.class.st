@@ -17,14 +17,14 @@ Class {
 SlotSilentTest >> compileAccessorsFor: aSlot [
 	| readerString writerString |
 	readerString := String streamContents: [ :str |
-		str 
+		str
 			nextPutAll: aSlot name;
 			cr;tab;
 			nextPutAll: ' ^';
 			nextPutAll: aSlot name.
 		 ].
 	writerString := String streamContents: [ :str |
-		str 
+		str
 			nextPutAll: aSlot name;
 			nextPutAll: ': anObject';
 			cr;tab;
@@ -38,7 +38,7 @@ SlotSilentTest >> compileAccessorsFor: aSlot [
 { #category : #running }
 SlotSilentTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ 
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		Author useAuthor: self class name asString during: [ super runCase ]
 	]
 ]
