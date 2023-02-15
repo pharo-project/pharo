@@ -550,9 +550,7 @@ RBScanner >> scanNumber [
 	gotError := nil.
 	number := NumberParser parse: stream onError: [ :message | gotError := message ].
 	stop := stream position.
-	stream position: start - 1.
-	string := stream next: stop - start + 1.
-	stream position: stop.
+	string := self scanBackFrom: start.
 	self step.
 	gotError ifNotNil: [
 	^ RBErrorToken
