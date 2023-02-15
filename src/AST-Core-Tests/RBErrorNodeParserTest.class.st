@@ -225,3 +225,35 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
 	self assert: node receiver formattedCode equals: '2r'.
 	self assert: node formattedCode equals: '2r + 12'
 ]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyStringLiteral [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '''foo'',''bar'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node selector equals: #','.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
+	self assert: node arguments first sourceInterval equals: (7 to: 10).
+	self assert: node arguments first formattedCode equals: '''bar'.
+	self assert: node formattedCode equals: '''foo'' , ''bar'.
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyStringLiteral2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '''foo'','''.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node selector equals: #','.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
+	self assert: node arguments first sourceInterval equals: (7 to: 7).
+	self assert: node arguments first formattedCode equals: ''''.
+	self assert: node formattedCode equals: '''foo'' , '''.
+]
