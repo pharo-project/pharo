@@ -1135,6 +1135,14 @@ RBParserTest >> testParents [
 											self assert: each methodNode identicalTo: root ] ] ] ] ]
 ]
 
+{ #category : #tests }
+RBParserTest >> testParseExpressionDontFreeze [
+
+	"Force a parse error (from a simple tool class).
+	The image (and CI) should not freeze :)"
+	self parserClass parseExpression: '#'
+]
+
 { #category : #'tests - parsing' }
 RBParserTest >> testParseExpressionGivesTheWriteAmountOfStatements [
 	"Testing with a list of triplets.
