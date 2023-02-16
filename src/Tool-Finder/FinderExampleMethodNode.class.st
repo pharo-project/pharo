@@ -18,7 +18,7 @@ FinderExampleMethodNode >> childNodeClassFromItem: anItem [
 { #category : #displaying }
 FinderExampleMethodNode >> displayString [
 
-	^ String streamContents: [ :str | 
+	^ String streamContents: [ :str |
 		  str
 			  print: self item;
 			  nextPutAll: ' -> ';
