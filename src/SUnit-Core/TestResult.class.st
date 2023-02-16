@@ -34,7 +34,8 @@ TestResult class >> defaultColorBackGroundForFailureTest [
 
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForPassingTest [
-	^ self currentTheme testColorPassing
+
+	^ Color green darker darker
 ]
 
 { #category : #'default - color' }
