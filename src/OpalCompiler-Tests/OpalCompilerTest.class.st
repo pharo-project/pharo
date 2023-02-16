@@ -19,7 +19,7 @@ OpalCompilerTest >> testArrayBindingsWriteGlobals [
 	result := Smalltalk compiler
 		 bindings: {(#Object -> Point)};
        evaluate: 'Object := 42'.
-	self assert: result equals: 42.
+	self assert: result equals: 42
 ]
 
 { #category : #'tests - bindings' }
@@ -64,7 +64,7 @@ OpalCompilerTest >> testBindingsWriteGlobals [
 	result := Smalltalk compiler
 		 bindings: {(#Object -> Point)} asDictionary;
        evaluate: 'Object := 42'.
-	self assert: result equals: 42.
+	self assert: result equals: 42
 ]
 
 { #category : #tests }
@@ -77,7 +77,7 @@ OpalCompilerTest >> testCompileEmbeddsSource [
 	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
 	self deny: result trailer hasSourcePointer. "no sourcePointer"
 	self assert: result trailer hasSource.		 "but source embedded"
-	
+
 	result := Smalltalk compiler
 		class: UndefinedObject;
 		options: #( - #optionEmbeddSources );
@@ -92,7 +92,7 @@ OpalCompilerTest >> testCompileWithNilClass [
 	"we shoud use UndefinedObject if the class is nil"
 	| method |
 	method := Smalltalk compiler compile: 'tst 1+2'.
-	self assert: method methodClass equals: UndefinedObject.
+	self assert: method methodClass equals: UndefinedObject
 ]
 
 { #category : #'tests - bindings' }
@@ -127,12 +127,12 @@ OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 		bindings: {(#self -> 3)} asDictionary;
 		evaluate: '1+self'.
 	self assert: result equals: 4.
-	
+
 	result := Smalltalk compiler
 		bindings: {(#super -> 3)} asDictionary;
 		evaluate: '1+super'.
 	self assert: result equals: 4.
-	
+
 	result := Smalltalk compiler
 		bindings: {(#thisContext -> 3)} asDictionary;
 		evaluate: '1+thisContext'.

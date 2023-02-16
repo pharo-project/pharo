@@ -38,12 +38,12 @@ UITheme class >> baseColor [
 ]
 
 { #category : #accessing }
-UITheme class >> basePassiveBackgroundColor [ 
+UITheme class >> basePassiveBackgroundColor [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-UITheme class >> baseSelectionColor [ 
+UITheme class >> baseSelectionColor [
 	^ self subclassResponsibility
 ]
 
@@ -66,7 +66,7 @@ UITheme class >> builder [
 UITheme class >> cleanUp [
 
 	"avoid old references to morphs that should be garbage-collected"
-	UITheme current focusIndicator: nil.
+	UITheme current focusIndicator: nil
 ]
 
 { #category : #accessing }
@@ -92,7 +92,7 @@ UITheme class >> current: aUITheme [
 
 	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings |
 		polymorphSystemSettings desktopColor: aUITheme desktopColor ].
-	
+
 	self class environment at: #NECPreferences ifPresent: [ :necPreferences |
 		necPreferences backgroundColor: aUITheme windowColor ].
 
@@ -124,7 +124,7 @@ UITheme class >> darkBaseColor [
 { #category : #accessing }
 UITheme class >> defaultSettings [
 	"Answer the default settings for the theme."
-	
+
 	^defaultSettings ifNil: [
 		self defaultSettings: self newDefaultSettings.
 		defaultSettings]
@@ -133,7 +133,7 @@ UITheme class >> defaultSettings [
 { #category : #accessing }
 UITheme class >> defaultSettings: aThemeSettings [
 	"Set the default settings for the theme."
-	
+
 	defaultSettings := aThemeSettings
 ]
 
@@ -142,7 +142,7 @@ UITheme class >> initialize [
 
 	self current class = UITheme
 		ifTrue: [self current: nil
-			"due to change to being abstract"].
+			"due to change to being abstract"]
 ]
 
 { #category : #testing }
@@ -165,7 +165,7 @@ UITheme class >> lightBaseColor [
 ]
 
 { #category : #accessing }
-UITheme class >> lightSelectionColor [ 
+UITheme class >> lightSelectionColor [
 	^ self subclassResponsibility
 ]
 
@@ -186,7 +186,7 @@ UITheme class >> newDefault [
 { #category : #accessing }
 UITheme class >> newDefaultSettings [
 	self setPreferredPreferences.
-	
+
 	^ThemeSettings new
 		buttonColor: Color gray;
 		scrollbarColor: Color gray;
@@ -213,7 +213,7 @@ UITheme class >> resetAllDefaultSettings [
 { #category : #'initialize-release' }
 UITheme class >> resetBuilder [
 	<script>
-	
+
 	Builder := nil
 ]
 
@@ -225,7 +225,7 @@ UITheme class >> resetDefaultSettings [
 ]
 
 { #category : #settings }
-UITheme class >> setPreferredPreferences [ 
+UITheme class >> setPreferredPreferences [
 	self subclassResponsibility
 ]
 
@@ -242,7 +242,7 @@ UITheme class >> themeName [
 ]
 
 { #category : #accessing }
-UITheme class >> veryLightSelectionColor [ 
+UITheme class >> veryLightSelectionColor [
 	^ self subclassResponsibility
 ]
 
@@ -336,8 +336,8 @@ UITheme >> basePassiveBackgroundColorFor: aButton [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> baseScrollbarColorFor: aScrollbar [
 	"Return the scrollbar last pane colour or that of our settings if unavailable"
-	
-	^ aScrollbar lastPaneColor 
+
+	^ aScrollbar lastPaneColor
 		ifNil: [ self scrollbarColor ]
 ]
 
@@ -347,17 +347,17 @@ UITheme >> baseSelectionColorFor: aButton [
 ]
 
 { #category : #scrollbars }
-UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [ 
-	"PRIVATE - create an arrow with aSymbolDirectionDirection,  
+UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [
+	"PRIVATE - create an arrow with aSymbolDirectionDirection,
 	finalSizeInteger and aColor.
 	aSymbolDirectionDirection = #top, #bottom. #left or #right .
-	Try with:  
+	Try with:
 	(UITheme current
-		basicCreateArrowOfDirection: #top 
-		size: 32 
-		color: Color lightGreen) asMorph openInHand. 
+		basicCreateArrowOfDirection: #top
+		size: 32
+		color: Color lightGreen) asMorph openInHand.
 	Fixed to work with translucent colours."
-	
+
 	|form resizeFactor arrow resizedForm |
 	resizeFactor := 4.
 	form := Form
@@ -379,7 +379,7 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> borderColor [ 
+UITheme >> borderColor [
 	^ Color gray
 ]
 
@@ -420,7 +420,7 @@ UITheme >> buttonBottomRightForm [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> buttonColor [ 
+UITheme >> buttonColor [
 	^ self settings buttonColor
 ]
 
@@ -436,7 +436,7 @@ UITheme >> buttonColorFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonColouredFillStyleFor: aButton [
 	"Return the coloured button fillStyle for the given button."
-	
+
 	|round roundCorners tl t tr l m r bl b br|
 	round := aButton wantsRoundedCorners.
 	roundCorners := aButton roundedCorners.
@@ -455,14 +455,14 @@ UITheme >> buttonColouredFillStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonColouredMiddleColor [
 	"Return the middle area colour for a coloured button fillStyle."
-	
+
 	^Color r: 102 g: 127 b: 168 range: 255
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> buttonCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^ #square
 ]
 
@@ -538,7 +538,7 @@ UITheme >> buttonLabelInsetFor: aButton [
 	^aButton wantsRoundedCorners
 		ifTrue: [left := ((aButton roundedCorners includesAnyOf: #(1 2)) ifTrue: [8] ifFalse: [4]).
 				right := ((aButton roundedCorners includesAnyOf: #(3 4)) ifTrue: [8] ifFalse: [4]).
-				Margin left: left top: 2 right: right bottom: 2]		
+				Margin left: left top: 2 right: right bottom: 2]
 		ifFalse: [3@2]
 ]
 
@@ -559,21 +559,21 @@ UITheme >> buttonMiddleRightForm [
 { #category : #defaults }
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
-	
+
 	^ 18 * self displayScaleFactor
 ]
 
 { #category : #defaults }
 UITheme >> buttonMinWidth [
 	"Answer the minumum width of a button for this theme."
-	
+
 	^24
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> buttonMouseOverBorderStyleFor: aButton [
 	"Return the mouse over button borderStyle for the given button."
-	
+
 	^self buttonNormalBorderStyleFor: aButton
 ]
 
@@ -596,7 +596,7 @@ UITheme >> buttonNormalBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
-	
+
 	(aButton valueOfProperty: #noFill ifAbsent: [false]) ifTrue: [^ SolidFillStyle color: Color transparent ].
 	^ self normalFillStyleFor: aButton height: aButton height
 ]
@@ -604,7 +604,7 @@ UITheme >> buttonNormalFillStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonPlainFillStyleFor: aButton [
 	"Return the plain button fillStyle for the given button."
-	
+
 	|round roundCorners tl t tr l m r bl b br|
 	round := aButton wantsRoundedCorners.
 	roundCorners := aButton roundedCorners.
@@ -623,7 +623,7 @@ UITheme >> buttonPlainFillStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonPlainMiddleColor [
 	"Return the middle area colour for a plain button fillStyle."
-	
+
 	^Color r: 211 g: 211 b: 211 range: 255
 ]
 
@@ -637,7 +637,7 @@ UITheme >> buttonPressedBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonPressedFillStyleFor: aButton [
 	"Return the button pressed fillStyle for the given button."
-		
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -686,14 +686,14 @@ UITheme >> buttonSelectedDisabledBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonSelectedDisabledFillStyleFor: aButton [
 	"Return the button selected disabled fillStyle for the given color."
-	
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
-	
+
 	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
 ]
 
@@ -721,7 +721,7 @@ UITheme >> buttonSelectedMouseOverBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonSelectedMouseOverFillStyleFor: aButton [
 	"Return the button selected mouse over fillStyle for the given color."
-	
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -869,14 +869,14 @@ UITheme >> checkboxButtonDisabledBorderStyleFor: aCheckboxButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonDisabledFillStyleFor: aCheckboxButton [
 	"Return the disabled checkbox button fillStyle for the given button."
-	
+
 	^self checkboxButtonNormalFillStyleFor: aCheckboxButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonLabelNormalFillStyleFor: aCheckboxButton label: aLabel [
 	"Return the selected disabled checkbox button fillStyle for the given button."
-	
+
 	^ aLabel color
 ]
 
@@ -892,7 +892,7 @@ UITheme >> checkboxButtonNormalBorderStyleFor: aChecboxButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonNormalFillStyleFor: aCheckboxButton [
 	"Return the normal checkbox button fillStyle for the given checkbox button."
-	
+
 	^(ImageFillStyle form: self checkboxForm) origin: aCheckboxButton topLeft
 ]
 
@@ -913,21 +913,21 @@ UITheme >> checkboxButtonSelectedDisabledBorderStyleFor: aCheckboxButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonSelectedDisabledFillStyleFor: aCheckboxButton [
 	"Return the selected disabled checkbox button fillStyle for the given button."
-	
+
 	^self checkboxButtonSelectedFillStyleFor:  aCheckboxButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonSelectedFillStyleFor: aCheckboxButton [
 	"Return the selected checkbox button fillStyle for the given checkbox button."
-	
+
 	^(ImageFillStyle form: self checkboxSelectedForm) origin: aCheckboxButton topLeft
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> checkboxCornerStyleFor: aCheckbox [
 	"Answer the corner style for checkbox buttons."
-	
+
 	^#square
 ]
 
@@ -960,7 +960,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 		ifFalse: [|t|
 				t := TextMorph new newContents: aTextOrString.
 				t extent: t optimalExtent].
-	^morph 
+	^morph
 		vResizing: #shrinkWrap;
 		hResizing: #spaceFill;
 		lock
@@ -1008,15 +1008,15 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 			title: aString;
 			selectedColor: aColor.
 	d extent: d initialExtent.
-	d announcer when: ColorChanged do: [:ann | 
+	d announcer when: ColorChanged do: [:ann |
 		aBlock value: ann newColor].
 	d openModal.
-	
+
 	newColor := d  cancelled
 		ifTrue: [aColor]
 		ifFalse: [d selectedColor].
-				
-	aBlock value: newColor.
+
+	aBlock value: newColor
 ]
 
 { #category : #services }
@@ -1056,7 +1056,7 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 		fileNameText: pathFileReference basename;
 		initialize;
 		title: title;
-		answerPathName.	
+		answerPathName.
 	exts ifNotNil: [ dialog validExtensions: exts ].
 	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
 	^ dialog openModal answer ifNotNil: #asFileReference
@@ -1111,7 +1111,7 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 		answerPathName.
 	patterns
 		ifNotNil: [ dialog
-				fileSelectionBlock: [ :de | 
+				fileSelectionBlock: [ :de |
 					(dialog defaultFileSelectionBlock value: de)
 						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
 	path ifNotNil: [ dialog selectPath: path ].
@@ -1172,7 +1172,7 @@ UITheme >> configureDialogWindowLabelAreaFrameFor: aWindow [
 
 	|frame|
 	self configureWindowLabelAreaFrameFor: aWindow.
-	aWindow labelArea ifNil: [^ self].	
+	aWindow labelArea ifNil: [^ self].
 	frame := aWindow labelArea layoutFrame.
 	frame
 		leftOffset: 0;
@@ -1190,28 +1190,28 @@ UITheme >> configureLabelMorph: aMorph [
 ]
 
 { #category : #configure }
-UITheme >> configureLazyListMorph: listMorph [ 
-	self configureScrollPane: listMorph.
+UITheme >> configureLazyListMorph: listMorph [
+	self configureScrollPane: listMorph
 ]
 
 { #category : #configure }
 UITheme >> configureMorphTreeMorph: aMorph [
 	aMorph preferedPaneColor: Color white.
-	aMorph 
+	aMorph
 		rowColorForEven: Color white
-		odd: Color white.
+		odd: Color white
 ]
 
 { #category : #configure }
 UITheme >> configurePluggableButtonMorph: aMorph [
 	"This will not work because it is using the #normalFillStyle hack :(
-	 So, go check the #buttonNormalFillStyleFor: method, which is the one that 
+	 So, go check the #buttonNormalFillStyleFor: method, which is the one that
 	 actually does something (he and his siblings)"
 ]
 
 { #category : #configure }
-UITheme >> configurePluggableListMorph: listMorph [ 
-	self configureScrollPane: listMorph.
+UITheme >> configurePluggableListMorph: listMorph [
+	self configureScrollPane: listMorph
 ]
 
 { #category : #configure }
@@ -1219,25 +1219,25 @@ UITheme >> configurePluggableTextFieldMorph: textFieldMorph [
 ]
 
 { #category : #configure }
-UITheme >> configurePluggableTextMorph: textMorph [ 
-	textMorph 
+UITheme >> configurePluggableTextMorph: textMorph [
+	textMorph
 		color: Color white;
-		borderWidth: 1.
+		borderWidth: 1
 ]
 
 { #category : #configure }
 UITheme >> configureScrollPane: aMorph [
-	aMorph color: Color white.
+	aMorph color: Color white
 ]
 
 { #category : #configure }
-UITheme >> configureSystemWindow: aWindow [ 
+UITheme >> configureSystemWindow: aWindow [
 	aWindow basicBorderColor: Color lightGray.
 	aWindow basicBorderWidth: 1.
-	aWindow color: Color lightGray lighter lighter lighter.	
+	aWindow color: Color lightGray lighter lighter lighter.
 	self
 		configureWindowBorderFor: aWindow;
-		configureWindowDropShadowFor: aWindow.
+		configureWindowDropShadowFor: aWindow
 ]
 
 { #category : #configure }
@@ -1308,10 +1308,10 @@ UITheme >> configureWindowLabelAreaFor: aWindow [
 	aWindow hasMenuBox ifTrue: [padding := padding - paddingStep].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
-	aWindow basicLabel ifNotNil: [:label | 
+	aWindow basicLabel ifNotNil: [:label |
 		label color: self textColor.
-		aWindow labelArea 
-			addMorphBack: label; 
+		aWindow labelArea
+			addMorphBack: label;
 			hResizing: #shrinkWrap ].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
@@ -1330,7 +1330,7 @@ UITheme >> configureWindowLabelAreaFrameFor: aWindow [
 	"Configure the layout frame for the label area for the given window."
 
 	|frame windowBorderWidth|
-	aWindow labelArea ifNil: [^ self].	
+	aWindow labelArea ifNil: [^ self].
 	windowBorderWidth := aWindow class borderWidth.
 	aWindow labelArea
 		layoutPolicy: RowLayout new;
@@ -1354,7 +1354,7 @@ UITheme >> controlButtonDisabledBorderStyleFor: aButton [
 UITheme >> controlButtonDisabledFillStyleFor: aButton [
 	"Return the disabled control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1377,7 +1377,7 @@ UITheme >> controlButtonMouseOverBorderStyleFor: aButton [
 UITheme >> controlButtonMouseOverFillStyleFor: aButton [
 	"Return the mouse over control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonNormalFillStyleFor: aButton
 ]
 
@@ -1393,7 +1393,7 @@ UITheme >> controlButtonNormalBorderStyleFor: aButton [
 UITheme >> controlButtonNormalFillStyleFor: aButton [
 	"Return the normal control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -1409,7 +1409,7 @@ UITheme >> controlButtonPressedBorderStyleFor: aButton [
 UITheme >> controlButtonPressedFillStyleFor: aButton [
 	"Return the pressed button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1425,7 +1425,7 @@ UITheme >> controlButtonSelectedDisabledBorderStyleFor: aButton [
 UITheme >> controlButtonSelectedDisabledFillStyleFor: aButton [
 	"Return the selected disabled control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1433,7 +1433,7 @@ UITheme >> controlButtonSelectedDisabledFillStyleFor: aButton [
 UITheme >> controlButtonSelectedFillStyleFor: aButton [
 	"Return the selected control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self buttonNormalFillStyleFor: aButton
 ]
 
@@ -1449,7 +1449,7 @@ UITheme >> controlButtonSelectedMouseOverBorderStyleFor: aButton [
 UITheme >> controlButtonSelectedMouseOverFillStyleFor: aButton [
 	"Return the selected mouse over control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1465,7 +1465,7 @@ UITheme >> controlButtonSelectedPressedBorderStyleFor: aButton [
 UITheme >> controlButtonSelectedPressedFillStyleFor: aButton [
 	"Return the selected pressed button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonNormalFillStyleFor: aButton
 ]
 
@@ -1484,13 +1484,13 @@ UITheme >> createArrowImagesCache [
 ]
 
 { #category : #scrollbars }
-UITheme >> createArrowOfDirection: aSymbol in: aRectangle [ 
+UITheme >> createArrowOfDirection: aSymbol in: aRectangle [
 	"PRIVATE - create an arrow bounded in aRectangle"
 
 	| arrow vertices |
 	vertices := self scrollBarButtonArrowVertices: aRectangle.
 	""
-	arrow := PolygonMorph 
+	arrow := PolygonMorph
 				vertices: vertices
 				color: Color transparent
 				borderWidth: 0
@@ -1498,20 +1498,20 @@ UITheme >> createArrowOfDirection: aSymbol in: aRectangle [
 	""
 	arrow bounds: (arrow bounds insetBy: (aRectangle width / 6) rounded).
 	""
-	aSymbol == #right 
+	aSymbol == #right
 		ifTrue: [arrow rotationDegrees: arrow rotationDegrees + 90].
-	aSymbol == #bottom 
+	aSymbol == #bottom
 		ifTrue: [arrow rotationDegrees: arrow rotationDegrees + 180].
-	aSymbol == #left 
+	aSymbol == #left
 		ifTrue: [arrow rotationDegrees: arrow rotationDegrees + 270].
 	""
 	^arrow
 ]
 
 { #category : #scrollbars }
-UITheme >> createArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [ 
+UITheme >> createArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [
 	"Defer to current UITheme if available."
-	
+
 	^self
 		scrollbarArrowOfDirection: aSymbolDirection
 		size: finalSizeInteger
@@ -1521,7 +1521,7 @@ UITheme >> createArrowOfDirection: aSymbolDirection size: finalSizeInteger color
 { #category : #scrollbars }
 UITheme >> createBoxImagesCache [
 	"Creates the cache to store the arrow forms"
-	
+
 	^ LRUCache new
 		maximumWeight: 20;
 		factory: [ :key |
@@ -1530,7 +1530,7 @@ UITheme >> createBoxImagesCache [
 ]
 
 { #category : #scrollbars }
-UITheme >> createBoxIn: aRectangle [ 
+UITheme >> createBoxIn: aRectangle [
 	"PRIVATE - create an box bounded in aRectangle"
 	| box |
 	box := Morph new.
@@ -1541,12 +1541,12 @@ UITheme >> createBoxIn: aRectangle [
 ]
 
 { #category : #scrollbars }
-UITheme >> createBoxOfSize: finalSizeInteger color: aColor [ 
-	"PRIVATE - create a box with finalSizeInteger and aColor  
-	 
-	Try with:  
-	(UITheme current createBoxOfSize: 32 color: Color lightGreen) 
-          asMorph openInHand.  
+UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
+	"PRIVATE - create a box with finalSizeInteger and aColor
+
+	Try with:
+	(UITheme current createBoxOfSize: 32 color: Color lightGreen)
+          asMorph openInHand.
 	"
 	| resizeFactor outerBox innerBox resizedForm |
 	resizeFactor := 4.
@@ -1570,7 +1570,7 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 { #category : #'label-styles' }
 UITheme >> createCloseBoxFor: aSystemWindow [
 	"Answer a button for closing the window."
-	
+
 	^(self
 		newCloseControlIn: aSystemWindow
 		for: aSystemWindow
@@ -1582,7 +1582,7 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 { #category : #'label-styles' }
 UITheme >> createCollapseBoxFor: aSystemWindow [
 	"Answer a button for minimising the window."
-	
+
 	|form msb|
 	form := self windowMinimizeForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -1609,7 +1609,7 @@ UITheme >> createCollapseBoxFor: aSystemWindow [
 { #category : #'label-styles' }
 UITheme >> createExpandBoxFor: aSystemWindow [
 	"Answer a button for maximising/restoring the window."
-	
+
 	|form msb|
 	form := self windowMaximizeForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -1636,14 +1636,14 @@ UITheme >> createExpandBoxFor: aSystemWindow [
 { #category : #'label-styles' }
 UITheme >> createMenuBoxFor: aSystemWindow [
 	"Answer a button for the window menu."
-	
+
 "	^aSystemWindow createBox
 		labelGraphic: (self windowMenuIconFor: aSystemWindow);
 		extent: aSystemWindow boxExtent;
 		actWhen: #buttonDown;
 		actionSelector: #offerWindowMenu;
 		setBalloonText: 'window menu' translated"
-	
+
 	|form msb|
 	form := self windowMenuForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -1808,14 +1808,14 @@ UITheme >> desktopImageLayout [
 { #category : #'fill-styles' }
 UITheme >> dialogWindowActiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
-	
+
 	^self windowActiveFillStyleFor: aWindow
 ]
 
 { #category : #'fill-styles' }
 UITheme >> dialogWindowInactiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
-	
+
 	^self windowInactiveFillStyleFor: aWindow
 ]
 
@@ -1875,7 +1875,7 @@ UITheme >> diffRemovedLinesBackgroundColor [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> disabledColor [ 
+UITheme >> disabledColor [
 	^ Color gray
 ]
 
@@ -1888,18 +1888,18 @@ UITheme >> disabledItemStyle [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> disabledTextColor [ 
+UITheme >> disabledTextColor [
 	^ self disabledColor
 ]
 
 { #category : #accessing }
 UITheme >> displayScaleFactor [
-	
+
 	^ self currentWorld displayScaleFactor
 ]
 
 { #category : #accessing }
-UITheme >> dockingBarBorderWidth [ 
+UITheme >> dockingBarBorderWidth [
 	^ 0
 ]
 
@@ -1916,7 +1916,7 @@ UITheme >> drawTabGroupFinishingFor: aTabGroupMorph on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawTextAdornmentFor: aPluggableTextMorph color: aColor on: aCanvas [
 	"Indicate edit status for the given morph."
-	
+
 	|bounds size fillStyle|
 	bounds := aPluggableTextMorph innerBounds.
 	size := 25.
@@ -1946,8 +1946,8 @@ UITheme >> drawTextAdornmentsFor: aPluggableTextMorph on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawWindowActiveDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the active drop shadow for the given window."
-	
-	
+
+
 	^self windowActiveDropShadowStyle == #diffuse
 		ifTrue: [self drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas]
 		ifFalse: [self drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas]
@@ -1956,7 +1956,7 @@ UITheme >> drawWindowActiveDropShadowFor: aSystemWindow on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the diffuse drop shadow for the given window."
-	
+
 	|or b r o gc|
 	or := self windowActiveDropShadowOffsetRectangleFor: aSystemWindow.
 	o := or bottom.
@@ -2021,22 +2021,22 @@ UITheme >> drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawWindowInactiveDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the inactive drop shadow for the given window."
-	
+
 	self drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas
 ]
 
 { #category : #'border-styles' }
 UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the plain drop shadow for the given window."
-	
+
 	|blOffset brOffset trOffset|
 	(aSystemWindow owner notNil and: [aSystemWindow owner isHandMorph])
 		ifTrue: [^self]. "skip if being dragged"
-	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])	
+	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])
 		ifTrue: [7] ifFalse: [1].
-	brOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 3])	
+	brOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 3])
 		ifTrue: [7] ifFalse: [1].
-	trOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 4])	
+	trOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 4])
 		ifTrue: [7] ifFalse: [1].
 	aCanvas
 		fillRectangle: (aSystemWindow bounds bottomLeft + (blOffset @ 0)
@@ -2070,7 +2070,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 { #category : #'border-styles - buttons' }
 UITheme >> dropListControlButtonWidth [
 	"Answer the width of a drop list control button for this theme."
-	
+
 	^ 18
 ]
 
@@ -2084,7 +2084,7 @@ UITheme >> dropListDisabledBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListDisabledFillStyleFor: aDropList [
 	"Return the disabled fillStyle for the given drop list."
-	
+
 	^ self textEditorDisabledFillStyleFor: aDropList
 ]
 
@@ -2116,7 +2116,7 @@ UITheme >> dropListFont [
 { #category : #defaults }
 UITheme >> dropListInsetFor: aDropList [
 	"Answer the inset to use for drop-list layout."
-	
+
 	^ Margin left: 6 top: 0 right: 0 bottom: 0
 ]
 
@@ -2130,7 +2130,7 @@ UITheme >> dropListNormalBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
-	
+
 	^ SolidFillStyle color: Color white
 ]
 
@@ -2146,7 +2146,7 @@ UITheme >> dropListNormalListBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
-	
+
 	^Color white
 ]
 
@@ -2187,7 +2187,7 @@ UITheme >> errorPopperBackgroundColor [
 { #category : #'border-styles - buttons' }
 UITheme >> expanderTitleControlButtonWidth [
 	"Answer the width of an expander title control button for this theme."
-	
+
 	^20
 ]
 
@@ -2201,7 +2201,7 @@ UITheme >> expanderTitleInsetFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> expanderTitleNormalFillStyleFor: anExpanderTitle [
 	"Return the normal expander title fillStyle for the given expander title."
-	
+
 	^ self buttonNormalFillStyleFor: anExpanderTitle
 ]
 
@@ -2256,7 +2256,7 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 				ifTrue: [self focusIndicator ~~ aMorph]
 				ifFalse: [self focusIndicator key ~~ aMorph]])
 		ifTrue: [self focusIndicator: aMorph ->(self newFocusIndicatorMorphFor: aMorph)].
-	^self focusIndicator value 
+	^self focusIndicator value
 		privateBounds: aMorph focusBounds
 ]
 
@@ -2394,7 +2394,7 @@ UITheme >> labelDisabledColorFor: aLabel [
 		ifNil: [aLabel paneColor muchDarker]
 		ifNotNil: [aLabel owner color isTransparent
 					ifTrue: [aLabel owner paneColor muchDarker]
-					ifFalse: [aLabel owner color muchDarker]].
+					ifFalse: [aLabel owner color muchDarker]]
 ]
 
 { #category : #defaults }
@@ -2411,7 +2411,7 @@ UITheme >> lessConspicuousColorFrom: aColor [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lightBackgroundColor [ 
+UITheme >> lightBackgroundColor [
 	^ Color veryLightGray muchLighter
 ]
 
@@ -2432,7 +2432,7 @@ UITheme >> lightSelectionColorFor: aMorph [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lineNumberColor [ 
+UITheme >> lineNumberColor [
 	^ Color gray muchDarker
 ]
 
@@ -2451,7 +2451,7 @@ UITheme >> listDisabledBorderStyleFor: aList [
 { #category : #'fill-styles' }
 UITheme >> listDisabledFillStyleFor: aList [
 	"Return the disabled fillStyle for the given list."
-	
+
 	^ self textEditorDisabledFillStyleFor: aList
 ]
 
@@ -2481,7 +2481,7 @@ UITheme >> listNormalBorderStyleFor: aList [
 { #category : #'fill-styles' }
 UITheme >> listNormalFillStyleFor: aList [
 	"Return the normal fillStyle for the given list."
-	
+
 	^Color white
 ]
 
@@ -2516,7 +2516,7 @@ UITheme >> menuBorderColor [
 ]
 
 { #category : #accessing }
-UITheme >> menuBorderWidth [ 
+UITheme >> menuBorderWidth [
 	^  self settings menuBorderWidth * self displayScaleFactor
 ]
 
@@ -2555,7 +2555,7 @@ UITheme >> menuColorFor: aThemedMorph [
 { #category : #'fill-styles' }
 UITheme >> menuFillStyleFor: aMenu [
 	"Return the fillStyle for the given menu."
-	
+
 	| bc fill |
 	bc := aMenu valueOfProperty: #basicColor ifAbsent: [self settings derivedMenuColor].
 	fill := GradientFillStyle ramp: {0.0 -> (bc alphaMixed: 0.2 with: Color white). 1.0 -> bc}.
@@ -2563,7 +2563,7 @@ UITheme >> menuFillStyleFor: aMenu [
 		radial: false;
 		origin: aMenu topLeft;
 		direction: 0 @ aMenu height.
-	^ fill.
+	^ fill
 ]
 
 { #category : #defaults }
@@ -2749,14 +2749,14 @@ UITheme >> morphTreeColumnFillStyleFor: aMorph [
 ]
 
 { #category : #'fill-styles' }
-UITheme >> morphTreeSplitterNormalFillStyleFor: aSplitter [	
+UITheme >> morphTreeSplitterNormalFillStyleFor: aSplitter [
 	^ self splitterNormalFillStyleFor: aSplitter
 ]
 
 { #category : #'fill-styles' }
 UITheme >> morphTreeSplitterPressedFillStyleFor: aSplitter [
 	"Return the pressed splitter fillStyle for the given splitter."
-	
+
 	|aColor|
 	aColor := aSplitter paneColor twiceDarker.
 	^(GradientFillStyle ramp: {
@@ -2770,11 +2770,11 @@ UITheme >> morphTreeSplitterPressedFillStyleFor: aSplitter [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> mouseOverColor [ 
+UITheme >> mouseOverColor [
 	"This color is used when hovering a raw of a list / table.
 	This color should be different from the default background color and from the raw alternate color
 	(see FTTableContainerMorph>>#alternateRowsColor."
-	
+
 	^ self backgroundColor darker darker
 ]
 
@@ -2783,7 +2783,7 @@ UITheme >> multiFormFillStyleFrom: anArray cornerWidths: widthArray in: aRectang
 	"Answer a composite fill style from the given forms and central colour
 	in the given bounds. Use the widths specified for the portion of the
 	corner forms to display."
-	
+
 	|tl tm tr ml mr bl bm br c tlw trw blw brw|
 	tl := anArray first. tlw:= widthArray first.
 	tm := anArray second.
@@ -2830,7 +2830,7 @@ UITheme >> multiFormFillStyleFrom: anArray cornerWidths: widthArray in: aRectang
 UITheme >> multiFormFillStyleFrom: anArray in: aRectangle [
 	"Answer a composite fill style from the given forms and central colour
 	in the given bounds."
-	
+
 	|tl tm tr ml mr bl bm br c|
 	tl := anArray first.
 	tm := anArray second.
@@ -2869,7 +2869,7 @@ UITheme >> multiFormFillStyleFrom: anArray in: aRectangle [
 UITheme >> multiFormTopFillStyleFrom: anArray in: aRectangle [
 	"Answer a composite fill style from the given forms and central colour
 	in the given bounds. Only top and middle sections are considered."
-	
+
 	|tl tm tr ml mr c|
 	tl := anArray first.
 	tm := anArray second.
@@ -2898,7 +2898,7 @@ UITheme >> multiFormTopFillStyleFrom: anArray in: aRectangle [
 { #category : #'morph creation' }
 UITheme >> newAlphaImageIn: aThemedMorph image: aForm help: helpText [
 	"Answer an alpha image morph."
-	
+
 	|answer|
 	answer := AlphaImageMorph new
 		hResizing: #rigid;
@@ -2922,7 +2922,7 @@ UITheme >> newAlphaSelectorIn: aThemedMorph for: aModel getAlpha: getSel setAlph
 ]
 
 { #category : #'morph creation' }
-UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel font: aFont help: helpText [ 
+UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel font: aFont help: helpText [
 	"Answer a text entry for the given model.
 	Object conversion will be automatic based on the class of
 	object returned after performing the get selector, aClass
@@ -2932,7 +2932,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: s
 		for: aModel
 		get: getSel
 		set: setSel
-		class: aClass 
+		class: aClass
 		getEnabled: enabledSel
 		font: aFont
 		help: helpText
@@ -2969,7 +2969,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 ]
 
 { #category : #'morph creation' }
-UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText [ 
+UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText [
 	"Answer a text entry for the given model.
 	Object conversion will be automatic based on the class of
 	object returned after performing the get selector, aClass
@@ -3008,7 +3008,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 UITheme >> newBalloonHelpIn: aThemedMorph contents: aTextStringOrMorph for: aMorph corner: cornerSymbol [
 	"Answer a new balloon help morph with the given text
 	and positioning for aMorph."
-	
+
 	^SimpleBalloonMorph
 		string: aTextStringOrMorph
 		for: aMorph
@@ -3447,7 +3447,7 @@ UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 { #category : #'morph creation' }
 UITheme >> newCloseControlIn: aThemedMorph for: aModel action: aValuable help: helpText [
 	"Answer a button for closing things."
-	
+
 	|form msb|
 	form := self windowCloseForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -4255,7 +4255,7 @@ UITheme >> newTabGroupIn: aThemedMorph for: labelsAndControls [
 { #category : #'morph creation' }
 UITheme >> newTaskListButtonIn: aTasklist for: aTask [
 	"Answer a tasklist button morph for the given task."
-	
+
 	|lm lab button |
 	lab := (self buttonLabelForText: (aTask label contractTo: 40)).
 	aTask isActive
@@ -4483,7 +4483,7 @@ UITheme >> newTreeExpandedForm [
 { #category : #'morph creation' }
 UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getSelector changeSelected: setSelector [
 	"Answer a new tree morph."
-	
+
 	^TreeListMorph new
 		selectionColor: self selectionColor;
 		font: self listFont;
@@ -4645,7 +4645,7 @@ UITheme >> normalFillStyleFor: aMorph height: anInteger [
 ]
 
 { #category : #private }
-UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
+UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [
 	| top bottom |
 	top := aColor darker.
 	bottom := aColor.
@@ -4664,7 +4664,7 @@ UITheme >> numberOfStepsForAnimations [
 
 { #category : #cursor }
 UITheme >> overTextCursorFor: aTextMorph [
-	"Answer the pointer cursor when over an active text 
+	"Answer the pointer cursor when over an active text
 	(answer nil if no particular cursor is wanted)."
 
 	^ Cursor overEditableText
@@ -4709,7 +4709,7 @@ UITheme >> plainGroupPanelBorderStyleFor: aGroupPanel [
 { #category : #copying }
 UITheme >> postCopy [
 	"Copy the settings too."
-	
+
 	super postCopy.
 	self settings: self settings copy
 ]
@@ -4804,7 +4804,7 @@ UITheme >> questionWithoutCancelIn: aThemedMorph text: aStringOrText title: aStr
 UITheme >> radioButtonCornerStyleFor: aRadioButton [
 	"Answer the corner style for radio buttons.
 	Answer square when not disabled since the form is rounded."
-	
+
 	^aRadioButton enabled
 		ifTrue: [#square]
 		ifFalse: [#rounded]
@@ -4820,7 +4820,7 @@ UITheme >> radioButtonDisabledBorderStyleFor: aRadioButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonDisabledFillStyleFor: aRadioButton [
 	"Return the disabled radio button fillStyle for the given button."
-	
+
 	^self radioButtonNormalFillStyleFor: aRadioButton
 ]
 
@@ -4848,7 +4848,7 @@ UITheme >> radioButtonNormalBorderStyleFor: aRadioButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonNormalFillStyleFor: aRadioButton [
 	"Return the normal radio button fillStyle for the given button."
-	
+
 	^(ImageFillStyle form: self radioButtonForm) origin: aRadioButton topLeft
 ]
 
@@ -4869,14 +4869,14 @@ UITheme >> radioButtonSelectedDisabledBorderStyleFor: aRadioButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonSelectedDisabledFillStyleFor: aRadioButton [
 	"Return the selected disabled radio button fillStyle for the given button."
-	
+
 	^self radioButtonNormalFillStyleFor: aRadioButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonSelectedFillStyleFor: aRadioButton [
 	"Return the selected radio button fillStyle for the given button."
-	
+
 	^(ImageFillStyle form: self radioButtonSelectedForm) origin: aRadioButton topLeft
 ]
 
@@ -4892,22 +4892,22 @@ UITheme >> resizerGripNormalFillStyleFor: aResizer [
 	"Return the normal fillStyle for the given resizer.
 	For the moment, answer a transparent colour for no drawing,
 	non transparent to draw as normal."
-	
+
 	^Color transparent
 ]
 
 { #category : #scrollbars }
-UITheme >> scrollBarButtonArrowVertices: aRectangle [ 
+UITheme >> scrollBarButtonArrowVertices: aRectangle [
 	^ self verticesForComplexArrow: aRectangle
 ]
 
 { #category : #'morph creation' }
 UITheme >> scrollBarDownButtonBoundsFor: aScrollbar [
-	
+
 	| extent position |
-	
+
 	extent := aScrollbar buttonExtent.
-	position := aScrollbar innerBounds bottomRight - extent.	
+	position := aScrollbar innerBounds bottomRight - extent.
 
 	^ position extent: extent
 ]
@@ -4936,14 +4936,14 @@ UITheme >> scrollPaneNormalBorderStyleFor: aScrollPane [
 { #category : #'label-styles' }
 UITheme >> scrollbarArrowOfDirection: aSymbol size: finalSizeInteger color: aColor [
 	"Answer a new scrollbar arrow form (normally cached by Scrollbar)."
-	
+
 	^self basicCreateArrowOfDirection: aSymbol size: finalSizeInteger color: aColor
 ]
 
 { #category : #'border-styles - scrollbars' }
 UITheme >> scrollbarButtonCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^#square
 ]
 
@@ -4965,15 +4965,15 @@ UITheme >> scrollbarColorFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarImageColorFor: aScrollbar [
 	"Return the scrollbar image colour (on buttons) for the given scrollbar."
-	
+
 	^(self baseScrollbarColorFor: aScrollbar) darker
 ]
 
 { #category : #defaults }
 UITheme >> scrollbarMinimumThumbThickness [
-	"Answer the minumum width or height of a scrollbar thumb 
+	"Answer the minumum width or height of a scrollbar thumb
 	as appropriate to its orientation."
-	
+
 	^15 * self displayScaleFactor
 ]
 
@@ -5087,14 +5087,14 @@ UITheme >> scrollbarNormalButtonBorderStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalButtonFillStyleFor: aScrollbar [
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
-	
+
 	^ self scrollbarNormalThumbFillStyleFor: aScrollbar
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
-	
+
 	^ "(self glamorousBaseColorFor: aScrollbar) muchLighter"
 	Color r: 245 g: 245 b: 245 range: 255
 ]
@@ -5102,7 +5102,7 @@ UITheme >> scrollbarNormalFillStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalHorizontalThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar horizontal thumb fillStyle for the given scrollbar."
-	
+
 	|s l m r|
 	s := aScrollbar slider.
 	l := self scrollbarThumbLeftForm.
@@ -5135,7 +5135,7 @@ UITheme >> scrollbarNormalThumbFillStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalVerticalThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar vertical thumb fillStyle for the given scrollbar."
-	
+
 	|s t m b|
 	s := aScrollbar slider.
 	t := self scrollbarThumbTopForm.
@@ -5151,7 +5151,7 @@ UITheme >> scrollbarNormalVerticalThumbFillStyleFor: aScrollbar [
 ]
 
 { #category : #'border-styles - scrollbars' }
-UITheme >> scrollbarPagingAreaCornerStyleIn: aThemedMorph [	
+UITheme >> scrollbarPagingAreaCornerStyleIn: aThemedMorph [
 	^#square
 ]
 
@@ -5171,14 +5171,14 @@ UITheme >> scrollbarPressedButtonBorderStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarPressedButtonFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar button fillStyle for the given scrollbar."
-	
+
 	^self scrollbarPressedThumbFillStyleFor: aScrollbar
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarPressedFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar fillStyle for the given scrollbar."
-	
+
 	^self scrollbarNormalFillStyleFor: aScrollbar
 ]
 
@@ -5192,7 +5192,7 @@ UITheme >> scrollbarPressedThumbBorderStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar thumb fillStyle for the given scrollbar."
-	
+
 	^self scrollbarNormalThumbFillStyleFor: aScrollbar
 ]
 
@@ -5200,7 +5200,7 @@ UITheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
-	
+
 	^13 * self displayScaleFactor
 ]
 
@@ -5214,7 +5214,7 @@ UITheme >> scrollbarThumbBottomForm [
 { #category : #'border-styles - scrollbars' }
 UITheme >> scrollbarThumbCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^#square
 ]
 
@@ -5260,7 +5260,7 @@ UITheme >> secondarySelectionColor [
 
 { #category : #private }
 UITheme >> selectedFillStyleFor: aMorph height: anInteger [
-	
+
 
 	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
 ]
@@ -5286,7 +5286,7 @@ UITheme >> selectionColor [
 ]
 
 { #category : #defaults }
-UITheme >> selectionColorForFrame: frame [ 
+UITheme >> selectionColorForFrame: frame [
 
 	^ self selectionColor
 ]
@@ -5299,7 +5299,7 @@ UITheme >> selectionTextColor [
 { #category : #'fill-styles' }
 UITheme >> separatorFillStyleFor: aSeparator [
 	"Return the separator fillStyle for the given separator."
-	
+
 	^ SolidFillStyle color: (self baseColorFor: aSeparator) darker
 ]
 
@@ -5311,7 +5311,7 @@ UITheme >> setSystemProgressMorphDefaultParameters: aProgressMorph [
 		ifTrue: [aProgressMorph useRoundedCorners].
 	aProgressMorph borderWidth: self menuBorderWidth * self displayScaleFactor.
 	aProgressMorph borderColor: self menuBorderColor.
-	aProgressMorph updateColor.
+	aProgressMorph updateColor
 ]
 
 { #category : #accessing }
@@ -5331,7 +5331,7 @@ UITheme >> settings: anObject [
 { #category : #accessing }
 UITheme >> shStyleTable [
 
-	"Styling depends on shout. If it is not present, means there is no style 
+	"Styling depends on shout. If it is not present, means there is no style
 	 table to apply"
 	^ (self class environment classNamed: #SHRBTextStyler)
 		ifNotNil: [ :aClass | aClass perform: self shStyleTableName ]
@@ -5359,7 +5359,7 @@ UITheme >> sliderDisabledBorderStyleFor: aSlider [
 { #category : #'fill-styles' }
 UITheme >> sliderDisabledFillStyleFor: aSlider [
 	"Return the disabled fillStyle for the given slider."
-	
+
 	^ self textEditorDisabledFillStyleFor: aSlider
 ]
 
@@ -5375,7 +5375,7 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 { #category : #'fill-styles' }
 UITheme >> sliderNormalFillStyleFor: aSlider [
 	"Return the normal fillStyle for the given slider."
-	
+
 	^ SolidFillStyle color: Color white
 ]
 
@@ -5397,14 +5397,14 @@ UITheme >> soundTheme: anObject [
 { #category : #'fill-styles' }
 UITheme >> splitterNormalFillStyleFor: aSplitter [
 	"Return the normal splitter fillStyle for the given splitter."
-	
+
 	^ SolidFillStyle color: Color transparent
 ]
 
 { #category : #'fill-styles' }
 UITheme >> splitterPressedFillStyleFor: aSplitter [
 	"Return the pressed splitter fillStyle for the given splitter."
-	
+
 	|aColor|
 	aColor := self baseColorFor: aSplitter.
 	^ (GradientFillStyle ramp: {0.0->aColor lighter. 0.9-> aColor})
@@ -5416,7 +5416,7 @@ UITheme >> splitterPressedFillStyleFor: aSplitter [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> spotlightWindowColor [ 
+UITheme >> spotlightWindowColor [
 	^ self selectionColor muchDarker
 ]
 
@@ -5448,7 +5448,7 @@ UITheme >> successTextColor [
 { #category : #'border-styles' }
 UITheme >> tabGroupCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^aThemedMorph
 		ifNil: [#square]
 		ifNotNil: [:tm | tm preferredCornerStyle]
@@ -5487,7 +5487,7 @@ UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
 
 { #category : #'border-styles' }
 UITheme >> tabPanelBorderStyleFor: aTabGroup [
-	^ Pharo3TabPanelBorderStyle new 
+	^ Pharo3TabPanelBorderStyle new
 		width: 1;
 		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
@@ -5503,23 +5503,23 @@ UITheme >> tabSelectorCellInsetFor: aTabSelector [
 { #category : #defaults }
 UITheme >> tabSelectorMorphMinExtentFor: aTabSelectorMorph [
 	"Answer the min extent of the given tab selector."
-	
+
 	^aTabSelectorMorph basicMinExtent + (8 @ 1)
 ]
 
 { #category : #'fill-styles' }
 UITheme >> taskListFillStyleFor: aTasklist [
-	
+
 	| aColor result |
 	aColor := aTasklist color.
 	result := GradientFillStyle ramp: {
 			0.0->aColor whiter whiter. 0.2->aColor lighter.
 			0.8->aColor darker. 1.0->aColor blacker}.
-	^ result		
+	^ result
 		origin: aTasklist topLeft;
 		direction: 0 @ aTasklist height;
 		radial: false;
-		yourself.
+		yourself
 ]
 
 { #category : #'basic-colors' }
@@ -5531,7 +5531,7 @@ UITheme >> taskbarActiveButtonColorFor: aButton [
 
 { #category : #'basic-colors' }
 UITheme >> taskbarButtonColorFor: aButton [
-	"Answer the colour for the given taskbar button." 
+	"Answer the colour for the given taskbar button."
 	^ self windowColorFor: aButton model
 ]
 
@@ -5569,21 +5569,21 @@ UITheme >> taskbarItemDisabledFillStyleFor: aButton [
 { #category : #'basic-colors' }
 UITheme >> taskbarItemLabelColorForCollapsed: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
-	
+
 	^Color darkGray
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarItemLabelColorForExpanded: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
-	
+
 	^ Color black
 ]
 
 { #category : #'border-styles - taskbar' }
 UITheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 	"Return the mouse over taskbar item borderStyle for the given button."
-	
+
 	^ self buttonMouseOverBorderStyleFor: aButton
 ]
 
@@ -5604,7 +5604,7 @@ UITheme >> taskbarItemNormalBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemNormalFillStyleFor: aButton [
 	"Return the normal taskbar item fillStyle for the given button."
-	
+
 	^ self buttonNormalFillStyleFor: aButton
 ]
 
@@ -5618,7 +5618,7 @@ UITheme >> taskbarItemPressedBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemPressedFillStyleFor: aButton [
 	"Return the taskbar item pressed fillStyle for the given button."
-		
+
 	^ self buttonPressedFillStyleFor: aButton
 ]
 
@@ -5639,14 +5639,14 @@ UITheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemSelectedDisabledFillStyleFor: aButton [
 	"Return the taskbar item selected disabled fillStyle for the given color."
-	
+
 	^ self buttonSelectedDisabledFillStyleFor: aButton
 ]
 
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemSelectedFillStyleFor: aButton [
 	"Return the taskbar item button fillStyle for the given button."
-	
+
 	^ self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -5660,7 +5660,7 @@ UITheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
 	"Return the taskbar item selected mouse over fillStyle for the given color."
-	
+
 	^ self buttonSelectedMouseOverFillStyleFor: aButton
 ]
 
@@ -5688,7 +5688,7 @@ UITheme >> taskbarMinimizedButtonColorFor: aButton [
 { #category : #'border-styles' }
 UITheme >> taskbarThumbnailCornerStyleFor: aMorph [
 	"Answer the corner style for the taskbar thumbnail/tasklist."
-	
+
 	^#square
 ]
 
@@ -5698,7 +5698,7 @@ UITheme >> taskbarThumbnailNormalBorderStyleFor: aWindow [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> textColor [ 
+UITheme >> textColor [
 	^ Color black
 ]
 
@@ -5717,7 +5717,7 @@ UITheme >> textEditorDisabledBorderStyleFor: aTextEditor [
 { #category : #'fill-styles' }
 UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
-	
+
 	^self basePassiveBackgroundColorFor: aTextEditor
 ]
 
@@ -5758,14 +5758,14 @@ UITheme >> textEditorNormalBorderStyleFor: aTextEditor [
 { #category : #'fill-styles' }
 UITheme >> textEditorNormalFillStyleFor: aTextEditor [
 	"Return the normal fillStyle for the given text editor."
-	
+
 	^Color white
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> textEntryCornerStyleIn: aThemedMorph [
 	"Answer the corner style to use for text entry morphs."
-	
+
 	^#square
 ]
 
@@ -5806,7 +5806,7 @@ UITheme >> textFieldDisabledBorderStyleFor: aTextField [
 { #category : #'fill-styles' }
 UITheme >> textFieldDisabledFillStyleFor: aTextField [
 	"Return the disabled fillStyle for the given text field."
-	
+
 	^self textEditorDisabledFillStyleFor: aTextField
 ]
 
@@ -5820,7 +5820,7 @@ UITheme >> textFieldNormalBorderStyleFor: aTextField [
 { #category : #'fill-styles' }
 UITheme >> textFieldNormalFillStyleFor: aTextField [
 	"Return the normal fillStyle for the given text field."
-	
+
 	^ Color white
 ]
 
@@ -5889,10 +5889,10 @@ UITheme >> updateScrollBarButtonAspect: aMorph color: aColor [
 ]
 
 { #category : #scrollbars }
-UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [ 
+UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [
 	"update aCollection of morphs with aColor"
-	
-	
+
+
 	aCollection
 		do: [:each | self updateScrollBarButtonAspect: each color: aColor]
 ]
@@ -5900,7 +5900,7 @@ UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [
 { #category : #initialization }
 UITheme >> updateWorldDockingBars [
 	"Update the world docking bar gradients."
-	
+
 	self currentWorld mainDockingBars do: [:d |
 		d
 			color: (self worldMainDockingBarColorFor: d);
@@ -5923,9 +5923,9 @@ UITheme >> useAnimation: aBoolean [
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
 	dragging a scrollbar thumb."
-	
+
 	"If for some reason it's nil, reinitialice to 'false'."
-	
+
 	useScrollbarThumbShadow ifNil:[useScrollbarThumbShadow:=false].
 
 	^useScrollbarThumbShadow
@@ -5935,11 +5935,11 @@ UITheme >> useScrollbarThumbShadow [
 UITheme >> useScrollbarThumbShadow: aBoolean [
 	"Sets whether the scrollbar must show a shadow of the original position before dragging."
 
-	useScrollbarThumbShadow := aBoolean.
+	useScrollbarThumbShadow := aBoolean
 ]
 
 { #category : #scrollbars }
-UITheme >> verticesForComplexArrow: aRectangle [ 
+UITheme >> verticesForComplexArrow: aRectangle [
 	"PRIVATE - answer a collection of vertices to draw a complex arrow"
 
 	|r vertices aux b c|
@@ -5958,7 +5958,7 @@ UITheme >> verticesForComplexArrow: aRectangle [
 ]
 
 { #category : #scrollbars }
-UITheme >> verticesForSimpleArrow: aRectangle [ 
+UITheme >> verticesForSimpleArrow: aRectangle [
 	"PRIVATE - answer a collection of vertices to draw a simple arrow"
 	| vertices |
 	vertices := OrderedCollection new.
@@ -5974,7 +5974,7 @@ UITheme >> verticesForSimpleArrow: aRectangle [
 { #category : #private }
 UITheme >> veryLightFillStyleFor: aMorph height: anInteger [
 	"Return the very light button fillStyle for the given button."
-	
+
 	^ SolidFillStyle color: (self veryLightSelectionColorFor: aMorph)
 ]
 
@@ -6009,8 +6009,8 @@ UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^ self forms 
-		at: #whiteTreeExpanded 
+	^ self forms
+		at: #whiteTreeExpanded
 		ifAbsent: [ | f |
 			f := self treeExpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
@@ -6023,7 +6023,7 @@ UITheme >> whiteTreeExpandedForm [
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^ self forms 
+	^ self forms
 		at: #whiteTreeUnexpanded
 		ifAbsent: [ | f |
 			f := self treeUnexpandedForm deepCopy.
@@ -6037,7 +6037,7 @@ UITheme >> whiteTreeUnexpandedForm [
 UITheme >> windowActiveDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the active window bounds for the drop shadow area."
-	
+
 	^self windowActiveDropShadowStyle == #diffuse
 		ifTrue: [self windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow]
 		ifFalse: [self windowPlainDropShadowOffsetRectangleFor: aSystemWindow]
@@ -6046,7 +6046,7 @@ UITheme >> windowActiveDropShadowOffsetRectangleFor: aSystemWindow [
 { #category : #accessing }
 UITheme >> windowActiveDropShadowStyle [
 	"Answer the style of drop shadow to use for active windows."
-	
+
 	^windowActiveDropShadowStyle
 ]
 
@@ -6066,7 +6066,7 @@ UITheme >> windowActiveFillStyleFor: aWindow [
 { #category : #'fill-styles' }
 UITheme >> windowActiveLabelFillStyleFor: aWindow [
 	"Return the window active label fillStyle for the given window."
-	
+
 	^Color black
 ]
 
@@ -6118,8 +6118,8 @@ UITheme >> windowCloseSound [
 { #category : #'morph creation' }
 UITheme >> windowCollapseBoxLayoutFor: aWindow [
 
-	^ LayoutFrame new 
-		leftFraction: 1; 
+	^ LayoutFrame new
+		leftFraction: 1;
 		leftOffset: aWindow boxExtent x negated;
 		yourself
 ]
@@ -6132,7 +6132,7 @@ UITheme >> windowColor [
 ]
 
 { #category : #'basic-colors' }
-UITheme >> windowColorFor: aWindowOrModel [ 
+UITheme >> windowColorFor: aWindowOrModel [
 	"Answer the colour for the given window."
 
 	^ self settings windowColor
@@ -6143,21 +6143,21 @@ UITheme >> windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the active window bounds for the drop shadow area
 	when the difuse style is used."
-	
+
 	^8@4 corner: 8@10
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowEdgeNormalFillStyleFor: anEdgeGrip [
 	"Return the normal window edge fillStyle for the given edge grip."
-	
+
 	^Color transparent
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowEdgePressedFillStyleFor: anEdgeGrip [
 	"Return the pressed window edge fillStyle for the given edge grip."
-	
+
 	^self windowEdgeNormalFillStyleFor: anEdgeGrip
 ]
 
@@ -6170,7 +6170,7 @@ UITheme >> windowExtentChangedFor: aWindow [
 UITheme >> windowInactiveDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the inactive window bounds for the drop shadow area."
-	
+
 	^self windowPlainDropShadowOffsetRectangleFor: aSystemWindow
 ]
 
@@ -6183,7 +6183,7 @@ UITheme >> windowInactiveFillStyleFor: aWindow [
 { #category : #'fill-styles' }
 UITheme >> windowInactiveLabelFillStyleFor: aWindow [
 	"Return the window inactive label fillStyle for the given window."
-	
+
 	^ self fadedBackgroundWindows
 		ifTrue: [ aWindow paneColorToUse alphaMixed: 0.6 with: Color black ]
 		ifFalse: [ self windowActiveLabelFillStyleFor: aWindow ]
@@ -6254,7 +6254,7 @@ UITheme >> windowMenuForm [
 { #category : #'label-styles - windows' }
 UITheme >> windowMenuIconFor: aWindow [
 	"Answer the menu icon for the given window."
-	
+
 	^ self windowMenuForm
 ]
 
@@ -6322,7 +6322,7 @@ UITheme >> windowPlainDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the active window bounds for the drop shadow area
 	when the plain style is used."
-	
+
 	^aSystemWindow shadowOffset negated corner: aSystemWindow shadowOffset
 ]
 
@@ -6389,7 +6389,7 @@ UITheme >> worldMainDockingBarColorFor: aDockingBar [
 { #category : #'fill-styles' }
 UITheme >> worldMainDockingBarNormalFillStyleFor: aDockingBar [
 	"Return the world main docking bar fillStyle for the given docking bar."
-	
+
 	|aColor|
 	aColor := aDockingBar originalColor alpha: 0.7.
 	^(GradientFillStyle ramp: {

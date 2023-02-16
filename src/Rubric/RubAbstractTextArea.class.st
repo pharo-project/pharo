@@ -2052,11 +2052,11 @@ RubAbstractTextArea >> textStyle: aTextStyle [
 
 { #category : #updating }
 RubAbstractTextArea >> themeChanged [
-	
-	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler | 
-		styler refreshStyling 
-	].
 
+	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
+		styler refreshStyling
+	].
+	self color: self theme backgroundColor.
 	super themeChanged
 ]
 

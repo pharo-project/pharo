@@ -23,9 +23,9 @@ RewriteRuleEditor class >> defaultLayout [
 			add: #searchLabel expand: false;
 			add: #searchPattern expand: true fill: true padding: 0;
 			add: #replaceLabel expand: false;
-			add: #replacePattern expand: true fill: true padding: 0) 
+			add: #replacePattern expand: true fill: true padding: 0)
 			expand: true fill: true padding: 5;
-		add: (SpBoxLayout newTopToBottom 
+		add: (SpBoxLayout newTopToBottom
 			add: #helpText expand: true fill: true padding: 18;
 			addLast: #replaceButton)
 			expand: false fill: false padding: 0;
@@ -51,19 +51,19 @@ RewriteRuleEditor class >> open [
 
 { #category : #initialization }
 RewriteRuleEditor >> connectPresenters [
-	replaceButton action: [ self runReplace ].
+	replaceButton action: [ self runReplace ]
 ]
 
 { #category : #initialization }
 RewriteRuleEditor >> initializePresenters [
 	searchLabel := self newLabel.
 	searchLabel label: 'Search for:'.
-	searchPattern := self newText 
+	searchPattern := self newText
 		autoAccept: true;
 		yourself.
 	replaceLabel := self newLabel.
 	replaceLabel label: 'Replace with:'.
-	replacePattern := self newText 
+	replacePattern := self newText
 		autoAccept: true;
 		yourself.
 	helpText := self newText
@@ -83,7 +83,7 @@ RewriteRuleEditor >> initializePresenters [
 
 { #category : #initialization }
 RewriteRuleEditor >> initializeWindow: aWindowPresenter [
-	| fontWidth rowHeight |	
+	| fontWidth rowHeight |
 	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
 	rowHeight := self class inputTextHeight.
 	aWindowPresenter
@@ -98,7 +98,7 @@ RewriteRuleEditor >> runReplace [
 	env := RBBrowserEnvironment default forPackages: (RPackageOrganizer default packages ).
 
 	rewriter := RBParseTreeRewriter new.
-	rewriter  
+	rewriter
 		replace: searchPattern text with: replacePattern text.
 
 	changes := Array with: (RBSmalllintChecker runRule: (RBTransformationRule new
@@ -106,11 +106,11 @@ RewriteRuleEditor >> runReplace [
 		yourself)
 		onEnvironment:  env  ) builder.
 
- (RewriteRuleChangesBrowser changes: changes) open.
+ (RewriteRuleChangesBrowser changes: changes) open
 ]
 
 { #category : #initialization }
 RewriteRuleEditor >> windowTitle [
-	
-	^ 'Rewrite rule editor'.
+
+	^ 'Rewrite rule editor'
 ]

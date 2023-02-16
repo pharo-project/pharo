@@ -235,7 +235,7 @@ Model >> wantsSteps [
 
 { #category : #stepping }
 Model >> wantsStepsIn: aSystemWindow [
-	
+	self deprecated: 'use #wantsSteps on the parameter instead'.
 	^ self wantsSteps
 ]
 

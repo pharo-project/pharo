@@ -38,7 +38,7 @@ CalendarMorph class >> on: aDate [
 	^self new
 		"extent: 200 @ 160;"
 		date: aDate;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -52,13 +52,13 @@ CalendarMorph >> announceDate [
 
 	| announcement |
 	announcement := ChoseDate of: self date from: self.
-	announcer ifNotNil: [ announcer announce: announcement ].
+	announcer ifNotNil: [ announcer announce: announcement ]
 ]
 
 { #category : #private }
 CalendarMorph >> announcer [
 
-	^ announcer ifNil: [ announcer := Announcer new ].
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #private }
@@ -108,7 +108,7 @@ CalendarMorph >> date: aDate [
 
 { #category : #private }
 CalendarMorph >> daysForLine: aNumber [
-	"Return an array of numbers that correspond to the day-of-month numbers of the given line (row) 
+	"Return an array of numbers that correspond to the day-of-month numbers of the given line (row)
 	in the calendar for the month of the receiver's date."
 
 	| dayCount firstWeekday previousDayCount previousMonthDays lastDay |
@@ -183,17 +183,17 @@ CalendarMorph >> drawMonthHeaderOn: aCanvas [
 		fillColor: Color veryLightGray
 		borderWidth: 1
 		borderColor: Color black;
-		
+
 		line: box bottomLeft
 		to: box bottomRight
 		width: 2
 		color: Color black;
-		
+
 		drawString: '<'
 		at: previousMonthBox origin
 		font: self monthNameFont
 		color: Color black;
-		
+
 		drawString: '>'
 		at: nextMonthBox origin
 		font: self monthNameFont
@@ -202,7 +202,7 @@ CalendarMorph >> drawMonthHeaderOn: aCanvas [
 		drawString: headerString
 		at: (self bounds topCenter translateBy: (headerWidth // -2) @ 5)
 		font: self monthNameFont
-		color: Color black.
+		color: Color black
 ]
 
 { #category : #drawing }
@@ -216,7 +216,7 @@ CalendarMorph >> drawOn: aCanvas [
 				fillRectangle: self bounds
 				color: Color white.
 
-			self 
+			self
 				drawMonthHeaderOn: clippedCanvas;
 				drawWeekDayNamesOn: clippedCanvas;
 				drawDaysOn: clippedCanvas;
@@ -225,7 +225,7 @@ CalendarMorph >> drawOn: aCanvas [
 			clippedCanvas
 				frameRectangle: self bounds
 				width: 1
-				color: Color black].
+				color: Color black]
 ]
 
 { #category : #drawing }
@@ -255,8 +255,8 @@ CalendarMorph >> drawWeekDayNamesOn: aCanvas [
 	cellHeight := height // 8.
 	cellWidth := self bounds width // 7.
 	aCanvas
-		line: (topLeft translateBy: 0 @ cellHeight) 
-		to: (topRight translateBy: 0 @ cellHeight) 
+		line: (topLeft translateBy: 0 @ cellHeight)
+		to: (topRight translateBy: 0 @ cellHeight)
 		width: 1
 		color: Color black.
 
@@ -304,21 +304,21 @@ CalendarMorph >> handleMonthNameTouched [
 CalendarMorph >> handleNextMonthTouched [
 
 	self date: date onNextMonth.
-	self changed.
+	self changed
 ]
 
 { #category : #'event handling' }
 CalendarMorph >> handlePreviousMonthTouched [
 
 	self date: date onPreviousMonth.
-	self changed.
+	self changed
 ]
 
 { #category : #'event handling' }
 CalendarMorph >> handleTodayTouched [
 
 	self date: Date today.
-	self changed.
+	self changed
 ]
 
 { #category : #'event handling' }
@@ -349,7 +349,7 @@ CalendarMorph >> handlesMouseDown: event [
 CalendarMorph >> initialize [
 
 	super initialize.
-	touchPoints := Dictionary new.
+	touchPoints := Dictionary new
 ]
 
 { #category : #accessing }
@@ -358,7 +358,7 @@ CalendarMorph >> monthNameFont [
 	| font boldItalic |
 	font := LogicalFont familyName: 'Bitmap DejaVu Sans' pointSize: 12.
 	boldItalic := TextEmphasis italic emphasisCode | TextEmphasis bold emphasisCode.
-	^ font emphasis: boldItalic.
+	^ font emphasis: boldItalic
 ]
 
 { #category : #'event handling' }
@@ -369,7 +369,7 @@ CalendarMorph >> mouseDown: event [
 	morphRelativeHitPoint := event cursorPoint translateBy: bounds origin negated.
 	days do: [:each |
 		each highlighted: (each bounds containsPoint: morphRelativeHitPoint)].
-	self changed.
+	self changed
 ]
 
 { #category : #'event handling' }
@@ -395,17 +395,17 @@ CalendarMorph >> mouseUp: event [
 			ifTrue: [
 				self date: each date.
 				self announceDate ]].
-	self changed.
+	self changed
 ]
 
 { #category : #announcing }
 CalendarMorph >> onChoiceSend: aSymbol to: anObject [
 
-	self announcer when: ChoseDate send: aSymbol to: anObject.
+	self announcer when: ChoseDate send: aSymbol to: anObject
 ]
 
 { #category : #accessing }
 CalendarMorph >> weekdayFont [
 
-	^ LogicalFont familyName: 'Bitmap DejaVu Sans' pointSize: 9.
+	^ LogicalFont familyName: 'Bitmap DejaVu Sans' pointSize: 9
 ]

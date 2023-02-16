@@ -18,7 +18,7 @@ Class {
 { #category : #'instance creation' }
 PluggableThreePhaseButtonMorph class >> on: aModel [
 
-	^ self new 
+	^ self new
 			target: aModel;
 			yourself
 ]
@@ -30,7 +30,7 @@ PluggableThreePhaseButtonMorph >> offImageSelector [
 ]
 
 { #category : #accessing }
-PluggableThreePhaseButtonMorph >> offImageSelector: anObject [ 
+PluggableThreePhaseButtonMorph >> offImageSelector: anObject [
 
 	offImageSelector := anObject
 ]
@@ -42,7 +42,7 @@ PluggableThreePhaseButtonMorph >> onImageSelector [
 ]
 
 { #category : #accessing }
-PluggableThreePhaseButtonMorph >> onImageSelector: anObject [ 
+PluggableThreePhaseButtonMorph >> onImageSelector: anObject [
 
 	onImageSelector := anObject
 ]
@@ -54,7 +54,7 @@ PluggableThreePhaseButtonMorph >> pressedImageSelector [
 ]
 
 { #category : #accessing }
-PluggableThreePhaseButtonMorph >> pressedImageSelector: anObject [ 
+PluggableThreePhaseButtonMorph >> pressedImageSelector: anObject [
 
 	pressedImageSelector := anObject
 ]
@@ -66,7 +66,7 @@ PluggableThreePhaseButtonMorph >> stateSelector [
 ]
 
 { #category : #accessing }
-PluggableThreePhaseButtonMorph >> stateSelector: anObject [ 
+PluggableThreePhaseButtonMorph >> stateSelector: anObject [
 
 	stateSelector := anObject
 ]
@@ -76,7 +76,7 @@ PluggableThreePhaseButtonMorph >> target: anObject [
 
 	target ifNotNil: [ target removeDependent: self ].
 	anObject ifNotNil: [ anObject addDependent: self ].
-	target := anObject.
+	target := anObject
 ]
 
 { #category : #updating }
@@ -90,7 +90,7 @@ PluggableThreePhaseButtonMorph >> update: aSymbol [
 		ifTrue: [ ^ self updateOffImage ].
 	aSymbol == pressedImageSelector
 		ifTrue: [ ^ self updatePressedImage ].
-				
+
 	^ super update: aSymbol
 ]
 

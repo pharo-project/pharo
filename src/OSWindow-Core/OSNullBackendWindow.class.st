@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OSNullBackendWindow class >> fromAttributes: attributes for: anOSWindow [ 
+OSNullBackendWindow class >> fromAttributes: attributes for: anOSWindow [
 	^ self new attributes: attributes
 ]
 
@@ -55,7 +55,7 @@ OSNullBackendWindow >> hide [
 { #category : #initialization }
 OSNullBackendWindow >> initialize [
 	super initialize.
-	
+
 	isTextInputActive := false
 ]
 

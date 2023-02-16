@@ -48,11 +48,11 @@ OCASTLiteralTranslatorTest >> literalExample: anObject [
 
 { #category : #'tests - literals' }
 OCASTLiteralTranslatorTest >> testLiteralIsInLiteralFrame [
-	
+
 	| array |
 	array := self testExample: literalExample.
-	
-	self assert: (method literals identityIncludes: array).
+
+	self assert: (method literals identityIncludes: array)
 ]
 
 { #category : #'tests - literals' }
@@ -64,6 +64,6 @@ OCASTLiteralTranslatorTest >> testLiteralReturnsAlwaysSameLiteral [
 
 { #category : #'tests - literals' }
 OCASTLiteralTranslatorTest >> testLiteralReturnsLiteral [
-	
+
 	self assert: (self testExample: literalExample) equals: expectedLiteralValue
 ]

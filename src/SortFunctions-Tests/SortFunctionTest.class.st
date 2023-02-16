@@ -18,17 +18,17 @@ SortFunctionTest >> testAsSortFunction [
 	function := [ :each | each name ] ascending.
 	self assert: function equals: function asSortFunction.
 	function := [ :x :y | x threeWayCompareTo: y ] asSortFunction.
-	self assert: function equals: function asSortFunction.
+	self assert: function equals: function asSortFunction
 ]
 
 { #category : #tests }
 SortFunctionTest >> testComparisonOfFunctionsDefinedByBlock [
 	| collatorBlock |
 	collatorBlock := [ :a :b | 1 ].
-	
+
 	self assert: collatorBlock ascending equals: collatorBlock ascending.
 	self assert: collatorBlock ascending hash equals: collatorBlock ascending hash.
-	
+
 	self deny: collatorBlock ascending equals: collatorBlock descending.
 	self deny: collatorBlock ascending equals: [ :a :b | -1 ] ascending
 ]
@@ -38,7 +38,7 @@ SortFunctionTest >> testComparisonOfFunctionsDefinedBySymbol [
 
 	self assert: #name ascending equals: #name ascending.
 	self assert: #name ascending hash equals: #name ascending hash.
-	
+
 	self deny: #name ascending equals: #name descending.
 	self deny: #name ascending equals: #name2 ascending.
 	self deny: #name ascending undefinedFirst equals: #name ascending undefinedLast
@@ -70,7 +70,7 @@ SortFunctionTest >> testPropertyWithOddCollator [
 	function := (#y collatedBy: oddFirst) , #y , #x.
 	data := { 1@10. 5@5. 10@4. 3@8. 1@1. 10@10 }.
 	sorted := data sorted: function.
-	self assert: sorted equals: { 1@1. 5@5. 10@4. 3@8. 1@10. 10@10 }.
+	self assert: sorted equals: { 1@1. 5@5. 10@4. 3@8. 1@10. 10@10 }
 ]
 
 { #category : #tests }
@@ -108,7 +108,7 @@ SortFunctionTest >> testSorting [
 	sorted := data sorted: [ :each | each y printStringLength: 2 ] ascending.
 	self assert: sorted equals: { 1@1. 10@4. 5@5. 3@8. 2@10. 11@11 }.
 	sorted := data sorted: [ :each | each y * 100.0 ] descending.
-	self assert: sorted equals: { 11@11. 2@10. 3@8. 5@5. 10@4. 1@1 }.
+	self assert: sorted equals: { 11@11. 2@10. 3@8. 5@5. 10@4. 1@1 }
 ]
 
 { #category : #'tests - sorting' }
@@ -120,7 +120,7 @@ SortFunctionTest >> testSortingChained [
 	self assert: (sorted isSortedBy: #x ascending , #y ascending).
 	sorted := data sorted: #x ascending , #y descending.
 	self assert: sorted equals: { 1@10. 1@1. 3@8. 5@5. 10@10. 10@4 }.
-	self assert: (sorted isSortedBy: #x ascending , #y descending).
+	self assert: (sorted isSortedBy: #x ascending , #y descending)
 ]
 
 { #category : #'tests - sorting' }
@@ -132,7 +132,7 @@ SortFunctionTest >> testSortingChainedWithUndefined [
 	self assert: (sorted isSortedBy: #x ascending , #y ascending undefinedFirst).
 	sorted := data sorted: #x ascending , #y descending undefinedLast.
 	self assert: sorted equals: { 1@10. 1@1. 3@8. 5@5. 10@10. 10@4. 10@nil }.
-	self assert: (sorted isSortedBy: #x ascending , #y descending undefinedLast).
+	self assert: (sorted isSortedBy: #x ascending , #y descending undefinedLast)
 ]
 
 { #category : #'tests - sorting' }
@@ -146,7 +146,7 @@ SortFunctionTest >> testSortingWithUndefined [
 	sorted := data sorted: #y ascending undefinedLast.
 	self assert: sorted equals: { 1@1. 10@4. 5@5. 3@8. 2@10. 11@11. Point new }.
 	sorted := data sorted: #y descending undefinedFirst.
-	self assert: sorted equals: { Point new. 11@11. 2@10. 3@8. 5@5. 10@4. 1@1 }.
+	self assert: sorted equals: { Point new. 11@11. 2@10. 3@8. 5@5. 10@4. 1@1 }
 ]
 
 { #category : #tests }

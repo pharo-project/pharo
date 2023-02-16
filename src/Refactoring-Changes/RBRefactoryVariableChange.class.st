@@ -29,7 +29,7 @@ RBRefactoryVariableChange class >> remove: aVariable from: aBehavior [
 { #category : #comparing }
 RBRefactoryVariableChange >> = aRefactoryVariableChange [
 
-	^ super = aRefactoryVariableChange and: [ 
+	^ super = aRefactoryVariableChange and: [
 		  self variable = aRefactoryVariableChange variable ]
 ]
 

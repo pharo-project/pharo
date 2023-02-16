@@ -14,7 +14,7 @@ Class {
 { #category : #accessing }
 EmbossedStringMorph >> adoptPaneColor: paneColor [
 	"Set the color."
-	
+
 	(paneColor notNil and: [self trackPaneColor])
 		ifTrue: [self color: paneColor].
 	super adoptPaneColor: paneColor
@@ -50,17 +50,17 @@ EmbossedStringMorph >> drawOn: aCanvas [
 { #category : #initialization }
 EmbossedStringMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 	"Grrr, why do they do basicNew?"
-	
+
 	super initWithContents: aString font: aFont emphasis: emphasisCode.
 	self
 		style: #inset;
-		trackPaneColor: true.
+		trackPaneColor: true
 ]
 
 { #category : #initialization }
 EmbossedStringMorph >> initialize [
 	"Initialize the receiver."
-	
+
 	super initialize.
 	self
 		style: #inset;

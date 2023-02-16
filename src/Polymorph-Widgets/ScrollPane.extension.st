@@ -3,7 +3,7 @@ Extension { #name : #ScrollPane }
 { #category : #'*Polymorph-Widgets' }
 ScrollPane >> adoptPaneColor: paneColor [
 	"Match the pane colour."
-	
+
 	super adoptPaneColor: paneColor.
 	scrollBar adoptPaneColor: paneColor.
 	hScrollBar adoptPaneColor: paneColor.
@@ -15,7 +15,7 @@ ScrollPane >> adoptPaneColor: paneColor [
 { #category : #'*Polymorph-Widgets' }
 ScrollPane >> borderStyle: aBorderStyle [
 	"Optimised when no change."
-	
+
 	self borderStyle = aBorderStyle ifTrue: [^self].
 	super borderStyle: aBorderStyle.
 	self setScrollDeltas
@@ -24,7 +24,7 @@ ScrollPane >> borderStyle: aBorderStyle [
 { #category : #'*Polymorph-Widgets' }
 ScrollPane >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
-	
+
 	^self enabled
 		ifTrue: [self theme scrollPaneNormalBorderStyleFor: self]
 		ifFalse: [self theme scrollPaneDisabledBorderStyleFor: self]
@@ -52,7 +52,7 @@ ScrollPane >> hScrollValue: scrollValue [
 
 { #category : #'*Polymorph-Widgets' }
 ScrollPane >> handlesMouseWheel: evt [
-	"Do I want to receive mouseWheel events?" 
+	"Do I want to receive mouseWheel events?"
 
 	^self vIsScrollable or: [ self hIsScrollable ]
 ]
@@ -65,7 +65,7 @@ ScrollPane >> hideOrShowScrollBar [
 	(self valueOfProperty: #noScrollBarPlease ifAbsent: [false]) ifTrue: [^self].
 
 	(self vIsScrollbarNeeded not and: [ self isScrolledFromTop not ]) ifTrue: [self vHideScrollBar].
-	(self vIsScrollbarNeeded or: [ self isScrolledFromTop ]) ifTrue: [self vShowScrollBar].
+	(self vIsScrollbarNeeded or: [ self isScrolledFromTop ]) ifTrue: [self vShowScrollBar]
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -76,11 +76,11 @@ ScrollPane >> minHeight [
 	noVPlease := self valueOfProperty: #noVScrollBarPlease ifAbsent: [ false ].
 	noHPlease := self valueOfProperty: #noHScrollBarPlease ifAbsent: [ false ].
 	minH := noVPlease
-		ifTrue: [ 
+		ifTrue: [
 			noHPlease
 				ifTrue: [ 1 ]
 				ifFalse: [ self scrollBarThickness ] ]
-		ifFalse: [ 
+		ifFalse: [
 			noHPlease
 				ifTrue: [ self scrollBarThickness * 3 ]
 				ifFalse: [ self scrollBarThickness * 4 + 2 ] ].
@@ -92,8 +92,8 @@ ScrollPane >> minWidth [
 	"Answer the minimum width."
 
 	|noVPlease noHPlease minW|
-	noVPlease := self valueOfProperty: #noVScrollBarPlease ifAbsent: [false]. 
-	noHPlease := self valueOfProperty: #noHScrollBarPlease ifAbsent: [false]. 
+	noVPlease := self valueOfProperty: #noVScrollBarPlease ifAbsent: [false].
+	noHPlease := self valueOfProperty: #noHScrollBarPlease ifAbsent: [false].
 	minW := noVPlease
 		ifTrue: [noHPlease
 					ifTrue: [1]
@@ -105,13 +105,13 @@ ScrollPane >> minWidth [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-ScrollPane >> mouseWheel: event [ 
+ScrollPane >> mouseWheel: event [
 	"Handle a mouseWheel event."
-	
+
 	event isUp ifTrue: [ ^ scrollBar scrollUp: 3 ].
 	event isDown ifTrue: [ ^ scrollBar scrollDown: 3 ].
 	event isLeft  ifTrue: [ ^ hScrollBar scrollLeft: 3 ].
-	event isRight  ifTrue: [ ^ hScrollBar scrollRight: 3 ].
+	event isRight  ifTrue: [ ^ hScrollBar scrollRight: 3 ]
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -129,9 +129,9 @@ ScrollPane >> scrollValue [
 
 { #category : #'*Polymorph-Widgets' }
 ScrollPane >> scrollValue: aPoint [
-	self 
+	self
 		hScrollValue: aPoint x;
-		vScrollValue: aPoint y.
+		vScrollValue: aPoint y
 ]
 
 { #category : #'*Polymorph-Widgets' }

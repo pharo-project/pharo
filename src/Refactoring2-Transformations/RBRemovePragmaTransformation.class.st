@@ -53,7 +53,7 @@ RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector in
 
 	self className: aClassName.
 	selector := aSelector.
-	pragma := aPragmaDefinition.
+	pragma := aPragmaDefinition
 ]
 
 { #category : #preconditions }
@@ -90,7 +90,7 @@ RBRemovePragmaTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBRemovePragmaTransformation >> storeOn: aStream [ 
+RBRemovePragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -22,8 +22,8 @@ ChangesBrowser class >> changes: aCollection [
 ChangesBrowser >> accept [
 
 	self okToChange ifFalse: [ ^ self ].
-	
-	[ self pickedChanges do: [ :change | 
+
+	[ self pickedChanges do: [ :change |
 			RBRefactoryChangeManager instance performChange: change ] ] asJob
 		title: 'Refactoring';
 		run
@@ -49,8 +49,6 @@ ChangesBrowser >> changes [
 ChangesBrowser >> changes: aCollection [
 
 	self model: aCollection
-
-	
 ]
 
 { #category : #accessing }
@@ -134,11 +132,11 @@ ChangesBrowser >> updateChanges [
 	"Later we could filter the shown changes depending on the selected scope"
 
 	changesTree roots: (aCompositeChange whatToDisplayIn: self).
-	selectedItems := Set withAll: changesTree roots.
+	selectedItems := Set withAll: changesTree roots
 ]
 
 { #category : #updating }
-ChangesBrowser >> updatePresenter [ 
+ChangesBrowser >> updatePresenter [
 
 	self model ifNil: [ ^ self ].
 	self updateChanges

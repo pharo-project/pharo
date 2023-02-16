@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #running }
-WindowAnnouncementTest >> tearDown [ 
+WindowAnnouncementTest >> tearDown [
 	window ifNotNil: [ window delete ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests - window change' }
@@ -36,7 +36,7 @@ WindowAnnouncementTest >> testMoving [
 	oldBounds := window bounds.
 	window announcer
 		when: WindowMoved
-		do: [ :ann | 
+		do: [ :ann |
 			t := t + 1.
 			event := ann ].
 
@@ -145,12 +145,12 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	t := 0.
 	self currentWorld announcer
 		when: WindowOpened
-		do: [ :ann | 
+		do: [ :ann |
 			t := t + 1.
 			newWindowCreated := ann window ].
 	self currentWorld announcer
 		when: WindowClosed
-		do: [ :ann | 
+		do: [ :ann |
 			t := t + 10.
 			newWindowCreated := ann window ].
 	window := SystemWindow labelled: 'foo'.
@@ -172,7 +172,7 @@ WindowAnnouncementTest >> testWindowLabelling [
 	labels := #().
 	self currentWorld announcer
 		when: WindowLabelled
-		do: [ :ann | 
+		do: [ :ann |
 			win := ann window.
 			labels := labels copyWith: ann label ].
 	window := SystemWindow labelled: 'foo'.

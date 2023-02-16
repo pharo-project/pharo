@@ -29,13 +29,13 @@ OSJoyAxisEvent >> accept: aVisitor [
 
 { #category : #accessing }
 OSJoyAxisEvent >> axis [
-	
+
 	^ axis
 ]
 
 { #category : #accessing }
 OSJoyAxisEvent >> axis: anObject [
-	
+
 	axis := anObject
 ]
 
@@ -101,18 +101,18 @@ OSJoyAxisEvent >> value [
 
 { #category : #accessing }
 OSJoyAxisEvent >> value: anObject [
-	
+
 	value := anObject
 ]
 
 { #category : #accessing }
 OSJoyAxisEvent >> which [
-	
+
 	^ which
 ]
 
 { #category : #accessing }
 OSJoyAxisEvent >> which: anObject [
-	
+
 	which := anObject
 ]

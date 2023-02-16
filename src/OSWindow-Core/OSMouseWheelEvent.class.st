@@ -18,24 +18,24 @@ OSMouseWheelEvent >> accept: aVisitor [
 
 { #category : #accessing }
 OSMouseWheelEvent >> scrollHorizontal [
-	
+
 	^ scrollHorizontal
 ]
 
 { #category : #accessing }
 OSMouseWheelEvent >> scrollHorizontal: anObject [
-	
+
 	scrollHorizontal := anObject
 ]
 
 { #category : #accessing }
 OSMouseWheelEvent >> scrollVertical [
-	
+
 	^ scrollVertical
 ]
 
 { #category : #accessing }
 OSMouseWheelEvent >> scrollVertical: anObject [
-	
+
 	scrollVertical := anObject
 ]

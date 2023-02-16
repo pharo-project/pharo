@@ -17,8 +17,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-OCMethodSemanticScope class >> targetingClass: aClass [ 
-	^self new 
+OCMethodSemanticScope class >> targetingClass: aClass [
+	^self new
 		targetClass: aClass
 ]
 

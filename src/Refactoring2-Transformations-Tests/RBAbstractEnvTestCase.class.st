@@ -15,7 +15,7 @@ RBAbstractEnvTestCase >> environmentOfTest [
 { #category : #running }
 RBAbstractEnvTestCase >> setUp [
 	super setUp.
-	testingEnvironment := Smalltalk globals.
+	testingEnvironment := Smalltalk globals
 ]
 
 { #category : #accessing }

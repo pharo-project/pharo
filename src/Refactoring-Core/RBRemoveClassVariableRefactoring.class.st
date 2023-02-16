@@ -18,7 +18,7 @@ RBRemoveClassVariableRefactoring >> preconditions [
 			( RBCondition
 				withBlock: [ | block |
 
-					block := [ :each | 
+					block := [ :each |
 					( each whichSelectorsReferToClassVariable: variableName ) isEmpty
 						ifFalse: [ class realClass
 								ifNil: [ self refactoringError: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]

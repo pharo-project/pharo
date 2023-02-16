@@ -37,7 +37,7 @@ IRMethod >> addAdditionalLiteral: aLiteral [
 ]
 
 { #category : #accessing }
-IRMethod >> addAdditionalLiterals: literals [ 
+IRMethod >> addAdditionalLiterals: literals [
 	additionalLiterals :=  literals
 ]
 
@@ -47,19 +47,19 @@ IRMethod >> addInstructionsAfter: aCollection [
 	aCollection ifEmpty: [^self].
 	returningSeqs := self allSequences select: [:each | each last isReturn].
 	lastInstr := returningSeqs last last.
-	lastInstr addInstructionsBefore: aCollection.
+	lastInstr addInstructionsBefore: aCollection
 ]
 
 { #category : #inlining }
 IRMethod >> addInstructionsBefore: aCollection [
 
-	(self startSequence nextSequence first) addInstructionsBefore: aCollection.
+	(self startSequence nextSequence first) addInstructionsBefore: aCollection
 ]
 
 { #category : #accessing }
 IRMethod >> addPragma: aPragma [
-	
-	pragmas add: aPragma.
+
+	pragmas add: aPragma
 ]
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ IRMethod >> allSequences [
 
 { #category : #enumerating }
 IRMethod >> allTempAccessInstructions [
-	^self allInstructionsMatching: [:bc | bc isTemp].
+	^self allInstructionsMatching: [:bc | bc isTemp]
 ]
 
 { #category : #inspector }
@@ -104,7 +104,7 @@ IRMethod >> children [
 
 { #category : #accessing }
 IRMethod >> compilationContext [
-	^ compilationContext ifNil: [ 
+	^ compilationContext ifNil: [
 		"only happens when decompiling or using stand-alone"
 		compilationContext := CompilationContext default]
 ]
@@ -117,7 +117,7 @@ IRMethod >> compilationContext: aCompilationContext [
 { #category : #translating }
 IRMethod >> compiledBlock: scope [
 
-	^compiledMethod 
+	^compiledMethod
 		ifNil: [self generateBlock: CompiledMethodTrailer empty withScope: scope ]
 		ifNotNil: [compiledMethod]
 ]
@@ -131,7 +131,7 @@ IRMethod >> compiledMethod [
 { #category : #translating }
 IRMethod >> compiledMethodWith: trailer [
 
-	^compiledMethod 
+	^compiledMethod
 		ifNil: [self generate: trailer ]
 		ifNotNil: [compiledMethod]
 ]
@@ -157,18 +157,18 @@ IRMethod >> generate [
 
 { #category : #translating }
 IRMethod >> generate: trailer [
-	
+
 	| irTranslator |
    irTranslator := IRTranslator context: compilationContext trailer: trailer.
-	irTranslator 
+	irTranslator
 		visitNode: self;
 		pragmas: pragmas.
 	compiledMethod := irTranslator compiledMethod.
-	self sourceNode 
-		ifNotNil: [ 
+	self sourceNode
+		ifNotNil: [
 			compiledMethod classBinding: self sourceNode methodClass binding.
 			compiledMethod selector: self sourceNode selector ]
-		ifNil: [ 
+		ifNil: [
 			compiledMethod classBinding: UndefinedObject binding.
 			compiledMethod selector: #UndefinedMethod ].
 	^ compiledMethod
@@ -178,7 +178,7 @@ IRMethod >> generate: trailer [
 IRMethod >> generateBlock: trailer withScope: scope [
 	| irTranslator |
       irTranslator := IRTranslator context: compilationContext trailer: trailer.
-	irTranslator 
+	irTranslator
 		pushOuterVectors: scope;
 		visitNode: self;
 		pragmas: pragmas.
@@ -199,20 +199,20 @@ IRMethod >> initialize [
 	tempMap := Dictionary new.
 	pragmas := OrderedCollection new.
 	additionalLiterals := OCLiteralSet new.
-	numArgs := 0.
+	numArgs := 0
 ]
 
 { #category : #decompiling }
 IRMethod >> instructionsForDecompiling [
 	"return all instructions, but skip the block bodies, as the decompiler
 	recurses over blocks"
-	
-	^startSequence instructionsForDecompiling allButFirst.
+
+	^startSequence instructionsForDecompiling allButFirst
 ]
 
 { #category : #accessing }
 IRMethod >> ir [
-	^self.
+	^self
 ]
 
 { #category : #accessing }
@@ -229,7 +229,7 @@ IRMethod >> irPrimitive: aPrimitiveNode [
 
 { #category : #testing }
 IRMethod >> isSend [
-	^false.
+	^false
 ]
 
 { #category : #printing }
@@ -242,7 +242,7 @@ IRMethod >> longPrintOn: stream [
 
 { #category : #accessing }
 IRMethod >> method [
-	^self.
+	^self
 ]
 
 { #category : #accessing }
@@ -279,7 +279,7 @@ IRMethod >> properties [
 
 { #category : #accessing }
 IRMethod >> properties: propDict [
-	properties := propDict.
+	properties := propDict
 ]
 
 { #category : #optimizing }
@@ -287,7 +287,7 @@ IRMethod >> removeEmptyStart [
 
 	 (startSequence size = 1) ifTrue: [
         "startSeq is just unconditional jump, forget it"
-        startSequence := startSequence last destination].
+        startSequence := startSequence last destination]
 ]
 
 { #category : #accessing }
@@ -315,7 +315,7 @@ IRMethod >> startSequence [
 IRMethod >> startSequence: irSequence [
 
 	startSequence := irSequence.
-	irSequence method: self.
+	irSequence method: self
 ]
 
 { #category : #accessing }

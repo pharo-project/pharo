@@ -48,20 +48,20 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 RBDeprecateMethodDriver >> execute [
 
 	| compositeChange |
-	compositeChange := [ 
-	                   [ 
+	compositeChange := [
+	                   [
 	                   [ refactoring generateChanges ]
 		                   on: RBInputValidationFailedError
-		                   do: [ :err | 
+		                   do: [ :err |
 			                   methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
 			                   refactoring newSelector:
 				                   methodToReplaceDeprecatedMethod.
 									err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
-		                   do: [ :err | 
+		                   do: [ :err |
 		                   ^ RBRefactoringFailure signal: err messageText ] ]
 		                   on: RBBreakingChangeChecksFailedWarning
-		                   do: [ :err | 
+		                   do: [ :err |
 			                   RBRefactoringWarning signal: err messageText.
 			                   "If user answers no, error is being propagated."
 			                   err resume ].
@@ -86,5 +86,5 @@ RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
 { #category : #utilities }
 RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
 
-	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment 
+	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
 ]

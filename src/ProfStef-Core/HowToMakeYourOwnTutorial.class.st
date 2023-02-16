@@ -11,9 +11,9 @@ Class {
 
 { #category : #lessons }
 HowToMakeYourOwnTutorial >> createLessonFactoryMethods [
-	^ Lesson 
+	^ Lesson
 title: 'Lesson factory methods'
-lesson: 
+lesson:
 '"Next, create category ''lessons'' and add a method per lesson.
 
 Each method must return a Lesson object.
@@ -24,7 +24,7 @@ HowToDebug compile:
 ''useSelfHalt
 	^ Lesson
 title: ''''self halt''''
-lesson: 
+lesson:
 ''''"Put self halt. in the method you want to debug."
 
 ProfStef next.''''''
@@ -34,7 +34,7 @@ HowToDebug compile:
 ''examineStackTrace
 	^ Lesson
 title: ''''self halt''''
-lesson: 
+lesson:
 ''''"Look at PharoDebug.log."
 
 ProfStef next.''''''
@@ -44,18 +44,18 @@ HowToDebug compile:
 ''changeReturnValue
 	^ Lesson
 title: ''''Change return value''''
-lesson: 
+lesson:
 ''''"Easy in the debugger !"''''''
 classified: ''lessons''.
 
-ProfStef next.'.
+ProfStef next.'
 ]
 
 { #category : #lessons }
 HowToMakeYourOwnTutorial >> implementTutorial [
-	^ Lesson 
+	^ Lesson
 title: 'Implement tutorial method'
-lesson: 
+lesson:
 '"Finally implement the tutorial method to return an Array of your lesson factory methods:"
 
 HowToDebug compile:
@@ -68,25 +68,25 @@ HowToDebug compile:
 classified: ''tutorial''.
 
 
-ProfStef next.'.
+ProfStef next.'
 ]
 
 { #category : #lessons }
 HowToMakeYourOwnTutorial >> runYourTutorial [
-	^ Lesson 
+	^ Lesson
 title: 'Run your tutorial'
-lesson: 
-'"You can run your fresh new tutorial like this:" 
+lesson:
+'"You can run your fresh new tutorial like this:"
 
-ProfStef goOn: HowToDebug.'.
+ProfStef goOn: HowToDebug.'
 ]
 
 { #category : #lessons }
 HowToMakeYourOwnTutorial >> subclassAbstractTutorial [
-	^ Lesson 
+	^ Lesson
 title: 'AbstractTutorial'
-lesson: 
-'"Here are the steps to create your own Pharo tutorial. 
+lesson:
+'"Here are the steps to create your own Pharo tutorial.
 
 First, create a subclass of AbstractTutorial. For example:"
 
@@ -95,12 +95,12 @@ AbstractTutorial subclass: #HowToDebug
 	classVariableNames: ''''
 	poolDictionaries: ''''
 	category: ''YourTutorial''.
-	
+
 ProfStef next.'
 ]
 
 { #category : #tutorial }
-HowToMakeYourOwnTutorial >> tutorial [ 
+HowToMakeYourOwnTutorial >> tutorial [
 	^ #(
 		subclassAbstractTutorial
 		createLessonFactoryMethods

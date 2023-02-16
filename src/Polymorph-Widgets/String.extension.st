@@ -17,7 +17,7 @@ String >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont 
 
 	aCanvas
 		drawString: self
-		in: drawBounds 
+		in: drawBounds
 		font: aMorph font
 		color: drawColor
 ]

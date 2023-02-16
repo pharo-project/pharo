@@ -14,8 +14,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-FFITypeDeclaration class >> typeName: aString arity: anInteger [ 
-	
+FFITypeDeclaration class >> typeName: aString arity: anInteger [
+
 	^ self new
 		name: aString;
 		arity: anInteger;
@@ -34,7 +34,7 @@ FFITypeDeclaration >> arity: anObject [
 
 { #category : #converting }
 FFITypeDeclaration >> asOldArraySpec [
-	
+
 	^ { name . arity }
 ]
 
@@ -46,13 +46,13 @@ FFITypeDeclaration >> defaultReturnOnError [
 
 { #category : #'emitting code' }
 FFITypeDeclaration >> emitReturn: anIRBuilder resultTempVar: aString context: aContext inCallout: aCallout [
-	
+
 	^ resolvedType emitReturn: anIRBuilder resultTempVar: aString context: aContext inCallout: aCallout
 ]
 
 { #category : #accessing }
 FFITypeDeclaration >> externalTypeWithArity [
-	
+
 	^ resolvedType externalTypeWithArity
 ]
 
@@ -76,8 +76,8 @@ FFITypeDeclaration >> resolveUsing: aResolver [
 ]
 
 { #category : #resolution }
-FFITypeDeclaration >> resolveUsing: aResolver forArgument: aFFIVariableArgument [ 
-	
+FFITypeDeclaration >> resolveUsing: aResolver forArgument: aFFIVariableArgument [
+
 	^ self resolveUsing: aResolver
 ]
 

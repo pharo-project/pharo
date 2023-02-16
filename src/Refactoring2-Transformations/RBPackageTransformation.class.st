@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #accessing }
-RBPackageTransformation class >> model: aRBModel packageName: aName [ 
+RBPackageTransformation class >> model: aRBModel packageName: aName [
 	^ self new
 		model: aRBModel;
 		packageName: aName;
@@ -40,9 +40,9 @@ RBPackageTransformation >> packageName: anObject [
 ]
 
 { #category : #preconditions }
-RBPackageTransformation >> preconditions [ 
+RBPackageTransformation >> preconditions [
 	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error 
+			on: Error
 			do: [ :e | self refactoringError: e messageText ]
 		])
 ]

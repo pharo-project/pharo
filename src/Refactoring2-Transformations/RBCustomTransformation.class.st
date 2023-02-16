@@ -42,7 +42,7 @@ RBCustomTransformation class >> with: aBlockWithOneArg [
 { #category : #preconditions }
 RBCustomTransformation >> preconditions [
 	"no precondition so far"
-	
+
 	^ self emptyCondition
 ]
 
@@ -53,7 +53,7 @@ RBCustomTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBCustomTransformation >> storeOn: aStream [ 
+RBCustomTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

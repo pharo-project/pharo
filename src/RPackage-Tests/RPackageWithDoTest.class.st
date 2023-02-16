@@ -11,25 +11,25 @@ Class {
 }
 
 { #category : #'tests - simple ensuring' }
-RPackageWithDoTest >> do: aBlock [ 
+RPackageWithDoTest >> do: aBlock [
 
 	x := 5.
 	[aBlock value] ensure: [x :=3.]
 ]
 
 { #category : #'tests - simple ensuring' }
-RPackageWithDoTest >> doC: aBlock [ 
-	
+RPackageWithDoTest >> doC: aBlock [
+
 	x := 5.
 	[aBlock value] ifCurtailed: [x :=3]
 ]
 
 { #category : #'tests - simple ensuring' }
-RPackageWithDoTest >> doOnDo: aBlock [ 
-	
+RPackageWithDoTest >> doOnDo: aBlock [
+
 	x := 5.
 	[aBlock value.
-	self ensure] on: Error do:  [:ex | self ensure].
+	self ensure] on: Error do:  [:ex | self ensure]
 ]
 
 { #category : #'tests - simple ensuring' }

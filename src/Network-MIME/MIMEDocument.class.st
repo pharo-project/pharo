@@ -20,16 +20,16 @@ MIMEDocument class >> content: aString [
 
 { #category : #'instance creation' }
 MIMEDocument class >> contentStream: aStream [
-	^ self 
-		contentStream: aStream 
+	^ self
+		contentStream: aStream
 		mimeType: self defaultMIMEType
 ]
 
 { #category : #'instance creation' }
-MIMEDocument class >> contentStream: aStream mimeType: aMimeType [ 
+MIMEDocument class >> contentStream: aStream mimeType: aMimeType [
 	"create a MIMEDocument with the given content-type and contentStream"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType contentStream: (ReadStream on: 'This is a test')"
-	
+
 	^self contentStream: aStream mimeType: aMimeType uri: aStream uri
 ]
 
@@ -37,7 +37,7 @@ MIMEDocument class >> contentStream: aStream mimeType: aMimeType [
 MIMEDocument class >> contentStream: aStream mimeType: aMimeType uri: aURI [
 	"create a MIMEDocument with the given content-type and contentStream"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType contentStream: (ReadStream on: 'This is a test')"
-	
+
 	^self new contentStream: aStream mimeType: aMimeType uri: aURI
 ]
 
@@ -45,7 +45,7 @@ MIMEDocument class >> contentStream: aStream mimeType: aMimeType uri: aURI [
 MIMEDocument class >> contentType: aMIMEType content: content [
 	"create a MIMEDocument with the given content-type and content"
 	"MIMEDocument contentType: 'text/plain' content: 'This is a test'"
-	
+
 	^ self new
 		privateContent: content;
 		type: aMIMEType asZnMimeType;
@@ -54,9 +54,9 @@ MIMEDocument class >> contentType: aMIMEType content: content [
 
 { #category : #compatibility }
 MIMEDocument class >> contentType: type content: content url: url [
-	^ self 
-		contents: content 
-		mimeType: type asZnMimeType 
+	^ self
+		contents: content
+		mimeType: type asZnMimeType
 		uri: url
 ]
 
@@ -87,16 +87,16 @@ MIMEDocument class >> contentTypeXml [
 
 { #category : #'instance creation' }
 MIMEDocument class >> contents: aString [
-	^ self 
-		contents: aString 
+	^ self
+		contents: aString
 		mimeType: self defaultMIMEType
 ]
 
 { #category : #'instance creation' }
-MIMEDocument class >> contents: content mimeType: aMimeType [ 
+MIMEDocument class >> contents: content mimeType: aMimeType [
 	"create a MIMEDocument with the given content-type and content"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType content: 'This is a test'"
-	
+
 	^self contents: content mimeType: aMimeType uri: nil
 ]
 
@@ -104,7 +104,7 @@ MIMEDocument class >> contents: content mimeType: aMimeType [
 MIMEDocument class >> contents: content mimeType: aMimeType uri: aURL [
 	"create a MIMEDocument with the given content-type and content"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType content: 'This is a test'"
-	
+
 	^self new contents: content mimeType: aMimeType uri: aURL
 ]
 
@@ -133,7 +133,7 @@ MIMEDocument class >> guessTypeFromExtension: ext [
 { #category : #compatibility }
 MIMEDocument class >> guessTypeFromName: url [
 	"guesses a content type from the url"
-	
+
 	| extension |
 	extension := url asString copyAfterLast: $..
 	^ ZnMimeType
@@ -269,7 +269,7 @@ MIMEDocument >> printOn: aStream [
 		ifNotNil: [ aStream
 			print: self contents size;
 			nextPutAll: ' bytes)' ]
-		ifNil: [ aStream nextPutAll: 'unknown size)' ].
+		ifNil: [ aStream nextPutAll: 'unknown size)' ]
 ]
 
 { #category : #private }
@@ -279,8 +279,8 @@ MIMEDocument >> privateContent: aString [
 
 { #category : #files }
 MIMEDocument >> saveToFile: pathString [
-	pathString asFileReference 
-		binaryWriteStreamDo: [ :out | 
+	pathString asFileReference
+		binaryWriteStreamDo: [ :out |
 			out nextPutAll: self contents ]
 ]
 

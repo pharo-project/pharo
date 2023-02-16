@@ -18,7 +18,7 @@ OmDeferrerTest >> count [
 ]
 
 { #category : #accessing }
-OmDeferrerTest >> count: anInteger [ 
+OmDeferrerTest >> count: anInteger [
 
 	count := anInteger
 ]
@@ -35,15 +35,15 @@ OmDeferrerTest >> testExecuteOnceAfterScheduling [
 	self skipOnPharoCITestingEnvironment.
 
 	self count: 0.
-	deferrer := OmDeferrer 
+	deferrer := OmDeferrer
 		send: #increase
 		to: self
 		after: 250 milliSeconds.
 
 	deferrer schedule.
 	(Delay forMilliseconds: 350) wait.
-	
-	self assert: self count equals: 1.
+
+	self assert: self count equals: 1
 ]
 
 { #category : #tests }
@@ -52,7 +52,7 @@ OmDeferrerTest >> testExecuteWithoutDelay [
 	self skipOnPharoCITestingEnvironment.
 
 	self count: 0.
-	deferrer := OmDeferrer 
+	deferrer := OmDeferrer
 		send: #increase
 		to: self
 		after: 0 milliSeconds.
@@ -61,6 +61,6 @@ OmDeferrerTest >> testExecuteWithoutDelay [
 
 	"Just to document it needs an interruption"
 	self assert: self count equals: 0.
-	Processor yield.	
-	self assert: self count equals: 1.
+	Processor yield.
+	self assert: self count equals: 1
 ]
