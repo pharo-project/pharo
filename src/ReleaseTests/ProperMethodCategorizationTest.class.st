@@ -142,7 +142,7 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 
 	self 
 		assert: violating size <= 4 
-		description: 'Instance side #initialize methods should be in "class initialization" method category:' , violating asString
+		description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]
 
 { #category : #tests }
