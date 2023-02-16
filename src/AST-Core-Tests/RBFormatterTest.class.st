@@ -143,9 +143,9 @@ RBFormatterTest >> testParseError [
 		"Bad assignments"
 		"FIXME, `:=` without variable is badly parsed."
 		'a := '.
-		':='.
-		':=2' -> ' :=.<r>2'.
-		'1:=2' -> ' 1.<r> :=.<r>2'.
+		':= '.
+		':= 2'.
+		'1:=2' -> ' 1.<r>:= 2'.
 
 		"Bad cascades"
 		"FIXME: the formater is currently broken on some cases (message send to nil)"
