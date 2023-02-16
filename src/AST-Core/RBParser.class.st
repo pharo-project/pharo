@@ -322,8 +322,19 @@ RBParser >> parseAssignment [
 	make it possible to assign the literals true, false and nil."
 
 	| node position |
+	currentToken isAssignment ifTrue: [
+		self parserError: 'identifier expected in assigment'.
+		position := currentToken start.
+		self step. "Consume the :="
+		node := self parseAssignment. "parse the right side".
+		node := RBAssignmentErrorNode content: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
+		node value: ':='.
+		^ node
+	].
+
 	(currentToken isIdentifier and: [self nextToken isAssignment])
 		ifFalse: [^self parseCascadeMessage].
+
 	node := self parseVariableNode.
 	position := currentToken start.
 	self step.
