@@ -33,9 +33,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-RemoteString class >> newFileNumber: sourceIndex position: anInteger [ 
-	"Answer an instance of me fora file indexed by sourceIndex, at the 
-	position anInteger. Assume that the string is already stored on the file 
+RemoteString class >> newFileNumber: sourceIndex position: anInteger [
+	"Answer an instance of me fora file indexed by sourceIndex, at the
+	position anInteger. Assume that the string is already stored on the file
 	and the instance will be used to access it."
 
 	^self new fileNumber: sourceIndex position: anInteger
@@ -43,7 +43,7 @@ RemoteString class >> newFileNumber: sourceIndex position: anInteger [
 
 { #category : #'instance creation' }
 RemoteString class >> newString: aString [
-	"Answer an instance of me for string, aString, on changes file. 
+	"Answer an instance of me for string, aString, on changes file.
 	Put the string on the file and create the remote reference."
 
 	^self new string: aString
@@ -51,16 +51,16 @@ RemoteString class >> newString: aString [
 
 { #category : #'instance creation' }
 RemoteString class >> newString: aString onFileNumber: sourceIndex toFile: aFileStream [
-	"Answer an instance of me for string, aString, on file indexed by 
-	sourceIndex. Put the string on the file, aFileStream, and create the 
-	remote reference. Assume that the index corresponds properly to 
+	"Answer an instance of me for string, aString, on file indexed by
+	sourceIndex. Put the string on the file, aFileStream, and create the
+	remote reference. Assume that the index corresponds properly to
 	aFileStream."
 
 	^self new string: aString onFileNumber: sourceIndex toFile: aFileStream
 ]
 
 { #category : #private }
-RemoteString >> fileNumber: fileNumber position: position [ 
+RemoteString >> fileNumber: fileNumber position: position [
 
 	sourceFileNumber := fileNumber.
 	filePositionHi := position
@@ -72,7 +72,7 @@ RemoteString >> last [
 ]
 
 { #category : #accessing }
-RemoteString >> position [ 
+RemoteString >> position [
 	"Answer the location of the string on a file."
 
 	^ filePositionHi
@@ -102,12 +102,12 @@ RemoteString >> sourcePointer [
 ]
 
 { #category : #accessing }
-RemoteString >> string [ 
+RemoteString >> string [
 	"Answer the receiver's string if remote files are enabled, or nil."
 
-	^ self sourceFileArray 
-		readStreamAtFileIndex: sourceFileNumber 
-		atPosition: filePositionHi 
+	^ self sourceFileArray
+		readStreamAtFileIndex: sourceFileNumber
+		atPosition: filePositionHi
 		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
 		ifAbsent: [ nil ]
 ]
@@ -118,14 +118,14 @@ RemoteString >> string: aString [
 
 	self sourceFileArray changesWriteStreamDo: [ :theFile |
 		theFile cr.
-		self 
-			string: aString 
+		self
+			string: aString
 			onFileNumber: 2
 			toFile: theFile ]
 ]
 
 { #category : #chunk }
-RemoteString >> string: aString onFileNumber: fileNumber toFile: aFileStream [ 
+RemoteString >> string: aString onFileNumber: fileNumber toFile: aFileStream [
 	"Store this as the receiver's string if source files exist."
 
 	| position |
