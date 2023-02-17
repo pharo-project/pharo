@@ -4,5 +4,5 @@ Extension { #name : #Object }
 Object >> asStringOrText [
 	"Answer a string that represents the receiver."
 
-	^ self asString 
+	^ self asString
 ]
