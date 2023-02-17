@@ -20,7 +20,7 @@ TFCallbackSameProcessRunStrategy class >> new [
 ]
 
 { #category : #'instance creation' }
-TFCallbackSameProcessRunStrategy class >> uniqueInstance [ 
+TFCallbackSameProcessRunStrategy class >> uniqueInstance [
 
 	^ Instance ifNil: [ Instance := self basicNew initialize; yourself]
 ]
@@ -30,11 +30,11 @@ TFCallbackSameProcessRunStrategy >> callbackProcess [
 
 	(callbackProcess isNotNil and: [ callbackProcess isTerminated not ])
 		ifTrue: [ ^ callbackProcess ].
-		
+
 	callbackProcess := [ self waitForever ] newProcess.
 	callbackProcess priority: Processor highIOPriority - 1.
 	callbackProcess resume.
-	^ callbackProcess.
+	^ callbackProcess
 ]
 
 { #category : #private }
@@ -48,16 +48,16 @@ TFCallbackSameProcessRunStrategy >> executeCallback: aCallbackInvocation on: aTF
 
 	| process newContext methodToUse |
 	process := self callbackProcess.
-		
+
 	"I will reuse the same process if it is not used already. Reentrant callbacks should fork a new process"
 	(process isSuspended and: [ process suspendedContext homeMethod = (self class >> #waitForever) ])
-		ifFalse: [ ^ super executeCallback: aCallbackInvocation on: aTFRunner ].	
+		ifFalse: [ ^ super executeCallback: aCallbackInvocation on: aTFRunner ].
 
 	methodToUse := self class >> #doExecuteCallback:on:.
-	
-	newContext := Context 
-		sender: process suspendedContext 
-		receiver: self 
+
+	newContext := Context
+		sender: process suspendedContext
+		receiver: self
 		method: methodToUse
 		arguments: {aCallbackInvocation. aTFRunner}.
 

@@ -13,8 +13,8 @@ Class {
 }
 
 { #category : #handling }
-TFTestCallbackExceptionHandler >> handleExceptionDuring: aBlockClosure [ 
-	
+TFTestCallbackExceptionHandler >> handleExceptionDuring: aBlockClosure [
+
 	aBlockClosure on: Exception do: [ :e |
 		lastException := e freeze.
 		available signal ]
@@ -24,7 +24,7 @@ TFTestCallbackExceptionHandler >> handleExceptionDuring: aBlockClosure [
 TFTestCallbackExceptionHandler >> initialize [
 
 	super initialize.
-	available := Semaphore new.
+	available := Semaphore new
 ]
 
 { #category : #accessing }
