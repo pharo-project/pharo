@@ -26,24 +26,24 @@ Class {
 }
 
 { #category : #building }
-StoredSettingsFactory >> from: aSettingNode [ 
+StoredSettingsFactory >> from: aSettingNode [
 	storedSetting := nil.
-	aSettingNode item acceptSettings: self. 
-	storedSetting ifNotNil: [ 
+	aSettingNode item acceptSettings: self.
+	storedSetting ifNotNil: [
 		storedSetting settingNodeIdentifier: aSettingNode settingNodeIdentifier ].
 	^ storedSetting
 ]
 
 { #category : #building }
-StoredSettingsFactory >> fromSettingNodes: aCollectionOfSettingNodes [ 
+StoredSettingsFactory >> fromSettingNodes: aCollectionOfSettingNodes [
 	storedSettings := OrderedCollection new.
-	
-	aCollectionOfSettingNodes 
-		select: [ :eachSettingNode | 
-			eachSettingNode item hasValue ] 
+
+	aCollectionOfSettingNodes
+		select: [ :eachSettingNode |
+			eachSettingNode item hasValue ]
 		thenDo: [ :eachSettingNode |
 			(self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
-	
+
 	^ storedSettings
 ]
 
@@ -54,7 +54,7 @@ StoredSettingsFactory >> newAbsolutePathStoredSetting [
 
 { #category : #'instance creation' }
 StoredSettingsFactory >> newClassStoredSetting [
-	^ storedSetting := ClassStoredSetting new.
+	^ storedSetting := ClassStoredSetting new
 ]
 
 { #category : #'instance creation' }
@@ -79,7 +79,7 @@ StoredSettingsFactory >> newRelativePathStoredSetting [
 
 { #category : #'instance creation' }
 StoredSettingsFactory >> newStoredSetting [
-	^ storedSetting := StoredSetting new.
+	^ storedSetting := StoredSetting new
 ]
 
 { #category : #'instance creation' }
@@ -93,29 +93,29 @@ StoredSettingsFactory >> newThemeIconsStoredSetting [
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitAbsolutePath: anAbsolutePath [ 
+StoredSettingsFactory >> visitAbsolutePath: anAbsolutePath [
 	self newAbsolutePathStoredSetting realValue: anAbsolutePath segments
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitAbstractFileReference: aFileReference [ 
-	aFileReference path acceptSettings: self.
+StoredSettingsFactory >> visitAbstractFileReference: aFileReference [
+	aFileReference path acceptSettings: self
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitClass: aClass [ 
-	self newClassStoredSetting realValue: aClass name.
+StoredSettingsFactory >> visitClass: aClass [
+	self newClassStoredSetting realValue: aClass name
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitFileLocator: aFileLocator [ 
-	self newFileLocatorStoreSetting 
+StoredSettingsFactory >> visitFileLocator: aFileLocator [
+	self newFileLocatorStoreSetting
 			origin: aFileLocator origin;
 			pathSegments: aFileLocator path segments
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitLogicalFont: aLogicalFont [ 
+StoredSettingsFactory >> visitLogicalFont: aLogicalFont [
 	self newLogicalFontStoredSetting
 		fontClassName: aLogicalFont class name;
 		familyName: aLogicalFont familyName;
@@ -123,26 +123,26 @@ StoredSettingsFactory >> visitLogicalFont: aLogicalFont [
 		pointSize: aLogicalFont pointSize;
 		stretchValue: aLogicalFont stretchValue;
 		weightValue: aLogicalFont weightValue;
-		slantValue: aLogicalFont slantValue.
+		slantValue: aLogicalFont slantValue
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitObject: anObject [ 
+StoredSettingsFactory >> visitObject: anObject [
 	self newStoredSetting realValue: anObject
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitPragmaSetting: aPragmaSetting [ 
+StoredSettingsFactory >> visitPragmaSetting: aPragmaSetting [
 	"do nothing"
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitRelativePath: aRelativePath [ 
+StoredSettingsFactory >> visitRelativePath: aRelativePath [
 	self newRelativePathStoredSetting realValue: aRelativePath segments
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitSettingDeclaration: aSettingDeclaration [ 
+StoredSettingsFactory >> visitSettingDeclaration: aSettingDeclaration [
 
 	aSettingDeclaration realValue acceptSettings: self.
 
@@ -150,8 +150,8 @@ StoredSettingsFactory >> visitSettingDeclaration: aSettingDeclaration [
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitStrikeFont: aStrikeFont [ 
-	self newStrikeFontStoredSetting 
+StoredSettingsFactory >> visitStrikeFont: aStrikeFont [
+	self newStrikeFontStoredSetting
 			fontClassName: aStrikeFont class name;
 			familyName: aStrikeFont familyName;
 			pointSize: aStrikeFont pointSize;
@@ -159,8 +159,8 @@ StoredSettingsFactory >> visitStrikeFont: aStrikeFont [
 ]
 
 { #category : #visitor }
-StoredSettingsFactory >> visitThemeIcons: aThemeIcons [ 
-	self newThemeIconsStoredSetting 
+StoredSettingsFactory >> visitThemeIcons: aThemeIcons [
+	self newThemeIconsStoredSetting
 			name: aThemeIcons name;
 			url: aThemeIcons url
 ]
