@@ -9,7 +9,6 @@ Class {
 
 { #category : #testing }
 DAReferenceDependencyNode >> browseSendersOrUsers [
-	
 ]
 
 { #category : #accessing }
