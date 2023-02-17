@@ -37,7 +37,7 @@ SettingNodeBuilder >> dialog: aSymbol [
 ]
 
 { #category : #'declaration accessing' }
-SettingNodeBuilder >> domainValues: aCollection [ 
+SettingNodeBuilder >> domainValues: aCollection [
 	node item domainValues: aCollection
 ]
 
@@ -113,7 +113,7 @@ SettingNodeBuilder >> parentName [
 
 { #category : #'declaration accessing' }
 SettingNodeBuilder >> parentName: aSymbol [
-	node parentName: aSymbol.
+	node parentName: aSymbol
 ]
 
 { #category : #'declaration accessing' }
