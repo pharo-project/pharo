@@ -126,23 +126,20 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 
 { #category : #'tests - initialization' }
 ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInInitializationProtocol [
-
 	"The instance side #initialize methods should be in method protocol 'initialization'"
 
 	| violating instanceSideInitializeMethods |
 	violating := OrderedCollection new.
 	instanceSideInitializeMethods := OrderedCollection new.
 
-	Object allSubclassesDo: [:cls | 
-		cls methods do: [:method | 
-			(method selector = #initialize and: [ method isClassSide not and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
-				ifTrue: [ instanceSideInitializeMethods add: method ]]].
+	Object allSubclassesDo: [ :cls |
+		cls methods do: [ :method |
+			(method selector = #initialize and: [ method isClassSide not and: [ (method package name beginsWith: 'SmalltalkCI') not ] ]) ifTrue: [
+				instanceSideInitializeMethods add: method ] ] ].
 
-	violating := instanceSideInitializeMethods select: [:m | m protocol ~= #initialization ].
+	violating := instanceSideInitializeMethods select: [ :m | m protocol ~= #initialization ].
 
-	self 
-		assert: violating size <= 4 
-		description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
+	self assert: violating isEmpty description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]
 
 { #category : #tests }
