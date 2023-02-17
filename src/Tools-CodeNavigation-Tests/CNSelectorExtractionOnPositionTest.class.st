@@ -74,7 +74,7 @@ CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 { #category : #helpers }
 CNSelectorExtractionOnPositionTest >> methodWithSpacesAtTheEnd [
 	"Please do not remove the leading spaces"
-	^ 1 someMessageFollowedBySpaces
+	^ 1 someMessageFollowedBySpaces  
 ]
 
 { #category : #helpers }
