@@ -1960,7 +1960,7 @@ SystemWindow >> wantsSteps [
 
 	model ifNil: [ ^ false ].
 
-	(model respondsTo: #wantsStpes) ifFalse: [ ^ false ].
+	(model respondsTo: #wantsSteps) ifFalse: [ ^ false ].
 
 	^ model wantsSteps
 ]
