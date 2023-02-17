@@ -6,8 +6,7 @@ SequenceableCollection >> closeTo: aSequenceableCollection [
 
 	"#(1.9283901234902349 2.302949083493849) closeTo: #(1.9283901234902348 2.302949083493899) >>> true"
 
-	self with: aSequenceableCollection do: [ :a :b | (a closeTo: b) ifFalse: [ ^ false ] ].
-	^ true
+	^ self closeTo: aSequenceableCollection precision: Float defaultComparisonPrecision
 ]
 
 { #category : #'*Math-Operations-Extensions' }
