@@ -30,10 +30,10 @@ SystemNavigation >> allBehaviorsDo: aBlock [
 ]
 
 { #category : #query }
-SystemNavigation >> allCallsOn: aSymbol [ 
+SystemNavigation >> allCallsOn: aSymbol [
 	"Answer a Collection of all the methods that call on the provided symbol even deeply embedded in literal array."
 	"self new allCallsOn: #allCallsOn:"
-	
+
 	^ self allReferencesTo: aSymbol
 ]
 
@@ -61,7 +61,7 @@ SystemNavigation >> allClasses [
 { #category : #query }
 SystemNavigation >> allClassesAndTraits [
 	"Answer all the classes and traits present in the image. Note that metaclasses are not part of the answer"
-	
+
 	^ self environment allClassesAndTraits
 ]
 
@@ -72,7 +72,7 @@ SystemNavigation >> allClassesDo: aBlock [
 ]
 
 { #category : #query }
-SystemNavigation >> allClassesImplementing: aSelector [  
+SystemNavigation >> allClassesImplementing: aSelector [
 	"Answer all classes that implement the message aSelector."
 	^self allBehaviors select: [:class | class includesSelector: aSelector]
 ]
@@ -88,7 +88,7 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 SystemNavigation >> allGlobalRefsOn: aSymbol [
 	"Answer all references to globals"
 	"self new allGlobalRefsOn: #ActiveWorld"
-	
+
 	| binding|
 	binding := self environment bindingOf: aSymbol.
 	binding ifNil: [ ^ #() ].
@@ -98,7 +98,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 { #category : #query }
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
-	
+
 	^Symbol selectorTable
 ]
 
@@ -118,13 +118,13 @@ SystemNavigation >> allMethods [
 ]
 
 { #category : #query }
-SystemNavigation >> allMethodsSelect: aBlock [ 
+SystemNavigation >> allMethodsSelect: aBlock [
 	"Answer a SortedCollection of each method that, when used as the block  argument to aBlock, gives a true result."
-	
+
 	| aCollection |
 	aCollection := OrderedCollection new.
-	self allBehaviorsDo: [:class | 
-		class	methodsDo: [:m | 
+	self allBehaviorsDo: [:class |
+		class	methodsDo: [:m |
 			(aBlock value: m) ifTrue: [aCollection add: m]]].
 	^ aCollection
 ]
@@ -132,15 +132,15 @@ SystemNavigation >> allMethodsSelect: aBlock [
 { #category : #query }
 SystemNavigation >> allObjects [
 	"Answer an Array of all objects in the system.  Fail if there isn't enough memory to instantiate the result."
-	
+
 	<primitive: 178>
 	^ self primitiveFailed
 ]
 
 { #category : #query }
-SystemNavigation >> allObjectsDo: aBlock [ 
+SystemNavigation >> allObjectsDo: aBlock [
 	"Evaluate the argument, aBlock, for each object in the system, excluding immediates such as SmallInteger and Character."
-	
+
 	self allObjectsOrNil
 		ifNotNil: [ :allObjects| allObjects do: aBlock ]
 		ifNil: [ self error:'Error allocating a big enough array for all objects' ]
@@ -149,7 +149,7 @@ SystemNavigation >> allObjectsDo: aBlock [
 { #category : #query }
 SystemNavigation >> allObjectsOrNil [
 	"Answer an Array of all objects in the system.  Fail if there isn't enough memory to instantiate the result and answer nil."
-	
+
 	<primitive: 178>
 	^ nil
 ]
@@ -160,7 +160,7 @@ SystemNavigation >> allPrimitiveMethods [
 
 	^self allMethods
 		select: [ :method | method isPrimitive ]
-		thenCollect: [ :method | method methodClass name , ' ' , 
+		thenCollect: [ :method | method methodClass name , ' ' ,
 			     method selector , ' ', method primitive printString ]
 ]
 
@@ -178,7 +178,7 @@ SystemNavigation >> allReferencesTo: aLiteral [
 { #category : #query }
 SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 	"Perform aBlock on all the references to aLiteral."
-	
+
 	| symbol |
 	symbol := aLiteral isSymbol.
 	self allBehaviorsDo: [ :class |
@@ -210,7 +210,7 @@ SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 ]
 
 { #category : #'message sends' }
-SystemNavigation >> allSendersOf: selector [ 
+SystemNavigation >> allSendersOf: selector [
 	^self allReferencesTo: selector
 ]
 
@@ -219,10 +219,10 @@ SystemNavigation >> allSentMessages [
 	"Answer the set of selectors which are sent somewhere in the system."
 	| sent |
 	sent := IdentitySet new.
-	self allBehaviorsDo: [:each | 
+	self allBehaviorsDo: [:each |
 				each selectors
 					do: [:sel | "Include all sels, but not if sent by self"
-						(each compiledMethodAt: sel) literalsDo: [:m | 
+						(each compiledMethodAt: sel) literalsDo: [:m |
 								(m isSymbol) ifTrue: ["might be sent"
 										m == sel ifFalse: [sent add: m]].
 								(m isMemberOf: Array) ifTrue: ["might be performed"
@@ -233,14 +233,6 @@ SystemNavigation >> allSentMessages [
 			do: [:index | sent
 					add: (Smalltalk specialSelectorAt: index)].
 	^ sent
-]
-
-{ #category : #query }
-SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
-
-	Symbol allSymbolTablesDo: [ :e |
-		(e beginsWith: aString)
-			ifTrue: [ aBlock value: e  ] ]
 ]
 
 { #category : #query }
@@ -257,6 +249,14 @@ SystemNavigation >> allSentNotImplementedSelectors [
 ]
 
 { #category : #query }
+SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
+
+	Symbol allSymbolTablesDo: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allUnimplementedCalls [
 	"call is not a good term here, these are selectors"
 	self
@@ -266,10 +266,10 @@ SystemNavigation >> allUnimplementedCalls [
 ]
 
 { #category : #query }
-SystemNavigation >> allUnsentMessagesIn: selectorSet [ 
+SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
-	
-	^ (selectorSet copyWithoutAll: self allSentMessages) 
+
+	^ (selectorSet copyWithoutAll: self allSentMessages)
 			select: [ :each | (self allCallsOn: each) isEmpty ]
 ]
 
@@ -280,7 +280,7 @@ SystemNavigation >> environment [
 
 { #category : #accessing }
 SystemNavigation >> environment: aSystemDictionary [
-	
+
 	environment := aSystemDictionary
 ]
 
@@ -309,7 +309,7 @@ SystemNavigation >> initialize [
 SystemNavigation >> installedMethodsWithIncorrectTrailerKind [
 
 	^ self allMethodsSelect:
-		[ :each | (#(#SourcePointer #VarLengthSourcePointer #NativeCodeTrailer) 
+		[ :each | (#(#SourcePointer #VarLengthSourcePointer #NativeCodeTrailer)
 							includes: each trailer kind) not and: [ each isInstalled ] ]
 ]
 
@@ -318,8 +318,8 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 	"This answers all the instance side methods that has NIL as the key in their last literal. There should be none (only class side methods have this)"
 
 	^ self
-		allMethodsSelect: [ :each | 
-			(((each literalAt: each numLiterals) key isNil 
+		allMethodsSelect: [ :each |
+			(((each literalAt: each numLiterals) key isNil
 					and: [ (each literalAt: each numLiterals) value isMeta not ])
 						and: [ each methodClass ~= UndefinedObject ]) and: [ each isInstalled ] ]
 ]
@@ -339,19 +339,19 @@ SystemNavigation >> methods [
 { #category : #'identifying obsoletes' }
 SystemNavigation >> methodsReferencingObsoleteClasses [
 	"Returns all methods that reference obsolete behaviors"
-	
+
 	| obsClasses |
 	obsClasses := self obsoleteClasses.
-	
+
 	^Array streamContents: [ :methods |
-		obsClasses keysAndValuesDo: 
-			[ :index :each | | obsRefs | 
+		obsClasses keysAndValuesDo:
+			[ :index :each | | obsRefs |
 			obsRefs := each pointersToExcept: obsClasses.
-			obsRefs do: [ :ref | 
+			obsRefs do: [ :ref |
 				"Figure out if it may be a global"
-				(ref isVariableBinding and: [ref key isString	"or Symbol"]) 
+				(ref isVariableBinding and: [ref key isString	"or Symbol"])
 					ifTrue: [
-						(ref pointersTo) do: [ :meth | 
+						(ref pointersTo) do: [ :meth |
 							meth isCompiledMethod
 								ifTrue: [methods nextPut: meth]]]]]]
 ]
@@ -384,17 +384,17 @@ SystemNavigation >> obsoleteClasses [
 	obs := OrderedCollection new.
 	Smalltalk garbageCollect.
 	Metaclass
-		allInstancesDo: [ :m | 
+		allInstancesDo: [ :m |
 			| c |
 			c := m soleInstance.
 			(c notNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
-	^ obs asArray	
-		
+	^ obs asArray
+
 "Likely in a ClassDict or Pool...
 (Association allInstances select: [:a | (a value isKindOf: Class) and: [a value isObsolete]]) asArray
-"	
-	
+"
+
 "Obsolete class refs or super pointer in last lit of a method...
 | n l found |
 SystemNavigation new browseAllSelect:
