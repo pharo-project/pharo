@@ -10,7 +10,7 @@ RGSlot >> accept: anInterpreter assign: aValue inNode: aVariableNode [
 ]
 
 { #category : #visiting }
-RGSlot >> acceptVisitor: aProgramNodeVisitor node: aNode [ 
+RGSlot >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
 ]
 
@@ -18,7 +18,7 @@ RGSlot >> acceptVisitor: aProgramNodeVisitor node: aNode [
 RGSlot >> addoptToParentStub [
 
 	super addoptToParentStub.
-	self parent addSlot: self.
+	self parent addSlot: self
 ]
 
 { #category : #'managing container' }
@@ -48,6 +48,6 @@ RGSlot >> isSlot [
 { #category : #accessing }
 RGSlot >> name: aString [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		super name: aString ].
+	self parent parent announceDefinitionChangeDuring: [
+		super name: aString ]
 ]

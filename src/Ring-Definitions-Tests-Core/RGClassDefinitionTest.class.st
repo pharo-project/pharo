@@ -81,7 +81,7 @@ RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
 	| newClass |
 	newClass := MOPTestClassC asRingDefinition.
 	self
-		assert: newClass definitionSource 
+		assert: newClass definitionSource
 		equals: (ClassDefinitionPrinter new for: MOPTestClassC) definitionString.
 
 	self
@@ -147,14 +147,14 @@ RGClassDefinitionTest >> testReadFrom [
 	| st rg |
 	rg := Point asRingDefinition.
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			rg storeOn: s.
 			s contents ].
 	self assert: (Object readFrom: st) equals: rg.
 
 	rg := Point class asRingDefinition.
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			rg storeOn: s.
 			s contents ].
 	self assert: (Object readFrom: st) equals: rg
@@ -193,13 +193,13 @@ RGClassDefinitionTest >> testRemovingMethods [
 RGClassDefinitionTest >> testStoreOn [
 	| st |
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			Point asRingDefinition storeOn: s.
 			s contents ].
 	self assert: st equals: '(RGClassDefinition named: #Point)'.
 
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			Point class asRingDefinition storeOn: s.
 			s contents ].
 	self assert: st equals: '((RGMetaclassDefinition named: #''Point class'') baseClass:(RGClassDefinition named: #Point))'

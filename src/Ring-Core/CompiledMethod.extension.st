@@ -11,12 +11,12 @@ CompiledMethod >> asRingMinimalDefinitionIn: anRGEnvironment [
 CompiledMethod >> ensureRingDefinitionIn: anRGEnvironment [
 
 	| parentModel |
-	
+
 	parentModel := (self methodClass ensureRingDefinitionIn: anRGEnvironment).
-	
-	^ parentModel methods 
+
+	^ parentModel methods
 		detect: [:each | each selector = self selector]
-		ifNone: [ 
+		ifNone: [
 			| methodModel |
 			methodModel := self asRingMinimalDefinitionIn: anRGEnvironment.
 			parentModel addLocalMethod: methodModel.
