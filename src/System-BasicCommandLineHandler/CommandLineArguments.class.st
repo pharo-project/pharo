@@ -25,7 +25,7 @@ CommandLineArguments class >> default [
 
 { #category : #'instance creation' }
 CommandLineArguments class >> withArguments: aCollection [
-	^ self basicNew 
+	^ self basicNew
 		initializeWithArguments: aCollection;
 		yourself
 ]
@@ -49,14 +49,14 @@ CommandLineArguments >> arguments [
 { #category : #testing }
 CommandLineArguments >> commandLineArguments [
 	"self commandLineArguments"
-	
+
 	| documentPath args |
-	
+
 	args := OrderedCollection withAll: Smalltalk arguments.
 	documentPath := Smalltalk vm documentPath.
 	documentPath isEmptyOrNil
 		ifFalse: [ args addFirst: documentPath ].
- 	^ args.
+ 	^ args
 ]
 
 { #category : #copying }
@@ -78,8 +78,8 @@ CommandLineArguments >> hasArguments [
 { #category : #testing }
 CommandLineArguments >> hasFileWithExtension: aFileExtension [
 	"return true if the first argument has the given file extension"
-	^ self arguments anySatisfy: [ :arg| 
-		arg endsWith: aFileExtension].
+	^ self arguments anySatisfy: [ :arg|
+		arg endsWith: aFileExtension]
 ]
 
 { #category : #testing }
@@ -90,7 +90,7 @@ CommandLineArguments >> hasOption: aString [
 					ifFalse: [ '--']), aString.
 	(self arguments includes: option) ifTrue: [ ^ true ].
 	option := option,'='.
-	^ self arguments anySatisfy: [ :arg| arg beginsWith: option ].
+	^ self arguments anySatisfy: [ :arg| arg beginsWith: option ]
 ]
 
 { #category : #testing }
@@ -102,19 +102,19 @@ CommandLineArguments >> includesSubCommand: aName [
 
 { #category : #initialization }
 CommandLineArguments >> initialize [
-	
+
 	| documentPath  |
-	
+
 	arguments := OrderedCollection withAll: Smalltalk arguments.
 	documentPath := Smalltalk vm documentPath.
 	documentPath isEmptyOrNil
-		ifFalse: [ arguments addFirst: documentPath ].
+		ifFalse: [ arguments addFirst: documentPath ]
 ]
 
 { #category : #initialization }
 CommandLineArguments >> initializeWithArguments: aCollection [
 	super initialize.
-	arguments := aCollection.
+	arguments := aCollection
 ]
 
 { #category : #testing }
@@ -149,7 +149,7 @@ CommandLineArguments >> optionAt: aString ifAbsent: absentBlock [
 { #category : #accessing }
 CommandLineArguments >> optionAt: aString ifPresent: presentBlock [
 	| option |
-	
+
 	option := self optionAt: aString ifAbsent: [ ^ self ].
 	^ presentBlock value: option
 ]
