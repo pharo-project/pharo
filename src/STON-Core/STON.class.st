@@ -227,7 +227,7 @@ STON class >> put: object asJsonOnStream: stream [
 { #category : #convencience }
 STON class >> put: object asJsonOnStreamPretty: stream [
 	(self jsonWriter on: stream)
-		prettyPrint: true; 
+		prettyPrint: true;
 		nextPut: object
 ]
 
@@ -239,7 +239,7 @@ STON class >> put: object onStream: stream [
 { #category : #convencience }
 STON class >> put: object onStreamPretty: stream [
 	(self writer on: stream)
-		prettyPrint: true; 
+		prettyPrint: true;
 		nextPut: object
 ]
 
