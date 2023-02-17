@@ -26,7 +26,7 @@ ZnHttpUnsuccessful class >> response: response [
 { #category : #accessing }
 ZnHttpUnsuccessful >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
@@ -43,7 +43,7 @@ ZnHttpUnsuccessful >> response: anObject [
 { #category : #accessing }
 ZnHttpUnsuccessful >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		response ifNotNil: [
 			response statusLine printCodeAndReasonOn: stream ] ]

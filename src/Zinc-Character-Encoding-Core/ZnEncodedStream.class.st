@@ -99,7 +99,7 @@ ZnEncodedStream >> truncate [
 ]
 
 { #category : #accessing }
-ZnEncodedStream >> truncate: anInteger [ 
+ZnEncodedStream >> truncate: anInteger [
 	stream truncate: anInteger
 ]
 

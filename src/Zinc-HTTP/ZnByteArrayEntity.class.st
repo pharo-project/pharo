@@ -18,14 +18,14 @@ Class {
 ZnByteArrayEntity class >> bytes: byteArray [
 	^ (self type: ZnMimeType applicationOctetStream length: byteArray size)
 		bytes: byteArray;
-		yourself 
+		yourself
 ]
 
 { #category : #testing }
 ZnByteArrayEntity class >> designatedMimeType [
 	"I have no designated mime type, I can handle all binary content.
 	See #concreteSubclassForType: "
-	
+
 	^ nil
 ]
 
@@ -33,7 +33,7 @@ ZnByteArrayEntity class >> designatedMimeType [
 ZnByteArrayEntity class >> matches: mimeType [
 	"I have no designated mime type, I can handle all binary content.
 	See #concreteSubclassForType: "
-	
+
 	^ false
 ]
 
@@ -63,14 +63,14 @@ ZnByteArrayEntity >> hash [
 ]
 
 { #category : #testing }
-ZnByteArrayEntity >> isEmpty [ 
+ZnByteArrayEntity >> isEmpty [
 	^ self bytes isNil or: [ self bytes isEmpty ]
 ]
 
 { #category : #printing }
 ZnByteArrayEntity >> printContentsOn: stream [
 	super printContentsOn: stream.
-	self bytes notNil ifTrue: [ 
+	self bytes notNil ifTrue: [
 		stream space; print: self bytes ]
 ]
 
@@ -78,7 +78,7 @@ ZnByteArrayEntity >> printContentsOn: stream [
 ZnByteArrayEntity >> readFrom: stream [
 
 	self contentLength
-		ifNil: [ 
+		ifNil: [
 			self bytes: (ZnUtils readUpToEnd: stream limit: (ZnCurrentOptions at: #maximumEntitySize)).
 			self contentLength: self bytes size
 			]

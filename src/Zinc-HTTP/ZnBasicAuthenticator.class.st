@@ -66,7 +66,6 @@ ZnBasicAuthenticator >> isRequestAuthenticated: request [
 	username := authorization first.
 	password := authorization second.
 	^ (credentials at: username ifAbsent: [ nil ]) = password
-	
 ]
 
 { #category : #accessing }
