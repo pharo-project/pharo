@@ -46,7 +46,7 @@ LocaleID class >> isoString: isoString [
 ]
 
 { #category : #'instance creation' }
-LocaleID class >> posixName: aString [ 
+LocaleID class >> posixName: aString [
 	^ self
 		isoString: (aString copyReplaceAll: '_' with: '-')
 ]
@@ -130,10 +130,10 @@ LocaleID >> printOn: stream [
 ]
 
 { #category : #printing }
-LocaleID >> storeOn: aStream [ 
+LocaleID >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.
 	aStream nextPutAll: ' isoString: '.
 	aStream nextPutAll: '''' , self printString , ''''.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
