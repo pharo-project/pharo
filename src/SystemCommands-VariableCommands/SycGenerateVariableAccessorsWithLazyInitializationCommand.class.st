@@ -11,30 +11,30 @@ Class {
 { #category : #testing }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecutedInContext: aToolContext [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ 
-		  aToolContext isVariableSelected and: [ 
+	^ (super canBeExecutedInContext: aToolContext) and: [
+		  aToolContext isVariableSelected and: [
 			  aToolContext isGlobalVariableSelected not ] ]
 ]
 
 { #category : #activation }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext
 ]
 
 { #category : #converting }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 
-	^ { (self refactoringClass  
+	^ { (self refactoringClass
 		variable: variable name
-		class: variable definingClass 
+		class: variable definingClass
 		classVariable: variable isClassVariable
 		defaultValue: value) }
 ]
 
 { #category : #accessing }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [ 
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
@@ -63,7 +63,7 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutio
 ]
 
 { #category : #'factory method' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> refactoringClass [ 
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> refactoringClass [
 
 	^ RBCreateLazyAccessorsForVariableTransformation
 ]
