@@ -34,7 +34,7 @@ EqFruit >> color [
 	^self subclassResponsibility
 ]
 
-{ #category : #'initialize - release' }
+{ #category : #initialization }
 EqFruit >> initialize [
 	super initialize.
 	self beUnripe
