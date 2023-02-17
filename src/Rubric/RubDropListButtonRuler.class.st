@@ -21,7 +21,7 @@ RubDropListButtonRuler >> computedWidthFrom: aRectangle [
 ]
 
 { #category : #initialization }
-RubDropListButtonRuler >> initialize [ 
+RubDropListButtonRuler >> initialize [
 	super initialize.
 	side := #right
 ]
@@ -35,8 +35,8 @@ RubDropListButtonRuler >> level [
 RubDropListButtonRuler >> noteNewOwner: aMorph [
 	| downArrow |
 	super noteNewOwner: aMorph.
-	downArrow := (self theme 
-		basicCreateArrowOfDirection: #bottom 
+	downArrow := (self theme
+		basicCreateArrowOfDirection: #bottom
 		size: (self textArea textStyle defaultFont height)
 		color: Color veryLightGray).
 	downArrowBtn := IconicButtonMorph new labelGraphic: downArrow.

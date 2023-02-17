@@ -101,7 +101,7 @@ RubTextFieldExample >> newScrolledTextAutoAccept [
 
 { #category : #'user interface' }
 RubTextFieldExample >> newScrolledTextWithBorderOfWidth: anInteger [
-	^ self newScrolledText borderWidth: anInteger.
+	^ self newScrolledText borderWidth: anInteger
 ]
 
 { #category : #'user interface' }
@@ -115,7 +115,7 @@ RubTextFieldExample >> newScrolledTextWithScrollbarAndBorderOfWidth: anInteger [
 ]
 
 { #category : #'user interface' }
-RubTextFieldExample >> setText: aText from: aView [ 
+RubTextFieldExample >> setText: aText from: aView [
 	self string: aText string.
 	"return true to remove unaccepted edit adornment in tge view"
 	^ true

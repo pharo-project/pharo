@@ -27,13 +27,13 @@ RubCodeSizeFeedback >> backgroundColor [
 	self paragraph ifNil: [ ^Color transparent ].
 	size := self textSize.
 	size >= self warningLimit
-		ifTrue: [ 
+		ifTrue: [
 			|  overshoot transitionSpan transitionColor |
 			transitionSpan := self warningLimit.
 			transitionColor := Color yellow mixed: 0.6 with: basicColor.
 			size >= self alertLimit
 				ifFalse: [ overshoot := size - self warningLimit ]
-				ifTrue: [ 
+				ifTrue: [
 					transitionSpan := self alertLimit - self warningLimit.
 					basicColor := transitionColor mixed: 0.5 with: basicColor.
 					transitionColor := (Color orange mixed: 0.5 with: Color red) mixed: 0.5 with: basicColor.
@@ -68,7 +68,7 @@ RubCodeSizeFeedback >> computedPositionFrom: aRectangle [
 
 { #category : #accessing }
 RubCodeSizeFeedback >> computedWidthFrom: aRectangle [
-	^  (super computedWidthFrom: aRectangle) min: 50.
+	^  (super computedWidthFrom: aRectangle) min: 50
 ]
 
 { #category : #defaults }
@@ -104,7 +104,7 @@ RubCodeSizeFeedback >> drawOnAthensCanvas: anAthensCanvas [
 ]
 
 { #category : #geometry }
-RubCodeSizeFeedback >> extent: aPoint [ 
+RubCodeSizeFeedback >> extent: aPoint [
 	self updateColor.
 	super extent: aPoint
 ]
@@ -136,7 +136,7 @@ RubCodeSizeFeedback >> stringColor [
 				size >= self alertLimit
 					ifTrue: [ Color red ]
 					ifFalse: [ Color orange ]]
-			ifFalse: [ Color black ].
+			ifFalse: [ Color black ]
 ]
 
 { #category : #'event handling' }
@@ -152,12 +152,12 @@ RubCodeSizeFeedback >> textSize [
 	count := true.
 	ignoredCharacters := self ignoredCharacters.
 	self text string
-		do: [ :char | 
-			result > (self alertLimit * 3) 
+		do: [ :char |
+			result > (self alertLimit * 3)
 				ifTrue: [ ^result ].
 			(#($' $") includes: char)
 				ifTrue: [ count := count not ]
-				ifFalse: [ 
+				ifFalse: [
 					((ignoredCharacters includes: char) not and: [ count ])
 						ifTrue: [ result := result + 1 ] ] ].
 	^ result
