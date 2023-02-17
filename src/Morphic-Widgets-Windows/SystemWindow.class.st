@@ -1960,7 +1960,7 @@ SystemWindow >> wantsSteps [
 
 	model ifNil: [ ^ false ].
 
-	model isCollection ifTrue: [ ^ false ].
+	(model respondsTo: #wantsStpes) ifFalse: [ ^ false ].
 
 	^ model wantsSteps
 ]
