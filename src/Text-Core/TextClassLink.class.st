@@ -29,7 +29,7 @@ TextClassLink >> = anotherObject [
 ]
 
 { #category : #'system primitives' }
-TextClassLink >> className [	
+TextClassLink >> className [
 	^ className
 ]
 
@@ -41,5 +41,5 @@ TextClassLink >> className: aStringOrSymbol [
 { #category : #comparing }
 TextClassLink >> hash [
 
-	^(super hash + className hash) hashMultiply 
+	^(super hash + className hash) hashMultiply
 ]
