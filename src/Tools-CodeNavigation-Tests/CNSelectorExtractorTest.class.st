@@ -12,8 +12,8 @@ Class {
 
 { #category : #initialization }
 CNSelectorExtractorTest >> initialize [
-			
-	selectorExtractor := CNSelectorExtractor new.
+
+	selectorExtractor := CNSelectorExtractor new
 ]
 
 { #category : #tests }
@@ -21,27 +21,26 @@ CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesRet
 
    |source position|
 	"Border cases first"
-	
+
 	"Nil source, returns nil"
 	source := nil.
 	position := 1.
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-	
+
 	"Empty source, returns nil"
 	source := ''.
 	position := 1.
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-	
+
 	"nil source, invalid Position"
 	source := nil.
 	position := -1.
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-	
+
 	"a string source, invalid Position"
 	source := 'astring'.
 	position := 10000.
-	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-
+	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil
 ]
 
 { #category : #tests }
