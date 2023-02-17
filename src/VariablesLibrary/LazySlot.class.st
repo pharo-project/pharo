@@ -28,8 +28,8 @@ LazySlot >> emitValue: aMethodBuilder [
 		jumpAheadTo: #target if: false;
 		popTop;
 		pushLiteral: default.
-	default isBlock ifTrue: [ 
-		aMethodBuilder	
+	default isBlock ifTrue: [
+		aMethodBuilder
 			pushReceiver;
 			send: #cull:].
 	aMethodBuilder
@@ -40,8 +40,8 @@ LazySlot >> emitValue: aMethodBuilder [
 { #category : #'meta-object-protocol' }
 LazySlot >> read: anObject [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
-	^ (super read: anObject) ifNil: [ 
-		default isBlock 
-			ifTrue: [ self write: (default cull: anObject) to: anObject] 
+	^ (super read: anObject) ifNil: [
+		default isBlock
+			ifTrue: [ self write: (default cull: anObject) to: anObject]
 			ifFalse: [ self write: default to: anObject]]
 ]

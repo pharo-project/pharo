@@ -27,7 +27,7 @@ HistorySlotTest >> testAddOneElementAndModifyClass [
 
 	instance := aClass new.
 	instance slot1: 25.
-	
+
 	aClass addInstVarNamed: 'x'.
 	self assert: instance slot1 equals: 25
 ]
@@ -107,7 +107,7 @@ HistorySlotTest >> testModifyIvarToHistory [
 	instance slot1: 25.
 	slot := #slot1 =>HistorySlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
-	
+
 	self assert: instance slot1 equals: 25.
 	self assert: (slot readHistory: instance) asArray equals: #(nil 25)
 ]

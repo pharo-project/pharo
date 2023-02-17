@@ -26,11 +26,6 @@ InitializedSlotTest >> testReadWriteCompiled [
 	self assert: (object slot1) equals: 5.
 	object slot1: 10.
 	self assert: (object slot1) equals: 10
-	
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -45,11 +40,6 @@ InitializedSlotTest >> testReflectiveReadWrite [
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
 	self assert: (slot read: object) equals: 10
-	
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -64,9 +54,4 @@ InitializedSlotTest >> testReflectiveReadWriteBlock [
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
 	self assert: (slot read: object) equals: 10
-	
-	
-	
-	
-	
 ]

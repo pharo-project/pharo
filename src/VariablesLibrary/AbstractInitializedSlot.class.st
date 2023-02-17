@@ -42,7 +42,7 @@ AbstractInitializedSlot >> hash [
 
 { #category : #printing }
 AbstractInitializedSlot >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
