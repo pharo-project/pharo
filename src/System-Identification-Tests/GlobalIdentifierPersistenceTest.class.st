@@ -37,7 +37,7 @@ GlobalIdentifierPersistenceTest >> setUp [
 	super setUp.
 	self setUpPreferencesAndChecker.
 	persistence := self persistenceClass new preferences: preferences; yourself.
-	persistence checker: checker.
+	persistence checker: checker
 ]
 
 { #category : #running }
@@ -48,7 +48,7 @@ GlobalIdentifierPersistenceTest >> setUpPreferencesAndChecker [
 { #category : #running }
 GlobalIdentifierPersistenceTest >> tearDown [
 	preferences ensureDelete.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -67,25 +67,25 @@ GlobalIdentifierPersistenceTest >> testDelete [
 	preferences ensureCreateFile.
 	self assert: preferences exists.
 	persistence delete.
-	self deny: preferences exists.
+	self deny: preferences exists
 ]
 
 { #category : #tests }
 GlobalIdentifierPersistenceTest >> testEnsureDirectory [
 	persistence ensureDirectory.
 	self assert: preferences parent exists.
-	self deny: preferences exists.
+	self deny: preferences exists
 ]
 
 { #category : #tests }
 GlobalIdentifierPersistenceTest >> testIsEnabled [
-	self assert: persistence isEnabled.
+	self assert: persistence isEnabled
 ]
 
 { #category : #tests }
 GlobalIdentifierPersistenceTest >> testIsEnabled2 [
 	persistence checker: self newFalseChecker.
-	self deny: persistence isEnabled.
+	self deny: persistence isEnabled
 ]
 
 { #category : #tests }
@@ -96,13 +96,13 @@ GlobalIdentifierPersistenceTest >> testLoad [
 	identifier := GlobalIdentifier basicNew initialize.
 	values := identifier persistedInformation.
 	values at: #a put: 42.
-	
+
 	persistence load: identifier.
-	
+
 	"It has the saved value, the computerUUID and the secretUUID"
 	self assert: values size equals: 3.
 	self assert: (values at: #a) equals: 42.
-	self assert: preferences exists.
+	self assert: preferences exists
 ]
 
 { #category : #tests }
@@ -111,15 +111,14 @@ GlobalIdentifierPersistenceTest >> testLoad2 [
 	| identifier otherIdentifier |
 	identifier := GlobalIdentifier basicNew initialize.
 	otherIdentifier := GlobalIdentifier basicNew initialize.
-	
+
 	identifier persistedInformation at: #a put: 42.
 	persistence save: identifier persistedInformation.
-	
+
 	persistence load: otherIdentifier.
 	self assert: (otherIdentifier persistedInformation at: #a) equals: 42.
 	self assert: (otherIdentifier persistedInformation includesKey: #computerUUID).
-	self assert: (otherIdentifier persistedInformation includesKey: #secretUUID).
-
+	self assert: (otherIdentifier persistedInformation includesKey: #secretUUID)
 ]
 
 { #category : #tests }
@@ -142,7 +141,7 @@ GlobalIdentifierPersistenceTest >> testSave [
 	values := Dictionary new.
 	values at: #a put: 42.
 	persistence save: values.
-	self assert: preferences exists.
+	self assert: preferences exists
 ]
 
 { #category : #tests }
@@ -152,5 +151,5 @@ GlobalIdentifierPersistenceTest >> testSave2 [
 	values := Dictionary new.
 	values at: #a put: 42.
 	persistence save: values.
-	self deny: preferences exists.
+	self deny: preferences exists
 ]
