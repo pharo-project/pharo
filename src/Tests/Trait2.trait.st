@@ -14,9 +14,3 @@ Trait2 >> c2 [
 
 	^ 'Trait2>>c2'
 ]
-
-{ #category : #'as yet unclassified' }
-Trait2 >> c3 [
-
-	^ 'Trait2>>c2'
-]
