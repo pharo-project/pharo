@@ -476,17 +476,17 @@ RBParser >> parseCascadeMessage [
 	"
 	(node isMessage not or: [ node hasParentheses ]) ifTrue: [
 		"Cut parsing with an error.
-		If in faulty mode, continue the execution and generate a faulty cascade node."
+		If in faulty mode, continue the execution and generate a faulty cascade node.
+		Note that this bad cascade node will be added to the list of messages."
 		self parserError: 'cascaded message not allowed'.
-		receiver := node := RBInvalidCascadeErrorNode
+		node := RBInvalidCascadeErrorNode
 			content: { node }
 			start: node start
 			stop: currentToken stop
-			errorMessage: 'End of statement expected'.
-	] ifFalse: [
-		receiver := node receiver.
-	 	messages add: node.
+			errorMessage: 'Message expected'.
 	].
+	receiver := node receiver.
+ 	messages add: node.
 
 	"Extract the messages following the cascade marker $;"
 	[currentToken isSpecial and: [currentToken value = $;]] whileTrue: [
@@ -497,6 +497,8 @@ RBParser >> parseCascadeMessage [
 		self saveCommentsDuring: [
 			newMessage := self parseCascadeMessageWithReceiver: receiver ].
 		self addCommentsTo: newMessage.
+		"Note that newMessage can be a message node or a error node.
+		In all cases, it will be added to the list of messages."
 		messages add: newMessage ].
 
 	^self cascadeNodeClass messages: messages semicolons: semicolons
