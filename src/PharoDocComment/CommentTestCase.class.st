@@ -62,7 +62,9 @@ CommentTestCase >> printString [
 CommentTestCase >> testIt [
 
 	| value |
-	value := self evaluate.
+	value := [ self evaluate ]
+		         on: RuntimeSyntaxError
+		         do: [ self fail: 'Invalid documentation comment test.' ].
 	self assert: value isAssociation.
 	self assert: value key equals: value value
 ]
