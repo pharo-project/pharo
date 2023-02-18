@@ -522,13 +522,10 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 
 	"At this point we know this is an invalid cascade.
 	Many things can happen next: it could be a closer parenthesis or bracket, the end of the stream, a non-identifier or an empty cascade.
-	For now, if it is a closer return an empty error node.
-	If it is not a closer, consume it"
+
+	For now, do not touch the unexpected token and let it be propagated to the caller.
+	Maybe someing up the callchain will gladly use it or know how to recover (eg unfinished statement)"
 	errorNode := self parserError: 'Cascade message expected'.
-	(currentToken value ~= $.
-		and: [ ('])};' includes: currentToken value) not
-			and: [ currentToken isEOF not ] ] )
-				ifTrue: [ self step ].
 	^ errorNode
 ]
 
