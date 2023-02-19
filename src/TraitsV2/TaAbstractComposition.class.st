@@ -36,22 +36,22 @@ TaAbstractComposition >> , anotherTrait [
 { #category : #operations }
 TaAbstractComposition >> - anArrayOrASymbol [
 	| anArray |
-	
+
 	"I create a remove method on me. Removing the symbol or array of symbols"
-	
+
 	anArray := anArrayOrASymbol isArray
 		ifTrue: [ anArrayOrASymbol ]
 		ifFalse: [ {anArrayOrASymbol} ].
-		
+
 	^ TaRemoveMethod remove: anArray to: self
 ]
 
 { #category : #operations }
 TaAbstractComposition >> -- anArrayOfSlotNames [
-	
+
 	"I create a new trait composition element, from me but without the slot named as the parameter"
 
-	^ TaRemoveSlot remove: anArrayOfSlotNames from: self.
+	^ TaRemoveSlot remove: anArrayOfSlotNames from: self
 ]
 
 { #category : #comparing }
@@ -62,13 +62,13 @@ TaAbstractComposition >> = anotherTrait [
 { #category : #operations }
 TaAbstractComposition >> @ anArrayOfAssociations [
 	"I return a new trait composition with the aliases passed as parameters. It is an array of associations, the keys are the new selectors and the values are the original selectors"
-	^ TaAliasMethod alias: anArrayOfAssociations to: self.
+	^ TaAliasMethod alias: anArrayOfAssociations to: self
 ]
 
 { #category : #operations }
 TaAbstractComposition >> @= anAssociation [
 	"This performs a deep alias, rewriting all the sendings of this message. The association has its key as the new alias selector and the value as the original selector."
-	^ TaDeepAliasMethod alias:anAssociation to: self.
+	^ TaDeepAliasMethod alias:anAssociation to: self
 ]
 
 { #category : #operations }
@@ -76,13 +76,13 @@ TaAbstractComposition >> @@ anArrayOfAssociations [
 
 	"This operation creates a new trait composition element with a slot renamed.
 	The parameter is an array of association, where the key is the old name and the value the new name."
-	
+
 	^ TaRenameSlot rename: anArrayOfAssociations on: self
 ]
 
 { #category : #operations }
 TaAbstractComposition >> addToSequence: sequence [
-	
+
 	"I basically add myself to the sequence passed as parameter. For sure you want to use #+ or #,"
 	sequence addMember: self.
 	^ sequence
@@ -114,8 +114,8 @@ TaAbstractComposition >> asTraitComposition [
 
 { #category : #accessing }
 TaAbstractComposition >> categoryOfMethod: method withSelector: selector [
-	"I return the category of the method with the selector. 
-	This is useful when the method is aliased or the method came from different traits or it is a conflicting category. 
+	"I return the category of the method with the selector.
+	This is useful when the method is aliased or the method came from different traits or it is a conflicting category.
 	The basic implementation returns the category of the method"
 	^ method category
 ]
@@ -123,13 +123,13 @@ TaAbstractComposition >> categoryOfMethod: method withSelector: selector [
 { #category : #testing }
 TaAbstractComposition >> changesSourceCode: aSelector [
 	"Checks if a selector should be compiled because its code has been rewritten."
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 TaAbstractComposition >> classComposition [
 	"This is used to access to the classSide of the traitComposition. Used when creating a traited class without class side traitComposition"
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #compiling }
@@ -138,13 +138,13 @@ TaAbstractComposition >> compile: selector into: aClass [
 	This version classify the method in the class passed as parameter"
 
 	| method newMethod sourceCode trailer traitDefining |
-	
+
 	traitDefining := self traitDefining: selector.
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
 	trailer := method trailer.
-	
+
 	newMethod := aClass compiler
 				source: sourceCode;
 				class: aClass ;
@@ -154,16 +154,16 @@ TaAbstractComposition >> compile: selector into: aClass [
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 
-	(selector ~= method selector or: [self changesSourceCode: selector]) 
+	(selector ~= method selector or: [self changesSourceCode: selector])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
-		
+
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: selector
 		inProtocolNamed: (self categoryOfMethod: method withSelector: method selector).
-	
+
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
 ]
@@ -172,7 +172,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 TaAbstractComposition >> compiledMethodAt: aSelector [
 	"Access the compiledMethod to use for a given selector. It should handle aliases, sequences and removals.
 	It signals NotFound"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -188,47 +188,47 @@ TaAbstractComposition >> compiledMethodAt: aSelector ifAbsent: aValuable [
 { #category : #operations }
 TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing [
 
-	"When the included method does not need to be source rewritten or recompiled, 
+	"When the included method does not need to be source rewritten or recompiled,
 	it is query by using #changesSourceCode:, the method is inserted in aClass' method dictionary.
 	The compiled method is just copied and the source is stored in the change file
-	
+
 	I check that the method is not already in the class
-	The method is only replaced if replacing is true. 
+	The method is only replaced if replacing is true.
 	"
 
 	| aCompiledMethod source newMethod traitDefining sourceHasChanged |
-	
+
 	traitDefining := self traitDefining: aSelector.
 	aCompiledMethod := self compiledMethodAt: aSelector.
 	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
-	
+
 	"If the selectors are not the same I have to save the new source code"
 	sourceHasChanged := aSelector ~= aCompiledMethod selector.
-	
+
 	"Check if the method should be replaced. It is replaced if:
 	 - replacing is true.
 	 - The trait defining the method is not the same.
 	 - If both methods have source code and if the source codes are not the same.
 	"
-	aClass methodDict at: aSelector ifPresent:[ :originalMethod | 
+	aClass methodDict at: aSelector ifPresent:[ :originalMethod |
 		((replacing not and: [(originalMethod traitSource = traitDefining) and: [originalMethod hasSourceCode]]) and: [ source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
-	
+
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
 	newMethod methodClass: aClass.
-			
-	newMethod setSourcePointer: aCompiledMethod sourcePointer.	
+
+	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: aSelector
-		inProtocolNamed: aCompiledMethod category asSymbol.		
-	
+		inProtocolNamed: aCompiledMethod category asSymbol.
+
 	aClass organization removeEmptyCategories.
-	
+
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
-		
+
 	^ true
 ]
 
@@ -245,18 +245,18 @@ TaAbstractComposition >> copySlot: aSlot [
 { #category : #copying }
 TaAbstractComposition >> copyTraitExpression [
 	"I should copy all the elements in the traitComposition"
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #copying }
-TaAbstractComposition >> copyWithoutTrait: aTrait [ 
+TaAbstractComposition >> copyWithoutTrait: aTrait [
 	"Returns a copy without the aTrait"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #operations }
-TaAbstractComposition >> getSourceCodeOf: aCompiledMethod usingSelector: aSelector [ 
-	
+TaAbstractComposition >> getSourceCodeOf: aCompiledMethod usingSelector: aSelector [
+
 	^ aCompiledMethod getSourceReplacingSelectorWith: aSelector
 ]
 
@@ -270,7 +270,7 @@ TaAbstractComposition >> hasMethod: aSelector [
 
 { #category : #comparing }
 TaAbstractComposition >> hash [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #querying }
@@ -281,9 +281,9 @@ TaAbstractComposition >> includesTrait: aTrait [
 
 { #category : #operations }
 TaAbstractComposition >> initializeObject: anObject [
-	
-	"Handles the custom initialization of a class using stateful talents. 
-	When using stateful traits the initialize method in the resulting class 
+
+	"Handles the custom initialization of a class using stateful talents.
+	When using stateful traits the initialize method in the resulting class
 	includes the initializaton of the included traits."
 
 	| selector |
@@ -303,9 +303,9 @@ TaAbstractComposition >> initializeSelectorForMe [
 { #category : #operations }
 TaAbstractComposition >> installSelector: aSelector into: aClass [
 	"
-	This method tryies to install a selector in a given class. 
+	This method tryies to install a selector in a given class.
 	If the method is already installed it does not perform nothing.
-	This may fail because this is used when recalculating the method dictionary. 
+	This may fail because this is used when recalculating the method dictionary.
 	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
 
 	^ self installSelector: aSelector into: aClass replacing: true
@@ -314,19 +314,19 @@ TaAbstractComposition >> installSelector: aSelector into: aClass [
 { #category : #operations }
 TaAbstractComposition >> installSelector: aSelector into: aClass replacing: replacing [
 	"
-	This method tryies to install a selector in a given class. 
+	This method tryies to install a selector in a given class.
 	If the method is already installed it does not perform nothing.
-	This may fail because this is used when recalculating the method dictionary. 
+	This may fail because this is used when recalculating the method dictionary.
 	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
 
 
-	[ 	
-		^ (self needsRecompilation: aSelector) 
+	[
+		^ (self needsRecompilation: aSelector)
 			ifTrue:[ self compile: aSelector into: aClass	]
-			ifFalse:[ self copyMethod: aSelector into: aClass replacing: replacing ].	
+			ifFalse:[ self copyMethod: aSelector into: aClass replacing: replacing ].
 	 ] on: NotFound
 		do: [ ^ true ].
-		
+
 	^ true
 ]
 
@@ -334,8 +334,7 @@ TaAbstractComposition >> installSelector: aSelector into: aClass replacing: repl
 TaAbstractComposition >> isAliasSelector: aSelector [
 
 	"Tests if aSelector is alias to another selector"
-	self subclassResponsibility  
-	
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -362,7 +361,7 @@ TaAbstractComposition >> isSourcesPresentInSystem [
 
 { #category : #accessing }
 TaAbstractComposition >> name [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -373,7 +372,7 @@ TaAbstractComposition >> needsRecompilation: aSelector [
 ]
 
 { #category : #querying }
-TaAbstractComposition >> originSelectorOf: aSelector [ 
+TaAbstractComposition >> originSelectorOf: aSelector [
 	"The original selector for a given selector. It is overriden by the alias."
 	^ aSelector
 ]
@@ -394,21 +393,20 @@ TaAbstractComposition >> reverseAlias: aSelector [
 TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 
 	"I have to check because during bootstrap there is no SouceFiles"
-	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) 
-		and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
+	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles)
+		and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [
 			newMethod putSource: sourceCode
-					withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].	
-
+					withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 ]
 
 { #category : #accessing }
 TaAbstractComposition >> selectors [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
 TaAbstractComposition >> semanticallyEquals: another [
-	"Checks if I have the same effect that another traitComposition. 
+	"Checks if I have the same effect that another traitComposition.
 	I have the same effect if I expose the same selectors and the methods have the same source code.
 	The comparison is done using the source code to handle the aliasing and the rewriting of methods"
 	^ self selectors = another selectors
@@ -419,7 +417,7 @@ TaAbstractComposition >> semanticallyEquals: another [
 
 { #category : #accessing }
 TaAbstractComposition >> slots [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #copying }
@@ -462,13 +460,13 @@ TaAbstractComposition >> traitCompositionExpressionWithParens [
 TaAbstractComposition >> traitDefining: selector [
 	"I return the trait that is used to find the definition of this selector
 	It signals NotFound if it is not found"
-	^ self shouldBeImplemented.
+	^ self shouldBeImplemented
 ]
 
 { #category : #querying }
-TaAbstractComposition >> traitDefining: aSelector ifNone: aBlockClosure [ 
+TaAbstractComposition >> traitDefining: aSelector ifNone: aBlockClosure [
 	"I return the trait that is used to find the definition of this selector. If none the block is evaluated"
-	
+
 	[ ^ self traitDefining: aSelector ] on: NotFound do: [ ^ aBlockClosure value ]
 ]
 

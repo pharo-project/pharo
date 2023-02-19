@@ -29,16 +29,16 @@ Class {
 NonInteractiveTranscript class >> defaultLogFileName [
 	"The default file name that will be used to write to.
 	This should probably become a system setting."
-	
+
 	^ 'PharoTranscript.log'
 ]
 
 { #category : #'instance creation' }
 NonInteractiveTranscript class >> file [
-	"Create a new NonInteractiveTranscript that will output 
+	"Create a new NonInteractiveTranscript that will output
 	to the default file named by #defaultLogFileName."
-	
-	^ self onFileNamed: self defaultLogFileName 
+
+	^ self onFileNamed: self defaultLogFileName
 ]
 
 { #category : #'class initialization' }
@@ -55,7 +55,7 @@ NonInteractiveTranscript class >> isInstalled [
 { #category : #'instance creation' }
 NonInteractiveTranscript class >> onFileNamed: fileName [
 	"Create a NonInteractiveTranscript that will write to fileName."
-	
+
 	^ self new
 		fileName: fileName;
 		yourself
@@ -65,23 +65,23 @@ NonInteractiveTranscript class >> onFileNamed: fileName [
 NonInteractiveTranscript class >> shutDown [
 	"Send close to all our instances.
 	Their streams will be reopened on first use later on."
-	
+
 	self allInstances do: #close
 ]
 
 { #category : #'instance creation' }
 NonInteractiveTranscript class >> stderr [
-	"Create a new NonInteractiveTranscript that will output 
+	"Create a new NonInteractiveTranscript that will output
 	to the special standard error output stream of the virtual machine process."
-	
+
 	^ self onFileNamed: #stderr
 ]
 
 { #category : #'instance creation' }
 NonInteractiveTranscript class >> stdout [
-	"Create a new NonInteractiveTranscript that will output 
+	"Create a new NonInteractiveTranscript that will output
 	to the special standard output stream of the virtual machine process."
-	
+
 	^ self onFileNamed: #stdout
 ]
 
@@ -104,9 +104,9 @@ NonInteractiveTranscript >> clear [
 { #category : #streaming }
 NonInteractiveTranscript >> close [
 	"Close the receiver, indicating it is not longer needed"
-	
-	self critical: [ 
-		stream ifNotNil: [ 
+
+	self critical: [
+		stream ifNotNil: [
 			(self isStdout or: [ self isStderr ])
 				ifTrue: [ stream flush ]
 				ifFalse: [ stream close ].
@@ -116,14 +116,14 @@ NonInteractiveTranscript >> close [
 { #category : #streaming }
 NonInteractiveTranscript >> cr [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self newLine
 ]
 
 { #category : #streaming }
 NonInteractiveTranscript >> crShow: anObject [
 	"Output anObject asString on the receiver preceded by a cr and show the output"
-	
+
 	self critical: [ self cr; show: anObject ]
 ]
 
@@ -131,7 +131,7 @@ NonInteractiveTranscript >> crShow: anObject [
 NonInteractiveTranscript >> critical: block [
 	"Execute block making sure only one thread accesses the receiver"
 
-	^ accessSemaphore critical: block 
+	^ accessSemaphore critical: block
 ]
 
 { #category : #streaming }
@@ -145,9 +145,9 @@ NonInteractiveTranscript >> endEntry [
 NonInteractiveTranscript >> fileName [
 	"The file name that I will write to.
 	Lazy initialized to a default.
-	When I connect to the standard output stream of the 
+	When I connect to the standard output stream of the
 	virtual machine process I return #stdout."
-	
+
 	^ fileName ifNil: [ fileName := self class defaultLogFileName ]
 ]
 
@@ -156,7 +156,7 @@ NonInteractiveTranscript >> fileName: anObject [
 	"Initialize me to write to a file stream described by anObject.
 	anObject is either a String naming a file or the special #stdout value
 	for using the standard output stream of the virtual machine process."
-	
+
 	self close.
 	fileName := anObject
 ]
@@ -179,10 +179,10 @@ NonInteractiveTranscript >> initializeStream [
 	"Open the file stream that I write to or connect to #stdout/#stderr.
 	I will use the platform line end convention.
 	I will append to regular files."
-	
-	^ stream := self isStdout 
+
+	^ stream := self isStdout
 		ifTrue: [ Stdio stdout ]
-		ifFalse: [ 
+		ifFalse: [
 			self isStderr
 				ifTrue: [ Stdio stderr ]
 				ifFalse: [ (File named: self fileName) openForAppend ] ]
@@ -191,23 +191,23 @@ NonInteractiveTranscript >> initializeStream [
 { #category : #installation }
 NonInteractiveTranscript >> install [
 	"Install me as a replacement for Transcript"
-	
-	Smalltalk globals 
-		at: #Transcript 
+
+	Smalltalk globals
+		at: #Transcript
 		put: self
 ]
 
 { #category : #'self evaluating' }
 NonInteractiveTranscript >> isSelfEvaluating [
 
-	^self == Transcript 
+	^self == Transcript
 		ifTrue: [ true ]
 		ifFalse: [ super isSelfEvaluating ]
 ]
 
 { #category : #testing }
 NonInteractiveTranscript >> isStderr [
-	
+
 	^ fileName = #stderr
 ]
 
@@ -215,14 +215,14 @@ NonInteractiveTranscript >> isStderr [
 NonInteractiveTranscript >> isStdout [
 	"Answer true when I am setup to be connected to the special
 	standard output stream of the virtual machine process."
-	
+
 	^ fileName = #stdout
 ]
 
 { #category : #streaming }
 NonInteractiveTranscript >> newLine [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self nextPutAll: OSPlatform current lineEnding
 ]
 
@@ -243,7 +243,7 @@ NonInteractiveTranscript >> nextPutAll: aCollection [
 { #category : #streaming }
 NonInteractiveTranscript >> print: anObject [
 	"Output anObject asString on the receiver, buffered, not yet shown"
-	
+
 	self nextPutAll: anObject asString
 ]
 
@@ -256,7 +256,7 @@ NonInteractiveTranscript >> printOn: aStream [
 { #category : #streaming }
 NonInteractiveTranscript >> show: anObject [
 	"Output anObject asString on the receiver and show the output"
-	
+
 	self critical: [ self print: anObject; endEntry ]
 ]
 
@@ -276,7 +276,7 @@ NonInteractiveTranscript >> stepGlobal [
 NonInteractiveTranscript >> stream [
 	"The file stream I am writing to.
 	Lazy initialized so as not to create the file when it is not used."
-	
+
 	^ stream ifNil: [ self initializeStream ]
 ]
 

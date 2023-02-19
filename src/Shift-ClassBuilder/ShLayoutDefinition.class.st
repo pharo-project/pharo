@@ -17,7 +17,7 @@ Class {
 
 { #category : #accessing }
 ShLayoutDefinition >> allSlots [
-	| superclass | 
+	| superclass |
 	superclass := builder superclass.
 	^ (superclass ifNil: [ #() ] ifNotNil: [ superclass allSlots ]) , slots
 ]
@@ -39,16 +39,16 @@ ShLayoutDefinition >> classSlots: anObject [
 
 { #category : #accessing }
 ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
-	"I only copy the slot if it is not virtual and it is the same in the oldClass. 
+	"I only copy the slot if it is not virtual and it is the same in the oldClass.
 	 They are copied as they have the index as instance variable, the index can change in the new class."
-	
+
 	aClass slots isEmpty ifTrue: [ ^ slotCollection ].
-	
+
 	^ slotCollection
-		collect: [ :aSlot | 
+		collect: [ :aSlot |
 			aClass
 				slotNamed: aSlot name
-				ifFound: [ :oldSlot | 
+				ifFound: [ :oldSlot |
 					(oldSlot == aSlot and: [ aSlot isVirtual not ])
 						ifTrue: [ aSlot copy ]
 						ifFalse: [ aSlot ] ]
@@ -56,12 +56,12 @@ ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 ]
 
 { #category : #copying }
-ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [ 
+ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [
 
 	classSlots ifNotNil: [ ^ self ].
 
-	classSlots := oldSlots 
-		select: [:each | each isDefinedByOwningClass ] 
+	classSlots := oldSlots
+		select: [:each | each isDefinedByOwningClass ]
 		thenCollect: [ :each | each copy index: nil; yourself ]
 ]
 
@@ -70,7 +70,7 @@ ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 	"I copy the slots if they are used in oldClass. As the slots has state (usually the index) they cannot be shared between the old and the new class."
 
 	oldClass ifNil: [ ^ self ].
-	
+
 	slots := self copy: slots ifUsedIn: oldClass.
 	classSlots := self copy: self classSlots ifUsedIn: oldClass class
 ]
@@ -141,30 +141,30 @@ ShLayoutDefinition >> slots: anObject [
 
 { #category : #validating }
 ShLayoutDefinition >> validate [
-	
+
 	| slotNames classSlotNames |
 	builder oldClass ifNil: [ ^ self ].
 
 	slotNames := slots collect: [ :e | e name ].
 	classSlotNames := classSlots collect: [ :e | e name ].
 
-	builder oldClass subclassesDo: [ :aSubclass | 
-		aSubclass slots do: [ :anotherSlot | 
-			(slotNames includes: anotherSlot name) ifTrue: [ 
+	builder oldClass subclassesDo: [ :aSubclass |
+		aSubclass slots do: [ :anotherSlot |
+			(slotNames includes: anotherSlot name) ifTrue: [
 				DuplicatedSlotName new
 						oldSlot: anotherSlot;
 						newSlot: nil;
 						host: aSubclass;
-						signal 
+						signal
 			] ]	 ].
-	
-	builder oldClass subclassesDo: [ :aSubclass | 
-		aSubclass class slots do: [ :anotherSlot | 
-			(classSlotNames includes: anotherSlot name) ifTrue: [ 
+
+	builder oldClass subclassesDo: [ :aSubclass |
+		aSubclass class slots do: [ :anotherSlot |
+			(classSlotNames includes: anotherSlot name) ifTrue: [
 				DuplicatedSlotName new
 						oldSlot: anotherSlot;
 						newSlot: nil;
 						host: aSubclass class;
-						signal 
+						signal
 			] ]	 ]
 ]

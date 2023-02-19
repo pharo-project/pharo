@@ -6,13 +6,13 @@ Class {
 
 { #category : #tests }
 FFIStringCalloutTest >> newFFIMethodWithSignature: signature doing: aBlock [
-	
+
 	^ self newFFIMethodWithSignature: signature doing: aBlock options: #()
 ]
 
 { #category : #tests }
 FFIStringCalloutTest >> newFFIMethodWithSignature: signature doing: aBlock options: options [
-	
+
 	| calloutAPI methodBuilder |
 	calloutAPI := FFICalloutAPI inUFFIContext: nil.
 	methodBuilder := FFIMockCalloutMethodBuilder calloutAPI: calloutAPI.
@@ -22,8 +22,8 @@ FFIStringCalloutTest >> newFFIMethodWithSignature: signature doing: aBlock optio
 		requestor: methodBuilder;
 		options: options;
 		yourself).
-	
-	^ methodBuilder build: [ :builder | 
+
+	^ methodBuilder build: [ :builder |
 			builder
 				signature: signature;
 				sender: methodBuilder ]
@@ -33,7 +33,7 @@ FFIStringCalloutTest >> newFFIMethodWithSignature: signature doing: aBlock optio
 FFIStringCalloutTest >> testCalloutShouldHaveLegacyStringEncodingStrategyByDefault [
 	|generator|
 	generator := FFICallout new.
-	
+
 	self assert: generator stringEncodingStrategy isLegacy
 ]
 
@@ -60,38 +60,38 @@ FFIStringCalloutTest >> testEncodingOptionSetsStringEncodingStrategy [
 { #category : #tests }
 FFIStringCalloutTest >> testLegacyCalloutShouldReturnStringArgument [
 	| method return |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( char* f ( void ) )
-		doing: [ 'string' ].	
-	
+		doing: [ 'string' ].
+
 	return := method valueWithReceiver: nil arguments: #( ).
-	
+
 	self assert: return equals: 'string'
 ]
 
 { #category : #tests }
 FFIStringCalloutTest >> testLegacyCalloutShouldSendStringArgument [
 	| ffiInvocationArgument method |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( void f (char* aString) )
-		doing: [ :aString | ffiInvocationArgument := aString ].	
+		doing: [ :aString | ffiInvocationArgument := aString ].
 	method valueWithReceiver: nil arguments: #( 'string' ).
-	
+
 	self assert: ffiInvocationArgument equals: 'string'
 ]
 
 { #category : #tests }
 FFIStringCalloutTest >> testMandatoryEncodingWithSpecifiedEncodingShouldNotFail [
 	| ffiInvocationArgument method |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( void f (char* aString) )
 		doing: [ :aString | ffiInvocationArgument := aString ]
 		options: #( optStringEncodingUtf8 optStringEncodingMandatory ).
 	method valueWithReceiver: nil arguments: #( 'string' ).
-	
+
 	self assert: ffiInvocationArgument equals: ('string' nullTerminatedEncodeWith: #utf8)
 ]
 
@@ -109,7 +109,7 @@ FFIStringCalloutTest >> testMandatoryEncodingWithoutExplicitEncodingShouldRaiseE
 { #category : #tests }
 FFIStringCalloutTest >> testStringEncodingWithMandatoryEncodingWithSpecifiedEncodingShouldNotFail [
 	| result method |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( char* f ( ) )
 		doing: [ 'test' ]
@@ -139,45 +139,45 @@ FFIStringCalloutTest >> testUtf8CalloutShouldReturnDecodeUtf8EncodedString [
 		doing: [ 	ByteString withAll: 'les élèves français' utf8Encoded ]
 		options: #( optStringEncodingUtf8 ).
 	return := method valueWithReceiver: nil arguments: #( ).
-	
+
 	self assert: return equals: 'les élèves français'
 ]
 
 { #category : #tests }
 FFIStringCalloutTest >> testUtf8CalloutShouldSendUtf8EncodedLiteralStringArgument [
 	| ffiInvocationArgument method |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( void f (char* 'string') )
 		doing: [ :aString | ffiInvocationArgument := aString ]
 		options: #( optStringEncodingUtf8 ).
 	method valueWithReceiver: nil arguments: #( nil ).
-	
+
 	self assert: ffiInvocationArgument equals: ('string' nullTerminatedEncodeWith: #utf8)
 ]
 
 { #category : #tests }
 FFIStringCalloutTest >> testUtf8CalloutShouldSendUtf8EncodedStringArgument [
 	| ffiInvocationArgument method |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( void f (char* aString) )
 		doing: [ :aString | ffiInvocationArgument := aString ]
 		options: #( optStringEncodingUtf8 ).
 	method valueWithReceiver: nil arguments: #( 'string' ).
-	
+
 	self assert: ffiInvocationArgument equals: ('string' nullTerminatedEncodeWith: #utf8)
 ]
 
 { #category : #tests }
 FFIStringCalloutTest >> testUtf8EncodedStringShouldHaveNullTerminator [
 	| ffiInvocationArgument method |
-	
+
 	method := self
 		newFFIMethodWithSignature: #( void f (char* 'string') )
 		doing: [ :aString | ffiInvocationArgument := aString ]
 		options: #( optStringEncodingUtf8 ).
 	method valueWithReceiver: nil arguments: #( nil ).
-	
+
 	self assert: ffiInvocationArgument utf8Decoded equals: 'string', Character null asString
 ]

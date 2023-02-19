@@ -9,7 +9,7 @@ Class {
 
 { #category : #actions }
 ReImageRuleBaner class >> ban: aCritique [
-	
+
 	ReSystemAnnouncer uniqueInstance
 		notifyCritique: aCritique
 		of: aCritique sourceAnchor entity
