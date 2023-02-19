@@ -39,7 +39,7 @@ MethodRemoved >> methodOrigin: anObject [
 
 { #category : #accessing }
 MethodRemoved >> methodRemoved [
-	
+
 	^ method
 ]
 
@@ -50,6 +50,6 @@ MethodRemoved >> protocol [
 
 { #category : #accessing }
 MethodRemoved >> protocol: anObject [
-	
+
 	protocol := anObject
 ]

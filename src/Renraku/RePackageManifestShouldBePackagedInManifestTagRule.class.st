@@ -13,7 +13,7 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> checksClass [
 { #category : #running }
 RePackageManifestShouldBePackagedInManifestTagRule >> basicCheck: aClass [
 
-	^ (aClass inheritsFrom: PackageManifest) and: [ 
+	^ (aClass inheritsFrom: PackageManifest) and: [
 		((aClass package classesForClassTag: 'Manifest') includes: aClass) not ]
 ]
 

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIOop class >> externalType [ 
+FFIOop class >> externalType [
 	^ ExternalType void asPointerType
 ]
 
@@ -38,7 +38,7 @@ FFIOop >> basicHandle: aHandle at: index put: value [
 
 { #category : #accessing }
 FFIOop >> externalTypeSize [
-	^ self pointerSize  
+	^ self pointerSize
 ]
 
 { #category : #testing }

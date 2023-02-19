@@ -20,20 +20,20 @@ FFIConst class >> value: aValue [
 
 { #category : #'instance creation' }
 FFIConst class >> value: anObject type: aType [
-	^ self new 
+	^ self new
 		value: anObject;
 		type: aType;
 		yourself
 ]
 
 { #category : #unpacking }
-FFIConst >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [ 
-	
+FFIConst >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [
+
 	"Nothing to do here"
 ]
 
 { #category : #'emitting code' }
-FFIConst >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [ 
+FFIConst >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	self error: 'Literals cannot be used as return'
 ]
 
@@ -43,7 +43,7 @@ FFIConst >> emitReturnArgument: builder context: aContext [
 ]
 
 { #category : #accessing }
-FFIConst >> externalType [ 
+FFIConst >> externalType [
 
 	^ self type externalType
 ]
@@ -61,7 +61,7 @@ FFIConst >> externalTypeSize [
 ]
 
 { #category : #accessing }
-FFIConst >> loader [ 
+FFIConst >> loader [
 	^ self
 ]
 
@@ -73,7 +73,6 @@ FFIConst >> pointerArity: additionalArity [
 { #category : #'stack parameter classification' }
 FFIConst >> stackValueParameterClass [
 	^ value isFloat ifTrue: [#float] ifFalse: [#integer]
-
 ]
 
 { #category : #accessing }

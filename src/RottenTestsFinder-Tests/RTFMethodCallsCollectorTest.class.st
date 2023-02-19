@@ -15,13 +15,13 @@ RTFMethodCallsCollectorTest >> setUp [
 	super setUp.
 	tree := RTFSelfCallRootNode new
 				compiledMethod: 'Fake CM';
-				subCalls: { 
+				subCalls: {
 					RTFSelfCallRootNode new
 						compiledMethod: 'Fake CM 2';
-						subCalls: { 
+						subCalls: {
 							RTFSelfCallRootNode new
 								compiledMethod: 'Fake CM 3';
-								subCalls: { 
+								subCalls: {
 									RTFSelfCallRootNode new
 										compiledMethod: (TestAsserter lookupSelector: #assert:);
 										subCalls: #()
@@ -29,7 +29,7 @@ RTFMethodCallsCollectorTest >> setUp [
 								yourself.
 							RTFSelfCallRootNode new
 								compiledMethod: 'Fake CM 4';
-								subCalls: { 
+								subCalls: {
 									RTFSelfCallRootNode new
 										compiledMethod: 'Fake CM 5';
 										subCalls: { };
@@ -39,7 +39,7 @@ RTFMethodCallsCollectorTest >> setUp [
 							};
 						yourself
 					};
-				yourself.
+				yourself
 ]
 
 { #category : #'tests-visiting' }
@@ -47,7 +47,7 @@ RTFMethodCallsCollectorTest >> testVisitRTFSelfCallNode [
 	| visitor methods |
 	visitor := RTFMethodCallsCollector new.
 	methods := tree acceptVisitor: visitor.
-	
+
 	self
 		assertCollection: visitor compiledMethods
 		hasSameElements: { 'Fake CM' . 'Fake CM 2' . 'Fake CM 3' . (TestAsserter lookupSelector: #assert:) . 'Fake CM 4' . 'Fake CM 5' }

@@ -114,18 +114,17 @@ RubWorkspaceBarRuler >> spacer: anInteger [
 
 { #category : #'managing editing mode' }
 RubWorkspaceBarRuler >> switchToPlainTextMode [
-	self paragraphProvider beForPlainText 
+	self paragraphProvider beForPlainText
 ]
 
 { #category : #'managing editing mode' }
 RubWorkspaceBarRuler >> switchToSmalltalkScriptingMode [
-	self paragraphProvider beForSmalltalkScripting 
+	self paragraphProvider beForSmalltalkScripting
 ]
 
 { #category : #accessing }
 RubWorkspaceBarRuler >> textColor [
 	^ self textArea lineNumbersTextColor muchDarker
-
 ]
 
 { #category : #'event handling' }

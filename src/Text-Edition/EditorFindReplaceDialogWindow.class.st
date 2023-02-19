@@ -195,6 +195,14 @@ EditorFindReplaceDialogWindow >> initialExtent [
 	^ 400 @ super initialExtent y
 ]
 
+{ #category : #initialization }
+EditorFindReplaceDialogWindow >> initialize [
+	"Set the initial position based on usable screen area."
+
+	super initialize.
+	self position: RealEstateAgent maximumUsableArea topLeft
+]
+
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> isRegex [
 	^ self state isRegex

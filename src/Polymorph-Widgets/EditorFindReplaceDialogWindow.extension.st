@@ -16,14 +16,6 @@ EditorFindReplaceDialogWindow >> aboutTitle [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-EditorFindReplaceDialogWindow >> initialize [
-	"Set the initial position based on usable screen area."
-
-	super initialize.
-	self position: RealEstateAgent maximumUsableArea topLeft
-]
-
-{ #category : #'*Polymorph-Widgets' }
 EditorFindReplaceDialogWindow >> removeBoxes [
 	"Remove all label area boxes."
 
