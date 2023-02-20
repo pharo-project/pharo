@@ -36,7 +36,7 @@ RunArray class >> new: aSize [
 ]
 
 { #category : #'instance creation' }
-RunArray class >> new: size withAll: value [ 
+RunArray class >> new: size withAll: value [
 	"Answer a new instance of me, whose every element is equal to the
 	argument, value."
 
@@ -58,16 +58,16 @@ RunArray class >> newFrom: aCollection [
 	values := (Array new: aCollection size // 2) writeStream.
 	lastRun := 0.
 	lastValue := Object new.
-	aCollection do: [ :x | 
+	aCollection do: [ :x |
 		lastValue = x
 			ifTrue: [ lastRun := lastRun + 1 ]
-			ifFalse: [ 
-				lastRun > 0 ifTrue: [ 
+			ifFalse: [
+				lastRun > 0 ifTrue: [
 					runs nextPut: lastRun.
 					values nextPut: lastValue ].
 				lastRun := 1.
 				lastValue := x ] ].
-	lastRun > 0 ifTrue: [ 
+	lastRun > 0 ifTrue: [
 		runs nextPut: lastRun.
 		values nextPut: lastValue ].
 	^ self basicNew setRuns: runs contents setValues: values contents
@@ -97,8 +97,8 @@ RunArray class >> readFrom: aStream [
 ]
 
 { #category : #'instance creation' }
-RunArray class >> runs: newRuns values: newValues [ 
-	"Answer an instance of me with runs and values specified by the 
+RunArray class >> runs: newRuns values: newValues [
+	"Answer an instance of me with runs and values specified by the
 	arguments."
 
 	| instance |
@@ -114,17 +114,17 @@ RunArray class >> scanFrom: strm [
 	(strm peekFor: $( ) ifFalse: [^ nil].
 	runs := OrderedCollection new.
 	[strm skipSeparators.
-	 strm peekFor: $)] whileFalse: 
+	 strm peekFor: $)] whileFalse:
 		[runs add: (Number readFrom: strm)].
 	values := OrderedCollection new. "Value array"
 	attrList := OrderedCollection new. "Attributes list"
 	[(char := strm next) == nil] whileFalse: [
 		char == $, ifTrue: [values add: attrList asArray. attrList := OrderedCollection new].
-		char == $a ifTrue: [attrList add: 
+		char == $a ifTrue: [attrList add:
 			(TextAlignment new alignment: (Integer readFrom: strm ifFail: [0]))].
-		char == $f ifTrue: [attrList add: 
+		char == $f ifTrue: [attrList add:
 			(TextFontChange new fontNumber: (Integer readFrom: strm ifFail: [0]))].
-		char == $F ifTrue: [attrList add: (TextFontReference toFont: 
+		char == $F ifTrue: [attrList add: (TextFontReference toFont:
 			(self environment at: #StrikeFont ifPresent: [:sf | sf familyName: (strm upTo: $#) size: (Integer readFrom: strm ifFail: [0])]))].
 		char == $b ifTrue: [attrList add: (TextEmphasis bold)].
 		char == $i ifTrue: [attrList add: (TextEmphasis italic)].
@@ -149,13 +149,13 @@ RunArray scanFrom: (ReadStream on: '(14 50 312)f1,f1b,f1LInteger +;i')
 ]
 
 { #category : #copying }
-RunArray >> , aRunArray [ 
+RunArray >> , aRunArray [
 	"Answer a new RunArray that is a concatenation of the receiver and
 	aRunArray."
 
 	| new newRuns |
 	(aRunArray isMemberOf: RunArray)
-		ifFalse: 
+		ifFalse:
 			[new := self copy.
 			"attempt to be sociable"
 			aRunArray do: [:each | new addLast: each].
@@ -173,7 +173,7 @@ RunArray >> , aRunArray [
 	newRuns at: runs size put: (runs at: runs size) + (aRunArray runs at: 1).
 	^RunArray
 		runs: newRuns
-		values: 
+		values:
 			(values
 				copyReplaceFrom: values size
 				to: values size
@@ -181,7 +181,7 @@ RunArray >> , aRunArray [
 ]
 
 { #category : #comparing }
-RunArray >> = otherArray [ 
+RunArray >> = otherArray [
 	"Test if all my elements are equal to those of otherArray"
 
 	self == otherArray ifTrue: [^true].
@@ -194,8 +194,8 @@ RunArray >> = otherArray [
 ]
 
 { #category : #adding }
-RunArray >> add: newObject [ 
-	"Include newObject as one of the receiver's elements. Answer newObject. 
+RunArray >> add: newObject [
+	"Include newObject as one of the receiver's elements. Answer newObject.
 	ArrayedCollections cannot respond to this message."
 
 	^ self addLast: newObject
@@ -240,14 +240,14 @@ RunArray >> addLast: value [
 ]
 
 { #category : #enumerating }
-RunArray >> allSatisfy: aBlock [ 
+RunArray >> allSatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values allSatisfy: aBlock
 ]
 
 { #category : #enumerating }
-RunArray >> anySatisfy: aBlock [ 
+RunArray >> anySatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values anySatisfy: aBlock
@@ -284,7 +284,7 @@ RunArray >> at: index put: aValue [
 		ifFalse: [ self errorSubscriptBounds: index ].
 	self
 		at: index
-		setRunOffsetAndValue: [ :run :offset :value | 
+		setRunOffsetAndValue: [ :run :offset :value |
 			runIndex := run.
 			offsetInRun := offset.
 			lastValue := value ].
@@ -307,7 +307,7 @@ RunArray >> at: index put: aValue [
 ]
 
 { #category : #private }
-RunArray >> at: index setRunOffsetAndValue: aBlock [ 
+RunArray >> at: index setRunOffsetAndValue: aBlock [
 	"Supply all run information to aBlock."
 	"Tolerates index=0 and index=size+1 for copyReplace: "
 	| run limit offset |
@@ -320,14 +320,14 @@ RunArray >> at: index setRunOffsetAndValue: aBlock [
 			[run := lastRun.
 			offset := lastOffset + (index-lastIndex)].
 	[run <= limit and: [offset >= (runs at: run)]]
-		whileTrue: 
+		whileTrue:
 			[offset := offset - (runs at: run).
 			run := run + 1].
 	lastIndex := index. "Load cache for next access"
 	lastRun := run.
 	lastOffset := offset.
 	run > limit
-		ifTrue: 
+		ifTrue:
 			["adjustment for size+1"
 			run := run - 1.
 			offset := offset + (runs at: run)].
@@ -343,14 +343,13 @@ RunArray >> coalesce [
 	| ind |
 	ind := 2.
 	[ind > values size] whileFalse: [
-		(values at: ind-1) = (values at: ind) 
+		(values at: ind-1) = (values at: ind)
 			ifFalse: [ind := ind + 1]
 			ifTrue: ["two are the same, combine them"
 				values := values copyReplaceFrom: ind to: ind with: #().
 				runs at: ind-1 put: (runs at: ind-1) + (runs at: ind).
 				runs := runs copyReplaceFrom: ind to: ind with: #().
-				"self error: 'needed to combine runs' "]].
-			
+				"self error: 'needed to combine runs' "]]
 ]
 
 { #category : #enumerating }
@@ -361,14 +360,14 @@ RunArray >> collect: aBlock [
 
 { #category : #copying }
 RunArray >> copyFrom: start to: stop [
-	| newRuns run1 run2 offset1 offset2 | 
+	| newRuns run1 run2 offset1 offset2 |
 	stop < start ifTrue: [^RunArray new].
 	self at: start setRunOffsetAndValue: [:r :o :value1 | run1 := r. offset1 := o. value1].
 	self at: stop setRunOffsetAndValue: [:r :o :value2 | run2 := r. offset2 := o. value2].
 	run1 = run2
-		ifTrue: 
+		ifTrue:
 			[newRuns := Array with: offset2 - offset1 + 1]
-		ifFalse: 
+		ifFalse:
 			[newRuns := runs copyFrom: run1 to: run2.
 			newRuns at: 1 put: (newRuns at: 1) - offset1.
 			newRuns at: newRuns size put: offset2 + 1].
@@ -379,7 +378,7 @@ RunArray >> copyFrom: start to: stop [
 RunArray >> copyReplaceFrom: start to: stop with: replacement [
 
 	^(self copyFrom: 1 to: start - 1)
-		, replacement 
+		, replacement
 		, (self copyFrom: stop + 1 to: self size)
 ]
 
@@ -395,7 +394,7 @@ RunArray >> copyUpThrough: anElement [
 ]
 
 { #category : #copying }
-RunArray >> copyUpTo: anElement [ 
+RunArray >> copyUpTo: anElement [
 	"Optimized"
 
 	| newValues |
@@ -429,10 +428,10 @@ RunArray >> count: aBlock [
 ]
 
 { #category : #enumerating }
-RunArray >> detect: aBlock ifNone: exceptionBlock [ 
+RunArray >> detect: aBlock ifNone: exceptionBlock [
 	"Only evaluate once per run"
 
-	^values detect: aBlock ifNone: exceptionBlock 
+	^values detect: aBlock ifNone: exceptionBlock
 ]
 
 { #category : #enumerating }
@@ -452,13 +451,13 @@ RunArray >> detectMin: aBlock [
 { #category : #enumerating }
 RunArray >> do: aBlock [
 	"This is refined for speed"
-	
+
 	1 to: runs size do: [:i |
 		| r v |
 		v := values at: i.
 		r := runs at: i.
 		[( r := r - 1) >= 0]
-			whileTrue: [aBlock value: v]].
+			whileTrue: [aBlock value: v]]
 ]
 
 { #category : #private }
@@ -471,7 +470,7 @@ RunArray >> fillFrom: aCollection with: aBlock [
 	newValues := (Array new: aCollection size) writeStream.
 	lastLength := 0.
 	lastValue := Object new.
-	aCollection do: [:each | 
+	aCollection do: [:each |
 		| value |
 		value := aBlock value: each.
 		lastValue = value
@@ -549,7 +548,7 @@ RunArray >> mapValues: mapBlock [
 ]
 
 { #category : #enumerating }
-RunArray >> noneSatisfy: aBlock [ 
+RunArray >> noneSatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values noneSatisfy: aBlock
@@ -577,9 +576,9 @@ RunArray >> rangeOf: attr startingAt: startPos [
 	"Answer an interval that gives the range of attr at index position startPos. An empty interval with start value startPos is returned when the attribute attr is not present at position startPos. self size > 0 is assumed, it is the responsibility of the caller to test for emptiness of self.
 Note that an attribute may span several adjancent runs. "
 
-	self at: startPos 
-		setRunOffsetAndValue: 
-			[:run :offset :value | 
+	self at: startPos
+		setRunOffsetAndValue:
+			[:run :offset :value |
 			^(value includes: attr)
 				ifFalse: [startPos to: startPos - 1]
 				ifTrue:
@@ -587,18 +586,18 @@ Note that an attribute may span several adjancent runs. "
 					lastRelevantPosition := startPos - offset + (runs at: run) - 1.
 					firstRelevantPosition := startPos - offset.
 					idxOfCandidateRun := run + 1.
-					[idxOfCandidateRun <= runs size 
+					[idxOfCandidateRun <= runs size
 							 and: [(values at: idxOfCandidateRun) includes: attr]]
 						whileTrue:
 							[lastRelevantPosition := lastRelevantPosition + (runs at: idxOfCandidateRun).
-							idxOfCandidateRun := idxOfCandidateRun + 1]. 
+							idxOfCandidateRun := idxOfCandidateRun + 1].
 					idxOfCandidateRun := run - 1.
-					[idxOfCandidateRun >= 1 
+					[idxOfCandidateRun >= 1
 							 and: [(values at: idxOfCandidateRun) includes: attr]]
 						whileTrue:
 							[firstRelevantPosition := firstRelevantPosition - (runs at: idxOfCandidateRun).
-							idxOfCandidateRun := idxOfCandidateRun - 1]. 
- 
+							idxOfCandidateRun := idxOfCandidateRun - 1].
+
 					firstRelevantPosition to: lastRelevantPosition]]
 ]
 
@@ -636,7 +635,7 @@ RunArray >> repeatLast: times ifEmpty: defaultBlock [
 			[runs := runs copyWith: times.
 			values := values copyWith: defaultBlock value]
 		ifFalse:
-			[runs at: runs size put: runs last+times] 
+			[runs at: runs size put: runs last+times]
 ]
 
 { #category : #adding }
@@ -661,17 +660,17 @@ RunArray >> replace: aBlock [
 { #category : #enumerating }
 RunArray >> reverseDo: aBlock [
 	"This is refined for speed"
-	
+
 	| i |
 	i := runs size.
 	[i > 0]
-		whileTrue: 
+		whileTrue:
 			[ | r v |
 			v := values at: i.
 			r := runs at: i.
 			i := i - 1.
 			[( r := r - 1) >= 0]
-				whileTrue: [aBlock value: v]].
+				whileTrue: [aBlock value: v]]
 ]
 
 { #category : #converting }
@@ -680,10 +679,10 @@ RunArray >> reversed [
 ]
 
 { #category : #accessing }
-RunArray >> runLengthAt: index [ 
+RunArray >> runLengthAt: index [
 	"Answer the length remaining in run beginning at index."
 
-	self at: index 
+	self at: index
 		setRunOffsetAndValue: [:run :offset :value | ^(runs at: run) - offset]
 ]
 
@@ -696,7 +695,7 @@ RunArray >> runs [
 { #category : #enumerating }
 RunArray >> runsAndValuesDo: aBlock [
 	"Evaluate aBlock with run lengths and values from the receiver"
-	^runs with: values do: aBlock.
+	^runs with: values do: aBlock
 ]
 
 { #category : #enumerating }
@@ -712,8 +711,7 @@ RunArray >> runsFrom: start to: stop do: aBlock [
 		index <= stop] whileTrue:[
 			run := run + 1.
 			value := values at: run.
-			index := index + (runs at: run)]].
-
+			index := index + (runs at: run)]]
 ]
 
 { #category : #enumerating }
@@ -734,7 +732,7 @@ RunArray >> select: aBlock [
 RunArray >> setRuns: newRuns setValues: newValues [
 	lastIndex := nil. "flush access cache"
 	runs := newRuns asArray.
-	values := newValues asArray.
+	values := newValues asArray
 ]
 
 { #category : #accessing }
@@ -762,7 +760,7 @@ RunArray >> sum: aBlock [
 	"Only loop on runs"
 	| sum |
 	sum := 0.
-	self runsAndValuesDo: [:run :value | 
+	self runsAndValuesDo: [:run :value |
 		sum := (aBlock value: value) * run + sum].
 	^ sum
 ]
@@ -783,7 +781,6 @@ RunArray >> withStartStopAndValueDo: aBlock [
 		stop := start + len - 1.
 		aBlock value: start value: stop value: val.
 		start := stop + 1]
-		
 ]
 
 { #category : #printing }

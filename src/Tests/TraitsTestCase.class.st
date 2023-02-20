@@ -86,13 +86,13 @@ TraitsTestCase >> categoryName [
 { #category : #utilities }
 TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
 	| class |
-			
+
 	class := self class classInstaller make: [ :aBuilder |
 		aBuilder name: aSymbol;
 			superclass: aClass;
 			traitComposition: aTraitComposition asTraitComposition;
-			package: self categoryName ].		
-		
+			package: self categoryName ].
+
 	self createdClassesAndTraits add: class.
 	^class
 ]
@@ -102,11 +102,11 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 	| trait |
 
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: aSymbol;
 			traitComposition: aTraitComposition asTraitComposition;
 			package: self categoryName;
-			beTrait ].			
+			beTrait ].
 
 	self createdClassesAndTraits add: trait.
 	^trait
@@ -129,8 +129,7 @@ TraitsTestCase >> setUp [
 
 	super setUp.
 	oldAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.
-
+	SystemAnnouncer announcer: nil
 ]
 
 { #category : #accessing }
@@ -197,6 +196,5 @@ TraitsTestCase >> tearDown [
 			testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
 	createdClassesAndTraits := nil.
 	SystemAnnouncer announcer: oldAnnouncer.
-	super tearDown 
-
+	super tearDown
 ]

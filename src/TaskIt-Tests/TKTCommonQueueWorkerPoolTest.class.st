@@ -8,7 +8,7 @@ Class {
 TKTCommonQueueWorkerPoolTest >> expectedFailures [
 
 	"This tests fail on P7"
-	SystemVersion current major <= 7 ifTrue: [ 
+	SystemVersion current major <= 7 ifTrue: [
 		^ #(
 		testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 		testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection
@@ -59,13 +59,13 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 	pool := TKTCommonQueueWorkerPool new.
 	pool poolMaxSize: 4.
 	pool start.
-		
+
 	((1 to: 10) collect: [:i | pool future: [ 1 + 1 ] ])
 		do: [ :future | future waitForCompletion: 500 milliSeconds. ].
-	
+
 	pool stop.
-	
-	pool workers do: [ :worker | self deny: worker isRunning ].
+
+	pool workers do: [ :worker | self deny: worker isRunning ]
 ]
 
 { #category : #tests }
@@ -76,13 +76,13 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollect
 	pool name: 'test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-	(pool future: (MessageSend receiver: self selector: #yourself)) 
+	(pool future: (MessageSend receiver: self selector: #yourself))
 		waitForCompletion: 1 second.
 	self assert: pool workers notEmpty.
 	workerProcess := WeakArray with: pool workers anyOne process.
 	pool := nil.
-	
-	self assertWithGarbageCollect: [ workerProcess first isNil ].
+
+	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
 { #category : #tests }
@@ -93,12 +93,11 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoo
 	pool name: 'Test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-	(pool future: (MessageSend receiver: self selector: #yourself)) 
+	(pool future: (MessageSend receiver: self selector: #yourself))
 		waitForCompletion: 1 second.
 	workerProcess := WeakArray with: pool workers anyOne process process.
 	pool := nil.
-	self assertWithGarbageCollect: [ workerProcess first isNil ].
-
+	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
 { #category : #tests }
@@ -106,10 +105,9 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfter
 
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool createDefault.
-	(pool future: (MessageSend receiver: self selector: #yourself)) 
+	(pool future: (MessageSend receiver: self selector: #yourself))
 		waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
-	self assertWithGarbageCollect: [ workerProcess isTerminated ].
-
+	self assertWithGarbageCollect: [ workerProcess isTerminated ]
 ]
