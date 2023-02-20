@@ -730,7 +730,8 @@ RBParser >> parseLiteralByteArrayObject [
 		ifFalse: [
 			| errorNode |
 			errorNode := self parserError: 'Expecting 8-bit integer'.
-			self step.
+			"Error recovery: consume the token as classic literal array object"
+			errorNode value: self parseLiteralArrayObject value asString.
 			^ errorNode ].
 	^self parsePrimitiveLiteral
 ]
