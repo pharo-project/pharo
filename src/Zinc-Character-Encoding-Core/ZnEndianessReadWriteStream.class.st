@@ -21,7 +21,7 @@ ZnEndianessReadWriteStream class >> on: writeStream [
 ZnEndianessReadWriteStream class >> on: writeStream do: block [
 	"Execute block with as argument a ZnBufferedWriteStream on writeStream,
 	making sure #flush is called at the end. Return the value of block."
-	
+
 	| bufferedWriteStream result |
 	bufferedWriteStream := self on: writeStream.
 	result := block value: bufferedWriteStream.
@@ -30,7 +30,7 @@ ZnEndianessReadWriteStream class >> on: writeStream do: block [
 ]
 
 { #category : #endianess }
-ZnEndianessReadWriteStream >> nextLittleEndianNumber: n [ 
+ZnEndianessReadWriteStream >> nextLittleEndianNumber: n [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 
 	| bytes s |

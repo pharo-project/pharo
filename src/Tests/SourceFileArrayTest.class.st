@@ -31,7 +31,7 @@ SourceFileArrayTest >> testAddressRange [
 
 	| sf i p a |
 	sf := SourceFileArray new.
-	16r1000000 to: 16r10000000 by: 4093 do: [ :e | 
+	16r1000000 to: 16r10000000 by: 4093 do: [ :e |
 		i := sf fileIndexFromSourcePointer: e.
 		p := sf filePositionFromSourcePointer: e.
 		a := sf sourcePointerFromFileIndex: i andPosition: p.
@@ -44,7 +44,7 @@ SourceFileArrayTest >> testChangesFileAddressRange [
 
 	| sf i p a a2 |
 	sf := SourceFileArray new.
-	0 to: 16r1FFFFFFF by: 4093 do: [ :e | 
+	0 to: 16r1FFFFFFF by: 4093 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		i := sf fileIndexFromSourcePointer: a.
 		self assert: i equals: 2.
@@ -52,28 +52,28 @@ SourceFileArrayTest >> testChangesFileAddressRange [
 		self assert: p equals: e.
 		a2 := sf sourcePointerFromFileIndex: 2 andPosition: p.
 		self assert: a2 equals: a ].
-	0 to: 16rFFFFFF by: 811 do: [ :e | 
+	0 to: 16rFFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16r2000000 and: 16r2FFFFFF) ].
-	16r1000000 to: 16r1FFFFFF by: 811 do: [ :e | 
+	16r1000000 to: 16r1FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16r4000000 and: 16r4FFFFFF) ].
-	16r2000000 to: 16r2FFFFFF by: 811 do: [ :e | 
+	16r2000000 to: 16r2FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16r6000000 and: 16r6FFFFFF) ].
-	16r3000000 to: 16r3FFFFFF by: 811 do: [ :e | 
+	16r3000000 to: 16r3FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16r8000000 and: 16r8FFFFFF) ].
-	16r4000000 to: 16r4FFFFFF by: 811 do: [ :e | 
+	16r4000000 to: 16r4FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16rA000000 and: 16rAFFFFFF) ].
-	16r5000000 to: 16r5FFFFFF by: 811 do: [ :e | 
+	16r5000000 to: 16r5FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16rC000000 and: 16rCFFFFFF) ].
-	16r6000000 to: 16r6FFFFFF by: 811 do: [ :e | 
+	16r6000000 to: 16r6FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16rE000000 and: 16rEFFFFFF) ].
-	16r7000000 to: 16r7FFFFFF by: 811 do: [ :e | 
+	16r7000000 to: 16r7FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
 		self assert: (a between: 16r10000000 and: 16r10FFFFFF) ]
 ]
@@ -161,14 +161,14 @@ SourceFileArrayTest >> testForkedRead [
 	testSemaphore := Semaphore new.
 
 	self ensureChangesFileOpenedInProcess.
-	
+
 	[	self ensureChangesFileOpenedInProcess.
 
 		readSemaphore wait.
 
 		"Read the string that was written in other process."
 		readString := remoteString string.
-		testSemaphore signal 
+		testSemaphore signal
 		] fork.
 
 	"Write the string, that will be read in other process."
@@ -176,8 +176,8 @@ SourceFileArrayTest >> testForkedRead [
 
 	readSemaphore signal.
 	testSemaphore wait.
-	
-	self assert: readString equals: originalString.
+
+	self assert: readString equals: originalString
 ]
 
 { #category : #tests }
@@ -188,17 +188,17 @@ SourceFileArrayTest >> testForkedWrite [
 	remoteString := nil.
 	readSemaphore := Semaphore new.
 	testSemaphore := Semaphore new.
-	
+
 	self ensureChangesFileOpenedInProcess.
 
 	[	self ensureChangesFileOpenedInProcess.
-		
+
 		readSemaphore wait.
 
 		"Write the string, that will be read in other process."
 		remoteString := SourceFiles remoteStringForNewString: originalString.
 
-		testSemaphore signal 
+		testSemaphore signal
 		] fork.
 
 	readSemaphore signal.
@@ -206,8 +206,8 @@ SourceFileArrayTest >> testForkedWrite [
 
 	"Read the string that was written in other process."
 	readString := remoteString string.
-	
-	self assert: readString equals: originalString.
+
+	self assert: readString equals: originalString
 ]
 
 { #category : #tests }
@@ -290,7 +290,7 @@ SourceFileArrayTest >> testSourcesFileAddressRange [
 
 	| sf i p a a2 |
 	sf := SourceFileArray new.
-	0 to: 16r1FFFFFFF by: 4093 do: [ :e | 
+	0 to: 16r1FFFFFFF by: 4093 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		i := sf fileIndexFromSourcePointer: a.
 		self assert: i equals: 1.
@@ -298,29 +298,29 @@ SourceFileArrayTest >> testSourcesFileAddressRange [
 		self assert: p equals: e.
 		a2 := sf sourcePointerFromFileIndex: 1 andPosition: p.
 		self assert: a2 equals: a ].
-	0 to: 16rFFFFFF by: 811 do: [ :e | 
+	0 to: 16rFFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16r1000000 and: 16r1FFFFFF) ].
-	16r1000000 to: 16r1FFFFFF by: 811 do: [ :e | 
+	16r1000000 to: 16r1FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16r3000000 and: 16r3FFFFFF) ].
 
-	16r2000000 to: 16r2FFFFFF by: 811 do: [ :e | 
+	16r2000000 to: 16r2FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16r5000000 and: 16r5FFFFFF) ].
-	16r3000000 to: 16r3FFFFFF by: 811 do: [ :e | 
+	16r3000000 to: 16r3FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16r7000000 and: 16r7FFFFFF) ].
-	16r4000000 to: 16r4FFFFFF by: 811 do: [ :e | 
+	16r4000000 to: 16r4FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16r9000000 and: 16r9FFFFFF) ].
-	16r5000000 to: 16r5FFFFFF by: 811 do: [ :e | 
+	16r5000000 to: 16r5FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16rB000000 and: 16rBFFFFFF) ].
-	16r6000000 to: 16r6FFFFFF by: 811 do: [ :e | 
+	16r6000000 to: 16r6FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16rD000000 and: 16rDFFFFFF) ].
-	16r7000000 to: 16r7FFFFFF by: 811 do: [ :e | 
+	16r7000000 to: 16r7FFFFFF by: 811 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
 		self assert: (a between: 16rF000000 and: 16rFFFFFFF) ]
 ]
@@ -337,9 +337,8 @@ SourceFileArrayTest >> testTimeStamp [
 
 	| okCm |
 	okCm := Point>>#dotProduct: .
-	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:   
- 'Point methodsFor: ''point functions'' stamp: ''''').
-	
+	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:
+ 'Point methodsFor: ''point functions'' stamp: ''''')
 ]
 
 { #category : #tests }
@@ -371,7 +370,7 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefer
 		sourcesFileStream:
 			(SourceFile on: 'sources.chunk' potentialLocations: { fs root })
 				tryOpen;
-		deferFlushDuring: [ 
+		deferFlushDuring: [
 			array
 				writeSource: 'some source'
 				preamble: 'some preamble'
@@ -387,11 +386,11 @@ SourceFileArrayTest >> testWriteToBufferedStream [
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
-	
-	array changesFileStream: 
+
+	array changesFileStream:
 		(SourceFileCharacterReadWriteStream on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'changes.chunk') path)) encoding: #utf8).
-	
-	array sourcesFileStream: 
+
+	array sourcesFileStream:
 		(SourceFileCharacterReadWriteStream on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'sources.chunk') path)) encoding: #utf8).
 
 	array
@@ -412,7 +411,7 @@ SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
 	array
 		sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: {fs root}) tryOpen.
 	array
-		changesWriteStreamDo: [ :changesFile | 
+		changesWriteStreamDo: [ :changesFile |
 			changesFile
 				cr;
 				cr;

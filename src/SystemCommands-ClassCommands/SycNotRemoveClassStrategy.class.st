@@ -19,7 +19,7 @@ SycNotRemoveClassStrategy >> execute: aSycRemoveClassCommand [
 { #category : #execution }
 SycNotRemoveClassStrategy >> orderForBrowser [
 	"Cancelling the remove of command should be at the end of list"
-	^super orderForBrowser + 1.
+	^super orderForBrowser + 1
 ]
 
 { #category : #execution }

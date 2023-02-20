@@ -27,7 +27,7 @@ EqTeacher >> experience: anObject [
 	experience := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 EqTeacher >> initialize [
 	super initialize.
 	self experience: 0

@@ -28,30 +28,30 @@ Class {
 { #category : #initialization }
 TKTParameterizableService >> initialize [
 	super initialize.
-	self step: [ 100 milliSeconds wait ].
+	self step: [ 100 milliSeconds wait ]
 ]
 
 { #category : #accessing }
 TKTParameterizableService >> name [
-	
+
 	^ name
 ]
 
 { #category : #accessing }
-TKTParameterizableService >> name: aString [ 
+TKTParameterizableService >> name: aString [
 	name := aString
 ]
 
 { #category : #parameterization }
-TKTParameterizableService >> onSetUpDo: aBlockClosure [ 
+TKTParameterizableService >> onSetUpDo: aBlockClosure [
 
-	startUpTask := aBlockClosure.
+	startUpTask := aBlockClosure
 ]
 
 { #category : #parameterization }
-TKTParameterizableService >> onTearDownDo: aBlockClosure [ 
+TKTParameterizableService >> onTearDownDo: aBlockClosure [
 
-	tearDownTask := aBlockClosure.
+	tearDownTask := aBlockClosure
 ]
 
 { #category : #starting }
@@ -64,24 +64,24 @@ TKTParameterizableService >> restart [
 
 { #category : #stepping }
 TKTParameterizableService >> setUp [
-	
+
 	super setUp.
 	startUpTask value
 ]
 
 { #category : #accessing }
-TKTParameterizableService >> step: aBlockClosure [ 
+TKTParameterizableService >> step: aBlockClosure [
 	task := aBlockClosure
 ]
 
 { #category : #stepping }
 TKTParameterizableService >> stepService [
-	task value.
+	task value
 ]
 
 { #category : #stepping }
 TKTParameterizableService >> tearDown [
-	
+
 	super tearDown.
 	tearDownTask value
 ]

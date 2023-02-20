@@ -13,17 +13,17 @@ ZnBufferedReadWriteStreamTest >> testBuffering [
 	self assert: (stream next: 10) equals: '0123456789'.
 	self deny: stream atEnd.
 	self assert: (stream next: 10) equals: '0123456789'.
-	self assert: stream atEnd	
+	self assert: stream atEnd
 ]
 
 { #category : #tests }
 ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| string |
-	string := String streamContents: [ :stringStream | 
+	string := String streamContents: [ :stringStream |
 		ZnBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
 			bufferedStream sizeBuffer: 8.
 			bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
-			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6. 
+			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6.
 			bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
 			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6.] ].
 	self assert: string equals: '01234567890123456789'
@@ -56,7 +56,7 @@ ZnBufferedReadWriteStreamTest >> testReadInto [
 	self assert: buffer equals: '456123'.
 	count := stream readInto: buffer startingAt: 1 count: 100.
 	self assert: count equals: 3.
-	self assert: buffer equals: '789123'	 
+	self assert: buffer equals: '789123'
 ]
 
 { #category : #tests }
@@ -67,13 +67,13 @@ ZnBufferedReadWriteStreamTest >> testReadIntoLarger [
 	buffer := String new: 10.
 	count := stream readInto: buffer startingAt: 1 count: 10.
 	self assert: count equals: 10.
-	self assert: buffer equals: '0123456789'	 
+	self assert: buffer equals: '0123456789'
 ]
 
 { #category : #tests }
 ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 	| stream stringStream |
-	
+
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
 		ifTrue: [ ^ self skip ].
 
@@ -81,17 +81,17 @@ ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 	stringStream reset.
 	stream := ZnBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
-	
+
 	stream next: 4.
 	self assert: stream position equals: 4.
-	
+
 	stream nextPutAll: 'ABCD'.
 	self assert: stream position equals: 8.
-		
-	self assert: stream peek equals: $8. 
+
+	self assert: stream peek equals: $8.
 	self assert: stream upToEnd equals: '89'.
 	self assert: stream atEnd.
-	
+
 	self assert: stringStream contents equals: '0123ABCD89'
 ]
 
@@ -118,7 +118,7 @@ ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
 { #category : #tests }
 ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
-	
+
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
 		ifTrue: [ ^ self skip ].
 
@@ -126,15 +126,15 @@ ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 	stringStream reset.
 	stream := ZnBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
-	
+
 	stream nextPutAll: 'ABCD'.
-	
-	self assert: stream peek equals: $4. 
+
+	self assert: stream peek equals: $4.
 	self assert: stream position equals: 4.
 	self assert: stream upToEnd equals: '456789'.
 	self assert: stream position equals: 10.
 	self assert: stream atEnd.
-	
+
 	self assert: stringStream contents equals: 'ABCD456789'
 ]
 

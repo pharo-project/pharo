@@ -20,10 +20,10 @@ TKTSubclassServiceTest >> testServiceExecutesStartUpOnStart [
 
 	service := TKTMockService new.
 	service start.
-	
+
 	10 milliSeconds wait.
-	
-	self assert: service isStarted.
+
+	self assert: service isStarted
 ]
 
 { #category : #tests }
@@ -33,7 +33,7 @@ TKTSubclassServiceTest >> testServiceExecutesTearDownOnStop [
 	service start.
 	(service stop) waitForCompletion: 1 second.
 
-	self assert: service isShutDown.
+	self assert: service isShutDown
 ]
 
 { #category : #tests }
@@ -41,8 +41,8 @@ TKTSubclassServiceTest >> testServiceRunsAfterStart [
 
 	service := TKTMockService new.
 	service start.
-	
+
 	10 milliSeconds wait.
-	
-	self assert: service hasRun.
+
+	self assert: service hasRun
 ]
