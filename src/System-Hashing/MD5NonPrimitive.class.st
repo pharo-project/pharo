@@ -32,20 +32,20 @@ MD5NonPrimitive class >> initialize [
 	| c |
 	c := 2 raisedTo: 32.
 	SinTable := Array new: 64.
-	1 
+	1
 		to: 64
-		do: 
-			[ :i | 
-			SinTable 
+		do:
+			[ :i |
+			SinTable
 				at: i
 				put: (ThirtyTwoBitRegister new load: (c * i sin abs) truncated) ].
-	ShiftTable := { 
+	ShiftTable := {
 		#(7 12 17 22 ).
 		#(5 9 14 20 ).
 		#(4 11 16 23 ).
 		#(6 10 15 21 )
 	 }.
-	IndexTable := { 
+	IndexTable := {
 		#(
 			1
 			2
@@ -119,7 +119,7 @@ MD5NonPrimitive class >> initialize [
 			10
 		)
 	 }.
-	ABCDTable := { 
+	ABCDTable := {
 		#(1 2 3 4 ).
 		#(4 1 2 3 ).
 		#(3 4 1 2 ).
@@ -136,7 +136,7 @@ MD5NonPrimitive >> fX: x Y: y Z: z [
 { #category : #'private - functions' }
 MD5NonPrimitive >> ffA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + f(b,c,d) + m + t) <<< s)"
-	^ a += (self fX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
+	^ a += (self fX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b
 ]
 
 { #category : #'private - buffers' }
@@ -154,7 +154,7 @@ MD5NonPrimitive >> gX: x Y: y Z: z [
 { #category : #'private - functions' }
 MD5NonPrimitive >> ggA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + g(b,c,d) + m + t) <<< s)"
-	^ a += (self gX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
+	^ a += (self gX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b
 ]
 
 { #category : #'private - functions' }
@@ -166,7 +166,7 @@ MD5NonPrimitive >> hX: x Y: y Z: z [
 { #category : #'private - functions' }
 MD5NonPrimitive >> hhA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + h(b,c,d) + m + t) <<< s)"
-	^ a += (self hX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
+	^ a += (self hX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b
 ]
 
 { #category : #'private - functions' }
@@ -178,13 +178,13 @@ MD5NonPrimitive >> iX: x Y: y Z: z [
 { #category : #'private - functions' }
 MD5NonPrimitive >> iiA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + i(b,c,d) + m + t) <<< s)"
-	^ a += (self iX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
+	^ a += (self iX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b
 ]
 
 { #category : #initialization }
 MD5NonPrimitive >> initialize [
 	"Some magic numbers to get the process started"
-	state := OrderedCollection newFrom: { 
+	state := OrderedCollection newFrom: {
 			(ThirtyTwoBitRegister new load: 1732584193).
 			(ThirtyTwoBitRegister new load: 4023233417).
 			(ThirtyTwoBitRegister new load: 2562383102).
@@ -193,37 +193,37 @@ MD5NonPrimitive >> initialize [
 ]
 
 { #category : #'private - buffers' }
-MD5NonPrimitive >> processBuffer: aByteArray [ 
+MD5NonPrimitive >> processBuffer: aByteArray [
 	"Process a 64-byte buffer"
 	| saveState data |
 	saveState := state collect: [ :item | item copy ].
 	data := Array new: 16.
-	1 
+	1
 		to: 16
-		do: 
-			[ :index | 
-			data 
+		do:
+			[ :index |
+			data
 				at: index
-				put: (ThirtyTwoBitRegister new 
+				put: (ThirtyTwoBitRegister new
 						reverseLoadFrom: aByteArray
 						at: index * 4 - 3) ].
 	self rounds: data.
-	1 
+	1
 		to: 4
 		do: [ :index | (state at: index) += (saveState at: index) ]
 ]
 
 { #category : #'private - rounds' }
-MD5NonPrimitive >> round: data selector: selector round: round [ 
+MD5NonPrimitive >> round: data selector: selector round: round [
 	"Do one round with the given function"
 	| shiftIndex template abcd |
-	1 
+	1
 		to: 16
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			shiftIndex := (i - 1) \\ 4 + 1.
 			abcd := ABCDTable at: shiftIndex.
-			template := { 
+			template := {
 				(abcd at: 1).
 				(abcd at: 2).
 				(abcd at: 3).
@@ -232,7 +232,7 @@ MD5NonPrimitive >> round: data selector: selector round: round [
 				((ShiftTable at: round) at: shiftIndex).
 				(SinTable at: (round - 1) * 16 + i)
 			 }.
-			self 
+			self
 				step: data
 				template: template
 				selector: selector ]
@@ -251,10 +251,10 @@ MD5NonPrimitive >> rounds: data [
 ]
 
 { #category : #'private - functions' }
-MD5NonPrimitive >> step: data template: item selector: selector [ 
+MD5NonPrimitive >> step: data template: item selector: selector [
 	"Perform one step in the round"
 	| args |
-	args := { 
+	args := {
 		(state at: (item at: 1)).
 		(state at: (item at: 2)).
 		(state at: (item at: 3)).
@@ -263,7 +263,7 @@ MD5NonPrimitive >> step: data template: item selector: selector [
 		(item at: 6).
 		(item at: 7)
 	 }.
-	self 
+	self
 		perform: selector
 		withArguments: args
 ]

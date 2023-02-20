@@ -16,10 +16,10 @@ Class {
 { #category : #writing }
 TFStringType >> allocateString: aString [
 	| anExternalAddress |
-	
+
 	anExternalAddress := (ExternalAddress fromString: aString utf8Encoded).
 	self allocatedStrings add: anExternalAddress.
-	^ anExternalAddress 
+	^ anExternalAddress
 ]
 
 { #category : #accessing }
@@ -49,13 +49,13 @@ TFStringType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argume
 ]
 
 { #category : #marshalling }
-TFStringType >> emitMarshallFromPrimitive: anIRBuilder [ 
+TFStringType >> emitMarshallFromPrimitive: anIRBuilder [
 
 	anIRBuilder send: #utf8StringFromCString
 ]
 
 { #category : #marshalling }
-TFStringType >> emitMarshallToPrimitive: anIRBuilder [ 
+TFStringType >> emitMarshallToPrimitive: anIRBuilder [
 
 	anIRBuilder addTemp: #__marshall_temp.
 	anIRBuilder storeTemp: #__marshall_temp.
@@ -63,7 +63,6 @@ TFStringType >> emitMarshallToPrimitive: anIRBuilder [
 	anIRBuilder pushLiteral: self.
 	anIRBuilder pushTemp: #__marshall_temp.
 	anIRBuilder send: #prepareStringForMarshalling:
-
 ]
 
 { #category : #writing }
@@ -74,46 +73,45 @@ TFStringType >> freeValueIfNeeded: aCHeapValueHolder [
 	pointer := aCHeapValueHolder pointerAt: 1.
 	(self allocatedStrings includes: pointer) ifFalse: [ ^ self ].
 	self allocatedStrings remove: pointer.
-	pointer isNull ifFalse: [ 
+	pointer isNull ifFalse: [
 		pointer free ]
 ]
 
 { #category : #marshalling }
 TFStringType >> marshallToPrimitive: aValue [
-	
+
 	^ self prepareStringForMarshalling: aValue
-	
 ]
 
 { #category : #writing }
 TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 
 	"The TFString type supports four possible parameters.
-	
-	- A String: this is allocated as an external string, encoded and passed the pointer to the allocated space. 
+
+	- A String: this is allocated as an external string, encoded and passed the pointer to the allocated space.
 	- A ByteArray: this will be passed as a pointer to the external call. It should be pinned and dereferenced to get the address.
 	- An ExternalAddress: this is directly passed to the external call.
 	- nil: An ExternalAddress null is passed in this case "
-	
+
 	"Maybe this code should be implemented delegating to the objects to handle the different cases"
 
 	"Handling Strings"
 	aStringOrExternalAddress isString
 		ifTrue: [ ^ self allocateString: aStringOrExternalAddress ].
-	
-	"Handling nil"	
-		aStringOrExternalAddress 
+
+	"Handling nil"
+		aStringOrExternalAddress
 			ifNil: [ ^ ExternalAddress null ].
 
 	"Handling ExternalAddress"
 		aStringOrExternalAddress isExternalAddress
 			ifTrue: [ ^ aStringOrExternalAddress ].
-	
+
 	"Handling ByteArray - We have to first check for ExternalAddress, as ExternalAddress are ByteArray"
-		(aStringOrExternalAddress isKindOf: ByteArray) 
+		(aStringOrExternalAddress isKindOf: ByteArray)
 			ifTrue: [ aStringOrExternalAddress pinInMemory.
             ^ PointerUtils oopForObject: aStringOrExternalAddress ].
-	
+
 	"Handling ExternalAddress"
 		^ self error: 'Could not handle this object'
 ]
@@ -130,7 +128,7 @@ TFStringType >> write: aStringOrExternalAddress into: targetAddress [
 	"If the argument is a aString I have to allocate it and later free it"
 	| anAddress |
 	anAddress := self prepareStringForMarshalling: aStringOrExternalAddress.
-	
+
 	self basicType
 		write: anAddress
 		into: targetAddress

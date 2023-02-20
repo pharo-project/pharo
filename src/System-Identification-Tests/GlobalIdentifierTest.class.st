@@ -46,10 +46,10 @@ GlobalIdentifierTest >> setUpPersistenceStrategyAndChecker [
 { #category : #running }
 GlobalIdentifierTest >> tearDown [
 	preferences ensureDelete.
-	(FileLocator workingDirectory / self folderName) 
-		ensureDeleteAllChildren; 
+	(FileLocator workingDirectory / self folderName)
+		ensureDeleteAllChildren;
 		ensureDelete.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -109,7 +109,7 @@ GlobalIdentifierTest >> testBackwardCompatibility2 [
 
 { #category : #tests }
 GlobalIdentifierTest >> testBackwardCompatibility3 [
-	"Let's say that we have information stored using FUEL but we cannot read the file. 
+	"Let's say that we have information stored using FUEL but we cannot read the file.
 	We use STON. We do not have any STON stored value.
 	Let's check that we keep FUEL file untouched and creates STON file."
 	| fuelPersistence fuelPrefereces data |
@@ -127,12 +127,12 @@ GlobalIdentifierTest >> testBackwardCompatibility3 [
 	identifier ensure.
 	self assert: fuelPrefereces exists.
 	self assert: fuelPrefereces contents equals: data.
-	self assert: identifier persistenceStrategy preferences exists.
+	self assert: identifier persistenceStrategy preferences exists
 ]
 
 { #category : #tests }
 GlobalIdentifierTest >> testBackwardCompatibility4 [
-	"Let's say that we have information stored using FUEL but we cannot read the file. 
+	"Let's say that we have information stored using FUEL but we cannot read the file.
 	We use STON. The STON preference file is broken, we cannot read it.
 	Let's check that we keep FUEL file untouched and creates STON file."
 
@@ -173,7 +173,7 @@ GlobalIdentifierTest >> testComputerUUID [
 	raised building errors when storing the computer UUID on the CI server."
 	self assert: identifier computerUUID notNil.
 	self assert: identifier computerUUID isString.
-	self testDefault.
+	self testDefault
 ]
 
 { #category : #tests }
@@ -189,17 +189,17 @@ GlobalIdentifierTest >> testDoNotStoreIfHomeDoesNotExists [
 	See issue https://pharo.manuscript.com/f/cases/19944."
 	| strategy |
 	strategy := identifier persistenceStrategy.
-	[ strategy ] whileNotNil: [ 
+	[ strategy ] whileNotNil: [
 		strategy checker: (self newChecker answer: false; yourself).
 		strategy := strategy previous.
 	].
 	identifier ensure.
 	strategy := identifier persistenceStrategy.
-	[ strategy ] whileNotNil: [ 
+	[ strategy ] whileNotNil: [
 		self deny: strategy preferences exists.
 		strategy := strategy previous.
 	].
-	self assert: identifier computerUUID notNil.
+	self assert: identifier computerUUID notNil
 ]
 
 { #category : #tests }
@@ -211,7 +211,7 @@ GlobalIdentifierTest >> testEnsure [
 	identifier ensure.
 	self assert: preferences exists description: 'The actual preferences should be stored now.'.
 	stored := identifier persistenceStrategy load.
-	self assert: stored equals: identifier persistedInformation.
+	self assert: stored equals: identifier persistedInformation
 ]
 
 { #category : #tests }
@@ -220,11 +220,11 @@ GlobalIdentifierTest >> testPreferenceFilesNotCollideWithRealPreferences [
 	See https://pharo.manuscript.com/f/cases/19501"
 	| strategy |
 	strategy := identifier persistenceStrategy.
-	[ strategy ] whileNotNil: [ 
+	[ strategy ] whileNotNil: [
 		self deny: (FileLocator preferences contains: strategy preferences)
 			description: 'Tested preference file should NOT be stored in the preferences directory.'.
 		self assert: (FileLocator preferences contains: strategy defaultPreferences)
 			description: 'Default preference file should BE stored in the preferences directory.'.
 		strategy := strategy previous.
-	].
+	]
 ]
