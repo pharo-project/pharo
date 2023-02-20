@@ -616,6 +616,9 @@ OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
+	aRBLiteralArrayNode contents
+		detect: [ :n | n isParseError ]
+		ifFound: [ :n | ^ self visitParseErrorNode: n ].
 	methodBuilder pushLiteral: aRBLiteralArrayNode value
 ]
 
