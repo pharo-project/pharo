@@ -1009,8 +1009,6 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"If the parsing failed because it did not match anything, consume the current token and continue parsing."
 	startOfStatementToken = currentToken ifTrue: [
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
-		node isParseError ifFalse: [ 1 haltIfTest ].
-		node value = '' ifFalse: [ 1 haltIfTest ].
 		"Solution to recover. Consume the token to create the statement."
 		node := RBParseErrorNode errorMessage: 'unexpected token' value: currentToken value asString at: currentToken start.
 		self step ].
