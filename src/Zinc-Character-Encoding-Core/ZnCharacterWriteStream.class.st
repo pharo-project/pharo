@@ -28,18 +28,18 @@ ZnCharacterWriteStream >> lf [
 { #category : #accessing }
 ZnCharacterWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count characters from collection starting at offset."
-	
-	self encoder 
-		next: count 
-		putAll: collection 
-		startingAt: offset 
-		toStream: stream 
+
+	self encoder
+		next: count
+		putAll: collection
+		startingAt: offset
+		toStream: stream
 ]
 
 { #category : #accessing }
 ZnCharacterWriteStream >> nextPut: object [
-	self encoder 
-		nextPut: object 
+	self encoder
+		nextPut: object
 		toStream: stream.
 	^ object
 ]
