@@ -798,11 +798,11 @@ Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 	results := misspelled correctAgainstDictionary: self classPool continuedFrom: oldResults.
 	self sharedPools do: [:pool |
 		results := misspelled correctAgainstDictionary: pool classPool continuedFrom: results ].
-	self superclass == nil
+	^ self superclass == nil
 		ifTrue:
-			[ ^ misspelled correctAgainstDictionary: self environment continuedFrom: results ]
+			[ misspelled correctAgainstDictionary: self environment continuedFrom: results ]
 		ifFalse:
-			[ ^ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
+			[ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
 ]
 
 { #category : #'class variables' }
