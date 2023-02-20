@@ -31,7 +31,7 @@ MergeJoinSection >> allowClick: anObject [
 { #category : #actions }
 MergeJoinSection >> appendToCompositeText: aText [
 	"If appropriate append the relevant src or dst text to the given text."
-	
+
 	self selectionState == #src ifTrue: [^aText append: self src text].
 	self selectionState == #dst ifTrue: [^aText append: self dst text].
 	self selectionState == #both ifTrue: [
@@ -43,7 +43,7 @@ MergeJoinSection >> appendToCompositeText: aText [
 { #category : #accessing }
 MergeJoinSection >> borderColorToUse [
 	"Answer the border color to use based on the selection state."
-	
+
 	^self selected
 		ifTrue: [self selectedBorderColor]
 		ifFalse: [super borderColorToUse]
@@ -77,7 +77,7 @@ MergeJoinSection >> defaultStateIcons [
 { #category : #drawing }
 MergeJoinSection >> drawOn: aCanvas [
 	"Draw the join on the given canvas."
-	
+
 	super drawOn: aCanvas.
 	self stateIcon ifNotNil: [:i |
 		aCanvas
@@ -171,7 +171,7 @@ MergeJoinSection >> stateIcon [
 { #category : #accessing }
 MergeJoinSection >> stateIconBounds [
 	"Answer the bounds of the state icon."
-	
+
 	|i|
 	i := self stateIcon ifNil: [^nil].
 	^self shape bounds center - (i extent // 2)

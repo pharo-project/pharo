@@ -24,9 +24,9 @@ DAPackageRelationGraphGenerator class >> newWith: aRelationGraph named: aString 
 { #category : #'build items' }
 DAPackageRelationGraphGenerator >> buildEdges [
 	relationGraph packages
-		do: [ :package | 
+		do: [ :package |
 			package dependencies
-				do: [ :dependency | 
+				do: [ :dependency |
 					graphviz
 						add: dependency source packageName -> dependency target packageName
 						with: {(#label -> dependency numberOfDependencies)} ] ]

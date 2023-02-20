@@ -3,7 +3,7 @@ Extension { #name : #MCWorkingCopyBrowser }
 { #category : #'*Tool-Diff' }
 MCWorkingCopyBrowser >> viewChanges [
 	"View the changes made in the working copy."
-	
+
 	| patch |
 	'Finding changes' displayProgressFrom: 0 to: 10 during:[:bar|
 		self canSave ifTrue:[

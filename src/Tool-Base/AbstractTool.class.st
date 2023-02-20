@@ -17,20 +17,20 @@ AbstractTool class >> protocolSuggestionsFor: aClass [
 		add: AllProtocol defaultName;
 		add: Protocol nullCategory;
 		add: Protocol unclassified.
-	allExistingProtocols := (SystemNavigation default 
-		                         allExistingProtocolsFor: aClass isMeta not) 
+	allExistingProtocols := (SystemNavigation default
+		                         allExistingProtocolsFor: aClass isMeta not)
 		                        reject: [ :p | classProtocols includes: p ].
 	interestingProtocols := classProtocols
 	                        ,
-		                        (allExistingProtocols asOrderedCollection 
-			                         sort: [ :a :b | 
+		                        (allExistingProtocols asOrderedCollection
+			                         sort: [ :a :b |
 			                         a asLowercase < b asLowercase ]).
 	^ interestingProtocols reject: [ :e | reject includes: e ]
 ]
 
 { #category : #method }
-AbstractTool >> browseAllStoresInto: aVariableName from: aClass [ 
-	^self systemNavigation browseAllStoresInto: aVariableName from: aClass 
+AbstractTool >> browseAllStoresInto: aVariableName from: aClass [
+	^self systemNavigation browseAllStoresInto: aVariableName from: aClass
 ]
 
 { #category : #class }
@@ -39,10 +39,9 @@ AbstractTool >> browseClassRefsOf: aClass [
 	| class |
 	aClass ifNil: [ ^self ].
 	class := aClass instanceSide ifNil: [^self].
-	class isTrait 
+	class isTrait
 		ifTrue: [self systemNavigation browseAllUsersOfTrait: class]
 		ifFalse: [self systemNavigation browseAllCallsOnClass: class]
-
 ]
 
 { #category : #method }
@@ -61,28 +60,27 @@ AbstractTool >> browseSendersOfMessagesFrom: aSelector [
 
 { #category : #method }
 AbstractTool >> browseVersionsFrom: aMethod [
-	"Create and schedule a Versions Browser, showing all versions of the 
+	"Create and schedule a Versions Browser, showing all versions of the
 	currently selected message. Answer the browser or nil."
 
 	aMethod selector
 		ifNil: [ self inform: 'Sorry, only actual methods have retrievable versions.'. ^nil ]
 		ifNotNil: [:selector |
 			Smalltalk tools versionBrowser browseVersionsForMethod: aMethod ]
-				
 ]
 
 { #category : #method }
 AbstractTool >> defaultGetSelectorAndSendQuery: array to: queryPerformer with: querySelector [
 	| selector |
-	
+
 	selector := UIManager default request: 'Type selector:' initialAnswer: 'flag:'.
 	selector ifNil: [ selector := String new ].
 	selector := selector copyWithout: Character space.
 	^ selector isEmptyOrNil
-		ifFalse: [ 
+		ifFalse: [
 			(Symbol
 				hasInterned: selector
-				ifTrue: [ :aSymbol | 
+				ifTrue: [ :aSymbol |
 					array at: 1 put: aSymbol.
 					queryPerformer perform: querySelector withArguments: array ])
 				ifFalse: [ self inform: 'no such selector' ] ]
@@ -92,19 +90,19 @@ AbstractTool >> defaultGetSelectorAndSendQuery: array to: queryPerformer with: q
 AbstractTool >> getSelectorAndSendQuery: querySelector to: queryPerformer with: queryArgs selector: aSelector [
 	"Obtain a selector relevant to the current context, and then send the querySelector to the queryPerformer with the selector obtained and queryArgs as its arguments.  If no message is currently selected, then obtain a method name from a user type-in"
 	| strm array |
-	
+
 	array := Array new: queryArgs size + 1.
 	strm := array writeStream.
 	strm nextPut: nil.
 	strm nextPutAll: queryArgs.
-	
-	aSelector ifNil: [ ^ self 
+
+	aSelector ifNil: [ ^ self
 						defaultGetSelectorAndSendQuery: querySelector
 						to: queryPerformer
 						with: array ].
-	
+
 	array at: 1 put: aSelector.
-	queryPerformer perform: querySelector withArguments: array.
+	queryPerformer perform: querySelector withArguments: array
 ]
 
 { #category : #class }
@@ -117,9 +115,9 @@ AbstractTool >> removeClass: aClass [
 	className := classToRemove name.
 	message := self removeClassMessageFor: className.
 	(result := self confirm: message)
-		ifTrue: [ 
+		ifTrue: [
 			classToRemove subclasses notEmpty
-				ifTrue: [ 
+				ifTrue: [
 					(self confirm: 'class has subclasses: ' , message)
 						ifFalse: [ ^ false ] ].
 			classToRemove removeFromSystem ].
@@ -145,11 +143,11 @@ AbstractTool >> removeClasses: aCollection [
 	classesToRemove := aCollection collect: [:each | each instanceSide].
 	classNames := (classesToRemove collect: [:each | each name]) joinUsing: ', '.
 	(result := self confirm: (self removeClassesMessageFor: classNames))
-		ifTrue: [ 
+		ifTrue: [
 			classesToRemove
-				do: [ :classToRemove | 
+				do: [ :classToRemove |
 					classToRemove subclasses notEmpty
-						ifTrue: [ 
+						ifTrue: [
 							(self confirm: (self removedClassHasSubclassesMessageFor: classToRemove name))
 								ifTrue: [ classToRemove removeFromSystem ] ]
 						ifFalse: [ classToRemove removeFromSystem ] ] ].
@@ -167,11 +165,11 @@ from the system?'
 
 { #category : #method }
 AbstractTool >> removeMethod: aMethod inClass: aClass [
-	"If a message is selected, create a Confirmer so the user can verify that  
-	the currently selected message should be removed from the system. If 
+	"If a message is selected, create a Confirmer so the user can verify that
+	the currently selected message should be removed from the system. If
 	so, remove it. "
 	| messageName confirmation |
-	
+
 	aMethod ifNil: [^ false].
 	messageName := aMethod selector.
 	confirmation := self systemNavigation confirmRemovalOf: messageName on: aClass.
@@ -184,7 +182,7 @@ AbstractTool >> removeMethod: aMethod inClass: aClass [
 	"In case organization not cached"
 	confirmation = 2
 		ifTrue: [self systemNavigation browseAllSendersOf: messageName].
-		
+
 	self removeEmptyUnclassifiedCategoryFrom: aClass.
 	^ true
 ]
@@ -201,7 +199,7 @@ AbstractTool >> renameClass: aClass [
 	| oldName newName obs |
 
 	aClass ifNil: [ ^ self ].
-	
+
 	oldName := aClass name.
 	newName := UIManager default  request: 'Please type new class name' initialAnswer: oldName.
 	newName isEmptyOrNil ifTrue: [ ^ self ].	"Cancel returns"

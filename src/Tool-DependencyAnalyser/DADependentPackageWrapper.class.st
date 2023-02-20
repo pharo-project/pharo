@@ -44,15 +44,15 @@ DADependentPackageWrapper >> dependenciesSize [
 DADependentPackageWrapper >> extensionDependenciesSize [
 	| usersOf |
 	usersOf := self usersOfPackage.
-	^ usersOf 
-			inject: 0 
+	^ usersOf
+			inject: 0
 			into: [ :sum :each | sum + (each extensionDependenciesSizeTo: self daPackage) ]
 ]
 
 { #category : #initialization }
 DADependentPackageWrapper >> initializeFrom: aPackage on: aRelationGraph [
 	pdPackage := aPackage.
-	relationGraph :=aRelationGraph.
+	relationGraph :=aRelationGraph
 ]
 
 { #category : #accessing }
@@ -74,7 +74,7 @@ DADependentPackageWrapper >> printOn: aStream [
 		nextPutAll: ' (+ ';
 		print: numberOfExtension;
 		nextPutAll: ' extension dependencies ';
-		nextPutAll: ')'.
+		nextPutAll: ')'
 ]
 
 { #category : #accessing }

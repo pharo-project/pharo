@@ -16,14 +16,14 @@ Class {
 PSMCMergeMorph class >> forMerger: aMerger [
 	"Answer a new instance of the receiver
 	with the given merger as the model."
-	
+
 	^ self new model: aMerger
 ]
 
 { #category : #testing }
 PSMCMergeMorph >> allConflictsResolved [
 	"Answer whether all conflicts were resolved."
-	
+
 	^(self model ifNil: [^false]) isMerged
 ]
 
@@ -59,7 +59,7 @@ PSMCMergeMorph >> compositeText [
 PSMCMergeMorph >> compositeText: aString [
 	"Save the new method text for the selected method.
 	Yet to be implemented."
-	
+
 	UIManager default inform: 'Saving of replacement methods is not yet imlemented.'
 ]
 
@@ -121,7 +121,7 @@ PSMCMergeMorph >> initialize [
 { #category : #actions }
 PSMCMergeMorph >> merge [
 	"Do the merge and close if no conflicts."
-	
+
 	^self model isMerged
 		ifTrue: [self merged: true.
 				self window delete]
@@ -154,7 +154,7 @@ PSMCMergeMorph >> model: aMerger [
 		having: [:g | true].
 	sorted := OrderedCollection new.
 	grouped keys asSortedCollection do: [:k |
-		sorted addAll: ((grouped at: k) asSortedCollection: [:a :b | a shortSummary <= b shortSummary])].		
+		sorted addAll: ((grouped at: k) asSortedCollection: [:a :b | a shortSummary <= b shortSummary])].
 	self patchMorph model: sorted
 ]
 
@@ -227,7 +227,7 @@ PSMCMergeMorph >> newPatchMorph [
 { #category : #testing }
 PSMCMergeMorph >> notAllConflictsResolved [
 	"Answer whether any conflicts are unresolved."
-	
+
 	^self allConflictsResolved not
 ]
 
@@ -248,7 +248,7 @@ PSMCMergeMorph >> patchMorph: anObject [
 { #category : #actions }
 PSMCMergeMorph >> selectNextConflict [
 	"Select the next conflict in the tree."
-	
+
 	self patchMorph selectNextConflict
 ]
 

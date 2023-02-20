@@ -28,8 +28,8 @@ LazyClassVariable >> emitValue: aMethodBuilder [
 		jumpAheadTo: #target if: false;
 		popTop;
 		pushLiteral: default.
-	default isBlock ifTrue: [ 
-		aMethodBuilder	
+	default isBlock ifTrue: [
+		aMethodBuilder
 			pushReceiver;
 			send: #definingClass;
 			send: #cull:].
@@ -41,8 +41,8 @@ LazyClassVariable >> emitValue: aMethodBuilder [
 { #category : #'meta-object-protocol' }
 LazyClassVariable >> read [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
-	^ super read ifNil: [ 
-		default isBlock 
-			ifTrue: [ self write: (default cull: self definingClass) ] 
+	^ super read ifNil: [
+		default isBlock
+			ifTrue: [ self write: (default cull: self definingClass) ]
 			ifFalse: [ self write: default ] ]
 ]
