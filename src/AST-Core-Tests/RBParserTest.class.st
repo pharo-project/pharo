@@ -1320,7 +1320,7 @@ RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtThe
 	self assert: errorNode isFaulty.
 	self
 		assert: errorNode value
-		equals: 'wrong'''.
+		equals: '''wrong'''''.
 	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
 ]
 
@@ -1356,7 +1356,7 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	self
 		assert: errorNode value
 		equals:
-			'wrong because no end.
+			'''wrong because no end.
 		^temp'.
 	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
 ]

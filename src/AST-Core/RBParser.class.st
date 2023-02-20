@@ -554,12 +554,16 @@ RBParser >> parseErrorNode: aMessageString [
 	| errorPosition|
 	currentToken isError
 		ifTrue: [ | errorNode|
+					 "The current token is an error, consume it and use its content for the error node."
 				    errorNode := RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: currentToken start.
+					 errorNode stop: currentToken location.
 					 self step.
 					 ^errorNode].
+	"The current token is not an error but is unexpected. Maybe something is missing?
+	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
 	errorPosition := self errorPosition.
 	(errorPosition = 0) ifTrue: [ errorPosition := self errorPosition].
-	^ RBParseErrorNode errorMessage: aMessageString value: currentToken value asString at: errorPosition
+	^ RBParseErrorNode errorMessage: aMessageString value: '' asString at: errorPosition
 ]
 
 { #category : #parsing }
@@ -1003,7 +1007,11 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		ifFalse: [ node := self parseAssignment ].
 
 	"If the parsing failed because it did not match anything, consume the current token and continue parsing."
-	startOfStatementToken = currentToken ifTrue: [ self step ].
+	startOfStatementToken = currentToken ifTrue: [
+		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
+		"Solution to recover. Consume the token to create the statement."
+		node := RBParseErrorNode errorMessage: 'unexpected token' value: currentToken value asString at: currentToken start.
+		self step ].
 
 	"At this point we have parsed a full statement."
 	"If the statement is followed by closers that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
@@ -1016,6 +1024,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 					start: node start
 					stop: currentToken stop
 					errorMessage: 'Missing opener for closer: ', currentToken value asString.
+				node valueAfter: currentToken value asString.
 				self step ].
 
 	"Next we should have the end of the statement

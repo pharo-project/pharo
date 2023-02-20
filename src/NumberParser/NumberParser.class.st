@@ -112,6 +112,12 @@ NumberParser >> allowPlusSignInExponent [
 { #category : #error }
 NumberParser >> expected: aString [
 
+	"This method handle errors on bad syntactically formated numbers.
+
+	Most of the time, the longest valid numeric is parsed and returned.
+	Therefore format errors on numbers are rare (arbitrary) occurences (see callers).
+	If the first character of a stream is a digit (or a minus followed by a digit), these occurences are even more rare."
+
 	| errorString |
 
 	errorString := aString , ' expected'.
@@ -292,7 +298,7 @@ NumberParser >> nextLargeIntegerBase: aRadix nPackets: nPackets [
 NumberParser >> nextNumber [
 	"Main method for reading a number.
 	 This one can read Float Integer and ScaledDecimal"
-
+	
 	| numberOfTrailingZeroInIntegerPart |
 	base := 10.
 	neg := self peekSignIsMinus.
@@ -306,7 +312,7 @@ NumberParser >> nextNumber [
 		ifTrue: ["<base>r<integer>"
 			(base := integerPart) < 2
 				ifTrue: [
-					sourceStream skip: -1.
+					sourceStream skip: -1. "Note, the faulty $r is not consumed and is not part or the invalid number."
 					^ self expected: 'an integer greater than 1 as valid radix'].
 			self peekSignIsMinus
 				ifTrue: [neg := neg not].

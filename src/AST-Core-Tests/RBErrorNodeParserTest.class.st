@@ -5,6 +5,44 @@ Class {
 }
 
 { #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '12 +'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first sourceInterval equals: (5 to: 4).
+	self assert: node arguments first errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node receiver isFaulty.
+	self assert: node receiver value equals: 12.
+	self assert: node arguments first formattedCode equals: ''.
+	self assert: node formattedCode equals: '12 + '
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
+
+	| node0 node |
+	node0 := self parserClass parseFaultyExpression: '[12 +]'.
+	node := node0 body statements first.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first sourceInterval equals: (6 to: 5).
+	self assert: node arguments first errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node receiver isFaulty.
+	self assert: node receiver value equals: 12.
+	self assert: node arguments first formattedCode equals: ''.
+	self assert: node formattedCode equals: '12 + '.
+	self assert: node0 formattedCode equals: '[ 12 +  ]'
+]
+
+{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrectMessage [
 
 	| node |
@@ -13,6 +51,44 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrect
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
 	self assert: node selector equals: #+
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '+ 12'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node receiver isParseError.
+	self assert: node receiver sourceInterval equals: (1 to: 0).
+	self assert: node receiver errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node arguments first isFaulty.
+	self assert: node arguments first value equals: 12.
+	self assert: node receiver formattedCode equals: ''.
+	self assert: node formattedCode equals: ' + 12'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
+
+	| node0 node |
+	node0 := self parserClass parseFaultyExpression: '[+ 12]'.
+	node := node0 body statements first.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node receiver isParseError.
+	self assert: node receiver sourceInterval equals: (2 to: 1).
+	self assert: node receiver errorMessage equals: 'Variable or expression expected'.
+	self assert: node selector equals: #+.
+	self   deny: node arguments first isFaulty.
+	self assert: node arguments first value equals: 12.
+	self assert: node receiver formattedCode equals: ''.
+	self assert: node formattedCode equals: ' + 12'.
+	self assert: node0 formattedCode equals: '[  + 12 ]'
 ]
 
 { #category : #tests }
@@ -27,6 +103,30 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 
 	self assert: node arguments first isLiteralNode.
 	self assert: node arguments first value equals: 12
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBlockUnclosed [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '[1+2'.
+
+	self assert: node isEnglobingError.
+	self assert: node isBlockError.
+	self assert: node errorMessage equals: ''']'' expected'.
+	self assert: node formattedCode equals: '[ 1 + 2'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '1+2]'.
+
+	self assert: node isEnglobingError.
+	self assert: node isUnfinishedStatement.
+	self assert: node errorMessage equals: 'Missing opener for closer: ]'.
+	self assert: node formattedCode equals: ' 1 + 2]'
 ]
 
 { #category : #tests }
@@ -116,4 +216,68 @@ RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContin
 
 	self assert: node body statements second isMessage.
 	self assert: node body statements second selector equals: #between:and:
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyNumericLiteral [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '000r'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node receiver isParseError.
+	self assert: node receiver sourceInterval equals: (1 to: 4).
+	self assert: node receiver errorMessage equals: 'an integer greater than 1 as valid radix expected'.
+	self assert: node selector equals: #r.
+	self assert: node receiver formattedCode equals: '000'.
+	self assert: node formattedCode equals: '000 r'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '2rx'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node receiver isParseError.
+	self assert: node receiver sourceInterval equals: (1 to: 3).
+	self assert: node receiver errorMessage equals: 'a digit between 0 and 1 expected'.
+	self assert: node selector equals: #x.
+	self assert: node receiver formattedCode equals: '2r'.
+	self assert: node formattedCode equals: '2r x'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyStringLiteral [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '''foo'',''bar'.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node selector equals: #','.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
+	self assert: node arguments first sourceInterval equals: (7 to: 11).
+	self assert: node arguments first formattedCode equals: '''bar'.
+	self assert: node formattedCode equals: '''foo'' , ''bar'.
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyStringLiteral2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '''foo'','''.
+
+	self assert: node isFaulty.
+	self assert: node isMessage.
+	self assert: node selector equals: #','.
+	self assert: node arguments first isParseError.
+	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
+	self assert: node arguments first sourceInterval equals: (7 to: 8).
+	self assert: node arguments first formattedCode equals: ''''.
+	self assert: node formattedCode equals: '''foo'' , '''.
 ]
