@@ -5,12 +5,47 @@ Class {
 }
 
 { #category : #tests }
+InitializedSlotTest >> testBlockWithNonSharedDefault [
+
+	| slot objectA objectB defaultA defaultB |
+	slot := #slot1 => InitializedSlot default: [ OrderedCollection new ].
+	aClass := self make: [ :builder | builder slots: { slot } ].
+	self assert: (aClass hasSlotNamed: #slot1).
+
+	objectA := aClass new.
+	objectB := aClass new.
+
+	defaultA := slot read: objectA.
+	defaultB := slot read: objectB.
+
+	self assert: defaultA isEmpty.
+	self assert: defaultB isEmpty.
+
+	"Each instance has its own collection"
+	self deny: defaultA identicalTo: defaultB.
+
+	defaultA add: 'HelloWorld'.
+
+	self assert: (slot read: objectA) size equals: 1.
+	self assert: (slot read: objectB) size equals: 0
+]
+
+{ #category : #tests }
 InitializedSlotTest >> testLazyClassVariableReflectiveBlockParameter [
 	| classVar |
 	classVar := #ClassVar => LazyClassVariable default: [:class | class].
 	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
 
 	self assert: classVar read equals: aClass
+]
+
+{ #category : #tests }
+InitializedSlotTest >> testPrintUsingStoreString [
+
+	| slot |
+	slot := #slot1 => InitializedSlot default: [ OrderedCollection new ].
+	aClass := self make: [ :builder | builder slots: { slot } ].
+	self assert: (aClass hasSlotNamed: #slot1)
 ]
 
 { #category : #tests }
