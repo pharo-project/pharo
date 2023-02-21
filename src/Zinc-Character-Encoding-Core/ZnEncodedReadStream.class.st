@@ -18,6 +18,15 @@ ZnEncodedReadStream >> atEnd [
 ]
 
 { #category : #accessing }
+ZnEncodedReadStream >> back [
+	self encoder backOnStream: stream.
+	peeked ifNotNil: [
+		self encoder backOnStream: stream.
+		peeked := nil ].
+	^ nil
+]
+
+{ #category : #accessing }
 ZnEncodedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
 

@@ -75,12 +75,20 @@ ZnEncodedStream >> on: wrappedStream [
 
 { #category : #accessing }
 ZnEncodedStream >> position [
+	"Return the byte position in the underlying/wrapped binary stream, zero based.
+	This is not a character based position! But it is always at the beginning of a code point."
+
 	^ stream position
 ]
 
 { #category : #accessing }
 ZnEncodedStream >> position: aPosition [
-	stream position: aPosition
+	"Set the byte position in the underlying/wrapped binary stream to aPosition.
+	This is not a character based position! Positions are zero based.
+	I will move further backward if aPosition is not at the beginning of a code point."
+
+	stream position: aPosition.
+	self encoder ensureAtBeginOfCodePointOnStream: stream
 ]
 
 { #category : #accessing }
