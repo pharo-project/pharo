@@ -1125,8 +1125,9 @@ RBParser >> parseTemporariesInto: aSequenceNode [
 									 temps := OrderedCollection new.
 									 leftBar := nil.
 								    ]
-						ifTrue: [ rightBar := currentToken start ].
-					self step]
+						ifTrue: [
+							rightBar := currentToken start.
+							self step ]]
 				ifFalse:
 					[currentToken value = #'||'
 						ifTrue:
