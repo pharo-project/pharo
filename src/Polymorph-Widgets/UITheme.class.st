@@ -1,17 +1,6 @@
 "
-Common superclass for User Interface themes.
-Provides methods for creating new morphs in a standard way, various ""services"" like a file dialog, message dialogs etc. and also methods for customising aspects of the appearance of various morphs.
-
+Common superclass for User Interface themes. Provides methods for creating new morphs in a standard way, various ""services"" like a file dialog, message dialogs etc. and also methods for customising aspects of the appearance of various morphs.
 Though conceptually abstract, no code is ""missing"". Subclasses, therefore, should override the aspects they wish to change.
-
-## Architecture
-
-In the new implementation now I have a color palette. My color palette is the one responsible for caching the colors to avoid re-allocations. The colors are defined in the UIThemeColorConfigurator class. Each theme, dark and light, have their own color configurator subclass. The palette obtains the colors from there and then caches them using a Dictionary.
-
-## How to create your own theme
-
-If you wish to have another custom theme, First you need to define your own color configurator class, see the comment of the abstract class UIThemeColorConfigurator. This is done by sublcassing UIThemeColorConfigurator and defining the missing abstract methods.
-Once you have your color configurator, you need to subclass Me and only re-define my class side method `colorConfiguratorClass` returning the class of your defined color configurator.
 "
 Class {
 	#name : #UITheme,
@@ -22,12 +11,14 @@ Class {
 		'soundTheme',
 		'focusIndicator',
 		'windowActiveDropShadowStyle',
-		'useScrollbarThumbShadow',
-		'colorPalette'
+		'useScrollbarThumbShadow'
 	],
 	#classVars : [
 		'Builder',
 		'Current'
+	],
+	#classInstVars : [
+		'defaultSettings'
 	],
 	#category : #'Polymorph-Widgets-Themes'
 }
@@ -39,6 +30,21 @@ UITheme class >> allThemeClasses [
 
 	^(self allSubclasses reject: [:c | c isAbstract]) asSortedCollection: [:a :b |
 		a themeName <= b themeName]
+]
+
+{ #category : #accessing }
+UITheme class >> baseColor [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> basePassiveBackgroundColor [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> baseSelectionColor [
+	^ self subclassResponsibility
 ]
 
 { #category : #query }
@@ -60,13 +66,7 @@ UITheme class >> builder [
 UITheme class >> cleanUp [
 
 	"avoid old references to morphs that should be garbage-collected"
-	self current focusIndicator: nil.
-]
-
-{ #category : #configuration }
-UITheme class >> colorConfiguratorClass [
-
-	^ self subclassResponsibility
+	UITheme current focusIndicator: nil
 ]
 
 { #category : #accessing }
@@ -111,10 +111,30 @@ UITheme class >> current: aUITheme [
 
 { #category : #accessing }
 UITheme class >> currentSettings [
-
 	"Answer the current ui theme settings."
 
 	^ self current settings
+]
+
+{ #category : #accessing }
+UITheme class >> darkBaseColor [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> defaultSettings [
+	"Answer the default settings for the theme."
+
+	^defaultSettings ifNil: [
+		self defaultSettings: self newDefaultSettings.
+		defaultSettings]
+]
+
+{ #category : #accessing }
+UITheme class >> defaultSettings: aThemeSettings [
+	"Set the default settings for the theme."
+
+	defaultSettings := aThemeSettings
 ]
 
 { #category : #'class initialization' }
@@ -140,6 +160,16 @@ UITheme class >> isCurrent [
 ]
 
 { #category : #accessing }
+UITheme class >> lightBaseColor [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> lightSelectionColor [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 UITheme class >> newBuilder [
 	"Answer a new builder morph."
 
@@ -153,11 +183,50 @@ UITheme class >> newDefault [
 	^self new
 ]
 
+{ #category : #accessing }
+UITheme class >> newDefaultSettings [
+	self setPreferredPreferences.
+
+	^ThemeSettings new
+		buttonColor: Color gray;
+		scrollbarColor: Color gray;
+		menuColor: self baseColor;
+		menuTitleColor: self baseColor;
+		windowColor: self baseColor;
+		selectionColor: self lightSelectionColor;
+		menuSelectionColor: self baseSelectionColor;
+		progressBarColor: self baseColor;
+		standardColorsOnly: true;
+		autoSelectionColor: false;
+		preferRoundCorner: false;
+		fadedBackgroundWindows: false;
+		flatMenu: true
+]
+
+{ #category : #accessing }
+UITheme class >> resetAllDefaultSettings [
+	"Reset the default settings of all themes"
+	"self resetAllDefaultSettings"
+	self withAllSubclassesDo: [:cls | cls defaultSettings: nil]
+]
+
 { #category : #'initialize-release' }
 UITheme class >> resetBuilder [
 	<script>
 
 	Builder := nil
+]
+
+{ #category : #accessing }
+UITheme class >> resetDefaultSettings [
+	"Reset the default settings to use the original values."
+
+	self defaultSettings: nil
+]
+
+{ #category : #settings }
+UITheme class >> setPreferredPreferences [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -170,6 +239,11 @@ UITheme class >> themeName [
 	"Answer the friendly name of the theme."
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> veryLightSelectionColor [
+	^ self subclassResponsibility
 ]
 
 { #category : #services }
@@ -228,57 +302,48 @@ UITheme >> autoMenuColor [
 { #category : #'accessing - colors' }
 UITheme >> backgroundColor [
 
-	^ colorPalette backgroundColor
+	^ Color white
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> balloonBackgroundColor [
 
-	^ colorPalette balloonBackgroundColor
+	^self lightBaseColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> balloonTextColor [
 
-	^ colorPalette balloonTextColor
+	^self textColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> baseColor [
-
-	^ colorPalette baseColor
+	^ self class baseColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> baseColorFor: aWidget [
 
-	^ colorPalette baseColorFor: aWidget
+	^ self class baseColor
 ]
 
 { #category : #private }
 UITheme >> basePassiveBackgroundColorFor: aButton [
-
-	^ colorPalette basePassiveBackgroundColor
+	^ self class basePassiveBackgroundColor
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> baseScrollbarColorFor: aScrollbar [
-
 	"Return the scrollbar last pane colour or that of our settings if unavailable"
 
-	^ colorPalette baseScrollbarColorFor: aScrollbar
-]
-
-{ #category : #'accessing - colors' }
-UITheme >> baseSelectionColor [
-
-	^ colorPalette baseSelectionColor
+	^ aScrollbar lastPaneColor
+		ifNil: [ self scrollbarColor ]
 ]
 
 { #category : #private }
 UITheme >> baseSelectionColorFor: aButton [
-
-	^ colorPalette baseSelectionColor
+	^ self class baseSelectionColor
 ]
 
 { #category : #scrollbars }
@@ -314,9 +379,8 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> borderColor [ 
-
-	^ colorPalette borderColor
+UITheme >> borderColor [
+	^ Color gray
 ]
 
 { #category : #accessing }
@@ -329,24 +393,70 @@ UITheme >> builder [
 	^ self class builder
 ]
 
-{ #category : #'accessing - colors' }
-UITheme >> buttonColor [ 
+{ #category : #'border-styles' }
+UITheme >> buttonBorderStyleFor: aButton [
+	aButton borderStyle: BorderStyle thinGray
+]
 
-	^ colorPalette buttonColor
+{ #category : #'fill-styles' }
+UITheme >> buttonBottomLeftForm [
+	"Answer the form to use for the bottom left of a button."
+
+	^self forms at: #buttonBottomLeft ifAbsent: [Form extent: 11@11 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonBottomMiddleForm [
+	"Answer the form to use for the bottom middle of a button."
+
+	^self forms at: #buttonBottomMiddle ifAbsent: [Form extent: 1@11 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonBottomRightForm [
+	"Answer the form to use for the bottom right of a button."
+
+	^self forms at: #buttonBottomRight ifAbsent: [Form extent: 11@11 depth: Display depth]
+]
+
+{ #category : #'accessing - colors' }
+UITheme >> buttonColor [
+	^ self settings buttonColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> buttonColorFor: aButton [
-
 	"Answer the colour for the given button."
 
-	^ colorPalette buttonColorFor: aButton
+	^self settings standardColorsOnly
+		ifTrue: [self buttonColor]
+		ifFalse: [ aButton colorToUse ]
+]
+
+{ #category : #'fill-styles - buttons' }
+UITheme >> buttonColouredFillStyleFor: aButton [
+	"Return the coloured button fillStyle for the given button."
+
+	|round roundCorners tl t tr l m r bl b br|
+	round := aButton wantsRoundedCorners.
+	roundCorners := aButton roundedCorners.
+	tl := (round and: [roundCorners includes: 1]) ifTrue: [self buttonSelectedTopLeftForm] ifFalse: [self buttonSquareSelectedTopLeftForm].
+	t := self buttonSelectedTopMiddleForm.
+	tr:= (round and: [roundCorners includes: 4]) ifTrue: [self buttonSelectedTopRightForm] ifFalse: [self buttonSquareSelectedTopRightForm].
+	l := self buttonSelectedMiddleLeftForm. m := self buttonColouredMiddleColor. r := self buttonSelectedMiddleRightForm.
+	bl := (round and: [roundCorners includes: 2]) ifTrue: [self buttonSelectedBottomLeftForm] ifFalse: [self buttonSquareSelectedBottomLeftForm].
+	b := self buttonSelectedBottomMiddleForm.
+	br := (round and: [roundCorners includes: 3]) ifTrue: [self buttonSelectedBottomRightForm] ifFalse: [self buttonSquareSelectedBottomRightForm].
+	^self
+		multiFormFillStyleFrom: {tl. t. tr. l. m. r. bl. b. br}
+		in: aButton bounds
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonColouredMiddleColor [
+	"Return the middle area colour for a coloured button fillStyle."
 
-	^ colorPalette buttonColouredMiddleColor
+	^Color r: 102 g: 127 b: 168 range: 255
 ]
 
 { #category : #'border-styles - buttons' }
@@ -365,8 +475,9 @@ UITheme >> buttonDisabledBorderStyleFor: aButton [
 
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonDisabledFillStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
 
-	^ SolidFillStyle color: Color transparent
+	^self buttonNormalFillStyleFor: aButton
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -431,6 +542,20 @@ UITheme >> buttonLabelInsetFor: aButton [
 		ifFalse: [3@2]
 ]
 
+{ #category : #'fill-styles' }
+UITheme >> buttonMiddleLeftForm [
+	"Answer the form to use for the middle left of a button."
+
+	^self forms at: #buttonMiddleLeft ifAbsent: [Form extent: 11@1 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonMiddleRightForm [
+	"Answer the form to use for the middle right of a button."
+
+	^self forms at: #buttonMiddleRight ifAbsent: [Form extent: 11@1 depth: Display depth]
+]
+
 { #category : #defaults }
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
@@ -477,9 +602,29 @@ UITheme >> buttonNormalFillStyleFor: aButton [
 ]
 
 { #category : #'fill-styles - buttons' }
-UITheme >> buttonPlainMiddleColor [
+UITheme >> buttonPlainFillStyleFor: aButton [
+	"Return the plain button fillStyle for the given button."
 
-	^ colorPalette buttonPlainMiddleColor
+	|round roundCorners tl t tr l m r bl b br|
+	round := aButton wantsRoundedCorners.
+	roundCorners := aButton roundedCorners.
+	tl := (round and: [roundCorners includes: 1]) ifTrue: [self buttonTopLeftForm] ifFalse: [self buttonSquareTopLeftForm].
+	t := self buttonTopMiddleForm.
+	tr:= (round and: [roundCorners includes: 4]) ifTrue: [self buttonTopRightForm] ifFalse: [self buttonSquareTopRightForm].
+	l := self buttonMiddleLeftForm. m := self buttonPlainMiddleColor. r := self buttonMiddleRightForm.
+	bl := (round and: [roundCorners includes: 2]) ifTrue: [self buttonBottomLeftForm] ifFalse: [self buttonSquareBottomLeftForm].
+	b := self buttonBottomMiddleForm.
+	br := (round and: [roundCorners includes: 3]) ifTrue: [self buttonBottomRightForm] ifFalse: [self buttonSquareBottomRightForm].
+	^self
+		multiFormFillStyleFrom: {tl. t. tr. l. m. r. bl. b. br}
+		in: aButton bounds
+]
+
+{ #category : #'fill-styles - buttons' }
+UITheme >> buttonPlainMiddleColor [
+	"Return the middle area colour for a plain button fillStyle."
+
+	^Color r: 211 g: 211 b: 211 range: 255
 ]
 
 { #category : #'border-styles - buttons' }
@@ -496,11 +641,39 @@ UITheme >> buttonPressedFillStyleFor: aButton [
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
+{ #category : #defaults }
+UITheme >> buttonPressedLabelInsetFor: aButton [
+	"Answer the inset to use for a button's label when pressed."
+
+	^self buttonLabelInsetFor: aButton
+]
+
 { #category : #'border-styles - buttons' }
 UITheme >> buttonSelectedBorderStyleFor: aButton [
 	"Return the selected button borderStyle for the given button."
 
 	^self buttonNormalBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedBottomLeftForm [
+	"Answer the form to use for the bottom left of a selected button."
+
+	^self forms at: #buttonSelectedBottomLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedBottomMiddleForm [
+	"Answer the form to use for the bottom middle of a selected button."
+
+	^self forms at: #buttonSelectedBottomMiddle ifAbsent: [Form extent: 1@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedBottomRightForm [
+	"Answer the form to use for the bottom right of a selected button."
+
+	^self forms at: #buttonSelectedBottomRight ifAbsent: [Form extent: 12@12 depth: Display depth]
 ]
 
 { #category : #'border-styles - buttons' }
@@ -522,6 +695,20 @@ UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 
 	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedMiddleLeftForm [
+	"Answer the form to use for the middle left of a selected button."
+
+	^self forms at: #buttonSelectedMiddleLeft ifAbsent: [Form extent: 12@1 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedMiddleRightForm [
+	"Answer the form to use for the middle right of a selected button."
+
+	^self forms at: #buttonSelectedMiddleRight ifAbsent: [Form extent: 12@1 depth: Display depth]
 ]
 
 { #category : #'border-styles - buttons' }
@@ -552,10 +739,107 @@ UITheme >> buttonSelectedPressedFillStyleFor: aButton [
 	^self buttonNormalFillStyleFor: aButton
 ]
 
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedTopLeftForm [
+	"Answer the form to use for the top left of a selected button."
+
+	^self forms at: #buttonSelectedTopLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedTopMiddleForm [
+	"Answer the form to use for the top middle of a selected button."
+
+	^self forms at: #buttonSelectedTopMiddle ifAbsent: [Form extent: 1@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSelectedTopRightForm [
+	"Answer the form to use for the top right of a selected button."
+
+	^self forms at: #buttonSelectedTopRight ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareBottomLeftForm [
+	"Answer the form to use for the bottom left of a square button."
+
+	^self forms at: #buttonSquareBottomLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareBottomRightForm [
+	"Answer the form to use for the bottom right of a square button."
+
+	^self forms at: #buttonSquareBottomRight ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareSelectedBottomLeftForm [
+	"Answer the form to use for the bottom left of a selected square button."
+
+	^self forms at: #buttonSquareSelectedBottomLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareSelectedBottomRightForm [
+	"Answer the form to use for the bottom right of a selected square button."
+
+	^self forms at: #buttonSquareSelectedBottomRight ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareSelectedTopLeftForm [
+	"Answer the form to use for the top left of a selected square button."
+
+	^self forms at: #buttonSquareSelectedTopLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareSelectedTopRightForm [
+	"Answer the form to use for the top right of a selected square button."
+
+	^self forms at: #buttonSquareSelectedTopRight ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareTopLeftForm [
+	"Answer the form to use for the top left of a square button."
+
+	^self forms at: #buttonSquareTopLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonSquareTopRightForm [
+	"Answer the form to use for the top right of a square button."
+
+	^self forms at: #buttonSquareTopRight ifAbsent: [Form extent: 12@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonTopLeftForm [
+	"Answer the form to use for the top left of a button."
+
+	^self forms at: #buttonTopLeft ifAbsent: [Form extent: 11@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonTopMiddleForm [
+	"Answer the form to use for the top middle of a button."
+
+	^self forms at: #buttonTopMiddle ifAbsent: [Form extent: 1@12 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> buttonTopRightForm [
+	"Answer the form to use for the top right of a button."
+
+	^self forms at: #buttonTopRight ifAbsent: [Form extent: 11@12 depth: Display depth]
+]
+
 { #category : #'accessing - colors' }
 UITheme >> caretColor [
-
-	^ colorPalette caretColor
+	^ Color blue
 ]
 
 { #category : #services }
@@ -879,8 +1163,7 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 
 { #category : #'accessing - colors' }
 UITheme >> classExtensionColor [
-
-	^ colorPalette classExtensionColor
+	^ Color gray darker
 ]
 
 { #category : #'label-styles' }
@@ -894,6 +1177,96 @@ UITheme >> configureDialogWindowLabelAreaFrameFor: aWindow [
 	frame
 		leftOffset: 0;
 		rightOffset: 0
+]
+
+{ #category : #configure }
+UITheme >> configureDropListMorph: aMorph [
+	"This also uses the fillStyle hack :(
+	 check at: #dropListNormalFillStyleFor: for changing style"
+]
+
+{ #category : #configure }
+UITheme >> configureLabelMorph: aMorph [
+]
+
+{ #category : #configure }
+UITheme >> configureLazyListMorph: listMorph [
+	self configureScrollPane: listMorph
+]
+
+{ #category : #configure }
+UITheme >> configureMorphTreeMorph: aMorph [
+	aMorph preferedPaneColor: Color white.
+	aMorph
+		rowColorForEven: Color white
+		odd: Color white
+]
+
+{ #category : #configure }
+UITheme >> configurePluggableButtonMorph: aMorph [
+	"This will not work because it is using the #normalFillStyle hack :(
+	 So, go check the #buttonNormalFillStyleFor: method, which is the one that
+	 actually does something (he and his siblings)"
+]
+
+{ #category : #configure }
+UITheme >> configurePluggableListMorph: listMorph [
+	self configureScrollPane: listMorph
+]
+
+{ #category : #configure }
+UITheme >> configurePluggableTextFieldMorph: textFieldMorph [
+]
+
+{ #category : #configure }
+UITheme >> configurePluggableTextMorph: textMorph [
+	textMorph
+		color: Color white;
+		borderWidth: 1
+]
+
+{ #category : #configure }
+UITheme >> configureScrollPane: aMorph [
+	aMorph color: Color white
+]
+
+{ #category : #configure }
+UITheme >> configureSystemWindow: aWindow [
+	aWindow basicBorderColor: Color lightGray.
+	aWindow basicBorderWidth: 1.
+	aWindow color: Color lightGray lighter lighter lighter.
+	self
+		configureWindowBorderFor: aWindow;
+		configureWindowDropShadowFor: aWindow
+]
+
+{ #category : #configure }
+UITheme >> configureTextMorph: textMorph [
+]
+
+{ #category : #'*Polymorph-Widgets-Themes' }
+UITheme >> configureWatcherWindowLabelAreaFor: aWindow [
+	"Configure the label area for the given Watcher window."
+
+	|padding|
+	padding := 0.
+	aWindow labelArea
+		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0).
+	aWindow hasCloseBox ifTrue: [aWindow addCloseBox. padding := padding + 1].
+"	aWindow hasCollapseBox ifTrue: [aWindow addCollapseBox. padding := padding + 1].
+	aWindow hasExpandBox ifTrue: [aWindow addExpandBox. padding := padding + 1].
+	aWindow hasMenuBox ifTrue: [padding := padding - 1].
+"	aWindow labelArea
+		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
+	aWindow basicLabel ifNotNil: [:label | aWindow labelArea addMorphBack: label; hResizing: #shrinkWrap].
+	aWindow labelArea
+		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
+	padding > 0 ifTrue: [
+		aWindow labelArea
+			addMorphBack: (Morph new extent: (aWindow boxExtent x * padding) @ 0)].
+"	aWindow hasMenuBox ifTrue: [aWindow addMenuControl]."
+	aWindow labelArea
+		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0)
 ]
 
 { #category : #'border-styles' }
@@ -1136,6 +1509,16 @@ UITheme >> createArrowOfDirection: aSymbol in: aRectangle [
 ]
 
 { #category : #scrollbars }
+UITheme >> createArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [
+	"Defer to current UITheme if available."
+
+	^self
+		scrollbarArrowOfDirection: aSymbolDirection
+		size: finalSizeInteger
+		color: aColor
+]
+
+{ #category : #scrollbars }
 UITheme >> createBoxImagesCache [
 	"Creates the cache to store the arrow forms"
 
@@ -1288,8 +1671,7 @@ UITheme >> createMenuBoxFor: aSystemWindow [
 
 { #category : #accessing }
 UITheme >> currentSettings [
-
-	^ settings
+	^ self class currentSettings
 ]
 
 { #category : #services }
@@ -1308,28 +1690,37 @@ UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noTex
 			default: defaultOption) openModal answer
 ]
 
+{ #category : #services }
+UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noText: noText title: aString [
+	"Answer the result of a question dialog with the given label, button labels and title."
+
+	self questionSound play.
+	^((CustomQuestionDialogWindow newWithTheme: aThemedMorph theme)
+			textFont: self textFont;
+			title: aString;
+			text: labelText;
+			yesText: yesText help: nil;
+			noText: noText help: nil) dialog answer
+]
+
 { #category : #'accessing - colors' }
 UITheme >> dangerBackgroundColor [
-
-	^ colorPalette dangerBackgroundColor
+	^ self dangerTextColor darker darker
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> dangerTextColor [
-
-	^ colorPalette dangerTextColor
+	^ Color red darker darker
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> darkBaseColor [
-
-	^ colorPalette darkBaseColor
+	^ self class darkBaseColor
 ]
 
 { #category : #private }
 UITheme >> darkBaseColorFor: aButton [
-
-	^ self darkBaseColor
+	^ self class darkBaseColor
 ]
 
 { #category : #defaults }
@@ -1357,22 +1748,9 @@ UITheme >> defaultMenuTitleColor [
 
 { #category : #initialization }
 UITheme >> defaultSettings [
+	"Answer the default settings."
 
-	^ ThemeSettings new
-		buttonColor: Color gray;
-		scrollbarColor: Color gray;
-		menuColor: self baseColor;
-		menuTitleColor: self baseColor;
-		windowColor: self baseColor;
-		selectionColor: self lightSelectionColor;
-		menuSelectionColor: self baseSelectionColor;
-		progressBarColor: self baseColor;
-		standardColorsOnly: true;
-		autoSelectionColor: false;
-		preferRoundCorner: false;
-		fadedBackgroundWindows: false;
-		flatMenu: true;
-		yourself
+	^self class defaultSettings copy
 ]
 
 { #category : #initialization }
@@ -1404,7 +1782,7 @@ UITheme >> denySound [
 { #category : #'fill-styles' }
 UITheme >> desktopColor [
 
-	^ colorPalette desktopColor
+	^(Color r: 240 g: 240 b: 240 range: 255)
 ]
 
 { #category : #'fill-styles' }
@@ -1450,72 +1828,55 @@ UITheme >> dialogWindowPreferredCornerStyleFor: aDialogWindow [
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffAdditionalLineBackgroundColor [
-
 	"Answer the color used to show additions in a diff view."
-
-	^ colorPalette diffAdditionalLineBackgroundColor
+	^ Color green alpha: 0.2
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffAdditionalTextInLineBackgroundColor [
-
 	"Answer the color used to show addition highlights in a text line."
-
-	^ colorPalette diffAdditionalTextInLineBackgroundColor
+	^ self diffAdditionalLineBackgroundColor alpha: 0.4
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffEdgeColor [
-
 	"Answer the color used to show the border of the changes."
-
-	^ colorPalette diffEdgeColor
+	^ Color gray alpha: 0.3
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffJoinColor [
-
 	"Answer the color used for the join bar."
-
-	^ colorPalette diffJoinColor
+	^ Color paleBlue duller
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffMapColor [
-
 	"Answer the color used for the mapping bar on the left side."
-
-	^ colorPalette diffMapColor
+	^ self backgroundColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffModificatedLineBackgroundColor [
-
 	"Answer the color used to show changes."
-
-	^ colorPalette diffModificatedLineBackgroundColor
+	^ Color yellow alpha: 0.2
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffRemovalHighlightColor [
-
 	"Answer the color used to show removal highligths."
-
-	^ colorPalette diffRemovalHighlightColor
+	^ self diffRemovedLinesBackgroundColor alpha: 0.4
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffRemovedLinesBackgroundColor [
-
 	"Answer the color used to show removals in a diff view."
-
-	^ colorPalette diffRemovedLinesBackgroundColor
+	^ Color red alpha: 0.2
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> disabledColor [ 
-
-	^ colorPalette disabledColor
+UITheme >> disabledColor [
+	^ Color gray
 ]
 
 { #category : #'label-styles' }
@@ -1526,16 +1887,9 @@ UITheme >> disabledItemStyle [
 	^#plain
 ]
 
-{ #category : #'basic-colors' }
-UITheme >> disabledLabelColor [
-
-	^ colorPalette disabledLabelColor
-]
-
 { #category : #'accessing - colors' }
-UITheme >> disabledTextColor [ 
-
-	^ colorPalette disabledTextColor
+UITheme >> disabledTextColor [
+	^ self disabledColor
 ]
 
 { #category : #accessing }
@@ -1576,6 +1930,17 @@ UITheme >> drawTextAdornmentFor: aPluggableTextMorph color: aColor on: aCanvas [
 	aCanvas
 		drawPolygon:  {bounds topRight. bounds topRight + (0@size). bounds topRight - (size@0)}
 		fillStyle: fillStyle
+]
+
+{ #category : #'border-styles' }
+UITheme >> drawTextAdornmentsFor: aPluggableTextMorph on: aCanvas [
+	"Indicate edit status for the given morph."
+
+	(aPluggableTextMorph hasEditingConflicts or: [ aPluggableTextMorph hasValidText not ])
+		ifTrue: [ ^ self drawTextAdornmentFor: aPluggableTextMorph color: Color red on: aCanvas ].
+	aPluggableTextMorph hasUnacceptedEdits
+		ifTrue: [ aPluggableTextMorph model wantsVisualFeedback
+				ifTrue: [ ^ self drawTextAdornmentFor: aPluggableTextMorph color: Color orange on: aCanvas ] ]
 ]
 
 { #category : #'border-styles' }
@@ -1765,8 +2130,8 @@ UITheme >> dropListNormalBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
-	
-	^ colorPalette dropListNormalFillStyleFor: aDropList
+
+	^ SolidFillStyle color: Color white
 ]
 
 { #category : #'border-styles' }
@@ -1781,14 +2146,20 @@ UITheme >> dropListNormalListBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
-	
-	^ colorPalette dropListNormalListFillStyleFor: aDropList
+
+	^Color white
+]
+
+{ #category : #defaults }
+UITheme >> editableDropListMargins [
+	"Answer the text margins for an editable drop list for this theme."
+	^ Margin left: 0 top: 3 right: 2 bottom: 1
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> enabledColor [
 
-	^ colorPalette enabledColor
+	^ Color black
 ]
 
 { #category : #services }
@@ -1810,8 +2181,7 @@ UITheme >> enterOrRequestIn: aThemedMorph title: title labels: labels values: va
 
 { #category : #'basic-colors' }
 UITheme >> errorPopperBackgroundColor [
-
-	^ colorPalette errorPopperBackgroundColor
+	^ Color paleRed
 ]
 
 { #category : #'border-styles - buttons' }
@@ -1907,7 +2277,7 @@ UITheme >> forms: anObject [
 { #category : #'accessing - colors' }
 UITheme >> ghostTextColor [
 
-	^ colorPalette ghostTextColor
+	^ Color lightGray
 ]
 
 { #category : #'border-styles' }
@@ -1947,21 +2317,10 @@ UITheme >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
-	colorPalette := UIThemePalette new
-		colorConfigurator: self class colorConfiguratorClass new;
-		yourself.
-	self initializeForms.
-	
-	self initializeDefaultSettings.
-	colorPalette themeSettings: settings.
-	
+	self
+		initializeForms;
+		settings: self defaultSettings.
 	self windowActiveDropShadowStyle: #diffuse
-]
-
-{ #category : #initialization }
-UITheme >> initializeDefaultSettings [
-
-	settings := self defaultSettings
 ]
 
 { #category : #initialization }
@@ -2029,14 +2388,13 @@ UITheme >> labelAreaLayout [
 
 { #category : #'label-styles' }
 UITheme >> labelDisabledColorFor: aLabel [
-	"^ aLabel owner ifNil: [ aLabel paneColor muchDarker ] ifNotNil: [
-	aLabel owner color isTransparent ifTrue: [ aLabel owner paneColor muchDarker ]
-	ifFalse: [ aLabel owner color muchDarker ] ]"
+	"Answer the color to use for a label when disabled."
 
-	"This method was overriden in the dark theme with the difference that the colors were
-	converted using muchLighter"
-
-	^ self disabledLabelColor
+	^aLabel owner
+		ifNil: [aLabel paneColor muchDarker]
+		ifNotNil: [aLabel owner color isTransparent
+					ifTrue: [aLabel owner paneColor muchDarker]
+					ifFalse: [aLabel owner color muchDarker]]
 ]
 
 { #category : #defaults }
@@ -2049,49 +2407,38 @@ UITheme >> labelFont [
 { #category : #accessing }
 UITheme >> lessConspicuousColorFrom: aColor [
 
-	^ colorPalette lessConspicuousColorFrom: aColor
+	^	aColor alphaMixed: 0.5 with: Color white
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lightBackgroundColor [ 
-
-	^ colorPalette lightBackgroundColor
+UITheme >> lightBackgroundColor [
+	^ Color veryLightGray muchLighter
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> lightBaseColor [
 
-	^ colorPalette lightBaseColor
+	^ self class lightBaseColor
 ]
 
 { #category : #private }
 UITheme >> lightColorFor: aButton [
-
-	^ self lightBaseColor
-]
-
-{ #category : #accessing }
-UITheme >> lightSelectionColor [
-
-	^ colorPalette lightSelectionColor
+	^ self class lightBaseColor
 ]
 
 { #category : #private }
 UITheme >> lightSelectionColorFor: aMorph [
-
-	^ self lightSelectionColor
+	^ self class lightSelectionColor
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lineNumberColor [ 
-	
-	^ colorPalette lineNumberColor
+UITheme >> lineNumberColor [
+	^ Color gray muchDarker
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> listBackgroundColor [
-
-	^ colorPalette listBackgroundColor
+	^ self backgroundColor
 ]
 
 { #category : #'border-styles' }
@@ -2133,16 +2480,16 @@ UITheme >> listNormalBorderStyleFor: aList [
 
 { #category : #'fill-styles' }
 UITheme >> listNormalFillStyleFor: aList [
-
 	"Return the normal fillStyle for the given list."
 
-	^ colorPalette listNormalFillStyleFor: aList
+	^Color white
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> listTextColor [
+	"Answer the list text color to use."
 
-	^ colorPalette listTextColor
+	^Color black
 ]
 
 { #category : #services }
@@ -2165,8 +2512,7 @@ UITheme >> menuBarFont [
 
 { #category : #'accessing - colors' }
 UITheme >> menuBorderColor [
-
-	^ colorPalette menuBorderColor
+	^  self settings menuBorderColor
 ]
 
 { #category : #accessing }
@@ -2183,8 +2529,9 @@ UITheme >> menuCloseForm [
 
 { #category : #'accessing - colors' }
 UITheme >> menuColor [
+	"Answer the menu color to use."
 
-	^ colorPalette menuColor
+	^self settings menuColor
 ]
 
 { #category : #'fill-styles' }
@@ -2230,7 +2577,9 @@ UITheme >> menuFont [
 UITheme >> menuItemDisabledTextColorFor: aMenuItem [
 	"Answer the color to use for disabled menu item text."
 
-	^ colorPalette menuItemDisabledTextColorFor: aMenuItem
+	^((aMenuItem color luminance - aMenuItem owner color luminance) abs < 0.3)
+		ifTrue: [aMenuItem owner color contrastingBlackAndWhiteColor muchDarker]
+		ifFalse: [aMenuItem owner color muchDarker]
 ]
 
 { #category : #'border-styles - buttons' }
@@ -2295,8 +2644,7 @@ UITheme >> menuItemSelectedTextColorFor: aMenuItem [
 
 { #category : #'accessing - colors' }
 UITheme >> menuKeyboardFocusColor [
-
-	^ colorPalette menuKeyboardFocusColor
+	^ self settings menuKeyboardFocusColor
 ]
 
 { #category : #'label-styles' }
@@ -2308,20 +2656,18 @@ UITheme >> menuPinForm [
 
 { #category : #'accessing - colors' }
 UITheme >> menuSelectionColor [
-
-	^ colorPalette menuSelectionColor
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> menuShadowColor [
-
-	^ colorPalette menuShadowColor
+	^ self settings menuShadowColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> menuTitleColor [
-
-	^ colorPalette menuTitleColor
+	"Answer the menu title color to use."
+	^self settings menuTitleColor
 ]
 
 { #category : #'fill-styles' }
@@ -2426,11 +2772,127 @@ UITheme >> morphTreeSplitterPressedFillStyleFor: aSplitter [
 { #category : #'accessing - colors' }
 UITheme >> mouseOverColor [
 	"This color is used when hovering a raw of a list / table.
-	This color should be different from the default background color and from the raw
-	alternate color
+	This color should be different from the default background color and from the raw alternate color
 	(see FTTableContainerMorph>>#alternateRowsColor."
 
-	^ colorPalette mouseOverColor
+	^ self backgroundColor darker darker
+]
+
+{ #category : #'fill-styles' }
+UITheme >> multiFormFillStyleFrom: anArray cornerWidths: widthArray in: aRectangle [
+	"Answer a composite fill style from the given forms and central colour
+	in the given bounds. Use the widths specified for the portion of the
+	corner forms to display."
+
+	|tl tm tr ml mr bl bm br c tlw trw blw brw|
+	tl := anArray first. tlw:= widthArray first.
+	tm := anArray second.
+	tr := anArray third. trw := widthArray second.
+	ml  := anArray fourth.
+	c := anArray fifth.
+	mr  := anArray sixth.
+	bl := anArray seventh. blw := widthArray third.
+	bm := anArray eighth.
+	br := anArray ninth. brw := widthArray fourth.
+	^CompositeFillStyle fillStyles: {
+		(ImageFillStyle form: tl)
+			origin: aRectangle topLeft;
+			extent: tlw@tl height.
+		(AlphaInfiniteForm with: tm)
+			origin: aRectangle topLeft + (tlw@0);
+			extent: (aRectangle width - trw - tlw)@tm height.
+		(ImageFillStyle form: tr)
+			origin: aRectangle topRight - (tr width@0);
+			extent: trw@tr height;
+			offset: (tr width - trw)@0.
+		(AlphaInfiniteForm with: ml)
+			origin: aRectangle topLeft + (0@tl height);
+			extent: ml width@(aRectangle height - tl height - bl height).
+		(ColorFillStyle color: c)
+			origin: aRectangle topLeft + (tlw@tl height);
+			extent: aRectangle extent - (tlw@tl height) - (brw@br height).
+		(AlphaInfiniteForm with: mr)
+			origin: aRectangle topRight + (trw negated@tr height);
+			extent: mr width@(aRectangle height - tr height - br height).
+		(ImageFillStyle form: bl)
+			origin: aRectangle bottomLeft - (0@bl height);
+			extent: blw@bl height.
+		(AlphaInfiniteForm with: bm)
+			origin: aRectangle bottomLeft - (blw negated@bl height);
+			extent: (aRectangle width - blw - brw)@bm height.
+		(ImageFillStyle form: br)
+			origin: aRectangle bottomRight - br extent;
+			extent: brw@br height;
+			offset: (br width - brw)@0}
+]
+
+{ #category : #'fill-styles' }
+UITheme >> multiFormFillStyleFrom: anArray in: aRectangle [
+	"Answer a composite fill style from the given forms and central colour
+	in the given bounds."
+
+	|tl tm tr ml mr bl bm br c|
+	tl := anArray first.
+	tm := anArray second.
+	tr := anArray third.
+	ml  := anArray fourth.
+	c := anArray fifth.
+	mr  := anArray sixth.
+	bl := anArray seventh.
+	bm := anArray eighth.
+	br := anArray ninth.
+	^CompositeFillStyle fillStyles: {
+		(ImageFillStyle form: tl) origin: aRectangle topLeft.
+		(AlphaInfiniteForm with: tm)
+			origin: aRectangle topLeft + (tl width@0);
+			extent: (aRectangle width - tl width - tr width)@tm height.
+		(ImageFillStyle form: tr)
+			origin: aRectangle topRight - (tr width@0).
+		(AlphaInfiniteForm with: ml)
+			origin: aRectangle topLeft + (0@tl height);
+			extent: ml width@(aRectangle height - tl height - bl height).
+		(ColorFillStyle color: c)
+			origin: aRectangle topLeft + tl extent;
+			extent: aRectangle extent - tl extent - br extent.
+		(AlphaInfiniteForm with: mr)
+			origin: aRectangle topRight + (tr width negated@tr height);
+			extent: mr width@(aRectangle height - tr height - br height).
+		(ImageFillStyle form: bl) origin: aRectangle bottomLeft - (0@bl height).
+		(AlphaInfiniteForm with: bm)
+			origin: aRectangle bottomLeft - (bl width negated@bl height);
+			extent: (aRectangle width - bl width - br width)@bm height.
+		(ImageFillStyle form: br)
+			origin: aRectangle bottomRight - br extent}
+]
+
+{ #category : #'fill-styles' }
+UITheme >> multiFormTopFillStyleFrom: anArray in: aRectangle [
+	"Answer a composite fill style from the given forms and central colour
+	in the given bounds. Only top and middle sections are considered."
+
+	|tl tm tr ml mr c|
+	tl := anArray first.
+	tm := anArray second.
+	tr := anArray third.
+	ml  := anArray fourth.
+	c := anArray fifth.
+	mr  := anArray sixth.
+	^CompositeFillStyle fillStyles: {
+		(ImageFillStyle form: tl) origin: aRectangle topLeft.
+		(AlphaInfiniteForm with: tm)
+			origin: aRectangle topLeft + (tl width@0);
+			extent: (aRectangle width - tl width - tr width)@tm height.
+		(ImageFillStyle form: tr)
+			origin: aRectangle topRight - (tr width@0).
+		(AlphaInfiniteForm with: ml)
+			origin: aRectangle topLeft + (0@tr height);
+			extent: ml width@(aRectangle height - tl height).
+		(ColorFillStyle color: c)
+			origin: aRectangle topLeft + tl extent;
+			extent: aRectangle extent - tl extent - (mr width @0).
+		(AlphaInfiniteForm with: mr)
+			origin: aRectangle topRight + (tr width negated@tr height);
+			extent: mr width@(aRectangle height - tr height)}
 ]
 
 { #category : #'morph creation' }
@@ -3437,6 +3899,21 @@ UITheme >> newMenuIn: aThemedMorph for: aModel [
 ]
 
 { #category : #'morph creation' }
+UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
+	"Answer a morph drop list for the given model."
+
+	^self
+		newMorphDropListIn: aThemedMorph
+		for: aModel
+		list: listSel
+		getSelected: getSel
+		setSelected: setSel
+		getEnabled: enabledSel
+		useIndex: true
+		help: helpText
+]
+
+{ #category : #'morph creation' }
 UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
 	"Answer a morph drop list for the given model."
 
@@ -4167,6 +4644,19 @@ UITheme >> normalFillStyleFor: aMorph height: anInteger [
 	^ SolidFillStyle color: (self lightColorFor: aMorph)
 ]
 
+{ #category : #private }
+UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [
+	| top bottom |
+	top := aColor darker.
+	bottom := aColor.
+	^(GradientFillStyle ramp: {
+			0.0->top.
+			0.7->bottom.})
+		origin: aMorph bounds origin;
+		direction: 0 @ anInteger;
+		radial: false
+]
+
 { #category : #accessing }
 UITheme >> numberOfStepsForAnimations [
 	^ self animationSettings numberOfSteps
@@ -4203,10 +4693,8 @@ UITheme >> passwordEntryIn: aThemedMorph text: aStringOrText title: aString entr
 
 { #category : #'basic-colors' }
 UITheme >> patchworkUIThemeColorFor: aWindowOrModel [
-
 	"Answer the colour for the given window."
-
-	^ colorPalette patchworkUIThemeColorFor: aWindowOrModel
+	^ self settings windowColor
 ]
 
 { #category : #'border-styles' }
@@ -4250,15 +4738,14 @@ UITheme >> progressBarBorderStyleFor: aProgressBar [
 	c := self progressBarColorFor: aProgressBar.
 	^BorderStyle simple
 		width: 1;
-		baseColor: c
+		baseColor: c darker
 ]
 
 { #category : #'basic-colors' }
 UITheme >> progressBarColorFor: aProgressBar [
-
 	"Answer the colour for the given progress bar."
 
-	^ colorPalette progressBarColorFor: aProgressBar
+	^self settings progressBarColor
 ]
 
 { #category : #'fill-styles' }
@@ -4268,10 +4755,9 @@ UITheme >> progressBarFillStyleFor: aProgressBar [
 
 { #category : #'basic-colors' }
 UITheme >> progressBarProgressColorFor: aProgressBar [
-
 	"Answer the colour for the progress part of the given progress bar."
 
-	^ colorPalette progressBarProgressColorFor: aProgressBar
+	^self settings progressBarProgressColor
 ]
 
 { #category : #'fill-styles' }
@@ -4403,8 +4889,11 @@ UITheme >> radioButtonSelectedForm [
 
 { #category : #'fill-styles' }
 UITheme >> resizerGripNormalFillStyleFor: aResizer [
+	"Return the normal fillStyle for the given resizer.
+	For the moment, answer a transparent colour for no drawing,
+	non transparent to draw as normal."
 
-	^ colorPalette resizerGripNormalFillStyleFor: aResizer
+	^Color transparent
 ]
 
 { #category : #scrollbars }
@@ -4460,24 +4949,24 @@ UITheme >> scrollbarButtonCornerStyleIn: aThemedMorph [
 
 { #category : #'accessing - colors' }
 UITheme >> scrollbarColor [
-
-	^ colorPalette scrollbarColor
+	^ self settings scrollbarColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> scrollbarColorFor: aScrollbar [
-
 	"Answer the colour for the given scrollbar."
 
-	^ colorPalette scrollbarColorFor: aScrollbar
+	^self settings standardColorsOnly
+		ifTrue: [self settings scrollbarColor]
+		ifFalse: [aScrollbar lastPaneColor
+					 ifNil: [Color white]]
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarImageColorFor: aScrollbar [
-
 	"Return the scrollbar image colour (on buttons) for the given scrollbar."
 
-	^ colorPalette scrollbarImageColorFor: aScrollbar
+	^(self baseScrollbarColorFor: aScrollbar) darker
 ]
 
 { #category : #defaults }
@@ -4604,8 +5093,28 @@ UITheme >> scrollbarNormalButtonFillStyleFor: aScrollbar [
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalFillStyleFor: aScrollbar [
-	
-	^ colorPalette scrollbarNormalFillStyleFor: aScrollbar
+	"Return the normal scrollbar fillStyle for the given scrollbar."
+
+	^ "(self glamorousBaseColorFor: aScrollbar) muchLighter"
+	Color r: 245 g: 245 b: 245 range: 255
+]
+
+{ #category : #'fill-styles - scrollbars' }
+UITheme >> scrollbarNormalHorizontalThumbFillStyleFor: aScrollbar [
+	"Return the normal scrollbar horizontal thumb fillStyle for the given scrollbar."
+
+	|s l m r|
+	s := aScrollbar slider.
+	l := self scrollbarThumbLeftForm.
+	m := self scrollbarThumbHorizontalMiddleForm.
+	r := self scrollbarThumbRightForm.
+	^CompositeFillStyle fillStyles: {
+		(ImageFillStyle form: l) origin: s topLeft.
+		(AlphaInfiniteForm with: m)
+			origin: s topLeft + (l width@0);
+			extent: (s width - l width - r width)@m height.
+		(ImageFillStyle form: r)
+			origin: s topRight - (r width@0)}
 ]
 
 { #category : #'border-styles - scrollbars' }
@@ -4621,6 +5130,24 @@ UITheme >> scrollbarNormalThumbBorderStyleFor: aScrollbar [
 UITheme >> scrollbarNormalThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 	^ self normalFillStyleFor: aScrollbar height: aScrollbar height
+]
+
+{ #category : #'fill-styles - scrollbars' }
+UITheme >> scrollbarNormalVerticalThumbFillStyleFor: aScrollbar [
+	"Return the normal scrollbar vertical thumb fillStyle for the given scrollbar."
+
+	|s t m b|
+	s := aScrollbar slider.
+	t := self scrollbarThumbTopForm.
+	m := self scrollbarThumbVerticalMiddleForm.
+	b := self scrollbarThumbBottomForm.
+	^CompositeFillStyle fillStyles: {
+		(ImageFillStyle form: t) origin: s topLeft.
+		(AlphaInfiniteForm with: m)
+			origin: s topLeft + (0@t height);
+			extent: m width@(s height - t height - b height).
+		(ImageFillStyle form: b)
+			origin: s bottomLeft - (0@b height)}
 ]
 
 { #category : #'border-styles - scrollbars' }
@@ -4677,6 +5204,13 @@ UITheme >> scrollbarThickness [
 	^13 * self displayScaleFactor
 ]
 
+{ #category : #'fill-styles' }
+UITheme >> scrollbarThumbBottomForm [
+	"Answer the form to use for the bottom of a vertical scrollbar."
+
+	^self forms at: #sbVThumbBottom ifAbsent: [Form extent: 13@7 depth: Display depth]
+]
+
 { #category : #'border-styles - scrollbars' }
 UITheme >> scrollbarThumbCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
@@ -4684,10 +5218,44 @@ UITheme >> scrollbarThumbCornerStyleIn: aThemedMorph [
 	^#square
 ]
 
+{ #category : #'fill-styles' }
+UITheme >> scrollbarThumbHorizontalMiddleForm [
+	"Answer the form to use for the middle of a horizontal scrollbar."
+
+	^self forms at: #sbHThumbMiddle ifAbsent: [Form extent: 1@13 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> scrollbarThumbLeftForm [
+	"Answer the form to use for the left of a horizontal scrollbar."
+
+	^self forms at: #sbHThumbLeft ifAbsent: [Form extent: 7@13 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> scrollbarThumbRightForm [
+	"Answer the form to use for the right of a horizontal scrollbar."
+
+	^self forms at: #sbHThumbRight ifAbsent: [Form extent: 7@13 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> scrollbarThumbTopForm [
+	"Answer the form to use for the top of a vertical scrollbar."
+
+	^self forms at: #sbVThumbTop ifAbsent: [Form extent: 13@7 depth: Display depth]
+]
+
+{ #category : #'fill-styles' }
+UITheme >> scrollbarThumbVerticalMiddleForm [
+	"Answer the form to use for the middle of a vertical scrollbar."
+
+	^self forms at: #sbVThumbMiddle ifAbsent: [Form extent: 13@1 depth: Display depth]
+]
+
 { #category : #'accessing - colors' }
 UITheme >> secondarySelectionColor [
-
-	^ colorPalette secondarySelectionColor
+	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
 ]
 
 { #category : #private }
@@ -4699,30 +5267,33 @@ UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 
 { #category : #'accessing - colors' }
 UITheme >> selectedItemListTextColor [
-
 	"Answer the color for the selected item in a list text."
 
-	^ colorPalette selectedItemListTextColor
+	^ self textColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectionBarColor [
 
-	^ colorPalette selectionBarColor
+	^ self settings selectionBarColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectionColor [
-
 	"Answer the selection color to use.."
 
-	^ colorPalette selectionColor
+	^ self settings selectionColor
+]
+
+{ #category : #defaults }
+UITheme >> selectionColorForFrame: frame [
+
+	^ self selectionColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectionTextColor [
-
-	^ colorPalette selectionTextColor
+ ^ self settings selectionTextColor
 ]
 
 { #category : #'fill-styles' }
@@ -4798,15 +5369,14 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 
 	^BorderStyle inset
 		width: 1;
-		baseColor: aSlider paneColor
+		baseColor: aSlider paneColor twiceDarker
 ]
 
 { #category : #'fill-styles' }
 UITheme >> sliderNormalFillStyleFor: aSlider [
-
 	"Return the normal fillStyle for the given slider."
 
-	^ colorPalette sliderNormalFillStyleFor: aSlider
+	^ SolidFillStyle color: Color white
 ]
 
 { #category : #accessing }
@@ -4846,29 +5416,33 @@ UITheme >> splitterPressedFillStyleFor: aSplitter [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> spotlightWindowColor [ 
+UITheme >> spotlightWindowColor [
+	^ self selectionColor muchDarker
+]
 
-	^ colorPalette spotlightWindowColor
+{ #category : #defaults }
+UITheme >> statusFont [
+	"Answer the status font to use."
+
+	^((TextStyle named: #BitstreamVeraSansMono) ifNil: [TextStyle default])
+		fontOfPointSize: 8
 ]
 
 { #category : #'basic-colors' }
 UITheme >> subgroupColorFrom: paneColor [
-
 	"Answer the colour for a subgroup given the pane colour."
 
-	^ colorPalette subgroupColorFrom: paneColor
+	^ self lightColorFor: paneColor" self class baseColor"
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> successBackgroundColor [
-
-	^ colorPalette successBackgroundColor
+	^ self successTextColor lighter lighter
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> successTextColor [
-
-	^ colorPalette successTextColor
+	^ Color r: 0 g: 0.5 b: 0
 ]
 
 { #category : #'border-styles' }
@@ -4950,26 +5524,27 @@ UITheme >> taskListFillStyleFor: aTasklist [
 
 { #category : #'basic-colors' }
 UITheme >> taskbarActiveButtonColorFor: aButton [
-
 	"Answer the colour for the given active taskbar button."
 
-	^ colorPalette taskbarActiveButtonColorFor: aButton
+	^self scrollbarColor alphaMixed: 0.7 with: Color white
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarButtonColorFor: aButton [
-
 	"Answer the colour for the given taskbar button."
-
-	^ colorPalette taskbarButtonColorFor: aButton
+	^ self windowColorFor: aButton model
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarButtonLabelColorFor: aButton [
-
 	"Answer the colour for the label of the given taskbar button."
 
-	^ colorPalette taskbarButtonLabelColorFor: aButton
+	^aButton model
+		ifNil: [super taskbarButtonLabelColorFor: aButton]
+		ifNotNil: [:win |
+			win isActive
+				ifTrue: [Color black]
+				ifFalse: [Color gray darker]]
 ]
 
 { #category : #'fill-styles - taskbar' }
@@ -4993,20 +5568,16 @@ UITheme >> taskbarItemDisabledFillStyleFor: aButton [
 
 { #category : #'basic-colors' }
 UITheme >> taskbarItemLabelColorForCollapsed: aButton [
+	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
-	"Answer the colour for the label of the given taskbar button, given that the corresponding
-	window is collapsed."
-
-	^ colorPalette taskbarItemLabelColorForCollapsed: aButton
+	^Color darkGray
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarItemLabelColorForExpanded: aButton [
+	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
-	"Answer the colour for the label of the given taskbar button, given that the corresponding
-	window is collapsed."
-
-	^ colorPalette taskbarItemLabelColorForExpanded: aButton
+	^ Color black
 ]
 
 { #category : #'border-styles - taskbar' }
@@ -5109,10 +5680,9 @@ UITheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 
 { #category : #'basic-colors' }
 UITheme >> taskbarMinimizedButtonColorFor: aButton [
-
 	"Answer the colour for the given minimized taskbar button."
 
-	^ colorPalette taskbarMinimizedButtonColorFor: aButton
+	^Color transparent
 ]
 
 { #category : #'border-styles' }
@@ -5128,15 +5698,13 @@ UITheme >> taskbarThumbnailNormalBorderStyleFor: aWindow [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> textColor [ 
-
-	^ colorPalette textColor
+UITheme >> textColor [
+	^ Color black
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> textColorForNonStandardBackground [
-
-	^ colorPalette textColorForNonStandardBackground
+	^ self textColor
 ]
 
 { #category : #'border-styles' }
@@ -5151,6 +5719,19 @@ UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
 
 	^self basePassiveBackgroundColorFor: aTextEditor
+]
+
+{ #category : #services }
+UITheme >> textEditorIn: aThemedMorph text: aStringOrText title: aString entryText: defaultEntryText [
+	"Answer the result of a text editor (multiline) dialog ( a string or nil if cancelled)
+	with the given label and title."
+
+	^self
+		textEditorIn: aThemedMorph
+		text: aStringOrText
+		title: aString
+		entryText: defaultEntryText
+		entryHeight: 64
 ]
 
 { #category : #services }
@@ -5176,10 +5757,9 @@ UITheme >> textEditorNormalBorderStyleFor: aTextEditor [
 
 { #category : #'fill-styles' }
 UITheme >> textEditorNormalFillStyleFor: aTextEditor [
-
 	"Return the normal fillStyle for the given text editor."
 
-	^ colorPalette textEditorNormalFillStyleFor: aTextEditor
+	^Color white
 ]
 
 { #category : #'border-styles - buttons' }
@@ -5216,10 +5796,39 @@ UITheme >> textEntryIn: aThemedMorph text: aStringOrText title: aString entryTex
 			entryCompletion: anEntryCompletion) openModal entryText
 ]
 
+{ #category : #'border-styles' }
+UITheme >> textFieldDisabledBorderStyleFor: aTextField [
+	"Return the disabled text field borderStyle for the given text field."
+
+	^self textEditorDisabledBorderStyleFor: aTextField
+]
+
+{ #category : #'fill-styles' }
+UITheme >> textFieldDisabledFillStyleFor: aTextField [
+	"Return the disabled fillStyle for the given text field."
+
+	^self textEditorDisabledFillStyleFor: aTextField
+]
+
+{ #category : #'border-styles' }
+UITheme >> textFieldNormalBorderStyleFor: aTextField [
+	"Return the normal text field borderStyle for the given text field."
+
+	^self textEditorNormalBorderStyleFor: aTextField
+]
+
 { #category : #'fill-styles' }
 UITheme >> textFieldNormalFillStyleFor: aTextField [
-	
-	^ colorPalette textFieldNormalFillStyleFor: aTextField
+	"Return the normal fillStyle for the given text field."
+
+	^ Color white
+]
+
+{ #category : #'border-styles' }
+UITheme >> textFocusBoundsFor: aPluggableTextMorph [
+	"Answer the bounds for drawing the focus indication."
+
+	^aPluggableTextMorph bounds
 ]
 
 { #category : #defaults }
@@ -5238,11 +5847,10 @@ UITheme >> treeExpandedForm [
 
 { #category : #'basic-colors' }
 UITheme >> treeLineColorsFrom: aColor [
-
 	"Answer the colours to use for the tree lines.
 	The given colour is the preferred colour."
 
-	^ colorPalette treeLineColorsFrom: aColor
+	^{aColor. Color transparent}
 ]
 
 { #category : #'basic-colors' }
@@ -5268,8 +5876,7 @@ UITheme >> treeUnexpandedForm [
 
 { #category : #'accessing - colors' }
 UITheme >> unfocusedSelectionColor [
-
-	^ colorPalette unfocusedSelectionColor
+	^ self settings unfocusedSelectionColor
 ]
 
 { #category : #scrollbars }
@@ -5279,6 +5886,15 @@ UITheme >> updateScrollBarButtonAspect: aMorph color: aColor [
 
 	aMorph ifNil: [ ^ self ].
 	aMorph color: aColor
+]
+
+{ #category : #scrollbars }
+UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [
+	"update aCollection of morphs with aColor"
+
+
+	aCollection
+		do: [:each | self updateScrollBarButtonAspect: each color: aColor]
 ]
 
 { #category : #initialization }
@@ -5295,8 +5911,7 @@ UITheme >> updateWorldDockingBars [
 
 { #category : #'accessing - colors' }
 UITheme >> urlColor [
-
-	^ colorPalette urlColor
+	^ Color fromHexString: '03A9F4'
 ]
 
 { #category : #accessing }
@@ -5314,6 +5929,13 @@ UITheme >> useScrollbarThumbShadow [
 	useScrollbarThumbShadow ifNil:[useScrollbarThumbShadow:=false].
 
 	^useScrollbarThumbShadow
+]
+
+{ #category : #'fill-styles - scrollbars' }
+UITheme >> useScrollbarThumbShadow: aBoolean [
+	"Sets whether the scrollbar must show a shadow of the original position before dragging."
+
+	useScrollbarThumbShadow := aBoolean
 ]
 
 { #category : #scrollbars }
@@ -5335,28 +5957,52 @@ UITheme >> verticesForComplexArrow: aRectangle [
 	^vertices
 ]
 
-{ #category : #'basic-colors' }
-UITheme >> veryLightSelectionColor [
+{ #category : #scrollbars }
+UITheme >> verticesForSimpleArrow: aRectangle [
+	"PRIVATE - answer a collection of vertices to draw a simple arrow"
+	| vertices |
+	vertices := OrderedCollection new.
+	""
+	vertices add: aRectangle bottomLeft.
+	vertices add: aRectangle center x @ (aRectangle top + (aRectangle width / 8)).
+	vertices add: aRectangle bottomRight.
+	vertices add: aRectangle bottomRight + (0@0.01).
+	""
+	^ vertices
+]
 
-	^ colorPalette veryLightSelectionColor
+{ #category : #private }
+UITheme >> veryLightFillStyleFor: aMorph height: anInteger [
+	"Return the very light button fillStyle for the given button."
+
+	^ SolidFillStyle color: (self veryLightSelectionColorFor: aMorph)
 ]
 
 { #category : #private }
 UITheme >> veryLightSelectionColorFor: aMorph [
-
-	^ colorPalette veryLightSelectionColor
+	^ self class veryLightSelectionColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> warningBackgroundColor [
-
-	^ colorPalette warningBackgroundColor
+	^ Color yellow
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> warningTextColor [
+	^ Color yellow muchDarker
+]
 
-	^ colorPalette warningTextColor
+{ #category : #'*Polymorph-Widgets-Themes' }
+UITheme >> watcherWindowActiveFillStyleFor: aWindow [
+
+	^ SolidFillStyle color: (Color veryVeryLightGray alpha: 0.6)
+]
+
+{ #category : #'*Polymorph-Widgets-Themes' }
+UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
+
+	^ SolidFillStyle color: (Color veryVeryLightGray alpha: 0.6)
 ]
 
 { #category : #'label-styles' }
@@ -5414,15 +6060,14 @@ UITheme >> windowActiveDropShadowStyle: anObject [
 { #category : #'fill-styles' }
 UITheme >> windowActiveFillStyleFor: aWindow [
 	"We do not want the lighting effect when the window goes inactive"
-	^SolidFillStyle color: self baseColor
+	^SolidFillStyle color: self class baseColor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowActiveLabelFillStyleFor: aWindow [
-
 	"Return the window active label fillStyle for the given window."
 
-	^ colorPalette windowActiveLabelFillStyleFor: aWindow
+	^Color black
 ]
 
 { #category : #'fill-styles' }
@@ -5481,17 +6126,16 @@ UITheme >> windowCollapseBoxLayoutFor: aWindow [
 
 { #category : #'accessing - colors' }
 UITheme >> windowColor [
-
 	"Answer the window color to use."
 
-	^ colorPalette windowColor
+	^self settings windowColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> windowColorFor: aWindowOrModel [
 	"Answer the colour for the given window."
 
-	^ colorPalette windowColorFor: aWindowOrModel
+	^ self settings windowColor
 ]
 
 { #category : #'border-styles' }
@@ -5505,8 +6149,9 @@ UITheme >> windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow [
 
 { #category : #'fill-styles' }
 UITheme >> windowEdgeNormalFillStyleFor: anEdgeGrip [
-	
-	^ colorPalette windowEdgeNormalFillStyleFor: anEdgeGrip
+	"Return the normal window edge fillStyle for the given edge grip."
+
+	^Color transparent
 ]
 
 { #category : #'fill-styles' }
@@ -5519,6 +6164,14 @@ UITheme >> windowEdgePressedFillStyleFor: anEdgeGrip [
 { #category : #'fill-styles' }
 UITheme >> windowExtentChangedFor: aWindow [
 	"Update any extent related visuals."
+]
+
+{ #category : #'border-styles' }
+UITheme >> windowInactiveDropShadowOffsetRectangleFor: aSystemWindow [
+	"Answer a rectangle describing the offsets for each corner
+	of the the inactive window bounds for the drop shadow area."
+
+	^self windowPlainDropShadowOffsetRectangleFor: aSystemWindow
 ]
 
 { #category : #'fill-styles' }
@@ -5603,6 +6256,13 @@ UITheme >> windowMenuIconFor: aWindow [
 	"Answer the menu icon for the given window."
 
 	^ self windowMenuForm
+]
+
+{ #category : #'label-styles - windows' }
+UITheme >> windowMenuOverForm [
+	"Answer the form to use for mouse over window menu buttons"
+
+	^(self forms at: #windowMenuOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
@@ -5699,10 +6359,9 @@ UITheme >> windowRightOffset [
 
 { #category : #'accessing - colors' }
 UITheme >> windowShadowColor [
-
 	"Answer the window shadow color to use."
 
-	^ colorPalette windowShadowColor
+	^ Color gray
 ]
 
 { #category : #defaults }
@@ -5722,10 +6381,9 @@ UITheme >> worldMainDockingBarBorderStyleFor: aDockingBar [
 
 { #category : #'basic-colors' }
 UITheme >> worldMainDockingBarColorFor: aDockingBar [
-
 	"Answer the base colour to use for a world main docking bar in this theme."
 
-	^ colorPalette worldMainDockingBarColorFor: aDockingBar
+	^self settings derivedMenuColor
 ]
 
 { #category : #'fill-styles' }

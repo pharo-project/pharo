@@ -17,22 +17,24 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
+{ #category : #exceptions }
+TestResult class >> currentTheme [
+	^ Smalltalk ui theme
+]
+
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForErrorTest [
-
-	^ Color red darker darker
+	^ self currentTheme testColorError
 ]
 
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForFailureTest [
-
-	^ Color yellow darker darker darker
+	^ self currentTheme testColorFailure
 ]
 
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForPassingTest [
-
-	^ Color green darker darker
+	^ self currentTheme testColorPassing
 ]
 
 { #category : #'default - color' }
