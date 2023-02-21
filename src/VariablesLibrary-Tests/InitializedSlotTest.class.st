@@ -45,7 +45,11 @@ InitializedSlotTest >> testPrintUsingStoreString [
 	| slot |
 	slot := #slot1 => InitializedSlot default: [ OrderedCollection new ].
 	aClass := self make: [ :builder | builder slots: { slot } ].
-	self assert: (aClass hasSlotNamed: #slot1)
+	self assert: (aClass hasSlotNamed: #slot1).
+
+	self assert: aClass definitionString equals: 'Object << #SlotTestsClassA
+	slots: { #slot1 => InitializedSlot default: [ OrderedCollection new ] };
+	package: ''_UnpackagedPackage'''
 ]
 
 { #category : #tests }
