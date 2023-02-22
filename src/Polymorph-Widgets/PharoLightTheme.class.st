@@ -1,13 +1,9 @@
 "
 The theme is developed in the context of the Glamour project, and its goal is to create a look that:
+
 - does not look like a specific operating system. In particular, the icons should be operating system agnostic, because, for example, people in Windows are confused by the red, yellow, green buttons of apple.
 - uses a limited amount of colors and effects.
 - is fast.
-
-self defaultSettings: nil.
-self beCurrent. 
-
-Is adopted as the theme for Pharo3, but it was renamed to avoid collisions with the glamour team,
 "
 Class {
 	#name : #PharoLightTheme,
@@ -15,48 +11,17 @@ Class {
 	#category : #'Polymorph-Widgets-Themes'
 }
 
-{ #category : #accessing }
-PharoLightTheme class >> baseColor [
-	^ Color r: 210 g: 210 b: 210 range: 255
+{ #category : #configuration }
+PharoLightTheme class >> colorConfiguratorClass [
+
+	^ LightThemeColorConfigurator
 ]
 
-{ #category : #accessing }
-PharoLightTheme class >> basePassiveBackgroundColor [
-	^ Color r: 245 g: 245 b: 245 range: 255
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> baseSelectionColor [
-	^ Color r: 97 g: 163 b: 225 range: 255
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> darkBaseColor [
-	^ Color r: 200 g: 200 b: 200 range: 255
-]
-
-{ #category : #accessing }
+{ #category : #testing }
 PharoLightTheme class >> isAbstract [
 	"Answer whether the receiver is considered to be abstract."
 
 	^false
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> lightBaseColor [
-	^ Color r: 230 g: 230 b: 230 range: 255
-]
-
-{ #category : #accessing }
-PharoLightTheme class >> lightSelectionColor [
-	^ Color r: 175 g: 213 b: 250 range: 255
-]
-
-{ #category : #settings }
-PharoLightTheme class >> setPreferredPreferences [
-	"NECPreferences
-		expandPrefixes: true;
-		popupShowWithShortcut: Character tab asShortcut."
 ]
 
 { #category : #settings }
@@ -180,33 +145,6 @@ PharoLightTheme class >> themeName [
 	^ 'Pharo Light'
 ]
 
-{ #category : #accessing }
-PharoLightTheme class >> veryLightSelectionColor [
-	^ self lightSelectionColor muchLighter
-]
-
-{ #category : #'accessing - colors' }
-PharoLightTheme >> balloonBackgroundColor [
-
-	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
-]
-
-{ #category : #'fill-styles - buttons' }
-PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
-	"Return the disabled button fillStyle for the given color."
-
-	^ BorderStyle
-		width: 0
-		color: Color transparent
-]
-
-{ #category : #'fill-styles - buttons' }
-PharoLightTheme >> buttonDisabledFillStyleFor: aButton [
-	"Return the disabled button fillStyle for the given color."
-
-	^ SolidFillStyle color: Color transparent
-]
-
 { #category : #'border-styles - buttons' }
 PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
@@ -232,38 +170,21 @@ PharoLightTheme >> configureWindowBorderFor: aWindow [
 	aWindow borderStyle: aStyle
 ]
 
-{ #category : #'accessing - colors' }
-PharoLightTheme >> ghostTextColor [
-
-	^ Color darkGray
-]
-
 { #category : #initialization }
 PharoLightTheme >> initialize [
 	"self beCurrent"
 
 	super initialize.
 	self windowActiveDropShadowStyle: #diffuse.
-	self settings preferGradientFill: false
+	settings preferGradientFill: false
 ]
 
-{ #category : #forms }
-PharoLightTheme >> newRadioMarkerForm [
-	"Answer a new checkbox marker form."
-
-	^Form extent: 12@12 depth: 32
-]
-
-{ #category : #forms }
+{ #category : #'fill-styles - scrollbars' }
 PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar thumb fillStyle for the given scrollbar."
-		"Return the normal scrollbar fillStyle for the given scrollbar."
+	"Return the normal scrollbar fillStyle for the given scrollbar."
+	"^ SolidFillStyle color: Color lightGray lighter."
 
-	"^ (self glamorousNormalFillStyleWithBaseColor: aScrollbar paneColor for:  aScrollbar height: aScrollbar height)
-		direction: (aScrollbar bounds isWide
-			ifTrue: [0 @ aScrollbar height]
-			ifFalse: [aScrollbar width @ 0])"
-"	^ SolidFillStyle color: Color lightGray lighter."
 	^ self selectedFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
@@ -277,7 +198,7 @@ PharoLightTheme >> taskbarItemDisabledBorderStyleFor: aButton [
 	^ self taskbarItemNormalBorderStyleFor: aButton
 ]
 
-{ #category : #'border-styles - taskbar' }
+{ #category : #'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 	"Return the disabled taskbar item fillStyle for the given color."
 
