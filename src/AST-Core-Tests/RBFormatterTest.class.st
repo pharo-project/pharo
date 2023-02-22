@@ -161,19 +161,25 @@ RBFormatterTest >> testParseError [
 		' goodby: 2 my: 3'.
 
 		"Bad assignments"
-		"FIXME, `:=` without variable is badly parsed."
 		'a := '.
-		':='.
-		':=2' -> ' :=.<r>2'.
-		'1:=2' -> ' 1.<r> :=.<r>2'.
+		':= '.
+		':= 2'.
+		'1:=2' -> ' 1.<r>:= 2'.
+		'1 foo := 2' -> ' 1 foo.<r>:= 2'.
+		'(1:=2)' -> ' ( 1.<r> := 2)'.
 
 		"Bad cascades"
-		"FIXME: the formater is currently broken on some cases (message send to nil)"
-		"';'"
-		"'1;'."
+		';' -> '<r><t>;<r><t>'.
+		'1;foo' -> '1<r><t>;<r><t>foo'.
+		'1;' -> '1<r><t>;<r><t>'.
 		'1 foo;' -> '1<r><t>foo;<r><t>'.
-		'1 foo;2' -> '1<r><t>foo;<r><t>'. "FIXME"
-		"';;'."
+		'1 foo:;bar' -> '1<r><t>foo: ;<r><t>bar'. "The cascade is correct here. It's a simple error of a missing argument"
+		'1 foo;2' -> ' 1<r><t>foo;<r><t>.<r>2'.
+		'(1 foo: 2);bar' -> '(1 foo: 2)<r><t>;<r><t>bar'.
+		'(1 foo);bar' -> '1 foo<r><t>;<r><t>bar'. "BUT the parentheses are lost, but is changes the meaning"
+		"Longer cascade"
+		';;' -> '<r><t>;<r><t>;<r><t>'.
+		'1 foo;;bar' -> '1<r><t>foo;<r><t>;<r><t>bar'.
 
 		"Bad returns"
 		'^ '.

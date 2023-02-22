@@ -32,8 +32,8 @@ Beeper class >> beep [
 	also uses the pluggable SoundService
 	mechanism, so it will use the primitive beep only
 	if there is no other sound mechanism available."
-	
-	self default 
+
+	self default
 		ifNil: [self beepPrimitive]
 		ifNotNil: [: def | def play]
 ]
@@ -103,5 +103,5 @@ Beeper >> play [
 	The sound system will check if sounds are enabled."
 
 	self class environment at: #SoundService ifPresent: [ :soundService |
-		soundService default new beep ].
+		soundService default new beep ]
 ]

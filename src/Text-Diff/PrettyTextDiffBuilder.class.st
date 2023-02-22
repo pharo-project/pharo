@@ -18,18 +18,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-PrettyTextDiffBuilder class >> from: srcString to: dstString inClass: srcClass [ 
+PrettyTextDiffBuilder class >> from: srcString to: dstString inClass: srcClass [
 	^ (self new sourceClass: srcClass) from: srcString to: dstString
-		
 ]
 
 { #category : #initialize }
 PrettyTextDiffBuilder >> sourceClass: aClass [
-	sourceClass := aClass.
+	sourceClass := aClass
 ]
 
 { #category : #initialize }
-PrettyTextDiffBuilder >> split: aString [ 
+PrettyTextDiffBuilder >> split: aString [
 	| formatted trimmed |
 	trimmed := aString asString trimBoth.
 	trimmed isEmpty ifTrue: [ ^super split: '' ].

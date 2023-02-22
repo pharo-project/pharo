@@ -10,6 +10,6 @@ Class {
 { #category : #accessing }
 SimpleTestResourceCircular1 class >> resources [
 	"Circular prereq:  C wants C1 which wants C."
-	
+
 	^Array with: SimpleTestResourceCircular
 ]

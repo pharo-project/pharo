@@ -18,9 +18,9 @@ Class {
 
 { #category : #'field definition' }
 TFLongTestStruct class >> fieldsDesc [
-	
+
 	"self rebuildFieldAccessors"
-	
+
 	^ #(
 	Char100 a;
 	float b;

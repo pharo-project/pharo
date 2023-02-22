@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-ZdcReferenceSocketStreamTest class >> isAbstract [ 
+ZdcReferenceSocketStreamTest class >> isAbstract [
 	^ false
 ]
 
@@ -30,7 +30,7 @@ ZdcReferenceSocketStreamTest >> openConnectionToHostNamed: host port: port [
 
 { #category : #accessing }
 ZdcReferenceSocketStreamTest >> socketStreamClass [
-	^ SocketStream 
+	^ SocketStream
 ]
 
 { #category : #private }
@@ -38,5 +38,5 @@ ZdcReferenceSocketStreamTest >> socketStreamOn: socket [
 	| stream |
 	stream := super socketStreamOn: socket.
 	self setReferenceSocketStreamOptions: stream.
-	^ stream	
+	^ stream
 ]

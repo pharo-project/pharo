@@ -18,7 +18,7 @@ TaAliasMethod class >> alias:anArrayOfAssociations to: aTrait [
 		aliases: anArrayOfAssociations asDictionary;
 		inner: aTrait;
 		checkAssociations;
-		yourself.
+		yourself
 ]
 
 { #category : #'transforming selectors' }
@@ -39,24 +39,23 @@ TaAliasMethod >> aliases: anObject [
 ]
 
 { #category : #'transforming selectors' }
-TaAliasMethod >> changesSourceCode: aSelector [ 
-	
-	^ self hasAliasForNew: aSelector
+TaAliasMethod >> changesSourceCode: aSelector [
 
+	^ self hasAliasForNew: aSelector
 ]
 
 { #category : #validation }
 TaAliasMethod >> checkAssociations [
 	"I check the validity of the associations used for aliasing"
 	self aliases
-		associationsDo: [ :assoc | 
+		associationsDo: [ :assoc |
 			| old new |
 			new := assoc key.
 			old := assoc value.
 			new = old ifTrue: [ self error: 'The alias and the alieased are the same' ].
 			(self aliases includesKey: old) ifTrue: [ self error: 'An alias is refering other alias' ].
 			new numArgs = old numArgs ifFalse: [ self error: 'Number of parameters in aliases should be the same.' ].
-			"For now I am not checking that the aliased method exists, 
+			"For now I am not checking that the aliased method exists,
 			this is the same behavior than before.
 			(inner compiledMethodAt: old) ifNil: [ NotFound signalFor: old ]" ]
 ]
@@ -72,12 +71,11 @@ TaAliasMethod >> compiledMethodAt: aSelector [
 { #category : #copying }
 TaAliasMethod >> copyTraitExpression [
 	^ self class alias: aliases to: inner
-
 ]
 
 { #category : #copying }
 TaAliasMethod >> copyWithoutTrait: aTrait [
- 
+
 	^ self inner = aTrait ifTrue: [ TaEmptyComposition new ] ifFalse: [ self copy ]
 ]
 
@@ -129,8 +127,6 @@ TaAliasMethod >> oldSelectorFor: aSelector [
 TaAliasMethod >> originSelectorOf: aSelector [
 
 	^ aliases at: aSelector ifAbsent: [ aSelector ]
-	
-	
 ]
 
 { #category : #querying }
@@ -140,7 +136,7 @@ TaAliasMethod >> reverseAlias: aSelector [
 
 { #category : #accessing }
 TaAliasMethod >> selectors [
-	^ inner selectors , self existingAliasedSelectors. 
+	^ inner selectors , self existingAliasedSelectors.
 ]
 
 { #category : #accessing }
@@ -153,7 +149,7 @@ TaAliasMethod >> sourceCodeAt: aSelector [
 
 { #category : #printing }
 TaAliasMethod >> traitCompositionExpression [
-	
+
 	^ self inner traitCompositionExpressionWithParens , ' @ ' , aliases associations printString
 ]
 

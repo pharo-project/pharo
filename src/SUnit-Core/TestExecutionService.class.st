@@ -56,7 +56,7 @@ Class {
 TestExecutionService class >> defaultServiceClasses [
 
 	^Array streamContents: [ :s |
-		self allSubclassesDo: [ :each | 
+		self allSubclassesDo: [ :each |
 			each isAbstract not & each isEnabledByDefault ifTrue: [s nextPut: each ]]]
 ]
 
@@ -69,17 +69,17 @@ TestExecutionService class >> descriptionForSettingsBrowser [
 TestExecutionService class >> enabledServiceClasses [
 
 	^Array streamContents: [ :s |
-		self allSubclassesDo: [ :each | 
+		self allSubclassesDo: [ :each |
 			each isAbstract not & each isEnabled ifTrue: [s nextPut: each ]]]
 ]
 
 { #category : #accessing }
-TestExecutionService class >> isAbstract [ 
+TestExecutionService class >> isAbstract [
 	^self = TestExecutionService
 ]
 
 { #category : #accessing }
-TestExecutionService class >> isEnabled [ 
+TestExecutionService class >> isEnabled [
 	^isEnabled ifNil: [ isEnabled := self isEnabledByDefault ]
 ]
 
@@ -98,7 +98,7 @@ TestExecutionService class >> settingsOn: aBuilder [
 	"No need for pragma <systemsettings>:
 	TestExecutionEnvironment organizes settings for all services.
 	It calls this method for every default service class.
-	Subclasses should override it to provide specific configuration options"	
+	Subclasses should override it to provide specific configuration options"
 	(aBuilder setting: self name)
 		target: self;
 		parent: #sunit;
@@ -111,7 +111,7 @@ TestExecutionService class >> settingsOn: aBuilder [
 
 { #category : #controlling }
 TestExecutionService >> cleanUpAfterTest [
-	
+
 	isEnabled := self isEnabledByDefault
 ]
 
@@ -148,14 +148,14 @@ TestExecutionService >> handleNewProcess: aProcess [
 ]
 
 { #category : #initialization }
-TestExecutionService >> initialize [ 
+TestExecutionService >> initialize [
 	super initialize.
-	
+
 	isEnabled := self isEnabledByDefault
 ]
 
 { #category : #accessing }
-TestExecutionService >> isEnabled [ 
+TestExecutionService >> isEnabled [
 	^isEnabled
 ]
 

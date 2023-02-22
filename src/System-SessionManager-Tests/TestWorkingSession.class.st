@@ -46,5 +46,5 @@ TestWorkingSession >> initialize [
 { #category : #'startup - shutdown' }
 TestWorkingSession >> start: isImageStarting [
 	"do not modify vm parameters, external objects"
-	self runStartup: isImageStarting.
+	self runStartup: isImageStarting
 ]

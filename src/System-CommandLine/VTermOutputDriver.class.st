@@ -48,7 +48,7 @@ VTermOutputDriver class >> stdout [
 
 { #category : #writing }
 VTermOutputDriver >> << aStringOrCharacter [
-	aStringOrCharacter putOn: outStream.
+	aStringOrCharacter putOn: outStream
 ]
 
 { #category : #removing }
@@ -59,12 +59,12 @@ VTermOutputDriver >> backspace [
 
 { #category : #coloring }
 VTermOutputDriver >> black [
-	self color: 30.
+	self color: 30
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> black: aString [
-	self black; << aString; flush; clear.
+	self black; << aString; flush; clear
 ]
 
 { #category : #highlighting }
@@ -74,12 +74,12 @@ VTermOutputDriver >> blinking [
 
 { #category : #coloring }
 VTermOutputDriver >> blue [
-	self color: 34.
+	self color: 34
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> blue: aString [
-	self blue; << aString; flush; clear.
+	self blue; << aString; flush; clear
 ]
 
 { #category : #highlighting }
@@ -91,7 +91,7 @@ VTermOutputDriver >> bold [
 { #category : #accessing }
 VTermOutputDriver >> clear [
 	self reset.
-	self colorEscape.
+	self colorEscape
 ]
 
 { #category : #removing }
@@ -117,7 +117,7 @@ VTermOutputDriver >> closed [
 { #category : #coloring }
 VTermOutputDriver >> color: aColor [
 	currentColor := aColor.
-	self colorEscape.
+	self colorEscape
 ]
 
 { #category : #escaping }
@@ -127,7 +127,7 @@ VTermOutputDriver >> colorEscape [
 	outStream print: currentColor.
 	(currentBackground == 0) ifFalse: [
 		outStream nextPut: $;; print: currentBackground ].
-	outStream nextPut: $m.
+	outStream nextPut: $m
 ]
 
 { #category : #accessing }
@@ -163,12 +163,12 @@ VTermOutputDriver >> cursorNormal [
 
 { #category : #coloring }
 VTermOutputDriver >> cyan [
-	self color: 36.
+	self color: 36
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> cyan: aString [
-	self cyan; << aString; flush; clear.
+	self cyan; << aString; flush; clear
 ]
 
 { #category : #removing }
@@ -190,7 +190,7 @@ VTermOutputDriver >> down [
 VTermOutputDriver >> down: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self up ]]
-		ifFalse: [ distance timesRepeat: [ self down ]].
+		ifFalse: [ distance timesRepeat: [ self down ]]
 ]
 
 { #category : #mode }
@@ -203,11 +203,11 @@ VTermOutputDriver >> erase [
 	"outStream nextPutAll:
 		(termcap parm: '1' in:
 			(termcap getstr: 'ec'))"
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]
 
 { #category : #coloring }
-VTermOutputDriver >> errorColor [ 
+VTermOutputDriver >> errorColor [
 	self red
 ]
 
@@ -218,17 +218,17 @@ VTermOutputDriver >> escape [
 
 { #category : #writing }
 VTermOutputDriver >> flush [
-	outStream flush.
+	outStream flush
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> green [
-	self color: 32.
+	self color: 32
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> green: aString [
-	self green; << aString; flush; clear.
+	self green; << aString; flush; clear
 ]
 
 { #category : #navigating }
@@ -244,10 +244,10 @@ VTermOutputDriver >> home [
 ]
 
 { #category : #initialization }
-VTermOutputDriver >> initialize [ 
+VTermOutputDriver >> initialize [
 	super initialize.
 	termcap := Termcap new.
-	self reset.
+	self reset
 ]
 
 { #category : #inserting }
@@ -280,7 +280,7 @@ VTermOutputDriver >> left [
 VTermOutputDriver >> left: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self right ]]
-		ifFalse: [ distance timesRepeat: [ self left ]].
+		ifFalse: [ distance timesRepeat: [ self left ]]
 ]
 
 { #category : #writing }
@@ -290,7 +290,7 @@ VTermOutputDriver >> lf [
 
 { #category : #coloring }
 VTermOutputDriver >> light [
-	light := true.
+	light := true
 ]
 
 { #category : #accessing }
@@ -299,8 +299,8 @@ VTermOutputDriver >> lines [
 ]
 
 { #category : #printing }
-VTermOutputDriver >> nextPut: aCharacter [ 
-	outStream nextPut: aCharacter.
+VTermOutputDriver >> nextPut: aCharacter [
+	outStream nextPut: aCharacter
 ]
 
 { #category : #printing }
@@ -320,7 +320,7 @@ VTermOutputDriver >> outStream [
 
 { #category : #accessing }
 VTermOutputDriver >> outStream: stream [
-	outStream := stream.
+	outStream := stream
 ]
 
 { #category : #writing }
@@ -331,27 +331,27 @@ VTermOutputDriver >> overwrite: char [
 
 { #category : #coloring }
 VTermOutputDriver >> pink [
-	self color: 35.
+	self color: 35
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> pink: aString [
-	self pink; nextPutAll: aString; flush; clear.
+	self pink; nextPutAll: aString; flush; clear
 ]
 
 { #category : #printing }
-VTermOutputDriver >> print: anObject [ 
+VTermOutputDriver >> print: anObject [
 	outStream print: anObject
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> red [
-	self color: 31.
+	self color: 31
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> red: aString [
-	self red; << aString; flush; clear.
+	self red; << aString; flush; clear
 ]
 
 { #category : #initialization }
@@ -359,7 +359,7 @@ VTermOutputDriver >> reset [
 	currentColor := 0.
 	currentBackground := 0.
 	light := false.
-	blink := false.
+	blink := false
 ]
 
 { #category : #navigating }
@@ -381,7 +381,7 @@ VTermOutputDriver >> right [
 VTermOutputDriver >> right: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self left ]]
-		ifFalse: [ distance timesRepeat: [ self right ]].
+		ifFalse: [ distance timesRepeat: [ self right ]]
 ]
 
 { #category : #navigating }
@@ -416,7 +416,7 @@ VTermOutputDriver >> startOfLine [
 ]
 
 { #category : #printing }
-VTermOutputDriver >> store: anObject [ 
+VTermOutputDriver >> store: anObject [
 	outStream store: anObject
 ]
 
@@ -461,17 +461,17 @@ VTermOutputDriver >> up [
 VTermOutputDriver >> up: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self down ]]
-		ifFalse: [ distance timesRepeat: [ self up ]].
+		ifFalse: [ distance timesRepeat: [ self up ]]
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> white [
-	self color: 37.
+	self color: 37
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> white: aString [
-	self white; << aString; flush; clear.
+	self white; << aString; flush; clear
 ]
 
 { #category : #accessing }
@@ -481,10 +481,10 @@ VTermOutputDriver >> width [
 
 { #category : #coloring }
 VTermOutputDriver >> yellow [
-	self color: 33.
+	self color: 33
 ]
 
 { #category : #coloring }
 VTermOutputDriver >> yellow: aString [
-	self yellow; << aString; flush; clear.
+	self yellow; << aString; flush; clear
 ]
