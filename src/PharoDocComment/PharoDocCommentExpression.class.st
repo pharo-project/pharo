@@ -14,13 +14,12 @@ Class {
 
 { #category : #operation }
 PharoDocCommentExpression >> evaluate [
-
 	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
 
 	self isFaulty ifTrue: [ RuntimeSyntaxError signal ].
 
 	^ self methodClass compiler
-		  source: self source;
+		  source: (self source copyReplaceAll: '""' with: '"');
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );

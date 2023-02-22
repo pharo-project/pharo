@@ -61,12 +61,8 @@ CommentTestCase >> printString [
 { #category : #tests }
 CommentTestCase >> testIt [
 
-	| value result |
+	| value |
 	value := self evaluate.
 	self assert: value isAssociation.
-
-	"If the result is a string, we should remove the escaping of double quotes."
-	result := value value.
-	result isString ifTrue: [ result := result copyReplaceAll: '""' with: '"' ].
-	self assert: value key equals: result
+	self assert: value key equals: value value
 ]

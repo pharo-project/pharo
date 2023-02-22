@@ -101,7 +101,7 @@ PharoDocCommentTest >> testExpressionWithEscapes [
 	node := thisContext method ast pharoDocCommentNodes first.
 	self assert: node expression source equals: 'PharoDocCommentTest stringWithDoubleQuotes >>> ''This is ""exagerated"" at least'''.
 	self deny: node expression isFaulty.
-	self assert: node expression evaluate equals: 'This is "exagerated" at least' -> 'This is ""exagerated"" at least'.
+	self assert: node expression evaluate equals: 'This is "exagerated" at least' -> 'This is "exagerated" at least'.
 	(CommentTestCase for: node) testIt
 ]
 
