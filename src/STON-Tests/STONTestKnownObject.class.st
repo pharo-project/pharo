@@ -68,7 +68,7 @@ STONTestKnownObject >> description [
 	^ description
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 STONTestKnownObject >> description: string [
 	description := string
 ]
@@ -83,7 +83,7 @@ STONTestKnownObject >> id [
 	^ id
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 STONTestKnownObject >> id: uuid [
 	id := uuid.
 	self description: 'I am a complex object known under the ID ', id asString, ' - I was created @ ', DateAndTime now asString

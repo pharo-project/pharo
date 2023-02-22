@@ -85,7 +85,7 @@ STONWriterTest >> testColor [
 		equals: 'Color{#red:1.0,#green:0.0,#blue:0.0,#alpha:0.4}'.
 	self
 		assert: (self serialize: Color red lighter lighter)
-		equals: 'Color{#red:1.0,#green:0.061,#blue:0.061,#alpha:1.0}'
+		equals: 'Color{#red:1.0,#green:0.06060606060606061,#blue:0.06060606060606061,#alpha:1.0}'
 ]
 
 { #category : #tests }
@@ -181,7 +181,10 @@ STONWriterTest >> testFloat [
 	self assert: ((self serialize: (1 / 3) asFloat) beginsWith: '0.333').
 	self assert: (self serialize: (10 raisedTo: 100) asFloat) equals: '1.0e100'.
 	self assert: (self serialize: (10 raisedTo: -50) asFloat) equals: '1.0e-50'.
-	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'
+	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'.
+	self assert: (self serialize: Float nan) equals: 'Float[#nan]'.
+	self assert: (self serialize: Float infinity) equals: 'Float[#infinity]'.
+	self assert: (self serialize: Float negativeInfinity) equals: 'Float[#negativeInfinity]'
 ]
 
 { #category : #tests }

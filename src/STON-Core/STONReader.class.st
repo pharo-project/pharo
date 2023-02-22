@@ -37,12 +37,12 @@ STONReader class >> on: readStream [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> acceptUnknownClasses: boolean [
 	acceptUnknownClasses := boolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> allowComplexMapKeys: boolean [
 	"This is a no-op, this used to be an option, but it is now always enabled"
 ]
@@ -52,7 +52,7 @@ STONReader >> atEnd [
 	^ readStream atEnd
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> close [
 	readStream ifNotNil: [
 		readStream close.
@@ -67,7 +67,7 @@ STONReader >> consumeWhitespace [
 		whileTrue: [ readStream next ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> convertNewLines: boolean [
 	"When true, any newline CR, LF or CRLF read unescaped inside strings or symbols
 	will be converted to the newline convention chosen, see #newLine:
@@ -157,7 +157,7 @@ STONReader >> matchChar: character [
 		ifFalse: [ false ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> newLine: string [
 	"Set the newline convention to be used when converting newlines, see #convertNewLines"
 
@@ -185,12 +185,12 @@ STONReader >> next [
 	^ object
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> on: aReadStream [
 	readStream := aReadStream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> optimizeForLargeStructures [
 	self class environment
 		at: #FLLargeIdentityDictionary
@@ -407,11 +407,14 @@ STONReader >> parseNumber [
 			number := Fraction numerator: number denominator: self parseNumberInteger.
 			(readStream peekFor: $s)
 				ifTrue: [ number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger ] ]
-		ifFalse: [
+		ifFalse: [ | isFloat |
+			isFloat := false.
 			(readStream peekFor: $.)
-				ifTrue: [ number := number + self parseNumberFraction ].
+				ifTrue: [ number := number + self parseNumberFraction. isFloat := true ].
 			((readStream peekFor: $e) or: [ readStream peekFor: $E ])
-				ifTrue: [ number := number * self parseNumberExponent ] ].
+				ifTrue: [ number := number * self parseNumberExponent ].
+			isFloat
+				ifTrue: [ number := number asFloat ] ].
 	negated
 		ifTrue: [ number := number negated ].
 	self consumeWhitespace.
@@ -435,10 +438,10 @@ STONReader >> parseNumberExponent [
 STONReader >> parseNumberFraction [
 	| number power |
 	number := 0.
-	power := 1.0.
+	power := 1.
 	[ readStream atEnd not and: [ readStream peek isDigit ] ] whileTrue: [
 		number := 10 * number + readStream next digitValue.
-		power := power * 10.0 ].
+		power := power * 10 ].
 	^ number / power
 ]
 
@@ -576,7 +579,7 @@ STONReader >> processSubObjectsOf: object [
 	^ object
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> reset [
 	unresolvedReferences := 0.
 	objects removeAll

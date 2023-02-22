@@ -50,6 +50,21 @@ STONTest class >> write: object toFileNamed: path [
 ]
 
 { #category : #tests }
+STONTest >> testAssociationClass [
+	self assert: (STON fromString: '#foo : 100') class equals: STON associationClass
+]
+
+{ #category : #tests }
+STONTest >> testClassNameKey [
+	self
+		assert: ((STON reader
+							acceptUnknownClasses: true;
+							on: 'FooBarBaz { #foo : 100 }' readStream;
+							next) at: STON classNameKey)
+		equals: #FooBarBaz
+]
+
+{ #category : #tests }
 STONTest >> testFromString [
 	| object |
 	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
@@ -63,6 +78,16 @@ STONTest >> testFromStringWithComments [
 	self
 		assert: (STON fromStringWithComments: '// comment\[1, /* comment */ 0, -1, true, false, nil] // comment' withCRs)
 		equals: object
+]
+
+{ #category : #tests }
+STONTest >> testListClass [
+	self assert: (STON fromString: '[1 , 2 , 3]') class equals: STON listClass
+]
+
+{ #category : #tests }
+STONTest >> testMapClass [
+	self assert: (STON fromString: '{ #foo : 1 , #bar : 2 }') class equals: STON mapClass
 ]
 
 { #category : #tests }

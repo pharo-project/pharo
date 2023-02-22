@@ -245,12 +245,12 @@ STONWriter >> indentedDo: block [
 	level := level - 1
 ]
 
-{ #category : #initialization }
+{ #category : #'initialize-release' }
 STONWriter >> initialize [
 	super initialize.
 	stonCharacters := STONCharacters.
 	prettyPrint := false.
-	newLine := String cr.
+	newLine := OSPlatform current lineEnding.
 	level := 0.
 	referencePolicy := #normal.
 	jsonMode := keepNewLines := asciiOnly := false.
@@ -402,7 +402,16 @@ STONWriter >> writeBoolean: boolean [
 
 { #category : #writing }
 STONWriter >> writeFloat: float [
-	writeStream print: float
+	float isFinite
+		ifTrue: [ writeStream print: float ]
+		ifFalse: [ | argument |
+			argument := float isNaN
+				ifTrue: [ #nan ]
+				ifFalse: [
+					float negative
+						ifTrue: [ #negativeInfinity ]
+						ifFalse: [ #infinity ] ].
+			self writeObject: float named: #Float listSingleton: argument ]
 ]
 
 { #category : #writing }
