@@ -5,6 +5,35 @@ Class {
 }
 
 { #category : #tests }
+RBErrorNodeParserTest >> testFaultyAssigment [
+
+	| node |
+	node := self parserClass parseFaultyExpression: ':=1'.
+
+	self assert: node isFaulty.
+	self assert: node isParseError.
+	self   deny: node content first isFaulty.
+	self assert: node content first value equals: 1.
+	self assert: node sourceInterval equals: (1 to: 3).
+	self assert: node errorMessage equals: 'identifier expected in assigment'.
+	self assert: node formattedCode equals: ':= 1'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyAssigment2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: 'a:='.
+
+	self assert: node isFaulty.
+	self assert: node value isParseError.
+	self assert: node value sourceInterval equals: (4 to: 3).
+	self assert: node value errorMessage equals: 'Variable or expression expected'.
+	self assert: node value formattedCode equals: ''.
+	self assert: node formattedCode equals: 'a := '
+]
+
+{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
 
 	| node |
