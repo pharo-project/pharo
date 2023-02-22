@@ -904,6 +904,10 @@ RBParser >> parsePrimitiveObject [
 			[currentToken value = $[ ifTrue: [^self saveCommentsDuring:[self parseBlock]].
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
+
+	": is only acceptable at the begin of a block. So just consume them as bad expression"
+	(currentToken isSpecial: $:) ifTrue: [ ^self parseVariableNode ].
+
 	errorNode := self parserError: 'Variable or expression expected'.
 	^errorNode
 ]
