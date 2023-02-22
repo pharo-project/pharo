@@ -424,7 +424,7 @@ RBParser >> parseBlock [
 
 { #category : #'private - parsing' }
 RBParser >> parseBlockArgsInto: node [
-	| verticalBar args colons |
+	| verticalBar args arg colons |
 	args := OrderedCollection new: 2.
 	colons := OrderedCollection new: 2.
 	verticalBar := false.
@@ -432,7 +432,9 @@ RBParser >> parseBlockArgsInto: node [
 			[colons add: currentToken start.
 			self step.	":"
 			verticalBar := true.
-			args add: self parseVariableNode].
+			args add: (arg := self parseVariableNode).
+			"In case of error, preserve the lone : to ditinguish from error witout even a :"
+			arg isParseError ifTrue: [ arg value: ':' ]].
 	verticalBar
 		ifTrue:
 			[currentToken isBinary
