@@ -83,12 +83,7 @@ ZnEncodedStream >> position [
 
 { #category : #accessing }
 ZnEncodedStream >> position: aPosition [
-	"Set the byte position in the underlying/wrapped binary stream to aPosition.
-	This is not a character based position! Positions are zero based.
-	I will move further backward if aPosition is not at the beginning of a code point."
-
-	stream position: aPosition.
-	self encoder ensureAtBeginOfCodePointOnStream: stream
+	stream position: aPosition
 ]
 
 { #category : #accessing }
