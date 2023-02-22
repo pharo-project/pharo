@@ -245,7 +245,7 @@ STONWriter >> indentedDo: block [
 	level := level - 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONWriter >> initialize [
 	super initialize.
 	stonCharacters := STONCharacters.
