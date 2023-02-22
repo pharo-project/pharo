@@ -22,6 +22,12 @@ AthensPathBuilder class >> initialize [
 	ZeroPoint := 0@0
 ]
 
+{ #category : #testing }
+AthensPathBuilder class >> isAbstract [
+
+	^ self == AthensPathBuilder
+]
+
 { #category : #'path commands' }
 AthensPathBuilder >> absolute [
 	"Next commands will use absolute coordinates for all segment points"
