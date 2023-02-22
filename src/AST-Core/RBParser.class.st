@@ -412,7 +412,11 @@ RBParser >> parseBlock [
 		untilAnyCloserOf: ']'.
 
 	(currentToken isSpecial: $])
-		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected'].
+		ifFalse: [
+			^ (self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected')
+				arguments: node arguments;
+				yourself
+		].
 	node right: currentToken start.
 	self step.
 	^node
