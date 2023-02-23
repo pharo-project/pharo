@@ -65,10 +65,13 @@ OupsDebuggerSelector >> nextDebugger [
 
 { #category : #debuggers }
 OupsDebuggerSelector >> nextDebuggerForSession: aDebugSession [
+
 	| debugger |
 	debugger := self nextDebugger.
-	[ (debugger handlesDebugSession: aDebugSession) ]
-		whileFalse: [ debugger := self nextDebugger ].
+	[
+	(debugger handlesDebugSession: aDebugSession) and: [
+		aDebugSession exception isHandleableBy: debugger ] ] whileFalse: [
+		debugger := self nextDebugger ].
 	^ debugger
 ]
 

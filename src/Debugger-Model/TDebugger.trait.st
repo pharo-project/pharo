@@ -53,7 +53,7 @@ TDebugger classSide >> defaultDebuggerRank [
 { #category : #debugging }
 TDebugger classSide >> handlesDebugSession: aDebugSession [
 
-	^ aDebugSession exception isHandleableBy: self
+	^ true
 ]
 
 { #category : #accessing }
