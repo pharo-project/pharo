@@ -13,7 +13,7 @@ Class {
 
 { #category : #printing }
 ExampleSlotWithFluidAPI >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;

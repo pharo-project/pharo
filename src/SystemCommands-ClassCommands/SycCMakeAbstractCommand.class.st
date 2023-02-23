@@ -20,7 +20,7 @@ SycCMakeAbstractCommand >> icon [
 ]
 
 { #category : #accessing }
-SycCMakeAbstractCommand >> isApplicable [ 
+SycCMakeAbstractCommand >> isApplicable [
 
 	^ context lastSelectedClass isAbstract not
 ]
@@ -38,5 +38,5 @@ SycCMakeAbstractCommand >> order [
 { #category : #'factory method' }
 SycCMakeAbstractCommand >> refactoringClass [
 
-	^ RBMakeClassAbstractTransformation 
+	^ RBMakeClassAbstractTransformation
 ]

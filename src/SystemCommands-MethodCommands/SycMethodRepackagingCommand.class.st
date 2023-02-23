@@ -26,7 +26,7 @@ SycMethodRepackagingCommand >> moveMethod: aMethod toPackage: aPackage [
 	wasExtension := aMethod isExtension.
 	willBeExtension := aPackage ~~ aMethod origin package.
 	aPackage addMethod: aMethod.
-	willBeExtension ifTrue: [ 
+	willBeExtension ifTrue: [
 		aMethod tagWith: ('*' , aPackage name) asSymbol ].
 	wasExtension ifFalse: [ ^ self ].
 	aMethod untagFrom: ('*' , existingPackage name) asSymbol.

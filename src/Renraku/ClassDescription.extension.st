@@ -9,7 +9,7 @@ ClassDescription >> ban: aCritique [
 		bannedOn: self.
 
 	(TheManifestBuilder of: self)
-		banRule: aCritique rule for: self.
+		banRule: aCritique rule for: self
 ]
 
 { #category : #'*Renraku' }
@@ -38,6 +38,6 @@ ClassDescription >> reBanName [
 ]
 
 { #category : #'*Renraku' }
-ClassDescription >> suitableRulesFrom: aReRuleManager [ 
+ClassDescription >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager classRules
 ]

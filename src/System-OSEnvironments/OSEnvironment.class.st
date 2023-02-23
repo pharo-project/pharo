@@ -92,7 +92,7 @@ OSEnvironment >> asDictionary [
 { #category : #accessing }
 OSEnvironment >> associations [
 	"Answer a Collection containing the receiver's associations."
-	
+
 	^Array streamContents: [ :stream |
 		self associationsDo: [ :each | stream nextPut: each ]]
 ]
@@ -108,7 +108,7 @@ OSEnvironment >> at: aKey [
 	"Gets the value of an environment variable called `aKey`.
 	Throws a KeyNotFound exception if not found.
 	It is the system responsibility to manage the encodings of the argument and return values.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
@@ -120,19 +120,19 @@ OSEnvironment >> at: aKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
 	It is the system responsibility to manage the encodings of the argument and return values.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSEnvironment >> at: aKey ifAbsentPut: aBlock [ 
+OSEnvironment >> at: aKey ifAbsentPut: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	If absent, insert the value given by aBlock.
 	It is the system responsibility to manage the encodings of the argument and return values.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
@@ -144,7 +144,7 @@ OSEnvironment >> at: aKey ifPresent: aBlock [
 	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
 	Return nil if absent.
 	It is the system responsibility to manage the encodings of the argument and return values.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
@@ -157,10 +157,10 @@ OSEnvironment >> at: aKey ifPresent: presentBlock ifAbsent: absentBlock [
 	Call presentBlock with it if present.
 	Execute absentBlock if absent.
 	It is the system responsibility to manage the encodings of the argument and return values.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
-	
+
 	self at: aKey ifPresent: [ :v | ^ presentBlock cull: v ].
 	^absentBlock value
 ]
@@ -169,7 +169,7 @@ OSEnvironment >> at: aKey ifPresent: presentBlock ifAbsent: absentBlock [
 OSEnvironment >> at: aKey put: aValue [
 	"Sets the value of an environment variable called `aKey` to `aValue`.
 	It is the system responsibility to manage the encodings of both arguments.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
@@ -191,7 +191,7 @@ OSEnvironment >> includes: anObject [
 
 { #category : #testing }
 OSEnvironment >> includesKey: aKey [
-	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ].
+	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ]
 ]
 
 { #category : #initialization }
@@ -203,7 +203,7 @@ OSEnvironment >> initializeWith: anOSPlatform [
 { #category : #accessing }
 OSEnvironment >> keys [
 	"Answer an Array containing the receiver's keys."
-	
+
 	^Array streamContents: [ :s | self keysDo: [ :key | s nextPut: key]]
 ]
 
@@ -216,9 +216,9 @@ OSEnvironment >> keysAndValuesDo: aBlock [
 OSEnvironment >> keysAndValuesDo: aBlock withAssociationString: associationString [
 	| equalsIndex |
 	equalsIndex := associationString indexOf: $=.
-	aBlock 
-		value: (associationString first: equalsIndex-1) 
-		value: (associationString allButFirst: equalsIndex).
+	aBlock
+		value: (associationString first: equalsIndex-1)
+		value: (associationString allButFirst: equalsIndex)
 ]
 
 { #category : #enumeration }
@@ -236,7 +236,7 @@ OSEnvironment >> platform [
 OSEnvironment >> removeKey: aKey [
 	"Removes the entry `aKey` from the environment variables.
 	It is the system responsibility to manage the encoding of the argument.
-	
+
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 

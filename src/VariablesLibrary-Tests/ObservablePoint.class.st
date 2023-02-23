@@ -18,7 +18,7 @@ Class {
 { #category : #initialization }
 ObservablePoint >> initialize [
 	super initialize.
-	self class initializeSlots: self.
+	self class initializeSlots: self
 ]
 
 { #category : #accessing }
@@ -27,12 +27,12 @@ ObservablePoint >> x [
 ]
 
 { #category : #accessing }
-ObservablePoint >> x: anInteger [ 
+ObservablePoint >> x: anInteger [
 	x := anInteger
 ]
 
 { #category : #accessing }
-ObservablePoint >> xReturn: anInteger [ 
+ObservablePoint >> xReturn: anInteger [
 	^x := anInteger
 ]
 
@@ -42,6 +42,6 @@ ObservablePoint >> y [
 ]
 
 { #category : #accessing }
-ObservablePoint >> y: anInteger [ 
+ObservablePoint >> y: anInteger [
 	y := anInteger
 ]

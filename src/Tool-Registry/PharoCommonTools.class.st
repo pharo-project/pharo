@@ -14,16 +14,16 @@ Class {
 { #category : #settings }
 PharoCommonTools class >> browsingSettingsOn: aBuilder [
 	<systemsettings>
-	
+
 	"create empty #codeBrowsing and #qualityAssistant settings groups so the tools can use it"
-	
+
 	(aBuilder group: #codeBrowsing)
 		label: 'Code Browsing';
 		description: 'All settings concerned with code browsing look''n feel'.
-	
+
 	(aBuilder group: #qualityAssistant)
 		label: 'QualityAssistant';
-		parent: #codeBrowsing.
+		parent: #codeBrowsing
 ]
 
 { #category : #'class initialization' }
@@ -35,14 +35,14 @@ PharoCommonTools class >> initialize [
 { #category : #settings }
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
-	
+
 	Smalltalk tools class == self
 		ifFalse: [ ^ self ].
 	(aBuilder group: #pharoTools)
 		parent: #pharoSystem;
 		label: 'Recent Tools';
 		description: 'Recently registered Tools';
-		with: [ 
+		with: [
 					(aBuilder pickOne: #browserTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -51,7 +51,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						label: 'System browser';
 						default: (self environment at: #ClyFullBrowserMorph);
 						domainValues: Smalltalk tools recentBrowserTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #inspectorTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -60,7 +60,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						default: (self environment at: #StInspector);
 						label: 'Inspector';
 						domainValues: Smalltalk tools recentInspectorTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #workspaceTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -69,20 +69,20 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						label: 'Workspace';
 						default: (self environment at: #StPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #versionBrowserTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Versionbrowser';
 						domainValues: Smalltalk tools recentVersionBrowserTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #fileListTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Filelist';
 						default: (self environment at: #FileList);
 						domainValues: Smalltalk tools recentFileListTools];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #changeSorterTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -191,8 +191,7 @@ PharoCommonTools >> finder [
 { #category : #initialization }
 PharoCommonTools >> initialize [
 	recentTools := Dictionary new.
-	super initialize.
-	
+	super initialize
 ]
 
 { #category : #'registry access' }

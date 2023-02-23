@@ -11,17 +11,17 @@ Class {
 TKTTestCase >> assertWithGarbageCollect: aBlock [
 
 	| waitingPeriod timesToRun |
-	
+
 	waitingPeriod := 100 milliSeconds.
 	timesToRun := self defaultTimeLimit / waitingPeriod.
 
-	timesToRun timesRepeat: [ 
+	timesToRun timesRepeat: [
 		aBlock value ifTrue: [ ^ self ].
 
 		Smalltalk garbageCollect.
 		waitingPeriod wait	].
 
-	self fail: 'Timeout waiting for ' , aBlock printString	
+	self fail: 'Timeout waiting for ' , aBlock printString
 ]
 
 { #category : #running }
@@ -34,14 +34,14 @@ TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
 		resetSoleInstance;
-		profileNamed: #test.
+		profileNamed: #test
 ]
 
 { #category : #running }
 TKTTestCase >> tearDown [
 
 	TKTConfiguration resetSoleInstance.
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #running }

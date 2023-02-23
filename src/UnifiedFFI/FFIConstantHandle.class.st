@@ -28,7 +28,7 @@ FFIConstantHandle class >> asExternalTypeOn: generator [
 { #category : #'instance creation' }
 FFIConstantHandle class >> fromInteger: anIntegerValue [
 	anIntegerValue ifNil: [ self error: 'Invalid value for ' , self name , ' contant handle' ].
-	^ self new 
+	^ self new
 		setHandle: anIntegerValue;
 		yourself
 ]

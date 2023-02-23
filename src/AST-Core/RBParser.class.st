@@ -322,8 +322,19 @@ RBParser >> parseAssignment [
 	make it possible to assign the literals true, false and nil."
 
 	| node position |
+	currentToken isAssignment ifTrue: [
+		self parserError: 'identifier expected in assigment'.
+		position := currentToken start.
+		self step. "Consume the :="
+		node := self parseAssignment. "parse the right side".
+		node := RBAssignmentErrorNode content: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
+		node value: ':='.
+		^ node
+	].
+
 	(currentToken isIdentifier and: [self nextToken isAssignment])
 		ifFalse: [^self parseCascadeMessage].
+
 	node := self parseVariableNode.
 	position := currentToken start.
 	self step.
@@ -476,17 +487,17 @@ RBParser >> parseCascadeMessage [
 	"
 	(node isMessage not or: [ node hasParentheses ]) ifTrue: [
 		"Cut parsing with an error.
-		If in faulty mode, continue the execution and generate a faulty cascade node."
+		If in faulty mode, continue the execution and generate a faulty cascade node.
+		Note that this bad cascade node will be added to the list of messages."
 		self parserError: 'cascaded message not allowed'.
-		receiver := node := RBInvalidCascadeErrorNode
+		node := RBInvalidCascadeErrorNode
 			content: { node }
 			start: node start
 			stop: currentToken stop
-			errorMessage: 'End of statement expected'.
-	] ifFalse: [
-		receiver := node receiver.
-	 	messages add: node.
+			errorMessage: 'Message expected'.
 	].
+	receiver := node receiver.
+ 	messages add: node.
 
 	"Extract the messages following the cascade marker $;"
 	[currentToken isSpecial and: [currentToken value = $;]] whileTrue: [
@@ -497,6 +508,8 @@ RBParser >> parseCascadeMessage [
 		self saveCommentsDuring: [
 			newMessage := self parseCascadeMessageWithReceiver: receiver ].
 		self addCommentsTo: newMessage.
+		"Note that newMessage can be a message node or a error node.
+		In all cases, it will be added to the list of messages."
 		messages add: newMessage ].
 
 	^self cascadeNodeClass messages: messages semicolons: semicolons
@@ -520,13 +533,10 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 
 	"At this point we know this is an invalid cascade.
 	Many things can happen next: it could be a closer parenthesis or bracket, the end of the stream, a non-identifier or an empty cascade.
-	For now, if it is a closer return an empty error node.
-	If it is not a closer, consume it"
+
+	For now, do not touch the unexpected token and let it be propagated to the caller.
+	Maybe someing up the callchain will gladly use it or know how to recover (eg unfinished statement)"
 	errorNode := self parserError: 'Cascade message expected'.
-	(currentToken value ~= $.
-		and: [ ('])};' includes: currentToken value) not
-			and: [ currentToken isEOF not ] ] )
-				ifTrue: [ self step ].
 	^ errorNode
 ]
 
@@ -554,12 +564,16 @@ RBParser >> parseErrorNode: aMessageString [
 	| errorPosition|
 	currentToken isError
 		ifTrue: [ | errorNode|
+					 "The current token is an error, consume it and use its content for the error node."
 				    errorNode := RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: currentToken start.
+					 errorNode stop: currentToken location.
 					 self step.
 					 ^errorNode].
+	"The current token is not an error but is unexpected. Maybe something is missing?
+	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
 	errorPosition := self errorPosition.
 	(errorPosition = 0) ifTrue: [ errorPosition := self errorPosition].
-	^ RBParseErrorNode errorMessage: aMessageString value: currentToken value asString at: errorPosition
+	^ RBParseErrorNode errorMessage: aMessageString value: '' asString at: errorPosition
 ]
 
 { #category : #parsing }
@@ -1003,7 +1017,11 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		ifFalse: [ node := self parseAssignment ].
 
 	"If the parsing failed because it did not match anything, consume the current token and continue parsing."
-	startOfStatementToken = currentToken ifTrue: [ self step ].
+	startOfStatementToken = currentToken ifTrue: [
+		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
+		"Solution to recover. Consume the token to create the statement."
+		node := RBParseErrorNode errorMessage: 'unexpected token' value: currentToken value asString at: currentToken start.
+		self step ].
 
 	"At this point we have parsed a full statement."
 	"If the statement is followed by closers that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
@@ -1016,6 +1034,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 					start: node start
 					stop: currentToken stop
 					errorMessage: 'Missing opener for closer: ', currentToken value asString.
+				node valueAfter: currentToken value asString.
 				self step ].
 
 	"Next we should have the end of the statement

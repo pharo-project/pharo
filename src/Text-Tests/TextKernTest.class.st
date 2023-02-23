@@ -11,5 +11,5 @@ Class {
 TextKernTest >> setUp [
 	super setUp.
 	prototypes
-		add: (TextKern kern: 1) 
+		add: (TextKern kern: 1)
 ]

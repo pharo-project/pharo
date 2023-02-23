@@ -25,14 +25,14 @@ Class {
 }
 
 { #category : #testing }
-ReNodeRewriteRule class >> isAbstract [ 
+ReNodeRewriteRule class >> isAbstract [
 
 	^self == ReNodeRewriteRule
 ]
 
 { #category : #testing }
 ReNodeRewriteRule class >> isVisible [
-	
+
 	^ self name ~=  #ReNodeRewriteRule
 ]
 
@@ -107,7 +107,7 @@ ReNodeRewriteRule >> critiqueFor: aNode by: rewriter withMappings: map [
 { #category : #initialization }
 ReNodeRewriteRule >> initialize [
 	super initialize.
-	matches := Dictionary new.
+	matches := Dictionary new
 ]
 
 { #category : #testing }

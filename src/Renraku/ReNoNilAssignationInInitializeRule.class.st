@@ -18,8 +18,8 @@ ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBloc
 	(aMethod selector = #initialize and: [ aMethod methodClass isInstanceSide ]) ifFalse: [ ^ self ].
 
 	problemAssigments := aMethod ast assignmentNodes select: [ :assignment | assignment value value isNil ].
-	
-	problemAssigments do: [ :assignment | 
+
+	problemAssigments do: [ :assignment |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: 'nil').
 		 ]
 ]

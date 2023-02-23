@@ -40,13 +40,13 @@ Class {
 ZnMessageBenchmark class >> bench: messages [
 	| results |
 	results := Dictionary new.
-	messages 
+	messages
 		do: [ :each | | bench report |
 			bench := self new.
 			bench perform: each.
 			bench writeRepresentation.
 			report := 'Writing {1} - Reading {2}' format: { bench benchWrite. bench benchRead }.
-			results at: each put: report ] 
+			results at: each put: report ]
 		displayingProgress: 'Benchmarking...'.
 	^ results
 ]
@@ -68,8 +68,8 @@ ZnMessageBenchmark class >> requests [
 
 { #category : #accessing }
 ZnMessageBenchmark class >> responses [
-	^ #( 
-		simpleResponse 
+	^ #(
+		simpleResponse
 		textResponse8k textResponse64k textResponse256k
 		textResponseWide8k textResponseWide64k textResponseWide256k
 		asciiResponse8k asciiResponse64k asciiResponse256k
@@ -78,25 +78,25 @@ ZnMessageBenchmark class >> responses [
 
 { #category : #'initialize-release' }
 ZnMessageBenchmark >> asciiResponse256k [
-	message := ZnResponse ok: 
-		(ZnEntity 
-			with: (self randomAsciiString: 256 * 1024) 
+	message := ZnResponse ok:
+		(ZnEntity
+			with: (self randomAsciiString: 256 * 1024)
 			type: 'text/plain;charset=ascii')
 ]
 
 { #category : #'initialize-release' }
 ZnMessageBenchmark >> asciiResponse64k [
-	message := ZnResponse ok: 
-		(ZnEntity 
-			with: (self randomAsciiString: 64 * 1024) 
+	message := ZnResponse ok:
+		(ZnEntity
+			with: (self randomAsciiString: 64 * 1024)
 			type: 'text/plain;charset=ascii')
 ]
 
 { #category : #'initialize-release' }
 ZnMessageBenchmark >> asciiResponse8k [
-	message := ZnResponse ok: 
-		(ZnEntity 
-			with: (self randomAsciiString: 8 * 1024) 
+	message := ZnResponse ok:
+		(ZnEntity
+			with: (self randomAsciiString: 8 * 1024)
 			type: 'text/plain;charset=ascii')
 ]
 
@@ -148,7 +148,7 @@ ZnMessageBenchmark >> postRequest [
 ZnMessageBenchmark >> randomAsciiString: count [
 	^ String
 		new: count
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			count timesRepeat: [ stream nextPut: '0123456789ABCDEF' atRandom ] ]
 ]
 
@@ -156,7 +156,7 @@ ZnMessageBenchmark >> randomAsciiString: count [
 ZnMessageBenchmark >> randomBytes: count [
 	| bytes |
 	bytes := ByteArray new: count.
-	1 to: count do: [ :each | 
+	1 to: count do: [ :each |
 		bytes at: each put: (#(65 66 67 68) at: each \\ 4 + 1) ].
 	^ bytes
 ]
@@ -165,7 +165,7 @@ ZnMessageBenchmark >> randomBytes: count [
 ZnMessageBenchmark >> randomUnicodeString: count [
 	^ String
 		new: count
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			"This is about 6% non-ASCII characters, still a ByteString"
 			count timesRepeat: [ stream nextPut: '0123456789ABCDEF-élève en Français-0123456789ABCDEF' atRandom ] ]
 ]
@@ -174,11 +174,11 @@ ZnMessageBenchmark >> randomUnicodeString: count [
 ZnMessageBenchmark >> randomUnicodeWideString: count [
 	| alphabet |
 	"This is about 6% non-ASCII characters, 6% non-octet characters, always a WideString"
-	alphabet := '0123456789ABCDEF-élève en Français-0123456789ABCDEF', 
+	alphabet := '0123456789ABCDEF-élève en Français-0123456789ABCDEF',
 		(WideString withAll: (#(300 400 500) collect: [ :each | each asCharacter ])).
 	^ WideString
 		new: count
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			count timesRepeat: [ stream nextPut: alphabet atRandom ] ]
 ]
 
@@ -263,7 +263,7 @@ ZnMessageBenchmark >> write: count [
 { #category : #'initialize-release' }
 ZnMessageBenchmark >> writeRepresentation [
 	representation := self write contents.
-	self sizeBuffer: representation size + 1024 
+	self sizeBuffer: representation size + 1024
 ]
 
 { #category : #'initialize-release' }
@@ -272,5 +272,5 @@ ZnMessageBenchmark >> writeUsingGzipEncodingAndChunkingRepresentation [
 		setContentEncodingGzip;
 		setTransferEncodingChunked.
 	representation := self write contents.
-	self sizeBuffer: representation size + 1024 
+	self sizeBuffer: representation size + 1024
 ]

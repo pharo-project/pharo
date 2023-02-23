@@ -64,7 +64,7 @@ FFICharacterType >> emitReturn: aBuilder resultTempVar: resultVar context: aCont
 ]
 
 { #category : #callbacks }
-FFICharacterType >> extractFromCallbackOn: aCallbackArgumentReader [ 
+FFICharacterType >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractCharacterType
 ]

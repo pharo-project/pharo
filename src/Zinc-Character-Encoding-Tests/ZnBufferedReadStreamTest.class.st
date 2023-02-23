@@ -16,7 +16,7 @@ ZnBufferedReadStreamTest >> testBuffering [
 	self assert: (stream next: 10) equals: '0123456789'.
 	self deny: stream atEnd.
 	self assert: (stream next: 10) equals: '0123456789'.
-	self assert: stream atEnd	
+	self assert: stream atEnd
 ]
 
 { #category : #testing }
@@ -46,7 +46,7 @@ ZnBufferedReadStreamTest >> testReadInto [
 	self assert: buffer equals: '456123'.
 	count := stream readInto: buffer startingAt: 1 count: 100.
 	self assert: count equals: 3.
-	self assert: buffer equals: '789123'	 
+	self assert: buffer equals: '789123'
 ]
 
 { #category : #testing }
@@ -57,7 +57,7 @@ ZnBufferedReadStreamTest >> testReadIntoLarger [
 	buffer := String new: 10.
 	count := stream readInto: buffer startingAt: 1 count: 10.
 	self assert: count equals: 10.
-	self assert: buffer equals: '0123456789'	 
+	self assert: buffer equals: '0123456789'
 ]
 
 { #category : #testing }
@@ -80,7 +80,7 @@ ZnBufferedReadStreamTest >> testReadUpToEnd [
 	self assert: stream atEnd.
 	stream := ZnBufferedReadStream on: #[] readStream.
 	self assert: stream upToEnd equals: #[].
-	self assert: stream atEnd.
+	self assert: stream atEnd
 ]
 
 { #category : #tests }
@@ -89,7 +89,7 @@ ZnBufferedReadStreamTest >> testSetToEnd [
 	source := '0123456789'.
 	stream := ZnBufferedReadStream on: source readStream.
 	stream sizeBuffer: source size.
-	
+
 	"Call setToEnd on new stream"
 	self assert: stream position equals: 0.
 	stream setToEnd.
@@ -99,5 +99,5 @@ ZnBufferedReadStreamTest >> testSetToEnd [
 	stream position: 2.
 	self assert: (stream next: 4) equals: '2345'.
 	stream setToEnd.
-	self assert: stream position equals: source size.
+	self assert: stream position equals: source size
 ]

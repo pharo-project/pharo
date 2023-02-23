@@ -9,11 +9,11 @@ Class {
 
 { #category : #testing }
 DADependencyItemDiff >> hasChanged [
-	^ self 
+	^ self
 ]
 
 { #category : #printing }
 DADependencyItemDiff >> printOn: aStream [
-	
-	aStream print: self content 
+
+	aStream print: self content
 ]

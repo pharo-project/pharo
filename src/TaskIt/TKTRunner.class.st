@@ -49,5 +49,5 @@ Class {
 { #category : #testing }
 TKTRunner class >> isAbstract [
 
-	^self == TKTRunner 
+	^self == TKTRunner
 ]

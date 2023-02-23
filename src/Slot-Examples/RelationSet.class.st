@@ -23,7 +23,7 @@ RelationSet >> add: anObject [
 
 	(self includes: anObject)
 		ifTrue: [ ^anObject ].
-		
+
 	slot add: anObject to: owner.
 	^set add: anObject
 ]
@@ -31,13 +31,13 @@ RelationSet >> add: anObject [
 { #category : #copying }
 RelationSet >> copy [
 
-	^Set new 
+	^Set new
 		addAll: self;
 		yourself
 ]
 
 { #category : #enumerating }
-RelationSet >> do: aBlock [ 
+RelationSet >> do: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument."
 
 	set do: aBlock
@@ -68,7 +68,7 @@ RelationSet >> remove: oldObject ifAbsent: aBlock [
 
 	(set includes: oldObject)
 		ifFalse: [ ^aBlock value ].
-		
+
 	slot remove: oldObject from: owner.
 	^set remove: oldObject ifAbsent: aBlock
 ]

@@ -21,7 +21,7 @@ SycFindAndReplaceSetUpCommand >> executeRefactoring [
 ]
 
 { #category : #testing }
-SycFindAndReplaceSetUpCommand >> isApplicable [ 
+SycFindAndReplaceSetUpCommand >> isApplicable [
 	^ context lastSelectedMethod selector = #setUp
 ]
 
@@ -33,13 +33,13 @@ SycFindAndReplaceSetUpCommand >> name [
 { #category : #preparation }
 SycFindAndReplaceSetUpCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	method := context lastSelectedMethod.
+	method := context lastSelectedMethod
 ]
 
 { #category : #executing }
 SycFindAndReplaceSetUpCommand >> searchInTheWholeHierarchy [
 
-	^ method origin subclasses 
+	^ method origin subclasses
 		ifEmpty: [ false ]
 		ifNotEmpty: [ self confirm: 'Do you want to search occurrences in the whole hierarchy?' ]
 ]

@@ -69,18 +69,16 @@ SyntaxErrorDebugger class >> open: aSyntaxErrorDebugger [
 
 { #category : #'tools registry' }
 SyntaxErrorDebugger class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]" 
+	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #syntaxErrorDebugger
-
 ]
 
 { #category : #'instance creation' }
 SyntaxErrorDebugger class >> syntaxError: aSyntaxError [
-	
+
 	^ self new
 		syntaxError: aSyntaxError;
 		yourself
-		
 ]
 
 { #category : #accessing }
@@ -110,7 +108,7 @@ SyntaxErrorDebugger >> checkForUnprintableCharacters: aString [
 	printables := '!@#$%&*-_=+<>{}?/\,¬∑¬£¬¢¬ß¬∂¬™¬∫¬ñ¬ó¬ì¬ë¬î¬í¬Ö√ö√¶√ö¬Ø√ó¬ø¬´¬ª`~`' asSet.
 	^ aString
 		detect: [ :aChar | (types at: aChar asciiValue ifAbsent: [ #xLetter ]) == #xBinary and: [ (printables includes: aChar) not ] ]
-		ifFound: [ :badChar | 
+		ifFound: [ :badChar |
 			'<<<This string contains a character (ascii value ' , badChar asciiValue printString
 				, ') that is not normally used in code>>> ' , aString ]
 		ifNone: [ aString ]
@@ -120,13 +118,12 @@ SyntaxErrorDebugger >> checkForUnprintableCharacters: aString [
 SyntaxErrorDebugger >> closeWindow [
 	debugSession ifNotNil: [ debugSession terminate ].
 	window close
-
 ]
 
 { #category : #accessing }
 SyntaxErrorDebugger >> codePaneMenu: aMenu shifted: shifted [
-	"Note that unless we override perform:orSendTo:, 
-	PluggableTextController will respond to all menu items in a 
+	"Note that unless we override perform:orSendTo:,
+	PluggableTextController will respond to all menu items in a
 	text pane"
 
 	| donorMenu |
@@ -137,7 +134,7 @@ SyntaxErrorDebugger >> codePaneMenu: aMenu shifted: shifted [
 
 { #category : #accessing }
 SyntaxErrorDebugger >> contents [
-	^contents 
+	^contents
 ]
 
 { #category : #accessing }
@@ -150,7 +147,7 @@ SyntaxErrorDebugger >> contents: aString notifying: aController [
 	"Compile the code in aString and proceed. Do not notify anybody of errors, because nobody would have been notified of errors if this syntax error had not arisen"
 
 	aController hasUnacceptedEdits: false.
-	
+
 	syntaxError doitFlag
 		ifTrue: [ self class compiler evaluate: aString ]
 		ifFalse: [ self resume: aString ].
@@ -161,9 +158,9 @@ SyntaxErrorDebugger >> contents: aString notifying: aController [
 SyntaxErrorDebugger >> contentsSelection [
 	"Return the interval of text in the code pane to select when I set the pane's contents"
 
-	^ location 
+	^ location
 		ifNil: [1 to: 0]  "null selection"
-		ifNotNil: [ location to: location + self sourceErrorString size - 1 ] 
+		ifNotNil: [ location to: location + self sourceErrorString size - 1 ]
 ]
 
 { #category : #menu }
@@ -196,9 +193,9 @@ SyntaxErrorDebugger >> highlightError [
 	"convert to Text that we can add Attributes"
 	contents := contents asText.
 	"use the ST80Styler"
-	location ifNil: [ ^ self ].	
+	location ifNil: [ ^ self ].
 	contents addAttribute: TextColor red from: location to: location + self sourceErrorString size - 1.
-	contents addAttribute: TextEmphasis bold from: location to: location + self sourceErrorString size - 1.
+	contents addAttribute: TextEmphasis bold from: location to: location + self sourceErrorString size - 1
 ]
 
 { #category : #'message list' }
@@ -208,7 +205,6 @@ SyntaxErrorDebugger >> list [
 	selector ifNil: [^ Array with: (class name, '  ', (self category ifNil: ['']), '  ', '<none>')].
 	self category ifNil: [^ Array with: (class name, '    ', '<none>')].
 	^ Array with: (class name, '  ', self category, '  ', selector)
-
 ]
 
 { #category : #'message list' }
@@ -221,7 +217,6 @@ SyntaxErrorDebugger >> listIndex [
 	"There is always exactly one element in my list and it is always selected."
 
 	^ 1
-
 ]
 
 { #category : #menu }
@@ -229,7 +224,7 @@ SyntaxErrorDebugger >> listMenu: aMenu [
 	^aMenu addList: {
 		{'Proceed' . #proceed}.
 		{'Debug calling process' . #debug}.
-		{'Browse full' . #browseMethodFull}}.
+		{'Browse full' . #browseMethodFull}}
 ]
 
 { #category : #accessing }
@@ -241,7 +236,7 @@ SyntaxErrorDebugger >> model [
 SyntaxErrorDebugger >> proceed [
 	"The user has has edited and presumably fixed the syntax error and the filein can now proceed."
 
-	debugSession 
+	debugSession
 			resume;
 			clear
 ]
@@ -249,7 +244,7 @@ SyntaxErrorDebugger >> proceed [
 { #category : #menu }
 SyntaxErrorDebugger >> resume: aValue [
 
-	debugSession 
+	debugSession
 			resume: aValue;
 			clear
 ]
@@ -259,7 +254,6 @@ SyntaxErrorDebugger >> selectedClass [
 	"Answer the class in which the syntax error occurred."
 
 	^ class
-
 ]
 
 { #category : #'text menu support' }
@@ -267,7 +261,6 @@ SyntaxErrorDebugger >> selectedClassOrMetaClass [
 	"Answer the class of the method being compiled."
 
 	^ class
-
 ]
 
 { #category : #'text menu support' }
@@ -275,7 +268,6 @@ SyntaxErrorDebugger >> selectedMessageName [
 	"Answer the selector of the method being compiled."
 
 	^ selector
-
 ]
 
 { #category : #other }
@@ -291,14 +283,14 @@ SyntaxErrorDebugger >> sourceErrorString [
 { #category : #initialization }
 SyntaxErrorDebugger >> syntaxError: aSyntaxError [
 	"extract the instance properties from a SyntaxErrorNotification"
-	
+
 	syntaxError := aSyntaxError.
 	class :=  aSyntaxError errorClass.
 	errorMessage := aSyntaxError errorMessage.
-	location := aSyntaxError location.	
+	location := aSyntaxError location.
 	debugSession := (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext).
 	contents := self checkForUnprintableCharacters: aSyntaxError errorCode.
-	selector := class compiler parseSelector: contents.	
+	selector := class compiler parseSelector: contents.
 	self highlightError
 ]
 

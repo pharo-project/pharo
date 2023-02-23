@@ -39,7 +39,6 @@ ZnBufferedReadStream class >> on: readStream do: block [
 { #category : #testing }
 ZnBufferedReadStream >> atEnd [
 	^ position > limit and: [ stream atEnd ]
-	
 ]
 
 { #category : #'initialize-release' }
@@ -61,7 +60,7 @@ ZnBufferedReadStream >> collectionSpecies [
 
 { #category : #accessing }
 ZnBufferedReadStream >> contents [
-	
+
 	^ self upToEnd
 ]
 
@@ -85,7 +84,7 @@ ZnBufferedReadStream >> initialize [
 
 { #category : #'accessing - bytes' }
 ZnBufferedReadStream >> int16 [
-	^ self nextIntegerOfSize: 2 signed: true bigEndian: true 
+	^ self nextIntegerOfSize: 2 signed: true bigEndian: true
 ]
 
 { #category : #'accessing - bytes' }
@@ -95,7 +94,7 @@ ZnBufferedReadStream >> int32 [
 
 { #category : #'accessing - bytes' }
 ZnBufferedReadStream >> int8 [
-	^ self nextIntegerOfSize: 1 signed: true bigEndian: true 
+	^ self nextIntegerOfSize: 1 signed: true bigEndian: true
 ]
 
 { #category : #accessing }
@@ -111,11 +110,11 @@ ZnBufferedReadStream >> isStream [
 { #category : #accessing }
 ZnBufferedReadStream >> next [
 	"Return the next element and move over it"
-	
+
 	position > limit
 		ifTrue: [ self nextBuffer ].
 	^ position <= limit
-		ifTrue: [ 
+		ifTrue: [
 			| char |
 			char := buffer at: position.
 			position := position + 1.
@@ -124,12 +123,12 @@ ZnBufferedReadStream >> next [
 ]
 
 { #category : #accessing }
-ZnBufferedReadStream >> next: requestedCount [ 
+ZnBufferedReadStream >> next: requestedCount [
 	"Read requestedCount elements and return them as a collection.
 	If less are available, a smaller collection will be returned."
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -137,26 +136,26 @@ ZnBufferedReadStream >> next: requestedCount [
 ZnBufferedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
-	^ self 
-		next: requestedCount 
-		into: collection 
-		startingAt: 1   
+
+	^ self
+		next: requestedCount
+		into: collection
+		startingAt: 1
 ]
 
 { #category : #accessing }
 ZnBufferedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| read |
-	read := self 
-		readInto: collection 
-		startingAt: offset 
+	read := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
-	^ read = requestedCount 
+	^ read = requestedCount
 		ifTrue: [ collection ]
-		ifFalse: [ collection copyFrom: 1 to: offset + read - 1 ]     
+		ifFalse: [ collection copyFrom: 1 to: offset + read - 1 ]
 ]
 
 { #category : #private }
@@ -173,18 +172,18 @@ ZnBufferedReadStream >> nextInt32 [
 { #category : #'accessing - bytes' }
 ZnBufferedReadStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian [
 	"Assuming the receiver is a stream of bytes, read the next integer of size numberOfBytes.
-	If bigEndian is true, use network byte order, most significant byte first, 
+	If bigEndian is true, use network byte order, most significant byte first,
 	else use little endian order, least significant byte first.
-	If signed is true, interpret as a two-complement signed value, 
+	If signed is true, interpret as a two-complement signed value,
 	else interpret as a plain unsigned value."
-	
+
 	| value |
 	value := 0.
 	bigEndian
-		ifTrue: [ 
+		ifTrue: [
 			(numberOfBytes - 1) * 8 to: 0 by: -8 do: [ :shift |
 				value := value + (self next bitShift: shift) ] ]
-		ifFalse: [ 
+		ifFalse: [
 			0 to: (numberOfBytes - 1) * 8 by: 8 do: [ :shift |
 				value := value + (self next bitShift: shift) ] ].
 	^ (signed and: [ (value bitAt: numberOfBytes * 8) = 1 ])
@@ -196,7 +195,7 @@ ZnBufferedReadStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndia
 ZnBufferedReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: collection size
 		into: collection
@@ -226,7 +225,7 @@ ZnBufferedReadStream >> on: readStream [
 { #category : #accessing }
 ZnBufferedReadStream >> peek [
 	"Return the next element but do not move over it"
-	
+
 	position > limit
 		ifTrue: [ self nextBuffer ].
 	^ position <= limit
@@ -236,11 +235,11 @@ ZnBufferedReadStream >> peek [
 
 { #category : #accessing }
 ZnBufferedReadStream >> peekFor: object [
-	"Answer false and do not move over the next element if it is not equal to object, or if the receiver is at the end. 
+	"Answer false and do not move over the next element if it is not equal to object, or if the receiver is at the end.
 	Answer true and move over the next element when it is equal to object."
 
 	^ self peek = object
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			true ]
 		ifFalse: [ false ]
@@ -248,21 +247,21 @@ ZnBufferedReadStream >> peekFor: object [
 
 { #category : #accessing }
 ZnBufferedReadStream >> position [
-	
+
 	"If the buffer advanced, we need to check the original stream position, minus what we have read.
 	The -1 is because the buffer is base 1"
 	^ stream position - limit + position - 1
 ]
 
 { #category : #accessing }
-ZnBufferedReadStream >> position: anInteger [ 
-	
+ZnBufferedReadStream >> position: anInteger [
+
 	| bufferEnd bufferStart |
 	bufferEnd := stream position.
 	bufferStart := bufferEnd - limit.
 	(anInteger between: bufferStart and: bufferEnd)
 		ifTrue: [ position := anInteger - bufferStart + 1 ]
-		ifFalse: [ 
+		ifFalse: [
 			"We reset the buffer and update the position in the underlying stream"
 			limit := 0.
 			position := 1.
@@ -318,7 +317,7 @@ ZnBufferedReadStream >> readStream [
 
 { #category : #accessing }
 ZnBufferedReadStream >> setToEnd [
-	
+
 	self position: stream size
 ]
 
@@ -344,18 +343,18 @@ ZnBufferedReadStream >> sizeBuffer: size [
 ZnBufferedReadStream >> skip: count [
 	"Skip over count elements.
 	This could be further optimzed."
-	
+
 	count timesRepeat: [ self next ]
 ]
 
 { #category : #'accessing - bytes' }
 ZnBufferedReadStream >> uint16 [
-	^ self nextIntegerOfSize: 2 signed: false bigEndian: true 
+	^ self nextIntegerOfSize: 2 signed: false bigEndian: true
 ]
 
 { #category : #'accessing - bytes' }
 ZnBufferedReadStream >> uint32 [
-	^ self nextIntegerOfSize: 4 signed: false bigEndian: true 
+	^ self nextIntegerOfSize: 4 signed: false bigEndian: true
 ]
 
 { #category : #'accessing - bytes' }
@@ -364,14 +363,14 @@ ZnBufferedReadStream >> uint8 [
 ]
 
 { #category : #accessing }
-ZnBufferedReadStream >> upTo: value [ 
+ZnBufferedReadStream >> upTo: value [
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream.
 	This could be further optimzed."
-	
-	^ self collectionSpecies 
+
+	^ self collectionSpecies
 		streamContents: [ :writeStream | | element |
-			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [ 
+			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [
 				writeStream nextPut: element ] ]
 ]
 
@@ -383,17 +382,17 @@ ZnBufferedReadStream >> upToEnd [
 	"If the stream knows its size we can reduce overhead by allocating a buffer of the correct size.
 	If the size is an over-estimate, #next: will copy the results in to a buffer of the correct size."
 	streamSize := [ self size ] on: Error do: [ 0 ].
-	result := streamSize > 0 
+	result := streamSize > 0
 		ifTrue: [ self next: (streamSize - self position) ]
 		ifFalse: [ self collectionSpecies new ].
 	"If the size is an under-estimate we're not at the end, get the rest and append to the result"
 	^ self atEnd
 		ifTrue: [ result ]
-		ifFalse: [ 
-			remaining := self collectionSpecies streamContents: [ :out | 
-				[ self atEnd ] whileFalse: [ 
+		ifFalse: [
+			remaining := self collectionSpecies streamContents: [ :out |
+				[ self atEnd ] whileFalse: [
 					position > limit
-						ifTrue: [ self nextBuffer ].	
+						ifTrue: [ self nextBuffer ].
 					out next: limit - position + 1 putAll: buffer startingAt: position.
 					position := limit + 1 ] ].
 			result := result , remaining ]

@@ -25,5 +25,5 @@ RegexSyntaxError >> position [
 
 { #category : #accessing }
 RegexSyntaxError >> position: anInteger [
-	position := anInteger.
+	position := anInteger
 ]

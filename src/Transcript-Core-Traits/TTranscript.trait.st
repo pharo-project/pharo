@@ -40,21 +40,21 @@ TTranscript >> close [
 { #category : #streaming }
 TTranscript >> cr [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self nextPut: Character cr
 ]
 
 { #category : #streaming }
 TTranscript >> crShow: anObject [
 	"Output anObject asString on the receiver preceded by a cr and show the output"
-	
+
 	self critical: [ self cr; show: anObject ]
 ]
 
 { #category : #streaming }
 TTranscript >> critical: block [
 	"Execute block making sure only one thread accesses the receiver"
-	
+
 	self explicitRequirement
 ]
 
@@ -89,14 +89,14 @@ TTranscript >> nextPutAll: string [
 { #category : #streaming }
 TTranscript >> print: anObject [
 	"Output anObject asString on the receiver, buffered, not yet shown"
-	
+
 	self nextPutAll: anObject asString
 ]
 
 { #category : #streaming }
 TTranscript >> show: anObject [
 	"Output anObject asString on the receiver and show the output"
-	
+
 	self critical: [ self print: anObject; endEntry ]
 ]
 
