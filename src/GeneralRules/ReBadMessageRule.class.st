@@ -21,11 +21,11 @@ ReBadMessageRule >> badSelectors [
 	^ #( #become: #isKindOf: #respondsTo: #isMemberOf: #perform: #perform:arguments: #perform:with: #perform:with:with: #perform:with:with:with: #allOwners #instVarAt: #instVarAt:put: #nextInstance instVarsInclude: #nextObject caseOf: caseOf:otherwise: caseError isThisEverCalled isThisEverCalled: becomeForward: instVarNamed: instVarNamed:put: someObject primitiveChangeClassTo:)
 ]
 
-{ #category : #enumerating }
+{ #category : #running }
 ReBadMessageRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^false ].
 	"In tests using these messages (like isKindOf:) is no problem"
-	aNode methodNode methodClass isTestCase ifTrue: [ ^false ].
+	aNode methodNode methodClass ifNotNil: [ :class | class isTestCase ifTrue: [ ^false ]].
 	^ self badSelectors includes: aNode selector
 ]
 
