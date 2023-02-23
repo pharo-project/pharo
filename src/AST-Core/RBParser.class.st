@@ -309,7 +309,7 @@ RBParser >> parseArray [
 	node := self arrayNodeClass new.
 	node left: startToken start.
 	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
-	(currentToken isSpecial and: [currentToken value = $}])
+	(currentToken isSpecial: $})
 		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
 	node right: currentToken start.
 	self step.
@@ -409,7 +409,7 @@ RBParser >> parseBlock [
 		into: node body
 		untilAnyCloserOf: ']'.
 
-	(currentToken isSpecial and: [currentToken value = $]])
+	(currentToken isSpecial: $])
 		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected'].
 	node right: currentToken start.
 	self step.
@@ -422,7 +422,7 @@ RBParser >> parseBlockArgsInto: node [
 	args := OrderedCollection new: 2.
 	colons := OrderedCollection new: 2.
 	verticalBar := false.
-	[currentToken isSpecial and: [currentToken value = $:]] whileTrue:
+	[currentToken isSpecial: $:] whileTrue:
 			[colons add: currentToken start.
 			self step.	":"
 			verticalBar := true.
@@ -445,7 +445,7 @@ RBParser >> parseBlockArgsInto: node [
 										start: currentToken start + 1]
 								ifFalse: [ args add:(self parserError: '''|'' expected')]]]
 				ifFalse:
-					[(currentToken isSpecial and: [currentToken value = $]])
+					[(currentToken isSpecial: $])
 						ifFalse: [ args add:(self parserError: '''|'' expected')]]].
 	node
 		arguments: args;
@@ -460,7 +460,7 @@ RBParser >> parseCascadeMessage [
 	node := self parseKeywordMessage.
 
 	"Quick check if this matches a cascade. If not, return the already parsed node"
-	(currentToken isSpecial and: [ currentToken value = $; ])
+	(currentToken isSpecial: $; )
 		ifFalse: [ ^ node ].
 
 	"At this point we know we should create a cascade node."
@@ -489,7 +489,7 @@ RBParser >> parseCascadeMessage [
 	].
 
 	"Extract the messages following the cascade marker $;"
-	[currentToken isSpecial and: [currentToken value = $;]] whileTrue: [
+	[currentToken isSpecial: $;] whileTrue: [
 		|newMessage|
 		semicolons add: currentToken start.
 		newMessage := nil.
@@ -669,10 +669,10 @@ RBParser >> parseLiteralArray [
 	startToken := currentToken.
 	literals := (OrderedCollection new: 5).
 	self step.
-	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]]
+	[self atEnd or: [currentToken isSpecial: $)]]
 		whileFalse: [literals add: self parseLiteralArrayObject].
 	stop := currentToken stop.
-	(currentToken isSpecial and: [currentToken value = $)])
+	(currentToken isSpecial: $))
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
 	^self literalArrayNodeClass
@@ -707,10 +707,10 @@ RBParser >> parseLiteralByteArray [
 	startToken := currentToken.
 	stream := (Array new: 5) writeStream.
 	self step.
-	[self atEnd or: [currentToken isSpecial and: [currentToken value = $]]]]
+	[self atEnd or: [currentToken isSpecial: $]]]
 		"Put literal value nodes corresponding to the bytes in the stream."
 		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
-	(currentToken isSpecial and: [currentToken value = $]])
+	(currentToken isSpecial: $])
 		ifFalse: [ ^ self parseEnglobingError: stream contents with: startToken errorMessage: ''']'' expected'].
 	stop := currentToken stop.
 	self step.
@@ -739,7 +739,7 @@ RBParser >> parseLiteralByteArrayObject [
 RBParser >> parseLiterals: aString [
 	| stream |
 	stream := (Array new: 5) writeStream.
-	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]]
+	[self atEnd or: [currentToken isSpecial: $)]]
 		whileFalse: [stream nextPut: self parseLiteralArrayObject].
 	self atEnd ifFalse: [ ^ self parserError: 'Unknown input at end'].
 	^stream contents collect: [ :each | each value ]
@@ -801,7 +801,7 @@ RBParser >> parseParenthesizedExpression [
 	startToken := currentToken.
 	self step.
 	node := self parseAssignment.
-	^(currentToken isSpecial and: [currentToken value = $)])
+	^(currentToken isSpecial: $))
 		ifTrue:
 			[node addParenthesis: (startToken start to: currentToken start).
 			self step.
@@ -925,7 +925,7 @@ RBParser >> parseStatementInto: statementList periodList: periods [
 	"If the current statement starts with ^, parse it as a return + an expression.
 	Otherwise just parse it as an expression.
 	Expressions start with assignments, which have lower precedence"
-	(currentToken isSpecial and: [ currentToken value = $^ ])
+	(currentToken isSpecial: $^)
 		ifTrue: [
 			returnPosition := currentToken start.
 			self step.
@@ -952,12 +952,12 @@ RBParser >> parseStatementInto: statementList periodList: periods [
 	].
 
 	"Then consume all dots and comments coming after this well formed statement, if there was any"
-	(currentToken isSpecial and: [ currentToken value = $. ]) ifTrue: [
+	(currentToken isSpecial: $.) ifTrue: [
 		periods add: currentToken start.
 		self step.
 		self addCommentsTo: node ].
 
-	[ currentToken isSpecial and: [ currentToken value = $. ] ]
+	[ currentToken isSpecial: $. ]
 		whileTrue: [
 			periods add: currentToken start.
 			self step ].
@@ -997,7 +997,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"If the current statement starts with ^, parse it as a return + an expression.
 	Otherwise just parse it as an expression.
 	Expressions start with assignments, which have lower precedence"
-	(currentToken isSpecial and: [ currentToken value = $^ ])
+	(currentToken isSpecial: $^)
 		ifTrue: [
 			returnPosition := currentToken start.
 			self step.
@@ -1044,12 +1044,12 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	].
 
 	"Then consume all dots and comments coming after this well formed statement, if there was any"
-	(currentToken isSpecial and: [ currentToken value = $. ]) ifTrue: [
+	(currentToken isSpecial: $.) ifTrue: [
 		periods add: currentToken start.
 		self step.
 		self addCommentsTo: node ].
 
-	[ currentToken isSpecial and: [ currentToken value = $. ] ]
+	[ currentToken isSpecial: $. ]
 		whileTrue: [
 			periods add: currentToken start.
 			self step ].
@@ -1084,7 +1084,7 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode until: aBlock [
 
 	pragmaBoolean ifTrue: [ self parsePragmas ].
 
-	[ currentToken isSpecial and: [ currentToken value = $. ] ]
+	[ currentToken isSpecial: $. ]
 		whileTrue: [
 			periods add: currentToken start.
 			self step ].
@@ -1115,7 +1115,7 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserO
 
 	pragmaBoolean ifTrue: [ self parsePragmas ].
 
-	[ currentToken isSpecial and: [ currentToken value = $. ] ]
+	[ currentToken isSpecial: $. ]
 		whileTrue: [
 			periods add: currentToken start.
 			self step ].
