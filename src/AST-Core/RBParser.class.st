@@ -437,21 +437,10 @@ RBParser >> parseBlockArgsInto: node [
 			arg isParseError ifTrue: [ arg value: ':' ]].
 	verticalBar
 		ifTrue:
-			[currentToken isBinary
+			[(currentToken isBinary and: [currentToken value first = $|])
 				ifTrue:
 					[node bar: currentToken start.
-					currentToken value = #|
-						ifTrue: [self step]
-						ifFalse:
-							[currentToken value = #'||'
-								ifTrue:
-									["Hack the current token to be the start
-									of temps bar"
-
-									currentToken
-										value: #|;
-										start: currentToken start + 1]
-								ifFalse: [ args add:(self parserError: '''|'' expected')]]]
+					self stepBar]
 				ifFalse:
 					[(currentToken isSpecial: $])
 						ifFalse: [ args add:(self parserError: '''|'' expected')]]].
@@ -1123,13 +1112,13 @@ RBParser >> parseTemporariesInto: aSequenceNode [
 	leftBar := rightBar := nil.
 	currentToken isBinary
 		ifTrue:
-			[currentToken value = #|
+			[currentToken value first = $|
 				ifTrue:
 					[ startToken := currentToken.
 					leftBar := currentToken start.
-					self step.
+					self stepBar. "Consume one | only"
 					temps := self parseTemps.
-					(currentToken isBinary and: [currentToken value = #|])
+					(currentToken isBinary and: [currentToken value first = $|])
 						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' expected'.
 									 aSequenceNode addFaultyNode: errorNode.
 									 temps := OrderedCollection new.
@@ -1137,12 +1126,7 @@ RBParser >> parseTemporariesInto: aSequenceNode [
 								    ]
 						ifTrue: [
 							rightBar := currentToken start.
-							self step ]]
-				ifFalse:
-					[currentToken value = #'||'
-						ifTrue:
-							[rightBar := (leftBar := currentToken start) + 1.
-							self step]]].
+							self stepBar "Consume one | only" ]]].
 
 	aSequenceNode leftBar: leftBar temporaries: temps rightBar: rightBar
 ]
@@ -1383,6 +1367,20 @@ RBParser >> step [
 			[currentToken := nextToken.
 			nextToken := nil]
 		ifNil: [currentToken := self scannerNext]
+]
+
+{ #category : #private }
+RBParser >> stepBar [
+	"When possible, only consume the first bar (`|`) of the current binary token"
+
+	"All of this because | can be a separator (block args), a type of brackets (temps) and a valid first character of binary operators."
+
+	| value |
+	value := currentToken value.
+	(value size < 2 or: [ value first ~= $| ]) ifTrue: [ ^ self step ].
+
+	currentToken value: value allButFirst.
+	currentToken start: currentToken start + 1
 ]
 
 { #category : #'private - classes' }
