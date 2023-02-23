@@ -14,12 +14,12 @@ SpMorphicProfilerTreeTableAdapter >> addModelTo: tableMorph [
 
 	self ensureAtLeastOneColumnIn: tableMorph.
 
-	self presenter selection isMultipleSelection ifTrue: [ 
+	self presenter selection isMultipleSelection ifTrue: [
 		tableMorph beMultipleSelection ].
 
 	tableMorph setBalloonText: self model help.
 
-	self presenter selection isEmpty ifFalse: [ 
+	self presenter selection isEmpty ifFalse: [
 		self updateSelectionOf: tableMorph ].
 
 	self presenter whenRootsChangedDo: [ tableMorph buildContents ]
@@ -41,34 +41,34 @@ SpMorphicProfilerTreeTableAdapter >> buildWidget [
 		doubleClickSelector: #browseItem;
 		rowColorForEven: self theme lightBackgroundColor;
 		yourself.
-	
-	self addModelTo: tableMorph.	
+
+	self addModelTo: tableMorph.
 	tableMorph buildContents.
-	
+
 	widget := tableMorph.
-	
+
 	^ tableMorph
 ]
 
 { #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> collapseAll [ 
+SpMorphicProfilerTreeTableAdapter >> collapseAll [
 	^ widget collapseAll
 ]
 
 { #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> collapsePath: anArray [ 
-	
+SpMorphicProfilerTreeTableAdapter >> collapsePath: anArray [
+
 	widget collapseNodePath: anArray
 ]
 
 { #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> expandAll [ 
+SpMorphicProfilerTreeTableAdapter >> expandAll [
 	^ widget expandAll
 ]
 
 { #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> expandPath: anArray [ 
-	
+SpMorphicProfilerTreeTableAdapter >> expandPath: anArray [
+
 	widget expandNodePath: anArray
 ]
 
@@ -91,6 +91,6 @@ SpMorphicProfilerTreeTableAdapter >> scrollToSelection [
 
 { #category : #accessing }
 SpMorphicProfilerTreeTableAdapter >> selectedItem [
-	
+
 	^ self widget selectedMorph complexContents
 ]

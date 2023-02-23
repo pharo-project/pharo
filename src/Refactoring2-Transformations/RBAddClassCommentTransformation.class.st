@@ -38,7 +38,7 @@ RBAddClassCommentTransformation class >> model: aRBModel comment: aString in: aC
 ]
 
 { #category : #api }
-RBAddClassCommentTransformation >> comment: aString in: aClassName [ 
+RBAddClassCommentTransformation >> comment: aString in: aClassName [
 
 	self className: aClassName.
 	comment := aString
@@ -47,7 +47,7 @@ RBAddClassCommentTransformation >> comment: aString in: aClassName [
 { #category : #preconditions }
 RBAddClassCommentTransformation >> preconditions [
 	"no preconditions needed"
-	
+
 	^ self emptyCondition
 ]
 
@@ -58,7 +58,7 @@ RBAddClassCommentTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddClassCommentTransformation >> storeOn: aStream [ 
+RBAddClassCommentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

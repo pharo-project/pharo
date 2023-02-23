@@ -21,12 +21,12 @@ RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: class
 										<< '	^ ';
 										<< classRefName ])
 		in: className asSymbol
-		withProtocols: { #accessing }) 
+		withProtocols: { #accessing })
 			asRefactoring execute
 ]
 
 { #category : #accessing }
-RBCopyPackageParametrizedTest >> constructor [ 
+RBCopyPackageParametrizedTest >> constructor [
 	^ #copyPackage:in:
 ]
 
@@ -94,7 +94,7 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 		equals: #Object.
 
 	self
-		assert: ((aModel classNamed: #BarFTTest1) parseTreeFor: #foo)
+		assert: ((aModel classNamed: #BarFTTest1) parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo
 			^ BarFTTest2')
 ]

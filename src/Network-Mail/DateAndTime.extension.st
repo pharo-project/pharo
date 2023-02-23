@@ -6,11 +6,11 @@ DateAndTime >> asEmailString [
 
 	| timeString |
 	timeString := (self asTime print24 first: 8).
-	^ '{1}, {2} {3} {4} {5} {6}' format: { 
+	^ '{1}, {2} {3} {4} {5} {6}' format: {
 			self dayOfWeekAbbreviation.
 			self dayOfMonth asString.
 			self monthAbbreviation.
 			self year asString.
 			timeString.
-			self offset asEmailTimeOffsetString }.
+			self offset asEmailTimeOffsetString }
 ]

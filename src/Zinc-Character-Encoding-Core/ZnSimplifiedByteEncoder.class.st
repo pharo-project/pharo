@@ -24,21 +24,21 @@ ZnSimplifiedByteEncoder class >> asciiMapping [
 	"ASCII is only defined for the first 127 codes (7-bit)"
 
 	^ #(
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
 	nil nil nil nil nil nil nil nil )
 ]
 
@@ -50,7 +50,7 @@ ZnSimplifiedByteEncoder class >> byteTextConverters [
 { #category : #accessing }
 ZnSimplifiedByteEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
-	
+
 	^ self byteTextConverters includesKey: (self canonicalEncodingIdentifier: string)
 ]
 
@@ -58,9 +58,9 @@ ZnSimplifiedByteEncoder class >> handlesEncoding: string [
 ZnSimplifiedByteEncoder class >> initialize [
 	"Initialize and cache the converters that I know of.
 	This includes all of their aliases.
-	This method must be changed to make sure it runs 
+	This method must be changed to make sure it runs
 	when loading in images where it is already present."
-	
+
 	self initializeByteTextConverters
 ]
 
@@ -70,7 +70,7 @@ ZnSimplifiedByteEncoder class >> initializeByteTextConverters [
 
 	byteTextConverters := Dictionary new.
 	self mappingToIdentifiers
-		keysAndValuesDo: [ :mapping :identifiers | 
+		keysAndValuesDo: [ :mapping :identifiers |
 			| tables |
 			tables := self tablesFromSpec: (self perform: mapping).
 			identifiers do: [ :each | byteTextConverters at: each put: tables ] ].
@@ -83,21 +83,21 @@ ZnSimplifiedByteEncoder class >> iso88591Mapping [
 	"ZnByteEncoder generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-1.TXT'"
 
 	^ #(
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	nil nil nil nil nil nil nil nil 
-	16r00A0 16r00A1 16r00A2 16r00A3 16r00A4 16r00A5 16r00A6 16r00A7 
-	16r00A8 16r00A9 16r00AA 16r00AB 16r00AC 16r00AD 16r00AE 16r00AF 
-	16r00B0 16r00B1 16r00B2 16r00B3 16r00B4 16r00B5 16r00B6 16r00B7 
-	16r00B8 16r00B9 16r00BA 16r00BB 16r00BC 16r00BD 16r00BE 16r00BF 
-	16r00C0 16r00C1 16r00C2 16r00C3 16r00C4 16r00C5 16r00C6 16r00C7 
-	16r00C8 16r00C9 16r00CA 16r00CB 16r00CC 16r00CD 16r00CE 16r00CF 
-	16r00D0 16r00D1 16r00D2 16r00D3 16r00D4 16r00D5 16r00D6 16r00D7 
-	16r00D8 16r00D9 16r00DA 16r00DB 16r00DC 16r00DD 16r00DE 16r00DF 
-	16r00E0 16r00E1 16r00E2 16r00E3 16r00E4 16r00E5 16r00E6 16r00E7 
-	16r00E8 16r00E9 16r00EA 16r00EB 16r00EC 16r00ED 16r00EE 16r00EF 
-	16r00F0 16r00F1 16r00F2 16r00F3 16r00F4 16r00F5 16r00F6 16r00F7 
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	nil nil nil nil nil nil nil nil
+	16r00A0 16r00A1 16r00A2 16r00A3 16r00A4 16r00A5 16r00A6 16r00A7
+	16r00A8 16r00A9 16r00AA 16r00AB 16r00AC 16r00AD 16r00AE 16r00AF
+	16r00B0 16r00B1 16r00B2 16r00B3 16r00B4 16r00B5 16r00B6 16r00B7
+	16r00B8 16r00B9 16r00BA 16r00BB 16r00BC 16r00BD 16r00BE 16r00BF
+	16r00C0 16r00C1 16r00C2 16r00C3 16r00C4 16r00C5 16r00C6 16r00C7
+	16r00C8 16r00C9 16r00CA 16r00CB 16r00CC 16r00CD 16r00CE 16r00CF
+	16r00D0 16r00D1 16r00D2 16r00D3 16r00D4 16r00D5 16r00D6 16r00D7
+	16r00D8 16r00D9 16r00DA 16r00DB 16r00DC 16r00DD 16r00DE 16r00DF
+	16r00E0 16r00E1 16r00E2 16r00E3 16r00E4 16r00E5 16r00E6 16r00E7
+	16r00E8 16r00E9 16r00EA 16r00EB 16r00EC 16r00ED 16r00EE 16r00EF
+	16r00F0 16r00F1 16r00F2 16r00F3 16r00F4 16r00F5 16r00F6 16r00F7
 	16r00F8 16r00F9 16r00FA 16r00FB 16r00FC 16r00FD 16r00FE 16r00FF )
 ]
 
@@ -109,8 +109,8 @@ ZnSimplifiedByteEncoder class >> knownEncodingIdentifiers [
 { #category : #mappings }
 ZnSimplifiedByteEncoder class >> mappingToIdentifiers [
 	"Return a dictionay mapping from encoding specifications to a list of encoding names."
-	
-	^ Dictionary newFromPairs: #( 
+
+	^ Dictionary newFromPairs: #(
 		#iso88591Mapping #('iso88591' 'latin1')
 		#asciiMapping #('ascii') )
 ]
@@ -136,12 +136,12 @@ ZnSimplifiedByteEncoder class >> tablesFromSpec: mapping [
 
 	| byteToUnicode unicodeToByte |
 	byteToUnicode := Array new: 128.
-	unicodeToByte := Dictionary new.	
-	"Mind the offset because first 128 characters are not stored into byteToUnicodeSpec"	
+	unicodeToByte := Dictionary new.
+	"Mind the offset because first 128 characters are not stored into byteToUnicodeSpec"
 	"Note that some entries are nil"
 	mapping
-		keysAndValuesDo: [ :index :unicode | 
-			unicode ifNotNil: [ 
+		keysAndValuesDo: [ :index :unicode |
+			unicode ifNotNil: [
 				byteToUnicode at: index put: (Character value: unicode).
 				unicodeToByte at: unicode put: 127 + index ] ].
 	^ Array with: byteToUnicode with: unicodeToByte
@@ -168,8 +168,8 @@ ZnSimplifiedByteEncoder >> beLenient [
 { #category : #accessing }
 ZnSimplifiedByteEncoder >> byteDomain [
 	"Return an array with the byte values that are in my domain, that I can decode"
-	
-	^ (0 to: 127) asArray , ((byteToUnicode withIndexCollect: [ :each :index | each ifNotNil: [ index + 127 ] ]) reject: [ :each | each isNil ]) 
+
+	^ (0 to: 127) asArray , ((byteToUnicode withIndexCollect: [ :each :index | each ifNotNil: [ index + 127 ] ]) reject: [ :each | each isNil ])
 ]
 
 { #category : #'initialize-release' }
@@ -187,7 +187,7 @@ ZnSimplifiedByteEncoder >> characterDomain [
 { #category : #converting }
 ZnSimplifiedByteEncoder >> encodedByteCountFor: character [
 	"Overwritten for performance reasons"
-	
+
 	^ 1
 ]
 
@@ -234,10 +234,10 @@ ZnSimplifiedByteEncoder >> nextCodePointFromStream: stream [
 	| byteValue |
 	^ (byteValue := stream next) < 128
 		ifTrue: [ byteValue ]
-		ifFalse: [ 
+		ifFalse: [
 			(byteToUnicode at: byteValue - 127 ifAbsent: [ nil ])
 				ifNotNil: [ :unicode | unicode asInteger ]
-				ifNil: [ 
+				ifNil: [
 					strict
 						ifTrue: [ self errorOutsideRange ]
 						ifFalse: [ byteValue ] ] ]
@@ -251,10 +251,10 @@ ZnSimplifiedByteEncoder >> nextFromStream: stream [
 	| byteValue |
 	^ (byteValue := stream next ifNil: [ ^ self errorIncomplete asCharacter ]) < 128
 		ifTrue: [ Character value: byteValue ]
-		ifFalse: [ 
+		ifFalse: [
 			(byteToUnicode at: byteValue - 127 ifAbsent: [ nil ])
 				ifNotNil: [ :unicode | unicode ]
-				ifNil: [ 
+				ifNil: [
 					strict
 						ifTrue: [ self errorOutsideRange ]
 						ifFalse: [ Character value: byteValue ] ] ]
@@ -263,10 +263,10 @@ ZnSimplifiedByteEncoder >> nextFromStream: stream [
 { #category : #converting }
 ZnSimplifiedByteEncoder >> nextPutCodePoint: codePoint toStream: stream [
 	"In non-strict mode, we let code points for holes in our mapping table pass through"
-	
+
 	codePoint < 128
 		ifTrue: [ stream nextPut: codePoint ]
-		ifFalse: [ 
+		ifFalse: [
 			| byte |
 			byte := unicodeToByte at: codePoint ifAbsent: [ nil ].
 			(byte isNil and: [ strict or: [ codePoint > 255 ] ])

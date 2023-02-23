@@ -15,13 +15,13 @@ Form >> anyShapeFill [
 ]
 
 { #category : #'*Morphic-Core' }
-Form >> borderWidth: anInteger [ 
-	"Set the width of the border for the receiver to be anInteger and paint it 
+Form >> borderWidth: anInteger [
+	"Set the width of the border for the receiver to be anInteger and paint it
 	using black as the border color."
 
-	self 
-		border: self boundingBox 
-		width: anInteger 
+	self
+		border: self boundingBox
+		width: anInteger
 		fillColor: Smalltalk ui theme borderColor
 ]
 

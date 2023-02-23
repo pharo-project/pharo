@@ -22,26 +22,26 @@ Class {
 
 { #category : #tests }
 OCContextTempMappingTest >> fetchArgFromOptimizedBlockInsideFullBlock: anArg extraArg: anotherArg [
-	
+
 	| result |
-	self class withAllSubclassesDo: [ :each | 
+	self class withAllSubclassesDo: [ :each |
 		result := anArg = anArg ifTrue: [ anotherArg value. thisContext tempNamed: #anArg ]].
 	^result
 ]
 
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingArgOfOuterBlockFromAnotherDeepBlock [
-	
+
 	| actual |
-	
+
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
-	
-	actual := [:outerArg | 
+
+	actual := [:outerArg |
 		outerArg asString.
 		[ :innerArg | innerArg asString. thisContext tempNamed: #outerArg ] value: #innerValue.
 		] value: #outerValue.
-	
+
 	self assert: actual equals: #outerValue
 ]
 
@@ -66,7 +66,7 @@ OCContextTempMappingTest >> testAccessingBlockArgumentOptimizedBlock [
 (OCContextTempMappingTest>>#testAccessingBlockArgumentOptimizedBlock) numTemps -> 3"
 
 	| a b |
-	
+
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
@@ -77,7 +77,7 @@ OCContextTempMappingTest >> testAccessingBlockArgumentOptimizedBlock [
 
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingMethodArgFromOptimizedBlockContext [
-	
+
 	| actual |
 	actual := self fetchArgFromOptimizedBlockInsideFullBlock: #argValue extraArg: #anotherArg.
 	self assert: actual equals: #argValue
@@ -145,10 +145,10 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock3 [
 
 	a := [ r := 'failure'].
 	[ b :='success'.
-	self assert: (thisContext tempNamed: 'a') equals: a. 
+	self assert: (thisContext tempNamed: 'a') equals: a.
 	] on: Error do: a.
 	self assert: (thisContext tempNamed: 'r') equals: nil.
-	self assert: (thisContext tempNamed: 'b') equals: 'success'.
+	self assert: (thisContext tempNamed: 'b') equals: 'success'
 ]
 
 { #category : #tests }
@@ -170,7 +170,7 @@ OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock [
 
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
-	1 to: 2 do: [ :index | 
+	1 to: 2 do: [ :index |
 		| optimizedTemp |
 		optimizedTemp := index.
 		self assert: (thisContext tempNamed: 'optimizedTemp') identicalTo: index ]

@@ -151,14 +151,14 @@ StartupPreferencesLoader class >> preferencesGeneralFolder [
 	^ [ FileLocator preferences asFileReference / 'pharo' ]
 		on: Error
 		do: [ :ex |
-			"Non NB-VMs will fail with a generic error"		
+			"Non NB-VMs will fail with a generic error"
 			StartupPreferencesLoadingError signal ]
 ]
 
 { #category : #private }
 StartupPreferencesLoader class >> preferencesVersionFolder [
 
-	^ self preferencesGeneralFolder 
+	^ self preferencesGeneralFolder
 		ifNotNil: [ :folder | folder / SystemVersion current dottedMajorMinor ]
 ]
 
@@ -177,13 +177,13 @@ StartupPreferencesLoader class >> startupGeneralPreferencesFolderScriptName [
 { #category : #setting }
 StartupPreferencesLoader class >> startupPreferencesSettingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder setting: #allowStartupScript)
 		label: 'Allow the preferences to be loaded at startup';
 		parent: #pharoSystem;
 		default: true;
 		target: self;
-		description: 'If true, the preferences will be loaded' .
+		description: 'If true, the preferences will be loaded'
 ]
 
 { #category : #private }
@@ -222,43 +222,42 @@ StartupPreferencesLoader >> addAtStartup: aCollection inDirectory: aFileReferenc
 ]
 
 { #category : #'script generation' }
-StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection [ 
-	self 
-		addAtStartup: aCollection 
-		inDirectory: self preferencesGeneralFolder 
+StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection [
+	self
+		addAtStartup: aCollection
+		inDirectory: self preferencesGeneralFolder
 		named: self class startupGeneralPreferencesFolderScriptName
 ]
 
 { #category : #'script generation' }
 StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection named: fileName [
-	self 
-		addAtStartup: aCollection 
-		inDirectory: self preferencesGeneralFolder 
+	self
+		addAtStartup: aCollection
+		inDirectory: self preferencesGeneralFolder
 		named: fileName
 ]
 
 { #category : #'script generation' }
 StartupPreferencesLoader >> addAtStartupInImageDirectory:  aCollection [
-	self 
-		addAtStartup: aCollection 
-		inDirectory: FileSystem workingDirectory 
+	self
+		addAtStartup: aCollection
+		inDirectory: FileSystem workingDirectory
 		named: self class startupScriptName
-
 ]
 
 { #category : #'script generation' }
-StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection [ 
-	self 
-		addAtStartup: aCollection 
-		inDirectory: self preferencesVersionFolder 
+StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection [
+	self
+		addAtStartup: aCollection
+		inDirectory: self preferencesVersionFolder
 		named: self class startupPreferencesVersionFolderScriptName
 ]
 
 { #category : #'script generation' }
 StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection named: fileName [
-	self 
-		addAtStartup: aCollection 
-		inDirectory: self preferencesVersionFolder 
+	self
+		addAtStartup: aCollection
+		inDirectory: self preferencesVersionFolder
 		named: fileName
 ]
 
@@ -266,12 +265,12 @@ StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection n
 StartupPreferencesLoader >> buildStreamFor: aCollection [
 	^ String
 		streamContents:
-			[ :stream | 
+			[ :stream |
 			stream
 				nextPutAll: 'StartupPreferencesLoader default executeAtomicItems: {';
 				crlf.
 			aCollection
-				do: [ :item | 
+				do: [ :item |
 					stream
 						tab;
 						nextPutAll: item storeString;
@@ -286,8 +285,8 @@ StartupPreferencesLoader >> buildStreamFor: aCollection [
 
 { #category : #cleaning }
 StartupPreferencesLoader >> cleanSavedActionsAndErrors [
-	actions := Dictionary new. 
-	errors := OrderedCollection new. 
+	actions := Dictionary new.
+	errors := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -302,8 +301,8 @@ StartupPreferencesLoader >> executeAtomicItems: aCollection [
 
 	'Load Startup Preferences'
 		displayProgressFrom: 0 to: aCollection size
-		during: [:bar | 
-			aCollection doWithIndex: [:item :index | 
+		during: [:bar |
+			aCollection doWithIndex: [:item :index |
 				bar current: index.
 				(self add: item) execute ]]
 ]
@@ -312,20 +311,20 @@ StartupPreferencesLoader >> executeAtomicItems: aCollection [
 StartupPreferencesLoader >> initialize [
 
 	super initialize.
-	actions := Dictionary new. 
-	errors := OrderedCollection new. 
+	actions := Dictionary new.
+	errors := OrderedCollection new.
 ]
 
 { #category : #private }
 StartupPreferencesLoader >> load: aCollection [
 	errors removeAll.
-	aCollection do: [:file | file fileIn ].
+	aCollection do: [:file | file fileIn ]
 ]
 
 { #category : #'startup loading' }
 StartupPreferencesLoader >> loadFromDefaultLocations [
 	self class allowStartupScript ifFalse: [ ^ self ].
-	
+
 	[ self load: self retrieveFilesStream ]
 		on: StartupPreferencesLoadingError
 		do: [ :ex | ex return ]
@@ -334,28 +333,26 @@ StartupPreferencesLoader >> loadFromDefaultLocations [
 { #category : #utilities }
 StartupPreferencesLoader >> preferencesGeneralFolder [
 
-	^ self class preferencesGeneralFolder.
+	^ self class preferencesGeneralFolder
 ]
 
 { #category : #utilities }
 StartupPreferencesLoader >> preferencesVersionFolder [
 
-	^ self class preferencesVersionFolder.
+	^ self class preferencesVersionFolder
 ]
 
 { #category : #cleaning }
 StartupPreferencesLoader >> removeAllScriptsAndCleanSavedActions [
 	self removeAllScriptsFromAllDirectories.
-	self cleanSavedActionsAndErrors.
-	
+	self cleanSavedActionsAndErrors
 ]
 
 { #category : #cleaning }
 StartupPreferencesLoader >> removeAllScriptsFromAllDirectories [
 	self removeScriptFromImageDirectory.
 	self removeAllScriptsFromPreferencesVersionDirectory.
-	self removeAllScriptsFromGeneralPreferencesDirectory.
-
+	self removeAllScriptsFromGeneralPreferencesDirectory
 ]
 
 { #category : #cleaning }
@@ -365,23 +362,17 @@ StartupPreferencesLoader >> removeAllScriptsFromDirectory: aDirectory [
 
 { #category : #cleaning }
 StartupPreferencesLoader >> removeAllScriptsFromGeneralPreferencesDirectory [
-	self removeAllScriptsFromDirectory: self preferencesGeneralFolder.
-	
-	
-
+	self removeAllScriptsFromDirectory: self preferencesGeneralFolder
 ]
 
 { #category : #cleaning }
 StartupPreferencesLoader >> removeAllScriptsFromPreferencesVersionDirectory [
-	self removeAllScriptsFromDirectory: self preferencesVersionFolder.
-
-
+	self removeAllScriptsFromDirectory: self preferencesVersionFolder
 ]
 
 { #category : #cleaning }
 StartupPreferencesLoader >> removeScriptFromImageDirectory [
-	(FileSystem workingDirectory / self class startupScriptName) delete.
-
+	(FileSystem workingDirectory / self class startupScriptName) delete
 ]
 
 { #category : #'startup loading' }

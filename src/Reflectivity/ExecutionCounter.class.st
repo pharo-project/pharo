@@ -62,7 +62,7 @@ ExecutionCounter class >> initialize [
 ExecutionCounter class >> installOn: aRBProgramNode [
 	^self new
 		node: aRBProgramNode;
-		install.
+		install
 ]
 
 { #category : #'class initialization' }
@@ -78,7 +78,7 @@ ExecutionCounter class >> registerInterestToSystemAnnouncement [
 { #category : #cleanup }
 ExecutionCounter class >> removeAll [
 	self allCounters values do: [ :aWatchpoint| aWatchpoint uninstall].
-	Counters := nil.
+	Counters := nil
 ]
 
 { #category : #cleanup }
@@ -88,7 +88,7 @@ ExecutionCounter class >> removeFrom: aNode [
 ]
 
 { #category : #cleanup }
-ExecutionCounter class >> removeFromMethod: aMethod [ 
+ExecutionCounter class >> removeFromMethod: aMethod [
 	self allCounters copy do: [ :counter |
 		counter link methods
 			detect: [ :m | m == aMethod ]
@@ -114,18 +114,18 @@ ExecutionCounter >> increase [
 { #category : #initialization }
 ExecutionCounter >> initialize [
 	super initialize.
-	count := 0.
+	count := 0
 ]
 
 { #category : #'add/remove' }
 ExecutionCounter >> install [
 
-	link := MetaLink new 
+	link := MetaLink new
 				metaObject: self;
 				selector: #increase;
 				options: #(+ optionAnnounce).
 	node link: link.
-	self class allCounters at: node put: self.
+	self class allCounters at: node put: self
 ]
 
 { #category : #accessing }
@@ -152,5 +152,5 @@ ExecutionCounter >> reset [
 ExecutionCounter >> uninstall [
 	node hasExecutionCounter ifFalse: [ ^self ].
 	link uninstall.
-	self class allCounters removeKey: node.
+	self class allCounters removeKey: node
 ]

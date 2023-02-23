@@ -155,7 +155,7 @@ BoxedFloat64 >> exp [
 	correction := 1.0 + fract.
 	delta := fract * fract / 2.0.
 	div := 2.0.
-	[delta > Epsilon] whileTrue: [
+	[delta > MathApproximationEpsilon] whileTrue: [
 		correction := correction + delta.
 		div := div + 1.0.
 		delta := delta * fract / div].
@@ -216,7 +216,7 @@ BoxedFloat64 >> ln [
 	div := 1.0.
 	pow := delta := sum := x.
 	x := x negated.  "x <= 0"
-	eps := Epsilon * (n abs + 1.0).
+	eps := MathApproximationEpsilon * (n abs + 1.0).
 	[delta > eps] whileTrue: [
 		"pass one: delta is positive"
 		div := div + 1.0.

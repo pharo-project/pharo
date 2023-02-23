@@ -34,7 +34,7 @@ Class {
 
 { #category : #cleanup }
 SystemSettingsPersistence class >> cleanUp [
-	lastSettingsComputerID := nil.
+	lastSettingsComputerID := nil
 ]
 
 { #category : #accessing }
@@ -51,7 +51,7 @@ SystemSettingsPersistence class >> defaultPreferenceFileReference [
 ]
 
 { #category : #deleting }
-SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [ 
+SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [
 	self default deleteSettingNode: aSettingNode
 ]
 
@@ -59,7 +59,7 @@ SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [
 SystemSettingsPersistence class >> initialize [
 	"in order to update settings at startup.
 	should be registered at the end of standard classes but before user classes"
-	
+
 	"IMPORTANT: do not uncomment the registration to the session manager!
 	For now, SystemSettingsPersistence is handled directly by the command line handler startup.
 	We should define a startup action parsing command line arguments and able to provide them to other startup actions. Then, SystemSettingsPersistence as well as StartupPreferencesLoader, could be independent startup actions."
@@ -71,15 +71,15 @@ SystemSettingsPersistence class >> initialize [
 SystemSettingsPersistence class >> resumeSystemSettings [
 	"Load persisted settings if the last settings were not loaded from this machine"
 	| thisComputerID |
-	
+
 	thisComputerID := GlobalIdentifier uniqueInstance computerUUID.
-	lastSettingsComputerID ~= thisComputerID ifTrue: [ 
+	lastSettingsComputerID ~= thisComputerID ifTrue: [
 		lastSettingsComputerID := thisComputerID.
 		self updateSettingNodes ]
 ]
 
 { #category : #'instance creation' }
-SystemSettingsPersistence class >> settingTree: aSettingTree [ 
+SystemSettingsPersistence class >> settingTree: aSettingTree [
 	^ self new
 		fileReference: self defaultPreferenceFileReference;
 		settingTree: aSettingTree;
@@ -97,7 +97,7 @@ SystemSettingsPersistence class >> storeIdentifier: settingNodeIdentifierString 
 ]
 
 { #category : #storing }
-SystemSettingsPersistence class >> storeSettingNode: aSettingNode [ 
+SystemSettingsPersistence class >> storeSettingNode: aSettingNode [
 	self default storeSettingNode: aSettingNode
 ]
 
@@ -107,12 +107,12 @@ SystemSettingsPersistence class >> storeSettingNodes [
 ]
 
 { #category : #storing }
-SystemSettingsPersistence class >> storeSettingNodes: aCollectionOfSettingNodes [ 
+SystemSettingsPersistence class >> storeSettingNodes: aCollectionOfSettingNodes [
 	self default storeSettingNodes: aCollectionOfSettingNodes
 ]
 
 { #category : #accessing }
-SystemSettingsPersistence class >> storedValueForSettingNode: aSettingNode [ 
+SystemSettingsPersistence class >> storedValueForSettingNode: aSettingNode [
 	^ self default storedValueForSettingNode: aSettingNode
 ]
 
@@ -134,21 +134,21 @@ SystemSettingsPersistence class >> updateSettingNodes: aSettingNode [
 { #category : #accessing }
 SystemSettingsPersistence >> allStoredSettings [
 	"Load all stored settings from the file preference."
-	(self fileReference exists) 
+	(self fileReference exists)
 		ifFalse: [ ^ #() ].
-	^ SettingsStonReader new stream: self readStream; secureLoad.
+	^ SettingsStonReader new stream: self readStream; secureLoad
 ]
 
 { #category : #deleting }
-SystemSettingsPersistence >> deleteSettingNode: aSettingNode [ 
+SystemSettingsPersistence >> deleteSettingNode: aSettingNode [
 	self deleteSettingNodes: (Array with: aSettingNode)
 ]
 
 { #category : #deleting }
-SystemSettingsPersistence >> deleteSettingNodes: aCollection [ 
+SystemSettingsPersistence >> deleteSettingNodes: aCollection [
 	| storedSettings reducedStoredSettings |
 	storedSettings := self storedSettingsForSettingNodes: aCollection.
-	reducedStoredSettings := self allStoredSettings difference: storedSettings . 
+	reducedStoredSettings := self allStoredSettings difference: storedSettings .
 	self storeExactStoredSettings: reducedStoredSettings
 ]
 
@@ -180,7 +180,7 @@ SystemSettingsPersistence >> mergeStoredSettings: aCollectionOfStoredSettings [
 ]
 
 { #category : #accessing }
-SystemSettingsPersistence >> nodeNamed: aString [ 
+SystemSettingsPersistence >> nodeNamed: aString [
 	^ self settingTree nodeNamed: aString
 ]
 
@@ -212,13 +212,13 @@ SystemSettingsPersistence >> settingTree [
 ]
 
 { #category : #accessing }
-SystemSettingsPersistence >> settingTree: aSettingTree [ 
+SystemSettingsPersistence >> settingTree: aSettingTree [
 	settingTree := aSettingTree
 ]
 
 { #category : #enumerating }
-SystemSettingsPersistence >> settingsNodesFromIdentifiers: aCollection [ 
-	^ aCollection 
+SystemSettingsPersistence >> settingsNodesFromIdentifiers: aCollection [
+	^ aCollection
 			collect: [ :eachIdentifier |
 				self settingTree deeplyDetect: [ :eachSettingNode |
 					eachSettingNode settingNodeIdentifier = eachIdentifier ] ]
@@ -264,7 +264,7 @@ SystemSettingsPersistence >> storeSettingNode: aSettingNode [
 
 { #category : #storing }
 SystemSettingsPersistence >> storeSettingNodes [
-	self storeSettingNodes: self settingTree nodeList.
+	self storeSettingNodes: self settingTree nodeList
 ]
 
 { #category : #storing }
@@ -272,7 +272,7 @@ SystemSettingsPersistence >> storeSettingNodes: aCollectionOfSettingNodes [
 	"It stores a collection of settings on the disk."
 	| storedNodes |
 	storedNodes := StoredSettingsFactory new fromSettingNodes: aCollectionOfSettingNodes.
-	self storeStoredSettings: storedNodes.
+	self storeStoredSettings: storedNodes
 ]
 
 { #category : #storing }
@@ -286,8 +286,8 @@ SystemSettingsPersistence >> storeStoredSettings: aCollectionOfStoredSettings [
 { #category : #enumerating }
 SystemSettingsPersistence >> storedSettingForSettingNode: aSettingNode [
 	"It returns a stored setting for the setting node."
-	^ self allStoredSettings 
-				detect: [ :eachStoredSetting | 
+	^ self allStoredSettings
+				detect: [ :eachStoredSetting |
 					eachStoredSetting isForSettingNode: aSettingNode ]
 				ifNone: [ nil ]
 ]
@@ -295,8 +295,8 @@ SystemSettingsPersistence >> storedSettingForSettingNode: aSettingNode [
 { #category : #enumerating }
 SystemSettingsPersistence >> storedSettingsForSettingNodes: aCollectionOfSettingNodes [
 	"It returns stored settings for the setting nodes."
-	^ self allStoredSettings 
-				select: [ :eachStoredSetting | 
+	^ self allStoredSettings
+				select: [ :eachStoredSetting |
 					aCollectionOfSettingNodes anySatisfy: [ :eachSettingNode |
 						eachStoredSetting isForSettingNode: eachSettingNode ] ]
 ]
@@ -323,7 +323,7 @@ SystemSettingsPersistence >> updateSettingNodes: aCollectionOfSettingNodes [
 	| storedSettings |
 	storedSettings := self allStoredSettings.
 	aCollectionOfSettingNodes do: [ :eachSettingNode |
-		storedSettings 
+		storedSettings
 			detect: [ :eachStoredSetting | eachStoredSetting isForSettingNode: eachSettingNode ]
 			ifFound: [ :storedSetting | storedSetting updateSettingNode: eachSettingNode ]
 			ifNone: [ "ignore it" ] ]

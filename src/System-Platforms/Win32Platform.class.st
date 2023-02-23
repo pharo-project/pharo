@@ -17,7 +17,7 @@ Class {
 { #category : #testing }
 Win32Platform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
-	^ Smalltalk vm operatingSystemName = 'Win32' and: [ 
+	^ Smalltalk vm operatingSystemName = 'Win32' and: [
 		  Smalltalk vm is32bit ]
 ]
 

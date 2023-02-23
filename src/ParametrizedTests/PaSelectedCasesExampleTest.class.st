@@ -63,6 +63,6 @@ PaSelectedCasesExampleTest >> result: anObject [
 
 { #category : #tests }
 PaSelectedCasesExampleTest >> testSum [
-	
+
 	self assert: number1 + number2 equals: result
 ]

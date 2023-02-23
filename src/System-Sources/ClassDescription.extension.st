@@ -6,7 +6,7 @@ ClassDescription >> logMethodSource: aText forMethod: aCompiledMethod inCategory
 		putSource: aText
 		class: self
 		category: category
-		withStamp: changeStamp 
+		withStamp: changeStamp
 		priorMethod: (self
 					compiledMethodAt: aCompiledMethod selector
 					ifAbsent: [])

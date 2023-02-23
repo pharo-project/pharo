@@ -124,8 +124,8 @@ RBScanner class >> new [
 ]
 
 { #category : #'instance creation' }
-RBScanner class >> on: aStream [
-	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens. Reader may consider scanTokens: as a better way to use the class."
+RBScanner class >> on: aStream [ 
+	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens."
 	"((RBScanner on: 'Pharo (, { exist ]' readStream) next;  next) value >>> $("
 
 	| scanner |
@@ -159,13 +159,6 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 	| scanner |
 	scanner := self on: aStringOrStream readStream.
 	^ scanner contents
-]
-
-{ #category : #'public api' }
-RBScanner class >> scanTokens: aStringOrStream [
-	"Return the tokens (and not the scanner token objects)."
-
-	^ (self scanTokenObjects: aStringOrStream) collect: [ :t | t value ]
 ]
 
 { #category : #testing }
@@ -322,6 +315,21 @@ RBScanner >> previousStepPosition [
 	^characterType = #eof
 		ifTrue: [stream position]
 		ifFalse: [stream position - 1]
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanBackFrom: start [
+	"Return the verbatim content from the `start` position until the current position.
+	 The starting and current character are both included.
+	 The stream status (inclutiong its position) is preserved"
+
+	| len string stop |
+	stop := stream position.
+	len := stop - start + 1.
+	stream position: start - 1.
+	string := stream next: len.
+	stream position: stop.
+	^ string
 ]
 
 { #category : #'private - scanning' }
@@ -505,19 +513,23 @@ RBScanner >> scanLiteralCharacter [
 
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralString [
-	"String can contain anything, even faulty code."
-	| string |
-	[stream atEnd ifTrue: [
-		self step. "to handle eof"
-		^ self scanError: 'Unmatched '' in string literal.'].
-	string := stream upTo: $'.
-	stream peekBack = $' ifFalse: [
-		"the peek logic here is because #upTo: does not tell if given char was found"
-		buffer nextPutAll: string.
-		self step. "to handle eof"
-		^ self scanError: 'Unmatched '' in string literal.'].
+	"The current character is the first one after the starting quote"
 
-	self step = $'] whileTrue: [
+	| start string |
+	[start := stream position.
+	string := stream upTo: $'.
+	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
+		"the peek logic here is because #upTo: does not tell if given char was found.
+		So if the stream did not move of if the last char is not a quote, then we have a problem."
+		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
+		self step. "to handle eof"
+		^ RBErrorToken
+			value: string
+			start: tokenStart
+			cause: 'Unmatched '' in string literal.'
+			location: stream position + 1].
+
+	 self step = $'] whileTrue: [
 		buffer nextPutAll: string; nextPut: $'.
 		string := ''].
 
@@ -542,15 +554,21 @@ RBScanner >> scanName [
 
 { #category : #'private - scanning' }
 RBScanner >> scanNumber [
-	| start number stop string |
+	| start number stop string gotError |
 	start := stream position.
 	stream position: start - 1.
-	number := [NumberParser parse: stream] on: Error do: [:err | self scannerError: err messageText].
+	gotError := nil.
+	number := NumberParser parse: stream onError: [ :message | gotError := message ].
 	stop := stream position.
-	stream position: start - 1.
-	string := stream next: stop - start + 1.
-	stream position: stop.
+	string := self scanBackFrom: start.
 	self step.
+	gotError ifNotNil: [
+	^ RBErrorToken
+		value: string
+		start: tokenStart
+		cause: gotError
+		location: stop+1
+		].
 	^RBNumberLiteralToken
 		value: number
 		start: start
@@ -584,6 +602,7 @@ RBScanner >> scanStringSymbol [
 	"Only supposed to be used when encountering an apostrophe."
 	| literalToken |
 	literalToken := self scanLiteralString.
+	literalToken isError ifTrue: [ ^ literalToken. ].
 	literalToken value: literalToken value asSymbol.
 	^literalToken
 ]

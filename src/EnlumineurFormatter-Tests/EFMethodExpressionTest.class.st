@@ -335,7 +335,7 @@ EFMethodExpressionTest >> testBigMethod [
 	<pragma>
 	| tmp |
 	tmp := 1.
-	tmp to: 10 do: [:i | 
+	tmp to: 10 do: [:i |
 		Transcript
 			show: i;
 			cr;
@@ -407,7 +407,7 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 	source := self formatter format: expr.
 	self assert: source equals:
 'aMethod
-	1 to: 10 do: [:i | 
+	1 to: 10 do: [:i |
 		Transcript
 			show: i;
 			cr;

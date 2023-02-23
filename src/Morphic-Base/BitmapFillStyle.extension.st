@@ -1,10 +1,10 @@
 Extension { #name : #BitmapFillStyle }
 
 { #category : #'*Morphic-Base-Balloon' }
-BitmapFillStyle >> grabNewGraphicIn: aMorph event: evt [ 
+BitmapFillStyle >> grabNewGraphicIn: aMorph event: evt [
 	"Used by any morph that can be represented by a graphic"
 	| fill |
-	fill := Form fromUser.
+	fill := Screenshot new formScreenshotFromUserSelection.
 	fill boundingBox area = 0
 		ifTrue: [^ self].
 	self form: fill.
@@ -18,5 +18,5 @@ BitmapFillStyle >> newForm: aForm forMorph: aMorph [
 	self form: aForm.
 	self direction: (aForm width @ 0).
 	self normal: (0 @ aForm height).
-	aMorph changed.
+	aMorph changed
 ]

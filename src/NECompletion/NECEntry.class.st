@@ -24,7 +24,7 @@ NECEntry class >> contents: aString node: aNode [
 
 { #category : #accessing }
 NECEntry class >> spaceAfterCompletion [
-	
+
 	^ SpaceAfterCompletion
 ]
 
@@ -35,7 +35,7 @@ NECEntry class >> spaceAfterCompletion: aBoolean [
 ]
 
 { #category : #operations }
-NECEntry >> <= aECEntry [ 
+NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
@@ -88,14 +88,14 @@ NECEntry >> label [
 ]
 
 { #category : #printing }
-NECEntry >> printOn: aStream [ 
-	aStream 
+NECEntry >> printOn: aStream [
+	aStream
 		nextPutAll: self class name;
 		nextPut: $(;
 		nextPutAll: contents;
 		nextPut: $,.
 
 	self hightlightSymbol ifNotNil: [ aStream nextPutAll: self hightlightSymbol ].
-	
+
 	aStream nextPut: $)
 ]

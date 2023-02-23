@@ -13,17 +13,17 @@ Class {
 { #category : #testing }
 SycExtractSetUpRefactoring class >> canBeExecutedInContext: aToolContext [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ 
-		  aToolContext isMethodSelected not and: [ 
+	^ (super canBeExecutedInContext: aToolContext) and: [
+		  aToolContext isMethodSelected not and: [
 			  aToolContext lastSelectedMethod selector isTestSelector ] ]
 ]
 
 { #category : #executing }
-SycExtractSetUpRefactoring >> asRefactorings [ 
+SycExtractSetUpRefactoring >> asRefactorings [
 	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [ 
+	selectedInterval := selectedTextInterval ifEmpty: [
 		                    sourceNode sourceInterval ].
-	refactoring := RBExtractSetUpMethodAndOccurrences 
+	refactoring := RBExtractSetUpMethodAndOccurrences
 		extract: selectedInterval
 		from: method selector
 		in: method origin.
@@ -32,21 +32,21 @@ SycExtractSetUpRefactoring >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycExtractSetUpRefactoring >> defaultMenuIconName [ 
+SycExtractSetUpRefactoring >> defaultMenuIconName [
 	^ #glamorousRestart
 ]
 
 { #category : #accessing }
-SycExtractSetUpRefactoring >> defaultMenuItemName [ 	
+SycExtractSetUpRefactoring >> defaultMenuItemName [
 	^ 'Extract setUp'
 ]
 
 { #category : #executing }
-SycExtractSetUpRefactoring >> executeRefactoring [ 
+SycExtractSetUpRefactoring >> executeRefactoring [
 	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [ 
+	selectedInterval := selectedTextInterval ifEmpty: [
 		                    sourceNode sourceInterval ].
-	refactoring := RBExtractSetUpMethodAndOccurrences 
+	refactoring := RBExtractSetUpMethodAndOccurrences
 		extract: selectedInterval
 		from: method selector
 		in: method origin.
@@ -57,6 +57,6 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 { #category : #preparation }
 SycExtractSetUpRefactoring >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
-	
-	selectedTextInterval := aSourceCodeContext selectedTextInterval.
+
+	selectedTextInterval := aSourceCodeContext selectedTextInterval
 ]

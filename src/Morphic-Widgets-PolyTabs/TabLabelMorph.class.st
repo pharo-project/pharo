@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 TabLabelMorph >> adoptPaneColor: paneColor [
 	"Use the theme for fillStyle and border."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self fillStyle: self fillStyleToUse.
@@ -25,7 +25,7 @@ TabLabelMorph >> adoptPaneColor: paneColor [
 { #category : #accessing }
 TabLabelMorph >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
-	
+
 	^self isSelected
 		ifTrue: [self theme tabLabelSelectedBorderStyleFor: self]
 		ifFalse: [self theme tabLabelNormalBorderStyleFor: self]
@@ -45,7 +45,7 @@ TabLabelMorph >> fillStyleToUse [
 	"Answer the basic fill style for the receiver."
 
 	^self isSelected
-		ifTrue: [self selectedFillStyle] 
+		ifTrue: [self selectedFillStyle]
 		ifFalse: [self normalFillStyle]
 ]
 
@@ -71,7 +71,7 @@ TabLabelMorph >> font: aFont [
 { #category : #initialization }
 TabLabelMorph >> initialize [
 	"Initialize the receiver."
-	
+
 	super initialize.
 	self fillStyle: self fillStyleToUse.
 	self borderStyle: self borderStyleToUse
@@ -151,7 +151,7 @@ TabLabelMorph >> minWidth [
 { #category : #style }
 TabLabelMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
-	
+
 	^self theme tabLabelNormalFillStyleFor: self
 ]
 
@@ -180,7 +180,7 @@ TabLabelMorph >> selected: aBoolean [
 { #category : #style }
 TabLabelMorph >> selectedFillStyle [
 	"Return the selected fillStyle of the receiver."
-	
+
 	^self theme tabLabelSelectedFillStyleFor: self
 ]
 

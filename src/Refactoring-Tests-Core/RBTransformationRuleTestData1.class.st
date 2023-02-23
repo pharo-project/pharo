@@ -16,6 +16,6 @@ RBTransformationRuleTestData1 >> classVarA [
 ]
 
 { #category : #accessing }
-RBTransformationRuleTestData1 >> foo [ 
+RBTransformationRuleTestData1 >> foo [
 	^ foo
 ]

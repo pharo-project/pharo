@@ -11,6 +11,6 @@ Class {
 }
 
 { #category : #filtering }
-SettingFilter >> keepSettingTreeNode: aSettingNode [ 
+SettingFilter >> keepSettingTreeNode: aSettingNode [
 	^ false
 ]

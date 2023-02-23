@@ -77,7 +77,7 @@ RBAddMethodChange >> asUndoOperation [
 { #category : #accessing }
 RBAddMethodChange >> changeForClass: aClassName selector: aSelector [
 
-	^ (isMeta not and: [ 
+	^ (isMeta not and: [
 		   self selector = aSelector and: [ className = aClassName ] ])
 		  ifTrue: [ self ]
 		  ifFalse: [ nil ]
@@ -86,7 +86,7 @@ RBAddMethodChange >> changeForClass: aClassName selector: aSelector [
 { #category : #accessing }
 RBAddMethodChange >> changeForMetaclass: aClassName selector: aSelector [
 
-	^ (isMeta and: [ 
+	^ (isMeta and: [
 		   self selector = aSelector and: [ className = aClassName ] ])
 		  ifTrue: [ self ]
 		  ifFalse: [ nil ]
@@ -153,14 +153,14 @@ RBAddMethodChange >> hash [
 { #category : #accessing }
 RBAddMethodChange >> oldVersionTextToDisplay [
 	| class |
-	
-	class := (onSystemDictionary  
+
+	class := (onSystemDictionary
 					classNamed: className)
 					ifNil: [ ^ super oldVersionTextToDisplay ].
-				
+
 	isMeta ifTrue: [ class := class classSide ].
-				
-	^ class methodDict 
+
+	^ class methodDict
 			at: self selector
 			ifPresent: [:method | method sourceCode ]
 			ifAbsent: [ super oldVersionTextToDisplay ]
@@ -222,7 +222,7 @@ RBAddMethodChange >> protocols: aCollectionOrString [
 { #category : #accessing }
 RBAddMethodChange >> selector [
 
-	selector ifNil: [ 
+	selector ifNil: [
 		selector := self parserClass parseMethodPattern: source.
 		selector ifNil: [ selector := #unknown ] ].
 	^ selector

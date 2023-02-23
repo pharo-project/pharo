@@ -6,30 +6,30 @@ Behavior >> allTemps [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Behavior >> compile: code [ 
-	"Compile the argument, code, as source code in the context of the 
-	receiver. Create an error notification if the code can not be compiled. 
-	The argument is either a string or an object that converts to a string or a 
+Behavior >> compile: code [
+	"Compile the argument, code, as source code in the context of the
+	receiver. Create an error notification if the code can not be compiled.
+	The argument is either a string or an object that converts to a string or a
 	PositionableStream on an object that converts to a string."
 
 	^self compile: code notifying: nil
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Behavior >> compile: code notifying: requestor [ 
-	"Compile the argument, code, as source code in the context of the 
-	receiver and insEtall the result in the receiver's method dictionary. The 
-	second argument, requestor, is to be notified if an error occurs. The 
-	argument code is either a string or an object that converts to a string or 
+Behavior >> compile: code notifying: requestor [
+	"Compile the argument, code, as source code in the context of the
+	receiver and insEtall the result in the receiver's method dictionary. The
+	second argument, requestor, is to be notified if an error occurs. The
+	argument code is either a string or an object that converts to a string or
 	a PositionableStream. This method also saves the source code."
-	
+
 	| method |
 	method  := self compiler
 		source: code;
 		requestor: requestor;
 		failBlock: [ ^nil ];
 		compile.
-		
+
 	method putSource: code
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Behavior method'; cr].
 	self addSelector: method selector withMethod: method.
@@ -46,7 +46,7 @@ Behavior >> compileAllFrom: oldClass [
 	"Compile all the methods in the receiver's method dictionary.
 	This validates sourceCode and variable references and forces
 	all methods to use the current bytecode set"
-	oldClass localSelectors do: [:sel | self recompile: sel from: oldClass].
+	oldClass localSelectors do: [:sel | self recompile: sel from: oldClass]
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -72,9 +72,9 @@ Behavior >> evaluate: aString [
 
 { #category : #'*OpalCompiler-Core' }
 Behavior >> lookupVar: aName [
-	^ self classLayout 
-		resolveSlot: aName asSymbol 
-		ifFound: [:var | var] 
+	^ self classLayout
+		resolveSlot: aName asSymbol
+		ifFound: [:var | var]
 		ifNone: [self bindingOf: aName]
 ]
 
@@ -118,7 +118,7 @@ Behavior >> recompile: selector from: oldClass [
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	self addSelector: selector withRecompiledMethod: newMethod.
+	self addSelector: selector withRecompiledMethod: newMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }

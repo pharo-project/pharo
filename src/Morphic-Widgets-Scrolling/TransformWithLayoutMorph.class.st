@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #layout }
-TransformWithLayoutMorph >> doLayoutIn: layoutBounds [ 
+TransformWithLayoutMorph >> doLayoutIn: layoutBounds [
 	"Compute a new layout based on the given layout bounds."
 
 	"Note: Testing for #bounds or #layoutBounds would be sufficient to
@@ -24,7 +24,7 @@ TransformWithLayoutMorph >> doLayoutIn: layoutBounds [
 	self adjustLayoutBounds.
 	fullBounds := self privateFullBounds.
 	box := self outerBounds.
-	box = priorBounds 
+	box = priorBounds
 		ifFalse: [self invalidRect: (priorBounds quickMerge: box)]
 ]
 

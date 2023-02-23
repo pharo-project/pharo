@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #running }
-RBTest >> someClasses [ 
+RBTest >> someClasses [
 	RBRefactoryTestDataApp new
 ]
 
 { #category : #running }
-RBTest >> testExample1 [ 	
+RBTest >> testExample1 [
 	self someClasses.
 	aString := 'Example'.
 	self assert: 4 > 5 equals: false

@@ -51,7 +51,7 @@ DAPackageCycleDetectorTest >> setUp [
 	packageE := DAPackage on: (RPackageSet named: 'E').
 	cycleA := DAPackageCycle new.
 	cycleB := DAPackageCycle new.
-	cycleC := DAPackageCycle new.
+	cycleC := DAPackageCycle new
 ]
 
 { #category : #tests }
@@ -97,7 +97,7 @@ DAPackageCycleDetectorTest >> testCycleAlreadyFound [
 	otherCycle addPackage: packageA.
 	self deny: (aPackageCycleDetection cycleAlreadyFound: otherCycle).
 	otherCycle addPackage: packageB.
-	self assert: (aPackageCycleDetection cycleAlreadyFound: otherCycle).
+	self assert: (aPackageCycleDetection cycleAlreadyFound: otherCycle)
 ]
 
 { #category : #tests }
@@ -245,8 +245,7 @@ DAPackageCycleDetectorTest >> testfindCycles [
 	(packageE) add: (DAPackageDependency from: (packageE) to: (packageA)).
 	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
 	aPackageCycleDetection findCycles: aPDPackageRelation.
-	self assert: (aPackageCycleDetection  cycles anySatisfy: [ :cycle | ((cycle size = 2) or: (cycle size= 4)) or: (cycle size = 3) ]).
-	
+	self assert: (aPackageCycleDetection  cycles anySatisfy: [ :cycle | ((cycle size = 2) or: (cycle size= 4)) or: (cycle size = 3) ])
 ]
 
 { #category : #utilities }

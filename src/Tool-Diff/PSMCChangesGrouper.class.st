@@ -24,7 +24,7 @@ PSMCChangesGrouper class >> group: aCollectionOfPatches [
 
 { #category : #grouping }
 PSMCChangesGrouper >> ensureClassChangeWrapperNamed: aClassName [
-	
+
 	(classes includes: aClassName)
 		ifFalse: [ classes add: aClassName.
 				classChanges add: (PSMCClassChangeWrapper with: aClassName model: model ) ]
@@ -44,13 +44,13 @@ PSMCChangesGrouper >> initialize [
 	super initialize.
 	classChanges := OrderedCollection new.
 	nonClassChanges := OrderedCollection new.
-	classes := Set new.
+	classes := Set new
 ]
 
 { #category : #grouping }
-PSMCChangesGrouper >> model: aCollection [ 
+PSMCChangesGrouper >> model: aCollection [
 
-	model := aCollection.
+	model := aCollection
 ]
 
 { #category : #grouping }
@@ -60,18 +60,18 @@ PSMCChangesGrouper >> visit: aMCOperation [
 	previous := currentOperation.
 	currentOperation := aMCOperation.
 	currentOperation definition accept: self.
-	currentOperation := previous.
+	currentOperation := previous
 ]
 
 { #category : #visitor }
-PSMCChangesGrouper >> visitClassDefinition: aMCClassDefinition [ 
-	
+PSMCChangesGrouper >> visitClassDefinition: aMCClassDefinition [
+
 	self ensureClassChangeWrapperNamed: aMCClassDefinition fullClassName
 ]
 
 { #category : #visitor }
-PSMCChangesGrouper >> visitClassTraitDefinition: aMCClassTraitDefinition [ 
-	
+PSMCChangesGrouper >> visitClassTraitDefinition: aMCClassTraitDefinition [
+
 	"Do nothing for class traits (similar to #visitMetaclassDefinition:)"
 ]
 
@@ -82,20 +82,20 @@ PSMCChangesGrouper >> visitDefaultDefinition: aDefinition [
 ]
 
 { #category : #visitor }
-PSMCChangesGrouper >> visitMetaclassDefinition: aMCClassDefinition [ 
-	
+PSMCChangesGrouper >> visitMetaclassDefinition: aMCClassDefinition [
+
 	"Do nothing for metaclasses"
 ]
 
 { #category : #visitor }
-PSMCChangesGrouper >> visitMethodDefinition: aMCMethodDefinition [ 
-	
+PSMCChangesGrouper >> visitMethodDefinition: aMCMethodDefinition [
+
 	self ensureClassChangeWrapperNamed: aMCMethodDefinition fullClassName
 ]
 
 { #category : #visitor }
-PSMCChangesGrouper >> visitOrganizationDefinition: aMCOrganizationDefinition [ 
-	
+PSMCChangesGrouper >> visitOrganizationDefinition: aMCOrganizationDefinition [
+
 	nonClassChanges add: (currentOperation patchWrapper model: model)
 ]
 
@@ -106,7 +106,7 @@ PSMCChangesGrouper >> visitScriptDefinition: aMCScriptDefinition [
 ]
 
 { #category : #visitor }
-PSMCChangesGrouper >> visitTraitDefinition: aMCTraitDefinition [ 
-	
+PSMCChangesGrouper >> visitTraitDefinition: aMCTraitDefinition [
+
 	self ensureClassChangeWrapperNamed: aMCTraitDefinition fullClassName
 ]

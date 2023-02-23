@@ -16,14 +16,14 @@ Class {
 }
 
 { #category : #accessing }
-ReferenceFinder class >> findAllPathsTo: anObject [ 
+ReferenceFinder class >> findAllPathsTo: anObject [
 	"self findAllPathsTo: (Object compiledMethodAt: #printString)"
 
 	^self findAllPathsTo: anObject from: Smalltalk
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findAllPathsTo: anObject from: fromObject [ 
+ReferenceFinder class >> findAllPathsTo: anObject from: fromObject [
 	"self findAllPathsTo: (Object compiledMethodAt: #printString) from: Object"
 
 	^(self new)
@@ -32,14 +32,14 @@ ReferenceFinder class >> findAllPathsTo: anObject from: fromObject [
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior [ 
+ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior [
 	"self findAllPathsToInstanceOf: RefactoringBrowser"
 
 	^self findAllPathsToInstanceOf: aBehavior from: Smalltalk
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior from: fromObject [ 
+ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior from: fromObject [
 	"self findAllPathsToInstanceOf: RefactoringBrowser from: ScheduledControllers"
 
 	^(self new)
@@ -48,12 +48,12 @@ ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior from: fromObject [
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findPathTo: anObject [ 
+ReferenceFinder class >> findPathTo: anObject [
 	^self findPathTo: anObject from: Smalltalk
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findPathTo: anObject from: fromObject [ 
+ReferenceFinder class >> findPathTo: anObject from: fromObject [
 	"self findPathTo: RefactoringManager instance from: Object"
 
 	^(self new)
@@ -62,12 +62,12 @@ ReferenceFinder class >> findPathTo: anObject from: fromObject [
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findPathToInstanceOf: aBehavior [ 
+ReferenceFinder class >> findPathToInstanceOf: aBehavior [
 	^self findPathToInstanceOf: aBehavior from: Smalltalk
 ]
 
 { #category : #accessing }
-ReferenceFinder class >> findPathToInstanceOf: aBehavior from: fromObject [ 
+ReferenceFinder class >> findPathToInstanceOf: aBehavior from: fromObject [
 	"self findPathToInstanceOf: RefactoringManager from: Object"
 
 	^(self new)
@@ -108,7 +108,7 @@ ReferenceFinder >> _objectSize: anObject [
 ]
 
 { #category : #private }
-ReferenceFinder >> addBacklinkFrom: newObject to: anObject [ 
+ReferenceFinder >> addBacklinkFrom: newObject to: anObject [
 	backlinks last at: newObject put: anObject
 ]
 
@@ -118,21 +118,21 @@ ReferenceFinder >> addBacklinkLevel [
 ]
 
 { #category : #private }
-ReferenceFinder >> backlinkFor: anObject [ 
+ReferenceFinder >> backlinkFor: anObject [
 	| toObject |
-	backlinks do: 
-			[:each | 
+	backlinks do:
+			[:each |
 			toObject := each at: anObject ifAbsent: [nil].
 			toObject notNil ifTrue: [^toObject]].
 	^nil
 ]
 
 { #category : #private }
-ReferenceFinder >> computePathFor: anObject [ 
+ReferenceFinder >> computePathFor: anObject [
 	| path object |
 	path := OrderedCollection new.
 	object := anObject.
-	[object isNil] whileFalse: 
+	[object isNil] whileFalse:
 			[path add: object.
 			object := self backlinkFor: object].
 	^path reverse
@@ -144,7 +144,7 @@ ReferenceFinder >> find [
 ]
 
 { #category : #accessing }
-ReferenceFinder >> findAllPaths: aBlock [ 
+ReferenceFinder >> findAllPaths: aBlock [
 	| paths |
 	paths := OrderedCollection new.
 	foundBlock := [:path | paths add: path].
@@ -154,7 +154,7 @@ ReferenceFinder >> findAllPaths: aBlock [
 ]
 
 { #category : #accessing }
-ReferenceFinder >> findPath: aBlock [ 
+ReferenceFinder >> findPath: aBlock [
 	foundBlock := [:path | ^path].
 	testBlock := aBlock.
 	self find.
@@ -162,7 +162,7 @@ ReferenceFinder >> findPath: aBlock [
 ]
 
 { #category : #private }
-ReferenceFinder >> hasSearched: newObject [ 
+ReferenceFinder >> hasSearched: newObject [
 	^backlinks anySatisfy: [:each | each includesKey: newObject]
 ]
 
@@ -172,7 +172,7 @@ ReferenceFinder >> identityDictionaryClass [
 ]
 
 { #category : #accessing }
-ReferenceFinder >> ignore: anObject [ 
+ReferenceFinder >> ignore: anObject [
 	self addBacklinkFrom: anObject to: anObject
 ]
 
@@ -190,19 +190,19 @@ ReferenceFinder >> printToDoNotice [
 ]
 
 { #category : #private }
-ReferenceFinder >> processLinkTo: newObject from: anObject [ 
-	newObject class instSize + newObject basicSize = 0 
-		ifTrue: 
-			[^(testBlock value: newObject) 
-				ifTrue: 
+ReferenceFinder >> processLinkTo: newObject from: anObject [
+	newObject class instSize + newObject basicSize = 0
+		ifTrue:
+			[^(testBlock value: newObject)
+				ifTrue:
 					[(self computePathFor: anObject)
 						add: newObject;
 						yourself]
 				ifFalse: [nil]].
-	(self hasSearched: newObject) 
-		ifFalse: 
-			[(testBlock value: newObject) 
-				ifTrue: 
+	(self hasSearched: newObject)
+		ifFalse:
+			[(testBlock value: newObject)
+				ifTrue:
 					[^(self computePathFor: anObject)
 						add: newObject;
 						yourself].
@@ -213,20 +213,20 @@ ReferenceFinder >> processLinkTo: newObject from: anObject [
 
 { #category : #private }
 ReferenceFinder >> searchForObject [
-	
+
 	[| objects |
 	self printToDoNotice.
 	objects := objectsLeft.
 	objectsLeft := OrderedCollection new.
 	self addBacklinkLevel.
-	objects do: 
-			[:each | 
+	objects do:
+			[:each |
 			| path |
-			(path := self searchVariablesIn: each) notNil 
+			(path := self searchVariablesIn: each) notNil
 				ifTrue: [foundBlock value: path].
-			(path := self searchIndicesIn: each) notNil 
+			(path := self searchIndicesIn: each) notNil
 				ifTrue: [foundBlock value: path]].
-	objectsLeft isEmpty] 
+	objectsLeft isEmpty]
 			whileFalse
 ]
 
@@ -237,7 +237,7 @@ ReferenceFinder >> searchIndicesIn: anObject [
 	class := self _objectClass: anObject.
 	class isBits ifTrue: [ ^ nil ].
 	class isWeak ifTrue: [ ^ nil ].
-	1 to: (self _objectSize: anObject) do: [ :i | 
+	1 to: (self _objectSize: anObject) do: [ :i |
 		| path |
 		path := self
 			        processLinkTo: (self _object: anObject at: i)
@@ -258,7 +258,7 @@ ReferenceFinder >> searchVariablesIn: anObject [
 ]
 
 { #category : #initialization }
-ReferenceFinder >> startFrom: anObject [ 
+ReferenceFinder >> startFrom: anObject [
 	backlinks := OrderedCollection new.
 	self addBacklinkLevel.
 	objectsLeft := OrderedCollection with: anObject.

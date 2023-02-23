@@ -19,7 +19,7 @@ RPackageStringExtensionTest >> testAsPackageIfAbsent [
 
 { #category : #tests }
 RPackageStringExtensionTest >> testAsPackageWithError [
-	self 
+	self
 		should: ['___inexistent___package___' asPackage]
 		raise: NotFound
 ]

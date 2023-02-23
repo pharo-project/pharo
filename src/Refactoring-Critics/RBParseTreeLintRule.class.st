@@ -23,19 +23,19 @@ RBParseTreeLintRule class >> isVisible [
 { #category : #accessing }
 RBParseTreeLintRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ParseTreeLintRule'
 ]
 
 { #category : #running }
-RBParseTreeLintRule >> basicCheck: aMethod [ 
-	(self matcher canMatchMethod: aMethod) 
+RBParseTreeLintRule >> basicCheck: aMethod [
+	(self matcher canMatchMethod: aMethod)
 		ifFalse: [ ^ false ].
 	^ (self matcher executeTree: aMethod ast initialAnswer: nil) isNotNil
 ]
 
 { #category : #running }
-RBParseTreeLintRule >> checkMethod: aMethod [ 
+RBParseTreeLintRule >> checkMethod: aMethod [
 	(self basicCheck: aMethod) ifTrue: [ result addMethod: aMethod ]
 ]
 

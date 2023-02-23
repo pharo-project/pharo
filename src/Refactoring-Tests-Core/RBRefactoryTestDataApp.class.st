@@ -20,7 +20,7 @@ RBRefactoryTestDataApp >> assignmentInBlock [
 { #category : #lint }
 RBRefactoryTestDataApp >> assignmentInIfTrue [
 	| variable |
-	self isVariable 
+	self isVariable
 		ifTrue: [variable := self]
 		ifFalse: [variable := self printString].
 	^variable
@@ -29,7 +29,7 @@ RBRefactoryTestDataApp >> assignmentInIfTrue [
 { #category : #lint }
 RBRefactoryTestDataApp >> atIfAbsent [
 	^ Smalltalk at: #MyTest
-		ifAbsent: 
+		ifAbsent:
 			[| collection |
 			collection := #().
 			Smalltalk at: #MyTest put: collection]
@@ -56,7 +56,7 @@ RBRefactoryTestDataApp >> callMethod [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> called: anObject on1: aBlock [ 
+RBRefactoryTestDataApp >> called: anObject on1: aBlock [
 	| each |
 	each := anObject printString.
 	Transcript
@@ -66,7 +66,7 @@ RBRefactoryTestDataApp >> called: anObject on1: aBlock [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> called: anObject on: aBlock [ 
+RBRefactoryTestDataApp >> called: anObject on: aBlock [
 	Transcript
 		show: anObject printString;
 		cr.
@@ -77,7 +77,7 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock [
 RBRefactoryTestDataApp >> caller [
 	| anObject |
 	anObject := 5.
-	self 
+	self
 		called: anObject + 1
 		on: [^anObject]
 ]
@@ -87,8 +87,8 @@ RBRefactoryTestDataApp >> caller1 [
 	| anObject |
 	anObject := 5.
 	self called: anObject + 1
-		on1: 
-			[:each | 
+		on1:
+			[:each |
 			each printString.
 			^anObject]
 ]
@@ -112,8 +112,8 @@ RBRefactoryTestDataApp >> collectionMessagesToExternalObject [
 RBRefactoryTestDataApp >> collectionProtocol [
 	| newCollection |
 	newCollection := OrderedCollection new.
-	(1 to: 10) asOrderedCollection do: 
-			[:each | 
+	(1 to: 10) asOrderedCollection do:
+			[:each |
 			| new |
 			new := each * 2.
 			newCollection add: new].
@@ -154,7 +154,7 @@ RBRefactoryTestDataApp >> demoMethodWithDuplicates [
 
 { #category : #tests }
 RBRefactoryTestDataApp >> demoRenameMethod: arg1 PermuteArgs: arg2 [
-	self do: arg1. 
+	self do: arg1.
 	self do: arg2.
 	^ arg1 > arg2
 ]
@@ -166,11 +166,11 @@ RBRefactoryTestDataApp >> detectContains [
 
 { #category : #lint }
 RBRefactoryTestDataApp >> endTrueFalse [
-	self isVariable 
-		ifTrue: 
+	self isVariable
+		ifTrue:
 			[self printString.
 			self isVariable printString]
-		ifFalse: 
+		ifFalse:
 			[self printString.
 			^4]
 ]
@@ -219,8 +219,8 @@ RBRefactoryTestDataApp >> fullBlocks [
 
 { #category : #lint }
 RBRefactoryTestDataApp >> guardingClause [
-	self isSymbol 
-		ifFalse: 
+	self isSymbol
+		ifFalse:
 			[self printString.
 			self isSymbol printString]
 ]
@@ -256,7 +256,7 @@ RBRefactoryTestDataApp >> inlineFailed [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> inlineFoo: aBlock [ 
+RBRefactoryTestDataApp >> inlineFoo: aBlock [
 	| bar baz asdf |
 	bar := aBlock value: self.
 	baz := bar + bar.
@@ -267,13 +267,13 @@ RBRefactoryTestDataApp >> inlineFoo: aBlock [
 { #category : #tests }
 RBRefactoryTestDataApp >> inlineJunk [
 	| asdf |
-	asdf := self inlineFoo: 
-					[:each | 
+	asdf := self inlineFoo:
+					[:each |
 					| temp |
 					temp := each.
 					temp , temp].
-	^asdf foo: 
-			[:bar | 
+	^asdf foo:
+			[:bar |
 			| baz |
 			baz := bar.
 			baz * baz]
@@ -382,12 +382,12 @@ RBRefactoryTestDataApp >> modifiesCollection [
 { #category : #tests }
 RBRefactoryTestDataApp >> moveDefinition [
 	| temp |
-	^(self collect: 
-			[:each | 
+	^(self collect:
+			[:each |
 			temp := each printString.
-			temp , temp]) 
-		select: 
-			[:each | 
+			temp , temp])
+		select:
+			[:each |
 			temp := each size.
 			temp odd]
 ]
@@ -401,10 +401,10 @@ RBRefactoryTestDataApp >> multipleCalls [
 { #category : #tests }
 RBRefactoryTestDataApp >> noMoveDefinition [
 	| temp |
-	^(self collect: 
-			[:each | 
+	^(self collect:
+			[:each |
 			temp := each printString.
-			temp , temp]) 
+			temp , temp])
 		select: [:each | temp := each size + temp]
 ]
 
@@ -414,12 +414,12 @@ RBRefactoryTestDataApp >> precedence [
 ]
 
 { #category : #accessing }
-RBRefactoryTestDataApp >> referencesConditionFor: aClass [ 
+RBRefactoryTestDataApp >> referencesConditionFor: aClass [
 	| environment association |
-	^(RBCondition withBlock: 
+	^(RBCondition withBlock:
 			[association := Smalltalk globals associationAt: aClass name
 						ifAbsent: [self refactoringError: 'Could not find class'].
-			environment := (self environment referencesTo: association) 
+			environment := (self environment referencesTo: association)
 						| (self environment referencesTo: aClass name).
 			environment isEmpty])
 		errorMacro: aClass , ' is referenced.<n>Browse references?';
@@ -452,20 +452,20 @@ RBRefactoryTestDataApp >> renderContentOn: html [
 	html
 		form: [ html text: 'Name:'.
 			html textInput on: #name of: self contact.
-			
-			
+
+
 			html break.
 			html text: 'Email address:'.
 			html textInput on: #emailAddress of: self contact.
-			
+
 			html break.
 			html text: 'Example:'.
-			
+
 			html textInput on: #example of: self contact.
 			html break.].
 	html text: 'Last:'.
 			html textInput on: #last of: self contact.
-					html break.
+					html break
 ]
 
 { #category : #lint }
@@ -517,8 +517,8 @@ RBRefactoryTestDataApp >> sendsDifferentSuper [
 { #category : #lint }
 RBRefactoryTestDataApp >> sizeCheck [
 	self isEmpty
-		ifFalse: [self do: 
-					[:each | 
+		ifFalse: [self do:
+					[:each |
 					Transcript
 						show: each;
 						cr]]
@@ -563,7 +563,7 @@ RBRefactoryTestDataApp >> testMethod [
 
 { #category : #tests }
 RBRefactoryTestDataApp >> testMethod1 [
-	^self testMethod1 
+	^self testMethod1
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))
 ]
 
@@ -616,7 +616,7 @@ RBRefactoryTestDataApp >> variableAssignedLiteral [
 RBRefactoryTestDataApp >> whileTrue [
 	| i |
 	i := 1.
-	[i < self size] whileTrue: 
+	[i < self size] whileTrue:
 			[(self at: i) printString.
 			i := i + 1]
 ]

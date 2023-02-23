@@ -31,14 +31,14 @@ SliderTest >> setUp [
 
 	super setUp.
 	aSlider := self createSlider.
-	window := aSlider openInWindow.
+	window := aSlider openInWindow
 ]
 
 { #category : #running }
 SliderTest >> tearDown [
 
 	window close.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -114,7 +114,7 @@ SliderTest >> testSliderMouseDownMakesItDrag [
 { #category : #tests }
 SliderTest >> testSliderMouseUpReleaseDrag [
 
-	self assertSameValueAfter: [ 
+	self assertSameValueAfter: [
 		aSlider simulateSliderMouseDown.
 		aSlider simulateSliderMouseUp.
 	]

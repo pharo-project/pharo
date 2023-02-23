@@ -18,7 +18,7 @@ IRBlockReturnTop >> accept: aVisitor [
 { #category : #testing }
 IRBlockReturnTop >> isBlockReturnTop [
 
-	^true.
+	^true
 ]
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ IRBlockReturnTop >> successor [
 { #category : #accessing }
 IRBlockReturnTop >> successor: anObject [
 
-	successor := anObject.
+	successor := anObject
 ]
 
 { #category : #accessing }

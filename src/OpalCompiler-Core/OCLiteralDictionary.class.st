@@ -9,10 +9,10 @@ Class {
 
 { #category : #accessing }
 OCLiteralDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
-	"Answer the key that is the external name for the argument, value. If 
+	"Answer the key that is the external name for the argument, value. If
 	there is none, answer the result of evaluating exceptionBlock."
- 
-	self associationsDo: 
+
+	self associationsDo:
 		[:association | (value literalEqual: association value) ifTrue: [^ association key]].
 	^ exceptionBlock value
 ]

@@ -120,7 +120,8 @@ Object class >> howToModifyPrimitives [
 
 { #category : #'class initialization' }
 Object class >> initialize [
-	"Object initialize"
+	"Upon loading a class, this selector is not looked up.
+	If you want a class to be initialized upon loading, this class should define the selector #intialize explicitly"
 	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
@@ -1978,30 +1979,6 @@ Object >> species [
 	^self class
 ]
 
-{ #category : #stepping }
-Object >> stepAt: millisecondClockValue in: aWindow [
-
-	^ self stepIn: aWindow
-]
-
-{ #category : #stepping }
-Object >> stepIn: aWindow [
-
-	^ self step
-]
-
-{ #category : #stepping }
-Object >> stepTime [
-
-	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
-]
-
-{ #category : #stepping }
-Object >> stepTimeIn: aSystemWindow [
-
-	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
-]
-
 { #category : #private }
 Object >> storeAt: offset inTempFrame: aContext [
 	"This message had to get sent to an expression already on the stack
@@ -2194,20 +2171,6 @@ Object >> veryDeepInner: deepCopier [
 	"No special treatment for inst vars of my superclasses.  Override when some need to be weakly copied.  Object>>veryDeepCopyWith: will veryDeepCopy any inst var whose class does not actually define veryDeepInner:"
 
 	"avoid to use me we will deprecate it in the future"
-]
-
-{ #category : #stepping }
-Object >> wantsSteps [
-	"Overridden by morphic classes whose instances want to be stepped,
-	or by model classes who want their morphic views to be stepped."
-
-	^ false
-]
-
-{ #category : #stepping }
-Object >> wantsStepsIn: aSystemWindow [
-
-	^ self wantsSteps
 ]
 
 { #category : #'model - updating' }

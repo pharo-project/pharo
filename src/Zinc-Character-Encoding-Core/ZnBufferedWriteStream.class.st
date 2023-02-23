@@ -32,7 +32,7 @@ ZnBufferedWriteStream class >> on: writeStream [
 ZnBufferedWriteStream class >> on: writeStream do: block [
 	"Execute block with as argument a ZnBufferedWriteStream on writeStream,
 	making sure #flush is called at the end. Return the value of block."
-	
+
 	| bufferedWriteStream result |
 	bufferedWriteStream := self on: writeStream.
 	result := block value: bufferedWriteStream.
@@ -116,9 +116,8 @@ ZnBufferedWriteStream >> flushBuffer [
 
 { #category : #private }
 ZnBufferedWriteStream >> flushBufferIfFull [
-	position = self bufferSize 
+	position = self bufferSize
 		ifTrue: [ self flushBuffer ]
-
 ]
 
 { #category : #'accessing - bytes' }
@@ -156,17 +155,17 @@ ZnBufferedWriteStream >> lf [
 { #category : #accessing }
 ZnBufferedWriteStream >> next: count putAll: collection [
 	"Write count elements from collection"
-	
-	self 
-		next: count 
-		putAll: collection 
+
+	self
+		next: count
+		putAll: collection
 		startingAt: 1
 ]
 
 { #category : #accessing }
 ZnBufferedWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count elements from collection starting at offset."
-	
+
 	self flushBufferIfFull.
 	count <= self bufferFreeSize
 		ifTrue: [
@@ -177,7 +176,6 @@ ZnBufferedWriteStream >> next: count putAll: collection startingAt: offset [
 			count > (self bufferSize / 2)
 				ifTrue: [ stream next: count putAll: collection startingAt: offset ]
 				ifFalse: [ self next: count putAll: collection startingAt: offset ] ]
-
 ]
 
 { #category : #'accessing - bytes' }
@@ -188,22 +186,22 @@ ZnBufferedWriteStream >> nextInt32Put: integer [
 { #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian put: value [
 	"Assuming the receiver is a stream of bytes, write value as the next integer of size numberOfBytes.
-	If bigEndian is true, use network byte order, most significant byte first, 
+	If bigEndian is true, use network byte order, most significant byte first,
 	else use little endian order, least significant byte first.
-	If signed is true, encode as a two-complement signed value, 
+	If signed is true, encode as a two-complement signed value,
 	else encode as a plain unsigned value."
-	
+
 	| unsignedValue |
 	unsignedValue := (signed and: [ value negative ])
-		ifTrue: [ (1 << (numberOfBytes * 8)) + value ] 
+		ifTrue: [ (1 << (numberOfBytes * 8)) + value ]
 		ifFalse: [ value ].
 	(unsignedValue between: 0 and: (2 ** (numberOfBytes * 8)) - 1)
 		ifFalse: [ DomainError signalFrom: 0 to: (2 ** (numberOfBytes * 8)) - 1 ].
 	bigEndian
-		ifTrue: [ 
+		ifTrue: [
 			numberOfBytes to: 1 by: -1 do: [ :index |
 				self nextPut: (unsignedValue byteAt: index) ] ]
-		ifFalse: [ 
+		ifFalse: [
 			1 to: numberOfBytes do: [ :index |
 				self nextPut: (unsignedValue byteAt: index) ] ].
 	^ value
@@ -229,10 +227,10 @@ ZnBufferedWriteStream >> nextPut: object [
 { #category : #accessing }
 ZnBufferedWriteStream >> nextPutAll: collection [
 	"Write a collection"
-	
-	self 
-		next: collection size 
-		putAll: collection 
+
+	self
+		next: collection size
+		putAll: collection
 		startingAt: 1
 ]
 
@@ -254,7 +252,7 @@ ZnBufferedWriteStream >> position [
 ]
 
 { #category : #accessing }
-ZnBufferedWriteStream >> position: anInteger [ 
+ZnBufferedWriteStream >> position: anInteger [
 	self flush.
 	stream position: anInteger
 ]
@@ -266,14 +264,14 @@ ZnBufferedWriteStream >> print: object [
 
 { #category : #printing }
 ZnBufferedWriteStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
+	aStream
+		nextPutAll: 'a ';
 		nextPutAll: self class name
 ]
 
 { #category : #accessing }
 ZnBufferedWriteStream >> setToEnd [
-	
+
 	self flush.
 	stream setToEnd
 ]
@@ -295,14 +293,14 @@ ZnBufferedWriteStream >> tab [
 
 { #category : #accessing }
 ZnBufferedWriteStream >> truncate [
-	
+
 	self flushBuffer.
 	stream truncate
 ]
 
 { #category : #accessing }
-ZnBufferedWriteStream >> truncate: anInteger [ 
-	
+ZnBufferedWriteStream >> truncate: anInteger [
+
 	self flushBuffer.
 	stream truncate: anInteger
 ]

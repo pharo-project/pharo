@@ -12,7 +12,7 @@ Class {
 
 { #category : #marshalling }
 TFPointerType >> emitMarshallToPrimitive: builder [
-	
+
 	builder send: #tfPointerAddress
 ]
 
@@ -25,7 +25,7 @@ TFPointerType >> readValue: anExternalAddress offset: offset [
 { #category : #writing }
 TFPointerType >> write: anExternalAddress into: targetAddress [
 
-	targetAddress 
-		pointerAt: 1 
+	targetAddress
+		pointerAt: 1
 		put: anExternalAddress tfPointerAddress
 ]

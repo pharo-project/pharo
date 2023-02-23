@@ -45,7 +45,7 @@ PluggableSliderMorph class >> on: anObject getValue: getSel setValue: setSel min
 { #category : #accessing }
 PluggableSliderMorph >> adoptPaneColor: paneColor [
 	"Pass on to the border too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self
@@ -59,7 +59,7 @@ PluggableSliderMorph >> adoptPaneColor: paneColor [
 { #category : #protocol }
 PluggableSliderMorph >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
-	
+
 	^self enabled
 		ifTrue: [self theme sliderNormalBorderStyleFor: self]
 		ifFalse: [self theme sliderDisabledBorderStyleFor: self]
@@ -68,14 +68,14 @@ PluggableSliderMorph >> borderStyleToUse [
 { #category : #initialization }
 PluggableSliderMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver."
-	
+
 	^Color white
 ]
 
 { #category : #protocol }
 PluggableSliderMorph >> disable [
 	"Disable the receiver."
-	
+
 	self enabled: false
 ]
 
@@ -83,17 +83,17 @@ PluggableSliderMorph >> disable [
 PluggableSliderMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
-	aCanvas 
+	aCanvas
 		drawString: self label
 		in: self labelBounds
 		font: self font
-		color: self fontColor.
+		color: self fontColor
 ]
 
 { #category : #protocol }
 PluggableSliderMorph >> enable [
 	"Enable the receiver."
-	
+
 	self enabled: true
 ]
 
@@ -119,7 +119,7 @@ PluggableSliderMorph >> enabled: anObject [
 { #category : #accessing }
 PluggableSliderMorph >> fillStyleToUse [
 	"Answer the fillStyle that should be used for the receiver."
-	
+
 	^self enabled
 		ifTrue: [self theme sliderNormalFillStyleFor: self]
 		ifFalse: [self theme sliderDisabledFillStyleFor: self]
@@ -181,7 +181,7 @@ PluggableSliderMorph >> getValueSelector: anObject [
 
 { #category : #'event handling' }
 PluggableSliderMorph >> handlesMouseDown: evt [
-	"Answer true." 
+	"Answer true."
 
 	^true
 ]
@@ -200,7 +200,7 @@ PluggableSliderMorph >> initialize [
 { #category : #initialization }
 PluggableSliderMorph >> initializeSlider [
 	"Make the slider raised."
-	
+
 	super initializeSlider.
 	slider borderStyle: (BorderStyle raised baseColor: slider color; width: 1)
 ]
@@ -215,7 +215,7 @@ PluggableSliderMorph >> label [
 PluggableSliderMorph >> label: aLabel [
 
 	label := aLabel.
-	self changed.
+	self changed
 ]
 
 { #category : #drawing }
@@ -233,7 +233,7 @@ PluggableSliderMorph >> labelBounds [
 
 { #category : #drawing }
 PluggableSliderMorph >> labelGap [
-	
+
 	^ 2
 ]
 
@@ -241,7 +241,7 @@ PluggableSliderMorph >> labelGap [
 PluggableSliderMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver.
 	Note: written so that #layoutBounds can be changed without touching this method"
-	
+
 	super layoutBounds: aRectangle.
 	self computeSlider
 ]
@@ -280,14 +280,14 @@ PluggableSliderMorph >> min: anObject [
 PluggableSliderMorph >> minHeight [
 	"Answer the receiver's minimum height.
 	Give it a bit of a chance..."
-	
+
 	^8 max: super minHeight
 ]
 
 { #category : #'event handling' }
 PluggableSliderMorph >> mouseDown: anEvent [
 	"Set the value directly."
-	
+
 	self enabled ifTrue: [
 		self
 			scrollPoint: anEvent;
@@ -303,17 +303,17 @@ PluggableSliderMorph >> mouseDown: anEvent [
 { #category : #'other events' }
 PluggableSliderMorph >> mouseDownInSlider: event [
 	"Ignore if disabled."
-	
+
 	self enabled ifFalse: [^self].
 	^super mouseDownInSlider: event
 ]
 
 { #category : #'other events' }
-PluggableSliderMorph >> mouseUpInSlider: event [ 
+PluggableSliderMorph >> mouseUpInSlider: event [
 
 	super mouseUpInSlider: event.
 	"label or label position may change"
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #'instance creation' }
@@ -369,17 +369,17 @@ PluggableSliderMorph >> scaledValue: newValue [
 { #category : #scrolling }
 PluggableSliderMorph >> scrollAbsolute: event [
 	"Ignore if disabled."
-	
+
 	self enabled ifFalse: [^self].
 	super scrollAbsolute: event.
 	"label or label position may change"
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #'event handling' }
 PluggableSliderMorph >> scrollPoint: event [
 	"Scroll to the event position."
-	
+
 	| r p |
 	r := self roomToMove.
 	bounds isWide
@@ -388,7 +388,7 @@ PluggableSliderMorph >> scrollPoint: event [
 	p := event position - (self sliderThickness // 2) adhereTo: r.
 	self descending
 		ifFalse:
-			[self setValue: (bounds isWide 
+			[self setValue: (bounds isWide
 				ifTrue: [(p x - r left) asFloat / r width]
 				ifFalse: [(p y - r top) asFloat / r height])]
 		ifTrue:
@@ -417,14 +417,14 @@ PluggableSliderMorph >> setValue: newValue [
 { #category : #accessing }
 PluggableSliderMorph >> setValueSelector [
 	"Answer the set selector."
-	
+
 	^setValueSelector
 ]
 
 { #category : #accessing }
 PluggableSliderMorph >> sliderColor: newColor [
 	"Set the slider colour."
-	
+
 	super sliderColor: newColor.
 	slider ifNotNil: [slider borderStyle baseColor: newColor]
 ]
@@ -435,22 +435,22 @@ PluggableSliderMorph >> update: aParameter [
 	aParameter = getEnabledSelector 		ifTrue: [ ^ self updateEnabled ].
 	aParameter = getValueSelector 		ifTrue: [ ^ self updateValue ].
 	aParameter = getLabelSelector 		ifTrue: [ ^ self updateLabel ].
-			
+
 	aParameter isArray ifFalse: [ ^ self ].
 	aParameter size == 2 ifFalse: [ ^ self ].
-	
+
 	aParameter first = #max: ifTrue: [ self max: aParameter second ].
 	aParameter first = #min: ifTrue: [ self min: aParameter second ].
 	aParameter first = #quantum: ifTrue: [ self quantum: aParameter second ].
 	aParameter first = #scaledValue: ifTrue: [ self scaledValue: aParameter second ].
-	aParameter first = #value: ifTrue: [ self value: aParameter second ].
+	aParameter first = #value: ifTrue: [ self value: aParameter second ]
 ]
 
 { #category : #protocol }
 PluggableSliderMorph >> updateEnabled [
 	"Update the enablement state."
 
-	self model ifNotNil: [:m | 
+	self model ifNotNil: [:m |
 		self getEnabledSelector ifNotNil: [:s |
 			self enabled: (m perform: s)]]
 ]
@@ -458,16 +458,16 @@ PluggableSliderMorph >> updateEnabled [
 { #category : #protocol }
 PluggableSliderMorph >> updateLabel [
 	"Update the label."
-	
+
 	self model ifNotNil: [:m |
-		self getLabelSelector ifNotNil: [:selector | 
+		self getLabelSelector ifNotNil: [:selector |
 			self label: (m perform: selector) ]]
 ]
 
 { #category : #protocol }
 PluggableSliderMorph >> updateValue [
 	"Update the value."
-	
+
 	self model ifNotNil: [:m |
 		self getValueSelector ifNotNil: [:s |
 			self scaledValue: (m perform: s)]]

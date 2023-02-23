@@ -32,7 +32,7 @@ OSPlatformTest >> testCurrentWorkingDirectory [
 { #category : #tests }
 OSPlatformTest >> testCurrentWorkingDirectoryWithBufferSize [
 	"This is a test to make sure getCurrentWorkingDirectoryWithBufferSize is working"
-	
+
  self assert: FileSystem workingDirectory fullName equals:  (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 1024) .
  self assert: 'relativePath' asFileReference asAbsolute parent fullName equals: (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 1024)
 ]
@@ -53,7 +53,7 @@ OSPlatformTest >> testNewFileInWorkingDirectory [
 { #category : #tests }
 OSPlatformTest >> testStartUpList [
 	"This test documents issue http://code.google.com/p/pharo/issues/detail?id=838"
-	
+
 	| startupList |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	self should: [ (startupList indexOf: #Delay) < (startupList indexOf: #GlobalIdentifier) ]

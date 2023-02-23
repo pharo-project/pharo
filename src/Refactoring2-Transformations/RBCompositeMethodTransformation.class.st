@@ -17,5 +17,5 @@ RBCompositeMethodTransformation >> definingClass [
 { #category : #accessing }
 RBCompositeMethodTransformation >> definingMethod [
 
-	^ self definingClass parseTreeFor: selector asSymbol
+	^ self definingClass parseTreeForSelector: selector asSymbol
 ]

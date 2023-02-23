@@ -25,9 +25,9 @@ Class {
 { #category : #accessing }
 OSWindowDriver class >> current [
 
-	Session == Smalltalk session ifTrue: [ 
+	Session == Smalltalk session ifTrue: [
 		^ Current ifNil: [ Current := self driverClass new ] ].
-	
+
 	Session := Smalltalk session.
 	^ Current := self driverClass new
 ]
@@ -42,7 +42,7 @@ OSWindowDriver class >> driverClass [
 OSWindowDriver class >> driverClass: aClass [
 
 	self driverClass = aClass ifTrue: [ ^ self ].
-	
+
 	DriverClass := aClass.
 	Current := nil.
 	self inform: 'You need to restart your image for this changes to take effect.'
@@ -75,16 +75,16 @@ OSWindowDriver class >> pickDriverClass [
 { #category : #settings }
 OSWindowDriver class >> settingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder group: #oswindow)
 		label: 'OSWindow';
 		parent: #pharoSystem;
 		description: 'OSWindow subsystem';
-		with: [  
+		with: [
 			(aBuilder pickOne: #driverClass)
 				label: 'Driver to use';
-				description: 'Select the driver to use for OSWindow. 
-WARNING: Changing the driver will change the world rendering itself. 
+				description: 'Select the driver to use for OSWindow.
+WARNING: Changing the driver will change the world rendering itself.
 You will need to restart the image to make this changes take effect.';
 				target: self;
 				domainValues: (self allSubclasses select: [ :each | each isSuitable ]) ]
@@ -100,9 +100,9 @@ OSWindowDriver class >> shutDown: quitting [
 	"Clean driver"
 	Current shutDown: quitting.
 	Current := nil.
-	
+
 	"clean OSWindow worlds"
-	WorldMorph extraWorldList copy 
+	WorldMorph extraWorldList copy
 		select: [ :each | each isKindOf: OSWindowWorldMorph ]
 		thenDo: [ :each | WorldMorph removeExtraWorld: each ].
 	"Clean also active world"
@@ -134,5 +134,4 @@ OSWindowDriver >> shutDown: quitting [
 
 { #category : #'system startup' }
 OSWindowDriver >> startUp: resuming [
-
 ]
