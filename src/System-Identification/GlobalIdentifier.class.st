@@ -40,8 +40,8 @@ Class {
 
 { #category : #cleanup }
 GlobalIdentifier class >> cleanUp [
-	"Clean unique instance."	
-	self reset.
+	"Clean unique instance."
+	self reset
 ]
 
 { #category : #'class initialization' }
@@ -49,14 +49,14 @@ GlobalIdentifier class >> initialize [
 
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
-		inCategory: SessionManager default systemCategory  
-		atPriority: SessionManager default defaultPriority - 80.
+		inCategory: SessionManager default systemCategory
+		atPriority: SessionManager default defaultPriority - 80
 ]
 
 { #category : #initialization }
 GlobalIdentifier class >> initializeUniqueInstance [
 	uniqueInstance := self basicNew initialize.
-	uniqueInstance ensure.
+	uniqueInstance ensure
 ]
 
 { #category : #'instance creation' }
@@ -89,24 +89,22 @@ GlobalIdentifier class >> uniqueInstance [
 GlobalIdentifier >> computerUUID [
 	"This value identifies a user logged into the computer.
 	Before calling #computerUUID method, you should call #ensure."
-	
-	^ persistedInformation at: #computerUUID ifAbsentPut: [UUID new asString].
+
+	^ persistedInformation at: #computerUUID ifAbsentPut: [UUID new asString]
 ]
 
 { #category : #'load and saving' }
 GlobalIdentifier >> ensure [
-	self persistenceStrategy ensure: self.
-
-
+	self persistenceStrategy ensure: self
 ]
 
 { #category : #'load and saving' }
 GlobalIdentifier >> ensureComputerAndSecretValues [
 
 	"To be used before saving the dictionary with new values. So, we can ensure it is properly generated. Accessing the values force its generation"
-	
+
 	self computerUUID.
-	self secretUUID.
+	self secretUUID
 ]
 
 { #category : #initialization }
@@ -115,7 +113,7 @@ GlobalIdentifier >> initialize [
 	"Dictionary contains all the values that we want to persist on disk."
 	persistedInformation := Dictionary new.
 	persistenceStrategy := GlobalIdentifierPersistence ston.
-	persistenceStrategy previous: GlobalIdentifierPersistence fuel.
+	persistenceStrategy previous: GlobalIdentifierPersistence fuel
 ]
 
 { #category : #actions }
@@ -145,6 +143,5 @@ GlobalIdentifier >> secretUUID [
 	"This value can be used for obfuscating an information before sending it.
 	See #obfuscate: method.
 	Before calling #secretUUID method, you should call #ensure."
-	^ persistedInformation at: #secretUUID ifAbsentPut: [UUID new asString].
-
+	^ persistedInformation at: #secretUUID ifAbsentPut: [UUID new asString]
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #TaSingleComposition }
 
 { #category : #'*TraitsV2-Compatibility' }
-TaSingleComposition >> includesElement: anElement [ 
+TaSingleComposition >> includesElement: anElement [
 	^ self == anElement or: [ inner == anElement ]
 ]
 

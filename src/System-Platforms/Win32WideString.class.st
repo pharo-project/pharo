@@ -42,8 +42,8 @@ Win32WideString class >> fromString: aString [
 		output: self null
 		outputLen: 0.
 
-	requestedSize = 0 
-		ifTrue: [ self error: 'Error while transforming utf8 string ', 
+	requestedSize = 0
+		ifTrue: [ self error: 'Error while transforming utf8 string ',
 				aString, ' using codepage ', codepage asString  ].
 
 	wideString := self new: requestedSize.
@@ -58,7 +58,7 @@ Win32WideString class >> fromString: aString [
 
 
 	r = 0 ifTrue: [ self error: 'Error while transforming utf8 string ', aString, ' using codepage ', codepage asString  ].
-	
+
 	^ wideString
 ]
 
@@ -66,7 +66,7 @@ Win32WideString class >> fromString: aString [
 Win32WideString class >> new: size [
 	^ self new
 		setHandle: (ByteArray new: (size + 1) * 2);
-		yourself.
+		yourself
 ]
 
 { #category : #converting }
@@ -75,7 +75,7 @@ Win32WideString >> asString [
 
 	(handle isNil or: [ handle isNull ])
 		ifTrue: [ ^ '' ].
-	
+
 	codepage := 65001.
 
 	r := OSPlatform current
@@ -98,7 +98,7 @@ Win32WideString >> asString [
 		inputLen: self size + 1
 		output: out
 		outputLen: out size.
-		
+
 	r = 0 ifTrue: [ self error: 'Error while transforming windows wide string using codepage ', codepage asString ].
 
 	^ out allButLast utf8Decoded
@@ -106,7 +106,7 @@ Win32WideString >> asString [
 
 { #category : #converting }
 Win32WideString >> asWin32WideString [
-	^ self.
+	^ self
 ]
 
 { #category : #accessing }
@@ -118,7 +118,7 @@ Win32WideString >> byteSize [
 
 { #category : #printing }
 Win32WideString >> printOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: 'a ' ;
 		nextPutAll: self class name;
 		nextPut: $(;

@@ -10,14 +10,14 @@ Class {
 { #category : #examples }
 RBVariablesSelectionPresenter class >> example [
 	<script>
-	^ (self label: 'example ...' 
-		withItems: 
-			{(ClassVariable named: #a) . (ClassVariable named: #b) . (ClassVariable named: #z) } asOrderedCollection 
+	^ (self label: 'example ...'
+		withItems:
+			{(ClassVariable named: #a) . (ClassVariable named: #b) . (ClassVariable named: #z) } asOrderedCollection
 		selecting: {(ClassVariable named: #z) . (ClassVariable named: #a) } asOrderedCollection )
 ]
 
 { #category : #specs }
-RBVariablesSelectionPresenter class >> title [ 
+RBVariablesSelectionPresenter class >> title [
 	^ 'Class variables'
 ]
 
@@ -27,6 +27,6 @@ RBVariablesSelectionPresenter >> columnName [
 ]
 
 { #category : #attributes }
-RBVariablesSelectionPresenter >> columnSelector [ 
+RBVariablesSelectionPresenter >> columnSelector [
 	^ #name
 ]

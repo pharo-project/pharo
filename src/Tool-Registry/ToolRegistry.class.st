@@ -50,7 +50,7 @@ Class {
 { #category : #announcer }
 ToolRegistry >> announcer [
 	announcer ifNil: [ announcer := Announcer new ].
-	
+
 	^ announcer
 ]
 
@@ -63,9 +63,9 @@ ToolRegistry >> browseDirectToolReferences [
 		MyTool foo
 	into:
 		Smalltalk tools myTool foo 	"
-	
+
 	| bindings |
-	
+
 	bindings := tools values select: [:each | each value isBehavior ]
 		thenCollect: [:each | each value binding ].
 	bindings := bindings copyWith: (Smalltalk bindingOf: #ToolSet).
@@ -87,22 +87,21 @@ ToolRegistry >> doesNotUnderstand: aMessage [
 	tool ifNotNil: [ ^ tool value ].
 
 	^super doesNotUnderstand: aMessage
-
 ]
 
 { #category : #testing }
 ToolRegistry >> hasToolNamed: aToolName [
-	^ tools includesKey: aToolName 
+	^ tools includesKey: aToolName
 ]
 
 { #category : #initialization }
 ToolRegistry >> initDefaultToolSet [
-	
+
 	"Query the system for registering tools"
 	"we cannot afford to show warnings because not all tools e.g Debugger, Inspector are registered yet"
-	
-	[	
-	Object withAllSubclassesDo: [:ea | 
+
+	[
+	Object withAllSubclassesDo: [:ea |
 	"evaluate only for classes which directly implement this message,
 	not via subclassing"
 		(ea isMeta  and: [
@@ -115,8 +114,8 @@ ToolRegistry >> initDefaultToolSet [
 ToolRegistry >> initialize [
 
 	"symbols used as keys "
-	tools := IdentityDictionary new.  
-	
+	tools := IdentityDictionary new.
+
 	self initDefaultToolSet
 ]
 
@@ -143,7 +142,6 @@ ToolRegistry >> menuItems [
 		('Monticello Browser'		#openMonticelloBrowser)
 		('Change Sorter'			#openChangeSorter)
 	)
-
 ]
 
 { #category : #menu }
@@ -159,7 +157,6 @@ ToolRegistry >> openFileList [
 { #category : #menu }
 ToolRegistry >> openMonticelloBrowser [
 	self monticelloBrowser open
-	
 ]
 
 { #category : #menu }
@@ -167,7 +164,6 @@ ToolRegistry >> openProcessBrowser [
 	self using: #processBrowser do: [:tool |
 		tool open
 		]
-
 ]
 
 { #category : #menu }
@@ -194,17 +190,17 @@ ToolRegistry >> openWorkspace [
 ToolRegistry >> register: anObject as: aNameSelector [
 	"Register a tool class under given name"
 	tools at: aNameSelector put: anObject.
-	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector) 
+	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector)
 ]
 
 { #category : #registration }
 ToolRegistry >> remove: aName [
 
 	| toolToRemove |
-	
+
 	"remove tool with given name"
 	toolToRemove := tools removeKey: aName ifAbsent: [].
-	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName) 
+	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName)
 ]
 
 { #category : #announcer }
@@ -213,11 +209,11 @@ ToolRegistry >> resetAnnouncer [
 	"unregister all current weak subscriptions because it can cause a memory leak"
 	announcer ifNil: [ ^self ].
 	announcer subscriptions subscriptions
- 		select: [:each | each isKindOf: WeakAnnouncementSubscription] 
-		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 
+ 		select: [:each | each isKindOf: WeakAnnouncementSubscription]
+		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []].
 	Smalltalk garbageCollect.
-		
-	announcer := nil.
+
+	announcer := nil
 ]
 
 { #category : #tools }
@@ -232,7 +228,7 @@ ToolRegistry >> transcript [
 ToolRegistry >> using: aToolName do: aBlock [
 	"Evaluate a block for tool found under corresponding name or silently ignore if its not found or nil"
 	| tool |
-	
+
 	tool := tools at: aToolName ifAbsent: [ ^ self ].
 	tool ifNotNil: [ ^ aBlock value: tool value ]
 ]
@@ -240,11 +236,11 @@ ToolRegistry >> using: aToolName do: aBlock [
 { #category : #announcer }
 ToolRegistry >> whenToolRegistered: aBlock [
 
-	self announcer weak when: ToolRegistryToolRegistered do: aBlock 
+	self announcer weak when: ToolRegistryToolRegistered do: aBlock
 ]
 
 { #category : #announcer }
 ToolRegistry >> whenToolUnregistered: aBlock [
 
-	self announcer weak when: ToolRegistryToolUnregistered do: aBlock 
+	self announcer weak when: ToolRegistryToolUnregistered do: aBlock
 ]

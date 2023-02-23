@@ -34,20 +34,15 @@ ZnResponseTest >> testCookie [
 	| response cookie1  responseString |
 	response := ZnResponse ok: (ZnStringEntity html: '<h1>hello world</h1>').
 	cookie1 := ZnCookie new.
-	cookie1 
+	cookie1
 		name: 'testCookie1';
 		value: '123'.
-		
+
 	response addCookie: cookie1.
-	
+
 	responseString := String streamContents: [ :stream | response writeOn: stream ].
-	
-	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie1=123')	
 
-	
-		
-		
-
+	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie1=123')
 ]
 
 { #category : #testing }
@@ -55,27 +50,22 @@ ZnResponseTest >> testCookies [
 	| response cookie1 cookie2 responseString |
 	response := ZnResponse ok: (ZnStringEntity html: '<h1>hello world</h1>').
 	cookie1 := ZnCookie new.
-	cookie1 
+	cookie1
 		name: 'testCookie1';
 		value: '123'.
-		
+
 	cookie2 := ZnCookie new.
-	cookie2 
+	cookie2
 		name: 'testCookie2';
 		value: '321'.
-		
+
 	response addCookie: cookie1.
 	response addCookie: cookie2.
-	
+
 	responseString := String streamContents: [ :stream | response writeOn: stream ].
-	
-	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie1=123').  
-	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie2=321').  	
 
-	
-		
-		
-
+	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie1=123').
+	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie2=321').
 ]
 
 { #category : #testing }
@@ -150,10 +140,10 @@ ZnResponseTest >> testSlashdotGzipChunked [
 		setConnectionClose;
 		setAcceptEncodingGzip.
 	stream := ZnNetworkingUtils socketStreamToUrl: request url.
-	response := [ 
-  		request writeOn: stream. 
-  		stream flush. 
-  		ZnDefaultCharacterEncoder 
+	response := [
+  		request writeOn: stream.
+  		stream flush.
+  		ZnDefaultCharacterEncoder
 			value: ZnNullEncoder new
 			during: [ ZnResponse readFrom: stream ] ] ensure: [ stream close ].
 	response isRedirect ifTrue: [ ^ self ].
@@ -163,7 +153,6 @@ ZnResponseTest >> testSlashdotGzipChunked [
 	self assert: (response headers at: 'Transfer-Encoding' ifAbsent: [ 'chunked' ]) equals: 'chunked'.
 	contents := response entity contents.
 	self assert: ((contents includesSubstring: 'Slashdot') or: [ contents includesSubstring: 'refresh' ])
-
 ]
 
 { #category : #testing }

@@ -42,7 +42,7 @@ TraitsResource >> c1 [
 
 { #category : #accessing }
 TraitsResource >> c10 [
-	^c10.
+	^c10
 ]
 
 { #category : #accessing }
@@ -52,7 +52,7 @@ TraitsResource >> c10: anObject [
 
 { #category : #accessing }
 TraitsResource >> c11 [
-	^c11.
+	^c11
 ]
 
 { #category : #accessing }
@@ -152,14 +152,14 @@ TraitsResource >> categoryName [
 
 { #category : #utilities }
 TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
-	| class |		
+	| class |
 
 	class := self class classInstaller make: [ :aBuilder |
 		aBuilder name: aSymbol;
 			superclass: aClass;
 			traitComposition: aTraitComposition asTraitComposition;
 			package: self categoryName ].
-				
+
 	self createdClassesAndTraits add: class.
 	^class
 ]
@@ -190,99 +190,99 @@ TraitsResource >> setUp [
 
 	super setUp.
 	dirty := false.
-	SystemAnnouncer uniqueInstance suspendAllWhile: 
+	SystemAnnouncer uniqueInstance suspendAllWhile:
 			[self t1: (self createTraitNamed: #T1
 						uses: { }).
 			self t1 comment: 'I am the trait T1'.
-			
+
 			self t1 compile: 'm11 ^11' classified: #cat1.
 			self t1 compile: 'm12 ^12' classified: #cat2.
 			self t1 compile: 'm13 ^self m12' classified: #cat3.
-			
+
 			self t2: (self createTraitNamed: #T2
 						uses: { }).
 			self t2 compile: 'm21 ^21' classified: #cat1.
 			self t2 compile: 'm22 ^22' classified: #cat2.
 			self t2 classSide compile: 'm2ClassSide: a ^a'.
-			
+
 			self t3: (self createTraitNamed: #T3
 						uses: { }).
 			self t3 compile: 'm31 ^31' classified: #cat1.
 			self t3 compile: 'm32 ^32' classified: #cat2.
 			self t3 compile: 'm33 ^33' classified: #cat3.
-			
+
 			self t4: (self createTraitNamed: #T4
 						uses: { (self t1). (self t2) }).
 			self t4 compile: 'm11 ^41' classified: #catX.	"overrides T1>>m11"
 			self t4 compile: 'm42 ^42' classified: #cat2.
-			
+
 			self t5: (self createTraitNamed: #T5 uses: self t1 + self t2).
 			self t5 compile: 'm51 ^super foo' classified: #cat1.
 			self t5 compile: 'm52 ^ self class bar' classified: #cat1.
 			self t5 compile: 'm53 ^ self class bar' classified: #cat1.
-			
+
 			self t6: (self createTraitNamed: #T6
 						uses: self t1 + (self t2 @ { (#m22Alias -> #m22) })).
 
 			self t9: (self createTraitNamed: #T9
 						uses: { }).
-						
+
 			self t10: (self createTraitNamed: #T10
 						uses: { }).
-						
+
 			self t12: (self createTraitNamed: #T12
 						uses: {}).
-	
+
 			self t11: (self createTraitNamed: #T11
 						uses: { self t12}).
-			
 
-						
-			self c1: (self 
+
+
+			self c1: (self
 						createClassNamed: #C1
 						superclass: Object
 						uses: { }).
 			self c1 compile: 'foo ^true' classified: #accessing.
-			self c2: (self 
+			self c2: (self
 						createClassNamed: #C2
 						superclass: self c1
 						uses: self t5 - { #m11 }).
 			self c2 compile: 'foo ^false' classified: #private.
 			self c2 compile: 'bar ^self foo' classified: #private.
-						
-			self c9: (self 
+
+			self c9: (self
 						createClassNamed: #C9
 						superclass: Object
 						uses: self t9 ).
-						
-			self c10: (self 
+
+			self c10: (self
 						createClassNamed: #C10
 						superclass: self c9
 						uses: self t10 ).
-						
-			self c11: (self 
+
+			self c11: (self
 						createClassNamed: #C11
 						superclass: self c10
 						uses: self t11 ).
-			
+
 			self setUpTrivialRequiresFixture.
 			self setUpTwoLevelRequiresFixture.
-			self setUpTranslatingRequiresFixture].
+			self setUpTranslatingRequiresFixture]
 ]
 
 { #category : #running }
 TraitsResource >> setUpTranslatingRequiresFixture [
-	self c6: (self 
+	self c6: (self
 				createClassNamed: #C6
 				superclass: ProtoObject
 				uses: { }).
 	ProtoObject removeSubclass: self c6.
 	self c6 superclass: nil.
-	self c7: (self 
+	self c7: (self
 				createClassNamed: #C7
 				superclass: self c6
 				uses: { }).
-	self c8: (self 
+	self c8: (self
 				createClassNamed: #C8
 				superclass: self c7
 				uses: { }).
@@ -294,7 +294,7 @@ TraitsResource >> setUpTranslatingRequiresFixture [
 
 { #category : #running }
 TraitsResource >> setUpTrivialRequiresFixture [
-	self c3: (self 
+	self c3: (self
 				createClassNamed: #C3
 				superclass: ProtoObject
 				uses: { }).
@@ -305,13 +305,13 @@ TraitsResource >> setUpTrivialRequiresFixture [
 
 { #category : #running }
 TraitsResource >> setUpTwoLevelRequiresFixture [
-	self c4: (self 
+	self c4: (self
 				createClassNamed: #C4
 				superclass: ProtoObject
 				uses: { }).
 	ProtoObject removeSubclass: self c4.
 	self c4 superclass: nil.
-	self c5: (self 
+	self c5: (self
 				createClassNamed: #C5
 				superclass: self c4
 				uses: { }).
@@ -326,7 +326,7 @@ TraitsResource >> t1 [
 
 { #category : #accessing }
 TraitsResource >> t10 [
-	^t10.
+	^t10
 ]
 
 { #category : #accessing }
@@ -336,7 +336,7 @@ TraitsResource >> t10: anObject [
 
 { #category : #accessing }
 TraitsResource >> t11 [
-	^t11.
+	^t11
 ]
 
 { #category : #accessing }
@@ -346,7 +346,7 @@ TraitsResource >> t11: anObject [
 
 { #category : #accessing }
 TraitsResource >> t12 [
-	^t12.
+	^t12
 ]
 
 { #category : #accessing }
@@ -433,7 +433,7 @@ TraitsResource >> t9: anObject [
 TraitsResource >> tearDown [
 
 	self createdClassesAndTraits reverse
-		do: [ :aClassOrTrait | 
+		do: [ :aClassOrTrait |
 			| behaviorName |
 			behaviorName := aClassOrTrait name.
 			Smalltalk globals

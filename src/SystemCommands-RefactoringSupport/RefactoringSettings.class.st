@@ -29,7 +29,7 @@ RefactoringSettings class >> availableScopes [
 RefactoringSettings class >> domainValues [
 
 	^ self scopeList collect: [ :each |
-		each description asSymbol -> each	
+		each description asSymbol -> each
 	]
 ]
 
@@ -47,7 +47,7 @@ RefactoringSettings class >> refactoringSettingsOn: aBuilder [
 		description:
 			'All refactoring related settings';
 		noOrdering;
-		with: [ 
+		with: [
 			(aBuilder pickOne: #scopeRefactoring)
 				order: 0;
 				target: self;
@@ -65,16 +65,16 @@ RefactoringSettings class >> refactoringSettingsOn: aBuilder [
 { #category : #removing }
 RefactoringSettings class >> removeScopeNamed: key [
 
-	self scopeList removeAllSuchThat: 
-		[ :e | e description = key and: 
+	self scopeList removeAllSuchThat:
+		[ :e | e description = key and:
 			[ e description ~= 'Current image'] ]
 ]
 
 { #category : #accessing }
 RefactoringSettings class >> scopeList [
 
-	^ ScopeList ifNil: 
-		[ ScopeList := OrderedCollection with: 
+	^ ScopeList ifNil:
+		[ ScopeList := OrderedCollection with:
 			(ClyNavigationEnvironment currentImageScope asRBEnvironment label: 'current image') ]
 ]
 

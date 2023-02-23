@@ -5,6 +5,35 @@ Class {
 }
 
 { #category : #tests }
+RBErrorNodeParserTest >> testFaultyAssigment [
+
+	| node |
+	node := self parserClass parseFaultyExpression: ':=1'.
+
+	self assert: node isFaulty.
+	self assert: node isParseError.
+	self   deny: node content first isFaulty.
+	self assert: node content first value equals: 1.
+	self assert: node sourceInterval equals: (1 to: 3).
+	self assert: node errorMessage equals: 'identifier expected in assigment'.
+	self assert: node formattedCode equals: ':= 1'
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyAssigment2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: 'a:='.
+
+	self assert: node isFaulty.
+	self assert: node value isParseError.
+	self assert: node value sourceInterval equals: (4 to: 3).
+	self assert: node value errorMessage equals: 'Variable or expression expected'.
+	self assert: node value formattedCode equals: ''.
+	self assert: node formattedCode equals: 'a := '
+]
+
+{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
 
 	| node |
@@ -164,6 +193,202 @@ RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 
 	self assert: node sourceInterval equals: (1 to: 13).
 	self assert: node formattedCode equals: source
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '1 foo;'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self deny: node messages first isFaulty.
+	self assert: node messages first selector equals: #foo.
+
+	self assert: node messages second isParseError.
+	self assert: node messages second sourceInterval equals: (7 to: 6).
+	self
+		assert: node messages second errorMessage
+		equals: 'Cascade message expected'.
+	self assert: node messages second formattedCode equals: ''.
+
+	self
+		assert: node formattedCode
+		equals: '1<r><t>foo;<r><t>' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '1 foo;;bar'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self deny: node messages first isFaulty.
+	self assert: node messages first selector equals: #foo.
+
+	self assert: node messages second isParseError.
+	self assert: node messages second sourceInterval equals: (7 to: 6).
+	self
+		assert: node messages second errorMessage
+		equals: 'Cascade message expected'.
+	self assert: node messages second formattedCode equals: ''.
+
+	self deny: node messages third isFaulty.
+	self assert: node messages third selector equals: #bar.
+
+	self
+		assert: node formattedCode
+		equals: '1<r><t>foo;<r><t>;<r><t>bar' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected3 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '1 foo;;'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self deny: node messages first isFaulty.
+	self assert: node messages first selector equals: #foo.
+
+	self assert: node messages second isParseError.
+	self assert: node messages second sourceInterval equals: (7 to: 6).
+	self
+		assert: node messages second errorMessage
+		equals: 'Cascade message expected'.
+	self assert: node messages second formattedCode equals: ''.
+
+	self assert: node messages third isParseError.
+	self assert: node messages third sourceInterval equals: (8 to: 7).
+	self
+		assert: node messages third errorMessage
+		equals: 'Cascade message expected'.
+	self assert: node messages third formattedCode equals: ''.
+
+	self
+		assert: node formattedCode
+		equals: '1<r><t>foo;<r><t>;<r><t>' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
+
+	| node |
+	node := self parserClass parseFaultyExpression: ';foo'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self assert: node messages first isCascadeError.
+	self assert: node messages first sourceInterval equals: (1 to: 1).
+	self
+		assert: node messages first errorMessage
+		equals: 'Message expected'.
+	self assert: node messages first formattedCode equals: ' '.
+
+	self assert: node messages second isFaulty. "Faulty because there is no receiver!"
+	self assert: node messages second selector equals: #foo.
+	self assert: node messages second receiver isParseError.
+
+	self
+		assert: node formattedCode
+		equals: '<r><t>;<r><t>foo' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: ';;foo'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self assert: node messages first isCascadeError.
+	self assert: node messages first sourceInterval equals: (1 to: 1).
+	self
+		assert: node messages first errorMessage
+		equals: 'Message expected'.
+	self assert: node messages first formattedCode equals: ' '.
+
+	self assert: node messages second isParseError.
+	self assert: node messages second sourceInterval equals: (2 to: 1).
+	self
+		assert: node messages second errorMessage
+		equals: 'Cascade message expected'.
+	self assert: node messages second formattedCode equals: ''.
+
+	self assert: node messages third isFaulty. "Faulty because there is no receiver!"
+	self assert: node messages third selector equals: #foo.
+	self assert: node messages third receiver isParseError.
+
+	self
+		assert: node formattedCode
+		equals: '<r><t>;<r><t>;<r><t>foo' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '(1 foo); bar'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self assert: node messages first isCascadeError.
+	self assert: node messages first sourceInterval equals: (1 to: 8).
+	self
+		assert: node messages first errorMessage
+		equals: 'Message expected'.
+	self assert: node messages first formattedCode equals: ' 1 foo'.
+
+	self deny: node messages first receiver isFaulty.
+	self assert: node messages first receiver isMessage.
+	self assert: node messages first receiver selector equals: #foo.
+
+	self deny: node messages second isFaulty.
+	self assert: node messages second isMessage.
+	self assert: node messages second selector equals: #bar.
+
+	self
+		assert: node formattedCode
+		equals: '1 foo<r><t>;<r><t>bar' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '1; bar'.
+
+	self assert: node isFaulty.
+	self assert: node isCascade.
+
+	self assert: node messages first isCascadeError.
+	self assert: node messages first sourceInterval equals: (1 to: 2).
+	self
+		assert: node messages first errorMessage
+		equals: 'Message expected'.
+	self assert: node messages first formattedCode equals: ' 1'.
+
+	self deny: node messages first receiver isFaulty.
+	self assert: node messages first receiver value equals: 1.
+
+	self deny: node messages second isFaulty.
+	self assert: node messages second isMessage.
+	self assert: node messages second selector equals: #bar.
+
+	self
+		assert: node formattedCode
+		equals: '1<r><t>;<r><t>bar' expandMacros
 ]
 
 { #category : #tests }

@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #accessing }
-SycRenameClassCommand >> defaultMenuIconName [ 
+SycRenameClassCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
@@ -27,7 +27,7 @@ SycRenameClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycRenameClassCommand >> execute [
-	
+
 	| refactoring |
 	refactoring := RBRenameClassTransformation
 		rename: targetClass name
@@ -55,6 +55,6 @@ SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
 		           initialAnswer: targetClass name
 		           title: 'Rename a class'.
 
-	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [ 
+	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [
 		CmdCommandAborted signal ]
 ]

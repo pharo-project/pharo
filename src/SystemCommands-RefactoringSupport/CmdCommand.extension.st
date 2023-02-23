@@ -8,13 +8,13 @@ CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 		                for: self
 		                scopes: aToolContext refactoringScopes.
 	submitDialog existChanges
-		ifTrue: [ 
+		ifTrue: [
 			submitDialog openDialog
-				okAction: [ 
+				okAction: [
 					submitDialog accept.
 					aCommandActivator applyCommandResult ];
 				cancelAction: [ :p | p beCancel ] ]
-		ifFalse: [ 
+		ifFalse: [
 			submitDialog alert:
 				'There is no change produced by this refactoring' ].
 	CmdCommandAborted signal

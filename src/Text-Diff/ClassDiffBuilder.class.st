@@ -12,7 +12,7 @@ Class {
 ClassDiffBuilder >> print: aString withAttributes: attributes on: stream [
 
 	stream
-		withAttributes: attributes 
+		withAttributes: attributes
 		do: [ stream nextPutAll: aString ]
 ]
 
@@ -28,6 +28,6 @@ ClassDiffBuilder >> split: aString [
 			c isSeparator ifTrue:[
 				stream nextPut: out contents.
 				out reset ] ].
-		out position = 0 ifFalse: [ 
+		out position = 0 ifFalse: [
 			stream nextPut: out contents ] ]
 ]

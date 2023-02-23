@@ -25,7 +25,7 @@ ZnUserAgentSession class >> withCookieJar: aCookieJar [
 
 { #category : #accessing }
 ZnUserAgentSession >> addCredential: aCredential [
-	self credentials at: aCredential domain, '@', aCredential realm put: aCredential 
+	self credentials at: aCredential domain, '@', aCredential realm put: aCredential
 ]
 
 { #category : #accessing }
@@ -74,6 +74,6 @@ ZnUserAgentSession >> resetCookies [
 ]
 
 { #category : #operations }
-ZnUserAgentSession >> resetCredentials [ 
+ZnUserAgentSession >> resetCredentials [
 	credentials ifNotNil: [ credentials removeAll ]
 ]

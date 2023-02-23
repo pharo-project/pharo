@@ -28,7 +28,6 @@ TextStreamTest >> testAddStringToTextStream [
 	text := ts contents.
    "Now, check the fundamental invariant of a text:"
 	self assert: text string size equals: text runs size
-
 ]
 
 { #category : #tests }
@@ -38,16 +37,16 @@ TextStreamTest >> testApplyAttributeBeginningAt [
 	stream applyAttribute:  TextEmphasis underlined beginningAt: 10.
 	1 to: 9 do: [ :index |
 		attributes := stream contents runs at: index.
-		self assertEmpty: attributes].	
+		self assertEmpty: attributes].
 	10 to: 14 do: [ :index |
 		attributes := stream contents runs at: index.
 		self assert: attributes isArray.
-		self assert: attributes first emphasisCode equals: 4].
+		self assert: attributes first emphasisCode equals: 4]
 ]
 
 { #category : #tests }
 TextStreamTest >> testNextPutAll [
-	stream 
+	stream
 		nextPutAll: 'Pharo';
 		space.
 	self assert: stream contents isText.
@@ -59,12 +58,12 @@ TextStreamTest >> testNextPutAll [
 { #category : #tests }
 TextStreamTest >> testWithAttributeDo [
 	| attributes |
-	stream 
-		withAttribute: TextEmphasis bold 
+	stream
+		withAttribute: TextEmphasis bold
 		do: [stream nextPutAll: 'Pharo'  ].
 	stream space.
-	stream 
-		withAttribute: TextEmphasis underlined 
+	stream
+		withAttribute: TextEmphasis underlined
 		do: [stream nextPutAll: 'is cool'  ].
 	self assert: stream contents string equals: 'Pharo is cool'.
 	"part of the text underlined"
@@ -78,14 +77,14 @@ TextStreamTest >> testWithAttributeDo [
 	7 to: 13 do: [ :index |
 		attributes := stream contents runs at: index.
 		self assert: attributes isArray.
-		self assert: attributes first emphasisCode equals: 4].
+		self assert: attributes first emphasisCode equals: 4]
 ]
 
 { #category : #tests }
 TextStreamTest >> testWithAttributesDo [
 	| attributes |
-	stream 
-		withAttributes: {TextEmphasis bold. TextColor yellow}  
+	stream
+		withAttributes: {TextEmphasis bold. TextColor yellow}
 		do: [stream nextPutAll: 'Pharo' ].
 	stream nextPutAll: ' is cool'.
 	self assert: stream contents string equals: 'Pharo is cool'.

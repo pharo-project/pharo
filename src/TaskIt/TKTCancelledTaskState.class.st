@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-TKTCancelledTaskState class >> reason: aString [ 
-	
+TKTCancelledTaskState class >> reason: aString [
+
 	^ self new
 		reason: aString;
 		yourself
@@ -31,7 +31,7 @@ TKTCancelledTaskState >> performTaskExecution: aTaskExecution [
 ]
 
 { #category : #accessing }
-TKTCancelledTaskState >> reason: aString [ 
+TKTCancelledTaskState >> reason: aString [
 	reason := aString
 ]
 

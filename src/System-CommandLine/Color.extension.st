@@ -11,7 +11,7 @@ Color >> closestXTermPixelValue [
 		index = 0 ifTrue: [ ^ 0 ].
 		index = 25 ifTrue: [ ^ 16 ].
 		^ index + 232 ].
-	
+
 	"compute nearest entry in the 6*6*6 color cube"
 	^ 16 + (self red * 6*6*5) asInteger + (self green * 6*5) asInteger + (self blue * 5) asInteger
 ]

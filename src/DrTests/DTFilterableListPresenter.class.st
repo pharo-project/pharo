@@ -96,8 +96,8 @@ DTFilterableListPresenter >> filterList [
 DTFilterableListPresenter >> filterStrings [
 
 	^ (self filterTextInput text splitOn: $|)
-		reject: #isEmpty
-		thenCollect: [ :pattern | pattern , '*' ]
+		  reject: #isEmpty
+		  thenCollect: [ :pattern | '*' , pattern , '*' ]
 ]
 
 { #category : #accessing }
