@@ -51,8 +51,9 @@ TDebugger classSide >> defaultDebuggerRank [
 ]
 
 { #category : #debugging }
-TDebugger classSide >> handlesContext: aContext [
-	^true
+TDebugger classSide >> handlesDebugSession: aDebugSession [
+
+	^ aDebugSession exception isHandleableBy: self
 ]
 
 { #category : #accessing }

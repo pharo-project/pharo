@@ -67,8 +67,7 @@ OupsDebuggerSelector >> nextDebugger [
 OupsDebuggerSelector >> nextDebuggerForSession: aDebugSession [
 	| debugger |
 	debugger := self nextDebugger.
-	[ (debugger handlesContext: aDebugSession context)
-		and: [ aDebugSession exception isHandleableBy: debugger ] ]
+	[ (debugger handlesDebugSession: aDebugSession) ]
 		whileFalse: [ debugger := self nextDebugger ].
 	^ debugger
 ]
