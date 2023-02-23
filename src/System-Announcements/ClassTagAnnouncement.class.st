@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 ClassTagAnnouncement class >> in: aPackage tag: aSymbol [
-	^self new 
+	^self new
 		package: aPackage;
 		tag: aSymbol
 ]

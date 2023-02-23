@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIInt32 class >> externalType [ 
+FFIInt32 class >> externalType [
 	^ ExternalType long
 ]
 

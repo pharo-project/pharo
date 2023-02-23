@@ -18,7 +18,7 @@ OSPlatform >> ffiInt64Alignment [
 ]
 
 { #category : #'*UnifiedFFI' }
-OSPlatform >> ffiLibraryName: aLibrary [ 
+OSPlatform >> ffiLibraryName: aLibrary [
 	^ self subclassResponsibility
 ]
 
@@ -37,13 +37,13 @@ OSPlatform >> ffiPointerAlignment [
 { #category : #'*UnifiedFFI' }
 OSPlatform >> resultOfCommand: aCommand [
 	"Run the given operating system command and return the piped command line result."
-	
+
 	^LibC resultOfCommand: aCommand
 ]
 
 { #category : #'*UnifiedFFI' }
 OSPlatform >> runCommand: aCommand [
 	"Run the given operating system command."
-	
+
 	^LibC runCommand: aCommand
 ]

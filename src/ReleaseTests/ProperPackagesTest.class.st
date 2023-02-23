@@ -16,12 +16,12 @@ ProperPackagesTest >> testNoPackageNameEndsWithTest [
 { #category : #tests }
 ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
-	 
+
 	| condition badCases |
-	condition := [ :protocol | 
-	             (protocol beginsWith: '*') and: [ 
+	condition := [ :protocol |
+	             (protocol beginsWith: '*') and: [
 		             protocol second isLowercase ] ].
-	badCases := CompiledMethod allInstances select: [ :each | 
+	badCases := CompiledMethod allInstances select: [ :each |
 		         each protocol notNil and: [ condition value: each protocol ] ].
 
 	self assert: badCases isEmpty
@@ -38,9 +38,9 @@ ProperPackagesTest >> testProperClassTagCasing [
 
 { #category : #'tests - manifest' }
 ProperPackagesTest >> testProperManifestCategorization [
-	"If a package provides a PackageManifest subclass then this manifest class should be packaged 
+	"If a package provides a PackageManifest subclass then this manifest class should be packaged
 	 with 'Manifest' tag similar to all other manifests."
-	
+
 	|violations|
 	violations := OrderedCollection new.
 	PackageManifest allSubclassesDo: [:each |
@@ -48,5 +48,5 @@ ProperPackagesTest >> testProperManifestCategorization [
   	      ifFalse: [ violations add: each ]
 	].
 
-	self assert: violations isEmpty.
+	self assert: violations isEmpty
 ]

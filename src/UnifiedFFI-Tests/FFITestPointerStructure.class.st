@@ -38,7 +38,7 @@ FFITestPointerStructure >> nestedPointer [
 { #category : #'accessing - structure variables' }
 FFITestPointerStructure >> nestedPointer: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_NESTEDPOINTER put: anObject getHandle.
+	handle pointerAt: OFFSET_NESTEDPOINTER put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -62,7 +62,7 @@ FFITestPointerStructure >> pointer [
 { #category : #'accessing - structure variables' }
 FFITestPointerStructure >> pointer: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_POINTER put: anObject getHandle.
+	handle pointerAt: OFFSET_POINTER put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }

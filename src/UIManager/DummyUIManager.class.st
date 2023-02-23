@@ -84,14 +84,13 @@ DummyUIManager >> inform: aString [
 { #category : #'ui requests' }
 DummyUIManager >> informUserDuring: aBlock [
 
-	aBlock value: DummySystemProgressItem new.
+	aBlock value: DummySystemProgressItem new
 ]
 
 { #category : #'default actions' }
 DummyUIManager >> lowSpaceWatcherDefaultAction [
 
-	self traceCr: '*** LOW SPACE ***'.
-
+	self traceCr: '*** LOW SPACE ***'
 ]
 
 { #category : #'ui requests' }
@@ -105,7 +104,7 @@ DummyUIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer ans
 { #category : #accessing }
 DummyUIManager >> progressBarEnabled [
 
-  ^ ProgressBarEnabled ifNil: [ ProgressBarEnabled := true ].
+  ^ ProgressBarEnabled ifNil: [ ProgressBarEnabled := true ]
 ]
 
 { #category : #accessing }
@@ -115,17 +114,15 @@ DummyUIManager >> progressBarEnabled: aBoolean [
 ]
 
 { #category : #'ui requests' }
-DummyUIManager >> request: queryString initialAnswer: defaultAnswer [ 
+DummyUIManager >> request: queryString initialAnswer: defaultAnswer [
 
 	^ self request: queryString initialAnswer: defaultAnswer title: 'Provide the following information' entryCompletion: nil
-
 ]
 
 { #category : #'ui requests' }
 DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
-	
-	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' entryCompletion: anEntryCompletion
 
+	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' entryCompletion: anEntryCompletion
 ]
 
 { #category : #'ui requests' }
@@ -133,13 +130,13 @@ DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTi
 
 	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
 		^ answer == #default ifTrue: [defaultAnswer] ifFalse: [answer]].
-	
+
 	self error: 'No user response possible'
 ]
 
 { #category : #'ui requests' }
 DummyUIManager >> requestPassword: queryString [
-	
+
 	^ self request: queryString initialAnswer: ''
 ]
 
@@ -151,7 +148,7 @@ DummyUIManager >> restoreDisplay [
 DummyUIManager >> restoreDisplayAfter: aBlock [
 
 	aBlock value.
-	self restoreDisplay.
+	self restoreDisplay
 ]
 
 { #category : #'default actions' }
@@ -168,7 +165,7 @@ DummyUIManager >> traceCr: aString [
 
 	Smalltalk logStdOutDuring: [:logger |
 		logger nextPutAll: aString;
-				 cr ].
+				 cr ]
 ]
 
 { #category : #'default actions' }

@@ -38,12 +38,12 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 
 { #category : #accessing }
 VirtualMachine >> architectureName [
-	
+
 	^ Smalltalk vm getSystemAttribute: 1003
 ]
 
 { #category : #accessing }
-VirtualMachine >> buildDate [			
+VirtualMachine >> buildDate [
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"
 
@@ -61,11 +61,11 @@ VirtualMachine >> command [
 	"return a bash-like launch command for the vm including all arguments up to the image name "
 	^ String streamContents: [ :s|
 		s nextPutAll: (self optionAt: 0).
-		Smalltalk commandLine options 
+		Smalltalk commandLine options
 			do: [ :argument|
 				(argument endsWith: '.image')
 					ifTrue: [ ^ s contents ].
-				
+
 				s space; nextPutAll: argument]]
 ]
 
@@ -83,7 +83,7 @@ VirtualMachine >> compiledMethodsCount [
 
 { #category : #accessing }
 VirtualMachine >> directory [
-	
+
 	^ self primVmPath asByteArray utf8Decoded
 ]
 
@@ -97,11 +97,11 @@ VirtualMachine >> disableModuleLoading [
 ]
 
 { #category : #attributes }
-VirtualMachine >> doGetSystemAttribute: attributeID [ 
-	"Optional. Answer the string for the system attribute with the given 
-	integer ID. Answer nil if the given attribute is not defined on this 
-	platform. On platforms that support invoking programs from command 
-	lines (e.g., Unix), this mechanism can be used to pass command line 
+VirtualMachine >> doGetSystemAttribute: attributeID [
+	"Optional. Answer the string for the system attribute with the given
+	integer ID. Answer nil if the given attribute is not defined on this
+	platform. On platforms that support invoking programs from command
+	lines (e.g., Unix), this mechanism can be used to pass command line
 	arguments to programs written in Pharo.
 
 	By convention, the first command line argument that is not a VM
@@ -109,7 +109,7 @@ VirtualMachine >> doGetSystemAttribute: attributeID [
 	document can add methods and classes, can contain a serialized object,
 	can include code to be executed, or any combination of these.
 
-	Currently defined attributes include: 
+	Currently defined attributes include:
 	-1000   1000th command line argument that specify VM options
    	...
 	-1              first command line argument that specify VM options
@@ -142,14 +142,14 @@ VirtualMachine >> doGetSystemAttribute: attributeID [
 VirtualMachine >> documentPath [
 	"Answer the absolute path of the document passed to the vm or nil if none."
 	"Smalltalk commandLine documentPath"
-	
+
 	^self getSystemAttribute: 2
 ]
 
 { #category : #gc }
 VirtualMachine >> edenSpaceSize [
 	"for spur, size of eden, in bytes"
-		
+
 	^ self parameterAt: 44
 ]
 
@@ -177,7 +177,7 @@ VirtualMachine >> fileName [
 { #category : #attributes }
 VirtualMachine >> flagInterpretedMethods: aBoolean [
 	"The Cog VM can be instructed to set the flag bit of CompiledMethods that it executes but will only interpret.  This can be used e.g. to profile startup. See CompiledMethod>>#flag & CompiledMethod>>#clearFlag. This flag persists across snapshots, stored in the image header."
-	
+
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 2) + (aBoolean ifTrue: [2] ifFalse: [0])
 ]
 
@@ -202,14 +202,14 @@ VirtualMachine >> forgetModule: aString [
 { #category : #gc }
 VirtualMachine >> freeOldSpaceSize [
 	"for spur, total size of free old space, otherwise nil"
-		
+
 	^ self parameterAt: 54
 ]
 
 { #category : #gc }
 VirtualMachine >> freeSize [
 	"Return the amount of free memory of the heap in bytes."
-		
+
 	^ self freeOldSpaceSize + self edenSpaceSize - self youngSpaceSize
 ]
 
@@ -232,29 +232,29 @@ VirtualMachine >> fullPath [
 { #category : #gc }
 VirtualMachine >> gcBiasToGrowLimit: arg [
 	"Tell the VM the grow limit if the GC logic has bias to grow."
-	
+
 	<primitive: 'primitiveSetGCBiasToGrowGCLimit'>
 	^self primitiveFailed
 ]
 
 { #category : #parameters }
-VirtualMachine >> getParameters [	
+VirtualMachine >> getParameters [
 	"Answer an Array containing the current values of the VM's internal
 	parameter/metric registers.  Each value is stored in the array at the
 	index corresponding to its VM register.  (See #vmParameterAt: and
 	#vmParameterAt:put:.)"
 	"Smalltalk vm getParameters"
-	
+
 	<primitive: 254>
 	self primitiveFailed
 ]
 
 { #category : #attributes }
-VirtualMachine >> getSystemAttribute: attributeID [ 
-	"Optional. Answer the string for the system attribute with the given 
-	integer ID. Answer nil if the given attribute is not defined on this 
-	platform. On platforms that support invoking programs from command 
-	lines (e.g., Unix), this mechanism can be used to pass command line 
+VirtualMachine >> getSystemAttribute: attributeID [
+	"Optional. Answer the string for the system attribute with the given
+	integer ID. Answer nil if the given attribute is not defined on this
+	platform. On platforms that support invoking programs from command
+	lines (e.g., Unix), this mechanism can be used to pass command line
 	arguments to programs written in Pharo.
 
 	By convention, the first command line argument that is not a VM
@@ -262,7 +262,7 @@ VirtualMachine >> getSystemAttribute: attributeID [
 	document can add methods and classes, can contain a serialized object,
 	can include code to be executed, or any combination of these.
 
-	Currently defined attributes include: 
+	Currently defined attributes include:
 	-1000   1000th command line argument that specify VM options
    	...
 	-1              first command line argument that specify VM options
@@ -320,7 +320,7 @@ VirtualMachine >> imagePath [
 { #category : #parameters }
 VirtualMachine >> imageVersionNumber [
 	"Image version number (6505 means the Squeak V3 format with BlockClosure support (but _without_ BlockContext support)"
-		
+
 	^ self parameterAt: 41
 ]
 
@@ -340,20 +340,20 @@ VirtualMachine >> interpreterClass [
 { #category : #accessing }
 VirtualMachine >> interpreterSourceDate [
 	"Return the date of changes given by `self interpreterSourceVersion`"
-	| dateString parts | 
-	
+	| dateString parts |
+
 	dateString := (self interpreterSourceVersion splitOn: 'Date: ') second.
-	
+
 	dateString first isDigit
-		ifTrue: [ 
-			"most probably the date is in ISO 8601 Format" 
+		ifTrue: [
+			"most probably the date is in ISO 8601 Format"
 			^ dateString asDateAndTime ].
-		
+
 	"Otherwise assume the old format: DDD MMM DD HH:MM:SS YYYY +TTTT ..."
 	parts := dateString substrings first: 6.
 	"create a more reasonable string.."
 	dateString := String streamContents: [ :s |
-		s 
+		s
 			nextPutAll: (parts at: 5 ); space; "year"
 			nextPutAll: (parts at: 2 ); space; "month name"
 			nextPutAll: (parts at: 3 ); space; "day of month"
@@ -393,7 +393,7 @@ VirtualMachine >> is64bit [
 
 { #category : #testing }
 VirtualMachine >> isAIOInterrupt [
-	"Answer true, if the vm is capable of being interrupted until there is an AIO event. 
+	"Answer true, if the vm is capable of being interrupted until there is an AIO event.
 	 (This means we are going idle until we have something real to process)"
 
 	^ (self getSystemAttribute: 1010) = 'AIO'
@@ -403,15 +403,15 @@ VirtualMachine >> isAIOInterrupt [
 VirtualMachine >> isPharoVM [
 	"Answers if this VM is a valid PharoVM (made with our sources)"
 	| version |
-	
+
 	self flag: #pharoTodo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
 	version := self version.
 	^ (version beginsWith: 'PharoVM')
-		or: [ 
+		or: [
 			(version includesSubstring: 'NBCoInterpreter')
 				or: [
-					(version includesSubstring: 'Commit: ') 
-						and: [ 
+					(version includesSubstring: 'Commit: ')
+						and: [
 							| pos |
 							pos := (version findString: 'Commit: ') + 8.
 							(version copyFrom: pos to: pos + 39) allSatisfy: [ :each | (($a to: $f), ($0 to: $9)) includes: each ] ] ] ]
@@ -441,7 +441,7 @@ VirtualMachine >> isRunningInWorkerThread [
 ]
 
 { #category : #testing }
-VirtualMachine >> isSpur [ 
+VirtualMachine >> isSpur [
 	"this value is always true but is here for backward compatibility (non Spur images should return false)"
 	^ true
 ]
@@ -458,16 +458,16 @@ VirtualMachine >> listBuiltinModule: index [
 VirtualMachine >> listBuiltinModules [
 	"Smalltalk vm listBuiltinModules"
 
-	"Return a list of all builtin modules (e.g., plugins). Builtin plugins are those that are 
-	compiled with the VM directly, as opposed to plugins residing in an external shared library. 	
-	The list will include all builtin plugins regardless of whether they are currently loaded 
+	"Return a list of all builtin modules (e.g., plugins). Builtin plugins are those that are
+	compiled with the VM directly, as opposed to plugins residing in an external shared library.
+	The list will include all builtin plugins regardless of whether they are currently loaded
 	or not. Note that the list returned is not sorted!"
 
 	| modules index tname |
 	modules := Array new writeStream.
 	index := 1.
 	[ true ]
-		whileTrue: [ 
+		whileTrue: [
 			tname := self listBuiltinModule: index.
 			tname ifNil: [ ^ modules contents ].
 			modules nextPut: tname.
@@ -494,7 +494,7 @@ VirtualMachine >> listLoadedModules [
 		tname ifNil:[^modules contents].
 		modules nextPut: tname.
 		index := index + 1.
-	].
+	]
 ]
 
 { #category : #attributes }
@@ -517,26 +517,26 @@ VirtualMachine >> maxExternalSemaphores: aSize [
     unhandled interrupts."
 
 	self maxExternalSemaphores ifNil: [ ^ 0 ].
-	
+
 	[ self maxExternalSemaphoresSilently: aSize.
 	SystemNotification signal: ('WARNING: Had to increase size of semaphore signal handling table due to many external objects concurrently in use', String cr,
 		'You should increase this size at startup using #maxExternalSemaphoresSilently:', String cr,
 		'Current table size: ' , self maxExternalSemaphores printString) ] forkAt: Processor userBackgroundPriority.
-	
+
 	self error: 'Not enough space for external objects, set a larger size at startup!'.
 	^ self maxExternalSemaphores
 ]
 
 { #category : #attributes }
-VirtualMachine >> maxExternalSemaphoresSilently: aSize [ 
+VirtualMachine >> maxExternalSemaphoresSilently: aSize [
 	"Changes the size of array where external signals for semaphores in
-	externalObjects are handled.. 
+	externalObjects are handled..
 	The size can only grow, and will always be the next power of two
 	larger than the parameter.
-	
+
 	The intended use is to set the table size to some adequate
 	maximum as part of a non-resuming image startUp.
-	
+
 	Setting this at any time other than start-up can potentially result in
 	lost signals during reallocation.
 	i.e. Requests handled during copying og signals from old to new array
@@ -545,7 +545,7 @@ VirtualMachine >> maxExternalSemaphoresSilently: aSize [
 	self maxExternalSemaphores
 		ifNil: [^ 0].
 	"The vm-header field where the size is stored is a short, maximum
-	64k entries. 
+	64k entries.
 	Well, on most platforms anyways"
 	(aSize < 0
 			or: [aSize > 65535])
@@ -586,21 +586,21 @@ VirtualMachine >> maximumPauseTimeDueToSegmentAllocation [
 { #category : #gc }
 VirtualMachine >> memoryEnd [
 	"end of memory"
-		
+
 	^ self parameterAt: 3
 ]
 
 { #category : #gc }
 VirtualMachine >> memorySize [
 	"Return the memory size of the heap in bytes."
-		
+
 	^ self parameterAt: 3 "Readonly parameter for spur"
 ]
 
 { #category : #gc }
 VirtualMachine >> oldSpace [
 	"for spur, sizeof old-space (0-based, read-only)"
-		
+
 
 	^ self parameterAt: 1
 ]
@@ -608,21 +608,21 @@ VirtualMachine >> oldSpace [
 { #category : #gc }
 VirtualMachine >> oldSpaceEnd [
 	"end of old-space (0-based, read-only)"
-		
+
 
 	^ self parameterAt: 1
 ]
 
 { #category : #accessing }
 VirtualMachine >> operatingSystemName [
-	
+
 	^ Smalltalk vm getSystemAttribute: 1001
 ]
 
 { #category : #accessing }
 VirtualMachine >> optionAt: i [
 	"Answer the i-th option of the command line, or nil if not so many options."
-	
+
 	^self getSystemAttribute: i negated
 ]
 
@@ -638,11 +638,11 @@ VirtualMachine >> optionDash [
 VirtualMachine >> options [
 	"return an array with all the options passed to the VM (up to the image) "
 	^ Array streamContents: [ :s|
-		Smalltalk commandLine options 
+		Smalltalk commandLine options
 			do: [ :argument|
 				(argument endsWith: '.image')
 					ifTrue: [ ^ s contents ].
-				
+
 				s nextPut: argument ]]
 ]
 
@@ -652,7 +652,7 @@ VirtualMachine >> parameter46Documentation [
 "
 46      size of machine code zone, in bytes
 
-To speed-up execution, the cog uses internally a JIT compiler which translates to machine code frequently used bytecoded method and run the machine code to execute them instead of using the interpreter. The machine code zone is an executable memory zone containing all the machine code versions of methods. 
+To speed-up execution, the cog uses internally a JIT compiler which translates to machine code frequently used bytecoded method and run the machine code to execute them instead of using the interpreter. The machine code zone is an executable memory zone containing all the machine code versions of methods.
 
 The default size should be between 1Mb and 2Mb for standard applications. If memory is a constraint, it can be lowered down to 750kb, under that you should use the stack VM else the performance starts to drastically decrease.
 
@@ -695,7 +695,7 @@ VirtualMachine >> parameterAt: parameterIndex put: newValue [
 VirtualMachine >> parameterLabels [
 
 	"The indices and label of each VM parameter.
-	
+
 	 Only one single (machine-processable) list to maintain in the Image side, marvelous!"
 
 	^ #(
@@ -823,7 +823,7 @@ VirtualMachine >> processPreemptionYields [
 { #category : #attributes }
 VirtualMachine >> processPreemptionYields: aBoolean [
 	"The Cog VM can be instructed not to yield on process preemption, i.e. not to put a preempted process at the back of its run queue.  By default preempting a process causes it to yield (Blue Book semantics) which can have unfortunate effects. This flag persists across snapshots, stored in the image header."
-	
+
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 4) + (aBoolean ifTrue: [0] ifFalse: [2r100])
 ]
 
@@ -889,7 +889,7 @@ VirtualMachine >> statisticsReport [
 	fullGCTime			:= self totalFullGCTime.
 	incrGCs				:= self incrementalGCCount.
 	incrGCTime			:= self totalIncrementalGCTime.
- 
+
 	upTime := Time millisecondClockValue.
 	str := (String new: 1000) writeStream.
 	str	<< 'uptime			';
@@ -921,8 +921,8 @@ VirtualMachine >> statisticsReport [
 	(fullGCs + incrGCs) printWithCommasOn: str.
 	fullGCs + incrGCs > 0 ifTrue: [
 		str
-			<< ' ('; 
-			print: ((upTime / (fullGCs + incrGCs)) roundTo: 1); 
+			<< ' (';
+			print: ((upTime / (fullGCs + incrGCs)) roundTo: 1);
 			<< 'ms between GCs)'
 	].
 	str cr.
@@ -960,8 +960,8 @@ ifNotNil: [
 	(fullGCs2 + incrGCs2) printWithCommasOn: str.
 	fullGCs2 + incrGCs2 > 0 ifTrue: [
 		str
-			<< ' ('; 
-			print: ((upTime2 / (fullGCs2 + incrGCs2)) roundTo: 1); 
+			<< ' (';
+			print: ((upTime2 / (fullGCs2 + incrGCs2)) roundTo: 1);
 			<< 'ms between GCs)'.
 	].
 	str cr.
@@ -1045,7 +1045,7 @@ VirtualMachine >> tenuringThreshold [
 VirtualMachine >> tenuringThreshold: anInteger [
 	"survivor count tenuring threshold (read-write).
 	tenure when more than this many objects survive the GC"
-	
+
 	^ self parameterAt: 6 put: anInteger
 ]
 
@@ -1094,7 +1094,7 @@ VirtualMachine >> totalJITCompileMethodsTime [
 
 { #category : #statistics }
 VirtualMachine >> totalJITCompileTime [
-	
+
 	^ self totalJITCompileMethodsTime + self totalJITCompileBlocksTime
 ]
 
@@ -1118,7 +1118,7 @@ VirtualMachine >> version [
 	^ String streamContents: [ :s |
 			s nextPutAll: self interpreterClass; cr.
 			self isRunningCogit ifTrue: [ s nextPutAll: self cogitClass; cr ].
-			s nextPutAll: self interpreterSourceVersion; cr ].
+			s nextPutAll: self interpreterSourceVersion; cr ]
 ]
 
 { #category : #accessing }
@@ -1130,7 +1130,7 @@ VirtualMachine >> versionLabel [
 	and various plugins) that is translated to C by a CCodeGenerator,  in
 	addition to the external platform source code, typically written in C and
 	managed separately for each platform.
-	
+
 	This invokes an optional primitive that may not be available on all virtual
 	machines. See also vmVersion, which answers a string identifying the image
 	from which virtual machine sources were generated."
@@ -1165,13 +1165,13 @@ VirtualMachine >> wordSize [
 { #category : #gc }
 VirtualMachine >> youngSpaceEnd [
 	"end of young-space"
-		
+
 	^ self parameterAt: 2
 ]
 
 { #category : #gc }
 VirtualMachine >> youngSpaceSize [
 	"for spur, size of young/new-space (read-only)"
-		
+
 	^ self parameterAt: 2
 ]

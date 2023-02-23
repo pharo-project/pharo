@@ -8,18 +8,18 @@ Class {
 SlotExampleMovieAndPersonTest >> testAddActors [
 
 	| m1 m2 p1 p2 |
-	
+
 	m1 := SlotExampleMovie named: 'M1'.
 	m2 := SlotExampleMovie named: 'M2'.
 	p1 := SlotExamplePerson named: 'P1'.
 	p2 := SlotExamplePerson named: 'P2'.
-	
+
 	m1 addActor: p1; addActor: p2.
 	self assert: m1 actors size equals: 2.
 	self assert: p1 actedInMovies size equals: 1.
 	self assert: p1 actedInMovies anyOne equals: m1.
 	self assert: p2 actedInMovies anyOne equals: m1.
-	
+
 	m2 addActor: p2.
 	self assert: p2 actedInMovies size equals: 2
 ]
@@ -49,23 +49,23 @@ SlotExampleMovieAndPersonTest >> testAddAndRemoveActors [
 SlotExampleMovieAndPersonTest >> testAddMovieDirector [
 
 	| movie person |
-	
+
 	movie := SlotExampleMovie named: 'Jaws'.
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	person directedMovies add: movie.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.
-	self assert: person directedMovies anyOne equals: movie.
+	self assert: person directedMovies anyOne equals: movie
 ]
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testAddMovieDirectorInvalid [
 
 	| person |
-	
+
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	self should: [ person directedMovies add: 'not-a-movie' ] raise: Error
 ]
 
@@ -73,10 +73,10 @@ SlotExampleMovieAndPersonTest >> testAddMovieDirectorInvalid [
 SlotExampleMovieAndPersonTest >> testAddMovieDirectorTwice [
 
 	| movie person |
-	
+
 	movie := SlotExampleMovie named: 'Jaws'.
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	person directedMovies add: movie; add: movie.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.
@@ -154,10 +154,10 @@ SlotExampleMovieAndPersonTest >> testSetAndUnsetMovieDirector [
 SlotExampleMovieAndPersonTest >> testSetMovieDirector [
 
 	| movie person |
-	
+
 	movie := SlotExampleMovie named: 'Jaws'.
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	movie director: person.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.
@@ -168,9 +168,9 @@ SlotExampleMovieAndPersonTest >> testSetMovieDirector [
 SlotExampleMovieAndPersonTest >> testSetMovieDirectorInvalid [
 
 	| movie |
-	
+
 	movie := SlotExampleMovie named: 'Jaws'.
-	
+
 	self should: [ movie director: 'not-a-person' ] raise: Error.
 	self assert: movie director isNil
 ]
@@ -179,10 +179,10 @@ SlotExampleMovieAndPersonTest >> testSetMovieDirectorInvalid [
 SlotExampleMovieAndPersonTest >> testSetMovieDirectorTwice [
 
 	| movie person |
-	
+
 	movie := SlotExampleMovie named: 'Jaws'.
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	movie director: person; director: person.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.

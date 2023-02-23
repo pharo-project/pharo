@@ -26,8 +26,8 @@ SycMethodNameEditorTest >> a: a b: b c: c [
 
 { #category : #running }
 SycMethodNameEditorTest >> methodNamedFor: aSymbol [
-	^ RBMethodName 
-		selector: (self class >> aSymbol) selector 
+	^ RBMethodName
+		selector: (self class >> aSymbol) selector
 		arguments: ((self class >> aSymbol) ast arguments collect: [:each | each name])
 ]
 
@@ -46,16 +46,16 @@ SycMethodNameEditorTest >> tearDown [
 
 { #category : #'tests - argument selection' }
 SycMethodNameEditorTest >> testAddArgument [
-	
+
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canAddArgs: false.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e | 
+	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
 		(e name = 'Add') ifTrue: [ self deny: e isVisible ] ]).
-	
+
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canAddArgs: true.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e | 
-		(e name = 'Add') ifTrue: [ self assert: e isVisible ] ]).
+	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
+		(e name = 'Add') ifTrue: [ self assert: e isVisible ] ])
 ]
 
 { #category : #'tests - up/down buttons' }
@@ -66,7 +66,7 @@ SycMethodNameEditorTest >> testButtonDownClickShouldModifiedArgumentsList [
 	self assert: (arrayBeforeClick collect: [ :each | each newName ]) asArray equals: #(a b c).
 	methodNameEditor downButton click.
 	arrayAfterClick := methodNameEditor argumentsList items.
-	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(a c b).
+	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(a c b)
 ]
 
 { #category : #'tests - up/down buttons' }
@@ -90,16 +90,16 @@ SycMethodNameEditorTest >> testButtonDownClickWithoutSelectOption [
 	self assert: (arrayBeforeClick collect: [ :each | each newName ]) asArray equals: #(a b c).
 	methodNameEditor downButton click.
 	arrayAfterClick := methodNameEditor argumentsList items.
-	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(b a c).
+	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(b a c)
 ]
 
 { #category : #'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonUpClickShouldModifiedArgumentsList [
 	methodNameEditor argumentsList selectIndex: 2.
-	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray 
+	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
 		equals: #(a b c).
 	methodNameEditor downButton click.
-	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray 
+	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
 		equals: #(a c b)
 ]
 
@@ -119,7 +119,7 @@ SycMethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 
 { #category : #'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonUpClickWithoutSelectOption [
-	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray 
+	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
 		equals: #(a b c).
 	methodNameEditor downButton click.
 	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
@@ -152,7 +152,7 @@ SycMethodNameEditorTest >> testChangeInInputSelectorWithToMuchAccessorThanArgume
 
 { #category : #'tests - initial state' }
 SycMethodNameEditorTest >> testInitialArgumentListAutoSelection [
-	
+
 	self assert: methodNameEditor argumentsList selection selectedIndexes equals: #(1)
 ]
 
@@ -170,28 +170,28 @@ SycMethodNameEditorTest >> testInitialButtonUpIsDisable [
 
 { #category : #'tests - argument selection' }
 SycMethodNameEditorTest >> testRemoveArguments [
-	
+
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRemoveArgs: false.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e | 
+	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
 		(e name = 'Remove') ifTrue: [ self deny: e isVisible ] ]).
-	
+
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRemoveArgs: true.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e | 
-		(e name = 'Remove') ifTrue: [ self assert: e isVisible ] ]).
+	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
+		(e name = 'Remove') ifTrue: [ self assert: e isVisible ] ])
 ]
 
 { #category : #'tests - argument selection' }
 SycMethodNameEditorTest >> testRenameArgument [
-	
+
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRenameArgs: false.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e | 
+	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
 		(e name = 'Rename') ifTrue: [ self deny: e isVisible ] ]).
-	
+
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRenameArgs: true.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e | 
-		(e name = 'Rename') ifTrue: [ self assert: e isVisible ] ]).
+	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
+		(e name = 'Rename') ifTrue: [ self assert: e isVisible ] ])
 ]

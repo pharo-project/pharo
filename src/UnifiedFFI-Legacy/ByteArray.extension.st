@@ -141,5 +141,5 @@ ByteArray >> nbUlongAt: index [
 { #category : #'*UnifiedFFI-Legacy' }
 ByteArray >> nbUlongAt: index put: value [
 	"Store unsigned long at one-based index."
-	^ self unsignedLongAt: index put: value	
+	^ self unsignedLongAt: index put: value
 ]

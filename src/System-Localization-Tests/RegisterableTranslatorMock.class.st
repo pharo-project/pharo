@@ -13,7 +13,7 @@ Class {
 { #category : #initialization }
 RegisterableTranslatorMock >> initialize [
 	"Initializes the receiver"
-	
+
 	super initialize.
 	translations := Dictionary new.
 	translations at: #'TestCase' put: 'Testfall'
@@ -27,6 +27,6 @@ RegisterableTranslatorMock >> translate: aString [
 
 { #category : #translate }
 RegisterableTranslatorMock >> translate: aString toLocale: localeID [
- 
+
 	^self translate: aString
 ]

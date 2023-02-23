@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #execution }
-SycSourceCodeCmCommand class >> activationStrategy [ 
+SycSourceCodeCmCommand class >> activationStrategy [
 	^ SycSourceCodeMenuActivation
 ]
 
 { #category : #accessing }
 SycSourceCodeCmCommand >> order [
-	
+
 	^ 100
 ]

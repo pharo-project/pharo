@@ -90,11 +90,11 @@ CharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textLine
 ]
 
 { #category : #'stop conditions' }
-CharacterBlockScanner >> cr [ 
-	"Answer a CharacterBlock that specifies the current location of the mouse 
-	relative to a carriage return stop condition that has just been 
-	encountered. The ParagraphEditor convention is to denote selections by 
-	CharacterBlocks, sometimes including the carriage return (cursor is at 
+CharacterBlockScanner >> cr [
+	"Answer a CharacterBlock that specifies the current location of the mouse
+	relative to a carriage return stop condition that has just been
+	encountered. The ParagraphEditor convention is to denote selections by
+	CharacterBlocks, sometimes including the carriage return (cursor is at
 	the end) and sometimes not (cursor is in the middle of the text)."
 
 	((characterIndex notNil
@@ -116,16 +116,16 @@ CharacterBlockScanner >> cr [
 
 { #category : #'stop conditions' }
 CharacterBlockScanner >> crossedX [
-	"Text display has wrapping. The scanner just found a character past the x 
-	location of the cursor. We know that the cursor is pointing at a character 
+	"Text display has wrapping. The scanner just found a character past the x
+	location of the cursor. We know that the cursor is pointing at a character
 	or before one."
 
 	self retrieveLastCharacterWidth.
-	
+
 	characterPoint x <= (destX + (lastCharacterWidth // 2))
 		ifTrue:	[characterPoint := destX @ destY.
 				^true].
-	lastIndex >= line last 
+	lastIndex >= line last
 		ifTrue:	[characterPoint := destX @ destY.
 				^true].
 
@@ -137,12 +137,12 @@ CharacterBlockScanner >> crossedX [
 
 { #category : #'stop conditions' }
 CharacterBlockScanner >> endOfRun [
-	"Before arriving at the cursor location, the selection has encountered an 
-	end of run. Answer false if the selection continues, true otherwise. Set 
+	"Before arriving at the cursor location, the selection has encountered an
+	end of run. Answer false if the selection continues, true otherwise. Set
 	up indexes for building the appropriate CharacterBlock."
 
 	| runLength lineStop |
-	
+
 	(((characterIndex ~~ nil and:
 		[runStopIndex < characterIndex and: [runStopIndex < text size]])
 			or:	[characterIndex == nil and: [lastIndex < line last]]) or: [
@@ -158,7 +158,7 @@ CharacterBlockScanner >> endOfRun [
 				^false].
 
 	self retrieveLastCharacterWidth.
-		
+
 	(characterIndex == nil and: [lastIndex = line last])
 		ifTrue: [characterPoint x > (destX + (lastCharacterWidth // 2))
 			ifTrue:
@@ -207,9 +207,9 @@ CharacterBlockScanner >> indentationLevel: anInteger [
 
 { #category : #'stop conditions' }
 CharacterBlockScanner >> paddedSpace [
-	"When the line is justified, the spaces will not be the same as the font's 
-	space character. A padding of extra space must be considered in trying 
-	to find which character the cursor is pointing at. Answer whether the 
+	"When the line is justified, the spaces will not be the same as the font's
+	space character. A padding of extra space must be considered in trying
+	to find which character the cursor is pointing at. Answer whether the
 	scanning has crossed the cursor."
 
 	| pad |
@@ -223,7 +223,6 @@ CharacterBlockScanner >> paddedSpace [
 	destX := destX + lastCharacterWidth + kern.
 	pendingKernX := 0.
 	^ false
-
 ]
 
 { #category : #private }
@@ -262,7 +261,7 @@ CharacterBlockScanner >> tab [
 	nextDestX := self plainTab.
 	lastCharacterWidth := nextDestX - destX max: 0.
 	nextDestX >= characterPoint x
-		ifTrue: 
+		ifTrue:
 			[^ self crossedX].
 	destX := nextDestX.
 	lastIndex := lastIndex + 1.

@@ -29,7 +29,7 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 		aBuilder name: self c2 name;
 			superclass: newSuperclass;
 			traitComposition: self c2 traitComposition asTraitComposition;
-			package: self c2 category ].		
+			package: self c2 category ].
 
 
 	self assert: self c2 superclass identicalTo: newSuperclass.
@@ -47,12 +47,12 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
 	self assert: self c2 localSelectors sorted equals: #(bar foo m51).
 
-	"change superclass of C2 back to C1"		
+	"change superclass of C2 back to C1"
 	self class classInstaller make: [ :aBuilder |
 		aBuilder name: self c2 name;
 			superclass: self c1;
 			traitComposition: self c2 traitComposition asTraitComposition;
-			package: self c2 category ].		
+			package: self c2 category ].
 
 	self assert: aC2 m51 equals: 19.
 	self assert: self c2 superclass identicalTo: self c1.
@@ -145,7 +145,7 @@ TraitPureBehaviorTest >> testMethodCategoryReorganization [
 	self t1 compile: 'm1' classified: 'category1'.
 	self assert: (self t5 organization categoryOfElement: #m1) equals: #category1.
 	self assert: (self c2 organization categoryOfElement: #m1) equals: #category1.
-	self t1 organization 
+	self t1 organization
 		classify: #m1
 		under: #category2
 		suppressIfDefault: true.
@@ -181,11 +181,11 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
 
 	self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: #T;
 			traitComposition: self t1 asTraitComposition;
 			package: self class category;
-			beTrait ].			
+			beTrait ].
 
 	self assert: trait methodDict size equals: 3.
 	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13)).
@@ -246,7 +246,7 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 
 	"removing methods"
 	self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: #T5;
 			traitComposition: self t1 + self t2 - {#m21 . #m22};
 			package: self class category;
@@ -256,7 +256,7 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 
 	"adding methods"
 	self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: #T2;
 			traitComposition: self t3 asTraitComposition;
 			package: self class category;
@@ -269,7 +269,7 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 { #category : #tests }
 TraitPureBehaviorTest >> testRemovingMethods [
 	"When removing a local method, assure that the method
-	from the trait is installed instead and that the users are 
+	from the trait is installed instead and that the users are
 	updated."
 
 	"Classes"
@@ -306,7 +306,7 @@ TraitPureBehaviorTest >> testReshapeClass [
 
 	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
 	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo).
+	self assert: self c2 localSelectors sorted equals: #(bar foo)
 ]
 
 { #category : #'tests - applying trait composition' }
@@ -377,8 +377,8 @@ TraitPureBehaviorTest >> traitOrClassOfSelector [
 	self assert: (self t6 traitOrClassOfSelector: #m22Alias) equals: self t2.
 
 	"class side"
-	self assert: (self t2 classSide traitOrClassOfSelector: #m2ClassSide:) 
+	self assert: (self t2 classSide traitOrClassOfSelector: #m2ClassSide:)
 		  equals: self t2 classSide.
-	self assert: (self t6 classSide traitOrClassOfSelector: #m2ClassSide:) 
+	self assert: (self t6 classSide traitOrClassOfSelector: #m2ClassSide:)
 		  equals: self t2 classSide
 ]
