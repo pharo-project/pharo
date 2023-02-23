@@ -1,3 +1,6 @@
+"
+Baseline for Beacon - a slim logging engine based entirely on Announcements
+"
 Class {
 	#name : #BaselineOfBeacon,
 	#superclass : #BaselineOf,

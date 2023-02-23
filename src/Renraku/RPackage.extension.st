@@ -9,12 +9,12 @@ RPackage >> ban: aCritique [
 		bannedOn: self.
 
 	(TheManifestBuilder of: self)
-		banRule: aCritique rule for: self.
+		banRule: aCritique rule for: self
 ]
 
 { #category : #'*Renraku' }
 RPackage >> banChecksForValidation [
-	
+
 	^ {}
 ]
 
@@ -42,6 +42,6 @@ RPackage >> reBanName [
 ]
 
 { #category : #'*Renraku' }
-RPackage >> suitableRulesFrom: aReRuleManager [ 
+RPackage >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager packageRules
 ]

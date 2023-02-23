@@ -16,7 +16,7 @@ TKTFutureTest >> testCannotDeployFailureTwiceIntoFuture [
 	| future |
 	future := TKTFuture new.
 	future deployFailure: Error new.
-	self should: [future deployFailure: Error new] raise: Error.
+	self should: [future deployFailure: Error new] raise: Error
 ]
 
 { #category : #'tests - callbacks' }
@@ -25,7 +25,7 @@ TKTFutureTest >> testCannotDeployTwiceIntoFuture [
 	| future |
 	future := TKTFuture new.
 	future deploySuccess: 2.
-	self should: [future deploySuccess: 3] raise: Error.
+	self should: [future deploySuccess: 3] raise: Error
 ]
 
 { #category : #'tests - combinators' }
@@ -34,7 +34,7 @@ TKTFutureTest >> testFutureAndThenExecutesInOrder [
 	| future collection |
 	future := TKTFuture new.
 	collection := OrderedCollection new.
-	
+
 	future
 		andThen: [ :v | collection add: v + 1 ];
 		andThen: [ :v | collection add: v + 2 ];
@@ -42,7 +42,7 @@ TKTFutureTest >> testFutureAndThenExecutesInOrder [
 
 	future deploySuccess: 0.
 	50 milliSecond wait.
-	
+
 	self assert: collection asArray equals: #( 1 2 3)
 ]
 
@@ -70,17 +70,17 @@ TKTFutureTest >> testFutureAndThenSuccessIfAndThenFails [
 	| future collection thenFuture got |
 	future := TKTFuture new.
 	collection := OrderedCollection new.
-	
+
 	thenFuture := future
 		andThen: [ :v | collection add: v + 1 ];
 		andThen: [ :v | self error ];
 		andThen: [ :v | collection add: v + 3 ].
 
 	thenFuture onSuccessDo: [ :e | got := e ].
-	
+
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 2
 ]
 
@@ -90,7 +90,7 @@ TKTFutureTest >> testFutureAndThenThenFailuresAreJustSkipped [
 	| future collection thenFuture |
 	future := TKTFuture new.
 	collection := OrderedCollection new.
-	
+
 	thenFuture := future
 		andThen: [ :v | collection add: v + 1 ];
 		andThen: [ :v | self error ];
@@ -98,7 +98,7 @@ TKTFutureTest >> testFutureAndThenThenFailuresAreJustSkipped [
 
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: collection asArray equals: #(3 5)
 ]
 
@@ -130,13 +130,13 @@ TKTFutureTest >> testFutureCollectFailsOnFailure [
 TKTFutureTest >> testFutureCollectSuccessOnSuccess [
 
 	| future got |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 
 	(future collect: [ :v | v * 5 ]) onSuccessDo: [ :v | got := v ].
-	
+
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 10
 ]
 
@@ -154,9 +154,9 @@ TKTFutureTest >> testFutureExecutesInSameLocalProcessRunner [
 
 	| runner future currentRunner |
 	runner := TKTLocalProcessTaskRunner new.
-	future := runner future: [ currentRunner := TKTConfiguration runner].	
+	future := runner future: [ currentRunner := TKTConfiguration runner].
 	future waitForCompletion: 1 second.
-	
+
 	self assert: currentRunner equals: runner
 ]
 
@@ -197,13 +197,13 @@ TKTFutureTest >> testFutureFailureCallbackExecutesInSameWorker [
 TKTFutureTest >> testFutureFailureCallbackIsCalledAfterFailureIsDeployed [
 
 	| future got deployedError |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	deployedError := Error new.
 	future deployFailure: deployedError.
-	
+
 	future onFailureDo: [ :error | got := error ].
 	50 milliSeconds wait.
-	
+
 	self assert: got equals: deployedError
 ]
 
@@ -213,11 +213,11 @@ TKTFutureTest >> testFutureFailureCallbackIsCalledIfFailureWasAlreadyDeployed [
 	| future got deployedError |
 	future := TKTFuture new.
 	future onFailureDo: [ :error | got := error ].
-	
+
 	deployedError := Error new.
 	future deployFailure: deployedError.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: deployedError
 ]
 
@@ -241,10 +241,10 @@ TKTFutureTest >> testFutureFallbackToHasFirstValueIfFirstSuccess [
 
 	| future got fallbackFuture |
 	future := TKTFuture new.
-	fallbackFuture := TKTFuture new.	
+	fallbackFuture := TKTFuture new.
 
 	(future fallbackTo: fallbackFuture) onSuccessDo: [ :v | got := v ].
-	
+
 	future deploySuccess: 2.
 	50 milliSecond wait.
 
@@ -256,7 +256,7 @@ TKTFutureTest >> testFutureFallbackToHasSecondValueIfFirstFailsAndSecondSuccess 
 
 	| future got fallbackFuture |
 	future := TKTFuture new.
-	fallbackFuture := TKTFuture new.	
+	fallbackFuture := TKTFuture new.
 
 	(future fallbackTo: fallbackFuture) onSuccessDo: [ :v | got := v ].
 
@@ -273,7 +273,7 @@ TKTFutureTest >> testFutureFirstCompleteOfFailsIfFirstFailsFaster [
 	| future got secondFuture error |
 	future := TKTFuture new.
 	secondFuture := TKTFuture new.
-	
+
 	(future firstCompleteOf: secondFuture) onFailureDo: [ :v | got := v ].
 
 	error := Error new.
@@ -292,7 +292,7 @@ TKTFutureTest >> testFutureFirstCompleteOfFailsIfSecondFailsFaster [
 	| future got secondFuture error |
 	future := TKTFuture new.
 	secondFuture := TKTFuture new.
-	
+
 	(future firstCompleteOf: secondFuture) onFailureDo: [ :v | got := v ].
 
 	error := Error new.
@@ -326,13 +326,13 @@ TKTFutureTest >> testFutureFirstCompleteOfSuccessIfSecondSuccessFaster [
 	| future got secondFuture |
 	future := TKTFuture new.
 	secondFuture := TKTFuture new.
-	
+
 	(future firstCompleteOf: secondFuture) onSuccessDo: [ :v | got := v ].
 
 	secondFuture deploySuccess: 5.
 	future deployFailure: Error new.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 5
 ]
 
@@ -340,10 +340,10 @@ TKTFutureTest >> testFutureFirstCompleteOfSuccessIfSecondSuccessFaster [
 TKTFutureTest >> testFutureFlatCollectFailsOnFailingMapFunction [
 
 	| future got error |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	error := Error new.
 	(future flatCollect: [ :v | error signal ]) onFailureDo: [ :v | got := v ].
-	
+
 	future deploySuccess: 2.
 	50 milliSecond wait.
 
@@ -383,21 +383,21 @@ TKTFutureTest >> testFutureFlatCollectFailsOnSelfFailure [
 TKTFutureTest >> testFutureFlatCollectSuccessOnMappedFutureSuccess [
 
 	| future got innerFuture |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	innerFuture := TKTFuture new.
 	(future flatCollect: [ :v | innerFuture ]) onSuccessDo: [ :v | got := v ].
-	
+
 	future deploySuccess: 2.
 	innerFuture deploySuccess: 42.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 42
 ]
 
 { #category : #'tests - termination' }
 TKTFutureTest >> testFutureIsFinishedIfFailureWasAlreadyDeployed [
 	| future error |
-	
+
 	future := TKTFuture new.
 	error := Error new.
 	[ error signal ]
@@ -412,7 +412,7 @@ TKTFutureTest >> testFutureIsFinishedIfValueWasAlreadyDeployed [
 	| future |
 	future := TKTFuture new.
 	future deploySuccess: 2.
-		
+
 	self assert: future isFinished
 ]
 
@@ -451,12 +451,12 @@ TKTFutureTest >> testFutureOnDoFailsOnTrappingWrongException [
 TKTFutureTest >> testFutureOnDoSucceedsOnSuccess [
 
 	| future got |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	(future on: Error do: [ :v | 5 ]) onSuccessDo: [ :v | got := v ].
 
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 2
 ]
 
@@ -479,14 +479,14 @@ TKTFutureTest >> testFutureOnDoSucceedsOnTrappingCorrectException [
 TKTFutureTest >> testFutureSelectFailsOnFailingPredicate [
 
 	| future got error |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	error := Error new.
 
 	(future select: [ :v | error signal ]) onFailureDo: [ :v | got := v ].
 
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: error
 ]
 
@@ -507,12 +507,12 @@ TKTFutureTest >> testFutureSelectFailsOnFailure [
 TKTFutureTest >> testFutureSelectFailsOnNonSatisfyingCondition [
 
 	| future got |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	(future select: [ :v | v even ]) onFailureDo: [ :v | got := v ].
-	
+
 	future deploySuccess: 3.
 	50 milliSecond wait.
-	
+
 	self assert: (got isKindOf: NotFound)
 ]
 
@@ -520,12 +520,12 @@ TKTFutureTest >> testFutureSelectFailsOnNonSatisfyingCondition [
 TKTFutureTest >> testFutureSelectSuccessOnSatisfyingCondition [
 
 	| future got |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	(future select: [ :v | v even ]) onSuccessDo: [ :v | got := v ].
-	
+
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 2
 ]
 
@@ -534,19 +534,19 @@ TKTFutureTest >> testFutureSuccessCallbackExecutesInNewProcess [
 
 	| runner future processIds processIdsSet |
 	processIds := AtomicSharedQueue new.
-	
+
 	runner := TKTNewProcessTaskRunner new.
 	future := runner future: [ 1 + 1 ].
-	
+
 	30 timesRepeat: [
 		future onSuccessDo: [ :r | processIds nextPut: Processor activeProcess identityHash ] ].
-	
+
 	1 second wait.
-	
+
 	processIdsSet := Set new.
 	[processIds isEmpty] whileFalse: [ processIdsSet add: processIds next ].
-	
-	self assert: processIdsSet size equals: 30.
+
+	self assert: processIdsSet size equals: 30
 ]
 
 { #category : #'tests - callbacks' }
@@ -595,10 +595,10 @@ TKTFutureTest >> testFutureSuccessCallbackIsCalledAfterValueIsDeployed [
 	| future got |
 	future := TKTFuture new.
 	future onSuccessDo: [ :value | got := value ].
-	
+
 	future deploySuccess: 2.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: 2
 ]
 
@@ -608,7 +608,7 @@ TKTFutureTest >> testFutureSuccessCallbackIsCalledIfValueWasAlreadyDeployed [
 	| future got |
 	future := TKTFuture new.
 	future deploySuccess: 2.
-		
+
 	future onSuccessDo: [ :value | got := value ].
 
 	50 milliSeconds wait.
@@ -622,7 +622,7 @@ TKTFutureTest >> testFutureSuccessCallbackIsNotCalledIfFailureWasAlreadyDeployed
 	| future got |
 	future := TKTFuture new.
 	future deployFailure: Error new.
-		
+
 	future onSuccessDo: [ :value | got := value ].
 
 	self assert: got equals: nil
@@ -634,7 +634,7 @@ TKTFutureTest >> testFutureZipFailsIfFirstFails [
 	| future zipFuture got error |
 	future := TKTFuture new.
 	zipFuture := TKTFuture new.
-	
+
 	(future zip: zipFuture) onFailureDo: [ :tuple | got := tuple ].
 
 	error := Error new.
@@ -643,7 +643,7 @@ TKTFutureTest >> testFutureZipFailsIfFirstFails [
 		do: [ :e | future deployFailure: e ].
 	zipFuture deploySuccess: 5.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: error
 ]
 
@@ -653,7 +653,7 @@ TKTFutureTest >> testFutureZipFailsIfSecondFails [
 	| future zipFuture got error |
 	future := TKTFuture new.
 	zipFuture := TKTFuture new.
-	
+
 	(future zip: zipFuture) onFailureDo: [ :tuple | got := tuple ].
 
 	error := Error new.
@@ -663,7 +663,7 @@ TKTFutureTest >> testFutureZipFailsIfSecondFails [
 
 	future deploySuccess: 5.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: error
 ]
 
@@ -673,13 +673,13 @@ TKTFutureTest >> testFutureZipSuccessIfBothSuccess [
 	| future zipFuture got |
 	future := TKTFuture new.
 	zipFuture := TKTFuture new.
-	
+
 	(future zip: zipFuture) onSuccessDo: [ :tuple | got := tuple ].
 
 	future deploySuccess: 2.
 	zipFuture deploySuccess: 5.
 	50 milliSecond wait.
-	
+
 	self assert: got equals: #(2 5)
 ]
 
@@ -687,6 +687,6 @@ TKTFutureTest >> testFutureZipSuccessIfBothSuccess [
 TKTFutureTest >> testNewFutureIsNotFinished [
 
 	| future |
-	future := TKTFuture new.	
+	future := TKTFuture new.
 	self assert: future isFinished not
 ]

@@ -12,42 +12,42 @@ Class {
 { #category : #'api - accessing' }
 LibC class >> fgetc: aCStream [
 	"Get character from the given C stream."
-	
+
 	^self uniqueInstance fgetc: aCStream
 ]
 
 { #category : #'api - misc' }
 LibC class >> memCopy: from to: to size: size [
-	^ self uniqueInstance  
-		memCopy: from 
-		to: to 
+	^ self uniqueInstance
+		memCopy: from
+		to: to
 		size: size
 ]
 
 { #category : #'api - piping' }
 LibC class >> pipe: command mode: mode [
 	"Initiate pipe streams to or from a process."
-	
+
 	^ self uniqueInstance pipe: command mode: mode
 ]
 
 { #category : #'api - piping' }
 LibC class >> pipeClose: stream [
 	"Close the given pipe stream."
-	
+
 	^ self uniqueInstance pipeClose: stream
 ]
 
 { #category : #'process actions' }
 LibC class >> resultOfCommand: aCommand [
 
-	^self uniqueInstance resultOfCommand: aCommand  
+	^self uniqueInstance resultOfCommand: aCommand
 ]
 
 { #category : #'process actions' }
 LibC class >> runCommand: aCommand [
 
-	^self uniqueInstance system: aCommand  
+	^self uniqueInstance system: aCommand
 ]
 
 { #category : #'api - misc' }
@@ -58,21 +58,21 @@ LibC class >> system: command [
 { #category : #'api - processes' }
 LibC >> currentProcessId [
 	"Returns the process identifier (PID) of the calling process."
- 
-	 ^self ffiCall: #(int getpid(void)) 
+
+	 ^self ffiCall: #(int getpid(void))
 ]
 
 { #category : #'api - accessing' }
 LibC >> fgetc: stream [
 	"Get character from stream."
-	 
+
 	 ^self ffiCall: #(int* fgetc(void* stream))
 ]
 
 { #category : #'api - accessing' }
 LibC >> getpid [
 	"Get PID of current process."
-	 
+
 	 ^self ffiCall: #(int getpid(void))
 ]
 
@@ -90,7 +90,7 @@ LibC >> memCopy: src to: dest size: n [
 { #category : #'api - processes' }
 LibC >> parentProcessId [
 	"Returns the process ID of the parent of the calling process."
-	 
+
 	 ^self ffiCall: #(int getppid(void))
 ]
 
@@ -101,9 +101,6 @@ LibC >> pipe: command mode: mode [
 	^self ffiCall: (Smalltalk os isWindows
 							ifTrue:  [ #(void* _popen(char* command, char* mode)) ]
 							ifFalse: [ #(void* popen(char* command, char* mode)) ])
-
-	
-			 
 ]
 
 { #category : #'api - piping' }
@@ -121,7 +118,7 @@ LibC >> resultOfCommand: cmd [
 	file := self pipe: cmd mode: 'r'.
 	s := String new writeStream.
 	[[ last := (self fgetc: file) value.
-	  last = 16rFFFFFFFF ] whileFalse: [ 	 
+	  last = 16rFFFFFFFF ] whileFalse: [
 			s nextPut: (Character value: last)
 	]] ensure: [ self pipeClose: file ].
 	^s contents

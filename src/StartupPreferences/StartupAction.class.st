@@ -47,7 +47,7 @@ StartupAction >> code [
 
 { #category : #accessing }
 StartupAction >> code: anObject [
-	
+
 	code := anObject
 ]
 
@@ -59,11 +59,11 @@ StartupAction >> execute [
 	block := self code isBlock
 				ifTrue: [ self code ]
 				ifFalse: [[ self class compiler evaluate: self code ]].
-	correctlyExecuted := true. 
-	block on: Halt, Error do: [ :ex | 
+	correctlyExecuted := true.
+	block on: Halt, Error do: [ :ex |
 		StartupPreferencesLoader default errors add: {ex. self}.
 		ex pass ].
-	self hasBeenExecuted: correctlyExecuted.
+	self hasBeenExecuted: correctlyExecuted
 ]
 
 { #category : #accessing }
@@ -74,7 +74,7 @@ StartupAction >> hasBeenExecuted [
 
 { #category : #accessing }
 StartupAction >> hasBeenExecuted: anObject [
-	
+
 	hasBeenExecuted := anObject
 ]
 
@@ -86,7 +86,7 @@ StartupAction >> name [
 
 { #category : #accessing }
 StartupAction >> name: anObject [
-	
+
 	name := anObject
 ]
 
@@ -104,7 +104,7 @@ StartupAction >> runOnce [
 
 { #category : #accessing }
 StartupAction >> runOnce: anObject [
-	
+
 	runOnce := anObject
 ]
 

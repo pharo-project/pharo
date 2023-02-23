@@ -37,7 +37,7 @@ Class {
 
 { #category : #'class initialization' }
 TFProcessLocalWorker class >> initialize [
-	
+
 	worker := ProcessLocalVariable new
 ]
 
@@ -78,11 +78,11 @@ TFProcessLocalWorker >> forCallback [
 ]
 
 { #category : #executing }
-TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aCollection [ 
+TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aCollection [
 
 	^ self worker
-		invokeFunction: aTFExternalFunction 
-		withArguments: aCollection 
+		invokeFunction: aTFExternalFunction
+		withArguments: aCollection
 ]
 
 { #category : #private }
@@ -90,12 +90,12 @@ TFProcessLocalWorker >> primitivePerformWorkerCall: aTFExternalFunction
 		withArguments: argumentHolder
 		withReturnHolder: aReturnHolder
 		usingSemaphore: anInteger [
-		
+
 	self error: 'Should not arrive here'
 ]
 
 { #category : #executing }
 TFProcessLocalWorker >> worker [
-		
+
 	^ self class worker ifNil: [ self defaultWorker ]
 ]

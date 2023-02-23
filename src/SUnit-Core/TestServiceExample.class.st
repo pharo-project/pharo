@@ -33,7 +33,7 @@ TestServiceExample class >> isEnabledByDefault [
 { #category : #controlling }
 TestServiceExample >> cleanUpAfterTest [
 	super cleanUpAfterTest.
-	
+
 	isCleanUpDone := true
 ]
 
@@ -45,28 +45,28 @@ TestServiceExample >> forkedProcesses [
 { #category : #controlling }
 TestServiceExample >> handleCompletedTest [
 	super handleCompletedTest.
-	
+
 	isCompletedTestHandled := true
 ]
 
 { #category : #controlling }
 TestServiceExample >> handleException: anUnhandledException [
 	super handleException: anUnhandledException.
-	
+
 	signaledExceptions add: anUnhandledException
 ]
 
 { #category : #controlling }
 TestServiceExample >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
-	
+
 	forkedProcesses add: aProcess
 ]
 
 { #category : #initialization }
-TestServiceExample >> initialize [ 
+TestServiceExample >> initialize [
 	super initialize.
-	
+
 	forkedProcesses := OrderedCollection new.
 	signaledExceptions := OrderedCollection new.
 	isCleanUpDone := false.

@@ -30,7 +30,7 @@ SettingTree class >> acceptableKeywords: aCollectionOfStrings [
 
 { #category : #accessing }
 SettingTree >> acceptableKeywords: keywords [
-	self collector 
+	self collector
 		selectors: keywords;
 		filter: [:prg | prg methodClass isMeta].
 	nodeList := nil.
@@ -40,7 +40,7 @@ SettingTree >> acceptableKeywords: keywords [
 { #category : #checking }
 SettingTree >> checkForUnknownParent [
 	self unclassified
-		ifNotEmpty: [ :nodesWithUnknownParent | 
+		ifNotEmpty: [ :nodesWithUnknownParent |
 			| builder g |
 			builder := SettingTreeBuilder new.
 			g := (builder group: #nodesWithUnknownParent) node.
@@ -57,7 +57,7 @@ SettingTree >> checkForUnknownParent [
 SettingTree >> checkForUnknownTarget [
 	"check only root because other nodes with unknown target inherits it from its parent"
 	self settingTreeRoots do: [:node | node item target ifNil: [node item target: (node pragma ifNotNil: [:prg | prg methodClass instanceSide])]].
-	self settingTreeRoots do: [:node | node checkForUnknownTarget].
+	self settingTreeRoots do: [:node | node checkForUnknownTarget]
 ]
 
 { #category : #querying }
@@ -67,16 +67,16 @@ SettingTree >> childrenOf: aNode [
 	children := self nodeList select: [ :p | p parentName = aNode settingDeclaration name ].
 	children
 		detect: [ :n | n order notNil ]
-		ifFound: [ :firstWithOrder | 
+		ifFound: [ :firstWithOrder |
 			idx := children indexOf: firstWithOrder.
 			order := firstWithOrder order.
 			idx > 1
-				ifTrue: [ 
-					idx - 1 to: 1 do: [ :pos | 
+				ifTrue: [
+					idx - 1 to: 1 do: [ :pos |
 						(children at: pos) order: order - 1.
 						order := order - 1 ] ].
 			order := firstWithOrder order.
-			idx + 1 to: children size do: [ :pos | 
+			idx + 1 to: children size do: [ :pos |
 				(children at: pos) order ifNil: [ (children at: pos) order: order + 1 ] ifNotNil: [ order := (children at: pos) order ].
 				order := order + 1 ] ].
 	^ children
@@ -88,7 +88,7 @@ SettingTree >> collector [
 ]
 
 { #category : #querying }
-SettingTree >> deeplyDetect: aBlock [ 
+SettingTree >> deeplyDetect: aBlock [
 	self settingTreeRoots
 		do: [:sub | (sub deeplyDetect: aBlock)
 				ifNotNil: [:found | ^ found]].
@@ -101,9 +101,9 @@ SettingTree >> deeplySelect: aBlock [
 ]
 
 { #category : #querying }
-SettingTree >> deeplySelect: aBlock in: aCollection [ 
+SettingTree >> deeplySelect: aBlock in: aCollection [
 	self settingTreeRoots
-		do: [:aRoot | aRoot deeplySelect: aBlock in: aCollection]. 
+		do: [:aRoot | aRoot deeplySelect: aBlock in: aCollection].
 	^ aCollection
 ]
 
@@ -114,7 +114,7 @@ SettingTree >> emptyNodeNamed: aSymbol [
 
 { #category : #accessing }
 SettingTree >> itemSortBlock [
-	^ [:a :b | 
+	^ [:a :b |
 		((a order notNil and: [b order notNil]) and: [a order ~= b order])
 			ifTrue: [a order < b order]
 			ifFalse: [((a order isNil and: [b order isNil]) or: [a order = b order])
@@ -125,7 +125,7 @@ SettingTree >> itemSortBlock [
 { #category : #accessing }
 SettingTree >> nodeList [
 	| builder |
-	^ nodeList 
+	^ nodeList
 		ifNil: [
 			builder := SettingTreeBuilder new.
 			self pragmasDo: [:p | builder buildPragma: p].
@@ -166,7 +166,7 @@ SettingTree >> retainedNodesFromList: aListOfNodes [
 
 { #category : #querying }
 SettingTree >> settingTreeRoots [
-	^ self retainedNodesFromList: ((self nodeList select: [:n | n parentName isNil]) asArray sort: self sortBlock) asOrderedCollection.
+	^ self retainedNodesFromList: ((self nodeList select: [:n | n parentName isNil]) asArray sort: self sortBlock) asOrderedCollection
 ]
 
 { #category : #accessing }
@@ -181,12 +181,12 @@ SettingTree >> storeSettingNodes [
 
 { #category : #querying }
 SettingTree >> unclassified [
-	^ self nodeList select: [:node | node parentName notNil and: [node parentNode isNil]].
+	^ self nodeList select: [:node | node parentName notNil and: [node parentNode isNil]]
 ]
 
 { #category : #accessing }
 SettingTree >> updateList [
-	nodeList := nil.
+	nodeList := nil
 ]
 
 { #category : #persistence }
@@ -197,5 +197,5 @@ SettingTree >> updateSettingNodes [
 { #category : #updating }
 SettingTree >> whenChangedSend: aSelector to: aTarget [
 	self collector whenChangedSend: aSelector to: aTarget.
-	self collector whenResetSend: aSelector to: aTarget.
+	self collector whenResetSend: aSelector to: aTarget
 ]

@@ -39,8 +39,8 @@ FindReplaceService >> caseSensitive: aBoolean [
 FindReplaceService >> convertedFindString [
 	| specials |
 	specials := '^$:\+*[]()?'.
-	^String 
-		streamContents: [:s | self findString 
+	^String
+		streamContents: [:s | self findString
 			do: [:c | (specials includes: c) ifTrue: [s nextPut:$\].
 				s nextPut: c]]
 ]
@@ -59,11 +59,11 @@ FindReplaceService >> entireWordsOnly: aBoolean [
 { #category : #services }
 FindReplaceService >> findInTextMorph: aTextMorph [
 	| where  |
-	findStartIndex 
-		ifNil: [findStartIndex := self searchBackwards 
+	findStartIndex
+		ifNil: [findStartIndex := self searchBackwards
 			ifTrue: [aTextMorph editor stopIndex]
 			ifFalse: [aTextMorph editor startIndex]].
-	findStartIndex > 0 
+	findStartIndex > 0
 		ifTrue: [where := aTextMorph
 			findAndSelect: self findRegex
 			startingAt: findStartIndex
@@ -77,20 +77,18 @@ FindReplaceService >> findInTextMorph: aTextMorph [
 				searchBackwards: self searchBackwards].
 	where ifNil: [aTextMorph flash].
 	^ where
-
 ]
 
 { #category : #services }
 FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
 	| where  |
-	findStartIndex 
+	findStartIndex
 		ifNil: [findStartIndex := aTextMorph editor startIndex].
-	findStartIndex > 0 
+	findStartIndex > 0
 		ifTrue: [where := aTextMorph findNextString: aSubstring asString startingAt: findStartIndex].
 	(where isNil and: [self wrapAround])
 		ifTrue: [where := aTextMorph findNextString: aSubstring asString startingAt: 1].
 	^ where
-
 ]
 
 { #category : #accessing }
@@ -109,10 +107,9 @@ FindReplaceService >> findRegex [
 	[^ self caseSensitive
 			ifTrue: [s asRegex]
 			ifFalse: [s asRegexIgnoringCase]]
-		on: Error 
-		do: [self changed: #regexError. 
+		on: Error
+		do: [self changed: #regexError.
 			^ '' asRegex]
-
 ]
 
 { #category : #accessing }
@@ -138,15 +135,14 @@ FindReplaceService >> findText [
 { #category : #accessing }
 FindReplaceService >> findText: aStringOrText [
 	findText := aStringOrText asText.
-	self findPolicyChanged.
+	self findPolicyChanged
 ]
 
 { #category : #accessing }
 FindReplaceService >> findText: aStringOrText isRegex: aBoolean [
 		self isRegex: aBoolean.
 		self findText: aStringOrText.
-		self replaceText: ''.
-
+		self replaceText: ''
 ]
 
 { #category : #accessing }
@@ -173,15 +169,13 @@ FindReplaceService >> isRegex [
 FindReplaceService >> isRegex: aBoolean [
 	isRegex := aBoolean.
 	self findPolicyChanged
-
 ]
 
 { #category : #accessing }
 FindReplaceService >> regexString [
-	^ self isRegex 
+	^ self isRegex
 		ifTrue: [self findString]
 		ifFalse: [self convertedFindString]
-
 ]
 
 { #category : #services }
@@ -189,14 +183,13 @@ FindReplaceService >> replaceAllInTextMorph: aTextMorph [
 	| startIdx |
 	startIdx := self wrapAround ifTrue: [1] ifFalse: [aTextMorph editor selectionInterval first].
 	aTextMorph replaceAll: self findRegex with: self replaceText startingAt: startIdx
-
 ]
 
 { #category : #services }
 FindReplaceService >> replaceInTextMorph: aTextMorph [
 
-	findStartIndex := self searchBackwards 
-		ifTrue: [aTextMorph editor stopIndex] 
+	findStartIndex := self searchBackwards
+		ifTrue: [aTextMorph editor stopIndex]
 		ifFalse: [aTextMorph editor startIndex].
 	(self findInTextMorph: aTextMorph)
 		ifNotNil: [aTextMorph replaceSelectionWith: self replaceText]
@@ -211,7 +204,6 @@ FindReplaceService >> replaceText [
 FindReplaceService >> replaceText: aStringOrText [
 	replaceText := aStringOrText asString.
 	self findPolicyChanged
-
 ]
 
 { #category : #accessing }
@@ -223,13 +215,11 @@ FindReplaceService >> searchBackwards [
 FindReplaceService >> searchBackwards: aBoolean [
 	searchBackwards := aBoolean.
 	self findPolicyChanged
-
 ]
 
 { #category : #accessing }
 FindReplaceService >> selectionRegexString [
 	^ self convertedFindString
-
 ]
 
 { #category : #updating }
@@ -248,6 +238,4 @@ FindReplaceService >> wrapAround [
 FindReplaceService >> wrapAround: aBoolean [
 	wrapAround := aBoolean.
 	self findPolicyChanged
-
-
 ]

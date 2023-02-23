@@ -120,8 +120,8 @@ Class {
 
 { #category : #converting }
 FFIEnumeration class >> asExternalTypeOn: generator [
-	^ FFIExternalEnumerationType 
-		objectClass: self 
+	^ FFIExternalEnumerationType
+		objectClass: self
 		representationType: self representationType
 ]
 
@@ -132,19 +132,19 @@ FFIEnumeration class >> at: anItem [
 
 { #category : #utilities }
 FFIEnumeration class >> buildClassVarNamed: aString with: enumerationValue [
-	
+
 		| classBinding |
 		classBinding := self classVariableNamed: aString ifAbsent: [ nil ].
-		classBinding 
+		classBinding
 			ifNotNil: [ classBinding value: enumerationValue ]
-			ifNil: [ 
+			ifNil: [
 				self addClassVariable: (ClassVariable key: aString asSymbol value: enumerationValue) ]
 ]
 
 { #category : #utilities }
 FFIEnumeration class >> buildClassVariables [
-	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue | 
-		| enumerationValue |	
+	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue |
+		| enumerationValue |
 		enumerationValue := (self enumClassForName: eachName) basicNew value: eachValue.
 		self buildClassVarNamed: eachName with: enumerationValue ]
 ]
@@ -153,7 +153,7 @@ FFIEnumeration class >> buildClassVariables [
 FFIEnumeration class >> buildEnumHierarchy [
 	"This utility method will create a hierarchy based on enumDecl"
 	<script>
-	
+
 	self buildClassVariables.
 	self rebuildEnumHierarchyAccessors
 ]
@@ -162,40 +162,40 @@ FFIEnumeration class >> buildEnumHierarchy [
 FFIEnumeration class >> defineEnumAccesorFor: enumName [
 	"Define accessors as class methods"
 	| code |
-	
+
 	code := enumName, '
 	"This method was automatically generated"
 	^ ', enumName.
-	
-	self class 
-		compile: code 
-		classified: self generatedEnumProtocolName.
+
+	self class
+		compile: code
+		classified: self generatedEnumProtocolName
 ]
 
 { #category : #utilities }
 FFIEnumeration class >> defineEnumHierarchyAccesorFor: enumName [
 	"Define accessors as class methods"
 	| code |
-	
+
 	code := (self enumSelectorName: enumName), '
 	"This method was automatically generated"
 	^ ', enumName.
-	
-	self class 
-		compile: code 
+
+	self class
+		compile: code
 		classified: self generatedEnumProtocolName
 ]
 
 { #category : #utilities }
 FFIEnumeration class >> enumClassForName: aName [
 	| className |
-	
+
 	className := (self name, (self enumNameSuffix: aName)) asSymbol.
 	^ self allSubclasses
 		detect: [ :each | each name = className ]
-		ifNone: [ 
-			self class classInstaller make: [ :aBuilder | 
-				aBuilder 
+		ifNone: [
+			self class classInstaller make: [ :aBuilder |
+				aBuilder
 					name: className;
 					package: self category ]]
 ]
@@ -254,15 +254,15 @@ FFIEnumeration class >> initialize [
 FFIEnumeration class >> initializeEnumeration [
 	| unsigned |
 	unsigned := true.
-	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue | 
+	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue |
 		| enumerationValue |
-		
-		(unsigned and: [ eachValue < 0 ]) 
+
+		(unsigned and: [ eachValue < 0 ])
 			ifTrue: [ unsigned := false ].
-		
+
 		enumerationValue := self basicNew value: eachValue.
 		self buildClassVarNamed: eachName with: enumerationValue ].
-					
+
 	representationType := unsigned
 		ifTrue: [ FFIUInt32 new ]
 		ifFalse: [ FFIInt32 new ]
@@ -271,16 +271,16 @@ FFIEnumeration class >> initializeEnumeration [
 { #category : #accessing }
 FFIEnumeration class >> itemAt: aValue [
 
-	^ self 
-		itemAt: aValue 
+	^ self
+		itemAt: aValue
 		ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
 FFIEnumeration class >> itemAt: aValue ifAbsent: exceptionBlock [
 
-	self classPool associationsDo: [ :assoc | 
-		aValue = assoc value value ifTrue: [ 
+	self classPool associationsDo: [ :assoc |
+		aValue = assoc value value ifTrue: [
 			^ assoc key ] ].
 
 	^ exceptionBlock value
@@ -293,13 +293,13 @@ FFIEnumeration class >> new [
 
 { #category : #private }
 FFIEnumeration class >> rebuildEnumAccessors [
-	self enumerationDictionary keysDo: [ :each | 
+	self enumerationDictionary keysDo: [ :each |
 		self defineEnumAccesorFor: each ]
 ]
 
 { #category : #utilities }
 FFIEnumeration class >> rebuildEnumHierarchyAccessors [
-	self enumerationDictionary keysDo: [ :each | 
+	self enumerationDictionary keysDo: [ :each |
 		self defineEnumHierarchyAccesorFor: each ]
 ]
 
@@ -310,7 +310,7 @@ FFIEnumeration class >> representationType [
 
 { #category : #comparing }
 FFIEnumeration >> = anEnumInst [
-	^ self class == anEnumInst class 
+	^ self class == anEnumInst class
 		and: [ self value = anEnumInst value ]
 ]
 
@@ -334,5 +334,5 @@ FFIEnumeration >> value [
 
 { #category : #accessing }
 FFIEnumeration >> value: anObject [
-	value := anObject 
+	value := anObject
 ]

@@ -2,7 +2,7 @@ Extension { #name : #TaCompositionElement }
 
 { #category : #'*TraitsV2-Compatibility' }
 TaCompositionElement >> includesElement: anElement [
- 
+
 	^ self == anElement
 ]
 

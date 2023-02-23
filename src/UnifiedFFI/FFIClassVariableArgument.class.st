@@ -22,7 +22,7 @@ FFIClassVariableArgument >> argName: anObject [
 
 { #category : #'emitting code' }
 FFIClassVariableArgument >> emitArgument: aBuilder context: aContext [
-	aBuilder pushLiteralVariable: (aContext methodClass bindingOf: self argName).
+	aBuilder pushLiteralVariable: (aContext methodClass bindingOf: self argName)
 ]
 
 { #category : #private }

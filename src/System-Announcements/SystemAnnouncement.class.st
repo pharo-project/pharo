@@ -16,7 +16,7 @@ Class {
 { #category : #initialization }
 SystemAnnouncement >> initialize [
 	super initialize.
-	self setTimeStamp.
+	self setTimeStamp
 ]
 
 { #category : #properties }
@@ -26,15 +26,15 @@ SystemAnnouncement >> properties [
 ]
 
 { #category : #properties }
-SystemAnnouncement >> propertyAt: aString ifPresent: aBlockClosure [ 
-	
+SystemAnnouncement >> propertyAt: aString ifPresent: aBlockClosure [
+
 	properties ifNil: [ ^ self ].
 	^ properties at: aString ifPresent: aBlockClosure
 ]
 
 { #category : #properties }
-SystemAnnouncement >> propertyAt: aKey put: aValue [ 
-	
+SystemAnnouncement >> propertyAt: aKey put: aValue [
+
 	self properties at: aKey put: aValue
 ]
 

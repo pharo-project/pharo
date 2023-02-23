@@ -2136,7 +2136,9 @@ EFFormatter >> visitEnglobingErrorNode: aNode [
 	self writeString: aNode value.
 	aNode children do: [ :e |
 		codeStream space.
-		self visitNode: e ]
+		self visitNode: e ].
+	self writeString: aNode valueAfter.
+
 ]
 
 { #category : #visiting }

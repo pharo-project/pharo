@@ -15,7 +15,7 @@ LogDebugger class >> isAbstract [
 { #category : #'opening api' }
 LogDebugger class >> messageToPrintFrom: aDebugSession [
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				<< 'ERROR. Here is the stack:';
 				<< OSPlatform current lineEnding.

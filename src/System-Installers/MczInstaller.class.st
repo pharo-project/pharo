@@ -31,7 +31,7 @@ MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 	<fileService>
 	^({ self extension. '*' } includes: suffix)
 		ifTrue: [ self services ]
-		ifFalse: [#()].
+		ifFalse: [#()]
 ]
 
 { #category : #'class initialization' }
@@ -75,7 +75,7 @@ MczInstaller class >> services [
 
 { #category : #versioninfo }
 MczInstaller class >> storeVersionInfo: aVersion [
-	Versions 
+	Versions
 		at: aVersion package name
 		put: aVersion info asDictionary
 ]
@@ -89,7 +89,7 @@ MczInstaller class >> versionInfo [
 MczInstaller >> associate: tokens [
 	| result |
 	result := Dictionary new.
-	tokens pairsDo: [:key :value | 
+	tokens pairsDo: [:key :value |
 					| tmp |
 					tmp := value.
 					value isString ifFalse: [tmp := value collect: [:ea | self associate: ea]].
@@ -101,7 +101,7 @@ MczInstaller >> associate: tokens [
 { #category : #utilities }
 MczInstaller >> checkDependencies [
 	| dependencies unmet |
-	dependencies := (zip membersMatching: 'dependencies/*') 
+	dependencies := (zip membersMatching: 'dependencies/*')
 			collect: [:member | self extractInfoFrom: (self parseMember: member)].
 	unmet := dependencies reject: [:dep |
 		self versions: Versions anySatisfy: (dep at: #id)].
@@ -115,7 +115,7 @@ MczInstaller >> checkDependencies [
 { #category : #private }
 MczInstaller >> contentStreamForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') text] on: ZnInvalidUTF8
-		do: [:exc | 
+		do: [:exc |
 			"Case of legacy encoding, presumably it is latin-1 and we do not need to do anything
 			But if contents starts with a null character, it might be a case of WideString encoded in UTF-32BE"
 			| str |
@@ -128,7 +128,7 @@ MczInstaller >> contentStreamForMember: member [
 { #category : #parsing }
 MczInstaller >> contentsForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') contents] on: ZnInvalidUTF8
-		do: [:exc | 
+		do: [:exc |
 			"Case of legacy encoding, presumably it is latin-1.
 			But if contents starts with a null character, it might be a case of WideString encoded in UTF-32BE"
 			| str |
@@ -149,7 +149,7 @@ MczInstaller >> extractInfoFrom: dict [
 
 { #category : #accessing }
 MczInstaller >> extractPackageName [
-	^ (self parseMember: 'package') at: #name.
+	^ (self parseMember: 'package') at: #name
 ]
 
 { #category : #accessing }
@@ -164,14 +164,14 @@ MczInstaller >> install [
 	zip readFrom: stream.
 	self checkDependencies ifFalse: [^false].
 	self recordVersionInfo.
-	sources := (zip membersMatching: 'snapshot/*') 
+	sources := (zip membersMatching: 'snapshot/*')
 				asSortedCollection: [:a :b | a fileName < b fileName].
-	sources do: [:src | self installMember: src].
+	sources do: [:src | self installMember: src]
 ]
 
 { #category : #installation }
 MczInstaller >> installMember: member [
-	 
+
 	self useNewChangeSetDuring:
 		[ CodeImporter evaluateReadStream: (self contentsForMember: member) readStream.
 		]
@@ -187,8 +187,8 @@ MczInstaller >> parseMember: memberOrName [
 
 { #category : #accessing }
 MczInstaller >> recordVersionInfo [
-	Versions 
-		at: self extractPackageName 
+	Versions
+		at: self extractPackageName
 		put: self extractVersionInfo
 ]
 
@@ -204,12 +204,12 @@ MczInstaller >> useNewChangeSetDuring: aBlock [
 	oldChanges := ChangeSet current.
 	newChanges := ChangeSet new name: (ChangeSet uniqueNameLike: self extractPackageName).
 	changeHolder newChanges: newChanges.
-	[ aBlock value ] ensure: [changeHolder newChanges: oldChanges].
+	[ aBlock value ] ensure: [changeHolder newChanges: oldChanges]
 ]
 
 { #category : #utilities }
 MczInstaller >> versions: aVersionList anySatisfy: aDependencyID [
-	^ aVersionList anySatisfy: [:version | 
+	^ aVersionList anySatisfy: [:version |
 			aDependencyID = (version at: #id)
 				or: [self versions: (version at: #ancestors) anySatisfy: aDependencyID]]
 ]

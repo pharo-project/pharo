@@ -20,7 +20,7 @@ ZnEncodedReadStream >> atEnd [
 { #category : #accessing }
 ZnEncodedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
-	
+
 	^ self upToEnd
 ]
 
@@ -38,7 +38,7 @@ ZnEncodedReadStream >> isReadOnly [
 { #category : #accessing }
 ZnEncodedReadStream >> next [
 	^ peeked
-		ifNil: [ 
+		ifNil: [
 			stream atEnd ifFalse: [ self nextElement ] ]
 		ifNotNil: [ | character |
 			character := peeked.
@@ -47,12 +47,12 @@ ZnEncodedReadStream >> next [
 ]
 
 { #category : #accessing }
-ZnEncodedReadStream >> next: requestedCount [ 
+ZnEncodedReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -60,7 +60,7 @@ ZnEncodedReadStream >> next: requestedCount [
 ZnEncodedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: requestedCount
 		into: collection
@@ -71,11 +71,11 @@ ZnEncodedReadStream >> next: requestedCount into: collection [
 ZnEncodedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| readCount |
-	readCount := self 
-		readInto: collection 
-		startingAt: offset 
+	readCount := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
 	^ requestedCount = readCount
 		ifTrue: [ collection ]
@@ -84,14 +84,14 @@ ZnEncodedReadStream >> next: requestedCount into: collection startingAt: offset 
 
 { #category : #private }
 ZnEncodedReadStream >> nextElement [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 ZnEncodedReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: collection size
 		into: collection
@@ -107,7 +107,7 @@ ZnEncodedReadStream >> peek [
 { #category : #accessing }
 ZnEncodedReadStream >> peekFor: object [
 	^ self peek = object
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			true ]
 		ifFalse: [ false ]
@@ -130,9 +130,9 @@ ZnEncodedReadStream >> readInto: collection startingAt: offset count: requestedC
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available.
 	This is an inefficient abstract implementation, reading one by one."
-	
+
 	0 to: requestedCount - 1 do: [ :count | | object |
-		(object := self next) ifNil: [ ^ count ].  
+		(object := self next) ifNil: [ ^ count ].
 		collection at: offset + count put: object ].
 	^ requestedCount
 ]
@@ -148,16 +148,16 @@ ZnEncodedReadStream >> skip: count [
 ]
 
 { #category : #accessing }
-ZnEncodedReadStream >> upTo: anObject [ 	
-	^ self collectionSpecies 
+ZnEncodedReadStream >> upTo: anObject [
+	^ self collectionSpecies
 		streamContents: [ :out | | element |
-			[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [ 
+			[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [
 				out nextPut: element ] ]
 ]
 
 { #category : #accessing }
 ZnEncodedReadStream >> upToEnd [
 	^ self collectionSpecies
-		streamContents: [ :collectionStream | 
+		streamContents: [ :collectionStream |
 			[ self atEnd ] whileFalse: [ collectionStream nextPut: self next ] ]
 ]

@@ -30,7 +30,7 @@ Author class >> authorSettingOn: aBuilder [
 ]
 
 { #category : #utilities }
-Author class >> changeStamp [ 
+Author class >> changeStamp [
 	"Answer a string to be pasted into source code to mark who changed it and when."
 	^ self fullName , ' ' , Date today mmddyyyy, ' ',
 		((String streamContents: [:s | Time now print24: true on: s]) copyFrom: 1 to: 5)
@@ -41,12 +41,12 @@ Author class >> changeStampPerSe [
 	"Answer a string to be pasted into source code to mark who changed it and when."
 
 	^ (self fullNamePerSe ifNil: ['.']) , ' ' , Date today mmddyyyy, ' ',
-		((String streamContents: [:s | Time now print24: true on: s]) 
+		((String streamContents: [:s | Time now print24: true on: s])
 			copyFrom: 1 to: 5)
 ]
 
 { #category : #utilities }
-Author class >> fixStamp: changeStamp [ 
+Author class >> fixStamp: changeStamp [
 	| parts |
 	parts := changeStamp findTokens: ' '.
 	(parts notEmpty and: [parts last first isLetter]) ifTrue:
@@ -63,7 +63,7 @@ Author class >> fullName [
 ]
 
 { #category : #convenience }
-Author class >> fullName: aString [ 
+Author class >> fullName: aString [
 	^ self uniqueInstance checkAndSetFullNameWith: aString
 ]
 
@@ -99,13 +99,13 @@ Author class >> useAuthor: aString during: aBlock [
 ]
 
 { #category : #accessing }
-Author >> checkAndSetFullNameWith: aString [ 
-	
-	fullName := 
+Author >> checkAndSetFullNameWith: aString [
+
+	fullName :=
 	aString select: [ :character |
 		character charCode < 128 and: [ character isAlphaNumeric ]
 	].
-	
+
 	(fullName = aString and: [ fullName isNotEmpty ]) ifFalse: [ self requestFullName ]
 ]
 
@@ -115,7 +115,7 @@ Author >> fullName [
 
 	[fullName isEmptyOrNil] whileTrue: [
 		self requestFullName.
-		(fullName isEmptyOrNil or:[ fullName = 'FirstnameLastname' ]) 
+		(fullName isEmptyOrNil or:[ fullName = 'FirstnameLastname' ])
 				ifTrue: [fullName := nil. ^'Anonymous']
 	].
 	^ fullName
@@ -123,7 +123,7 @@ Author >> fullName [
 
 { #category : #accessing }
 Author >> fullName: aString [
-	fullName := aString.
+	fullName := aString
 ]
 
 { #category : #accessing }
@@ -136,7 +136,7 @@ Author >> fullNamePerSe [
 Author >> ifUnknownAuthorUse: aString during: aBlock [
 	"If no author is set use the name aString while executing aBlock."
 	"for compatibility with 1.0"
-	
+
 	fullName isEmptyOrNil ifFalse: [ ^ aBlock value ].
 	fullName := aString.
 	^ aBlock ensure: [ self reset ]
@@ -151,13 +151,13 @@ Author >> initialize [
 { #category : #'ui - requests' }
 Author >> requestFullName [
 	| initialAnswer |
-	
+
 	initialAnswer := fullName isEmptyOrNil
 				ifTrue: ['FirstnameLastname']
 				ifFalse: [fullName].
-				
-	(AuthorNameRequest new initialAnswer: initialAnswer) signal 
-		ifNotNil: [ :newName | self checkAndSetFullNameWith: newName ] 
+
+	(AuthorNameRequest new initialAnswer: initialAnswer) signal
+		ifNotNil: [ :newName | self checkAndSetFullNameWith: newName ]
 		"nil means that the dialog was cancelled "
 ]
 

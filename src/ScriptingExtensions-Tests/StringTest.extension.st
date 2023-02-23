@@ -2,7 +2,7 @@ Extension { #name : #StringTest }
 
 { #category : #'*ScriptingExtensions-Tests' }
 StringTest >> testAsClass [
-	self 
+	self
 		assert: 'String' asClass
 		equals: String
 ]
@@ -10,19 +10,19 @@ StringTest >> testAsClass [
 { #category : #'*ScriptingExtensions-Tests' }
 StringTest >> testAsClassIfAbsent [
 
-	self 
+	self
 		assert: ('String' asClassIfAbsent: [ self fail ])
 		equals: String.
-	
+
 	'+' asClassIfAbsent: [ ^ self "success" ].
-	self fail.
+	self fail
 ]
 
 { #category : #'*ScriptingExtensions-Tests' }
 StringTest >> testAsClassIfPresent [
-	
-	'String' asClassIfPresent: [ :class | 
+
+	'String' asClassIfPresent: [ :class |
 		self assert: class equals: String ].
-	
-	'+' asClassIfPresent: [ ^ self fail ].
+
+	'+' asClassIfPresent: [ ^ self fail ]
 ]

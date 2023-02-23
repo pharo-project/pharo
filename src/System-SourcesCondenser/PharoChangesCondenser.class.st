@@ -23,9 +23,9 @@ PharoChangesCondenser class >> condense [
 { #category : #'private - 3 installing' }
 PharoChangesCondenser >> backupOldChanges [
 	| changesFile |
-	
+
 	changesFile := self originalFile.
-	changesFile moveTo: (changesFile , 'bak') asFileReference nextVersion.
+	changesFile moveTo: (changesFile , 'bak') asFileReference nextVersion
 ]
 
 { #category : #private }
@@ -34,7 +34,7 @@ PharoChangesCondenser >> basicCondense [
 		condenseClassesAndTraits;
 		swapSourcePointers;
     updateQuitPosition.
-  stream flush.
+  stream flush
 ]
 
 { #category : #private }
@@ -44,7 +44,7 @@ PharoChangesCondenser >> commentRemoteStringFor: org [
 
 { #category : #public }
 PharoChangesCondenser >> condense [
-	job := [ 
+	job := [
 		newChangesFile writeStreamDo: [ :aStream |
 			  stream := aStream.
 			  self basicCondense ].
@@ -52,29 +52,29 @@ PharoChangesCondenser >> condense [
         installNewChangesFile;
   		  reset
     ] asJob.
-	
-	job 
+
+	job
 		title: 'Condensing Changes';
 		max: Smalltalk classNames size + Smalltalk traitNames size;
-		run.
+		run
 ]
 
 { #category : #private }
 PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 	self writeClassComment: classOrTrait.
-	
+
 	classOrTrait instanceSide methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]].
-	
+
 	classOrTrait classSide methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]]
 ]
 
 { #category : #private }
-PharoChangesCondenser >> condenseClassesAndTraits [ 
-	Smalltalk allClassesAndTraitsDo: [ :classOrTrait | 
+PharoChangesCondenser >> condenseClassesAndTraits [
+	Smalltalk allClassesAndTraitsDo: [ :classOrTrait |
 		self condenseClassOrTrait: classOrTrait	]
 ]
 
@@ -88,17 +88,17 @@ PharoChangesCondenser >> fileIndex [
 
 { #category : #initialization }
 PharoChangesCondenser >> initialize [
-	self reset.
+	self reset
 ]
 
 { #category : #'private - 3 installing' }
 PharoChangesCondenser >> installNewChangesFile [
-	
+
 	SourceFiles changesFileStream close.
 	self backupOldChanges.
 	self originalFile ensureDelete.
 	newChangesFile moveTo: self originalFile.
-	Smalltalk openSourceFiles.
+	Smalltalk openSourceFiles
 ]
 
 { #category : #helper }
@@ -122,7 +122,7 @@ PharoChangesCondenser >> originalFile [
 PharoChangesCondenser >> reset [
 	remoteStringMap := IdentityDictionary new.
 	newChangesFile := self temporaryFile.
-	
+
 	"Keep a copy of the source streams for performance"
 	sourceStreams := Array
 			with: PharoFilesOpener default sourcesFileOrNil
@@ -138,9 +138,9 @@ PharoChangesCondenser >> shouldCondenseMethod: aMethod [
 
 { #category : #'private - 2 swapping' }
 PharoChangesCondenser >> swapClassComment: classOrTrait [
-	remoteStringMap 
+	remoteStringMap
 		at: classOrTrait
-		ifPresent: [ :remoteString | 
+		ifPresent: [ :remoteString |
 			classOrTrait organization commentSourcePointer:  remoteString sourcePointer]
 ]
 
@@ -148,11 +148,11 @@ PharoChangesCondenser >> swapClassComment: classOrTrait [
 PharoChangesCondenser >> swapSourcePointerOfClassOrTrait: classOrTrait [
 
 	self swapClassComment: classOrTrait.
-	
-	classOrTrait methodsDo: [ :method | 
+
+	classOrTrait methodsDo: [ :method |
 		self swapSourcePointerOfMethod: method ].
-	
-	classOrTrait classSide methodsDo: [ :method | 
+
+	classOrTrait classSide methodsDo: [ :method |
 		self swapSourcePointerOfMethod: method ]
 ]
 
@@ -165,10 +165,10 @@ PharoChangesCondenser >> swapSourcePointerOfMethod: method [
 
 { #category : #'private - 2 swapping' }
 PharoChangesCondenser >> swapSourcePointers [
-	job 
+	job
 		title: 'Swapping source pointers';
 		currentValue: 0.
-	
+
 	Smalltalk allClassesAndTraitsDo: [ :classOrTrait |
 		job increment.
 		self swapSourcePointerOfClassOrTrait: classOrTrait ]
@@ -176,64 +176,64 @@ PharoChangesCondenser >> swapSourcePointers [
 
 { #category : #accessing }
 PharoChangesCondenser >> temporaryFile [
-	^ (Smalltalk changesFile, 'new') nextVersion.
+	^ (Smalltalk changesFile, 'new') nextVersion
 ]
 
 { #category : #'private - 3 installing' }
 PharoChangesCondenser >> updateQuitPosition [
-	
-	Smalltalk lastQuitLogPosition: stream position.
+
+	Smalltalk lastQuitLogPosition: stream position
 ]
 
 { #category : #'private - 1 writing' }
 PharoChangesCondenser >> writeClassComment: aClass [
 	| organizer commentRemoteString stamp |
-	
+
 	organizer := aClass organization.
 	commentRemoteString := self commentRemoteStringFor: organizer.
-	
+
 	(commentRemoteString isNil or: [ commentRemoteString sourceFileNumber = 1 ])
 		ifTrue: [ ^ self ].
-		
+
 	self nextCommentChunkDo: [ :strm |
-		strm 
+		strm
 			nextPutAll: aClass name;
 			nextPutAll: ' commentStamp: '.
-		stamp := organizer commentStamp 
+		stamp := organizer commentStamp
 			ifNil: ['<historical>'].
 		stamp storeOn: strm ].
-	
-	self 
+
+	self
 		writeRemoteString: organizer classComment
 		for: aClass
 ]
 
 { #category : #'private - 1 writing' }
 PharoChangesCondenser >> writeMethodSource: aMethod [
-	
+
 	self nextCommentChunkDo: [ :strm |
-		strm 
+		strm
 			nextPutAll: aMethod methodClass name;
 			nextPutAll: ' methodsFor: ';
 			store: aMethod category asString;
 			nextPutAll: ' stamp: ';
 			store: aMethod timeStamp ].
-	
+
 	self
 		writeRemoteString: aMethod sourceCode
 		for: aMethod.
-		
-	stream nextPutAll: ' !'; cr.
+
+	stream nextPutAll: ' !'; cr
 ]
 
 { #category : #'private - 1 writing' }
 PharoChangesCondenser >> writeRemoteString: aString for: reference [
 
 	| remoteString |
-	remoteString := 
-		RemoteString 
-			newString: aString 
-			onFileNumber: self fileIndex 
+	remoteString :=
+		RemoteString
+			newString: aString
+			onFileNumber: self fileIndex
 			toFile: stream.
 
 	remoteStringMap at: reference put: remoteString.

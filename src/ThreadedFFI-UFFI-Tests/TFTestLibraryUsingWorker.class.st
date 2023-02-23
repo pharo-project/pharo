@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TFTestLibraryUsingWorker >> runner [ 
-	
+TFTestLibraryUsingWorker >> runner [
+
 	^ TFWorker default
 ]
