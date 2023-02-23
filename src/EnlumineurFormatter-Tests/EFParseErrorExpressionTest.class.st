@@ -33,5 +33,5 @@ EFParseErrorExpressionTest >> testParseError2 [
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
-' 1. :='
+' 1. := '
 ]

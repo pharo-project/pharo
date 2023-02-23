@@ -263,12 +263,19 @@ RBParserTest >> testCascadeReplacementCanLeadToOddErrors [
 
 { #category : #'error testing' }
 RBParserTest >> testCascadeWithInvalidSelectorRaisesError [
-	| tree |
-	tree := self parseFaultyExpression: 'faulty cascade; repared ; 1; node'.
-	self assert: tree isCascade.
-	self assert: tree messages size equals: 4.
+	| tree0 tree |
+	tree0 := self parseFaultyExpression: 'faulty cascade; repared ; 1; node'.
+	self assert: tree0 isSequence.
 
-	"The presence of an error in a cascade (when parsingFaulty) parses the cascade until the end and stores the error node inside 	 the cascade."
+	tree := tree0 statements first.
+	self assert: tree isUnfinishedStatement.
+
+	tree := tree statement.
+	self assert: tree isCascade.
+	self assert: tree messages size equals: 3.
+
+	"The presence of an error in a cascade (when parsingFaulty) aborts the cascade and start a new statement.
+	The error node is stored inside the cascade."
 	self assert: tree messages first isMessage.
 	self assert: tree messages first receiver name equals: #faulty.
 	self assert: tree messages first selectorNode equals: (RBSelectorNode value: #cascade).
@@ -277,11 +284,21 @@ RBParserTest >> testCascadeWithInvalidSelectorRaisesError [
 	self assert: tree messages second receiver name equals: #faulty.
 	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
 
-	self assert: tree messages third isFaulty.
+	self assert: tree messages third isParseError.
 	self assert: tree messages third errorMessage equals: 'Cascade message expected'.
 
+	"Its possible that what follows the cascade is also a cascade, but with a faulty first message.
+	The error is also stored inside the cascade."
+
+	tree := tree0 statements second.
+	self assert: tree isCascade.
+	self assert: tree messages size equals: 2.
+
+	self assert: tree messages first isParseError.
+	self assert: tree messages first errorMessage equals: 'Message expected'.
+
 	self assert: tree messages last isMessage.
-	self assert: tree messages last receiver name equals: #faulty.
+	self assert: tree messages last receiver value equals: 1.
 	self assert: tree messages last selectorNode equals: (RBSelectorNode value: #node)
 ]
 
