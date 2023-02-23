@@ -12,7 +12,6 @@ exponent <Integer> the exponent used in scientific notation if any
 scale <Integer> the scale used in case of ScaledDecimal number if any
 nDigits <Integer> number of digits read to form an Integer
 lasNonZero <Integer> position of last non zero digit, starting at 1 from left, 0 if all digits are zero
-requestor <?> could eventually be used to insert an error message in a text editor
 failBlock <BlockClosure> Block to execute whenever an error occurs
 "
 Class {
@@ -28,7 +27,6 @@ Class {
 		'scale',
 		'nDigits',
 		'lastNonZero',
-		'requestor',
 		'failBlock'
 	],
 	#category : #'NumberParser-Base'
@@ -121,8 +119,6 @@ NumberParser >> expected: aString [
 	| errorString |
 
 	errorString := aString , ' expected'.
-	requestor
-		ifNotNil: [ requestor notify: errorString at: sourceStream position + 1 in: sourceStream ].
 	failBlock ifNotNil: [ ^ failBlock cull: errorString cull: sourceStream position + 1 ].
 	self error: 'Reading a number failed: ' , errorString
 ]
@@ -436,7 +432,7 @@ NumberParser >> on: aStringOrStream [
 	base := 10.
 	neg := false.
 	integerPart := fractionPart := exponent := scale := 0.
-	requestor := failBlock := nil
+	failBlock := nil
 ]
 
 { #category : #'private - parsing' }
@@ -548,9 +544,4 @@ NumberParser >> readScaleWithDefaultNumberOfDigits: anInteger [
 					false ]
 				ifFalse: [ true ] ].
 	^ true
-]
-
-{ #category : #accessing }
-NumberParser >> requestor: anObjectOrNil [
-	requestor := anObjectOrNil
 ]
