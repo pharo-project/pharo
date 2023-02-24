@@ -554,9 +554,9 @@ RBParser >> parseDoIt [
 RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
 	| firstParse |
 	firstParse := self parserError: anErrorMessage.
-	^[firstParse isParseError
+	^firstParse isParseError
 		ifTrue: [ (self englobingErrorNodeClass error: aToken withNodes: aCollection) value: aToken value asString ]
-		ifFalse: [ firstParse ]] on: Error do: [ firstParse ]
+		ifFalse: [ firstParse ]
 ]
 
 { #category : #'error handling' }
