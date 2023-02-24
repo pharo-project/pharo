@@ -41,7 +41,7 @@ RGCommentDefinitionTest >> testActiveComment [
 { #category : #testing }
 RGCommentDefinitionTest >> testCommentFromSourceFile [
 	| rgComment |
-	
+
 	rgComment := (RGCommentDefinition realClass: RGClassDefinition) asHistorical.
 	self assert: rgComment isHistorical.
 	self assert: rgComment sourcePointer notNil.
@@ -52,13 +52,13 @@ RGCommentDefinitionTest >> testCommentFromSourceFile [
 { #category : #testing }
 RGCommentDefinitionTest >> testCommentWithoutAuthor [
 	| newComment |
-	
+
 	newComment:= RGCommentDefinition new
 						content: 'This is a comment for test';
 						stamp: '3/22/2011 14:51';
 						yourself.
-	
-	self assert: (newComment hasAuthor not).
+
+	self assert: (newComment hasAuthor not)
 ]
 
 { #category : #testing }
@@ -93,11 +93,11 @@ RGCommentDefinitionTest >> testSorting [
 
 { #category : #testing }
 RGCommentDefinitionTest >> testingConversion [
-	
+
 	| rgComm |
 	rgComm := RGCommentDefinition realClass: RGClassDefinition.
 	self assert: rgComm asString equals: 'RGClassDefinition Comment'.
-	
+
 	rgComm := RGCommentDefinition class: (RGClassDefinition named: #Foo).
 	self assert: rgComm asString equals: 'Foo Comment'
 ]

@@ -6,7 +6,7 @@ MCClassDefinition >> asRingDefinition [
 
 	ring:= (RGClassDefinition named:  self className)
 		category: self category;
-		superclassName: self superclassName;  
+		superclassName: self superclassName;
 		traitCompositionSource: self traitCompositionString;
 		addInstanceVariables: self instVarNames;
 		addClassVariables: self classVarNames;
@@ -15,7 +15,7 @@ MCClassDefinition >> asRingDefinition [
 		stamp: self commentStamp;
 		definitionSource: self definitionString;
 		withMetaclass.
-	ring classSide 
+	ring classSide
 		traitCompositionSource: self classTraitCompositionString;
 		addInstanceVariables: self classInstVarNames;
 		definitionSource: self classDefinitionString.
