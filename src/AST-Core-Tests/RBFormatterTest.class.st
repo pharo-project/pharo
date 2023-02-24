@@ -73,10 +73,10 @@ RBFormatterTest >> testLiteralDynamicArray [
 { #category : #tests }
 RBFormatterTest >> testParseError [
 
-		| source node |
+	| source node |
 	source := '  +  foo: )'.
-	   node := self parseFaultyExpression: source.
-		self assert: node formattedCode equals: source
+	node := self parseFaultyExpression: source.
+	self assert: node formattedCode equals: source
 ]
 
 { #category : #tests }
