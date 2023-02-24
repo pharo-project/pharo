@@ -17,16 +17,16 @@ Class {
 	#name : #RBEnglobingErrorNode,
 	#superclass : #RBParseErrorNode,
 	#instVars : [
-		'content',
-		'valueAfter'
+		'valueAfter',
+		'contents'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
 { #category : #'instance creation' }
-RBEnglobingErrorNode class >> content: aCollection start: aStart stop: aStop errorMessage: message [
+RBEnglobingErrorNode class >> contents: aCollection start: aStart stop: aStop errorMessage: message [
 	^self new
-		content: aCollection;
+		contents: aCollection;
 		start: aStart;
 		stop: aStop;
 		errorMessage: message
@@ -50,7 +50,7 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 		ifTrue: [ ^RBTemporariesErrorNode error: aToken withNodes: aCollection ].
 	('<' = aToken value asString)
 		ifTrue: [ ^RBPragmaErrorNode error: aToken withNodes: aCollection ].
-	^self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
+	^self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
 ]
 
 { #category : #visiting }
@@ -61,17 +61,17 @@ RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> children [
-	^ content
+	^ contents
 ]
 
 { #category : #accessing }
-RBEnglobingErrorNode >> content [
-	^content
+RBEnglobingErrorNode >> contents [
+	^contents
 ]
 
 { #category : #accessing }
-RBEnglobingErrorNode >> content: aCollection [
-	content := aCollection.
+RBEnglobingErrorNode >> contents: aCollection [
+	contents := aCollection.
 	aCollection do: [:each | each parent: self ]
 ]
 

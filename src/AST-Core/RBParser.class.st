@@ -327,7 +327,7 @@ RBParser >> parseAssignment [
 		position := currentToken start.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side".
-		node := RBAssignmentErrorNode content: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
+		node := RBAssignmentErrorNode contents: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
 		node value: ':='.
 		^ node
 	].
@@ -491,7 +491,7 @@ RBParser >> parseCascadeMessage [
 		Note that this bad cascade node will be added to the list of messages."
 		self parserError: 'cascaded message not allowed'.
 		node := RBInvalidCascadeErrorNode
-			content: { node }
+			contents: { node }
 			start: node start
 			stop: currentToken stop
 			errorMessage: 'Message expected'.
@@ -1040,7 +1040,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 			whileTrue: [
 				self parserError: 'Missing opener for closer: ', currentToken value asString.
 				node := RBUnfinishedStatementErrorNode
-					content: { node }
+					contents: { node }
 					start: node start
 					stop: currentToken stop
 					errorMessage: 'Missing opener for closer: ', currentToken value asString.
@@ -1057,7 +1057,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 			and: [ currentToken isEOF not ] ] ) ifTrue: [
 		self parserError: 'End of statement expected'.
 		node := RBUnfinishedStatementErrorNode
-			content: { node }
+			contents: { node }
 			start: node start
 			stop: node stop
 			errorMessage: 'End of statement expected'
@@ -1079,7 +1079,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
 		self parserError: 'Unreachable code'.
 		node := RBUnreachableStatementErrorNode
-			content: { node }
+			contents: { node }
 			start: node start
 			stop: node stop
 			errorMessage: 'Unreachable code' ].
