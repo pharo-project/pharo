@@ -33,7 +33,7 @@ PharoDocCommentExpression >> expressionNode [
 	cachedExpressionNode ifNil: [
 		cachedExpressionNode := self expressionNodeReal
 	].
-	^ cachedExpressionNode.
+	^ cachedExpressionNode
 ]
 
 { #category : #accessing }
@@ -46,7 +46,7 @@ PharoDocCommentExpression >> expressionNodeReal [
 		  noPattern: true;
 		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
-		  parse.
+		  parse
 ]
 
 { #category : #testing }
@@ -88,7 +88,7 @@ PharoDocCommentExpression >> node: anObject [
 PharoDocCommentExpression >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: '('.
-	aStream nextPutAll: self source. 
+	aStream nextPutAll: self source.
 	aStream nextPutAll: ')'
 ]
 

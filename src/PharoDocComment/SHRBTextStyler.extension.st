@@ -3,7 +3,7 @@ Extension { #name : #SHRBTextStyler }
 { #category : #'*PharoDocComment' }
 SHRBTextStyler >> styleDocComment: aRBComment [
 	aRBComment pharoDocCommentNodes
-		do: [ :pharoDocComment | 
+		do: [ :pharoDocComment |
 			self styleDocExpression: pharoDocComment expression in: aRBComment. ]
 ]
 
@@ -14,7 +14,7 @@ SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
 	expressionText := expressionNode source asText.
 	self class new style: expressionText ast: expressionNode.
 	expressionText
-		withIndexDo: [ :char :ij | 
+		withIndexDo: [ :char :ij |
 			| index |
 			index := ij + aRBComment start.
 			charAttr at: index put: (expressionText attributesAt: ij) ]

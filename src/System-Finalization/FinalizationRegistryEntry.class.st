@@ -59,5 +59,6 @@ FinalizationRegistryEntry >> mourn [
 	This Ephemeron instance is not ephemeric anymore: it cannot be reused.
 	
 	Ask the container to finalize myself"
+
 	container finalizeEphemeron: self
 ]

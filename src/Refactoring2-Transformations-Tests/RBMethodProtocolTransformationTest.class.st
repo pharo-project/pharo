@@ -47,7 +47,7 @@ RBMethodProtocolTransformationTest >> testTransform [
 	self assert: ( RBDummyEmptyClass
 		organization protocolOrganizer
 		protocolNamed: 'empty protocol 2' ) isEmpty.
-	
+
 	transformation := (RBMethodProtocolTransformation new
 		protocol: 'empty protocol 2'
 		inMethod: #someMethod
@@ -58,14 +58,14 @@ RBMethodProtocolTransformationTest >> testTransform [
 	self assert: ( RBDummyEmptyClass
 		organization protocolOrganizer
 		protocolNamed: 'empty protocol 2' ) isEmpty not.
-	
+
 	transformation := (RBMethodProtocolTransformation new
 		protocol: 'empty protocol 1'
 		inMethod: #someMethod
 		inClass: #RBDummyEmptyClass)
 		transform.
-	RBRefactoryChangeManager instance performChange: transformation changes.	
+	RBRefactoryChangeManager instance performChange: transformation changes.
 	self assert: ( RBDummyEmptyClass
 		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty.
+		protocolNamed: 'empty protocol 2' ) isEmpty
 ]

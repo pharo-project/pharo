@@ -18,16 +18,16 @@ Class {
 
 { #category : #private }
 ExternalDropHandler class >> chooseServiceFrom: aCollection [
-	"private - choose a service from aCollection asking the user if  
+	"private - choose a service from aCollection asking the user if
 	needed"
 	aCollection size = 1 ifTrue: [^ aCollection anyOne].
-	^ UIManager default chooseFrom: (aCollection collect: [:each | 
-			each label]) values: aCollection.
+	^ UIManager default chooseFrom: (aCollection collect: [:each |
+			each label]) values: aCollection
 ]
 
 { #category : #cleanup }
 ExternalDropHandler class >> cleanUp [
-	self resetRegisteredHandlers.
+	self resetRegisteredHandlers
 ]
 
 { #category : #accessing }
@@ -54,11 +54,11 @@ ExternalDropHandler class >> lookupExternalDropHandler: aFileReference [
 	types := aFileReference mimeTypes.
 
 	types ifNotNil: [
-		self registeredHandlers do: [:handler | 
+		self registeredHandlers do: [:handler |
 			(handler matchesTypes: types)
 				ifTrue: [^handler]]].
 
-	self registeredHandlers do: [:handler | 
+	self registeredHandlers do: [:handler |
 		(handler matchesExtension: aFileReference extension)
 				ifTrue: [^handler]].
 	serviceHandler := self lookupServiceBasedHandler: aFileReference.
@@ -100,7 +100,7 @@ ExternalDropHandler class >> resetRegisteredHandlers [
 ]
 
 { #category : #'instance creation' }
-ExternalDropHandler class >> type: aType extension: anExtension action: anAction [ 
+ExternalDropHandler class >> type: aType extension: anExtension action: anAction [
 	^self new type: aType extension: anExtension action: anAction
 ]
 
@@ -117,9 +117,9 @@ ExternalDropHandler >> extension [
 
 { #category : #accessing }
 ExternalDropHandler >> handle: dropStream in: pasteUp dropEvent: anEvent [
-	
-	^action cull: dropStream 
-			cull: pasteUp 
+
+	^action cull: dropStream
+			cull: pasteUp
 			cull: anEvent
 ]
 
@@ -135,7 +135,7 @@ ExternalDropHandler >> matchesExtension: aExtension [
 ExternalDropHandler >> matchesTypes: types [
 	(self type isNil or: [types isNil])
 		ifTrue: [^false].
-	^types anySatisfy: [:mimeType | mimeType beginsWith: self type]
+	^types anySatisfy: [:mimeType | mimeType main beginsWith: self type]
 ]
 
 { #category : #accessing }
@@ -144,7 +144,7 @@ ExternalDropHandler >> type [
 ]
 
 { #category : #initialize }
-ExternalDropHandler >> type: aType extension: anExtension action: anAction [ 
+ExternalDropHandler >> type: aType extension: anExtension action: anAction [
 	action := anAction.
 	type := aType.
 	extension := anExtension

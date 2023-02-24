@@ -26,7 +26,7 @@ TabSelectorMorph >> activate [
 { #category : #adding }
 TabSelectorMorph >> addTab: aStringOrMorph [
 	"Add a new tab with the given text."
-	
+
 	self tabs add: (self newLabelMorph: aStringOrMorph).
 	self updateTabs
 ]
@@ -35,16 +35,16 @@ TabSelectorMorph >> addTab: aStringOrMorph [
 TabSelectorMorph >> addTab: aStringOrMorph beforeIndex: index [
 
 	self tabs add: (self newLabelMorph: aStringOrMorph) beforeIndex: index.
-	selectedIndex >= index ifTrue: [ 
+	selectedIndex >= index ifTrue: [
 		"there is now new tab before selected tab"
-		self selectedIndex: selectedIndex + 1 ]. 
+		self selectedIndex: selectedIndex + 1 ].
 	self updateTabs
 ]
 
 { #category : #adding }
 TabSelectorMorph >> addTab: aStringOrMorph selected: selectedStringOrMorph [
 	"Add a new tab with the given text or morph and alternate for when selected."
-	
+
 	self tabs add: (self newLabelMorph: aStringOrMorph selected: selectedStringOrMorph).
 	self updateTabs
 ]
@@ -136,7 +136,7 @@ TabSelectorMorph >> cornerStyle: aSymbol [
 ]
 
 { #category : #drawing }
-TabSelectorMorph >> drawSubmorphsOn: aCanvas [ 
+TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front.
 	Draw the focus here since we are using inset bounds
 	for the focus rectangle."
@@ -145,7 +145,7 @@ TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 	super drawSubmorphsOn: aCanvas.
 	(self hasKeyboardFocus and: [(tab := self selectedTab) notNil
 			and: [tab owner notNil]])
-		ifTrue: [self clipSubmorphs 
+		ifTrue: [self clipSubmorphs
 				ifTrue: [aCanvas
 							clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone:["done here" ^ self ])
 							during: [:c | tab drawKeyboardFocusOn: c]]
@@ -201,7 +201,7 @@ TabSelectorMorph >> font: aFont [
 { #category : #'event handling' }
 TabSelectorMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
-	
+
 	^true
 ]
 
@@ -227,11 +227,11 @@ TabSelectorMorph >> initialize [
 TabSelectorMorph >> initializeShortcuts: aKMDispatcher [
 	super initializeShortcuts: aKMDispatcher.
 	aKMDispatcher attachCategory: #MorphFocusNavigation.
-	aKMDispatcher attachCategory: #TabMorphsNavigation.
+	aKMDispatcher attachCategory: #TabMorphsNavigation
 ]
 
 { #category : #'event handling' }
-TabSelectorMorph >> keyDown: event [ 
+TabSelectorMorph >> keyDown: event [
 	"Process keys navigation and space to toggle."
 
 	(self navigationKey: event) ifTrue: [^self].
@@ -277,7 +277,7 @@ TabSelectorMorph >> minExtent [
 { #category : #operations }
 TabSelectorMorph >> newControls [
 	"Answer the scrolling controls."
-	
+
 	^{self newLeftButton. self newRightButton}
 ]
 
@@ -404,7 +404,7 @@ TabSelectorMorph >> relabelTab: aTab with: aStringOrMorph [
 TabSelectorMorph >> removeTabIndex: anInteger [
 	"Remove the tab at the given index and
 	adjust any selected (next or first if was last)."
-	
+
 	self tabs removeAt: anInteger.
 	self selectedIndex: 0.
 	self tabs ifNotEmpty: [
@@ -432,7 +432,7 @@ TabSelectorMorph >> rightButtonLabel [
 { #category : #operations }
 TabSelectorMorph >> scrollTabsLeft [
 	"Scroll left through the tabs."
-	
+
 	self visibleTabRange: (self visibleTabRange first < 2
 		ifTrue: [0 to: self tabs size]
 		ifFalse: [0 to: self visibleTabRange first - 1]).
@@ -442,7 +442,7 @@ TabSelectorMorph >> scrollTabsLeft [
 { #category : #operations }
 TabSelectorMorph >> scrollTabsRight [
 	"Scroll right through the tabs."
-	
+
 	self visibleTabRange: (self visibleTabRange last \\ self tabs size + 1 to: 0).
 	self updateTabs
 ]
@@ -450,14 +450,14 @@ TabSelectorMorph >> scrollTabsRight [
 { #category : #operations }
 TabSelectorMorph >> selectNextTab [
 	"Select the next tab, or the first if none selected."
-	
+
 	self selectedIndex: self selectedIndex \\ self tabs size + 1
 ]
 
 { #category : #tabs }
 TabSelectorMorph >> selectPreviousTab [
 	"Select the previous tab, or the last if none selected."
-	
+
 	self selectedIndex: (self selectedIndex < 2
 		ifTrue: [self tabs size]
 		ifFalse: [self selectedIndex - 1])
@@ -489,15 +489,15 @@ TabSelectorMorph >> selectedIndex: index [
 { #category : #tabs }
 TabSelectorMorph >> selectedTab [
 	"Answer the selected tab."
-	
+
 	^self selectedIndex = 0
 		ifFalse: [self tabs at: self selectedIndex ifAbsent: [nil]]
 ]
 
 { #category : #operations }
-TabSelectorMorph >> tabClicked: evt with: aMorph [ 
+TabSelectorMorph >> tabClicked: evt with: aMorph [
 	"A tab has been clicked."
-	
+
 	self selectedIndex: (self tabs indexOf: aMorph)
 ]
 
@@ -577,7 +577,7 @@ TabSelectorMorph >> visibleTabRange [
 TabSelectorMorph >> visibleTabRange: anInterval [
 	"Record the range of tabs that are visible.
 	Also used when scrolling to determine starting index."
-	
+
 	visibleTabRange := anInterval.
 	self
 		changed: #leftButtonEnabled;

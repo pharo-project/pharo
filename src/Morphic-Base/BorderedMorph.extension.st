@@ -34,15 +34,15 @@ Click when done.' translated hand: evt hand.
 
 { #category : #'*Morphic-Base' }
 BorderedMorph class >> exampleGradient [
-	
+
 	| morph fs |
 	morph := self new.
 	fs := GradientFillStyle ramp: {0.0 -> Color red. 1.0 -> Color green}.
-	fs 
+	fs
 		origin: morph bounds center;
 		direction: (morph bounds width // 2) @ 0;
 		radial: true.
-	morph 
+	morph
 		fillStyle: fs;
 		openInWindow
 ]

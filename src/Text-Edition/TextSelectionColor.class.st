@@ -27,7 +27,7 @@ Class {
 
 { #category : #cleaning }
 TextSelectionColor class >> cleanUp [
-	PrimarySelection := nil.
+	PrimarySelection := nil
 ]
 
 { #category : #'default accessing' }
@@ -47,7 +47,7 @@ TextSelectionColor class >> primarySelection [
 TextSelectionColor class >> secondarySelection [
 	^ SecondarySelection
 		ifNil: [SecondarySelection := self new
-						colorBlock: [self theme currentSettings secondarySelectionTextColor]] 
+						colorBlock: [self theme currentSettings secondarySelectionTextColor]]
 ]
 
 { #category : #'default accessing' }
@@ -74,7 +74,7 @@ TextSelectionColor >> dominates: other [
 ]
 
 { #category : #accessing }
-TextSelectionColor >> emphasizeScanner: scanner [ 
+TextSelectionColor >> emphasizeScanner: scanner [
 	"Set the emphasis for text display"
 	scanner textColor: self textColor
 ]

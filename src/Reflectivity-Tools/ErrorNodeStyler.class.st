@@ -16,7 +16,7 @@ ErrorNodeStyler >> iconFor: aNode [
 
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
-	^ aNode errorMessage.
+	^ aNode errorMessage
 ]
 
 { #category : #hooks }
@@ -35,7 +35,7 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |
 	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text | 
+	conf configurationBlock: [ :text |
 		| r |
 		r := self segmentMorphClass from: anEnglobingNode stop to: anEnglobingNode stop + 1.
 		text addSegment: r.

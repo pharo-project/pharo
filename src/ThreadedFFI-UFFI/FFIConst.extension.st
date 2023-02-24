@@ -1,7 +1,7 @@
 Extension { #name : #FFIConst }
 
 { #category : #'*ThreadedFFI-UFFI' }
-FFIConst >> emitArgument: aBuilder context: aContext [ 
+FFIConst >> emitArgument: aBuilder context: aContext [
 
 	aBuilder pushLiteral: self value
 ]

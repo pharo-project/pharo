@@ -104,11 +104,11 @@ HistoryIterator >> groupFrom: firstIdx to: secondIdx [
 	group := UndoRedoGroup new.
 	firstIdx to: (secondIdx min: index) do: [:i | group addItem: (self at:i)].
 	group close.
-	group 
+	group
 		isEmpty ifTrue: [^ self].
 	firstIdx + 1 to: (secondIdx min: index) do: [:i | self removeAt: i].
 	self at: firstIdx put: group.
-	index := index - group size + 1.
+	index := index - group size + 1
 ]
 
 { #category : #testing }
@@ -165,7 +165,7 @@ HistoryIterator >> nextList [
 { #category : #grouping }
 HistoryIterator >> openGroup [
 	self recorder openGroup.
-	self updateIndex.
+	self updateIndex
 ]
 
 { #category : #compatibility }
@@ -223,7 +223,7 @@ HistoryIterator >> removeFirst [
 { #category : #initialization }
 HistoryIterator >> reset [
 	self recorder reset.
-	index := nil.
+	index := nil
 ]
 
 { #category : #accessing }
@@ -251,5 +251,5 @@ HistoryIterator >> unplugWhile: aBlock [
 HistoryIterator >> updateIndex [
 	self size <= self maxSize
 		ifFalse: [self removeFirst].
-	index := self size.
+	index := self size
 ]

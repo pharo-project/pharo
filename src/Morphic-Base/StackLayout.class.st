@@ -14,7 +14,7 @@ Class {
 { #category : #private }
 StackLayout >> flushLayoutCache [
 	"Flush any cached information associated with the receiver."
-	
+
 	cachedMinExtent := nil
 ]
 
@@ -35,7 +35,7 @@ StackLayout >> layout: aMorph in: layoutBounds [
 			ifTrue: [((vr == #shrinkWrap) not and: [m extent = cell extent])
 						ifTrue: [m position: cell origin]
 						ifFalse: [box := m bounds.
-								m hResizing == #spaceFill 
+								m hResizing == #spaceFill
 									ifTrue: [box := cell origin extent: cell width @ box height].
 								vr  == #spaceFill
 									ifTrue: [box := box origin extent: box width @ cell height].
@@ -49,7 +49,7 @@ StackLayout >> layout: aMorph in: layoutBounds [
 { #category : #layout }
 StackLayout >> minExtentOf: aMorph in: newBounds [
 	"Return the minimal size aMorph's children would require given the new bounds"
-	
+
 	|min extent|
 	cachedMinExtent ifNotNil: [^cachedMinExtent].
 	aMorph submorphs ifEmpty: [^0 @ 0].

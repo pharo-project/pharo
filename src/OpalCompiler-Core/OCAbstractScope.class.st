@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #testing }
-OCAbstractScope class >> isAbstract [ 
+OCAbstractScope class >> isAbstract [
 	^self = OCAbstractScope
 ]
 

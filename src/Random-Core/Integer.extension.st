@@ -8,7 +8,7 @@ Integer >> atRandom [
 
 	self = 0 ifTrue: [ ^0 ].
 	self < 0 ifTrue: [ ^self negated atRandom negated ].
-	^ self atRandom: SharedRandom globalGenerator.
+	^ self atRandom: SharedRandom globalGenerator
 ]
 
 { #category : #'*Random-Core' }

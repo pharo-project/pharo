@@ -14,7 +14,7 @@ Class {
 TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border taking the currently selected tab into account.
 	Only works for top-positioned tabs for the moment."
-	
+
 	|w h r tab|
 	w := self width.
 	w isPoint ifTrue: [h := w y. w := w x] ifFalse:[h := w].
@@ -25,7 +25,7 @@ TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	r := aRectangle bottomLeft + (w@h negated) extent: aRectangle width - w - w@h.
 	aCanvas fillRectangle: r color: self color. "bottom"
 	tab := self selectedTab.
-	(tab isNil or: [tab owner isNil]) ifTrue: [	
+	(tab isNil or: [tab owner isNil]) ifTrue: [
 		r := aRectangle topLeft + (w@0) corner: aRectangle topRight - (w@h negated).
 		aCanvas fillRectangle: r color: self color.
 		^self]. "top"
@@ -40,14 +40,14 @@ TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 { #category : #accessing }
 TabPanelBorderStyle >> selectedTab [
 	"Answer the currently selected tab."
-	
+
 	^(self tabSelector ifNil: [^nil]) selectedTab
 ]
 
 { #category : #accessing }
 TabPanelBorderStyle >> style [
 	"Answer #tabbed."
-	
+
 	^#tabbed
 ]
 

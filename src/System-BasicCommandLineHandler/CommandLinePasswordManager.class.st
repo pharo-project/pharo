@@ -66,7 +66,7 @@ CommandLinePasswordManager class >> exampleRemovePasswordProtection [
 { #category : #public }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString [
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications."
-	
+
 	self protectCommandLinesByPasswordWith: aString pepper: nil numberOfHashIterations: nil
 ]
 
@@ -126,7 +126,7 @@ CommandLinePasswordManager >> isMatchingPassword: aPassword [
 { #category : #accessing }
 CommandLinePasswordManager >> numberOfHashIterations [
 	"When the password protection is activated, define the number of times the password is hashed."
-	
+
 	^ numberOfHashIterations ifNil: [ numberOfHashIterations := self class defaultNumberOfHashIterations ]
 ]
 
@@ -144,12 +144,12 @@ CommandLinePasswordManager >> password: aString [
 { #category : #accessing }
 CommandLinePasswordManager >> passwordHash [
 	"When this variable is not nil, the command lines are protected by a password. The command line needs to begin with the argument '--password=ThePasswordDefinedByTheDev'"
-	
+
 	^ passwordHash
 ]
 
 { #category : #accessing }
-CommandLinePasswordManager >> passwordHash: aString [	
+CommandLinePasswordManager >> passwordHash: aString [
 	passwordHash := aString
 ]
 
@@ -158,7 +158,7 @@ CommandLinePasswordManager >> protectCommandLinesByPasswordWith: aString pepper:
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 	This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information.
 	This method also allows to specify a custom number of hash iterations."
-	
+
 	"Before setting the pepper and the number of iterations we set the password hash to nil else it migh raise an error since we cannot change pepper/iterations while a password it set."
 	self passwordHash: nil.
 	self hashingPepper: anotherString.

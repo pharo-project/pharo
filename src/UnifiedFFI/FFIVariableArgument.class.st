@@ -17,7 +17,7 @@ Class {
 
 { #category : #'instance creation' }
 FFIVariableArgument class >> name: aString typeName: aTypeName arity: anInteger [
-	
+
 	^ self new
 		name: aString;
 		type: (FFITypeDeclaration typeName: aTypeName arity: anInteger);
@@ -44,6 +44,6 @@ FFIVariableArgument >> name: anObject [
 FFIVariableArgument >> resolveUsing: aResolver [
 
 	loader := aResolver loaderForArgNamed: name indirectIndex: nil.
-	resolvedType := type resolveUsing: aResolver forArgument: self.	
-	resolvedType loader: loader.
+	resolvedType := type resolveUsing: aResolver forArgument: self.
+	resolvedType loader: loader
 ]

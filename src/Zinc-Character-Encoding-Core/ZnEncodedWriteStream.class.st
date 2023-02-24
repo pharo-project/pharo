@@ -31,10 +31,10 @@ ZnEncodedWriteStream >> isBinary [
 ]
 
 { #category : #accessing }
-ZnEncodedWriteStream >> next: count putAll: collection [	
-	self 
-		next: count 
-		putAll: collection 
+ZnEncodedWriteStream >> next: count putAll: collection [
+	self
+		next: count
+		putAll: collection
 		startingAt: 1
 ]
 
@@ -42,8 +42,8 @@ ZnEncodedWriteStream >> next: count putAll: collection [
 ZnEncodedWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count items from collection starting at offset.
 	This is an inefficient abstract implementation writing one by one."
-	
-	0 to: count - 1 do: [ :each | 
+
+	0 to: count - 1 do: [ :each |
 		self nextPut: (collection at: offset + each) ]
 ]
 
@@ -54,8 +54,8 @@ ZnEncodedWriteStream >> nextPut: anObject [
 
 { #category : #accessing }
 ZnEncodedWriteStream >> nextPutAll: collection [
-	self 
-		next: collection size 
-		putAll: collection 
+	self
+		next: collection size
+		putAll: collection
 		startingAt: 1
 ]

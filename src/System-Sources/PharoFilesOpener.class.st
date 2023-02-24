@@ -27,7 +27,7 @@ PharoFilesOpener class >> reset [
 PharoFilesOpener >> badContentMsg [
 	^ '&fileRef
 has been injured by an unpacking utility.  Crs were changed to CrLfs.
-Please set the preferences in your decompressing program to 
+Please set the preferences in your decompressing program to
 "do not convert text files" and unpack the system again.'
 ]
 
@@ -69,8 +69,8 @@ PharoFilesOpener >> changesFileOrNilReadOnly: readOnly silent: silent [
 
 	silent
 		ifTrue: [ ^ changesFile ].
-		
-	changesFile isOpen ifFalse: [ 
+
+	changesFile isOpen ifFalse: [
 		changesFile := nil.
 		^ nil ].
 
@@ -111,7 +111,7 @@ PharoFilesOpener >> informCannotLocateSources [
 	| msg |
 	msg := self cannotLocateMsg.
 	Smalltalk os isMacOS
-		ifTrue: [ 
+		ifTrue: [
 			msg := msg
 				,
 					'
@@ -176,7 +176,7 @@ PharoFilesOpener >> sourcesFileOrNil [
 	| sources |
 	sources := self openSources.
 	^ (sources isNil or: [ sources closed ])
-		ifTrue: [ 
+		ifTrue: [
 			self informCannotLocateSources.
 			nil ]
 		ifFalse: [ sources ]

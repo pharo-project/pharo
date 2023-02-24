@@ -24,9 +24,9 @@ RFSenderReification >> genForRBMessageNode [
 
 { #category : #generate }
 RFSenderReification >> genForRBMethodNode [
-	^RBMessageNode 
-		receiver: (RBMessageNode 
+	^RBMessageNode
+		receiver: (RBMessageNode
 			receiver: RBVariableNode thisContextNode
 			selector: #sender)
-		selector: #receiver.
+		selector: #receiver
 ]

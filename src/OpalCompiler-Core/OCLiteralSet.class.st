@@ -19,7 +19,7 @@ OCLiteralSet >> add: newObject [
 	| index |
 	newObject ifNil: [self error: 'Sets cannot meaningfully contain nil as an element'].
 	index := self findElementOrNil: newObject.
-	^ (array at: index) 
+	^ (array at: index)
 		ifNil: [self atNewIndex: index put: newObject. newObject]
 		ifNotNil: [array at: index]
 ]

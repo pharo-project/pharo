@@ -24,7 +24,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlock [
 		withFirstBlock: '[ temp := temp + 1. temp < 5 ]'
 		withSecondBlock: '[ ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -43,7 +43,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlockWithTemp [
 			intemp < 5 ]'
 		withSecondBlock: '[ ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -59,7 +59,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlock [
 		withFirstBlock: '[ temp < 5 ]'
 		withSecondBlock: '[ temp := temp + 1 ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -78,7 +78,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlockWithTemp [
 			temp := intemp.
 			temp ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -93,5 +93,5 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueReturnsNil [
 		withFirstBlock: '[ temp := temp + 1. temp < 5 ]'
 		withSecondBlock: '[ ]'.
 
-	self assert: result equals: nil.
+	self assert: result equals: nil
 ]

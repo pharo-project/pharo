@@ -40,7 +40,7 @@ DamageRecorder >> recordInvalidRect: newRect [
 
 	| mergeRect zeroRect |
 	totalRepaint ifTrue: [^ self].  "planning full repaint; don't bother collecting damage"
-	zeroRect := 0@0 corner: 0@0. 
+	zeroRect := 0@0 corner: 0@0.
 	invalidRects do:
 		[:rect | | a |
 		((a := (rect intersect: newRect ifNone: [ zeroRect ]) area) > 40
@@ -63,10 +63,10 @@ DamageRecorder >> recordInvalidRect: newRect [
 	"add the given rectangle to the damage list"
 	"Note: We make a deep copy of all rectangles added to the damage list,
 		since rectangles in this list may be extended in place."
-	newRect hasPositiveExtent ifTrue: [ 
+	newRect hasPositiveExtent ifTrue: [
 		invalidRects addLast:
 			(newRect topLeft truncated corner: newRect bottomRight truncated).
-	].
+	]
 ]
 
 { #category : #initialization }

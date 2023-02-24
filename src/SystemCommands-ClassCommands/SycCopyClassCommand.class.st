@@ -43,7 +43,7 @@ SycCopyClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycCopyClassCommand >> execute [
-	
+
 	resultClass := originalClass duplicateClassWithNewName: newClassName
 ]
 
@@ -71,9 +71,9 @@ SycCopyClassCommand >> originalClass: anObject [
 SycCopyClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	originalClass := aToolContext lastSelectedClass.
-	
+
 	newClassName := UIManager default request: 'Input new class name' initialAnswer: originalClass name.
-	
-	newClassName isEmptyOrNil | (newClassName = originalClass name) 
+
+	newClassName isEmptyOrNil | (newClassName = originalClass name)
 		ifTrue: [ CmdCommandAborted signal ]
 ]

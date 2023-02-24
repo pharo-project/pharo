@@ -35,21 +35,21 @@ Class {
 { #category : #checking }
 RBConjunctiveCondition >> check [
 	left check
-		ifFalse: 
+		ifFalse:
 			[failed := #leftFailed.
 			^false].
 	right check
-		ifFalse: 
+		ifFalse:
 			[failed := #rightFailed.
 			^false].
 	^true
 ]
 
 { #category : #private }
-RBConjunctiveCondition >> errorBlockFor: aBoolean [ 
+RBConjunctiveCondition >> errorBlockFor: aBoolean [
 	^aBoolean
 		ifTrue: [nil]
-		ifFalse: 
+		ifFalse:
 			[failed = #leftFailed ifTrue: [left errorBlock] ifFalse: [right errorBlock]]
 ]
 
@@ -67,7 +67,7 @@ RBConjunctiveCondition >> errorStringFor: aBoolean [
 ]
 
 { #category : #initialization }
-RBConjunctiveCondition >> left: aCondition right: aCondition2 [ 
+RBConjunctiveCondition >> left: aCondition right: aCondition2 [
 	left := aCondition.
 	right := aCondition2.
 	failed := #unknownFailed
@@ -89,8 +89,8 @@ RBConjunctiveCondition >> neitherFailed [
 ]
 
 { #category : #printing }
-RBConjunctiveCondition >> printOn: aStream [ 
-	aStream 
+RBConjunctiveCondition >> printOn: aStream [
+	aStream
 		print: left;
 		nextPutAll: ' & ';
 		print: right

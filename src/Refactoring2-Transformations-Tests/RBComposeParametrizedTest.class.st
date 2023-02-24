@@ -9,25 +9,25 @@ Class {
 
 { #category : #accessing }
 RBComposeParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
-	^ isComposed 
-	ifTrue: 
+	^ isComposed
+	ifTrue:
 		[ {super createRefactoringWithArguments: aParameterCollection} ]
-	ifFalse: [  aParameterCollection collect: [ :e | 
+	ifFalse: [  aParameterCollection collect: [ :e |
 			super createRefactoringWithArguments: {e} ]
 	 ]
 ]
 
 { #category : #accessing }
 RBComposeParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
-	^ isComposed 
-	ifTrue: [ {super createRefactoringWithModel: rbNamespace andArguments: {aParameterCollection}} ] 
+	^ isComposed
+	ifTrue: [ {super createRefactoringWithModel: rbNamespace andArguments: {aParameterCollection}} ]
 	ifFalse: [ aParameterCollection collect: [ :e |
-		super createRefactoringWithModel: rbNamespace andArguments: {e	}	
+		super createRefactoringWithModel: rbNamespace andArguments: {e	}
 	] ]
 ]
 
 { #category : #accessing }
-RBComposeParametrizedTest >> isComposed: aBoolean [ 
+RBComposeParametrizedTest >> isComposed: aBoolean [
 	isComposed := aBoolean
 ]
 
@@ -40,8 +40,8 @@ RBComposeParametrizedTest >> shouldFail: refactoringColl [
 ]
 
 { #category : #asserting }
-RBComposeParametrizedTest >> shouldWarn: aRefactoringColl [ 
-	self 
+RBComposeParametrizedTest >> shouldWarn: aRefactoringColl [
+	self
 		should: [ self executeRefactorings: aRefactoringColl ]
 		raise: RBRefactoringWarning
 ]

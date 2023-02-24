@@ -65,7 +65,7 @@ RBRemoveMessageSendTransformation >> preconditions [
 			withBlock: [ self definingClass canUnderstand: selector ]
 			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
 	  & (RBCondition
-			withBlock: [ 
+			withBlock: [
 				(self definingMethod
 					allChildren select: #isMessage)
 					anySatisfy: [ :messageNode | messageNode selector = message asSymbol ] ]
@@ -78,19 +78,19 @@ RBRemoveMessageSendTransformation >> privateTransform [
 
 	| methodTree nodesToModify |
 	methodTree := self definingMethod.
-	
+
 	"try to find a message node with the same selector"
 	nodesToModify := ( methodTree allChildren removeDuplicates
 		select: #isMessage )
 		select: [ :node | node selector = message asSymbol ].
-	
-	nodesToModify ifNotEmpty: [ 
+
+	nodesToModify ifNotEmpty: [
 		nodesToModify do: #removeFromTree.
 		self definingClass compileTree: methodTree ]
 ]
 
 { #category : #printing }
-RBRemoveMessageSendTransformation >> storeOn: aStream [ 
+RBRemoveMessageSendTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

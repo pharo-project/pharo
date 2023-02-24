@@ -77,7 +77,7 @@ UpdatingMenuItemMorph >> step [
 
 { #category : #stepping }
 UpdatingMenuItemMorph >> stepTime [
-	
+
 	^ 250
 ]
 

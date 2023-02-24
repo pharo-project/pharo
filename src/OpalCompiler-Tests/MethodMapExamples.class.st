@@ -15,10 +15,10 @@ MethodMapExamples >> defineCopiedVarBecomeDeadContext [
 ]
 
 { #category : #examples }
-MethodMapExamples >> exampleAccessOuterFromCleanBlock [ 
+MethodMapExamples >> exampleAccessOuterFromCleanBlock [
 	<compilerOptions: #(+ optionCleanBlockClosure)>
 	| b |
-	b := 1. 
+	b := 1.
 	^[ thisContext tempNamed: 'b' ] value
 ]
 
@@ -92,7 +92,7 @@ MethodMapExamples >> exampleTempNamedPutTempVector2 [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
-	
+
 	^[| b |
 		b := 1.
 		[   | a |
@@ -103,10 +103,10 @@ MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock2 [
 	 | a |
-		 a := 2. 
-	^[| b | 
+		 a := 2.
+	^[| b |
 		b := 1.
-		[  
+		[
 		 a := b . thisContext tempNamed: 'b' ] value] value
 ]
 
@@ -128,7 +128,7 @@ MethodMapExamples >> exampleTempNamedTempVector2 [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVectorInOptimizedBlock [
-"temp a is in a temp vector and is accessed from with in the optimized ifTrue:ifFalse: block. But 
+"temp a is in a temp vector and is accessed from with in the optimized ifTrue:ifFalse: block. But
 the definition is not in the outer block, but in the method scope"
 	| result a |
 	[ a := 1.
@@ -140,7 +140,7 @@ the definition is not in the outer block, but in the method scope"
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVectorInlinedLoop [
-"This test is for accessing temp var c within an inlined loop scope. 
+"This test is for accessing temp var c within an inlined loop scope.
 Temp var c is written in the loop and closed in a block -> therefore it is in a tempvector. "
 	| a b c |
 	c := nil.
@@ -158,7 +158,7 @@ MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
       a  := 1.
 	^[| b |
 		b := a.
-		[  
+		[
 		 b := 2 . thisContext tempNamed: 'b' ] value] value
 ]
 
@@ -166,7 +166,7 @@ MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
 MethodMapExamples >> helperMethod12 [
 	| i |
 	i := 5.
-	[ i=0 ] whileFalse: [ i := i - 1 ].
+	[ i=0 ] whileFalse: [ i := i - 1 ]
 ]
 
 { #category : #examples }

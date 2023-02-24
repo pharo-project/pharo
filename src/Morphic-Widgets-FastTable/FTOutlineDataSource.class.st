@@ -37,7 +37,7 @@ FTOutlineDataSource >> elementAt: index [
 	| tmpIndex |
 	tmpIndex := index.
 	self items
-		do: [ :elements | 
+		do: [ :elements |
 			tmpIndex <= elements size
 				ifTrue: [ ^ elements at: tmpIndex ]
 				ifFalse: [ tmpIndex := tmpIndex - elements size ] ].
@@ -66,7 +66,7 @@ FTOutlineDataSource >> needSeparatorBefore: index [
 		ifTrue: [ ^ false ].
 	tmpIndex := index.
 	self items
-		do: [ :elements | 
+		do: [ :elements |
 			elements size >= tmpIndex
 				ifTrue: [ ^ tmpIndex = 1 ]
 				ifFalse: [ tmpIndex := tmpIndex - elements size ] ].
@@ -98,9 +98,9 @@ FTOutlineDataSource >> searchText: aString [
 	index := 0.
 	result := OrderedCollection new.
 	self items
-		do: [ :elements | 
+		do: [ :elements |
 			elements
-				do: [ :each | 
+				do: [ :each |
 					index := index + 1.
 					((self toString: each) beginsWith: aString)
 						ifTrue: [ result add: index ] ] ].

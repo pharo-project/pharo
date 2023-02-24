@@ -15,7 +15,7 @@ RBMethodProtocolChange class >> selector: aSelector in: aBehavior classified: aP
 
 { #category : #converting }
 RBMethodProtocolChange >> asUndoOperation [
-	
+
 	^ self class
 		selector: self selector
 		in: self changeClass
@@ -38,7 +38,7 @@ RBMethodProtocolChange >> oldProtocol [
 	| oldProtocol |
 	oldProtocol := RBBrowserEnvironment new
 						whichProtocolIncludes: self selector in: self changeClass.
-	^ oldProtocol ifNil: [ oldProtocol := #accessing ].
+	^ oldProtocol ifNil: [ oldProtocol := #accessing ]
 ]
 
 { #category : #printing }

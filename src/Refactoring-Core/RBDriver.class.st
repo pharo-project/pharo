@@ -24,12 +24,12 @@ Class {
 
 { #category : #testing }
 RBDriver class >> isAbstract [
-		
+
 	^ self == RBDriver
 ]
 
 { #category : #execution }
 RBDriver >> execute [
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]

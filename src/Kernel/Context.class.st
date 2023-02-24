@@ -143,7 +143,7 @@ Context class >> initialize [
 Context class >> initializePrimitiveSimulators [
 	"extra primitive simulators can be registered by implementing
 	#registerPrimitiveSimulators method in class side of your class."
-	<ignoreUnimplementedCalls: #(#registerPrimitiveSimulators)>
+	<ignoreNotImplementedSelectors: #(#registerPrimitiveSimulators)>
 
 	SpecialPrimitiveSimulators := Dictionary new.
 

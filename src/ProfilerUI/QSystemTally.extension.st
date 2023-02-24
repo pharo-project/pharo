@@ -1,7 +1,7 @@
 Extension { #name : #QSystemTally }
 
 { #category : #'*ProfilerUI' }
-QSystemTally >> <= aQSystemTally [ 
+QSystemTally >> <= aQSystemTally [
 	^ tally <= aQSystemTally tally
 ]
 
@@ -14,7 +14,7 @@ QSystemTally >> asTallyModel [
 
 { #category : #'*ProfilerUI' }
 QSystemTally >> methodClassName [
-	^ class ifNil: [ 'nil' ] ifNotNil: [ class name ] 
+	^ class ifNil: [ 'nil' ] ifNotNil: [ class name ]
 ]
 
 { #category : #'*ProfilerUI' }

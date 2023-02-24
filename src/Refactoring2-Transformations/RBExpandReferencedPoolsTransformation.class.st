@@ -38,7 +38,7 @@ RBExpandReferencedPoolsTransformation >> computePoolsToMove [
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			| varName pool |
 
 			varName := aNode name.
@@ -73,7 +73,7 @@ RBExpandReferencedPoolsTransformation >> movePool: aSymbol toClass: aClass [
 
 { #category : #executing }
 RBExpandReferencedPoolsTransformation >> movePoolVariables [
-	pools 
+	pools
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
@@ -87,10 +87,10 @@ RBExpandReferencedPoolsTransformation >> preconditions [
 RBExpandReferencedPoolsTransformation >> privateTransform [
 
 	self computePoolsToMove.
-	self hasPoolsToMove 
-		ifTrue: 
-			[self 
-				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?' 
+	self hasPoolsToMove
+		ifTrue:
+			[self
+				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
 						expandMacros].
 	self movePoolVariables
 ]
@@ -115,8 +115,8 @@ RBExpandReferencedPoolsTransformation >> storeOn: aStream [
 RBExpandReferencedPoolsTransformation >> whichPoolDefines: varName [
 	| currentClass |
 	currentClass := fromClass.
-	[currentClass isNil] whileFalse: 
-			[currentClass allPoolDictionaryNames 
+	[currentClass isNil] whileFalse:
+			[currentClass allPoolDictionaryNames
 				detect: [:each | ((self poolVariableNamesIn: each) includes: varName)] ifFound: [ :each | ^ each ].
 			currentClass := currentClass superclass].
 	^nil

@@ -66,23 +66,23 @@ Base64MimeConverter class >> initialize [
 
 	FromCharTable := Array new: 256.	"nils"
 	ToCharTable := Array new: 64.
-	($A asciiValue to: $Z asciiValue) doWithIndex: [:val :ind | 
+	($A asciiValue to: $Z asciiValue) doWithIndex: [:val :ind |
 		FromCharTable at: val+1 put: ind-1.
 		ToCharTable at: ind put: val asCharacter].
-	($a asciiValue to: $z asciiValue) doWithIndex: [:val :ind | 
+	($a asciiValue to: $z asciiValue) doWithIndex: [:val :ind |
 		FromCharTable at: val+1 put: ind+25.
 		ToCharTable at: ind+26 put: val asCharacter].
-	($0 asciiValue to: $9 asciiValue) doWithIndex: [:val :ind | 
+	($0 asciiValue to: $9 asciiValue) doWithIndex: [:val :ind |
 		FromCharTable at: val+1 put: ind+25+26.
 		ToCharTable at: ind+26+26 put: val asCharacter].
 	FromCharTable at: $+ asciiValue + 1 put: 62.
 	ToCharTable at: 63 put: $+.
 	FromCharTable at: $/ asciiValue + 1 put: 63.
-	ToCharTable at: 64 put: $/.
+	ToCharTable at: 64 put: $/
 ]
 
 { #category : #encoding }
-Base64MimeConverter class >> mimeDecodeToChars: aStream [ 
+Base64MimeConverter class >> mimeDecodeToChars: aStream [
 	"Return a ReadWriteStream of the original String.  aStream has only 65 innocuous character values.  It is not binary.  (See class comment). 4 bytes in aStream goes to 3 bytes in output."
 
 	| me |
@@ -113,10 +113,10 @@ Base64MimeConverter class >> mimeEncode: aStream multiLine: aBool [
 ]
 
 { #category : #initialization }
-Base64MimeConverter >> initialize [ 
+Base64MimeConverter >> initialize [
 	super initialize.
-		
-	multiLine := true.
+
+	multiLine := true
 ]
 
 { #category : #converting }
@@ -163,20 +163,20 @@ Base64MimeConverter >> mimeEncode [
 	| phase1 phase2 raw nib lineLength data |
 	phase1 := phase2 := false.
 	lineLength := 0.
-	[ dataStream atEnd ] whileFalse: [ 
-		(multiLine and: [ lineLength >= 70 ]) ifTrue: [ 
+	[ dataStream atEnd ] whileFalse: [
+		(multiLine and: [ lineLength >= 70 ]) ifTrue: [
 			mimeStream cr.
 			lineLength := 0 ].
 		data := raw := dataStream next asInteger.
 		nib := (data bitAnd: 252) bitShift:  -2.
 		mimeStream nextPut: (ToCharTable at: nib + 1).
-		(raw := dataStream next) ifNil: [ 
+		(raw := dataStream next) ifNil: [
 			raw := 0.
 			phase1 := true ].
 		data := ((data bitAnd: 3) bitShift: 8) + raw asInteger.
 		nib := (data bitAnd: 1008) bitShift:  -4.
 		mimeStream nextPut: (ToCharTable at: nib + 1).
-		(raw := dataStream next) ifNil: [ 
+		(raw := dataStream next) ifNil: [
 			raw := 0.
 			phase2 := true ].
 		data := ((data bitAnd: 15) bitShift: 8) + raw asInteger.
@@ -185,7 +185,7 @@ Base64MimeConverter >> mimeEncode [
 		nib := data bitAnd: 63.
 		mimeStream nextPut: (ToCharTable at: nib + 1).
 		lineLength := lineLength + 4 ].
-	phase1 ifTrue: [ 
+	phase1 ifTrue: [
 		mimeStream
 			skip:  -2;
 			nextPut: $=;
@@ -218,5 +218,5 @@ Base64MimeConverter >> nextValue [
 	num := FromCharTable at: raw asciiValue + 1.
 	num ifNotNil: [^ num].
 	"else ignore space, return, tab, ..."
-	true] whileTrue.
+	true] whileTrue
 ]

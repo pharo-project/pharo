@@ -13,12 +13,12 @@ Class {
 { #category : #api }
 DAPotentialDependenciesNode >> buildChildren [
 	^ (self messageSendAnalysis unimplementedCallsInAllDependencies
-		collect: [ :selector | 
+		collect: [ :selector |
 						(DAMissingMethodNode new
 								content: selector;
 								parentNode: self;
 								yourself) ]
-		as: Array) 
+		as: Array)
 			sort: [ :a :b | a content < b content ]
 ]
 
@@ -55,7 +55,7 @@ DAPotentialDependenciesNode >> label [
 { #category : #accessing }
 DAPotentialDependenciesNode >> messageSendAnalysis [
 	[ messageSendAnalysis ifNil: [ messageSendAnalysis := DAMessageSendAnalyzer on: self parentNode content packageName ] ]
-		on: PotentialOutDatedDependencyWarning 
+		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | ex resume. "ignore. We already got an alert box" ].
 	^ messageSendAnalysis
 ]

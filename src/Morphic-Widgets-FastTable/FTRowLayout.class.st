@@ -20,13 +20,13 @@ FTRowLayout >> layout: aMorph in: bounds [
 	width := (self minExtentOf: aMorph in: bounds) x.
 	spare := bounds width - width max: 0.
 	fillCount := 0.
-	spare > 0 
+	spare > 0
 		ifTrue: [
 			fillCount := aMorph submorphs size.
 			extra := (fillCount = 0) ifTrue: [0] ifFalse: [ spare // fillCount ].
 			spare := spare - ((fillCount - 1) * extra) ]
 		ifFalse: [ extra := 0 ].
-		
+
 	x := fillCount > 0
 		ifTrue: [ bounds left ]
 		ifFalse: [
@@ -36,15 +36,15 @@ FTRowLayout >> layout: aMorph in: bounds [
 					props listCentering == #bottomRight
 						ifTrue: [ bounds right - width ]
 						ifFalse: [ bounds left ] ] ].
-	
+
 	height := bounds height.
-	inset := props cellInset isPoint ifTrue: [ props cellInset x ] ifFalse: [ props cellInset ]. 
+	inset := props cellInset isPoint ifTrue: [ props cellInset x ] ifFalse: [ props cellInset ].
 	aMorph submorphs withIndexDo: [ :eachMorph :index | | pos box cell |
-		width := ((eachMorph width = 0) and: [ fillCount > 0 ]) 
+		width := ((eachMorph width = 0) and: [ fillCount > 0 ])
 			ifTrue: [ (bounds width + bounds left - x) / (fillCount - index + 1) ]
 			ifFalse: [ eachMorph width ].
 		cell := x@bounds top extent: width@height.
-		box := cell origin extent: cell width @ cell height.		
+		box := cell origin extent: cell width @ cell height.
 		pos := props cellPositioning.
 		box := box align: (box perform: pos) with: (cell perform: pos).
 		eachMorph bounds: box.

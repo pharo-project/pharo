@@ -12,7 +12,7 @@ Class {
 
 { #category : #reading }
 TFFloatType >> emitMarshallToPrimitive: builder [
-	
+
 	builder send: #asFloat
 ]
 
@@ -23,7 +23,7 @@ TFFloatType >> readValue: anExternalAddress offset: offset [
 ]
 
 { #category : #writing }
-TFFloatType >> write: aNumber into: anExternalAddress [ 
-	
+TFFloatType >> write: aNumber into: anExternalAddress [
+
 	anExternalAddress floatAt: 1 put: aNumber asFloat
 ]

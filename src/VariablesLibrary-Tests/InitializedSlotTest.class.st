@@ -5,6 +5,33 @@ Class {
 }
 
 { #category : #tests }
+InitializedSlotTest >> testBlockWithNonSharedDefault [
+	"If we use a block the resulting default value should not be shared among instances"
+
+	| slot objectA objectB defaultA defaultB |
+	slot := #slot1 => InitializedSlot default: [ OrderedCollection new ].
+	aClass := self make: [ :builder | builder slots: { slot } ].
+	self assert: (aClass hasSlotNamed: #slot1).
+
+	objectA := aClass new.
+	objectB := aClass new.
+
+	defaultA := slot read: objectA.
+	defaultB := slot read: objectB.
+
+	self assert: defaultA isEmpty.
+	self assert: defaultB isEmpty.
+
+	"Each instance has its own collection"
+	self deny: defaultA identicalTo: defaultB.
+
+	defaultA add: 'HelloWorld'.
+
+	self assert: (slot read: objectA) size equals: 1.
+	self assert: (slot read: objectB) size equals: 0
+]
+
+{ #category : #tests }
 InitializedSlotTest >> testLazyClassVariableReflectiveBlockParameter [
 	| classVar |
 	classVar := #ClassVar => LazyClassVariable default: [:class | class].
@@ -13,7 +40,33 @@ InitializedSlotTest >> testLazyClassVariableReflectiveBlockParameter [
 	self assert: classVar read equals: aClass
 ]
 
-{ #category : #tests }
+{ #category : #'tests - printing' }
+InitializedSlotTest >> testPrintingUsingPrintStringForBlocks [
+
+	| slot |
+	slot := #slot1 => InitializedSlot default: [ OrderedCollection new ].
+	aClass := self make: [ :builder | builder slots: { slot } ].
+	self assert: (aClass hasSlotNamed: #slot1).
+
+	self assert: aClass definitionString equals: 'Object << #SlotTestsClassA
+	slots: { #slot1 => InitializedSlot default: [ OrderedCollection new ] };
+	package: ''_UnpackagedPackage'''
+]
+
+{ #category : #'tests - printing' }
+InitializedSlotTest >> testPrintingUsingStoreStringWithoutBlocks [
+
+	| slot |
+	slot := #slot1 => InitializedSlot default: OrderedCollection new.
+	aClass := self make: [ :builder | builder slots: { slot } ].
+	self assert: (aClass hasSlotNamed: #slot1).
+
+	self assert: aClass definitionString equals: 'Object << #SlotTestsClassA
+	slots: { #slot1 => InitializedSlot default: ((OrderedCollection new)) };
+	package: ''_UnpackagedPackage'''
+]
+
+{ #category : #'tests - read/write' }
 InitializedSlotTest >> testReadWriteCompiled [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: 5.
@@ -26,14 +79,9 @@ InitializedSlotTest >> testReadWriteCompiled [
 	self assert: (object slot1) equals: 5.
 	object slot1: 10.
 	self assert: (object slot1) equals: 10
-	
-	
-	
-	
-	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - read/write' }
 InitializedSlotTest >> testReflectiveReadWrite [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: 5.
@@ -45,14 +93,9 @@ InitializedSlotTest >> testReflectiveReadWrite [
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
 	self assert: (slot read: object) equals: 10
-	
-	
-	
-	
-	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - read/write' }
 InitializedSlotTest >> testReflectiveReadWriteBlock [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: [4+1].
@@ -64,9 +107,4 @@ InitializedSlotTest >> testReflectiveReadWriteBlock [
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
 	self assert: (slot read: object) equals: 10
-	
-	
-	
-	
-	
 ]

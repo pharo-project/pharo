@@ -14,7 +14,7 @@ MorphTreeMorphTest >> testLastClickedMorphSetUponUpdateList [
 
 	| c w t |
 	c := ClassTreeExample new.
-	[ 
+	[
 	w := c openOn: Collection.
 	t := c dependents last.
 	t expandAll.
@@ -36,7 +36,7 @@ MorphTreeMorphTest >> testLeakingSelectionsOnUpdate [
 
 	| c w t |
 	c := ClassTreeExample new.
-	[ 
+	[
 	w := c openOn: Collection.
 	t := c dependents last.
 	t expandAll.
@@ -52,7 +52,7 @@ MorphTreeMorphTest >> testMaintainingSelectionsOnUpdate [
 
 	| c w t |
 	c := ClassTreeExample new.
-	[ 
+	[
 	w := c openOn: Collection.
 	t := c dependents last.
 	t expandAll.
@@ -61,14 +61,14 @@ MorphTreeMorphTest >> testMaintainingSelectionsOnUpdate [
 			{Bag.
 			CharacterSet}.
 	t selectedMorphList
-		do: [ :e | 
+		do: [ :e |
 			self
 				assert:
 					({Bag.
 					CharacterSet} includes: e complexContents withoutListWrapper) ].
 	c updateList.
 	t selectedMorphList
-		do: [ :e | 
+		do: [ :e |
 			self
 				assert:
 					({Bag.
@@ -82,7 +82,7 @@ MorphTreeMorphTest >> testUpdatingSelectionsOnUpdate [
 
 	| c w t |
 	c := ClassTreeExample new.
-	[ 
+	[
 	w := c openOn: Collection.
 	t := c dependents last.
 	t expandAll.

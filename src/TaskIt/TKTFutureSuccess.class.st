@@ -26,7 +26,7 @@ TKTFutureSuccess >> isSuccess [
 
 { #category : #callbacks }
 TKTFutureSuccess >> onSuccessDo: aBlockClosure inFuture: aFuture [
-	
+
 	aFuture scheduleCallbackTask: [ aBlockClosure value: value ]
 ]
 

@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-CompositeBorder class >> isDeprecated [ 
+CompositeBorder class >> isDeprecated [
 	^ true
 ]

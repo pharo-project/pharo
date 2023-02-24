@@ -33,14 +33,14 @@ StepMessage class >> scheduledAt: scheduledTime stepTime: stepTime receiver: aTa
 { #category : #printing }
 StepMessage >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		print: receiver;
 		space;
 		print: selector;
 		space;
 		print: scheduledTime;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #stepping }

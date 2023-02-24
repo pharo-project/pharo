@@ -23,20 +23,20 @@ ErrorNonInteractive class >> signalForException: anError [
 { #category : #exceptiondescription }
 ErrorNonInteractive >> defaultAction [
 	" log error and quit "
-	
-	^ UIManager default 
-		quitFrom: self signalerContext 
+
+	^ UIManager default
+		quitFrom: self signalerContext
 		withMessage: self description
 ]
 
 { #category : #accessing }
 ErrorNonInteractive >> description [
 	^ String streamContents: [ :s |
-		s nextPutAll: 'An attempt to use interactive tools detected, while in non-interactive mode'. 
-		self messageText  ifNotEmpty: [ :message| 
+		s nextPutAll: 'An attempt to use interactive tools detected, while in non-interactive mode'.
+		self messageText  ifNotEmpty: [ :message|
 			s cr; tab; nextPutAll: message ].
 		self exception ifNotNil: [ :ex |
-			s cr; tab; print: ex ]].
+			s cr; tab; print: ex ]]
 ]
 
 { #category : #accessing }

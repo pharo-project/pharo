@@ -8,7 +8,7 @@ AbstractTool class >> menuCommandOn: aBuilder [
 				parent: #Refactoring;
 				help: 'Undo last refactoring';
 				order: 10;
-				iconName: #smallUndo.
+				iconName: #smallUndo
 ]
 
 { #category : #'*Refactoring-Changes' }
@@ -16,7 +16,7 @@ AbstractTool class >> undoLastRefactoring [
 	| manager |
 	manager := RBRefactoryChangeManager instance.
 	manager undoPointers ifNotEmpty: [
-	[ |limit list| 
+	[ |limit list|
 	list := OrderedCollection new.
 	limit := manager lastUndoPointer .
 	1 to: limit do:[ :i | list add: manager undoChange ].

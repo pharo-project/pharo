@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #actions }
-ReProperty >> actions [ 
+ReProperty >> actions [
 
 	^ #()
 ]

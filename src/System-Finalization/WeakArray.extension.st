@@ -56,14 +56,14 @@ WeakArray class >> restartFinalizationProcess [
 		ifNotNil: [FinalizationProcess terminate.
 			FinalizationProcess := nil].
 
-	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42.	
+	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42.
 	FinalizationProcess := [self finalizationProcess]
 		forkAt: Processor userInterruptPriority.
-	FinalizationProcess name: 'WeakArray Finalization Process'.
+	FinalizationProcess name: 'WeakArray Finalization Process'
 ]
 
 { #category : #'*System-Finalization' }
 WeakArray class >> startUp: resuming [
 	resuming ifFalse: [ ^self ].
-	self restartFinalizationProcess.
+	self restartFinalizationProcess
 ]

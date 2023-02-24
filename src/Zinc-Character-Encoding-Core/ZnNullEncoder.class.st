@@ -15,10 +15,10 @@ Class {
 { #category : #accessing }
 ZnNullEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string.
-	Note that in principle I could handle latin1 (iso-8859-1) and ASCII, 
-	although that is not completely correct. 
+	Note that in principle I could handle latin1 (iso-8859-1) and ASCII,
+	although that is not completely correct.
 	To get maximum efficiency, it remains an option."
-	
+
 	^ (self canonicalEncodingIdentifier: string) = 'null'
 ]
 
@@ -30,7 +30,7 @@ ZnNullEncoder class >> knownEncodingIdentifiers [
 { #category : #'instance creation' }
 ZnNullEncoder class >> newForEncoding: string [
 	"No further parametrization needed"
-	
+
 	^ self new
 ]
 
@@ -99,10 +99,10 @@ ZnNullEncoder >> next: count putAll: string startingAt: offset toStream: stream 
 	"Overwritten for performance reasons"
 
 	string isByteString
-		ifTrue: [ 
-			offset to: offset + count - 1 do: [ :index | 
+		ifTrue: [
+			offset to: offset + count - 1 do: [ :index |
 				stream nextPut: (string byteAt: index) ] ]
-		ifFalse: [ 
+		ifFalse: [
 			super next: count putAll: string startingAt: offset toStream: stream ]
 ]
 
@@ -129,7 +129,7 @@ ZnNullEncoder >> readInto: string startingAt: offset count: requestedCount fromS
 	"Overwritten for performance reasons"
 
 	offset to: offset + requestedCount - 1 do: [ :index |
-		stream atEnd ifTrue: [ ^ index - offset ].  
+		stream atEnd ifTrue: [ ^ index - offset ].
 		string byteAt: index put: stream next ].
 	^ requestedCount
 ]

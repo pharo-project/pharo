@@ -25,8 +25,7 @@ TKTServiceTest >> testPrioritySetAfterStart [
 	service start.
 	service priority: newPriority.
 	self assert: service priority equals: newPriority.
-	self assert: service process priority equals: newPriority.
-
+	self assert: service process priority equals: newPriority
 ]
 
 { #category : #tests }
@@ -38,8 +37,7 @@ TKTServiceTest >> testPrioritySetBeforeStart [
 	service priority: initialPriority.
 	self assert: service priority equals: initialPriority.
 	service start.
-	self assert: service process priority equals: initialPriority.
-
+	self assert: service process priority equals: initialPriority
 ]
 
 { #category : #tests }
@@ -49,8 +47,8 @@ TKTServiceTest >> testServiceIsKilledAfterStop [
 	service name: 'test service'.
 	service start.
 	(service stop) waitForCompletion: 2 second.
-	
-	self deny: service isRunning.
+
+	self deny: service isRunning
 ]
 
 { #category : #tests }
