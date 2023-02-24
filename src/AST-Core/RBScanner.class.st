@@ -365,7 +365,7 @@ RBScanner >> scanComment [
 	self step.
 	self atEnd
 		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
-	[ currentCharacter = $" and: [ buffer nextPut: currentCharacter. self step ~= $" ] ]
+	[ currentCharacter = $" and: [ "buffer nextPut: currentCharacter." self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 			buffer nextPut: currentCharacter.
@@ -373,7 +373,7 @@ RBScanner >> scanComment [
 	stop := self atEnd
 		ifTrue: [ stream position ]
 		ifFalse: [ stream position - 1 ].
-	comments add: (RBCommentToken value: (buffer contents copyFrom: 1 to: buffer contents size -1) start: start stop: stop)
+	comments add: (RBCommentToken value: buffer contents start: start stop: stop)
 ]
 
 { #category : #'private - scanning' }
