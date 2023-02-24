@@ -97,6 +97,26 @@ RBFormatterTest >> testParseError [
 		'#['.
 		'{'.
 
+		"Compounds with an unexped thing inside"
+		'(1]2)' -> '  ( 1].<r> 2)'.
+		'(1}2)' -> '  ( 1}.<r> 2)'.
+		'(1. 2)' -> '( 1.<r> 2)'.
+		'[1)2]' -> '[<r>  1).<r>2 ]'.
+		'[1}2]' -> '[<r>  1}.<r>2 ]'.
+		'#(1]2}3)' -> { #isok->true. #format->'#( 1 #'']'' 2 #''}'' 3 )' }. "`#(` can eat almost anything"
+		'#[ 1 ) 2]'.
+		'#[ 1 } 2]'.
+		'#[ 1 a 2]'.
+		'#[ 1 -1 2]'.
+		'#[ 1 1.0 2]'.
+		'#[ 1 256 2]'.
+		'{1)2}' -> '{<r><t>  1).<r><t>2 }'.
+		'{1]2}' -> '{<r><t>  1].<r><t>2 }'.
+
+		"...or without expected thing"
+		"Note: all compounds `[]` `#()` `#[]` `{}` are legal empty, except one"
+		'()' -> ''. "Errr... I understand but I do not like it"
+
 		"Bad sequence. The first expression is considered unfinished."
 		'1 2' -> ' 1.<r>2'.
 		'1 foo 2' -> ' 1 foo.<r>2'.
@@ -169,7 +189,7 @@ RBFormatterTest >> testParseError [
 		'^^1' -> ' ^ .<r>^ 1' "FIXME, same spirit".
 		'{ ^ 1 }' -> {#isok->true}. "I did not expect this one to be legal"
 		'#(^1)' -> {#isok->true. #format->'#( #''^'' 1 )'}. "Obviously..."
-		'#[^1]' -> '#[  1 ]' "FIXME, where '^' went?".
+		'#[ ^ 1]'.
 
 		"Bad string literal"
 		"Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"

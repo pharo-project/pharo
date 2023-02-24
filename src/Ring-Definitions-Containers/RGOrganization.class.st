@@ -31,7 +31,7 @@ RGOrganization >> fullName [
 RGOrganization >> initialize [
 
 	super initialize.
-	self categories: OrderedCollection new.
+	self categories: OrderedCollection new
 ]
 
 { #category : #testing }

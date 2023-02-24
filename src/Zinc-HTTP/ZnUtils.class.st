@@ -195,17 +195,10 @@ ZnUtils class >> readUpToEnd: inputStream limit: limit [
 
 { #category : #streaming }
 ZnUtils class >> signalProgress: amount total: total [
-	(ZnCurrentOptions at: #signalProgress)
-		ifTrue: [
-			total
-				ifNil: [
-					HTTPProgress new
-						signal: ('Transferred {1} bytes ...' format: { amount humanReadableSIByteSize }) ]
-				ifNotNil: [
-					HTTPProgress new
-						total: total;
-						amount: amount;
-						signal: 'Transferring...' ] ]
+  (ZnCurrentOptions at: #signalProgress) ifTrue: [ total ifNil: [ HTTPProgress new signal: ('Transferred {1} bytes ...' format: {amount humanReadableSISizeString}) ] ifNotNil: [ HTTPProgress new
+                 total: total;
+                 amount: amount;
+                 signal: 'Transferring...' ] ]
 ]
 
 { #category : #streaming }
