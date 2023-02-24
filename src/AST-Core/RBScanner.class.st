@@ -365,7 +365,7 @@ RBScanner >> scanComment [
 	self step.
 	self atEnd
 		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
-	[ currentCharacter = $" and: [ "buffer nextPut: currentCharacter." self step ~= $" ] ]
+	[ currentCharacter = $" and: [ self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 			buffer nextPut: currentCharacter.
