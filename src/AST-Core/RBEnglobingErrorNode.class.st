@@ -77,10 +77,11 @@ RBEnglobingErrorNode >> contents: aCollection [
 
 { #category : #initialization }
 RBEnglobingErrorNode >> initialize [
+
 	super initialize.
-	content := OrderedCollection new.
+	contents := OrderedCollection new.
 	value := ''.
-	valueAfter := ''.
+	valueAfter := ''
 ]
 
 { #category : #testing }
