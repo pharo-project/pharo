@@ -24,7 +24,7 @@ SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
 		(expressionText at: ij) = $" ifTrue: [
 			"Because doublequote are escaped in the original source code,
 			just highlight both character the same and increase the original source offset"
-			charAttr at: index put: attr.
+			charAttr at: index + 1 put: attr.
 			off := off + 1 ] ]
 ]
 

@@ -144,7 +144,7 @@ PharoDocCommentTest >> testNestedInsanity [
 	node expression evaluate >>> (7->7)
 	""This is the end of the executable comment"""
 
-	"Now it's the real test... or it is?"
+	"Now it's the real test... or is it?"
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
 	self assert: node expression source equals: '"Seriously, you should not do what follows"
