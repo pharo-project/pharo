@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #comparing }
-DAPackageUnderAnalysisNode >> <= aDANode [ 
+DAPackageUnderAnalysisNode >> <= aDANode [
 	^ (aDANode class respondsTo: #packageName) and: [ self packageName <= aDANode packageName ]
 ]
 
 { #category : #dependencies }
 DAPackageUnderAnalysisNode >> assemblyNodeFor: anAssemblyManifest [
-	^ (DAAssemblyNode newWith: (self packageDependencies 
+	^ (DAAssemblyNode newWith: (self packageDependencies
 			select: [ :dependency | anAssemblyManifest includes: dependency packageName ]
 			thenCollect: #asPackageDependencyWrapper))
 		content: anAssemblyManifest packageName;
@@ -23,7 +23,7 @@ DAPackageUnderAnalysisNode >> assemblyNodeFor: anAssemblyManifest [
 
 { #category : #dependencies }
 DAPackageUnderAnalysisNode >> assemblyNodesFor: aListOfAssemblyManifest [
-	^ aListOfAssemblyManifest 
+	^ aListOfAssemblyManifest
 		collect: [ :each | self assemblyNodeFor: each ]
 		as: OrderedCollection
 ]
@@ -83,7 +83,6 @@ DAPackageUnderAnalysisNode >> printOn: aStream [
 	aStream nextPut: $(.
 	self content printOn: aStream.
 	aStream nextPut: $)
-
 ]
 
 { #category : #'browse-nautilus' }
@@ -94,6 +93,6 @@ DAPackageUnderAnalysisNode >> selectInBrowser [
 { #category : #dependencies }
 DAPackageUnderAnalysisNode >> wrappedPackageDependencies [
 	^ (self packageDependencies
-		collect: #asPackageDependencyWrapper 
+		collect: #asPackageDependencyWrapper
 		as: OrderedCollection) sorted
 ]

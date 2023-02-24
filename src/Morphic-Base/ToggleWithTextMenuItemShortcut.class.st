@@ -23,7 +23,7 @@ ToggleWithTextMenuItemShortcut class >> priority [
 { #category : #drawing }
 ToggleWithTextMenuItemShortcut >> drawOn: aCanvas [
 	| keyBounds |
-	
+
 	keyBounds := self boundsForKeyText: self keyText font: self owner fontToUse.
 	self owner
 		drawText: keyText

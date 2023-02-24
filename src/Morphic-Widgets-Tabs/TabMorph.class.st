@@ -91,7 +91,7 @@ TabMorph class >> defaultHeight [
 { #category : #'class initialization' }
 TabMorph class >> initialize [
 
-	Icons := Dictionary new.
+	Icons := Dictionary new
 ]
 
 { #category : #'instance creation' }
@@ -145,7 +145,7 @@ TabMorph class >> menuIcon [
 { #category : #icons }
 TabMorph class >> refreshIcon1 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon1
 		ifAbsentPut: [ self refreshIcon1Contents ]
 ]
@@ -153,7 +153,7 @@ TabMorph class >> refreshIcon1 [
 { #category : #icons }
 TabMorph class >> refreshIcon10 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon10
 		ifAbsentPut: [ self refreshIcon10Contents ]
 ]
@@ -181,7 +181,7 @@ TabMorph class >> refreshIcon1Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon2 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon2
 		ifAbsentPut: [ self refreshIcon2Contents ]
 ]
@@ -199,7 +199,7 @@ TabMorph class >> refreshIcon2Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon3 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon3
 		ifAbsentPut: [ self refreshIcon3Contents ]
 ]
@@ -217,7 +217,7 @@ TabMorph class >> refreshIcon3Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon4 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon4
 		ifAbsentPut: [ self refreshIcon4Contents ]
 ]
@@ -235,7 +235,7 @@ TabMorph class >> refreshIcon4Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon5 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon5
 		ifAbsentPut: [ self refreshIcon5Contents ]
 ]
@@ -253,7 +253,7 @@ TabMorph class >> refreshIcon5Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon6 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon6
 		ifAbsentPut: [ self refreshIcon6Contents ]
 ]
@@ -271,7 +271,7 @@ TabMorph class >> refreshIcon6Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon7 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon7
 		ifAbsentPut: [ self refreshIcon7Contents ]
 ]
@@ -289,7 +289,7 @@ TabMorph class >> refreshIcon7Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon8 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon8
 		ifAbsentPut: [ self refreshIcon8Contents ]
 ]
@@ -307,7 +307,7 @@ TabMorph class >> refreshIcon8Contents [
 { #category : #icons }
 TabMorph class >> refreshIcon9 [
 
-	^ Icons 
+	^ Icons
 		at: #refreshIcon9
 		ifAbsentPut: [ self refreshIcon9Contents ]
 ]
@@ -356,7 +356,7 @@ TabMorph >> addActions: aCollection [
 { #category : #'icons - actions' }
 TabMorph >> addActionsToIcon [
 
-	closeIcon 
+	closeIcon
 		on: #mouseEnter send: #mouseEnterIcon to: self;
 		on: #click send: #close to: self;
 		on: #mouseLeave send: #mouseLeaveIcon to: self
@@ -366,14 +366,14 @@ TabMorph >> addActionsToIcon [
 TabMorph >> addIcon [
 
 	self
-		addMorph: closeIcon 
+		addMorph: closeIcon
 		fullFrame: (LayoutFrame identity
 			bottomFraction: 0;
 			leftFraction: 1;
-			topOffset: 6 * self displayScaleFactor; 
+			topOffset: 6 * self displayScaleFactor;
 			leftOffset: self iconRightOffset negated - (12 * self displayScaleFactor);
 			rightOffset: self iconRightOffset negated;
-			bottomOffset: (18 * self displayScaleFactor); 
+			bottomOffset: (18 * self displayScaleFactor);
 			yourself)
 ]
 
@@ -381,7 +381,7 @@ TabMorph >> addIcon [
 TabMorph >> addLabel [
 
 	self
-		addMorph: label 
+		addMorph: label
 		fullFrame: (LayoutFrame identity
 			topFraction: 1;
 			leftOffset: self labelRightOffset;
@@ -392,7 +392,7 @@ TabMorph >> addLabel [
 { #category : #private }
 TabMorph >> addRefreshMenuItemOn: aMenu [
 	"I have a block for retrieving my contents, so I install a menu action for this"
-	
+
 	retrievingBlock ifNil: [ ^ self ].
 	aMenu addLine.
 	aMenu
@@ -405,7 +405,7 @@ TabMorph >> addRefreshMenuItemOn: aMenu [
 TabMorph >> addToSelection [
 
 	self triggerEvent: #tabAddedToSelection with: self.
-	
+
 	"No need to change here since the toolbar I belong to will do it"
 ]
 
@@ -428,13 +428,13 @@ TabMorph >> borderColor [
 
 { #category : #'private - drawing' }
 TabMorph >> buildBorderVertices [
-	
+
 	^ state buildBorderVertices
 ]
 
 { #category : #private }
 TabMorph >> buildLabel: text withIcon: icon [
-	
+
 	^ (TabLabelItemMorph tab: self)
 		morph:	text asMorph;
 		icon: (AlphaImageMorph new image: icon);
@@ -443,7 +443,7 @@ TabMorph >> buildLabel: text withIcon: icon [
 
 { #category : #'private - drawing' }
 TabMorph >> buildVerticesFrom: borderVertices [
-	
+
 	^ state buildVerticesFrom: borderVertices
 ]
 
@@ -464,7 +464,7 @@ TabMorph >> closeable [
 TabMorph >> closeable: anObject [
 
 	closeable := anObject.
-	anObject 
+	anObject
 		ifTrue: [ self showCloseIcon ]
 		ifFalse: [ self hideCloseIcon ]
 ]
@@ -491,17 +491,17 @@ TabMorph >> delete [
 { #category : #drawing }
 TabMorph >> drawOn: aCanvas [
 	| borderVertices vertices |
-	
+
 	borderVertices := self buildBorderVertices.
 	vertices := self buildVerticesFrom: borderVertices.
-	
+
 	aCanvas
 		drawPolygon: vertices
 		color: self backgroundColor
 		borderWidth: 0
 		borderColor: Color transparent.
-		
-	borderVertices overlappingPairsDo: [ :start :end | 
+
+	borderVertices overlappingPairsDo: [ :start :end |
 		aCanvas
 			line: start
 			to: end
@@ -511,7 +511,7 @@ TabMorph >> drawOn: aCanvas [
 
 { #category : #accessing }
 TabMorph >> enabled [
-	
+
 	^ state enabled
 ]
 
@@ -519,7 +519,7 @@ TabMorph >> enabled [
 TabMorph >> enabled: aBoolean [
 
 	(state isEnabledMatchingTheState: aBoolean) ifTrue: [ ^ self ].
-	
+
 	state := state newStateForEnabled: aBoolean.
 	label enabled: aBoolean.
 	self changed
@@ -528,18 +528,18 @@ TabMorph >> enabled: aBoolean [
 { #category : #protocol }
 TabMorph >> extraSpaceForActions [
 	| space offsets |
-	
+
 	space := 0.
 	offsets := 1.
-	
-	self hasMenu ifTrue: [ 
+
+	self hasMenu ifTrue: [
 		offsets := offsets +1.
 		space := space + self menuIcon width ].
-	
-	self actions do: [ :each | 
+
+	self actions do: [ :each |
 		space := space + each icon width.
 		offsets := offsets +1 ].
-	
+
 	^ space + (offsets * self actionOffset)
 ]
 
@@ -583,7 +583,7 @@ TabMorph >> icon [
 { #category : #protocol }
 TabMorph >> icon: anIcon [
 
-	anIcon 
+	anIcon
 		ifNil: [ label icon: nil ]
 		ifNotNil: [ label icon: (AlphaImageMorph new image: anIcon) ]
 ]
@@ -638,24 +638,24 @@ TabMorph >> labelRightOffset [
 { #category : #accessing }
 TabMorph >> menu [
 	| newMenu |
-	
+
 	newMenu := MenuMorph new defaultTarget: self.
 	menu ifNotNil: [ menu cull: newMenu ].
-	
+
 	self addRefreshMenuItemOn: newMenu.
-	
+
 	^ newMenu
 ]
 
 { #category : #protocol }
 TabMorph >> menu: aMenu [
-	
+
 	menu := aMenu
 ]
 
 { #category : #'private - icons' }
 TabMorph >> menuIcon [
-	
+
 	^ self class menuIcon
 ]
 
@@ -712,7 +712,7 @@ TabMorph >> mouseLeaveIcon [
 
 	closeable ifFalse: [ ^ self ].
 	fadeOut ifNotNil: [ fadeOut terminate ].
-	fadeOut := [ 
+	fadeOut := [
 		closeIcon image: self class closeHalfOverIcon.
 		50 milliSeconds asDelay wait.
 		closeIcon image: self class closeIcon ] fork
@@ -723,7 +723,7 @@ TabMorph >> mouseUp: event [
 
 	(event commandKeyPressed or: [ event controlKeyPressed ])
 		ifTrue: [ self toggleSelection ]
-		ifFalse: [ 
+		ifFalse: [
 			event shiftPressed
 				ifTrue: [ self selectToMe ]
 				ifFalse: [ self selected: true ] ]
@@ -737,19 +737,19 @@ TabMorph >> okToClose [
 
 { #category : #private }
 TabMorph >> refreshContent [
-	
+
 	morph := nil.
 	self triggerEvent: #tabEmptyContents with: self.
-	
+
 	"Trigger the update"
-	self softRetrieveMorph.
+	self softRetrieveMorph
 ]
 
 { #category : #private }
 TabMorph >> removeFromSelection [
 
 	self triggerEvent: #tabRemovedFromSelection with: self.
-	
+
 	"No need to change here since the toolbar I belong to will do it"
 ]
 
@@ -758,15 +758,15 @@ TabMorph >> retrieveMorph: aBlock [
 	"This is a hard request. The result is blocking contrary to softRetrieveMorph.
 	Late binding so the morph may be built only on demand"
 
-	morph ifNotNil: [ 
+	morph ifNotNil: [
 		aBlock value: morph.
 		^ nil ].
 	retrievingSemaphore isSignaled
 		ifFalse: [ self softRetrieveMorph ].
 
 	^ [ retrievingSemaphore wait.
-		morph ifNotNil: [ 
-			UIManager default defer: [aBlock value: morph ]]] 
+		morph ifNotNil: [
+			UIManager default defer: [aBlock value: morph ]]]
 				fork
 ]
 
@@ -774,35 +774,35 @@ TabMorph >> retrieveMorph: aBlock [
 TabMorph >> retrievingBlock: anObject [
 
 	retrievingBlock := anObject.
-	retrievingBlock ifNotNil: [ self softRetrieveMorph ].
+	retrievingBlock ifNotNil: [ self softRetrieveMorph ]
 ]
 
 { #category : #private }
 TabMorph >> selectToMe [
 
 	self triggerEvent: #tabSelectTo with: self.
-	
+
 	"No need to change here since the toolbar I belong to will do it"
 ]
 
 { #category : #accessing }
 TabMorph >> selected [
-	
+
 	^ state selected
 ]
 
 { #category : #protocol }
 TabMorph >> selected: aBoolean [
 
-	(state isSelectedMatchingTheState: aBoolean) 
+	(state isSelectedMatchingTheState: aBoolean)
 		ifTrue: [ ^ self triggerEvent: #tabResetSelection with: self ].
-	
+
 	state := state newStateForSelected: aBoolean.
 	aBoolean
-		ifTrue: [ 
+		ifTrue: [
 			self triggerEvent: #tabSelected with: self.
 			self showCloseIcon ].
-	
+
 	"No need to change here since the toolbar Ibelong to will do it"
 ]
 
@@ -830,32 +830,32 @@ TabMorph >> showIconTreshold [
 { #category : #protocol }
 TabMorph >> silentlySelected: aBoolean [
 
-	(state isSelectedMatchingTheState: aBoolean) 
+	(state isSelectedMatchingTheState: aBoolean)
 		ifTrue: [ ^ self ].
-	
+
 	state := state newStateForSelected: aBoolean.
 	aBoolean
 		ifTrue: [ self showCloseIcon ].
-	
+
 	"No need to change here since the toolbar Ibelong to will do it"
 ]
 
 { #category : #protocol }
 TabMorph >> softRetrieveMorph [
 	| oldIcon |
-	"Like retrieveMorph but done in a separated process"	
-	morph ifNotNil: [ ^ self ].	
-	retrievingProcess 
-		ifNotNil: [ 
+	"Like retrieveMorph but done in a separated process"
+	morph ifNotNil: [ ^ self ].
+	retrievingProcess
+		ifNotNil: [
 			"The retrieving process is already running, let's wait for its result"
-			retrievingProcess isTerminated 
+			retrievingProcess isTerminated
 				ifFalse: [ ^ self ] ].
-	
+
 	oldIcon := self icon ifNotNil: [ :i | i form ].
 	label icon: TabBuildingIconMorph new.
 	retrievingProcess := [ [
 		morph := retrievingBlock value]
-	ensure: [		
+	ensure: [
 		UIManager default defer: [
 			self icon: oldIcon.
 			self triggerEvent: #tabRefreshed with: self].

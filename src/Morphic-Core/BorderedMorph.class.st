@@ -39,11 +39,11 @@ BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 
 	| subMenu |
 	subMenu := UIManager default newMenuIn: self for: self.
-	subMenu 
+	subMenu
 		add: 'border width...' selector: #changeBorderWidth:;
 		add: 'border color...' selector: #changeBorderColor:;
 		addLine.
-		
+
 	BorderStyle borderStyleChoices do:
 		[:sym | (self borderStyleForSymbol: sym)
 			ifNotNil:
@@ -52,12 +52,12 @@ BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 ]
 
 { #category : #private }
-BorderedMorph >> basicBorderColor: aColor [ 
+BorderedMorph >> basicBorderColor: aColor [
 	borderColor := aColor
 ]
 
 { #category : #private }
-BorderedMorph >> basicBorderWidth: aNumber [ 
+BorderedMorph >> basicBorderWidth: aNumber [
 	borderWidth := aNumber
 ]
 
@@ -72,7 +72,7 @@ BorderedMorph >> borderColor: colorOrSymbolOrNil [
 		colorOrSymbolOrNil isColor ifFalse:[^self]].
 	borderColor = colorOrSymbolOrNil ifFalse: [
 		borderColor := colorOrSymbolOrNil.
-		self changed].
+		self changed]
 ]
 
 { #category : #accessing }
@@ -94,15 +94,15 @@ BorderedMorph >> borderStyle [
 	borderWidth isZero ifTrue: [^BorderStyle default].
 	self assureExtension.
 	style := extension borderStyle ifNil: [BorderStyle default].
-	(borderWidth = style width and: 
+	(borderWidth = style width and:
 			["Hah! Try understanding this..."
 
-			borderColor == style style or: 
+			borderColor == style style or:
 					["#raised/#inset etc"
 
-					#simple == style style and: [borderColor = style color]]]) 
-		ifFalse: 
-			[style := borderColor isColor 
+					#simple == style style and: [borderColor = style color]]])
+		ifFalse:
+			[style := borderColor isColor
 				ifTrue: [BorderStyle width: borderWidth color: borderColor]
 				ifFalse: [(BorderStyle perform: borderColor) width: borderWidth	"argh."].
 			extension borderStyle: style].
@@ -110,27 +110,27 @@ BorderedMorph >> borderStyle [
 ]
 
 { #category : #accessing }
-BorderedMorph >> borderStyle: aBorderStyle [ 
+BorderedMorph >> borderStyle: aBorderStyle [
 	"Work around the borderWidth/borderColor pair"
 
 	aBorderStyle = self borderStyle ifTrue: [^self].
 	self assureExtension.
 	"secure against invalid border styles"
-	(self canDrawBorder: aBorderStyle) 
-		ifFalse: 
+	(self canDrawBorder: aBorderStyle)
+		ifFalse:
 			["Replace the suggested border with a simple one"
 
 			^self borderStyle: (BorderStyle width: aBorderStyle width
 						color: (aBorderStyle trackColorFrom: self) color)].
 	aBorderStyle width = self borderStyle width ifFalse: [self changed].
-	(aBorderStyle isNil or: [aBorderStyle == BorderStyle default]) 
-		ifTrue: 
+	(aBorderStyle isNil or: [aBorderStyle == BorderStyle default])
+		ifTrue:
 			[extension borderStyle: nil.
 			borderWidth := 0.
 			^self changed].
 	extension borderStyle: aBorderStyle.
 	borderWidth := aBorderStyle width.
-	borderColor := aBorderStyle style == #simple 
+	borderColor := aBorderStyle style == #simple
 				ifTrue: [aBorderStyle color]
 				ifFalse: [aBorderStyle style].
 	self changed
@@ -158,13 +158,13 @@ BorderedMorph >> closestPointTo: aPoint [
 		(pt - out) abs < (6@6)
 			ifTrue: [ ^(in + (Point r: 5.0 degrees: (pt - in) degrees)) asIntegerPoint ].
 	].
-	^pt.
+	^pt
 ]
 
 { #category : #accessing }
 BorderedMorph >> colorForInsets [
 	"Return the color to be used for shading inset borders."
-	
+
 	self owner isSystemWindow
 		ifTrue: [^self owner colorForInsets].
 	^super colorForInsets
@@ -194,7 +194,7 @@ BorderedMorph >> doesBevels [
 { #category : #initialization }
 BorderedMorph >> initialize [
 	"Initializes the receiver"
-	
+
 	super initialize.
 	self initializeBorder
 ]
@@ -202,7 +202,7 @@ BorderedMorph >> initialize [
 { #category : #'private - initialization' }
 BorderedMorph >> initializeBorder [
 	"Initialize the receiver state related to border."
-	
+
 	borderColor:= self defaultBorderColor.
 	borderWidth := self defaultBorderWidth
 ]
@@ -211,9 +211,9 @@ BorderedMorph >> initializeBorder [
 BorderedMorph >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
 
-	(color isColor and: [ color isTranslucentButNotTransparent ]) 
+	(color isColor and: [ color isTranslucentButNotTransparent ])
 		ifTrue: [ ^ true ].
-	(borderColor isColor and: [ 
+	(borderColor isColor and: [
 		 borderColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
 	^ false
 ]

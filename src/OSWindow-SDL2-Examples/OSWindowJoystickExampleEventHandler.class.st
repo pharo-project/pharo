@@ -32,12 +32,12 @@ OSWindowJoystickExampleEventHandler >> normalizeAxisValue: value [
 	| result deadZone |
 	result := value asFloat / self axisMaxValue.
 	deadZone := self axisDeadZoneThreshold.
-	(result between: deadZone negated and: deadZone) ifTrue: [ 
+	(result between: deadZone negated and: deadZone) ifTrue: [
 		result := 0.0
 	] ifFalse: [
-		result < 0 ifTrue: [ 
+		result < 0 ifTrue: [
 			result := result + deadZone.
-		] ifFalse: [ 
+		] ifFalse: [
 			result := result - deadZone.
 		].
 		result := result / (1.0 - deadZone).
@@ -50,14 +50,14 @@ OSWindowJoystickExampleEventHandler >> normalizeAxisValue: value [
 OSWindowJoystickExampleEventHandler >> visitJoyAxisEvent: axisEvent [
 	| axisValue velocity |
 	axisEvent isPreferredEvent ifFalse: [ ^ self ].
-	
+
 	axisValue := self normalizeAxisValue: axisEvent value.
 	velocity := example characterVelocity.
-	axisEvent isLeftX ifTrue: [ 
+	axisEvent isLeftX ifTrue: [
 		velocity := (axisValue * 300) @ velocity y
 	].
 
-	axisEvent isLeftY ifTrue: [ 
+	axisEvent isLeftY ifTrue: [
 		"Left Y"
 		velocity := velocity x @ (axisValue * 300)
 
@@ -69,14 +69,14 @@ OSWindowJoystickExampleEventHandler >> visitJoyAxisEvent: axisEvent [
 { #category : #visiting }
 OSWindowJoystickExampleEventHandler >> visitJoyButtonDownEvent: buttonEvent [
 	buttonEvent isPreferredEvent ifFalse: [ ^ self ].
-	
-	buttonEvent isButtonX ifTrue: [ 
+
+	buttonEvent isButtonX ifTrue: [
 		example shoot.
 	].
 
-	buttonEvent isButtonStart ifTrue: [ 
+	buttonEvent isButtonStart ifTrue: [
 		example reset.
-	].
+	]
 ]
 
 { #category : #visiting }

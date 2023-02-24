@@ -14,7 +14,7 @@ HaltOnCountIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 HaltOnCountIconStyler >> iconLabelBlock: aNode [
-	^ [(aNode hasProperty: #haltCount) 
+	^ [(aNode hasProperty: #haltCount)
 		ifTrue: [(aNode propertyAt: #haltCount) asString, ' ,click to reset']
 		ifFalse: ['count: 0' ]]
 ]

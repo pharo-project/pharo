@@ -40,29 +40,29 @@ RPackageReadOnlyCompleteSetupTest >> setUp [
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	p3 := self createNewPackageNamed: self p3Name.
-	
+
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
 	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
 	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
-	
+
 	a1 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	p1 addMethod: (a1>>#methodDefinedInP1).
 	a1 compileSilently: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 	p1 addMethod: (a1>>#anotherMethodDefinedInP1).
-	
+
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	p1 addMethod: (a2>>#methodDefinedInP1).
-	
+
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
 	p2 addMethod: (a2>>#methodDefinedInP2).
-	
+
 	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
 	p3 addMethod: (a2>>#methodDefinedInP3).
 
 	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
-	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3).
+	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3)
 ]
 
 { #category : #'tests - tag class' }
@@ -134,7 +134,7 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 	self deny: (p1 extendsClass: (testingEnvironment at: #A1DefinedInP1)).
 	self assert: ((testingEnvironment at: #A2DefinedInP2) isExtendedInPackage: p1).
 	self deny: (p1 includesClass: (testingEnvironment at: #A2DefinedInP2)).
-	self assert: (p1 extendsClass: (testingEnvironment at: #A2DefinedInP2)).
+	self assert: (p1 extendsClass: (testingEnvironment at: #A2DefinedInP2))
 ]
 
 { #category : #'tests - slice' }
@@ -146,7 +146,7 @@ RPackageReadOnlyCompleteSetupTest >> testClassNamesAndExtensionSelectorsDo [
 		equals: 'A2DefinedInP2 methodDefinedInP1
 A2DefinedInP2 methodDefinedInP3
 A2DefinedInP2_class classSideMethodDefinedInP3
-'.
+'
 ]
 
 { #category : #'tests - slice' }
@@ -159,7 +159,7 @@ RPackageReadOnlyCompleteSetupTest >> testClassesAndExtensionMethodsDo [
 				stream cr.].
 		{p1 . p2 . p3} do: [ :p |
 			p classExtensionSlicesDo: block.
-			p metaclassExtensionSlicesDo: block.]]) 
+			p metaclassExtensionSlicesDo: block.]])
 		equals: 'A2DefinedInP2 methodDefinedInP1
 A2DefinedInP2 methodDefinedInP3
 A2DefinedInP2 classSideMethodDefinedInP3
@@ -170,19 +170,19 @@ A2DefinedInP2 classSideMethodDefinedInP3
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
 
 	self assert: (((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1) isDefinedInPackage: p1).
-	self deny: (((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1) isDefinedInPackage: p1).
+	self deny: (((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1) isDefinedInPackage: p1)
 ]
 
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
 
 	self deny: (((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1) isExtensionInPackage: p1).
-	self assert: (((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1) isExtensionInPackage: p1).
+	self assert: (((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1) isExtensionInPackage: p1)
 ]
 
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackageFromOrganizer [
-	
+
 	| method |
 	method := (testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1.
 	self assert: (method packageFromOrganizer: self packageClass organizer) equals: p1.
@@ -193,12 +193,12 @@ RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackageFromOrganizer [
 { #category : #'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testDefinedSelectors [
 
-	self assert: a1 definedSelectors size equals: 2. 
+	self assert: a1 definedSelectors size equals: 2.
 	self assert: ((a1 definedSelectors) includes: #methodDefinedInP1).
-	self assert: ((a1 definedSelectors) includes: #anotherMethodDefinedInP1). 
+	self assert: ((a1 definedSelectors) includes: #anotherMethodDefinedInP1).
 
 	self assert: a2 definedSelectors size equals: 1.
-	self assert: (a2 definedSelectors includes: #methodDefinedInP2).
+	self assert: (a2 definedSelectors includes: #methodDefinedInP2)
 ]
 
 { #category : #'tests - situation' }
@@ -285,9 +285,9 @@ RPackageReadOnlyCompleteSetupTest >> testMethods [
 
 	| m1 m3 |
 	m1 := p1 methods.
-	self assert: m1 size equals: 3. 
+	self assert: m1 size equals: 3.
 	self assert: (m1 includes: a1>>#methodDefinedInP1).
-	self assert: (m1 includes: a1>>#anotherMethodDefinedInP1). 
+	self assert: (m1 includes: a1>>#anotherMethodDefinedInP1).
 	self assert: (m1 includes: a2>>#methodDefinedInP1).
 	m3 := p3 methods.
 	self assert: m3 size equals: 2.
@@ -314,19 +314,19 @@ RPackageReadOnlyCompleteSetupTest >> testMethodsForClass [
 RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 	"since a class can be extended by several packages, we want the complete list of packages that define or extend
 	the class"
-	
+
 	| packages extending |
 	packages := a2 packages.
 	"a2 is extended by p1 and p3"
 	extending := a2 extendingPackages.
-	self assert: extending size equals: 2. 
+	self assert: extending size equals: 2.
 	self assert: (extending includes: p1).
 	self assert: (extending includes: p3).
-	
-	self assert: packages size equals: 3. 
+
+	self assert: packages size equals: 3.
 	self assert: (packages includes: p1).
 	self assert: (packages includes: p2).
-	self assert: (packages includes: p3).
+	self assert: (packages includes: p3)
 ]
 
 { #category : #'tests - tag class' }
@@ -348,7 +348,7 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTag [
 
 { #category : #'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
-	
+
 	p1 addClassDefinitionName: #A1DefinedInP1 toClassTag: #foo.
 	p1 addClassDefinitionName: #B1DefinedInP1 toClassTag: #foo.
 	p1 addClassDefinitionName: #B1DefinedInP1 toClassTag: #zork.
@@ -372,10 +372,10 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 
 { #category : #'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testSelectors [
-		
-	self assert: (p1 selectors) size equals: 2. 
+
+	self assert: (p1 selectors) size equals: 2.
 	self assert: ((p1 selectors) includes: #methodDefinedInP1).
-	self assert: ((p1 selectors) includes: #anotherMethodDefinedInP1). 
+	self assert: ((p1 selectors) includes: #anotherMethodDefinedInP1).
 
 	self assert: p3 selectors size equals: 2.
 	self assert: (p3 selectors includes: #methodDefinedInP3).
@@ -398,15 +398,15 @@ RPackageReadOnlyCompleteSetupTest >> testSelectorsForClass [
 ]
 
 { #category : #'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testStartingSituation [	
+RPackageReadOnlyCompleteSetupTest >> testStartingSituation [
 
  	self deny: (p2 includesClass: b1).
 	self assert: (p2 includesClass: b2).
 	"a locally defined class not extended by other packages"
-	
-	self assert: (p2 includesClass: a2).  
+
+	self assert: (p2 includesClass: a2).
 	"a locally defined class extended by other packages"
-	
+
 	self assert: (p1 definesOrExtendsClass: a2).
-	self deny: (p1 includesClass: a2).
+	self deny: (p1 includesClass: a2)
 ]

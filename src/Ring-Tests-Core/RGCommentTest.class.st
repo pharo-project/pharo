@@ -8,7 +8,7 @@ Class {
 RGCommentTest >> testClass [
 
 	| environment aClass aPackage aComment |
-	
+
 	environment := RGEnvironment new.
 	aClass := environment ensureClassNamed: #SomeClass.
 	aPackage := environment ensurePackageNamed: #SomePackage.
@@ -19,24 +19,24 @@ RGCommentTest >> testClass [
 	aClass comment: aComment.
 	self assert: aComment package equals: aPackage.
 	self assert: aClass hasComment.
-	
-	self assert: aComment fullName equals: 'SomeClass comment'.
+
+	self assert: aComment fullName equals: 'SomeClass comment'
 ]
 
 { #category : #tests }
 RGCommentTest >> testImplicitEnvironment [
-	
+
 	| def def2 env |
 
 	def := RGComment unnamed.
 	env := def environment.
 
-	self checkImplicitSingleClassEnvironmentOf: def parent.	
+	self checkImplicitSingleClassEnvironmentOf: def parent.
 
 	self assert: (def isRingResolved).
-	
+
 	def2 := RGComment parent: def parent .
-	self checkImplicitSingleClassEnvironmentOf: def parent.
+	self checkImplicitSingleClassEnvironmentOf: def parent
 ]
 
 { #category : #tests }
@@ -49,39 +49,39 @@ RGCommentTest >> testMakeReslolved [
 	self assert: comment unresolvedProperties isEmpty.
 	self assert: comment content equals: ''.
 	self assert: comment author equals: ''.
-	self assert: (comment time isKindOf: DateAndTime).
+	self assert: (comment time isKindOf: DateAndTime)
 ]
 
 { #category : #tests }
 RGCommentTest >> testNewComment [
 	| comment time |
-	
+
 	comment := RGComment unnamed.
-	
+
 	self assert: (comment isRingResolved).
 	self assert: (comment isComment).
-	
+
 	self assert: (comment hasUnresolvedAll: #(content author time name)).
-	
+
 	self assert: (comment isEmptyOrNil).
-	
+
 	self assert: comment content equals: ''.
 	comment content: 'some class comment'.
 	self assert: (comment hasUnresolvedAll: #(author time name)).
 	self assert: comment content equals: 'some class comment'.
 	self deny: (comment isEmptyOrNil).
 	self assert: comment content equals: comment sourceCode.
-	
+
 	self assert: comment author equals: ''.
 	comment author: 'FullAuthorName'.
 	self assert: (comment hasUnresolvedAll: #(time name)).
 	self assert: comment author equals: 'FullAuthorName'.
-	
+
 	time := DateAndTime now.
 	self assert: comment time equals: DateAndTime new.
 	comment time: time.
 	self assert: (comment hasUnresolved: #name).
-	self assert: comment time equals: time.
+	self assert: comment time equals: time
 ]
 
 { #category : #tests }
@@ -95,26 +95,26 @@ RGCommentTest >> testResolvingConsistency [
 { #category : #tests }
 RGCommentTest >> testTransformations [
 	| comment time |
-	
+
 	comment := RGComment unnamed.
-	
+
 	self assert: (comment isRingResolved).
-	
+
 	self assert: (comment hasUnresolvedAll: #(content author time name)).
-	
+
 	self assert: comment content equals: ''.
 	comment content: 'some class comment'.
 	self assert: (comment hasUnresolvedAll: #(author time name)).
 	self assert: comment content equals: 'some class comment'.
-	
+
 	self assert: comment author equals: ''.
 	comment author: 'FullAuthorName'.
 	self assert: (comment hasUnresolvedAll: #(time name)).
 	self assert: comment author equals: 'FullAuthorName'.
-	
+
 	time := DateAndTime now.
 	self assert: comment time equals: DateAndTime new.
 	comment time: time.
 	self assert: (comment hasUnresolved: #name).
-	self assert: comment time equals: time.
+	self assert: comment time equals: time
 ]

@@ -33,12 +33,12 @@ Trait >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 
 	methodsBoolean
 		ifTrue: [ self
-				methodsDo: [ :mth | 
+				methodsDo: [ :mth |
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass using: packageKeys
 					].
 			self classSide
-				methodsDo: [ :mth | 
+				methodsDo: [ :mth |
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass classSide using: packageKeys
 					]

@@ -11,8 +11,8 @@ Class {
 GlobalVariableTest >> testIsReadInMethod [
 
 	self assert: (Object binding isReadIn: self class >> testSelector).
-	self deny: ((self class environment classNamed: #String) binding 
-							isReadIn: self class >> testSelector).
+	self deny: ((self class environment classNamed: #String) binding
+							isReadIn: self class >> testSelector)
 ]
 
 { #category : #tests }
@@ -30,32 +30,32 @@ GlobalVariableTest >> testNotWrittenInMethod [
 GlobalVariableTest >> testPropertyAtPut [
 
 	| testValue |
-	
+
 	testValue := Date today.
 	self class binding propertyAt: #testKeySelector put: testValue.
 	self
 		assert: (self class binding propertyAt: #testKeySelector)
 		equals: testValue.
 	self class binding removeProperty: #testKeySelector.
-	self assert: self class binding properties isNil.
+	self assert: self class binding properties isNil
 ]
 
 { #category : #'tests - properties' }
 GlobalVariableTest >> testRemoveProperty [
 
 	self class binding propertyAt: #testKeySelector put: 1.
-		
+
 	self class binding removeProperty: #testKeySelector.
 	self
 		assert: (self class binding propertyAt: #testKeySelector)
 		equals: nil.
-		
-	self assert: self class binding properties isNil.
+
+	self assert: self class binding properties isNil
 ]
 
 { #category : #'tests - properties' }
 GlobalVariableTest >> testScope [
 
 	self assert: Object binding scope equals: Object environment.
-	self assert: (Object binding scope lookupVar: Object binding name) equals: Object binding.
+	self assert: (Object binding scope lookupVar: Object binding name) equals: Object binding
 ]

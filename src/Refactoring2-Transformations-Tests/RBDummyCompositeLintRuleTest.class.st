@@ -14,17 +14,17 @@ RBDummyCompositeLintRuleTest class >> allRules [
 
 { #category : #'all checks' }
 RBDummyCompositeLintRuleTest class >> lintChecks [
-	^ self 
-		rules: (RBBasicLintRuleTestData protocolsToCheck collect: 
-			[ :each | 
-			self 
+	^ self
+		rules: (RBBasicLintRuleTestData protocolsToCheck collect:
+			[ :each |
+			self
 				ruleFor: RBBasicLintRuleTestData
 				protocol: each ])
 		name: 'Lint checks'
 ]
 
 { #category : #'instance creation' }
-RBDummyCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [ 
+RBDummyCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [
 	^self
 		rules: (((RBBrowserEnvironment new selectorsFor: aProtocol asSymbol in: aClass class)
 				collect: [:selector | aClass perform: selector])
@@ -34,12 +34,12 @@ RBDummyCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [
 ]
 
 { #category : #'instance creation' }
-RBDummyCompositeLintRuleTest class >> rules: aCollection [ 
+RBDummyCompositeLintRuleTest class >> rules: aCollection [
 	^self new rules: aCollection
 ]
 
 { #category : #'instance creation' }
-RBDummyCompositeLintRuleTest class >> rules: aCollection name: aString [ 
+RBDummyCompositeLintRuleTest class >> rules: aCollection name: aString [
 	^(self new) rules: aCollection;
 		name: aString;
 		yourself
@@ -47,23 +47,23 @@ RBDummyCompositeLintRuleTest class >> rules: aCollection name: aString [
 
 { #category : #'all checks' }
 RBDummyCompositeLintRuleTest class >> transformations [
-	^ self 
+	^ self
 		ruleFor: RBTransformationRuleTestData
 		protocol: 'transformations'
 ]
 
 { #category : #accessing }
-RBDummyCompositeLintRuleTest >> checkClass: aSmalllintContext [ 
-	rules do: 
-			[:each | 
+RBDummyCompositeLintRuleTest >> checkClass: aSmalllintContext [
+	rules do:
+			[:each |
 			each checkClass: aSmalllintContext.
 			Processor yield]
 ]
 
 { #category : #accessing }
-RBDummyCompositeLintRuleTest >> checkMethod: aSmalllintContext [ 
-	rules do: 
-			[:each | 
+RBDummyCompositeLintRuleTest >> checkMethod: aSmalllintContext [
+	rules do:
+			[:each |
 			each checkMethod: aSmalllintContext.
 			Processor yield]
 ]

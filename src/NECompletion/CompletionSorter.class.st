@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #description }
-CompletionSorter class >> kind [ 
+CompletionSorter class >> kind [
 	^ ''
 ]
 

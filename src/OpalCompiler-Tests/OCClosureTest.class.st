@@ -11,9 +11,9 @@ Class {
 OCClosureTest >> assertValues: anArray [
 	| values |
 	values := collection collect: [ :each | each value ].
-	self 
+	self
 		assert: anArray asArray = values asArray
-		description: ['Expected: ' , anArray asArray printString , 
+		description: ['Expected: ' , anArray asArray printString ,
 			', but got ' , values asArray printString]
 ]
 
@@ -34,9 +34,9 @@ OCClosureTest >> testActiveHomeClean [
 	| block |
 	block := [thisContext activeHome method].
 	self assert: block class equals: CleanBlockClosure.
-	
+
 	self assert: block value equals: block homeMethod.
-	
+
 	block := [thisContext activeHome].
 	self assert: block class equals: CleanBlockClosure.
 	self assert: block value equals: thisContext
@@ -45,7 +45,7 @@ OCClosureTest >> testActiveHomeClean [
 { #category : #tests }
 OCClosureTest >> testBlockArgument [
 	| block block1 block2 |
-	block := [ :arg | 
+	block := [ :arg |
 	| temp |
 	temp := arg.
 	[ temp ] ].
@@ -69,7 +69,7 @@ OCClosureTest >> testBlockTemp [
 OCClosureTest >> testBlockTemps [
 	| block block1 block2 |
 	"Regression test: Bytecode offset of IR was to last byte of IR node, which for blocks include temp initialization bytes. This caused scan for block creation bytecode to fail when there were many block temps, and no source node to be found."
-	block := [ :arg | 
+	block := [ :arg |
 	| a b c d e f g |
 	a := b := c := d := e := f := g := arg.
 	[ a ] ].
@@ -104,27 +104,27 @@ OCClosureTest >> testConstantBlockClosure [
 	self assert: block outerContext isNil.
 	self assert: block value equals: 1.
 	self assert: (block valueWithArguments: #()) equals: 1.
-	
-	
+
+
 	self should: [block value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block valueWithArguments: #(1)] raise: ArgumentsCountMismatch.
-	
-	
+
+
 	block := [:arg | 1].
 	self assert: block isClean.
 	self assert: block class equals: ConstantBlockClosure1Arg.
 	self assert: block outerContext isNil.
 	self assert: (block value: nil) equals: 1.
 	self assert: (block valueWithArguments: #(2)) equals: 1.
-	
+
 	self should: [block value: nil value: nil ] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
-	
+
 	block := [:arg1 :arg2 | 1].
 	self assert: block isClean.
 	self assert: block class equals: ConstantBlockClosure2Arg.
@@ -132,13 +132,13 @@ OCClosureTest >> testConstantBlockClosure [
 	self assert: (block value: nil value: nil) equals: 1.
 	self assert: (block valueWithArguments: #(2 2)) equals: 1.
 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
-	
+
 	self should: [block value] raise: ArgumentsCountMismatch.
 	self should: [block value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
-	
+
 	block := [:arg1 :arg2 :arg3 | 1].
 	self assert: block isClean.
 	self assert: block sourceNode isConstant.
@@ -146,38 +146,37 @@ OCClosureTest >> testConstantBlockClosure [
 	self assert: block outerContext isNil.
 	self assert: (block value: nil value: nil value: nil) equals: 1.
 	self assert: (block valueWithArguments: #(2 2 2)) equals: 1.
-	
+
 	self should: [block value] raise: ArgumentsCountMismatch.
 	self should: [block value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
-	
+
 	block := [:arg1 :arg2 :arg3 :arg4 | 1].
 	self assert: block isClean.
 	self assert: block sourceNode isConstant.
 	"but we do not compile is special for now"
 	self assert: block class equals: FullBlockClosure.
-	
+
 	self should: [block value] raise: ArgumentsCountMismatch.
 	self should: [block value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
-	
-	
+
+
 	block := [:arg1 :arg2 :arg3 :arg4 :arg5 | 1].
 	self assert: block isClean.
 	self assert: block sourceNode isConstant.
 	"but we do not compile is special for now"
 	self assert: block class equals: FullBlockClosure.
-	
+
  	self should: [block value] raise: ArgumentsCountMismatch.
  	self should: [block value: nil] raise: ArgumentsCountMismatch.
  	self should: [block value: nil value: nil] raise: ArgumentsCountMismatch.
  	self should: [block value: nil value: nil value: nil] raise: ArgumentsCountMismatch.
- 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch.
-	
+ 	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch
 ]
 
 { #category : #'tests - empty' }
@@ -254,9 +253,9 @@ OCClosureTest >> testToDoArgumentNotInlined [
 
 { #category : #'tests - todo' }
 OCClosureTest >> testToDoInsideTemp [
-	1 to: 5 do: [ :index | 
-		| temp | 
-		temp := index. 
+	1 to: 5 do: [ :index |
+		| temp |
+		temp := index.
 		collection add: [ temp ] ].
 	self assertValues: #(1 2 3 4 5)
 ]
@@ -264,9 +263,9 @@ OCClosureTest >> testToDoInsideTemp [
 { #category : #'tests - todo' }
 OCClosureTest >> testToDoInsideTempNotInlined [
 	| block |
-	block := [ :index | 
-		| temp | 
-		temp := index. 
+	block := [ :index |
+		| temp |
+		temp := index.
 		collection add: [ temp ] ].
 	1 to: 5 do: block.
 	self assertValues: #(1 2 3 4 5)
@@ -275,8 +274,8 @@ OCClosureTest >> testToDoInsideTempNotInlined [
 { #category : #'tests - todo' }
 OCClosureTest >> testToDoOutsideTemp [
 	| temp |
-	1 to: 5 do: [ :index | 
-		temp := index. 
+	1 to: 5 do: [ :index |
+		temp := index.
 		collection add: [ temp ] ].
 	self assertValues: #(5 5 5 5 5)
 ]
@@ -284,8 +283,8 @@ OCClosureTest >> testToDoOutsideTemp [
 { #category : #'tests - todo' }
 OCClosureTest >> testToDoOutsideTempNotInlined [
 	| block temp |
-	block := [ :index | 
-		temp := index. 
+	block := [ :index |
+		temp := index.
 		collection add: [ temp ] ].
 	1 to: 5 do: block.
 	self assertValues: #(5 5 5 5 5)
@@ -305,7 +304,7 @@ OCClosureTest >> testWhileModificationAfter [
 OCClosureTest >> testWhileModificationAfterNotInlined [
 	| index block |
 	index := 0.
-	block := [ 
+	block := [
 		collection add: [ index ].
 		index := index + 1 ].
 	[ index < 5 ] whileTrue: block.
@@ -316,7 +315,7 @@ OCClosureTest >> testWhileModificationAfterNotInlined [
 OCClosureTest >> testWhileModificationBefore [
 	| index |
 	index := 0.
-	[ index < 5 ] whileTrue: [ 
+	[ index < 5 ] whileTrue: [
 		index := index + 1.
 		collection add: [ index ] ].
 	self assertValues: #(5 5 5 5 5)
@@ -326,7 +325,7 @@ OCClosureTest >> testWhileModificationBefore [
 OCClosureTest >> testWhileModificationBeforeNotInlined [
 	| index block |
 	index := 0.
-	block := [ 
+	block := [
 		index := index + 1.
 		collection add: [ index ] ].
 	[ index < 5 ] whileTrue: block.
@@ -346,13 +345,13 @@ OCClosureTest >> testWhileWithTemp [
 
 { #category : #'tests - while' }
 OCClosureTest >> testWhileWithTempIsNil [
-	
+
 	| index |
 	index := 0.
 	[ index < 5 ] whileTrue: [
 		| temp |
 		collection add: temp.
-		temp := index := index + 1. 
+		temp := index := index + 1.
 		collection add: temp].
 	self assertValues: #(nil 1 nil 2 nil 3 nil 4 nil 5)
 ]

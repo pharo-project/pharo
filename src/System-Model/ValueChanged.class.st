@@ -36,7 +36,7 @@ ValueChanged >> newValue [
 
 { #category : #accessing }
 ValueChanged >> newValue: anObject [
-	
+
 	newValue := anObject
 ]
 
@@ -48,6 +48,6 @@ ValueChanged >> oldValue [
 
 { #category : #accessing }
 ValueChanged >> oldValue: anObject [
-	
+
 	oldValue := anObject
 ]

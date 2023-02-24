@@ -17,7 +17,7 @@ UndefinedClass class >> basicNew [
 
 { #category : #building }
 UndefinedClass class >> createUndefinedClassNamed: aString package: aPackageName [
-	
+
 	^ self
 		subclass: aString
 		instanceVariableNames: ''
@@ -27,6 +27,6 @@ UndefinedClass class >> createUndefinedClassNamed: aString package: aPackageName
 
 { #category : #'reflective operations' }
 UndefinedClass >> doesNotUnderstand: aMessage [
-	
+
 	UndefinedClassError signal
 ]

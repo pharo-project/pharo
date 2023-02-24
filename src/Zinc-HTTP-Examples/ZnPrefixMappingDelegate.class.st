@@ -28,27 +28,25 @@ Class {
 { #category : #public }
 ZnPrefixMappingDelegate >> handleRequest: request [
 	| handler relativeRequest |
-	handler := self prefixDictionary 
-		at: request uri firstPathSegment 
-		ifAbsent: [ ^ ZnResponse notFound: request uri ].	
+	handler := self prefixDictionary
+		at: request uri firstPathSegment
+		ifAbsent: [ ^ ZnResponse notFound: request uri ].
 	relativeRequest := request copy.
 	relativeRequest uri removeFirstPathSegment.
-	^ handler isBlock 
+	^ handler isBlock
 		ifTrue: [ handler value: relativeRequest ]
-		ifFalse: [ handler handleRequest: relativeRequest ].
-
-
+		ifFalse: [ handler handleRequest: relativeRequest ]
 ]
 
 { #category : #public }
 ZnPrefixMappingDelegate >> map: uriPrefixString to: handler [
 	self prefixDictionary
-		at: uriPrefixString 
+		at: uriPrefixString
 		put: handler
 ]
 
 { #category : #accessing }
 ZnPrefixMappingDelegate >> prefixDictionary [
-	^ prefixDictionary ifNil: [ 
+	^ prefixDictionary ifNil: [
 		prefixDictionary := Dictionary new ]
 ]

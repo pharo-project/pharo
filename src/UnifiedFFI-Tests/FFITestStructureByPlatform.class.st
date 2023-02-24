@@ -41,5 +41,5 @@ FFITestStructureByPlatform >> pointer [
 { #category : #'accessing - structure variables' }
 FFITestStructureByPlatform >> pointer: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_POINTER put: anObject getHandle.
+	handle pointerAt: OFFSET_POINTER put: anObject getHandle
 ]

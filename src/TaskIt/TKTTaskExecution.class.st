@@ -31,8 +31,8 @@ TKTTaskExecution >> doExecuteTask [
 ]
 
 { #category : #evaluating }
-TKTTaskExecution >> executeTask [ 
-	^ state performTaskExecution: self 
+TKTTaskExecution >> executeTask [
+	^ state performTaskExecution: self
 ]
 
 { #category : #accessing }
@@ -44,8 +44,7 @@ TKTTaskExecution >> executionProcess [
 { #category : #initialization }
 TKTTaskExecution >> initialize [
 	super initialize.
-	state := TKTReadyTaskState new.
-
+	state := TKTReadyTaskState new
 ]
 
 { #category : #testing }
@@ -61,7 +60,7 @@ TKTTaskExecution >> isRunning [
 ]
 
 { #category : #testing }
-TKTTaskExecution >> noteRunningOn: aRunner [ 
+TKTTaskExecution >> noteRunningOn: aRunner [
 	" Some times is needed to know the real runner. By default we do nothing :) "
 ]
 
@@ -103,5 +102,5 @@ TKTTaskExecution >> task: aTask [
 { #category : #evaluating }
 TKTTaskExecution >> value [
 	executionProcess := Processor activeProcess.
-	TKTConfiguration runner: runner during: [ self executeTask ].
+	TKTConfiguration runner: runner during: [ self executeTask ]
 ]

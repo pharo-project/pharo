@@ -88,15 +88,14 @@ DrTests >> currentPlugin: aPlugin [
 
 	super currentPlugin: aPlugin.
 
-	aPlugin pluginPresenterClass = pluginPresenter class
-		ifFalse: [
-			newPluginPresenter := self
-				instantiate: aPlugin pluginPresenterClass
-				on: { aPlugin. self }.
-			self layout
-				replace: pluginPresenter
-				with: newPluginPresenter.
-			pluginPresenter := newPluginPresenter ].
+	"Always instantiate and update the plugin, as the plugin presenter class is not sufficient to tell them appart"
+	newPluginPresenter := self
+		instantiate: aPlugin pluginPresenterClass
+		on: { aPlugin. self }.
+	self layout
+		replace: pluginPresenter
+		with: newPluginPresenter.
+	pluginPresenter := newPluginPresenter.
 
 	self updateStatus: aPlugin pluginName , ' plugin is ready to work!' translated
 ]

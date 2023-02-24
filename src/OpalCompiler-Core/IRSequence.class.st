@@ -18,7 +18,7 @@ IRSequence class >> orderNumber: aNumber [
 ]
 
 { #category : #copying }
-IRSequence >> , otherCollection [ 
+IRSequence >> , otherCollection [
 	^sequence, otherCollection
 ]
 
@@ -29,7 +29,7 @@ IRSequence >> absorbJumpToSingleInstr: alreadySeen [
 	| seqs seq |
 	(alreadySeen includes: self) ifTrue: [^ self].
 	alreadySeen add: self.
-	[ (seqs := self successorSequences) size = 1  "unconditional jump..." 
+	[ (seqs := self successorSequences) size = 1  "unconditional jump..."
 	   and: [((seq := seqs first) size = 1)  "...to single instruction..."
 	    and: [seq successorSequences size < 2
 		and: [self last isBlockReturnTop not
@@ -39,7 +39,7 @@ IRSequence >> absorbJumpToSingleInstr: alreadySeen [
 		seq do: [:instr |  self add: instr copy].
 	].
 
-	seqs do: [:instrs | instrs ifNotNil: [:i | i absorbJumpToSingleInstr: alreadySeen]].
+	seqs do: [:instrs | instrs ifNotNil: [:i | i absorbJumpToSingleInstr: alreadySeen]]
 ]
 
 { #category : #visiting }
@@ -52,7 +52,7 @@ IRSequence >> add: anInstruction [
 
 	sequence add: anInstruction.
 	anInstruction sequence: self.
-	^anInstruction.
+	^anInstruction
 ]
 
 { #category : #adding }
@@ -60,14 +60,14 @@ IRSequence >> add: instr after: another [
 
 	sequence add: instr after: another.
 	instr sequence: self.
-	^instr.
+	^instr
 ]
 
 { #category : #adding }
 IRSequence >> add: instr before: another [
 	sequence add: instr before: another.
 	instr sequence: self.
-	^instr.
+	^instr
 ]
 
 { #category : #adding }
@@ -77,30 +77,30 @@ IRSequence >> addAll: aCollection [
 
 { #category : #adding }
 IRSequence >> addAllFirst: aCollection [
-	^sequence addAllFirst: aCollection.
+	^sequence addAllFirst: aCollection
 ]
 
 { #category : #adding }
 IRSequence >> addInstructions: aCollection [
-	
-	^aCollection do: [:instr | self add: instr].
+
+	^aCollection do: [:instr | self add: instr]
 ]
 
 { #category : #adding }
 IRSequence >> addInstructions: aCollection after: anInstruction [
-	
-	^aCollection reverseDo: [:instr | self add: instr after: anInstruction].
+
+	^aCollection reverseDo: [:instr | self add: instr after: anInstruction]
 ]
 
 { #category : #adding }
 IRSequence >> addInstructions: aCollection before: anInstruction [
 
-	aCollection do: [:instr | self add: instr before: anInstruction].
+	aCollection do: [:instr | self add: instr before: anInstruction]
 ]
 
 { #category : #adding }
 IRSequence >> addLast: anInstruction [
-	^self add: anInstruction.
+	^self add: anInstruction
 ]
 
 { #category : #accessing }
@@ -120,7 +120,7 @@ IRSequence >> children [
 
 { #category : #enumerating }
 IRSequence >> contains: aBlock [
-	^sequence contains: aBlock.
+	^sequence contains: aBlock
 ]
 
 { #category : #enumerating }
@@ -130,7 +130,7 @@ IRSequence >> detect: aBlock [
 
 { #category : #enumerating }
 IRSequence >> do: aBlock [
-	^sequence do: aBlock.
+	^sequence do: aBlock
 ]
 
 { #category : #accessing }
@@ -150,13 +150,13 @@ IRSequence >> ifNotEmpty: aBlock [
 
 { #category : #initialization }
 IRSequence >> initialize [
-	sequence := OrderedCollection new.
+	sequence := OrderedCollection new
 ]
 
 { #category : #'successor sequences' }
 IRSequence >> instructionsDo: aBlock [
 
-	^self withAllSuccessorsDo: [:seq | seq do: aBlock].
+	^self withAllSuccessorsDo: [:seq | seq do: aBlock]
 ]
 
 { #category : #'successor sequences' }
@@ -231,7 +231,7 @@ IRSequence >> orderNumber [
 { #category : #accessing }
 IRSequence >> orderNumber: num [
 	"Sequences are sorted by this number"
-	orderNumber := num.
+	orderNumber := num
 ]
 
 { #category : #printing }
@@ -242,53 +242,53 @@ IRSequence >> printOn: stream [
 	stream space.
 	stream nextPut: $(.
 	self orderNumber printOn: stream.
-	stream nextPut: $).
+	stream nextPut: $)
 ]
 
 { #category : #replacing }
 IRSequence >> remove: aNode [
 	aNode sequence: nil.
-	sequence remove: aNode ifAbsent: [self error].
+	sequence remove: aNode ifAbsent: [self error]
 ]
 
 { #category : #removing }
 IRSequence >> removeFirst [
-	^sequence removeFirst.
+	^sequence removeFirst
 ]
 
 { #category : #removing }
 IRSequence >> removeLast [
-	^sequence removeLast.
+	^sequence removeLast
 ]
 
 { #category : #removing }
 IRSequence >> removeLast: n [
-	^sequence removeLast: n.
+	^sequence removeLast: n
 ]
 
 { #category : #replacing }
-IRSequence >> replaceNode: aNode withNode: anotherNode [ 
+IRSequence >> replaceNode: aNode withNode: anotherNode [
 
 	| index |
 	index := sequence indexOf: aNode ifAbsent: [ self error ].
-	sequence at: index put: (anotherNode sequence: self).
+	sequence at: index put: (anotherNode sequence: self)
 ]
 
 { #category : #replacing }
-IRSequence >> replaceNode: aNode withNodes: aCollection [ 
+IRSequence >> replaceNode: aNode withNodes: aCollection [
 
 	self addInstructions: aCollection before: aNode.
-	sequence remove: aNode ifAbsent: [self error].
+	sequence remove: aNode ifAbsent: [self error]
 ]
 
 { #category : #enumerating }
 IRSequence >> reverseDo: aBlock [
-	^sequence reverseDo: aBlock.
+	^sequence reverseDo: aBlock
 ]
 
 { #category : #enumerating }
 IRSequence >> select: aBlock [
-	^sequence select: aBlock.
+	^sequence select: aBlock
 ]
 
 { #category : #accessing }
@@ -298,7 +298,7 @@ IRSequence >> sequence [
 
 { #category : #accessing }
 IRSequence >> size [
-	^sequence size.
+	^sequence size
 ]
 
 { #category : #inspector }
@@ -309,7 +309,7 @@ IRSequence >> sourceInterval [
 { #category : #inspector }
 IRSequence >> sourceNode [
 	"we should do better here"
-	^RBSequenceNode new.
+	^RBSequenceNode new
 ]
 
 { #category : #manipulating }
@@ -363,7 +363,7 @@ IRSequence >> withAllSuccessorsDo: block alreadySeen: set [
 	set add: self.
 	block value: self.
 	self successorSequences do: [:seq |
-		seq ifNotNil: [seq withAllSuccessorsDo: block alreadySeen: set]].
+		seq ifNotNil: [seq withAllSuccessorsDo: block alreadySeen: set]]
 ]
 
 { #category : #'successor sequences' }
@@ -381,5 +381,5 @@ IRSequence >> withNonBodySuccessorsDo: block alreadySeen: set [
 	set add: self.
 	block value: self.
 	self nonBodySuccessorSequences do: [:seq |
-		seq ifNotNil: [seq withNonBodySuccessorsDo: block alreadySeen: set]].
+		seq ifNotNil: [seq withNonBodySuccessorsDo: block alreadySeen: set]]
 ]

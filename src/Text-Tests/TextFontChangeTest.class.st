@@ -17,7 +17,7 @@ TextFontChangeTest >> setUp [
 	prototypes add: TextFontChange font3.
 	prototypes add: TextFontChange font4.
 	prototypes
-		add: (TextFontChange fontNumber: 6) 
+		add: (TextFontChange fontNumber: 6)
 ]
 
 { #category : #tests }
@@ -33,7 +33,7 @@ TextFontChangeTest >> testEquality [
 
 { #category : #tests }
 TextFontChangeTest >> testHash [
-	"test that different instances of the same TextFontChange hash to the 
+	"test that different instances of the same TextFontChange hash to the
 	same value"
 	| hashes hash |
 	hashes := OrderedCollection new.

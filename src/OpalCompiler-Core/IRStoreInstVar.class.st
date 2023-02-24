@@ -20,6 +20,6 @@ IRStoreInstVar >> isStore [
 { #category : #accessing }
 IRStoreInstVar >> popIntoNode [
 	^ IRPopIntoInstVar new
-		index: index; 
+		index: index;
 		yourself
 ]

@@ -16,7 +16,7 @@ Class {
 ExpanderTitleMorph >> adoptPaneColor: paneColor [
 	"Update the fill styles, corner styles, label colour
 	and expansion button indicator."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self fillStyle: self normalFillStyle.
@@ -43,7 +43,7 @@ ExpanderTitleMorph >> buttonMorph: anObject [
 { #category : #private }
 ExpanderTitleMorph >> buttonWidth [
 	"Answer based on scrollbar size."
-	
+
 	^(self theme scrollbarThickness + 3)
 		max: self theme expanderTitleControlButtonWidth
 ]
@@ -84,7 +84,7 @@ ExpanderTitleMorph >> expanded: aBoolean [
 ]
 
 { #category : #geometry }
-ExpanderTitleMorph >> extent: aPoint [ 
+ExpanderTitleMorph >> extent: aPoint [
 	"Set the receiver's extent to value provided.
 	Update the gradient fills."
 
@@ -185,7 +185,7 @@ ExpanderTitleMorph >> newLabelMorph [
 { #category : #style }
 ExpanderTitleMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
-	
+
 	^self theme expanderTitleNormalFillStyleFor: self
 ]
 
@@ -193,7 +193,7 @@ ExpanderTitleMorph >> normalFillStyle [
 ExpanderTitleMorph >> themeChanged [
 	"Update the button corner style from default
 	to match the receiver."
-	
+
 	super themeChanged.
 	self buttonMorph cornerStyle: self cornerStyle
 ]

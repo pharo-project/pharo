@@ -50,7 +50,7 @@ OCASTVariableTranslatorTest >> testAssignSuperVariable [
 { #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignTemporaryVariable [
 	self testExample: #exampleTemporaryVariableAssignment.
-	
+
 	self assert: instance result equals: 17
 ]
 
@@ -64,7 +64,7 @@ OCASTVariableTranslatorTest >> testAssignThisContextVariable [
 { #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushArgumentVariable [
 	self testExample: #examplePushArgumentVariable: withArgument: 17.
-	
+
 	self assert: instance result equals: 17
 ]
 
@@ -72,7 +72,7 @@ OCASTVariableTranslatorTest >> testPushArgumentVariable [
 OCASTVariableTranslatorTest >> testPushClassVariable [
 	instance classVariable: 17.
 	self testExample: #examplePushClassVariable.
-	
+
 	self assert: instance result equals: 17
 ]
 
@@ -82,7 +82,7 @@ OCASTVariableTranslatorTest >> testPushGlobalVariable [
 	globals add: (GlobalVariable key: #GlobalVariable value: 17).
 	self testSource: 'exampleGlobalVariableAssignment
 	self message: GlobalVariable'.
-	
+
 	self assert: instance result equals: 17
 ]
 
@@ -90,13 +90,13 @@ OCASTVariableTranslatorTest >> testPushGlobalVariable [
 OCASTVariableTranslatorTest >> testPushInstanceVariable [
 	instance iVar: 17.
 	self testExample: #examplePushInstanceVariable.
-	
+
 	self assert: instance result equals: 17
 ]
 
 { #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushSelf [
-	
+
 	self assert: instance result equals: nil.
 	self testExample: #exampleSelf.
 	self assert: instance result equals: instance
@@ -104,7 +104,7 @@ OCASTVariableTranslatorTest >> testPushSelf [
 
 { #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushSuper [
-	
+
 	self assert: instance result equals: nil.
 	self testExample: #exampleSuper.
 	self assert: instance result equals: instance
@@ -114,7 +114,7 @@ OCASTVariableTranslatorTest >> testPushSuper [
 OCASTVariableTranslatorTest >> testPushTemporaryVariable [
 	instance iVar: 17.
 	self testExample: #examplePushTemporaryVariable.
-	
+
 	self assert: instance result equals: 17
 ]
 
@@ -124,5 +124,5 @@ OCASTVariableTranslatorTest >> testPushThisContext [
 	self executeMethodOnInstance: method.
 
 	self assert: instance result isContext.
-	self assert: instance result method equals: method.
+	self assert: instance result method equals: method
 ]

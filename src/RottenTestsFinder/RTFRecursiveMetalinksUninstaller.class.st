@@ -12,7 +12,7 @@ Class {
 { #category : #private }
 RTFRecursiveMetalinksUninstaller >> uninstallMetaLinkOf: aRTFSelfCallNode [
 	aRTFSelfCallNode metaLink uninstall.
-	aRTFSelfCallNode metaLink: nil.
+	aRTFSelfCallNode metaLink: nil
 ]
 
 { #category : #visiting }

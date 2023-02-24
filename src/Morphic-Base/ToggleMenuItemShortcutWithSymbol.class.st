@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-ToggleMenuItemShortcutWithSymbol class >> isDeprecated [ 
+ToggleMenuItemShortcutWithSymbol class >> isDeprecated [
 	^ true
 ]

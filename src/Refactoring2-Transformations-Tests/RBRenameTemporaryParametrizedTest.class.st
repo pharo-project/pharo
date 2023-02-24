@@ -60,14 +60,14 @@ RBRenameTemporaryParametrizedTest >> testModelBadName [
 	| class |
 	model := RBNamespace new.
 	class := model classNamed: #Object.
-	class 
+	class
 		compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
 		classified: #(#accessing).
 	self
-		shouldFail: (self createRefactoringWithModel: model	
+		shouldFail: (self createRefactoringWithModel: model
 			andArguments: { { (20 to: 24) . #temp2 } .
 					'temp3' . #Object .  #aMethod: });
-		shouldFail: (self createRefactoringWithModel: model 
+		shouldFail: (self createRefactoringWithModel: model
 			andArguments: { { (20 to: 24) . #temp2 } .
 					'temp1' . #Object . #aMethod: })
 ]
@@ -88,7 +88,7 @@ RBRenameTemporaryParametrizedTest >> testModelExistingVariable [
 
 	self shouldFail: (self
 			 createRefactoringWithModel: transformation model
-			 andArguments: { 
+			 andArguments: {
 					 { (16 to: 19) . #temp }.
 					 #bar.
 					 self class name.
@@ -102,7 +102,7 @@ RBRenameTemporaryParametrizedTest >> testRenameArg [
 		'asdf' . #RBLintRuleTestData . #name: }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #name:) equals: (self parseMethod: 'name: asdf 
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #name:) equals: (self parseMethod: 'name: asdf
 	name := asdf')
 ]
 

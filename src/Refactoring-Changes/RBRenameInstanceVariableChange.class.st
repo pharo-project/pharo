@@ -11,7 +11,7 @@ Class {
 { #category : #private }
 RBRenameInstanceVariableChange >> addNewVariable [
 
-	(self changeClass allInstVarNames includes: newName) 
+	(self changeClass allInstVarNames includes: newName)
 		ifFalse: [ (changeFactory addInstanceVariable: newName to: self changeClass) execute ]
 ]
 
@@ -19,7 +19,7 @@ RBRenameInstanceVariableChange >> addNewVariable [
 RBRenameInstanceVariableChange >> copyOldValuesToNewVariable [
 
 	self changeClass withAllSubclasses do: [ :class |
-		class allInstances 
+		class allInstances
 			do: [ :each | each instVarNamed: newName asString put: (each instVarNamed: oldName asString) ] ]
 ]
 
@@ -42,7 +42,7 @@ RBRenameInstanceVariableChange >> printOn: aStream [
 { #category : #private }
 RBRenameInstanceVariableChange >> removeOldVariable [
 
-	(self changeClass allInstVarNames includes: oldName) ifTrue: [ 
+	(self changeClass allInstVarNames includes: oldName) ifTrue: [
 		(changeFactory
 			 removeInstanceVariable: oldName
 			 from: self changeClass) execute ]

@@ -18,7 +18,7 @@ Class {
 { #category : #private }
 ZnInvalidUTF8 >> defaultResumeValue [
 	"$? codePoint"
-	
+
 	^ 63
 ]
 

@@ -16,25 +16,25 @@ Class {
 SystemSettingsPersistenceTest >> assertStoredSettingsDoNotInclude: aIdentifier [
 
 	| nodes |
-	self assert: preferencesFile exists.	
-	
+	self assert: preferencesFile exists.
+
 	nodes := preferencesFile readStreamDo: [ :stream | STON fromStream: stream ].
-	
-	nodes detect: [ :aNode | aNode settingNodeIdentifier = aIdentifier printString ]  
-		ifFound: [ :aNode | self fail: 'The node has been found, it should not be there' ] 
+
+	nodes detect: [ :aNode | aNode settingNodeIdentifier = aIdentifier printString ]
+		ifFound: [ :aNode | self fail: 'The node has been found, it should not be there' ]
 		ifNone: [ ^ self ]
 ]
 
 { #category : #asserting }
-SystemSettingsPersistenceTest >> assertStoredSettingsInclude: aIdentifier withValue: aValue [ 
+SystemSettingsPersistenceTest >> assertStoredSettingsInclude: aIdentifier withValue: aValue [
 
 	| nodes |
-	self assert: preferencesFile exists.	
-	
+	self assert: preferencesFile exists.
+
 	nodes := preferencesFile readStreamDo: [ :stream | STON fromStream: stream ].
-	
-	nodes detect: [ :aNode | aNode settingNodeIdentifier = aIdentifier printString ]  
-		ifFound: [ :aNode | self assert: aNode realValue equals: aValue ] 
+
+	nodes detect: [ :aNode | aNode settingNodeIdentifier = aIdentifier printString ]
+		ifFound: [ :aNode | self assert: aNode realValue equals: aValue ]
 		ifNone: [ self fail: 'Node with identifier ', aIdentifier printString, ' not found' ]
 ]
 
@@ -62,21 +62,21 @@ SystemSettingsPersistenceTest >> setUp [
 
 { #category : #accessing }
 SystemSettingsPersistenceTest >> systemSettingNodeList [
-	^ SettingBrowser new treeHolder nodeList.
+	^ SettingBrowser new treeHolder nodeList
 ]
 
 { #category : #running }
 SystemSettingsPersistenceTest >> tearDown [
-	
+
 	MockSettings cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testAccessRealValues [
 	"Ensure we can access all setting real values."
-	self systemSettingNodeList do: [ :eachSettingNode | 
-				eachSettingNode item hasValue and: [ eachSettingNode item realValue ] ].
+	self systemSettingNodeList do: [ :eachSettingNode |
+				eachSettingNode item hasValue and: [ eachSettingNode item realValue ] ]
 ]
 
 { #category : #tests }
@@ -105,8 +105,8 @@ SystemSettingsPersistenceTest >> testDefaultImageDoesNotStoreAnySetting [
 	The settings only should be saved if changed from default value"
 	Author
 		useAuthor: ''
-		during: [ 
-			nodesToStore :=  StoredSettingsFactory new fromSettingNodes: 
+		during: [
+			nodesToStore :=  StoredSettingsFactory new fromSettingNodes:
 				(MockSettings settingTree nodeList select: [ :aNode | aNode item hasDefault ]).
 			nodesToStore := nodesToStore reject: [ :aNode | aNode hasDefaultValue ] ].
 
@@ -119,8 +119,8 @@ SystemSettingsPersistenceTest >> testDefaultSettingValueIsNotIncludedInTheStored
 	MockSettings booleanSettingWithDefault: false.
 
 	systemSettings storeSettingNodes: MockSettings settingTree nodeList.
-	
-	self assertStoredSettingsDoNotInclude: #booleanSettingWithDefault.
+
+	self assertStoredSettingsDoNotInclude: #booleanSettingWithDefault
 ]
 
 { #category : #'tests - storing - defaults' }
@@ -129,8 +129,8 @@ SystemSettingsPersistenceTest >> testNonDefaultSettingValueIsIncludedInTheStored
 	MockSettings booleanSettingWithDefault: true.
 
 	systemSettings storeSettingNodes: MockSettings settingTree nodeList.
-	
-	self assertStoredSettingsInclude: #booleanSettingWithDefault withValue: true.
+
+	self assertStoredSettingsInclude: #booleanSettingWithDefault withValue: true
 ]
 
 { #category : #tests }
@@ -138,23 +138,23 @@ SystemSettingsPersistenceTest >> testRealValueModification [
 	self booleanSettingNode realValue: false.
 	self rangeSettingNode realValue: 55.
 	self assert: self booleanSettingNode realValue equals: false.
-	self assert: self rangeSettingNode realValue equals: 55.
+	self assert: self rangeSettingNode realValue equals: 55
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testRealValues [
 	self assert: (systemSettings nodeNamed: #booleanSetting) realValue equals: true.
-	self assert: (systemSettings nodeNamed: #rangeSetting) realValue equals: 10.
+	self assert: (systemSettings nodeNamed: #rangeSetting) realValue equals: 10
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testSettingNodeIdentifierForChildNode [
-	self assert: MockSettings cacheDirectorySettingNode settingNodeIdentifier equals: '#monticello#cacheDirectory'.
+	self assert: MockSettings cacheDirectorySettingNode settingNodeIdentifier equals: '#monticello#cacheDirectory'
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testSettingNodeIdentifierForRootNode [
-	self assert: MockSettings rangeSettingNode settingNodeIdentifier equals: '#rangeSetting'.
+	self assert: MockSettings rangeSettingNode settingNodeIdentifier equals: '#rangeSetting'
 ]
 
 { #category : #'tests - loading' }
@@ -168,8 +168,8 @@ SystemSettingsPersistenceTest >> testStoreAndLoadAllSystemSettings [
 		settingNode := systemSettings settingNodeForStoredSetting: eachStoredSetting.
 		self assert: eachStoredSetting realValue class equals: settingNode realValue class.
 		compiledMethod := searchCompiledMethod value: eachStoredSetting realValue class value: searchCompiledMethod.
-		compiledMethod methodClass == Object ifFalse: [ 
-			self assert: eachStoredSetting realValue equals: settingNode realValue ] ].
+		compiledMethod methodClass == Object ifFalse: [
+			self assert: eachStoredSetting realValue equals: settingNode realValue ] ]
 ]
 
 { #category : #tests }
@@ -183,9 +183,9 @@ SystemSettingsPersistenceTest >> testStoreBooleanToSton [
 		writer writeObject: stored.
 	].
 	self assert: string notNil.
-	stored2 := STON fromString: string. 
+	stored2 := STON fromString: string.
 	self assert: stored2 notNil.
-	self assert: stored2 equals: stored.
+	self assert: stored2 equals: stored
 ]
 
 { #category : #'tests - storing' }
@@ -193,7 +193,7 @@ SystemSettingsPersistenceTest >> testStoreIdentifier [
 	self deny: preferencesFile exists.
 	systemSettings storeIdentifier: MockSettings booleanSettingNode settingNodeIdentifier.
 	self assert: preferencesFile exists.
-	self assert: preferencesFile size > 0.
+	self assert: preferencesFile size > 0
 ]
 
 { #category : #'tests - storing' }
@@ -201,7 +201,7 @@ SystemSettingsPersistenceTest >> testStoreSettingNode [
 	self deny: preferencesFile exists.
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
 	self assert: preferencesFile exists.
-	self assert: preferencesFile size > 0.
+	self assert: preferencesFile size > 0
 ]
 
 { #category : #'tests - storing' }
@@ -216,14 +216,14 @@ SystemSettingsPersistenceTest >> testStoreSettingNodeTwice [
 	self assert: fileSize > 0.
 	systemSettings storeSettingNode: MockSettings booleanSettingNode.
 	self assert: preferencesFile fullPath equals: fullPath.
-	self assert: preferencesFile size equals: fileSize.
+	self assert: preferencesFile size equals: fileSize
 ]
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreSettingNodes [
 	self deny: preferencesFile exists.
 	self testRealValueModification.
-	systemSettings storeSettingNodes: { 
+	systemSettings storeSettingNodes: {
 		MockSettings booleanSettingNode.
 		MockSettings rangeSettingNode }.
 	self assert: preferencesFile exists.
@@ -240,7 +240,7 @@ SystemSettingsPersistenceTest >> testStoreTwoSettingNodeSeparately [
 	fileSize := preferencesFile size.
 	self assert: fileSize > 0.
 	systemSettings storeSettingNode: MockSettings rangeSettingNode.
-	self assert: preferencesFile size > fileSize.
+	self assert: preferencesFile size > fileSize
 ]
 
 { #category : #tests }
@@ -248,14 +248,14 @@ SystemSettingsPersistenceTest >> testStoredValueForSetting [
 	| value |
 	self testStoreSettingNode.
 	value := systemSettings storedValueForSettingNode: MockSettings booleanSettingNode.
-	self assert: value.
+	self assert: value
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testStoredValueForSettingNoStoredValue [
 	| value |
 	value := systemSettings storedValueForSettingNode: MockSettings booleanSettingNode.
-	self assert: value equals: nil.
+	self assert: value equals: nil
 ]
 
 { #category : #'tests - storing - defaults' }
@@ -268,23 +268,23 @@ SystemSettingsPersistenceTest >> testStoringNonDefaultValueAndThenStoringTheDefa
 	"Store with a default value"
 	MockSettings booleanSettingWithDefault: false.
 	systemSettings storeSettingNodes: MockSettings settingTree nodeList.
-	
-	self assertStoredSettingsDoNotInclude: #booleanSettingWithDefault.
+
+	self assertStoredSettingsDoNotInclude: #booleanSettingWithDefault
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testUniqueIdentifiers [
 	| names |
 	names := self systemSettingNodeList collect: [:each | each settingNodeIdentifier].
-	self assert: names size equals: names asSet size.
+	self assert: names size equals: names asSet size
 ]
 
 { #category : #tests }
 SystemSettingsPersistenceTest >> testUniqueNames [
 	| names |
-	names := self systemSettingNodeList collect: [ :eachNode | 
+	names := self systemSettingNodeList collect: [ :eachNode |
 						eachNode parentName printString, eachNode item name ].
-	self assert: names size equals: names asSet size.
+	self assert: names size equals: names asSet size
 ]
 
 { #category : #'tests - loading' }
@@ -310,9 +310,9 @@ SystemSettingsPersistenceTest >> testWriteAndReadBoolean [
 		writer writeObject: stored.
 	].
 	self assert: string notNil.
-	stored2 := STON fromString: string. 
+	stored2 := STON fromString: string.
 	self assert: stored2 notNil.
-	self assert: stored2 equals: stored.
+	self assert: stored2 equals: stored
 ]
 
 { #category : #tests }
@@ -322,7 +322,7 @@ SystemSettingsPersistenceTest >> testWriteStream [
 	self deny: preferencesFile parent exists.
 	writeStream := systemSettings writeStream.
 	self assert: writeStream isStream.
-	writeStream close.
+	writeStream close
 ]
 
 { #category : #'tests - storing' }

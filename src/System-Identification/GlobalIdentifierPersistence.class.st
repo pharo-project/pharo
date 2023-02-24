@@ -72,7 +72,7 @@ GlobalIdentifierPersistence >> delete [
 { #category : #'load and saving' }
 GlobalIdentifierPersistence >> ensure: globalIdentifier [
 	"It proceeds all backward compatibility work."
-	self shouldCallPreviousPersistence ifTrue: [ 
+	self shouldCallPreviousPersistence ifTrue: [
 		previousPersistence ensure: globalIdentifier ].
 	self load: globalIdentifier
 ]
@@ -116,9 +116,9 @@ GlobalIdentifierPersistence >> load: globalIdentifier [
 		globalIdentifier ensureComputerAndSecretValues.
 		^ self save: globalIdentifier persistedInformation ].
 	[ (self mergeExisting: globalIdentifier stored: self load)
-			ifTrue: [ 
+			ifTrue: [
 				self save: globalIdentifier persistedInformation ].
-	] on: Error do: [ 
+	] on: Error do: [
 		"Preferences likely contains a different settings version, so we store the actual one.
 		We should keep the preferences as stable as possible."
 		globalIdentifier ensureComputerAndSecretValues.
@@ -129,13 +129,13 @@ GlobalIdentifierPersistence >> load: globalIdentifier [
 GlobalIdentifierPersistence >> mayOverwrite: aDictionary [
 	"If I keep previous persistence strategy, I am the main one and I can overwrite the current preference file.
 	I am called only on loading failure; it means when I cannot load preference file."
-	self hasPreviousPersistence ifTrue: [ self save: aDictionary ].
+	self hasPreviousPersistence ifTrue: [ self save: aDictionary ]
 ]
 
 { #category : #merging }
 GlobalIdentifierPersistence >> mergeExisting: globalIdentifier stored: storedDictionary [
-	
-	"If the stored version does not have a computerUUID, we have to ensure the new one 
+
+	"If the stored version does not have a computerUUID, we have to ensure the new one
 	has it"
 	(storedDictionary includesKey: #computerUUID)
 		ifFalse: [ globalIdentifier ensureComputerAndSecretValues ].
@@ -177,7 +177,7 @@ GlobalIdentifierPersistence >> save: aDictionary [
 	self isEnabled ifFalse: [ ^ self ].
 	self delete.
 	self ensureDirectory.
-	self preferences binaryWriteStreamDo: [ :aPreferenceStream | 
+	self preferences binaryWriteStreamDo: [ :aPreferenceStream |
 			self save: aDictionary into: aPreferenceStream ]
 ]
 

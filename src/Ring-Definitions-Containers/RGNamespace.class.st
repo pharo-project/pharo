@@ -28,7 +28,7 @@ RGNamespace >> addGlobalVariableNamed: globalVariableName [
 	It's verified that a pool with that name does not exist"
 
 	(self includesGlobalVariableNamed: globalVariableName) ifTrue: [ ^self ].
-	self addGlobalVariable: (RGGlobalVariableDefinition named: globalVariableName).
+	self addGlobalVariable: (RGGlobalVariableDefinition named: globalVariableName)
 ]
 
 { #category : #adding }
@@ -51,7 +51,7 @@ RGNamespace >> addPoolNamed: poolName [
 			superclassName: #SharedPool;
 			isPool: true;
 			yourself.
-	self addPool: pool.
+	self addPool: pool
 ]
 
 { #category : #'accessing - global variables' }
@@ -81,7 +81,7 @@ RGNamespace >> includesGlobalVariable: anORGlobalVariableDefinition [
 
 { #category : #testing }
 RGNamespace >> includesGlobalVariableNamed: globalVariableName [
-	
+
 	^self includesElementNamed: globalVariableName in: self globalVariables
 ]
 
@@ -93,7 +93,7 @@ RGNamespace >> includesPool: anORPoolDefinition [
 
 { #category : #testing }
 RGNamespace >> includesPoolNamed: poolName [
-	
+
 	^self includesElementNamed: poolName in: self pools
 ]
 
@@ -102,7 +102,7 @@ RGNamespace >> initialize [
 
 	super initialize.
 	self globalVariables: IdentityDictionary new.
-	self pools: IdentityDictionary new.
+	self pools: IdentityDictionary new
 ]
 
 { #category : #testing }

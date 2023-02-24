@@ -37,13 +37,12 @@ TPrintTest >> testPrintElementsOn [
 { #category : #'tests - printing' }
 TPrintTest >> testPrintNameOn [
 
-	| aStream result |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
-	self nonEmpty printNameOn: aStream.
-	self nonEmpty class name first isVowel
-		ifTrue:[ self assert: aStream contents =('an ',self nonEmpty class name ) ]
-		ifFalse:[self assert: aStream contents =('a ',self nonEmpty class name)]
+	| printed |
+	printed := String streamContents: [ :stream | self nonEmpty printNameOn: stream ].
+
+	self
+		assert: printed
+		equals: (self nonEmpty class name first isVowel ifTrue: [ 'an ' ] ifFalse: [ 'a ' ]) , self nonEmpty class name
 ]
 
 { #category : #'tests - printing' }

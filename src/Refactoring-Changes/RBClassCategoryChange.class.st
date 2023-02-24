@@ -22,7 +22,7 @@ RBClassCategoryChange class >> category: aString for: aClass [
 { #category : #converting }
 RBClassCategoryChange >> asUndoOperation [
 
-	self copy 
+	self copy
 		category: self changeClass category;
 		yourself
 ]
@@ -36,7 +36,7 @@ RBClassCategoryChange >> category: anObject [
 RBClassCategoryChange >> changeClass: aBehavior [
 
 	super changeClass: aBehavior.
-	isMeta := false.
+	isMeta := false
 ]
 
 { #category : #printing }
@@ -53,14 +53,14 @@ RBClassCategoryChange >> displayCategoryName [
 
 { #category : #private }
 RBClassCategoryChange >> primitiveExecute [
-	
+
 	self changeClass category: category.
-	SystemAnnouncer uniqueInstance 
+	SystemAnnouncer uniqueInstance
 		classReorganized: self changeClass
 ]
 
 { #category : #printing }
-RBClassCategoryChange >> printOn: aStream [ 
+RBClassCategoryChange >> printOn: aStream [
 
 	aStream
 		nextPutAll: self displayClassName;

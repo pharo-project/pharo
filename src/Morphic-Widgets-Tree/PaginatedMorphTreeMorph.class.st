@@ -22,7 +22,7 @@ PaginatedMorphTreeMorph >> addNavigationPane: aNavigPane [
 { #category : #'accessing - colors' }
 PaginatedMorphTreeMorph >> adoptPaneColor: paneColor [
 	"Pass on to the selection, the border and on the eventual pager too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self pager ifNotNil: [:p | p color: self pagerColor]
@@ -35,10 +35,10 @@ PaginatedMorphTreeMorph >> buildContents [
 ]
 
 { #category : #'pager managing' }
-PaginatedMorphTreeMorph >> chunkSize: aPageSize [ 
+PaginatedMorphTreeMorph >> chunkSize: aPageSize [
 	self pager
 		ifNil: [aPageSize ifNotNil: [self addNavigationPane: (TreeChunkPagerMorph on: self pageSize: aPageSize)]]
-		ifNotNil: [aPageSize 
+		ifNotNil: [aPageSize
 			ifNil: [self removePager]
 			ifNotNil: [self pager changePageSize: aPageSize]]
 ]
@@ -56,7 +56,7 @@ PaginatedMorphTreeMorph >> expandItemPath: anItemPath [
 	| rest |
 	rest := anItemPath asOrderedCollection.
 	[ rest notEmpty ]
-		whileTrue: [ 
+		whileTrue: [
 			| res |
 			res := (1 to: self nodeList size) select: [ :li | (self nodeList at: li) item = rest first ].
 			res isEmpty
@@ -71,7 +71,7 @@ PaginatedMorphTreeMorph >> expandItemPath: anItemPath [
 PaginatedMorphTreeMorph >> extent: newExtent [
 	self extent = newExtent ifTrue: [^ self].
 	super extent: newExtent.
-	self updatePager.
+	self updatePager
 ]
 
 { #category : #geometry }
@@ -89,10 +89,10 @@ PaginatedMorphTreeMorph >> innerBounds [
 ]
 
 { #category : #'pager managing' }
-PaginatedMorphTreeMorph >> pageSize: aPageSize [ 
+PaginatedMorphTreeMorph >> pageSize: aPageSize [
 	self pager
 		ifNil: [aPageSize ifNotNil: [self addNavigationPane: (TreePagerMorph on: self pageSize: aPageSize)]]
-		ifNotNil: [aPageSize 
+		ifNotNil: [aPageSize
 			ifNil: [self removePager]
 			ifNotNil: [self pager changePageSize: aPageSize]]
 ]
@@ -120,7 +120,7 @@ PaginatedMorphTreeMorph >> removePager [
 		self removeMorph: self pager.
 		pager := nil.
 		self updateList.
-		self resizerChanged].
+		self resizerChanged]
 ]
 
 { #category : #updating }

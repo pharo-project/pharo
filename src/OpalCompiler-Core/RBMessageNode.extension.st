@@ -3,7 +3,7 @@ Extension { #name : #RBMessageNode }
 { #category : #'*OpalCompiler-Core' }
 RBMessageNode >> isInlineAndOr [
 
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineAndOr ifFalse: [ ^false ]]. 
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineAndOr ifFalse: [ ^false ]].
 	self receiver isBlock ifTrue: [^ false].
 	self isCascaded ifTrue: [^ false].
 	(#(and: or:) includes: self selector) ifFalse: [^ false].
@@ -12,7 +12,7 @@ RBMessageNode >> isInlineAndOr [
 
 { #category : #'*OpalCompiler-Core' }
 RBMessageNode >> isInlineCase [
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineCase ifFalse: [ ^false ]]. 
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineCase ifFalse: [ ^false ]].
 	self isCascaded ifTrue: [^ false].
 	(#(caseOf: caseOf:otherwise:) includes: self selector) ifFalse: [^ false].
 	self arguments size = 2 ifTrue: [  "otherwise block"
@@ -31,7 +31,7 @@ RBMessageNode >> isInlineCase [
 { #category : #'*OpalCompiler-Core' }
 RBMessageNode >> isInlineIf [
 
-	self methodCompilationContextOrNil ifNotNil: [ :c | 
+	self methodCompilationContextOrNil ifNotNil: [ :c |
 		c optionInlineIf ifFalse: [ ^ false ] ].
 	self receiver isBlock ifTrue: [ ^ false ].
 	self isCascaded ifTrue: [ ^ false ].
@@ -43,25 +43,25 @@ RBMessageNode >> isInlineIf [
 RBMessageNode >> isInlineIfNil [
 
 	| assertNone assertOneOrNone |
-	
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineIfNil ifFalse: [ ^false ]]. 
+
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineIfNil ifFalse: [ ^false ]].
 	self receiver isBlock ifTrue: [^ false].
 	self isCascaded ifTrue: [^ false].
 	(#(ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil:) includes: self selector) ifFalse: [^ false].
 	self arguments do: [:node | node isBlock ifFalse: [^ false]].
-	assertNone := [:block | 
+	assertNone := [:block |
 		block arguments isEmpty ifFalse: [^ false]
 	].
-	assertOneOrNone := [:block | 
+	assertOneOrNone := [:block |
 		block arguments size > 1 ifTrue: [^ false]
 	].
-	self selector == #ifNil: 	
+	self selector == #ifNil:
 		ifTrue: [assertNone value: self arguments first].
-	self selector == #ifNil:ifNotNil: 
+	self selector == #ifNil:ifNotNil:
 		ifTrue: [assertNone value: self arguments first.  assertOneOrNone value: self arguments last].
-	self selector == #ifNotNil: 
+	self selector == #ifNotNil:
 		ifTrue: [assertOneOrNone value: self arguments first].
-	self selector == #ifNotNil:ifNil: 
+	self selector == #ifNotNil:ifNil:
 		ifTrue: [assertOneOrNone value: self arguments first. assertNone value: self arguments last].
 	^ true
 ]
@@ -84,7 +84,7 @@ RBMessageNode >> isInlineRepeat [
 RBMessageNode >> isInlineTimesRepeat [
 
 	| block |
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineTimesRepeat ifFalse: [ ^false ]]. 
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineTimesRepeat ifFalse: [ ^false ]].
 
 	self receiver isBlock ifTrue: [^ false].
 	self isCascaded ifTrue: [^ false].
@@ -99,7 +99,7 @@ RBMessageNode >> isInlineTimesRepeat [
 RBMessageNode >> isInlineToDo [
 
 	| block step |
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineToDo ifFalse: [ ^false ]]. 
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineToDo ifFalse: [ ^false ]].
 
 	self receiver isBlock ifTrue: [^ false].
 	self isCascaded ifTrue: [^ false].
@@ -107,7 +107,7 @@ RBMessageNode >> isInlineToDo [
 	block := self arguments last.
 	block isBlock ifFalse: [^ false].
 	block arguments size = 1 ifFalse: [^ false].
-	self arguments first isVariable ifTrue: [ 
+	self arguments first isVariable ifTrue: [
 		(RBParseTreeSearcher new
 			matches: self arguments first name , ' := `@object' do: [:n :a | true];
 			executeTree: block initialAnswer: false) ifTrue: [^ false].
@@ -122,8 +122,8 @@ RBMessageNode >> isInlineToDo [
 
 { #category : #'*OpalCompiler-Core' }
 RBMessageNode >> isInlineWhile [
-	
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineWhile ifFalse: [ ^false ]]. 
+
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineWhile ifFalse: [ ^false ]].
 	self isCascaded ifTrue: [^ false].
 	(#(whileFalse: whileTrue: whileFalse whileTrue) includes: self selector) ifFalse: [^ false].
 	self receiver isBlock ifFalse: [^ false].
@@ -136,17 +136,17 @@ RBMessageNode >> isInlineWhile [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMessageNode >> isInlined [ 
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineNone ifTrue: [ ^false ]]. 
+RBMessageNode >> isInlined [
+	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineNone ifTrue: [ ^false ]].
 	self isInlineIf ifTrue: [^true].
-	self isInlineIfNil  ifTrue: [^true]. 
+	self isInlineIfNil  ifTrue: [^true].
 	self isInlineAndOr  ifTrue: [^true].
 	self isInlineWhile ifTrue: [^true].
 	self isInlineToDo  ifTrue: [^true].
 	self isInlineCase  ifTrue: [^true].
 	self isInlineTimesRepeat ifTrue: [^true].
 	self isInlineRepeat ifTrue: [^true].
-	^false.
+	^false
 ]
 
 { #category : #'*OpalCompiler-Core' }

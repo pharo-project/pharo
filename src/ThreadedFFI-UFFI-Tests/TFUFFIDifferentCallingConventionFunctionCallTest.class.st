@@ -12,7 +12,7 @@ TFUFFIDifferentCallingConventionFunctionCallTest >> calloutWithManyArguments: ar
 ]
 
 { #category : #private }
-TFUFFIDifferentCallingConventionFunctionCallTest >> ffiCallingConvention [ 
+TFUFFIDifferentCallingConventionFunctionCallTest >> ffiCallingConvention [
 
 	^ #win64
 ]
@@ -21,11 +21,11 @@ TFUFFIDifferentCallingConventionFunctionCallTest >> ffiCallingConvention [
 TFUFFIDifferentCallingConventionFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
 
 	| result |
-	
+
 	"This test is only valid in OSX and X86_64, as calling conventions constants are heavily dependant on the OS & Architecture"
-	(OSPlatform current isMacOS and: [ Smalltalk vm architectureName = 'x86_64']) 
+	(OSPlatform current isMacOS and: [ Smalltalk vm architectureName = 'x86_64'])
 		ifFalse: [ self skip ].
-			
+
 	result := self
 			calloutWithManyArguments: 1
 			and: 2
@@ -37,6 +37,6 @@ TFUFFIDifferentCallingConventionFunctionCallTest >> testCallingFunctionWithW64Ca
 			and: 8
 			and: 9
 			and: 10.
-			
+
 	self assert: result equals: 55
 ]

@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #execution }
-SycOpenProtocolMenuCommand >> activationStrategy [ 
+SycOpenProtocolMenuCommand >> activationStrategy [
 	^ SycProtocolMenuActivation
 ]
 
 { #category : #'context menu' }
-SycOpenProtocolMenuCommand >> cmCommandClass [ 
+SycOpenProtocolMenuCommand >> cmCommandClass [
 	^ SycProtocolCmCommand
 ]
 

@@ -38,14 +38,14 @@ TFWorker class >> finalizeResourceData: anArray [
 	(self fromHandle: handle)
 		semaphorePool: semaphorePool;
 		release.
-		
-	handle beNull.
+
+	handle beNull
 ]
 
 { #category : #private }
 TFWorker class >> named: aName [
 
-	^ self new 
+	^ self new
 		name: aName;
 		autoRelease;
 		yourself
@@ -59,11 +59,11 @@ TFWorker >> doInitialize [
 ]
 
 { #category : #executing }
-TFWorker >> executeFunction: aTFExternalFunction withArguments: arguments usingSemaphore: anInteger [ 
-	
+TFWorker >> executeFunction: aTFExternalFunction withArguments: arguments usingSemaphore: anInteger [
+
 	<primitive: 'primitiveWorkerCallout' error: ec>
-	
-	self primitiveFailed 
+
+	self primitiveFailed
 ]
 
 { #category : #initialization }
@@ -86,7 +86,7 @@ TFWorker >> name: aName [
 ]
 
 { #category : #private }
-TFWorker >> newSemaphorePool [ 
+TFWorker >> newSemaphorePool [
 
 	"We need to keep a reference to the semaphorePool in an array. Because the array is passed to the finalization registry.
 	Like this the semaphorePool can be created lazy."
@@ -100,7 +100,7 @@ TFWorker >> primitiveCreateWorker [
 
 	<primitive: 'primitiveCreateWorker'>
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #private }
@@ -108,7 +108,7 @@ TFWorker >> primitiveReleaseWorker [
 
 	<primitive: 'primitiveReleaseWorker'>
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #executing }
@@ -120,18 +120,18 @@ TFWorker >> readReturnValueFromTask: anExternalAddress [
 ]
 
 { #category : #executing }
-TFWorker >> release [ 
-	
+TFWorker >> release [
+
 	"We need to ensure the semaphorePool is always released"
-	semaphorePool ifNotNil: [ 
+	semaphorePool ifNotNil: [
 		semaphorePool release.
 		semaphorePoolHolder at: 1 put: nil.
-		semaphorePool := nil ].	
-	
+		semaphorePool := nil ].
+
 	self isNull ifTrue: [ ^ self ].
-	
+
 	self primitiveReleaseWorker.
-	super release.
+	super release
 ]
 
 { #category : #'external resource management' }

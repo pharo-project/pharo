@@ -57,7 +57,7 @@ IRPushFullClosure >> outerContextNeeded: anObject [
 ]
 
 { #category : #scoping }
-IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [ 
+IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [
 
-	self copiedValues at: index put: aRemote.
+	self copiedValues at: index put: aRemote
 ]

@@ -20,7 +20,7 @@ TKTExceptionHandler class >> isDebuggingCompatible [
 ]
 
 { #category : #handling }
-TKTExceptionHandler >> handleException: anError [ 
-	
-	anError debug 
+TKTExceptionHandler >> handleException: anError [
+
+	anError debug
 ]

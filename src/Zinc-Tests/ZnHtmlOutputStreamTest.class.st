@@ -39,7 +39,7 @@ ZnHtmlOutputStreamTest >> testEscaping [
 	self assert: result equals: 'Foo & Bar < 100'.
 	result := ZnHtmlOutputStream streamContents: [ :html |
 		html str: 'Foo & Bar < 100' ].
-	self assert: result equals: 'Foo &amp; Bar &lt; 100'.
+	self assert: result equals: 'Foo &amp; Bar &lt; 100'
 ]
 
 { #category : #tests }
@@ -62,7 +62,7 @@ ZnHtmlOutputStreamTest >> testHtml5Tag [
 ZnHtmlOutputStreamTest >> testNesting [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
-		html tag: #ol do: [ 
+		html tag: #ol do: [
 			#(one two three) do: [ :each | html tag: #li with: each ] ] ].
 	self assert: result equals: '<ol><li>one</li><li>two</li><li>three</li></ol>'
 ]
@@ -79,7 +79,7 @@ ZnHtmlOutputStreamTest >> testSelfClosingTag [
 ZnHtmlOutputStreamTest >> testSmall [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
-		html 
+		html
 			tag: #h1 with: #Small;
 			tag: #p with: 'This is a small HTML document' ].
 	self assert: result equals: '<h1>Small</h1><p>This is a small HTML document</p>'
@@ -89,7 +89,7 @@ ZnHtmlOutputStreamTest >> testSmall [
 ZnHtmlOutputStreamTest >> testSmallPage [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
-		html page: 'Small' do: [ 
+		html page: 'Small' do: [
 			html tag: #p with: 'This is a small HTML document' ] ].
 	self assert: result equals: '<!DOCTYPE html><html><head><title>Small</title></head><body><h1>Small</h1><p>This is a small HTML document</p></body></html>'
 ]

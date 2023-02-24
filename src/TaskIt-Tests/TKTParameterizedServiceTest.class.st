@@ -12,7 +12,7 @@ TKTParameterizedServiceTest >> tearDown [
 
 	(service notNil and: [service isRunning]) ifTrue: [
 		(service stop) waitForCompletion: 1 second ].
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
@@ -24,10 +24,10 @@ TKTParameterizedServiceTest >> testServiceExecutesStartUpOnStart [
 	service name: 'test service'.
 	service onSetUpDo: [ started := true ].
 	service start.
-	
+
 	100 milliSeconds wait.
-	
-	self assert: started.
+
+	self assert: started
 ]
 
 { #category : #tests }
@@ -41,7 +41,7 @@ TKTParameterizedServiceTest >> testServiceExecutesTearDownOnStop [
 	service start.
 	(service stop) waitForCompletion: 2 second.
 
-	self assert: stopped.
+	self assert: stopped
 ]
 
 { #category : #tests }
@@ -53,8 +53,8 @@ TKTParameterizedServiceTest >> testServiceRunsAfterStart [
 	service name: 'test service'.
 	service step: [ run := true ].
 	service start.
-	
+
 	10 milliSeconds wait.
-	
-	self assert: run.
+
+	self assert: run
 ]

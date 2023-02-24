@@ -42,10 +42,13 @@ AbstractInitializedSlot >> hash [
 
 { #category : #printing }
 AbstractInitializedSlot >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
 		nextPutAll: ' default: '.
-	default printOn: aStream
+
+	default isBlock
+		ifTrue: [ default printOn: aStream ]
+		ifFalse: [ aStream store: default ]
 ]

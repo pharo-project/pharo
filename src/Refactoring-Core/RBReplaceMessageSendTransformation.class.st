@@ -42,7 +42,7 @@ RBReplaceMessageSendTransformation class >> kind [
 ]
 
 { #category : #'instance creation' }
-RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		model: aRBSmalltalk;
 		replaceCallMethod: aSelector
@@ -65,8 +65,8 @@ RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: a
 ]
 
 { #category : #'instance creation' }
-RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
-	^self new 
+RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [
+	^self new
 		replaceCallMethod: aSelector
 		in: aClass
 		to: newSelector
@@ -75,7 +75,7 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 
 { #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
-	^self new 
+	^self new
 		replaceCallMethod: aSelector
 		in: aClass
 		to: newSelector
@@ -103,16 +103,16 @@ RBReplaceMessageSendTransformation >> newSelectorString [
 	permutation ifEmpty: [ stream nextPutAll: newSelector ].
 	keywords := newSelector keywords.
 	permutation
-		doWithIndex: 
-			[:each :index | 
+		doWithIndex:
+			[:each :index |
 			stream nextPutAll: (keywords at: index).
 			each < 0
-				ifTrue: 
+				ifTrue:
 					[stream
 						nextPut: $(;
 						nextPutAll: (initializers at: each abs);
 						nextPut: $)]
-				ifFalse: 
+				ifFalse:
 					[stream
 						nextPutAll: ' ``@arg';
 						nextPutAll: each printString].
@@ -137,10 +137,10 @@ RBReplaceMessageSendTransformation >> parseTreeRewriter [
 RBReplaceMessageSendTransformation >> preconditions [
 
 	| conditions |
-	conditions := (RBCondition withBlock: [ 
-		               oldSelector numArgs < newSelector numArgs ifTrue: [ 
+	conditions := (RBCondition withBlock: [
+		               oldSelector numArgs < newSelector numArgs ifTrue: [
 			               oldSelector numArgs + self initializers size
-			               = newSelector numArgs ifFalse: [ 
+			               = newSelector numArgs ifFalse: [
 				               self refactoringFailure:
 					               'You don''t have the necessary initializers to replace senders.' ] ].
 		               true ])
@@ -148,7 +148,7 @@ RBReplaceMessageSendTransformation >> preconditions [
 	              & (RBCondition definesSelector: newSelector in: class).
 	"This is unclear that the targeting method should already be defined."
 
-	^ conditions 
+	^ conditions
 ]
 
 { #category : #initialization }
@@ -157,14 +157,14 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap.
+	permutation := aMap
 ]
 
 { #category : #initialization }
 RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean [
 
 	self replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap.
-	replaceInAllClasses := aBoolean.
+	replaceInAllClasses := aBoolean
 ]
 
 { #category : #accessing }
@@ -174,7 +174,7 @@ RBReplaceMessageSendTransformation >> replaceInAllClasses [
 
 { #category : #transforming }
 RBReplaceMessageSendTransformation >> transform [
-	self replaceInAllClasses 
+	self replaceInAllClasses
 		ifTrue: [ self renameMessageSends ]
 		ifFalse: [ self renameMessageSendsIn: {class} ]
 ]

@@ -12,19 +12,19 @@ SessionAccessModeResolver class >> initialize [
 
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
-		inCategory: SessionManager default systemCategory  
-		atPriority: SessionManager default defaultPriority - 90.
+		inCategory: SessionManager default systemCategory
+		atPriority: SessionManager default defaultPriority - 90
 ]
 
 { #category : #'class initialization' }
-SessionAccessModeResolver class >> resolve [ 
+SessionAccessModeResolver class >> resolve [
 
 	"check if the image was started in the read-only mode"
 
-	| arguments mode | 
-	
+	| arguments mode |
+
 	arguments := Smalltalk argumentsStartingAtIndex: 0.
-			
+
 	mode := #readWrite.
 
 	(Smalltalk argumentsInclude: '--readWriteAccessMode')
@@ -35,8 +35,8 @@ SessionAccessModeResolver class >> resolve [
 		ifTrue: [ mode := #writeOnly ].
 	(Smalltalk argumentsInclude: '--disabledAccessMode')
 		ifTrue: [ mode := #disabled ].
-		
-	SessionManager default currentSession accessMode: mode.
+
+	SessionManager default currentSession accessMode: mode
 ]
 
 { #category : #'system startup' }

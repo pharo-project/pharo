@@ -22,12 +22,12 @@ ZnBasicCredential class >> authName [
 
 { #category : #accessing }
 ZnBasicCredential >> authTokenForUrl: urlObject method: method [
-	^ 'Basic ', (ZnUtils encodeBase64: (username, ':', password)) 
+	^ 'Basic ', (ZnUtils encodeBase64: (username, ':', password))
 ]
 
 { #category : #testing }
-ZnBasicCredential >> isComplete [ 
-	^ username notNil & password notNil 
+ZnBasicCredential >> isComplete [
+	^ username notNil & password notNil
 ]
 
 { #category : #accessing }
