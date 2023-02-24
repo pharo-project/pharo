@@ -1,8 +1,8 @@
 "
 This class contains tests
 
-Parametrized matrix test class to run various test on code snipets.
-The only parameter is the instance variable `snipet` that is the current code snipet <RBCodeSnipet>.
+Parametrized matrix test class to run various test on code snippets.
+The only parameter is the instance variable `snippet` that is the current code snippet <RBCodeSnippet>.
 "
 Class {
 	#name : #RBCodeSnippetTest,

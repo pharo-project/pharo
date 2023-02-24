@@ -10,7 +10,7 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * messageNotUnderstood <Symbol> the expected MNU error when executed
 * skippedTests <Collection> list of test to not execute (that should be fixed)
 
-Tests are executed by the parametrized matrix class `RBCodeSnipetTest`
+Tests are executed by the parametrized matrix class `RBCodeSnippetTest`
 
 Additional tools can add more information and expectation (please improve the list and the tools)
 "
@@ -268,7 +268,7 @@ RBCodeSnippet class >> badExpressions [
 
 { #category : #script }
 RBCodeSnippet class >> styleAll [
-	"Display all snipets in a big styled text.
+	"Display all snippets in a big styled text.
 	Each sniped is styled independently."
 
 	<script>

@@ -8,7 +8,7 @@ RBCodeSnippetTest >> testCritiques [
 	critiques := ast critiques.
 
 	"Alone blocks will have ReDeadBlockRule. Currently no other critiques are fired."
-	"When we get some critiques, we will add a instance vaviable in the snipet to validate them"
+	"When we get some critiques, we will add a instance vaviable in the snippet to validate them"
 	ast isBlock
 		ifTrue: [
 			self assert: critiques size equals: 1.
