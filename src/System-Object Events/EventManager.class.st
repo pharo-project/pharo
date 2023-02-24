@@ -35,24 +35,24 @@ EventManager class >> actionMaps [
 EventManager class >> cleanUp: aggressive [
 	"Dump all ActionMaps but only when we're aggressively cleaning"
 
-	aggressive ifTrue: [ActionMaps := nil].
+	aggressive ifTrue: [ActionMaps := nil]
 ]
 
 { #category : #cleanup }
 EventManager class >> flushEvents [
 	"EventManager flushEvents"
-	
+
 	self actionMaps keysAndValuesDo:[:rcvr :evtDict| rcvr ifNotNil:[
 		"make sure we don't modify evtDict while enumerating"
 		evtDict keysDo: [:evtName| | msgSet |
 			msgSet := evtDict at: evtName ifAbsent:[nil].
 			(msgSet == nil) ifTrue:[rcvr removeActionsForEvent: evtName]]]].
-	EventManager actionMaps finalizeValues.
+	EventManager actionMaps finalizeValues
 ]
 
 { #category : #'class initialization' }
 EventManager class >> initialize [
-	
+
 	SessionManager default registerSystemClassNamed: self name
 ]
 
@@ -65,8 +65,8 @@ EventManager class >> releaseActionMapFor: anObject [
 ]
 
 { #category : #'system startup' }
-EventManager class >> shutDown [	
-	self flushEvents.
+EventManager class >> shutDown [
+	self flushEvents
 ]
 
 { #category : #accessing }
@@ -103,12 +103,12 @@ EventManager >> breakDependents [
 ]
 
 { #category : #updating }
-EventManager >> changed: aParameter [ 
-	"Receiver changed. The change is denoted by the argument aParameter. 
-	Usually the argument is a Symbol that is part of the dependent's change 
+EventManager >> changed: aParameter [
+	"Receiver changed. The change is denoted by the argument aParameter.
+	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents."
 
-	self 
+	self
 		triggerEvent: self changedEventSelector
 		with: aParameter
 ]
@@ -131,7 +131,7 @@ EventManager >> dependents [
 EventManager >> postCopy [
 
 	super postCopy.
-	self releaseActionMap.
+	self releaseActionMap
 ]
 
 { #category : #accessing }
@@ -144,7 +144,7 @@ EventManager >> releaseActionMap [
 EventManager >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
-	self 
+	self
 		removeActionsWithReceiver: anObject
 		forEvent: self changedEventSelector.
 	^ anObject
@@ -158,7 +158,7 @@ EventManager >> updateEventSelector [
 
 { #category : #accessing }
 EventManager >> updateableActionMap [
-	actionMap 
+	actionMap
 		ifNil: [ actionMap := self createActionMap ].
 	^actionMap
 ]

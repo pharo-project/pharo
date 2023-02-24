@@ -62,7 +62,7 @@ TKTWorker >> ensureIsWorking [
 
 { #category : #accessing }
 TKTWorker >> exceptionHandler [
-	
+
 	^ process exceptionHandler
 ]
 
@@ -75,12 +75,12 @@ TKTWorker >> exceptionHandler: aHandler [
 { #category : #finalization }
 TKTWorker >> executor [
 
-	"The finalization scheme runs in another object (the executor) that does not have 
+	"The finalization scheme runs in another object (the executor) that does not have
 	all the state, if it has all the state a loop is generated and never GCed"
 
 	^ TKTWorkerExecutor new
 		processToKill: process;
-		yourself.
+		yourself
 ]
 
 { #category : #initialization }
@@ -88,7 +88,6 @@ TKTWorker >> initialize [
 	super initialize.
 	self name: ('Worker-{ID}' format: {(#ID -> UUID new)} asDictionary).
 	self ensureIsBeingWatched
-	
 ]
 
 { #category : #testing }
@@ -164,15 +163,14 @@ TKTWorker >> queue [
 { #category : #starting }
 TKTWorker >> restart [
 	self stop.
-	self start.
+	self start
 ]
 
 { #category : #starting }
 TKTWorker >> start [
 	self privatePrepareProcess: TKTConfiguration poolWorkerProcess new.
 	self privateStart.
-	self priority ifNotNil: [self process priority: self priority].
-
+	self priority ifNotNil: [self process priority: self priority]
 ]
 
 { #category : #starting }
@@ -181,7 +179,7 @@ TKTWorker >> stop [
 		ifNotNil: [ process stop.
 			process := nil ].
 	TKTConfiguration watchDog stopWatching: self.
-	self noteDoesNotNeedToBeFinalized.
+	self noteDoesNotNeedToBeFinalized
 ]
 
 { #category : #accessing }

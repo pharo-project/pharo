@@ -40,12 +40,11 @@ DiffChangeMorph class >> from: old label: oldLabel to: new label: newLabel conte
 { #category : #actions }
 DiffChangeMorph >> adoptPaneColor: paneColor [
 	"Change the fill styles on the descriptions."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self descriptionMorph borderStyle: (self theme listNormalBorderStyleFor: self).
 	self updateDescriptionFillStyle: paneColor
-	
 ]
 
 { #category : #initialization }
@@ -161,7 +160,6 @@ DiffChangeMorph >> newDescriptionMorph [
 		cellInset: 2;
 		"fillStyle: Color white;"
 		borderStyle: (self theme listNormalBorderStyleFor: self)
-		
 ]
 
 { #category : #actions }
@@ -192,8 +190,8 @@ DiffChangeMorph >> toDescriptionMorph [
 { #category : #actions }
 DiffChangeMorph >> updateDescriptionFillStyle: aColor [
 	"Change the colours on the descriptions."
-	
+
 	self descriptionMorph fillStyle: aColor.
 	self fromDescriptionMorph owner color: (aColor alpha: 0.5).
-	self toDescriptionMorph owner color: (aColor alpha: 0.3).
+	self toDescriptionMorph owner color: (aColor alpha: 0.3)
 ]

@@ -34,7 +34,7 @@ RBProtectVariableTransformation >> buildTransformations [
 ]
 
 { #category : #printing }
-RBProtectVariableTransformation >> storeOn: aStream [ 
+RBProtectVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -52,5 +52,5 @@ RBProtectVariableTransformation >> variable: aVariableName class: aClassName cla
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]

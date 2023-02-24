@@ -7,7 +7,7 @@ WeakArray class >> doOldFinalization [
 	FinalizationLock critical: [
 			FinalizationDependents do: 	[:weakDependent |
 				weakDependent ifNotNil: [
-					[ weakDependent finalizeValues ] on: Exception fork: [:ex | ex pass ] ]]].
+					[ weakDependent finalizeValues ] on: Exception fork: [:ex | ex pass ] ]]]
 ]
 
 { #category : #'*System-Finalization' }
@@ -69,14 +69,14 @@ WeakArray class >> restartFinalizationProcess [
 	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42.
 	FinalizationDependents ifNil: [FinalizationDependents := WeakArray new: 10].
 	FinalizationLock := Semaphore forMutualExclusion.
-	
+
 	FinalizationProcess := [self finalizationProcess]
 		forkAt: Processor userInterruptPriority.
-	FinalizationProcess name: 'WeakArray Finalization Process'.
+	FinalizationProcess name: 'WeakArray Finalization Process'
 ]
 
 { #category : #'*System-Finalization' }
 WeakArray class >> startUp: resuming [
 	resuming ifFalse: [ ^self ].
-	self restartFinalizationProcess.
+	self restartFinalizationProcess
 ]

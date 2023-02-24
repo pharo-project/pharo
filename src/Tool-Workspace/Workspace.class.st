@@ -35,7 +35,7 @@ Class {
 
 { #category : #cleaning }
 Workspace class >> cleanUp [
-	LastContents := nil.
+	LastContents := nil
 ]
 
 { #category : #accessing }
@@ -70,9 +70,8 @@ Workspace class >> openLabel: aLabel [
 
 { #category : #'tool registry' }
 Workspace class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]" 
+	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #workspace
-
 ]
 
 { #category : #icons }
@@ -83,7 +82,7 @@ Workspace class >> taskbarIconName [
 ]
 
 { #category : #'instance creation' }
-Workspace class >> title [ 
+Workspace class >> title [
 	^ 'Workspace'
 ]
 
@@ -107,7 +106,7 @@ Workspace >> addModelItemsToWindowMenu: aMenu [
 Workspace >> askForFileNameToOpen [
 	"Ask user for file name to load content from"
 	^ UIManager default
-			chooseFullFileNameMatching: nil 
+			chooseFullFileNameMatching: nil
 			label: 'Choose file to open in the workspace' translated
 ]
 
@@ -116,12 +115,12 @@ Workspace >> askForFileNameToSave: suggestedFileName [
 	"Ask user for the name of the file to save workspace content to. Use the given file name as the initial answer"
 
 	^ UIManager default
-			request: 'Enter file name to save the workspace to' translated 
+			request: 'Enter file name to save the workspace to' translated
 			initialAnswer: suggestedFileName
 ]
 
 { #category : #'variable definitions' }
-Workspace >> bindingOf: aString [ 
+Workspace >> bindingOf: aString [
 	(bindings includesKey: aString)
 		ifFalse: [ bindings add: (WorkspaceVariable key: aString asSymbol) ].
 	^ bindings associationAt: aString
@@ -181,7 +180,7 @@ Workspace >> fileName: anObject [
 ]
 
 { #category : #'shout bindings' }
-Workspace >> hasBindingOf: aString [ 
+Workspace >> hasBindingOf: aString [
 	^bindings includesKey: aString asSymbol
 ]
 
@@ -195,7 +194,7 @@ Workspace >> initialize [
 
 { #category : #initialization }
 Workspace >> initializeBindings [
-	
+
 	bindings := Dictionary new
 ]
 
@@ -212,41 +211,38 @@ Workspace >> label: aString [
 
 { #category : #accessing }
 Workspace >> lastContents [
-	^ self class lastContents 
+	^ self class lastContents
 ]
 
 { #category : #accessing }
 Workspace >> maxKeptContents [
-	^ self class maxKeptContents 
+	^ self class maxKeptContents
 ]
 
 { #category : #view }
 Workspace >> open [
-	
+
 	self openLabel: self class title
 ]
 
 { #category : #'file support' }
 Workspace >> openFile: aFileName [
 	"Load file content into this workspace. If successful, associate the workspace with this file and change its label"
-	
+
 	self readStringFromFile: aFileName.
 	self fileName: aFileName.
-	self label: aFileName.
+	self label: aFileName
 ]
 
 { #category : #view }
 Workspace >> openLabel: aString [
-	
+
 	window := StandardWindow new model: self.
 	window title: aString.
 	window
 		addMorph: self textView
 		fullFrame: LayoutFrame identity.
 	window openInWorld
-	
-
-
 ]
 
 { #category : #'window menu' }
@@ -257,7 +253,7 @@ Workspace >> openMenuAction [
 	userWarned := true.
 	(self fileName isNil and: [self contents isEmpty not or: [self hasUnacceptedEdits]]) ifTrue: [userWarned := self warnUser].
 	(self fileName isNil not and: [self hasUnacceptedEdits]) ifTrue: [userWarned := self warnUser].
-	
+
 	userWarned ifTrue: [self openFile: self askForFileNameToOpen]
 ]
 
@@ -308,8 +304,7 @@ Workspace >> selectedMethod [
 Workspace >> setBindings: aDictionary [
 	"Sets the Workspace to use the specified dictionary as its namespace"
 
-	bindings := aDictionary.
-
+	bindings := aDictionary
 ]
 
 { #category : #accessing }
@@ -320,7 +315,7 @@ Workspace >> sourceTextArea [
 { #category : #'file support' }
 Workspace >> suggestedFileName [
 	"If the workspace has an associated fileName use that, otherwise derive a reasonable file-name from the window label"
-	
+
 	self fileName ifNotNil: [ :f | ^ f ].
 	^ window title, '.ws'
 ]

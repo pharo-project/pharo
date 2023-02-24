@@ -68,9 +68,9 @@ ReInvocationSequenceRuleSequence >> initializeBefore: beforeSymols after: afterS
 		[ beforeSymols isString not ])
 			ifFalse: [ Array with: beforeSymols asSymbol ]
 			ifTrue: [ beforeSymols ].
-	after := 
+	after :=
 		(afterSymbols isCollection and:
 		[ afterSymbols isString not ])
 			ifFalse: [ Array with: afterSymbols asSymbol ]
-			ifTrue: [ afterSymbols ].
+			ifTrue: [ afterSymbols ]
 ]

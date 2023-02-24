@@ -21,18 +21,16 @@ HistorySlot >> emitValue: aMethodBuilder [
 { #category : #initialization }
 HistorySlot >> initialize [
 	size := 5
-
 ]
 
 { #category : #initialization }
 HistorySlot >> initialize: anObject [
 	super write: (OrderedCollection with: nil) to: anObject
-
 ]
 
 { #category : #printing }
 HistorySlot >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;

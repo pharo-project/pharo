@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #accessing }
-RBTrait >> definesInstanceVariable: aString [ 
+RBTrait >> definesInstanceVariable: aString [
 	^ self directlyDefinesInstanceVariable: aString
 ]
 

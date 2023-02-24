@@ -1,32 +1,32 @@
 Extension { #name : #Float }
 
 { #category : #'*UnifiedFFI' }
-Float >> packAsDoubleToArity: arity [ 
+Float >> packAsDoubleToArity: arity [
 	| rolledPointer |
-		
+
 	rolledPointer := self.
 	1 to: arity do: [ :index | rolledPointer := rolledPointer pointerDouble ].
-	^ rolledPointer	
+	^ rolledPointer
 ]
 
 { #category : #'*UnifiedFFI' }
-Float >> packAsFloatToArity: arity [ 
+Float >> packAsFloatToArity: arity [
 	| rolledPointer |
-		
+
 	rolledPointer := self.
 	1 to: arity do: [ :index | rolledPointer := rolledPointer pointerFloat ].
-	^ rolledPointer	
+	^ rolledPointer
 ]
 
 { #category : #'*UnifiedFFI' }
-Float >> packToArity: arity [ 
+Float >> packToArity: arity [
 	self error: 'Use #rollAsFloatArity: or #rollAsDoubleArity:'
 ]
 
 { #category : #'*UnifiedFFI' }
-Float >> pointer [ 
+Float >> pointer [
 	"Floats in Pharo are 64bits (8 bytes) and that correspond directly with a double on C.
-	 So 'default' behaviour will be to address it as a double (float is also available in case is 
+	 So 'default' behaviour will be to address it as a double (float is also available in case is
 	 needed)"
 	^ self pointerDouble
 ]

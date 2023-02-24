@@ -13,20 +13,20 @@ TextAlignmentTest >> setUp [
 	prototypes add: TextAlignment centered;
 		 add: TextAlignment justified;
 		 add: TextAlignment leftFlush;
-		 add: TextAlignment rightFlush 
+		 add: TextAlignment rightFlush
 ]
 
 { #category : #tests }
 TextAlignmentTest >> testAlignment [
 	| attribute |
-	self assert: TextAlignment leftFlush alignment equals: TextConstants LeftFlush. 
-	self assert: TextAlignment rightFlush alignment equals: TextConstants RightFlush. 
-	self assert: TextAlignment centered alignment equals: TextConstants Centered . 
-	self assert: TextAlignment justified  alignment equals: TextConstants Justified . 
+	self assert: TextAlignment leftFlush alignment equals: TextConstants LeftFlush.
+	self assert: TextAlignment rightFlush alignment equals: TextConstants RightFlush.
+	self assert: TextAlignment centered alignment equals: TextConstants Centered .
+	self assert: TextAlignment justified  alignment equals: TextConstants Justified .
 	"We can change alignment"
 	attribute := TextAlignment leftFlush.
 	attribute alignment: TextConstants RightFlush.
-	self assert: attribute alignment equals: TextConstants RightFlush 
+	self assert: attribute alignment equals: TextConstants RightFlush
 ]
 
 { #category : #tests }

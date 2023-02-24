@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [ 
+RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [
 	^ self new
 		model: aRBSmalltalk;
 		className: aClass newName: aNewName;
@@ -30,13 +30,13 @@ RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewNam
 
 { #category : #'instance creation' }
 RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
-	^ self new 
-		className: aClassName 
+	^ self new
+		className: aClassName
 		newName: aNewName
 ]
 
 { #category : #initialization }
-RBRenameClassRefactoring >> className: aName newName: aNewName [ 
+RBRenameClassRefactoring >> className: aName newName: aNewName [
 	className := aName asSymbol.
 	class := self model classNamed: className.
 	newName := aNewName asSymbol
@@ -44,8 +44,8 @@ RBRenameClassRefactoring >> className: aName newName: aNewName [
 
 { #category : #preconditions }
 RBRenameClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [class notNil and: [class isMeta not]]) 
-			& (RBCondition isValidClassName: newName) 
+	^((RBCondition withBlock: [class notNil and: [class isMeta not]])
+			& (RBCondition isValidClassName: newName)
 			& (RBCondition isGlobal: newName in: self model) not) |
 			(RBCondition withBlock: [ self refactoringFailure: newName , ' is not a valid class name'])
 ]
@@ -56,26 +56,26 @@ RBRenameClassRefactoring >> renameReferences [
 	replacer := (self parseTreeRewriterClass replaceLiteral: className with: newName)
 				replace: className with: newName;
 				replaceArgument: newName
-					withValueFrom: 
-						[:aNode | 
-						self 
+					withValueFrom:
+						[:aNode |
+						self
 							refactoringFailure: newName , ' already exists within the reference scope'];
 				yourself.
 	self model allReferencesToClass: class
-		do: 
-			[:method | 
-			(method modelClass hierarchyDefinesVariable: newName) 
-				ifTrue: 
-					[self refactoringFailure: newName , ' is already defined in hierarchy of ' 
+		do:
+			[:method |
+			(method modelClass hierarchyDefinesVariable: newName)
+				ifTrue:
+					[self refactoringFailure: newName , ' is already defined in hierarchy of '
 								, method modelClass printString].
-			self 
+			self
 				convertMethod: method selector
 				for: method modelClass
 				using: replacer]
 ]
 
 { #category : #printing }
-RBRenameClassRefactoring >> storeOn: aStream [ 
+RBRenameClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' rename: '.
@@ -88,7 +88,7 @@ RBRenameClassRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBRenameClassRefactoring >> transform [
-	self model 
+	self model
 		renameClass: class
 		to: newName
 		around: [self renameReferences]

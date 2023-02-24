@@ -48,7 +48,7 @@ RBBrowserEnvironment class >> defaultName [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> & anEnvironment [ 
+RBBrowserEnvironment >> & anEnvironment [
 	"If we or anEnvironment includes everything, then just include the other environment (optimization)"
 
 	self isSystem ifTrue: [^anEnvironment].
@@ -84,7 +84,7 @@ RBBrowserEnvironment >> allClasses [
 
 	| allClasses |
 	allClasses := IdentitySet new: 4096.
-	self classesDo: [ :each | 
+	self classesDo: [ :each |
 		allClasses add: each instanceSide].
 	^ allClasses asArray
 ]
@@ -92,10 +92,10 @@ RBBrowserEnvironment >> allClasses [
 { #category : #'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
 	" compatibility method with SystemDictionary "
-	
+
 	| allClassesAndTraits |
 	allClassesAndTraits := OrderedCollection new: 4096.
-	self allClassesAndTraitsDo: [ :each | 
+	self allClassesAndTraitsDo: [ :each |
 		allClassesAndTraits add: each ].
 	^ allClassesAndTraits asArray
 ]
@@ -117,7 +117,7 @@ RBBrowserEnvironment >> allMetaClasses [
 	| allMetaClasses |
 	allMetaClasses := OrderedCollection new: 4096.
 	self
-		classesDo: [ :each | 
+		classesDo: [ :each |
 			each isMeta
 				ifTrue: [ allMetaClasses add: each instanceSide ] ].
 	^ allMetaClasses asArray
@@ -129,7 +129,7 @@ RBBrowserEnvironment >> allNonMetaClasses [
 	| allNonMetaClasses |
 	allNonMetaClasses := OrderedCollection new: 4096.
 	self
-		classesDo: [ :each | 
+		classesDo: [ :each |
 			each isMeta
 				ifFalse: [ allNonMetaClasses add: each  ] ].
 	^ allNonMetaClasses asArray
@@ -143,7 +143,7 @@ RBBrowserEnvironment >> announceChangesOf: aQueryResult [
 
 { #category : #converting }
 RBBrowserEnvironment >> asRBEnvironment [
- 
+
 	^ self
 ]
 
@@ -209,21 +209,21 @@ RBBrowserEnvironment >> classNamesFor: aCategoryName [
 	^ (self systemDictionary organization listAtCategoryNamed: aCategoryName) select: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		class notNil 
+		class notNil
 			and: [ (self includesClass: class)
 			or: [ self includesClass: class class ] ] ]
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> classVarRefsTo: instVarName in: aClass [ 
-	^ RBVariableEnvironment 
+RBBrowserEnvironment >> classVarRefsTo: instVarName in: aClass [
+	^ RBVariableEnvironment
 		on: self
 		referencesToClassVariable: instVarName
 		in: aClass
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> classVariablesFor: aClass [ 
+RBBrowserEnvironment >> classVariablesFor: aClass [
 	^aClass classVarNames
 ]
 
@@ -236,31 +236,31 @@ RBBrowserEnvironment >> classes [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> classesAndSelectorsDo: aBlock [ 
-	self classesDo: [ :class | 
-		self selectorsForClass: class do: [ :sel | 
+RBBrowserEnvironment >> classesAndSelectorsDo: aBlock [
+	self classesDo: [ :class |
+		self selectorsForClass: class do: [ :sel |
 			aBlock value: class value: sel ]]
 ]
 
 { #category : #'accessing - classes' }
 RBBrowserEnvironment >> classesAndTraits [
-	
+
 	| classesAndTraits |
 	classesAndTraits := OrderedCollection new: 4096.
-	self classesAndTraitsDo: [ :each | 
+	self classesAndTraitsDo: [ :each |
 		classesAndTraits add: each ].
 	^ classesAndTraits asArray
 ]
 
 { #category : #'accessing - classes' }
-RBBrowserEnvironment >> classesAndTraitsDo: aBlock [ 
+RBBrowserEnvironment >> classesAndTraitsDo: aBlock [
 	self allClassesAndTraitsDo: [ :each |
 		(self includesClass: each)
 			ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #'accessing - classes' }
-RBBrowserEnvironment >> classesDo: aBlock [ 
+RBBrowserEnvironment >> classesDo: aBlock [
 	self systemDictionaryClassesDo: [ :each |
 		(self includesClass: each)
 			ifTrue: [aBlock value: each ] ]
@@ -317,24 +317,24 @@ RBBrowserEnvironment >> environment [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> forCategories: categoryList [ 
+RBBrowserEnvironment >> forCategories: categoryList [
 	^RBCategoryEnvironment onEnvironment: self categories: categoryList
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> forClass: aClass protocols: protocolCollection [ 
+RBBrowserEnvironment >> forClass: aClass protocols: protocolCollection [
 	^RBProtocolEnvironment onEnvironment: self
 		class: aClass
 		protocols: protocolCollection
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> forClass: aClass selectors: selectorCollection [ 
-	^(RBSelectorEnvironment 
+RBBrowserEnvironment >> forClass: aClass selectors: selectorCollection [
+	^(RBSelectorEnvironment
 		onMethods: selectorCollection
 		forClass: aClass
 		in: self)
-		label: aClass name , '>>' 
+		label: aClass name , '>>'
 					, (selectorCollection detect: [:each | true] ifNone: ['']);
 		yourself
 ]
@@ -345,11 +345,11 @@ RBBrowserEnvironment >> forClassHierarchy: aClass [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> forClasses: classCollection [ 
+RBBrowserEnvironment >> forClasses: classCollection [
 	| classes |
 	classes := OrderedCollection new: classCollection size * 2.
-	classCollection do: 
-			[:each | 
+	classCollection do:
+			[:each |
 			classes add: each instanceSide; add: each classSide].
 	^RBClassEnvironment onEnvironment: self classes: classes
 ]
@@ -376,23 +376,23 @@ RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
 	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
 	todoSize := 0.
 	[[todoSize = todoList size] whileFalse: [
-		todoSize := todoList size.  
+		todoSize := todoList size.
 		todoList asArray do: [ :eachResult |
-			(todoList includes: eachResult) ifTrue: [  
+			(todoList includes: eachResult) ifTrue: [
 				eachResult handleSystemChange: aSystemAnnouncement byProcessingList: todoList]]].
-	todoList notEmpty] whileTrue: [ 
+	todoList notEmpty] whileTrue: [
 		anyResult := todoList anyOne.
 		anyResult handleSystemChange: aSystemAnnouncement.
 		todoList remove: anyResult]
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> implementorsMatching: aString [ 
+RBBrowserEnvironment >> implementorsMatching: aString [
 	^RBSelectorEnvironment implementorsMatching: aString in: self
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> implementorsOf: aSelector [ 
+RBBrowserEnvironment >> implementorsOf: aSelector [
 	^RBSelectorEnvironment implementorsOf: aSelector in: self
 ]
 
@@ -408,7 +408,7 @@ RBBrowserEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBBrowserEnvironment >> includesMethod: aMethod [
-	^ self 
+	^ self
 		includesSelector: aMethod selector
 		in: aMethod methodClass
 ]
@@ -437,31 +437,31 @@ RBBrowserEnvironment >> inspectIn: spec [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [ 
-	^RBVariableEnvironment 
+RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [
+	^RBVariableEnvironment
 		on: self
 		readersOfInstanceVariable: instVarName
 		in: aClass
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> instVarRefsTo: instVarName in: aClass [ 
-	^RBVariableEnvironment 
+RBBrowserEnvironment >> instVarRefsTo: instVarName in: aClass [
+	^RBVariableEnvironment
 		on: self
 		referencesToInstanceVariable: instVarName
 		in: aClass
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> instVarWritersTo: instVarName in: aClass [ 
-	^RBVariableEnvironment 
+RBBrowserEnvironment >> instVarWritersTo: instVarName in: aClass [
+	^RBVariableEnvironment
 		on: self
 		writersOfInstanceVariable: instVarName
 		in: aClass
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> instanceVariablesFor: aClass [ 
+RBBrowserEnvironment >> instanceVariablesFor: aClass [
 	^aClass instVarNames
 ]
 
@@ -512,13 +512,13 @@ RBBrowserEnvironment >> isVariableEnvironment [
 RBBrowserEnvironment >> keys [
 	| keys |
 	keys := Set new.
-	self systemDictionary keysAndValuesDo: [ :key :value | 
+	self systemDictionary keysAndValuesDo: [ :key :value |
 		| class |
 		value isBehavior ifTrue: [
-			(self includesClass: value) 
+			(self includesClass: value)
 				ifTrue: [ keys add: key ] ].
 			class := value class.
-			(self includesClass: class) 
+			(self includesClass: class)
 				ifTrue: [ keys add: key ] ].
 	^ keys
 ]
@@ -535,7 +535,7 @@ RBBrowserEnvironment >> label: aString [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> matches: aString [ 
+RBBrowserEnvironment >> matches: aString [
 	^RBSelectorEnvironment matches: aString in: self
 ]
 
@@ -549,9 +549,9 @@ RBBrowserEnvironment >> methods [
 
 { #category : #accessing }
 RBBrowserEnvironment >> methodsDo: aBlock [
-	
+
 	self classesDo: [ :aClass |
-		
+
 		self selectorsForClass: aClass do: [ :selector |
 			aBlock value: (aClass >> selector) ].
 		self selectorsForClass: aClass class do: [ :selector |
@@ -585,9 +585,9 @@ RBBrowserEnvironment >> packageAt: aName [
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
 	| package |
-	package := self packageOrganizer 
+	package := self packageOrganizer
 		packageNamed: aName ifAbsent: absentBlock.
-	
+
 	^ (self includesCategory: aName)
 		ifTrue: [ package ]
 		ifFalse: absentBlock
@@ -610,7 +610,7 @@ RBBrowserEnvironment >> packages [
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packagesWithContributors [
 	"answer a list of all packages contributing to the definition of classes in the environment"
-	^ self classes 
+	^ self classes
 		flatCollect: #packages
 		as: Set
 ]
@@ -644,7 +644,7 @@ RBBrowserEnvironment >> problemCount [
 
 { #category : #accessing }
 RBBrowserEnvironment >> protocolsFor: aClass [
-	^aClass organization categories 
+	^aClass organization categories
 		select: [ :each | self includesProtocol: each in: aClass ]
 ]
 
@@ -654,13 +654,13 @@ RBBrowserEnvironment >> query: aQuery [
 	| result |
 	self cleanGarbageInCache.
 	result := self queryCache at: aQuery ifAbsent: [nil]. "cache is weak dict where ifAbsentPut: not works"
-	result ifNil: [  
+	result ifNil: [
 		result := aQuery prepareNewResult.
 		aQuery fixStateBeforeExecution.
-		"We should ensure that state of query will not be modified after execution 
+		"We should ensure that state of query will not be modified after execution
 		because it is the key in cache.
 		So aQuery is supposed to become readonly object together with required internal state"
-		self accessGuard critical: [ self queryCache at: aQuery put: result]].	
+		self accessGuard critical: [ self queryCache at: aQuery put: result]].
 	result rebuildIfNeeded.
 	^result
 ]
@@ -672,12 +672,12 @@ RBBrowserEnvironment >> queryCache [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> referencesTo: aLiteral [ 
+RBBrowserEnvironment >> referencesTo: aLiteral [
 	^RBSelectorEnvironment referencesTo: aLiteral in: self
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> referencesTo: aLiteral in: aClass [ 
+RBBrowserEnvironment >> referencesTo: aLiteral in: aClass [
 	| classes |
 	classes := aClass withAllSuperclasses asSet.
 	classes
@@ -701,29 +701,29 @@ RBBrowserEnvironment >> searchStrings [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> searchStrings: aCollection [ 
+RBBrowserEnvironment >> searchStrings: aCollection [
 	searchStrings := aCollection
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> selectMethods: aBlock [ 
+RBBrowserEnvironment >> selectMethods: aBlock [
 	| env |
 	env := RBSelectorEnvironment onEnvironment: self.
-	self classesAndSelectorsDo: 
-			[:each :sel | 
-			(aBlock value: (each compiledMethodAt: sel)) 
+	self classesAndSelectorsDo:
+			[:each :sel |
+			(aBlock value: (each compiledMethodAt: sel))
 				ifTrue: [env addClass: each selector: sel]].
 	^env
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> selectionIntervalFor: aString [ 
+RBBrowserEnvironment >> selectionIntervalFor: aString [
 	| interval |
 	self searchStrings ifEmpty: [^nil].
 	interval := self selectionParseTreeIntervalFor: aString.
 	interval ifNotNil: [^interval].
-	self searchStrings do: 
-			[:each | 
+	self searchStrings do:
+			[:each |
 			| search index |
 			search := each isSymbol ifTrue: [each keywords first] ifFalse: [each].
 			index := aString indexOfSubCollection: search startingAt: 1.
@@ -732,17 +732,17 @@ RBBrowserEnvironment >> selectionIntervalFor: aString [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [ 
+RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	| parseTree answerBlock |
 	parseTree := RBParser
 		parseMethod: aString
 		onError: [ :str :pos | ^ nil ].
 	answerBlock := [ :aNode :answer | ^ aNode sourceInterval ].
-	self searchStrings do: [ :each | 
+	self searchStrings do: [ :each |
 		| matcher tree |
 		matcher := RBParseTreeSearcher new.
 		matcher matchesTree: (RBLiteralNode value: each) do: answerBlock.
-		each isSymbol 
+		each isSymbol
 			ifTrue: [
 				tree := RBParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
@@ -758,14 +758,14 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 { #category : #accessing }
 RBBrowserEnvironment >> selectors [
 	^ Array streamContents: [ :stream |
-		self selectorsDo: [ :selector | 
+		self selectorsDo: [ :selector |
 			stream nextPut: selector ]]
 ]
 
 { #category : #accessing }
 RBBrowserEnvironment >> selectorsDo: aBlock [
-	self allClassesDo: [ :each | 
-		self selectorsForClass: each do: aBlock ].
+	self allClassesDo: [ :each |
+		self selectorsForClass: each do: aBlock ]
 ]
 
 { #category : #accessing }
@@ -775,7 +775,7 @@ RBBrowserEnvironment >> selectorsFor: aProtocol in: aClass [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> selectorsForClass: aClass [ 
+RBBrowserEnvironment >> selectorsForClass: aClass [
 	| selectors |
 	selectors := IdentitySet new.
 	self selectorsForClass: aClass do: [ :each | selectors add: each ].
@@ -783,9 +783,9 @@ RBBrowserEnvironment >> selectorsForClass: aClass [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [ 
-	aClass selectorsAndMethodsDo: 
-			[:each :meth | 
+RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [
+	aClass selectorsAndMethodsDo:
+			[:each :meth |
 			(self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]
 ]
 
@@ -796,7 +796,7 @@ RBBrowserEnvironment >> shortDescription [
 ]
 
 { #category : #printing }
-RBBrowserEnvironment >> storeOn: aStream [ 
+RBBrowserEnvironment >> storeOn: aStream [
 	aStream
 		nextPutAll: self class name;
 		nextPutAll: ' new'
@@ -832,7 +832,7 @@ RBBrowserEnvironment >> traits [
 { #category : #'accessing - classes' }
 RBBrowserEnvironment >> traitsDo: aBlock [
 
-	self systemDictionary allTraitsDo: [ :each | 
+	self systemDictionary allTraitsDo: [ :each |
 		(self includesClass: each)
 			ifTrue: [ aBlock value: each ]  ]
 ]
@@ -859,9 +859,9 @@ RBBrowserEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 					updateStrategy := oldStrategy.
 					updateGuard := Mutex new.
 					err pass]
-			] ensure: [ 
-				self updateStrategy == newUpdateStrategy ifTrue: [ 
-					"In case of error another process can set up new strategy. 
+			] ensure: [
+				self updateStrategy == newUpdateStrategy ifTrue: [
+					"In case of error another process can set up new strategy.
 					This condition will avoid possible collision"
 					updateStrategy := oldStrategy ]]]
 	] ensure: [ newUpdateStrategy publishCollectedChanges]
@@ -880,14 +880,14 @@ RBBrowserEnvironment >> whichProtocolIncludes: aSelector in: aClass [
 { #category : #environments }
 RBBrowserEnvironment >> withoutClasses: aListOfClasses [
 	"Build the same environment without classes given as parameter"
-	^ RBClassEnvironment 
-			onEnvironment: self 
+	^ RBClassEnvironment
+			onEnvironment: self
 			classes: (self classes copyWithoutAll: aListOfClasses)
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> | anEnvironment [ 
-	"If we or anEnvironment includes everything, then return it instead of creating 
+RBBrowserEnvironment >> | anEnvironment [
+	"If we or anEnvironment includes everything, then return it instead of creating
 	an or that will include everything."
 
 	self isSystem ifTrue: [^self].

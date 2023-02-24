@@ -12,7 +12,7 @@ ZnEasyTest >> smallHtmlUrl [
 { #category : #testing }
 ZnEasyTest >> testDelete [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response |
 			response := ZnEasy
 				delete:
@@ -72,7 +72,7 @@ ZnEasyTest >> testHeadSmallHTMLDocument [
 { #category : #testing }
 ZnEasyTest >> testPost [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response data |
 			data := String streamContents: [ :stream | 1 to: 32 do: [ :each | stream nextPut: 'abc' atRandom ] ].
 			response := ZnEasy
@@ -90,7 +90,7 @@ ZnEasyTest >> testPost [
 { #category : #testing }
 ZnEasyTest >> testPostUnicodeUtf8 [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response data |
 			data := String streamContents: [ :stream | 0 to: 16r024F do: [ :each | stream nextPut: each asCharacter ] ].
 			response := ZnEasy
@@ -108,7 +108,7 @@ ZnEasyTest >> testPostUnicodeUtf8 [
 { #category : #testing }
 ZnEasyTest >> testPut [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response data |
 			data := String streamContents: [ :stream | 1 to: 32 do: [ :each | stream nextPut: 'abc' atRandom ] ].
 			response := ZnEasy
@@ -126,26 +126,15 @@ ZnEasyTest >> testPut [
 { #category : #testing }
 ZnEasyTest >> testTimeout [
 	self withServerDo: [ : server |
-		self 
-			should: [ 
-				ZnConnectionTimeout 
-					value: 1 
-					during: [ ZnEasy get: (server localUrl addPathSegment: 'echo'; queryAt: 'delay' put: '2'; yourself) ] ] 
+		self
+			should: [
+				ZnConnectionTimeout
+					value: 1
+					during: [ ZnEasy get: (server localUrl addPathSegment: 'echo'; queryAt: 'delay' put: '2'; yourself) ] ]
 			raise: ConnectionTimedOut ]
-	
 ]
 
 { #category : #private }
 ZnEasyTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		self assert: server isRunning & server isListening.
-		block cull: server
-	] 
-		ensure: [ server stop ]
+	ZnServer withOSAssignedPortDo: block
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #configuration }
-GlobalIdentifierFuelPersistence >> fileName [ 
+GlobalIdentifierFuelPersistence >> fileName [
 	^ 'org.pharo.gt.spotter.event.recorder.fuel'
 ]
 

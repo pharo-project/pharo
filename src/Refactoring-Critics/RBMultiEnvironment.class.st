@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #adding }
-RBMultiEnvironment >> addClass: aClass into: aValue [ 
-	(environmentDictionaries at: aValue ifAbsentPut: [RBSelectorEnvironment new]) 
+RBMultiEnvironment >> addClass: aClass into: aValue [
+	(environmentDictionaries at: aValue ifAbsentPut: [RBSelectorEnvironment new])
 		addClass: aClass
 ]
 
 { #category : #adding }
-RBMultiEnvironment >> addClass: aClass selector: aSymbol into: aValue [ 
-	(environmentDictionaries at: aValue ifAbsentPut: [RBSelectorEnvironment new]) 
+RBMultiEnvironment >> addClass: aClass selector: aSymbol into: aValue [
+	(environmentDictionaries at: aValue ifAbsentPut: [RBSelectorEnvironment new])
 		addClass: aClass
 		selector: aSymbol
 ]
@@ -26,7 +26,7 @@ RBMultiEnvironment >> asSelectorEnvironment [
 	s := RBSelectorEnvironment new.
 	s label: self label.
 	environmentDictionaries do: [:each | | env |
-			env := each asSelectorEnvironment. 
+			env := each asSelectorEnvironment.
 			env classesDo: [:cls | env selectorsForClass: cls do:  [:sel | s addClass: cls selector: sel]]].
 	^ s
 ]
@@ -85,20 +85,20 @@ RBMultiEnvironment >> removeClass: aClass [
 ]
 
 { #category : #removing }
-RBMultiEnvironment >> removeClass: aClass into: aValue [ 
-	(environmentDictionaries at: aValue ifAbsent: [RBSelectorEnvironment new]) 
+RBMultiEnvironment >> removeClass: aClass into: aValue [
+	(environmentDictionaries at: aValue ifAbsent: [RBSelectorEnvironment new])
 		removeClass: aClass
 ]
 
 { #category : #removing }
-RBMultiEnvironment >> removeClass: aClass selector: aSelector into: aValue [ 
-	(environmentDictionaries at: aValue ifAbsentPut: [RBSelectorEnvironment new]) 
+RBMultiEnvironment >> removeClass: aClass selector: aSelector into: aValue [
+	(environmentDictionaries at: aValue ifAbsentPut: [RBSelectorEnvironment new])
 		removeClass: aClass
 		selector: aSelector
 ]
 
 { #category : #accessing }
-RBMultiEnvironment >> selectEnvironment: aValue [ 
+RBMultiEnvironment >> selectEnvironment: aValue [
 	environment := environmentDictionaries at: aValue
 				ifAbsent: [RBSelectorEnvironment new]
 ]

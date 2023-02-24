@@ -20,7 +20,7 @@ FFIFloatType >> defaultReturnOnError [
 
 { #category : #testing }
 FFIFloatType >> isFloatType [
-	
+
 	^ true
 ]
 

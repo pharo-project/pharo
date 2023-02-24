@@ -54,7 +54,7 @@ ZdcPluginSSLSession >> certificateVerificationState [
 		8   - If set, the certificate is used for the wrong purpose
 		16 - If set, the CN of the certificate is invalid
 		32 - If set, the certificate was revoked"
-		
+
 	^ self primitiveSSL: handle getIntProperty: 3
 ]
 
@@ -91,7 +91,7 @@ ZdcPluginSSLSession >> destroy [
 { #category : #initialization }
 ZdcPluginSSLSession >> enableLogging [
 	"Enable logging of the native code inside the plugin"
-	
+
 	self logging: true
 ]
 
@@ -107,12 +107,11 @@ ZdcPluginSSLSession >> initialize [
 	"Initialize the receiver"
 
 	[ handle := self primitiveSSLCreate ]
-		on: PrimitiveFailed 
+		on: PrimitiveFailed
 		do: [ :exception |
 			"Give a more human friendly error message"
 			ZdcPluginMissing signal ].
 	self logging: false
-
 ]
 
 { #category : #testing }
@@ -131,8 +130,7 @@ ZdcPluginSSLSession >> logging [
 { #category : #accessing }
 ZdcPluginSSLSession >> logging: boolean [
 
-	self primitiveSSL: handle setIntProperty: self constantsSQSSL_PROP_LOGLEVEL toValue: (boolean ifFalse: [ 0 ] ifTrue: [ 1 ]).
-
+	self primitiveSSL: handle setIntProperty: self constantsSQSSL_PROP_LOGLEVEL toValue: (boolean ifFalse: [ 0 ] ifTrue: [ 1 ])
 ]
 
 { #category : #accessing }
@@ -159,9 +157,9 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle accept: srcbuf startingAt: start 
 		= 0   Success. The connection is established
 		= -1  More input is required
 		< -1  Other errors"
-		
+
 	<primitive: 'primitiveAccept' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -174,9 +172,9 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle connect: srcbuf startingAt: start
 		= 0   Success. The connection is established
 		= -1  More input is required
 		< -1  Other errors"
-	
+
 	<primitive: 'primitiveConnect' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -186,7 +184,7 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle decrypt: srcbuf startingAt: start
 	Returns the number of bytes produced in the output"
 
 	<primitive: 'primitiveDecrypt' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -196,7 +194,7 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle encrypt: srcbuf startingAt: start
 	Returns the number of bytes produced as a result"
 
 	<primitive: 'primitiveEncrypt' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -205,7 +203,7 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle getIntProperty: propID [
 	"Primitive. Returns a string property from an SSL session"
 
 	<primitive: 'primitiveGetIntProperty' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -214,7 +212,7 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle getStringProperty: propID [
 	"Primitive. Returns a string property from an SSL session"
 
 	<primitive: 'primitiveGetStringProperty' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -223,7 +221,7 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle setIntProperty: propID toValue: a
 	"Primitive. Sets an integer property in an SSL session"
 
 	<primitive: 'primitiveSetIntProperty' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -232,7 +230,7 @@ ZdcPluginSSLSession >> primitiveSSL: sslHandle setStringProperty: propID toValue
 	"Primitive. Sets a string property in an SSL session"
 
 	<primitive: 'primitiveSetStringProperty' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -241,7 +239,7 @@ ZdcPluginSSLSession >> primitiveSSLCreate [
 	"Primitive. Creates and returns a new SSL handle in the VM plugin"
 
 	<primitive: 'primitiveCreate' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -250,7 +248,7 @@ ZdcPluginSSLSession >> primitiveSSLDestroy: sslHandle [
 	"Primitive. Destroys the SSL session handle in the VM plugin"
 
 	<primitive: 'primitiveDestroy' module: 'SqueakSSL'>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -263,10 +261,10 @@ ZdcPluginSSLSession >> serverName [
 
 { #category : #accessing }
 ZdcPluginSSLSession >> serverName: serverName [
-	"Set the Server Name Indication (SNI) to serverName, 
+	"Set the Server Name Indication (SNI) to serverName,
 	the fully qualified domain name of the host to connect to.
 	This should be set by a client before #connect is attempted."
-	
+
 	^ self primitiveSSL: handle setStringProperty: 2 toValue: (serverName ifNil: [''])
 ]
 
@@ -277,7 +275,6 @@ ZdcPluginSSLSession >> sslState [
 		1 - In accept handshake
 		2 - In connect handshake
 		3 - Connected"
-		
+
 	^ self primitiveSSL: handle getIntProperty: 2
-		
 ]

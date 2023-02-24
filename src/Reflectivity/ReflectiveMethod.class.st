@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ReflectiveMethod class >> on: aCompiledMethod [ 
+ReflectiveMethod class >> on: aCompiledMethod [
 	^self new
 		compiledMethod: aCompiledMethod
 ]
@@ -34,7 +34,7 @@ ReflectiveMethod >> ast [
 ReflectiveMethod >> compileAndInstallCompiledMethod [
 	self wrapperNeeded ifTrue: [ self generatePrimitiveWrapper ].
 	self recompileAST.
-	self installCompiledMethod.
+	self installCompiledMethod
 ]
 
 { #category : #accessing }
@@ -56,7 +56,7 @@ ReflectiveMethod >> createTwin [
 
 { #category : #invalidate }
 ReflectiveMethod >> decreaseLinkCount [
-	linkCount := linkCount - 1.
+	linkCount := linkCount - 1
 ]
 
 { #category : #invalidate }
@@ -83,52 +83,52 @@ ReflectiveMethod >> flushCache [
 ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
 	OCASTSemanticCleaner clean: ast.
-	ast compilationContext 
+	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
 	wrappedMethod := ast generate: compiledMethod trailer.
-	
+
 	send := RBMessageNode
 		receiver: RBVariableNode selfNode
 		selector:  #rFwithArgs:executeMethod:
 		arguments: {RBArrayNode statements: ast arguments . (RBLiteralNode value: wrappedMethod)}.
-	
-	assignmentNode := RBAssignmentNode 
+
+	assignmentNode := RBAssignmentNode
 		variable: (RBVariableNode named: #RFReifyValueVar)
 		value: send.
-		
+
 	wrapperMethod := RBMethodNode
 		selector: ast selector
-		arguments: ast arguments 
+		arguments: ast arguments
 		body: assignmentNode asSequenceNode.
-		
+
 	wrapperMethod methodClass: ast methodClass.
 	wrapperMethod propertyAt: #wrapperMethod put: true.
 	ast hasMetalink ifTrue: [wrapperMethod propertyAt: #links put: (ast propertyAt: #links)].
-	ast := wrapperMethod.
+	ast := wrapperMethod
 ]
 
 { #category : #testing }
 ReflectiveMethod >> hasMetaLinks [
-	^self linkCount > 0.
+	^self linkCount > 0
 ]
 
 { #category : #invalidate }
 ReflectiveMethod >> increaseLinkCount [
-	linkCount := self linkCount + 1.
+	linkCount := self linkCount + 1
 ]
 
 { #category : #invalidate }
 ReflectiveMethod >> installCompiledMethod [
 	self installMethod: compiledMethod.
-	ASTCache default at: compiledMethod put: ast.
+	ASTCache default at: compiledMethod put: ast
 ]
 
 { #category : #invalidate }
 ReflectiveMethod >> installLink: aMetaLink [
 	self increaseLinkCount.
-	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink) 
+	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink)
 		ifTrue: [ self compileAndInstallCompiledMethod ]
 ]
 
@@ -187,27 +187,27 @@ ReflectiveMethod >> methodClass: aClass [
 ]
 
 { #category : #printing }
-ReflectiveMethod >> printOn: aStream [ 
+ReflectiveMethod >> printOn: aStream [
 	"Overrides method inherited from the byte arrayed collection."
 
-	aStream 
-		print: ast methodClass; 
-		nextPutAll: '>>'; 
-		store: self selector; 
-		nextPutAll: ' (ReflectiveMethod)'.
+	aStream
+		print: ast methodClass;
+		nextPutAll: '>>';
+		store: self selector;
+		nextPutAll: ' (ReflectiveMethod)'
 ]
 
 { #category : #evaluation }
 ReflectiveMethod >> recompileAST [
- 
+
 	OCASTSemanticCleaner clean: ast.
-	ast compilationContext 
+	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
 	compiledMethod := ast generate: compiledMethod trailer.
 	ast compilationContext compiledMethod: compiledMethod.
-	compiledMethod reflectiveMethod: self.
+	compiledMethod reflectiveMethod: self
 ]
 
 { #category : #accessing }
@@ -225,7 +225,7 @@ ReflectiveMethod >> removeLink: aMetaLink [
 ]
 
 { #category : #evaluation }
-ReflectiveMethod >> run: aSelector with: anArray in: aReceiver [	
+ReflectiveMethod >> run: aSelector with: anArray in: aReceiver [
 	"we install the old one as the compiler might need it"
 	self installCompiledMethod.
 	self compileAndInstallCompiledMethod.
@@ -233,7 +233,7 @@ ReflectiveMethod >> run: aSelector with: anArray in: aReceiver [
 ]
 
 { #category : #forwarding }
-ReflectiveMethod >> selector [ 
+ReflectiveMethod >> selector [
 	^compiledMethod selector
 ]
 
@@ -268,5 +268,5 @@ ReflectiveMethod >> wrapperNeeded [
 	ast hasMetalink ifFalse: [ ^false ].
 	compiledMethod isRealPrimitive ifTrue: [ ^true ].
 	ast hasMetalinkAfter ifTrue: [ ^true ].
-	^false.
+	^false
 ]

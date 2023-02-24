@@ -32,7 +32,7 @@ MethodFinderTopClass >> onlyTopDefinedDisaprovedMethod [
 
 { #category : #tests }
 MethodFinderTopClass >> test [
-	^ self onlyTopDefinedDisaprovedMethod 
+	^ self onlyTopDefinedDisaprovedMethod
 ]
 
 { #category : #accessing }

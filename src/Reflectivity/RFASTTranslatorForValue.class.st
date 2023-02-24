@@ -11,14 +11,14 @@ Class {
 
 { #category : #'inline messages' }
 RFASTTranslatorForValue >> emitIfFalse: aMessageNode [
-	
+
 	self visitNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #false if: false.
 		methodBuilder pushLiteral: nil.
 		methodBuilder jumpAheadTo: #end.
 		methodBuilder jumpAheadTarget: #false.
 	self visitInlinedBlockNode: aMessageNode arguments first.
-	methodBuilder jumpAheadTarget: #end.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
@@ -33,47 +33,47 @@ RFASTTranslatorForValue >> emitIfNotNil: aMessageNode [
 	methodBuilder jumpAheadTo: #end if: true.
 	methodBuilder popTop.
 	self visitInlinedBlockNode: args first.
-	methodBuilder jumpAheadTarget: #end.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
 RFASTTranslatorForValue >> emitIfTrue: aMessageNode [
-	
+
 	self visitNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #else if: false.
 	self visitInlinedBlockNode:  aMessageNode arguments first.
 	methodBuilder jumpAheadTo: #end.
 	methodBuilder jumpAheadTarget: #else.
 	methodBuilder pushLiteral: nil.
-	methodBuilder jumpAheadTarget: #end.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
 RFASTTranslatorForValue >> emitWhileFalse: aMessageNode [
 
 	super emitWhileFalse: aMessageNode.
-	methodBuilder pushLiteral: nil.
+	methodBuilder pushLiteral: nil
 ]
 
 { #category : #'inline messages' }
 RFASTTranslatorForValue >> emitWhileTrue: aMessageNode [
 
 	super emitWhileTrue: aMessageNode.
-	methodBuilder pushLiteral: nil.
+	methodBuilder pushLiteral: nil
 ]
 
 { #category : #'visitor - double dispatching' }
-RFASTTranslatorForValue >> visitSequenceNode: aSequenceNode [ 
+RFASTTranslatorForValue >> visitSequenceNode: aSequenceNode [
 	| statements |
-	
+
 	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
-	
+
 	aSequenceNode hasMetalinkAfter ifTrue: [ ^ self visitSequenceWithAfter: aSequenceNode  ].
-	
+
 	aSequenceNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aSequenceNode ]
-		ifFalse: [ 
+		ifFalse: [
 			statements := aSequenceNode statements.
 			statements ifEmpty: [
 			methodBuilder pushLiteral: nil.

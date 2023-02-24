@@ -34,7 +34,7 @@ SettingsStonReaderTest >> testLoad [
 	reader load.
 	self assert: reader storedSettings notNil.
 	self assert: reader storedSettings size equals: 1.
-	self assert: reader storedSettings first realValue equals: true.
+	self assert: reader storedSettings first realValue equals: true
 ]
 
 { #category : #tests }
@@ -44,7 +44,7 @@ SettingsStonReaderTest >> testLoadNotExistingClassNameForRealValue [
 	self assert: reader storedSettings notNil.
 	self assert: reader storedSettings size equals: 1.
 	self should: [  reader storedSettings first realValue ] raise: NotFound.
-	reader storedSettings first updateSettingNode: nil.
+	reader storedSettings first updateSettingNode: nil
 ]
 
 { #category : #tests }
@@ -54,7 +54,7 @@ SettingsStonReaderTest >> testLoadTwoObjects [
 	self assert: reader storedSettings notNil.
 	self assert: reader storedSettings size equals: 2.
 	self assert: reader storedSettings first realValue equals: false.
-	self assert: reader storedSettings second realValue equals: 55.
+	self assert: reader storedSettings second realValue equals: 55
 ]
 
 { #category : #tests }

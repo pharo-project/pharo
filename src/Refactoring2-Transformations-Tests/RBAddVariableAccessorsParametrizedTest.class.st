@@ -15,42 +15,42 @@ RBAddVariableAccessorsParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddVariableAccessorsParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self abstractVariableTestData
 ]
 
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest >> testExistingClassVariableAccessors [
 	| refactoring |
-	refactoring := rbClass 
-		classVariable: 'Name1' 
+	refactoring := rbClass
+		classVariable: 'Name1'
 		class: #RBLintRuleTestData.
-							
+
 	self executeRefactoring: refactoring asRefactoring.
-	
-	self assertEmpty: refactoring changes changes.
+
+	self assertEmpty: refactoring changes changes
 ]
 
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest >> testExistingInstanceVariableAccessors [
 	| refactoring |
-	refactoring := rbClass 
-		instanceVariable: 'name' 
+	refactoring := rbClass
+		instanceVariable: 'name'
 		class: #RBLintRuleTestData.
-	
+
 	self executeRefactoring: refactoring asRefactoring.
-	
-	self assertEmpty: refactoring changes changes.
+
+	self assertEmpty: refactoring changes changes
 ]
 
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest >> testNewClassVariableAccessors [
 	| refactoring class |
-	refactoring := rbClass 
-		classVariable: 'Foo1' 
+	refactoring := rbClass
+		classVariable: 'Foo1'
 		class: #RBLintRuleTestData.
-		
+
 	self executeRefactoring: refactoring asRefactoring.
-	
+
 	class := refactoring model metaclassNamed: #RBLintRuleTestData.
 	self denyEmpty: refactoring changes changes.
 	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
@@ -60,12 +60,12 @@ RBAddVariableAccessorsParametrizedTest >> testNewClassVariableAccessors [
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 	| refactoring class |
-	refactoring := rbClass 
-		instanceVariable: 'foo1' 
+	refactoring := rbClass
+		instanceVariable: 'foo1'
 		class: #RBLintRuleTestData.
-		
+
 	self executeRefactoring: refactoring asRefactoring.
-	
+
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self denyEmpty: refactoring changes changes.
 	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
@@ -75,7 +75,7 @@ RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 { #category : #'failure tests' }
 RBAddVariableAccessorsParametrizedTest >> testNonExistantClassVariable [
 
-	self shouldFail: (rbClass 
+	self shouldFail: (rbClass
 		classVariable: 'Foo'
 		class: #RBBasicLintRuleTestData) asRefactoring
 ]
@@ -83,7 +83,7 @@ RBAddVariableAccessorsParametrizedTest >> testNonExistantClassVariable [
 { #category : #'failure tests' }
 RBAddVariableAccessorsParametrizedTest >> testNonExistantInstanceVariable [
 
-	self shouldFail: (rbClass 
+	self shouldFail: (rbClass
 		instanceVariable: 'foo'
 		class: #RBBasicLintRuleTestData) asRefactoring
 ]

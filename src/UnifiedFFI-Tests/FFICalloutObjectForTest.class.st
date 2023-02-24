@@ -17,9 +17,9 @@ FFICalloutObjectForTest class >> asExternalTypeOn: generator [
 
 { #category : #primitives }
 FFICalloutObjectForTest class >> primCreate: size [
-	self 
+	self
 		ffiCall: #( FFICalloutObjectForTest malloc( size_t size ) )
-		module: LibC	
+		module: LibC
 ]
 
 { #category : #primitives }
@@ -47,21 +47,21 @@ FFICalloutObjectForTest >> handle: anObject [
 
 { #category : #primitives }
 FFICalloutObjectForTest >> primFree [
-	^ self 
+	^ self
 		ffiCall: #( void free ( self ) )
 		module: LibC
 ]
 
 { #category : #primitives }
 FFICalloutObjectForTest >> primStrcpy: aString [
-	^ self 
+	^ self
 		ffiCall: #( char *strcpy ( self, const char *aString ) )
 		module: LibC
 ]
 
 { #category : #primitives }
 FFICalloutObjectForTest >> primStrcpy: aString size: n [
-	^ self 
+	^ self
 		ffiCall: #( char *strncpy ( self, const char *aString, size_t n ) )
 		module: LibC
 ]
@@ -69,5 +69,5 @@ FFICalloutObjectForTest >> primStrcpy: aString size: n [
 { #category : #accessing }
 FFICalloutObjectForTest >> strcpy: aString [
 	handle := ByteArray new: aString size + 1.
-	^ self primStrcpy: aString.
+	^ self primStrcpy: aString
 ]

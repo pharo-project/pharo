@@ -39,7 +39,7 @@ DAPackageRelationGraphTest >> setUp [
 	packageA := DAPackage on: (RPackageSet named: 'A').
 	packageB := DAPackage on: (RPackageSet named: 'B').
 	packageC := DAPackage on: (RPackageSet named: 'C').
-	packageD := DAPackage on: (RPackageSet named: 'D').
+	packageD := DAPackage on: (RPackageSet named: 'D')
 ]
 
 { #category : #tests }
@@ -49,16 +49,13 @@ DAPackageRelationGraphTest >> testAddExtensionDependencies [
 	"self assert: (packageCollectionAbstract dependentPackages includes: packageKernel).
 	self assert: (packageCollectionAbstract dependentPackages includes: packageRegexCore).
 	self assert: (packageCollectionAbstract dependentPackages includes: packageCollectionsSequenceable)."
-
-	
-
 ]
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testAddInheritanceDependencies [
 	aPackageRelationGraph addInheritanceDependencies: packageCollectionAbstract.
 	"Collections-Abstract has one dependency with Error and Object by Inheritance"
-	self assert: (packageCollectionAbstract dependentPackages includes: packageKernel).
+	self assert: (packageCollectionAbstract dependentPackages includes: packageKernel)
 ]
 
 { #category : #tests }
@@ -82,22 +79,21 @@ DAPackageRelationGraphTest >> testAddPackages [
 { #category : #tests }
 DAPackageRelationGraphTest >> testAddPoolDictionaryDependencies [
 	aPackageRelationGraph addPoolDictionaryDependencies: packageMorphicBase.
- 
-	self assert: (packageMorphicBase dependentPackages includes: packageTextCore).
+
+	self assert: (packageMorphicBase dependentPackages includes: packageTextCore)
 ]
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testAddReferenceDependencies [
 	aPackageRelationGraph addReferenceDependencies: packagePackageDependencies.
 	packagePackageDependencies removeAllInternal.
-	self assert: (packagePackageDependencies  dependentPackages includes: packageStrings).
+	self assert: (packagePackageDependencies  dependentPackages includes: packageStrings)
 ]
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testAllDependentPackages [
-	
-		packageA add: (DAPackageDependency from: packageA to: packageB).
 
+		packageA add: (DAPackageDependency from: packageA to: packageB)
 ]
 
 { #category : #tests }
@@ -127,8 +123,8 @@ DAPackageRelationGraphTest >> testAllSeen [
 { #category : #tests }
 DAPackageRelationGraphTest >> testCanGetDaPackageFromAGivenClass [
 	aPackageRelationGraph addPackage: packageCollectionAbstract.
-	
-	self 
+
+	self
 		assert: (aPackageRelationGraph packageForClass: Collection)
 		equals: packageCollectionAbstract
 ]
@@ -158,13 +154,6 @@ DAPackageRelationGraphTest >> testCombineDependencies [
 	  ].
 	aPackageRelationGraph combineDependencies: packageCollectionAbstract.
 	aSet do: [ :each | self assert: (packageCollectionAbstract dependentPackages includes: each) ]
-	
-
-	
-	
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -204,7 +193,7 @@ DAPackageRelationGraphTest >> testIncludedPackages [
 DAPackageRelationGraphTest >> testPackageAt [
 
 	aPackageRelationGraph addPackage: packageKernel.
-	self assert: ( (aPackageRelationGraph packageAt: 'Kernel') isNotNil).
+	self assert: ( (aPackageRelationGraph packageAt: 'Kernel') isNotNil)
 ]
 
 { #category : #tests }
@@ -243,24 +232,24 @@ DAPackageRelationGraphTest >> testPredecessors [
 DAPackageRelationGraphTest >> testRemoveInternalDependencies [
 	aPackageRelationGraph computeStaticDependencies.
 	aPackageRelationGraph removeInternalDependencies.
-	
+
 	aPackageRelationGraph packages do: [ :value |
-				value dependencies do: 
+				value dependencies do:
 					[ :dependency |
 					self assert: (dependency isExternal).
-					 ] ].
+					 ] ]
 ]
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testRemoveOutgoingDependencies [
 	aPackageRelationGraph computeStaticDependencies.
 	aPackageRelationGraph removeOutgoingDependencies.
-	
+
 	aPackageRelationGraph packages do: [ :package |
 			package dependencies do: [ :dependency |
 				self assert: (dependency target isIncluded)
 				]
-		 ].
+		 ]
 ]
 
 { #category : #tests }
@@ -286,7 +275,7 @@ DAPackageRelationGraphTest >> testSeenPackagesName [
 	aPackageRelationGraph addPackage: packageKernel.
 	self deny: (aPackageRelationGraph seenPackagesName includes: 'Kernel').
 	aPackageRelationGraph computeStaticDependencies.
-	self assert: (aPackageRelationGraph seenPackagesName includes: 'Kernel').
+	self assert: (aPackageRelationGraph seenPackagesName includes: 'Kernel')
 ]
 
 { #category : #tests }

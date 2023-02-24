@@ -79,13 +79,13 @@ ShDefaultBuilderEnhancer >> metaclassCreated: builder [
 ]
 
 { #category : #events }
-ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [
 
 	aShiftClassInstaller migrateInstancesTo: aClass
 ]
 
 { #category : #events }
-ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [ 
+ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [
 
 	aShiftClassInstaller migrateClassTo: aClass
 ]
@@ -104,7 +104,7 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
-	
+
 	newClass subclasses do: [ :e | installer remake: e ]
 ]
 

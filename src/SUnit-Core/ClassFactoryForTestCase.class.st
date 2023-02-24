@@ -38,7 +38,7 @@ ClassFactoryForTestCase >> cleanUp [
 	createdClassNames := self createdClassNames.
 	createdTraitNames := self createdTraitNames.
 
-	self 
+	self
 		deleteClasses;
 		deleteTraits;
 		deletePackage;
@@ -52,8 +52,8 @@ ClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 	self class environment at: #ChangeSet ifPresent: [ :aChangeSetClass |
 		| changeSet |
 		changeSet := aChangeSetClass current.
-		classeNames do: [:name|	
-			changeSet 
+		classeNames do: [:name|
+			changeSet
 				removeClassChanges: name;
 				removeClassChanges: name, ' class']]
 ]
@@ -251,7 +251,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString category: category [
 
 	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder | 
+	newClass := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            name: self newClassName;
 			            superclass: aClass;
@@ -306,7 +306,7 @@ ClassFactoryForTestCase >> newTraitName [
 ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
 
 	| newTrait |
-	newTrait := self class classInstaller make: [ :aBuilder | 
+	newTrait := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            name: aTraitName;
 			            traitComposition: aTraitComposition asTraitComposition;
@@ -369,7 +369,7 @@ ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString 
 ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString package: aPackageName [
 
 	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder | 
+	newClass := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            name: aClass name;
 			            superclass: aSuperclass;
@@ -395,7 +395,7 @@ ClassFactoryForTestCase >> silentlyNewClassInCategory: category [
 
 { #category : #'creating - silently' }
 ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-	
+
 	^ self
 		silentlyNewSubclassOf: aClass
 		instanceVariableNames: ivNamesString
@@ -416,7 +416,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 { #category : #'creating - silently' }
 ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString package: packageName [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ 
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		^ self
 			  newSubclassOf: aClass
 			  uses: #(  )
