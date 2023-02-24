@@ -514,7 +514,6 @@ PharoShortcuts >> selectPageUpShortcut [
 PharoShortcuts >> selectTextEndShortcut [
 
 	^ Character end shift meta
-	 
 ]
 
 { #category : #'keymaps - editor selection' }
@@ -542,7 +541,7 @@ PharoShortcuts >> setSearchStringShortcut [
 { #category : #'keymaps - debugger' }
 PharoShortcuts >> stepIntoShortcut [
 
-	^ $e meta 
+	^ $e meta
 ]
 
 { #category : #'keymaps - debugger' }
@@ -573,14 +572,12 @@ PharoShortcuts >> swapCharsShortcut [
 PharoShortcuts >> textEndShortcut [
 
 	^ Character end meta
-	 
 ]
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> textStartShortcut [
 
 	^ Character home meta
-
 ]
 
 { #category : #'keymaps - editor style' }

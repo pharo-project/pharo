@@ -52,7 +52,7 @@ HaloSpec >> iconSymbol [
 HaloSpec >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ' (';
 		print: addHandleSelector;
  		space;

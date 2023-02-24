@@ -44,7 +44,7 @@ FTSearchFunction >> realSearch [
 
 	founds ifNotEmpty: [ self table selectIndex: founds first ].
 	self table highlightIndexes: founds.
-	
+
 	^ founds notEmpty
 ]
 

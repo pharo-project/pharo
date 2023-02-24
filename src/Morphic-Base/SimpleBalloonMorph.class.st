@@ -16,7 +16,7 @@ SimpleBalloonMorph class >> getVertices: bounds [
 
 { #category : #initialization }
 SimpleBalloonMorph >> initialize [
-	
+
 	super initialize.
 	self beStraightSegments
 ]

@@ -19,6 +19,6 @@ FFIUndefinedTypeDeclaration >> isUndefined [
 
 { #category : #resolution }
 FFIUndefinedTypeDeclaration >> resolveUsing: aResolver forArgument: aFFIFunctionArgument [
-	
+
 	^ aResolver resolveUntypedArgument: aFFIFunctionArgument
 ]

@@ -8,7 +8,7 @@ Trait {
 
 { #category : #'managing line numbers' }
 TRubWithLineNumber >> changeLineNumbersDisplay [
-	self paragraphProvider lineNumbersRuler 
+	self paragraphProvider lineNumbersRuler
 		ifNil: [ self paragraphProvider withLineNumbers ]
 		ifNotNil: [ self paragraphProvider withoutLineNumbers ].
 	self paragraphProvider manageLayout.
@@ -22,7 +22,7 @@ TRubWithLineNumber >> fontToUse [
 
 { #category : #'managing line numbers' }
 TRubWithLineNumber >> lineNumbersDisplayLabel [
-	^ self paragraphProvider lineNumbersRuler  
+	^ self paragraphProvider lineNumbersRuler
 		ifNil: [ '+L' ]
 		ifNotNil: [ 'L' ]
 ]

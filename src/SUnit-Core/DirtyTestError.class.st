@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 DirtyTestError class >> signalFrom: aTestExecutionEnvironment [
-	^self new 
+	^self new
 		executionEnvironment: aTestExecutionEnvironment;
 		signal
 ]
@@ -42,9 +42,9 @@ DirtyTestError >> manageTestProcessBy: aProcessMonitorTestService [
 { #category : #'exception handling' }
 DirtyTestError >> sunitAnnounce: aTestCase toResult: aTestResult [
 
-	executionEnvironment isMainTestProcessFailed ifTrue: [ 
+	executionEnvironment isMainTestProcessFailed ifTrue: [
 		"The main test process errors are handled by SUnit using same message.
-		So the actual domain test error is already counted in result" 
+		So the actual domain test error is already counted in result"
 		^ self ].
 
 	"If main test process was completed successfully

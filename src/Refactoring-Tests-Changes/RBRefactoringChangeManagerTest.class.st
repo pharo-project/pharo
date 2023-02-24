@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #tests }
-RBRefactoringChangeManagerTest >> testChangeFactoryIsCorrectlyInitialized [ 
+RBRefactoringChangeManagerTest >> testChangeFactoryIsCorrectlyInitialized [
 
 	RBRefactoryChangeManager nuke.
 	self assert: RBRefactoryChangeManager changeFactory isNotNil

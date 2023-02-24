@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-RubTextBackgroundColorSegmentMorph class >> color: aColor from: start to: stop [ 
+RubTextBackgroundColorSegmentMorph class >> color: aColor from: start to: stop [
 	^ self new
 		color: aColor;
-		from: start to: stop; 
+		from: start to: stop;
 		yourself
 ]
 

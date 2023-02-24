@@ -74,18 +74,18 @@ RBInsertClassTransformation >> addClass: aName superclass: superclassName subcla
 RBInsertClassTransformation >> preconditions [
 
 	| cond |
-	cond := ((RBCondition isMetaclass: (self model classObjectFor: superclass)) 
+	cond := ((RBCondition isMetaclass: (self model classObjectFor: superclass))
 				errorMacro: 'Superclass must not be a metaclass') not.
-	cond := subclasses inject: cond into: [:sub :each | 
-		sub & ((RBCondition isMetaclass: (self model classObjectFor: each)) 
-					errorMacro: 'Subclass must <1?not :>be a metaclass') not 
-			 & (RBCondition 
+	cond := subclasses inject: cond into: [:sub :each |
+		sub & ((RBCondition isMetaclass: (self model classObjectFor: each))
+					errorMacro: 'Subclass must <1?not :>be a metaclass') not
+			 & (RBCondition
 					isImmediateSubclass: (self model classObjectFor: each)
 					of: (self model classObjectFor: superclass))].
-	^ cond & (RBCondition isValidClassName: className) 
-		& (RBCondition isGlobal: className in: self model) not 
-			& (RBCondition isSymbol: category) 
-			& ((RBCondition withBlock: [category isEmpty not]) 
+	^ cond & (RBCondition isValidClassName: className)
+		& (RBCondition isGlobal: className in: self model) not
+			& (RBCondition isSymbol: category)
+			& ((RBCondition withBlock: [category isEmpty not])
 					errorMacro: 'Invalid category name')
 ]
 
@@ -93,7 +93,7 @@ RBInsertClassTransformation >> preconditions [
 RBInsertClassTransformation >> privateTransform [
 
 	self model
-		defineClass: ('<1p> %<%< #<2s> package: <3p>' 
+		defineClass: ('<1p> %<%< #<2s> package: <3p>'
 			expandMacrosWith: (self model classObjectFor: superclass)
 			with: className
 			with: category asString);
@@ -102,7 +102,7 @@ RBInsertClassTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBInsertClassTransformation >> storeOn: aStream [ 
+RBInsertClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

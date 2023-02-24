@@ -19,12 +19,12 @@ OmReference class >> fromSton: stonReader [
 
 	"Optimization: only write globalName if it belongs to a 'remote' store"
 	^ array size = 1
-		ifTrue: [ 
-			self 
+		ifTrue: [
+			self
 				globalName: OmCurrentGlobalName value
 				localName: array first ]
 		ifFalse: [
-			self 
+			self
 				globalName: array first
 				localName: array second ]
 ]
@@ -40,14 +40,14 @@ OmReference class >> globalName: aName localName: anIdentifier [
 
 { #category : #comparing }
 OmReference >> = other [
-	^ other species = self species and: [ 
+	^ other species = self species and: [
 		other localName = self localName and: [
 		other globalName = self globalName ] ]
 ]
 
 { #category : #accessing }
 OmReference >> globalName [
-	
+
 	^ globalName
 ]
 
@@ -61,12 +61,12 @@ OmReference >> initializeWithLocalName: aLocalName globalName: aGlobalName [
 
 	self initialize.
 	localName := aLocalName.
-	globalName := aGlobalName.
+	globalName := aGlobalName
 ]
 
 { #category : #accessing }
 OmReference >> localName [
-	
+
 	^ localName
 ]
 
@@ -74,11 +74,11 @@ OmReference >> localName [
 OmReference >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
-		nextPutAll: self shortName; 
-		nextPut: $).
+		nextPutAll: self shortName;
+		nextPut: $)
 ]
 
 { #category : #printing }
@@ -86,21 +86,21 @@ OmReference >> shortName [
 
 	^ String streamContents: [ :stream |
 		stream
-			nextPutAll: self globalName; 
+			nextPutAll: self globalName;
 			nextPut: $:;
 			nextPutAll: self localName ]
 ]
 
 { #category : #'ston persistence' }
-OmReference >> stonContainSubObjects [ 
+OmReference >> stonContainSubObjects [
 	^ false
 ]
 
 { #category : #'ston persistence' }
 OmReference >> stonOn: stonWriter [
-	
-	stonWriter 
-		writeObject: self 
+
+	stonWriter
+		writeObject: self
 		streamShortList: [ :array |
 			"Optimization: only write globalName if it belongs to a 'remote' store"
 			OmCurrentGlobalName value = self globalName

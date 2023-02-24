@@ -56,12 +56,14 @@ IntegerTest >> testBitOr [
 { #category : #'*Kernel-Tests-Extended' }
 IntegerTest >> testDegreeCos [
 
-	45 degreeCos.	"Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
-	self assert: (45 degreeCos squared - (1 / 2)) abs <= Float epsilon.
-	self assert: (60 degreeCos - (1 / 2)) abs <= Float epsilon.
-	self assert: (120 degreeCos + (1 / 2)) abs <= Float epsilon.
-	-360 to: 360 do: [ :i | self assert: (i degreeCos closeTo: i degreesToRadians cos) ].	"Following tests use strict equality which is a requested property of degreeCos"
-	-10 to: 10 do: [ :k |
+	45 degreeCos. "Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
+	self assert:
+		(45 degreeCos squared - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (60 degreeCos - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (120 degreeCos + (1 / 2)) abs <= Float machineEpsilon.
+	-360 to: 360 do: [ :i | 
+	self assert: (i degreeCos closeTo: i degreesToRadians cos) ]. "Following tests use strict equality which is a requested property of degreeCos"
+	-10 to: 10 do: [ :k | 
 		self assert: (k * 360 + 90) degreeCos equals: 0.
 		self assert: (k * 360 - 90) degreeCos equals: 0.
 		self assert: (k * 360 + 180) degreeCos + 1 equals: 0.
@@ -71,12 +73,14 @@ IntegerTest >> testDegreeCos [
 { #category : #'*Kernel-Tests-Extended' }
 IntegerTest >> testDegreeSin [
 
-	45 degreeSin.	"Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
-	self assert: (45 degreeSin squared - (1 / 2)) abs <= Float epsilon.
-	self assert: (30 degreeSin - (1 / 2)) abs <= Float epsilon.
-	self assert: (-30 degreeSin + (1 / 2)) abs <= Float epsilon.
-	-360 to: 360 do: [ :i | self assert: (i degreeSin closeTo: i degreesToRadians sin) ].	"Following tests use strict equality which is a requested property of degreeSin"
-	-10 to: 10 do: [ :k |
+	45 degreeSin. "Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
+	self assert:
+		(45 degreeSin squared - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (30 degreeSin - (1 / 2)) abs <= Float machineEpsilon.
+	self assert: (-30 degreeSin + (1 / 2)) abs <= Float machineEpsilon.
+	-360 to: 360 do: [ :i | 
+	self assert: (i degreeSin closeTo: i degreesToRadians sin) ]. "Following tests use strict equality which is a requested property of degreeSin"
+	-10 to: 10 do: [ :k | 
 		self assert: (k * 360 + 90) degreeSin - 1 equals: 0.
 		self assert: (k * 360 - 90) degreeSin + 1 equals: 0.
 		self assert: (k * 360 + 180) degreeSin equals: 0.

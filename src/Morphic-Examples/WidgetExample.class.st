@@ -70,7 +70,7 @@ WidgetExample class >> exampleBasicControls [
 	|dialog builder radioModel treeModel|
 	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
-	radioModel := ExampleRadioButtonModel new.
+	radioModel := RadioButtonModelExample new.
 	treeModel := Array with:(MorphWithSubmorphsWrapper with: self currentWorld).
 	dialog contentMorph: ((dialog newRow: {
 		dialog newLabelGroup: {
@@ -179,7 +179,7 @@ WidgetExample class >> exampleDialogs [
 	"Open an example of each services dialog"
 	"self exampleDialogs"
 	<script>
-	
+
 	self builder
 		chooseFont: TextStyle default defaultFont;
 		chooseColor: (Color r: 0.529 g: 0.611 b: 0.004);
@@ -350,11 +350,11 @@ WidgetExample class >> exampleTextEntryWithCompletionDialog [
 
 	| applicants entryCompletion |
 	applicants := Smalltalk globals classNames sorted.
-	
+
 	entryCompletion := EntryCompletion new
 		                   dataSourceBlock: [ :currText | applicants ];
-		                   filterBlock: [ :currApplicant :currText | 
-			                   currText size > 3 and: [ 
+		                   filterBlock: [ :currApplicant :currText |
+			                   currText size > 3 and: [
 					                   currApplicant asUppercase includesSubstring:
 							                   currText asString asUppercase ] ].
 	UIManager default
@@ -369,7 +369,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 	"Open an example window with toolbars."
 	"self exampleWindowWithToolbars"
 	<script>
-	
+
 	| win fileMenu tools dock text holder |
 	win := StandardWindow new.
 	fileMenu := win newMenu.

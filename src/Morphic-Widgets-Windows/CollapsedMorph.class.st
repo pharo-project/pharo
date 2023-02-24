@@ -18,14 +18,14 @@ CollapsedMorph >> beReplacementFor: aMorph [
 	| itsWorld priorPosition |
 	(itsWorld := aMorph world) ifNil: [^self].
 	uncollapsedMorph := aMorph.
-			
+
 	self setLabel: aMorph externalName.
 	aMorph delete.
 	itsWorld addMorphFront: self.
 	self collapseOrExpand.
 	(priorPosition := aMorph valueOfProperty: #collapsedPosition ifAbsent: [nil])
 	ifNotNil:
-		[self position: priorPosition].
+		[self position: priorPosition]
 ]
 
 { #category : #menu }
@@ -46,7 +46,7 @@ CollapsedMorph >> buildWindowMenu [
 		ifTrue:
 			[aMenu add: 'Make closable' translated selector: #makeClosable].
 	aMenu
-		add: (self isSticky ifTrue: ['Make draggable'] ifFalse: ['Make undraggable']) 
+		add: (self isSticky ifTrue: ['Make draggable'] ifFalse: ['Make undraggable'])
 		selector: #toggleStickiness.
 	^aMenu
 ]
@@ -57,7 +57,7 @@ CollapsedMorph >> collapseOrExpand [
 	"Toggle the expand/collapsd state of the receiver.  If expanding, copy the window title back to the name of the expanded morph"
 
 	isCollapsed
-		ifTrue: [ 
+		ifTrue: [
 			| aWorld |
 			uncollapsedMorph
 				setProperty: #collapsedPosition

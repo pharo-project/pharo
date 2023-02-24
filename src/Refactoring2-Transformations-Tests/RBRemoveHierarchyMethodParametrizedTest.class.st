@@ -13,7 +13,7 @@ RBRemoveHierarchyMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBRemoveHierarchyMethodParametrizedTest >> constructor [ 
+RBRemoveHierarchyMethodParametrizedTest >> constructor [
 	^ #removeMethods:from:
 ]
 

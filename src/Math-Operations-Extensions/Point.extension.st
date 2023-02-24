@@ -36,24 +36,24 @@ Point >> bearingToPoint: anotherPoint [
 Point >> degrees [
 	"Answer the angle the receiver makes with origin in degrees. right is 0; down is 90."
 	| tan theta |
-	^ x = 0 
-		ifTrue: 
-			[ y >= 0 
+	^ x = 0
+		ifTrue:
+			[ y >= 0
 				ifTrue: [ 90.0 ]
 				ifFalse: [ 270.0 ] ]
-		ifFalse: 
+		ifFalse:
 			[ tan := y asFloat / x asFloat.
 			theta := tan arcTan.
-			x >= 0 
-				ifTrue: 
-					[ y >= 0 
+			x >= 0
+				ifTrue:
+					[ y >= 0
 						ifTrue: [ theta radiansToDegrees ]
 						ifFalse: [ 360.0 + theta radiansToDegrees ] ]
 				ifFalse: [ 180.0 + theta radiansToDegrees ] ]
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Point >> distanceTo: aPoint [ 
+Point >> distanceTo: aPoint [
 	"Answer the distance between aPoint and the receiver."
 	| dx dy |
 	dx := aPoint x - x.
@@ -120,9 +120,9 @@ Point class >> r: rho degrees: degrees [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Point >> rotateBy: angle about: center [ 
-	"This method returns the point obtained after rotating myself (counter clockwise) 
-	around the #center point of an #angle given as parameter. The #angle provided as 
+Point >> rotateBy: angle about: center [
+	"This method returns the point obtained after rotating myself (counter clockwise)
+	around the #center point of an #angle given as parameter. The #angle provided as
 	parameter is interpreted as being in radian."
 	| p r theta |
 	p := self - center.
@@ -132,7 +132,7 @@ Point >> rotateBy: angle about: center [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Point >> rotateBy: direction centerAt: c [ 
+Point >> rotateBy: direction centerAt: c [
 	"Answer a Point which is rotated according to direction, about the point c.
 	Direction must be one of #right (CW), #left (CCW) or #pi (180 degrees)."
 	| offset |
@@ -144,7 +144,7 @@ Point >> rotateBy: direction centerAt: c [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Point >> setR: rho degrees: degrees [ 
+Point >> setR: rho degrees: degrees [
 	| radians |
 	radians := degrees asFloat degreesToRadians.
 	x := rho asFloat * radians cos.
@@ -153,7 +153,7 @@ Point >> setR: rho degrees: degrees [
 
 { #category : #'*Math-Operations-Extensions' }
 Point >> theta [
-	"Answer the angle the receiver makes with origin in radians. right is 0; 
+	"Answer the angle the receiver makes with origin in radians. right is 0;
 	down is 90."
 
 	| tan theta |
@@ -161,7 +161,7 @@ Point >> theta [
 		ifTrue: [y >= 0
 				ifTrue: [ 1.570796326794897 "90.0 degreesToRadians" ]
 				ifFalse: [ 4.71238898038469 "270.0 degreesToRadians" ] ]
-		ifFalse: 
+		ifFalse:
 			[tan := y asFloat / x asFloat.
 			theta := tan arcTan.
 			x >= 0

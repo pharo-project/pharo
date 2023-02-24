@@ -29,7 +29,7 @@ LockableTabMorph class >> lockedIconContents [
 LockableTabMorph >> closeable: anObject [
 
 	closeable := anObject.
-	anObject 
+	anObject
 		ifTrue: [ self setUnlockedIcon ]
 		ifFalse: [ self setLockedIcon ]
 ]
@@ -37,13 +37,13 @@ LockableTabMorph >> closeable: anObject [
 { #category : #private }
 LockableTabMorph >> setLockedIcon [
 
-	closeIcon image: self class lockedIcon.
+	closeIcon image: self class lockedIcon
 ]
 
 { #category : #private }
 LockableTabMorph >> setUnlockedIcon [
 
-	closeIcon image: self class closeIcon.
+	closeIcon image: self class closeIcon
 ]
 
 { #category : #protocol }

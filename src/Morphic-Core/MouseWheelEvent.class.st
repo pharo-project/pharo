@@ -51,7 +51,7 @@ MouseWheelEvent >> isLeft [
 { #category : #testing }
 MouseWheelEvent >> isMouseWheel [
 	"Answer whether the receiver is a mouse wheel event."
-	
+
 	^true
 ]
 
@@ -78,26 +78,26 @@ MouseWheelEvent >> printOn: aStream [
 	aStream nextPutAll: self buttonString.
 	aStream print: timeStamp; space.
 	aStream print: self windowIndex.
-	aStream nextPut: $].
+	aStream nextPut: $]
 ]
 
 { #category : #dispatching }
 MouseWheelEvent >> sentTo: anObject [
 	"Dispatch the receiver into anObject"
-	
+
 	type == #mouseWheel ifTrue:[^anObject handleMouseWheel: self].
-	^super sentTo: anObject.
+	^super sentTo: anObject
 ]
 
 { #category : #accessing }
 MouseWheelEvent >> setType: evtType position: evtPos direction: dirSymbol buttons: evtButtons hand: evtHand stamp: stamp [
 	"Set the state for the receiver."
-	
+
 	type := evtType.
 	position := evtPos.
 	buttons := evtButtons.
 	source := evtHand.
 	wasHandled := false.
 	direction := dirSymbol.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]

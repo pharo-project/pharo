@@ -9,7 +9,7 @@ MetaclassForTraits >> asRGDefinition [
 { #category : #'*Ring-TraitsV2Support' }
 MetaclassForTraits >> asRingDefinitionIn: anRGEnvironment [
 
-	^ RGMetaclassTrait named: self name parent: anRGEnvironment.
+	^ RGMetaclassTrait named: self name parent: anRGEnvironment
 ]
 
 { #category : #'*Ring-TraitsV2Support' }

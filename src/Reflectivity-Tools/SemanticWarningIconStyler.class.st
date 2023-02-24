@@ -14,7 +14,7 @@ SemanticWarningIconStyler >> highlightColor [
 
 { #category : #defaults }
 SemanticWarningIconStyler >> iconFor: aNode [
-	^self iconNamed: #flag.
+	^self iconNamed: #flag
 ]
 
 { #category : #defaults }

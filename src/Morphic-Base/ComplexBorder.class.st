@@ -62,6 +62,6 @@ Class {
 }
 
 { #category : #testing }
-ComplexBorder class >> isDeprecated [ 
+ComplexBorder class >> isDeprecated [
 	^ true
 ]

@@ -28,7 +28,7 @@ ScrollBarMorph >> scrollRestrictedDown: aValue [
 	"only scroll if the scrollbar is not at its end yet"
 
 	self canScrollDown ifFalse: [ ^self ].
-	
+
 	self scrollDown: aValue
 ]
 
@@ -38,7 +38,7 @@ ScrollBarMorph >> scrollRestrictedUp: aValue [
 	"only scroll if the scrollbar is not at its end yet"
 
 	self canScrollUp ifFalse: [ ^self ].
-	
+
 	self scrollUp: aValue
 ]
 

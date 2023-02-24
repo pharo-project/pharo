@@ -84,7 +84,7 @@ ZnChunkedStreamTest >> testReadingGzip [
 	chunked := String streamContents: [ :stream |
 		self nextPutAll: gzipped on: stream chunked: 16 ].
 	plain := (GZipReadStream on: (ZnChunkedReadStream on: chunked readStream)) upToEnd.
-	self assert: data equals: plain 
+	self assert: data equals: plain
 ]
 
 { #category : #testing }
@@ -98,7 +98,7 @@ ZnChunkedStreamTest >> testReadingGzipStepped [
 	unchunked := (ZnChunkedReadStream on: chunked readStream) upToEnd.
 	ungzipped := (GZipReadStream on: unchunked) upToEnd.
 	self assert: gzipped equals: unchunked.
-	self assert: data equals: ungzipped 
+	self assert: data equals: ungzipped
 ]
 
 { #category : #testing }

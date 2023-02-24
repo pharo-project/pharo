@@ -35,19 +35,19 @@ ToggleMenuItemShortcut class >> keyTextShortcuts [
 ]
 
 { #category : #'instance creation' }
-ToggleMenuItemShortcut class >> new [ 
+ToggleMenuItemShortcut class >> new [
 	self error: 'Use #owner:keyText:'
 ]
 
 { #category : #private }
 ToggleMenuItemShortcut class >> normalize: aString [
-	"This is a hack to show better explained menu commands. 
-	 WARNING: This is now really good, but is an easy and fast way to enhance accesibility of 
+	"This is a hack to show better explained menu commands.
+	 WARNING: This is now really good, but is an easy and fast way to enhance accesibility of
 	 menu commands."
 
 	self keyTextShortcuts do: [ :each |
 		(aString includesSubstring: each caseSensitive: false)
-			ifTrue: [ ^ self normalizeFullStyle: aString ] ].   
+			ifTrue: [ ^ self normalizeFullStyle: aString ] ].
 	^ self normalizeCondensedStyle: aString
 ]
 
@@ -58,8 +58,8 @@ ToggleMenuItemShortcut class >> normalizeCondensedStyle: aString [
 	^ String streamContents: [ :stream | | keys |
 		keys := (aString substrings: ',') collect: [ :each | each trimBoth ].
 		stream << OSPlatform current menuShortcutString capitalized << '+'.
-		keys 
-			do: [ :each | 
+		keys
+			do: [ :each |
 			(each first isUppercase) ifTrue: [ stream << 'Shift+' ].
 			stream << each asLowercase capitalized ]
 			separatedBy: [ stream << '+' ] ]
@@ -69,7 +69,7 @@ ToggleMenuItemShortcut class >> normalizeCondensedStyle: aString [
 ToggleMenuItemShortcut class >> normalizeFullStyle: aString [
 	"Assuming is a keytext with the format: 'cmd+shift+something'"
 
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 			((aString substrings: '+') collect: [:each | each trimBoth])
 				do: [ :each | stream << (each asLowercase capitalized) ]
 				separatedBy: [ stream << '+' ] ]
@@ -77,7 +77,7 @@ ToggleMenuItemShortcut class >> normalizeFullStyle: aString [
 
 { #category : #'instance creation' }
 ToggleMenuItemShortcut class >> owner: aMenuItem keyText: aString [
-	^ self shortcutClass basicNew 
+	^ self shortcutClass basicNew
 		initializeOwner: aMenuItem keyText: aString;
 		yourself
 ]
@@ -89,8 +89,8 @@ ToggleMenuItemShortcut class >> priority [
 
 { #category : #private }
 ToggleMenuItemShortcut class >> shortcutClass [
-	"Answers first class that can be used. 
-	 WARNING: Note than for speed I'm using #subclasses instead #allSubclasses, avoiding the scan of 
+	"Answers first class that can be used.
+	 WARNING: Note than for speed I'm using #subclasses instead #allSubclasses, avoiding the scan of
 	 the hierarchy. This will not work if we extend the hierarchy more than one level"
 	^ (self subclasses sorted: [ :a :b | a priority < b priority ])
 		detect: #canBeUsed
@@ -99,7 +99,7 @@ ToggleMenuItemShortcut class >> shortcutClass [
 { #category : #private }
 ToggleMenuItemShortcut >> boundsForKeyText: aString font: aFont [
 	| ktp ktw b |
-	
+
 	ktp := self owner hasSubMenu
 		ifTrue: [ self owner right - self owner subMenuMarker width ]
 		ifFalse: [ self owner right ].

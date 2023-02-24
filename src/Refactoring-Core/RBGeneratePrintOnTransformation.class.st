@@ -47,7 +47,7 @@ RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 ]
 
 { #category : #testing }
-RBGeneratePrintOnTransformation class >> isTransformation [ 
+RBGeneratePrintOnTransformation class >> isTransformation [
 
 	^ true
 ]
@@ -60,10 +60,10 @@ RBGeneratePrintOnTransformation class >> model: aNamespace className: aClass var
 { #category : #preconditions }
 RBGeneratePrintOnTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the printOn:."
-	
+
 	^ variables
 		  inject: self emptyCondition
-		  into: [ :condition :variable | 
+		  into: [ :condition :variable |
 			  condition
 			  &
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
@@ -81,10 +81,10 @@ RBGeneratePrintOnTransformation >> transform [
 		parseMethod:
 			'printOn: aStream
 		"Generate a string representation of the receiver based on its instance variables."
-		
+
 		super printOn: aStream'.
 	variables
-		do: [ :each | 
+		do: [ :each |
 			method body
 				addNode:
 					(self parserClass

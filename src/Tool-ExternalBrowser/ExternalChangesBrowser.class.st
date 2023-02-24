@@ -26,24 +26,24 @@ Class {
 { #category : #examples }
 ExternalChangesBrowser class >> browseRecentLog [
 	<example>
-	
+
 	^ self openOnStream: SourceFiles changesFileStream
 ]
 
 { #category : #layout }
 ExternalChangesBrowser class >> defaultLayout [
 	<spec: #default>
-	
-	^ SpPanedLayout newTopToBottom 
-		add: (SpBoxLayout newTopToBottom 
+
+	^ SpPanedLayout newTopToBottom
+		add: (SpBoxLayout newTopToBottom
 					add: #changes;
-					add: (SpBoxLayout newLeftToRight 
+					add: (SpBoxLayout newLeftToRight
 							add: #selectAllButton;
 							add: #deselectAllButton;
 							add: #fileInSelectedButton;
 							yourself ) height: self buttonHeight );
 		add: #codePane;
-		yourself 
+		yourself
 ]
 
 { #category : #examples }
@@ -56,7 +56,7 @@ ExternalChangesBrowser class >> example1 [
 { #category : #examples }
 ExternalChangesBrowser class >> example2 [
 	<example>
-	
+
 	self openOn: Smalltalk changesFile fullName
 ]
 
@@ -102,15 +102,15 @@ ExternalChangesBrowser class >> openOnStream: aStream [
 { #category : #'tool registry' }
 ExternalChangesBrowser class >> registerToolsOn: registry [
 
-	registry register: self as: #changeList 
+	registry register: self as: #changeList
 ]
 
 { #category : #'file service' }
 ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 	"Answer a service for opening a changelist browser on a file"
 
-	^ (SimpleServiceEntry 
-		provider: self 
+	^ (SimpleServiceEntry
+		provider: self
 		label: 'Changelist browser'
 		selector: #openOnStream:
 		description: 'Open a changelist tool on this file'
@@ -139,12 +139,12 @@ ExternalChangesBrowser >> buildMenu [
 
 	aMenu := self newMenu.
 
-	aMenu 	addItem: [ :item | 
+	aMenu 	addItem: [ :item |
 			item
 				name: 'File in all selected';
 				action: [ self fileIn: changes selectedItemsSorted ] ].
 
-	aMenu 	addItem: [ :item | 
+	aMenu 	addItem: [ :item |
 			item
 				name:  'Compare method to current';
 				enabled: [ self canCompareToCurrent ];
@@ -159,10 +159,9 @@ ExternalChangesBrowser >> canCompareToCurrent [
 	| aMethodDeclaration |
 	(changes selectedItems size = 1) ifFalse: [ ^ false ].
 	((aMethodDeclaration := changes selectedItem) isMethodDeclaration) ifFalse: [  ^ false ].
-	
+
 	( aMethodDeclaration existsBehavior) ifFalse: [ ^ false ].
 	^ aMethodDeclaration targetClass includesSelector: aMethodDeclaration methodSelector
-	
 ]
 
 { #category : #initialization }
@@ -176,7 +175,7 @@ ExternalChangesBrowser >> changeSetName: aFileName [
 
 	changeSet := CodeImporter fileNamed: aFileName.
 	changeSet parseChunks.
-	changes items: changeSet codeDeclarations.
+	changes items: changeSet codeDeclarations
 ]
 
 { #category : #accessing }
@@ -197,7 +196,7 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 	| class sourceString |
 	class := aMethodDeclaration targetClass.
 	sourceString := (class >> aMethodDeclaration methodSelector) sourceCode.
-	
+
 	self
 		openComparisonFrom: aMethodDeclaration contents
 		to: sourceString
@@ -208,7 +207,7 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 ]
 
 { #category : #initialization }
-ExternalChangesBrowser >> connectPresenters [ 
+ExternalChangesBrowser >> connectPresenters [
 
 	changes display: [ :elem | self changeDescription: elem ].
 
@@ -217,9 +216,8 @@ ExternalChangesBrowser >> connectPresenters [
 	selectAllButton action: [ changes selectAll ].
 	deselectAllButton action: [ changes resetListSelection ].
 	fileInSelectedButton action: [ self fileIn: changes selectedItemsSorted ].
-	
-	changes contextMenu: self buildMenu.
 
+	changes contextMenu: self buildMenu
 ]
 
 { #category : #accessing }
@@ -231,7 +229,7 @@ ExternalChangesBrowser >> deselectAllButton [
 { #category : #menu }
 ExternalChangesBrowser >> fileIn: aCodeDeclaration [
 
-	aCodeDeclaration do: #import.
+	aCodeDeclaration do: #import
 ]
 
 { #category : #accessing }
@@ -254,12 +252,12 @@ ExternalChangesBrowser >> initializePresenters [
 	deselectAllButton := self newButton.
 	deselectAllButton
 		label: 'deselect all'.
-		
+
 	fileInSelectedButton := self newButton.
 	fileInSelectedButton
 		label: 'file in selected'.
 
-	codePane := self newCode.
+	codePane := self newCode
 ]
 
 { #category : #initialization }
@@ -273,14 +271,14 @@ ExternalChangesBrowser >> initializeWindow: aWindow [
 ExternalChangesBrowser >> openComparisonFrom: targetMethodSource
 					to: originalMethodSource
 					belongingTo: aClass
-					from: aChange 
-					labeled: aLabel 
-					inWindowLabeled: aWindowLabel [ 
+					from: aChange
+					labeled: aLabel
+					inWindowLabeled: aWindowLabel [
 
 	| diffBuilder difference  |
 
-	PSMCPatchMorph usedByDefault 
-		ifTrue: [ ^ self openPolymorphComparisonFrom: originalMethodSource 
+	PSMCPatchMorph usedByDefault
+		ifTrue: [ ^ self openPolymorphComparisonFrom: originalMethodSource
 					to: targetMethodSource
 					belongingTo: aClass
 					from: aChange
@@ -288,22 +286,21 @@ ExternalChangesBrowser >> openComparisonFrom: targetMethodSource
 					inWindowLabeled: aWindowLabel   ].
 
 	diffBuilder :=  TextDiffBuilder
-			from: originalMethodSource 
+			from: originalMethodSource
 			to: targetMethodSource.
 
 	difference := diffBuilder buildDisplayPatch.
-	
-	UIManager default edit: difference label: aLabel.
-				
+
+	UIManager default edit: difference label: aLabel
 ]
 
 { #category : #private }
 ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource
 					to: originalMethodSource
 					belongingTo: aClass
-					from: aChange 
-					labeled: aLabel 
-					inWindowLabeled: aWindowLabel [ 
+					from: aChange
+					labeled: aLabel
+					inWindowLabeled: aWindowLabel [
 
 	| diffMorph |
 
@@ -314,7 +311,7 @@ ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource
 		label: (aClass compiledMethodAt: aChange methodSelector) timeStamp
 		contextClass: aClass.
 
-	diffMorph openInWindowLabeled: aWindowLabel.
+	diffMorph openInWindowLabeled: aWindowLabel
 ]
 
 { #category : #accessing }

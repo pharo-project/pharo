@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #menu }
-Finder class >> finderMenuOn: aBuilder [ 
+Finder class >> finderMenuOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #Finder)
@@ -29,7 +29,7 @@ Finder class >> finderMenuOn: aBuilder [
 		order: 2;
 		parent: #Searching;
 		help: 'Looking for something ?';
-		icon: self icon.
+		icon: self icon
 ]
 
 { #category : #menu }
@@ -41,24 +41,22 @@ Finder class >> icon [
 { #category : #menu }
 Finder class >> open [
 	<script>
-	
+
 	^ self new open
 ]
 
 { #category : #'tools registry' }
 Finder class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]" 
+	"Add ourselves to registry. See [Smalltalk tools]"
 
 	registry register: self as: #finder
-
-	
 ]
 
 { #category : #private }
 Finder >> classSearch: aSelectBlock [
 	| result |
 	result := OrderedCollection new.
-	self packagesSelection classesAndTraitsDo:[ :class | 
+	self packagesSelection classesAndTraitsDo:[ :class |
 			(aSelectBlock value: class)
 				ifTrue: [ result add: class ] ].
 	^ result
@@ -67,12 +65,12 @@ Finder >> classSearch: aSelectBlock [
 { #category : #'private - class' }
 Finder >> computeListOfClasses: aString [
 	"Compute in the case I'm searching class names"
-		
+
 	^ self useRegEx
 		ifTrue: [ | regex |
 			regex := aString asRegex.
 			self classSearch: [ :class | regex search: class name ]]
-		ifFalse: [ 
+		ifFalse: [
 			self classSearch: [ :class |
 				class name includesSubstring: aString caseSensitive: false ]]
 ]
@@ -88,31 +86,31 @@ Finder >> computeWithMethodFinder: aString [
 
 	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
 		on: SyntaxErrorNotification, RuntimeSyntaxError
-		do: [ :e | 
+		do: [ :e |
 			self inform: 'Syntax Error: ' , e errorMessage.
 			^ #() ].	"#( data1 data2 result )"
-	
+
 	dataObjects size < 2
-		ifTrue: [ 
+		ifTrue: [
 			self
 				inform:
 					'If you are giving an example of receiver, \args, and result, please put periods between the parts.\Otherwise just type one selector fragment'
 						withCRs.
 			^ #() ].
-		
+
 	result := MethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
 	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
-	^ result.
+	^ result
 ]
 
 { #category : #'private - class' }
 Finder >> constructClassNamesDictionary [
 	"Construct the dictionary in the case I'm searching in class names"
-	
+
 	| result listOfClasses |
 	listOfClasses := self computeListOfClasses: self searchingString.
 	result := Dictionary new.
-	listOfClasses do: [:each | 
+	listOfClasses do: [:each |
 		result at: each put: (each selectors sort: [:a :b | a < b])].
 	self resultDictionary: result
 ]
@@ -140,7 +138,7 @@ Finder >> constructDictionary [
 { #category : #'private - selector' }
 Finder >> constructDictionaryWithMessagesNameSearch: aString [
 	"Construct dictionary when searching for selector"
-	
+
 	| result listOfMethods |
 	result := Dictionary new.
 	listOfMethods := self messagesNameSearch: aString.
@@ -161,17 +159,17 @@ Finder >> constructDictionaryWithMethodFinder: aString [
 	result := Dictionary new.
 	listOfResults := self computeWithMethodFinder: aString.
 	listOfSelectors := listOfResults collect: [ :each | each selector ].
-	self packagesSelection classesDo:[ :class | 
-			class methodsDo:  [ :method | 
+	self packagesSelection classesDo:[ :class |
+			class methodsDo:  [ :method |
 					| index |
 					(index := listOfSelectors indexOf: method selector) = 0
-						ifFalse: [ 
+						ifFalse: [
 							| key value |
 							key := listOfResults at: index.
 							value := method methodClass.
 							(result includesKey: key)
 								ifTrue: [ (result at: key) add: value ]
-								ifFalse: [ 
+								ifFalse: [
 									result
 										at: key
 										put:
@@ -182,9 +180,9 @@ Finder >> constructDictionaryWithMethodFinder: aString [
 ]
 
 { #category : #'private - pragma' }
-Finder >> constructDictionaryWithPragmaSearch: aString [ 
+Finder >> constructDictionaryWithPragmaSearch: aString [
 	"construct dictionary when searching for pragmas"
-	
+
 	| dictionary |
 	dictionary := self pragmaSearch: aString.
 	dictionary keysDo:[ :k || result |
@@ -192,7 +190,7 @@ Finder >> constructDictionaryWithPragmaSearch: aString [
 		(dictionary at: k) do: [:method || key value |
 				key := method selector.
 				value := method methodClass.
-				(result 
+				(result
 					at: key
 					ifAbsentPut: OrderedCollection new ) add: value].
 		dictionary at: k put: result ].
@@ -222,7 +220,7 @@ Finder >> currentSearchMode [
 		- #Classes
 		- #Source
 		- #Examples"
-	
+
 	 ^ currentSearchMode
 ]
 
@@ -235,7 +233,7 @@ Finder >> currentSearchMode: aSymbol [
 	self isExamplesSymbol
 		ifTrue: [ self disableUseRegEx]
 		ifFalse:[ self enableUseRegEx].
-		
+
 	self update: #sourceCode.
 	self constructDictionary
 ]
@@ -270,7 +268,7 @@ Finder >> enableUseRegEx [
 { #category : #accessing }
 Finder >> environment [
 
-	 ^ environment 
+	 ^ environment
 ]
 
 { #category : #accessing }
@@ -288,7 +286,6 @@ Finder >> initialize [
 	resultDictionary := Dictionary new.
 	currentSearchMode := #Selectors.
 	useRegEx := false
-	
 ]
 
 { #category : #checkbox }
@@ -343,14 +340,14 @@ Finder >> messagesNameSearch: aString [
 ]
 
 { #category : #private }
-Finder >> methodSearch: aSelectBlock [ 
-	| result | 
+Finder >> methodSearch: aSelectBlock [
+	| result |
 	result := OrderedCollection new.
 	aSelectBlock ifNil: [ ^result ].
 	self packagesSelection classesAndTraits do:[ :class |
-			class methodsDo: [ :method | 
+			class methodsDo: [ :method |
 				(aSelectBlock value: method) ifTrue: [ result add: method ]].
-			class classSide methodsDo: [ :method | 
+			class classSide methodsDo: [ :method |
 				(aSelectBlock value: method) ifTrue: [ result add: method ]]
 			]
 			displayingProgress: [ :aClass | aClass name ].
@@ -360,7 +357,7 @@ Finder >> methodSearch: aSelectBlock [
 { #category : #display }
 Finder >> open [
 	<script: 'self new open'>
-	
+
 	^ (FinderUI on: self) open
 ]
 
@@ -379,18 +376,18 @@ Finder >> packagesSelection: aCollection [
 ]
 
 { #category : #'private - pragma' }
-Finder >> pragmaSearch: aString [ 
+Finder >> pragmaSearch: aString [
 	| result byCondition |
 	"I choose a dictionary here because the next step is to group result by pragmas."
 	result := Dictionary new.
-	
-	byCondition :=  self useRegEx 
+
+	byCondition :=  self useRegEx
 		ifTrue: [[ :pragma | pragma selector matchesRegexIgnoringCase: aString ]]
 		ifFalse: [[ :pragma | pragma selector includesSubstring: aString caseSensitive: false ]].
-	
+
 	(Pragma all select: byCondition)
 		do: [ :pragma |
-			(result at: (pragma selector) ifAbsentPut: OrderedCollection new)				
+			(result at: (pragma selector) ifAbsentPut: OrderedCollection new)
 				add: pragma method ].
 	^ result
 ]
@@ -437,7 +434,6 @@ Finder >> searchingString: aString [
 Finder >> searchingStringSilently: aString [
 
 	searchingString := aString
-
 ]
 
 { #category : #accessing }
@@ -451,7 +447,6 @@ Finder >> selectedClass: aClass [
 	"When the class seletion is changed, I send an event to UI"
 	selectedClass := aClass.
 	self triggerEvent: #updateSelectedClass
-	
 ]
 
 { #category : #accessing }
@@ -503,14 +498,14 @@ Finder >> selection: aSelectionHolder [
 	self isPragmasSymbol
 		ifTrue: [
 			methodNode := path at:2 ifAbsent: [ nil ].
-			classNode := path at: 3 ifAbsent:[nil]].		
+			classNode := path at: 3 ifAbsent:[nil]].
 
 	classNode ifNotNil: [ class := classNode item ].
 	self selectedClass: class.
-	
+
 	methodNode ifNotNil: [ method := methodNode item ].
 	self selectedMethod: method.
-	
+
 	self triggerEvent: #updateSourceCode
 ]
 
@@ -530,8 +525,8 @@ Finder >> sourceSearch: aSearchString [
 ]
 
 { #category : #private }
-Finder >> sourceStringSearch: aSearchString [ 
-	^ self 
+Finder >> sourceStringSearch: aSearchString [
+	^ self
 		methodSearch: [ :method |
 			method sourceCode includesSubstring: aSearchString caseSensitive: false ]
 ]

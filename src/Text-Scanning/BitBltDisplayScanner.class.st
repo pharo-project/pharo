@@ -26,8 +26,8 @@ Class {
 { #category : #displaying }
 BitBltDisplayScanner >> displayEmbeddedForm: aForm [
 
-	aForm 
-		displayOn: bitBlt destForm 
+	aForm
+		displayOn: bitBlt destForm
 		at: destX @ (lineY + line baseline - aForm height)
 		clippingBox: bitBlt clipRect
 		rule: Form blend
@@ -38,11 +38,11 @@ BitBltDisplayScanner >> displayEmbeddedForm: aForm [
 BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
     | endPoint top |
    top := aPoint translateBy: 0@ font ascent.
-	endPoint := font displayString: string on: bitBlt 
-		from: startIndex 
-		to: stopIndex 
+	endPoint := font displayString: string on: bitBlt
+		from: startIndex
+		to: stopIndex
 		at: aPoint kern: kern.
-		
+
     (emphasisCode allMask: 4)
         ifTrue: [ font displayUnderlineOn: bitBlt from: top to: endPoint ].
     (emphasisCode allMask: 16)
@@ -54,7 +54,7 @@ BitBltDisplayScanner >> fillTextBackground [
 	fillBlt ifNotNil:
 		["Not right"
 		fillBlt destX: line left destY: lineY
-			width: line width left height: line lineHeight; copyBits].
+			width: line width left height: line lineHeight; copyBits]
 ]
 
 { #category : #'stop conditions' }
@@ -68,11 +68,11 @@ BitBltDisplayScanner >> plainTab [
 
 { #category : #private }
 BitBltDisplayScanner >> setDestForm: df [
-	bitBlt setDestForm: df.
+	bitBlt setDestForm: df
 ]
 
 { #category : #private }
-BitBltDisplayScanner >> setFont [ 
+BitBltDisplayScanner >> setFont [
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
 	font installOn: bitBlt foregroundColor: foregroundColor backgroundColor: Color transparent
 ]
@@ -83,13 +83,12 @@ BitBltDisplayScanner >> setPort: aBitBlt [
 	bitBlt := aBitBlt.
 	bitBlt sourceX: 0; width: 0.	"Init BitBlt so that the first call to a primitive will not fail"
 	bitBlt sourceForm: nil. "Make sure font installation won't be confused"
-
 ]
 
 { #category : #private }
 BitBltDisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
 	text := t.
-	textStyle := ts. 
+	textStyle := ts.
 	foregroundColor := defaultTextColor := foreColor.
 	(backgroundColor := backColor) isTransparent ifFalse:
 		[fillBlt := blt.

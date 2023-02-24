@@ -11,7 +11,7 @@ Class {
 SycGenerateEqualAndHashCommand >> asRefactorings [
 
 	^{
-		self refactoringClass 
+		self refactoringClass
 			className: targetClass name
 			variables: (variables collect: [:each | each name])
 	}
@@ -20,7 +20,7 @@ SycGenerateEqualAndHashCommand >> asRefactorings [
 { #category : #accessing }
 SycGenerateEqualAndHashCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
-	
+
 	^ self refactoringClass menuItemString
 ]
 
@@ -32,14 +32,14 @@ SycGenerateEqualAndHashCommand >> execute [
 { #category : #execution }
 SycGenerateEqualAndHashCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	variables := aToolContext 
-		requestMultipleVariables: 'Choose variables for equality' 
+
+	variables := aToolContext
+		requestMultipleVariables: 'Choose variables for equality'
 		from: {targetClass}
 ]
 
 { #category : #'factory method' }
-SycGenerateEqualAndHashCommand >> refactoringClass [ 
+SycGenerateEqualAndHashCommand >> refactoringClass [
 
 	^ RBGenerateEqualHashTransformation
 ]

@@ -9,13 +9,16 @@ RBParser parseFaultyMethod:
 
 Accessing to the parsed nodes contained inside the node is the method 'content'.
 
+`valueAfter` is used to store the optional raw content (source string) that appears after the content.
+
 
 "
 Class {
 	#name : #RBEnglobingErrorNode,
 	#superclass : #RBParseErrorNode,
 	#instVars : [
-		'content'
+		'content',
+		'valueAfter'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
@@ -76,7 +79,8 @@ RBEnglobingErrorNode >> content: aCollection [
 RBEnglobingErrorNode >> initialize [
 	super initialize.
 	content := OrderedCollection new.
-	value := ''
+	value := ''.
+	valueAfter := ''.
 ]
 
 { #category : #testing }
@@ -87,4 +91,16 @@ RBEnglobingErrorNode >> isEnglobingError [
 { #category : #accessing }
 RBEnglobingErrorNode >> stop: anInterger [
 	stop := anInterger
+]
+
+{ #category : #accessing }
+RBEnglobingErrorNode >> valueAfter [
+
+	^ valueAfter
+]
+
+{ #category : #accessing }
+RBEnglobingErrorNode >> valueAfter: anObject [
+
+	valueAfter := anObject
 ]

@@ -15,7 +15,7 @@ FinderMethodNode >> addInspectMenuItem: menu [
 
 { #category : #private }
 FinderMethodNode >> browse [
-	self item isSymbol	ifTrue: [ 	
+	self item isSymbol	ifTrue: [
 		^ SystemNavigation new browseAllImplementorsOf: self item ].
 	self item browse
 ]
@@ -28,8 +28,7 @@ FinderMethodNode >> browseClass [
 
 { #category : #private }
 FinderMethodNode >> browseImplementors [
-	SystemNavigation new browseAllImplementorsOf: self selector 
-		
+	SystemNavigation new browseAllImplementorsOf: self selector
 ]
 
 { #category : #private }
@@ -76,17 +75,17 @@ FinderMethodNode >> keyDown: anEvent [
 
 { #category : #'event handling' }
 FinderMethodNode >> menu: menu shifted: aBoolean [
-	
+
 	menu
 		add: 'Implementors (m)'
 		target: self
 		selector: #browseImplementors.
-		
+
 	menu
 		add: 'Senders (n)'
 		target: self
 		selector: #browseSenders.
-		
+
 	^ super menu: menu shifted: aBoolean
 ]
 

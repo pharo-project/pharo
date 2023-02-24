@@ -23,7 +23,7 @@ StandardWindow class >> newWithTheme: aUITheme [
 { #category : #initialize }
 StandardWindow >> defaultColor [
 	"Answer the default color/fill style for the receiver"
-	
+
 	^self theme windowColor
 ]
 
@@ -37,9 +37,9 @@ StandardWindow >> defaultLabel [
 { #category : #'open/close' }
 StandardWindow >> delete [
 	"If fullscreen remove the owner too."
-	
+
 	self mustNotClose ifTrue: [^ self].
-	self model ifNotNil: [ 
+	self model ifNotNil: [
 		self model okToChange ifFalse: [ ^ self ].
 		self model okToClose ifFalse: [ ^ self ] ].
 	self isFullscreen
@@ -50,37 +50,37 @@ StandardWindow >> delete [
 { #category : #operations }
 StandardWindow >> flash [
 	"Flash the window."
-	
+
 	(self hasProperty: #activeModalFlash) ifTrue: [ ^self ].
 	self setProperty: #activeModalFlash toValue: true.
-		
-	[ 
-		
+
+	[
+
 		| oldColor newColor duration |
-	
+
 		oldColor := self fillStyle.
 		newColor := self color alphaMixed: 0.5 with: Color white.
 		duration := 0.
-	
+
 		2 timesRepeat: [
 			duration milliSeconds asDuration wait.
 			duration := 200.
-			
+
 			self color: newColor.
-			
+
 			duration milliSeconds asDuration wait.
-			
-			self color = newColor ifFalse: [ 
+
+			self color = newColor ifFalse: [
 				"the color changed while waiting (theme changed)"
-				oldColor := self fillStyle 
+				oldColor := self fillStyle
 			].
-		
+
 			self fillStyle: oldColor.
 		].
-	
+
 		self removeProperty: #activeModalFlash
-	
-	] fork.
+
+	] fork
 ]
 
 { #category : #initialization }
@@ -96,7 +96,7 @@ StandardWindow >> initialize [
 { #category : #testing }
 StandardWindow >> isActive [
 	"Answer active if fullscreen too."
-	
+
 	^self isFullscreen or: [super isActive]
 ]
 
@@ -111,7 +111,7 @@ StandardWindow >> isFullscreen [
 { #category : #layout }
 StandardWindow >> layoutBounds [
 	"Bounds of pane area only."
-	
+
 	^self isFullscreen
 		ifTrue: [self perform: #layoutBounds withArguments: #() inSuperclass: Morph]
 		ifFalse: [super layoutBounds]
@@ -143,12 +143,12 @@ StandardWindow >> newTextEntryFor: aModel getText: getSel setText: setSel help: 
 		get: getSel
 		set: setSel
 		class: String
-		getEnabled: nil 
+		getEnabled: nil
 		help: helpText
 ]
 
 { #category : #'submorphs - accessing' }
-StandardWindow >> noteNewOwner: aMorph [ 
+StandardWindow >> noteNewOwner: aMorph [
 	"Go fullscreen if needed."
 
 	super noteNewOwner: aMorph.
@@ -194,39 +194,39 @@ StandardWindow >> postOpenInWorld: aWorld [
 
 { #category : #controls }
 StandardWindow >> title [
-	
+
 	^self label
 ]
 
 { #category : #controls }
 StandardWindow >> title: aString [
-	
+
 	self setLabel: aString
 ]
 
 { #category : #'morphic ui' }
 StandardWindow >> wantsRoundedCorners [
 	"Check to see if the property is set first."
-	
+
 	^self isFullscreen
 		ifTrue: [false]
 		ifFalse: [^super wantsRoundedCorners]
 ]
 
 { #category : #initialize }
-StandardWindow >> withText: aStringOrText label: title [ 
-	
+StandardWindow >> withText: aStringOrText label: title [
+
 	self title: title.
-	self 
-		addMorph: (RubScrolledTextMorph new 
+	self
+		addMorph: (RubScrolledTextMorph new
 				setText: aStringOrText asString;
 				yourself)
-		fullFrame: LayoutFrame identity.						
-	self themeChanged.
+		fullFrame: LayoutFrame identity.
+	self themeChanged
 ]
 
 { #category : #'event handling' }
-StandardWindow >> yellowButtonActivity: shiftState [ 
+StandardWindow >> yellowButtonActivity: shiftState [
 	"Do nothing."
 	^ false
 ]

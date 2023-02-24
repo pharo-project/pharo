@@ -30,7 +30,7 @@ CornerGripMorph >> initialize [
 { #category : #event }
 CornerGripMorph >> mouseDown: anEvent [
 	"Remember the receiver and target offsets too."
-	
+
 	|cp|
 	cp := anEvent cursorPoint.
 	lastMouse := {cp. cp - self position. cp - self targetPoint}
@@ -39,14 +39,14 @@ CornerGripMorph >> mouseDown: anEvent [
 { #category : #event }
 CornerGripMorph >> mouseMove: anEvent [
 	"Track the mouse for resizing."
-	
+
 	target ifNil: [^ self].
-	target fastFramingOn 
-		ifTrue: [target doFastWindowReframe: self ptName] 
+	target fastFramingOn
+		ifTrue: [target doFastWindowReframe: self ptName]
 		ifFalse: [
 			lastMouse at: 1 put: anEvent cursorPoint.
 			self targetPoint: lastMouse first - lastMouse last.
-			self position: (lastMouse first - lastMouse second)].
+			self position: (lastMouse first - lastMouse second)]
 ]
 
 { #category : #accessing }

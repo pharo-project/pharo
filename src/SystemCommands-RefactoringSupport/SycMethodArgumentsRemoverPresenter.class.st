@@ -71,11 +71,11 @@ SycMethodArgumentsRemoverPresenter class >> openOn: aMethod [
 SycMethodArgumentsRemoverPresenter >> connectPresenters [
 
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
-	argumentsList whenSelectionChangedDo: [ :selection | 
-		selection selectedItem ifNotNil: [ 
+	argumentsList whenSelectionChangedDo: [ :selection |
+		selection selectedItem ifNotNil: [
 			selectorInput text:
 				(self defaultSelectorAfterRemoving: selection selectedItem name) ] ].
-	argumentsList displayColor: [ :arg | 
+	argumentsList displayColor: [ :arg |
 		arg = argumentsList selection selectedItem
 			ifTrue: [ Color lightGray ]
 			ifFalse: [ self theme textColor ] ].
@@ -90,7 +90,7 @@ SycMethodArgumentsRemoverPresenter >> defaultSelectorAfterRemoving: argumentName
 	| argIndex keywords |
 	argIndex := methodName arguments indexOf: argumentName.
 	keywords := methodName selector keywords asOrderedCollection.
-	keywords size = 1 ifTrue: [ 
+	keywords size = 1 ifTrue: [
 		^ (keywords first copyWithout: $:) asSymbol ].
 	keywords removeAt: argIndex.
 	^ (keywords joinUsing: '') asSymbol
@@ -107,10 +107,10 @@ SycMethodArgumentsRemoverPresenter >> getParametersOrder [
 { #category : #initialization }
 SycMethodArgumentsRemoverPresenter >> initializeDialogWindow: aModalPresenter [
 
-	aModalPresenter 
+	aModalPresenter
 		addButton: 'Accept' do: [ :presenter | self renameMethodAndClose: presenter ];
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
-		initialExtent: 300 @ 300 
+		initialExtent: 300 @ 300
 ]
 
 { #category : #initialization }

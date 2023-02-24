@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #utilities }
-RealEstateAgent class >> assignCollapseFrameFor: aSSView [ 
+RealEstateAgent class >> assignCollapseFrameFor: aSSView [
 	"Offer up a location along the left edge of the screen for a collapsed
 	SSView. Make sure it doesn't overlap any other collapsed frames."
 	| grid otherFrames topLeft viewBox collapsedFrame extent newFrame verticalBorderDistance top |
@@ -46,7 +46,7 @@ RealEstateAgent class >> assignCollapseFrameFor: aSSView [
 ]
 
 { #category : #utilities }
-RealEstateAgent class >> assignCollapsePointFor: aSSView [ 
+RealEstateAgent class >> assignCollapsePointFor: aSSView [
 	"Offer up a location along the left edge of the screen for a collapsed
 	SSView. Make sure it doesn't overlap any other collapsed frames."
 	| grid otherFrames y free topLeft viewBox |
@@ -73,7 +73,7 @@ RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: a
 
 	| position allowedArea |
 	allowedArea := self maximumUsableAreaInWorld: aWorld.
-	position := aWorld currentWindow isMorph 
+	position := aWorld currentWindow isMorph
 		ifFalse: [ aWorld center - (initialExtent / 2)]
 		ifTrue: [ aWorld currentWindow position + 20].
 	^ (position extent: initialExtent)
@@ -81,12 +81,12 @@ RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: a
 ]
 
 { #category : #framing }
-RealEstateAgent class >> initialFrameFor: aView initialExtent: initialExtent world: aWorld [ 
+RealEstateAgent class >> initialFrameFor: aView initialExtent: initialExtent world: aWorld [
 	"Find a plausible initial screen area for the supplied view, which
 	should be a StandardSystemView, taking into account the
 	'reverseWindowStagger' Preference, the size needed, and other
 	windows currently on the screen."
-	
+
 	^self perform: self usedStrategy with: aView with: initialExtent with: aWorld
 ]
 
@@ -102,7 +102,7 @@ RealEstateAgent class >> initialize [
 	"RealEstateAgent initialize"
 
 	StaggerOffset := 20 @ 40.
-	StandardSize := 700@500.
+	StandardSize := 700@500
 ]
 
 { #category : #accessing }
@@ -118,9 +118,9 @@ RealEstateAgent class >> maximumUsableArea [
 RealEstateAgent class >> maximumUsableAreaInWorld: aWorldOrNil [
 
 	| allowedArea |
-	
+
 	allowedArea := 0@0 extent: self standardSize. "fallback default size"
-	
+
 	aWorldOrNil ifNotNil: [
 		allowedArea := aWorldOrNil displayArea intersect: aWorldOrNil visibleClearArea ifNone: [ allowedArea ]].
 	^allowedArea
@@ -188,7 +188,7 @@ RealEstateAgent class >> standardPositionsInWorld: aWorldOrNil [
 	self windowColumnsDesired > 1
 		ifTrue: 	[ aList add: (midX @ self screenTopSetback)].
 	self windowRowsDesired > 1
-		ifTrue: 
+		ifTrue:
 			[ aList add: (self scrollBarSetback @ (midY+self screenTopSetback)).
 			self windowColumnsDesired > 1 ifTrue:
 				[ aList add: (midX @ (midY+self screenTopSetback))]].
@@ -260,7 +260,7 @@ RealEstateAgent class >> strictlyStaggeredInitialFrameFor: aStandardSystemView i
 	otherFrames := (aWorld windowsSatisfying: [:w | w isCollapsed not])
 					collect: [:w | w bounds].
 	0 to: maxLevel do:
-		[:level | 
+		[:level |
 		1 to: 4 do:
 			[:ci | cornerSel := #(topLeft topRight bottomRight bottomLeft) at: ci.
 			corner := allowedArea perform: cornerSel.

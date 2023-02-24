@@ -10,7 +10,7 @@ Class {
 { #category : #selecting }
 RubSegmentIconMenuItemMorph >> deselect: anEvent [
 	self segment showMouseHasLeaved.
-	super deselect: anEvent.
+	super deselect: anEvent
 ]
 
 { #category : #events }
@@ -21,18 +21,18 @@ RubSegmentIconMenuItemMorph >> invokeWithEvent: evt [
 
 { #category : #accessing }
 RubSegmentIconMenuItemMorph >> segment [
-	
+
 	^ segment
 ]
 
 { #category : #accessing }
 RubSegmentIconMenuItemMorph >> segment: aSegment [
-	
+
 	segment := aSegment
 ]
 
 { #category : #selecting }
 RubSegmentIconMenuItemMorph >> select: anEvent [
 	self segment showMouseHasEntered.
-	super select: anEvent.
+	super select: anEvent
 ]

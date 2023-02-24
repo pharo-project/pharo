@@ -90,7 +90,7 @@ RBAddAssignmentTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddAssignmentTransformation >> storeOn: aStream [ 
+RBAddAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

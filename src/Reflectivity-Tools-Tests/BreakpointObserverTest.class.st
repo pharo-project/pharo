@@ -14,7 +14,7 @@ Class {
 { #category : #helpers }
 BreakpointObserverTest >> newDummyClass [
 
-	^ self class classInstaller make: [ :aBuilder | 
+	^ self class classInstaller make: [ :aBuilder |
 		  aBuilder
 			  name: #DummyClassForBreakpoint;
 			  package: 'DummyPackage' ]
@@ -41,7 +41,7 @@ BreakpointObserverTest >> setUp [
 BreakpointObserverTest >> tearDown [
 	|pkg|
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
-	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
+	pkg := 'DummyPackage' asPackageIfAbsent: [ ].
 	pkg ifNotNil: [ pkg removeFromSystem ].
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
@@ -62,14 +62,14 @@ BreakpointObserverTest >> testNotifyBreakpointAdded [
 BreakpointObserverTest >> testNotifyBreakpointHit [
 	SystemAnnouncer uniqueInstance when: BreakpointHit send: #update: to: observer.
 	breakpoint install.
-	self should: [cls new dummy] raise: Break.	
+	self should: [cls new dummy] raise: Break.
 	self assert: observer tag class equals: BreakpointHit.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assert: observer tag valueOrNil isNil
 ]
 
 { #category : #tests }
-BreakpointObserverTest >> testNotifyBreakpointRemoved [	
+BreakpointObserverTest >> testNotifyBreakpointRemoved [
 	breakpoint install.
 	SystemAnnouncer uniqueInstance when: BreakpointRemoved send: #update: to: observer.
 	breakpoint remove.

@@ -29,7 +29,7 @@ OCStaticASTCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 { #category : #tests }
 OCStaticASTCompilerPluginTest >> testIsAbstract [
 
-	self assert: OCStaticASTCompilerPlugin isAbstract 
+	self assert: OCStaticASTCompilerPlugin isAbstract
 ]
 
 { #category : #tests }

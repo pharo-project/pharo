@@ -27,7 +27,7 @@ WatchIconStyler >> iconFor: aNode [
 { #category : #defaults }
 WatchIconStyler >> iconLabel: aNode [
 
-	^ aNode watch asString.
+	^ aNode watch asString
 ]
 
 { #category : #testing }

@@ -18,7 +18,7 @@ Class {
 { #category : #accessing }
 ZnServerSessionManager >> cleanupInvalidSessions [
 	"Remove all expired sessions"
-	
+
 	sessions keysAndValuesRemove: [ :key :value | value isValid not ]
 ]
 
@@ -47,12 +47,12 @@ ZnServerSessionManager >> newSessionForRequest: request [
 ZnServerSessionManager >> newSessionId [
 	"Create a new session id.
 	If the server has a route, append it at the end with a dot as separator."
-	
+
 	^ ZnCurrentServer value route
 		ifNil: [ UUID new asString36 ]
-		ifNotNil: [ :route | 
+		ifNotNil: [ :route |
 			String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					stream
 						<< UUID new asString36;
 						nextPut: $.;
@@ -63,7 +63,7 @@ ZnServerSessionManager >> newSessionId [
 ZnServerSessionManager >> removeSessionWithId: id [
 	"Remove the session with id.
 	If there is no such session, do nothing"
-	
+
 	^ sessions removeKey: id ifAbsent: [ nil ]
 ]
 
@@ -75,7 +75,7 @@ ZnServerSessionManager >> sessionFor: request [
 	id := self sessionIdFromRequest: request.
 	sessions
 		at: id
-		ifPresent: [ :session | 
+		ifPresent: [ :session |
 			session isValid
 				ifTrue: [ ^ session touch; yourself ]
 				ifFalse: [ sessions removeKey: id ] ].
@@ -85,8 +85,8 @@ ZnServerSessionManager >> sessionFor: request [
 { #category : #private }
 ZnServerSessionManager >> sessionIdFromRequest: request [
 	| cookie |
-	cookie := request cookies 
-		detect: [ :each | each name = self cookieName ] 
+	cookie := request cookies
+		detect: [ :each | each name = self cookieName ]
 		ifNone: [ ^ nil ].
 	^ cookie value
 ]

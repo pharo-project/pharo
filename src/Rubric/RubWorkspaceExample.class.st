@@ -36,7 +36,7 @@ RubWorkspaceExample class >> exampleWithCustomShortcut [
     window := StandardWindow new.
     window addMorph: text fullFrame: LayoutFrame identity.
     window title: 'Custom shortcuts example'.
-    window openInWorld.
+    window openInWorld
 ]
 
 { #category : #'instance creation' }
@@ -51,7 +51,7 @@ RubWorkspaceExample class >> title [
 ]
 
 { #category : #'private - utilities' }
-RubWorkspaceExample class >> windowWithScrolledText: aScrolledText [ 
+RubWorkspaceExample class >> windowWithScrolledText: aScrolledText [
 	| w |
 	w := StandardWindow new.
 	w title: self title.
@@ -74,7 +74,7 @@ RubWorkspaceExample >> announcer [
 RubWorkspaceExample >> bindingOf: aString [
 
 	mustDeclareVariables
-		ifTrue: [ ^ nil ].	"I want to have workspace that force the user to declare  
+		ifTrue: [ ^ nil ].	"I want to have workspace that force the user to declare
 	variables. Still subclasses may want to do something else"
 	bindings ifNil: [ self initializeBindings ].
 	( bindings includesKey: aString )
@@ -83,9 +83,9 @@ RubWorkspaceExample >> bindingOf: aString [
 ]
 
 { #category : #'code pane menu' }
-RubWorkspaceExample >> codePaneMenu: aMenu shifted: shifted [ 
-	"Note that unless we override perform:orSendTo:, 
-	PluggableTextController will respond to all menu items in a 
+RubWorkspaceExample >> codePaneMenu: aMenu shifted: shifted [
+	"Note that unless we override perform:orSendTo:,
+	PluggableTextController will respond to all menu items in a
 	text pane"
 	"Not tested"
 ]
@@ -112,7 +112,7 @@ RubWorkspaceExample >> initialize [
 { #category : #'user interface' }
 RubWorkspaceExample >> newScrolledText [
 	| st |
-	st := textModel newScrolledText 
+	st := textModel newScrolledText
 		beWrapped;
 		autoAccept: true;
 		withLineNumbers;
@@ -124,7 +124,7 @@ RubWorkspaceExample >> newScrolledText [
 ]
 
 { #category : #'user interface' }
-RubWorkspaceExample >> setText: aText from: aView [ 
+RubWorkspaceExample >> setText: aText from: aView [
 	^ self acceptString: aText string
 ]
 
