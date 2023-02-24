@@ -88,3 +88,18 @@ RBCodeSnippetTest >> testParse [
 
 	self assert: snippet parse isFaulty equals: snippet isFaulty
 ]
+
+{ #category : #tests }
+RBCodeSnippetTest >> testParseOnError [
+
+	snippet isFaulty
+		ifTrue: [
+			RBParser
+				parseExpression: snippet source
+				onError: [ :message :parser :position | ^ self ].
+			self signalFailure: 'An error is expected' ]
+		ifFalse: [
+			RBParser
+				parseExpression: snippet source
+				onError: [ :message | ^ self signalFailure: 'Error unexpected: ', message ] ]
+]
