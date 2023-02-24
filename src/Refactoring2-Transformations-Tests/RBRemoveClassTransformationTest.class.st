@@ -20,7 +20,7 @@ RBRemoveClassTransformationTest >> resumeIfCannotRemove: error [
 { #category : #tests }
 RBRemoveClassTransformationTest >> testRefactoring [
 	| refactoring |
-	refactoring := (RBRemoveClassTransformation className: #RBFooDummyLintRuleTest1) 
+	refactoring := (RBRemoveClassTransformation className: #RBFooDummyLintRuleTest1)
 	asRefactoring.
 
 	[ refactoring transform ]

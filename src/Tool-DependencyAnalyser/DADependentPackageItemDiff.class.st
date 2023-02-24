@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 DADependentPackageItemDiff >> hasChanged [
-	^ self isNew or: [ self isRemoved ].
+	^ self isNew or: [ self isRemoved ]
 ]
 
 { #category : #accessing }
@@ -26,8 +26,8 @@ DADependentPackageItemDiff >> parent: anObject [
 ]
 
 { #category : #printing }
-DADependentPackageItemDiff >> printOn: aStream [ 
-	aStream 
+DADependentPackageItemDiff >> printOn: aStream [
+	aStream
 		nextPutAll: content packageName;
 		nextPutAll: ' Parent : ';
 		nextPutAll: self parent packageName

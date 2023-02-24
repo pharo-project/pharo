@@ -32,7 +32,7 @@ DropFilesEvent >> fileNames: anObject [
 { #category : #dispatching }
 DropFilesEvent >> requestDropReference: i [
 
-	| fileName |	
+	| fileName |
 	fileName := self fileNames at: i.
 	^ fileName asFileReference
 ]

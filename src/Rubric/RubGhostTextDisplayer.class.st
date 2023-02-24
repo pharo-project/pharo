@@ -52,9 +52,9 @@ RubGhostTextDisplayer >> font: aFont [
 { #category : #accessing }
 RubGhostTextDisplayer >> fontName: aFontName pointSize: anInteger [
 	self
-		handleTextChangeWhile: [ 
+		handleTextChangeWhile: [
 			ghostText
-				beEditableWhile: [ 
+				beEditableWhile: [
 					ghostText fontName: aFontName pointSize: anInteger.
 					ghostText compose.
 					self changed ] ]
@@ -66,13 +66,13 @@ RubGhostTextDisplayer >> fontPointSize: anInteger [
 ]
 
 { #category : #accessing }
-RubGhostTextDisplayer >> ghostText [ 
+RubGhostTextDisplayer >> ghostText [
 	"Return the editing area of the ghostText"
 	^ ghostText
 ]
 
 { #category : #accessing }
-RubGhostTextDisplayer >> handleTextChangeWhile: aBlock [ 
+RubGhostTextDisplayer >> handleTextChangeWhile: aBlock [
 	aBlock value.
 	self showHideGhostText
 ]
@@ -98,9 +98,9 @@ RubGhostTextDisplayer >> manageLayoutInBounds: aRectangle [
 RubGhostTextDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	ghostText := self paragraphProvider defaultGhostTextMorph.
-	textColor := self defaultTextColor. 
-	self textArea announcer when: MorphGotFocus send: #showHideGhostText to: self.	
-	self textArea announcer when: MorphLostFocus send: #showHideGhostText to: self.
+	textColor := self defaultTextColor.
+	self textArea announcer when: MorphGotFocus send: #showHideGhostText to: self.
+	self textArea announcer when: MorphLostFocus send: #showHideGhostText to: self
 ]
 
 { #category : #alignment }
@@ -119,13 +119,13 @@ RubGhostTextDisplayer >> setTextWith: aText [
 RubGhostTextDisplayer >> showHideGhostText [
 	self textArea text
 		ifNotEmpty: [ self removeAllMorphs ]
-		ifEmpty: [ 
+		ifEmpty: [
 			self paragraphProvider configureGhostText: ghostText.
 			self addMorph: ghostText ]
 ]
 
 { #category : #'event handling' }
-RubGhostTextDisplayer >> textChanged [ 
+RubGhostTextDisplayer >> textChanged [
 	self showHideGhostText.
 	super textChanged
 ]
@@ -151,7 +151,7 @@ RubGhostTextDisplayer >> updateMarginsWith: aMargin [
 { #category : #accessing }
 RubGhostTextDisplayer >> updateTextWith: aText [
 	self
-		handleTextChangeWhile: [ 
+		handleTextChangeWhile: [
 			ghostText updateTextWith: aText asText.
 			ghostText textColor: self textColor ]
 ]

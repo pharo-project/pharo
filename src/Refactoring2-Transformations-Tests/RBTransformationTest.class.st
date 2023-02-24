@@ -11,16 +11,16 @@ Class {
 RBTransformationTest >> abstractVariableTestData [
 
 	| newModel classEnvironment classes |
-	classes := #(#Bar #Foo) 
-		inject: OrderedCollection new 
-		into: [ :sum :each | 
-			testingEnvironment at: each ifPresent: [ :class | 
+	classes := #(#Bar #Foo)
+		inject: OrderedCollection new
+		into: [ :sum :each |
+			testingEnvironment at: each ifPresent: [ :class |
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
 	newModel := RBNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
-	
+
 	#('Object << #Foo
 		slots: { #instVarName1 . #instVarName2};
 		sharedVariables: { #ClassVarName1 . #ClassVarName2};
@@ -28,44 +28,44 @@ RBTransformationTest >> abstractVariableTestData [
 	'Foo << #Bar
 		package: ''Testing'' '
 	) do: [ :each | newModel defineClass: each ].
-	
+
 	#(#(#Bar #(
 		#('instVarName1
-			^1242321' #tests) 
+			^1242321' #tests)
 		#('foo
-			instVarName1 := instVarName1 + instVarName2 + ClassVarName1' #tests))) 
+			instVarName1 := instVarName1 + instVarName2 + ClassVarName1' #tests)))
 	#(#Foo #(
 		#('foo
 			^instVarName2 := 3' #tests)
 		#('bar
 			"Add one to instVarName1"
-			instVarName1 := instVarName1 + 1' #tests) 
+			instVarName1 := instVarName1 + 1' #tests)
 		#('classVarName1
 			^ClassVarName1' #tests)
 		#('instVarName1: anObject
 			^anObject' #tests)
 		#('asdf
-			^self classVarName1: (ClassVarName1 := ClassVarName1 + 1)' #tests) 
+			^self classVarName1: (ClassVarName1 := ClassVarName1 + 1)' #tests)
 		#('instVarName2
 			^instVarName2' #tests)
 		#('instVarName2: anObject
 			instVarName2 := anObject' #tests)
 		#('classVarName1: anObject
 			^ClassVarName1 := anObject' #tests)))
-	
+
 	#('Bar class' #(
 		#('classVarName2: anObject
-			ClassVarName2 := anObject' #tests) 
+			ClassVarName2 := anObject' #tests)
 		#('classVarName2
-			^ClassVarName2' #tests))) 
+			^ClassVarName2' #tests)))
 	#('Foo class' #(
 		#('foo
-			^ClassVarName1 := ClassVarName1 * ClassVarName1 * ClassVarName1' #tests)))) 
-		do: [:each | 
+			^ClassVarName1 := ClassVarName1 * ClassVarName1 * ClassVarName1' #tests))))
+		do: [:each |
 			| class |
 			class := newModel classNamed: each first.
-			each last do: [ :methodPair | 
-				class 
+			each last do: [ :methodPair |
+				class
 					compile: methodPair first
 					classified: methodPair last]].
 	^ newModel
@@ -80,15 +80,15 @@ RBTransformationTest >> changeMock [
 { #category : #mocking }
 RBTransformationTest >> createMockClass [
 
-	self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: 'RBRefactoringChangeMock';
 			sharedVariablesFromString: 'ClassVar';
 			slots: 'instVar' asSlotCollection;
 			classSlots: 'classInstVar' asSlotCollection;
 			package: 'Refactoring-Tests-Changes' ].
-	
-	self changeMock compile: 'one ^ 1' classified: 'accessing'.
+
+	self changeMock compile: 'one ^ 1' classified: 'accessing'
 ]
 
 { #category : #mocking }
@@ -128,7 +128,7 @@ RBTransformationTest >> proceedThroughWarning: aBlock [
 { #category : #mocking }
 RBTransformationTest >> removeMockClass [
 
-	testingEnvironment removeClassNamed: #RBRefactoringChangeMock.
+	testingEnvironment removeClassNamed: #RBRefactoringChangeMock
 ]
 
 { #category : #running }
@@ -140,7 +140,7 @@ RBTransformationTest >> setUp [
 ]
 
 { #category : #running }
-RBTransformationTest >> shouldFail: aRefactoring [ 
+RBTransformationTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
 		self should: [ aRefactoring transform ] raise: RBRefactoringError ]
@@ -159,14 +159,14 @@ RBTransformationTest >> testAPI [
 
 	| incompleteTransformations |
 	incompleteTransformations := RBTransformation allSubclasses
-		select: [ :each | 
+		select: [ :each |
 			| selectors |
 			selectors := each methods collect: [:m | m selector].
 			each subclasses isEmpty and: [ (selectors includes: #privateTransform) not and: [ (selectors includes: #storeOn:) not ] ] ].
 	self assertEmpty: incompleteTransformations.
 
 	incompleteTransformations := RBCompositeTransformation allSubclasses
-		select: [ :each | 
+		select: [ :each |
 			| selectors |
 			selectors := each methods collect: [:m | m selector].
 			each subclasses isEmpty and: [ (selectors includes: #buildTransformations) not ] ].

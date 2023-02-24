@@ -38,7 +38,6 @@ ZnDigestAuthenticator class >> md5Hash: aString [
 		(hash beginsWith: '16r') ifTrue: [ hash := hash allButFirst: 3 ].
 		hash := hash padLeftTo: 32 with: $0 ].
 	^ hash
-
 ]
 
 { #category : #accessing }
@@ -52,7 +51,7 @@ ZnDigestAuthenticator class >> parseAuthRequest: headerValue [
 		i := tokens indexOf: $=.
 		(i > 0) ifTrue: [
 			key := tokens copyFrom: 1 to: i - 1.
-			value := tokens copyFrom: i + 1 to: tokens size.  
+			value := tokens copyFrom: i + 1 to: tokens size.
 			dict at: key put: (value trimBoth: [ :char | char = $" ]) ] ].
 	^ dict
 ]
@@ -62,13 +61,11 @@ ZnDigestAuthenticator >> a1for: username [
 	| password |
 	password := credentials at: username ifAbsent: [ ^ nil ].
 	^ self class md5Hash: username, ':', self realm, ':', password
-	
 ]
 
 { #category : #private }
 ZnDigestAuthenticator >> a2forUrl: uri method: method [
 	^ self class md5Hash: method, ':', uri
-	
 ]
 
 { #category : #public }
@@ -110,6 +107,6 @@ ZnDigestAuthenticator >> isRequestAuthenticated: request [
 ]
 
 { #category : #accessing }
-ZnDigestAuthenticator >> nonces [ 
+ZnDigestAuthenticator >> nonces [
 	^ nonces ifNil: [ nonces := Dictionary new ]
 ]

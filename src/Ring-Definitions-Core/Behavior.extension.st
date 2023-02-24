@@ -8,6 +8,6 @@ Behavior >> methodNamed: aSelector [
 
 { #category : #'*Ring-Definitions-Core' }
 Behavior >> protocols [
-	
+
 	^ self organization categories copy
 ]

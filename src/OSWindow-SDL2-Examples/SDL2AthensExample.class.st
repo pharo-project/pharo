@@ -14,8 +14,8 @@ Class {
 
 { #category : #'instance creation' }
 SDL2AthensExample >> createDrawingProcess [
-	^ [ 
-	[ 
+	^ [
+	[
 	(Delay forMilliseconds: 1000 / self maxFPS) wait.
 	self redrawAndUpdateSurface ] repeat ] fork
 ]
@@ -23,7 +23,7 @@ SDL2AthensExample >> createDrawingProcess [
 { #category : #factory }
 SDL2AthensExample >> createEventHandler [
 	"You should override this method with your own event handler"
-	^ OSWindowAthensExampleEventHandler new 
+	^ OSWindowAthensExampleEventHandler new
 		athensExample: self
 ]
 
@@ -52,19 +52,19 @@ SDL2AthensExample >> maxFPS [
 SDL2AthensExample >> open [
 	| attrs |
 	attrs := OSWindowAttributes new.
-	attrs 
+	attrs
 		extent: self defaultExtent;
 		resizable: false;
 		position: 100@100.
-		
+
 	window := OSWindow createWithAttributes: attrs.
-	
+
 	renderer := window newAthensRenderer.
 
 	self initializeFromSurface.
 
 	window eventHandler: (self createEventHandler).
-	
+
 	drawingProcess := self createDrawingProcess
 ]
 

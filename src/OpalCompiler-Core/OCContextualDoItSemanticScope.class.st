@@ -26,39 +26,38 @@ Class {
 }
 
 { #category : #'instance creation' }
-OCContextualDoItSemanticScope class >> targetingContext: aContext [ 
-	^self new 
+OCContextualDoItSemanticScope class >> targetingContext: aContext [
+	^self new
 		targetContext: aContext
 ]
 
 { #category : #'code evaluation' }
-OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [ 
+OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 
 	aSystemAnnouncer evaluated: aSourceString context: targetContext
 ]
 
 { #category : #converting }
-OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [ 
-	anObject == targetContext receiver ifFalse: [ 
+OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [
+	anObject == targetContext receiver ifFalse: [
 		self error: 'Receiver is not same as context receiver' ].
-	
+
 	^self
 ]
 
 { #category : #testing }
 OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
-	
-	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	
-	^super hasBindingThatBeginsWith: aString
 
+	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+
+	^super hasBindingThatBeginsWith: aString
 ]
 
 { #category : #lookup }
-OCContextualDoItSemanticScope >> importVariable: aVariable [ 
+OCContextualDoItSemanticScope >> importVariable: aVariable [
 
-	^importedVariables 
-		at: aVariable name 
+	^importedVariables
+		at: aVariable name
 		ifAbsentPut: [ aVariable asDoItVariableFrom: targetContext ]
 ]
 
@@ -75,10 +74,10 @@ OCContextualDoItSemanticScope >> importedVariables: anObject [
 ]
 
 { #category : #initialization }
-OCContextualDoItSemanticScope >> initialize [ 
+OCContextualDoItSemanticScope >> initialize [
 	super initialize.
-	
-	importedVariables := Dictionary new 
+
+	importedVariables := Dictionary new
 ]
 
 { #category : #lookup }
@@ -95,7 +94,7 @@ OCContextualDoItSemanticScope >> receiver [
 ]
 
 { #category : #accessing }
-OCContextualDoItSemanticScope >> targetClass [ 
+OCContextualDoItSemanticScope >> targetClass [
 	^targetContext compiledCode methodClass
 ]
 

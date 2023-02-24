@@ -12,14 +12,14 @@ Class {
 
 { #category : #cleanup }
 ReSettings class >> cleanUp [
-	
+
 	uniqueInstance := nil
 ]
 
 { #category : #'settings-definition' }
 ReSettings class >> resetButtonSettingsOn: aBuilder [
 	<systemsettings>
-		
+
 	(aBuilder group: #'resetRules')
 		order: 10;
 		target: self;
@@ -32,7 +32,7 @@ ReSettings class >> resetButtonSettingsOn: aBuilder [
 				label: 'Reset rule cache';
 				actionSelector: #resetWithInform;
 				themeChanged;
-				yourself ].
+				yourself ]
 ]
 
 { #category : #'settings-accessing' }
@@ -41,16 +41,16 @@ ReSettings class >> showErrors [
 	"Utilize the ReExceptionStrategy to either skip the exception,
 	pass it on, or create a list of exceptions as a reparete
 	'category' with all the exceptions that happened."
-	
+
 	^ ReExceptionStrategy current = RePassExceptionStrategy
 ]
 
 { #category : #'settings-accessing' }
 ReSettings class >> showErrors: aBoolean [
 
-	ReExceptionStrategy current: (aBoolean 
+	ReExceptionStrategy current: (aBoolean
 		ifTrue: [ RePassExceptionStrategy ]
-		ifFalse: [ ReIgnoreExceptionStrategy ]).
+		ifFalse: [ ReIgnoreExceptionStrategy ])
 ]
 
 { #category : #'settings-definition' }
@@ -62,11 +62,11 @@ ReSettings class >> showErrorsSettingsOn: aBuilder [
 		default: false;
 		label: 'Show errors (dev. only!)';
 		description: 'Signal errors that happen during critique-checking (and related). This should be used by developers.';
-		parent: #qualityAssistant.
+		parent: #qualityAssistant
 ]
 
 { #category : #accessing }
 ReSettings class >> uniqueInstance [
-	
+
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]

@@ -72,7 +72,7 @@ SDL2TouchGestureExample2 >> createEventHandler [
 { #category : #drawing }
 SDL2TouchGestureExample2 >> displayAbortMessage [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas pathTransform translateBy: self windowCenter x - 30 @ self windowCenter y.
 			canvas
 				setPaint: Color green;
@@ -85,7 +85,7 @@ SDL2TouchGestureExample2 >> displayAbortMessage [
 { #category : #drawing }
 SDL2TouchGestureExample2 >> drawBlackBackground [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas setPaint: blackBackground.
 			canvas drawShape: (blackBackgroundPosition @ 0 extent: window extent) ]
 ]
@@ -93,7 +93,7 @@ SDL2TouchGestureExample2 >> drawBlackBackground [
 { #category : #drawing }
 SDL2TouchGestureExample2 >> drawCircle [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas pathTransform translateBy: circleCenter.
 			canvas
 				setPaint:
@@ -127,7 +127,7 @@ SDL2TouchGestureExample2 >> endSwipe: anEvent [
 { #category : #drawing }
 SDL2TouchGestureExample2 >> generateCircleOfSize: anInteger [
 	^ renderer athensSurface
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: anInteger negated @ 0;
@@ -163,12 +163,12 @@ SDL2TouchGestureExample2 >> pinch: anEvent [
 { #category : #drawing }
 SDL2TouchGestureExample2 >> randomizeCircleColor [
 	positiveColor := Color random.
-	negativeColor := Color random.
+	negativeColor := Color random
 ]
 
 { #category : #drawing }
 SDL2TouchGestureExample2 >> redraw [
-	discoMode ifTrue: 
+	discoMode ifTrue:
 		[ self randomizeCircleColor ].
 	self clearSurface.
 	self drawBlackBackground.
@@ -180,7 +180,7 @@ SDL2TouchGestureExample2 >> redraw [
 
 { #category : #'manage rotation' }
 SDL2TouchGestureExample2 >> rotation: anEvent [
-	circleCenter := circleCenter 
+	circleCenter := circleCenter
 		rotateBy: 2 * anEvent dTheta negated
 		about: self windowCenter
 ]

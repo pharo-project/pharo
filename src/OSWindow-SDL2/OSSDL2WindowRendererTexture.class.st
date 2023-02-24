@@ -36,7 +36,7 @@ OSSDL2WindowRendererTexture >> handle: anObject [
 
 { #category : #'texture manipulation' }
 OSSDL2WindowRendererTexture >> uploadAthensSurface: athensSurface [
-	handle updateTexturePixels: athensSurface getDataPtr pitch: athensSurface stride.
+	handle updateTexturePixels: athensSurface getDataPtr pitch: athensSurface stride
 ]
 
 { #category : #'texture manipulation' }
@@ -44,5 +44,5 @@ OSSDL2WindowRendererTexture >> uploadForm: aForm [
 	| convertedForm |
 	convertedForm := aForm asFormOfDepth: 32.
 	convertedForm unhibernate.
-	handle updateTexturePixels: convertedForm bits pitch: convertedForm width * 4.
+	handle updateTexturePixels: convertedForm bits pitch: convertedForm width * 4
 ]

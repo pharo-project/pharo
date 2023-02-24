@@ -11,10 +11,10 @@ Class {
 RGUnresolvedValue class >> recursive [
 
 	| unresolvedValue |
-	
+
 	unresolvedValue := self new.
 	unresolvedValue default: unresolvedValue.
-	^ unresolvedValue.
+	^ unresolvedValue
 ]
 
 { #category : #accessing }

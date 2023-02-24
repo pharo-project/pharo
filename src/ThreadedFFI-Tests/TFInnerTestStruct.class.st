@@ -14,9 +14,9 @@ Class {
 
 { #category : #'field definition' }
 TFInnerTestStruct class >> fieldsDesc [
-	
+
 	"self rebuildFieldAccessors"
-	
+
 	^ #(
 	char a;
 	void* b;
@@ -44,5 +44,5 @@ TFInnerTestStruct >> b [
 { #category : #'accessing - structure variables' }
 TFInnerTestStruct >> b: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_B put: anObject getHandle.
+	handle pointerAt: OFFSET_B put: anObject getHandle
 ]

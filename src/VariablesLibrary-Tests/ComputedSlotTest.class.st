@@ -7,15 +7,17 @@ Class {
 { #category : #tests }
 ComputedSlotTest >> testReadComputedSlotCompiled [
 	| object slot |
+	<ignoreNotImplementedSelectors: #(slot1)>
+
 	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	object := aClass new.
-	
+
 	"The slot is virtual and does not use memory"
 	self assert: object basicSize  equals: 0.
-	
+
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
 	self assert: object slot1 equals: 5
@@ -28,7 +30,7 @@ ComputedSlotTest >> testReadComputedSlotReflective [
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
-	
+
 	self assert: (slot read: object) equals: 5
 ]
 
@@ -40,7 +42,7 @@ ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 	self assert: (aClass hasSlotNamed: #slot1).
 
 	object := aClass new.
-	
+
 	self assert: (slot read: object) equals: 5
 ]
 
@@ -50,9 +52,9 @@ ComputedSlotTest >> testWriteComputedSlotCompiled [
 	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	object := aClass new.
-	
+
 	"now compile an accessor and write"
 	self compileAccessorsFor: slot.
 	object slot1: 10.

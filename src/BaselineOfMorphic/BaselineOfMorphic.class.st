@@ -115,8 +115,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
-		spec package: 'Unicode-Initialization'.
-
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.

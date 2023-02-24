@@ -14,7 +14,7 @@ TFUFFITestCase class >> isAbstract [
 ]
 
 { #category : #'building suites' }
-TFUFFITestCase class >> testParameters [ 
+TFUFFITestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
 		forSelector: #ffiLibrary addOptions: { TFTestLibraryUsingSameThreadRunner. TFTestLibraryUsingWorker. }
@@ -31,12 +31,12 @@ TFUFFITestCase >> ffiLibrary: anObject [
 ]
 
 { #category : #running }
-TFUFFITestCase >> runCaseManaged [ 
-	
+TFUFFITestCase >> runCaseManaged [
+
 	"Skipping in running on an old VM"
 	TFFIBackend isAvailable ifFalse: [ ^ self skip ].
-	
-	super runCaseManaged.
+
+	super runCaseManaged
 ]
 
 { #category : #running }

@@ -65,7 +65,7 @@ PluggableMultiColumnListMorph >> gapSize [
 { #category : #accessing }
 PluggableMultiColumnListMorph >> gapSize: anInteger [
 
-	gapSize := anInteger.
+	gapSize := anInteger
 ]
 
 { #category : #accessing }

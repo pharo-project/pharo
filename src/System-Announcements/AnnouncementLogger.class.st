@@ -21,6 +21,6 @@ AnnouncementLogger >> logAnnouncement: ann [
 { #category : #subscription }
 AnnouncementLogger >> subscribeTo: anAnnouncer [
 
-	anAnnouncer "weak" 
+	anAnnouncer "weak"
 		when: Announcement send: #logAnnouncement: to: self
 ]

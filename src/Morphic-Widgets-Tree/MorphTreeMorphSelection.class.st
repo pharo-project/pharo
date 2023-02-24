@@ -28,7 +28,7 @@ MorphTreeMorphSelection >> lastSelectedNode [
 ]
 
 { #category : #accessing }
-MorphTreeMorphSelection >> lastSelectedNodePath [ 
+MorphTreeMorphSelection >> lastSelectedNodePath [
 	^ self subclassResponsibility
 ]
 

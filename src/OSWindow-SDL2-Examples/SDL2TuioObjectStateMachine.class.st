@@ -35,7 +35,7 @@ SDL2TuioObjectStateMachine >> color: anObject [
 SDL2TuioObjectStateMachine >> initialize [
 	position := 0@0.
 	color := Color random.
-	angle := 0.
+	angle := 0
 ]
 
 { #category : #accessing }

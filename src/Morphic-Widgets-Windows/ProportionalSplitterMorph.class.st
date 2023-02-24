@@ -19,7 +19,7 @@ Class {
 
 { #category : #preferences }
 ProportionalSplitterMorph class >> fastSplitterResize [
-	
+
 	^ self theme settings fastDragging
 ]
 
@@ -50,20 +50,20 @@ ProportionalSplitterMorph >> addLeftOrTop: aMorph [
 { #category : #operations }
 ProportionalSplitterMorph >> addRightOrBottom: aMorph [
 
-	rightOrBottom add: aMorph.
+	rightOrBottom add: aMorph
 ]
 
 { #category : #operations }
 ProportionalSplitterMorph >> beSplitsTopAndBottom [
 
-	splitsTopAndBottom := true.
+	splitsTopAndBottom := true
 ]
 
 { #category : #accessing }
 ProportionalSplitterMorph >> bottomBoundary [
 	"Answer the bottom boundary position by calculating the minimum
 	of the minimum heights of the bottom morphs."
-	
+
 	|morphs|
 	morphs := rightOrBottom reject: [:m |
 		m layoutFrame bottomFraction ~= 1 and: [
@@ -79,7 +79,7 @@ ProportionalSplitterMorph >> bottomBoundary [
 ]
 
 { #category : #drawing }
-ProportionalSplitterMorph >> drawOn: aCanvas [ 
+ProportionalSplitterMorph >> drawOn: aCanvas [
 
 	| dotBounds size alphaCanvas dotSize |
 	self shouldDraw ifFalse: [^self].
@@ -107,9 +107,9 @@ ProportionalSplitterMorph >> getOldColor [
 ProportionalSplitterMorph >> handleRect [
 
 	^ Rectangle
-		center: self bounds center 
+		center: self bounds center
 		extent: (self splitsTopAndBottom
-			ifTrue: [self handleSize transposed] 
+			ifTrue: [self handleSize transposed]
 			ifFalse: [self handleSize])
 ]
 
@@ -123,11 +123,11 @@ ProportionalSplitterMorph >> handleSize [
 ProportionalSplitterMorph >> initialize [
 
 	super initialize.
-	
+
 	self hResizing: #spaceFill.
 	self vResizing: #spaceFill.
 	splitsTopAndBottom := false.
-	
+
 	leftOrTop := OrderedCollection new.
 	rightOrBottom := OrderedCollection new
 ]
@@ -141,7 +141,7 @@ ProportionalSplitterMorph >> isCursorOverHandle [
 ProportionalSplitterMorph >> leftBoundary [
 	"Answer the left boundary position by calculating the minimum
 	of the minimum widths of the left morphs."
-	
+
 	|morphs|
 	morphs := leftOrTop reject: [:m |
 		m layoutFrame leftFraction ~= 0 and: [
@@ -157,11 +157,11 @@ ProportionalSplitterMorph >> leftBoundary [
 ]
 
 { #category : #'event handling' }
-ProportionalSplitterMorph >> mouseDown: anEvent [ 
+ProportionalSplitterMorph >> mouseDown: anEvent [
 	"A mouse button has been pressed.
 	Update the color for feedback and store the mouse
 	position and relative offset to the receiver."
-	
+
 	|cp|
 	(self class showSplitterHandles not
 			and: [self bounds containsPoint: anEvent cursorPoint])
@@ -172,7 +172,7 @@ ProportionalSplitterMorph >> mouseDown: anEvent [
 ]
 
 { #category : #'event handling' }
-ProportionalSplitterMorph >> mouseMove: anEvent [ 
+ProportionalSplitterMorph >> mouseMove: anEvent [
 	anEvent hand temporaryCursor
 		ifNil: [^ self].
 	self class fastSplitterResize
@@ -211,7 +211,7 @@ ProportionalSplitterMorph >> resizeCursor [
 ProportionalSplitterMorph >> rightBoundary [
 	"Answer the right boundary position by calculating the minimum
 	of the minimum widths of the right morphs."
-	
+
 	|morphs|
 	morphs := rightOrBottom reject: [:m |
 		m layoutFrame rightFraction ~= 1 and: [
@@ -229,8 +229,8 @@ ProportionalSplitterMorph >> rightBoundary [
 { #category : #accessing }
 ProportionalSplitterMorph >> siblingSplitters [
 
-	^ self owner 
-		submorphsSatisfying: [:each | (each isKindOf: self class) 
+	^ self owner
+		submorphsSatisfying: [:each | (each isKindOf: self class)
 									and: [self splitsTopAndBottom = each splitsTopAndBottom and: [each ~= self]]]
 ]
 
@@ -243,7 +243,7 @@ ProportionalSplitterMorph >> splitsTopAndBottom [
 { #category : #accessing }
 ProportionalSplitterMorph >> splitterAbove [
 	"Answer the splitter above the receiver that overlaps in its horizontal range."
-	
+
 	|splitters|
 	splitters := ((self siblingSplitters select: [:each |
 		each top > self top and: [self overlapsHorizontal: each]]) asSortedCollection: [:a :b | a top < b top]).
@@ -259,7 +259,7 @@ ProportionalSplitterMorph >> splitterBelow [
 	|splitters|
 	splitters := ((self siblingSplitters select: [:each |
 		each top < self top and: [self overlapsHorizontal: each]]) asSortedCollection: [:a :b | a top > b top]).
-	
+
 	^ splitters
 		ifEmpty: [ nil ]
 		ifNotEmpty: [:s | s first ]
@@ -268,11 +268,11 @@ ProportionalSplitterMorph >> splitterBelow [
 { #category : #accessing }
 ProportionalSplitterMorph >> splitterLeft [
 	"Answer the splitter to the left of the receiver that overlaps in its vertical range."
-	
+
 	|splitters|
 	splitters := ((self siblingSplitters select: [:each |
 		each left < self left and: [self overlapsVertical: each]]) asSortedCollection: [:a :b | a left > b left]).
-	
+
 	^ splitters
 		ifEmpty: [ nil ]
 		ifNotEmpty: [:s | s first ]
@@ -281,11 +281,11 @@ ProportionalSplitterMorph >> splitterLeft [
 { #category : #accessing }
 ProportionalSplitterMorph >> splitterRight [
 	"Answer the splitter to the right of the receiver that overlaps in its vertical range."
-	
+
 	|splitters|
 	splitters := ((self siblingSplitters select: [:each |
 		each left > self left and: [self overlapsVertical: each]]) asSortedCollection: [:a :b | a left < b left]).
-	
+
 	^ splitters
 		ifEmpty: [ nil ]
 		ifNotEmpty: [:s | s first ]
@@ -295,7 +295,7 @@ ProportionalSplitterMorph >> splitterRight [
 ProportionalSplitterMorph >> topBoundary [
 	"Answer the top boundary position by calculating the minimum
 	of the minimum heights of the top morphs."
-	
+
 	|morphs|
 	morphs := leftOrTop reject: [:m |
 		m layoutFrame topFraction ~= 0 and: [
@@ -314,7 +314,7 @@ ProportionalSplitterMorph >> topBoundary [
 ProportionalSplitterMorph >> updateFromEvent: anEvent [
 	"Update the splitter and attached morph positions from the mouse event.
 	Take into account the mouse down offset."
-	
+
 	| pNew pOld delta selfTop selfBottom selfLeft selfRight|
 	pNew := anEvent cursorPoint - lastMouse second.
 	pOld := lastMouse first - lastMouse second.
@@ -324,7 +324,7 @@ ProportionalSplitterMorph >> updateFromEvent: anEvent [
 	lastMouse at: 1 put: (splitsTopAndBottom
 		ifTrue: [pNew x @ (self normalizedY: pNew y) + lastMouse second]
 		ifFalse: [(self normalizedX: pNew x) @ pNew y + lastMouse second]).
-	leftOrTop do: [:each | | firstRight firstBottom | 
+	leftOrTop do: [:each | | firstRight firstBottom |
 		firstRight := each layoutFrame rightOffset
 					ifNil: [0].
 		firstBottom := each layoutFrame bottomOffset
@@ -337,7 +337,7 @@ ProportionalSplitterMorph >> updateFromEvent: anEvent [
 		(each layoutFrame topFraction = each layoutFrame bottomFraction and: [
 				each layoutFrame topFraction ~= 0]) "manual splitter"
 			ifTrue: [each layoutFrame topOffset: (each layoutFrame topOffset ifNil: [0]) + delta y]].
-	rightOrBottom do: [:each | | secondLeft secondTop | 
+	rightOrBottom do: [:each | | secondLeft secondTop |
 		secondLeft := each layoutFrame leftOffset
 					ifNil: [0].
 		secondTop := each layoutFrame topOffset

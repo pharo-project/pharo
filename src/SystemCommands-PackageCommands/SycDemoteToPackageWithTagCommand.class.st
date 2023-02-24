@@ -9,7 +9,7 @@ Class {
 
 { #category : #execution }
 SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
-			
+
 	| lastPackage newPackage tag |
 	lastPackage := packages detect: [ :each | each name includes: $- ] ifNone: [ ^self ].
 
@@ -25,8 +25,8 @@ SycDemoteToPackageWithTagCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycDemoteToPackageWithTagCommand >> execute [
-			
-	packages 
+
+	packages
 		select: [ :each | each name includes: $- ]
 		thenDo: [ :each | each demoteToTagInPackageNamed: (each name copyUpToLast: $-) ]
 ]

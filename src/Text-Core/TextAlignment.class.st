@@ -62,8 +62,8 @@ TextAlignment class >> rightFlush [
 ]
 
 { #category : #comparing }
-TextAlignment >> = other [ 
-	^ (other class == self class) 
+TextAlignment >> = other [
+	^ (other class == self class)
 		and: [other alignment = alignment]
 ]
 
@@ -74,7 +74,7 @@ TextAlignment >> alignment [
 
 { #category : #accessing }
 TextAlignment >> alignment: aNumber [
-	alignment := aNumber.
+	alignment := aNumber
 ]
 
 { #category : #testing }

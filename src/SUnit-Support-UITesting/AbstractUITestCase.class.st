@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-AbstractUITestCase class >> isAbstract [ 
+AbstractUITestCase class >> isAbstract [
 
 	^self == AbstractUITestCase
 ]

@@ -30,7 +30,7 @@ Class {
 RBTransformation class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them
 	 so the block references the current method"
-	self initializeRefactoringOptions.
+	self initializeRefactoringOptions
 ]
 
 { #category : #'class initialization' }
@@ -46,31 +46,31 @@ RBTransformation class >> initializeRefactoringOptions [
 	RefactoringOptions
 		at: #implementorToInline
 		put: [ :ref :imps | self error: #implementorToInline ];
-		
+
 		at: #methodName
 		put: [ :methodName | self error: #methodName ];
-		
+
 		at: #selfArgumentName
 		put: [ :ref | self error: #selfArgumentName ];
-		
+
 		at: #selectVariableToMoveTo
-		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];	
-			
+		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];
+
 		at: #variableTypes
 		put: [ :ref :types :selected | self error: #variableTypes ];
-		
+
 		at: #extractAssignment
 		put: [ :ref :varName | self error: #extractAssignment ];
-		
+
 		at: #inlineExpression
 		put: [ :ref :string | self error: #inlineExpression ];
-		
+
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
-		
+
 		at: #useExistingMethod
 		put: [ :ref :selector |  self error: #useExistingMethod ];
-		
+
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
@@ -84,27 +84,27 @@ RBTransformation class >> refactoringOptions [
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
-	^ self 
+	^ self
 		checksPreconditions;
 		yourself
 ]
 
 { #category : #private }
-RBTransformation >> buildSelectorString: aSelector [ 
+RBTransformation >> buildSelectorString: aSelector [
 	aSelector numArgs = 0 ifTrue: [^aSelector].
 	^self buildSelectorString: aSelector
 		withPermuteMap: (1 to: aSelector numArgs)
 ]
 
 { #category : #private }
-RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [ 
+RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [
 	| stream keywords |
 	aSelector numArgs == 0 ifTrue: [^aSelector asString].
 	stream := WriteStream on: String new.
 	keywords := aSelector keywords.
 	keywords with: anIntegerCollection
-		do: 
-			[:each :i | 
+		do:
+			[:each :i |
 			stream
 				nextPutAll: each;
 				nextPutAll: ' ``@arg';
@@ -124,7 +124,7 @@ RBTransformation >> checkPreconditions [
 
 	| conditions result |
 	conditions := self preconditions.
-	
+
 	result := conditions check.
 	result ifFalse: [ self refactoringError: conditions errorString ].
 	^ result
@@ -149,14 +149,14 @@ RBTransformation >> convertMethod: selector for: aClass using: searchReplacer [
 ]
 
 { #category : #accessing }
-RBTransformation >> copyOptionsFrom: aDictionary [ 
+RBTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
-	dict == self class refactoringOptions 
+	dict == self class refactoringOptions
 		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo: 
-			[:key :value | 
-			value == (self class refactoringOptions at: key) 
+	dict keysAndValuesDo:
+			[:key :value |
+			value == (self class refactoringOptions at: key)
 				ifTrue: [dict at: key put: (aDictionary at: key)]].
 	self options: dict
 ]
@@ -170,8 +170,8 @@ RBTransformation >> defaultEnvironment [
 { #category : #execution }
 RBTransformation >> execute [
 	self primitiveExecute.
-	RBRefactoryChangeManager instance 
-		performChange: self changes; 
+	RBRefactoryChangeManager instance
+		performChange: self changes;
 		addUndoPointer: (RBRefactoryChangeManager nextCounter)
 ]
 
@@ -203,7 +203,7 @@ RBTransformation >> newModel [
 ]
 
 { #category : #executing }
-RBTransformation >> openBrowserOn: anEnvironment [ 
+RBTransformation >> openBrowserOn: anEnvironment [
 
 	^ (self options at: #openBrowser)
 		value: self value: anEnvironment
@@ -216,7 +216,7 @@ RBTransformation >> options [
 ]
 
 { #category : #accessing }
-RBTransformation >> options: aDictionary [ 
+RBTransformation >> options: aDictionary [
 
 	options := aDictionary
 ]
@@ -225,9 +225,9 @@ RBTransformation >> options: aDictionary [
 RBTransformation >> poolVariableNamesFor: aClass [
 	| pools |
 	pools := Set new.
-	aClass withAllSuperclasses do: 
-			[:each | 
-			each allPoolDictionaryNames do: 
+	aClass withAllSuperclasses do:
+			[:each |
+			each allPoolDictionaryNames do:
 					[:pool |
 					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
 	^pools
@@ -281,14 +281,14 @@ RBTransformation >> transform [
 
 	self preconditionChecking ifTrue: [ self checkPreconditions ].
 	self privateTransform
-	
+
 	"below executes the refactoring without prompt"
 	"RBRefactoringManager instance addRefactoring: self"
 ]
 
 { #category : #displaying }
-RBTransformation >> whatToDisplayIn: aBrowser [ 
-	
+RBTransformation >> whatToDisplayIn: aBrowser [
+
 	^ self changes changes
 		flatCollect: [ :e | e whatToDisplayIn: aBrowser ]
 ]

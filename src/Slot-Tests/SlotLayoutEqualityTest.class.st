@@ -6,35 +6,35 @@ Class {
 
 { #category : #helpers }
 SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isEqualToClassBuiltWith: blockToBuildAnotherClass [
-	
-	aClass := self make: [ :builder | 
-		builder 
+
+	aClass := self make: [ :builder |
+		builder
 			name: self aClassName;
 			in: blockToBuildAClass ].
-		
-	anotherClass := self make: [ :builder | 
-		builder 
+
+	anotherClass := self make: [ :builder |
+		builder
 			name: self anotherClassName;
 			in: blockToBuildAnotherClass ].
-	
-	self assert: aClass classLayout equals: aClass classLayout.	
+
+	self assert: aClass classLayout equals: aClass classLayout.
 	self assert: aClass classLayout equals: anotherClass classLayout.
 	self assert: aClass classLayout hash equals: anotherClass classLayout hash
 ]
 
 { #category : #helpers }
 SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isNotEqualToClassBuiltWith: blockToBuildAnotherClass [
-		
-	aClass := self make: [ :builder | 
-		builder 
+
+	aClass := self make: [ :builder |
+		builder
 			name: self aClassName;
 			in: blockToBuildAClass ].
-		
-	anotherClass := self make: [ :builder | 
-		builder 
+
+	anotherClass := self make: [ :builder |
+		builder
 			name: self anotherClassName;
 			in: blockToBuildAnotherClass ].
-	
+
 	self assert: aClass classLayout ~= anotherClass classLayout.
 	self assert: aClass classLayout hash ~= anotherClass classLayout hash
 ]
@@ -43,18 +43,18 @@ SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isNotEqualToC
 SlotLayoutEqualityTest >> testLayoutEquals [
 
 	self layoutClasses do: [:aLayoutClass |
-		self 
-			assertClassBuiltWith: [:builder | builder layoutClass: aLayoutClass ] 
+		self
+			assertClassBuiltWith: [:builder | builder layoutClass: aLayoutClass ]
 			isEqualToClassBuiltWith: [:builder | builder layoutClass: aLayoutClass ] ]
 ]
 
 { #category : #tests }
 SlotLayoutEqualityTest >> testLayoutNotEquals [
- 
+
 	self layoutClasses do: [:aLayoutClass |
 		(self layoutClasses copyWithout: aLayoutClass) do: [:anotherLayoutClass |
-			self 
-				assertClassBuiltWith: [:builder | builder layoutClass: aLayoutClass ] 
+			self
+				assertClassBuiltWith: [:builder | builder layoutClass: aLayoutClass ]
 				isNotEqualToClassBuiltWith: [:builder | builder layoutClass: anotherLayoutClass ]]]
 ]
 
@@ -62,13 +62,13 @@ SlotLayoutEqualityTest >> testLayoutNotEquals [
 SlotLayoutEqualityTest >> testLayoutWithSlotsEquals [
 
 	self layoutClassesWithSlots do: [:aLayoutClass |
-		self 
-			assertClassBuiltWith: [:builder | 
-				builder 
+		self
+			assertClassBuiltWith: [:builder |
+				builder
 					layoutClass: aLayoutClass;
 					slots: { #field1}  ]
-			isEqualToClassBuiltWith: [:builder | 
-				builder 
+			isEqualToClassBuiltWith: [:builder |
+				builder
 					layoutClass: aLayoutClass;
 					slots: { #field1}  ]]
 ]
@@ -77,13 +77,13 @@ SlotLayoutEqualityTest >> testLayoutWithSlotsEquals [
 SlotLayoutEqualityTest >> testLayoutWithSlotsNotEquals [
 
 	self layoutClassesWithSlots do: [:aLayoutClass |
-		self 
-			assertClassBuiltWith: [:builder | 
-				builder 
+		self
+			assertClassBuiltWith: [:builder |
+				builder
 					layoutClass: aLayoutClass;
 					slots: { #field1}  ]
-			isNotEqualToClassBuiltWith: [:builder | 
-				builder 
+			isNotEqualToClassBuiltWith: [:builder |
+				builder
 					layoutClass: aLayoutClass;
 					slots: { #field2}  ]]
 ]

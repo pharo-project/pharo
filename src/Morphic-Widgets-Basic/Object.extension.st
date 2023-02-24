@@ -1,8 +1,8 @@
 Extension { #name : #Object }
 
 { #category : #'*Morphic-Widgets-Basic' }
-Object >> acceptDroppingMorph: transferMorph event: evt inMorph: dstListMorph [ 
-	
+Object >> acceptDroppingMorph: transferMorph event: evt inMorph: dstListMorph [
+
 	^false
 ]
 
@@ -25,7 +25,7 @@ Object >> dragTransferTypeForMorph: dragSource [
 ]
 
 { #category : #'*Morphic-Widgets-Basic' }
-Object >> wantsDroppedMorph: aMorph event: anEvent inMorph: destinationLM [ 
+Object >> wantsDroppedMorph: aMorph event: anEvent inMorph: destinationLM [
 	^false
 ]
 

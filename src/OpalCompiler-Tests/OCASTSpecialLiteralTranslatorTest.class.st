@@ -6,20 +6,20 @@ Class {
 
 { #category : #'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayIsNotInLiteralFrame [
-	
+
 	| aCompiledMethod array |
 	aCompiledMethod := self compileExample: #examplePushDynamicLiteralArray.
 	array := self executeMethodOnInstance: aCompiledMethod.
-	
-	self deny: (aCompiledMethod literals identityIncludes: array).
+
+	self deny: (aCompiledMethod literals identityIncludes: array)
 ]
 
 { #category : #'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsAlwaysNewArray [
-	
+
 	| aCompiledMethod |
 	aCompiledMethod := self compileExample: #examplePushDynamicLiteralArray.
-	
+
 	self assert: (self executeMethodOnInstance: aCompiledMethod) ~~ (self executeMethodOnInstance: aCompiledMethod)
 ]
 
@@ -31,10 +31,10 @@ OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsArray [
 
 { #category : #'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsEqualsArray [
-	
+
 	| aCompiledMethod |
 	aCompiledMethod := self compileExample: #examplePushDynamicLiteralArray.
-	
+
 	self assert: (self executeMethodOnInstance: aCompiledMethod) equals: (self executeMethodOnInstance: aCompiledMethod)
 ]
 

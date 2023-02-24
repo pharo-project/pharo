@@ -16,7 +16,7 @@ OCASTSingleBlockTranslatorTest class >> isAbtract [
 { #category : #'building suites' }
 OCASTSingleBlockTranslatorTest class >> testParameters [
 
-	^ super testParameters * 
+	^ super testParameters *
 		(ParametrizedTestMatrix new
 			forSelector: #extractBlockInTemp addOptions: { true . false };
 			yourself)
@@ -29,7 +29,7 @@ OCASTSingleBlockTranslatorTest >> extractBlockInTemp [
 ]
 
 { #category : #accessing }
-OCASTSingleBlockTranslatorTest >> extractBlockInTemp: aBoolean [ 
+OCASTSingleBlockTranslatorTest >> extractBlockInTemp: aBoolean [
 	extractBlockInTemp := aBoolean
 ]
 
@@ -41,10 +41,10 @@ OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: block
 
 { #category : #tests }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode withArguments: arguments [
-	
+
 	^ self
 		testComposedExample: template
-		withTemps: #() 
+		withTemps: #()
 		withBlock: blockCode
 		withArguments: arguments
 ]
@@ -59,20 +59,20 @@ OCASTSingleBlockTranslatorTest >> testComposedExample: template withTemps: temps
 OCASTSingleBlockTranslatorTest >> testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: arguments [
 	| declaration argument source methodTemps |
 	methodTemps := OrderedCollection withAll: temps.
-	self extractBlockInTemp ifTrue: [ 
+	self extractBlockInTemp ifTrue: [
 			methodTemps add: 'block'.
 			declaration := 'block := ', blockCode.
 			argument := 'block' ]
 		ifFalse: [
 			declaration := ''.
 			argument := blockCode ].
-	
+
 	declaration := String streamContents: [ :stream |
 		stream nextPut: $|.
 		methodTemps do: [ :each | stream nextPutAll: each; space ].
 		stream nextPut: $|.
 		stream nextPutAll: declaration. ].
-	source := template format: { 
+	source := template format: {
 		'definition' -> declaration.
 		'argument' -> argument } asDictionary.
 	^ self testSource: source withArguments: arguments

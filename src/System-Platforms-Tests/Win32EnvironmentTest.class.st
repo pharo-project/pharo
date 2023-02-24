@@ -8,16 +8,16 @@ Class {
 Win32EnvironmentTest >> testExistingEnvironmentVariableLongerThanBufferShouldReturnValue [
 
 	| value aExpectedValue |
-	
-	OSPlatform current isWindows 
+
+	OSPlatform current isWindows
 		ifFalse: [ ^self skip ].
 
 	aExpectedValue := String loremIpsum: 1500.
 
 	OSEnvironment current at: 'ExistingNonEmpty' put: aExpectedValue.
-		
+
 	value := OSEnvironment current at: 'ExistingNonEmpty'.
-	
+
 	self assert: value equals: aExpectedValue
 ]
 
@@ -25,22 +25,22 @@ Win32EnvironmentTest >> testExistingEnvironmentVariableLongerThanBufferShouldRet
 Win32EnvironmentTest >> testExistingEnvironmentVariableShouldReturnValue [
 
 	| value |
-	
-	OSPlatform current isWindows 
+
+	OSPlatform current isWindows
 		ifFalse: [ ^self skip ].
 
 	OSEnvironment current at: 'ExistingNonEmpty' put: 'IamAValue'.
-		
+
 	value := OSEnvironment current at: 'ExistingNonEmpty'.
-	
+
 	self assert: value equals: 'IamAValue'
 ]
 
 { #category : #tests }
 Win32EnvironmentTest >> testNonExistingEnvironmentVariableShouldGenerateException [
 
-	OSPlatform current isWindows 
+	OSPlatform current isWindows
 		ifFalse: [ ^self skip ].
-		
-	self should: [ OSEnvironment current at: 'NonExistingVariable' ] raise: NotFound.
+
+	self should: [ OSEnvironment current at: 'NonExistingVariable' ] raise: NotFound
 ]

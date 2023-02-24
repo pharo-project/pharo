@@ -23,12 +23,12 @@ OSWindowGestureEventHandler >> visitTouchActionPointerDownEvent: anEvent [
 
 { #category : #'visiting - two fingers gestures' }
 OSWindowGestureEventHandler >> visitTouchActionPointerMoveEvent: anEvent [
-	touchExample move: anEvent fingerId at: anEvent position.
+	touchExample move: anEvent fingerId at: anEvent position
 ]
 
 { #category : #'visiting - two fingers gestures' }
 OSWindowGestureEventHandler >> visitTouchActionPointerUpEvent: anEvent [
-	touchExample endMove: anEvent fingerId at: anEvent position.
+	touchExample endMove: anEvent fingerId at: anEvent position
 ]
 
 { #category : #visiting }
@@ -43,7 +43,7 @@ OSWindowGestureEventHandler >> visitTouchOneFingerHoldEvent: anEvent [
 
 { #category : #'visiting - three fingers gestures' }
 OSWindowGestureEventHandler >> visitTouchThreeFingersSwipeAbortEvent: anEvent [
-	touchExample abortedSwipe.
+	touchExample abortedSwipe
 ]
 
 { #category : #'visiting - three fingers gestures' }

@@ -77,17 +77,16 @@ Class {
 { #category : #starting }
 TKTService >> doStop [
 	self tearDown.
-	(TKTNewProcessTaskRunner new 
-		future: [ self kill ]) 
-		flatCollect: [ :r | 
+	(TKTNewProcessTaskRunner new
+		future: [ self kill ])
+		flatCollect: [ :r |
 			stopCallbacks do: [ :each | each value: r ] ]
 ]
 
 { #category : #initialization }
 TKTService >> initialize [
 	super initialize.
-	self stepDelay: 500 milliSeconds.
-
+	self stepDelay: 500 milliSeconds
 ]
 
 { #category : #testing }
@@ -113,16 +112,16 @@ TKTService >> kill [
 TKTService >> launch [
 
 	self name ifNil: [ self error: 'A name should be provided for a service' ].
-	
+
 	worker name: self name.
 	worker start.
 	worker schedule: [ self setUp ].
-	self scheduleRecursiveTask.
+	self scheduleRecursiveTask
 ]
 
 { #category : #accessing }
 TKTService >> name [
-	
+
 	self subclassResponsibility
 ]
 
@@ -138,7 +137,7 @@ TKTService >> priority [
 ]
 
 { #category : #accessing }
-TKTService >> priority: anInteger [ 
+TKTService >> priority: anInteger [
 	self worker priority: anInteger
 ]
 
@@ -174,7 +173,7 @@ TKTService >> start [
 	stopRequested := false.
 	stopCallbacks := Set new.
 	self worker taskQueue: AtomicSharedQueue new.
-	recursiveTask := [ 
+	recursiveTask := [
 			self iterateService.
 			self scheduleRecursiveTask ] asTask.
 	TKTConfiguration serviceManager startService: self
@@ -182,12 +181,12 @@ TKTService >> start [
 
 { #category : #accessing }
 TKTService >> stepDelay [
-	^ stepDelay 
+	^ stepDelay
 ]
 
 { #category : #starting }
 TKTService >> stepDelay: aTimeDelay [
-	stepDelay := aTimeDelay 
+	stepDelay := aTimeDelay
 ]
 
 { #category : #stepping }

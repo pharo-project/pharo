@@ -18,5 +18,5 @@ SDL2ScanCodeConstants class >> initialize [
 SDL2ScanCodeConstants class >> initializeScanCodes [
 
 	SDL_SCANCODE_COMMA := 54.
-	SDL_SCANCODE_PERIOD := 55.
+	SDL_SCANCODE_PERIOD := 55
 ]

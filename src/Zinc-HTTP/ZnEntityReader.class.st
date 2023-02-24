@@ -52,8 +52,8 @@ ZnEntityReader >> contentLength [
 
 { #category : #accessing }
 ZnEntityReader >> contentType [
-	^ (self headers includesKey: 'Content-Type') 
-		ifTrue: [ self headers contentType ] 
+	^ (self headers includesKey: 'Content-Type')
+		ifTrue: [ self headers contentType ]
 		ifFalse: [ ZnMimeType default ]
 ]
 
@@ -108,21 +108,21 @@ ZnEntityReader >> readEntity [
 	entity := self readEntityFromStream.
 	^ entity isEmpty
 		ifTrue: [ nil ]
-		ifFalse: [ entity ]    
+		ifFalse: [ entity ]
 ]
 
 { #category : #private }
 ZnEntityReader >> readEntityFromStream [
 	| entity decodedEntityLength chunkedStream isChunked |
 	chunkedStream := (isChunked := self isChunked) ifTrue: [ stream := ZnChunkedReadStream on: stream ] ifFalse: [ nil ].
-	self isGzipped 
-		ifTrue: [ 
+	self isGzipped
+		ifTrue: [
 			self hasContentLength ifTrue: [ stream := ZnLimitedReadStream on: stream limit: self contentLength ].
 			decodedEntityLength := nil.
 			stream := GZipReadStream on: stream ]
 		ifFalse: [ decodedEntityLength := self contentLength ].
 	entity := self readFrom: stream usingType: self contentType andLength: decodedEntityLength.
-	isChunked ifTrue: [ 
+	isChunked ifTrue: [
 		self isIdentityEncoded ifTrue: [ entity contentLength: stream totalSize ].
 		chunkedStream extraHeaders ifNotNil: [ :extraHeaders | self headers addAll: extraHeaders ] ].
 	^ entity
@@ -131,15 +131,15 @@ ZnEntityReader >> readEntityFromStream [
 { #category : #private }
 ZnEntityReader >> readFrom: readStream usingType: contentType andLength: length [
 	| entityClass selector |
-	entityClass := self isStreaming 
+	entityClass := self isStreaming
 		ifTrue: [ ZnStreamingEntity ]
 		ifFalse: [ ZnEntity ].
-	selector := self isBinary 
+	selector := self isBinary
 		ifTrue: [ #readBinaryFrom:usingType:andLength: ]
 		ifFalse: [ #readFrom:usingType:andLength: ].
-	^ entityClass perform: selector 
+	^ entityClass perform: selector
 		with: readStream
-		with: contentType 
+		with: contentType
 		with: length
 ]
 
@@ -150,7 +150,7 @@ ZnEntityReader >> stream [
 
 { #category : #accessing }
 ZnEntityReader >> stream: readStream [
-	stream := readStream 
+	stream := readStream
 ]
 
 { #category : #accessing }

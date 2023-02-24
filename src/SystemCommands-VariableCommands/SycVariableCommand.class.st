@@ -29,7 +29,7 @@ SycVariableCommand class >> isAbstract [
 { #category : #execution }
 SycVariableCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	variables := aToolContext selectedVariables
 ]
 

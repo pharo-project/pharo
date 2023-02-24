@@ -20,7 +20,7 @@ RBPackageRefactoring class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBPackageRefactoring class >> model: aRBModel packageName: aName [ 
+RBPackageRefactoring class >> model: aRBModel packageName: aName [
 	^ self new
 		model: aRBModel;
 		packageName: aName;
@@ -58,9 +58,9 @@ RBPackageRefactoring >> packageName: anObject [
 ]
 
 { #category : #preconditions }
-RBPackageRefactoring >> preconditions [ 
+RBPackageRefactoring >> preconditions [
 	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error 
+			on: Error
 			do: [ :e | self refactoringError: e messageText ]
 		])
 ]

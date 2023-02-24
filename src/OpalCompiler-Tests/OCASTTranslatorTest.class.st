@@ -32,7 +32,7 @@ OCASTTranslatorTest >> compilationContext [
 
 { #category : #support }
 OCASTTranslatorTest >> compileExample: aSelector [
-	
+
 	^ self compileSource: (OCOpalExamples>> aSelector) sourceCode
 ]
 
@@ -132,7 +132,7 @@ OCASTTranslatorTest >> setUp [
 
 	super setUp.
 	instance := OCOpalExamples new.
-	globals := SystemDictionary new.
+	globals := SystemDictionary new
 ]
 
 { #category : #running }

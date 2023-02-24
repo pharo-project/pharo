@@ -28,8 +28,8 @@ TextFontReference class >> toFont: aFont [
 ]
 
 { #category : #comparing }
-TextFontReference >> = other [ 
-	^ (other class == self class) 
+TextFontReference >> = other [
+	^ (other class == self class)
 		and: [other font = font]
 ]
 

@@ -14,7 +14,7 @@ Class {
 { #category : #layout }
 RowLayout >> flushLayoutCache [
 	"Flush any cached information associated with the receiver."
-	
+
 	cachedMinExtent := nil
 ]
 
@@ -49,7 +49,7 @@ RowLayout >> layout: aMorph in: layoutBounds [
 								ifTrue: [newBounds right - width]
 								ifFalse: [newBounds left]]].
 	height := newBounds height.
-	inset := props cellInset isPoint ifTrue: [props cellInset x] ifFalse: [props cellInset]. 
+	inset := props cellInset isPoint ifTrue: [props cellInset x] ifFalse: [props cellInset].
 	aMorph submorphs with: cachedMinExtents do: [:m :ext | | pos vr box cell |
 		width := m hResizing == #spaceFill
 			ifTrue: [fillCount := fillCount - 1.
@@ -62,7 +62,7 @@ RowLayout >> layout: aMorph in: layoutBounds [
 			ifTrue: [((vr == #shrinkWrap) not and: [m extent = cell extent])
 						ifTrue: [m position: cell origin]
 						ifFalse: [box := m bounds.
-								m hResizing == #spaceFill 
+								m hResizing == #spaceFill
 									ifTrue: [box := cell origin extent: cell width @ box height].
 								vr  == #spaceFill
 									ifTrue: [box := box origin extent: box width @ cell height].
@@ -77,7 +77,7 @@ RowLayout >> layout: aMorph in: layoutBounds [
 { #category : #layout }
 RowLayout >> minExtentOf: aMorph in: newBounds [
 	"Return the minimal size aMorph's children would require given the new bounds"
-	
+
 	| props extent|
 	cachedMinExtent ifNotNil: [^cachedMinExtent].
 	aMorph submorphs ifEmpty: [^aMorph minWidth @ aMorph minHeight].
@@ -87,6 +87,6 @@ RowLayout >> minExtentOf: aMorph in: newBounds [
 		extent := extent x + min x @ (extent y max: min y).
 		min].
 	props := aMorph assureTableProperties.
-	^cachedMinExtent := extent + (aMorph submorphs size - 1 * 
+	^cachedMinExtent := extent + (aMorph submorphs size - 1 *
 		(props cellInset isPoint ifTrue: [props cellInset x] ifFalse: [props cellInset]) @ 0)
 ]

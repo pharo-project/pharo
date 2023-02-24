@@ -18,7 +18,7 @@ MetaLinkRegistryTest >> setUp [
 	permalink slotOrVarClass: ReflectivityExamples2.
 	permalink slotOrVariable: (ReflectivityExamples2 lookupVar: #instVar2).
 	registry registerPermaLink: permalink.
-	registry slotSourcesAt: ReflectivityExamples2 ifAbsentPut: [ 
+	registry slotSourcesAt: ReflectivityExamples2 ifAbsentPut: [
 		Set new
 			add: permalink slotOrVariable;
 			yourself ]

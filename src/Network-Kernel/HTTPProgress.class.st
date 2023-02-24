@@ -25,17 +25,17 @@ Class {
 
 { #category : #examples }
 HTTPProgress class >> example [
-	
+
  	UIManager default informUserDuring: [ :bar |
 		bar label: 'Transfer Demo...'.
 		1 second asDelay wait.
 		[ 1 to: 20 do: [ :each |
 			HTTPProgress signal: 'Transferring...' amount: each * 1024 total: 20*1024.
 			(Delay forMilliseconds: 100) wait ] ]
-			on: HTTPProgress 
-			do: [ :progress | 
+			on: HTTPProgress
+			do: [ :progress |
 				bar label: progress printString.
-				progress isEmpty ifFalse: [ bar current: progress percentage ]. 
+				progress isEmpty ifFalse: [ bar current: progress percentage ].
 				progress resume ] ]
 ]
 
@@ -53,7 +53,7 @@ HTTPProgress class >> signal: signalerText amount: amount total: total [
 { #category : #exceptioninstantiator }
 HTTPProgress class >> signalAmount: amount total: total [
 	"Create and signal HTTPProgress with amount bytes transferred out of total."
-	
+
 	^ self new
 		amount: amount;
 		total: total;
@@ -102,7 +102,7 @@ HTTPProgress >> beComplete [
 HTTPProgress >> fraction [
 	"Answer the fraction of total that has already been transferred.
 	Can be nil. Should be between 0 and 1."
-	
+
 	^ self isEmpty ifFalse: [ amount / total ]
 ]
 
@@ -117,7 +117,7 @@ HTTPProgress >> isComplete [
 { #category : #testing }
 HTTPProgress >> isEmpty [
 	"Answer true if I do not contain a numerical progress indication."
-  	
+
 	^ amount isNil or: [ total isNil ]
 ]
 
@@ -132,10 +132,10 @@ HTTPProgress >> percentage [
 { #category : #printing }
 HTTPProgress >> printOn: stream [
 	"Print an extra progress percentage if available"
-	
+
 	super printOn: stream.
-	self isEmpty 
-		ifFalse: [ 
+	self isEmpty
+		ifFalse: [
 			stream space; print: self percentage rounded; nextPut: $% ]
 ]
 
