@@ -1215,8 +1215,8 @@ String >> endsWithDigit [
 
 { #category : #converting }
 String >> escapeCharacter: aCharacter [
-	"Returns a new string with contents equals to self surrounded by aCharacter.
-	Escapes all occurrences of aCharacter within aString by doubling them."
+	"Returns a copy of the string doubling all occurence of aCharacter."
+	"See `unescapeCharacter:` for the opposite"
 
 	"('abc' escapeCharacter: $X) >>> 'abc'"
 
@@ -2720,6 +2720,7 @@ String >> uncapitalized [
 String >> unescapeCharacter: aCharacter [
 	"Unescape an escaped string. Assume the string has all occurrences of aCharacter are escaped. That is, they are in pairs.
 	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
+	"See `escapeCharacter:` for the opposite"
 
 	"('''''' unescapeCharacter: $') >>> ''''"
 	"('''' unescapeCharacter: $') >>> ''"
