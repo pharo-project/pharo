@@ -38,7 +38,14 @@ TDebuggerTest >> testDebugSession [
 { #category : #tests }
 TDebuggerTest >> testHandlesContext [
 	"By default handles any context"
-	self assert: (self class handlesContext: nil)
+
+	self assert: (self class handlesDebugSession:
+			 ((DebugSession
+				   named: 'a random debug session'
+				   on: nil
+				   startedAt: nil)
+				  exception: Exception new;
+				  yourself))
 ]
 
 { #category : #tests }
