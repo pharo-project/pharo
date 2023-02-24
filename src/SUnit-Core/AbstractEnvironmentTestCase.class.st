@@ -21,7 +21,7 @@ AbstractEnvironmentTestCase >> environmentOfTest [
 { #category : #running }
 AbstractEnvironmentTestCase >> setUp [
 	super setUp.
-	testingEnvironment := Smalltalk globals.
+	testingEnvironment := Smalltalk globals
 ]
 
 { #category : #accessing }

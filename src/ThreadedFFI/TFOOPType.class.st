@@ -9,8 +9,8 @@ Class {
 }
 
 { #category : #marshalling }
-TFOOPType >> emitMarshallFromPrimitive: anIRBuilder [ 
-	
+TFOOPType >> emitMarshallFromPrimitive: anIRBuilder [
+
 	anIRBuilder addTemp: #__marshall_temp.
 	anIRBuilder storeTemp: #__marshall_temp.
 	anIRBuilder popTop.
@@ -20,15 +20,14 @@ TFOOPType >> emitMarshallFromPrimitive: anIRBuilder [
 ]
 
 { #category : #marshalling }
-TFOOPType >> emitMarshallToPrimitive: anIRBuilder [ 
-	
+TFOOPType >> emitMarshallToPrimitive: anIRBuilder [
+
 	anIRBuilder addTemp: #__marshall_temp.
 	anIRBuilder storeTemp: #__marshall_temp.
 	anIRBuilder popTop.
 	anIRBuilder pushLiteral: PointerUtils.
 	anIRBuilder pushTemp: #__marshall_temp.
 	anIRBuilder send: #oopForObjectForcePinInMemory:
-	
 ]
 
 { #category : #'reading-writing' }

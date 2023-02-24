@@ -15,31 +15,29 @@ Class {
 
 { #category : #'instance creation' }
 DAPackageCycle class >> new [
-	^ self basicNew initialize; yourself.
+	^ self basicNew initialize; yourself
 ]
 
 { #category : #comparing }
 DAPackageCycle >> <= aPDPackageCycle [
 	^ (self size) <= (aPDPackageCycle size)
-
 ]
 
 { #category : #comparing }
 DAPackageCycle >> = aPDPackageCycle [
-	(aPDPackageCycle isKindOf: self class) ifFalse: [ ^ false ]. 
-	^ self size = aPDPackageCycle size and: [ self packages includesAll: aPDPackageCycle packages ].
+	(aPDPackageCycle isKindOf: self class) ifFalse: [ ^ false ].
+	^ self size = aPDPackageCycle size and: [ self packages includesAll: aPDPackageCycle packages ]
 ]
 
 { #category : #comparing }
 DAPackageCycle >> > aPDPackageCycle [
 	^ (self size) > (aPDPackageCycle size)
-
 ]
 
 { #category : #adding }
 DAPackageCycle >> addAllPackages: aCollection [
-	
-	aCollection do: [ :package | self addPackage: package].
+
+	aCollection do: [ :package | self addPackage: package]
 ]
 
 { #category : #adding }
@@ -69,18 +67,18 @@ DAPackageCycle >> displayString [
 
 { #category : #testing }
 DAPackageCycle >> hasOutgoingDependencies: aPackage [
-	^ aPackage dependencies anySatisfy: [ :dependency | (self packages includes: (dependency target)) not ].
+	^ aPackage dependencies anySatisfy: [ :dependency | (self packages includes: (dependency target)) not ]
 ]
 
 { #category : #comparing }
 DAPackageCycle >> hash [
-	^ self packages hash.
+	^ self packages hash
 ]
 
 { #category : #initialization }
 DAPackageCycle >> initialize [
 	super initialize.
-	packages := OrderedCollection new.
+	packages := OrderedCollection new
 ]
 
 { #category : #testing }
@@ -110,17 +108,17 @@ DAPackageCycle >> packages: anObject [
 
 { #category : #actions }
 DAPackageCycle >> removeOutgoingDependencies [
-	self packages do: [ :package | self removeOutgoingDependencies: package ].
+	self packages do: [ :package | self removeOutgoingDependencies: package ]
 ]
 
 { #category : #private }
 DAPackageCycle >> removeOutgoingDependencies: aPackage [
-	
+
 	| removals |
 	packages := packages copy.
 	removals := aPackage dependencies reject: [ :dependency | self packages includes: (dependency target) ].
-	
-	removals do: [ :each | aPackage remove: each ].
+
+	removals do: [ :each | aPackage remove: each ]
 ]
 
 { #category : #accessing }

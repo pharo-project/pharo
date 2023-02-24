@@ -19,14 +19,14 @@ RubOpeningClosingDelimiterDecorator >> drawOn: aCanvas [
 	| cursorPosition delimiter oppositePos rect previousOppositeBlock |
 	cursorPosition := self paragraph pointIndex ifNil: [ ^ self ].
 	cursorPosition < 2 ifTrue: [ ^ self ].
-	
-	(self closingDelimiters includes: (delimiter := self paragraph string at: cursorPosition - 1)) 	ifFalse: [ 
+
+	(self closingDelimiters includes: (delimiter := self paragraph string at: cursorPosition - 1)) 	ifFalse: [
 			(self openingDelimiters includes: (delimiter := self paragraph string at: cursorPosition - 1)) 	ifFalse: [ ^ self ] .
 	].
 
 	oppositePos := self positionOfOppositeDelimiter: delimiter startingAt: cursorPosition in: aCanvas clipRect.
 	oppositePos = 0 ifTrue: [ ^ self ].
-	
+
 	previousOppositeBlock := self characterBlockForIndex: oppositePos.
 	rect := previousOppositeBlock.
 	rect privateSetCorner: rect corner + (1 @ 1).
@@ -45,7 +45,7 @@ RubOpeningClosingDelimiterDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	cursorPosition < 2
 		ifTrue: [ ^ self ].
 	(self closingDelimiters includes: (delimiter := self paragraph string at: cursorPosition - 1))
-		ifFalse: [ 
+		ifFalse: [
 			(self openingDelimiters includes: (delimiter := self paragraph string at: cursorPosition - 1))
 				ifFalse: [ ^ self ] ].
 	oppositePos := self positionOfOppositeDelimiter: delimiter startingAt: cursorPosition in: anAthensCanvas clipRect.
@@ -61,7 +61,7 @@ RubOpeningClosingDelimiterDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas setShape: (rect surface insetBy: 0.5).
 	(anAthensCanvas setStrokePaint: Color black)
 		width: 1.
-	anAthensCanvas draw.
+	anAthensCanvas draw
 ]
 
 { #category : #drawing }
@@ -80,17 +80,17 @@ RubOpeningClosingDelimiterDecorator >> positionOfOppositeDelimiter: aDelimiter s
 	level := 1.
 	here := aPosition - 1.
 	[ level > 0 and: [ here > (topLineFirst max: 1) and: [ here <= bottomLinelast ] ] ]
-		whileTrue: [ 
+		whileTrue: [
 			here := incr value: here.
 			here > string size
 				ifTrue: [ ^ 0 ].
 			hereChar := string at: here.
 			hereChar = oppositeDelimiter
-				ifTrue: [ 
+				ifTrue: [
 					level := level - 1.
 					level = 0
 						ifTrue: [ ^ here ] ]
-				ifFalse: [ 
+				ifFalse: [
 					hereChar = aDelimiter
 						ifTrue: [ level := level + 1 ] ] ].
 	^ 0

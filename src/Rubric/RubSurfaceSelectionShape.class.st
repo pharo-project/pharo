@@ -44,7 +44,7 @@ RubSurfaceSelectionShape >> bounds [
 ]
 
 { #category : #drawing }
-RubSurfaceSelectionShape >> drawOn: aCanvas [ 
+RubSurfaceSelectionShape >> drawOn: aCanvas [
 	aCanvas drawPolygon: self vertices color: self backgroundColor borderWidth: borderWidth borderColor:  borderColor
 ]
 
@@ -52,7 +52,7 @@ RubSurfaceSelectionShape >> drawOn: aCanvas [
 RubSurfaceSelectionShape >> drawOnAthensCanvas: aCanvas [
 	| path |
 	path := aCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: self vertices first.
@@ -62,7 +62,7 @@ RubSurfaceSelectionShape >> drawOnAthensCanvas: aCanvas [
 	aCanvas setPaint: self backgroundColor.
 	aCanvas draw.
 	borderWidth > 0
-		ifTrue: [ 
+		ifTrue: [
 			(aCanvas setStrokePaint: borderColor)
 				capSquare;
 				width: borderWidth.

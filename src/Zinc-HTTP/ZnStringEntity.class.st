@@ -24,7 +24,7 @@ Class {
 ZnStringEntity class >> designatedMimeType [
 	"I have no designated mime type, I can handle all non-binary content.
 	See #concreteSubclassForType: "
-	
+
 	^ nil
 ]
 
@@ -46,7 +46,7 @@ ZnStringEntity class >> json: string [
 ZnStringEntity class >> matches: mimeType [
 	"I have no designated mime type, I can handle all non-binary content.
 	See #concreteSubclassForType: "
-	
+
 	^ false
 ]
 
@@ -86,14 +86,14 @@ ZnStringEntity >> contentLength [
 { #category : #accessing }
 ZnStringEntity >> contentType: object [
 	"We only allow assignment compatible with our designated mime type"
-	
+
 	| newType |
 	newType := object asZnMimeType.
-	contentType = newType 
+	contentType = newType
 		ifTrue: [ ^ self ]
-		ifFalse: [ 
+		ifFalse: [
 			newType isBinary
-				ifFalse: [ 
+				ifFalse: [
 					contentType := newType.
 					self invalidateEncoder ] ]
 ]
@@ -136,7 +136,7 @@ ZnStringEntity >> initializeEncoder [
 		ifTrue: [ ^ self ].
 	newEncoder := ( charSet := contentType charSet )
 		ifNil: [ ZnDefaultCharacterEncoder value ]
-		ifNotNil: [ 
+		ifNotNil: [
 			( ZnCharacterEncoder newForEncoding: charSet )
 				beLenient;
 				yourself ].
@@ -154,14 +154,14 @@ ZnStringEntity >> invalidateEncoder [
 ]
 
 { #category : #testing }
-ZnStringEntity >> isEmpty [ 
-	^ self string isNil or: [ self string isEmpty ] 
+ZnStringEntity >> isEmpty [
+	^ self string isNil or: [ self string isEmpty ]
 ]
 
 { #category : #printing }
 ZnStringEntity >> printContentsOn: stream [
 	super printContentsOn: stream.
-	self string notNil ifTrue: [ 
+	self string notNil ifTrue: [
 		stream space; nextPutAll: self string ]
 ]
 
@@ -176,8 +176,8 @@ ZnStringEntity >> readFrom: stream [
 	self initializeEncoder.
 	[ readStream atEnd ] whileFalse: [
 		[ read := encoder readInto: buffer startingAt: 1 count: buffer size fromStream: readStream ]
-			on: ZnByteStringBecameWideString 
-			do: [ :notification | 
+			on: ZnByteStringBecameWideString
+			do: [ :notification |
 					buffer := notification wideString.
 					stringStream ifNotNil: [ | wideString position |
 						position := stringStream position.
@@ -187,7 +187,7 @@ ZnStringEntity >> readFrom: stream [
 		totalRead := totalRead + read.
 		totalRead > (ZnCurrentOptions at: #maximumEntitySize)
 			ifTrue: [ ZnEntityTooLarge signal ].
-		stringStream ifNil: [ 
+		stringStream ifNil: [
 			readStream atEnd
 				ifTrue: [ ^ self string: (buffer copyFrom: 1 to: read) ]
 				ifFalse: [ stringStream := (total ifNil: [ buffer species new ] ifNotNil: [ buffer species new: total ]) writeStream ] ].
@@ -218,7 +218,7 @@ ZnStringEntity >> writeOn: stream [
 	self initializeEncoder.
 	totalWritten := 0.
 	total := string size.
-	[ totalWritten < total ] whileTrue: [ 
+	[ totalWritten < total ] whileTrue: [
 		toWrite := ZnUtils streamingBufferSize min: (total - totalWritten).
 		encoder next: toWrite putAll: string startingAt: totalWritten + 1 toStream: stream.
 		totalWritten := totalWritten + toWrite.

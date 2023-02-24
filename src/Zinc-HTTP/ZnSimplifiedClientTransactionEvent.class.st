@@ -46,7 +46,7 @@ ZnSimplifiedClientTransactionEvent >> printContentsOn: stream [
 	stream space.
 	url printPathQueryFragmentOn: stream.
 	stream space; print: response.
-	size ifNotNil: [ 
+	size ifNotNil: [
 		stream space; print: size; nextPut: $B ].
 	stream space; print: duration; nextPutAll: 'ms'
 ]
@@ -59,7 +59,7 @@ ZnSimplifiedClientTransactionEvent >> request: aZnRequest [
 
 { #category : #initialize }
 ZnSimplifiedClientTransactionEvent >> requestDuration: requestDuration [
-	duration := duration + requestDuration 
+	duration := duration + requestDuration
 ]
 
 { #category : #initialize }
@@ -76,7 +76,7 @@ ZnSimplifiedClientTransactionEvent >> responseCode [
 
 { #category : #initialize }
 ZnSimplifiedClientTransactionEvent >> responseDuration: responseDuration [
-	duration := duration + responseDuration 
+	duration := duration + responseDuration
 ]
 
 { #category : #accessing }

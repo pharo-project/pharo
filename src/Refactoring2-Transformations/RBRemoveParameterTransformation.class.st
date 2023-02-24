@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		removeParameter: aString
@@ -20,9 +20,9 @@ RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aS
 
 { #category : #'instance creation' }
 RBRemoveParameterTransformation class >> removeParameter: aString in: aClass selector: aSelector [
-	^ self new 
-		removeParameter: aString 
-		in: aClass 
+	^ self new
+		removeParameter: aString
+		in: aClass
 		selector: aSelector
 ]
 
@@ -69,22 +69,22 @@ RBRemoveParameterTransformation >> myConditions [
 	imps := self model allImplementorsOf: oldSelector.
 	self getNewSelector.
 	^imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into: 
-			[:cond :each | 
-			cond 
+		into:
+			[:cond :each |
+			cond
 				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	argument := aString
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> storeOn: aStream [ 
+RBRemoveParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

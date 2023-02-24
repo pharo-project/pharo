@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : #accessing }
-RFMetaContext class >> current [ 
+RFMetaContext class >> current [
 	ActiveMetaContext value ifNil:[ActiveMetaContext value: self basicNew initialize].
 	^ActiveMetaContext value
 ]
 
 { #category : #'class initialization' }
 RFMetaContext class >> reset [
-	ActiveMetaContext value: self new.
+	ActiveMetaContext value: self new
 ]
 
 { #category : #initialization }

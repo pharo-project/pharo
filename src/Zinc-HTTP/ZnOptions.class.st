@@ -42,7 +42,7 @@ Class {
 ZnOptions class >> definitionOf: key [
 	| implementors options |
 	implementors := key implementors.
-	options := implementors select: [ :method | 
+	options := implementors select: [ :method |
 		method method pragmas
 			anySatisfy: [ :pragma | pragma selector = #znOption ] ].
 	options ifEmpty: [ self error: 'Not option definition found for ' , key printString ].
@@ -58,8 +58,8 @@ ZnOptions class >> globalDefault [
 { #category : #'class initialization' }
 ZnOptions class >> initialize [
 	"Changed at 2021-12-13"
-	
-	self resetGlobalDefault 
+
+	self resetGlobalDefault
 ]
 
 { #category : #options }
@@ -67,10 +67,10 @@ ZnOptions class >> maximumEntitySize [
 	"The maximum entity size in bytes that can read from a stream before ZnEntityTooLarge is signalled.
 	Entities are the resources transferred by the HTTP procotol. Malicious parties could hurt a client or
 	server by sending artificially large payloads. Setting a maximum is a protection against this."
-	
+
 	<znOption>
-	
-	^ 16 * 1024 * 1024 
+
+	^ 16 * 1024 * 1024
 ]
 
 { #category : #options }
@@ -79,9 +79,9 @@ ZnOptions class >> maximumNumberOfConcurrentConnections [
 	When this threshold is reached, a 503 Service Unavailable response will be sent
 	and the connection will be closed. This protects me from certain forms of attacks.
 	It is possible to raise this number when other system parameters are adjusted as well."
-		
+
 	<znOption>
-	
+
 	^ 32
 ]
 
@@ -89,9 +89,9 @@ ZnOptions class >> maximumNumberOfConcurrentConnections [
 ZnOptions class >> myOption [
 	"This is an example option.
 	This class side method defines the option and its global default value"
-	
+
 	<znOption>
-	
+
 	^ 'myOptionDefaultValue'
 ]
 
@@ -100,12 +100,12 @@ ZnOptions class >> onClass: targetClass [
 	| dictionary |
 	dictionary := Dictionary new.
 	(Pragma allNamed: #znOption in: targetClass class)
-		do: [ :each | 
+		do: [ :each |
 			dictionary
 				at: each method selector
 				put: (each method methodClass instanceSide perform: each method selector) ].
-	^ self new 
-		options: dictionary; 
+	^ self new
+		options: dictionary;
 		writable: false;
 		yourself
 ]
@@ -116,11 +116,11 @@ ZnOptions class >> queryKeyValueSafeSet [
 	the characters part of this safe set are not percent encoded.
 	Some servers expect more characters to be percent encoded, some less,
 	in which case this option can be modified."
-	
+
 	<znOption>
-	
+
 	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~!$''()*,;:@/?'
-	
+
 	"When a query is interpreted as a list of key=value&.. pairs,
 	it is better to encode = and & and leave them out of the safe set.
 	Furthermore, since + is interpreted as space in the query part,
@@ -142,7 +142,7 @@ ZnOptions class >> serverString [
 	"The string a server uses in the Server header of responses to identify itself.
 	To provide malicious parties as little information as possible it could make sense to overwrite this.
 	Also, to idenitify yourself as a specific server, you could use its server string."
-	
+
 	<znOption>
 
 	^ ZnConstants defaultServerString
@@ -152,9 +152,9 @@ ZnOptions class >> serverString [
 ZnOptions class >> signalProgress [
 	"Boolean indicating if HTTPProgress notifications are signalled during the transfer of HTTP resources.
 	Although unhandled notifications are harmless, it is a bit more efficient not to signal them."
-	
+
 	<znOption>
-	
+
 	^ false
 ]
 
@@ -163,20 +163,20 @@ ZnOptions class >> userAgentString [
 	"The value a client uses in the User-Agent header of requests to identify itself.
 	To provide as little information to a server it could make sense to overwrite this.
 	Also to idenitify yourself as a specific client, you could use its user agent string."
-	
+
 	<znOption>
 
-	^ ZnConstants defaultUserAgent 
+	^ ZnConstants defaultUserAgent
 ]
 
 { #category : #accessing }
 ZnOptions >> allBindings [
 	| bindings |
 	bindings := Dictionary new.
-	parent ifNotNil: [ 
+	parent ifNotNil: [
 		parent allBindings keysAndValuesDo: [ :key :value |
 			bindings at: key put: value ] ].
-	options ifNotNil: [ 
+	options ifNotNil: [
 		options keysAndValuesDo: [ :key :value |
 			bindings at: key put: value ] ].
 	^ bindings
@@ -209,7 +209,7 @@ ZnOptions >> clone [
 	^ (self class new)
 		parent: self;
 		writable: true;
-		yourself 
+		yourself
 ]
 
 { #category : #execution }
@@ -236,9 +236,9 @@ ZnOptions >> options: dictionary [
 		ifNotNil: [ (ModificationForbidden
 				for: self
 				at: nil
-				with: dictionary 
+				with: dictionary
 				retrySelector: #options:) signal ].
-	options := dictionary 
+	options := dictionary
 ]
 
 { #category : #private }
@@ -247,9 +247,9 @@ ZnOptions >> parent: otherOptions [
 		ifNotNil: [ (ModificationForbidden
 				for: self
 				at: nil
-				with: otherOptions 
+				with: otherOptions
 				retrySelector: #parent:) signal ].
-	parent := otherOptions 
+	parent := otherOptions
 ]
 
 { #category : #initialization }

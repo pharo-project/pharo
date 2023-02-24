@@ -16,11 +16,11 @@ RGGlobalVariableTest >> testGlobalVariableImplicitEnvironment [
 { #category : #tests }
 RGGlobalVariableTest >> testNewGlobalVariable [
 
-	| classVariable | 
+	| classVariable |
 	classVariable  := RGGlobalVariable named: #SomeGlobalVariable.
 	self assert: (classVariable isRingResolved).
 	self assert: (classVariable hasResolvedName).
-	self assert: (classVariable isGlobalVariable).
+	self assert: (classVariable isGlobalVariable)
 ]
 
 { #category : #tests }

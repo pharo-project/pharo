@@ -24,15 +24,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forClass: aClass [ 
-	^ self new 
+RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forClass: aClass [
+	^ self new
 		inline: anInterval
 		inMethod: aSelector
 		forClass: aClass
 ]
 
 { #category : #'instance creation' }
-RBInlineMethodRefactoring class >> model: aRBSmalltalk inline: anInterval inMethod: aSelector forClass: aClass [ 
+RBInlineMethodRefactoring class >> model: aRBSmalltalk inline: anInterval inMethod: aSelector forClass: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
@@ -47,7 +47,7 @@ RBInlineMethodRefactoring >> addSelfReturn [
 ]
 
 { #category : #transforming }
-RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNode [ 
+RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNode [
 	| newName |
 	newName := self renameConflictingTemporary: sourceNode name.
 	(inlineParseTree body)
@@ -73,7 +73,7 @@ RBInlineMethodRefactoring >> checkSuperMessages [
 		ifTrue: [ ^ self ].
 	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
 	inlineParseTree superMessages
-		do: [ :each | 
+		do: [ :each |
 			( self classOfTheMethodToInline superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
 				ifFalse: [ self
 						refactoringError:
@@ -124,7 +124,7 @@ RBInlineMethodRefactoring >> hasMultipleReturns [
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '^``@object'
-		do: [ :aNode :hasAReturn | 
+		do: [ :aNode :hasAReturn |
 			hasAReturn
 				ifTrue: [ ^ true ].
 			true ].
@@ -135,7 +135,7 @@ RBInlineMethodRefactoring >> hasMultipleReturns [
 ]
 
 { #category : #initialization }
-RBInlineMethodRefactoring >> inline: anInterval inMethod: aSelector forClass: aClass [ 
+RBInlineMethodRefactoring >> inline: anInterval inMethod: aSelector forClass: aClass [
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
 	sourceInterval := anInterval
@@ -157,7 +157,7 @@ RBInlineMethodRefactoring >> inlineSelector [
 RBInlineMethodRefactoring >> inlineSourceReplacing: aParseTree [
 	| statements nodeUnderSequence |
 	statements := inlineParseTree body statements.
-	(statements size > 1 and: [ aParseTree isEvaluatedFirst not ]) ifTrue: [ 
+	(statements size > 1 and: [ aParseTree isEvaluatedFirst not ]) ifTrue: [
 		self refactoringWarning:
 			'To inline this method, we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?'
 				expandMacros ].
@@ -177,11 +177,11 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 
 	node := sourceMessage.
 	self moveComments.
-	node parent isCascade 
-		ifTrue: 
+	node parent isCascade
+		ifTrue:
 			[self rewriteCascadedMessage.
 			node := node parent].
-	node parent isReturn 
+	node parent isReturn
 		ifTrue: [node := node parent]
 		ifFalse: [inlineParseTree := self removeReturnsOf: inlineParseTree].
 	self replaceArguments.
@@ -193,7 +193,7 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 
 { #category : #testing }
 RBInlineMethodRefactoring >> isOverridden [
-	| selector| 
+	| selector|
 	selector := self inlineSelector.
 	^ class subclassRedefines: selector
 ]
@@ -205,15 +205,15 @@ RBInlineMethodRefactoring >> isPrimitive [
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> moveComments [
-	inlineParseTree nodesDo: 
-			[:each | 
-			each 
+	inlineParseTree nodesDo:
+			[:each |
+			each
 				comments: (each comments collect:
-							[:aComment | 
+							[:aComment |
 							| start source |
 							source := sourceParseTree source.
 							start := source size + 1.
-							source := source 
+							source := source
 										, (inlineParseTree source copyFrom: aComment start to: aComment stop).
 							sourceParseTree source: source.
 							RBComment with: aComment contents at: start])]
@@ -228,7 +228,7 @@ RBInlineMethodRefactoring >> normalizeIfTrues [
 			with: '| `@temps | ``@.s1. ``@boolean ifTrue: [| `@t1 | ``@.Stmts1. ^`@r1] ifFalse: [``@.s2. ^``@r2]';
 		replace: '| `@temps | ``@.s1. ``@boolean ifFalse: [| `@t1 | ``@.Stmts1. ^`@r1]. ``@.s2. ^``@r2'
 			with: '| `@temps | ``@.s1. ``@boolean ifTrue: [``@.s2. ^``@r2] ifFalse: [| `@t1 | ``@.Stmts1. ^`@r1]'.
-	[rewriter executeTree: inlineParseTree] 
+	[rewriter executeTree: inlineParseTree]
 		whileTrue: [inlineParseTree := rewriter tree]
 ]
 
@@ -253,7 +253,7 @@ RBInlineMethodRefactoring >> normalizeReturns [
 			with: '^``@boolean ifTrue: [| `@t1 | `@.Stmts1. ``@r1] ifFalse: [| `@t2 | `@.Stmts2. ``@r2]';
 		replace: '``@boolean ifFalse: [| `@t1 | `@.Stmts1. ^``@r1] ifTrue: [| `@t2 | `@.Stmts2. ^``@r2]'
 			with: '^``@boolean ifFalse: [| `@t1 | `@.Stmts1. ``@r1] ifTrue: [| `@t2 | `@.Stmts2. ``@r2]'.
-	[rewriter executeTree: inlineParseTree] 
+	[rewriter executeTree: inlineParseTree]
 		whileTrue: [inlineParseTree := rewriter tree]
 ]
 
@@ -276,24 +276,24 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 { #category : #preconditions }
 RBInlineMethodRefactoring >> preconditions [
 	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
-	^ (RBCondition definesSelector: sourceSelector in: class) 
-		& (RBCondition withBlock: 
+	^ (RBCondition definesSelector: sourceSelector in: class)
+		& (RBCondition withBlock:
 					[self findSelectedMessage.
 					self checkOverridden ifTrue: [
-						self isOverridden 
-						ifTrue: 
-							[self 
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.' 
+						self isOverridden
+						ifTrue:
+							[self
+								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.'
 										expandMacrosWith: self classOfTheMethodToInline
 										with: self inlineSelector)] ].
 					self parseInlineMethod.
-					self isPrimitive 
+					self isPrimitive
 						ifTrue: [self refactoringError: 'Cannot inline primitives'].
 					self checkSuperMessages.
 					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not]) 
-						ifFalse: 
-							[self 
+					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
+						ifFalse:
+							[self
 								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
 					true])
 ]
@@ -311,7 +311,7 @@ RBInlineMethodRefactoring >> removeEmptyIfTrues [
 			with: '``@boolean ifTrue: [|`@temps | ``@.Stmts]';
 		replace: '``@boolean ifFalse: [| `@temps | ``@.Stmts] ifTrue: []'
 			with: '``@boolean ifFalse: [|`@temps | ``@.Stmts]'.
-	(rewriter executeTree: sourceParseTree) 
+	(rewriter executeTree: sourceParseTree)
 		ifTrue: [sourceParseTree := rewriter tree]
 ]
 
@@ -319,25 +319,25 @@ RBInlineMethodRefactoring >> removeEmptyIfTrues [
 RBInlineMethodRefactoring >> removeImmediateBlocks [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
-	rewriter 
+	rewriter
 		replace: '[``.object] value'
 		with: '``.object'
 		when: [:aNode | aNode parent isCascade not].
-	rewriter 
+	rewriter
 		replace: '| `@temps | ``@.Stmts1. [| `@bTemps | ``@.bStmts] value. ``@.Stmts2'
 		with: '| `@temps `@bTemps | ``@.Stmts1. ``@.bStmts. ``@.Stmts2'.
-	(rewriter executeTree: sourceParseTree) 
+	(rewriter executeTree: sourceParseTree)
 		ifTrue: [sourceParseTree := rewriter tree]
 ]
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> renameConflictingTemporaries [
-	inlineParseTree allDefinedVariables 
+	inlineParseTree allDefinedVariables
 		do: [:each | self renameConflictingTemporary: each]
 ]
 
 { #category : #transforming }
-RBInlineMethodRefactoring >> renameConflictingTemporary: aName [ 
+RBInlineMethodRefactoring >> renameConflictingTemporary: aName [
 	| allNames newName index seqNode |
 	allNames := (Set new)
 				addAll: inlineParseTree allDefinedVariables;
@@ -345,14 +345,14 @@ RBInlineMethodRefactoring >> renameConflictingTemporary: aName [
 	allNames remove: aName ifAbsent: [].
 	seqNode := sourceMessage.
 	[seqNode isSequence] whileFalse: [seqNode := seqNode parent].
-	allNames addAll: seqNode allDefinedVariables.	"Add those variables defined in blocks. This might cause a few 
+	allNames addAll: seqNode allDefinedVariables.	"Add those variables defined in blocks. This might cause a few
 													variables to be renamed that don't need to be, but this should be safe."
 	newName := aName.
 	index := 0.
-	
-	[(sourceMessage whoDefines: newName) notNil or: 
-			[(class hierarchyDefinesVariable: newName) or: [allNames includes: newName]]] 
-			whileTrue: 
+
+	[(sourceMessage whoDefines: newName) notNil or:
+			[(class hierarchyDefinesVariable: newName) or: [allNames includes: newName]]]
+			whileTrue:
 				[index := index + 1.
 				newName := aName , index printString].
 	newName = aName ifFalse: [self renameTemporary: aName to: newName].
@@ -360,22 +360,22 @@ RBInlineMethodRefactoring >> renameConflictingTemporary: aName [
 ]
 
 { #category : #transforming }
-RBInlineMethodRefactoring >> renameTemporary: oldName to: newName [ 
+RBInlineMethodRefactoring >> renameTemporary: oldName to: newName [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: oldName with: newName;
 		replaceArgument: oldName with: newName.
-	(rewriter executeTree: inlineParseTree) 
+	(rewriter executeTree: inlineParseTree)
 		ifTrue: [inlineParseTree := rewriter tree]
 ]
 
 { #category : #transforming }
-RBInlineMethodRefactoring >> replaceArgument: sourceNode with: replacementNode [ 
+RBInlineMethodRefactoring >> replaceArgument: sourceNode with: replacementNode [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
 	rewriter replaceTree: sourceNode withTree: replacementNode.
-	(rewriter executeTree: inlineParseTree body) 
+	(rewriter executeTree: inlineParseTree body)
 		ifTrue: [inlineParseTree body: rewriter tree]
 ]
 
@@ -383,8 +383,8 @@ RBInlineMethodRefactoring >> replaceArgument: sourceNode with: replacementNode [
 RBInlineMethodRefactoring >> replaceArguments [
 	sourceMessage arguments reversed
 		with: inlineParseTree arguments reversed
-		do: [ :replacement :source | 
-			(replacement isImmediateNode or: [ self shouldInlineExpression: replacement newSource ]) 
+		do: [ :replacement :source |
+			(replacement isImmediateNode or: [ self shouldInlineExpression: replacement newSource ])
 				ifTrue: [ self replaceArgument: source with: replacement ]
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]
 ]
@@ -392,25 +392,25 @@ RBInlineMethodRefactoring >> replaceArguments [
 { #category : #transforming }
 RBInlineMethodRefactoring >> rewriteCascadedMessage [
 	| index messages |
-	
+
 	messages := sourceMessage parent messages.
-	index := (1 to: messages size) 
+	index := (1 to: messages size)
 				detect: [:i | sourceMessage == (messages at: i)]
 				ifNone: [0].
 	inlineParseTree body addNodesFirst: (messages copyFrom: 1 to: index - 1).
 	inlineParseTree := self removeReturnsOf: inlineParseTree.
-	inlineParseTree body 
+	inlineParseTree body
 		addNodes: (messages copyFrom: index + 1 to: messages size).
 	inlineParseTree addReturn
 ]
 
 { #category : #transforming }
-RBInlineMethodRefactoring >> rewriteInlinedTree [ 
-	sourceMessage parent isReturn 
-		ifTrue: 
-			[(sourceParseTree isLast: sourceMessage parent) 
+RBInlineMethodRefactoring >> rewriteInlinedTree [
+	sourceMessage parent isReturn
+		ifTrue:
+			[(sourceParseTree isLast: sourceMessage parent)
 				ifFalse: [self addSelfReturn]]
-		ifFalse: 
+		ifFalse:
 			[self
 				writeGuardClauses;
 				normalizeIfTrues;
@@ -424,7 +424,7 @@ RBInlineMethodRefactoring >> sourceSelector [
 ]
 
 { #category : #printing }
-RBInlineMethodRefactoring >> storeOn: aStream [ 
+RBInlineMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' inline: '.
@@ -458,6 +458,6 @@ RBInlineMethodRefactoring >> writeGuardClauses [
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [| `@t1 | `@.Stmts1. ^`@r1] ifFalse: [`@.s2. ^self]';
 		replaceMethod: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]. `@.s2'
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [`@.s2. ^self] ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]'.
-	[rewriter executeTree: self inlineParseTree] 
+	[rewriter executeTree: self inlineParseTree]
 		whileTrue: [inlineParseTree := rewriter tree]
 ]

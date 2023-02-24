@@ -30,6 +30,7 @@ Class {
 		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
+		'astParseTransformPlugins',
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
@@ -37,10 +38,17 @@ Class {
 	],
 	#classVars : [
 		'DefaultOptions',
+		'DefaultParseTransformationPlugins',
 		'DefaultTransformationPlugins'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
+
+{ #category : #adding }
+CompilationContext class >> addDefaultParseTransformationPlugin: aPlugin [
+
+	self defaultParseTransformationPlugins add: aPlugin
+]
 
 { #category : #adding }
 CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
@@ -90,8 +98,17 @@ CompilationContext class >> defaultOptions [
 ]
 
 { #category : #accessing }
+CompilationContext class >> defaultParseTransformationPlugins [
+
+	^ DefaultParseTransformationPlugins
+		ifNil: [ DefaultParseTransformationPlugins := OrderedCollection new ]
+]
+
+{ #category : #accessing }
 CompilationContext class >> defaultTransformationPlugins [
-	^ DefaultTransformationPlugins ifNil: [ DefaultTransformationPlugins := OrderedCollection new ]
+
+	^ DefaultTransformationPlugins ifNil: [
+		DefaultTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -304,8 +321,8 @@ CompilationContext class >> optionsDescription [
 	(+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
 	(+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
 	(+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
-	(- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
-	(- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
+	(+ optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
+	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
@@ -340,12 +357,26 @@ CompilationContext class >> writeDefaultOption: option value: boolean [
 
 { #category : #plugins }
 CompilationContext >> addASTTransformationPlugin: aPlugin [
+
 	astTransformPlugins add: aPlugin
 ]
 
 { #category : #plugins }
+CompilationContext >> addParseASTTransformationPlugin: aPlugin [
+
+	astParseTransformPlugins add: aPlugin
+]
+
+{ #category : #plugins }
+CompilationContext >> astParseTransformPlugins [
+
+	^ astParseTransformPlugins
+]
+
+{ #category : #plugins }
 CompilationContext >> astTransformPlugins [
-	^astTransformPlugins
+
+	^ astTransformPlugins
 ]
 
 { #category : #accessing }
@@ -464,8 +495,10 @@ CompilationContext >> getClass [
 
 { #category : #initialization }
 CompilationContext >> initialize [
+
 	options := Set new.
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
+	astParseTransformPlugins := OrderedCollection withAll: self class defaultParseTransformationPlugins.
 	semanticScope := OCMethodSemanticScope targetingClass: nil class
 ]
 

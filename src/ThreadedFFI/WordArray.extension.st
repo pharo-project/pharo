@@ -5,5 +5,4 @@ WordArray >> tfPointerAddress [
 
 	self pinInMemory.
 	^ PointerUtils oopForObject: self
-
 ]

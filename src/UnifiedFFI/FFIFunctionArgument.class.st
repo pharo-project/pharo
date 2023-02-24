@@ -41,13 +41,13 @@ FFIFunctionArgument >> emitReturnArgument: anIRBuilder context: aContext [
 
 { #category : #accessing }
 FFIFunctionArgument >> externalTypeWithArity [
-	
+
 	^ self resolvedType externalTypeWithArity
 ]
 
 { #category : #accessing }
 FFIFunctionArgument >> loader [
-	
+
 	^ loader
 ]
 
@@ -59,13 +59,13 @@ FFIFunctionArgument >> resolveUsing: aResolver [
 
 { #category : #accessing }
 FFIFunctionArgument >> resolvedType [
-	
+
 	^ resolvedType
 ]
 
 { #category : #accessing }
 FFIFunctionArgument >> type [
-	
+
 	^ type
 ]
 

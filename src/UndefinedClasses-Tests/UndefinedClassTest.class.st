@@ -19,17 +19,15 @@ UndefinedClassTest >> assertClassExist: aSymbol [
 { #category : #utilities }
 UndefinedClassTest >> compile [
 	<script: 'self new compile'>
-	
-	self createClassFromDefinitionString: self undefinedDefinition
 
-	
+	self createClassFromDefinitionString: self undefinedDefinition
 ]
 
 { #category : #utilities }
 UndefinedClassTest >> createClassFromDefinitionString: aString [
 	<script: 'self new compile'>
 
-	^ ShiftClassInstaller make: [ :builder | 
+	^ ShiftClassInstaller make: [ :builder |
 		builder
 			useUndefinedClass;
 			buildEnvironment: ShSmalltalkGlobalsEnvironment new;
@@ -48,10 +46,10 @@ UndefinedClassTest >> tearDown [
 UndefinedClassTest >> testClassWithUndefinedSuperclassNameHasUndefinedSuperclass [
 
 	| class |
-	self assertClassDoesNotExist: #Foo. 
-	
+	self assertClassDoesNotExist: #Foo.
+
 	class := self createClassFromDefinitionString: self undefinedDefinition.
-	
+
 	self assert: class superclass isUndefined
 ]
 
@@ -64,9 +62,9 @@ UndefinedClassTest >> testCreateSubclassOfArbitraryExpressionReturningNilThrowsE
 		self createClassFromDefinitionString: '(Array new: 1) first subclass: #Box2
 			instanceVariableNames: ''''
 			classVariableNames:''''
-			package: ''Box'''. 
+			package: ''Box'''.
 	] raise: Error.
-	
+
 	self assertClassDoesNotExist: #ColoredFoo
 ]
 
@@ -79,7 +77,7 @@ UndefinedClassTest >> testCreateSubclassOfNilCreatesSubclassOfNil [
 		instanceVariableNames: ''''
 		classVariableNames:''''
 		package: ''Box'''.
-	
+
 	self assertClassExist: #ColoredFoo.
 	self assert: (self class environment at: #ColoredFoo) superclass equals: nil
 ]
@@ -102,7 +100,7 @@ UndefinedClassTest >> testCreateUndefinedClassShouldCreateNewClassThatIsUndefine
 	self assertClassDoesNotExist: #Foo.
 
 	UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
-	
+
 	self assertClassExist: #Foo.
 	self assert: [(ShSmalltalkGlobalsEnvironment new classNamed:#Foo) isUndefined]
 ]
@@ -116,14 +114,13 @@ UndefinedClassTest >> testDefinedClassIsUndefined [
 { #category : #tests }
 UndefinedClassTest >> testInstallClassNameWithUnknownSuperclassName [
 
-	self assertClassDoesNotExist: #Foo. 
-	
+	self assertClassDoesNotExist: #Foo.
+
 	self createClassFromDefinitionString: self undefinedDefinition.
-	
+
 	self assertClassExist: #ColoredFoo.
 	self assert: (self class environment at: #ColoredFoo) superclass equals: (self class environment at: #Foo).
 	self assert: (self class environment at: #Foo) isUndefined
-	
 ]
 
 { #category : #tests }
@@ -131,12 +128,12 @@ UndefinedClassTest >> testRemoveUndefinedClassShouldRemoveIt [
 	self assertClassDoesNotExist: #Foo.
 
 	UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
-	
+
 	self assertClassExist: #Foo.
 	self assert: [(ShSmalltalkGlobalsEnvironment new classNamed:#Foo) isUndefined].
-	
+
 	(ShSmalltalkGlobalsEnvironment new classNamed:#Foo) removeFromSystem.
-	
+
 	self assertClassDoesNotExist: #Foo
 ]
 
@@ -176,10 +173,10 @@ UndefinedClassTest >> testUndefinedMetaclassIsUndefined [
 UndefinedClassTest >> testUnknowSuperclassShouldInheritFromUndefinedClass [
 	| newUndefinedClass |
 	self assertClassDoesNotExist: #Foo.
-	
+
 	self createClassFromDefinitionString: self undefinedDefinition.
 	self assertClassExist: #ColoredFoo.
-	newUndefinedClass := (self class environment at: #ColoredFoo). 
+	newUndefinedClass := (self class environment at: #ColoredFoo).
 	self assert: newUndefinedClass superclass equals: (self class environment at: #Foo).
 	self assert: (self class environment at: #Foo) isUndefined
 ]

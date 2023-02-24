@@ -22,8 +22,8 @@ ReCodeBasedTestCase class >> isAbstract [
 ReCodeBasedTestCase >> setUp [
 	super setUp.
 
-	testClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	testClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #RenrakuProgrammaticallyCreatedClassTestClass;
 			package: testPackage name ].
 
@@ -31,8 +31,8 @@ ReCodeBasedTestCase >> setUp [
 	testMethod := testClass
 		>> (testClass compile: 'testingMethod ^ self').
 
-	testClass2 := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	testClass2 := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #RenrakuProgrammaticallyCreatedClassTestClass2;
 			package: testPackage name ]
 ]

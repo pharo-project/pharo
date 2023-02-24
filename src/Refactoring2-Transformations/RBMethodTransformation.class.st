@@ -14,6 +14,6 @@ Class {
 { #category : #accessing }
 RBMethodTransformation >> definingMethod [
 
-	^ method ifNil: [ 
+	^ method ifNil: [
 		method := (self definingClass methodFor: selector asSymbol) ast ]
 ]

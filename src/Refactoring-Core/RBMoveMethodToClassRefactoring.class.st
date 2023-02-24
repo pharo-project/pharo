@@ -37,7 +37,7 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 { #category : #transforming }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 	| classModel |
-	classModel := aClass isMeta 
+	classModel := aClass isMeta
 		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
 		ifFalse: [ RBClassModelFactory rbClass named: aClass name ].
 	classModel model: self model.
@@ -47,7 +47,7 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 { #category : #initialization }
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
-	class := self classObjectFor: aClass.
+	class := self classObjectFor: aClass
 ]
 
 { #category : #preconditions }
@@ -56,7 +56,7 @@ RBMoveMethodToClassRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBMoveMethodToClassRefactoring >> storeOn: aStream [ 
+RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

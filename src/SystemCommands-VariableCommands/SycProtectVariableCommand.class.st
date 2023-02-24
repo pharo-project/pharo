@@ -10,21 +10,21 @@ Class {
 { #category : #activation }
 SycProtectVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
 ]
 
 { #category : #execution }
 SycProtectVariableCommand >> asRefactorings [
 
-	^self 
-		createRefactorings: RBProtectInstanceVariableRefactoring 
+	^self
+		createRefactorings: RBProtectInstanceVariableRefactoring
 		using: [ :refactoring :var |
 			refactoring variable: var name class: var definingClass ]
 ]
 
 { #category : #accessing }
-SycProtectVariableCommand >> defaultMenuIconName [ 
+SycProtectVariableCommand >> defaultMenuIconName [
 	^ #group
 ]
 

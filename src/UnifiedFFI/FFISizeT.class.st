@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #accessing }
-FFISizeT class >> externalType [ 
+FFISizeT class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalSizeTType
 ]
 
@@ -41,64 +41,62 @@ FFISizeT >> emitSelector [
 
 { #category : #accessing }
 FFISizeT >> offsetPointerReadFieldAt: offsetVariableName [
-	^ '^ExternalData 
+	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
 		type: FFIArchitecture forCurrentArchitecture externalSizeTType asPointerType'
-	format: { 
+	format: {
 		self emitSelector.
 		offsetVariableName }
 ]
 
 { #category : #accessing }
 FFISizeT >> offsetReadFieldAt: offsetVariableName [
-	self isPointer ifTrue: [ 
+	self isPointer ifTrue: [
 		^ self offsetPointerReadFieldAt: offsetVariableName ].
-	
+
 	^ String streamContents: [ :stream |
 		stream << '^handle ' << self emitSelector << ': ' << offsetVariableName ]
 ]
 
 { #category : #accessing }
 FFISizeT >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	self isPointer ifTrue: [ 
-		^ self externalTypeWithArity 
-			offsetWriteFieldAt: offsetVariableName 
+	self isPointer ifTrue: [
+		^ self externalTypeWithArity
+			offsetWriteFieldAt: offsetVariableName
 			with: valueName ].
 
 	^ String streamContents: [ :stream |
-		stream 
-			<< '^handle ' << self emitSelector << ': ' << offsetVariableName 
+		stream
+			<< '^handle ' << self emitSelector << ': ' << offsetVariableName
 			<< ' put: ' << valueName ]
 ]
 
 { #category : #accessing }
 FFISizeT >> pointerReadFieldAt: byteOffset [
-	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of 
+	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of
 	 just passing the offset as a string... it will work :)"
 	^ self offsetPointerReadFieldAt: byteOffset asString
 ]
 
 { #category : #accessing }
 FFISizeT >> readFieldAt: byteOffset [
-	self isPointer ifTrue: [ 
+	self isPointer ifTrue: [
 		^ self pointerReadFieldAt: byteOffset ].
 
 	^ String streamContents: [ :stream |
-		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ].
-
+		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
 { #category : #accessing }
 FFISizeT >> writeFieldAt: byteOffset with: valueName [
 
-	self isPointer ifTrue: [ 
-		^ self externalTypeWithArity 
+	self isPointer ifTrue: [
+		^ self externalTypeWithArity
 			writeFieldAt: byteOffset
 			with: valueName ].
 
 	^ String streamContents: [ :stream |
-		stream 
+		stream
 			<< '^handle ' << self emitSelector << ': ' << byteOffset asString
 			<< ' put: ' << valueName ]
-
 ]
