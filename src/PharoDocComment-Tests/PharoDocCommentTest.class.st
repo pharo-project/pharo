@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #helpers }
+PharoDocCommentTest class >> stringWithDoubleDoubleQuotes [
+
+	^ 'This is ""exagerated"" at least'
+]
+
+{ #category : #helpers }
 PharoDocCommentTest class >> stringWithDoubleQuotes [
 
 	^ 'This is "exagerated" at least'
@@ -102,6 +108,21 @@ PharoDocCommentTest >> testExpressionWithEscapes [
 	self assert: node expression source equals: 'PharoDocCommentTest stringWithDoubleQuotes >>> ''This is ""exagerated"" at least'''.
 	self deny: node expression isFaulty.
 	self assert: node expression evaluate equals: 'This is "exagerated" at least' -> 'This is "exagerated" at least'.
+	(CommentTestCase for: node) testIt
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testExpressionWithEscapes2 [
+	"This test is here in case one day the Pharo parser is updated to remove the escaped double quotes from the RBCommentNode.
+	In that case, the first test will work but this one will fail and we will be able to know we need to update PharoDocComment"
+
+	"PharoDocCommentTest stringWithDoubleDoubleQuotes >>> 'This is """"exagerated"""" at least'"
+
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression source equals: 'PharoDocCommentTest stringWithDoubleDoubleQuotes >>> ''This is """"exagerated"""" at least'''.
+	self deny: node expression isFaulty.
+	self assert: node expression evaluate equals: 'This is ""exagerated"" at least' -> 'This is ""exagerated"" at least'.
 	(CommentTestCase for: node) testIt
 ]
 
