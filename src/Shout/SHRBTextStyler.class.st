@@ -25,29 +25,29 @@ Class {
 }
 
 { #category : #attributes }
-SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil font: aTextStyleOrFontOrNil [ 
+SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil font: aTextStyleOrFontOrNil [
 
-	| emphArray answer |	
+	| emphArray answer |
 	answer := Array new.
 	aColorOrNil ifNotNil: [ answer := answer , {TextColor color: aColorOrNil}].
-	
+
 	anEmphasisSymbolOrArrayorNil
 		ifNotNil: [
 			emphArray := anEmphasisSymbolOrArrayorNil isSymbol
 						ifTrue: [{anEmphasisSymbolOrArrayorNil}]
 						ifFalse: [anEmphasisSymbolOrArrayorNil].
-			emphArray do: [:each | 
+			emphArray do: [:each |
 				each ~= #normal
 					ifTrue: [answer := answer , {TextEmphasis perform: each}]]].
-	
+
 	aTextStyleOrFontOrNil
 		ifNotNil: [ answer := answer , {TextFontReference toFont: aTextStyleOrFontOrNil}].
-		
+
 	^ answer
 ]
 
 { #category : #attributes }
-SHRBTextStyler class >> attributesFor: aSymbol pixelHeight: aNumber [ 
+SHRBTextStyler class >> attributesFor: aSymbol pixelHeight: aNumber [
 	^ (self textAttributesByPixelHeight
 		at: aNumber
 		ifAbsentPut: [self initialTextAttributesForPixelHeight: aNumber])
@@ -64,35 +64,35 @@ SHRBTextStyler class >> blueStyleTable [
 	if pixel height is not specified , then the editor font size will be used.
 	"
 	<styleTable: 'Blue'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
-			
+
 			(comment 								(gray darker))
 			(unfinishedComment 					(red muchDarker))
-			
+
 			(#'$' 									(red muchDarker))
 			(character 								(red muchDarker))
 			(integer 								(red muchDarker))
-			(number 								(red muchDarker)) 
+			(number 								(red muchDarker))
 			(#- 										(red muchDarker))
-			(symbol 								(magenta muchDarker)) 
-			(stringSymbol 							(magenta muchDarker)) 
+			(symbol 								(magenta muchDarker))
+			(stringSymbol 							(magenta muchDarker))
 			(literalArray 							(magenta muchDarker))
-			(string 									(magenta muchDarker) normal)										
+			(string 									(magenta muchDarker) normal)
 			(unfinishedString 						red normal)
-	
+
 			(assignment 							nil)
 			(ansiAssignment 						nil)
-	
+
 			(literal 									nil italic)
 			(keyword 								(black))
-			(binary 									(black)) 
+			(binary 									(black))
 			(unary 									(black))
-										
+
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
 			(#true 									(red muchDarker))
@@ -100,7 +100,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
-			(patternArg 							(blue muchDarker)) 
+			(patternArg 							(blue muchDarker))
 			(methodArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
@@ -109,26 +109,26 @@ SHRBTextStyler class >> blueStyleTable [
 			(blockPatternTempVar 					(blue muchDarker))
 			(instVar 								(blue muchDarker))
 			(workspaceVar 							(blue muchDarker))
-		
+
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
 			(poolConstant 							(blue muchDarker))
 			(classVar 								(blue muchDarker))
 			(globalVar 								(blue muchDarker))
-												
+
 			(incompleteIdentifier 					blue italic)
 			(incompleteKeyword 					nil  italic)
-			(incompleteBinary 						nil  italic) 
-			(incompleteUnary 						nil  italic)					
-				
-			(undefinedIdentifier 					red)						
+			(incompleteBinary 						nil  italic)
+			(incompleteUnary 						nil  italic)
+
+			(undefinedIdentifier 					red)
 			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
-	
+			(undefinedBinary 						red)
+			(undefinedUnary 						red)
+
 			(patternKeyword 						nil bold)
 			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(patternUnary 							nil bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -161,7 +161,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(blockStart6 							(magenta darker))
 			(blockEnd6 								(magenta darker))
 			(blockStart7 							blue)
-			(blockEnd7 								blue) 
+			(blockEnd7 								blue)
 			(arrayStart 								black)
 			(arrayEnd 								black)
 			(arrayStart1 							black)
@@ -173,7 +173,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(methodTempBar 						(black))
 			(blockTempBar 						(black))
 			(blockArgsBar 							(black))
-										
+
 			(externalCallType 						black)
 			(externalCallTypePointerIndicator 		black)
 			(primitiveOrExternalCallStart 			black bold)
@@ -181,7 +181,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(primitive 								(green muchDarker))
 			(pragmaKeyword 						(green muchDarker))
 			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker)) 
+			(pragmaBinary 							(green muchDarker))
 			(externalFunctionCallingConvention 	(green muchDarker) bold)
 			(module 								(green muchDarker) bold))
 ]
@@ -193,81 +193,81 @@ SHRBTextStyler class >> darkStyleTable [
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
-	This style is inspired on darkula theme from eclipse: http://eclipsecolorthemes.org/?view=theme&id=15515.  
+
+	This style is inspired on darkula theme from eclipse: http://eclipsecolorthemes.org/?view=theme&id=15515.
 	"
 	<styleTable: 'Dark'>
 
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
 			(excessCode 							'FF8A80')
-			
+
 			(comment 								'7D8C93')
 			(unfinishedComment 				'FF8A80')
-			
+
 			(#'$' 									('E38C1E' lighter))
 			(character 							('E38C1E' lighter))
 			(integer 								('FFE54B'))
 			(number 								('FFE54B'))
 			(#- 									('FFE54B'))
-			(symbol 								('E38C1E')) 
-			(stringSymbol 						('E38C1E')) 
+			(symbol 								('E38C1E'))
+			(stringSymbol 						('E38C1E'))
 			(literalArray 						white)
 			(string 								('E38C1E'))
-												
+
 			(unfinishedString 					'FF8A80' normal)
 			(assignment 							nil bold)
 			(ansiAssignment 					nil bold)
-										
+
 			(literal 								nil italic)
-												
+
 			(keyword 								white)
-			(binary 								white) 
+			(binary 								white)
 			(unary 								white)
-										
+
 			(#true 								('00CC6E' darker))
 			(#false 								('00CC6E' darker))
 			(#nil 									('00CC6E' darker))
-													
+
 			(#self 								'00CC6E')
 			(#super								'00CC6E')
 			(#thisContext 						'00CC6E')
 			(#return 								'00CC6E' bold)
-												
-			(patternArg 							'A7E2ED') 
+
+			(patternArg 							'A7E2ED')
 			(methodArg 							'A7E2ED')
 			(blockPatternArg 					'A7E2ED' italic)
 			(blockArg 							'A7E2ED' italic)
 			(argument 							'A7E2ED')
 			(blockTempVar 						'A7E2ED')
 			(blockPatternTempVar 				'A7E2ED')
-								
+
 			(instVar 								'A7E2ED')
 			(workspaceVar 						'A7E2ED' bold)
-										
+
 			(tempVar 								'A7E2ED')
 			(patternTempVar 					'A7E2ED')
-										
+
 			(poolConstant 						'A7E2ED' bold)
 			(classVar 							'A7E2ED' bold)
 			(globalVar 							white bold)
-												
-		
+
+
 			(incompleteIdentifier 			'E8E2B7' italic)
 			(incompleteKeyword 				'E8E2B7' italic)
-			(incompleteBinary 					'E8E2B7' italic) 
+			(incompleteBinary 					'E8E2B7' italic)
 			(incompleteUnary 					'E8E2B7' italic)
-				
-			(undefinedIdentifier 				'FF8A80')						
+
+			(undefinedIdentifier 				'FF8A80')
 			(undefinedKeyword 					'FF8A80')
-			(undefinedBinary 					'FF8A80') 
-			(undefinedUnary 					'FF8A80') 
-			
+			(undefinedBinary 					'FF8A80')
+			(undefinedUnary 					'FF8A80')
+
 			(patternKeyword 					nil bold)
 			(patternBinary 						nil bold)
-			(patternUnary 						nil bold) 
+			(patternUnary 						nil bold)
 			(blockArgColon 						white)
 			(leftParenthesis 					white)
 			(rightParenthesis 					white)
@@ -300,7 +300,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(blockStart6 						(magenta lighter))
 			(blockEnd6 							(magenta lighter))
 			(blockStart7 						blue)
-			(blockEnd7 							blue) 
+			(blockEnd7 							blue)
 			(arrayStart 							white)
 			(arrayEnd 							white)
 			(arrayStart1 						white)
@@ -312,7 +312,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(methodTempBar 						white)
 			(blockTempBar 						white)
 			(blockArgsBar 						white)
-										
+
 			(externalCallType 								white)
 			(externalCallTypePointerIndicator 		white)
 			(primitiveOrExternalCallStart 				white bold)
@@ -320,7 +320,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(primitive 										'B4DD6E')
 			(pragmaKeyword 									'B4DD6E')
 			(pragmaUnary 									'B4DD6E')
-			(pragmaBinary 									'B4DD6E') 
+			(pragmaBinary 									'B4DD6E')
 			(externalFunctionCallingConvention 		'B4DD6E' bold)
 			(module 											'B4DD6E' bold))
 ]
@@ -333,7 +333,7 @@ SHRBTextStyler class >> defaultStyleTable [
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
 	"
-								
+
  	^ self blueStyleTable
 ]
 
@@ -350,11 +350,11 @@ SHRBTextStyler class >> formatIncompleteIdentifiers: aValue [
 ]
 
 { #category : #attributes }
-SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [ 
+SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [
 	| d |
 	d := IdentityDictionary new.
 	self styleTable
-		do: [:each | 
+		do: [:each |
 			| textStyle element emphasis font pixelHeight attrArray color textStyleName |
 			element := each first.
 			color := each
@@ -394,10 +394,10 @@ SHRBTextStyler class >> initialize [
 ]
 
 { #category : #styles }
-SHRBTextStyler class >> settingsOn: aBuilder [ 
+SHRBTextStyler class >> settingsOn: aBuilder [
 	<systemsettings>
-	
-	(aBuilder setting: #formatIncompleteIdentifiers) 
+
+	(aBuilder setting: #formatIncompleteIdentifiers)
 		target: self;
 		default: false;
 		order: 1;
@@ -413,78 +413,78 @@ SHRBTextStyler class >> solarizedStyleTable [
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
-	This style is based on old theme and other old environments.  
+
+	This style is based on old theme and other old environments.
 	"
 	<styleTable: 'Solarized'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
 			(excessCode 							red)
-			
+
 			(comment 								'586E75')
 			(unfinishedComment 					(red muchDarker))
-			
+
 			(#'$' 									('268BD2' lighter))
 			(character 								('268BD2' lighter))
 			(integer 								('2AA198'))
 			(number 								('2AA198'))
 			(#- 										('2AA198'))
-			(symbol 								('268BD2')) 
-			(stringSymbol 							('268BD2')) 
+			(symbol 								('268BD2'))
+			(stringSymbol 							('268BD2'))
 			(literalArray 							black)
 			(string 									('268BD2'))
-												
+
 			(unfinishedString 						red normal)
 			(assignment 							nil bold)
 			(ansiAssignment 						nil bold)
-										
+
 			(literal 									nil italic)
-												
+
 			(keyword 								nil)
-			(binary 									nil) 
+			(binary 									nil)
 			(unary 									nil)
-										
+
 			(#true 									('CB4B16' darker))
 			(#false 									('CB4B16' darker))
 			(#nil 									('CB4B16' darker))
-													
+
 			(#self 									'B58900')
 			(#super								'B58900')
 			(#thisContext 							'B58900')
 			(#return 								'B58900' bold)
-												
-			(patternArg 							('D33682')) 
+
+			(patternArg 							('D33682'))
 			(methodArg 							('D33682'))
 			(blockPatternArg 						('D33682'))
 			(blockArg 								('D33682'))
 			(argument 								('D33682'))
 			(blockTempVar 						('D33682'))
 			(blockPatternTempVar 					('D33682'))
-								
+
 			(instVar 								('D33682'))
 			(workspaceVar 							('D33682') bold)
-										
+
 			(tempVar 								('D33682'))
 			(patternTempVar 						('D33682'))
-										
+
 			(poolConstant 							('D33682') bold)
 			(classVar 								('D33682') bold)
 			(globalVar 								('268BD2' muchDarker) bold)
-												
+
 			(undefinedIdentifier 					red)
 			(incompleteIdentifier 					'D33682' italic)
 			(incompleteKeyword 					nil  italic)
-			(incompleteBinary 						nil  italic) 
+			(incompleteBinary 						nil  italic)
 			(incompleteUnary 						nil  italic)
 			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
+			(undefinedBinary 						red)
+			(undefinedUnary 						red)
 			(patternKeyword 						'657A81' bold)
 			(patternBinary 							'657A81' bold)
-			(patternUnary 							'657A81' bold) 
+			(patternUnary 							'657A81' bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -517,7 +517,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(blockStart6 							(magenta darker))
 			(blockEnd6 								(magenta darker))
 			(blockStart7 							blue)
-			(blockEnd7 								blue) 
+			(blockEnd7 								blue)
 			(arrayStart 								black)
 			(arrayEnd 								black)
 			(arrayStart1 							black)
@@ -529,7 +529,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
-										
+
 			(externalCallType 						black)
 			(externalCallTypePointerIndicator 		black)
 			(primitiveOrExternalCallStart 			black bold)
@@ -537,7 +537,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(primitive 								(cyan muchDarker))
 			(pragmaKeyword 						(cyan muchDarker))
 			(pragmaUnary 							(cyan muchDarker))
-			(pragmaBinary 							(cyan muchDarker)) 
+			(pragmaBinary 							(cyan muchDarker))
 			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
 			(module 								(cyan muchDarker) bold))
 ]
@@ -549,7 +549,7 @@ SHRBTextStyler class >> styleTable [
 ]
 
 { #category : #accessing }
-SHRBTextStyler class >> styleTable: anArray [ 
+SHRBTextStyler class >> styleTable: anArray [
 	styleTable := anArray.
 	textAttributesByPixelHeight := nil
 ]
@@ -561,81 +561,81 @@ SHRBTextStyler class >> tangoStyleTable [
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
+
 	This is a syntax coloring scheme based on the tango desktop icon scheme:
 	http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines
 	"
 	<styleTable: 'Tango'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
-			
+
 			(comment 								'888a85')
 			(unfinishedComment 					(red muchDarker))
-			
+
 			(#'$' 									'ce5c00')
 			(character 								'ce5c00')
 			(integer 								'8f5902')
 			(number 								'8f5902')
 			(#- 										'8f5902')
-			(symbol 								'c4a000') 
-			(stringSymbol 							'c4a000') 
+			(symbol 								'c4a000')
+			(stringSymbol 							'c4a000')
 			(literalArray 							black)
 			(string 									'ce5c00')
-												
+
 			(unfinishedString 						red normal)
 			(assignment 							nil)
 			(ansiAssignment 						nil)
-										
+
 			(literal 									'8F5902')
-												
+
 			(keyword 								(black))
-			(binary 									(black)) 
+			(binary 									(black))
 			(unary 									(black))
-										
+
 			(#true 									'8F5902')
 			(#false 									'8F5902')
 			(#nil 									'8F5902')
-													
+
 			(#self 									'4d9a06')
 			(#super 								'4d9a06')
 			(#thisContext 							'4d9a06')
 			(#return 								black bold)
-												
-			(patternArg 							'2e3426' italic) 
+
+			(patternArg 							'2e3426' italic)
 			(methodArg 							'555753' italic)
 			(blockPatternArg 						'888a85' bold)
 			(blockArg 								'555753' italic)
 			(argument 								'555753' italic)
 			(blockTempVar 						'555753' italic)
 			(blockPatternTempVar 					'888a85' italic)
-								
+
 			(instVar 								'204a87')
 			(workspaceVar 							'204a87')
-										
+
 			(tempVar 								'555753' italic)
 			(patternTempVar 						'888a85' italic)
-										
+
 			(poolConstant 							'ad7fa8' bold)
 			(classVar 								'ad7fa8' bold)
 			(globalVar 								'5c3566' bold)
-												
-			
+
+
 			(incompleteIdentifier 					blue italic)
 			(incompleteKeyword 					blue italic)
-			(incompleteBinary 						blue italic) 
+			(incompleteBinary 						blue italic)
 			(incompleteUnary 						blue italic)
-									
-			(undefinedIdentifier 					red)						
+
+			(undefinedIdentifier 					red)
 			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
+			(undefinedBinary 						red)
+			(undefinedUnary 						red)
 			(patternKeyword 						nil bold)
 			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(patternUnary 							nil bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -668,7 +668,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(blockStart6 							(magenta darker))
 			(blockEnd6 								(magenta darker))
 			(blockStart7 							blue)
-			(blockEnd7 								blue) 
+			(blockEnd7 								blue)
 			(arrayStart 								black)
 			(arrayEnd 								black)
 			(arrayStart1 							black)
@@ -680,7 +680,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
-										
+
 			(externalCallType 						black)
 			(externalCallTypePointerIndicator 		black)
 			(primitiveOrExternalCallStart 			black bold)
@@ -688,7 +688,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(primitive 								(green muchDarker))
 			(pragmaKeyword 						(green muchDarker))
 			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker)) 
+			(pragmaBinary 							(green muchDarker))
 			(externalFunctionCallingConvention 	(green muchDarker) bold)
 			(module 								(green muchDarker) bold))
 ]
@@ -706,81 +706,81 @@ SHRBTextStyler class >> vintageStyleTable [
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
-	This style is based on old theme and other old environments.  
+
+	This style is based on old theme and other old environments.
 	"
 	<styleTable: 'Vintage'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
-			
+
 			(comment 								'006400')
 			(unfinishedComment 					(red muchDarker))
-			
+
 			(#'$' 									('801f91' lighter))
 			(character 								('801f91' lighter))
 			(integer 								('801f91'))
 			(number 								('801f91'))
 			(#- 										('801f91'))
-			(symbol 								('801f91')) 
-			(stringSymbol 							('801f91')) 
+			(symbol 								('801f91'))
+			(stringSymbol 							('801f91'))
 			(literalArray 							black)
 			(string 									('801f91'))
-												
+
 			(unfinishedString 						red normal)
 			(assignment 							nil bold)
 			(ansiAssignment 						nil bold)
-										
+
 			(literal 									nil italic)
-												
+
 			(keyword 								black)
-			(binary 									black) 
+			(binary 									black)
 			(unary 									black)
-										
+
 			(#true 									('A31515' darker))
 			(#false 									('A31515' darker))
 			(#nil 									('A31515' darker))
-													
+
 			(#self 									'A31515')
 			(#super								'A31515')
 			(#thisContext 							'A31515')
 			(#return 								'A31515' bold)
-												
-			(patternArg 							(blue muchDarker)) 
+
+			(patternArg 							(blue muchDarker))
 			(methodArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
 			(argument 								(blue muchDarker))
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
-								
+
 			(instVar 								(blue muchDarker))
 			(workspaceVar 							(blue muchDarker) bold)
-										
+
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
-										
+
 			(poolConstant 							(blue muchDarker) bold)
 			(classVar 								(blue muchDarker) bold)
 			(globalVar 								black bold)
-												
-		
+
+
 			(incompleteIdentifier 					blue italic)
 			(incompleteKeyword 					blue italic)
-			(incompleteBinary 						blue italic) 
+			(incompleteBinary 						blue italic)
 			(incompleteUnary 						blue italic)
-				
-			(undefinedIdentifier 					red)						
+
+			(undefinedIdentifier 					red)
 			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
-			
+			(undefinedBinary 						red)
+			(undefinedUnary 						red)
+
 			(patternKeyword 						nil bold)
 			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(patternUnary 							nil bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -813,7 +813,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(blockStart6 							(magenta darker))
 			(blockEnd6 								(magenta darker))
 			(blockStart7 							blue)
-			(blockEnd7 								blue) 
+			(blockEnd7 								blue)
 			(arrayStart 								black)
 			(arrayEnd 								black)
 			(arrayStart1 							black)
@@ -825,7 +825,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
-										
+
 			(externalCallType 						black)
 			(externalCallTypePointerIndicator 		black)
 			(primitiveOrExternalCallStart 			black bold)
@@ -833,14 +833,14 @@ SHRBTextStyler class >> vintageStyleTable [
 			(primitive 								(cyan muchDarker))
 			(pragmaKeyword 						(cyan muchDarker))
 			(pragmaUnary 							(cyan muchDarker))
-			(pragmaBinary 							(cyan muchDarker)) 
+			(pragmaBinary 							(cyan muchDarker))
 			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
 			(module 								(cyan muchDarker) bold))
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
-	self 
+	self
 		addAttributes: attributes
 		from: anRBNode start
 		to: anRBNode stop
@@ -857,55 +857,55 @@ SHRBTextStyler >> addAttributes: attributes from: start to: stop [
 { #category : #converting }
 SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aText [
 
-	attributeRuns withStartStopAndValueDo: [:start :stop :attributes | 
-		attributes 
-			select: aTestBlock 
-			thenDo: [ :selectedAttribute| 
+	attributeRuns withStartStopAndValueDo: [:start :stop :attributes |
+		attributes
+			select: aTestBlock
+			thenDo: [ :selectedAttribute|
 				aText
 					addAttribute: selectedAttribute
 					from: start
 					to: stop ]].
-		
+
 	^ aText
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute forNode: anRBNode [
-	self 
+	self
 		addStyle:styleSymbol
 		attributes: { additionalAttribute }
-		forNode: anRBNode.
+		forNode: anRBNode
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: start to: end [
-	self addAttributes: (self attributesFor: styleSymbol), {additionalAttribute} from: start to: end.
+	self addAttributes: (self attributesFor: styleSymbol), {additionalAttribute} from: start to: end
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
-	self 
-		addAttributes: (self attributesFor: styleSymbol), additionalAttributes 
-		forNode: anRBNode.
+	self
+		addAttributes: (self attributesFor: styleSymbol), additionalAttributes
+		forNode: anRBNode
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode.
+	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol from: start to: end [
-	self addAttributes: (self attributesFor: styleSymbol) from: start to: end.
+	self addAttributes: (self attributesFor: styleSymbol) from: start to: end
 ]
 
 { #category : #private }
-SHRBTextStyler >> attributesFor: aSymbol [ 
+SHRBTextStyler >> attributesFor: aSymbol [
 	^ self class attributesFor: aSymbol pixelHeight: self pixelHeight
 ]
 
 { #category : #accessing }
-SHRBTextStyler >> classOrMetaClass: aBehavior [ 
+SHRBTextStyler >> classOrMetaClass: aBehavior [
 	classOrMetaClass := aBehavior
 ]
 
@@ -934,7 +934,7 @@ SHRBTextStyler >> currentOpenedParenthesisStyleName [
 ]
 
 { #category : #accessing }
-SHRBTextStyler >> font: aFont [ 
+SHRBTextStyler >> font: aFont [
 	font := aFont
 ]
 
@@ -949,15 +949,15 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 ]
 
 { #category : #initialization }
-SHRBTextStyler >> initialize [ 
+SHRBTextStyler >> initialize [
 	super initialize.
-	
+
 	isForWorkspace := false
 ]
 
 { #category : #accessing }
-SHRBTextStyler >> isForWorkspace [  
-	^workspace 
+SHRBTextStyler >> isForWorkspace [
+	^workspace
 		ifNil: [ isForWorkspace ]
 		ifNotNil: [ workspace isScripting ]
 ]
@@ -989,7 +989,7 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
 	^ anArgumentNode isDefinedByBlock
-		ifTrue: [ anArgumentNode isDefinition 
+		ifTrue: [ anArgumentNode isDefinition
 				ifTrue: [ #blockPatternArg ]
 				ifFalse: [ #blockArg ] ]
 		ifFalse: [ #methodArg ]
@@ -1023,7 +1023,7 @@ SHRBTextStyler >> privateStyle: aText [
 		noPattern: self isForWorkspace ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
 		requestor: workspace;
-		parse.				
+		parse.
 	^ self style: aText ast: ast
 ]
 
@@ -1035,23 +1035,23 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode isGlobalVariable ifTrue: [ ^#globalVar].
 	"here we should add support for #classVar"
 	aVariableNode isClassVariable ifTrue: [ ^#globalVar].
-	aVariableNode isInstanceVariable ifTrue: [ ^#instVar]. 
+	aVariableNode isInstanceVariable ifTrue: [ ^#instVar].
 	"for now we use temp variable here, we could now color them with their own color"
-	aVariableNode isWorkspaceVariable ifTrue: [ ^#tempVar]. 
-	
-	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
+	aVariableNode isWorkspaceVariable ifTrue: [ ^#tempVar].
+
+	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ])
 		ifTrue:[ ^#incompleteIdentifier] .
 	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
 	aVariableNode isUndeclaredVariable ifTrue: [ ^#undefinedIdentifier ].
 
-	^#invalid.
+	^#invalid
 ]
 
 { #category : #private }
 SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 
 	aVariableNode binding isGlobalVariable
-		ifTrue: [ ^ TextClassLink className: aVariableNode name ].	
+		ifTrue: [ ^ TextClassLink className: aVariableNode name ].
 	^ TextVariableLink variableName: aVariableNode name
 ]
 
@@ -1060,17 +1060,17 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 	| textLink global |
 	textLink := self resolveTextLinkFor: aVariableNode.
 	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink} ].
-	
+
 	global :=	 aVariableNode binding value.
 	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
-	
+
 	^{ textLink. TextEmphasis struckOut }
 ]
 
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
 	aText ifEmpty: [ ^ self ].
-	text := aText.	
+	text := aText.
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
 	parentheseLevel:=0.
@@ -1088,9 +1088,9 @@ SHRBTextStyler >> styleCloseBracket: aBlockNode [
 { #category : #private }
 SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
-		ifNotEmpty: [ 
+		ifNotEmpty: [
 			aMessageNode parentheses
-				reverseDo: [:interval | 
+				reverseDo: [:interval |
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
@@ -1110,9 +1110,9 @@ SHRBTextStyler >> styleOpenBracket: aBlockNode [
 { #category : #private }
 SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 	aMessageNode parentheses
-		ifNotEmpty: [ 
+		ifNotEmpty: [
 			aMessageNode parentheses
-				do: [ :interval | 
+				do: [ :interval |
 					| pos |
 					pos := interval first.
 					self addStyle:  self currentOpenedParenthesisStyleName from: pos to: pos.
@@ -1132,12 +1132,12 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 ]
 
 { #category : #styling }
-SHRBTextStyler >> unstyledTextFrom: aText [ 
+SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
 	| answer |
 	answer := super unstyledTextFrom: aText.
-	self 
-		addAttributesFrom: aText runs 
+	self
+		addAttributesFrom: aText runs
 		satisfying: [ :each| each isKindOf: TextAction ]
 		to: answer.
 	^ answer
@@ -1191,13 +1191,13 @@ SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	"In a (valid) byte array all elements are of the same type, style the whole contents
 at once, but for ordinary literal arrays, style every node"
 
-	(aRBLiteralArrayNode isForByteArray and: [ 
-		aRBLiteralArrayNode isFaulty not and: [ 
-			aRBLiteralArrayNode contents isNotEmpty 
+	(aRBLiteralArrayNode isForByteArray and: [
+		aRBLiteralArrayNode isFaulty not and: [
+			aRBLiteralArrayNode contents isNotEmpty
 		]
-	]) ifTrue: [ 
-			self addStyle: #number 
-				from: aRBLiteralArrayNode start + 2 
+	]) ifTrue: [
+			self addStyle: #number
+				from: aRBLiteralArrayNode start + 2
 				to: aRBLiteralArrayNode stop - 1 ]
 		ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]]
 ]
@@ -1206,9 +1206,9 @@ at once, but for ordinary literal arrays, style every node"
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	| value link |
 	value := aLiteralValueNode value.
-	
-	
-	"We can have 3 different kind of links from a literal: 
+
+
+	"We can have 3 different kind of links from a literal:
 	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
@@ -1225,26 +1225,26 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
-	
-	style := aMessageNode selector isSelectorSymbol 
+
+	style := aMessageNode selector isSelectorSymbol
 		ifTrue: [ #keyword ]
 		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
-		
+
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
-	
+
 	aMessageNode selectorParts
 		with: aMessageNode keywordsPositions
-		do: [ :keyword :position | 
+		do: [ :keyword :position |
 			self
 				addStyle: style
 				attribute: link
 				from: position
 				to: position + keyword size - 1 ].
-	
+
 	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
-	
+
 	aMessageNode arguments do: [ :each | self visitNode: each ].
 	self styleCloseParenthese: aMessageNode
 ]
@@ -1258,7 +1258,7 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 	aMethodNode selectorParts
 		with: aMethodNode keywordsPositions
 		do:
-			[ :keyword :position | 
+			[ :keyword :position |
 			self
 				addStyle: #patternKeyword
 				attribute: link
@@ -1269,9 +1269,9 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitNode: aNode [ 
+SHRBTextStyler >> visitNode: aNode [
 	aNode comments do: [:comment|
-		self 
+		self
 			addStyle: #comment
 			from: comment start
 			to: comment stop ].
@@ -1281,7 +1281,7 @@ SHRBTextStyler >> visitNode: aNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
-	self 
+	self
 		addStyle: #invalid
 		forNode: anErrorNode
 ]
@@ -1289,27 +1289,27 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 { #category : #visiting }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword : position|
-	self 
+	self
 		addStyle: #pragmaKeyword
 		from: position
 		to: position + keyword size ].
-	
+
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitReturnNode: aReturnNode [ 
-	self 
+SHRBTextStyler >> visitReturnNode: aReturnNode [
+	self
 		addStyle: #return
 		from: aReturnNode start
 		to: aReturnNode stop.
-		
+
 	self visitNode: aReturnNode value
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitSelfNode: aSelfNode [
-	self 
+	self
 		addStyle: #self
 		forNode: aSelfNode
 ]
@@ -1350,13 +1350,13 @@ SHRBTextStyler >> visitThisContextNode: aThisContextNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
-	self 
-		addStyle: (self resolveStyleFor: aVariableNode) 
+	self
+		addStyle: (self resolveStyleFor: aVariableNode)
 		attributes: (self resolveVariableAttributesFor: aVariableNode)
 		forNode: aVariableNode
 ]
 
 { #category : #accessing }
-SHRBTextStyler >> workspace: aWorkspace [ 
+SHRBTextStyler >> workspace: aWorkspace [
 	workspace := aWorkspace
 ]

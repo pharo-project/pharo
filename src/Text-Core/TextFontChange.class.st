@@ -20,8 +20,7 @@ TextFontChange class >> defaultFontChange [
   defaultFontStyle := TextStyle default.
   fontIndex := defaultFontStyle ifNil: [1] ifNotNil: [defaultFontStyle defaultFontIndex].
 
-  ^ self new fontNumber: fontIndex.
-
+  ^ self new fontNumber: fontIndex
 ]
 
 { #category : #defaults }
@@ -50,8 +49,8 @@ TextFontChange class >> fontNumber: n [
 ]
 
 { #category : #comparing }
-TextFontChange >> = other [ 
-	^ (other class == self class) 
+TextFontChange >> = other [
+	^ (other class == self class)
 		and: [other fontNumber = fontNumber]
 ]
 

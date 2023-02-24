@@ -21,17 +21,18 @@ DTFilterableListPresenterTest >> setUp [
 
 { #category : #tests }
 DTFilterableListPresenterTest >> testFilterStrings [
+
 	filterableList filterTextInput text: 'foo|bar'.
 
-	self assertCollection: filterableList filterStrings hasSameElements: #('foo*' 'bar*').
+	self assertCollection: filterableList filterStrings hasSameElements: #( '*foo*' '*bar*' ).
 
 	filterableList filterTextInput text: '|bar'.
 
-	self assertCollection: filterableList filterStrings hasSameElements: #('bar*').
+	self assertCollection: filterableList filterStrings hasSameElements: #( '*bar*' ).
 
 	filterableList filterTextInput text: 'foo|'.
 
-	self assertCollection: filterableList filterStrings hasSameElements: #('foo*')
+	self assertCollection: filterableList filterStrings hasSameElements: #( '*foo*' )
 ]
 
 { #category : #tests }
@@ -42,7 +43,7 @@ DTFilterableListPresenterTest >> testFilterWorks [
 	filterableList filterTextInput text: '2'.
 
 	self assertCollection: filterableList allItems equals: (1 to: 20).
-	self assertCollection: filterableList visibleItems equals: #(2 20).
+	self assertCollection: filterableList visibleItems equals: #(2 12 20).
 
 	filterableList filterTextInput text: ''.
 

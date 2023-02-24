@@ -340,7 +340,6 @@ PBBootstrap >> monticelloNetworkPackageNames [
 		 'MonticelloRemoteRepositories'
 
 		 'Zinc-HTTP'
-		 'Zinc-FileSystem'
 		 'Zodiac-Core')
 ]
 

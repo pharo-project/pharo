@@ -16,13 +16,13 @@ RTFSelfCallTreeCleanerTest >> setUp [
 	super setUp.
 	tree1 := RTFSelfCallRootNode new
 				compiledMethod: 'Fake CM';
-				subCalls: { 
+				subCalls: {
 					RTFSelfCallRootNode new
 						compiledMethod: 'Fake CM 2';
-						subCalls: { 
+						subCalls: {
 							RTFSelfCallRootNode new
 								compiledMethod: 'Fake CM 3';
-								subCalls: { 
+								subCalls: {
 									RTFSelfCallRootNode new
 										compiledMethod: (TestAsserter lookupSelector: #assert:);
 										subCalls: #()
@@ -30,7 +30,7 @@ RTFSelfCallTreeCleanerTest >> setUp [
 								yourself.
 							RTFSelfCallRootNode new
 								compiledMethod: 'Fake CM 4';
-								subCalls: { 
+								subCalls: {
 									RTFSelfCallRootNode new
 										compiledMethod: 'Fake CM 5';
 										subCalls: { };
@@ -43,7 +43,7 @@ RTFSelfCallTreeCleanerTest >> setUp [
 				yourself.
 	tree2 := RTFSelfCallRootNode new
 				compiledMethod: 'Fake CM';
-				subCalls: { 
+				subCalls: {
 					RTFSelfCallRootNode new
 						compiledMethod: 'Fake CM 2';
 						subCalls: #();
@@ -56,7 +56,7 @@ RTFSelfCallTreeCleanerTest >> setUp [
 RTFSelfCallTreeCleanerTest >> testVisitRTFSelfCallNode [
 	| cleanedTree1 cleanedTree2 |
 	cleanedTree1 := tree1 acceptVisitor: RTFSelfCallTreeCleaner new.
-	
+
 	self
 		assert: cleanedTree1 compiledMethod equals: 'Fake CM';
 		assert: cleanedTree1 subCalls size equals: 1;
@@ -65,9 +65,9 @@ RTFSelfCallTreeCleanerTest >> testVisitRTFSelfCallNode [
 		assert: cleanedTree1 subCalls first subCalls first compiledMethod equals: 'Fake CM 3';
 		assert: cleanedTree1 subCalls first subCalls first subCalls size equals: 1;
 		assert: cleanedTree1 subCalls first subCalls first subCalls first compiledMethod equals: (TestAsserter lookupSelector: #assert:).
-		
+
 	cleanedTree2 :=  tree2 acceptVisitor: RTFSelfCallTreeCleaner new.
-	
+
 	self
 		assert: cleanedTree2 compiledMethod equals: 'Fake CM';
 		assert: cleanedTree2 subCalls size equals: 0

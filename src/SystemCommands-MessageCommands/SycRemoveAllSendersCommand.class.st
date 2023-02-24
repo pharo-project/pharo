@@ -25,7 +25,7 @@ SycRemoveAllSendersCommand >> createRefactoring [
 ]
 
 { #category : #accessing }
-SycRemoveAllSendersCommand >> defaultMenuIconName [ 
+SycRemoveAllSendersCommand >> defaultMenuIconName [
 	^#remove
 ]
 

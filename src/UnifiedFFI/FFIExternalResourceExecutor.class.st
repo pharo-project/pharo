@@ -70,13 +70,13 @@ Class {
 }
 
 { #category : #finalization }
-FFIExternalResourceExecutor >> finalize [ 
-	session = Smalltalk session ifFalse: [ ^ self ].		
+FFIExternalResourceExecutor >> finalize [
+	session = Smalltalk session ifFalse: [ ^ self ].
 	resourceClass finalizeResourceData: data
 ]
 
 { #category : #initialization }
-FFIExternalResourceExecutor >> initialize [ 
+FFIExternalResourceExecutor >> initialize [
 	super initialize.
 	session := Smalltalk session
 ]

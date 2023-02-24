@@ -36,7 +36,7 @@ ObservableSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varName value: <stackTop>', make sure to preserve the stackTop"
 
 	| temp |
-	temp := '0slotTempForStackManipulation'.	
+	temp := '0slotTempForStackManipulation'.
 	"We pop the value from the stack into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
@@ -63,7 +63,7 @@ ObservableSlot >> initialize: anObject [
 
 { #category : #testing }
 ObservableSlot >> isObservableSlot [
-	
+
 	^ true
 ]
 

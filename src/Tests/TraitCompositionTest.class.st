@@ -24,7 +24,7 @@ TraitCompositionTest >> testAliasCompositions [
 	self t2 setTraitComposition: self t1 @ {(#myX:y:z: -> #x:y:z:)}.	"alias same as selector"
 	self should: [ self t2 setTraitComposition: self t1 @ {(#m11 -> #m11)} ] raise: Error.	"same alias name used twice"
 	self
-		should: [ 
+		should: [
 			self t2
 				setTraitCompositionFrom:
 					self t1
@@ -33,7 +33,7 @@ TraitCompositionTest >> testAliasCompositions [
 							(#alias -> #m12)} ]
 		raise: Error.	"aliasing an alias"
 	self
-		should: [ 
+		should: [
 			self t2
 				setTraitCompositionFrom:
 					self t1
@@ -86,7 +86,7 @@ TraitCompositionTest >> testInvalidComposition [
 	self should: [ self t1 + self t1 ] raise: Error.
 	self shouldnt: [ (self t1 + self t2) @ {(#a -> #b)} + self t1 ] raise: Error.
 	self
-		should: [ 
+		should: [
 			self t1
 				@
 					{(#a -> #m11).
@@ -96,30 +96,28 @@ TraitCompositionTest >> testInvalidComposition [
 
 { #category : #'tests - basic' }
 TraitCompositionTest >> testOriginSelectorOf [
-	
+
 	"regular method "
-	self assert: (MOPTestClassC traitComposition originSelectorOf: #c) equals: #c.	
+	self assert: (MOPTestClassC traitComposition originSelectorOf: #c) equals: #c.
 	"non aliased trait method "
-	self assert: (MOPTestClassD traitComposition originSelectorOf: #c2) equals: #c2.	
+	self assert: (MOPTestClassD traitComposition originSelectorOf: #c2) equals: #c2.
 	"aliased method "
-	self assert: (MOPTestClassD traitComposition originSelectorOf: #c3) equals: #c2.
+	self assert: (MOPTestClassD traitComposition originSelectorOf: #c3) equals: #c2
 ]
 
 { #category : #'tests - basic' }
 TraitCompositionTest >> testPrinting [
 	| composition1 composition2 |
-	composition1 := ((self t2 + self t1) @ { (#z -> #c) } - {#a. #b. #c } 
-				+ self t3 - { #d. #e } 
+	composition1 := ((self t2 + self t1) @ { (#z -> #c) } - {#a. #b. #c }
+				+ self t3 - { #d. #e }
 				+ self t4).
-	composition2 := self t4 @ { (#x -> #a). (#y -> #b) } + self t1 - { #a } 
-				+ self t3 - { #d. #e } 
+	composition2 := self t4 @ { (#x -> #a). (#y -> #b) } + self t1 - { #a }
+				+ self t3 - { #d. #e }
 				+ self t2 - { #b. #c }.
 	self assertPrints: composition1 printString
  		like:  '(((T2 + T1) @ {#z->#c}) - {#a. #b. #c} + T3) - {#d. #e} + T4'.
 	self assertPrints: composition2 printString
 		like:  '(((T4 @ {#x->#a. #y->#b} + T1) - {#a} + T3) - {#d. #e} + T2) - {#b. #c}'
-		
-		
 ]
 
 { #category : #'tests - basic' }
@@ -157,7 +155,7 @@ TraitCompositionTest >> testSyntacticEqualsWithAlias [
 	self deny: ((self t1 @ {#a -> #b}) semanticallyEquals: (self t1 @ {#A -> #b})).
 
 	self assert: ((self t1 @ {#a -> #b} @ {#x -> #y}) semanticallyEquals: (self t1 @ {#a -> #b} @ {#x -> #y})).
-	self deny: ((self t1 @ {#a -> #b} @ {#x -> #y}) semanticallyEquals: (self t1 @ {#x -> #y} @ {#a -> #b})).
+	self deny: ((self t1 @ {#a -> #b} @ {#x -> #y}) semanticallyEquals: (self t1 @ {#x -> #y} @ {#a -> #b}))
 ]
 
 { #category : #'tests - comparing' }
@@ -166,20 +164,19 @@ TraitCompositionTest >> testSyntacticEqualsWithComplexCompositions [
 	self t3 compile: 'y ^$y'.
 	self t3 compile: 'Y ^$Y'.
 
-	self assert: ((self t1 + (self t2 - {#a. #b}) + (self t3 @ {#x -> #y})) 
+	self assert: ((self t1 + (self t2 - {#a. #b}) + (self t3 @ {#x -> #y}))
 		semanticallyEquals: (self t1 + (self t2 - {#a. #b}) + (self t3 @ {#x -> #y}))).
-	self deny: ((self t1 + (self t2 - {#a. #b}) + (self t3 @ {#x -> #y})) 
+	self deny: ((self t1 + (self t2 - {#a. #b}) + (self t3 @ {#x -> #y}))
 		semanticallyEquals: (self t1 + (self t2 - {#A. #B}) + (self t3 @ {#X -> #Y}))).
 
 	self t1 compile: 'y ^$y'.
 	self t1 compile: 'w ^$w'.
 	self t1 compile: 'c ^$c'.
-	
-	self assert: ((self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#c} + self t2) 
-		semanticallyEquals: (self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#c} + self t2)).
-	self deny: ((self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#c} + self t2) 
-		semanticallyEquals: (self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#C} + self t2)).
 
+	self assert: ((self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#c} + self t2)
+		semanticallyEquals: (self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#c} + self t2)).
+	self deny: ((self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#c} + self t2)
+		semanticallyEquals: (self t1 @ {#x -> #y} @ {#z -> #w} - {#a. #b} - {#C} + self t2))
 ]
 
 { #category : #'tests - comparing' }
@@ -190,14 +187,13 @@ TraitCompositionTest >> testSyntacticEqualsWithComposition [
 
 	self assert: (self t1 asTraitComposition semanticallyEquals: self t1 asTraitComposition).
 	self deny: (self t1 asTraitComposition semanticallyEquals: self t2 asTraitComposition).
-	
+
 	self assert: ((self t1 + self t2) semanticallyEquals: (self t1 + self t2)).
 	self deny: ((self t1 + self t2) semanticallyEquals: (self t1 + self t3)).
 	self deny: ((self t1 + self t2) semanticallyEquals: (self t2 + self t1)).
-	
-	self assert: ((self t1 + self t2 + self t3) semanticallyEquals: (self t1 + self t2 + self t3)).
-	self deny: ((self t1 + self t2 + self t3) semanticallyEquals: (self t3 + self t2 + self t1)).
 
+	self assert: ((self t1 + self t2 + self t3) semanticallyEquals: (self t1 + self t2 + self t3)).
+	self deny: ((self t1 + self t2 + self t3) semanticallyEquals: (self t3 + self t2 + self t1))
 ]
 
 { #category : #'tests - comparing' }
@@ -209,8 +205,7 @@ TraitCompositionTest >> testSyntacticEqualsWithExclusion [
 	self assert: ((self t1 - {#a}) semanticallyEquals: (self t1 - {#a})).
 	self deny: ((self t1 - {#a}) semanticallyEquals: (self t1 - {#b})).
 	self assert: ((self t1 - {#a. #b}) semanticallyEquals: (self t1 - {#b. #a})).
-	
-	self assert: ((self t1 - {#a} - {#b}) semanticallyEquals: (self t1 - {#a} - {#b})).
-	self assert: ((self t1 - {#a} - {#b}) semanticallyEquals: (self t1 - {#b} - {#a})).
 
+	self assert: ((self t1 - {#a} - {#b}) semanticallyEquals: (self t1 - {#a} - {#b})).
+	self assert: ((self t1 - {#a} - {#b}) semanticallyEquals: (self t1 - {#b} - {#a}))
 ]

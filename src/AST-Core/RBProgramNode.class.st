@@ -514,6 +514,11 @@ RBProgramNode >> isCascade [
 ]
 
 { #category : #testing }
+RBProgramNode >> isCascadeError [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isClassVariable [
 	^ false
 ]

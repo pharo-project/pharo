@@ -15,7 +15,7 @@ RubLineNumberDisplayer class >> key [
 { #category : #'menu declaration' }
 RubLineNumberDisplayer class >> menuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'RubLineNumberMenu'
 		model: nil) menu popUpInWorld"
 
@@ -53,26 +53,26 @@ RubLineNumberDisplayer >> drawOn: aCanvas [
 	tcolor := self textColor.
 	aCanvas
 		clipBy: self bounds
-		during: [ :clippedCanvas | 
+		during: [ :clippedCanvas |
 			| backBnd |
 			clippedCanvas fillRectangle: self verticalSeparatorBounds color: self verticalSeparatorColor.
 			visibleRectangle := clippedCanvas clipRect.
-			(self lineIndexForPoint: visibleRectangle topLeft) to: (self lineIndexForPoint: visibleRectangle bottomRight) do: [ :i | 
+			(self lineIndexForPoint: visibleRectangle topLeft) to: (self lineIndexForPoint: visibleRectangle bottomRight) do: [ :i |
 				| line |
 				line := lines at: i.
 				(self selectionStart == self selectionStop and: [self selectionStop textLine lineNumber = line lineNumber])
-					ifTrue: [ 
+					ifTrue: [
 						backBnd := self bounds.
 						backBnd := (backBnd left) @ line top corner: self verticalSeparatorBounds left @ line bottom.
 						backBnd := backBnd translateBy: 0 @ (self offset y negated + self bounds top).
 						clippedCanvas fillRectangle: backBnd color: self selectionColorToUse ].
 				prev = line lineNumber
-					ifFalse: [ 
+					ifFalse: [
 						| lineMark lineBnd ygap |
 						ygap := ((line lineHeight - font height) // 2 - 1) rounded.
 						lineMark := line lineNumber asString.
 						self side = #left
-							ifTrue: [ 
+							ifTrue: [
 								| width |
 								width := (self fontToUse widthOfString: lineMark) + self horizontalGapAfter.
 								lineBnd := (right - width) @ (line bottom - font height - ygap) corner: (right + width) @ line bottom ]
@@ -101,17 +101,17 @@ RubLineNumberDisplayer >> drawOnAthensCanvas: aCanvas [
 	tcolor := self textColor.
 	aCanvas
 		clipBy: self bounds
-		during: [ 
+		during: [
 			| backBnd |
 			aCanvas setShape: self verticalSeparatorBounds.
 			aCanvas setPaint: self verticalSeparatorColor.
 			aCanvas draw.
 			visibleRectangle := aCanvas clipRect.
-			(self lineIndexForPoint: visibleRectangle topLeft) to: (self lineIndexForPoint: visibleRectangle bottomRight) do: [ :i | 
+			(self lineIndexForPoint: visibleRectangle topLeft) to: (self lineIndexForPoint: visibleRectangle bottomRight) do: [ :i |
 				| line |
 				line := lines at: i.
 				(self selectionStart == self selectionStop and: [self selectionStop textLine lineNumber = line lineNumber])
-					ifTrue: [ 
+					ifTrue: [
 						backBnd := self bounds.
 						backBnd := (backBnd left) @ line top corner: self verticalSeparatorBounds left @ line bottom.
 						backBnd := backBnd translateBy: 0 @ (self offset y negated + self bounds top).
@@ -119,12 +119,12 @@ RubLineNumberDisplayer >> drawOnAthensCanvas: aCanvas [
 						aCanvas setPaint: self selectionColorToUse.
 						aCanvas draw ].
 				prev = line lineNumber
-					ifFalse: [ 
+					ifFalse: [
 						| lineMark lineBnd ygap |
 						ygap := ((line lineHeight - font height) // 2 - 1) rounded.
 						lineMark := line lineNumber asString.
 						self side = #left
-							ifTrue: [ 
+							ifTrue: [
 								| width |
 								width := (self fontToUse widthOfString: lineMark) + self horizontalGapAfter.
 								lineBnd := (right - width) @ (line bottom - font height - ygap) corner: (right + width) @ line bottom ]
@@ -174,7 +174,7 @@ RubLineNumberDisplayer >> menu [
 ]
 
 { #category : #menus }
-RubLineNumberDisplayer >> menuKeyword [ 
+RubLineNumberDisplayer >> menuKeyword [
 	^ #RubLineNumberMenu
 ]
 
@@ -210,7 +210,7 @@ RubLineNumberDisplayer >> mouseUp: anEvent [
 	lineIndex := self lineIndexForPoint: anEvent position.
 	line := self lines at: lineIndex.
 	anEvent setPosition: line topLeft.
-	self textArea mouseUp: anEvent.
+	self textArea mouseUp: anEvent
 ]
 
 { #category : #accessing }
@@ -243,12 +243,12 @@ RubLineNumberDisplayer >> verticalSeparatorWidth [
 ]
 
 { #category : #'event handling' }
-RubLineNumberDisplayer >> yellowButtonActivity: shiftKeyState [ 
+RubLineNumberDisplayer >> yellowButtonActivity: shiftKeyState [
 	"Invoke the text-editing menu.
 	Check if required first!"
 	(self getMenu: shiftKeyState)
 		ifNotNil: [ :menu|
-			menu invokeModal. 
+			menu invokeModal.
 			self changed.
 			^ true].
 	^ true

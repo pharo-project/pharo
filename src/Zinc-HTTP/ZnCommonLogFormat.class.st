@@ -24,8 +24,8 @@ Class {
 
 { #category : #private }
 ZnCommonLogFormat >> clientIPAddressFrom: event [
-	^ event request headers 
-		at: ZnConstants remoteAddressHeader 
+	^ event request headers
+		at: ZnConstants remoteAddressHeader
 		ifAbsent: [ '-' ]
 ]
 
@@ -36,21 +36,21 @@ ZnCommonLogFormat >> combined [
 
 { #category : #accessing }
 ZnCommonLogFormat >> combined: boolean [
-	"If boolean is true (the default), use the 'Combined' format, 
+	"If boolean is true (the default), use the 'Combined' format,
 	adding Referer and User-Agent fields."
-	
+
 	combined := boolean
 ]
 
 { #category : #public }
 ZnCommonLogFormat >> format: event on: stream [
 	"Output a ZnServerTransactionEvent on a text stream in Common Log Format"
-	
+
 	stream << (self clientIPAddressFrom: event); << ' - '.
 	stream << (self userFrom: event); space.
 	self formatTimestamp: event timestamp on: stream.
 	self formatRequest: event on: stream.
-	self formatResponse: event on: stream. 
+	self formatResponse: event on: stream.
 	combined ifTrue: [ self formatCombinedFields: event request on: stream ]
 ]
 
@@ -63,7 +63,6 @@ ZnCommonLogFormat >> formatCombinedFields: request on: stream [
 	stream nextPut: $"; << referer; nextPut: $".
 	stream space.
 	stream nextPut: $"; << userAgent; nextPut: $"
-
 ]
 
 { #category : #private }
@@ -83,11 +82,10 @@ ZnCommonLogFormat >> formatResponse: event on: stream [
 	stream space.
 	stream print: event response code.
 	stream space.
-	size := event response hasEntity 
-		ifTrue: [ event response contentLength ] 
+	size := event response hasEntity
+		ifTrue: [ event response contentLength ]
 		ifFalse: [ 0 ].
 	stream print: size
-
 ]
 
 { #category : #private }
@@ -111,7 +109,7 @@ ZnCommonLogFormat >> formatTimestamp: timestamp on: stream [
 { #category : #initialization }
 ZnCommonLogFormat >> initialize [
 	super initialize.
-	combined := true.
+	combined := true
 ]
 
 { #category : #private }

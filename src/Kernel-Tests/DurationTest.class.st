@@ -64,6 +64,24 @@ DurationTest >> testAsDuration [
 ]
 
 { #category : #tests }
+DurationTest >> testAsMicroseconds [
+
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: (Duration seconds: 1) asMicroseconds equals: 1000000.
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: aDuration asMicroseconds equals: 93784000000.
+	self assert: (Duration microSeconds: 3775) asSeconds equals: 0.
+	self assert: (Duration microSeconds: 3775000) asSeconds equals: 3.
+	self assert: (Duration microSeconds: 3775) nanoSeconds equals: 3775000.
+	self assert: (Duration microSeconds: -3775) asSeconds equals: 0.
+	self assert: (Duration microSeconds: -3775000) asSeconds equals: -3.
+	self assert: (Duration microSeconds: -3775000) nanoSeconds equals: -775000000.
+	"but"
+	self assert: (Duration microSeconds: -3775000) asNanoSeconds equals: -3775000000
+]
+
+{ #category : #tests }
 DurationTest >> testAsMilliSecond [
 	self
 		assert: 1 milliSecond equals: (1 / 1000) second;
@@ -216,6 +234,36 @@ DurationTest >> testDivide [
 				minutes: 6
 				seconds: 8
 				nanoSeconds: 10)
+]
+
+{ #category : #tests }
+DurationTest >> testEqualsSign [
+
+	self
+		assert: aDuration
+		equals:
+			(Duration
+				days: 1
+				hours: 2
+				minutes: 3
+				seconds: 4
+				nanoSeconds: 5).
+
+	self assert: aDuration equals: aDuration.
+
+	self
+		deny: aDuration
+		equals:
+			(Duration
+				days: 1
+				hours: 2
+				minutes: 3
+				seconds: 4
+				nanoSeconds: 4).
+
+	self assert: (Time seconds: 1) asNanoSeconds equals: (Duration seconds: 1) asNanoSeconds.
+	"but"
+	self deny: (Time seconds: 1) equals: (Duration seconds: 1)
 ]
 
 { #category : #tests }
@@ -391,6 +439,21 @@ DurationTest >> testModulo [
 				minutes: 0
 				seconds: 0
 				nanoSeconds: 1)
+]
+
+{ #category : #tests }
+DurationTest >> testMultiplication [
+
+	self assert: aDuration * 1 equals: aDuration.
+	self assert: aDuration * 2 equals: (Duration
+				days: 2
+				hours: 4
+				minutes: 6
+				seconds: 8
+				nanoSeconds: 10).
+	self assert: 1 nanoSecond * 2 equals: 2 nanoSeconds.
+	"but"
+	self assert: 1 nanoSecond * 1.99 equals: 1 nanoSecond
 ]
 
 { #category : #tests }
@@ -616,6 +679,21 @@ DurationTest >> testSecondsNanoSeconds [
 	self assert: (Duration seconds: 0 nanoSeconds: 5) equals: (Duration nanoSeconds: 5).
 	"not sure I should include in sunit since its Private "
 	self assert: (aDuration seconds: 0 nanoSeconds: 1) equals: (Duration nanoSeconds: 1)
+]
+
+{ #category : #tests }
+DurationTest >> testStar [
+
+	self assert: aDuration * 1 equals: aDuration.
+	self assert: aDuration * 2 equals: (Duration
+				days: 2
+				hours: 4
+				minutes: 6
+				seconds: 8
+				nanoSeconds: 10).
+	self assert: 1 nanoSecond * 2 equals: 2 nanoSeconds.
+	"but"
+	self assert: 1 nanoSecond * 1.99 equals: 1 nanoSecond
 ]
 
 { #category : #tests }

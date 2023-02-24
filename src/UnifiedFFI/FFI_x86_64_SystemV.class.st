@@ -33,7 +33,7 @@ FFI_x86_64_SystemV >> maxStructureSizeToPassInRegisters [
 ]
 
 { #category : #callbacks }
-FFI_x86_64_SystemV >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [ 
+FFI_x86_64_SystemV >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
 
 	^ FFISystemV64CallbackArgumentReader
 		forCallback: aCallback

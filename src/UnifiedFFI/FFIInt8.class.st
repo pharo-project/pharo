@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIInt8 class >> externalType [ 
+FFIInt8 class >> externalType [
 	^ ExternalType signedByte
 ]
 

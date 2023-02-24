@@ -38,7 +38,7 @@ ZnUTF32Encoder >> backOnStream: stream [
 ZnUTF32Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer codePoint"
 
-	codePoint > self maximumUTFCode 
+	codePoint > self maximumUTFCode
 		ifTrue: [ ^ self errorOutsideRange ].
 	^ 4
 ]
@@ -61,7 +61,7 @@ ZnUTF32Encoder >> nextCodePointFromStream: stream [
 	codePoint := self readCodePointFrom: stream.
 	(self processByteOrderMark: codePoint)
 		ifTrue: [ codePoint := self readCodePointFrom: stream ].
-	((self isSurrogateCodePoint: codePoint) or: [ codePoint > self maximumUTFCode ]) 
+	((self isSurrogateCodePoint: codePoint) or: [ codePoint > self maximumUTFCode ])
 		ifTrue: [ ^ self errorOutsideRange ].
 	^ codePoint
 ]
@@ -70,7 +70,7 @@ ZnUTF32Encoder >> nextCodePointFromStream: stream [
 ZnUTF32Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
-	(self isSurrogateCodePoint: codePoint) 
+	(self isSurrogateCodePoint: codePoint)
 		ifTrue: [ self errorOutsideRange ].
 	codePoint <= self maximumUTFCode
 		ifTrue: [
@@ -82,7 +82,7 @@ ZnUTF32Encoder >> nextPutCodePoint: codePoint toStream: stream [
 { #category : #private }
 ZnUTF32Encoder >> processByteOrderMark: codePoint [
 	^ (codePoint = 16rFEFF or: [ codePoint = 16rFFFE0000 ])
-		ifTrue: [ 
+		ifTrue: [
 			codePoint = 16rFFFE0000
 				ifTrue: [ self swapEndianness ].
 			true ]
@@ -99,25 +99,25 @@ ZnUTF32Encoder >> readCodePointFrom: stream [
 	(byte1 isNil or: [ byte2 isNil or: [ byte3 isNil or: [ byte4 isNil ] ] ])
 		ifTrue: [ ^ self errorIncomplete ].
 	^ self isBigEndian
-		ifTrue: [ 
-			(byte1 bitShift: 24) + (byte2 bitShift: 16) + (byte3 bitShift: 8) + byte4 ] 
-		ifFalse: [ 
+		ifTrue: [
+			(byte1 bitShift: 24) + (byte2 bitShift: 16) + (byte3 bitShift: 8) + byte4 ]
+		ifFalse: [
 			(byte4 bitShift: 24) + (byte3 bitShift: 16) + (byte2 bitShift: 8) + byte1 ]
 ]
 
 { #category : #private }
 ZnUTF32Encoder >> writeCodePoint: codePoint to: stream [
-	self isBigEndian 
-		ifTrue: [ 
-			stream 
-				nextPut: (codePoint byteAt: 4); 
-				nextPut: (codePoint byteAt: 3); 
-				nextPut: (codePoint byteAt: 2); 
+	self isBigEndian
+		ifTrue: [
+			stream
+				nextPut: (codePoint byteAt: 4);
+				nextPut: (codePoint byteAt: 3);
+				nextPut: (codePoint byteAt: 2);
 				nextPut: (codePoint byteAt: 1) ]
-		ifFalse: [ 
-			stream 
-				nextPut: (codePoint byteAt: 1); 
-				nextPut: (codePoint byteAt: 2); 
-				nextPut: (codePoint byteAt: 3); 
+		ifFalse: [
+			stream
+				nextPut: (codePoint byteAt: 1);
+				nextPut: (codePoint byteAt: 2);
+				nextPut: (codePoint byteAt: 3);
 				nextPut: (codePoint byteAt: 4) ]
 ]

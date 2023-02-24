@@ -16,7 +16,7 @@ SystemDictionaryTest class >> shouldInheritSelectors [
 { #category : #requirements }
 SystemDictionaryTest >> canBeUnhealthy [
 	"uses GlobalVariables instead of associations"
-	
+
 	^ false
 ]
 
@@ -42,8 +42,8 @@ SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
 
 { #category : #tests }
 SystemDictionaryTest >> testEnvironmentOfOrganization [
-	
-	| aDictionary |	
+
+	| aDictionary |
 	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
 	self assert: aDictionary organization environment equals: aDictionary
 ]

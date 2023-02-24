@@ -7,7 +7,7 @@ Class {
 { #category : #examples }
 RBSelectClassAndMethodsPresenter class >> example [
 	<script>
-	^ (self label: 'example ...' 
+	^ (self label: 'example ...'
 		dropLabel: 'Pull up methods'
 		withItems: SycExtractMethodCommand methods
 		selecting: OrderedCollection new
@@ -16,12 +16,12 @@ RBSelectClassAndMethodsPresenter class >> example [
 ]
 
 { #category : #specs }
-RBSelectClassAndMethodsPresenter class >> title [ 
+RBSelectClassAndMethodsPresenter class >> title [
 	^ 'Methods'
 ]
 
 { #category : #attributes }
-RBSelectClassAndMethodsPresenter >> columnName [ 
+RBSelectClassAndMethodsPresenter >> columnName [
 	^ 'Methods'
 ]
 

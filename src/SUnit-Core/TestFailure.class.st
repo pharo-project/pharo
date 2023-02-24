@@ -14,11 +14,11 @@ TestFailure class >> captureIfSignalledWhenStepping [
 
 { #category : #testing }
 TestFailure >> isResumable [
-	
+
 	^ false
 ]
 
 { #category : #'camp smalltalk' }
 TestFailure >> sunitAnnounce: aTestCase toResult: aTestResult [
-	aTestResult addFailure: aTestCase.
+	aTestResult addFailure: aTestCase
 ]

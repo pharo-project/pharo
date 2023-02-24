@@ -19,18 +19,18 @@ LogicalFontStoredSetting >> fallbackFamilyNames [
 ]
 
 { #category : #accessing }
-LogicalFontStoredSetting >> fallbackFamilyNames: aCollectionOrNil [ 
+LogicalFontStoredSetting >> fallbackFamilyNames: aCollectionOrNil [
 	fallbackFamilyNames := aCollectionOrNil
 ]
 
 { #category : #accessing }
 LogicalFontStoredSetting >> realValue [
 	^ (self class environment at: self fontClassName)
-				familyName: self familyName 
-				fallbackFamilyNames: self fallbackFamilyNames 
-				pointSize: self pointSize 
+				familyName: self familyName
+				fallbackFamilyNames: self fallbackFamilyNames
+				pointSize: self pointSize
 				stretchValue: self stretchValue
-				weightValue: self weightValue 
+				weightValue: self weightValue
 				slantValue: self slantValue
 ]
 
@@ -40,7 +40,7 @@ LogicalFontStoredSetting >> slantValue [
 ]
 
 { #category : #accessing }
-LogicalFontStoredSetting >> slantValue: anInteger [ 
+LogicalFontStoredSetting >> slantValue: anInteger [
 	slantValue := anInteger
 ]
 
@@ -50,7 +50,7 @@ LogicalFontStoredSetting >> stretchValue [
 ]
 
 { #category : #accessing }
-LogicalFontStoredSetting >> stretchValue: anInteger [ 
+LogicalFontStoredSetting >> stretchValue: anInteger [
 	stretchValue := anInteger
 ]
 
@@ -60,6 +60,6 @@ LogicalFontStoredSetting >> weightValue [
 ]
 
 { #category : #accessing }
-LogicalFontStoredSetting >> weightValue: anInteger [ 
+LogicalFontStoredSetting >> weightValue: anInteger [
 	weightValue := anInteger
 ]
