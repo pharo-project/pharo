@@ -1776,6 +1776,20 @@ StringTest >> testPadRightToWith [
 ]
 
 { #category : #tests }
+StringTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each | each asString ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self
+		assert: printed
+		equals: (('' join: allElementsAsString) surroundedBy: $' asString)
+]
+
+{ #category : #tests }
 StringTest >> testReadFrom [
 	self
 		assert: (String readFrom: ($' asString, 'foo', $' asString) readStream)

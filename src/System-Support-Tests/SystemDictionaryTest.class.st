@@ -84,6 +84,23 @@ SystemDictionaryTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
 ]
 
 { #category : #tests }
+SystemDictionaryTest >> testPrintOn [
+
+	| printed splittedString |
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	splittedString := printed findBetweenSubstrings: { ' '. '('. ')' }.
+
+	self assertCollection: splittedString hasSameElements: {
+			self prefix.
+			self nonEmpty class name.
+			'lots'.
+			'of'.
+			'globals' }
+]
+
+{ #category : #tests }
 SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 
 	| sd so |
