@@ -121,3 +121,41 @@ PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
 	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
 	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
 ]
+
+{ #category : #tests }
+PharoDocCommentTest >> testNestedComments [
+	"3 + 4 ""the sum"" >>> ""is seven"" 7 "
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression source equals: '3 + 4 "the sum" >>> "is seven" 7 '.
+	self assert: node expression isFaulty not.
+	self assert: node expression evaluate equals: 7->7.
+	(CommentTestCase for: node) testIt
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testNestedInsanity [
+	"""Seriously, you should not do what follows""
+		""3 + 4 """"a nested executable comment with a nested nested comment
+		because it's how we roll baby"""" >>> 7""
+	""that is not the test, it's still the executable comment""
+	| node |
+	node := thisContext method ast allComments second pharoDocCommentNodes first.
+	node expression evaluate >>> (7->7)
+	""This is the end of the executable comment"""
+
+	"Now it's the real test... or it is?"
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression source equals: '"Seriously, you should not do what follows"
+		"3 + 4 ""a nested executable comment with a nested nested comment
+		because it''s how we roll baby"" >>> 7"
+	"that is not the test, it''s still the executable comment"
+	| node |
+	node := thisContext method ast allComments second pharoDocCommentNodes first.
+	node expression evaluate >>> (7->7)
+	"This is the end of the executable comment"'.
+	self assert: node expression isFaulty not.
+	self assert: node expression evaluate equals: ((7->7)->(7->7)).
+	(CommentTestCase for: node) testIt
+]
