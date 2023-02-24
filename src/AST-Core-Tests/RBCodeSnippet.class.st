@@ -93,7 +93,7 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '[1][2]'; formattedCode: ' [ 1 ].<r>[ 2 ]'.
 		self new source: '{1}{2}'; formattedCode: ' { 1 }.<r>{ 2 }'.
 		self new source: '#(1)#(2)'; formattedCode: ' #( 1 ).<r>#( 2 )'.
-		self new source: '#[1]#[2]'; formattedCode: ' #[ 1 ].<r>#[ 2 ]'; skip: #testDump.
+		self new source: '#[1]#[2]'; formattedCode: ' #[ 1 ].<r>#[ 2 ]'.
 
 		"Bad temporary variable declarations"
 		"Note: bad temporaries will be stored as error statements"
