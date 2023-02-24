@@ -170,32 +170,6 @@ RBErrorNodeParserTest >> testFaultyCascade [
 ]
 
 { #category : #tests }
-RBErrorNodeParserTest >> testFaultyLiterabByteArray [
-
-	| source node |
-	source := '#[ 1 hello 3]'.
-	node := self parserClass parseFaultyExpression: source.
-
-	self assert: node isFaulty.
-	self assert: node isLiteralByteArrayError.
-
-	self deny: node content first isFaulty.
-	self assert: node content first value equals: 1.
-
-	self assert: node content second isFaulty.
-	self assert: node content second value equals: 'hello'.
-	self assert: node content second sourceInterval equals: (6 to: 10).
-	self assert: node content second errorMessage equals: 'Expecting 8-bit integer'.
-	self assert: node content second formattedCode equals: 'hello'.
-
-	self deny: node content third isFaulty.
-	self assert: node content third value equals: 3.
-
-	self assert: node sourceInterval equals: (1 to: 13).
-	self assert: node formattedCode equals: source
-]
-
-{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
 
 	| node |
@@ -389,6 +363,32 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 	self
 		assert: node formattedCode
 		equals: '1<r><t>;<r><t>bar' expandMacros
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyLiterabByteArray [
+
+	| source node |
+	source := '#[ 1 hello 3]'.
+	node := self parserClass parseFaultyExpression: source.
+
+	self assert: node isFaulty.
+	self assert: node isLiteralByteArrayError.
+
+	self deny: node content first isFaulty.
+	self assert: node content first value equals: 1.
+
+	self assert: node content second isFaulty.
+	self assert: node content second value equals: 'hello'.
+	self assert: node content second sourceInterval equals: (6 to: 10).
+	self assert: node content second errorMessage equals: 'Expecting 8-bit integer'.
+	self assert: node content second formattedCode equals: 'hello'.
+
+	self deny: node content third isFaulty.
+	self assert: node content third value equals: 3.
+
+	self assert: node sourceInterval equals: (1 to: 13).
+	self assert: node formattedCode equals: source
 ]
 
 { #category : #tests }
