@@ -63,22 +63,16 @@ ToggleWithSymbolMenuItemShortcut class >> symbolTableAt: anObject ifAbsent: aBlo
 
 { #category : #drawing }
 ToggleWithSymbolMenuItemShortcut >> drawOn: aCanvas [
-	| text paragraph keyBounds keyFont |
 
+	| text keyBounds keyFont |
 	text := self text.
 	keyFont := self class symbolFont.
 
 	keyBounds := self boundsForKeyText: text string font: keyFont.
-	paragraph := Paragraph new
-		compose: text
-			style: (TextStyle fontArray: { keyFont })
-			from: 1
-			in: (0@0 corner: keyBounds corner);
-		yourself.
-
 	aCanvas
-		paragraph: paragraph
-		bounds: keyBounds
+		drawString: text asString
+		in: keyBounds
+		font: keyFont
 		color: self color
 ]
 
