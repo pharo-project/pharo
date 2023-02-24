@@ -606,7 +606,7 @@ TextMorph >> editor [
 TextMorph >> editorClass [
 	"Answer the class used to create the receiver's editor"
 
-	^TextEditor
+	^ RubTextEditor
 ]
 
 { #category : #accessing }
@@ -1098,13 +1098,11 @@ TextMorph >> leftFlush [
 
 { #category : #blinking }
 TextMorph >> manageCursor [
-	(paragraph isNil or: [paragraph focused not])
-		ifTrue: [^ self
-				resetBlinkCursor;
-				stopBlinking].
-	TextEditor blinkingCursor
-		ifTrue: [self startBlinking]
-		ifFalse: [self ensureCursor]
+
+	(paragraph isNil or: [ paragraph focused not ]) ifTrue: [
+		^ self
+			  resetBlinkCursor;
+			  stopBlinking ]
 ]
 
 { #category : #accessing }
