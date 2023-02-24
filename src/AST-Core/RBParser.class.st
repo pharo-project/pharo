@@ -713,17 +713,26 @@ RBParser >> parseLiteralArrayObject [
 RBParser >> parseLiteralByteArray [
 	"Current token is litteral array token #[ which means following tokens are part of the array
 	 until the encounter of the special character ] ."
-	| stream startToken stop |
+	| stream startToken value stop isFaulty |
 	startToken := currentToken.
 	stream := (Array new: 5) writeStream.
 	self step.
+	isFaulty := false.
 	[self atEnd or: [currentToken isSpecial and: [currentToken value = $]]]]
 		"Put literal value nodes corresponding to the bytes in the stream."
-		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
+		whileFalse: [
+			stream nextPut: (value := self parseLiteralByteArrayObject).
+			"In case of unexpected element, continue until the closing bracket, but an error node will sill be produced."
+			value isParseError ifTrue: [ isFaulty := true ]].
 	(currentToken isSpecial and: [currentToken value = $]])
 		ifFalse: [ ^ self parseEnglobingError: stream contents with: startToken errorMessage: ''']'' expected'].
 	stop := currentToken stop.
 	self step.
+	isFaulty ifTrue: [
+		^ (self parseEnglobingError: stream contents with: startToken errorMessage: nil)
+			valueAfter: ']';
+			stop: stop;
+			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
 		contents: stream contents
@@ -734,13 +743,14 @@ RBParser >> parseLiteralByteArray [
 { #category : #'private - parsing' }
 RBParser >> parseLiteralByteArrayObject [
 	"Ensure that the object contained in the array is the value of a byte."
-	"Return a literal value node of said byte."
+	"Return a literal value node of said byte or a parse error node."
 	(currentToken isLiteralToken and:
 			[currentToken value isInteger and: [currentToken value between: 0 and: 255]])
 		ifFalse: [
 			| errorNode |
 			errorNode := self parserError: 'Expecting 8-bit integer'.
-			self step.
+			"Error recovery: consume the token as classic literal array object"
+			errorNode value: self parseLiteralArrayObject value asString.
 			^ errorNode ].
 	^self parsePrimitiveLiteral
 ]
