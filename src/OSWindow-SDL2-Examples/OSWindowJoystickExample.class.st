@@ -39,7 +39,7 @@ OSWindowJoystickExample >> characterVelocity: anObject [
 
 { #category : #factory }
 OSWindowJoystickExample >> createEventHandler [
-	^ OSWindowJoystickExampleEventHandler new 
+	^ OSWindowJoystickExampleEventHandler new
 		example: self
 ]
 
@@ -63,7 +63,7 @@ OSWindowJoystickExample >> drawCharacter [
 OSWindowJoystickExample >> initialize [
 	super initialize.
 	bullets := OrderedCollection new.
-	self reset.
+	self reset
 ]
 
 { #category : #drawing }
@@ -72,7 +72,7 @@ OSWindowJoystickExample >> redraw [
 	renderer
 		color: Color black;
 		clear.
-		
+
 	self
 		drawCharacter;
 		drawBullets
@@ -82,7 +82,7 @@ OSWindowJoystickExample >> redraw [
 OSWindowJoystickExample >> reset [
 	characterPosition := 320@240.
 	characterVelocity := 0@0.
-	bullets removeAll.
+	bullets removeAll
 ]
 
 { #category : #'game controls' }
@@ -100,25 +100,25 @@ OSWindowJoystickExample >> simulate [
 	currentTime := Time millisecondClockValue * 0.001.
 	deltaTime := currentTime - lastSimulationTime.
 	lastSimulationTime := currentTime.
-	
+
 	self
 		simulateCharacter: deltaTime;
-		simulateBullets: deltaTime.
+		simulateBullets: deltaTime
 ]
 
 { #category : #simulation }
 OSWindowJoystickExample >> simulateBullets: delta [
 	| position velocity |
-	
+
 	bullets do: [ :bullet |
 		position := bullet first.
 		velocity	:= bullet second.
 		position := position + (velocity * delta).
 		bullet at: 1 put: position.
-	].
+	]
 ]
 
 { #category : #simulation }
 OSWindowJoystickExample >> simulateCharacter: deltaTime [
-	characterPosition := characterPosition + (characterVelocity * deltaTime).
+	characterPosition := characterPosition + (characterVelocity * deltaTime)
 ]

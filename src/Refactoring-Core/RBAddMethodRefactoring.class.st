@@ -28,15 +28,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAddMethodRefactoring class >> addMethod: aString toClass: aClass inProtocols: protocolList [ 
-	^ self new 
+RBAddMethodRefactoring class >> addMethod: aString toClass: aClass inProtocols: protocolList [
+	^ self new
 		addMethod: aString
 		toClass: aClass
 		inProtocols: protocolList
 ]
 
 { #category : #'instance creation' }
-RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: aClass inProtocols: protocolList [ 
+RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: aClass inProtocols: protocolList [
 	^ self new
 		model: aRBSmalltalk;
 		addMethod: aString
@@ -46,7 +46,7 @@ RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: 
 ]
 
 { #category : #initialization }
-RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protocolList [ 
+RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protocolList [
 	class := self classObjectFor: aClass.
 	source := aString.
 	protocols := protocolList
@@ -57,7 +57,7 @@ RBAddMethodRefactoring >> preconditions [
 	| selector method |
 	method := self parserClass
 		parseMethod: source
-		onError: [ :string :position | 
+		onError: [ :string :position |
 			^ RBCondition
 				withBlock: [ self refactoringFailure: 'The sources could not be parsed' ] ].
 	selector := method selector.
@@ -66,7 +66,7 @@ RBAddMethodRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBAddMethodRefactoring >> storeOn: aStream [ 
+RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

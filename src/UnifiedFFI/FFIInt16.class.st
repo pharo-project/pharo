@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIInt16 class >> externalType [ 
+FFIInt16 class >> externalType [
 	^ ExternalType short
 ]
 
@@ -18,6 +18,6 @@ FFIInt16 >> basicHandle: aHandle at: index [
 ]
 
 { #category : #private }
-FFIInt16 >> basicHandle: aHandle at: index put: value [ 
+FFIInt16 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedShortAt: index put: value
 ]

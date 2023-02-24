@@ -9,7 +9,7 @@ SimpleServiceEntry >> buttonToTriggerIn: aFileList [
 					on: self
 					getState: nil
 					action: #performServiceFor:.
-	aButton 
+	aButton
 		arguments: { aFileList }.
 
 	aButton

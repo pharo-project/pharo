@@ -36,10 +36,10 @@ RBSmalllintContext >> buildParseTree [
 ]
 
 { #category : #private }
-RBSmalllintContext >> checkLiteral: aLiteral [ 
+RBSmalllintContext >> checkLiteral: aLiteral [
 	(aLiteral isSymbol or: [aLiteral isVariableBinding])
 		ifTrue: [literals add: aLiteral]
-		ifFalse: 
+		ifFalse:
 			[aLiteral class == Array
 				ifTrue: [aLiteral do: [:each | self checkLiteral: each]]]
 ]
@@ -58,9 +58,9 @@ RBSmalllintContext >> computeLiterals [
 ]
 
 { #category : #private }
-RBSmalllintContext >> computeLiteralsForClass: aClass [ 
-	(selectors addAll: aClass selectors) do: 
-			[:sel | 
+RBSmalllintContext >> computeLiteralsForClass: aClass [
+	(selectors addAll: aClass selectors) do:
+			[:sel |
 			self computeLiteralsForSelector: sel in: aClass.
 			Processor yield]
 ]
@@ -76,7 +76,7 @@ RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
 ]
 
 { #category : #testing }
-RBSmalllintContext >> implements: aSelector [ 
+RBSmalllintContext >> implements: aSelector [
 	^self selectors includes: aSelector
 ]
 
@@ -102,8 +102,8 @@ RBSmalllintContext >> instVarNames [
 ]
 
 { #category : #testing }
-RBSmalllintContext >> isAbstract: aClass [ 
-	^(aClass isMeta or: 
+RBSmalllintContext >> isAbstract: aClass [
+	^(aClass isMeta or:
 			[(self literals includes: aClass name)
 				or: [self literals includes: (Smalltalk globals associationAt: aClass name)]])
 		not
@@ -185,7 +185,7 @@ RBSmalllintContext >> selectedClass [
 ]
 
 { #category : #accessing }
-RBSmalllintContext >> selectedClass: anObject [ 
+RBSmalllintContext >> selectedClass: anObject [
 	class := anObject.
 	self selector: nil
 ]
@@ -196,7 +196,7 @@ RBSmalllintContext >> selector [
 ]
 
 { #category : #accessing }
-RBSmalllintContext >> selector: anObject [ 
+RBSmalllintContext >> selector: anObject [
 	selector := anObject.
 	parseTree := compiledMethod := nil
 ]
@@ -228,7 +228,7 @@ RBSmalllintContext >> signalProcesses: aSemaphore [
 
 { #category : #accessing }
 RBSmalllintContext >> sourceCode [
-	^self selectedClass sourceCodeAt: self selector ifAbsent: [ '' ].
+	^self selectedClass sourceCodeAt: self selector ifAbsent: [ '' ]
 ]
 
 { #category : #private }
@@ -237,7 +237,7 @@ RBSmalllintContext >> specialSelectors [
 	answer := IdentityDictionary new.
 	(Smalltalk specialSelectors select: [:sel | sel isSymbol]) do:
 		[:sel | answer at: sel put: nil.].
-	^answer.
+	^answer
 ]
 
 { #category : #accessing }
@@ -246,6 +246,6 @@ RBSmalllintContext >> superMessages [
 ]
 
 { #category : #testing }
-RBSmalllintContext >> uses: anObject [ 
+RBSmalllintContext >> uses: anObject [
 	^self literals includes: anObject
 ]

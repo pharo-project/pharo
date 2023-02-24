@@ -18,38 +18,38 @@ RBRenameClassVariableParametrizedTest class >> testParameters [
 
 { #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testAlreadyExistingName [
-	self shouldFail: 
+	self shouldFail:
 		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule . 
-			self objectClassVariable . 
+			{ #RecursiveSelfRule .
+			self objectClassVariable .
 			#RBTransformationRuleTestData})
 ]
 
 { #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testMetaClassFailure [
 
-	self shouldFail: 
-		(self createRefactoringWithArguments: 
-			{ #RecursiveSelfRule . 
-			#Foo . 
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			{ #RecursiveSelfRule .
+			#Foo .
 			RBTransformationRuleTestData class name asSymbol })
 ]
 
 { #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: 
-		(self createRefactoringWithArguments: 
-			{ #foo . 
-			#newFoo . 
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			{ #foo .
+			#newFoo .
 			#RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
 RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
-		{ #RecursiveSelfRule . 
-		#RSR . 
+	refactoring := self createRefactoringWithArguments:
+		{ #RecursiveSelfRule .
+		#RSR .
 		#RBTransformationRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
@@ -77,11 +77,11 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 		equals:
 			(self
 				parseMethod:
-					'checkMethod: aSmalllintContext 
+					'checkMethod: aSmalllintContext
 								class := aSmalllintContext selectedClass.
-								(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+								(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
 										[(RSR executeTree: rewriteRule tree initialAnswer: false)
-											ifFalse: 
+											ifFalse:
 												[builder compile: rewriteRule tree printString
 													in: class
 													classified: aSmalllintContext protocols]]')
@@ -90,19 +90,19 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 { #category : #tests }
 RBRenameClassVariableParametrizedTest >> testRenameClassVarInSharedPool [
 	| refactoring class userClass |
-	
-	refactoring := self createRefactoringWithArguments: 
-		{ #Var1 . 
-		#VarOne . 
+
+	refactoring := self createRefactoringWithArguments:
+		{ #Var1 .
+		#VarOne .
 		#RBSharedPoolForTestData}.
-	
+
 	self executeRefactoring: refactoring.
-	
+
 	class := refactoring model classNamed: #RBSharedPoolForTestData.
 	userClass := refactoring model classNamed: #RBClassUsingSharedPoolForTestData.
-	
-	self assert: (class parseTreeForSelector: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').	
-	self assert: (class parseTreeForSelector: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').	
+
+	self assert: (class parseTreeForSelector: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').
+	self assert: (class parseTreeForSelector: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').
 		self flag: 'TODO : fix in tranform class'
 "	self assert: (userClass parseTreeFor: #msg3) equals: (self parseMethod: 'msg3 ^ VarOne').	"
 ]

@@ -12,7 +12,7 @@ RBRemoveAllSendersParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBRemoveAllSendersParametrizedTest >> constructor [ 
+RBRemoveAllSendersParametrizedTest >> constructor [
 	^ #removeSendersOf:
 ]
 
@@ -27,5 +27,5 @@ RBRemoveAllSendersParametrizedTest >> testRemoveMessageInsideBlock [
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #multipleCalls) equals: (self parseMethod: 'multipleCalls').
 	"it doesn't remove the sender, because its result is used"
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
-	5 = 3 ifTrue: [^self caller] ifFalse: [^self caller2]').
+	5 = 3 ifTrue: [^self caller] ifFalse: [^self caller2]')
 ]

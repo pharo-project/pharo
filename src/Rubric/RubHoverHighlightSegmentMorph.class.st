@@ -29,5 +29,5 @@ RubHoverHighlightSegmentMorph >> initialize [
 { #category : #'event handling' }
 RubHoverHighlightSegmentMorph >> mouseLeave: anEvent [
 	super mouseLeave: anEvent.
-	self delete.
+	self delete
 ]

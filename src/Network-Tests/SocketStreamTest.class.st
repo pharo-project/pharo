@@ -13,7 +13,7 @@ Class {
 
 { #category : #coverage }
 SocketStreamTest >> classToBeTested [
-	
+
 	^ SocketStream
 ]
 
@@ -34,7 +34,7 @@ SocketStreamTest >> setUp [
 	] ensure:[listener destroy].
 
 	clientStream := SocketStream on: clientSocket.
-	serverStream := SocketStream on: serverSocket.
+	serverStream := SocketStream on: serverSocket
 ]
 
 { #category : #running }
@@ -51,7 +51,7 @@ SocketStreamTest >> testNextIntoClose [
 	clientStream nextPutAll:'A line of text'; flush.
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
-	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1) 
+	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1)
 		equals: 'A line of text'
 ]
 
@@ -155,7 +155,7 @@ SocketStreamTest >> testUpToEndClose [
 	clientStream nextPutAll:'A line of text'; flush.
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
-	self assert: (serverStream upToEnd) 
+	self assert: (serverStream upToEnd)
 		equals: 'A line of text'
 ]
 
@@ -204,7 +204,7 @@ SocketStreamTest >> testUpToWithByteArray [
 	"Tests correct behavior of #upTo:"
 
 	|byteArray|
-	
+
 	byteArray := ('A line of text', String cr, 'with more text') asByteArray.
 	clientStream binary.
 	serverStream binary.

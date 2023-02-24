@@ -26,7 +26,7 @@ TaCompositionElement >> = aTrait [
 ]
 
 { #category : #users }
-TaCompositionElement >> addUser: aClass [ 
+TaCompositionElement >> addUser: aClass [
 	"When a user is added to me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass addUser: aClass
 ]
@@ -40,15 +40,13 @@ TaCompositionElement >> aliasSelector: selector [
 
 { #category : #querying }
 TaCompositionElement >> allTraits [
-	^ { innerClass } , innerClass traitComposition allTraits.
+	^ { innerClass } , innerClass traitComposition allTraits
 ]
 
 { #category : #testing }
 TaCompositionElement >> changesSourceCode: aSelector [
 
-	^ false 
-	
-
+	^ false
 ]
 
 { #category : #accessing }
@@ -67,12 +65,12 @@ TaCompositionElement >> compiledMethodAt: selector [
 { #category : #copying }
 TaCompositionElement >> copyTraitExpression [
 	"I can be just shallowCopy, because I have only a reference to the real Trait"
-	^ self shallowCopy.
+	^ self shallowCopy
 ]
 
 { #category : #copying }
-TaCompositionElement >> copyWithoutTrait: aTrait [ 
-	
+TaCompositionElement >> copyWithoutTrait: aTrait [
+
 	"If you want to remove a trait that is equivalent to me, I return an empty composition.
 	If not a copy is returned"
 	^ self = aTrait ifTrue: [ TaEmptyComposition new ] ifFalse: [ self copy ]
@@ -108,8 +106,8 @@ TaCompositionElement >> innerClass: anObject [
 ]
 
 { #category : #testing }
-TaCompositionElement >> isAliasSelector: aString [ 
-	
+TaCompositionElement >> isAliasSelector: aString [
+
 	^ innerClass traitComposition isAliasSelector: aString
 ]
 
@@ -128,19 +126,19 @@ TaCompositionElement >> needsRecompilation: aSelector [
 
 	"We need to recompile if there is a supersend"
 
-	^ (innerClass >> aSelector) sendsToSuper or: [ 
+	^ (innerClass >> aSelector) sendsToSuper or: [
 		  super needsRecompilation: aSelector ]
 ]
 
 { #category : #users }
-TaCompositionElement >> removeUser: aClass [ 
-	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"	
+TaCompositionElement >> removeUser: aClass [
+	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass removeUser: aClass
 ]
 
 { #category : #querying }
 TaCompositionElement >> reverseAlias: aSelector [
-	
+
 	^ #()
 ]
 
@@ -157,12 +155,12 @@ TaCompositionElement >> selectors [
 
 { #category : #accessing }
 TaCompositionElement >> slots [
-	^ innerClass allSlots 
+	^ innerClass allSlots
 ]
 
 { #category : #printing }
 TaCompositionElement >> traitCompositionExpression [
-	
+
 	^ innerClass name
 ]
 
@@ -176,7 +174,7 @@ TaCompositionElement >> traitCompositionExpressionWithParens [
 TaCompositionElement >> traitDefining: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.
-	
+
 	^ innerClass localMethods
 		detect: [ :e | e selector = newSelector ]
 		ifFound: [ :e | self ]
@@ -190,5 +188,5 @@ TaCompositionElement >> traits [
 
 { #category : #operations }
 TaCompositionElement >> without: anotherTrait [
-	^ self = anotherTrait ifTrue:[nil] ifFalse:[self].
+	^ self = anotherTrait ifTrue:[nil] ifFalse:[self]
 ]

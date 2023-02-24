@@ -4,7 +4,7 @@ Extension { #name : #Behavior }
 Behavior >> basicNewPinned [
 
 	<primitive: 598 error: ec>
-	
+
 	^ self basicNew
 		pinInMemory;
 		yourself
@@ -24,12 +24,10 @@ Behavior >> basicNewPinned: requestedSize [
 Behavior >> newPinned [
 
 	^ self basicNewPinned initialize
-
 ]
 
 { #category : #'*ThreadedFFI-UFFI' }
 Behavior >> newPinned: sizeRequested [
 
 	^ (self basicNewPinned: sizeRequested) initialize
-
 ]

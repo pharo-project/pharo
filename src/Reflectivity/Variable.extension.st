@@ -2,7 +2,7 @@ Extension { #name : #Variable }
 
 { #category : #'*Reflectivity' }
 Variable >> accessingNodes [
-	"return all reads and all assignments. This is different to #astNodes, which returns 
+	"return all reads and all assignments. This is different to #astNodes, which returns
 	variable nodes in case of assignment, not the assignment itself"
 	^ self readNodes, self assignmentNodes
 ]
@@ -29,21 +29,21 @@ Variable >> afterLinks [
 
 { #category : #'*Reflectivity' }
 Variable >> assignmentNodes [
-	^self astNodes 
-		select: [ :each | each isWrite ] 
+	^self astNodes
+		select: [ :each | each isWrite ]
 		thenCollect: [ :each | each parent ]
 ]
 
 { #category : #'*Reflectivity' }
 Variable >> astNodes [
 	"by default we search the usingMethods for all AST nodes"
-	^self usingMethods flatCollect: [ :method | 
+	^self usingMethods flatCollect: [ :method |
 		method variableNodes select: [: each| each variable == self ]]
 ]
 
 { #category : #'*Reflectivity' }
 Variable >> availableReifications [
-	^RFReification subclasses 
+	^RFReification subclasses
 		select: [ :e | e entities includesAny: self class withAllSuperclasses ]
 		thenCollect: #key
 ]
@@ -63,7 +63,7 @@ Variable >> clearReflectivityAnnotations [
 	self removeProperty: #preambles ifAbsent: [ ].
 	self removeProperty: #beforeHooks ifAbsent: [ ].
 	self removeProperty: #afterHooks ifAbsent: [ ].
-	self removeProperty: #insteadHooks ifAbsent: [ ].
+	self removeProperty: #insteadHooks ifAbsent: [ ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -103,7 +103,7 @@ Variable >> insteadLinks [
 
 { #category : #'*Reflectivity' }
 Variable >> invalidate [
-	self usingMethods do: [:method | method invalidate].
+	self usingMethods do: [:method | method invalidate]
 ]
 
 { #category : #'*Reflectivity' }
@@ -112,7 +112,7 @@ Variable >> link: aMetaLink [
 	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
 	aMetaLink installOnVariable: self.
 	self clearReflectivityAnnotations.
-	self usingMethods do: [ :method |  
+	self usingMethods do: [ :method |
 		method method installLink: aMetaLink ]
 ]
 
@@ -139,11 +139,11 @@ Variable >> readNodes [
 { #category : #'*Reflectivity' }
 Variable >> removeLink: aMetaLink [
 	"The order of operations here is critical.
-	When link is removed from the method it is recompiled. But recompilation needs to look into links here in order to keep available links in the new method instance. 
-	Therefore it is important to first remove the given link from the variable list and only then remove it from using methods. Otherwise the method recompilation will keep removed link in the method bytecode"	
+	When link is removed from the method it is recompiled. But recompilation needs to look into links here in order to keep available links in the new method instance.
+	Therefore it is important to first remove the given link from the variable list and only then remove it from using methods. Otherwise the method recompilation will keep removed link in the method bytecode"
 	self links remove: aMetaLink.
 	self usingMethods do: [:method | method removeLink: aMetaLink].
-	
+
 	self links ifEmpty: [ self removeProperty: #links ].
-	self clearReflectivityAnnotations.
+	self clearReflectivityAnnotations
 ]

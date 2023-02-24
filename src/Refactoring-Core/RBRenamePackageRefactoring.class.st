@@ -23,7 +23,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aSymbol to: aNewName [ 
+RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aSymbol to: aNewName [
 	^ self new
 		model: aRBSmalltalk;
 		packageName: aSymbol newName: aNewName;
@@ -39,34 +39,34 @@ RBRenamePackageRefactoring class >> rename: aString to: aNewName [
 { #category : #transforming }
 RBRenamePackageRefactoring >> manifestClassNameFor: aPackageName [
 	"Returns a symbol representing a suitable name for a Manifest class for the given package"
-	
+
 	^('Manifest', (aPackageName select: [:each | each isAlphaNumeric ])) asSymbol
 ]
 
 { #category : #initialization }
-RBRenamePackageRefactoring >> packageName: aName newName: aNewName [ 
+RBRenamePackageRefactoring >> packageName: aName newName: aNewName [
 	packageName := aName asSymbol.
 	package := self model packageNamed: packageName.
 	newName := aNewName asSymbol
 ]
 
 { #category : #preconditions }
-RBRenamePackageRefactoring >> preconditions [ 
-	^ super preconditions & (RBCondition withBlock: [ newName = package name ifTrue: 
+RBRenamePackageRefactoring >> preconditions [
+	^ super preconditions & (RBCondition withBlock: [ newName = package name ifTrue:
 		[ self refactoringError: 'Use a different name' ].
 		true ]) &
 	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
-			on: Error 
+			on: Error
 			do: [ :e | self refactoringError: e messageText ]
 		])
 ]
 
 { #category : #transforming }
-RBRenamePackageRefactoring >> renameManifestClass [ 
+RBRenamePackageRefactoring >> renameManifestClass [
 	|refactoring manifest|
 	manifest := package realPackage packageManifestOrNil.
 	manifest ifNotNil: [
-	refactoring := RBRenameClassRefactoring 
+	refactoring := RBRenameClassRefactoring
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName).
@@ -79,7 +79,7 @@ RBRenamePackageRefactoring >> renamePackage [
 ]
 
 { #category : #printing }
-RBRenamePackageRefactoring >> storeOn: aStream [ 
+RBRenamePackageRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' rename: '.
@@ -94,5 +94,5 @@ RBRenamePackageRefactoring >> storeOn: aStream [
 RBRenamePackageRefactoring >> transform [
 
 	self renamePackage.
-	self renameManifestClass.
+	self renameManifestClass
 ]

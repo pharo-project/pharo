@@ -41,7 +41,7 @@ Class {
 }
 
 { #category : #formatting }
-SHTextStyler >> format: aText [ 
+SHTextStyler >> format: aText [
 	self terminateBackgroundStylingProcess.
 	^ aText
 ]
@@ -58,7 +58,7 @@ SHTextStyler >> monitor [
 ]
 
 { #category : #private }
-SHTextStyler >> privateStyle: aText [ 
+SHTextStyler >> privateStyle: aText [
 	self shouldBeImplemented
 ]
 
@@ -80,14 +80,14 @@ SHTextStyler >> styleInBackgroundProcess: aText [
 	stylingEnabled ifFalse: [ ^ self ].
 	text := aText copy.
 	self monitor critical: [
-		backgroundProcess := [ 
+		backgroundProcess := [
 			self privateStyle: text.
 			view ifNotNil: [
 				view stylerStyledInBackground: text ] ] forkAt: Processor userBackgroundPriority ]
 ]
 
 { #category : #styling }
-SHTextStyler >> styledTextFor: aText [ 
+SHTextStyler >> styledTextFor: aText [
 	^self privateStyle: aText
 ]
 
@@ -110,11 +110,11 @@ SHTextStyler >> terminateBackgroundStylingProcess [
 ]
 
 { #category : #styling }
-SHTextStyler >> unstyledTextFrom: aText [ 
+SHTextStyler >> unstyledTextFrom: aText [
 	^ Text fromString: aText string
 ]
 
 { #category : #accessing }
-SHTextStyler >> view: aViewOrMorph [ 
+SHTextStyler >> view: aViewOrMorph [
 	view := aViewOrMorph
 ]

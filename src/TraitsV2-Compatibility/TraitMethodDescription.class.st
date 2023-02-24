@@ -42,7 +42,7 @@ TraitMethodDescription >> conflictMethod [
 	self isConflict ifFalse: [^nil].
 	binary := self isBinarySelector.
 	numberOfArguments := self numberOfArguments.
-	
+
 	^self
 		generateMethod: self selector
 		withMarker: CompiledMethod conflictMarker
@@ -62,7 +62,7 @@ TraitMethodDescription >> effectiveMethodCategoryCurrent: currentCategoryOrNil n
 	size = 0 ifTrue: [^ nil].
 	result := self locatedMethods anyOne category.
 	size = 1 ifTrue: [^ result].
-	
+
 	isCurrent := currentCategoryOrNil isNil.
 	isConflict := false.
 	self locatedMethods do: [:each | | cat |
@@ -71,8 +71,8 @@ TraitMethodDescription >> effectiveMethodCategoryCurrent: currentCategoryOrNil n
 		isConflict := isConflict or: [cat ~~ result]].
 	isConflict ifFalse: [^ result].
 	(isCurrent not and: [newCategoryOrNil notNil]) ifTrue: [^ newCategoryOrNil].
-	
-	^ Protocol ambiguous 
+
+	^ Protocol ambiguous
 ]
 
 { #category : #private }
@@ -91,7 +91,7 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 							nextPutAll: (keywords at: argumentNumber); space;
 							nextPutAll: 'arg'; nextPutAll: argumentNumber asString; space]]].
 		stream cr; tab; nextPutAll: 'self '; nextPutAll: aSymbol].
-	
+
 	node := self class compiler
 		source: source;
 		class: self class;
@@ -112,7 +112,7 @@ TraitMethodDescription >> isAliasSelector [
 	from the original selector) or already an aliased method
 	in the original location (recursively search the compositions).
 	Return false, if not or if we have a conflict."
-	
+
 	| locatedMethod |
 	^self size = 1 and: [
 		locatedMethod := self locatedMethods anyOne.
@@ -132,7 +132,7 @@ TraitMethodDescription >> isConflict [
 	count := 0.
 
 	self locatedMethods size > 1
-		ifTrue: 
+		ifTrue:
 			["If they are more than 1 located method, then check whether these methods have the same origin"
 			originMethodReferenciel := self locatedMethods anyOne  origin.
 			(self locatedMethods allSatisfy: [:each | each origin == originMethodReferenciel])
@@ -155,7 +155,7 @@ TraitMethodDescription >> isLocalAliasSelector [
 	"Return true if the selector is an alias (if it is different
 	from the original selector). Return false, if not or if we
 	have a conflict."
-	
+
 	^self size = 1 and: [
 		(self locatedMethods anyOne selector ~= self selector)]
 ]
@@ -190,7 +190,6 @@ TraitMethodDescription >> methodsDo: aBlock [
 { #category : #private }
 TraitMethodDescription >> numberOfArguments [
 	^ self locatedMethods anyOne selector numArgs
-		
 ]
 
 { #category : #accessing }
@@ -209,7 +208,7 @@ TraitMethodDescription >> providedLocatedMethod [
 			].
 
 	self locatedMethods
-		do: [ :each | 
+		do: [ :each |
 			each isProvided
 				ifTrue: [ locatedMethod ifNotNil: [ ^ nil ].
 					locatedMethod := each
@@ -229,7 +228,7 @@ TraitMethodDescription >> selector [
 ]
 
 { #category : #accessing }
-TraitMethodDescription >> selector: aSymbol [ 
+TraitMethodDescription >> selector: aSymbol [
 	selector := aSymbol
 ]
 

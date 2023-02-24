@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-GeneralScrollBar class >> isDeprecated [ 
+GeneralScrollBar class >> isDeprecated [
 	^ true
 ]

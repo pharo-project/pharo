@@ -124,9 +124,9 @@ FilteredMorphTreeModel >> initialRootItems [
 FilteredMorphTreeModel >> initialize [
 	super initialize.
 	patternModel := RubScrolledTextModel new.
-	patternModel announcer 
-		when: RubTextUpdatedInModel 
-		send: #whenPatternChanged: 
+	patternModel announcer
+		when: RubTextUpdatedInModel
+		send: #whenPatternChanged:
 		to: self.
 	autoAccept := true.
 	ghostString := ''
@@ -166,7 +166,7 @@ FilteredMorphTreeModel >> whenPatternChanged: anAnnouncement [
 ]
 
 { #category : #'accessing - pattern' }
-FilteredMorphTreeModel >> whenReturnInFilter: anAnnouncement [ 
+FilteredMorphTreeModel >> whenReturnInFilter: anAnnouncement [
 	"needed if auto-accept is false"
 	patternModel acceptEditsInView
 ]

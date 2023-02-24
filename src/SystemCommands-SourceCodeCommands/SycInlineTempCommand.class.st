@@ -15,17 +15,17 @@ SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 { #category : #execution }
 SycInlineTempCommand >> asRefactorings [
 	| assignment |
-	assignment := sourceNode methodNode assignmentNodes 
+	assignment := sourceNode methodNode assignmentNodes
 		detect: [:each | each variable = sourceNode ].
 
-	^ { RBInlineTemporaryRefactoring	
+	^ { RBInlineTemporaryRefactoring
 		inline: assignment sourceInterval
 		from: method selector
 		in: method origin}
 ]
 
 { #category : #accessing }
-SycInlineTempCommand >> defaultMenuIconName [ 
+SycInlineTempCommand >> defaultMenuIconName [
 	^ ##smallRightFlushIcon
 ]
 

@@ -17,12 +17,12 @@ DAPackageDependenciesPresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages
 				select: [ :package | match match: package packageName asString ]
-				thenCollect: [ :package | package packageName ]) ) 
+				thenCollect: [ :package | package packageName ]) )
 ]
 
 { #category : #examples }
 DAPackageDependenciesPresenter class >> system [
-	^ (self onPackagesNamed: self systemPackages) open 
+	^ (self onPackagesNamed: self systemPackages) open
 ]
 
 { #category : #initialization }

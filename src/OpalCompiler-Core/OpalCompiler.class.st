@@ -44,7 +44,7 @@ Class {
 OpalCompiler class >> compilerClasses [
 	"here the classes for the overlay can changed. the default is just the compiler"
 	^self package definedClasses
-	
+
 	"Compiler and AST:
 	self package definedClasses, RBProgramNode package definedClasses, {TRBProgramNodeVisitor}
 	"
@@ -56,7 +56,7 @@ OpalCompiler class >> compilerSettingsOn: aBuilder [
 	(aBuilder group: #compiler)
 		label: 'Compiler';
 		description: 'All Compiler Settings';
-		with: [ 
+		with: [
 				(aBuilder setting: #createAndEnableOverlay)
 						label: 'Compiler Overlay Environment';
 						target: self;
@@ -72,9 +72,9 @@ OpalCompiler class >> createAndEnableOverlay [
 
 { #category : #overlay }
 OpalCompiler class >> createAndEnableOverlay: aBoolean [
-	
+
 	aBoolean = self overlayIsActive ifTrue: [ ^self ].
-	aBoolean 
+	aBoolean
 		ifTrue: [ self startUsingOverlayForDevelopment   ]
 		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
@@ -113,8 +113,8 @@ OpalCompiler class >> overlayStep1CopyClasses [
 { #category : #overlay }
 OpalCompiler class >> overlayStep2Recompile [
 	"now we recompile the classes in the environment with itself as an overlay"
-	self overlayEnvironment valuesDo: [ :class | 
-			class methodsDo: [ :method | 
+	self overlayEnvironment valuesDo: [ :class |
+			class methodsDo: [ :method |
 					| newMethod |
 					newMethod := class compiler
 						bindings: self overlayEnvironment;
@@ -125,8 +125,8 @@ OpalCompiler class >> overlayStep2Recompile [
 { #category : #overlay }
 OpalCompiler class >> overlayStep3FixSuperclassPointers [
 	"make sure superclass pointers are correct"
-    self overlayEnvironment valuesDo: [ :class | 
-        (class isTrait not and: [self overlayEnvironment includesKey: class superclass name]) 
+    self overlayEnvironment valuesDo: [ :class |
+        (class isTrait not and: [self overlayEnvironment includesKey: class superclass name])
 				ifTrue: [ class superclass: (self overlayEnvironment at: class superclass name)]]
 ]
 
@@ -134,14 +134,14 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
-	ASTCache reset.
+	ASTCache reset
 ]
 
 { #category : #overlay }
 OpalCompiler class >> overlayStep5UpdateInstances [
 	"transform existing instances to be instances of the overlay"
 	self compilerClasses do: [ :class |
-		class allInstances do: [ :object | 
+		class allInstances do: [ :object |
 			(self overlayEnvironment at: class name) adoptInstance: object ]]
 ]
 
@@ -153,7 +153,7 @@ OpalCompiler class >> recompileAll [
 ]
 
 { #category : #public }
-OpalCompiler class >> register [ 
+OpalCompiler class >> register [
 
 	SmalltalkImage current compilerClass: self
 ]
@@ -165,7 +165,7 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 	<script>
 	"We copy all compiler classes into the overlayEnvironment, recompile to update referenced classes,
 	fix the superclasses and finaly set the compiler overlay as the image default compiler."
-	self 
+	self
 		overlayStep1CopyClasses;
 		overlayStep2Recompile;
 		overlayStep3FixSuperclassPointers;
@@ -184,7 +184,13 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 ]
 
 { #category : #plugins }
-OpalCompiler >> addPlugin: aClass [ 
+OpalCompiler >> addParsePlugin: aClass [
+
+	compilationContext addParseASTTransformationPlugin: aClass
+]
+
+{ #category : #plugins }
+OpalCompiler >> addPlugin: aClass [
 	compilationContext addASTTransformationPlugin: aClass
 ]
 
@@ -200,11 +206,21 @@ OpalCompiler >> bindings: aDictionary [
 ]
 
 { #category : #private }
+OpalCompiler >> callParsePlugins [
+	| plugins |
+
+	plugins := compilationContext astParseTransformPlugins ifEmpty: [ ^ self ].
+	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
+	plugins do: [ :each | ast := each transform: ast ]
+]
+
+{ #category : #private }
 OpalCompiler >> callPlugins [
-	| plugins  |
+	| plugins |
+
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
-	plugins sort: [:a :b | a priority > b priority]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast].
+	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
+	plugins do: [ :each | ast := each transform: ast ]
 ]
 
 { #category : #accessing }
@@ -229,7 +245,7 @@ OpalCompiler >> compilationContextClass [
 
 { #category : #plugins }
 OpalCompiler >> compilationContextClass: aClass [
-	compilationContextClass := aClass.
+	compilationContextClass := aClass
 ]
 
 { #category : #'public access' }
@@ -237,27 +253,27 @@ OpalCompiler >> compile [
 	^[
 		self parse.
 		self semanticScope compileMethodFromASTBy: self
-	] on: SyntaxErrorNotification do: [ :exception | 
+	] on: SyntaxErrorNotification do: [ :exception |
 			self compilationContext requestor
                 ifNotNil: [
-						self compilationContext requestor 
+						self compilationContext requestor
 							notify: exception errorMessage , ' ->'
 							at: exception location
 							in: exception errorCode.
                     ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ]].
+                ifNil: [ exception pass ]]
 ]
 
 { #category : #'public access' }
-OpalCompiler >> compile: textOrString [ 
-	
+OpalCompiler >> compile: textOrString [
+
 	^self
 		source: textOrString;
-		compile.
+		compile
 ]
 
 { #category : #private }
-OpalCompiler >> compileDoItFromAST [ 
+OpalCompiler >> compileDoItFromAST [
 	| method |
 	method := self compileMethodFromAST.
 	method propertyAt: #ast put: ast.
@@ -265,14 +281,14 @@ OpalCompiler >> compileDoItFromAST [
 ]
 
 { #category : #private }
-OpalCompiler >> compileMethodFromAST [ 
+OpalCompiler >> compileMethodFromAST [
 	self callPlugins.
 	^ast generateMethod
 ]
 
 { #category : #accessing }
-OpalCompiler >> compiledMethodClass: aClass [ 
-	
+OpalCompiler >> compiledMethodClass: aClass [
+
 	self compilationContext compiledMethodClass: aClass
 ]
 
@@ -283,45 +299,45 @@ OpalCompiler >> compiledMethodTrailer: bytes [
 
 { #category : #accessing }
 OpalCompiler >> context: aContext [
-	aContext ifNil: [ 
+	aContext ifNil: [
 		"There are such users which sets up all parameters (doItContext and doItReceiver).
 		For example check SpCodePresenter>>#evaluate:onCompileError:onError:.
 		The nil context here means to do nothing in such scenarious. So no need to touch the scope here"
-		^self ]. 
-	
+		^self ].
+
 	self semanticScope: (self semanticScope asDoItScopeForContext: aContext)
 ]
 
 { #category : #private }
-OpalCompiler >> createParser [ 
+OpalCompiler >> createParser [
 
 	| parser |
-	parser := self parserClass new. 
+	parser := self parserClass new.
 	(self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
 		ifTrue: [ parser beFaulty ].
 	parser	 initializeParserWith: source contents.
-	^parser 
+	^parser
 ]
 
 { #category : #'public access' }
 OpalCompiler >> decompileMethod: aCompiledMethod [
-	^ Smalltalk globals 
-		at: #FBDDecompiler  
+	^ Smalltalk globals
+		at: #FBDDecompiler
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
-			on: Error 
+			on: Error
 			do: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
 		ifAbsent: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^[ast doSemanticAnalysis] 
-		on: OCSemanticError 
+	^[ast doSemanticAnalysis]
+		on: OCSemanticError
 		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
 ]
 
 { #category : #plugins }
-OpalCompiler >> encoderClass: aClass [ 
+OpalCompiler >> encoderClass: aClass [
 	self compilationContext encoderClass: aClass
 ]
 
@@ -336,7 +352,7 @@ OpalCompiler >> evaluate [
 	"Compiles the sourceStream into a parse tree, then generates code into
 	 a method. If aContext is not nil, the text can refer to temporaries in that
 	 context (the Debugger uses this). If aRequestor is not nil, then it will receive
-	 a notify:at: message before the attempt to evaluate is aborted. Finally, the 
+	 a notify:at: message before the attempt to evaluate is aborted. Finally, the
 	 compiled method is invoked from here via withArgs:executeMethod:, hence
 	 the system no longer creates Doit method litter on errors."
 
@@ -344,15 +360,15 @@ OpalCompiler >> evaluate [
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
 	doItMethod := self compile.
-	doItMethod ifNotNil: [ 
+	doItMethod ifNotNil: [
 			value := self semanticScope evaluateDoIt: doItMethod ].
 	self logDoIt.
 	^ value
 ]
 
 { #category : #'public access' }
-OpalCompiler >> evaluate: textOrString [ 
-	
+OpalCompiler >> evaluate: textOrString [
+
 	^self
 		source: textOrString;
 		evaluate
@@ -360,17 +376,17 @@ OpalCompiler >> evaluate: textOrString [
 
 { #category : #accessing }
 OpalCompiler >> failBlock: aBlock [
-	self compilationContext failBlock: aBlock.
+	self compilationContext failBlock: aBlock
 ]
 
 { #category : #'public access' }
 OpalCompiler >> format [
-	^self parse formattedCode.
+	^self parse formattedCode
 ]
 
 { #category : #'public access' }
-OpalCompiler >> format: textOrString [ 
-	
+OpalCompiler >> format: textOrString [
+
 	^self
 		source: textOrString;
 		format
@@ -381,10 +397,10 @@ OpalCompiler >> getSourceFromRequestorSelection [
     | selection |
     "if the requestor can provide a selection, we use that as the source"
      (self compilationContext requestor respondsTo: #selection) ifFalse: [ ^self ].
-    
+
     selection := self compilationContext requestor selection .
     selection isEmptyOrNil ifTrue: [ ^self ].
-    self source: selection asString.
+    self source: selection asString
 ]
 
 { #category : #testing }
@@ -399,12 +415,12 @@ OpalCompiler >> logDoIt [
 
 { #category : #accessing }
 OpalCompiler >> logged: aBoolean [
-	self compilationContext logged:  aBoolean.
+	self compilationContext logged:  aBoolean
 ]
 
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
-	self compilationContext noPattern: aBoolean.
+	self compilationContext noPattern: aBoolean
 ]
 
 { #category : #'public access' }
@@ -418,18 +434,20 @@ OpalCompiler >> parse [
 	[
 		parser := self createParser.
 		ast := self semanticScope parseASTBy: parser.
-		
+
 		ast methodNode compilationContext: self compilationContext.
-		self doSemanticAnalysis]
-	on: ReparseAfterSourceEditing do: [:notification | 
-			self source: notification newSource. 
-			notification retry ]. 
-	^ast
+		self callParsePlugins.
+		self doSemanticAnalysis ]
+	on: ReparseAfterSourceEditing do: [:notification |
+			self source: notification newSource.
+			notification retry ].
+
+	^ ast
 ]
 
 { #category : #'public access' }
-OpalCompiler >> parse: textOrString [ 
-	
+OpalCompiler >> parse: textOrString [
+
 	^self
 		source: textOrString;
 		parse
@@ -441,10 +459,10 @@ OpalCompiler >> parseLiterals: aString [
 ]
 
 { #category : #'public access' }
-OpalCompiler >> parseSelector: aString [ 
+OpalCompiler >> parseSelector: aString [
 	"Answer the message selector for the argument, aString, which should parse successfully up to the temporary declaration or the end of the method header."
-	
-	^[self parserClass parseMethodPattern: aString] on: Error do: [nil].
+
+	^[self parserClass parseMethodPattern: aString] on: Error do: [nil]
 ]
 
 { #category : #plugins }
@@ -468,7 +486,7 @@ OpalCompiler >> requestor: aRequestor [
 ]
 
 { #category : #plugins }
-OpalCompiler >> requestorScopeClass: aClass [ 
+OpalCompiler >> requestorScopeClass: aClass [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	self compilationContext requestorScopeClass: aClass
 ]
@@ -485,5 +503,5 @@ OpalCompiler >> semanticScope: anObject [
 
 { #category : #accessing }
 OpalCompiler >> source: aString [
-	source := aString readStream.
+	source := aString readStream
 ]

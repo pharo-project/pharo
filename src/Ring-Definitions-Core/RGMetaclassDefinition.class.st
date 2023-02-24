@@ -94,10 +94,10 @@ RGMetaclassDefinition >> realClass [
 
 { #category : #printing }
 RGMetaclassDefinition >> storeOn: aStream [
-	
-	aStream nextPut: $(. 
+
+	aStream nextPut: $(.
 	super storeOn: aStream.
 	aStream nextPutAll: ' baseClass:'.
 	self instanceSide storeOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]

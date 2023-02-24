@@ -9,8 +9,8 @@ Class {
 
 { #category : #accessing }
 FFIUnix32LibraryFinder >> knownPaths [
-		
-	^ #( 
+
+	^ #(
 	'/usr/lib/i386-linux-gnu'
 	'/usr/lib32'
 	'/usr/lib')

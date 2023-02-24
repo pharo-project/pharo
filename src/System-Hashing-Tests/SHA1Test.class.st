@@ -15,7 +15,7 @@ Class {
 
 { #category : #coverage }
 SHA1Test >> classToBeTested [
-	
+
 	^ SHA1
 ]
 
@@ -30,7 +30,7 @@ SHA1Test >> testExample1 [
 	"This is the first example from the specification document (FIPS PUB 180-1)"
 
 	hash := SHA1 new hashMessage: 'abc'.
-	self assert: hash equals: (ByteArray readHexFrom:  'A9993E364706816ABA3E25717850C26C9CD0D89D').
+	self assert: hash equals: (ByteArray readHexFrom:  'A9993E364706816ABA3E25717850C26C9CD0D89D')
 ]
 
 { #category : #'testing - examples' }
@@ -43,11 +43,11 @@ SHA1Test >> testExample2 [
 
 { #category : #'testing - examples' }
 SHA1Test >> testExample3 [
-	"This is the third example from the specification document (FIPS PUB 180-1). 
+	"This is the third example from the specification document (FIPS PUB 180-1).
 	This example may take several minutes."
 
 	hash := SHA1 new hashMessage: (String new: 1000000 withAll: $a).
-	self assert: hash asInteger equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F.
+	self assert: hash asInteger equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F
 ]
 
 { #category : #testing }

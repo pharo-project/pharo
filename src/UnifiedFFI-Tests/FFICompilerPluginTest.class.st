@@ -22,8 +22,8 @@ FFICompilerPluginTest >> ffiCopyString: aString to: dest [
 { #category : #tests }
 FFICompilerPluginTest >> ffiCopyStringWithError: aString to: destError [
 	"This method explicitly uses a non-matching variable dest in the FFI call to provoke an error"
-	
-	^ self ffiCall: #(String strcpy #(String dest , String aString)) 
+
+	^ self ffiCall: #(String strcpy #(String dest , String aString))
 ]
 
 { #category : #tests }
@@ -62,8 +62,8 @@ FFICompilerPluginTest >> testFFIMethodDelegatesWhenLookingForHasSelector [
 	self ffiCopyString: 'Hello World!' to: buffer.
 
 	ffiMethod := FFICompilerPluginTest >> #ffiCopyString:to:.
-	
-	self assert: (ffiMethod hasSelector: #ffiCall: specialSelectorIndex: nil).
+
+	self assert: (ffiMethod hasSelector: #ffiCall: specialSelectorIndex: nil)
 ]
 
 { #category : #tests }

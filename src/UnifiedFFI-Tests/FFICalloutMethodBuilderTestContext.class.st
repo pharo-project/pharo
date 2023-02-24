@@ -34,7 +34,7 @@ FFICalloutMethodBuilderTestContext >> compiledMethod [
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilderTestContext >> ffiLibrary [ 
+FFICalloutMethodBuilderTestContext >> ffiLibrary [
 
 	^ LibC
 ]

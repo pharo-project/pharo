@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIFloat32 class >> externalType [ 
+FFIFloat32 class >> externalType [
 	^ ExternalType float
 ]
 
@@ -42,15 +42,15 @@ FFIFloat32 >> callbackReturnOn: callbackContext for: aFloat [
 
 { #category : #'emitting code' }
 FFIFloat32 >> emitPointerArityRoll: aBuilder context: aContext [
-	self loader 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
+	self loader
+		emitPointerArityPack: aBuilder
+		context: aContext
 		arity: self pointerArity
 		selector: #packAsFloatToArity:
 ]
 
 { #category : #callbacks }
-FFIFloat32 >> extractFromCallbackOn: aCallbackArgumentReader [ 
-	
+FFIFloat32 >> extractFromCallbackOn: aCallbackArgumentReader [
+
 	aCallbackArgumentReader extractFloat
 ]

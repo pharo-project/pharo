@@ -29,7 +29,7 @@ RBClassRefactoring class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBClassRefactoring class >> model: aRBModel className: aName [ 
+RBClassRefactoring class >> model: aRBModel className: aName [
 	^ self new
 		model: aRBModel;
 		className: aName;

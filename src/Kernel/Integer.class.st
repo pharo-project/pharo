@@ -93,9 +93,9 @@ Integer >> * aNumber [
 Integer >> + aNumber [
 	"Refer to the comment in Number + "
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [^ (self digitAdd: aNumber) normalize]
-			ifFalse: [^ self digitSubtract: aNumber]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ (self digitAdd: aNumber) normalize]
+			  ifFalse: [ self digitSubtract: aNumber]].
 	aNumber isFraction ifTrue:
 		[^Fraction numerator: self * aNumber denominator + aNumber numerator denominator: aNumber denominator].
 	^ aNumber adaptToInteger: self andSend: #+
@@ -105,9 +105,9 @@ Integer >> + aNumber [
 Integer >> - aNumber [
 	"Refer to the comment in Number - "
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [^ self digitSubtract: aNumber]
-			ifFalse: [^ (self digitAdd: aNumber) normalize]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self digitSubtract: aNumber]
+			  ifFalse: [ (self digitAdd: aNumber) normalize]].
 	aNumber isFraction ifTrue:
 		[^Fraction numerator: self * aNumber denominator - aNumber numerator denominator: aNumber denominator].
 	^ aNumber adaptToInteger: self andSend: #-
@@ -119,9 +119,9 @@ Integer >> / aNumber [
 	| quoRem |
 	aNumber isInteger ifTrue:
 		[quoRem := self digitDiv: aNumber neg: self negative ~~ aNumber negative.
-		(quoRem at: 2) = 0
-			ifTrue: [^ (quoRem at: 1) normalize]
-			ifFalse: [^ (Fraction numerator: self denominator: aNumber) reduced]].
+		^ (quoRem at: 2) = 0
+			ifTrue: [ (quoRem at: 1) normalize]
+			ifFalse: [ (Fraction numerator: self denominator: aNumber) reduced]].
 	^ aNumber adaptToInteger: self andSend: #/
 ]
 
@@ -132,21 +132,21 @@ Integer >> // aNumber [
 	self = 0 ifTrue: [^ 0].
 	q := self quo: aNumber.
 	"Refer to the comment in Number|//."
-	(q negative
+	^ (q negative
 		ifTrue: [q * aNumber ~= self]
 		ifFalse: [q = 0 and: [self negative ~= aNumber negative]])
-		ifTrue: [^ q - 1"Truncate towards minus infinity."]
-		ifFalse: [^ q]
+		ifTrue: [ q - 1"Truncate towards minus infinity."]
+		ifFalse: [ q]
 ]
 
 { #category : #comparing }
 Integer >> < aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^ (self bytesCompare: aNumber) > 0]
-						ifFalse: [^ (self bytesCompare: aNumber) < 0]]
-			ifFalse: [^ self negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [ (self bytesCompare: aNumber) > 0]
+						    ifFalse: [ (self bytesCompare: aNumber) < 0]]
+			  ifFalse: [ self negative]].
 	^ aNumber adaptToInteger: self andCompare: #<
 ]
 
@@ -161,11 +161,11 @@ Integer >> << shiftAmount [
 { #category : #comparing }
 Integer >> <= aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^ (self bytesCompare: aNumber) >= 0]
-						ifFalse: [^ (self bytesCompare: aNumber) <= 0]]
-			ifFalse: [^ self negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [ (self bytesCompare: aNumber) >= 0]
+						    ifFalse: [ (self bytesCompare: aNumber) <= 0]]
+			  ifFalse: [ self negative]].
 	^ aNumber adaptToInteger: self andCompare: #<=
 ]
 
@@ -173,31 +173,31 @@ Integer >> <= aNumber [
 Integer >> = aNumber [
 	aNumber isNumber ifFalse: [^ false].
 	aNumber isInteger ifTrue:
-		[aNumber negative == self negative
-			ifTrue: [^ (self bytesCompare: aNumber) = 0]
-			ifFalse: [^ false]].
+		[^ aNumber negative == self negative
+			ifTrue: [ (self bytesCompare: aNumber) = 0]
+			ifFalse: [ false]].
 	^ aNumber adaptToInteger: self andCompare: #=
 ]
 
 { #category : #comparing }
 Integer >> > aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^(self bytesCompare: aNumber) < 0]
-						ifFalse: [^(self bytesCompare: aNumber) > 0]]
-			ifFalse: [^ aNumber negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [(self bytesCompare: aNumber) < 0]
+						    ifFalse: [(self bytesCompare: aNumber) > 0]]
+			  ifFalse: [ aNumber negative]].
 	^ aNumber adaptToInteger: self andCompare: #>
 ]
 
 { #category : #comparing }
 Integer >> >= aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^(self bytesCompare: aNumber) <= 0]
-						ifFalse: [^(self bytesCompare: aNumber) >= 0]]
-			ifFalse: [^ aNumber negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [(self bytesCompare: aNumber) <= 0]
+						    ifFalse: [(self bytesCompare: aNumber) >= 0]]
+			  ifFalse: [ aNumber negative]].
 	^ aNumber adaptToInteger: self andCompare: #>=
 ]
 

@@ -18,7 +18,7 @@ OCLiteralList >> addLiteral: anObject [
 
 	"I keep the first element, so it can be easily returned"
 	literalsDict ifEmpty: [ first := anObject ].
-	
+
 	"The index of the last inserted element is the the size of the literalsDict,
 	as the elements are always added and never removed"
 	^ literalsDict at: anObject ifAbsentPut: [ literalsDict size + 1 ]
@@ -28,18 +28,18 @@ OCLiteralList >> addLiteral: anObject [
 OCLiteralList >> asArray [
 
 	| result |
-	
+
 	result := Array new: literalsDict size.
-	
+
 	literalsDict associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
-	
-	^ result.
+
+	^ result
 ]
 
 { #category : #adding }
 OCLiteralList >> first [
-	
-	^ first 
+
+	^ first
 ]
 
 { #category : #initialization }

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'target resize' }
-BottomLeftGripMorph >> apply: delta [ 
+BottomLeftGripMorph >> apply: delta [
 	| oldBounds |
 	oldBounds := target bounds.
 	target
@@ -18,7 +18,7 @@ BottomLeftGripMorph >> apply: delta [
 { #category : #testing }
 BottomLeftGripMorph >> containsPoint: aPoint [
 	"Answer true only if on edges."
-	
+
 	|w|
 	^(super containsPoint: aPoint) and: [
 		w := SystemWindow borderWidth.
@@ -31,11 +31,11 @@ BottomLeftGripMorph >> drawOn: aCanvas [
 	"Draw the grip on the given canvas."
 
 	| dotBounds alphaCanvas windowBorderWidth dotBounds2 |
-	
+
 	self shouldDraw ifFalse: [^self].
 
 	windowBorderWidth := SystemWindow borderWidth.
-	alphaCanvas := aCanvas asAlphaBlendingCanvas: 0.7.	
+	alphaCanvas := aCanvas asAlphaBlendingCanvas: 0.7.
 	"alphaCanvas
 		frameRectangle: bounds color: Color blue."
 
@@ -45,7 +45,7 @@ BottomLeftGripMorph >> drawOn: aCanvas [
 	alphaCanvas
 		fillRectangle: dotBounds2
 		color: self handleColor.
-	
+
 	dotBounds2 := dotBounds left: (dotBounds left + windowBorderWidth).
 	dotBounds2 := dotBounds2 top: (dotBounds2 bottom - windowBorderWidth).
 	alphaCanvas
@@ -73,7 +73,7 @@ BottomLeftGripMorph >> drawOn: aCanvas [
 
 { #category : #accessing }
 BottomLeftGripMorph >> gripLayoutFrame [
-	^  (0 @ 1 corner: 0 @ 1) asLayoutFrame 
+	^  (0 @ 1 corner: 0 @ 1) asLayoutFrame
 			topOffset: self defaultHeight negated;
 			rightOffset: self defaultWidth
 ]

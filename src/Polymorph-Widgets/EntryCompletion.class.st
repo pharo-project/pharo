@@ -38,7 +38,7 @@ Class {
 
 { #category : #accessing }
 EntryCompletion >> choose: aToken [
-	chooseBlock 
+	chooseBlock
 		ifNotNil: [self closeChooser.
 			chooseBlock value: aToken]
 ]
@@ -64,12 +64,12 @@ EntryCompletion >> chooser [
 EntryCompletion >> chooserWith: aToken [
 	| applicants |
 	applicants  := self filteredValuesWith: aToken.
-	aToken 
-		ifNil: [applicants isEmpty 
+	aToken
+		ifNil: [applicants isEmpty
 			ifFalse: [self setChooserWith: nil labels: applicants]]
-		ifNotNil: [ | meaningfulApplicants | 
+		ifNotNil: [ | meaningfulApplicants |
 			meaningfulApplicants := (applicants copyWithout: nil) asSet.
-			meaningfulApplicants isEmpty 
+			meaningfulApplicants isEmpty
 				ifFalse: [(meaningfulApplicants size = 1 and: [aToken = meaningfulApplicants anyOne])
 					ifFalse: [self setChooserWith: aToken labels: applicants]]].
 	^ chooser
@@ -77,9 +77,9 @@ EntryCompletion >> chooserWith: aToken [
 
 { #category : #accessing }
 EntryCompletion >> closeChooser [
-	chooser 
+	chooser
 		ifNotNil: [chooser close.
-			chooser := nil].
+			chooser := nil]
 ]
 
 { #category : #'events - handling' }
@@ -112,7 +112,7 @@ EntryCompletion >> filterBlock: aBlock [
 
 { #category : #accessing }
 EntryCompletion >> filteredValuesWith: aToken [
-	^ (self dataSourceBlock value: aToken) 
+	^ (self dataSourceBlock value: aToken)
 		select: [:v | aToken isNil or: [aToken isEmpty or: [v isNil or: [self filterBlock value: v value: aToken]]]]
 ]
 
@@ -167,8 +167,8 @@ EntryCompletion >> openChooserWith: aToken from: aFieldMorph [
 ]
 
 { #category : #accessing }
-EntryCompletion >> openChooserWithAllOrCloseFrom: aFieldMorph [ 
-	chooser 
+EntryCompletion >> openChooserWithAllOrCloseFrom: aFieldMorph [
+	chooser
 		ifNotNil: [self closeChooser]
 		ifNil: [
 			self openChooserWith: aFieldMorph getText asString from: aFieldMorph].
@@ -193,8 +193,8 @@ EntryCompletion >> positionChooser: aChooser [
 
 { #category : #accessing }
 EntryCompletion >> setChooserWith: aToken labels: labels [
-	chooser 
-		ifNil: [chooser := IdentifierChooserMorph 
+	chooser
+		ifNil: [chooser := IdentifierChooserMorph
 							labels: labels
 							chooseBlock: [:token | self choose: token].
 					chooser on: #keyStroke send: #keystrokeInChooser: to: self].

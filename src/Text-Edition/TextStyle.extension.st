@@ -27,7 +27,6 @@ TextStyle >> addNewFontSize: pointSize [
 	newArray := ((fontArray copyWith: f) asSortedCollection: [:a :b | a pointSize <= b pointSize]) asArray.
 	self newFontArray: newArray.
 	^ self fontOfPointSize: pointSize
-
 ]
 
 { #category : #'*Text-Edition' }
@@ -40,13 +39,11 @@ TextStyle >> addNewFontSizeDialog: args [
 	r := self addNewFontSize: n.
 	r ifNotNil: [
 		args second ifNotNil: [args second modalSelection: {args first. n}].
-	].
-
+	]
 ]
 
 { #category : #'*Text-Edition' }
 TextStyle >> isTTCStyle [
 
-	^ fontArray first isTTCFont.
-
+	^ fontArray first isTTCFont
 ]

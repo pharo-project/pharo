@@ -69,7 +69,7 @@ PSMCMergePatchMorph >> changeTreeKey: aCharacter [
 		^self markAsConflict].
 	(aCharacter == $f and: [self notAllConflictsResolved]) ifTrue: [
 		^self selectNextConflict].
-	
+
 	(aCharacter == $C and: [self hasAnyNonKeptConflicts]) ifTrue: [
 		^self keepAllCurrentVersion].
 	(aCharacter == $G and: [self hasAnyNonIncomingConflicts]) ifTrue: [
@@ -185,7 +185,7 @@ PSMCMergePatchMorph >> hasConflicts [
 { #category : #actions }
 PSMCMergePatchMorph >> keepAllCurrentVersion [
 	"Mark all conflicts as local."
-	
+
 	self allConflicts do: [:c | c chooseLocal].
 	self changed: #changes.
 	self updateSource
@@ -194,7 +194,7 @@ PSMCMergePatchMorph >> keepAllCurrentVersion [
 { #category : #actions }
 PSMCMergePatchMorph >> keepCurrentVersion [
 	"Mark the conflict as local."
-	
+
 	self selectedChangeWrapper chooseLocal.
 	self changed: #changes.
 	self updateSource
@@ -203,7 +203,7 @@ PSMCMergePatchMorph >> keepCurrentVersion [
 { #category : #actions }
 PSMCMergePatchMorph >> markAllAsConflict [
 	"Mark all conflicts as unresolved."
-	
+
 	self allConflicts do: [:c | c clearChoice].
 	self changed: #changes.
 	self updateSource
@@ -212,10 +212,10 @@ PSMCMergePatchMorph >> markAllAsConflict [
 { #category : #actions }
 PSMCMergePatchMorph >> markAsConflict [
 	"Mark the operation as unresolved conflict."
-	
+
 	self selectedChangeWrapper operation beConflict.
 	self changed: #changes.
-	self updateSource.
+	self updateSource
 ]
 
 { #category : #actions }
@@ -235,7 +235,7 @@ PSMCMergePatchMorph >> nextConflict [
 { #category : #testing }
 PSMCMergePatchMorph >> notAllConflictsResolved [
 	"Answer whether any conflicts are unresolved."
-	
+
 	^self model anySatisfy: [:item | item isConflict and: [item isResolved not]]
 ]
 
@@ -268,7 +268,7 @@ PSMCMergePatchMorph >> selectionIsRemoteChosen [
 { #category : #actions }
 PSMCMergePatchMorph >> toggleApplySelectedChange [
 
-	self selectedChange remoteChosen 
+	self selectedChange remoteChosen
 		ifTrue: [ self selectedChange chooseLocal ]
 		ifFalse: [ self selectedChange chooseRemote ].
 	self changed: #changes.
@@ -293,7 +293,7 @@ PSMCMergePatchMorph >> updateSource [
 { #category : #actions }
 PSMCMergePatchMorph >> useAllIncomingVersion [
 	"Mark all conflicts as remote."
-	
+
 	self allConflicts do: [:c | c chooseRemote].
 	self changed: #changes.
 	self updateSource
@@ -302,7 +302,7 @@ PSMCMergePatchMorph >> useAllIncomingVersion [
 { #category : #actions }
 PSMCMergePatchMorph >> useIncomingVersion [
 	"Mark the conflict as remote."
-	
+
 	self selectedChangeWrapper chooseRemote.
 	self changed: #changes.
 	self updateSource

@@ -25,7 +25,7 @@ FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext [
 
 { #category : #'emitting code' }
 FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext inCallout: aCallout [
-	
+
 	self emitArgument: aBuilder context: aContext
 ]
 
@@ -45,12 +45,12 @@ FFIFunctionArgumentLoader >> emitHandleArityUnpack: aBuilder type: aType context
 	"This a special kind of arity-unpacking, that works with FFIConstantHandleType"
 
 	aType needsArityUnpacking ifFalse: [ ^ self ].
-	
+
 	"Push accessing variable (this change depending on the argument type)"
-	self 
-		emitArgumentVariableAccesingPart: aBuilder 
-		context: aContext 
-		objectClass: objectClass 
+	self
+		emitArgumentVariableAccesingPart: aBuilder
+		context: aContext
+		objectClass: objectClass
 		instVarName: aName.
 	"Unpack argument"
 	aBuilder
@@ -60,27 +60,27 @@ FFIFunctionArgumentLoader >> emitHandleArityUnpack: aBuilder type: aType context
 	"Send assignment"
 	aBuilder send: #instVarAt:put:.
 	"... and return top"
-	aBuilder popTop.
+	aBuilder popTop
 ]
 
 { #category : #'emitting code' }
 FFIFunctionArgumentLoader >> emitPointerArityPack: aBuilder context: aContext arity: arity [
-	"I take into account complex arities (like **, ***). 
+	"I take into account complex arities (like **, ***).
 	 I'm called right after argument marshaling which means it is already in top of the stack"
-	^ self 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
+	^ self
+		emitPointerArityPack: aBuilder
+		context: aContext
 		arity: arity
 		selector: #packToArity:
 ]
 
 { #category : #'emitting code' }
 FFIFunctionArgumentLoader >> emitPointerArityPack: aBuilder context: aContext arity: arity selector: aSelector [
-	"I take into account complex arities (like **, ***). 
+	"I take into account complex arities (like **, ***).
 	 I'm called right after argument marshaling which means it is already in top of the stack"
 	| ptrName |
 	ptrName := self rolledPointerTempName.
-	aBuilder 
+	aBuilder
 		addTemp: ptrName;
 		pushLiteral: arity;
 		send: aSelector;
@@ -102,19 +102,19 @@ FFIFunctionArgumentLoader >> emitPointerArityUnpack: aBuilder context: aContext 
 { #category : #'emitting code' }
 FFIFunctionArgumentLoader >> emitPointerArityUnpack: aBuilder type: aType context: aContext [
 	aType needsArityUnpacking ifFalse: [ ^ self ].
-	self 
-		emitPointerArityUnpack: aBuilder 
-		context: aContext 
+	self
+		emitPointerArityUnpack: aBuilder
+		context: aContext
 		arity: aType pointerArity
 ]
 
 { #category : #'emitting code' }
 FFIFunctionArgumentLoader >> emitPointerArityUnpack: aBuilder type: aType context: aContext objectClass: objectClass instVarName: aName [
 	aType needsArityUnpacking ifFalse: [ ^ self ].
-	self 
-		emitPointerArityUnpack: aBuilder 
-		context: aContext 
-		objectClass: objectClass 
+	self
+		emitPointerArityUnpack: aBuilder
+		context: aContext
+		objectClass: objectClass
 		instVarName: aName
 		arity: aType pointerArity
 ]

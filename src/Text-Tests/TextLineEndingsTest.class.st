@@ -51,7 +51,7 @@ TextLineEndingsTest >> testDecoratedTextConversionNoLF [
 	self assert: (text size) equals: newText size.
 	self assert: newText size equals: newText runs size.
 	self assert: (newText attributesAt: 6) equals: (text attributesAt: 6).
-	self assert: (newText attributesAt: 8) equals: (text attributesAt: 8).
+	self assert: (newText attributesAt: 8) equals: (text attributesAt: 8)
 ]
 
 { #category : #tests }
@@ -61,7 +61,7 @@ TextLineEndingsTest >> testSimpleTextConversionCrLF [
 	string := 'This is a test', String crlf, 'of the conversion'.
 	newText := string asText withInternalLineEndings.
 	self assert: (string size - 1) equals: newText size.
-	self assert: newText size equals: newText runs size.
+	self assert: newText size equals: newText runs size
 ]
 
 { #category : #tests }

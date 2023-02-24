@@ -47,8 +47,8 @@ BalloonMorph class >> defaultBalloonColor [
 { #category : #private }
 BalloonMorph class >> getBestLocation: vertices for: morph corner: cornerName [
 	| rect maxArea verts rectCorner morphPoint mbc a mp dir bestVerts result usableArea |
-	"Choose rect independantly of vertice order or size. Would be nice it this took into account curveBounds but it does not." 
-	rect := Rectangle encompassing: vertices.  
+	"Choose rect independantly of vertice order or size. Would be nice it this took into account curveBounds but it does not."
+	rect := Rectangle encompassing: vertices.
 	maxArea := -1.
 	verts := vertices.
 	usableArea := (morph world ifNil: [self currentWorld]) viewBox.
@@ -97,8 +97,8 @@ BalloonMorph class >> getVertices: bounds [
 ]
 
 { #category : #'class initialization' }
-BalloonMorph class >> initialize [ 
- 
+BalloonMorph class >> initialize [
+
 	self setBalloonColorTo: self defaultBalloonColor.
 	self balloonFont: StandardFonts defaultFont
 ]
@@ -117,7 +117,7 @@ BalloonMorph class >> string: str for: morph [
 
 { #category : #'instance creation' }
 BalloonMorph class >> string: str for: morph corner: cornerName [
-	"Make up and return a balloon for morph. Find the quadrant that 
+	"Make up and return a balloon for morph. Find the quadrant that
 	clips the text the least, using cornerName as a tie-breaker. tk 9/12/97"
 
 	| tm vertices |
@@ -172,21 +172,21 @@ BalloonMorph >> defaultBorderColor [
 { #category : #initialization }
 BalloonMorph >> defaultBorderWidth [
 	"Answer the default border width for the receiver"
-	
+
 	^ 1
 ]
 
 { #category : #initialization }
 BalloonMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver"
-	
+
 	^ self balloonColor
 ]
 
 { #category : #initialization }
 BalloonMorph >> initialize [
 	"Initialize the state of the receiver"
-	
+
 	balloonColor := self class balloonColor.
 	super initialize.
 	self beSmoothCurve.
@@ -204,7 +204,7 @@ BalloonMorph >> morphicLayerNumber [
 { #category : #initialization }
 BalloonMorph >> popUpFor: aMorph hand: aHand [
 	"Pop up the receiver as balloon help for the given hand"
-	
+
 	balloonOwner := aMorph.
 	self popUpForHand: aHand
 ]
@@ -212,7 +212,7 @@ BalloonMorph >> popUpFor: aMorph hand: aHand [
 { #category : #initialization }
 BalloonMorph >> popUpForHand: aHand [
 	"Pop up the receiver as balloon help for the given hand"
-	
+
 	| worldBounds |
 	self lock.
 	self fullBounds. "force layout"
@@ -229,7 +229,7 @@ BalloonMorph >> popUpForHand: aHand [
 { #category : #private }
 BalloonMorph >> setTarget: aMorph [
 
-	(target := aMorph) ifNotNil: [ 
+	(target := aMorph) ifNotNil: [
 		offsetFromTarget := self position - target position ]
 ]
 
