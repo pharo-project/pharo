@@ -32,7 +32,8 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'FileSystem-Tests-Attributes';
 			package: 	'Files-Tests' ;
 			package: 	'Jobs-Tests' ;
-			package: 	'OpalCompiler-Tests'; 
+			package: 	'AST-Core-Tests';
+			package: 	'OpalCompiler-Tests' with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'Random-Tests';
 			package: 	'Ring-Definitions-Tests-Core';
 			package: 	'Ring-Definitions-Tests-Containers'; 
