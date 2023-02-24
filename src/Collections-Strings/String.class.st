@@ -1213,6 +1213,30 @@ String >> endsWithDigit [
 	^ self notEmpty and: [self last isDigit]
 ]
 
+{ #category : #converting }
+String >> escapeCharacter: aCharacter [
+	"Returns a new string with contents equals to self surrounded by aCharacter.
+	Escapes all occurrences of aCharacter within aString by doubling them."
+
+	"('abc' escapeCharacter: $X) >>> 'abc'"
+
+	"('aXb' escapeCharacter: $X) >>> 'aXXb'"
+
+	"('XaX' escapeCharacter: $X) >>> 'XXaXX'"
+
+	"('XXaXbXXcXXXdXX' escapeCharacter: $X) >>> 'XXXXaXXbXXXXcXXXXXXdXXXX'"
+
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: self.
+	[ stream atEnd ] whileFalse: [
+		result nextPutAll: (stream upTo: aCharacter).
+		stream peekBack = aCharacter ifTrue: [
+			result nextPut: aCharacter.
+			result nextPut: aCharacter ] ].
+	^ result contents
+]
+
 { #category : #formatting }
 String >> expandMacros [
 	"'<t>' expandMacros >>> String tab"
