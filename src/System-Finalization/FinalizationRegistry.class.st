@@ -131,6 +131,12 @@ FinalizationRegistry >> isEmpty [
 	^ ephemeronCollection isEmpty
 ]
 
+{ #category : #adding }
+FinalizationRegistry >> keys [
+
+	^ ephemeronCollection collect: [ :e | e key ]
+]
+
 { #category : #copying }
 FinalizationRegistry >> postCopy [
 	"should we prohibit any attempts to copy receiver?"
