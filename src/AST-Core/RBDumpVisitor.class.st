@@ -113,11 +113,19 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 { #category : #visiting }
 RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
-	stream
-		nextPutAll: aLiteralArrayNode class name;
-		nextPutAll: ' value: #('.
-	(aLiteralArrayNode contents collect: [ :each | each value ]) printOn: stream delimiter: ' '.
-	stream nextPutAll: ')'
+
+	stream nextPutAll: aLiteralArrayNode class name;
+		nextPutAll: ' value: ';
+		nextPutAll: (
+	aLiteralArrayNode isForByteArray
+		ifTrue: [ '#['  ]
+		ifFalse: [ '#(' ]).
+	(aLiteralArrayNode contents collect: [ :each | each value ])
+		printOn: stream
+		delimiter: ' '.
+	stream nextPutAll: (aLiteralArrayNode isForByteArray
+			 ifTrue: [ ']' ]
+			 ifFalse: [ ')' ])
 ]
 
 { #category : #visiting }
