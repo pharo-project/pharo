@@ -1442,7 +1442,6 @@ RubAbstractTextArea >> mouseMove: evt [
    self paragraph move: evt for: model controller: self editor.
 	evt redButtonPressed
 		ifFalse: [ ^ self ].
-	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
 	hasDragDoubleClick ifTrue: [
 		^ editor
 			selectWordMark: (self paragraph characterBlockAtPoint: mouseDownPoint) stringIndex

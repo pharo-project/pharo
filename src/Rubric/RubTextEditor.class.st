@@ -1744,6 +1744,7 @@ RubTextEditor >> previousWord: position [
 	string := self string.
 	index := position.
 	position <= 1 ifTrue: [ ^ position ].
+	position > string size ifTrue: [ ^ position ].
 	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
 	[index := index - 1] doWhileTrue:
 		[(index > 0) and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]].
