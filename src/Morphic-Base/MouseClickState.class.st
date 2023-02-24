@@ -268,7 +268,6 @@ MouseClickState >> handleEvent: evt from: aHand [
 	localEvt := evt transformedBy: (clickClient transformedFrom: aHand owner).
 	isDrag := (localEvt position - firstClickDown position) r > dragThreshold.
 	isDragSecond := localEvt position ~= firstClickDown position.
-
 	clickState == #firstClickDown ifTrue: [
 		"Careful here - if we had a slow cycle we may have a timedOut mouseUp event"
 		(timedOut and:[localEvt isMouseUp not]) ifTrue:[
