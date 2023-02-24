@@ -41,7 +41,7 @@ Class {
 { #category : #'world menu' }
 TestRunner class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	
+
 	(aBuilder item: #'Test Runner')
 		parent: #Testing;
 		action: [ Smalltalk tools openTestRunner ];
@@ -54,14 +54,14 @@ TestRunner class >> menuCommandOn: aBuilder [
 { #category : #'instance creation' }
 TestRunner class >> open [
 	<script>
-	
+
 	^ self new open
 ]
 
 { #category : #initialization }
 TestRunner class >> registerToolsOn: registry [
 
-	"Add ourselves to registry. See [Smalltalk tools]" 
+	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #testRunner
 ]
 
@@ -73,22 +73,22 @@ TestRunner class >> taskbarIconName [
 ]
 
 { #category : #actions }
-TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [ 
+TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [
 	"This method looks for #packageNamesUnderTest method in class side of classes defined packages in listOfPackages.
 	 If a class defines this method, then the coverage tool knows the methods of which packages should be spied to compute the coverage.
 	 Thus, it adds it to #listOfPackages collection provided as parameter."
 	classesSelected
 		select: [ :class | (class class includesSelector: #packageNamesUnderTest) ]
-		thenDo: [ :class | 
-			class packageNamesUnderTest do: [ :name | 
+		thenDo: [ :class |
+			class packageNamesUnderTest do: [ :name |
 				listOfPackages add: (RPackage organizer packageNamed: name) ] ]
 ]
 
 { #category : #actions }
-TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [ 
+TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [
 	listOfPackages
 		reject: #isNil
-		thenDo: [:package | 
+		thenDo: [:package |
 			package methods
 				reject: [ :method | (#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
 												or: [ method  isAbstract
@@ -100,8 +100,8 @@ TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [
 { #category : #accessing }
 TestRunner >> allSelectedTestSuites [
 	"Return the suite for all the selected test case classes"
-	
-	^ classesSelected select: [ :each | each isAbstract not] thenCollect: [:each | each suite].
+
+	^ classesSelected select: [ :each | each isAbstract not] thenCollect: [:each | each suite]
 ]
 
 { #category : #factory }
@@ -144,20 +144,20 @@ TestRunner >> browseSelectedTest: aTest [
 { #category : #building }
 TestRunner >> build [
 	"self new build openInWorld"
-	
+
 	| window |
 	window := (SystemWindow labelled: self label) model: self; extent: self extent.
-	
+
 	window addMorph: self buildPackageSearch fullFrame: self packageSearchFrame.
 	window addMorph: self buildPackages fullFrame: self packagesFrame.
-	
+
 	window addMorph: self buildClassesSearch fullFrame: self classesSearchFrame.
 	window addMorph: self buildClasses fullFrame: self classesFrame.
-	
-	window	addMorph: self buildStatus fullFrame: self statusFrame. 
-	window	addMorph: self buildFailures fullFrame: self failureListFrame. 
-	window	addMorph: self buildErrors fullFrame: self errorListFrame. 
-	window	addMorph: self buildButtons fullFrame: self buttonsFrame. 
+
+	window	addMorph: self buildStatus fullFrame: self statusFrame.
+	window	addMorph: self buildFailures fullFrame: self failureListFrame.
+	window	addMorph: self buildErrors fullFrame: self errorListFrame.
+	window	addMorph: self buildButtons fullFrame: self buttonsFrame.
 	^ window
 ]
 
@@ -180,7 +180,7 @@ TestRunner >> buildButtons [
 				getEnabledSelector: (each at: 4);
 				hResizing: #spaceFill;
 				yourself ]);
-		yourself.
+		yourself
 ]
 
 { #category : #building }
@@ -188,19 +188,19 @@ TestRunner >> buildClasses [
 
 	^ PluggableListMorph new
 		on: self
-		list: #classList 
-		primarySelection: #classSelected 
-		changePrimarySelection: #classSelected: 
-		listSelection: #classAt: 
-		changeListSelection: #classAt:put: 
-		menu: #classMenu:  
+		list: #classList
+		primarySelection: #classSelected
+		changePrimarySelection: #classSelected:
+		listSelection: #classAt:
+		changeListSelection: #classAt:put:
+		menu: #classMenu:
 		keystroke: nil;
 		yourself
 ]
 
 { #category : #building }
 TestRunner >> buildClassesSearch [
-	
+
 	^ SearchMorph new
 		model: self;
 		updateSelector: #classSearchUpdate:;
@@ -211,24 +211,24 @@ TestRunner >> buildClassesSearch [
 { #category : #building }
 TestRunner >> buildErrors [
 	^ PluggableListMorph new
-			on: self 
+			on: self
 			list: #errorList
 			selected: #errorSelected
 			changeSelected: #errorSelected:
-			menu: #errorMenu: 
-			keystroke: nil.
+			menu: #errorMenu:
+			keystroke: nil
 ]
 
 { #category : #building }
 TestRunner >> buildFailures [
 	^ PluggableListMorph new
-			on: self 
+			on: self
 			list: #failedList
 			selected: #failedSelected
 			changeSelected: #failedSelected:
-			menu: #failureMenu: 
+			menu: #failureMenu:
 			keystroke: nil.
-	
+
 		" do not know how to express
 		name: 'Failure List'"
 ]
@@ -248,12 +248,12 @@ TestRunner >> buildPackages [
 
 	^ PluggableListMorph new
 		on: self
-		list: #packageList 
-		primarySelection: #packageSelected 
-		changePrimarySelection: #packageSelected: 
-		listSelection: #packageAt: 
-		changeListSelection: #packageAt:put: 
-		menu: #packageMenu:  
+		list: #packageList
+		primarySelection: #packageSelected
+		changePrimarySelection: #packageSelected:
+		listSelection: #packageAt:
+		changeListSelection: #packageAt:put:
+		menu: #packageMenu:
 		keystroke: nil;
 		yourself
 ]
@@ -262,16 +262,16 @@ TestRunner >> buildPackages [
 TestRunner >> buildStatus [
 
 	^ (RubPluggableTextMorph
-		on: self 
-		text: #statusText 
-		accept: nil 
-		readSelection: nil 
+		on: self
+		text: #statusText
+		accept: nil
+		readSelection: nil
 		menu: #statusMenu:)
 			beReadOnly;
 			beWrapped;
 			textColor: self theme textColorForNonStandardBackground;
-			getColorSelector: #statusColor ; 
-			yourself.
+			getColorSelector: #statusColor ;
+			yourself
 ]
 
 { #category : #building }
@@ -296,7 +296,7 @@ TestRunner >> buttonsFrame [
 
 { #category : #'accessing - classes' }
 TestRunner >> classAt: anInteger [
-	^ classesSelected includes: (classes at: anInteger ifAbsent: [ ^ false ]).
+	^ classesSelected includes: (classes at: anInteger ifAbsent: [ ^ false ])
 ]
 
 { #category : #'accessing - classes' }
@@ -304,7 +304,7 @@ TestRunner >> classAt: anInteger put: aBoolean [
 	classesSelected := classesSelected
 		perform: (aBoolean ifTrue: [ #copyWith: ] ifFalse: [ #copyWithout: ])
 		with: (classes at: anInteger ifAbsent: [ ^ self ]).
-	self changed: #classSelected; changed: #hasRunnable.
+	self changed: #classSelected; changed: #hasRunnable
 ]
 
 { #category : #factory }
@@ -318,15 +318,15 @@ TestRunner >> classList [
 	classes isEmpty ifTrue: [ ^ classes ].
 	offset := classes first allSuperclasses size.
 	^ classes collect: [ :each | | ident |
-		ident := String 
-			new: 2 * (0 max: each allSuperclasses size - offset) 
+		ident := String
+			new: 2 * (0 max: each allSuperclasses size - offset)
 			withAll: $ .
 		each isAbstract
 			ifFalse: [ ident , each name ]
-			ifTrue: [ 
-				ident asText , each name asText 
+			ifTrue: [
+				ident asText , each name asText
 					addAttribute: TextEmphasis italic;
-					yourself ] ].
+					yourself ] ]
 ]
 
 { #category : #'accessing - classes' }
@@ -345,7 +345,7 @@ TestRunner >> classMenu: aMenu [
 		add: 'Filter...' selector: #filterClasses;
 		addLine;
 		add: 'Run selected' selector: #runAll;
-		yourself.
+		yourself
 ]
 
 { #category : #building }
@@ -353,7 +353,7 @@ TestRunner >> classSearchUpdate: aPattern [
 	classPattern := (aPattern isNil or: [ aPattern trimBoth isEmpty ])
 		ifTrue: [ nil ]
 		ifFalse: [ aPattern asRegexIgnoringCase ].
-	self updateClasses.
+	self updateClasses
 ]
 
 { #category : #'accessing - classes' }
@@ -391,19 +391,19 @@ TestRunner >> collectCoverageFor: methods [
 	suite := self
 		resetResult;
 		suiteForAllSelected.
-	
+
 	collector := CoverageCollector new.
 	collector methods: methods.
 	coverage := collector runOn: [ self runSuite: suite ].
 
 	notExecuted := coverage uncoveredMethods.
-	notExecuted isEmpty 
+	notExecuted isEmpty
 		ifTrue:  [ UIManager default inform: 'Congratulations. Your tests cover all code under analysis.' ]
-		ifFalse: [ 
-			Smalltalk tools messageList 
+		ifFalse: [
+			Smalltalk tools messageList
 				browse: notExecuted
 				title: 'Not Covered Code (' , (100 - (100 * notExecuted size // methods size)) printString , '% Code Coverage)'].
-		
+
 	self saveResultInHistory
 ]
 
@@ -418,12 +418,12 @@ TestRunner >> debug: aTestCase [
 
 { #category : #actions }
 TestRunner >> debugSuite: aTestSuite [
-	self executeSuite: aTestSuite as: [ :aSuite | aSuite debug ].
+	self executeSuite: aTestSuite as: [ :aSuite | aSuite debug ]
 ]
 
 { #category : #'accessing - testing' }
 TestRunner >> errorList [
-	^ errorList collect: [ :each | each printString ].
+	^ errorList collect: [ :each | each printString ]
 ]
 
 { #category : #building }
@@ -445,22 +445,22 @@ TestRunner >> errorMenu: aMenu [
 
 { #category : #'accessing - testing' }
 TestRunner >> errorSelected [
-	^ errorList indexOf: errorSelected.
+	^ errorList indexOf: errorSelected
 ]
 
 { #category : #'accessing - testing' }
 TestRunner >> errorSelected: anInteger [
 	errorSelected := errorList at: anInteger ifAbsent: nil.
 	self changed: #errorSelected.
-	errorSelected ifNotNil: [ self debug: errorSelected ].
+	errorSelected ifNotNil: [ self debug: errorSelected ]
 ]
 
 { #category : #accessing }
 TestRunner >> errorTestSuites [
 	^ errorList
-		collect: [ :each | 
+		collect: [ :each |
 			self classForTestSuite new
-				in: [ :suite | 
+				in: [ :suite |
 							suite
 								addTest: each;
 								name: (self label: 'Error' forSuite: suite) ];
@@ -491,7 +491,7 @@ TestRunner >> executeSuite: aTestSuite as: aBlock [
 	aTestSuite when:TestAnnouncement do: self updateUIBlock.
 	[ aBlock cull: aTestSuite cull: result  ] ensure: [
 		aTestSuite unsubscribe:TestAnnouncement.
-	].
+	]
 ]
 
 { #category : #'accessing - ui' }
@@ -501,19 +501,19 @@ TestRunner >> extent [
 
 { #category : #'accessing - testing' }
 TestRunner >> failedList [
-	^ failedList collect: [ :each | each printString ].
+	^ failedList collect: [ :each | each printString ]
 ]
 
 { #category : #'accessing - testing' }
 TestRunner >> failedSelected [
-	^ failedList indexOf: failedSelected.
+	^ failedList indexOf: failedSelected
 ]
 
 { #category : #'accessing - testing' }
 TestRunner >> failedSelected: anInteger [
 	failedSelected := failedList at: anInteger ifAbsent: nil.
 	self changed: #failedSelected.
-	failedSelected ifNotNil: [ self debug: failedSelected ].
+	failedSelected ifNotNil: [ self debug: failedSelected ]
 ]
 
 { #category : #building }
@@ -527,7 +527,7 @@ TestRunner >> failureListFrame [
 { #category : #'accessing - menu' }
 TestRunner >> failureMenu: aMenu [
 	"Add the browse item only if an item is selected"
-	
+
 	failedSelected ifNotNil: [aMenu add: 'Browse test' selector: #browseSelectedFailedTest].
 	^ aMenu
 ]
@@ -535,9 +535,9 @@ TestRunner >> failureMenu: aMenu [
 { #category : #accessing }
 TestRunner >> failureTestSuites [
 	^ failedList
-		collect: [ :each | 
+		collect: [ :each |
 			self classForTestSuite new
-				in: [ :suite | 
+				in: [ :suite |
 							suite
 								addTest: each;
 								name: (self label: 'Failure' forSuite: suite) ];
@@ -551,17 +551,17 @@ TestRunner >> fileOutResults [
 
 	| fileName defaultFilename stream |
 	defaultFilename := self generateDefaultFileOutResultsName.
-						
-						
-	fileName := UIManager default 
-		request: 'Enter the file name' 
+
+
+	fileName := UIManager default
+		request: 'Enter the file name'
 		initialAnswer: defaultFilename.
 	fileName ifNil: [^ self].
 	stream := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: (File openForWriteFileNamed: fileName)
 			encoding: 'utf8').
 	[result fileOutOn: stream]
-		ensure: [stream close].
+		ensure: [stream close]
 ]
 
 { #category : #'accessing - classes' }
@@ -598,8 +598,8 @@ TestRunner >> findClassesForPackages: aCollection [
 	aCollection isEmpty
 		ifTrue: [ ^ self baseClass withAllSubclasses asSet ].
 	items := aCollection
-		flatCollect: [ :category | 
-			((Smalltalk organization listAtCategoryNamed: category) 
+		flatCollect: [ :category |
+			((Smalltalk organization listAtCategoryNamed: category)
 				collect: [ :each | Smalltalk globals at: each ])
 				select: [ :each | each includesBehavior: self baseClass ] ].
 	^ items asSet
@@ -614,17 +614,17 @@ TestRunner >> findPackages [
 			visible add: category ] ].
 	^ Array streamContents: [ :stream |
 		Smalltalk organization categories do: [ :each |
-			((visible includes: each) 
+			((visible includes: each)
 					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isNotEmpty]])
-				ifTrue: [ stream nextPut: each ] ] ].
+				ifTrue: [ stream nextPut: each ] ] ]
 ]
 
 { #category : #actions }
 TestRunner >> generateDefaultFileOutResultsName [
-	
+
 	| filename |
 	filename := String
-		streamContents: [ :st | 
+		streamContents: [ :st |
 			st nextPutAll: 'tests_'.
 			st nextPutAll: SystemVersion current version.
 			st nextPutAll: '_'.
@@ -632,22 +632,22 @@ TestRunner >> generateDefaultFileOutResultsName [
 			st nextPutAll: '_'.
 			result timeStamp printHMSOn: st.
 			st nextPutAll: '.txt' ].
-	^ filename copyReplaceAll: ':' with: '-'.
+	^ filename copyReplaceAll: ':' with: '-'
 ]
 
 { #category : #testing }
 TestRunner >> hasErrors [
-	^ result hasErrors.
+	^ result hasErrors
 ]
 
 { #category : #testing }
 TestRunner >> hasFailures [
-	^ result hasFailures.
+	^ result hasFailures
 ]
 
 { #category : #testing }
 TestRunner >> hasFailuresOrErrors [
-	^ result hasFailures | result hasErrors.
+	^ result hasFailures | result hasErrors
 ]
 
 { #category : #'history saving' }
@@ -667,7 +667,7 @@ TestRunner >> hasResults [
 
 { #category : #testing }
 TestRunner >> hasRunnable [
-	^ classesSelected notEmpty.
+	^ classesSelected notEmpty
 ]
 
 { #category : #'history saving' }
@@ -680,8 +680,8 @@ TestRunner >> initialize [
 	super initialize.
 	failedList := errorList := Array new.
 	SystemAnnouncer uniqueInstance weak
-		when: ClassAdded, CategoryAdded, ClassRemoved, CategoryRemoved, ClassRenamed, CategoryRenamed, ClassRecategorized 
-			send: #update 
+		when: ClassAdded, CategoryAdded, ClassRemoved, CategoryRemoved, ClassRenamed, CategoryRenamed, ClassRecategorized
+			send: #update
 			to: self.
 	self update; resetResult
 ]
@@ -695,19 +695,19 @@ TestRunner >> label [
 TestRunner >> label: aString forSuite: aTestSuite [
 	^ String streamContents: [ :stream |
 		stream nextPutAll: 'Running '; print: aTestSuite tests size; space; nextPutAll: aString.
-		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ].
+		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ]
 ]
 
 { #category : #building }
 TestRunner >> open [
 	<script: 'self new open'>
-	 
+
 	^ self build openInWorld
 ]
 
 { #category : #'accessing - packages' }
 TestRunner >> packageAt: anIndex [
-	^ packagesSelected includes: (packages at: anIndex ifAbsent: [ ^ false ]).
+	^ packagesSelected includes: (packages at: anIndex ifAbsent: [ ^ false ])
 ]
 
 { #category : #'accessing - packages' }
@@ -715,7 +715,7 @@ TestRunner >> packageAt: anInteger put: aBoolean [
 	packagesSelected := packagesSelected
 		perform: (aBoolean ifTrue: [ #copyWith: ] ifFalse: [ #copyWithout: ])
 		with: (packages at: anInteger ifAbsent: [ ^ self ]).
-	self changed: #packageSelected; updateClasses.
+	self changed: #packageSelected; updateClasses
 ]
 
 { #category : #'accessing - packages' }
@@ -734,7 +734,7 @@ TestRunner >> packageMenu: aMenu [
 		add: 'Filter...' selector: #filterPackages;
 		addLine;
 		add: 'Refresh' selector: #updatePackages;
-		yourself.
+		yourself
 ]
 
 { #category : #building }
@@ -749,7 +749,7 @@ TestRunner >> packageSearchUpdate: aPattern [
 	packagePattern := (aPattern isNil or: [ aPattern trimBoth isEmpty ])
 		ifTrue: [ nil ]
 		ifFalse: [ [aPattern asRegexIgnoringCase] on: RegexSyntaxError do: [ nil ] ].
-	self updatePackages.
+	self updatePackages
 ]
 
 { #category : #'accessing - packages' }
@@ -760,7 +760,7 @@ TestRunner >> packageSelected [
 { #category : #'accessing - packages' }
 TestRunner >> packageSelected: anInteger [
 	packageIndex := anInteger.
-	self changed: #packageSelected.
+	self changed: #packageSelected
 ]
 
 { #category : #building }
@@ -799,7 +799,7 @@ TestRunner >> promptForPackages [
 { #category : #actions }
 TestRunner >> resetResult [
 
-	self result: TestAsserter classForTestResult new ; updateResults.
+	self result: TestAsserter classForTestResult new ; updateResults
 ]
 
 { #category : #'accessing - testing' }
@@ -825,14 +825,14 @@ TestRunner >> runCoverage [
 	| myPackages methods |
 	myPackages := Set new.
 	self addDeclaredPackagesUnderTestTo: myPackages.
-	myPackages isEmpty ifTrue: 
+	myPackages isEmpty ifTrue:
 		[ myPackages := self promptForPackages ].
 	methods := OrderedCollection new.
-	self 
+	self
 		addMethodsUnderTestIn: myPackages
 		to: methods.
 	self excludeClassesNotUnderTestFrom: methods.
-	methods isEmpty ifTrue: 
+	methods isEmpty ifTrue:
 		[ ^ UIManager default inform: 'No methods found for coverage analysis.' ].
 	self collectCoverageFor: methods
 ]
@@ -840,7 +840,7 @@ TestRunner >> runCoverage [
 { #category : #actions }
 TestRunner >> runErrors [
 	self result errors: OrderedCollection new.
-	self runTestSuites: self errorTestSuites.
+	self runTestSuites: self errorTestSuites
 ]
 
 { #category : #actions }
@@ -851,7 +851,7 @@ TestRunner >> runFailures [
 
 { #category : #actions }
 TestRunner >> runProfiled [
-	MessageTally spyOn: [ self runAll ].
+	MessageTally spyOn: [ self runAll ]
 ]
 
 { #category : #actions }
@@ -863,11 +863,11 @@ TestRunner >> runSuite: aTestSuite [
 { #category : #actions }
 TestRunner >> runTest: aTestCase [
 	aTestCase run: result.
-	self updateStatus: true.
+	self updateStatus: true
 ]
 
 { #category : #actions }
-TestRunner >> runTestSuites: testSuites [ 
+TestRunner >> runTestSuites: testSuites [
 	CurrentExecutionEnvironment runTestsBy: [
 		testSuites
 			do: [:testSuite | self runSuite: testSuite]
@@ -884,7 +884,7 @@ TestRunner >> saveResultInHistory [
 TestRunner >> selectAllClasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
-	
+
 	classesSelected := classes asSet.
 	self
 		changed: #allSelections;
@@ -911,8 +911,8 @@ TestRunner >> selectAllUnitTests [
 TestRunner >> selectInverseClasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
-	
-	classesSelected := classes asSet 
+
+	classesSelected := classes asSet
 		removeAll: classesSelected;
 		yourself.
 	self
@@ -923,7 +923,7 @@ TestRunner >> selectInverseClasses [
 
 { #category : #'accessing - packages' }
 TestRunner >> selectInversePackages [
-	packagesSelected := packages asSet 
+	packagesSelected := packages asSet
 		removeAll: packagesSelected;
 		yourself.
 	self changed: #allSelections; changed: #packageSelected; updateClasses
@@ -933,7 +933,7 @@ TestRunner >> selectInversePackages [
 TestRunner >> selectNoClasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
-	
+
 	classesSelected := Set new.
 	self
 		changed: #allSelections;
@@ -951,9 +951,9 @@ TestRunner >> selectNoPackages [
 TestRunner >> selectSubclasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
-	
+
 	| classesForPackages |
-	classesForPackages := self findClassesForPackages: packagesSelected.	
+	classesForPackages := self findClassesForPackages: packagesSelected.
 	classesSelected := (classesSelected flatCollect: [ :class |
 		class withAllSubclasses select: [ :each |
 			classesForPackages includes: each ] ])
@@ -978,12 +978,12 @@ TestRunner >> showDiffWith: aTestResult [
 		str nextPutAll: 'New failures: '.
 		diff second do: [:s| str nextPutAll: s printString, ' '].
 		str cr.
-		
+
 		str nextPutAll: 'New errors: '.
 		diff third do: [:s| str nextPutAll: s printString, ' '].
 		str cr].
-	
-	UIManager default edit: string label: 'SUnit Progress'.
+
+	UIManager default edit: string label: 'SUnit Progress'
 ]
 
 { #category : #'history saving' }
@@ -992,22 +992,22 @@ TestRunner >> showHistoryMenu [
 	selectionIndex := UIManager default chooseFrom: self historyMenuList title: 'History:'.
 
 	"We pressed outside the menu"
-	selectionIndex isZero ifTrue: [ ^ self ]. 				
+	selectionIndex isZero ifTrue: [ ^ self ].
 
 	"save current result is selected"
-	selectionIndex = 1 ifTrue: [ self previousRun addFirst: result. ^ self ]. 			
+	selectionIndex = 1 ifTrue: [ self previousRun addFirst: result. ^ self ].
 
 	selectedPreviousResult := self previousRun at: (selectionIndex - 1).
  	actionIndex := (UIManager default chooseFrom: #('delete' 'show diff')  title:  'Action:').
 	actionIndex = 1 ifTrue: [ self previousRun remove: selectedPreviousResult. ^ self ].
-	actionIndex = 2 ifTrue: [ self showDiffWith: selectedPreviousResult].
+	actionIndex = 2 ifTrue: [ self showDiffWith: selectedPreviousResult]
 ]
 
 { #category : #'history saving' }
 TestRunner >> showProgress [
 	| testCaseClasses d string |
 	testCaseClasses := (self suiteForAllSelected tests collect: [:testCase | testCase class]) asSet.
-	
+
 	"At the end of the algorithm, d will contains all the diff between what was saved and the current result"
 	d := Dictionary new.
 	d at: #passed put: OrderedCollection new.
@@ -1017,23 +1017,23 @@ TestRunner >> showProgress [
 	testCaseClasses do: [ :cls | | t |
 		(cls class includesSelector: #lastStoredRun)
 			ifTrue: [t := cls lastStoredRun.
-					(t at: #passed) do: [:s | 	
+					(t at: #passed) do: [:s |
 											(result isErrorFor: cls selector: s)
 												ifTrue: [(d at: #errors) add: {cls . s}].
 											(result isFailureFor: cls selector: s)
 												ifTrue: [(d at: #failures) add: {cls . s}]  ].
-											
+
 					(t at: #failures) do: [:s | (result isPassedFor: cls selector: s)
 												ifTrue: [(d at: #passed) add: {cls . s}].
 											(result isErrorFor: cls selector: s)
 												ifTrue: [(d at: #errors) add: {cls . s}]].
-											
+
 					(t at: #errors) do: [:s | 	(result isPassedFor: cls selector: s)
 												ifTrue: [(d at: #passed) add: {cls . s}].
 											(result isFailureFor: cls selector: s)
 												ifTrue: [(d at: #failures) add: {cls . s}]]]].
-		
-			
+
+
 	string := String streamContents: [:str|
 		str nextPutAll: '----------------'; cr.
 		str nextPutAll: 'Diff between current result and saved result'; cr.
@@ -1043,12 +1043,12 @@ TestRunner >> showProgress [
 		str nextPutAll: 'New failures: '.
 		(d at: #failures) do: [:s| str nextPutAll: s printString, ' '].
 		str cr.
-		
+
 		str nextPutAll: 'New errors: '.
 		(d at: #errors) do: [:s| str nextPutAll: s printString, ' '].
 		str cr].
-	
-	UIManager default edit: string label: 'SUnit Progress'.
+
+	UIManager default edit: string label: 'SUnit Progress'
 ]
 
 { #category : #utilities }
@@ -1056,17 +1056,17 @@ TestRunner >> sortClass: aFirstClass before: aSecondClass [
 	| first second |
 	first := aFirstClass withAllSuperclasses reversed.
 	second := aSecondClass withAllSuperclasses reversed.
-	1 to: (first size min: second size) do: [ :index | 
+	1 to: (first size min: second size) do: [ :index |
 		(first at: index) == (second at: index)
 			ifFalse: [ ^ (first at: index) name <= (second at: index) name ] ].
-	^ second includes: aFirstClass.
+	^ second includes: aFirstClass
 ]
 
 { #category : #'accessing - testing' }
 TestRunner >> statusColor [
-	result hasErrors 
+	result hasErrors
 		ifTrue: [ ^ self theme dangerBackgroundColor ].
-	result hasFailures 
+	result hasFailures
 		ifTrue: [ ^ self theme warningBackgroundColor ].
 	^ self theme successBackgroundColor
 ]
@@ -1085,17 +1085,17 @@ TestRunner >> statusHeight [
 
 { #category : #'accessing - menu' }
 TestRunner >> statusMenu: aMenu [
-	^ aMenu 
+	^ aMenu
 		defaultTarget: self;
 		add: 'History' selector: #showHistoryMenu;
 		add: 'Store result as progress reference' selector: #storeResultIntoTestCases;
-		add: 'Show progress' selector: #showProgress; 
+		add: 'Show progress' selector: #showProgress;
 		yourself
 ]
 
 { #category : #'accessing - testing' }
 TestRunner >> statusText [
-	^ result printString.
+	^ result printString
 ]
 
 { #category : #'history saving' }
@@ -1109,9 +1109,9 @@ TestRunner >> suiteForAllSelected [
 	"Return the suite for all the selected test case classes"
 
 	^ self classForTestSuite new
-		in: [ :suite | 
+		in: [ :suite |
 			classesSelected
-				do: [ :each | 
+				do: [ :each |
 					each isAbstract
 						ifFalse: [ each addToSuiteFromSelectors: suite ] ].
 			suite name: (self label: 'Test' forSuite: suite) ]
@@ -1168,8 +1168,8 @@ TestRunner >> updateResults [
 		failedList := result failures asArray
 			sort: [ :a :b | a printString <= b printString ].
 		failedSelected := nil.
-		self 
-			changed: #failedList; 
+		self
+			changed: #failedList;
 			changed: #failedSelected;
 			changed: #hasFailures;
 			changed: #hasProgress;
@@ -1178,12 +1178,12 @@ TestRunner >> updateResults [
 		errorList := result errors asArray
 			sort: [ :a :b | a printString <= b printString ].
 		errorSelected := nil.
-		self 
-			changed: #errorList; 
+		self
+			changed: #errorList;
 			changed: #errorSelected;
 			changed: #hasErrors;
 			changed: #hasProgress;
-			changed: #hasFailuresOrErrors  ].
+			changed: #hasFailuresOrErrors  ]
 ]
 
 { #category : #updating }
@@ -1193,13 +1193,13 @@ TestRunner >> updateStatus: aBoolean [
 	(aBoolean and: [ lastUpdate = Time totalSeconds ])
 		ifTrue: [ ^ self ].
 	self changed: #statusText; changed: #statusColor.
-	lastUpdate := Time totalSeconds.
+	lastUpdate := Time totalSeconds
 ]
 
 { #category : #updating }
 TestRunner >> updateUIBlock [
 	^ testAnnouncementBlock ifNil: [
-		testAnnouncementBlock :=  [ :announcement | self updateStatus: true ] ].
+		testAnnouncementBlock :=  [ :announcement | self updateStatus: true ] ]
 ]
 
 { #category : #private }

@@ -27,9 +27,9 @@ RubTextSelectionColor class >> cleanUp [
 { #category : #'default accessing' }
 RubTextSelectionColor class >> findReplaceSelection [
 	^ FindReplaceSelection
-		ifNil: [ 
+		ifNil: [
 			FindReplaceSelection := self new
-				colorBlock: [ 
+				colorBlock: [
 							self theme currentSettings haveFindReplaceSelectionTextColor
 								ifTrue: [ self theme currentSettings findReplaceSelectionTextColor ]
 								ifFalse: [  ] ];
@@ -40,7 +40,7 @@ RubTextSelectionColor class >> findReplaceSelection [
 { #category : #'default accessing' }
 RubTextSelectionColor class >> oppositeDelimiterSelection [
 	^ OppositeDelimiterSelection
-		ifNil: [ 
+		ifNil: [
 			OppositeDelimiterSelection := self new
 				colorBlock: [ self theme currentSettings selectionTextColor ];
 				backgroundColorBlock: [ self theme secondarySelectionColor ];
@@ -50,7 +50,7 @@ RubTextSelectionColor class >> oppositeDelimiterSelection [
 { #category : #'default accessing' }
 RubTextSelectionColor class >> primarySelection [
 	^ PrimarySelection
-		ifNil: [ 
+		ifNil: [
 			PrimarySelection := self new
 				colorBlock: [ self theme currentSettings selectionTextColor ];
 				backgroundColorBlock: [ self theme currentSettings selectionColor ];
@@ -60,9 +60,9 @@ RubTextSelectionColor class >> primarySelection [
 { #category : #'default accessing' }
 RubTextSelectionColor class >> secondarySelection [
 	^ SecondarySelection
-		ifNil: [ 
+		ifNil: [
 			SecondarySelection := self new
-				colorBlock: [ 
+				colorBlock: [
 							self theme currentSettings haveSecondarySelectionTextColor
 								ifTrue: [ self theme currentSettings secondarySelectionTextColor ]
 								ifFalse: [  ] ];

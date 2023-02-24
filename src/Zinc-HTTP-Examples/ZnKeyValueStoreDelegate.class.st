@@ -54,19 +54,19 @@ Class {
 
 { #category : #public }
 ZnKeyValueStoreDelegate class >> installInDefaultServer [
-	"Assuming the default server has the default delegate, 
+	"Assuming the default server has the default delegate,
 	install ourself under /kvstore"
-	
-	ZnServer default delegate 
+
+	ZnServer default delegate
 		map: 'kvstore' to: self new
 ]
 
 { #category : #public }
 ZnKeyValueStoreDelegate >> handleDeleteKey: request [
 	"Handle DELETE /kvstore/sone-key returing either the URI or a 404 Not Found"
-	
-	access critical: [ 
-		data 
+
+	access critical: [
+		data
 			removeKey: request uri pathSegments second
 			ifAbsent: [ ^ ZnResponse notFound: request uri ].
 		^ ZnResponse ok: (ZnEntity text: request uri asString) ]
@@ -75,8 +75,8 @@ ZnKeyValueStoreDelegate >> handleDeleteKey: request [
 { #category : #public }
 ZnKeyValueStoreDelegate >> handleGetKey: request [
 	"Handle GET /kvstore/sone-key returing either the value or a 404 Not Found"
-	
-	^ access critical: [ 
+
+	^ access critical: [
 			data
 				at: request uri pathSegments second
 				ifPresent: [ :value | ZnResponse ok: (ZnEntity text: value) ]
@@ -87,8 +87,8 @@ ZnKeyValueStoreDelegate >> handleGetKey: request [
 ZnKeyValueStoreDelegate >> handlePutKey: request [
 	"Handle PUT /kvstore/sone-key returing either the value.
 	The value is the contents of the entity, assumed to be text/plain"
-	
-	access critical: [ 
+
+	access critical: [
 		data
 			at: request uri pathSegments second
 			put: request entity contents ].
@@ -98,10 +98,10 @@ ZnKeyValueStoreDelegate >> handlePutKey: request [
 { #category : #public }
 ZnKeyValueStoreDelegate >> handleRequest: request [
 	"Dispatch on the different REST calls that I implement"
-	
-	request uri pathSegments size = 1
-		ifTrue: [ ^ self handleStoreContents ]
-		ifFalse: [ 
+
+	^ request uri pathSegments size = 1
+		ifTrue: [ self handleStoreContents ]
+		ifFalse: [
 			request uri pathSegments size = 2
 				ifTrue: [
 					request method = #GET
@@ -111,13 +111,13 @@ ZnKeyValueStoreDelegate >> handleRequest: request [
 					(request method = #PUT
 							and: [ request entity contentType matches: ZnMimeType textPlain ])
 						ifTrue: [ ^ self handlePutKey: request ] ].
-			^ ZnResponse badRequest: request ]
+			ZnResponse badRequest: request ]
 ]
 
 { #category : #public }
 ZnKeyValueStoreDelegate >> handleStoreContents [
 	"Handle GET /kvstore - list the full contents of the key-valyue store"
-	
+
 	^ ZnResponse ok: (ZnEntity text: self storeContents)
 ]
 
@@ -131,12 +131,12 @@ ZnKeyValueStoreDelegate >> initialize [
 { #category : #private }
 ZnKeyValueStoreDelegate >> storeContents [
 	"Generate a string describing/listing the full contents of my key-value store"
-	
+
 	^ String streamContents: [ :out |
-			access critical: [ 
+			access critical: [
 				data isEmpty
 					ifTrue: [ out << 'the key-value store is empty'; crlf ]
-					ifFalse: [ 
+					ifFalse: [
 						data keysAndValuesDo: [ :key :value |
 							out << key << ' = ' << value; crlf ] ] ] ]
 ]
@@ -144,6 +144,6 @@ ZnKeyValueStoreDelegate >> storeContents [
 { #category : #public }
 ZnKeyValueStoreDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
-	
+
 	^ self handleRequest: request
 ]

@@ -37,7 +37,7 @@ MethodFinderSend >> arguments: anObject [
 
 { #category : #'public access' }
 MethodFinderSend >> evaluate [
-	
+
 	^ receiver perform: selector withArguments: arguments
 ]
 
@@ -47,14 +47,14 @@ MethodFinderSend >> printOn: aStream [
 	aStream print: receiver.
 	aStream space.
 	arguments ifEmpty: [^ aStream nextPutAll: selector].
-	arguments 
-		with: selector keywords 
+	arguments
+		with: selector keywords
 		do: [:arg :word |
 				aStream nextPutAll: word asString.
 				aStream space.
 				aStream print: arg.
 				aStream space ].
-	aStream skip: -1.
+	aStream skip: -1
 ]
 
 { #category : #accessing }
@@ -79,7 +79,7 @@ MethodFinderSend >> resultIn: expectedResult [
 
 { #category : #accessing }
 MethodFinderSend >> selector [
-	
+
 	^ selector
 ]
 

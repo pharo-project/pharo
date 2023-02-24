@@ -10,19 +10,19 @@ DTStyleContributor >> styleSheetContribution [
 	^ SpStyle newApplication
 		addClass: 'testError' with: [ :class |
 			class addPropertyDrawWith: [ :draw |
-				draw backgroundColor: self theme testColorError ] ];
+				draw backgroundColor: TestResult defaultColorBackGroundForErrorTest ] ];
 		"addClass: 'testExpectedFailure' with: [ :class |
 			class addPropertyDrawWith: [ :draw |
 				draw backgroundColor: Color transparent ] ];"
 		addClass: 'testFail' with: [ :class |
 			class addPropertyDrawWith: [ :draw |
-				draw backgroundColor: self theme testColorFailure ] ];
+				draw backgroundColor: TestResult defaultColorBackGroundForFailureTest ] ];
 		addClass: 'testPass' with: [ :class |
 			class addPropertyDrawWith: [ :draw |
-				draw backgroundColor:  self theme testColorPassing ] ];
+				draw backgroundColor:   TestResult defaultColorBackGroundForPassingTest ] ];
 		addClass: 'testSkipped' with: [ :class |
 			class addPropertyDrawWith: [ :draw |
-				draw backgroundColor: self theme testColorPassing ] ];
+				draw backgroundColor:  TestResult defaultColorBackGroundForPassingTest ] ];
 		"addClass: 'testUnexpectedPass' with: [ :class |
 			class addPropertyDrawWith: [ :draw |
 				draw backgroundColor: Color gray ] ];"

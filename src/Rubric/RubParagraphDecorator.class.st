@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #querying }
-RubParagraphDecorator class >> classOfDecoratorNamed: aKey [ 
+RubParagraphDecorator class >> classOfDecoratorNamed: aKey [
 	^ self allSubclasses detect: [ :cls | cls key = aKey ] ifNone: [  ]
 ]
 
@@ -34,15 +34,15 @@ RubParagraphDecorator class >> next: aDecoratorOrAParagraph [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> aboutToBeUnplugged [ 
+RubParagraphDecorator >> aboutToBeUnplugged [
 	^self paragraph aboutToBeUnplugged
 ]
 
 { #category : #drawing }
 RubParagraphDecorator >> canDrawDecoratorsOn: aCanvas [
 
-	^self drawingEnabled and: [ 
-		self selectionStart isNotNil and: [ 
+	^self drawingEnabled and: [
+		self selectionStart isNotNil and: [
 			self selectionStop isNotNil
 		]
 	]
@@ -72,7 +72,7 @@ RubParagraphDecorator >> closingDelimiters [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> compose [ 
+RubParagraphDecorator >> compose [
 	^self paragraph compose
 ]
 
@@ -94,7 +94,7 @@ RubParagraphDecorator >> decoratorNamed: aKey [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> defaultCharacterBlock [ 
+RubParagraphDecorator >> defaultCharacterBlock [
 	^self paragraph defaultCharacterBlock
 ]
 
@@ -117,7 +117,7 @@ RubParagraphDecorator >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #drawing }
-RubParagraphDecorator >> drawOn: aCanvas [ 
+RubParagraphDecorator >> drawOn: aCanvas [
 	"do nothing"
 ]
 
@@ -125,7 +125,7 @@ RubParagraphDecorator >> drawOn: aCanvas [
 RubParagraphDecorator >> drawOn: aCanvas using: aDisplayScanner at: aPosition [
 
 	(self canDrawDecoratorsOn: aCanvas) ifFalse: [ ^self ].
-	
+
 	self drawOn: aCanvas.
 	next drawOn: aCanvas using: aDisplayScanner at: aPosition
 ]
@@ -151,7 +151,7 @@ RubParagraphDecorator >> drawingEnabled [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> extent [ 
+RubParagraphDecorator >> extent [
 	^self paragraph extent
 ]
 
@@ -177,12 +177,12 @@ RubParagraphDecorator >> lineIndexForPoint: aPoint [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> lineIndexOfCharacterIndex: characterIndex [ 
+RubParagraphDecorator >> lineIndexOfCharacterIndex: characterIndex [
 	^self paragraph lineIndexOfCharacterIndex: characterIndex
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> lines [ 
+RubParagraphDecorator >> lines [
 	^self paragraph lines
 ]
 
@@ -226,7 +226,7 @@ RubParagraphDecorator >> next: anObject [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> numberOfLines [ 
+RubParagraphDecorator >> numberOfLines [
 	^self paragraph numberOfLines
 ]
 
@@ -289,7 +289,7 @@ RubParagraphDecorator >> tabWidth: anInteger [
 ]
 
 { #category : #delegating }
-RubParagraphDecorator >> text [ 
+RubParagraphDecorator >> text [
 
 	^self paragraph text
 ]
@@ -327,7 +327,7 @@ RubParagraphDecorator >> theme [
 { #category : #initialization }
 RubParagraphDecorator >> unplug [
 	next
-		ifNotNil: [ 
+		ifNotNil: [
 			next unplug.
 			next := nil ].
 	super unplug

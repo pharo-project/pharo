@@ -22,7 +22,7 @@ Class {
 TFCallback class >> finalizeResourceData: aCallbackDataHandler [
 
 	aCallbackDataHandler isNull ifTrue: [ ^ self ].
-	
+
 	self primUnregister: aCallbackDataHandler.
 	aCallbackDataHandler beNull
 ]
@@ -57,7 +57,6 @@ TFCallback >> beFailed [
 TFCallback >> beNull [
 
 	self setHandle: ExternalAddress null
-
 ]
 
 { #category : #accessing }
@@ -97,20 +96,20 @@ TFCallback >> initialize [
 ]
 
 { #category : #invoking }
-TFCallback >> invokeAsFunctionWithArguments: aCollection [ 
-	
+TFCallback >> invokeAsFunctionWithArguments: aCollection [
+
 	| definition function preparedArguments |
 
 	definition := TFFunctionDefinition
 		parameterTypes: self parameterTypes
 		returnType: self returnType.
 
-	function := TFExternalFunction 
-		fromAddress: self getHandle 
+	function := TFExternalFunction
+		fromAddress: self getHandle
 		definition: definition.
 
-	preparedArguments := aCollection 
-		with: self parameterTypes 
+	preparedArguments := aCollection
+		with: self parameterTypes
 		collect: [ :anArgument :aType | aType marshallToPrimitive: anArgument ].
 
 	^ self returnType marshallFromPrimitive: (self runner invokeFunction: function withArguments: preparedArguments)
@@ -134,34 +133,33 @@ TFCallback >> parameterTypes: anObject [
 
 { #category : #registering }
 TFCallback >> register [
-	
+
 	handle isNull ifFalse: [ ^ self error: 'Callback already registered' ].
-	
+
 	self validateTypes.
 	self runner ensureInitialized.
 	self registerCallback: frontendCallback tfPrintString.
-	TFCallbackQueue uniqueInstance registerCallback: self.
+	TFCallbackQueue uniqueInstance registerCallback: self
 ]
 
 { #category : #registering }
 TFCallback >> registerCallback [
 	"TODO: This is still here to allow updating. We need to remove it soon!"
 	<primitive: 'primitiveRegisterCallback'>
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #registering }
 TFCallback >> registerCallback: debugString [
 
 	<primitive: 'primitiveRegisterCallback'>
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
 TFCallback >> resourceData [
 
-	^ self callbackData.
-
+	^ self callbackData
 ]
 
 { #category : #accessing }
@@ -196,7 +194,7 @@ TFCallback >> runner: anObject [
 
 { #category : #accessing }
 TFCallback >> thunk [
-	^ self getHandle 
+	^ self getHandle
 ]
 
 { #category : #'private - operations' }
@@ -206,5 +204,5 @@ TFCallback >> validateTypes [
 	returnType validate.
 
 	parameterHandlers := parameterTypes collect: [ :e | e basicType ] as: Array.
-	returnTypeHandler := returnType basicType.
+	returnTypeHandler := returnType basicType
 ]

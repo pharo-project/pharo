@@ -20,7 +20,7 @@ RubSmalltalkCommentMode class >> menuKeyword [
 { #category : #menu }
 RubSmalltalkCommentMode class >> menuOn: aBuilder [
 	"Specify the menu used when writing code. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'RubSmalltalkCommentMenu'
 		model: RubEditingArea new) menu popUpInWorld
 	"
@@ -41,13 +41,13 @@ RubSmalltalkCommentMode >> isCompletionEnabled [
 ]
 
 { #category : #parsing }
-RubSmalltalkCommentMode >> parseExpression: aString [ 
-	
+RubSmalltalkCommentMode >> parseExpression: aString [
+
 	^ RBParser parseFaultyExpression: aString
 ]
 
 { #category : #parsing }
-RubSmalltalkCommentMode >> parseSource: aString [ 
+RubSmalltalkCommentMode >> parseSource: aString [
 
 	^ RBParser parseFaultyExpression: aString
 ]

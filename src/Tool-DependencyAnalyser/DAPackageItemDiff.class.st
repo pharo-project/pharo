@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 DAPackageItemDiff >> dependencies [
-	 ^ self content dependentPackages 
+	 ^ self content dependentPackages
 ]
 
 { #category : #testing }
@@ -22,6 +22,6 @@ DAPackageItemDiff >> hasChanged [
 
 { #category : #printing }
 DAPackageItemDiff >> printOn: aStream [
-	aStream 
-		nextPutAll: content packageName.
+	aStream
+		nextPutAll: content packageName
 ]

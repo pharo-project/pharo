@@ -16,8 +16,8 @@ Class {
 
 { #category : #'instance creation' }
 ZnTooManyDictionaryEntries class >> limit: limit [
-	^ self new 
-		limit: limit; 
+	^ self new
+		limit: limit;
 		yourself
 ]
 

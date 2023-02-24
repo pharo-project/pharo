@@ -29,15 +29,6 @@ Object >> stepTimeIn: aSystemWindow [
 ]
 
 { #category : #'*Deprecated11' }
-Object >> wantsSteps [
-	"Overridden by morphic classes whose instances want to be stepped,
-	or by model classes who want their morphic views to be stepped."
-
-	self deprecated: 'This method should be called on Model or Morph classes and not on any object.'.
-	^ false
-]
-
-{ #category : #'*Deprecated11' }
 Object >> wantsStepsIn: aSystemWindow [
 
 	self deprecated: 'This method should be called on Model classes and not on any object.'.

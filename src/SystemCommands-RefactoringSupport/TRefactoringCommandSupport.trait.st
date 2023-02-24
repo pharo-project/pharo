@@ -10,7 +10,7 @@ Trait {
 TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
 	| invalidArgNames |
 	invalidArgNames := Set new.
-	(model allImplementorsOf: aSymbol) do: [ :e | | cm | 
+	(model allImplementorsOf: aSymbol) do: [ :e | | cm |
 		cm:=(e realClass >> aSymbol).
 		invalidArgNames addAll: cm argumentNames;
 			addAll: cm origin instVarNames ].

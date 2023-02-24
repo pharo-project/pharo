@@ -43,7 +43,7 @@ RubFloatingEditorBuilder class >> exampleCommandLauncher [
 	<example>
  	^RubFloatingEditorBuilder new
 		acceptOnCR: false;
-		customizeEditorWith: [ :editor | 
+		customizeEditorWith: [ :editor |
 			editor
 				width: 300;
 				height: 50;
@@ -64,19 +64,19 @@ RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 		borderWidth: 5.
 	stringMorph := StringMorph
 		contents: 'Open the mini editor: [Shift+mouseDown on the string]; Update: [Enter|Cmd+s]; Abort: [Escape]'.
-	stringMorph 
+	stringMorph
 		position: 5 asPoint.
 		pane addMorph: stringMorph.
 	edBuilder := RubFloatingEditorBuilder new.
 	edBuilder
-		customizeEditorWith: [ :editor | 
-			editor	 
+		customizeEditorWith: [ :editor |
+			editor
 				color: Color veryLightGray veryMuchLighter;
 				bounds:
 					(((stringMorph bounds withRight: pane right) withBottom: stringMorph bottom + 40)
 						translateBy: 2 negated asPoint) ];
 		withEditedContentsDo:
-				[ :editedContents | 
+				[ :editedContents |
 			| newContents |
 			newContents := editedContents ifEmpty: [ 'Ahem! I need something here...' ].
 			stringMorph contents: newContents.
@@ -84,7 +84,7 @@ RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 	stringMorph
 		on: #mouseDown
 		send: #value:
-		to: [ :event | 
+		to: [ :event |
 			event shiftPressed
 				ifTrue: [ edBuilder openEditorWithContents: stringMorph contents ] ].
 	(pane embeddedInMorphicWindowLabeled: 'Editable sm example')
@@ -268,7 +268,7 @@ RubFloatingEditorBuilder >> whenReturnEntered: anAnnouncement [
 RubFloatingEditorBuilder >> whenTextAccepted: anAnnouncement [
 	self
 		editorDo:
-			[ :ed | 
+			[ :ed |
 			| ann |
 			autoAccept
 				ifFalse: [ self closeEditor ].
@@ -281,7 +281,7 @@ RubFloatingEditorBuilder >> whenTextAccepted: anAnnouncement [
 RubFloatingEditorBuilder >> withEditedContentsDo: aBlock [
 	self
 		announcerDo:
-			[ :anncer | 
+			[ :anncer |
 			anncer
 				when: RubMorphEdited
 				send: #value:

@@ -9,8 +9,8 @@ ZnFastLineReaderTest >> testLinesDo [
 	| lines reader |
 	lines := #( 'foo' 'bar' 'last').
 	reader := ZnFastLineReader on: (Character lf join: lines) readStream.
-	self 
-		assert: (Array streamContents: [ :out | 
+	self
+		assert: (Array streamContents: [ :out |
 					reader linesDo: [ :line | out nextPut: line ] ])
 		equals: lines
 ]
@@ -25,25 +25,25 @@ ZnFastLineReaderTest >> testNextLine [
 	reader := ZnFastLineReader on: '' readStream.
 	self assert: reader nextLine equals: nil.
 	self assert: reader atEnd.
-	reader := ZnFastLineReader on: (String withAll: { 
-		$a. Character cr. 
-		$b. Character lf. 
+	reader := ZnFastLineReader on: (String withAll: {
+		$a. Character cr.
+		$b. Character lf.
 		$c }) readStream.
 	self assert: reader nextLine equals: 'a'.
 	self assert: reader nextLine equals: 'b'.
 	self assert: reader nextLine equals: 'c'.
 	self assert: reader nextLine equals: nil.
-	reader := ZnFastLineReader on: (String withAll: { 
-		$a. Character cr. Character lf.  
-		$b. Character cr. Character lf. 
+	reader := ZnFastLineReader on: (String withAll: {
+		$a. Character cr. Character lf.
+		$b. Character cr. Character lf.
 		$c. Character cr. Character lf }) readStream.
 	self assert: reader nextLine equals: 'a'.
 	self assert: reader nextLine equals: 'b'.
 	self assert: reader nextLine equals: 'c'.
 	self assert: reader nextLine equals: nil.
-	reader := ZnFastLineReader on: (String withAll: { 
-		$a. Character cr. Character lf.  
-		Character cr. Character lf. 
+	reader := ZnFastLineReader on: (String withAll: {
+		$a. Character cr. Character lf.
+		Character cr. Character lf.
 		$c. Character cr. Character lf }) readStream.
 	self assert: reader nextLine equals: 'a'.
 	self assert: reader nextLine equals: ''.

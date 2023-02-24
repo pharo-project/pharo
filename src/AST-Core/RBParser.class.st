@@ -322,8 +322,19 @@ RBParser >> parseAssignment [
 	make it possible to assign the literals true, false and nil."
 
 	| node position |
+	currentToken isAssignment ifTrue: [
+		self parserError: 'identifier expected in assigment'.
+		position := currentToken start.
+		self step. "Consume the :="
+		node := self parseAssignment. "parse the right side".
+		node := RBAssignmentErrorNode content: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
+		node value: ':='.
+		^ node
+	].
+
 	(currentToken isIdentifier and: [self nextToken isAssignment])
 		ifFalse: [^self parseCascadeMessage].
+
 	node := self parseVariableNode.
 	position := currentToken start.
 	self step.
@@ -476,17 +487,17 @@ RBParser >> parseCascadeMessage [
 	"
 	(node isMessage not or: [ node hasParentheses ]) ifTrue: [
 		"Cut parsing with an error.
-		If in faulty mode, continue the execution and generate a faulty cascade node."
+		If in faulty mode, continue the execution and generate a faulty cascade node.
+		Note that this bad cascade node will be added to the list of messages."
 		self parserError: 'cascaded message not allowed'.
-		receiver := node := RBInvalidCascadeErrorNode
+		node := RBInvalidCascadeErrorNode
 			content: { node }
 			start: node start
 			stop: currentToken stop
-			errorMessage: 'End of statement expected'.
-	] ifFalse: [
-		receiver := node receiver.
-	 	messages add: node.
+			errorMessage: 'Message expected'.
 	].
+	receiver := node receiver.
+ 	messages add: node.
 
 	"Extract the messages following the cascade marker $;"
 	[currentToken isSpecial: $;] whileTrue: [
@@ -497,6 +508,8 @@ RBParser >> parseCascadeMessage [
 		self saveCommentsDuring: [
 			newMessage := self parseCascadeMessageWithReceiver: receiver ].
 		self addCommentsTo: newMessage.
+		"Note that newMessage can be a message node or a error node.
+		In all cases, it will be added to the list of messages."
 		messages add: newMessage ].
 
 	^self cascadeNodeClass messages: messages semicolons: semicolons
@@ -520,13 +533,10 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 
 	"At this point we know this is an invalid cascade.
 	Many things can happen next: it could be a closer parenthesis or bracket, the end of the stream, a non-identifier or an empty cascade.
-	For now, if it is a closer return an empty error node.
-	If it is not a closer, consume it"
+
+	For now, do not touch the unexpected token and let it be propagated to the caller.
+	Maybe someing up the callchain will gladly use it or know how to recover (eg unfinished statement)"
 	errorNode := self parserError: 'Cascade message expected'.
-	(currentToken value ~= $.
-		and: [ ('])};' includes: currentToken value) not
-			and: [ currentToken isEOF not ] ] )
-				ifTrue: [ self step ].
 	^ errorNode
 ]
 
@@ -703,17 +713,26 @@ RBParser >> parseLiteralArrayObject [
 RBParser >> parseLiteralByteArray [
 	"Current token is litteral array token #[ which means following tokens are part of the array
 	 until the encounter of the special character ] ."
-	| stream startToken stop |
+	| stream startToken value stop isFaulty |
 	startToken := currentToken.
 	stream := (Array new: 5) writeStream.
 	self step.
+	isFaulty := false.
 	[self atEnd or: [currentToken isSpecial: $]]]
 		"Put literal value nodes corresponding to the bytes in the stream."
-		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
+		whileFalse: [
+			stream nextPut: (value := self parseLiteralByteArrayObject).
+			"In case of unexpected element, continue until the closing bracket, but an error node will sill be produced."
+			value isParseError ifTrue: [ isFaulty := true ]].
 	(currentToken isSpecial: $])
 		ifFalse: [ ^ self parseEnglobingError: stream contents with: startToken errorMessage: ''']'' expected'].
 	stop := currentToken stop.
 	self step.
+	isFaulty ifTrue: [
+		^ (self parseEnglobingError: stream contents with: startToken errorMessage: nil)
+			valueAfter: ']';
+			stop: stop;
+			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
 		contents: stream contents
@@ -724,13 +743,14 @@ RBParser >> parseLiteralByteArray [
 { #category : #'private - parsing' }
 RBParser >> parseLiteralByteArrayObject [
 	"Ensure that the object contained in the array is the value of a byte."
-	"Return a literal value node of said byte."
+	"Return a literal value node of said byte or a parse error node."
 	(currentToken isLiteralToken and:
 			[currentToken value isInteger and: [currentToken value between: 0 and: 255]])
 		ifFalse: [
 			| errorNode |
 			errorNode := self parserError: 'Expecting 8-bit integer'.
-			self step.
+			"Error recovery: consume the token as classic literal array object"
+			errorNode value: self parseLiteralArrayObject value asString.
 			^ errorNode ].
 	^self parsePrimitiveLiteral
 ]
