@@ -21,15 +21,14 @@ TFSameThreadRunner class >> uniqueInstance [
 TFSameThreadRunner >> doInitialize [
 
 	super doInitialize.
-	handle := self primitiveGetRunnerAddress.
+	handle := self primitiveGetRunnerAddress
 ]
 
 { #category : #executing }
-TFSameThreadRunner >> invokeFunction: function withArguments: aCollection [ 
+TFSameThreadRunner >> invokeFunction: function withArguments: aCollection [
 
-	function validate.	
-	^ self primitivePerformWorkerCall: function withArguments: aCollection 
-	
+	function validate.
+	^ self primitivePerformWorkerCall: function withArguments: aCollection
 ]
 
 { #category : #private }
@@ -37,13 +36,13 @@ TFSameThreadRunner >> primitiveGetRunnerAddress [
 
 	<primitive: 'primitiveGetSameThreadRunnerAddress'>
 
-	self primitiveFailed 	
+	self primitiveFailed
 ]
 
 { #category : #private }
-TFSameThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder [ 
+TFSameThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder [
 
 	<primitive: 'primitiveSameThreadCallout' error: ec>
 
-	self primitiveFailed 	
+	self primitiveFailed
 ]

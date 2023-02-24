@@ -64,7 +64,5 @@ TFAbiTypes class >> initialize [
 	UNIX_X86_32_STDCALL   := 5.
 	UNIX_X86_32_PASCAL    := 6.
 	UNIX_X86_32_REGISTER  := 7.
-	UNIX_X86_32_MS_CDECL  := 8.
-	
-
+	UNIX_X86_32_MS_CDECL  := 8
 ]

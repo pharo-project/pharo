@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #running }
-T2CommonClassDefinitionPrinterTest >> setUp [ 
+T2CommonClassDefinitionPrinterTest >> setUp [
 	super setUp.
 	slotuse := ClassDefinitionPrinter showFluidClassDefinition.
 	emptySlots := ClassDefinitionPrinter displayEmptySlots.

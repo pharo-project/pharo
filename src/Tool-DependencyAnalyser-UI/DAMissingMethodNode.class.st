@@ -9,7 +9,7 @@ Class {
 
 { #category : #api }
 DAMissingMethodNode >> buildChildren [
-	^ self messageSendNodes 
+	^ self messageSendNodes
 		addAll: self methodImplementationNodes;
 		yourself
 ]
@@ -38,7 +38,7 @@ DAMissingMethodNode >> messageSendAnalysis [
 DAMissingMethodNode >> messageSendNodes [
 	^ self messageSendAnalysis rPackage methods
 		select: [ :method | method sendsSelector: self content ]
-		thenCollect: [ :method | 
+		thenCollect: [ :method |
 			DAMessageSendNode new
 				content: method;
 				parentNode: self;
@@ -47,8 +47,8 @@ DAMissingMethodNode >> messageSendNodes [
 
 { #category : #api }
 DAMissingMethodNode >> methodImplementationNodes [
-	^ (self content implementors collect: 
-		[ :method | 
+	^ (self content implementors collect:
+		[ :method |
 		DAMethodImplementationNode new
 			content: method;
 			parentNode: self;

@@ -18,10 +18,9 @@ TKTWorkerPoolTest >> testPriorityAfterStart [
 	doneSemaphore wait: 500 milliSeconds.
 	pool priority: newPriority.
 	self assert: pool priority equals: newPriority.
-	pool workers do: [: each | 
+	pool workers do: [: each |
 		workerProcess :=  each process process.
-		self assert: workerProcess priority equals: newPriority].
-	
+		self assert: workerProcess priority equals: newPriority]
 ]
 
 { #category : #tests }
@@ -38,10 +37,9 @@ TKTWorkerPoolTest >> testPrioritySetBeforeStart [
 	doneSemaphore := Semaphore new.
 	pool schedule: (TKTTask valuable: [doneSemaphore signal]).
 	doneSemaphore wait: 500 milliSeconds.
-	pool workers do: [: each | 
+	pool workers do: [: each |
 		workerProcess :=  each process process.
-		self assert: workerProcess priority equals: initialPriority].
-	
+		self assert: workerProcess priority equals: initialPriority]
 ]
 
 { #category : #tests }
@@ -74,15 +72,15 @@ TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInPar
 	pool poolMaxSize: 10.
 	pool start.
 	totalTasks := 0.
-		
+
 	futures := AtomicSharedQueue new.
-	1 to: 10 do: [:i | 
-		futures nextPut: (pool future: [ 
+	1 to: 10 do: [:i |
+		futures nextPut: (pool future: [
 			10 timesRepeat: [ futures nextPut: (pool future: [
 					totalTasks := totalTasks + 1 ]) ] ]) ].
-	
+
 	[ futures isEmpty ] whileFalse: [ futures next waitForCompletion: 1 second ].
-	
+
 	self assert: totalTasks equals: 100.
 	self assert: pool size equals: 10
 ]
@@ -94,13 +92,13 @@ TKTWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 	pool := TKTWorkerPool new.
 	pool poolMaxSize: 4.
 	pool start.
-		
+
 	((1 to: 10) collect: [:i | pool future: [ 1 + 1 ] ])
 		do: [ :future | future waitForCompletion: 500 milliSeconds. ].
-	
+
 	pool stop.
-	
-	pool workers do: [ :worker | self deny: worker isRunning ].
+
+	pool workers do: [ :worker | self deny: worker isRunning ]
 ]
 
 { #category : #tests }
@@ -119,7 +117,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 	workerProcess := WeakArray with: pool workers anyOne process.
 
 	pool := nil.
-	self assertWithGarbageCollect: [ workerProcess first isNil ].
+	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
 { #category : #tests }
@@ -136,7 +134,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollectio
 	workerProcess := WeakArray with: pool workers anyOne process process.
 
 	pool := nil.
-	self assertWithGarbageCollect: [ workerProcess first isNil ].
+	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
 { #category : #tests }
@@ -150,6 +148,5 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollec
 	(pool future: [ 1 ]) waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
-	self assertWithGarbageCollect: [ workerProcess isTerminated ].
-
+	self assertWithGarbageCollect: [ workerProcess isTerminated ]
 ]

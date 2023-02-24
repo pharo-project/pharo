@@ -33,14 +33,14 @@ Class {
 DangerousClassNotifier class >> check: classSymbol [
 
 	self enabled ifFalse: [ ^false ].
-	
-	(self shouldNotBeRedefined: classSymbol)		
-			ifTrue: [ self notify: '"' , classSymbol , '" should not be redefined as its structure is known to the VM. \Only proceed if you know what you are doing!' withCRs ].
+
+	(self shouldNotBeRedefined: classSymbol)
+			ifTrue: [ self notify: '"' , classSymbol , '" should not be redefined as its structure is known to the VM. \Only proceed if you know what you are doing!' withCRs ]
 ]
 
 { #category : #accessing }
 DangerousClassNotifier class >> disable [
-	enabled := false.
+	enabled := false
 ]
 
 { #category : #accessing }
@@ -50,12 +50,12 @@ DangerousClassNotifier class >> disableDuring: aBlock [
 	oldState := enabled.
 	enabled := false.
 	aBlock value.
-	enabled := oldState.
+	enabled := oldState
 ]
 
 { #category : #accessing }
 DangerousClassNotifier class >> enable [
-	enabled := true.
+	enabled := true
 ]
 
 { #category : #accessing }
@@ -73,9 +73,9 @@ DangerousClassNotifier class >> initialize [
 DangerousClassNotifier class >> shouldNotBeRedefined: classSymbol [
 	(self tooDangerousClasses includes: classSymbol) ifTrue: [ ^true ].
 	^Smalltalk globals
-		at: classSymbol 
+		at: classSymbol
 		ifPresent: [ :class | (Smalltalk specialObjectsArray includes: class) or: [class isKindOf: class]]
-		ifAbsent: false .
+		ifAbsent: false
 ]
 
 { #category : #accessing }

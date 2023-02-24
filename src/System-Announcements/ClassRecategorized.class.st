@@ -41,7 +41,7 @@ ClassRecategorized >> classRecategorized: aClass [
 ]
 
 { #category : #accessing }
-ClassRecategorized >> newCategory [ 
+ClassRecategorized >> newCategory [
 	^newCategory
 ]
 

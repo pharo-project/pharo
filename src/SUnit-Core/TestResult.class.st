@@ -17,24 +17,22 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #exceptions }
-TestResult class >> currentTheme [
-	^ Smalltalk ui theme
-]
-
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForErrorTest [
-	^ self currentTheme testColorError
+
+	^ Color red darker darker
 ]
 
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForFailureTest [
-	^ self currentTheme testColorFailure
+
+	^ Color yellow darker darker darker
 ]
 
 { #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForPassingTest [
-	^ self currentTheme testColorPassing
+
+	^ Color green darker darker
 ]
 
 { #category : #'default - color' }
@@ -87,14 +85,14 @@ TestResult class >> historyAt: aTestCaseClass put: aDictionary [
 
 { #category : #history }
 TestResult class >> historyFor: aTestCaseClass [
-	"I return the last test dictionary for aTestCaseClass. 
+	"I return the last test dictionary for aTestCaseClass.
 	If none found, I return an empty dictionary but will not link it to the class in the history."
-	
+
 	| history |
 	history := aTestCaseClass history.
 	history ifNil: [ ^ self newTestDictionary ].
 	^ history
-	
+
 "	^ self history at: aTestCaseClass ifAbsent: [ self newTestDictionary ]"
 ]
 
@@ -111,10 +109,10 @@ TestResult class >> newTestDictionary [
 { #category : #history }
 TestResult class >> removeFromTestHistory: aSelector in: aTestCaseClass [
 	| lastRun |
-	
+
 	lastRun := self historyFor: aTestCaseClass.
 	#(#passed #failures #errors) do:
-		[ :set | (lastRun at: set) remove: aSelector ifAbsent: []].
+		[ :set | (lastRun at: set) remove: aSelector ifAbsent: []]
 ]
 
 { #category : #exceptions }
@@ -123,12 +121,12 @@ TestResult class >> resumableFailure [
 ]
 
 { #category : #exceptions }
-TestResult class >> signalErrorWith: aString [ 
+TestResult class >> signalErrorWith: aString [
 	self error signal: aString
 ]
 
 { #category : #exceptions }
-TestResult class >> signalFailureWith: aString [ 
+TestResult class >> signalFailureWith: aString [
 	self failure signal: aString
 ]
 
@@ -140,11 +138,11 @@ TestResult class >> skip [
 { #category : #history }
 TestResult class >> updateTestHistoryFor: aTestCase status: aSymbol [
 	| cls sel |
-	
+
 	cls := aTestCase class.
 	sel := aTestCase selector.
 	self removeFromTestHistory: sel in: cls.
-	((self historyAt: cls) at: aSymbol ) add: sel.
+	((self historyAt: cls) at: aSymbol ) add: sel
 ]
 
 { #category : #exceptions }
@@ -183,7 +181,7 @@ TestResult >> addSkip: aTestCase [
 { #category : #accessing }
 TestResult >> classesTested [
 	"I return the set of Classes under test"
-	
+
 	^ (self tests collect: [ :testCase | testCase class ]) asSet
 ]
 
@@ -199,7 +197,7 @@ TestResult >> defects [
 { #category : #diff }
 TestResult >> diff: aTestResult [
 	"Return a collection that contains differences"
-	
+
 	| passed1Selectors failed1Selectors errors1Selectors passed2Selectors failed2Selectors errors2Selectors |
 	passed1Selectors := self passed collect: [:testCase | testCase selector].
 	failed1Selectors := self failures collect: [:testCase | testCase selector].
@@ -208,26 +206,26 @@ TestResult >> diff: aTestResult [
 	passed2Selectors := aTestResult passed collect: [:testCase | testCase selector].
 	failed2Selectors := aTestResult failures collect: [:testCase | testCase selector].
 	errors2Selectors := aTestResult errors collect: [:testCase | testCase selector].
-	
+
 	^ {passed1Selectors copyWithoutAll: passed2Selectors .
 		failed1Selectors copyWithoutAll: failed2Selectors .
 		errors1Selectors copyWithoutAll: errors2Selectors}
 ]
 
 { #category : #history }
-TestResult >> dispatchResultsIntoHistory [ 
+TestResult >> dispatchResultsIntoHistory [
 
-	self classesTested do: 
-		[ :testClass | 
+	self classesTested do:
+		[ :testClass |
 		self class
 			historyAt: testClass
-			put: (self selectResultsForTestCase: testClass) ].
+			put: (self selectResultsForTestCase: testClass) ]
 ]
 
 { #category : #accessing }
 TestResult >> errorCount [
 	"I return the numbers of tests which raise error"
-	
+
 	^self errors size
 ]
 
@@ -260,7 +258,7 @@ TestResult >> expectedPassCount [
 
 { #category : #accessing }
 TestResult >> expectedPasses [
-	"I return the collection of tests which are expected to pass. 
+	"I return the collection of tests which are expected to pass.
 	A test which does not include the pragma (<expectedFailure>) is expected to pass"
 
 	^ passed select: [ :each | each shouldPass ]
@@ -275,11 +273,11 @@ TestResult >> failureCount [
 { #category : #compatibility }
 TestResult >> failures [
 	"I return failures tests.
-	I don't considere the following cases as failure: 
+	I don't considere the following cases as failure:
 	1) A failure test which was supposed to fail
 	2) A passed test which was supposed to pass"
-	
-	
+
+
 	^ self unexpectedFailures, self unexpectedPasses
 ]
 
@@ -294,18 +292,18 @@ TestResult >> fileOutOn: aFileStream [
 	3 run, 2 passes, 0 expected failures, 1 failures, 0 errors, 0 unexpected passes
 	Failures:
 	SHParserST80Test>>#testNumbers
-	
-	Errors:"	
+
+	Errors:"
 	| printer |
-	printer := [:title :testCases | 
+	printer := [:title :testCases |
 				aFileStream cr; nextPutAll: title; cr.
-				testCases do: [:aTestCase| 
+				testCases do: [:aTestCase|
 								aTestCase printOn: aFileStream.
 								aFileStream cr]].
-				
-	self printOn: aFileStream.	
+
+	self printOn: aFileStream.
 	printer value: 'Failures:' value: self failures.
-	printer value: 'Errors:' value: self errors.
+	printer value: 'Errors:' value: self errors
 ]
 
 { #category : #testing }
@@ -371,7 +369,7 @@ TestResult >> isPassedFor: class selector: selector [
 { #category : #combining }
 TestResult >> mergeWith: aTestResult [
 	"merge the given test result with the receiver"
-	
+
 	timeStamp := DateAndTime now.
 	failures addAll: aTestResult failures.
 	errors addAll: aTestResult errors.
@@ -407,7 +405,7 @@ TestResult >> printOn: aStream [
 		print: self skippedCount;
 		nextPutAll: ' skipped, ';
 		print: self expectedDefectCount;
-		nextPutAll: (' expected failure' asPluralBasedOn: self expectedDefectCount); 
+		nextPutAll: (' expected failure' asPluralBasedOn: self expectedDefectCount);
 		nextPutAll: ', ';
 		print: self unexpectedFailureCount;
 		nextPutAll: (' failure' asPluralBasedOn: self unexpectedFailureCount);
@@ -455,12 +453,12 @@ TestResult >> selectResultsForTestCase: aTestCaseClass [
 	| passedSelectors errorsSelectors failuresSelectors |
 	passedSelectors := self passed
 						select: [:testCase | testCase class == aTestCaseClass ] thenCollect: [:testCase | testCase selector].
-	errorsSelectors := self errors 
+	errorsSelectors := self errors
 						select: [:testCase | testCase class == aTestCaseClass ] thenCollect:  [:testCase | testCase selector].
-	failuresSelectors := self failures 
+	failuresSelectors := self failures
 						select: [:testCase | testCase class == aTestCaseClass ] thenCollect:  [:testCase | testCase selector].
-	
-	^ self class newTestDictionary 
+
+	^ self class newTestDictionary
 		at: #passed put: passedSelectors asSet;
 		at: #failures put: failuresSelectors asSet;
 		at: #errors put: errorsSelectors asSet;
@@ -526,7 +524,7 @@ TestResult >> unexpectedPassCount [
 { #category : #accessing }
 TestResult >> unexpectedPasses [
 	"I return passed tests which were supposed to fail"
-	
+
 	^ passed reject: [ :each | each shouldPass ]
 ]
 
@@ -534,10 +532,10 @@ TestResult >> unexpectedPasses [
 TestResult >> updateResultsInHistory [
 	|classesToNotify|
 	classesToNotify:= Set new.
-	#(#passed #failures #errors) do: [ :status | 
-		(self perform: status) do: [ :testCase | 
+	#(#passed #failures #errors) do: [ :status |
+		(self perform: status) do: [ :testCase |
 			classesToNotify add:testCase class.
 			self class updateTestHistoryFor: testCase status: status ] ].
-	classesToNotify do:[:cl | 
+	classesToNotify do:[:cl |
 		cl historyAnnouncer announce: (TestSuiteEnded result: cl)]
 ]

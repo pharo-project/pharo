@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 StrikeFontSetStoredSetting >> realValue [
 	^ (self class environment at: self fontClassName)
-				familyName: self familyName 
+				familyName: self familyName
 				size: self pointSize
 				emphasized: self emphasized
 ]

@@ -44,7 +44,7 @@ SycFindAndReplaceMethodCommand >> resultMessageSelector [
 { #category : #testing }
 SycFindAndReplaceMethodCommand >> searchInTheWholeHierarchy [
 
-	^ originalMessage contextUser origin subclasses 
+	^ originalMessage contextUser origin subclasses
 		ifEmpty: [ false ]
 		ifNotEmpty: [ self confirm: 'Do you want to search occurrences in the whole hierarchy?' ]
 ]

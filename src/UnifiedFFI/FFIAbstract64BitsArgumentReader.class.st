@@ -16,19 +16,19 @@ Class {
 
 { #category : #accessing }
 FFIAbstract64BitsArgumentReader >> floatRegisterPointer [
-	
+
 	^ callbackContext floatregargsp
 ]
 
 { #category : #initialization }
-FFIAbstract64BitsArgumentReader >> initialize [ 
+FFIAbstract64BitsArgumentReader >> initialize [
 	super initialize.
-	currentRegisterIndex := 1.	
+	currentRegisterIndex := 1.
 ]
 
 { #category : #accessing }
 FFIAbstract64BitsArgumentReader >> integerRegisterPointer [
-	
+
 	^ callbackContext intregargsp
 ]
 

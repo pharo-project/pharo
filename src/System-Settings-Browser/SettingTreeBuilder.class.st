@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-SettingTreeBuilder class >> acceptableKeywords: aCollectionOfRegExps [ 
+SettingTreeBuilder class >> acceptableKeywords: aCollectionOfRegExps [
 	^ self new acceptableKeywords: aCollectionOfRegExps
 ]
 

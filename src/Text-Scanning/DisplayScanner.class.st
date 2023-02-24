@@ -78,7 +78,7 @@ DisplayScanner class >> new [
 
 { #category : #'stop conditions' }
 DisplayScanner >> cr [
-	"When a carriage return is encountered, simply increment the pointer 
+	"When a carriage return is encountered, simply increment the pointer
 	into the paragraph."
 
 	pendingKernX := 0.
@@ -91,16 +91,16 @@ DisplayScanner >> cr [
 
 { #category : #'stop conditions' }
 DisplayScanner >> crossedX [
-	"This condition will sometimes be reached 'legally' during display, when, 
-	for instance the space that caused the line to wrap actually extends over 
-	the right boundary. This character is allowed to display, even though it 
-	is technically outside or straddling the clipping rectangle since it is in 
-	the normal case not visible and is in any case appropriately clipped by 
+	"This condition will sometimes be reached 'legally' during display, when,
+	for instance the space that caused the line to wrap actually extends over
+	the right boundary. This character is allowed to display, even though it
+	is technically outside or straddling the clipping rectangle since it is in
+	the normal case not visible and is in any case appropriately clipped by
 	the scanner."
 
 	self advanceIfFirstCharOfLine.
 	lastDisplayableIndex := lastIndex - 1.
-	^ true 
+	^ true
 ]
 
 { #category : #private }
@@ -110,7 +110,7 @@ DisplayScanner >> defaultTextColor [
 
 { #category : #private }
 DisplayScanner >> defaultTextColor: color [
-	defaultTextColor := color.
+	defaultTextColor := color
 ]
 
 { #category : #displaying }
@@ -177,8 +177,8 @@ DisplayScanner >> displayString: string from: startIndex  to: stopIndex at: aPoi
 
 { #category : #'stop conditions' }
 DisplayScanner >> endOfRun [
-	"The end of a run in the display case either means that there is actually 
-	a change in the style (run code) to be associated with the string or the 
+	"The end of a run in the display case either means that there is actually
+	a change in the style (run code) to be associated with the string or the
 	end of this line has been reached."
 	| runLength |
 	lastDisplayableIndex := lastIndex.
@@ -198,14 +198,14 @@ DisplayScanner >> fillTextBackground [
 { #category : #initialization }
 DisplayScanner >> initialize [
 	super initialize.
-	ignoreColorChanges := false.
+	ignoreColorChanges := false
 ]
 
 { #category : #'stop conditions' }
 DisplayScanner >> paddedSpace [
-	"Each space is a stop condition when the alignment is right justified. 
-	Padding must be added to the base width of the space according to 
-	which space in the line this space is and according to the amount of 
+	"Each space is a stop condition when the alignment is right justified.
+	Padding must be added to the base width of the space according to
+	which space in the line this space is and according to the amount of
 	space that remained at the end of the line when it was composed."
 
 	lastDisplayableIndex := lastIndex - 1.
@@ -220,7 +220,7 @@ DisplayScanner >> paddedSpace [
 DisplayScanner >> placeEmbeddedObject: anchoredMorphOrForm [
 
 	anchoredMorphOrForm relativeTextAnchorPosition ifNotNil:[:relativeTextAnchorPosition |
-		anchoredMorphOrForm position: 
+		anchoredMorphOrForm position:
 			relativeTextAnchorPosition +
 			(anchoredMorphOrForm owner textBounds origin x @ (lineY - morphicOffset y)).
 		^true
@@ -235,7 +235,7 @@ DisplayScanner >> placeEmbeddedObject: anchoredMorphOrForm [
 ]
 
 { #category : #private }
-DisplayScanner >> setFont [ 
+DisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
 	text ifNotNil:[destY := lineY + line baseline - font ascent]
@@ -258,7 +258,7 @@ DisplayScanner >> tab [
 { #category : #private }
 DisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
 	text := t.
-	textStyle := ts. 
+	textStyle := ts.
 	foregroundColor := defaultTextColor := foreColor.
 	backgroundColor := backColor.
 	ignoreColorChanges := shadowMode

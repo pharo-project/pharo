@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 SnapshotDone class >> isNewImage: aBoolean [
-	 ^ self new isNewImage: aBoolean.
+	 ^ self new isNewImage: aBoolean
 ]
 
 { #category : #accessing }

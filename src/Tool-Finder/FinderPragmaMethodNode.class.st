@@ -9,5 +9,4 @@ Class {
 
 { #category : #'event handling' }
 FinderPragmaMethodNode >> addInspectMenuItem: menu [
-
 ]

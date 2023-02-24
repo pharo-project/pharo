@@ -15,7 +15,7 @@ Class {
 { #category : #menu }
 MenuCapturingMorph >> menu [
 
-	^ menu.
+	^ menu
 ]
 
 { #category : #'stepping and presenter' }
