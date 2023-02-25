@@ -792,21 +792,6 @@ RBParser >> parseMethodBodyInto: aMethodNode [
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseNumberLiteral [
-	"Creates a literal value node from a number literal token."
-	| token |
-	"self deprecated: 'Unnecessary method because it is the same as parsePrimitiveValueLiteral, both called only by parsePrimitiveLiteral' transformWith: self parsePrimitiveLiteral."
-	token := currentToken.
-	self step.
-
-	^self literalValueNodeClass
-		value: token value
-		start: token start
-		stop: token stop
-		source: token source
-]
-
-{ #category : #'private - parsing' }
 RBParser >> parseParenthesizedExpression [
 	| node startToken |
 	startToken := currentToken.
@@ -884,9 +869,17 @@ RBParser >> parsePrimitiveKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parsePrimitiveLiteral [
-	^ currentToken isNumberLiteralToken
-		ifTrue: [ self parseNumberLiteral ]
-		ifFalse: [ self parsePrimitiveValueLiteral ]
+	"Creates a literal value node from a literal token."
+	| token |
+
+	token := currentToken.
+	self step.
+
+	^self literalValueNodeClass
+		value: token value
+		start: token start
+		stop: token stop
+		source: token source
 ]
 
 { #category : #'private - parsing' }
@@ -907,21 +900,6 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = ${ ifTrue: [^self parseArray]].
 	errorNode := self parserError: 'Variable or expression expected'.
 	^errorNode
-]
-
-{ #category : #'private - parsing' }
-RBParser >> parsePrimitiveValueLiteral [
-	"Creates a literal value node from a literal token."
-	| token |
-	"self deprecated: 'Unnecessary method because it is the same as parseNumberLiteral, both called only by parsePrimitiveLiteral' transformWith: self parsePrimitiveLiteral."
-	token := currentToken.
-	self step.
-
-	^self literalValueNodeClass
-		value: token value
-		start: token start
-		stop: token stop
-		source: token source
 ]
 
 { #category : #'private - parsing' }
