@@ -590,7 +590,7 @@ RBParser >> parseIncompleteExpression: priorStatementsNode [
 	self step.
 	priorStatementsNode statements: statements.
 	^self atEnd ifTrue: [ priorStatementsNode ]
-				  ifFalse: [ self parseStatementList: false into: priorStatementsNode until: [ false "No extra condition, just until the end of the stream" ].
+				  ifFalse: [ self parseStatementList: false into: priorStatementsNode untilAnyCloserOf: '' "No extra condition, just until the end of the stream".
 								self atEnd ifFalse: [ self parseIncompleteExpression: priorStatementsNode ]
 											  ifTrue: [ priorStatementsNode ] ]
 ]
@@ -1058,37 +1058,6 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseStatementList: pragmaBoolean into: sequenceNode until: aBlock [
-
-	"Parse a list of statements and set those statetements to a sequence node.
-	Stop parsing when we finish the current scope.
-	Different scopes such as blocks or methods can decide different stop conditions."
-
-	| statements return periods |
-	return := false.
-	statements := sequenceNode statements.
-	periods := OrderedCollection new.
-
-	self addCommentsTo: sequenceNode.
-
-	pragmaBoolean ifTrue: [ self parsePragmas ].
-
-	[ currentToken isSpecial: $. ]
-		whileTrue: [
-			periods add: currentToken start.
-			self step ].
-
-	[  self atEnd or: [ aBlock value ] ] whileFalse: [
-		self parseStatementInto: statements periodList: periods ].
-
-	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
-	sequenceNode
-		statements: statements;
-		periods: periods.
-	^ sequenceNode
-]
-
-{ #category : #'private - parsing' }
 RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserOf: aCollectionOfClosers [
 
 	"Parse a list of statements and set those statetements to a sequence node.
@@ -1124,17 +1093,6 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserO
 		statements: statements;
 		periods: periods.
 	^ sequenceNode
-]
-
-{ #category : #'private - parsing' }
-RBParser >> parseStatements: pragmaBoolean into: aSequenceNode until: aBlock [
-
-	self parseTemporariesInto: aSequenceNode.
-
-	^self
-		parseStatementList: pragmaBoolean
-		into: aSequenceNode
-		until: aBlock
 ]
 
 { #category : #'private - parsing' }
