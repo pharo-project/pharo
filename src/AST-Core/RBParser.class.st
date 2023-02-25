@@ -292,15 +292,6 @@ RBParser >> nextToken [
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseArgs [
-	"Return a collection of variable node."
-	| args |
-	args := OrderedCollection new.
-	[currentToken isIdentifier] whileTrue: [args add: self parseVariableNode].
-	^args
-]
-
-{ #category : #'private - parsing' }
 RBParser >> parseArray [
 	"Although an array node represents an array, it is not an Array-like object."
 	| startToken node |
