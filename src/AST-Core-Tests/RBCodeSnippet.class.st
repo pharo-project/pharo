@@ -99,69 +99,69 @@ RBCodeSnippet class >> badExpressions [
 		"Note: bad temporaries will be stored as error statements"
 		self new source: '|'.
 		self new source: '| a b'.
-		self new source: '| 1'; formattedCode: '|'. "FIXME"
+		self new source: '| 1'; formattedCode: '|.<r>1'.
 		"Note that the | character is also a binary operator, so a missing opening | become a binary call with a missing argument (see bellow)"
 		self new source: 'a | '.
 		self new source: 'a || '.
 		self new source: '| | a'; formattedCode: 'a'; isFaulty: false. "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		self new source: '|| a'; formattedCode: 'a'; isFaulty: false. "Same, but are messing with the Scanner"
-		self new source: ' ||| a'; formattedCode: ' ||| a'. "FIXME. this one is a empty temps and a binary operator | with a mising receiver"
-		self new source: ' |||| a'; formattedCode: ' |||| a'. "FIXME. this one is a empty temps and a binary operator || with a mising receiver"
+		self new source: ' ||| a'; formattedCode: ' | a'. "this one is a empty temps and a binary operator | with a mising receiver"
+		self new source: ' |||| a'; formattedCode: ' || a'. "this one is a empty temps and a binary operator || with a mising receiver"
 		self new source: '| a | | b'; formattedCode: '| a |<r> | b'. "A valid temporary followed by a binary operator with a missing receiver"
-		self new source: '| a ||b'; formattedCode: '| a.<r>b'. "FIXME"
+		self new source: '| a ||b'; formattedCode: '| a |<r> | b'. "same"
 
 		"Unexpected parameters (or columns)"
 		"Note that `:a` is not a token but a special `:` followed by an identifier, whereas `a:` is a single token."
 		"Nevertheless, the parser will try to catch unexpected :a together"
-		self new source: ':a'; formattedCode: ' :.<r>a'.
-		self new source: '::a'; formattedCode: ' :.<r> :.<r>a'.
-		self new source: ':::a'; formattedCode: ' :.<r> :.<r> :.<r>a'.
-		self new source: '::'; formattedCode: ' :.<r>:'.
-		self new source: ':a foo'; formattedCode: ' :.<r>a foo'.
-		self new source: 'a :foo'; formattedCode: ' a.<r> :.<r>foo'.
-		self new source: 'a : foo'; formattedCode: ' a.<r> :.<r>foo'.
+		self new source: ':a'.
+		self new source: '::a'.
+		self new source: ':::a'.
+		self new source: '::'.
+		self new source: ':a foo'.
+		self new source: 'a :foo'; formattedCode: ' a.<r>:foo'.
+		self new source: 'a : foo'; formattedCode: ' a.<r>:foo'.
 		self new source: 'a:'; formattedCode: ' a: '. "keyword message with a missing receiver and argument"
 		self new source: 'a::'. "just a bad token"
 		self new source: 'a:foo'; formattedCode: ' a: foo'. "keyword message with a missing receiver"
 		self new source: 'a::foo'; formattedCode: ' a::.<r>foo'.
-		self new source: ':a:foo'; formattedCode: ' :.<r> a: foo'. "FIXME"
-		self new source: '|:a|'; formattedCode: '|.<r>a | '.
-		self new source: '|:a'; formattedCode: '|.<r>a'.
-		self new source: '|::a'; formattedCode: '|.<r> :.<r>a'.
-		self new source: '|a:|'; formattedCode: '|.<r> | '. "FIXME"
-		self new source: '|a:'; formattedCode: '|'. "FIXME"
+		self new source: ':a:foo'; formattedCode: ': a: foo'.
+		self new source: '|:a|'; formattedCode: '|.<r>:a | '.
+		self new source: '|:a'; formattedCode: '|.<r>:a'.
+		self new source: '|::a'; formattedCode: '|.<r>::a'.
+		self new source: '|a:|'; formattedCode: '|.<r> a:  | '.
+		self new source: '|a:'; formattedCode: '|.<r> a: '.
 
 		"Bad block parameters"
 		"A bad parameter cause a error object to be added as the last element of the block parameter.
 		On formating, a double space can be seen."
-		self new source: '[:a b]'; formattedCode: '[ :a : | b ]'; skip: #testExecute.
-		self new source: '[:a 1]'; formattedCode: '[ :a : | 1 ]'; skip: #testExecute.
+		self new source: '[:a b]'; formattedCode: '[ :a  | b ]'; skip: #testExecute.
+		self new source: '[:a 1]'; formattedCode: '[ :a  | 1 ]'; skip: #testExecute.
 		self new source: '[:a :]'; formattedCode: '[ :a : |  ]'; skip: #testExecute.
-		self new source: '[:a ::b]'; formattedCode: '[ :a : :b |  ]'; skip: #testExecute.
+		self new source: '[:a ::b]'; formattedCode: '[ :a ::b |  ]'; skip: #testExecute.
 		self new source: '[:a :b]'; formattedCode: '[ :a :b |  ]'; isFaulty: false. "no pipe (and no body) is legal"
 		self new source: '[: a : b]'; formattedCode: '[ :a :b |  ]'; isFaulty: false. "spaces are also legal"
-		self new source: '[:a:b]'; formattedCode: '[ : : |  a: b ]'. "FIXME"
+		self new source: '[:a:b]'; formattedCode: '[ :  |  a: b ]'. "FIXME?"
 		self new source: '[  a:  ]'. "no parameters, a keyword message send witout receiver nor arguments"
-		self new source: '[ | ]'; formattedCode: '[ |'. "FIXME"
-		self new source: '[ | b ]'; formattedCode: '[ | b'. "FIXME"
-		self new source: '[ :a | | b ]'; formattedCode: '[ | b'. "FIXME"
-		self new source: '[ :a || b ]'; formattedCode: '[ | b'. "FIXME"
+		self new source: '[ | ]'.
+		self new source: '[ | b ]'.
+		self new source: '[ :a | | b ]'.
+		self new source: '[ :a || b ]'; formattedCode: '[ :a | | b ]'.
 		self new source: '[:a| | |b]'; formattedCode: '[ :a | b ]'; isFaulty: false. "Explicit empty list of temporaries"
 		self new source: '[:a| ||b]'; formattedCode: '[ :a | b ]'; isFaulty: false. "Same but mess with the Scanner"
 		self new source: '[:a|| |b]'; formattedCode: '[ :a | b ]'; isFaulty: false. "Same"
-		self new source: '[:a|||b]'; formattedCode: '[ :a : |  ||| b ]'. "FIXME"
-		self new source: '[:a||||b]'; formattedCode: '[ :a : |  |||| b ]'. "FIXME"
+		self new source: '[:a|||b]'; formattedCode: '[ :a | b ]'; isFaulty: false. "Same"
+		self new source: '[:a||||b]'; formattedCode: '[ :a |  | b ]'. "same + binary | without receiver"
 
 		"Unclosed blocks"
-		self new source: '[: | '; formattedCode: '['. "FIXME"
-		self new source: '[:'; formattedCode: '['. "FIXME"
-		self new source: '[:a :b | '; formattedCode: '['. "FIXME"
-		self new source: '[:a :b'; formattedCode: '['. "FIXME"
-		self new source: '[:a b'; formattedCode: '[ b'. "FIXME"
-		self new source: '[:a | '; formattedCode: '['. "FIXME"
-		self new source: '[:a |  b'; formattedCode: '[ b'. "FIXME"
+		self new source: '[: | '.
+		self new source: '[:'; formattedCode: '[:  | '.
+		self new source: '[:a :b | '.
+		self new source: '[:a :b'; formattedCode: '[:a :b  | '.
+		self new source: '[:a b'; formattedCode: '[:a  |  b'.
+		self new source: '[:a | '.
+		self new source: '[:a |  b'.
 		self new source: '[ |'.
-		self new source: '[ | 1'; formattedCode: '[ |'. "FIXME"
+		self new source: '[ | 1'.
 		self new source: '[ | a'.
 
 		"Missing receiver or argument in message sends.
@@ -198,7 +198,7 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '1 foo:;bar'; formattedCode: '1<r><t>foo: ;<r><t>bar'. "The cascade is correct here. It's a simple error of a missing argument"
 		self new source: '1 foo;2'; formattedCode: ' 1<r><t>foo;<r><t>.<r>2'.
 		self new source: '(1 sign: 2);bar'; formattedCode: '(1 sign: 2)<r><t>;<r><t>bar'.
-		self new source: '(1 sign);bar'; formattedCode: '1 sign<r><t>;<r><t>bar'. "BUT the parentheses are lost, but is changes the meaning"
+		self new source: '(1 sign);bar'; formattedCode: '1 sign<r><t>;<r><t>bar'. "FIXME the parentheses are lost, and this changes the meaning"
 		"Longer cascade"
 		self new source: ';;'; formattedCode: '<r><t>;<r><t>;<r><t>'.
 		self new source: '1 sign;;bar'; formattedCode: '1<r><t>sign;<r><t>;<r><t>bar'.
@@ -207,11 +207,11 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '^ '.
 		self new source: '1+^2'; formattedCode: ' 1 + .<r>^ 2'.
 		self new source: '1 foo: ^2'; formattedCode: ' 1 foo: .<r>^ 2'.
-		self new source: '(^1)'; formattedCode: ' ( .<r> ^ 1)'. "FIXME WTF"
-		self new source: '^^1'; formattedCode: ' ^ .<r>^ 1' "FIXME, same spirit".
+		self new source: '(^1)'; formattedCode: ' ( .<r> ^ 1)'. "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
+		self new source: '^^1'; formattedCode: ' ^ .<r>^ 1' "Same spirit".
 		self new source: '{ ^ 1 }'; isFaulty: false; value: 1. "I did not expect this one to be legal"
 		self new source: '#(^1)'; formattedCode: '#( #''^'' 1 )'; isFaulty: false; value: #(^1). "Obviously..."
-		self new source: '#[ ^ 1]'; skip: #testDump.
+		self new source: '#[ ^ 1]'.
 
 		"Bad string literal"
 		"Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
