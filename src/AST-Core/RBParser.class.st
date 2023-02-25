@@ -434,7 +434,7 @@ RBParser >> parseBlockArgsInto: node [
 			verticalBar := true.
 			args add: (arg := self parseVariableNode).
 			"In case of error, preserve the lone : to ditinguish from error witout even a :"
-			arg isParseError ifTrue: [ arg value: ':' ]].
+			arg isParseError ifTrue: [ arg value: ':', arg value ]].
 	verticalBar
 		ifTrue:
 			[(currentToken isBinary and: [currentToken value first = $|])
@@ -1196,11 +1196,13 @@ RBParser >> parseVariableNode [
 
 	"Consume : and optional identifier that follows as an error"
 	(currentToken isSpecial: $:) ifTrue: [
-		self step. "consume : if present"
-		errorNode value: ':'.
+		[ currentToken isSpecial: $: ] whileTrue: [
+			self step. "consume : while present"
+			errorNode stop: currentToken stop.
+			errorNode value: errorNode value , ':' ].
 		currentToken isIdentifier ifTrue: [ "Also consume the identifier"
 			errorNode stop: currentToken stop.
-			errorNode value: ':' , currentToken source.
+			errorNode value: errorNode value , currentToken source.
 			self step ] ].
 
 	^ errorNode
