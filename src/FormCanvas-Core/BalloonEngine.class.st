@@ -426,7 +426,11 @@ BalloonEngine >> flush [
 BalloonEngine >> initialize [
 	| w |
 	super initialize.
-	w := Display width > 2048 ifTrue: [ 4096 ] ifFalse: [ 2048 ].
+	
+	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a standard value as 2048"
+	w := Display width.
+	w <= 0 ifTrue:[w := 2048].
+	
 	externals := OrderedCollection new: 100.
 	span := Bitmap new: w.
 	self
@@ -750,4 +754,10 @@ BalloonEngine >> resetIfNeeded [
 	self primSetColorTransform: colorTransform.
 	self primSetDepth: self primGetDepth + 1.
 	postFlushNeeded := false
+]
+
+{ #category : #accessing }
+BalloonEngine >> span [
+
+	^ span
 ]
