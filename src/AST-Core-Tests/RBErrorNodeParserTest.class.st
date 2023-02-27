@@ -381,7 +381,7 @@ RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 	self assert: node contents second isFaulty.
 	self assert: node contents second value equals: 'hello'.
 	self assert: node contents second sourceInterval equals: (6 to: 10).
-	self assert: node contents second errorMessage equals: 'Expecting 8-bit integer'.
+	self assert: node contents second errorMessage equals: '8-bit integer expected'.
 	self assert: node contents second formattedCode equals: 'hello'.
 
 	self deny: node contents third isFaulty.
