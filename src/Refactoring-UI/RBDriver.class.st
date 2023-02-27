@@ -19,7 +19,10 @@ then you can send the `execute` message that will execute the refactoring.
 Class {
 	#name : #RBDriver,
 	#superclass : #Object,
-	#category : #'Refactoring-Core-UI'
+	#instVars : [
+		'model'
+	],
+	#category : #'Refactoring-UI'
 }
 
 { #category : #testing }
