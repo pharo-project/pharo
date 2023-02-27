@@ -347,7 +347,7 @@ ThemeSettings >> maxBalloonHelpLineLength: anInteger [
 ThemeSettings >> menuBorderColor [
 	"Answer the value of menuColor"
 
-	^ self flatMenu 
+	^ self flatMenu
 		ifFalse: [ #raised ]
 		ifTrue: [ self derivedMenuColor twiceDarker ]
 ]

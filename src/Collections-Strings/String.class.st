@@ -1213,6 +1213,30 @@ String >> endsWithDigit [
 	^ self notEmpty and: [self last isDigit]
 ]
 
+{ #category : #converting }
+String >> escapeCharacter: aCharacter [
+	"Returns a copy of the string doubling all occurence of aCharacter."
+	"See `unescapeCharacter:` for the opposite"
+
+	"('abc' escapeCharacter: $X) >>> 'abc'"
+
+	"('aXb' escapeCharacter: $X) >>> 'aXXb'"
+
+	"('XaX' escapeCharacter: $X) >>> 'XXaXX'"
+
+	"('XXaXbXXcXXXdXX' escapeCharacter: $X) >>> 'XXXXaXXbXXXXcXXXXXXdXXXX'"
+
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: self.
+	[ stream atEnd ] whileFalse: [
+		result nextPutAll: (stream upTo: aCharacter).
+		stream peekBack = aCharacter ifTrue: [
+			result nextPut: aCharacter.
+			result nextPut: aCharacter ] ].
+	^ result contents
+]
+
 { #category : #formatting }
 String >> expandMacros [
 	"'<t>' expandMacros >>> String tab"
@@ -2696,6 +2720,7 @@ String >> uncapitalized [
 String >> unescapeCharacter: aCharacter [
 	"Unescape an escaped string. Assume the string has all occurrences of aCharacter are escaped. That is, they are in pairs.
 	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
+	"See `escapeCharacter:` for the opposite"
 
 	"('''''' unescapeCharacter: $') >>> ''''"
 	"('''' unescapeCharacter: $') >>> ''"
