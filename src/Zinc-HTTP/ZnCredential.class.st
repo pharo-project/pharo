@@ -15,7 +15,7 @@ Class {
 
 { #category : #accessing }
 ZnCredential class >> authName [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - class hierarchy' }
@@ -32,19 +32,19 @@ ZnCredential class >> findHandlerFor: anAuthHeader [
 ZnCredential class >> findRealmFor: anAuthHeader [
 	(anAuthHeader substrings: ',') do: [ :token |
 		"String>>trimBoth: is a grease method, so not sure if we should be using it."
-		(token includesSubstring: 'realm=') 
+		(token includesSubstring: 'realm=')
 			ifTrue: [ ^ ((token substrings: '=') second) ] ].
 	^ nil
 ]
 
 { #category : #accessing }
 ZnCredential >> authToken [
-	^ self authTokenForUrl: nil method: nil 
+	^ self authTokenForUrl: nil method: nil
 ]
 
 { #category : #accessing }
 ZnCredential >> authTokenForUrl: urlObject method: method [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -59,12 +59,12 @@ ZnCredential >> domain: anObject [
 
 { #category : #testing }
 ZnCredential >> isComplete [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #operations }
 ZnCredential >> linkToAuthRequest: aHeader [
-	"Link this credential to the WWW-Authenticate request in the provided header. 
+	"Link this credential to the WWW-Authenticate request in the provided header.
 	Used for authentication methods which require parameters provided by the server
 	(e.g. Digest authentication)."
 	realm := self class findRealmFor: aHeader

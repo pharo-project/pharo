@@ -14,7 +14,7 @@ SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassSideCommand >> defaultMenuIconName [ 
+SycMoveMethodsToClassSideCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 

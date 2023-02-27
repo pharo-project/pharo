@@ -139,8 +139,9 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-				
-				
+
+
+		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.

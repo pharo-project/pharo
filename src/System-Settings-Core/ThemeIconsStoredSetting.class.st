@@ -23,7 +23,7 @@ ThemeIconsStoredSetting >> name: anObject [
 
 { #category : #accessing }
 ThemeIconsStoredSetting >> realValue [
-	^ ThemeIcons new 
+	^ ThemeIcons new
 		name: self name;
 		url: self url;
 		yourself

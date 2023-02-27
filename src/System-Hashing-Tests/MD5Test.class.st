@@ -12,15 +12,15 @@ Class {
 
 { #category : #coverage }
 MD5Test >> classToBeTested [
-	
+
 	^ MD5
 ]
 
 { #category : #testing }
 MD5Test >> testEmpty [
-	
-	self 
-		assert: (MD5 hashMessage: '') hex 
+
+	self
+		assert: (MD5 hashMessage: '') hex
 		equals: 'd41d8cd98f00b204e9800998ecf8427e'
 ]
 
@@ -36,14 +36,14 @@ MD5Test >> testLargeCharacterStream [
 
 { #category : #testing }
 MD5Test >> testWikipedia1 [
-	self 
-		assert: (MD5 hashMessage: 'The quick brown fox jumps over the lazy dog') hex 
+	self
+		assert: (MD5 hashMessage: 'The quick brown fox jumps over the lazy dog') hex
 		equals: '9e107d9d372bb6826bd81d3542a419d6'
 ]
 
 { #category : #testing }
 MD5Test >> testWikipedia2 [
-	self 
-		assert: (MD5 hashMessage: 'The quick brown fox jumps over the lazy dog.') hex 
+	self
+		assert: (MD5 hashMessage: 'The quick brown fox jumps over the lazy dog.') hex
 		equals: 'e4d909c290d0fb1ca068ffaddf22cbd0'
 ]

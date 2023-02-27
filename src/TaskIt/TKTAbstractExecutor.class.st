@@ -18,7 +18,7 @@ Class {
 { #category : #testing }
 TKTAbstractExecutor class >> isAbstract [
 
-	^self == TKTAbstractExecutor 
+	^self == TKTAbstractExecutor
 ]
 
 { #category : #accessing }
@@ -28,7 +28,7 @@ TKTAbstractExecutor >> exceptionHandler [
 
 { #category : #accessing }
 TKTAbstractExecutor >> exceptionHandler: aHandler [
-	
+
 	exceptionHandler := aHandler
 ]
 
@@ -70,5 +70,4 @@ TKTAbstractExecutor >> start [
 
 { #category : #polymorphism }
 TKTAbstractExecutor >> stop [
-
 ]

@@ -26,7 +26,7 @@ WeakSlot >> emitStore: aMethodBuilder [
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
 	aMethodBuilder popTop.
-	
+
 	"Push the weak array into the stack, then the arguments, then send"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder pushLiteral: 1.
@@ -51,7 +51,7 @@ WeakSlot >> initialize: anObject [
 { #category : #'meta-object-protocol' }
 WeakSlot >> read: anObject [
 
-	^ (super read: anObject) at: 1.
+	^ (super read: anObject) at: 1
 ]
 
 { #category : #'meta-object-protocol' }

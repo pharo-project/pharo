@@ -68,7 +68,7 @@ ZnReadEvalPrintDelegate class >> startInServerOn: port [
 	"Start a new server bound to port on the local network running a REPL web service"
 
 	"self startInServerOn: 1701"
-	
+
 	 ^ (ZnServer on: port)
 			bindingAddress: NetNameResolver loopBackAddress;
 			delegate: self new;
@@ -79,12 +79,12 @@ ZnReadEvalPrintDelegate class >> startInServerOn: port [
 { #category : #private }
 ZnReadEvalPrintDelegate >> evaluate: string [
 	| output |
-	output := String streamContents: [ :out | 
+	output := String streamContents: [ :out |
 		[ 	| compiler result |
-			compiler := [ self class compiler ] 
-								on: MessageNotUnderstood 
-								do: [ Smalltalk at: #Compiler "for Pharo 2.0" ].		
-			result := compiler evaluate: string. 
+			compiler := [ self class compiler ]
+								on: MessageNotUnderstood
+								do: [ Smalltalk at: #Compiler "for Pharo 2.0" ].
+			result := compiler evaluate: string.
 			out print: result; cr ]
 			on: Error
 			do: [ :exception |
@@ -97,7 +97,7 @@ ZnReadEvalPrintDelegate >> evaluate: string [
 
 { #category : #'request handling' }
 ZnReadEvalPrintDelegate >> handleGetRequest: request [
-	^ ZnResponse ok: (ZnEntity text: (self helpText format: { request server port })) 
+	^ ZnResponse ok: (ZnEntity text: (self helpText format: { request server port }))
 ]
 
 { #category : #'request handling' }
@@ -108,27 +108,27 @@ ZnReadEvalPrintDelegate >> handlePostRequest: request [
 { #category : #public }
 ZnReadEvalPrintDelegate >> handleRequest: request [
 	request uri firstPathSegment = #repl
-		ifTrue: [ 
+		ifTrue: [
 			request method = #GET
-				ifTrue: [ 
+				ifTrue: [
 					^ self handleGetRequest: request ].
 			(request method = #POST and: [ request hasEntity and: [ request contentType isBinary not ] ])
-				ifTrue: [ 
+				ifTrue: [
 					^ self handlePostRequest: request ] ].
 	^ ZnResponse notFound: request uri
 ]
 
 { #category : #private }
 ZnReadEvalPrintDelegate >> helpText [
-	^ '# Pharo Smalltalk REPL. POST expressions to evaluate\# Here is one way (type ctrl-d to end input)\curl -X POST -H''Content-Type:text/plain'' --data-binary @- http://localhost:{1}/repl\' 
-			withCRs 
-				replaceAll: Character cr with: Character lf; 
+	^ '# Pharo Smalltalk REPL. POST expressions to evaluate\# Here is one way (type ctrl-d to end input)\curl -X POST -H''Content-Type:text/plain'' --data-binary @- http://localhost:{1}/repl\'
+			withCRs
+				replaceAll: Character cr with: Character lf;
 				yourself
 ]
 
 { #category : #public }
 ZnReadEvalPrintDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
-	
+
 	^ self handleRequest: request
 ]

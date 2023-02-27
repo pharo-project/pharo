@@ -26,11 +26,11 @@ RBScannerTest >> testCommentTokenHasTheRightValue [
 
 	scanner := self buildScannerForText: String tab, ' """nested at beggining"" comment" firstToken'.
 	token := scanner next comments first.
-	self assert: token value equals: '""nested at beggining"" comment'.
+	self assert: token value equals: '"nested at beggining" comment'.
 
 	scanner := self buildScannerForText: String tab, ' "comment ""nested at end""" firstToken'.
 	token := scanner next comments first.
-	self assert: token value equals: 'comment ""nested at end""'
+	self assert: token value equals: 'comment "nested at end"'
 ]
 
 { #category : #'tests - Comment' }
@@ -205,9 +205,11 @@ RBScannerTest >> testNextAssignementStopAtEqual [
 { #category : #'tests - Error' }
 RBScannerTest >> testNextBaseOfRadixNumbersCanNotBeOne [
 
-	| scanner |
+	| scanner token |
 	scanner := self buildScannerForText: '1r1a'.
-	self should: [scanner next] raise: SyntaxErrorNotification
+	token := scanner next.
+	self assert: token isError.
+	self assert: token start equals: 1
 ]
 
 { #category : #'tests - NumberLiteral' }
@@ -789,7 +791,7 @@ RBScannerTest >> testNextLiteralBeginningWithApostropheThrowsError [
 	scanner := self buildScannerForText: '#'''.
 	token := scanner next.
 	self assert: token isError.
-	self assert: token value equals: #''.
+	self assert: token value equals: #'#'''.
 	self assert: token cause equals: 'Unmatched '' in string literal.'
 ]
 
@@ -1556,7 +1558,7 @@ RBScannerTest >> testNextWithAnOpeningStringsGetError [
 	| source scannedToken |
 	source := '''only the opening'.
 	scannedToken := (self buildScannerForText: source) next.
-	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.' translated valueExpected: 'only the opening'
+	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.' translated valueExpected: source
 ]
 
 { #category : #tests }
@@ -1575,7 +1577,7 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
 	self
 		shouldnt: [ token := (self buildScannerForText: source) next ]
 		raise: SyntaxErrorNotification.
-	self assert: token comments first value equals: 'only the"" opening'
+	self assert: token comments first value equals: 'only the" opening'
 ]
 
 { #category : #tests }
@@ -1609,7 +1611,7 @@ RBScannerTest >> testScanTokenObjects2 [
 	| inp exp |
 	inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
-	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
+	exp := {'classVariableNames:' . '' . 'package:' . '''UndefinedClasses-Experiment'}.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 

@@ -11,8 +11,6 @@ ZnHeadersTest >> testMergeValued [
 	headers at: 'Set-Cookie' put: 'foo=1'.
 	headers at: 'Set-Cookie' put: 'bar=1' ifPresentMerge: [ :old :new | old, ';', new ].
 	self assert: (headers at: 'Set-Cookie') equals: 'foo=1;bar=1'
-	
-	
 ]
 
 { #category : #testing }
@@ -22,8 +20,6 @@ ZnHeadersTest >> testMultiValued [
 	headers at: 'Set-Cookie' put: 'foo=1'.
 	headers at: 'Set-Cookie' add: 'bar=1'.
 	self assert: (headers at: 'Set-Cookie') equals: #('foo=1' 'bar=1')
-	
-	
 ]
 
 { #category : #testing }
@@ -35,9 +31,7 @@ ZnHeadersTest >> testMultiValuedStreaming [
 	keysAndValues := OrderedCollection streamContents: [ : stream |
 		headers headersDo: [ :key :value |
 			stream nextPut: key; nextPut: value ] ].
-	self assert: keysAndValues equals: #('Set-Cookie' 'foo=1' 'Set-Cookie' 'bar=1') asOrderedCollection 
-	
-	
+	self assert: keysAndValues equals: #('Set-Cookie' 'foo=1' 'Set-Cookie' 'bar=1') asOrderedCollection
 ]
 
 { #category : #testing }
@@ -49,9 +43,7 @@ ZnHeadersTest >> testNormalization [
 	self assert: (headers includesKey: 'content-TYPE').
 	self assert: (headers at: 'Content-Type') equals: 'text/plain'.
 	headers at: 'CONTENT-type' put: 'text/html'.
-	self assert: (headers at: 'Content-Type') equals: 'text/html'.
-
-	
+	self assert: (headers at: 'Content-Type') equals: 'text/html'
 ]
 
 { #category : #testing }
@@ -62,16 +54,16 @@ ZnHeadersTest >> testReading [
 	self assert: (headers includesKey: 'Content-Type').
 	self assert: (headers includesKey: 'Content-Length').
 	self assert: (headers at: 'Content-Type') equals: 'text/plain'.
-	self assert: (headers at: 'Content-Length') equals: '128'.
+	self assert: (headers at: 'Content-Length') equals: '128'
 ]
 
 { #category : #testing }
 ZnHeadersTest >> testReadingMultiline [
 	| string headers |
-	string := 'Content-Type: text/plain', String crlf, 
-		'Long: foo', String crlf, 
-		' bar', String crlf, 
-		String tab, 'baz', String crlf, 
+	string := 'Content-Type: text/plain', String crlf,
+		'Long: foo', String crlf,
+		' bar', String crlf,
+		String tab, 'baz', String crlf,
 		'Content-Length: 128', String crlf.
 	headers := ZnHeaders readFrom: string asByteArray readStream.
 	self assert: (headers includesKey: 'Content-Type').
@@ -79,28 +71,28 @@ ZnHeadersTest >> testReadingMultiline [
 	self assert: (headers at: 'Content-Type') equals: 'text/plain'.
 	self assert: (headers at: 'Content-Length') equals: '128'.
 	self assert: (headers includesKey: #Long).
-	self assert: (headers at: #long) equals: 'foo bar	baz'.
+	self assert: (headers at: #long) equals: 'foo bar	baz'
 ]
 
 { #category : #testing }
 ZnHeadersTest >> testReadingMultilineMultiValue [
 	| string headers |
-	string := 'Content-Type: text/plain', String crlf, 
-		'Long: foo', String crlf, 
-		' bar', String crlf, 
-		String tab, 'baz', String crlf, 
+	string := 'Content-Type: text/plain', String crlf,
+		'Long: foo', String crlf,
+		' bar', String crlf,
+		String tab, 'baz', String crlf,
 		'Content-Length: 128', String crlf,
 		'Long: more', String crlf.
 	headers := ZnHeaders readFrom: string asByteArray readStream.
-	self assert: (headers at: #long) equals: #( 'foo bar	baz' 'more').
+	self assert: (headers at: #long) equals: #( 'foo bar	baz' 'more')
 ]
 
 { #category : #testing }
 ZnHeadersTest >> testReadingMultilineNonBinary [
 	| string headers |
-	string := 'Foo: 1', String crlf, 
-		' 2', String crlf, 
-		String tab, '3', String crlf, 
+	string := 'Foo: 1', String crlf,
+		' 2', String crlf,
+		String tab, '3', String crlf,
 		'Bar: EOF', String crlf.
 	headers := ZnHeaders readFrom: string readStream.
 	self assert: (headers at: 'Foo') equals: '1 2', String tab, '3'.

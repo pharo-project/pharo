@@ -14,9 +14,9 @@ Class {
 
 { #category : #'field definition' }
 TFNestedTestStruct class >> fieldsDesc [
-	
+
 	"self rebuildFieldAccessors"
-		
+
 	^ #(
 	TFInnerTestStruct inner;
 	float x;

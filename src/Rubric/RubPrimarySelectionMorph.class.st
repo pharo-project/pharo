@@ -31,13 +31,13 @@ RubPrimarySelectionMorph >> readWriteView [
 ]
 
 { #category : #'event handling' }
-RubPrimarySelectionMorph >> registerTextArea [ 
+RubPrimarySelectionMorph >> registerTextArea [
 	super registerTextArea.
-	
-	textArea announcer 
+
+	textArea announcer
 	when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self;
-	when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self;	
-	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self.
+	when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self;
+	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self
 ]
 
 { #category : #accessing }
@@ -48,19 +48,19 @@ RubPrimarySelectionMorph >> selectionColor [
 ]
 
 { #category : #'protocol - events' }
-RubPrimarySelectionMorph >> whenTextAreaGotFocus: anAnnouncement [ 
+RubPrimarySelectionMorph >> whenTextAreaGotFocus: anAnnouncement [
 	self color: self selectionColor
 ]
 
 { #category : #'protocol - events' }
-RubPrimarySelectionMorph >> whenTextAreaLostFocus: anAnnouncement [ 
+RubPrimarySelectionMorph >> whenTextAreaLostFocus: anAnnouncement [
 	self color: self selectionColor
 ]
 
 { #category : #'protocol - events' }
-RubPrimarySelectionMorph >> whenTextAreaSelectionChanged: anAnnouncement [ 
+RubPrimarySelectionMorph >> whenTextAreaSelectionChanged: anAnnouncement [
 	firstIndex := self textArea markIndex min: self textArea pointIndex.
 	lastIndex := self textArea pointIndex max: self textArea markIndex.
 	self computeVertices.
-	self announcer announce: RubTextSetInModel.
+	self announcer announce: RubTextSetInModel
 ]

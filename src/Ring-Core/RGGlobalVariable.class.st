@@ -17,7 +17,7 @@ RGGlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 RGGlobalVariable >> addoptToParentStub [
 
 	super addoptToParentStub.
-	self parent addGlobalVariable: self.
+	self parent addGlobalVariable: self
 ]
 
 { #category : #analyzing }
@@ -37,7 +37,7 @@ RGGlobalVariable >> isGlobalVariable [
 ]
 
 { #category : #testing }
-RGGlobalVariable >> isSuperVariable [ 
+RGGlobalVariable >> isSuperVariable [
 
 	^ false
 ]

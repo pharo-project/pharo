@@ -75,7 +75,6 @@ ZnChunkedWriteStream >> initialize [
 { #category : #testing }
 ZnChunkedWriteStream >> isBinary [
 	^ stream isBinary
-
 ]
 
 { #category : #testing }
@@ -85,9 +84,9 @@ ZnChunkedWriteStream >> isStream [
 
 { #category : #accessing }
 ZnChunkedWriteStream >> next: count putAll: collection [
-	self 
-		next: count 
-		putAll: collection 
+	self
+		next: count
+		putAll: collection
 		startingAt: 1
 ]
 
@@ -98,7 +97,6 @@ ZnChunkedWriteStream >> next: count putAll: collection startingAt: offset [
 	self crlf.
 	chunkCount := chunkCount + 1.
 	totalSize := totalSize + count
-
 ]
 
 { #category : #accessing }
@@ -108,7 +106,7 @@ ZnChunkedWriteStream >> nextPut: element [
 
 { #category : #accessing }
 ZnChunkedWriteStream >> nextPutAll: collection [
-	self 
+	self
 		next: collection size
 		putAll: collection
 		startingAt: 1

@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 TraitFileOutTest class >> defaultTimeLimit [
-	
+
 	^ 15 seconds
 ]
 
@@ -27,23 +27,23 @@ TraitFileOutTest >> categoryName [
 TraitFileOutTest >> setUp [
 	super setUp.
 	self class environment organization addCategory: self categoryName.
-	
-	td := self createTraitNamed: #TD uses: {}.		
+
+	td := self createTraitNamed: #TD uses: {}.
 	td compile: 'd' classified: #cat1.
-	tc := self createTraitNamed: #TC uses: td.		
+	tc := self createTraitNamed: #TC uses: td.
 	tc compile: 'c' classified: #cat1.
-	tb := self createTraitNamed: #TB uses: td.		
+	tb := self createTraitNamed: #TB uses: td.
 	tb compile: 'b' classified: #cat1.
 	ta := self createTraitNamed: #TA uses: tb + tc @ {#cc->#c} - {#c}.
 	ta compile: 'a' classified: #cat1.
-	
+
 	ca := self createClassNamed: #CA superclass: Object uses: {}.
 	ca compile: 'ca' classified: #cat1.
 	cb := self createClassNamed: #CB superclass: ca uses: ta.
 	cb compile: 'cb' classified: #cat1.
-	
+
 	"make the class of cb also use tc:"
-	cb class uses: ta classTrait + tc instanceVariableNames: ''.
+	cb class uses: ta classTrait + tc instanceVariableNames: ''
 ]
 
 { #category : #running }
@@ -68,7 +68,7 @@ TraitFileOutTest >> testFileOutCategory [
 	self class environment organization fileOutCategory: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
 	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
-	
+
 	CodeImporter evaluateFileNamed: (self categoryName , '.st').
 	self assertCollection: testingEnvironment keys asSet includesAll: #(#CA #CB #TA #TB #TC #TD).
 	ta := testingEnvironment at: #TA.
@@ -92,7 +92,7 @@ TraitFileOutTest >> testFileOutTrait [
 	fileName := self t6 asString , '.st'.
 	self resourceClassesAndTraits remove: self t6.
 	self t6 removeFromSystem.
-	
+
 	CodeImporter evaluateFileNamed: fileName.
 	self assert: (testingEnvironment includesKey: #T6).
 	TraitsResource current t6: (testingEnvironment at: #T6).
@@ -107,23 +107,22 @@ TraitFileOutTest >> testFileOutTrait [
 TraitFileOutTest >> testRecompiling [
 
 	| traitSrcPtr methodSrcPtr |
-	
+
 	traitSrcPtr := self t1 methods first sourcePointer.
 	methodSrcPtr := self c1 methods first sourcePointer.
-	
+
 	self t1 recompile.
 	self c1 recompile.
-	
+
 	self
 		assert: traitSrcPtr equals: self t1 methods first sourcePointer;
 		assert: methodSrcPtr equals: self c1 methods first sourcePointer
-	
 ]
 
 { #category : #tests }
 TraitFileOutTest >> testRemovingMethods [
 	"When removing a local method, assure that the method
-	from the trait is installed instead and that the users are 
+	from the trait is installed instead and that the users are
 	updated."
 
 	"Classes"

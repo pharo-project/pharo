@@ -7,14 +7,14 @@ Class {
 { #category : #accessing }
 ZnMimeTypeTest >> someNonBinaryMimeTypes [
 	^ #(
-		'text/plain;charset=ascii' 
-		'application/json;charset=utf-8' 
+		'text/plain;charset=ascii'
+		'application/json;charset=utf-8'
 		'application/ston'
-		'application/vnd.com.runkeeper.user+json;charset=ISO-8859-1' 
-		'application/xml-dtd' 
-		'application/xslt+xml' 
-		'image/svg+xml' 
-		'application/SGML' 
+		'application/vnd.com.runkeeper.user+json;charset=ISO-8859-1'
+		'application/xml-dtd'
+		'application/xslt+xml'
+		'image/svg+xml'
+		'application/SGML'
 		'model/x3d+xml'
 		'application/csv')
 ]
@@ -99,7 +99,7 @@ ZnMimeTypeTest >> testMatches [
 	#(
 		( 'text/plain' 'text/*' )
 		( 'text/plain' '*/*' )
-		( 'text/plain;charset=utf-8' 'text/*' ) 
+		( 'text/plain;charset=utf-8' 'text/*' )
 		( 'text/plain;charset=utf-8' 'text/plain' )
 		( 'text/plain' 'text/plain;charset=utf-8' )
 		( 'text/plain;charset=utf-8' 'text/plain;charset=ascii' ) ) do: [ :each |
@@ -128,7 +128,7 @@ ZnMimeTypeTest >> testParameters [
 	mimeType removeParameter: 'foo'.
 	mimeType removeParameter: 'bar'.
 	self should: [ mimeType parameterAt: 'foo' ] raise: KeyNotFound.
-	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) equals: #none	
+	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) equals: #none
 ]
 
 { #category : #testing }

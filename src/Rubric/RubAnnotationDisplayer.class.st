@@ -65,7 +65,7 @@ RubAnnotationDisplayer >> chosenTabWidth: anInteger [
 
 { #category : #'submorphs - accessing' }
 RubAnnotationDisplayer >> columnDisplayLabel [
-	^ self paragraphProvider columnRuler 
+	^ self paragraphProvider columnRuler
 		ifNil: [ '+C' ]
 		ifNotNil: [ 'C' ]
 ]
@@ -97,7 +97,7 @@ RubAnnotationDisplayer >> editingModeLabelMorph [
 { #category : #initialization }
 RubAnnotationDisplayer >> initialize [
 	super initialize.
-	self side: #bottom.
+	self side: #bottom
 ]
 
 { #category : #accessing }
@@ -213,7 +213,7 @@ RubAnnotationDisplayer >> textOfCharBlock: aCharacterBlock [
 	t := l lineNumber printString , '/' , self lines size printString
 		, ' [', c printString.
 	self paragraphProvider annotationRuler
-		ifNotNil: [ :r | 
+		ifNotNil: [ :r |
 			| tabIdx |
 			tabIdx := ((aCharacterBlock left + 1) // self paragraph tabWidth) + 1.
 			t := t , ':' , tabIdx printString ].
@@ -231,7 +231,7 @@ RubAnnotationDisplayer >> updateContents [
 	self textArea selectionStop ~= self textArea selectionStart
 		ifTrue: [ t := t , ' -- ' , (self textOfCharBlock: self textArea selectionStop) ].
 	lineAnnotation
-		beEditableWhile: [ 
+		beEditableWhile: [
 			lineAnnotation setTextWith: t.
 			self layoutChanged ].
 	wrappingPolicyMorph contents: self wrappingPolicyLabel.
