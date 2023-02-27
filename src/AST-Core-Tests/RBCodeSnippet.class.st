@@ -269,7 +269,7 @@ RBCodeSnippet class >> badExpressions [
 { #category : #script }
 RBCodeSnippet class >> styleAll [
 	"Display all snippets in a big styled text.
-	Each sniped is styled independently."
+	Each snipped is styled independently."
 
 	<script>
 	| bigtext |
@@ -277,6 +277,59 @@ RBCodeSnippet class >> styleAll [
 	self badExpressions do: [ :each |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 		bigtext append: each styledText ].
+	bigtext inspect
+]
+
+{ #category : #script }
+RBCodeSnippet class >> styleAllWithError [
+	"Display all snippets in a big styled text with compilation error messages and error nodes.
+	Each compilation error message and each error node is displayed indenpendently."
+
+	<script>
+	| bigtext |
+	bigtext := Text new.
+	self badExpressions do: [ :each |
+		| text ast |
+		bigtext ifNotEmpty: [ bigtext append: String cr ].
+
+		"Get the original styled text"
+		text := each styledText.
+		bigtext append: text.
+
+		"Try to compile it"
+		[
+		OpalCompiler new
+			noPattern: true;
+			compile: each source ]
+			on: SyntaxErrorNotification
+			do: [ :exception |
+				"In case of error, insert error message (like an old-school smalltalk compiler)"
+				text
+					replaceFrom: exception location
+					to: exception location - 1
+					with: (exception errorMessage asText addAttribute:
+							 (TextBackgroundColor color: Color lightBlue)).
+				bigtext append: String cr.
+				bigtext append: String tab.
+				bigtext append: text. ].
+
+		"Then the fun part. Add line for each error node"
+		ast := each parse.
+		ast nodesDo: [ :node |
+			node isParseError ifTrue: [
+				text := each styledText.
+				text
+					addAttribute: (TextBackgroundColor color: Color cyan)
+					from: node start
+					to: (node stop min: text size).
+				text append: '    '.
+				text append: node errorMessage.
+				text append: '  ('.
+				text append: node class name.
+				text append: ')'.
+				bigtext append: String cr.
+				bigtext append: String tab.
+				bigtext append: text ] ] ].
 	bigtext inspect
 ]
 
