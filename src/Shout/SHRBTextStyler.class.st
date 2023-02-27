@@ -1207,7 +1207,7 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
-	anEnglobingErrorNode content do: [:each | self visitNode: each ]
+	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
 { #category : #visiting }
