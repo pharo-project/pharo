@@ -198,7 +198,7 @@ BaselineOfIDE >> baseline: spec [
 		self drTests: spec.
 		self microdown: spec.
 		self beautifulComments: spec.
-		self documentBrowser: spec.
+		self documentBrowserCore: spec.
 		self roassal3: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
@@ -217,11 +217,12 @@ BaselineOfIDE >> beautifulComments: spec [
 ]
 
 { #category : #baselines }
-BaselineOfIDE >> documentBrowser: spec [
+BaselineOfIDE >> documentBrowserCore: spec [
 
 	spec baseline: 'NewToolsDocumentBrowser' with: [
 		spec
-			repository: (self class environment at: #BaselineOfPharo) documentBrowserRepository ]
+			repository: (self class environment at: #BaselineOfPharo) documentBrowserRepository;
+			loads: 'Core+Tests' ]
 ]
 
 { #category : #baselines }
@@ -234,12 +235,14 @@ BaselineOfIDE >> drTests: spec [
 
 { #category : #actions }
 BaselineOfIDE >> loadExtraTools [
-	
-	"Metacello new
-		baseline: 'NewToolsDocumentationReader';
-		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
+
+	"Load NewTools-DocumentBrowser-GitHubResource packages depending on Iceberg GitHub plugin"
+
+	Metacello new
+		baseline: 'NewToolsDocumentBrowser';
+		repository: (self class environment at: #BaselineOfPharo) documentBrowserRepository;
 		onConflictUseIncoming;
-		load."
+		load
 ]
 
 { #category : #actions }
