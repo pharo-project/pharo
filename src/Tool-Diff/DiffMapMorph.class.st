@@ -13,7 +13,7 @@ Class {
 { #category : #accessing }
 DiffMapMorph >> adoptPaneColor: paneColor [
 	"Change our border color too."
-	
+
 	|c|
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
@@ -30,7 +30,7 @@ DiffMapMorph >> defaultColor [
 { #category : #drawing }
 DiffMapMorph >> drawOn: aCanvas [
 	"Draw the indicators for the mappings."
-	
+
 	|b f|
 	b := self innerBounds insetBy: 2.
 	super drawOn: aCanvas.
@@ -46,7 +46,7 @@ DiffMapMorph >> drawOn: aCanvas [
 { #category : #drawing }
 DiffMapMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the indicators for the mappings."
-	
+
 	|b f|
 	b := self innerBounds insetBy: 2.
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -62,7 +62,7 @@ DiffMapMorph >> drawOnAthensCanvas: anAthensCanvas [
 { #category : #accessing }
 DiffMapMorph >> extent: newExtent [
 	"Update the gradient."
-	
+
 	super extent: newExtent.
 	(self fillStyle notNil and: [self fillStyle isOrientedFill])
 		ifTrue: [self fillStyle direction: 0@self height]
@@ -71,7 +71,7 @@ DiffMapMorph >> extent: newExtent [
 { #category : #accessing }
 DiffMapMorph >> gradientRampForColor: c [
 	"Answer the background gradient ramp to use."
-	
+
 	^{0.0->c darker duller. 0.1-> c lighter.
 		0.9->c twiceLighter. 1.0->c darker}
 ]
@@ -79,7 +79,7 @@ DiffMapMorph >> gradientRampForColor: c [
 { #category : #'event handling' }
 DiffMapMorph >> handlesMouseDown: anEvent [
 	"Answer true to report mouse down activity."
-	
+
 	^true
 ]
 
@@ -110,19 +110,19 @@ DiffMapMorph >> mappings: anObject [
 { #category : #'private - accessing' }
 DiffMapMorph >> mappingsHeight [
 	"Answer the maximum y of all the mappings."
-	
+
 	self mappings ifEmpty: [^0].
-	^self mappings last dst range last 
+	^self mappings last dst range last
 ]
 
 { #category : #'event handling' }
 DiffMapMorph >> mouseDown: event [
 	"Trigger a 0..1 range based on location."
-	
+
 	|b|
 	b := self innerBounds insetBy: 2.
 	self
 		triggerEvent: #mapClicked
-		with: (((event cursorPoint y asFloat - b top / b height) 
+		with: (((event cursorPoint y asFloat - b top / b height)
 				min: 1) max: 0)
 ]

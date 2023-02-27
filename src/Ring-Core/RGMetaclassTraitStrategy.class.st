@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #visiting }
-RGMetaclassTraitStrategy >> acceptVisitor: aVisitor [ 
+RGMetaclassTraitStrategy >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitClassTrait: self owner
 ]
@@ -81,15 +81,15 @@ RGMetaclassTraitStrategy >> isMetaclassTraitStrategy [
 { #category : #'private - backend access' }
 RGMetaclassTraitStrategy >> makeResolved [
 
-	
+
 	"try to set the correct name before resolving of it"
-	((self owner hasUnresolved: #name) and: [ self baseClass isRingResolved and: [ self baseTrait hasResolvedName] ]) ifTrue: [ 
+	((self owner hasUnresolved: #name) and: [ self baseClass isRingResolved and: [ self baseTrait hasResolvedName] ]) ifTrue: [
 		self owner pvtName: (self baseTrait name, ' classTrait') asSymbol.
 		 ].
 
 	super makeResolved.
-	
-	baseTrait := self baseTrait markAsRingResolved.
+
+	baseTrait := self baseTrait markAsRingResolved
 ]
 
 { #category : #'private - backend access' }
@@ -116,7 +116,7 @@ RGMetaclassTraitStrategy >> pvtBaseTrait: anRGTrait [
 RGMetaclassTraitStrategy >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
-		#baseTrait -> baseTrait. 
+		#baseTrait -> baseTrait.
    	}
 ]
 
@@ -129,7 +129,7 @@ RGMetaclassTraitStrategy >> referencedBehaviors [
 { #category : #'private - backend access' }
 RGMetaclassTraitStrategy >> sibling [
 
-	^ self baseTrait.
+	^ self baseTrait
 ]
 
 { #category : #testing }
@@ -139,7 +139,7 @@ RGMetaclassTraitStrategy >> storeName [
 ]
 
 { #category : #'private - backend access' }
-RGMetaclassTraitStrategy >> traitTransformationString [		
-		
+RGMetaclassTraitStrategy >> traitTransformationString [
+
 	^ self owner name
 ]

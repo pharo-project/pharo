@@ -18,7 +18,6 @@ ZnCookieJar >> add: aCookie [
 	self cookies do: [ :cookie |
 		cookie = aCookie ifTrue: [ self cookies remove: cookie ] ].
 	self cookies add: aCookie
-	
 ]
 
 { #category : #accessing }
@@ -28,13 +27,13 @@ ZnCookieJar >> cookieAt: aName forUrl: urlObject [
 ]
 
 { #category : #accessing }
-ZnCookieJar >> cookies [ 
+ZnCookieJar >> cookies [
 	^ cookies ifNil: [ cookies := Bag new ]
 ]
 
 { #category : #accessing }
 ZnCookieJar >> cookiesForUrl: urlObject [
-	^ self cookies select: [ :cookie | 
+	^ self cookies select: [ :cookie |
 		(cookie isExpired not) & (cookie isInDomain: urlObject) & (cookie isInPath: urlObject) ]
 ]
 
@@ -50,9 +49,9 @@ ZnCookieJar >> removeAll [
 
 { #category : #operations }
 ZnCookieJar >> removeIfExpired: aCookie [
-	^ aCookie isExpired 
-		ifTrue: [ 
-			self remove: aCookie. 
+	^ aCookie isExpired
+		ifTrue: [
+			self remove: aCookie.
 			true ]
 		ifFalse: [
 			false ]

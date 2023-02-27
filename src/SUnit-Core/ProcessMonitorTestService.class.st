@@ -106,7 +106,7 @@ ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
 
 { #category : #settings }
 ProcessMonitorTestService class >> settingsForFailingStrategyOn: aBuilder [
-	
+
 	(aBuilder setting: #shouldFailTestLeavingProcesses)
 		target: self;
 		parent: self name ;
@@ -124,15 +124,15 @@ See ProcessMonitorTestService comment for more details'
 
 { #category : #settings }
 ProcessMonitorTestService class >> settingsForTerminationStrategyOn: aBuilder [
-	
+
 	(aBuilder setting: #shouldTerminateProcesses)
 		target: self;
 		parent: self name ;
 		default: true;
 		label: 'Terminate all processes after the test' ;
-		description: 'At the end of each test all forked processes will be terminated except when we are running in interractive mode under debugger. 
+		description: 'At the end of each test all forked processes will be terminated except when we are running in interractive mode under debugger.
 When debugger opens all control is up to the user.
-But when we are running the test suite to get results it is a good practice to remove all garbage after the test. 
+But when we are running the test suite to get results it is a good practice to remove all garbage after the test.
 This setting is about doing it in automatic way.
 See ProcessMonitorTestService comment for more details'
 ]
@@ -140,7 +140,7 @@ See ProcessMonitorTestService comment for more details'
 { #category : #settings }
 ProcessMonitorTestService class >> settingsOn: aBuilder [
 	super settingsOn: aBuilder.
-	
+
 	self
 		settingsForFailingStrategyOn: aBuilder;
 		settingsForTerminationStrategyOn: aBuilder
@@ -172,21 +172,21 @@ ProcessMonitorTestService >> allowRunningProcessesToFinish [
 	So they would not be a garbage left by test.
 	For example following test would left one process at the end:
 		>>testExample
-			[ Processor yield ] fork 
-	But if we would give it a chance to finish it would do this. 
+			[ Processor yield ] fork
+	But if we would give it a chance to finish it would do this.
 	So in this method we give running processes a chance to finish:
 		- yield execution until number of rest processes are reduced"
 	| runningProcesses restProcesses |
 	runningProcesses := self runningProcesses.
 	runningProcesses ifEmpty: [ ^self ].
-	(runningProcesses allSatisfy: [ :each | each priority = Processor activePriority ]) ifFalse: [ 
-			"If there is any process with different priority than active one 
+	(runningProcesses allSatisfy: [ :each | each priority = Processor activePriority ]) ifFalse: [
+			"If there is any process with different priority than active one
 			we can't do anything to allow finish all of them"
 			^self ].
-	
+
 	[Processor yield.
 	restProcesses := runningProcesses reject: [ :each | each isTerminated ].
-	restProcesses size = runningProcesses size or: [ restProcesses isEmpty ]] 
+	restProcesses size = runningProcesses size or: [ restProcesses isEmpty ]]
 		whileFalse: [ runningProcesses := restProcesses ]
 ]
 
@@ -199,8 +199,8 @@ ProcessMonitorTestService >> allowTestToLeaveProcesses [
 { #category : #controlling }
 ProcessMonitorTestService >> cleanUpAfterTest [
 	super cleanUpAfterTest.
-	
-	shouldTerminateProcesses ifTrue: [ 
+
+	shouldTerminateProcesses ifTrue: [
 		self terminateRunningProcesses].
 	forkedProcesses removeAll.
 	testFailures removeAll.
@@ -229,8 +229,8 @@ ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoBackgroundFailures [
-	self isMainTestProcessFailed & self shouldPassBackgroundFailures ifTrue: [ 
-		"We don't need extra error about failed process when all errors are shown to the user: 
+	self isMainTestProcessFailed & self shouldPassBackgroundFailures ifTrue: [
+		"We don't need extra error about failed process when all errors are shown to the user:
 			- if they were not suspended and were passed
 			- if main test process is also fail (and therefore test fails anyway)"
 		^self ].
@@ -240,24 +240,24 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 	TestFailedByForkedProcess notifies about background failures.
 	Test failed because forked process failed (even if main test process was completed without errors).
 	See ProcessMonitorTestService comment for more details"
-	[TestFailedByForkedProcess signalFrom: executionEnvironment] 
-		on: UnhandledError do: [ :e | 
+	[TestFailedByForkedProcess signalFrom: executionEnvironment]
+		on: UnhandledError do: [ :e |
 			self passBackgroundFailures.
 			e pass]
 ]
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoRunningProcesses [
-	"If test was already failed due to an error in the main test process 
+	"If test was already failed due to an error in the main test process
 	we do not need an extra failure about left processes"
-	self isMainTestProcessFailed ifTrue: [ ^self ].	
+	self isMainTestProcessFailed ifTrue: [ ^self ].
 	self runningProcesses ifEmpty: [ ^self ].
 	shouldFailTestLeavingProcesses ifFalse: [ ^self ].
-	
+
 	"COMMENT FOR DEBUGGER STOPPED HERE:
 	TestLeftRunningProcess notifies that forked processes are still running when test completes.
 	Test failed because test left the system in dirty state.
-	Left running processes can affect the result of other tests 
+	Left running processes can affect the result of other tests
 	and even the general system behavior after test run.
 	This protection can be disabled globaly in settings or in test method and setUp:
 		self executionProcessMonitor allowTestToLeaveProcesses
@@ -283,16 +283,16 @@ ProcessMonitorTestService >> forkedProcesses: anObject [
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleBackgroundException: anUnhandledException [
-	
+
 	self handleException: anUnhandledException.
-	
+
 	anUnhandledException pass
 ]
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleCompletedTest [
 	super handleCompletedTest.
-	
+
 	self allowRunningProcessesToFinish.
 	self ensureNoBackgroundFailures.
 	self ensureNoRunningProcesses
@@ -301,16 +301,16 @@ ProcessMonitorTestService >> handleCompletedTest [
 { #category : #controlling }
 ProcessMonitorTestService >> handleException: anException [
 	super handleException: anException.
-	
+
 	anException manageTestProcessBy: self
 ]
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
-	
+
 	forkedProcesses add: aProcess.
-	
+
 	aProcess on: UnhandledException do: [ :err |
 		self handleBackgroundException: err]
 ]
@@ -318,9 +318,9 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 { #category : #controlling }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 	self recordTestFailure: anUnhandledException.
-	
+
 	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passBackgroundFailures ].
-	
+
 	shouldSuspendBackgroundFailures ifTrue: [
 		self suspendBackgroundFailure: anUnhandledException]
 ]
@@ -328,12 +328,12 @@ ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 { #category : #initialization }
 ProcessMonitorTestService >> initialize [
 	super initialize.
-	
+
 	self enableBackgroudFailuresSuspension.
 	self useDefaultFailingStrategyForRunningProcesses.
 	self useDefaultTerminationStrategyForRunningProcesses.
 	forkedProcesses := WeakSet new.
-	testFailures := OrderedIdentityDictionary new.
+	testFailures := OrderedIdentityDictionary new
 ]
 
 { #category : #testing }
@@ -348,12 +348,12 @@ ProcessMonitorTestService >> isTestProcessFailed: aProcess [
 ]
 
 { #category : #controlling }
-ProcessMonitorTestService >> passBackgroundFailures [	
+ProcessMonitorTestService >> passBackgroundFailures [
 	self disableBackgroudFailuresSuspension.
 	self disableProcessesTermination.
-		
-	testFailures keys 
-		select: [:each | each isSuspended ] 
+
+	testFailures keys
+		select: [:each | each isSuspended ]
 		thenDo: [:each | each resume ]
 ]
 
@@ -362,10 +362,10 @@ ProcessMonitorTestService >> recordTestFailure: anException [
 
 	| activeProcess |
 	activeProcess := Processor activeProcess.
-	activeProcess isTerminating ifTrue: [ 
+	activeProcess isTerminating ifTrue: [
 		"Do nothing for exceptions during process termination"
-		^self ]. 
-	
+		^self ].
+
 	testFailures at: activeProcess put: anException
 ]
 
@@ -415,10 +415,10 @@ ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 
 	| activeProcess |
 	activeProcess := Processor activeProcess.
-	activeProcess isTerminating ifTrue: [ 
+	activeProcess isTerminating ifTrue: [
 		"Do nothing if process is under termination"
-		^self ]. 
-	
+		^self ].
+
 	self recordTestFailure: anException.
 	activeProcess suspend
 ]
@@ -441,7 +441,7 @@ ProcessMonitorTestService >> terminateRunningProcesses [
 
 { #category : #accessing }
 ProcessMonitorTestService >> testBackgroundFailures [
-	^ testFailures copy 
+	^ testFailures copy
 		removeKey: executionEnvironment mainTestProcess ifAbsent: [ ];
 		yourself
 ]
@@ -454,7 +454,7 @@ ProcessMonitorTestService >> testFailures [
 { #category : #initialization }
 ProcessMonitorTestService >> useDefaultFailingStrategyForRunningProcesses [
 
-	shouldFailTestLeavingProcesses := self class shouldFailTestLeavingProcesses.
+	shouldFailTestLeavingProcesses := self class shouldFailTestLeavingProcesses
 ]
 
 { #category : #initialization }

@@ -35,13 +35,13 @@ DACompositeDependency >> dependencies [
 
 { #category : #accessing }
 DACompositeDependency >> dependenciesFrom: aClass [
-	
-	^ dependencies select: [ :reference | reference theClass = aClass ].
+
+	^ dependencies select: [ :reference | reference theClass = aClass ]
 ]
 
 { #category : #testing }
 DACompositeDependency >> dependenciesWithoutExtensionDependency [
-	^ dependencies reject: [ :dependency | dependency isExtensionDependency ].
+	^ dependencies reject: [ :dependency | dependency isExtensionDependency ]
 ]
 
 { #category : #accessing }
@@ -51,7 +51,7 @@ DACompositeDependency >> extensionDependencies [
 
 { #category : #accessing }
 DACompositeDependency >> extensionDependenciesSize [
-	^ self dependencies sum: [ :dependency | 
+	^ self dependencies sum: [ :dependency |
 			dependency isExtensionDependency
 				ifTrue: [ 1 ]
 				ifFalse: [ 0 ] ]
@@ -91,6 +91,6 @@ DACompositeDependency >> referenceDependencies [
 DACompositeDependency >> referenceDependenciesFrom: aClass [
 	| references |
 	references := self referenceDependencies.
-	
-	^ references select: [ :reference | reference theClass = aClass ].
+
+	^ references select: [ :reference | reference theClass = aClass ]
 ]

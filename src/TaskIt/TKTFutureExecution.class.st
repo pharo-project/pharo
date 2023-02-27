@@ -27,13 +27,12 @@ TKTFutureExecution >> future [
 TKTFutureExecution >> initialize [
 
 	super initialize.
-	future := TKTFuture new.
-	
+	future := TKTFuture new
 ]
 
 { #category : #accessing }
 TKTFutureExecution >> runner: aRunner [
 
 	super runner: aRunner.
-	future runner: aRunner.
+	future runner: aRunner
 ]

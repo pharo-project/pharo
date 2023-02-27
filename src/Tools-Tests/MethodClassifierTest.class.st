@@ -12,7 +12,7 @@ MethodClassifierTest >> testProtocolForKnownKeywordSuffixOfSelector [
 	| classifier |
 	classifier := MethodClassifier new.
 	classifier class keywordSuffixMapping
-		keysAndValuesDo: [ :suffix :protocol | 
+		keysAndValuesDo: [ :suffix :protocol |
 			self
 				assert: (classifier protocolForKnownKeywordSuffixOfSelector: suffix asSymbol) equals: protocol;
 				assert: (classifier protocolForKnownKeywordSuffixOfSelector: ('more' , suffix) asSymbol) equals: protocol.
@@ -35,7 +35,7 @@ MethodClassifierTest >> testProtocolForKnownPrefixOfSelector [
 	| classifier |
 	classifier := MethodClassifier new.
 	classifier class prefixMapping
-		keysAndValuesDo: [ :prefix :protocol | 
+		keysAndValuesDo: [ :prefix :protocol |
 			self
 				assert: (classifier protocolForKnownPrefixOfSelector: prefix asSymbol) equals: protocol;
 				assert: (classifier protocolForKnownPrefixOfSelector: (prefix , 'More') asSymbol) equals: protocol;

@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 StoredSettingsMergerTest >> setUp [
 	super setUp.
-	merger := StoredSettingsMerger new.
+	merger := StoredSettingsMerger new
 ]
 
 { #category : #tests }
@@ -28,5 +28,5 @@ StoredSettingsMergerTest >> testStoredSettings [
 	merger addStoredSettings: MockSettings storedSettings.
 	self assert: merger storedSettings size equals: numberOfNodeSettings.
 	merger addStoredSettings: MockSettings storedSettings.
-	self assert: merger storedSettings size equals: numberOfNodeSettings.
+	self assert: merger storedSettings size equals: numberOfNodeSettings
 ]

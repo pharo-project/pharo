@@ -60,7 +60,7 @@ TKTWorkerPool >> initialize [
 	freeWorkers := AtomicSharedQueue new.
 
 	poolWorker := TKTWorker new.
-	self name: 'Worker' , self identityHash asString.
+	self name: 'Worker' , self identityHash asString
 ]
 
 { #category : #testing }
@@ -71,18 +71,18 @@ TKTWorkerPool >> isFree [
 
 { #category : #accessing }
 TKTWorkerPool >> name [
-	
+
 	^ poolWorker name
 ]
 
 { #category : #accessing }
-TKTWorkerPool >> name: aString [ 
-	
+TKTWorkerPool >> name: aString [
+
 	poolWorker name: aString
 ]
 
 { #category : #schedulling }
-TKTWorkerPool >> newWorker [	
+TKTWorkerPool >> newWorker [
 	| newWorker |
 	newWorker := TKTWorker new.
 	newWorker
@@ -93,8 +93,8 @@ TKTWorkerPool >> newWorker [
 ]
 
 { #category : #accessing }
-TKTWorkerPool >> poolMaxSize: anInteger [ 
-	
+TKTWorkerPool >> poolMaxSize: anInteger [
+
 	poolMaxSize := anInteger
 ]
 
@@ -118,7 +118,7 @@ TKTWorkerPool >> priority [
 ]
 
 { #category : #accessing }
-TKTWorkerPool >> priority: anInteger [ 
+TKTWorkerPool >> priority: anInteger [
 	priority := anInteger.
 	workers do: [ : each | each priority: anInteger ]
 ]
@@ -130,14 +130,14 @@ TKTWorkerPool >> purge [
 ]
 
 { #category : #schedulling }
-TKTWorkerPool >> returnWorker: aTKTWorker [ 
+TKTWorkerPool >> returnWorker: aTKTWorker [
 
 	freeWorkers nextPut: aTKTWorker
 ]
 
 { #category : #schedulling }
 TKTWorkerPool >> scheduleTaskExecution: aTaskExecution [
-	
+
 	poolWorker schedule: [ | worker |
 		worker := self getAvailableWorker.
 		worker schedule: [
@@ -147,12 +147,12 @@ TKTWorkerPool >> scheduleTaskExecution: aTaskExecution [
 
 { #category : #accessing }
 TKTWorkerPool >> size [
-	
+
 	^ workers size
 ]
 
 { #category : #starting }
-TKTWorkerPool >> start [ 
+TKTWorkerPool >> start [
 	poolWorker start
 ]
 
@@ -160,10 +160,10 @@ TKTWorkerPool >> start [
 TKTWorkerPool >> stop [
 
 	poolWorker stop.
-	
+
 	workers do: #stop.
 	workers removeAll.
-	
+
 	"Empty the free workers queue"
 	[freeWorkers isEmpty]
 		whileFalse: [ freeWorkers next ]
@@ -171,6 +171,6 @@ TKTWorkerPool >> stop [
 
 { #category : #accessing }
 TKTWorkerPool >> workers [
-	
+
 	^ workers copy
 ]

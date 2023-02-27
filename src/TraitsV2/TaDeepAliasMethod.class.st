@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #testing }
-TaDeepAliasMethod >> changesSourceCode: aSelector [ 
-	
+TaDeepAliasMethod >> changesSourceCode: aSelector [
+
 	^ true
 ]
 
@@ -23,12 +23,12 @@ TaDeepAliasMethod >> rewriteText: aSelector [
 	stream nextPutAll: 'self '.
 
 	aSelector numArgs == 0
-		ifTrue: [ 
+		ifTrue: [
 			stream nextPutAll: aSelector asString.
 			^ stream contents ].
 
 	aSelector keywords
-		withIndexDo: [ :each :i | 
+		withIndexDo: [ :each :i |
 			stream
 				nextPutAll: each;
 				nextPutAll: ' ``@arg';
@@ -43,11 +43,11 @@ TaDeepAliasMethod >> sourceCodeAt: aSelector [
 	originalSourceCode := super sourceCodeAt: aSelector.
 	parseTree := RBParser parseMethod: originalSourceCode.
 	rewriter := RBParseTreeRewriter new.
-	
+
 	self aliases
 		associationsDo:
 			[ :assoc | rewriter replace: (self rewriteText: assoc value) with: (self rewriteText: assoc key) ].
-	
+
 	^ (rewriter
 			executeTree: parseTree;
 			tree) formattedCode

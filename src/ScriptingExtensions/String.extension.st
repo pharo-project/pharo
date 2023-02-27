@@ -21,18 +21,18 @@ String >> asClassIfPresent: presentBlock [
 { #category : #'*ScriptingExtensions' }
 String >> asClassInEnvironment: anEnvironment [
 	"I return class named after myself from anEnvironment"
-	^ self 
-		asClassInEnvironment: anEnvironment 
+	^ self
+		asClassInEnvironment: anEnvironment
 		ifAbsent: [ NotFound signalFor: self in: anEnvironment ]
 ]
 
 { #category : #'*ScriptingExtensions' }
 String >> asClassInEnvironment: anEnvironment ifAbsent: absentBlock [
-	^  anEnvironment 
-			at: self asSymbol 
-			ifPresent: [ :aClass| 
-				self 
-					assert: aClass isBehavior 
+	^  anEnvironment
+			at: self asSymbol
+			ifPresent: [ :aClass|
+				self
+					assert: aClass isBehavior
 					description: [ self printString, ' is not a Class but an instance of a ', aClass class name ].
 				aClass ]
 			ifAbsent: absentBlock

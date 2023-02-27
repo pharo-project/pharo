@@ -33,22 +33,22 @@ SycRemoveMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycRemoveMethodCommand >> execute [
-	
+
 	removeStrategy removeMethods: methods
 ]
 
 { #category : #initialization }
 SycRemoveMethodCommand >> initialize [
 	super initialize.
-	
+
 	removeStrategy := SycSilentlyRemoveMethodStrategy new
 ]
 
 { #category : #execution }
 SycRemoveMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	removeStrategy := aToolContext requestRemoveMethodStrategyFor: methods.
+
+	removeStrategy := aToolContext requestRemoveMethodStrategyFor: methods
 ]
 
 { #category : #accessing }

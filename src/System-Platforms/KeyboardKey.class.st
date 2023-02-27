@@ -258,19 +258,19 @@ KeyboardKey class >> backspace [
 
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> braceLeft [
-	
+
 	^ self named: 'BRACELEFT'
 ]
 
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> bracketLeft [
-	
+
 	^ self named: 'BRACKETLEFT'
 ]
 
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> bracketRight [
-	
+
 	^ self named: 'BRACKETRIGHT'
 ]
 
@@ -351,9 +351,9 @@ KeyboardKey class >> fromCharacter: aCharacter [
 	"For backwards compatibility mainly.
 	Return the key that should correspond to some character.
 	Handle normal ascii characters and special control keys only (enter, tab space...)"
-	
+
 	"(KeyboardKey fromCharacter: $a) >>> KeyboardKey A"
-	
+
 	^ self keyFromCharacterTable at: aCharacter ifAbsent: [ self named: aCharacter asString asUppercase ]
 ]
 
@@ -362,12 +362,12 @@ KeyboardKey class >> fromCharacter: aCharacter ifNone: aBlock [
 	"For backwards compatibility mainly.
 	Return the key that should correspond to some character.
 	Handle normal ascii characters and special control keys only (enter, tab space...)"
-	
+
 	"(KeyboardKey fromCharacter: $a) >>> KeyboardKey A"
-	
+
 	^ self keyFromCharacterTable
-		at: aCharacter 
-		ifAbsent: [ 
+		at: aCharacter
+		ifAbsent: [
 			self
 				named: aCharacter asString asUppercase
 				ifNone: aBlock ]
@@ -401,7 +401,7 @@ KeyboardKey class >> initialize [
 { #category : #'key table' }
 KeyboardKey class >> initializeKeyFromCharacterCompatibilityTable [
 	KeyFromCharacterTable := Dictionary new.
-	{ 
+	{
 		Character backspace 	. #Backspace "XK_BackSpace".
 		Character tab 			. #Tab "XK_Tab".
 		Character cr 			. #Return "XK_Return".
@@ -425,7 +425,7 @@ KeyboardKey class >> initializeKeyFromCharacterCompatibilityTable [
 		$| 							. #bar.
 		$- 							. #minus}
 			pairsDo: [ :character :keyname |
-				KeyFromCharacterTable at: character put: (self named: keyname asUppercase) ].
+				KeyFromCharacterTable at: character put: (self named: keyname asUppercase) ]
 ]
 
 { #category : #'key table' }
@@ -632,13 +632,13 @@ KeyboardKey class >> initializeKeyTable [
 		16r005f underscore "XK_underscore"
 		16r0060 grave "XK_grave"
 		"16r0060 quoteleft" "XK_quoteleft"
-		16r007b braceleft "XK_braceleft"	
+		16r007b braceleft "XK_braceleft"
 		16r007c bar "XK_bar"
 		16r007d braceright "XK_braceright"
 		16r007e asciitilde "XK_asciitilde"
 		16rff63 Insert "XK_Insert"
 		16rff7f Num_Lock "XK_Num_Lock"
-		
+
 		16rffca F13	 "XK_F13"
 		16rffcb F14	 "XK_F14"
 		16rffcc F15	 "XK_F15"
@@ -651,7 +651,7 @@ KeyboardKey class >> initializeKeyTable [
 		16rffd3 F22	 "XK_F22"
 		16rffd4 F23	 "XK_F23"
 		16rffd5 F24	 "XK_F24"
-			
+
 		16rff60 Select "XK_Select"
 		16rff61 Print "XK_Print"
 		16rff62 Execute "XK_Execute"
@@ -679,7 +679,7 @@ KeyboardKey class >> initializeKeyTable [
 			key := self basicNew withValue: keyCode andName: keyname asString asUppercase asSymbol.
 			KeyCodeTable at: keyCode put: key.
 			KeyNameTable at: key name put: key.
-		].
+		]
 ]
 
 { #category : #macos }
@@ -752,7 +752,7 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 		at: 16r07 put: (self value: 16r58); "  kVK_ANSI_X                    = 0x07"
 		at: 16r10 put: (self value: 16r59); "  kVK_ANSI_Y                    = 0x10"
 		at: 16r06 put: (self value: 16r5a); "  kVK_ANSI_Z                    = 0x06"
-		
+
 		at: 16r1D put: (self value: 16r30); "  kVK_ANSI_0                    = 0x1D"
 		at: 16r12 put: (self value: 16r31); "  kVK_ANSI_1                    = 0x12"
 		at: 16r13 put: (self value: 16r32); "  kVK_ANSI_2                    = 0x13"
@@ -866,13 +866,13 @@ KeyboardKey class >> initializeUnixVirtualKeyTable [
 		at: $x asciiValue put: (self value: 16r58); "  kVK_ANSI_X                  = 0x07"
 		at: $y asciiValue put: (self value: 16r59); "  kVK_ANSI_Y                  = 0x10"
 		at: $z asciiValue put: (self value: 16r5a). "  kVK_ANSI_Z                  = 0x06"
-	
+
 	"Map also uppercase letters.
 	Old VM events use the ascii value of characters in linux to refer to keys.
 	Work it around by making lowercase and uppercase letters both refer to the same key"
 	($A to: $Z) do: [ :c |
 		UnixVirtualKeyTable at: c asciiValue put: (UnixVirtualKeyTable at: c asLowercase asciiValue) ].
-		
+
 	UnixVirtualKeyTable
 		at: $0 asciiValue put: (self value: 16r30); "  kVK_ANSI_0                  = 0x1D"
 		at: $1 asciiValue put: (self value: 16r31); "  kVK_ANSI_1                  = 0x12"
@@ -987,7 +987,7 @@ KeyboardKey class >> initializeWindowsVirtualKeyTable [
 		at: 16r58 put: (self value: 16r58); "  kVK_ANSI_X                    = 0x07"
 		at: 16r59 put: (self value: 16r59); "  kVK_ANSI_Y                    = 0x10"
 		at: 16r5a put: (self value: 16r5a); "  kVK_ANSI_Z                    = 0x06"
-		
+
 		at: $0 asciiValue put: (self value: 16r30); "  kVK_ANSI_0                    = 0x1D"
 		at: $1 asciiValue put: (self value: 16r31); "  kVK_ANSI_1                    = 0x12"
 		at: $2 asciiValue put: (self value: 16r32); "  kVK_ANSI_2                    = 0x13"
@@ -1085,6 +1085,12 @@ KeyboardKey class >> macOSVirtualKeyTable [
 	^MacosVirtualKeyTable
 ]
 
+{ #category : #'accessing - keys - special' }
+KeyboardKey class >> menu [
+
+	^ self named: #MENU
+]
+
 { #category : #'accessing - keys - modifiers' }
 KeyboardKey class >> metaLeft [
 	^ self named: #META_L
@@ -1095,12 +1101,6 @@ KeyboardKey class >> metaRight [
 	^ self named: #META_R
 ]
 
-{ #category : #'accessing - keys - special' }
-KeyboardKey class >> menu [
-
-	^ self named: #MENU
-]
-
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> minus [
 	^ self named: #MINUS
@@ -1109,18 +1109,18 @@ KeyboardKey class >> minus [
 { #category : #'instance creation' }
 KeyboardKey class >> named: aString [
 	"Returns the instance of myself having aString as name."
-	
+
 	"(KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)"
-	
+
 	^ KeyNameTable at: aString
 ]
 
 { #category : #'instance creation' }
 KeyboardKey class >> named: aString ifNone: aBlock [
 	"Returns the instance of myself having aString as name."
-	
+
 	"(KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)"
-	
+
 	^ KeyNameTable at: aString ifAbsent: aBlock
 ]
 
@@ -1146,7 +1146,7 @@ KeyboardKey class >> pageUp [
 
 { #category : #'accessing - keys - symbols' }
 KeyboardKey class >> parenthesisLeft [
-	
+
 	^ self named: 'PARENLEFT'
 ]
 

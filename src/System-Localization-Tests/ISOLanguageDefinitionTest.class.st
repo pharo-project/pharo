@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 ISOLanguageDefinitionTest >> testISO2LanguageDefinition [
 
-	self 
+	self
 		assert: (ISOLanguageDefinition iso2LanguageDefinition: 'de') language equals: 'German';
 		assert: (ISOLanguageDefinition iso2LanguageDefinition: 'fr') language equals: 'French'
 ]
@@ -18,7 +18,7 @@ ISOLanguageDefinitionTest >> testISO2LanguageDefinition [
 { #category : #tests }
 ISOLanguageDefinitionTest >> testISO3LanguageDefinition [
 
-	self 
+	self
 		assert: (ISOLanguageDefinition iso3LanguageDefinition: 'deu') language equals: 'German';
 		assert: (ISOLanguageDefinition iso3LanguageDefinition: 'fra') language equals: 'French'
 ]

@@ -15,14 +15,14 @@ Class {
 { #category : #testing }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : #testing }
 SycExtractMethodCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
 ]
 
@@ -30,7 +30,7 @@ SycExtractMethodCommand class >> methodEditorShortcutActivation [
 SycExtractMethodCommand >> asRefactorings [
 
 	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [ 
+	selectedInterval := selectedTextInterval ifEmpty: [
 		                    sourceNode sourceInterval ].
 	refactoring := RBExtractMethodAndOccurrences
 		               extract: selectedInterval
@@ -41,7 +41,7 @@ SycExtractMethodCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycExtractMethodCommand >> defaultMenuIconName [ 
+SycExtractMethodCommand >> defaultMenuIconName [
 	^ #glamorousRestart
 ]
 
@@ -54,7 +54,7 @@ SycExtractMethodCommand >> defaultMenuItemName [
 SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	self setUpModelFromContext: aSourceCodeContext.
-	selectedTextInterval := aSourceCodeContext selectedTextInterval.
+	selectedTextInterval := aSourceCodeContext selectedTextInterval
 ]
 
 { #category : #execution }
@@ -63,13 +63,13 @@ SycExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 	refactoring setOption: #extractionClass toUse: [ :ref | | cls superclasses |
 		cls := ref methodClass realClass.
 		superclasses := cls allSuperclasses reversed copyWithoutAll: { Object . ProtoObject }.
-		superclasses ifNotEmpty: [ 
+		superclasses ifNotEmpty: [
 			cls := UIManager default
 				chooseFrom: ((superclasses, {cls}) collect: #name)
 				values: superclasses, {cls}
 				title: 'Choose the class where you want to extract the method'
 		].
-		cls ifNil: [ 
+		cls ifNil: [
 			self inform: 'Command aborted, you must select a class.'.
 			CmdCommandAborted signal ].
 		cls ]
@@ -94,17 +94,17 @@ SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 { #category : #execution }
 SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
 
-	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :class :selector | 
-		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name].
+	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :class :selector |
+		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name]
 ]
 
 { #category : #execution }
 SycExtractMethodCommand >> setUpOptionToUseExistingMethodDuring: aRefactoring [
 
-	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector | 
-		UIManager default 
+	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector |
+		UIManager default
 			confirm: 'Do you want to use existing method ', selector printString, '?'
-			label: 'Warninig'].
+			label: 'Warninig']
 ]
 
 { #category : #execution }

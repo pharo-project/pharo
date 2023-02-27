@@ -16,19 +16,19 @@ Class {
 { #category : #testing }
 ZnHTTPSTest class >> generateTestData: size [
 	"self generateTestData: 1111"
-	
-	^ String 
+
+	^ String
 		streamContents: [ :stream |
 			stream << 'Transfer test file of size '; print: size; << ' bytes.'; lf.
 			1 to: size do: [ :each |
-				stream nextPutAll: 'Line '; print: each; lf ] ] 
-		limitedTo: size 
+				stream nextPutAll: 'Line '; print: each; lf ] ]
+		limitedTo: size
 ]
 
 { #category : #testing }
 ZnHTTPSTest class >> generateTestFiles [
 	"self generateTestFiles"
-	
+
 	(Integer primesUpTo: 100) do: [ :each | | size |
 		size := 1024 * each + each.
 		('test-', size asString, '.txt') asFileReference writeStreamDo: [ :stream |
@@ -40,7 +40,7 @@ ZnHTTPSTest >> disabledTestPayPal [
 	| client |
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
-	(client := ZnClient new) 
+	(client := ZnClient new)
 		get: 'https://www.paypal.com'.
 	self assert: client isSuccess.
 	self assert: (client contents includesSubstring: 'PayPal').
@@ -50,7 +50,7 @@ ZnHTTPSTest >> disabledTestPayPal [
 { #category : #private }
 ZnHTTPSTest >> doesNativeSSLPluginSupportSNI [
 	"Return whether the SSL VM plugin supports SNI."
-	
+
 	^ [ ZdcPluginSSLSession new serverName; serverName: nil; destroy. true ]
 			on: ZdcPluginMissing, PrimitiveFailed
 			do: [ false ]
@@ -58,7 +58,7 @@ ZnHTTPSTest >> doesNativeSSLPluginSupportSNI [
 
 { #category : #private }
 ZnHTTPSTest >> ensureSocketStreamFactory [
-	self 
+	self
 		assert: ZnNetworkingUtils default secureSocketStreamClass notNil
 		description: 'Please set a secure socket stream class in ZnNetworkingUtils default or switch to the ZnZodiacNetworkingUtils socket stream factory'
 ]
@@ -66,7 +66,7 @@ ZnHTTPSTest >> ensureSocketStreamFactory [
 { #category : #private }
 ZnHTTPSTest >> isNativeSSLPluginPresent [
 	"Return whether the SSL VM plugin can be instanciated and intialized."
-	
+
 	^ [ ZdcPluginSSLSession new destroy. true ]
 			on: ZdcPluginMissing
 			do: [ false ]
@@ -87,7 +87,7 @@ ZnHTTPSTest >> runningOnWindowsInriaCI [
 	| platform ci |
 	self runningOnWindows
 		ifFalse: [ ^ false ].
-	^ [ 
+	^ [
 	platform := OSPlatform current.
 	ci := platform environment at: 'CI' ifAbsent: [ '' ].
 	ci = 'ci.inria.fr' ]
@@ -100,7 +100,7 @@ ZnHTTPSTest >> testAmazonAWS [
 	| client |
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
-	(client := ZnClient new) 
+	(client := ZnClient new)
 		get: 'https://aws.amazon.com/'.
 	self assert: client isSuccess.
 	self assert: (client contents includesSubstring: 'Amazon').
@@ -113,19 +113,19 @@ ZnHTTPSTest >> testGetPharoVersion [
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	self runningOnWindowsInriaCI ifTrue: [ ^ self ].
-	
+
 	versionName := SystemVersion current type , SystemVersion current dottedMajorMinor.
 
-	url := ZnUrl new 
+	url := ZnUrl new
 		scheme: #https;
 		host: 'ci.inria.fr';
-		addPathSegments: #('pharo-ci-jenkins2' 'job' 
+		addPathSegments: #('pharo-ci-jenkins2' 'job'
 			'Test pending pull request and branch Pipeline' 'job');
 		addPathSegment: versionName;
 		addPathSegments: #('api' 'xml');
 		queryAt: 'xpath' add: '/*/fullDisplayName';
 		yourself.
-	
+
 	lastBuildVersion := ZnClient new
 		beOneShot;
 		get: url.
@@ -140,12 +140,12 @@ ZnHTTPSTest >> testGetPharoVersion [
 ZnHTTPSTest >> testGmailEncrypted [
 	| client |
 	self ensureSocketStreamFactory.
-	self isNativeSSLPluginPresent ifFalse: [ ^ self ].  
-	(client := ZnClient new) 
+	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
+	(client := ZnClient new)
 		get: 'https://www.gmail.com'.
 	self assert: client isSuccess.
-	self assert: (client contents includesSubstring: 'Google').    
-	self assert: (client contents includesSubstring: 'mail'). 
+	self assert: (client contents includesSubstring: 'Google').
+	self assert: (client contents includesSubstring: 'mail').
 	client close
 ]
 
@@ -154,10 +154,10 @@ ZnHTTPSTest >> testGoogleEncrypted [
 	| client |
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
-	(client := ZnClient new) 
+	(client := ZnClient new)
 		get: 'https://encrypted.google.com/search?q=Smalltalk'.
 	self assert: client isSuccess.
-	self assert: (client contents includesSubstring: 'Google').    
+	self assert: (client contents includesSubstring: 'Google').
 	self assert: (client contents includesSubstring: 'Smalltalk').
 	client close
 ]
@@ -190,8 +190,8 @@ ZnHTTPSTest >> testRequestResponse [
 		ZnResponse readFrom: stream.
 	] ensure: [ stream close ].
 	self assert: response isSuccess.
-	self assert: (response contents includesSubstring: 'Duck').   
-	self assert: (response contents includesSubstring: query).
+	self assert: (response contents includesSubstring: 'Duck').
+	self assert: (response contents includesSubstring: query)
 ]
 
 { #category : #testing }
@@ -203,8 +203,8 @@ ZnHTTPSTest >> testSNIPage [
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self skip ].
 	self doesNativeSSLPluginSupportSNI ifFalse: [ ^ self skip ].
-	
-	(client := ZnClient new) 
+
+	(client := ZnClient new)
 		get: 'https://www.mnot.net/blog/2014/05/09/if_you_can_read_this_youre_sniing'.
 
 	self assert: client isSuccess.
@@ -217,7 +217,7 @@ ZnHTTPSTest >> testTransfers [
 	self timeLimit: 300 seconds.
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
-	
+
 	(Integer primesUpTo: 100) do: [ :each | | size client |
 		size := 1024 * each + each.
 		(client := ZnClient new)
@@ -230,8 +230,8 @@ ZnHTTPSTest >> testTransfers [
 		self assert: client isSuccess.
 		self assert: (client response contentType matches: ZnMimeType textPlain).
 		self assert: client response contentLength equals: size.
-		self 
-			assert: client contents 
+		self
+			assert: client contents
 			equals: (self class generateTestData: size)	]
 ]
 
@@ -251,8 +251,8 @@ ZnHTTPSTest >> testTransfersSingleClient [
 		self assert: client isSuccess.
 		self assert: (client response contentType matches: ZnMimeType textPlain).
 		self assert: client response contentLength equals: size.
-		self 
-			assert: client contents 
+		self
+			assert: client contents
 			equals: (self class generateTestData: size)	].
 	client close
 ]
@@ -261,8 +261,8 @@ ZnHTTPSTest >> testTransfersSingleClient [
 ZnHTTPSTest >> testWikimedia [
 	| client |
 	self ensureSocketStreamFactory.
-	self isNativeSSLPluginPresent ifFalse: [ ^ self ]. 
-	(client := ZnClient new) 
+	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
+	(client := ZnClient new)
 		get: 'https://secure.wikimedia.org/'.
 	self assert: client isSuccess.
 	self assert: (client contents includesSubstring: 'Wikimedia').

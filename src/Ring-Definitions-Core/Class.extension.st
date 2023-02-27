@@ -5,17 +5,17 @@ Class >> asFullRingDefinition [
 	"A behavior is converted to a ring class including its variables, methods, direct superclass, direct subclasses and the package in which is loaded.
 	Active methods are generated and each knows its package as well.
 	Note that for its direct superclass and subclasses no full definitions are requested. If you need to traverse hierarchies use #asRingDefinitionWithMethods:withSuperclasses:withSubclasses:withPackages:"
-	
+
 	| rgClass rgSuper rgSub rgMethod packageKeys |
 	rgClass:= self asRingDefinition.
 	rgClass package: (RGContainer packageOfClass: rgClass).
-	
-	self superclass notNil 
-		ifTrue: [ 
+
+	self superclass notNil
+		ifTrue: [
 			rgSuper := self superclass asRingDefinition.
 			rgClass superclass: rgSuper ]
-		ifFalse: [  
-			self isTrait ifTrue: [ 
+		ifFalse: [
+			self isTrait ifTrue: [
 				rgSuper := Trait asRingDefinition.
 				rgClass superclass: rgSuper. ]
 			].
@@ -23,17 +23,17 @@ Class >> asFullRingDefinition [
 	self subclasses do:[ :each |
 		rgSub := each asRingDefinition.
 		rgSub superclass: rgClass ].
-	
+
 	packageKeys := RGContainer packageKeys.
-	self methodsDo:[ :mth|  
+	self methodsDo:[ :mth|
 			rgMethod := mth asActiveRingDefinition.
 			rgClass addMethod: rgMethod.
 			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
-	self classSide methodsDo:[ :mth|  
+	self classSide methodsDo:[ :mth|
 			rgMethod := mth asActiveRingDefinition.
 			rgClass classSide addMethod: rgMethod.
 			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
-	
+
 	^ rgClass
 ]
 
@@ -41,7 +41,7 @@ Class >> asFullRingDefinition [
 Class >> asRingDefinition [
 	"A behavior is converted to a ring class. Only the receiver and its variables (instance, class, pools) are converted.
 	Methods, superclasses, subclasses are not generated"
-	
+
 	| ring |
 	ring := (RGClassDefinition named: self name)
 		category: self category;
@@ -57,10 +57,10 @@ Class >> asRingDefinition [
 		definitionSource: self definitionString;
 		package: self package asRingDefinition;
 		withMetaclass.
-	ring classSide 
+	ring classSide
 		traitCompositionSource: self classSide traitCompositionString;
 		definitionSource: self classSide definitionString;
-		addInstanceVariables: self classSide instVarNames.  
+		addInstanceVariables: self classSide instVarNames.
 	^ ring
 ]
 
@@ -70,22 +70,22 @@ Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 	rgClass := self asRingDefinition.
 	aRGSlice loadClass: rgClass using: packageKeys.
 	methodsBoolean
-		ifTrue: [ 
+		ifTrue: [
 			self
-				methodsDo: [ :mth | 
+				methodsDo: [ :mth |
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass using: packageKeys ].
 			self classSide
-				methodsDo: [ :mth | 
+				methodsDo: [ :mth |
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass classSide using: packageKeys ] ].
 	supersBoolean
-		ifTrue: [ 
+		ifTrue: [
 			self superclass
-				ifNotNil: [ 
+				ifNotNil: [
 					rgSuper := aRGSlice classNamed: self superclass name.
 					rgSuper
-						ifNil: [ 
+						ifNil: [
 							rgSuper := self superclass
 								asRingDefinitionWithMethods: methodsBoolean
 								withSuperclasses: supersBoolean
@@ -94,15 +94,15 @@ Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 								in: aRGSlice ].
 					rgClass superclass: rgSuper ] ].
 	subsBoolean
-		ifTrue: [ 
+		ifTrue: [
 			subs := self subclasses reject: [ :sub | sub isMeta ].
 			rgClass name = #Trait
 				ifTrue: [ subs := aRGSlice environment allTraits ].
 			subs
-				do: [ :each | 
+				do: [ :each |
 					rgSub := aRGSlice classNamed: each name.
 					rgSub
-						ifNil: [ 
+						ifNil: [
 							rgSub := each
 								asRingDefinitionWithMethods: methodsBoolean
 								withSuperclasses: supersBoolean
@@ -120,13 +120,13 @@ Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 	As it may need to traverse hierarchies for retrieving super and subclasses a ring slice is created as the container for every class, method and package.
 	To retrieve the slice:  aRGClass environment "
 	| rgClass rgSlice  rgPackageKeys |
-	
+
 	rgSlice := RGSlice named: #fromImage.
-	packsBoolean ifTrue: [ 
+	packsBoolean ifTrue: [
 		rgPackageKeys := rgSlice loadPackagesFromImage ].
 	rgClass := self asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoolean withSubclasses: subsBoolean withPackageKeys: rgPackageKeys in: rgSlice.
 	rgSlice cleanEmptyPackages.
 	rgSlice loadTraitUsers.
-		
+
 	^ rgClass
 ]

@@ -22,7 +22,7 @@ TaRemoveMethod class >> remove: anArrayOfSelectors to: aTrait [
 { #category : #accessing }
 TaRemoveMethod >> compiledMethodAt: aSelector [
 	(removedSelectors includes: aSelector ) ifTrue:[NotFound signalFor: aSelector].
-	^ inner compiledMethodAt: aSelector.
+	^ inner compiledMethodAt: aSelector
 ]
 
 { #category : #copying }
@@ -53,7 +53,7 @@ TaRemoveMethod >> selectors [
 { #category : #printing }
 TaRemoveMethod >> traitCompositionExpression [
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				nextPutAll: self inner traitCompositionExpressionWithParens;
 				nextPutAll: ' - '.

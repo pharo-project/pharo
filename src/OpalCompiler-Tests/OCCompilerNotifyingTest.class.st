@@ -122,7 +122,7 @@ OCCompilerNotifyingTest >> testAssignmentOfSelf [
 { #category : #tests }
 OCCompilerNotifyingTest >> testDigitTooLargeForARadix [
 
-	self setUpForErrorsIn: '2r` Reading a number failed: a digit between 0 and 1 expected ->`3'.
+	self setUpForErrorsIn: '2r` a digit between 0 and 1 expected ->`3'.
 	self enumerateAllSelections
 ]
 
@@ -182,8 +182,8 @@ OCCompilerNotifyingTest >> testInvalidPrimitive [
 { #category : #tests }
 OCCompilerNotifyingTest >> testInvalidRadix [
 
-	self setUpForErrorsIn: '1` Reading a number failed: an integer greater than 1 as valid radix expected ->`r0'.
-	self enumerateAllSelections
+	self setUpForErrorsIn: '1` an integer greater than 1 as valid radix expected ->`r0'.
+	self enumerateAllSelections.
 ]
 
 { #category : #tests }

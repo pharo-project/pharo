@@ -29,8 +29,8 @@ TextKern class >> kern: kernValue [
 ]
 
 { #category : #comparing }
-TextKern >> = other [ 
-	^ (other class == self class) 
+TextKern >> = other [
+	^ (other class == self class)
 		and: [other kern = kern]
 ]
 
@@ -68,7 +68,7 @@ TextKern >> kern [
 { #category : #accessing }
 TextKern >> kern: kernValue [
 	kern := kernValue.
-	self reset.
+	self reset
 ]
 
 { #category : #initialization }

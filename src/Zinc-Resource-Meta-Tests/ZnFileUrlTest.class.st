@@ -11,7 +11,7 @@ ZnFileUrlTest >> testAsFileReference [
 	fileReference := fileUrl asFileReference.
 	self assert: fileReference basename equals: 'test.txt'.
 	self assert: fileReference pathSegments asArray equals: #( 'foo' 'bar' 'test.txt' ).
-	self assert: fileReference isAbsolute 
+	self assert: fileReference isAbsolute
 ]
 
 { #category : #testing }
@@ -22,7 +22,7 @@ ZnFileUrlTest >> testAsFileReferenceNoDoubleSlash [
 	fileReference := fileUrl asFileReference.
 	self assert: fileReference basename equals: 'test.txt'.
 	self assert: fileReference pathSegments asArray equals: #( 'foo' 'bar' 'test.txt' ).
-	self assert: fileReference isAbsolute.
+	self assert: fileReference isAbsolute
 ]
 
 { #category : #testing }
@@ -94,11 +94,11 @@ ZnFileUrlTest >> testSlash [
 
 { #category : #testing }
 ZnFileUrlTest >> testSpaces [
-	self 
-		assert: 'file:///foo%20bar/test.st' asZnUrl asFileReference 
+	self
+		assert: 'file:///foo%20bar/test.st' asZnUrl asFileReference
 		equals: FileLocator root / 'foo bar' / 'test.st'.
-	self 
-		assert: (FileLocator root / 'foo bar' / 'test.st') asZnUrl 
+	self
+		assert: (FileLocator root / 'foo bar' / 'test.st') asZnUrl
 		equals: 'file:///foo%20bar/test.st' asZnUrl
 ]
 
@@ -119,12 +119,12 @@ ZnFileUrlTest >> testTrailingSlash [
 { #category : #testing }
 ZnFileUrlTest >> testWindowsDriveNamesInFileUrl [
 	"Note the 3 slashes: 2 are from the scheme, file://, 1 is from the empty host and starts the absolute path"
-	
+
 	SystemVersion current major < 3 ifTrue: [ self skip ].
-	self 
+	self
 		assert: 'file:///C:/Programs/notepad.exe' asUrl asFileReference
 		equals: FileLocator C / 'Programs' / 'notepad.exe'.
-	self 
+	self
 		assert: 'file:///C:' asUrl asFileReference
 		equals: FileLocator C
 ]

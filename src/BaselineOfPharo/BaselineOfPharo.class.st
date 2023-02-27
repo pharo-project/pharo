@@ -23,7 +23,7 @@ BaselineOfPharo class >> declareExternalProjects [
 	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.
 	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.
 	PharoExternalProject newName: 'DocumentBrowser' owner: 'pharo-spec' project: 'NewTools-DocumentBrowser' version: 'integration'.
-	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9L'
+	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9m' 
 	 }
 ]
 

@@ -64,18 +64,18 @@ TextStyle class >> changed: anAspect [
 ]
 
 { #category : #utilities }
-TextStyle class >> decodeStyleName: styleName [ 
-	"Given a string styleName, return a collection with: 
-	 
-	* [1] the probable Pharo emphasis code, which is a bit combination of: 
-	1	bold 
-	2	italic 
-	4	underlined 
-	8	narrow 
-	16	strikeout 
-	 
+TextStyle class >> decodeStyleName: styleName [
+	"Given a string styleName, return a collection with:
+
+	* [1] the probable Pharo emphasis code, which is a bit combination of:
+	1	bold
+	2	italic
+	4	underlined
+	8	narrow
+	16	strikeout
+
 	* [2] the base style name without the modifiers (can be empty)
-	* [3] the modifiers in the order they were found 
+	* [3] the modifiers in the order they were found
 	* [4] the codes for those modifiers, in the same order
 	"
 	| decoder keys modifiers modifierCodes baseName styleCode matchedKey |
@@ -92,7 +92,7 @@ TextStyle class >> decodeStyleName: styleName [
 				detect: [:k | baseName endsWith: k]
 				ifNone: [].
 	matchedKey notNil]
-		whileTrue: [| last code | 
+		whileTrue: [| last code |
 			last := baseName size - matchedKey size.
 			last > 0
 				ifTrue: [('- ' includes: (baseName at: last))
@@ -120,7 +120,7 @@ TextStyle class >> defaultFamilyNames [
 	DefaultTextStyle := TextSharedInformation at: #DefaultTextStyle.
 	DefaultFixedTextStyle := TextSharedInformation at: #DefaultFixedTextStyle.
 	DefaultMultiStyle := TextSharedInformation at: #DefaultMultiStyle.
-	
+
 	^#(DefaultTextStyle DefaultFixedTextStyle DefaultMultiStyle)
 ]
 
@@ -132,7 +132,7 @@ TextStyle class >> defaultFont [
 ]
 
 { #category : #'instance creation' }
-TextStyle class >> fontArray: anArray [ 
+TextStyle class >> fontArray: anArray [
 	"Answer an instance of me with fonts those in the argument, anArray."
 
 	^self new newFontArray: anArray
@@ -147,7 +147,6 @@ TextStyle class >> fontArrayForStyle: aName [
 	"TextStyle fontPointSizesFor: 'NewYork'"
 
 	^ ((self named: aName) ifNil: [ ^#() ]) fontArray
-
 ]
 
 { #category : #'textconstants access' }
@@ -158,7 +157,6 @@ TextStyle class >> fontSizesFor: aName [
 	"TextStyle fontSizesFor: 'NewYork'"
 
 	^ (self fontArrayForStyle: aName) collect: [:f | f height ]
-
 ]
 
 { #category : #'class initialization' }
@@ -178,8 +176,6 @@ TextStyle class >> knownTextStyles [
 
 	"TextStyle knownTextStyles"
 	^ (TextSharedInformation select: [:thang | thang isKindOf: TextStyle]) keys sort
-
-
 ]
 
 { #category : #'textconstants access' }
@@ -190,16 +186,14 @@ TextStyle class >> knownTextStylesWithoutDefault [
 	| result |
 	result := self knownTextStyles asOrderedCollection.
 	^ result copyWithoutAll: self defaultFamilyNames
-
-
 ]
 
 { #category : #constants }
-TextStyle class >> named: familyName [ 
+TextStyle class >> named: familyName [
 	"Answer the TextStyle with the given name, or nil."
 	"TextStyle named: 'NewYork'"
 	| textStyle |
-	textStyle := TextSharedInformation 
+	textStyle := TextSharedInformation
 		at: familyName
 		ifAbsent: [ ^ nil ].
 	(textStyle isKindOf: self) ifFalse: [ ^ nil ].
@@ -221,7 +215,7 @@ TextStyle class >> notifier [
 TextStyle class >> pixelsPerInch [
 	"Answer the nominal resolution of the screen."
 
-	^TextSharedInformation at: #pixelsPerInch ifAbsentPut: [ 96.0 ].
+	^TextSharedInformation at: #pixelsPerInch ifAbsentPut: [ 96.0 ]
 ]
 
 { #category : #utilities }
@@ -235,7 +229,6 @@ TextStyle class >> pointSizesFor: aName [
 
 	"TextStyle pointSizesFor: 'NewYork'"
 	^ (self fontArrayForStyle: aName) collect: [:f | f pointSize]
-
 ]
 
 { #category : #utilities }
@@ -253,7 +246,7 @@ TextStyle class >> removeDependent: anObject [
 TextStyle class >> setDefault: aTextStyle [
 	"Answer the system default text style."
 
-	TextSharedInformation at: #DefaultTextStyle put: aTextStyle.
+	TextSharedInformation at: #DefaultTextStyle put: aTextStyle
 ]
 
 { #category : #'private - accessing' }
@@ -304,7 +297,7 @@ TextStyle >> alignment [
 ]
 
 { #category : #accessing }
-TextStyle >> alignment: anInteger [ 
+TextStyle >> alignment: anInteger [
 	"Set the current setting of the alignment to be anInteger:
 	0=left flush, 1=right flush, 2=centered, 3=justified."
 	alignment := anInteger \\ (Justified + 1)
@@ -322,15 +315,15 @@ TextStyle >> alignmentSymbol [
 
 { #category : #accessing }
 TextStyle >> baseline [
-	"Answer the distance from the top of the line to the bottom of most of the 
+	"Answer the distance from the top of the line to the bottom of most of the
 	characters (by convention, bottom of the letter 'A')."
 
 	^baseline
 ]
 
 { #category : #accessing }
-TextStyle >> baseline: anInteger [ 
-	"Set the distance from the top of the line to the bottom of most of the 
+TextStyle >> baseline: anInteger [
+	"Set the distance from the top of the line to the bottom of most of the
 	characters."
 	baseline := anInteger
 ]
@@ -350,7 +343,7 @@ TextStyle >> clearIndents [
 ]
 
 { #category : #'fonts and font indexes' }
-TextStyle >> consistOnlyOf: aFont [ 
+TextStyle >> consistOnlyOf: aFont [
 	fontArray := Array with: aFont.
 	defaultFontIndex := 1
 ]
@@ -364,17 +357,17 @@ TextStyle >> consolidate [
 "
 	| defFonts font |
 	defFonts := TextStyle default fontArray.
-	1 
+	1
 		to: fontArray size
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			font := fontArray at: i.
-			1 
+			1
 				to: defFonts size
-				do: 
-					[ :j | 
-					(font familyName asUppercase copyWithout: $ ) = ((defFonts at: j) familyName asUppercase copyWithout: $ ) ifTrue: 
-						[ fontArray 
+				do:
+					[ :j |
+					(font familyName asUppercase copyWithout: $ ) = ((defFonts at: j) familyName asUppercase copyWithout: $ ) ifTrue:
+						[ fontArray
 							at: i
 							put: (defFonts at: j) ] ] ]
 ]
@@ -390,21 +383,21 @@ TextStyle >> defaultFontIndex [
 ]
 
 { #category : #'default font' }
-TextStyle >> defaultFontIndex: anIndex [ 
+TextStyle >> defaultFontIndex: anIndex [
 	defaultFontIndex := anIndex
 ]
 
 { #category : #accessing }
 TextStyle >> firstIndent [
-	"Answer the horizontal indenting of the first line of a paragraph in the 
+	"Answer the horizontal indenting of the first line of a paragraph in the
 	style of the receiver."
 
 	^firstIndent
 ]
 
 { #category : #accessing }
-TextStyle >> firstIndent: anInteger [ 
-	"Set the horizontal indenting of the first line of a paragraph in the style 
+TextStyle >> firstIndent: anInteger [
+	"Set the horizontal indenting of the first line of a paragraph in the style
 	of the receiver to be the argument, anInteger."
 	firstIndent := anInteger
 ]
@@ -416,18 +409,18 @@ TextStyle >> fontArray [
 ]
 
 { #category : #private }
-TextStyle >> fontAt: index [ 
-	"This is private because no object outside TextStyle should depend on the 
+TextStyle >> fontAt: index [
+	"This is private because no object outside TextStyle should depend on the
 	representation of the font family in fontArray."
 
 	^ fontArray atPin: index
 ]
 
 { #category : #private }
-TextStyle >> fontAt: index put: font [ 
+TextStyle >> fontAt: index put: font [
 	"Automatically grow the array."
 	index > fontArray size ifTrue: [ fontArray := fontArray , (Array new: index - fontArray size) ].
-	fontArray 
+	fontArray
 		at: index
 		put: font
 ]
@@ -438,38 +431,38 @@ TextStyle >> fontIndexOf: aFont [
 ]
 
 { #category : #'fonts and font indexes' }
-TextStyle >> fontIndexOfPointSize: desiredPointSize [ 
+TextStyle >> fontIndexOfPointSize: desiredPointSize [
 	"Returns an index in fontArray of the font with pointSize <= desiredPointSize"
 	"Leading is not inluded in the comparison"
 	| bestMatch bestIndex d |
 	bestMatch := 9999.
 	bestIndex := 1.
-	1 
+	1
 		to: fontArray size
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			d := desiredPointSize - (fontArray at: i) pointSize.
 			d = 0 ifTrue: [ ^ i ].
-			(d > 0 and: [ d < bestMatch ]) ifTrue: 
+			(d > 0 and: [ d < bestMatch ]) ifTrue:
 				[ bestIndex := i.
 				bestMatch := d ] ].
 	^ bestIndex
 ]
 
 { #category : #'fonts and font indexes' }
-TextStyle >> fontIndexOfSize: desiredHeight [ 
+TextStyle >> fontIndexOfSize: desiredHeight [
 	"Returns an index in fontArray of the font with height <= desiredHeight"
 	"Leading is not inluded in the comparison"
 	| bestMatch bestIndex d |
 	bestMatch := 9999.
 	bestIndex := 1.
-	1 
+	1
 		to: fontArray size
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			d := desiredHeight - (fontArray at: i) height.
 			d = 0 ifTrue: [ ^ i ].
-			(d > 0 and: [ d < bestMatch ]) ifTrue: 
+			(d > 0 and: [ d < bestMatch ]) ifTrue:
 				[ bestIndex := i.
 				bestMatch := d ] ].
 	^ bestIndex
@@ -510,7 +503,7 @@ TextStyle >> fonts [
 ]
 
 { #category : #private }
-TextStyle >> gridForFont: fontIndex withLead: leadInteger [ 
+TextStyle >> gridForFont: fontIndex withLead: leadInteger [
 	"Force whole style to suit one of its fonts. Assumes only one font referred
 	to by runs."
 	| font |
@@ -524,7 +517,6 @@ TextStyle >> gridForFont: fontIndex withLead: leadInteger [
 TextStyle >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^fontArray hash
-
 ]
 
 { #category : #accessing }
@@ -541,7 +533,7 @@ TextStyle >> leading [
 ]
 
 { #category : #accessing }
-TextStyle >> leading: yDelta [ 
+TextStyle >> leading: yDelta [
 	leading := yDelta
 ]
 
@@ -552,26 +544,26 @@ TextStyle >> leftFlush [
 
 { #category : #'tabs and margins' }
 TextStyle >> leftMarginTabAt: marginIndex [
-	"Set the 'nesting' level of left margin indents of the paragraph in the 
+	"Set the 'nesting' level of left margin indents of the paragraph in the
 	style of the receiver to be the argument, marginIndex."
 
 	^ (marginIndex > 0 and: [ marginIndex < marginTabsArray size ])
 		ifTrue: [ (marginTabsArray at: marginIndex) at: 1 ]
-		ifFalse: [ "The marginTabsArray is an Array of tuples.  The Array is indexed according 
+		ifFalse: [ "The marginTabsArray is an Array of tuples.  The Array is indexed according
 	to the marginIndex, the 'nesting' level of the requestor." 0 ]
 ]
 
 { #category : #accessing }
 TextStyle >> lineGrid [
-	"Answer the relative space between lines of a paragraph in the style of 
+	"Answer the relative space between lines of a paragraph in the style of
 	the receiver."
 
 	^lineGrid
 ]
 
 { #category : #accessing }
-TextStyle >> lineGrid: anInteger [ 
-	"Set the relative space between lines of a paragraph in the style of the 
+TextStyle >> lineGrid: anInteger [
+	"Set the relative space between lines of a paragraph in the style of the
 	receiver to be the argument, anInteger."
 	lineGrid := anInteger
 ]
@@ -588,8 +580,8 @@ TextStyle >> marginTabAt: marginIndex side: sideIndex [
 ]
 
 { #category : #private }
-TextStyle >> newFontArray: anArray [ 
-	"Currently there is no supporting protocol for changing these arrays. If an editor wishes to implement margin setting, then a copy of the default should be stored with these instance variables.  
+TextStyle >> newFontArray: anArray [
+	"Currently there is no supporting protocol for changing these arrays. If an editor wishes to implement margin setting, then a copy of the default should be stored with these instance variables.
 	, Make size depend on first font."
 	fontArray := anArray.
 	lineGrid := (fontArray at: 1) height + leading.	"For whole family"
@@ -606,15 +598,15 @@ TextStyle allInstancesDo: [:ts | ts newFontArray: TextStyle default fontArray].
 ]
 
 { #category : #'tabs and margins' }
-TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin [ 
-	"Tab stops are distances from the left margin. Set the distance into the 
+TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin [
+	"Tab stops are distances from the left margin. Set the distance into the
 	argument, anX, normalized for the paragraph's left margin."
 	| normalizedX tabX |
 	normalizedX := anX - leftMargin.
-	1 
+	1
 		to: tabsArray size
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			(tabX := tabsArray at: i) > normalizedX ifTrue: [ ^ leftMargin + tabX min: rightMargin ] ].
 	^ rightMargin
 ]
@@ -635,20 +627,19 @@ TextStyle >> printOn: aStream [
 	] ifFalse: [
 		aStream space; nextPutAll: self defaultFont familySizeFace first
 	]
-
 ]
 
 { #category : #accessing }
 TextStyle >> restIndent [
-	"Answer the indent for all but the first line of a paragraph in the style 
+	"Answer the indent for all but the first line of a paragraph in the style
 	of the receiver."
 
 	^restIndent
 ]
 
 { #category : #accessing }
-TextStyle >> restIndent: anInteger [ 
-	"Set the indent for all but the first line of a paragraph in the style of the 
+TextStyle >> restIndent: anInteger [
+	"Set the indent for all but the first line of a paragraph in the style of the
 	receiver to be the argument, anInteger."
 	restIndent := anInteger
 ]
@@ -660,27 +651,27 @@ TextStyle >> rightFlush [
 
 { #category : #accessing }
 TextStyle >> rightIndent [
-	"Answer the right margin indent for the lines of a paragraph in the style 
+	"Answer the right margin indent for the lines of a paragraph in the style
 	of the receiver."
 
 	^rightIndent
 ]
 
 { #category : #accessing }
-TextStyle >> rightIndent: anInteger [ 
-	"Answer the right margin indent for the lines of a paragraph in the style 
+TextStyle >> rightIndent: anInteger [
+	"Answer the right margin indent for the lines of a paragraph in the style
 	of the receiver to be the argument, anInteger."
 	rightIndent := anInteger
 ]
 
 { #category : #'tabs and margins' }
 TextStyle >> rightMarginTabAt: marginIndex [
-	"Set the 'nesting' level of right margin indents of the paragraph in the 
+	"Set the 'nesting' level of right margin indents of the paragraph in the
 	style of the receiver to be marginIndex."
 
 	^ (marginIndex > 0 and: [ marginIndex < marginTabsArray size ])
 		ifTrue: [ (marginTabsArray at: marginIndex) at: 2 ]
-		ifFalse: [ "The marginTabsArray is an Array of tuples.  The Array is indexed according 
+		ifFalse: [ "The marginTabsArray is an Array of tuples.  The Array is indexed according
 	to the marginIndex, the 'nesting' level of the requestor." 0 ]
 ]
 
@@ -692,7 +683,7 @@ TextStyle >> tabWidth [
 ]
 
 { #category : #copying }
-TextStyle >> veryDeepCopyWith: deepCopier [ 
+TextStyle >> veryDeepCopyWith: deepCopier [
 	"All inst vars are meant to be shared"
 
 	self == #veryDeepCopyWith:.	"to satisfy checkVariables"
