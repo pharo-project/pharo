@@ -91,8 +91,8 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	stream
 		nextPutAll: '(';
 		nextPutAll: anEnglobingErrorNode class name;
-		nextPutAll: ' content: {'.
-	anEnglobingErrorNode content
+		nextPutAll: ' contents: {'.
+	anEnglobingErrorNode contents
 		do: [ :each |
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
